@@ -1,5 +1,6 @@
 local dungeonIndex = 1
 local nerfMultiplier = 0.834
+local pi = math.pi
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=300,teeming=360}
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	[1] = {
@@ -106,7 +107,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[3] = {x = 194.35354454595,y = -169.8589173035,sublevel=1},
 			[4] = {x = 160.45110582898,y = -226.7027767885,sublevel=1,g=2},
 			[5] = {x = 335.93428814378,y = -117.49902925202,sublevel=1,g=4},			
-			[6] = { x = 362.15242603613,y = -152.04445576944,sublevel=1,g=5,patrol={
+			[6] = { x = 362.15242603613,y = -152.04445576944,sublevel=1,g=5,patrolFacing=(8/32)*pi,patrolFacing2=(44/32)*pi,patrol={
 				[1] = {x = 292.28939446176,y = -99.354561671759},
 				[2] = {x = 406.83485155365,y = -184.35458074609},
 			}},			
@@ -207,7 +208,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 212.79933408203,y = -173.17364653278,sublevel=2,g=11,patrol={
+            [1] = {x = 216.79933408203,y = -173.17364653278,sublevel=2,g=11,patrolFacing=(26/32)*pi,patrolFacing2=(60/32)*pi,patrol={
 				[1] = {x = 210.19961349338,y = -184.08484933298},
 				[2] = {x = 217.47243753375,y = -196.35758384532},
 				[3] = {x = 210.19961349338,y = -184.08484933298},
@@ -295,7 +296,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 344.75229577404,y = -222.99333883764,sublevel=2,g=14,patrol={
+            [1] = {x = 350.16398783331,y = -216.35014538687,sublevel=2,g=14,patrolFacing=(9/32)*pi,patrolFacing2=(42/32)*pi,patrol={
 				[1] = {x = 321.43114553451,y = -195.04999761296},
 				[2] = {x = 387.34017706564,y = -243.68634514584},
 			}},
@@ -349,7 +350,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 476.62940868524,y = -281.81662864068,sublevel=3,g=19,patrol={
+            [1] = {x = 476.62940868524,y = -281.81662864068,sublevel=3,g=19,patrolFacing=(9/32)*pi,patrolFacing2=(35/32)*pi,patrol={
 				[1] = {x = 476.62940868524,y = -281.81662864068},
 				[2] = {x = 421.47985769165,y = -235.68169558854},
 				[3] = {x = 336.47988792662,y = -228.4089487879},
@@ -371,7 +372,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 482.22326529682,y = -291.08370346883,sublevel=3,g=19},
+            [1] = {x = 486.20425408937,y = -274.78586919875,sublevel=3,g=19},
 			[2] = {x = 145.90545604752,y = -277.61907188549,sublevel=3,g=23},
         },
     },

@@ -28,3 +28,12 @@ Reloe-Blackrock
 Asmonbáld-TwistingNether
 Mönödruid-Stormreaver
 Derkevin-Nathrezim
+
+Arcway:
+Iachawr-Blackmoore
+Batwoman-Ravencrest
+Mayonaisè-Blackhand
+
+Court of Stars:
+Kyurä-Hyjal
+Sollate-Blackrock

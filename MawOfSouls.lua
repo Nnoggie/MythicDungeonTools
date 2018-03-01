@@ -1,5 +1,5 @@
 local dungeonIndex = 7
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180,teemingEnabled=true}
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Maw of Souls
 	[1] = {
 		[1] = {
