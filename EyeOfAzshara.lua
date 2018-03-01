@@ -1,5 +1,5 @@
 local dungeonIndex = 5
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=206,teeming=242}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=206,teeming=242,teemingEnabled=true}
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 	[1] = {
 		[1] = {

@@ -1633,9 +1633,12 @@ function MethodDungeonTools:UpdateSidePanelCheckBoxes()
 	local affix = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix	
 	frame.sidePanelTyrannicalCheckBox:SetValue(affix~="fortified")
 	frame.sidePanelFortifiedCheckBox:SetValue(affix=="fortified")
-	
+
+
 	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 	frame.sidePanelTeemingCheckBox:SetValue(teeming)
+	local teemingEnabled = MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teemingEnabled
+	frame.sidePanelTeemingCheckBox:SetDisabled(not teemingEnabled)
 end
 
 function MethodDungeonTools:CreateDungeonPresetDropdown(frame)
