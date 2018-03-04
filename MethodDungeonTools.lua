@@ -8,7 +8,7 @@ _G["MethodDungeonTools"] = MethodDungeonTools
 
 local sizex = 840
 local sizey = 555
-local numPullButtons = 15
+local numPullButtons = 40
 local buttonTextFontSize = 12
 
 local Dialog = LibStub("LibDialog-1.0")
@@ -502,7 +502,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelString:SetText("");
 	frame.sidePanelString:ClearAllPoints();
 	frame.sidePanelString:SetPoint("TOPLEFT", frame.sidePanel, "TOPLEFT", 33, -120-30-25);
-	frame.sidePanelString:Show();
+	frame.sidePanelString:Hide();
 	
 	
 	
@@ -658,7 +658,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 	
 	frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
-	frame.sidePanel.DifficultySlider:SetSliderValues(1,90,1)
+	frame.sidePanel.DifficultySlider:SetSliderValues(1,35,1)
 	frame.sidePanel.DifficultySlider:SetWidth(195)	--240
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
@@ -808,6 +808,7 @@ function MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,add,ignoreGroupe
 			end
 		end
 	end
+	MethodDungeonTools:UpdatePullButtonNPCData(pull)
 end
 
 
@@ -979,7 +980,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				]]
 			elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
 				local cursorX, cursorY = GetCursorPosition();
-				EasyMenu({
+				L_EasyMenu({
 					{
 						text = "Copy Position",
 						notCheckable = true,
@@ -1215,8 +1216,8 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				local data 
 			
 			end
+
 			if mouseoverBlip then
-				--GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
 				local data = dungeonEnemyBlips[mouseoverBlip]
 				local fortified = false
 				local boss = false
@@ -1320,6 +1321,25 @@ function MethodDungeonTools:MakeMapTexture(frame)
 					end
 				end				
 			end
+
+			--mouseover pull button
+			--[[
+
+			elseif mouseOverPullButton then
+				--tooltip.String:Show()
+				--tooltip:Show()
+				--tooltipLastShown = GetTime()
+
+
+			local mouseOverPullButton
+			if MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then
+				for idx,_ in pairs(MethodDungeonTools.main_frame.sidePanel.newPullButtons) do
+					mouseOverPullButton = idx
+					break
+				end
+			end
+
+			]]
 		end)
 		
 		if frame.mapPanelFrame == nil then
@@ -1639,6 +1659,7 @@ function MethodDungeonTools:UpdateSidePanelCheckBoxes()
 	frame.sidePanelTeemingCheckBox:SetValue(teeming)
 	local teemingEnabled = MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teemingEnabled
 	frame.sidePanelTeemingCheckBox:SetDisabled(not teemingEnabled)
+
 end
 
 function MethodDungeonTools:CreateDungeonPresetDropdown(frame)
@@ -1721,7 +1742,7 @@ function MethodDungeonTools:EnsureDBTables()
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] or {}
 end
 
-function MethodDungeonTools:UpdateMap(ignoreSetSelection)
+function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons)
 	local mapPanel = self.main_frame.mapPanel
 	local mapName
 	local frame = MethodDungeonTools.main_frame	
@@ -1736,8 +1757,10 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection)
 		end
 	end
 	MethodDungeonTools:UpdateDungeonBossButtons()
-	MethodDungeonTools:UpdateDungeonEnemies()	
-	MethodDungeonTools:UpdatePullSelectionButtons(db.currentPreset[db.currentDungeonIdx])
+	MethodDungeonTools:UpdateDungeonEnemies()
+	if not ignoreReloadPullButtons then
+		MethodDungeonTools:ReloadPullButtons()
+	end
 	MethodDungeonTools:UpdateSidePanelCheckBoxes()
 	
 	--handle delete button disable/enable
@@ -1927,38 +1950,47 @@ function MethodDungeonTools:ImportPreset(preset)
 end
 
 function MethodDungeonTools:MakePullSelectionButtons(frame)
-	frame.pullButtons = {}
-	for i = 1,numPullButtons do		
-		local item=CreateFrame("Button","MethodDungeonTools_PullButton"..i,frame);
-		item:SetSize(23,23);		 
-		item:SetNormalTexture("Interface\\Buttons\\UI-Quickslot2");
-		item:SetPushedTexture("Interface\\Buttons\\UI-Quickslot-Depress");
-		item:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square","ADD");
-		do local tex=item:GetNormalTexture();-- Hack to modify the existing texture object
-			tex:ClearAllPoints();
-			tex:SetPoint("CENTER",0,-1);
-			tex:SetSize(38,38);
-		end
-		item.text=item:CreateFontString("$parentText","BORDER","NumberFontNormal");		
-		item.text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize)
-		item.text:SetPoint("CENTER",0,0);
-		item.text:SetJustifyH("CENTER");
-		item.text:SetJustifyV("CENTER");		
-		item.text:SetText(i)		
-		item:SetPoint("TOPLEFT",frame,"TOPLEFT",3,(-i*25)-28-25-30-40-25)
-		item:Hide()
-		item.index = i
-		item:SetFrameLevel(14)
-		item:RegisterForClicks("LeftButtonUp", "RightButtonUp");
-		frame.pullButtons[i] = item
-	end
+
+    frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
+    frame.PullButtonScrollGroup:SetWidth(248);
+    frame.PullButtonScrollGroup:SetHeight(410)
+    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame,"TOPLEFT",0,-(31+140))
+    frame.PullButtonScrollGroup:SetLayout("Fill")
+    frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
+    frame.PullButtonScrollGroup.frame:Show()
+
+    --dirty hook to make PullButtonScrollGroup show/hide
+    local originalShow,originalHide = MethodDungeonTools.main_frame.Show,MethodDungeonTools.main_frame.Hide
+    function MethodDungeonTools.main_frame:Show(...)
+        frame.PullButtonScrollGroup.frame:Show()
+        return originalShow(self, ...);
+    end
+    function MethodDungeonTools.main_frame:Hide(...)
+        frame.PullButtonScrollGroup.frame:Hide()
+        return originalHide(self, ...);
+    end
+
+
+
+    frame.pullButtonsScrollFrame = AceGUI:Create("ScrollFrame")
+    frame.pullButtonsScrollFrame:SetLayout("Flow")
+    frame.PullButtonScrollGroup:AddChild(frame.pullButtonsScrollFrame)
+
+    frame.newPullButtons = {}
+
+
+
 	--rightclick context menu
-	frame.optionsDropDown = CreateFrame("Frame", "PullButtonsOptionsDropDown", nil, "UIDropDownMenuTemplate")
+	frame.optionsDropDown = CreateFrame("Frame", "PullButtonsOptionsDropDown", nil, "L_UIDropDownMenuTemplate")
 end
 
 
-function MethodDungeonTools:PresetsAddPull()	
-	tinsert(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,{})
+function MethodDungeonTools:PresetsAddPull(index)
+	if index then
+		tinsert(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,index,{})
+	else
+		tinsert(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,{})
+	end
 end
 
 function MethodDungeonTools:PresetsDeletePull(p,j)	
@@ -1997,7 +2029,7 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	end
 	if lastSubLevel then
 		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = lastSubLevel
-		MethodDungeonTools:UpdateMap(true)
+		MethodDungeonTools:UpdateMap(true,true)
 	end
 	
 	--update dropdown
@@ -2005,126 +2037,21 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
 end
 
-function MethodDungeonTools:UpdatePullSelectionButtons(preset)
-	--currentDungeonIdx
-	--presets[dungeon][preset].value[pull][mobidx]= {1,3,7}
-	local frame = MethodDungeonTools.main_frame.sidePanel
-	local idx = 1
-	local AddButtonCallBack,PullButtonCallBack
-	
-	function PullButtonCallBack(self, button, down)
-		if button == "LeftButton" then
-			MethodDungeonTools:SetMapSublevel(self.index)
-			MethodDungeonTools:SetSelectionToPull(self.index)
-		elseif button == "RightButton" and frame.pullButtons[self.index].text:GetText()~="+" then
-			EasyMenu({
-				{
-					text = "Move Up",
-					notCheckable = true,
-					func = function()
-						if self.index>1 then
-							MethodDungeonTools:PresetsSwapPulls(self.index,self.index-1)
-							MethodDungeonTools:SetMapSublevel(self.index-1)
-							MethodDungeonTools:SetSelectionToPull(self.index-1)
-						end
-					end,
-				},
-				{
-					text = "Move Down",
-					notCheckable = true,
-					func = function()
-						if frame.pullButtons[self.index+1].text:GetText()~="+" then
-							MethodDungeonTools:PresetsSwapPulls(self.index,self.index+1)
-							MethodDungeonTools:SetMapSublevel(self.index+1)
-							MethodDungeonTools:SetSelectionToPull(self.index+1)
-						end
-					end,
-				},
-				{	
-					text = "Delete",
-					notCheckable = true,
-					func = function()
-						if frame.pullButtons[self.index+1] and frame.pullButtons[self.index+1]:IsShown() then							
-							local idx = self.index
-							while frame.pullButtons[idx+1].text:GetText()~="+" do
-								idx = idx+1
-							end
-							MethodDungeonTools:PresetsDeletePull(self.index,idx)
-							if idx>1 and frame.pullButtons[idx+1].text:GetText()=="+" then
-								frame.pullButtons[idx].text:SetText("+")
-								frame.pullButtons[idx].text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize+3)
-								frame.pullButtons[idx+1]:Hide()
-								frame.pullButtons[idx]:SetScript("OnClick",AddButtonCallBack)
-							end
-							--set pull
-							if frame.pullButtons[self.index].text:GetText()=="+" then
-								MethodDungeonTools:SetMapSublevel(self.index-1)
-								MethodDungeonTools:SetSelectionToPull(self.index-1)
-							else
-								MethodDungeonTools:SetMapSublevel(self.index)
-								MethodDungeonTools:SetSelectionToPull(self.index)
-							end
-						end
-						if not frame.pullButtons[self.index+1] then
-							MethodDungeonTools:PresetsDeletePull(self.index)
-							frame.pullButtons[self.index].text:SetText("+")
-							frame.pullButtons[self.index].text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize+3)	
-							frame.pullButtons[self.index]:SetScript("OnClick",AddButtonCallBack)
-							MethodDungeonTools:SetMapSublevel(self.index-1)
-							MethodDungeonTools:SetSelectionToPull(self.index-1)
-						end
-					end,
-				},
-			}, frame.optionsDropDown, "cursor", 0 , -15, "MENU")
-		end
-		
-	end
-	
-	for k,v in pairs(db.presets[db.currentDungeonIdx][preset].value.pulls) do
-		frame.pullButtons[idx].text:SetText(idx)	
-		frame.pullButtons[idx].text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize)		
-		frame.pullButtons[idx]:SetScript("OnClick", PullButtonCallBack)
-		frame.pullButtons[idx]:Show()		
-		idx = idx+1
-	end
-	
-	function AddButtonCallBack(self, button, down)
-		if button == "LeftButton" then
-			self.text:SetText(self.index)
-			self.text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize)		
-			self:SetScript("OnClick", PullButtonCallBack)
-			if self.index+1<=numPullButtons then
-				frame.pullButtons[self.index+1].text:SetText("+")
-				frame.pullButtons[self.index+1].text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize+3)
-				frame.pullButtons[self.index+1]:SetScript("OnClick",AddButtonCallBack)			
-				frame.pullButtons[self.index+1]:Show()
-			end
-			MethodDungeonTools:PresetsAddPull()
-			MethodDungeonTools:SetMapSublevel(self.index)
-			MethodDungeonTools:SetSelectionToPull(self.index)
-		end
-	end
-	
-	frame.pullButtons[idx].text:SetText("+")
-	frame.pullButtons[idx].text:SetFont("Fonts\\FRIZQT__.TTF", buttonTextFontSize+3)	
-	frame.pullButtons[idx]:Show()	
-	frame.pullButtons[idx]:SetScript("OnClick",AddButtonCallBack)
-	idx = idx+1
-	for i=idx,numPullButtons do
-		frame.pullButtons[i]:Hide()
-	end
-	
-end
 
-function MethodDungeonTools:SetSelectionToPull(pull)	
+function MethodDungeonTools:SetSelectionToPull(pull)
+	--if pull is not specified set pull to last pull in preset (for adding new pulls)
+	if not pull then
+		local count = 0
+		for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
+			count = count + 1
+		end
+		pull = count
+	end
 	--SaveCurrentPresetPull
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = pull
 	--button text color to indicate selection
 	local frame = MethodDungeonTools.main_frame.sidePanel
-	for j=1,numPullButtons do
-		if j==pull then frame.pullButtons[j].text:SetTextColor(0,1,0,1) else frame.pullButtons[j].text:SetTextColor(1,1,1,1) end
-	end
-	
+	MethodDungeonTools:PickPullButton(pull)
 	
 	
 	--deselect all 
@@ -2160,9 +2087,130 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 	MethodDungeonTools:UpdateEnemiesSelected()	
 end
 
+---UpdatePullButtonNPCData
+---
+function MethodDungeonTools:UpdatePullButtonNPCData(idx)
+	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+	local frame = MethodDungeonTools.main_frame.sidePanel
+	local enemyTable = {}
+	if preset.value.pulls[idx] then
+		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
+			local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
+			for k,cloneIdx in pairs(clones) do
+				if not enemyTable[npcId] then enemyTable[npcId] = {} end
+				enemyTable[npcId].quantity = enemyTable[npcId].quantity or 0
+				enemyTable[npcId].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+				enemyTable[npcId].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+				enemyTable[npcId].quantity = enemyTable[npcId].quantity + 1
+			end
+		end
+	end
+	frame.newPullButtons[idx]:SetNPCData(enemyTable)
+end
+
+
+---ReloadPullButtons
+---Reloads all pull buttons in the scroll frame
+function MethodDungeonTools:ReloadPullButtons()
+	local frame = MethodDungeonTools.main_frame.sidePanel
+	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+
+	--first release all children of the scroll frame
+	frame.pullButtonsScrollFrame:ReleaseChildren()
+
+	local maxPulls =  0
+	for k,v in pairs(preset.value.pulls) do
+		maxPulls = maxPulls + 1
+	end
+
+	--add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
+
+	local idx = 0
+	for k,pull in pairs(preset.value.pulls) do
+		idx = idx+1
+		frame.newPullButtons[idx] = AceGUI:Create("MethodDungeonToolsPullButton")
+		frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
+		frame.newPullButtons[idx]:SetIndex(idx)
+		MethodDungeonTools:UpdatePullButtonNPCData(idx)
+		frame.newPullButtons[idx]:Initialize()
+		frame.newPullButtons[idx]:Enable()
+		frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
+	end
+
+	--add the "new pull" button
+	frame.newPullButton = AceGUI:Create("MethodDungeonToolsNewPullButton")
+	frame.newPullButton:Initialize()
+	frame.newPullButton:Enable()
+	frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)
+
+
+end
+
+---ClearPullButtonPicks
+---Deselects all pull buttons
+function MethodDungeonTools:ClearPullButtonPicks()
+	local frame = MethodDungeonTools.main_frame.sidePanel
+	for k,v in pairs(frame.newPullButtons) do
+		v:ClearPick()
+	end
+end
+
+---PickPullButton
+---Selects the current pull button and deselects all other buttons
+function MethodDungeonTools:PickPullButton(idx)
+	MethodDungeonTools:ClearPullButtonPicks()
+	local frame = MethodDungeonTools.main_frame.sidePanel
+	frame.newPullButtons[idx]:Pick()
+end
+
+---AddPull
+---Creates a new pull in the current preset and calls ReloadPullButtons to reflect the change in the scrollframe
+function MethodDungeonTools:AddPull(index)
+	MethodDungeonTools:PresetsAddPull(index)
+	MethodDungeonTools:ReloadPullButtons()
+	MethodDungeonTools:SetSelectionToPull(index)
+end
+
+---ClearPull
+---Clears all the npcs out of a pull
+function MethodDungeonTools:ClearPull(index)
+	table.wipe(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[index])
+	MethodDungeonTools:ReloadPullButtons()
+	MethodDungeonTools:SetSelectionToPull(index)
+end
+
+---MovePullUp
+---Moves the selected pull up
+function MethodDungeonTools:MovePullUp(index)
+	MethodDungeonTools:PresetsSwapPulls(index,index-1)
+	MethodDungeonTools:ReloadPullButtons()
+	MethodDungeonTools:SetSelectionToPull(index-1)
+end
+
+---MovePullDown
+---Moves the selected pull down
+function MethodDungeonTools:MovePullDown(index)
+	MethodDungeonTools:PresetsSwapPulls(index,index+1)
+	MethodDungeonTools:ReloadPullButtons()
+	MethodDungeonTools:SetSelectionToPull(index+1)
+end
+
+---DeletePull
+---Deletes the selected pull and makes sure that a pull will be selected afterwards
+function MethodDungeonTools:DeletePull(index)
+
+	MethodDungeonTools:PresetsDeletePull(index)
+	MethodDungeonTools:ReloadPullButtons()
+	local pullCount = 0
+	for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
+		pullCount = pullCount + 1
+	end
+	if index>pullCount then index = pullCount end
+	MethodDungeonTools:SetSelectionToPull(index)
+
+end
 
 ---RenamePreset
----@param renameText string
 function MethodDungeonTools:RenamePreset(renameText)
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text = renameText
 	MethodDungeonTools.main_frame.RenameFrame:Hide()
@@ -2173,7 +2221,7 @@ end
 
 function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame = AceGUI:Create("Frame")
-	frame.RenameFrame:SetTitle("Rename Profile")
+	frame.RenameFrame:SetTitle("Rename Preset")
 	frame.RenameFrame:SetWidth(350)
 	frame.RenameFrame:SetHeight(150)
 	frame.RenameFrame:EnableResize(false)		
@@ -2342,24 +2390,34 @@ function initFrames()
 	MethodDungeonTools:MakeRenameFrame(main_frame)
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
 	--tooltip
-	do
-		tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
-		tooltip:SetClampedToScreen(true)
-		tooltip:SetFrameStrata("TOOLTIP")
-		tooltip:SetSize(250, 250)		
-		tooltip:SetPoint("BOTTOMRIGHT",main_frame.sidePanel,"BOTTOMRIGHT",0,28)
-		tooltip:Hide()
-		
-		tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
-		tooltip.Model:SetFrameLevel(1)
-		tooltip.Model.fac = 0
-		tooltip.Model:SetScript("OnUpdate",function (self,elapsed)
-			self.fac = self.fac + 0.5
-			if self.fac >= 360 then
-				self.fac = 0
-			end
-			self:SetFacing(PI*2 / 360 * self.fac)			
-		end)
+    do
+        tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
+        tooltip:SetClampedToScreen(true)
+        tooltip:SetFrameStrata("TOOLTIP")
+        tooltip:SetSize(250, 250)
+        tooltip:SetPoint("BOTTOMRIGHT",main_frame.sidePanel,"BOTTOMRIGHT",0,28)
+        tooltip:Hide()
+
+        tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
+        tooltip.Model:SetFrameLevel(1)
+
+        tooltip.Model.fac = 0
+        if true then
+            tooltip.Model:SetScript("OnUpdate",function (self,elapsed)
+                self.fac = self.fac + 0.5
+                if self.fac >= 360 then
+                    self.fac = 0
+                end
+                self:SetFacing(PI*2 / 360 * self.fac)
+				--print(tooltip.Model:GetModelFileID())
+            end)
+
+        else
+            tooltip.Model:SetPortraitZoom(1)
+            tooltip.Model:SetFacing(PI*2 / 360 * 2)
+        end
+
+
 		tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT")
 		tooltip.Model:SetPoint("BOTTOMRIGHT", tooltip, "BOTTOMRIGHT",0,45)
 		
@@ -2376,7 +2434,7 @@ function initFrames()
 		tooltip.String:Show();
 	end
 	
-	main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "UIDropDownMenuTemplate")
+	main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "L_UIDropDownMenuTemplate")
 	
 	main_frame:Hide();
 end

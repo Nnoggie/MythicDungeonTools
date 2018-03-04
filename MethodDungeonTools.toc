@@ -20,7 +20,8 @@ libs\LibCompress\LibCompress.lua
 libs\LibUIDropDownMenu\LibUIDropDownMenu.xml
 #@end-no-lib-strip@
 
-
+AceGUIWidget-MethodDungeonToolsPullButton.lua
+AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 MethodDungeonTools.lua
 Transmission.lua
 CathedralOfEternalNight.lua
