@@ -382,7 +382,7 @@ function MethodDungeonTools:ShowInterface()
 		self.main_frame:Hide();
 	else
 		self.main_frame:Show();
-		MethodDungeonTools:UpdateDungeon(true)
+		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 	end
 end
 
@@ -1738,11 +1738,7 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	function frame.DungeonSelectDropdown:OnValueChanged(value, text)
 		for k,v in pairs(dungeonList) do
 			if v == text then
-				db.currentDungeonIdx = k
-				--populate 2nd dropdown with apropritate list of sublevels
-				frame.DungeonSublevelSelectDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
-				frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][1])
-				MethodDungeonTools:UpdateDungeon(true)
+				MethodDungeonTools:UpdateToDungeon(k)
 				return
 			end
 		end
@@ -1755,9 +1751,12 @@ end
 
 
 function MethodDungeonTools:EnsureDBTables()
-	
+
+
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix or "fortified"
+
+    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
 
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming or false
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel or 1
@@ -1804,10 +1803,17 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
 end
 
-function MethodDungeonTools:UpdateDungeon(forceZone) --on open and dungeon change from dropdown TODO: decide if needed
-	local frame = MethodDungeonTools.main_frame
+---UpdateToDungeon
+---Updates the map to the specified dungeon
+function MethodDungeonTools:UpdateToDungeon(dungeonIdx,forceZone) --on open and dungeon change from dropdown TODO: decide if needed
+    local frame = MethodDungeonTools.main_frame
+    db.currentDungeonIdx = dungeonIdx
+    --populate 2nd dropdown with apropritate list of sublevels
+    frame.DungeonSublevelSelectDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
+    frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][1])
+
 	local zoneId = HBD:GetPlayerZone()
-	local dungIdx = zoneIdToIdx[zoneId] 
+	--local dungIdx = zoneIdToIdx[zoneId]
 	--if forceZone and dungIdx then db.currentDungeonIdx = dungIdx end TODO HERE
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
 	frame.DungeonSelectDropdown:SetValue(dungeonList[db.currentDungeonIdx])
@@ -1953,6 +1959,8 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 end
 
 function MethodDungeonTools:ImportPreset(preset)
+    --change dungeon to dungeon of the new preset
+    MethodDungeonTools:UpdateToDungeon(preset.value.currentDungeonIdx)
 	local name = preset.text
 	local num = 2;
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -1964,6 +1972,7 @@ function MethodDungeonTools:ImportPreset(preset)
 	
 	preset.text = name
 	local countPresets = 0
+
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
 		countPresets = countPresets + 1
 	end	
