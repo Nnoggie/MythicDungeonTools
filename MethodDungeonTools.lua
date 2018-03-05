@@ -1483,7 +1483,7 @@ function MethodDungeonTools:UpdateDungeonBossButtons()
 end
 
 
-
+local patrolColor = {r=0,g=.5,b=1,a=0.8}
 
 function MethodDungeonTools:UpdateDungeonEnemies()
 	if not dungeonEnemyBlips then
@@ -1510,30 +1510,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						dungeonEnemyBlips[idx].count = data["count"]
 						dungeonEnemyBlips[idx].name = data["name"]
 						dungeonEnemyBlips[idx].color = data["color"]
-						--color patrol
-						dungeonEnemyBlips[idx].patrolFollower = nil
-						if clone.patrol then
-							dungeonEnemyBlips[idx].color = {r=0,g=0.45,b=1,a=0.8}
-						else
-							--iterate over all enemies again to find if this npc is linked to a patrol
-							for _,patrolCheckData in pairs(enemies) do
-								for _,patrolCheckClone in pairs(patrolCheckData["clones"]) do
-									--check sublevel
-									if (patrolCheckClone.sublevel and patrolCheckClone.sublevel == db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel) or ((not patrolCheckClone.sublevel) and db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel == 1) then
-										--check for teeming
-										local patrolCheckDataTeeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-										if (patrolCheckDataTeeming==true) or (patrolCheckDataTeeming==false and ((not patrolCheckClone.teeming) or patrolCheckClone.teeming==false))  then
-											if clone.g and patrolCheckClone.g then
-												if clone.g == patrolCheckClone.g and patrolCheckClone.patrol then
-													dungeonEnemyBlips[idx].color = {r=0,g=0.45,b=1,a=0.8}
-													dungeonEnemyBlips[idx].patrolFollower = true
-												end
-											end
-										end
-									end
-								end
-							end
-						end
+
 						dungeonEnemyBlips[idx].cloneIdx = cloneIdx
 						dungeonEnemyBlips[idx].enemyIdx = enemyIdx
 						dungeonEnemyBlips[idx].id = data["id"]	
@@ -1542,16 +1519,46 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						dungeonEnemyBlips[idx].creatureType = data["creatureType"]				
 						dungeonEnemyBlips[idx].health = data["health"]
 						dungeonEnemyBlips[idx].level = data["level"]
-						dungeonEnemyBlips[idx]:SetDrawLayer("ARTWORK", 5);
+						dungeonEnemyBlips[idx]:SetDrawLayer("ARTWORK", 5)
 						dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
 						dungeonEnemyBlips[idx]:SetWidth(10*data["scale"])
 						dungeonEnemyBlips[idx]:SetHeight(10*data["scale"])
-						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)				
+						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
+
+                        --color patrol
+                        dungeonEnemyBlips[idx].patrolFollower = nil
+                        if clone.patrol then
+                            dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
+                            dungeonEnemyBlips[idx].color = patrolColor
+                        else
+                            --iterate over all enemies again to find if this npc is linked to a patrol
+                            for _,patrolCheckData in pairs(enemies) do
+                                for _,patrolCheckClone in pairs(patrolCheckData["clones"]) do
+                                    --check sublevel
+                                    if (patrolCheckClone.sublevel and patrolCheckClone.sublevel == db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel) or ((not patrolCheckClone.sublevel) and db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel == 1) then
+                                        --check for teeming
+                                        local patrolCheckDataTeeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
+                                        if (patrolCheckDataTeeming==true) or (patrolCheckDataTeeming==false and ((not patrolCheckClone.teeming) or patrolCheckClone.teeming==false))  then
+                                            if clone.g and patrolCheckClone.g then
+                                                if clone.g == patrolCheckClone.g and patrolCheckClone.patrol then
+                                                    dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
+                                                    dungeonEnemyBlips[idx].color = patrolColor
+                                                    dungeonEnemyBlips[idx].patrolFollower = true
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+
 						if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx]:SetVertexColor(0,1,0,1) else
 							local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
 							dungeonEnemyBlips[idx]:SetVertexColor(r,g,b,a)							
 						end
-						
+
+
+
 						
 						dungeonEnemyBlips[idx]:Show()
 						
