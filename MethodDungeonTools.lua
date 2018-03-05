@@ -879,6 +879,89 @@ end
 
 local lastModelId
 local cloneOffset = 0
+
+function MethodDungeonTools:ZoomMap(delta,resetZoom)
+    local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+    local oldScrollH = scrollFrame:GetHorizontalScroll();
+    local oldScrollV = scrollFrame:GetVerticalScroll();
+
+    -- get the mouse position on the frame, with 0,0 at top left
+    local cursorX, cursorY = GetCursorPosition()
+    local relativeFrame = UIParent
+    local frameX = cursorX / relativeFrame:GetScale() - scrollFrame:GetLeft()
+    local frameY = scrollFrame:GetTop() - cursorY / relativeFrame:GetScale()
+    local oldScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
+    local newScale = oldScale + delta * 0.3;
+    newScale = max(1, newScale)
+    newScale = min(2.2, newScale)
+    if resetZoom then newScale = 1 end
+    MethodDungeonTools.main_frame.mapPanelFrame:SetScale(newScale)
+
+    if newScale == 1 then
+        scrollFrame.maxX = 0
+        scrollFrame.maxY = 0
+    elseif newScale > 1.2 and newScale < 1.4 then
+        scrollFrame.maxX = 192
+        scrollFrame.maxY = 131
+    elseif newScale > 1.5 and newScale < 1.7 then
+        scrollFrame.maxX = 313
+        scrollFrame.maxY = 211
+    elseif newScale > 1.8 and newScale < 2 then
+        scrollFrame.maxX = 396
+        scrollFrame.maxY = 266
+    elseif newScale > 2.1 and newScale < 2.3 then
+        scrollFrame.maxX = 453
+        scrollFrame.maxY = 305
+    end
+    scrollFrame.zoomedIn = abs(MethodDungeonTools.main_frame.mapPanelFrame:GetScale() - 1) > 0.02
+
+    --frameX = 420
+    --frameY = 555/2
+
+    if newScale == 1 then
+
+    elseif newScale > 1.2 and newScale < 1.4 then
+        frameX = frameX -105
+        frameY = frameY -58
+    elseif newScale > 1.5 and newScale < 1.7 then
+        frameX = frameX -245
+        frameY = frameY -165
+    elseif newScale > 1.8 and newScale < 2 then
+        frameX = frameX -355
+        frameY = frameY -245
+    elseif newScale > 2.1 and newScale < 2.3 then
+        frameX = frameX -455
+        frameY = frameY -345
+    end
+
+    -- figure out new scroll values
+    local scaleChange = newScale / oldScale;
+    local newScrollH = scaleChange * ( frameX + oldScrollH ) - frameX
+    local newScrollV = scaleChange * ( frameY + oldScrollV ) - frameY
+
+    --[[
+    if newScale == 1 then
+
+    elseif newScale > 1.2 and newScale < 1.4 then
+        newScrollH = newScrollH - 30
+    elseif newScale > 1.5 and newScale < 1.7 then
+        newScrollH = newScrollH - 50
+    elseif newScale > 1.8 and newScale < 2 then
+
+    end
+    ]]
+
+    -- clamp scroll values
+    newScrollH = min(newScrollH, scrollFrame.maxX)
+    newScrollH = max(0, newScrollH)
+    newScrollV = min(newScrollV, scrollFrame.maxY)
+    newScrollV = max(0, newScrollV)
+    -- set scroll values
+
+    scrollFrame:SetHorizontalScroll(newScrollH)
+    scrollFrame:SetVerticalScroll(newScrollV)
+end
+
 function MethodDungeonTools:MakeMapTexture(frame)
     MethodDungeonTools.contextMenuList = {}
     if db.devMode then
@@ -1087,85 +1170,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
-			local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-			local oldScrollH = scrollFrame:GetHorizontalScroll();
-			local oldScrollV = scrollFrame:GetVerticalScroll();
-			
-			-- get the mouse position on the frame, with 0,0 at top left
-			local cursorX, cursorY = GetCursorPosition();			
-			local relativeFrame = UIParent			
-			local frameX = cursorX / relativeFrame:GetScale() - scrollFrame:GetLeft();
-			local frameY = scrollFrame:GetTop() - cursorY / relativeFrame:GetScale();
-			local oldScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale();
-			local newScale = oldScale + delta * 0.3;
-			newScale = max(1, newScale);
-			newScale = min(2.2, newScale);
-			MethodDungeonTools.main_frame.mapPanelFrame:SetScale(newScale);
-			
-			if newScale == 1 then
-				scrollFrame.maxX = 0
-				scrollFrame.maxY = 0
-			elseif newScale > 1.2 and newScale < 1.4 then
-				scrollFrame.maxX = 192
-				scrollFrame.maxY = 131
-			elseif newScale > 1.5 and newScale < 1.7 then
-				scrollFrame.maxX = 313
-				scrollFrame.maxY = 211
-			elseif newScale > 1.8 and newScale < 2 then
-				scrollFrame.maxX = 396
-				scrollFrame.maxY = 266
-			elseif newScale > 2.1 and newScale < 2.3 then
-				scrollFrame.maxX = 453
-				scrollFrame.maxY = 305
-			end
-			scrollFrame.zoomedIn = abs(MethodDungeonTools.main_frame.mapPanelFrame:GetScale() - 1) > 0.02;			
-			
-			--frameX = 420
-			--frameY = 555/2
-			
-			if newScale == 1 then
-				
-			elseif newScale > 1.2 and newScale < 1.4 then
-				frameX = frameX -105
-				frameY = frameY -58
-			elseif newScale > 1.5 and newScale < 1.7 then
-				frameX = frameX -245
-				frameY = frameY -165
-			elseif newScale > 1.8 and newScale < 2 then
-				frameX = frameX -355
-				frameY = frameY -245
-			elseif newScale > 2.1 and newScale < 2.3 then
-				frameX = frameX -455
-				frameY = frameY -345
-			end
-			
-			-- figure out new scroll values
-			local scaleChange = newScale / oldScale;			
-			local newScrollH = scaleChange * ( frameX + oldScrollH ) - frameX;
-			local newScrollV = scaleChange * ( frameY + oldScrollV ) - frameY;
-			
-			--[[
-			if newScale == 1 then
-			
-			elseif newScale > 1.2 and newScale < 1.4 then
-				newScrollH = newScrollH - 30
-			elseif newScale > 1.5 and newScale < 1.7 then
-				newScrollH = newScrollH - 50
-			elseif newScale > 1.8 and newScale < 2 then
-			
-			end
-			]]
-			
-			-- clamp scroll values
-			newScrollH = min(newScrollH, scrollFrame.maxX);
-			newScrollH = max(0, newScrollH);
-			newScrollV = min(newScrollV, scrollFrame.maxY);
-			newScrollV = max(0, newScrollV);
-			-- set scroll values
-			
-			scrollFrame:SetHorizontalScroll(newScrollH);
-			scrollFrame:SetVerticalScroll(newScrollV);
-			
+            MethodDungeonTools:ZoomMap(delta)
 		end)
 		
 		--PAN
@@ -1764,6 +1769,7 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 			if v == text then
 				db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = k
 				MethodDungeonTools:UpdateMap()
+                MethodDungeonTools:ZoomMap(1,true)
 				return
 			end
 		end
@@ -1862,6 +1868,7 @@ function MethodDungeonTools:UpdateToDungeon(dungeonIdx,forceZone) --on open and 
 	frame.sidePanel.DungeonPresetDropdown:SetList(db.presets[db.currentDungeonIdx])
 	frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value)	
 	MethodDungeonTools:UpdateMap()
+    MethodDungeonTools:ZoomMap(1,true)
 end
 
 function MethodDungeonTools:DeletePreset(index)
@@ -2108,6 +2115,7 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	--update dropdown
 	local frame = MethodDungeonTools.main_frame
 	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
+    MethodDungeonTools:ZoomMap(1,true)
 end
 
 
