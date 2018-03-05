@@ -22,12 +22,12 @@ SLASH_METHODDUNGEONTOOLS2 = "/mdt"
 SLASH_METHODDUNGEONTOOLS3 = "/methoddungeontools"
 
 --LUA API
-local pi = math.pi
+local pi,tinsert = math.pi,table.insert
 
 function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
 	local rqst, arg = strsplit(' ', cmd)
-	if rqst == "purge" then
-		--
+	if rqst == "devmode" then
+		MethodDungeonTools:ToggleDevMode()
 	elseif rqst == "remove" then
 		--
 	else
@@ -388,6 +388,11 @@ end
 
 function MethodDungeonTools:HideInterface()
 	self.main_frame:Hide();
+end
+
+function MethodDungeonTools:ToggleDevMode()
+    db.devMode = not db.devMode
+    print("MDT: Reload Interface to enable dev mode features")
 end
 
 
@@ -872,6 +877,203 @@ end
 local lastModelId
 local cloneOffset = 0
 function MethodDungeonTools:MakeMapTexture(frame)
+    MethodDungeonTools.contextMenuList = {}
+    if db.devMode then
+        tinsert(MethodDungeonTools.contextMenuList, {
+            text = "Copy Position",
+            notCheckable = true,
+            func = function()
+                local cursorX, cursorY = GetCursorPosition()
+                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+                local relativeFrame = UIParent		--UIParent
+                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
+                local mapScale = mapPanelFrame:GetScale()
+                local scrollH = scrollFrame:GetHorizontalScroll();
+                local scrollV = scrollFrame:GetVerticalScroll();
+                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
+                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
+                frameX=(frameX/mapScale)+scrollH
+                frameY=(frameY/mapScale)+scrollV
+                local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
+                local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
+
+                local cloneIdx = 1
+                local targetName = UnitName("target")
+                if targetName then
+                    for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+                        if v["name"]==targetName then
+                            for k,v in pairs(v["clones"]) do
+                                cloneIdx = cloneIdx+1
+                            end
+                            break
+                        end
+                    end
+                end
+
+
+                local activeDialog = Dialog:ActiveDialog("MethodDungeonToolsPosCopyDialog")
+                if activeDialog then
+                    cloneOffset = cloneOffset + 1
+                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .. ",sublevel="..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel..",g="..group..teeming.."},"
+                    activeDialog.editboxes[1]:SetText(activeDialog.editboxes[1]:GetText().."\n			"..position)
+                else
+                    cloneOffset = 0
+                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .. ",sublevel="..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel..",g="..group..teeming.."},"
+                    Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=position})
+                end
+            end,
+        })
+        tinsert(MethodDungeonTools.contextMenuList, {
+            text = "Copy Patrol Waypoint",
+            notCheckable = true,
+            func = function()
+                local cursorX, cursorY = GetCursorPosition()
+                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+                local relativeFrame = UIParent		--UIParent
+                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
+                local mapScale = mapPanelFrame:GetScale()
+                local scrollH = scrollFrame:GetHorizontalScroll();
+                local scrollV = scrollFrame:GetVerticalScroll();
+                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
+                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
+                frameX=(frameX/mapScale)+scrollH
+                frameY=(frameY/mapScale)+scrollV
+                local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
+                local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
+
+                local cloneIdx = 1
+                local targetName = UnitName("target")
+                if targetName then
+                    for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+                        if v["name"]==targetName then
+                            for k,v in pairs(v["clones"]) do
+                                cloneIdx = cloneIdx+1
+                            end
+                            break
+                        end
+                    end
+                end
+
+
+                local activeDialog = Dialog:ActiveDialog("MethodDungeonToolsPosCopyDialog")
+                if activeDialog then
+                    cloneOffset = cloneOffset + 1
+                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .."},"
+                    activeDialog.editboxes[1]:SetText(activeDialog.editboxes[1]:GetText().."\n			"..position)
+                else
+                    cloneOffset = 0
+                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .."},"
+                    Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=position})
+                end
+            end,
+        })
+        tinsert(MethodDungeonTools.contextMenuList, {
+            text = "Create new NPC from Target here",
+            notCheckable = true,
+            func = function()
+                local cursorX, cursorY = GetCursorPosition()
+                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+                local relativeFrame = UIParent		--UIParent
+                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
+                local mapScale = mapPanelFrame:GetScale()
+                local scrollH = scrollFrame:GetHorizontalScroll();
+                local scrollV = scrollFrame:GetVerticalScroll();
+                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
+                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
+                frameX=(frameX/mapScale)+scrollH
+                frameY=(frameY/mapScale)+scrollV
+
+                local id
+                local guid = UnitGUID("target")
+                if guid then
+                    id = select(6,strsplit("-", guid))
+                end
+                if id then
+                    local newIdx = 1
+                    for enemyIdx,data in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+                        newIdx = newIdx + 1
+                    end
+                    local name = UnitName("target")
+                    local health = UnitHealthMax("target").."*nerfMultiplier"
+                    local level = UnitLevel("target")
+                    local creatureType = UnitCreatureType("target")
+                    local x,y = frameX,-frameY
+                    local sublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
+                    local s = string.format('[%s] = {\n        ["name"] = "%s",\n        ["health"] = %s,\n        ["level"] = %s,\n        ["creatureType"] = "%s",\n        ["id"] = %s,\n        ["count"] = XXX,\n        ["scale"] = 1,\n        ["color"] = {r=1,g=1,b=1,a=0.8},\n        ["clones"] = {\n            [1] = {x = %s,y = %s,sublevel=%s},\n        },\n    },',newIdx,name,health,level,creatureType,id,x,y,sublevel)
+
+                    lastDialog = Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=s})
+                end
+            end,
+        })
+        tinsert(MethodDungeonTools.contextMenuList, {
+            text = "Create new Boss from Target here",
+            notCheckable = true,
+            func = function()
+                local cursorX, cursorY = GetCursorPosition()
+                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+                local relativeFrame = UIParent		--UIParent
+                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
+                local mapScale = mapPanelFrame:GetScale()
+                local scrollH = scrollFrame:GetHorizontalScroll();
+                local scrollV = scrollFrame:GetVerticalScroll();
+                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
+                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
+                frameX=(frameX/mapScale)+scrollH
+                frameY=(frameY/mapScale)+scrollV
+
+                local id
+                local guid = UnitGUID("target")
+                if guid then
+                    id = select(6,strsplit("-", guid))
+                end
+                if id then
+                    local encounterID
+                    for i=1,10000 do
+                        local id, name, description, displayInfo, iconImage = EJ_GetCreatureInfo(1,i)
+                        --cordana fix, encouner name was "Cordana"
+
+                        if name then
+                            if string.find(name,"Galind") then print(id,name) end
+                        end
+                        if name == UnitName("target") --[[or name == "Lord Kur'talos Ravencrest"]] then encounterID=i; break; end
+
+                    end
+
+                    --with ej open
+                    if false then
+                        local id, name, description, displayInfo, iconImage = EJ_GetCreatureInfo(1)
+                    end
+
+                    if encounterID then
+                        local name = UnitName("target")
+                        local health = UnitHealthMax("target")
+                        local level = UnitLevel("target")
+                        local creatureType = UnitCreatureType("target")
+                        local x,y = frameX,-frameY
+                        local s = string.format('[1] = {\n            ["name"] = "%s",\n            ["health"] = %s,\n            ["encounterID"] = %s,\n            ["level"] = %s,\n            ["creatureType"] = "%s",\n            ["id"] = %s,\n            ["x"] = %s,\n            ["y"] = %s,\n        },',name,health,encounterID,level,creatureType,id,x,y)
+
+                        Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=s})
+                    end
+                end
+            end,
+        })
+        tinsert(MethodDungeonTools.contextMenuList, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+    end
+
+
+    tinsert(MethodDungeonTools.contextMenuList, {
+        text = "Close",
+        notCheckable = 1,
+        func = frame.contextDropdown:Hide()
+    })
+
+
+
 	-- Scroll Frame
 	if frame.scrollFrame == nil then
 		frame.scrollFrame = CreateFrame("ScrollFrame", "MethodDungeonToolsScrollFrame",frame)
@@ -981,6 +1183,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.scrollFrame:SetScript("OnMouseUp", function(self, button)			
 			local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
 			if ( button == "LeftButton") then
+                frame.contextDropdown:Hide()
 				if scrollFrame.panning then scrollFrame.panning = false end
 				
 				--handle clicks on enemy blips
@@ -1002,184 +1205,10 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				end
 				]]
 			elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
-				local cursorX, cursorY = GetCursorPosition();
-				L_EasyMenu({
-					{
-						text = "Copy Position",
-						notCheckable = true,
-						func = function()
-							local scrollFrame = MethodDungeonTools.main_frame.scrollFrame										
-							local relativeFrame = UIParent		--UIParent		
-							local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-							local mapScale = mapPanelFrame:GetScale()
-							local scrollH = scrollFrame:GetHorizontalScroll();
-							local scrollV = scrollFrame:GetVerticalScroll();
-							local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-							local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-							frameX=(frameX/mapScale)+scrollH
-							frameY=(frameY/mapScale)+scrollV
-							local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
-							local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
-							
-							local cloneIdx = 1
-							local targetName = UnitName("target")
-							if targetName then
-								for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-									if v["name"]==targetName then
-										for k,v in pairs(v["clones"]) do
-											cloneIdx = cloneIdx+1
-										end
-										break
-									end
-								end
-							end
-							
-							
-							local activeDialog = Dialog:ActiveDialog("MethodDungeonToolsPosCopyDialog")
-							if activeDialog then
-								cloneOffset = cloneOffset + 1
-								local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .. ",sublevel="..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel..",g="..group..teeming.."},"
-								activeDialog.editboxes[1]:SetText(activeDialog.editboxes[1]:GetText().."\n			"..position)								
-							else
-								cloneOffset = 0
-								local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .. ",sublevel="..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel..",g="..group..teeming.."},"
-								Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=position})
-							end
-						end,
-					},
-					{
-						text = "Copy Patrol Waypoint",
-						notCheckable = true,
-						func = function()
-							local scrollFrame = MethodDungeonTools.main_frame.scrollFrame										
-							local relativeFrame = UIParent		--UIParent		
-							local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-							local mapScale = mapPanelFrame:GetScale()
-							local scrollH = scrollFrame:GetHorizontalScroll();
-							local scrollV = scrollFrame:GetVerticalScroll();
-							local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-							local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-							frameX=(frameX/mapScale)+scrollH
-							frameY=(frameY/mapScale)+scrollV
-							local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
-							local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
-							
-							local cloneIdx = 1
-							local targetName = UnitName("target")
-							if targetName then
-								for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-									if v["name"]==targetName then
-										for k,v in pairs(v["clones"]) do
-											cloneIdx = cloneIdx+1
-										end
-										break
-									end
-								end
-							end
-							
-							
-							local activeDialog = Dialog:ActiveDialog("MethodDungeonToolsPosCopyDialog")
-							if activeDialog then
-								cloneOffset = cloneOffset + 1
-								local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .."},"
-								activeDialog.editboxes[1]:SetText(activeDialog.editboxes[1]:GetText().."\n			"..position)								
-							else
-								cloneOffset = 0
-								local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .."},"
-								Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=position})
-							end
-						end,
-					},
-					{
-						text = "Create new NPC from Target here",
-						notCheckable = true,
-						func = function()
-							local scrollFrame = MethodDungeonTools.main_frame.scrollFrame										
-							local relativeFrame = UIParent		--UIParent		
-							local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-							local mapScale = mapPanelFrame:GetScale()
-							local scrollH = scrollFrame:GetHorizontalScroll();
-							local scrollV = scrollFrame:GetVerticalScroll();
-							local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-							local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-							frameX=(frameX/mapScale)+scrollH
-							frameY=(frameY/mapScale)+scrollV
-						
-							local id 
-							local guid = UnitGUID("target")
-							if guid then
-								id = select(6,strsplit("-", guid))
-							end
-							if id then
-								local newIdx = 1
-								for enemyIdx,data in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-									newIdx = newIdx + 1								
-								end
-								local name = UnitName("target")
-								local health = UnitHealthMax("target").."*nerfMultiplier"
-								local level = UnitLevel("target")
-								local creatureType = UnitCreatureType("target")
-								local x,y = frameX,-frameY
-								local sublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
-								local s = string.format('[%s] = {\n        ["name"] = "%s",\n        ["health"] = %s,\n        ["level"] = %s,\n        ["creatureType"] = "%s",\n        ["id"] = %s,\n        ["count"] = XXX,\n        ["scale"] = 1,\n        ["color"] = {r=1,g=1,b=1,a=0.8},\n        ["clones"] = {\n            [1] = {x = %s,y = %s,sublevel=%s},\n        },\n    },',newIdx,name,health,level,creatureType,id,x,y,sublevel)
-																
-								lastDialog = Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=s})
-							end
-						end,
-					},
-					{
-						text = "Create new Boss from Target here",
-						notCheckable = true,
-						func = function()
-							local scrollFrame = MethodDungeonTools.main_frame.scrollFrame										
-							local relativeFrame = UIParent		--UIParent		
-							local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-							local mapScale = mapPanelFrame:GetScale()
-							local scrollH = scrollFrame:GetHorizontalScroll();
-							local scrollV = scrollFrame:GetVerticalScroll();
-							local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-							local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-							frameX=(frameX/mapScale)+scrollH
-							frameY=(frameY/mapScale)+scrollV
-						
-							local id 
-							local guid = UnitGUID("target")
-							if guid then
-								id = select(6,strsplit("-", guid))
-							end
-							if id then
-								local encounterID
-								for i=1,10000 do
-									local id, name, description, displayInfo, iconImage = EJ_GetCreatureInfo(1,i)
-									--cordana fix, encouner name was "Cordana"
-									
-									if name then 
-										if string.find(name,"Galind") then print(id,name) end
-									end
-									if name == UnitName("target") --[[or name == "Lord Kur'talos Ravencrest"]] then encounterID=i; break; end
-									
-								end
-								
-								--with ej open
-								if false then
-									local id, name, description, displayInfo, iconImage = EJ_GetCreatureInfo(1)
-								end
-								
-								if encounterID then
-									local name = UnitName("target")
-									local health = UnitHealthMax("target")
-									local level = UnitLevel("target")
-									local creatureType = UnitCreatureType("target")
-									local x,y = frameX,-frameY
-									local s = string.format('[1] = {\n            ["name"] = "%s",\n            ["health"] = %s,\n            ["encounterID"] = %s,\n            ["level"] = %s,\n            ["creatureType"] = "%s",\n            ["id"] = %s,\n            ["x"] = %s,\n            ["y"] = %s,\n        },',name,health,encounterID,level,creatureType,id,x,y)
-									
-									Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=s})
-								end
-							end
-						end,
-					},
-					
-				}, frame.contextDropdown, "cursor", 0 , -15, "MENU")
+				local cursorX, cursorY = GetCursorPosition()
+
+				L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
+                frame.contextDropdown:Show()
 			end
 		end)
 		
@@ -1436,7 +1465,7 @@ end
 
 function MethodDungeonTools:DisplayEncounterInformation(encounterID)
 	
-	print(db.currentDungeonIdx)
+	--print(db.currentDungeonIdx)
 	
 	
 end
@@ -2282,7 +2311,6 @@ function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame.Editbox:SetWidth(200)
 	frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(...)
         local widget, event, text = ...
-        print(...)
 		--check if name is valid, block button if so, unblock if valid
 		if MethodDungeonTools:SanitizePresetName(text) then
 			frame.RenameFrame.PresetRenameLabel:SetText(nil)
@@ -2381,6 +2409,12 @@ function MethodDungeonTools:MakeDeleteConfirmationFrame(frame)
 
 end
 
+function MethodDungeonTools:CreateTutorialButton(parent)
+    local button = CreateFrame("Button",parent,nil,"MainHelpPlateButton")
+    button:SetPoint()
+
+end
+
 
 function initFrames()
 	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent);
@@ -2418,6 +2452,8 @@ function initFrames()
 		end
 		
 	end)
+
+    main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "L_UIDropDownMenuTemplate")
 	
 	MethodDungeonTools:CreateMenu();
 	MethodDungeonTools:MakeTopBottomTextures(main_frame);
@@ -2481,7 +2517,7 @@ function initFrames()
 		tooltip.String:Show();
 	end
 	
-	main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "L_UIDropDownMenuTemplate")
+
 	
 	main_frame:Hide();
 end
