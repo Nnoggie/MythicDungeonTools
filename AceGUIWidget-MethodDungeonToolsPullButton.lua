@@ -140,8 +140,11 @@ local methods = {
             v.fontString:Hide()
         end
 
+        table.sort(enemyTable,function(a,b)
+            return a.count>b.count
+        end)
 
-        for npcId,data in pairs(enemyTable) do
+        for npcId,data in ipairs(enemyTable) do
             idx = idx + 1
             if not self.enemyPortraits[idx] then break end
             if data.displayId then
