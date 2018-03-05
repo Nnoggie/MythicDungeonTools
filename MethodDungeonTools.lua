@@ -45,9 +45,9 @@ local defaultSavedVars = {
 		currentDungeonIdx = 1,
 		currentDifficulty = 15,
 		xoffset = 0,
-		yoffset = 150,
-		anchorFrom = "CENTER",
-		anchorTo = "CENTER",
+		yoffset = -150,
+		anchorFrom = "TOP",
+		anchorTo = "TOP",
 		presets = {
 			[1] = {
 				[1] = {text="Default",value={}},
@@ -401,29 +401,27 @@ function MethodDungeonTools:CreateMenu()
 end
 
 function MethodDungeonTools:MakeTopBottomTextures(frame)
-	if frame.bottomPanel == nil then
-		frame.bottomPanel = frame:CreateTexture(nil);
-	end
+
+    frame:SetMovable(true)
+
 	if frame.topPanel == nil then
-		frame.topPanel = CreateFrame("Frame", "MethodDungeonToolsTopPanel", frame);
-		frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND");
-		--frame.topPanelTex:ClearAllPoints();
-		frame.topPanelTex:SetAllPoints();
-		--frame.topPanelTex:SetSize(frame:GetWidth(), 30);
-		frame.topPanelTex:SetDrawLayer("ARTWORK", -5);
-		frame.topPanelTex:SetColorTexture(0, 0, 0, 0.7);
+		frame.topPanel = CreateFrame("Frame", "MethodDungeonToolsTopPanel", frame)
+		frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND")
+		frame.topPanelTex:SetAllPoints()
+		frame.topPanelTex:SetDrawLayer("ARTWORK", -5)
+		frame.topPanelTex:SetColorTexture(0, 0, 0, 0.7)
 		
-		frame.topPanelString = frame.topPanel:CreateFontString("MethodDungeonTools name");
+		frame.topPanelString = frame.topPanel:CreateFontString("MethodDungeonTools name")
 		frame.topPanelString:SetFont("Fonts\\FRIZQT__.TTF", 20)
-		frame.topPanelString:SetTextColor(1, 1, 1, 1);
+		frame.topPanelString:SetTextColor(1, 1, 1, 1)
 		frame.topPanelString:SetJustifyH("CENTER")
 		frame.topPanelString:SetJustifyV("CENTER")
 		frame.topPanelString:SetWidth(600)
 		frame.topPanelString:SetHeight(20)
-		frame.topPanelString:SetText("Method Dungeon Tools");
+		frame.topPanelString:SetText("Method Dungeon Tools")
 		frame.topPanelString:ClearAllPoints()
-		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 0, 0);
-		frame.topPanelString:Show();
+		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 0, 0)
+		frame.topPanelString:Show()
 		
 		frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "HIGH", nil, 7)
 		frame.topPanelLogo:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Method")
@@ -431,35 +429,60 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelLogo:SetHeight(24)
 		frame.topPanelLogo:SetPoint("RIGHT",frame.topPanelString,"LEFT",183,0)
 		frame.topPanelLogo:Show()
-        
-		
-		
+
 	end
-	frame.bottomPanel:SetColorTexture(0, 0, 0, 0.7);
-	frame.bottomPanel:ClearAllPoints();
-	frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, 0);
-	frame.bottomPanel:SetSize(frame:GetWidth(), 30);
-	frame.bottomPanel:SetDrawLayer("ARTWORK", 7);
 
-	frame.topPanel:ClearAllPoints();
-	frame.topPanel:SetSize(frame:GetWidth(), 30);
-	frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0);
+    frame.topPanel:ClearAllPoints()
+    frame.topPanel:SetSize(frame:GetWidth(), 30)
+    frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0)
 
-	frame:SetMovable(true);
-	frame.topPanel:EnableMouse(true);
-	frame.topPanel:RegisterForDrag("LeftButton");
-	frame.topPanel:SetScript("OnDragStart", function(self,button)
-		frame:SetMovable(true);
-        frame:StartMoving();
-    end);
-	frame.topPanel:SetScript("OnDragStop", function(self,button)
+    frame.topPanel:EnableMouse(true)
+    frame.topPanel:RegisterForDrag("LeftButton")
+    frame.topPanel:SetScript("OnDragStart", function(self,button)
+        frame:SetMovable(true)
+        frame:StartMoving()
+    end)
+    frame.topPanel:SetScript("OnDragStop", function(self,button)
         frame:StopMovingOrSizing();
-		frame:SetMovable(false);
+        frame:SetMovable(false);
+        local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
+        db.anchorFrom = from
+        db.anchorTo = to
+        db.xoffset,db.yoffset = x,y
+    end)
+
+    if frame.bottomPanel == nil then
+        frame.bottomPanel = CreateFrame("Frame", "MethodDungeonToolsBottomPanel", frame)
+        frame.bottomPanelTex = frame.bottomPanel:CreateTexture(nil, "BACKGROUND")
+        frame.bottomPanelTex:SetAllPoints()
+        frame.bottomPanelTex:SetDrawLayer("ARTWORK", -5)
+        frame.bottomPanelTex:SetColorTexture(0, 0, 0, 0.7)
+
+    end
+
+    frame.bottomPanel:ClearAllPoints()
+    frame.bottomPanel:SetSize(frame:GetWidth(), 30)
+    frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, 0)
+
+
+
+
+
+	frame.bottomPanel:EnableMouse(true)
+	frame.bottomPanel:RegisterForDrag("LeftButton")
+	frame.bottomPanel:SetScript("OnDragStart", function(self,button)
+		frame:SetMovable(true)
+        frame:StartMoving()
+    end)
+	frame.bottomPanel:SetScript("OnDragStop", function(self,button)
+        frame:StopMovingOrSizing()
+		frame:SetMovable(false)
 		local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
 		db.anchorFrom = from
 		db.anchorTo = to
 		db.xoffset,db.yoffset = x,y
-    end);
+    end)
+
 end
 
 function MethodDungeonTools:MakeSidePanel(frame)
@@ -1390,6 +1413,7 @@ end
 function round(number, decimals)
     return (("%%.%df"):format(decimals)):format(number)
 end
+
 function MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,baseHealth,level)
 	local mult = 1
 	if boss == false and fortified == true then mult = 1.2 end
@@ -1397,6 +1421,7 @@ function MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,baseH
 	mult = round((1.1^(level-1))*mult,2)
 	return round(mult*baseHealth,0)
 end
+
 function MethodDungeonTools:FormatEnemyHealth(amount)
 	amount = tonumber(amount)
 	if amount<1000 then return ""; end
@@ -2088,20 +2113,24 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 end
 
 ---UpdatePullButtonNPCData
----
+---Updates the portraits display of a button to show which and how many npcs are selected
 function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 	local frame = MethodDungeonTools.main_frame.sidePanel
 	local enemyTable = {}
 	if preset.value.pulls[idx] then
+		local enemyTableIdx = 0
 		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
+			local incremented = false
 			local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
 			for k,cloneIdx in pairs(clones) do
-				if not enemyTable[npcId] then enemyTable[npcId] = {} end
-				enemyTable[npcId].quantity = enemyTable[npcId].quantity or 0
-				enemyTable[npcId].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-				enemyTable[npcId].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-				enemyTable[npcId].quantity = enemyTable[npcId].quantity + 1
+				if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+				if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+				enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+				enemyTable[enemyTableIdx].npcId = npcId
+				enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+				enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+				enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
 			end
 		end
 	end
@@ -2235,7 +2264,9 @@ function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame.Editbox = AceGUI:Create("EditBox")
 	frame.RenameFrame.Editbox:SetLabel("Insert new Preset Name:")
 	frame.RenameFrame.Editbox:SetWidth(200)
-	frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(widget, event, text)
+	frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(...)
+        local widget, event, text = ...
+        print(...)
 		--check if name is valid, block button if so, unblock if valid
 		if MethodDungeonTools:SanitizePresetName(text) then
 			frame.RenameFrame.PresetRenameLabel:SetText(nil)
