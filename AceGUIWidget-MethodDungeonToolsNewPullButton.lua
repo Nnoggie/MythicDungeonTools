@@ -13,6 +13,7 @@ local methods = {
         self.callbacks = {};
 
         function self.callbacks.OnClickNormal(_, mouseButton)
+            if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
             if(IsControlKeyDown())then
 
             elseif(IsShiftKeyDown()) then

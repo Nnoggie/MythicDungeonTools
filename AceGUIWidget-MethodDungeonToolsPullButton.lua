@@ -3,7 +3,7 @@ local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
 local maxPortraitCount = 7
-local tinsert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor = table.insert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor
+local tinsert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor,MouseIsOver
 
 --Methods
 local methods = {
@@ -12,9 +12,10 @@ local methods = {
         self:SetHeight(height);
     end,
     ["Initialize"] = function(self)
-        self.callbacks = {};
+        self.callbacks = {}
 
         function self.callbacks.OnClickNormal(_, mouseButton)
+            if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
             if(IsControlKeyDown())then
 
             elseif(IsShiftKeyDown()) then
