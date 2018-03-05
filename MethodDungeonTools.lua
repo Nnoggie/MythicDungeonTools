@@ -2099,6 +2099,7 @@ end
 
 function MethodDungeonTools:SetMapSublevel(pull)
 	--set map sublevel
+	local shouldResetZoom = false
 	local lastSubLevel
 	for enemyIdx,clones in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[pull]) do
 		for idx,cloneIdx in pairs(clones) do
@@ -2108,6 +2109,7 @@ function MethodDungeonTools:SetMapSublevel(pull)
 		end
 	end
 	if lastSubLevel then
+		shouldResetZoom = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel ~= lastSubLevel
 		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = lastSubLevel
 		MethodDungeonTools:UpdateMap(true,true)
 	end
@@ -2115,7 +2117,7 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	--update dropdown
 	local frame = MethodDungeonTools.main_frame
 	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
-    MethodDungeonTools:ZoomMap(1,true)
+    if shouldResetZoom then MethodDungeonTools:ZoomMap(1,true) end
 end
 
 
