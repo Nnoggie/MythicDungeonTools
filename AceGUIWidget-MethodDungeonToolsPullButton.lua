@@ -2,6 +2,7 @@ local Type, Version = "MethodDungeonToolsPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
+local maxPortraitCount = 7
 local tinsert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor = table.insert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor
 
 --Methods
@@ -253,7 +254,7 @@ local function Constructor()
     --enemy portraits
     local enemyPortraits = {}
 
-    for i=1,6 do
+    for i=1,maxPortraitCount do
         enemyPortraits[i] = button:CreateTexture(nil, "BACKGROUND", nil, 2)
         enemyPortraits[i]:SetSize(height-2,height-2)
         SetPortraitTexture(enemyPortraits[i],76542)
