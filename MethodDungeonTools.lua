@@ -694,6 +694,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		db.currentDifficulty = difficulty or db.currentDifficulty
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
+    frame.sidePanel.DifficultySlider.frame:SetFrameLevel(7)
 	
 	frame.sidePanel.middleLine = AceGUI:Create("Heading")
 	frame.sidePanel.middleLine:SetWidth(240)		
