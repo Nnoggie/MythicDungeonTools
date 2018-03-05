@@ -743,7 +743,8 @@ function MethodDungeonTools:UpdateEnemiesSelected()
 	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 	table.wipe(dungeonEnemiesSelected)
-	
+
+
 	for enemyIdx,clones in pairs(preset.value.pulls[preset.value.currentPull]) do
 		for k,cloneIdx in pairs(clones) do
 			local enemyName = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
@@ -818,6 +819,7 @@ function MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,add,ignoreGroupe
 				for k,v in pairs(p[dungeonEnemyBlips[i].enemyIdx]) do
 					if v == dungeonEnemyBlips[i].cloneIdx then
 						tremove(preset.value.pulls[pullIdx][dungeonEnemyBlips[i].enemyIdx],k)
+                        MethodDungeonTools:UpdatePullButtonNPCData(pullIdx)
 						--print("Removing "..dungeonEnemyBlips[i].name.." "..dungeonEnemyBlips[i].cloneIdx.." from pull"..pullIdx)
 					end
 				end
