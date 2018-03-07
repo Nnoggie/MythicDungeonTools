@@ -6,13 +6,15 @@
 ## OptionalDeps: LibStub, LibUIDropDownMenu
 ## SavedVariables: MethodDungeonToolsDB
 
+## OptionalDeps: Ace3
+
 #@no-lib-strip@
 libs\LibStub-1.0\LibStub.lua
 libs\PhanxConfig-Dropdown\PhanxConfig-Dropdown.lua
 libs\HereBeDragons-1.0\HereBeDragons-1.0.lua
-libs\AceDB-3.0\AceDB-3.0.lua
-libs\AceAddon-3.0\AceAddon-3.0.lua
-libs\AceGUI-3.0\AceGUI-3.0.lua
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
 libs\LibDialog-1.0\LibDialog-1.0.lua
 libs\AceComm-3.0\AceComm-3.0.lua
 libs\AceSerializer-3.0\AceSerializer-3.0.lua

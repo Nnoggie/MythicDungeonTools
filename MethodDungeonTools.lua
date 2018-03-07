@@ -1193,7 +1193,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
 			if ( button == "LeftButton") then
                 frame.contextDropdown:Hide()
 				if scrollFrame.panning then scrollFrame.panning = false end
-				
 				--handle clicks on enemy blips
 				if MouseIsOver(MethodDungeonToolsScrollFrame) then
 					for i=1,numDungeonEnemyBlips do
@@ -1206,15 +1205,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 						end
 					end
 					
-				end				
-				--[[
-				if ( scrollFrame.moved ) then
-					WorldMapButton.ignoreClick = true;
 				end
-				]]
 			elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
 				local cursorX, cursorY = GetCursorPosition()
-
 				L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
                 frame.contextDropdown:Show()
 			end
@@ -1222,7 +1215,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		
 		frame.scrollFrame:SetScript("OnHide", function() 
 			tooltipLastShown = nil
-			--GameTooltip:Hide()
 			tooltip.Model:Hide()
 			tooltip:Hide()
 		end)
