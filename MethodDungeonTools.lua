@@ -686,7 +686,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 	
 	frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
-	frame.sidePanel.DifficultySlider:SetSliderValues(1,35,1)
+	frame.sidePanel.DifficultySlider:SetSliderValues(1,100,1)
 	frame.sidePanel.DifficultySlider:SetWidth(195)	--240
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
@@ -964,12 +964,12 @@ end
 
 function MethodDungeonTools:MakeMapTexture(frame)
     MethodDungeonTools.contextMenuList = {}
+	local cursorX, cursorY
     if db.devMode then
         tinsert(MethodDungeonTools.contextMenuList, {
             text = "Copy Position",
             notCheckable = true,
             func = function()
-                local cursorX, cursorY = GetCursorPosition()
                 local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
                 local relativeFrame = UIParent		--UIParent
                 local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
@@ -980,6 +980,8 @@ function MethodDungeonTools:MakeMapTexture(frame)
                 local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
                 frameX=(frameX/mapScale)+scrollH
                 frameY=(frameY/mapScale)+scrollV
+
+
                 local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
                 local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
 
@@ -1013,7 +1015,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
             text = "Copy Patrol Waypoint",
             notCheckable = true,
             func = function()
-                local cursorX, cursorY = GetCursorPosition()
                 local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
                 local relativeFrame = UIParent		--UIParent
                 local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
@@ -1057,7 +1058,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
             text = "Create new NPC from Target here",
             notCheckable = true,
             func = function()
-                local cursorX, cursorY = GetCursorPosition()
                 local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
                 local relativeFrame = UIParent		--UIParent
                 local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
@@ -1095,7 +1095,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
             text = "Create new Boss from Target here",
             notCheckable = true,
             func = function()
-                local cursorX, cursorY = GetCursorPosition()
                 local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
                 local relativeFrame = UIParent		--UIParent
                 local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
@@ -1207,7 +1206,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 					
 				end
 			elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
-				local cursorX, cursorY = GetCursorPosition()
+				cursorX, cursorY = GetCursorPosition()
 				L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
                 frame.contextDropdown:Show()
 			end
