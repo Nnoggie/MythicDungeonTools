@@ -1,7 +1,7 @@
 local dungeonIndex = 1
 local nerfMultiplier = 0.834
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=300,teeming=360}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=300,teeming=360,teemingEnabled=true}
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	[1] = {
 		[1] = {
@@ -69,7 +69,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {			
 			[1] = {x = 209.98629733844,y = -116.95565215215,sublevel=1,g=1},			
-			[2] = {x = 204.98630883858,y = -132.86472065678,sublevel=1},
+			[2] = {x = 204.98630883858,y = -132.86472065678,sublevel=1,g=35},
 			[3] = {x = 184.08745446019,y = -162.69468952815,sublevel=1},
 			[4] = {x = 160.95042250865,y = -220.00960841426,sublevel=1,g=2},
 			[5] = {x = 294.52988815315,y = -114.55769503399,sublevel=1,g=3},
@@ -79,6 +79,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[9] = {x = 353.06159105541,y = -150.68082076884,sublevel=1,g=5},
 			[10] = {x = 416.87929765038,y = -202.15734397773,sublevel=1,g=6},
 			[11] = {x = 420.51567065662,y = -213.0664239825,sublevel=1,g=6},
+            [12] = {x = 209.54507885725,y = -137.95454467424,sublevel=1,g=35,teeming=true},
+            [13] = {x = 347.74311836916,y = -147.82117311179,sublevel=1,g=5,teeming=true},
+            [14] = {x = 155.88584041655,y = -205.45725716437,sublevel=1,g=2,teeming=true},
         },
     },	
 	[2] = {
@@ -96,6 +99,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[2] = {x = 164.05718794928,y = -203.52322713666,sublevel=1,g=2},				
 			[3] = {x = 327.75247814021,y = -120.68083124876,sublevel=1,g=4},
 			[4] = {x = 360.33429805394,y = -142.04443975577,sublevel=1,g=5},
+            [5] = {x = 424.30196291791,y = -179.0878963561,sublevel=1,g=6,teeming=true},
+            [6] = {x = 425.21102690901,y = -220.90608839297,sublevel=1,g=6,teeming=true},
+            [7] = {x = 197.72679738124,y = -161.69547433509,sublevel=1,teeming=true},
         },
     },
 	[3] = {
@@ -119,6 +125,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 				[2] = {x = 406.83485155365,y = -184.35458074609},
 			}},			
 			[7] = {x = 420.0611191541,y = -187.15735897118,sublevel=1,g=6},
+            [8] = {x = 354.10676137659,y = -138.73029911712,sublevel=1,g=5,teeming=true},
+            [9] = {x = 151.79493541476,y = -196.36638316969,sublevel=1,g=2,teeming=true},
         },
     },
 	[4] = {
@@ -231,6 +239,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[2] = {x = 245.54683342287,y = -130.54452921552,sublevel=2,g=12},
 			[3] = {x = 315.27961073261,y = -191.13526840096,sublevel=2,g=13},
 			[4] = {x = 415.16192117353,y = -423.31871257288,sublevel=2,g=17},
+            [5] = {x = 243.10864006406,y = -118.86360741567,sublevel=2,g=12,teeming=true},
         },
     },
 	[10] = {
@@ -250,6 +259,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[4] = {x = 398.35757296803,y = -234.94778333439,sublevel=2,g=15},
 			[5] = {x = 388.73140148194,y = -184.73135581813,sublevel=2,g=16},
 			[6] = {x = 335.09502062257,y = -257.45862875476,sublevel=2,g=16},
+            [7] = {x = 325.59963050002,y = -179.21529453413,sublevel=2,g=13,teeming=true},
         },
     },
 	[11] = {
@@ -271,6 +281,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[6] = {x = 391.0041202269,y = -297.45861911641,sublevel=2,g=16},			
 			[7] = {x = 427.26721105027,y = -419.6344752559,sublevel=2,g=17},
 			[8] = {x = 420.95138210316,y = -437.00288063181,sublevel=2,g=17},
+            [9] = {x = 250.38138607653,y = -119.77267140677,sublevel=2,g=12,teeming=true},
+            [10] = {x = 312.87234448516,y = -203.30621205627,sublevel=2,g=13,teeming=true},
         },
     },
 	[12] = {
@@ -381,6 +393,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			}},
 			[2] = {x = 331.31309519598,y = -415.85030523001,sublevel=3,g=24},
 			[3] = {x = 344.04038121083,y = -450.85030275692,sublevel=3,g=24},
+            [4] = {x = 468.26846693278,y = -287.5244329471,sublevel=3,g=19,teeming=true},
+            [5] = {x = 327.40999034673,y = -390.82122511989,sublevel=3,g=24,teeming=true},
         },
     },
 	[18] = {
@@ -420,6 +434,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[9] = {x = 291.51317932041,y = -335.97058555782,sublevel=3,g=22},
 			[10] = {x = 172.26909206834,y = -286.70998489411,sublevel=3,g=23},
 			[11] = {x = 329.12882009368,y = -424.17377397276,sublevel=4,g=26},
+            [12] = {x = 465.70730350226,y = -345.36922481678,sublevel=3,g=18,teeming=true},
+            [13] = {x = 518.43453652995,y = -358.09651083164,sublevel=3,g=18,teeming=true},
+            [14] = {x = 333.11274764803,y = -208.35334429605,sublevel=3,g=21,teeming=true},
+            [15] = {x = 309.02184963286,y = -216.08062230408,sublevel=3,g=21,teeming=true},
+            [16] = {x = 286.94838791594,y = -341.90516676018,sublevel=3,g=22,teeming=true},
+            [17] = {x = 293.31203092337,y = -302.81428373845,sublevel=3,g=22,teeming=true},
 			
         },
     },
@@ -440,6 +460,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[4] = {x = 427.55774623074,y = -338.83627939259,sublevel=4,},
 			[5] = {x = 473.46678972373,y = -279.74533843275,sublevel=4,g=28},
 			[6] = {x = 487.55770014382,y = -287.92723048184,sublevel=4,g=28},
+            [7] = {x = 475.76195545635,y = -287.72447536706,sublevel=4,g=28,teeming=true},
         },
     },
 	[21] = {
@@ -458,6 +479,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[3] = {x = 351.76436323392,y = -472.00179216617,sublevel=5,g=32},
 			[4] = {x = 489.03236969736,y = -421.52467814905,sublevel=5,g=33},
 			[5] = {x = 540.08504666711,y = -384.68262582061,sublevel=5,g=34},
+            [6] = {x = 328.8905046709,y = -281.90627033604,sublevel=5,g=30,teeming=true},
+            [7] = {x = 338.89052068457,y = -254.63355081715,sublevel=5,g=30,teeming=true},
+            [8] = {x = 513.38960404477,y = -428.36844351211,sublevel=5,g=33,teeming=true},
         },
     },
 	[22] = {
@@ -478,6 +502,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 			[5] = {x = 354.03708173259,y = -450.63820316613,sublevel=5,g=32},
 			[6] = {x = 501.13765805508,y = -437.31418077443,sublevel=5,g=33},
 			[7] = {x = 561.13768671825,y = -399.41943771718,sublevel=5,g=34},
+            [8] = {x = 445.79575265703,y = -239.56931610201,sublevel=5,g=29,teeming=true},
+            [9] = {x = 500.23166848117,y = -403.63158608925,sublevel=5,g=33,teeming=true},
         },
     },
 

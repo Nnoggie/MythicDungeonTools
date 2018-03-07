@@ -1,7 +1,7 @@
 local dungeonIndex = 12
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=392,teeming=466}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=392,teeming=466,teemingEnabled=true}
 MethodDungeonTools.dungeonBosses[dungeonIndex] ={ --The Arcway
     [1] = {
         [1] = {
@@ -69,6 +69,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [5] = {x = 367.59420221202,y = -297.13514094464,sublevel=1,g=4},
             [6] = {x = 378.95787273325,y = -299.40789845725,sublevel=1,g=4},
             [7] = {x = 371.23053620431,y = -291.22604943973,sublevel=1,g=4},
+            [8] = {x = 403.26369039058,y = -144.91358574685,sublevel=1,g=1,teeming=true},
         },
     },
     [2] = {
@@ -126,7 +127,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [18] = {x = 281.25065846808,y = -197.4666262996,sublevel=1,g=8},
             [19] = {x = 281.70520997061,y = -193.37572129781,sublevel=1,g=8},
             [20] = {x = 273.97795146955,y = -194.28484380983,sublevel=1,g=8},
-            [21] = {x = 266.2506929685,y = -191.55755430167,sublevel=1,g=8},w
+            [21] = {x = 266.2506929685,y = -191.55755430167,sublevel=1,g=8},
         },
     },
     [4] = {
@@ -166,6 +167,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [11] = {x = 409.51960836011,y = -362.83523054065,sublevel=1,g=21},
             [12] = {x = 398.2843808592,y = -400.20549865404,sublevel=1,g=22},
             [13] = {x = 405.55712687168,y = -419.29642767632,sublevel=1,g=22},
+            [14] = {x = 405.67645219801,y = -399.29657150525,sublevel=1,g=22,teeming=true},
         },
     },
     [5] = {
@@ -222,6 +224,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [39] = {x = 356.5140677851,y = -195.50485595248,sublevel=1},
             [40] = {x = 347.87770627901,y = -205.95944297564,sublevel=1},
             [41] = {x = 326.5140197441,y = -194.59583097533,sublevel=1},
+
+            [42] = {x = 356.69509584199,y = -329.51389941196,sublevel=1,g=19,teeming=true},
+            [43] = {x = 345.78601583722,y = -339.51387641168,sublevel=1,g=19,teeming=true},
         },
     },
     [6] = {
@@ -366,6 +371,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [8] = {x = 463.1829632776,y = -320.04926622418,sublevel=1,g=45},
             [9] = {x = 471.36477328117,y = -330.5038142334,sublevel=1,g=45},
             [10] = {x = 481.36478929484,y = -319.14018272611,sublevel=1,g=45},
+            [11] = {x = 210.37886166784,y = -402.3699115151,sublevel=1,g=13,teeming=true},
+            [12] = {x = 190.37881013353,y = -381.00626399415,sublevel=1,g=14,teeming=true},
         },
     },
     [8] = {
@@ -380,7 +387,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
             [1] = {x = 292.05823017762,y = -340.47828621906,sublevel=1},
-            [2] = {x = 256.01544932303,y = -360.82955651529,sublevel=1,sublevel=1,patrolFacing=(20/32)*pi,patrolFacing2=(55/32)*pi,patrol={
+            [2] = {x = 256.01544932303,y = -360.82955651529,sublevel=1,g=47,sublevel=1,patrolFacing=(20/32)*pi,patrolFacing2=(55/32)*pi,patrol={
                 [1] = {x = 214.83406824345,y = -382.2883447718},
                 [2] = {x = 274.37949578109,y = -350.4701687486},
             }},
@@ -389,6 +396,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [5] = {x = 485.27332169177,y = -263.59814903528,sublevel=1},
             [6] = {x = 433.74600183911,y = -350.74341624941,sublevel=1},
             [7] = {x = 472.72834976085,y = -320.50383723368,sublevel=1,g=45},
+            [8] = {x = 282.14437891513,y = -345.01415290813,sublevel=1,teeming=true},
+            [9] = {x = 252.72544315243,y = -355.89286334599,sublevel=1,g=47,teeming=true},
         },
     },
     [9] = {
@@ -463,6 +472,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [1] = {x = 322.94606047922,y = -388.84857859476,sublevel=1,g=16},
             [2] = {x = 354.83736055727,y = -391.14829355205,sublevel=1,g=17},
             [3] = {x = 337.46658303154,y = -416.47849743033,sublevel=1,g=18},
+            [4] = {x = 335.00768839593,y = -405.72023018853,sublevel=1,g=18,teeming=true},
+            [5] = {x = 342.18950989965,y = -406.17480119803,sublevel=1,g=18,teeming=true},
         },
     },
     [12] = {
@@ -591,6 +602,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
             [16] = {x = 549.06505768273,y = -273.46556211167,sublevel=1},
             [17] = {x = 489.90816867397,y = -195.79203451781,sublevel=1,g=42},
             [18] = {x = 489.90816867397,y = -206.246602034,sublevel=1,g=42},
+            [19] = {x = 484.69460298094,y = -207.06715495472,sublevel=1,g=42,teeming=true},
+            [20] = {x = 484.69460298094,y = -193.88533694431,sublevel=1,g=42,teeming=true},
         },
     },
     [16] = {
@@ -617,6 +630,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
                 [1] = {x = 469.58717001489,y = -201.07368949371},
                 [2] = {x = 429.1326324856,y = -201.07368949371},
             }},
+            [5] = {x = 607.06557212752,y = -276.55429663756,sublevel=1,g=41,teeming=true},
         },
     },
     [17] = {
@@ -656,6 +670,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         ["clones"] = {
             [1] = {x = 541.11868060688,y = -184.77155770162,sublevel=1,g=36},
             [2] = {x = 613.92042609528,y = -160.12288701286,sublevel=1,g=39},
+            [3] = {x = 606.82048968677,y = -156.45891102154,sublevel=1,g=39,teeming=true},
         },
     },
     [19] = {

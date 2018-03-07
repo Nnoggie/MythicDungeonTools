@@ -1,17 +1,21 @@
 Mega special thanks goes out to Noobanidus for the python script to fetch displayIds directly from wowhead <3
 Thanks to these people voluntarily depleting their keys with me!
 
-Upper Kara Blasters:
+Upper Kara
 Reloe-Blackrock
 Sebekxd-Kazzak
+Lardbucket-Draenor
+Ryòsuke-Blackmoore
+Rñglance-TarrenMill
+Jonasyo-Kazzak
 
-Cathedral Depleters:
+Cathedral of Eternal Night
 Féelsbadman-Magtheridon
 Niceclass-Kazzak
 Gnurl-Kargath
 Apophine-Malygos
 
-Seat Heroes:
+Seat of the Triumvirate:
 Dunao-Nathrezim
 Nezyardruid-Eredar
 Tuvia-Blackrock
@@ -29,6 +33,9 @@ Reloe-Blackrock
 Asmonbáld-TwistingNether
 Mönödruid-Stormreaver
 Derkevin-Nathrezim
+Séraak-Eredar
+Woodeh-TheMaelstrom
+Jovê-Blackrock
 
 Arcway:
 Iachawr-Blackmoore
@@ -38,3 +45,10 @@ Mayonaisè-Blackhand
 Court of Stars:
 Kyurä-Hyjal
 Sollate-Blackrock
+
+Lower Kara
+Sebek
+Reloe
+Yzena-TarrenMill
+Gravebanes-Draenor
+Yûlai-Blackmoore

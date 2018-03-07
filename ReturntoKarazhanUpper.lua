@@ -1,5 +1,6 @@
 local dungeonIndex = 10
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=169,teeming=2520}
+local pi = math.pi
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=169,teeming=202,teemingEnabled=true}
 local nerfMultiplier = 0.74 --npcs got nerfed by 26% compared against m0 values, bosses unchanged
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 	[3] = {
@@ -68,8 +69,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 468.99627645128,y = -142.49885850586,sublevel=1},
-			[2] = {x = 358.55852524295,y = -350.87923899266,sublevel=1},
+            [1] = {x = 468.99627645128,y = -142.49885850586,sublevel=1,g=10},
+			[2] = {x = 358.55852524295,y = -350.87923899266,sublevel=1,g=11},
         },
     },
 	[2] = {
@@ -84,6 +85,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
             [1] = {x = 454.99640774168,y = -213.49888224155,sublevel=2},
+            [2] = {x = 474.33527475862,y = -127.2404501885,sublevel=1,g=10,teeming=true},
+            [3] = {x = 349.44567294153,y = -333.44203722496,sublevel=1,g=11,teeming=true},
+            [4] = {x = 335.35473089204,y = -349.35114646764,sublevel=1,g=11,teeming=true},
         },
     },
 	[3] = {
@@ -99,6 +103,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["clones"] = {
             [1] = {x = 436.59142578673,y = -115.00588501208,sublevel=3},
 			[2] = {x = 425.01241357937,y = -188.16378900679,sublevel=3},
+            [3] = {x = 256.36316305923,y = -227.08774103385,sublevel=3,g=1,teeming=true},
+            [4] = {x = 372.45886686736,y = -319.78934580451,sublevel=3,g=4,teeming=true},
         },
     },	
 	[4] = {
@@ -168,9 +174,19 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 171.36199546143,y = -227.59531741039,sublevel=4},
+            [1] = {x = 192.7267165289,y = -224.86141950088,sublevel=4,g=12,patrolFacing=(20/32)*pi,patrolFacing2=(46/32)*pi,patrol={
+                [1] = {x = 192.7267165289,y = -224.86141950088},
+                [2] = {x = 214.09032503591,y = -232.85386527592},
+                [3] = {x = 192.7267165289,y = -224.86141950088},
+                [4] = {x = 176.36301849385,y = -235.59778998003},
+                [5] = {x = 156.81757698299,y = -238.40918823135},
+                [6] = {x = 176.36301849385,y = -235.59778998003},
+            }},
 			[2] = {x = 101.81658901231,y = -197.14074829487,sublevel=4},
-			[3] = {x = 489.99660709314,y = -353.49857438356,sublevel=6},
+			[3] = {x = 489.99660709314,y = -353.49857438356,sublevel=6,g=14},
+            [4] = {x = 192.7267165289,y = -228.86141950088,sublevel=4,g=12},
+            [5] = {x = 497.17010486843,y = -240.86553566596,sublevel=6,g=13,teeming=true},
+            [6] = {x = 479.77912390227,y = -353.40131807648,sublevel=6,g=14,teeming=true},
         },
     },
 	[8] = {
@@ -258,6 +274,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["clones"] = {
             [1] = {x = 428.6455740107,y = -329.82874820557,sublevel=5},
 			[2] = {x = 449.99677092023,y = -177.49860725552,sublevel=5},
+            [3] = {x = 464.98593800353,y = -449.68591588586,sublevel=5,teeming=true},
         },
     },
 	[13] = {
@@ -287,6 +304,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 			[14] = {x = 111.36210063483,y = -187.6478533763,sublevel=6,g=9},
 			[15] = {x = 107.7257276286,y = -194.92059938877,sublevel=6,g=9},
 			[16] = {x = 114.99843462712,y = -193.55696438818,sublevel=6,g=9},
+            [17] = {x = 187.72653133202,y = -150.22723855889,sublevel=6,g=7,teeming=true},
+            [18] = {x = 176.81745132725,y = -141.59085754582,sublevel=6,g=7,teeming=true},
+            [19] = {x = 188.63563433707,y = -134.77266303587,sublevel=6,g=7,teeming=true},
+            [20] = {x = 194.9992773445,y = -149.31813555385,sublevel=6,g=7,teeming=true},
+            [21] = {x = 175.90838733616,y = -133.8635795378,sublevel=6,g=7,teeming=true},
         },
     },
 	[14] = {
@@ -300,7 +322,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
-            [1] = {x = 508.1634565365,y = -242.25111581555,sublevel=6},
+            [1] = {x = 508.1634565365,y = -242.25111581555,sublevel=6,g=13},
         },
     },
 	[15] = {
