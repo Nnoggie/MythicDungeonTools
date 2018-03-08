@@ -14,6 +14,9 @@ Féelsbadman-Magtheridon
 Niceclass-Kazzak
 Gnurl-Kargath
 Apophine-Malygos
+Dunao-Nathrezim
+Henduil-Shadowsong
+Shaliz-Illidan
 
 Seat of the Triumvirate:
 Dunao-Nathrezim
