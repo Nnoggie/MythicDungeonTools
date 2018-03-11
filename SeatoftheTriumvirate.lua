@@ -477,7 +477,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 			}},
 			[5] = {x = 343.20422392941,y = -142.66814057984,sublevel=1,g=61},
 			[6] = {x = 325.640566819,y = -410.33455290244,sublevel=1,g=75},
-			[7] = {x = 263.43797015732,y = -222.14517614093,sublevel=1,g=76,patrolFacing=(23/32)*pi,patrolFacing2=(1/32)*pi,patrol={
+			[7] = {x = 263.43797015732,y = -222.14517614093,sublevel=1,g=76,teeming=true,patrolFacing=(23/32)*pi,patrolFacing2=(1/32)*pi,patrol={
 				[1] = {x = 263.43797015732,y = -222.14517614093},
 				[2] = {x = 257.78422033301,y = -229.62301197211},
 				[3] = {x = 249.60237042881,y = -225.9866385718},
