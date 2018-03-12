@@ -267,7 +267,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		["scale"] = 1.4,
 		["color"] = {r=1,g=1,b=1,a=0.8},
 		["clones"] = {
-			[1] = {x = 363,y = -379,teeming=true,patrolFacing=(5/32)*pi,patrolFacing2=(37/32)*pi,patrol={
+			[1] = {x = 363,y = -379,patrolFacing=(5/32)*pi,patrolFacing2=(37/32)*pi,patrol={
                 [1] = {x = 363,y = -379},
                 [2] = {x = 368.29747142623,y = -389.90770136719},--orange
                 [3] = {x = 368.83241243769,y = -398.48367500493},--moon
