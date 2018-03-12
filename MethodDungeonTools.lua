@@ -718,10 +718,14 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 end
 
+---Progressbar_SetValue
+---Sets the value/progress/color of the count progressbar to the apropriate data
 function MethodDungeonTools:Progressbar_SetValue(self, pullCurrent,totalCurrent,totalMax)
 	local percent = (totalCurrent/totalMax)*100
-	if percent >= 100 then
-		self.Bar:SetStatusBarColor(0,1,0,1)
+	if percent >= 102 then
+		self.Bar:SetStatusBarColor(1,0,0,1)
+    elseif percent >= 100 then
+        self.Bar:SetStatusBarColor(0,1,0,1)
 	else
 		self.Bar:SetStatusBarColor(0.26,0.42,1)
 	end
