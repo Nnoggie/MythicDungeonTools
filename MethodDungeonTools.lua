@@ -379,15 +379,20 @@ function MethodDungeonTools:ShowInterface()
 		ViragDevTool_AddData(db, "Mplusdb")
 	end
 	if self.main_frame:IsShown() then
-		self.main_frame:Hide();
+		MethodDungeonTools:HideInterface()
 	else
 		self.main_frame:Show();
 		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
+		self.main_frame.HelpButton:Show()
 	end
+
+
+
 end
 
 function MethodDungeonTools:HideInterface()
 	self.main_frame:Hide();
+	self.main_frame.HelpButton:Hide()
 end
 
 function MethodDungeonTools:ToggleDevMode()
@@ -842,10 +847,11 @@ function MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,add,ignoreGroupe
 	MethodDungeonTools:UpdatePullButtonNPCData(pull)
 end
 
+---UpdateEnemyBlipSelection
+---Colors blips green when they are selected
+function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLinked, otherPull)
 
-function MethodDungeonTools:UpdateEnemyBlipSelection(i,forceDeselect,ignoreLinked,previousPull)
-
-	if previousPull and previousPull == true then
+	if otherPull and otherPull == true then
 		dungeonEnemyBlips[i]:SetVertexColor(0,1,0,0.4)
 	else
 		if forceDeselect and forceDeselect == true then
@@ -2144,19 +2150,19 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 		end
 	end
 	
-	--highlight previous pull enemies
+	--highlight other pull enemies
 	for pullIdx,p in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
-		if pullIdx<pull then
-			for enemyIdx,clones in pairs(p) do
-				for j,cloneIdx in pairs(clones) do		
-					for k,v in ipairs(dungeonEnemyBlips) do
-						if (v.enemyIdx == enemyIdx) and (v.cloneIdx == cloneIdx) then
-							MethodDungeonTools:UpdateEnemyBlipSelection(k,nil,true,true)
-						end
-					end
-				end
-			end
-		end
+        if pullIdx~=pull then
+            for enemyIdx,clones in pairs(p) do
+                for j,cloneIdx in pairs(clones) do
+                    for k,v in ipairs(dungeonEnemyBlips) do
+                        if (v.enemyIdx == enemyIdx) and (v.cloneIdx == cloneIdx) then
+                            MethodDungeonTools:UpdateEnemyBlipSelection(k,nil,true,true)
+                        end
+                    end
+                end
+            end
+        end
 	end
 	MethodDungeonTools:UpdateEnemiesSelected()	
 end
@@ -2415,8 +2421,20 @@ end
 
 function MethodDungeonTools:CreateTutorialButton(parent)
     local button = CreateFrame("Button",parent,nil,"MainHelpPlateButton")
-    button:SetPoint()
+    button:SetPoint("TOPRIGHT",parent,"TOPRIGHT",0,48)
+	button:SetScale(0.6)
+	button:SetFrameStrata(mainFrameStrata)
+	button:SetFrameLevel(6)
+	button:Hide()
 
+	--dirty hook to make button hide
+	local originalHide = parent.Hide
+	function parent:Hide(...)
+		button:Hide()
+		return originalHide(self, ...);
+	end
+
+	parent.HelpButton = button
 end
 
 
@@ -2476,6 +2494,9 @@ function initFrames()
 	MethodDungeonTools:MakeExportFrame(main_frame)
 	MethodDungeonTools:MakeRenameFrame(main_frame)
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
+
+	MethodDungeonTools:CreateTutorialButton(main_frame)
+
 	--tooltip
     do
         tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
