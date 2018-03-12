@@ -680,6 +680,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelTeemingCheckBox:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming = value
 		MethodDungeonTools:UpdateMap()
+        MethodDungeonTools:ReloadPullButtons()
 	end) 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelTeemingCheckBox)
 	
@@ -691,7 +692,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 	
 	frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
-	frame.sidePanel.DifficultySlider:SetSliderValues(1,100,1)
+	frame.sidePanel.DifficultySlider:SetSliderValues(1,35,1)
 	frame.sidePanel.DifficultySlider:SetWidth(195)	--240
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
@@ -1444,10 +1445,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 
 end
 
-function round(number, decimals)
+local function round(number, decimals)
     return (("%%.%df"):format(decimals)):format(number)
 end
-
 function MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,baseHealth,level)
 	local mult = 1
 	if boss == false and fortified == true then mult = 1.2 end
@@ -1790,11 +1790,9 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	
 end
 
-
-
+---EnsureDBTables
+---Makes sure profiles are valid and have their fields set
 function MethodDungeonTools:EnsureDBTables()
-
-
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix or "fortified"
 
@@ -2172,20 +2170,25 @@ end
 function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 	local frame = MethodDungeonTools.main_frame.sidePanel
+    local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 	local enemyTable = {}
 	if preset.value.pulls[idx] then
 		local enemyTableIdx = 0
 		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
 			local incremented = false
 			local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
-			for k,cloneIdx in pairs(clones) do
-				if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
-				if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-				enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-				enemyTable[enemyTableIdx].npcId = npcId
-				enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-				enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-				enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+            for k,cloneIdx in pairs(clones) do
+                --check for teeming
+                local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
+                if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
+                    if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+                    if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+                    enemyTable[enemyTableIdx].npcId = npcId
+                    enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                    enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                end
 			end
 		end
 	end
