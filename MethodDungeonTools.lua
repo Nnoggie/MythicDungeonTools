@@ -82,8 +82,7 @@ local defaultSavedVars = {
 						[3] = {4,5},
 					},
 				]]
-				[2] = {text="Noober Run",value={}},
-				[3] = {text="<New Preset>",value=0},
+				[2] = {text="<New Preset>",value=0},
 			},
 			[6] = {
 				[1] = {text="Default",value={}},
@@ -1808,6 +1807,13 @@ function MethodDungeonTools:EnsureDBTables()
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls or {}
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] or {}
+
+	for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
+		if k ==0  then
+			db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[0] = nil
+			break;
+		end
+	end
 end
 
 function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons)
@@ -2031,9 +2037,9 @@ end
 function MethodDungeonTools:MakePullSelectionButtons(frame)
 
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
-    frame.PullButtonScrollGroup:SetWidth(248);
+    frame.PullButtonScrollGroup:SetWidth(249);
     frame.PullButtonScrollGroup:SetHeight(410)
-    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame,"TOPLEFT",0,-(31+140))
+    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame,"TOPLEFT",0,-(31+143))
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
     frame.PullButtonScrollGroup.frame:Show()

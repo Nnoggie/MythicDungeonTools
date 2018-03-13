@@ -21,6 +21,7 @@ local methods = {
             elseif(IsShiftKeyDown()) then
 
             else
+                MethodDungeonTools:EnsureDBTables()
                 if(mouseButton == "RightButton") then
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
@@ -76,11 +77,13 @@ local methods = {
             notCheckable = 1,
             func = nil
         })
-        tinsert(self.menu, {
-            text = "Delete",
-            notCheckable = 1,
-            func = function() MethodDungeonTools:DeletePull(self.index) end
-        })
+        if self.maxPulls > 1 then
+            tinsert(self.menu, {
+                text = "Delete",
+                notCheckable = 1,
+                func = function() MethodDungeonTools:DeletePull(self.index) end
+            })
+        end
         tinsert(self.menu, {
             text = " ",
             notClickable = 1,
