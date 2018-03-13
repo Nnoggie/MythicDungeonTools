@@ -1701,8 +1701,12 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	local presetList = {}
 	local countPresets = 0
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
-		if v.text ~= "<New Preset>" then table.insert(presetList,k,v.text);countPresets=countPresets+1 end
+		if v.text ~= "<New Preset>" then
+			table.insert(presetList,k,v.text)
+			countPresets=countPresets+1
+		end
 	end
+	table.insert(presetList,1,"Empty")
 	MethodDungeonTools.main_frame.PresetCreationDropDown:SetList(presetList)
 	MethodDungeonTools.main_frame.PresetCreationDropDown:SetValue(1)
 	MethodDungeonTools.main_frame.PresetCreationEditbox:SetText("Preset "..countPresets+1)		
@@ -1898,8 +1902,16 @@ function MethodDungeonTools:CreateNewPreset(name)
 		if v.text == name then duplicate = true end
 	end
 	if duplicate == false then
-		db.presets[db.currentDungeonIdx][countPresets+1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list	
-		db.presets[db.currentDungeonIdx][countPresets] = {text=name,value={}}
+		db.presets[db.currentDungeonIdx][countPresets+1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
+
+		local startingPointPresetIdx = MethodDungeonTools.main_frame.PresetCreationDropDown:GetValue()-1
+		if startingPointPresetIdx>0 then
+			db.presets[db.currentDungeonIdx][countPresets] = MethodDungeonTools:CopyObject(db.presets[db.currentDungeonIdx][startingPointPresetIdx])
+			db.presets[db.currentDungeonIdx][countPresets].text = name
+		else
+			db.presets[db.currentDungeonIdx][countPresets] = {text=name,value={}}
+		end
+
 		db.currentPreset[db.currentDungeonIdx] = countPresets
 		MethodDungeonTools.main_frame.presetCreationFrame:Hide()
 		MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][countPresets].value)	
@@ -2087,18 +2099,20 @@ function MethodDungeonTools:PresetsDeletePull(p,j)
 	end
 end
 
+function MethodDungeonTools:CopyObject(obj,seen)
+    if type(obj) ~= 'table' then return obj end
+    if seen and seen[obj] then return seen[obj] end
+    local s = seen or {}
+    local res = setmetatable({}, getmetatable(obj))
+    s[obj] = res
+    for k, v in pairs(obj) do res[MethodDungeonTools:CopyObject(k, s)] = MethodDungeonTools:CopyObject(v, s) end
+    return res
+end
+
 function MethodDungeonTools:PresetsSwapPulls(p1,p2)
-	local function copy(obj, seen)
-	  if type(obj) ~= 'table' then return obj end
-	  if seen and seen[obj] then return seen[obj] end
-	  local s = seen or {}
-	  local res = setmetatable({}, getmetatable(obj))
-	  s[obj] = res
-	  for k, v in pairs(obj) do res[copy(k, s)] = copy(v, s) end
-	  return res
-	end
-	local p1copy = copy(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p1])
-	local p2copy = copy(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p2])	
+
+	local p1copy = MethodDungeonTools:CopyObject(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p1])
+	local p2copy = MethodDungeonTools:CopyObject(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p2])
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p1] = p2copy
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p2] = p1copy
 end
