@@ -1814,6 +1814,7 @@ function MethodDungeonTools:EnsureDBTables()
 			break;
 		end
 	end
+
 end
 
 function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons)
