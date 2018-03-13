@@ -1,5 +1,6 @@
 Mega special thanks goes out to Noobanidus for the python script to fetch displayIds directly from wowhead <3
-Thanks to these people voluntarily depleting their keys with me!
+Big thanks to Masterlenni for the continued big support!
+Thanks to these people voluntarily depleting their keys with me:
 
 Upper Kara
 Reloe-Blackrock
@@ -82,3 +83,5 @@ Halls of Valor
 Einhadin-Bloodhof
 Shadowcraft-Ysondre
 Retolies
+
+I love u all
