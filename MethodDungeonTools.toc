@@ -20,6 +20,10 @@ libs\AceComm-3.0\AceComm-3.0.lua
 libs\AceSerializer-3.0\AceSerializer-3.0.lua
 libs\LibCompress\LibCompress.lua
 libs\LibUIDropDownMenu\LibUIDropDownMenu.xml
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+libs\LibDBIcon-1.0\lib.xml
+libs\AceConfig-3.0\AceConfig-3.0.xml
 #@end-no-lib-strip@
 
 AceGUIWidget-MethodDungeonToolsPullButton.lua

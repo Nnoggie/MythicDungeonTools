@@ -10,11 +10,38 @@ local sizex = 840
 local sizey = 555
 local numPullButtons = 40
 local buttonTextFontSize = 12
+local methodColor = "|cFFF49D38"
 
 local Dialog = LibStub("LibDialog-1.0")
 local dropDownLib,_ = LibStub("PhanxConfig-Dropdown")
 local HBD = LibStub("HereBeDragons-1.0")
 local AceGUI = LibStub("AceGUI-3.0")
+local db
+local icon = LibStub("LibDBIcon-1.0")
+local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
+	type = "data source",
+	text = "Method Dungeon Tools",
+	icon = "Interface\\AddOns\\MethodDungeonTools\\Textures\\Method",
+	OnClick = function(button,buttonPressed)
+		if buttonPressed == "RightButton" then
+			if db.minimap.lock then
+				icon:Unlock("MethodDungeonTools")
+			else
+				icon:Lock("MethodDungeonTools")
+			end
+		else
+			MethodDungeonTools:ShowInterface()
+		end
+	end,
+	OnTooltipShow = function(tooltip)
+		if not tooltip or not tooltip.AddLine then return end
+		tooltip:AddLine(methodColor.."Method Dungeon Tools|r")
+		tooltip:AddLine("Click to toggle AddOn Window")
+		tooltip:AddLine("Right-click to lock Minimap Button")
+	end,
+})
+
+
 -- Made by: Nnogga - Tarren Mill <Method>, 2017
 
 SLASH_METHODDUNGEONTOOLS1 = "/mplus"
@@ -48,6 +75,9 @@ local defaultSavedVars = {
 		yoffset = -150,
 		anchorFrom = "TOP",
 		anchorTo = "TOP",
+		minimap = {
+			hide = false,
+		},
 		presets = {
 			[1] = {
 				[1] = {text="Default",value={}},
@@ -135,7 +165,7 @@ local defaultSavedVars = {
 	},
 }
 
-local db
+
 -- Init db
 do
     local frame = CreateFrame("Frame")
@@ -148,6 +178,11 @@ do
         if addon == "MethodDungeonTools" then
 			db = LibStub("AceDB-3.0"):New("MethodDungeonToolsDB", defaultSavedVars).global           
 			initFrames()
+			icon:Register("MethodDungeonTools", LDB, db.minimap)
+
+			if not db.minimap.hide then
+				icon:Show("MethodDungeonTools")
+			end
 			
 			Dialog:Register("MethodDungeonToolsPosCopyDialog", {
 				text = "Pos Copy",
@@ -2455,6 +2490,18 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 	button:SetFrameLevel(6)
 	button:Hide()
 
+    local helpPlateArray = {
+        [1] = {
+            FramePos = { x = 0, y = 0 },FrameSize = { width = 660, height = 615 },
+            [1] = { ButtonPos = { x = 500,	y = -40 },  	HighLightBox = { x = 485, y = -50, width = 170, height = 25 },		ToolTipDir = "LEFT",	ToolTipText = "Hallo123" },
+            [2] = { ButtonPos = { x = 0,  y = -135 }, 	HighLightBox = { x = 7, y = -85, width = 34, height = 495 },		ToolTipDir = "RIGHT",	ToolTipText = "Hallo123" },
+            [3] = { ButtonPos = { x = 250,  y = -135 }, 	HighLightBox = { x = 225, y = -85, width = 150, height = 495 },		ToolTipDir = "DOWN",	ToolTipText = "Hallo123" },
+            [4] = { ButtonPos = { x = 375,  y = -135},  	HighLightBox = { x = 380, y = -85, width = 85, height = 495 },		ToolTipDir = "DOWN",	ToolTipText = "Hallo123" },
+            [5] = { ButtonPos = { x = 470,  y = -135 },  	HighLightBox = { x = 465, y = -85, width = 165, height = 495 },		ToolTipDir = "LEFT",	ToolTipText = "Hallo123" },
+            [6] = { ButtonPos = { x = 370,  y = -570 },  	HighLightBox = { x = 7, y = -580, width = 625, height = 30 },		ToolTipDir = "UP",	ToolTipText = "Hallo123" },
+        },
+    }
+
 	--dirty hook to make button hide
 	local originalHide = parent.Hide
 	function parent:Hide(...)
@@ -2462,7 +2509,17 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 		return originalHide(self, ...);
 	end
 
+    button.helpPlateArray = helpPlateArray
+    button:SetScript("OnClick",HelpButtonOnClick)
+    button:SetScript("OnHide",HelpButtonOnHide)
+
+
 	parent.HelpButton = button
+end
+
+function MethodDungeonTools:RegisterOptions()
+	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MethodDungeonTools", MethodDungeonTools.blizzardOptionsMenuTable);
+	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools");
 end
 
 
@@ -2570,8 +2627,31 @@ function initFrames()
 		tooltip.String:Show();
 	end
 	
+	--Blizzard Options
+	MethodDungeonTools.blizzardOptionsMenuTable = {
+		name = "Method Dungeon Tools",
+		type = 'group',
+		args = {
+			enable = {
+				type = 'toggle',
+				name = "Enable Minimap Button",
+				desc = "If the Minimap Button is enabled.",
+				get = function() return not db.minimap.hide end,
+				set = function(_, newValue)
+					db.minimap.hide = not newValue
+					if not db.minimap.hide then
+						icon:Show("MethodDungeonTools")
+					else
+						icon:Hide("MethodDungeonTools")
+					end
+				end,
+				order = 1,
+				width = "full",
+			},
+		}
+	}
+	MethodDungeonTools:RegisterOptions()
 
-	
 	main_frame:Hide();
 end
 
