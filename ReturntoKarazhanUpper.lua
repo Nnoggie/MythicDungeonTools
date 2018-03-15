@@ -184,7 +184,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             }},
 			[2] = {x = 101.81658901231,y = -197.14074829487,sublevel=4},
 			[3] = {x = 489.99660709314,y = -353.49857438356,sublevel=6,g=14},
-            [4] = {x = 192.7267165289,y = -228.86141950088,sublevel=4,g=12},
+            [4] = {x = 192.7267165289,y = -228.86141950088,sublevel=4,g=12,teeming=true},
             [5] = {x = 497.17010486843,y = -240.86553566596,sublevel=6,g=13,teeming=true},
             [6] = {x = 479.77912390227,y = -353.40131807648,sublevel=6,g=14,teeming=true},
         },
