@@ -757,7 +757,11 @@ end
 function MethodDungeonTools:Progressbar_SetValue(self, pullCurrent,totalCurrent,totalMax)
 	local percent = (totalCurrent/totalMax)*100
 	if percent >= 102 then
-		self.Bar:SetStatusBarColor(1,0,0,1)
+		if totalCurrent-totalMax > 8 then
+			self.Bar:SetStatusBarColor(1,0,0,1)
+		else
+			self.Bar:SetStatusBarColor(0,1,0,1)
+		end
     elseif percent >= 100 then
         self.Bar:SetStatusBarColor(0,1,0,1)
 	else
@@ -2035,8 +2039,14 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 	middleLine:SetText("Or import:")
 	middleLine:SetWidth(400)
 	frame.presetCreationFrame:AddChild(middleLine)
-	
-	local importString	
+
+
+    frame.presetImportLabel = AceGUI:Create("Label")
+    frame.presetImportLabel:SetText(nil)
+    frame.presetImportLabel:SetWidth(390)
+    frame.presetImportLabel:SetColor(1,0,0)
+
+	local importString	= ""
 	frame.presetImportBox = AceGUI:Create("EditBox")
 	frame.presetImportBox:SetLabel("Import Preset:")
 	frame.presetImportBox:SetWidth(255)
@@ -2048,13 +2058,34 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 	importButton:SetWidth(100)
 	importButton:SetCallback("OnClick", function() 
 		local newPreset = MethodDungeonTools:StringToTable(importString, true)
-		MethodDungeonTools.main_frame.presetCreationFrame:Hide()
-		MethodDungeonTools:ImportPreset(newPreset)
+        if MethodDungeonTools:ValidateImportPreset(newPreset) then
+            MethodDungeonTools.main_frame.presetCreationFrame:Hide()
+            MethodDungeonTools:ImportPreset(newPreset)
+        else
+            frame.presetImportLabel:SetText("Invalid import string")
+        end
 	end)
 	frame.presetCreationFrame:AddChild(importButton)
+    frame.presetCreationFrame:AddChild(frame.presetImportLabel)
 		
 	--frame.presetCreationFrame:SetStatusText("AceGUI-3.0 Example Container Frame")
 	frame.presetCreationFrame:Hide()
+end
+
+function MethodDungeonTools:ValidateImportPreset(preset)
+    if type(preset) ~= "table" then return false end
+    ViragDevTool_AddData(preset,"preset")
+    if not preset.text then return false end
+    if not preset.value then return false end
+    if type(preset.text) ~= "string" then return false end
+    if type(preset.value) ~= "table" then return false end
+    if not preset.value.currentAffix then return false end
+    if not preset.value.currentDungeonIdx then return false end
+    if not preset.value.currentPull then return false end
+    if not preset.value.currentSublevel then return false end
+    if not preset.value.pulls then return false end
+    if type(preset.value.pulls) ~= "table" then return false end
+    return true
 end
 
 function MethodDungeonTools:ImportPreset(preset)
