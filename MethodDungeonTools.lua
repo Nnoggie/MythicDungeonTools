@@ -8,7 +8,6 @@ _G["MethodDungeonTools"] = MethodDungeonTools
 
 local sizex = 840
 local sizey = 555
-local numPullButtons = 40
 local buttonTextFontSize = 12
 local methodColor = "|cFFF49D38"
 
@@ -65,7 +64,7 @@ end
 
 local initFrames
 -------------------------
--- Saved Variables
+--- Saved Variables  ----
 -------------------------
 local defaultSavedVars = {
 	global = {
@@ -305,20 +304,7 @@ local dungeonSubLevels = {
 	},
 
 }
-local zoneIdToIdx = {
-	[1081] = 1,
-	[1146] = 2,
-	[1087] = 3,
-	[1067] = 4,
-	[1046] = 5,
-	[1041] = 6,
-	[1042] = 7,
-	[1065] = 8,
-	[1115] = 9,
-	[1178] = 11,
-	[12] = 12, --???
-	[1045] = 13,
-}
+
 
 MethodDungeonTools.dungeonMaps = {
 	[1] = {
@@ -419,9 +405,6 @@ function MethodDungeonTools:ShowInterface()
 		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 		self.main_frame.HelpButton:Show()
 	end
-
-
-
 end
 
 function MethodDungeonTools:HideInterface()
@@ -593,32 +576,33 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		return originalHide(self, ...);
 	end
 	
-	
+	local buttonWidth = 80
 	
 	---new profile,rename,export,delete
 	frame.sidePanelNewButton = AceGUI:Create("Button")
 	frame.sidePanelNewButton:SetText("New")
-	frame.sidePanelNewButton:SetWidth(50)
+	frame.sidePanelNewButton:SetWidth(buttonWidth)
 	--button fontInstance
 	local fontInstance = CreateFont("MDTButtonFont");
 	fontInstance:CopyFontObject(frame.sidePanelNewButton.frame:GetNormalFontObject());
 	local fontName,height = fontInstance:GetFont()
-	fontInstance:SetFont(fontName,8)
+	fontInstance:SetFont(fontName,10)
 	frame.sidePanelNewButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelNewButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelNewButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelNewButton:SetCallback("OnClick",function(widget,callbackName,value)
 		MethodDungeonTools:OpenNewPresetDialog()
 	end)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
+
 	
 	frame.sidePanelRenameButton = AceGUI:Create("Button")	
-	frame.sidePanelRenameButton:SetWidth(66)
+	frame.sidePanelRenameButton:SetWidth(buttonWidth)
 	frame.sidePanelRenameButton:SetText("Rename")	
-	frame.sidePanelRenameButton.frame:SetNormalFontObject(fontInstance)	
-	frame.sidePanelRenameButton.frame:SetHighlightFontObject(fontInstance)	
-	frame.sidePanelRenameButton.frame:SetDisabledFontObject(fontInstance)	
+	frame.sidePanelRenameButton.frame:SetNormalFontObject(fontInstance)
+	frame.sidePanelRenameButton.frame:SetHighlightFontObject(fontInstance)
+	frame.sidePanelRenameButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelRenameButton:SetCallback("OnClick",function(widget,callbackName,value)
+		MethodDungeonTools:HideAllDialogs()
 		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
 		MethodDungeonTools.main_frame.RenameFrame:Show()
 		MethodDungeonTools.main_frame.RenameFrame.RenameButton:SetDisabled(true)
@@ -627,36 +611,66 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		MethodDungeonTools.main_frame.RenameFrame.Editbox:HighlightText(0, string.len(currentPresetName))
 		MethodDungeonTools.main_frame.RenameFrame.Editbox:SetFocus()
 	end)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
-	
+
+	frame.sidePanelImportButton = AceGUI:Create("Button")
+	frame.sidePanelImportButton:SetText("Import")
+	frame.sidePanelImportButton:SetWidth(buttonWidth)
+	frame.sidePanelImportButton.frame:SetNormalFontObject(fontInstance)
+	frame.sidePanelImportButton.frame:SetHighlightFontObject(fontInstance)
+	frame.sidePanelImportButton.frame:SetDisabledFontObject(fontInstance)
+	frame.sidePanelImportButton:SetCallback("OnClick",function(widget,callbackName,value)
+		MethodDungeonTools:OpenImportPresetDialog()
+	end)
+
 	frame.sidePanelExportButton = AceGUI:Create("Button")
 	frame.sidePanelExportButton:SetText("Export")
-	frame.sidePanelExportButton:SetWidth(59)
+	frame.sidePanelExportButton:SetWidth(buttonWidth)
 	frame.sidePanelExportButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelExportButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelExportButton:SetCallback("OnClick",function(widget,callbackName,value)
 		local export = MethodDungeonTools:TableToString(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]],true)
+		MethodDungeonTools:HideAllDialogs()
 		MethodDungeonTools.main_frame.ExportFrame:Show()
 		MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 		MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
 		MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
 		MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
 	end)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
 	
 	frame.sidePanelDeleteButton = AceGUI:Create("Button")
 	frame.sidePanelDeleteButton:SetText("Delete")
-	frame.sidePanelDeleteButton:SetWidth(58)
+	frame.sidePanelDeleteButton:SetWidth(buttonWidth)
 	frame.sidePanelDeleteButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelDeleteButton:SetCallback("OnClick",function(widget,callbackName,value)
+		MethodDungeonTools:HideAllDialogs()
 		frame.DeleteConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
 		frame.DeleteConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
 		frame.DeleteConfirmationFrame:Show()
 	end)
+
+	frame.sidePanelClearButton = AceGUI:Create("Button")
+	frame.sidePanelClearButton:SetText("Clear")
+	frame.sidePanelClearButton:SetWidth(buttonWidth)
+	frame.sidePanelClearButton.frame:SetNormalFontObject(fontInstance)
+	frame.sidePanelClearButton.frame:SetHighlightFontObject(fontInstance)
+	frame.sidePanelClearButton.frame:SetDisabledFontObject(fontInstance)
+	frame.sidePanelClearButton:SetCallback("OnClick",function(widget,callbackName,value)
+		MethodDungeonTools:HideAllDialogs()
+		frame.ClearConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
+		frame.ClearConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
+		frame.ClearConfirmationFrame:Show()
+	end)
+
+	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelClearButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
 	
 	
@@ -745,7 +759,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 	frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioTrackerProgressBarTemplate")
 	frame.sidePanel.ProgressBar:Show()
-	frame.sidePanel.ProgressBar:SetPoint("TOP",frame.sidePanel,"TOP",-10,-110-25)
+	frame.sidePanel.ProgressBar:SetPoint("TOP",frame.sidePanel.WidgetGroup.frame,"BOTTOM",-10,5)
 	MethodDungeonTools:Progressbar_SetValue(frame.sidePanel.ProgressBar, 50,205,205)
 	frame.sidePanel.ProgressBar.Bar.Icon:Hide();
 	frame.sidePanel.ProgressBar.Bar.IconBG:Hide();
@@ -1734,9 +1748,24 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 	numDungeonEnemyBlips = idx-1	
 end
 
+function MethodDungeonTools:HideAllDialogs()
+	MethodDungeonTools.main_frame.presetCreationFrame:Hide()
+	MethodDungeonTools.main_frame.presetImportFrame:Hide()
+	MethodDungeonTools.main_frame.ExportFrame:Hide()
+	MethodDungeonTools.main_frame.RenameFrame:Hide()
+	MethodDungeonTools.main_frame.ClearConfirmationFrame:Hide()
+	MethodDungeonTools.main_frame.DeleteConfirmationFrame:Hide()
+end
 
+function MethodDungeonTools:OpenImportPresetDialog()
+	MethodDungeonTools:HideAllDialogs()
+	MethodDungeonTools.main_frame.presetImportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+	MethodDungeonTools.main_frame.presetImportFrame:Show()
+	MethodDungeonTools.main_frame.presetImportBox:SetFocus()
+end
 
 function MethodDungeonTools:OpenNewPresetDialog()
+	MethodDungeonTools:HideAllDialogs()
 	local presetList = {}
 	local countPresets = 0
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -1927,6 +1956,14 @@ function MethodDungeonTools:DeletePreset(index)
 	MethodDungeonTools:UpdateMap()
 end
 
+function MethodDungeonTools:ClearPreset(index)
+	table.wipe(db.presets[db.currentDungeonIdx][index].value.pulls)
+	db.presets[db.currentDungeonIdx][index].value.currentPull = 1
+	MethodDungeonTools:EnsureDBTables()
+	MethodDungeonTools:UpdateMap()
+	MethodDungeonTools:ReloadPullButtons()
+end
+
 function MethodDungeonTools:CreateNewPreset(name)
 	if name == "<New Preset>" then 
 		MethodDungeonTools.main_frame.presetCreationLabel:SetText("Cannot create preset '"..name.."'")
@@ -1979,11 +2016,59 @@ function MethodDungeonTools:SanitizePresetName(text)
 	end
 end
 
+
+function MethodDungeonTools:MakePresetImportFrame(frame)
+	frame.presetImportFrame = AceGUI:Create("Frame")
+	frame.presetImportFrame:SetTitle("Import Preset")
+	frame.presetImportFrame:SetWidth(400)
+	frame.presetImportFrame:SetHeight(200)
+	frame.presetImportFrame:EnableResize(false)
+	--frame.presetCreationFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
+	frame.presetImportFrame:SetLayout("Flow")
+	frame.presetImportFrame:SetCallback("OnClose", function(widget)
+		if MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown then
+			MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value)
+			if db.currentPreset[db.currentDungeonIdx] ~= 1 then
+				MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)
+			end
+		end
+	end)
+
+	frame.presetImportLabel = AceGUI:Create("Label")
+	frame.presetImportLabel:SetText(nil)
+	frame.presetImportLabel:SetWidth(390)
+	frame.presetImportLabel:SetColor(1,0,0)
+
+	local importString	= ""
+	frame.presetImportBox = AceGUI:Create("EditBox")
+	frame.presetImportBox:SetLabel("Import Preset:")
+	frame.presetImportBox:SetWidth(255)
+	frame.presetImportBox:SetCallback("OnEnterPressed", function(widget, event, text) importString = text end)
+	frame.presetImportFrame:AddChild(frame.presetImportBox)
+
+	local importButton = AceGUI:Create("Button")
+	importButton:SetText("Import")
+	importButton:SetWidth(100)
+	importButton:SetCallback("OnClick", function()
+		local newPreset = MethodDungeonTools:StringToTable(importString, true)
+		if MethodDungeonTools:ValidateImportPreset(newPreset) then
+			MethodDungeonTools.main_frame.presetImportFrame:Hide()
+			MethodDungeonTools:ImportPreset(newPreset)
+		else
+			frame.presetImportLabel:SetText("Invalid import string")
+		end
+	end)
+	frame.presetImportFrame:AddChild(importButton)
+	frame.presetImportFrame:AddChild(frame.presetImportLabel)
+	frame.presetImportFrame:Hide()
+
+end
+
 function MethodDungeonTools:MakePresetCreationFrame(frame)
 	frame.presetCreationFrame = AceGUI:Create("Frame")
 	frame.presetCreationFrame:SetTitle("New Preset")
 	frame.presetCreationFrame:SetWidth(400)
-	frame.presetCreationFrame:SetHeight(250)
+	frame.presetCreationFrame:SetHeight(200)
 	frame.presetCreationFrame:EnableResize(false)		
 	--frame.presetCreationFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 	frame.presetCreationFrame:SetLayout("Flow")
@@ -2033,42 +2118,6 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 	frame.PresetCreationDropDown:SetLabel("Use as a starting point:")
 	frame.presetCreationFrame:AddChild(frame.PresetCreationDropDown)
 
-	
-	
-	local middleLine = AceGUI:Create("Heading")
-	middleLine:SetText("Or import:")
-	middleLine:SetWidth(400)
-	frame.presetCreationFrame:AddChild(middleLine)
-
-
-    frame.presetImportLabel = AceGUI:Create("Label")
-    frame.presetImportLabel:SetText(nil)
-    frame.presetImportLabel:SetWidth(390)
-    frame.presetImportLabel:SetColor(1,0,0)
-
-	local importString	= ""
-	frame.presetImportBox = AceGUI:Create("EditBox")
-	frame.presetImportBox:SetLabel("Import Preset:")
-	frame.presetImportBox:SetWidth(255)
-	frame.presetImportBox:SetCallback("OnEnterPressed", function(widget, event, text) importString = text end)
-	frame.presetCreationFrame:AddChild(frame.presetImportBox)	
-		
-	local importButton = AceGUI:Create("Button")
-	importButton:SetText("Import")
-	importButton:SetWidth(100)
-	importButton:SetCallback("OnClick", function() 
-		local newPreset = MethodDungeonTools:StringToTable(importString, true)
-        if MethodDungeonTools:ValidateImportPreset(newPreset) then
-            MethodDungeonTools.main_frame.presetCreationFrame:Hide()
-            MethodDungeonTools:ImportPreset(newPreset)
-        else
-            frame.presetImportLabel:SetText("Invalid import string")
-        end
-	end)
-	frame.presetCreationFrame:AddChild(importButton)
-    frame.presetCreationFrame:AddChild(frame.presetImportLabel)
-		
-	--frame.presetCreationFrame:SetStatusText("AceGUI-3.0 Example Container Frame")
 	frame.presetCreationFrame:Hide()
 end
 
@@ -2118,7 +2167,8 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
     frame.PullButtonScrollGroup:SetWidth(249);
     frame.PullButtonScrollGroup:SetHeight(410)
-    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame,"TOPLEFT",0,-(31+143))
+    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame.WidgetGroup.frame,"BOTTOMLEFT",0,-32)
+    frame.PullButtonScrollGroup:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",0,30)
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
     frame.PullButtonScrollGroup.frame:Show()
@@ -2218,8 +2268,6 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 	end
 	--SaveCurrentPresetPull
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = pull
-	--button text color to indicate selection
-	local frame = MethodDungeonTools.main_frame.sidePanel
 	MethodDungeonTools:PickPullButton(pull)
 	
 	
@@ -2475,7 +2523,6 @@ end
 
 ---MakeDeleteConfirmationFrame
 ---Creates the delete confirmation dialog that pops up when a user wants to delete a preset
----@param frame frame
 function MethodDungeonTools:MakeDeleteConfirmationFrame(frame)
 	frame.DeleteConfirmationFrame = AceGUI:Create("Frame")
 	frame.DeleteConfirmationFrame:SetTitle("Delete Preset")
@@ -2512,6 +2559,47 @@ function MethodDungeonTools:MakeDeleteConfirmationFrame(frame)
 	frame.DeleteConfirmationFrame:Hide()
 
 end
+
+
+---MakeClearConfirmationFrame
+---Creates the clear confirmation dialog that pops up when a user wants to clear a preset
+function MethodDungeonTools:MakeClearConfirmationFrame(frame)
+	frame.ClearConfirmationFrame = AceGUI:Create("Frame")
+	frame.ClearConfirmationFrame:SetTitle("Clear Preset")
+	frame.ClearConfirmationFrame:SetWidth(250)
+	frame.ClearConfirmationFrame:SetHeight(120)
+	frame.ClearConfirmationFrame:EnableResize(false)
+	frame.ClearConfirmationFrame:SetLayout("Flow")
+	frame.ClearConfirmationFrame:SetCallback("OnClose", function(widget)
+
+	end)
+
+	frame.ClearConfirmationFrame.label = AceGUI:Create("Label")
+	frame.ClearConfirmationFrame.label:SetWidth(390)
+	frame.ClearConfirmationFrame.label:SetHeight(10)
+	--frame.DeleteConfirmationFrame.label:SetColor(1,0,0)
+	frame.ClearConfirmationFrame:AddChild(frame.DeleteConfirmationFrame.label)
+
+	frame.ClearConfirmationFrame.OkayButton = AceGUI:Create("Button")
+	frame.ClearConfirmationFrame.OkayButton:SetText("Clear")
+	frame.ClearConfirmationFrame.OkayButton:SetWidth(100)
+	frame.ClearConfirmationFrame.OkayButton:SetCallback("OnClick",function()
+		MethodDungeonTools:ClearPreset(db.currentPreset[db.currentDungeonIdx])
+		frame.ClearConfirmationFrame:Hide()
+	end)
+	frame.ClearConfirmationFrame.CancelButton = AceGUI:Create("Button")
+	frame.ClearConfirmationFrame.CancelButton:SetText("Cancel")
+	frame.ClearConfirmationFrame.CancelButton:SetWidth(100)
+	frame.ClearConfirmationFrame.CancelButton:SetCallback("OnClick",function()
+		frame.ClearConfirmationFrame:Hide()
+	end)
+
+	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.OkayButton)
+	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.CancelButton)
+	frame.ClearConfirmationFrame:Hide()
+
+end
+
 
 function MethodDungeonTools:CreateTutorialButton(parent)
     local button = CreateFrame("Button",parent,nil,"MainHelpPlateButton")
@@ -2598,7 +2686,8 @@ function initFrames()
 	MethodDungeonTools:MakeMapTexture(main_frame)
 	MethodDungeonTools:MakeSidePanel(main_frame)
 	MethodDungeonTools:MakePresetCreationFrame(main_frame)
-	
+	MethodDungeonTools:MakePresetImportFrame(main_frame)
+
 	MethodDungeonTools:MakeDungeonBossButtons(main_frame)
 	MethodDungeonTools:UpdateDungeonEnemies(main_frame)	
 	
@@ -2610,6 +2699,7 @@ function initFrames()
 	MethodDungeonTools:MakeExportFrame(main_frame)
 	MethodDungeonTools:MakeRenameFrame(main_frame)
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
+	MethodDungeonTools:MakeClearConfirmationFrame(main_frame)
 
 	MethodDungeonTools:CreateTutorialButton(main_frame)
 
