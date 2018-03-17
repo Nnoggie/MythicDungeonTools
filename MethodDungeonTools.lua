@@ -2596,16 +2596,9 @@ end
 
 
 
-MethodDungeonTools_HelpPlate = {
-	FramePos = { x = 0,	y = 0 },
-	FrameSize = { width = sizex, height = sizey	},
-	[1] = { ButtonPos = { x = 190,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 197, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = "Select a dungeon" },
-	[2] = { ButtonPos = { x = 190,	y = -210 }, HighLightBox = { x = 0, y = -58, width = sizex-6, height = sizey-58 },	ToolTipDir = "RIGHT",	ToolTipText = "Select enemies for your pulls\nCTRL+Click to single select enemies" },
-	[3] = { ButtonPos = { x = 828,	y = 0 }, HighLightBox = { x = 838, y = 30, width = 251, height = 87 },	ToolTipDir = "LEFT",	ToolTipText = "Manage presets" },
-	[4] = { ButtonPos = { x = 828,	y = -87 }, HighLightBox = { x = 838, y = 30-87, width = 251, height = 83 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon Options" },
-	[5] = { ButtonPos = { x = 828,	y = -(87+83) }, HighLightBox = { x = 838, y = 30-(87+83), width = 251, height = 415 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
-}
 
+---CreateTutorialButton
+---Creates the tutorial button and sets up the help plate frames
 function MethodDungeonTools:CreateTutorialButton(parent)
     local button = CreateFrame("Button",parent,parent,"MainHelpPlateButton")
     button:SetPoint("TOPLEFT",parent,"TOPLEFT",0,48)
@@ -2614,8 +2607,6 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 	button:SetFrameLevel(6)
 	button:Hide()
 
-
-
 	--dirty hook to make button hide
 	local originalHide = parent.Hide
 	function parent:Hide(...)
@@ -2623,11 +2614,19 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 		return originalHide(self, ...);
 	end
 
+	local helpPlate = {
+		FramePos = { x = 0,	y = 0 },
+		FrameSize = { width = sizex, height = sizey	},
+		[1] = { ButtonPos = { x = 190,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 197, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = "Select a dungeon" },
+		[2] = { ButtonPos = { x = 190,	y = -210 }, HighLightBox = { x = 0, y = -58, width = sizex-6, height = sizey-58 },	ToolTipDir = "RIGHT",	ToolTipText = "Select enemies for your pulls\nCTRL+Click to single select enemies" },
+		[3] = { ButtonPos = { x = 828,	y = 0 }, HighLightBox = { x = 838, y = 30, width = 251, height = 87 },	ToolTipDir = "LEFT",	ToolTipText = "Manage presets" },
+		[4] = { ButtonPos = { x = 828,	y = -87 }, HighLightBox = { x = 838, y = 30-87, width = 251, height = 83 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon Options" },
+		[5] = { ButtonPos = { x = 828,	y = -(87+83) }, HighLightBox = { x = 838, y = 30-(87+83), width = 251, height = 415 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
+	}
 
 	local function TutorialButtonOnClick(self)
-		ViragDevTool_AddData(self.helpPlateArray)
-		if not HelpPlate_IsShowing(MethodDungeonTools_HelpPlate) then
-			HelpPlate_Show(MethodDungeonTools_HelpPlate, MethodDungeonTools.main_frame, self)
+		if not HelpPlate_IsShowing(helpPlate) then
+			HelpPlate_Show(helpPlate, MethodDungeonTools.main_frame, self)
 		else
 			HelpPlate_Hide(true)
 		end
@@ -2641,11 +2640,10 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 
     button:SetScript("OnClick",TutorialButtonOnClick)
     button:SetScript("OnHide",TutorialButtonOnHide)
-
-
-
 end
 
+---RegisterOptions
+---Register the options of the addon to the blizzard options
 function MethodDungeonTools:RegisterOptions()
 	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MethodDungeonTools", MethodDungeonTools.blizzardOptionsMenuTable);
 	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools");
