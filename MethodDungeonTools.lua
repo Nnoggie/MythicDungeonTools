@@ -20,7 +20,7 @@ local icon = LibStub("LibDBIcon-1.0")
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 	type = "data source",
 	text = "Method Dungeon Tools",
-	icon = "Interface\\AddOns\\MethodDungeonTools\\Textures\\Method",
+	icon = "Interface\\AddOns\\MethodDungeonTools\\Textures\\MethodMinimap",
 	OnClick = function(button,buttonPressed)
 		if buttonPressed == "RightButton" then
 			if db.minimap.lock then
@@ -41,6 +41,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 })
 
 
+
 -- Made by: Nnogga - Tarren Mill <Method>, 2017
 
 SLASH_METHODDUNGEONTOOLS1 = "/mplus"
@@ -57,7 +58,6 @@ function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
 	elseif rqst == "remove" then
 		--
 	else
-		
 		MethodDungeonTools:ShowInterface()
 	end
 end
@@ -178,11 +178,9 @@ do
 			db = LibStub("AceDB-3.0"):New("MethodDungeonToolsDB", defaultSavedVars).global           
 			initFrames()
 			icon:Register("MethodDungeonTools", LDB, db.minimap)
-
 			if not db.minimap.hide then
 				icon:Show("MethodDungeonTools")
 			end
-			
 			Dialog:Register("MethodDungeonToolsPosCopyDialog", {
 				text = "Pos Copy",
 				width = 500,
@@ -395,15 +393,13 @@ MethodDungeonTools.dungeonBosses = {}
 MethodDungeonTools.dungeonEnemies = {}
 
 function MethodDungeonTools:ShowInterface()
-	if ViragDevTool_AddData then 
-		ViragDevTool_AddData(db, "Mplusdb")
-	end
 	if self.main_frame:IsShown() then
 		MethodDungeonTools:HideInterface()
 	else
 		self.main_frame:Show();
 		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 		self.main_frame.HelpButton:Show()
+		ViragDevTool_AddData(icon)
 	end
 end
 
