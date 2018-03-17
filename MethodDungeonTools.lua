@@ -399,7 +399,6 @@ function MethodDungeonTools:ShowInterface()
 		self.main_frame:Show();
 		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 		self.main_frame.HelpButton:Show()
-		ViragDevTool_AddData(icon)
 	end
 end
 
@@ -2119,7 +2118,6 @@ end
 
 function MethodDungeonTools:ValidateImportPreset(preset)
     if type(preset) ~= "table" then return false end
-    ViragDevTool_AddData(preset,"preset")
     if not preset.text then return false end
     if not preset.value then return false end
     if type(preset.text) ~= "string" then return false end
@@ -2597,25 +2595,26 @@ function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 end
 
 
+
+MethodDungeonTools_HelpPlate = {
+	FramePos = { x = 0,	y = 0 },
+	FrameSize = { width = sizex, height = sizey	},
+	[1] = { ButtonPos = { x = 190,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 197, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = "Select a dungeon" },
+	[2] = { ButtonPos = { x = 190,	y = -210 }, HighLightBox = { x = 0, y = -58, width = sizex-6, height = sizey-58 },	ToolTipDir = "RIGHT",	ToolTipText = "Select enemies for your pulls\nCTRL+Click to single select enemies" },
+	[3] = { ButtonPos = { x = 828,	y = 0 }, HighLightBox = { x = 838, y = 30, width = 251, height = 87 },	ToolTipDir = "LEFT",	ToolTipText = "Manage presets" },
+	[4] = { ButtonPos = { x = 828,	y = -87 }, HighLightBox = { x = 838, y = 30-87, width = 251, height = 83 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon Options" },
+	[5] = { ButtonPos = { x = 828,	y = -(87+83) }, HighLightBox = { x = 838, y = 30-(87+83), width = 251, height = 415 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
+}
+
 function MethodDungeonTools:CreateTutorialButton(parent)
-    local button = CreateFrame("Button",parent,nil,"MainHelpPlateButton")
-    button:SetPoint("TOPRIGHT",parent,"TOPRIGHT",0,48)
-	button:SetScale(0.6)
+    local button = CreateFrame("Button",parent,parent,"MainHelpPlateButton")
+    button:SetPoint("TOPLEFT",parent,"TOPLEFT",0,48)
+	button:SetScale(0.8)
 	button:SetFrameStrata(mainFrameStrata)
 	button:SetFrameLevel(6)
 	button:Hide()
 
-    local helpPlateArray = {
-        [1] = {
-            FramePos = { x = 0, y = 0 },FrameSize = { width = 660, height = 615 },
-            [1] = { ButtonPos = { x = 500,	y = -40 },  	HighLightBox = { x = 485, y = -50, width = 170, height = 25 },		ToolTipDir = "LEFT",	ToolTipText = "Hallo123" },
-            [2] = { ButtonPos = { x = 0,  y = -135 }, 	HighLightBox = { x = 7, y = -85, width = 34, height = 495 },		ToolTipDir = "RIGHT",	ToolTipText = "Hallo123" },
-            [3] = { ButtonPos = { x = 250,  y = -135 }, 	HighLightBox = { x = 225, y = -85, width = 150, height = 495 },		ToolTipDir = "DOWN",	ToolTipText = "Hallo123" },
-            [4] = { ButtonPos = { x = 375,  y = -135},  	HighLightBox = { x = 380, y = -85, width = 85, height = 495 },		ToolTipDir = "DOWN",	ToolTipText = "Hallo123" },
-            [5] = { ButtonPos = { x = 470,  y = -135 },  	HighLightBox = { x = 465, y = -85, width = 165, height = 495 },		ToolTipDir = "LEFT",	ToolTipText = "Hallo123" },
-            [6] = { ButtonPos = { x = 370,  y = -570 },  	HighLightBox = { x = 7, y = -580, width = 625, height = 30 },		ToolTipDir = "UP",	ToolTipText = "Hallo123" },
-        },
-    }
+
 
 	--dirty hook to make button hide
 	local originalHide = parent.Hide
@@ -2624,12 +2623,27 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 		return originalHide(self, ...);
 	end
 
-    button.helpPlateArray = helpPlateArray
-    button:SetScript("OnClick",HelpButtonOnClick)
-    button:SetScript("OnHide",HelpButtonOnHide)
 
+	local function TutorialButtonOnClick(self)
+		ViragDevTool_AddData(self.helpPlateArray)
+		if not HelpPlate_IsShowing(MethodDungeonTools_HelpPlate) then
+			HelpPlate_Show(MethodDungeonTools_HelpPlate, MethodDungeonTools.main_frame, self)
+		else
+			HelpPlate_Hide(true)
+		end
+	end
+
+	local function TutorialButtonOnHide(self)
+		HelpPlate_Hide(true)
+	end
 
 	parent.HelpButton = button
+
+    button:SetScript("OnClick",TutorialButtonOnClick)
+    button:SetScript("OnHide",TutorialButtonOnHide)
+
+
+
 end
 
 function MethodDungeonTools:RegisterOptions()
