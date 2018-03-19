@@ -359,7 +359,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Elemental",
         ["id"] = 101437,
         ["displayId"] = 33425,
-        ["count"] = 1,
+        ["count"] = 0,
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
