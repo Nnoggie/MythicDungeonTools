@@ -74,6 +74,7 @@ local defaultSavedVars = {
 		yoffset = -150,
 		anchorFrom = "TOP",
 		anchorTo = "TOP",
+        tooltipInCorner = false,
 		minimap = {
 			hide = false,
 		},
@@ -552,9 +553,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 	
 	frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
-	frame.sidePanel.WidgetGroup:SetWidth(250);
+	frame.sidePanel.WidgetGroup:SetWidth(245);
 	frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight()+(frame.topPanel:GetHeight()*2)-31);
-	frame.sidePanel.WidgetGroup:SetPoint("TOP",frame.sidePanel,"TOP",0,-31)
+	frame.sidePanel.WidgetGroup:SetPoint("TOP",frame.sidePanel,"TOP",3,-31)
 	frame.sidePanel.WidgetGroup:SetLayout("Flow")
 	
 	frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
@@ -568,6 +569,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end
 	function frame:Hide(...)
 		frame.sidePanel.WidgetGroup.frame:Hide()
+        MethodDungeonTools.pullTooltip:Hide()
 		return originalHide(self, ...);
 	end
 	
@@ -1020,6 +1022,109 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
     scrollFrame:SetVerticalScroll(newScrollV)
 end
 
+---ActivatePullTooltip
+---
+function MethodDungeonTools:ActivatePullTooltip(pull)
+    local pullTooltip = MethodDungeonTools.pullTooltip
+
+    pullTooltip.currentPull = pull
+    pullTooltip:Show()
+end
+
+---UpdatePullTooltip
+---Updates the tooltip which is being displayed when a pull is mouseovered
+function MethodDungeonTools:UpdatePullTooltip(tooltip)
+    local frame = MethodDungeonTools.main_frame
+	if not MouseIsOver(frame.sidePanel.pullButtonsScrollFrame.frame) then
+        tooltip:Hide()
+    elseif MouseIsOver(frame.sidePanel.newPullButton.frame) then
+        tooltip:Hide()
+	else
+		if frame.sidePanel.newPullButtons and tooltip.currentPull and frame.sidePanel.newPullButtons[tooltip.currentPull] then
+			for k,v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
+				if MouseIsOver(v) then
+					if v:IsShown() then
+                        --model
+						if not tooltip.modelNpcId or (tooltip.modelNpcId ~= v.enemyData.displayId) then
+							tooltip.Model:SetDisplayInfo(v.enemyData.displayId)
+							tooltip.modelNpcId = v.enemyData.displayId
+						end
+						tooltip.Model:Show()
+                        --topString
+                        local newLine = "\n"
+                        local text = newLine..newLine..newLine..v.enemyData.name.." x"..v.enemyData.quantity..newLine
+                        text = text.."Level "..v.enemyData.level.." "..v.enemyData.creatureType..newLine
+                        --ViragDevTool_AddData(v.enemyData)
+                        local fortified = false
+                        local boss = false
+                        if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix then
+                            if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix == "fortified" then fortified = true end
+                        end
+                        local tyrannical = not fortified
+                        local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,v.enemyData.baseHealth,db.currentDifficulty)
+                        text = text..MethodDungeonTools:FormatEnemyHealth(health).." HP"..newLine
+                        text = text.."Enemy Forces: "..v.enemyData.count.." ("..v.enemyData.count*v.enemyData.quantity..")"
+                        tooltip.topString:SetText(text)
+                        tooltip.topString:Show()
+
+					else
+                        --model
+						tooltip.Model:Hide()
+                        --topString
+                        tooltip.topString:Hide()
+					end
+					break;
+				end
+			end
+            local countEnemies = 0
+            for k,v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
+                if v:IsShown() then countEnemies = countEnemies + 1 end
+            end
+            if countEnemies == 0 then
+                tooltip:Hide()
+                return
+            end
+            local pullForces = MethodDungeonTools:CountForces(tooltip.currentPull,true)
+            local totalForces = MethodDungeonTools:CountForces(tooltip.currentPull,false)
+            local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
+            text = string.format(MethodDungeonTools.pullTooltip.botString.defaultText,pullForces,totalForces,totalForcesMax)
+            tooltip.botString:SetText(text)
+            tooltip.botString:Show()
+		end
+	end
+end
+
+---CountForces
+---Counts total selected enemy forces in the current preset up to pull
+function MethodDungeonTools:CountForces(currentPull,currentOnly)
+    --count up to and including the currently selected pull
+    local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+    local pullCurrent = 0
+    for pullIdx,pull in pairs(preset.value.pulls) do
+        if not currentOnly or (currentOnly and pullIdx == currentPull) then
+            if pullIdx <= currentPull then
+                for enemyIdx,clones in pairs(pull) do
+                    for k,v in pairs(clones) do
+                        local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                        if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                        end
+                    end
+                end
+            else
+                break
+            end
+        end
+    end
+    return pullCurrent
+end
+
+---IsCurrentPresetTeeming
+---Returns true if the current preset has teeming turned on, false otherwise
+function MethodDungeonTools:IsCurrentPresetTeeming()
+    return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
+end
+
 function MethodDungeonTools:MakeMapTexture(frame)
     MethodDungeonTools.contextMenuList = {}
 	local cursorX, cursorY
@@ -1336,9 +1441,25 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				local tyrannical = not fortified
 				local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,data.health,db.currentDifficulty)
 				local group = data.g and " (G "..data.g..")" or ""
-				tooltip.String:SetText(data.name.." "..data.cloneIdx..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n".."Enemy Forces: "..data.count)
+				tooltip.String:SetText("\n\n"..data.name.." "..data.cloneIdx..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n".."Enemy Forces: "..data.count)
 				tooltip.String:Show()
 				tooltip:Show()
+                if db.tooltipInCorner then
+                    tooltip:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",0,0)
+                    tooltip:SetPoint("TOPLEFT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",-tooltip.mySizes.x,tooltip.mySizes.y)
+                else
+                    --check for bottom clipping
+                    tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30,0)
+                    tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x,-tooltip.mySizes.y)
+                    local bottomOffset = 0
+                    local tooltipBottom = tooltip:GetBottom()
+                    local mainFrameBottom = MethodDungeonTools.main_frame:GetBottom()
+                    if tooltipBottom<mainFrameBottom then
+                        bottomOffset = tooltip.mySizes.y
+                    end
+                    tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30,bottomOffset)
+                    tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x,-tooltip.mySizes.y+bottomOffset)
+                end
 				local id = dungeonEnemyBlips[mouseoverBlip].id
 				if id then
 					if lastModelId then 
@@ -1368,7 +1489,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				--check if blip is in a patrol but not the "leader"
 				if data.patrolFollower then
 					for blipIdx,blip in pairs(dungeonEnemyBlips) do
-						if blip.g and data.g then
+						if blip:IsShown() and blip.g and data.g then
 							if blip.g == data.g and blip.patrol then
 								mouseoverBlip = blipIdx
 							end
@@ -1381,8 +1502,10 @@ function MethodDungeonTools:MakeMapTexture(frame)
 					if blip.patrol then	
 						if idx == mouseoverBlip and blip.patrolActive then
 							for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-								waypointBlip:Show()
-								waypointBlip.line:Show()
+                                if waypointBlip.isActive then
+                                    waypointBlip:Show()
+                                    waypointBlip.line:Show()
+                                end
 							end
 							if blip.patrolIndicator then
 								blip.patrolIndicator:Show()
@@ -1449,7 +1572,17 @@ function MethodDungeonTools:MakeMapTexture(frame)
 			end
 
 			]]
-		end)
+
+
+
+
+            MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+
+
+
+        end)
+
+
 		
 		if frame.mapPanelFrame == nil then
 			frame.mapPanelFrame = CreateFrame("frame","MethodDungeonToolsMapPanelFrame",nil)
@@ -1458,6 +1591,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 			frame.mapPanelFrame:SetPoint("BOTTOM", frame, "BOTTOM", 0, 0);
 			
 		end
+
 		
 		--mouseover glow tex
 		do
@@ -1693,6 +1827,11 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 							dungeonEnemyBlips[idx].patrol = dungeonEnemyBlips[idx].patrol or {}
 							local firstWaypointBlip
 							local oldWaypointBlip
+
+                            for k,v in pairs(dungeonEnemyBlips[idx].patrol) do
+                                v.isActive = false
+                            end
+
 							for patrolIdx,waypoint in ipairs(clone.patrol) do
 								if not dungeonEnemyBlips[idx].patrol[patrolIdx] then
 								dungeonEnemyBlips[idx].patrol[patrolIdx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx,"BACKGROUND")
@@ -1704,7 +1843,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetVertexColor(0,0.2,0.5,0.6) 
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",waypoint.x,waypoint.y)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:Hide()
-								
+								dungeonEnemyBlips[idx].patrol[patrolIdx].isActive = true
+
 								if not dungeonEnemyBlips[idx].patrol[patrolIdx].line then
 									dungeonEnemyBlips[idx].patrol[patrolIdx].line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx.."line","BACKGROUND")
 								end
@@ -1712,7 +1852,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetVertexColor(0,0.2,0.5,0.6) 
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:Hide()
-								
+
 								--connect 2 waypoints								
 								if oldWaypointBlip then
 									local startPoint, startRelativeTo, startRelativePoint, startX, startY = dungeonEnemyBlips[idx].patrol[patrolIdx]:GetPoint()
@@ -2161,7 +2301,7 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
     frame.PullButtonScrollGroup:SetWidth(249);
     frame.PullButtonScrollGroup:SetHeight(410)
-    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame.WidgetGroup.frame,"BOTTOMLEFT",0,-32)
+    frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame.WidgetGroup.frame,"BOTTOMLEFT",-4,-32)
     frame.PullButtonScrollGroup:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",0,30)
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
@@ -2182,6 +2322,7 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
 
     frame.pullButtonsScrollFrame = AceGUI:Create("ScrollFrame")
     frame.pullButtonsScrollFrame:SetLayout("Flow")
+
     frame.PullButtonScrollGroup:AddChild(frame.pullButtonsScrollFrame)
 
     frame.newPullButtons = {}
@@ -2310,6 +2451,10 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
 			local incremented = false
 			local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
+            local name = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
+            local creatureType = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
+            local level = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["level"]
+            local baseHealth = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
             for k,cloneIdx in pairs(clones) do
                 --check for teeming
                 local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
@@ -2321,6 +2466,10 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                     enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
                     enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
                     enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                    enemyTable[enemyTableIdx].name = name
+                    enemyTable[enemyTableIdx].level = level
+                    enemyTable[enemyTableIdx].creatureType = creatureType
+                    enemyTable[enemyTableIdx].baseHealth = baseHealth
                 end
 			end
 		end
@@ -2716,12 +2865,13 @@ function initFrames()
         tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
-        tooltip:SetSize(250, 250)
-        tooltip:SetPoint("BOTTOMRIGHT",main_frame.sidePanel,"BOTTOMRIGHT",0,28)
+        tooltip.mySizes ={x=250,y=110}
+        tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
         tooltip:Hide()
 
         tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
         tooltip.Model:SetFrameLevel(1)
+        tooltip.Model:SetSize(100,100)
 
         tooltip.Model.fac = 0
         if true then
@@ -2740,20 +2890,82 @@ function initFrames()
         end
 
 
-		tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT")
-		tooltip.Model:SetPoint("BOTTOMRIGHT", tooltip, "BOTTOMRIGHT",0,45)
+		tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT",7,-7)
 		
 		tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString");
 		tooltip.String:SetFont("Fonts\\FRIZQT__.TTF", 10)
 		tooltip.String:SetTextColor(1, 1, 1, 1);
-		tooltip.String:SetJustifyH("RIGHT")
-		tooltip.String:SetJustifyV("BOTTOM")
+		tooltip.String:SetJustifyH("LEFT")
+		tooltip.String:SetJustifyV("CENTER")
 		tooltip.String:SetWidth(tooltip:GetWidth())
-		tooltip.String:SetHeight(50)
-		tooltip.String:SetWidth(235)
+		tooltip.String:SetHeight(80)
+		tooltip.String:SetWidth(120)
 		tooltip.String:SetText(" ");
-		tooltip.String:SetPoint("BOTTOMRIGHT", tooltip, "BOTTOMRIGHT", -10, 10);
+		tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -7)
 		tooltip.String:Show();
+	end
+
+	--pullTooltip
+	do
+		MethodDungeonTools.pullTooltip = CreateFrame("Frame", "MethodDungeonToolsPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
+		MethodDungeonTools.pullTooltip:SetClampedToScreen(true)
+		MethodDungeonTools.pullTooltip:SetFrameStrata("TOOLTIP")
+        MethodDungeonTools.pullTooltip.myHeight = 160
+		MethodDungeonTools.pullTooltip:SetSize(250, MethodDungeonTools.pullTooltip.myHeight)
+		MethodDungeonTools.pullTooltip:Hide()
+
+        MethodDungeonTools.pullTooltip.Model = CreateFrame("PlayerModel", nil, MethodDungeonTools.pullTooltip)
+        MethodDungeonTools.pullTooltip.Model:SetFrameLevel(1)
+
+        MethodDungeonTools.pullTooltip.Model.fac = 0
+        if true then
+            MethodDungeonTools.pullTooltip.Model:SetScript("OnUpdate",function (self,elapsed)
+                self.fac = self.fac + 0.5
+                if self.fac >= 360 then
+                    self.fac = 0
+                end
+                self:SetFacing(PI*2 / 360 * self.fac)
+                --print(tooltip.Model:GetModelFileID())
+            end)
+
+        else
+            MethodDungeonTools.pullTooltip.Model:SetPortraitZoom(1)
+            MethodDungeonTools.pullTooltip.Model:SetFacing(PI*2 / 360 * 2)
+        end
+
+        MethodDungeonTools.pullTooltip.Model:SetSize(110,110)
+        MethodDungeonTools.pullTooltip.Model:SetPoint("TOPLEFT", MethodDungeonTools.pullTooltip, "TOPLEFT",7,-7)
+
+        MethodDungeonTools.pullTooltip.topString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
+        MethodDungeonTools.pullTooltip.topString:SetFont("Fonts\\FRIZQT__.TTF", 10)
+        MethodDungeonTools.pullTooltip.topString:SetTextColor(1, 1, 1, 1);
+        MethodDungeonTools.pullTooltip.topString:SetJustifyH("LEFT")
+        MethodDungeonTools.pullTooltip.topString:SetJustifyV("TOP")
+        MethodDungeonTools.pullTooltip.topString:SetHeight(110)
+        MethodDungeonTools.pullTooltip.topString:SetWidth(130)
+        MethodDungeonTools.pullTooltip.topString:SetPoint("TOPLEFT", MethodDungeonTools.pullTooltip, "TOPLEFT", 110, -7)
+        MethodDungeonTools.pullTooltip.topString:Hide()
+
+        local heading = MethodDungeonTools.pullTooltip:CreateTexture(nil, "TOOLTIP")
+        heading:SetHeight(8)
+        heading:SetPoint("LEFT", 12, -30)
+        heading:SetPoint("RIGHT", MethodDungeonTools.pullTooltip, "RIGHT", -12, -30)
+        heading:SetTexture("Interface\\Tooltips\\UI-Tooltip-Border")
+        heading:SetTexCoord(0.81, 0.94, 0.5, 1)
+        heading:Show()
+
+        MethodDungeonTools.pullTooltip.botString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
+        local botString = MethodDungeonTools.pullTooltip.botString
+        botString:SetFont("Fonts\\FRIZQT__.TTF", 10)
+        botString:SetTextColor(1, 1, 1, 1);
+        botString:SetJustifyH("TOP")
+        botString:SetJustifyV("TOP")
+        botString:SetHeight(23)
+        botString:SetWidth(250)
+        botString.defaultText = "Enemy Forces: %d\nTotal: %d/%d"
+        botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
+        botString:Hide()
+
 	end
 	
 	--Blizzard Options
@@ -2777,6 +2989,21 @@ function initFrames()
 				order = 1,
 				width = "full",
 			},
+            tooltipSelect ={
+                type = 'select',
+                name = "Chose npc tooltip position",
+                desc = "Where the tooltip should be positioned",
+                values = {
+                    [1] = "Next to the npc",
+                    [2] = "In the bottom right corner",
+                },
+                get = function() return db.tooltipInCorner and 2 or 1 end,
+                set = function(_,newValue)
+                    if newValue == 1 then db.tooltipInCorner = false end
+                    if newValue == 2 then db.tooltipInCorner = true end
+                end,
+                style = 'radio',
+            }
 		}
 	}
 	MethodDungeonTools:RegisterOptions()

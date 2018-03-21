@@ -90,7 +90,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-    local name = "MethodDungeonToolsPullButton"..AceGUI:GetNextWidgetNum(Type);
+    local name = "MethodDungeonToolsNewPullButton"..AceGUI:GetNextWidgetNum(Type);
     local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
     button:SetHeight(height);
     button:SetWidth(width);

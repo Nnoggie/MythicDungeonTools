@@ -34,6 +34,26 @@ local methods = {
             end
         end
 
+        function self.callbacks.OnEnter()
+            --ViragDevTool_AddData(self,"pullButton"..self.index)
+            MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,4)
+            MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"TOPLEFT",-250,-(4+MethodDungeonTools.pullTooltip.myHeight))
+            local tooltipBottom = MethodDungeonTools.pullTooltip:GetBottom()
+            local mainFrameBottom = MethodDungeonTools.main_frame:GetBottom()
+            if tooltipBottom<mainFrameBottom then
+                MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"BOTTOMLEFT",0,(4+MethodDungeonTools.pullTooltip.myHeight))
+                MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",-250,-4)
+            end
+            MethodDungeonTools:ActivatePullTooltip(self.index)
+        end
+
+        function self.callbacks.OnLeave()
+            --model
+            MethodDungeonTools.pullTooltip.Model:Hide()
+            --topString
+            MethodDungeonTools.pullTooltip.topString:Hide()
+        end
+
 
 
         function self.callbacks.OnDragStart()
@@ -104,6 +124,8 @@ local methods = {
 
         self.frame:SetScript("OnClick", self.callbacks.OnClickNormal);
         self.frame:SetScript("OnKeyDown", self.callbacks.OnKeyDown);
+        self.frame:SetScript("OnEnter", self.callbacks.OnEnter);
+        self.frame:SetScript("OnLeave", self.callbacks.OnLeave);
         self.frame:EnableKeyboard(false);
         self.frame:SetMovable(true);
         self.frame:RegisterForDrag("LeftButton");
@@ -152,6 +174,7 @@ local methods = {
         for npcId,data in ipairs(enemyTable) do
             idx = idx + 1
             if not self.enemyPortraits[idx] then break end
+            self.enemyPortraits[idx].enemyData = data
             if data.displayId then
                 SetPortraitTexture(self.enemyPortraits[idx],data.displayId)
             else
@@ -261,7 +284,6 @@ local function Constructor()
     for i=1,maxPortraitCount do
         enemyPortraits[i] = button:CreateTexture(nil, "BACKGROUND", nil, 2)
         enemyPortraits[i]:SetSize(height-2,height-2)
-        SetPortraitTexture(enemyPortraits[i],76542)
         if i == 1 then
             enemyPortraits[i]:SetPoint("LEFT",icon,"RIGHT",-5,0)
         else
@@ -279,9 +301,9 @@ local function Constructor()
         enemyPortraits[i].fontString:SetTextColor(1, 1, 1, 1);
         enemyPortraits[i].fontString:SetWidth(25)
         enemyPortraits[i].fontString:SetHeight(10)
-        enemyPortraits[i].fontString:SetText("x5");
         enemyPortraits[i].fontString:SetPoint("BOTTOM", enemyPortraits[i], "BOTTOM", 0, 0);
         enemyPortraits[i].fontString:Hide();
+
 
     end
 
