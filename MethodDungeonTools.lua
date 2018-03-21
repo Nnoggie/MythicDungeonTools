@@ -1452,13 +1452,21 @@ function MethodDungeonTools:MakeMapTexture(frame)
                     tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30,0)
                     tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x,-tooltip.mySizes.y)
                     local bottomOffset = 0
+                    local rightOffset = 0
                     local tooltipBottom = tooltip:GetBottom()
                     local mainFrameBottom = MethodDungeonTools.main_frame:GetBottom()
                     if tooltipBottom<mainFrameBottom then
                         bottomOffset = tooltip.mySizes.y
                     end
-                    tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30,bottomOffset)
-                    tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x,-tooltip.mySizes.y+bottomOffset)
+                    --right side clipping
+                    local tooltipRight = tooltip:GetRight()
+                    local mainFrameRight = MethodDungeonTools.main_frame:GetRight()
+                    if tooltipRight>mainFrameRight then
+                        rightOffset = -(tooltip.mySizes.x+60)
+                    end
+
+                    tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+rightOffset,bottomOffset)
+                    tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x+rightOffset,-tooltip.mySizes.y+bottomOffset)
                 end
 				local id = dungeonEnemyBlips[mouseoverBlip].id
 				if id then
