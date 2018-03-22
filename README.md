@@ -1,8 +1,8 @@
 # MethodDungeonTools
 
-If you would like to support the development of the Method Dungeon Tools you can become a patron and reap special rewards!
+[![Foo](https://i.imgur.com/VqoOFgI.png)](https://www.patreon.com/methoddungeontools)
 
-[![Foo](http://www.google.com.au/images/nav_logo7.png)](https://www.patreon.com/methoddungeontools)
+If you would like to support the development of the Method Dungeon Tools you can become a patron and reap special rewards!
 
 World of Warcraft AddOn for planning and optimizing Mythic+ dungeon runs 
 
