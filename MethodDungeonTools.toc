@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 1.5
+## Version: 1.5.1
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: LibStub, LibUIDropDownMenu
 ## SavedVariables: MethodDungeonToolsDB
