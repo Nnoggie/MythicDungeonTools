@@ -659,7 +659,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		MethodDungeonTools:HideAllDialogs()
 		frame.ClearConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-		frame.ClearConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
+		frame.ClearConfirmationFrame.label:SetText("Clear "..currentPresetName.."?")
 		frame.ClearConfirmationFrame:Show()
 	end)
 
@@ -2729,7 +2729,7 @@ function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame.label:SetWidth(390)
 	frame.ClearConfirmationFrame.label:SetHeight(10)
 	--frame.DeleteConfirmationFrame.label:SetColor(1,0,0)
-	frame.ClearConfirmationFrame:AddChild(frame.DeleteConfirmationFrame.label)
+	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.label)
 
 	frame.ClearConfirmationFrame.OkayButton = AceGUI:Create("Button")
 	frame.ClearConfirmationFrame.OkayButton:SetText("Clear")
