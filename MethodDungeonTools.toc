@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 1.5.1
+## Version: 1.5.2
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: LibStub, LibUIDropDownMenu
 ## SavedVariables: MethodDungeonToolsDB
@@ -43,5 +43,6 @@ ReturntoKarazhanUpper.lua
 SeatoftheTriumvirate.lua
 BlackRookHold.lua
 TheArcway.lua
+toolbar.lua
 
 

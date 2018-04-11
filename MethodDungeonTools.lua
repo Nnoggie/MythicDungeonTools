@@ -78,6 +78,9 @@ local defaultSavedVars = {
 		minimap = {
 			hide = false,
 		},
+        toolbar ={
+            color = {r=1,g=1,b=1,a=1},
+        },
 		presets = {
 			[1] = {
 				[1] = {text="Default",value={}},
@@ -214,6 +217,7 @@ local tooltipLastShown
 local dungeonEnemyBlipMouseoverHighlight
 local dungeonEnemiesSelected = {}
 MethodDungeonTools.dungeonTotalCount = {}
+MethodDungeonTools.pencilBlips = {}
 
 
 local dungeonList = {		
@@ -392,6 +396,10 @@ MethodDungeonTools.dungeonMaps = {
 }
 MethodDungeonTools.dungeonBosses = {}
 MethodDungeonTools.dungeonEnemies = {}
+
+function MethodDungeonTools:GetDB()
+    return db
+end
 
 function MethodDungeonTools:ShowInterface()
 	if self.main_frame:IsShown() then
@@ -1125,9 +1133,54 @@ function MethodDungeonTools:IsCurrentPresetTeeming()
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 end
 
+---MethodDungeonTools.OnMouseDown
+---Handles mouse-down events on the map scrollframe
+MethodDungeonTools.OnMouseDown = function(self,button)
+	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+	if ( button == "LeftButton" and scrollFrame.zoomedIn ) then
+		scrollFrame.panning = true;
+		local x, y = GetCursorPosition();
+		scrollFrame.cursorX = x;
+		scrollFrame.cursorY = y;
+		scrollFrame.x = scrollFrame:GetHorizontalScroll();
+		scrollFrame.y = scrollFrame:GetVerticalScroll();
+		scrollFrame.moved = false;
+	end
+end
+
+--local here to be used for dev context menu
+local cursorX, cursorY
+---MethodDungeonTools.OnMouseUp
+---handles mouse-up events on the map scrollframe
+MethodDungeonTools.OnMouseUp = function(self,button)
+	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+	local frame = MethodDungeonTools.main_frame
+	if ( button == "LeftButton") then
+		frame.contextDropdown:Hide()
+		if scrollFrame.panning then scrollFrame.panning = false end
+		--handle clicks on enemy blips
+		if MouseIsOver(MethodDungeonToolsScrollFrame) then
+			for i=1,numDungeonEnemyBlips do
+				if MouseIsOver(dungeonEnemyBlips[i]) then
+					local isCTRLKeyDown = IsControlKeyDown()
+					MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,not dungeonEnemyBlips[i].selected,isCTRLKeyDown)
+					MethodDungeonTools:UpdateEnemyBlipSelection(i,nil,isCTRLKeyDown)
+					MethodDungeonTools:UpdateEnemiesSelected()
+					break;
+				end
+			end
+
+		end
+	elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
+		cursorX, cursorY = GetCursorPosition()
+		L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
+		frame.contextDropdown:Show()
+	end
+end
+
 function MethodDungeonTools:MakeMapTexture(frame)
     MethodDungeonTools.contextMenuList = {}
-	local cursorX, cursorY
+
     if db.devMode then
         tinsert(MethodDungeonTools.contextMenuList, {
             text = "Copy Position",
@@ -1337,43 +1390,8 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		
 		--PAN
 		frame.scrollFrame:EnableMouse(true)
-		frame.scrollFrame:SetScript("OnMouseDown", function(self, button)
-			local scrollFrame = MethodDungeonTools.main_frame.scrollFrame			
-			if ( button == "LeftButton" and scrollFrame.zoomedIn ) then
-				scrollFrame.panning = true;
-				local x, y = GetCursorPosition();
-				scrollFrame.cursorX = x;
-				scrollFrame.cursorY = y;
-				scrollFrame.x = scrollFrame:GetHorizontalScroll();
-				scrollFrame.y = scrollFrame:GetVerticalScroll();
-				scrollFrame.moved = false;
-			end
-		end)
-
-		frame.scrollFrame:SetScript("OnMouseUp", function(self, button)			
-			local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-			if ( button == "LeftButton") then
-                frame.contextDropdown:Hide()
-				if scrollFrame.panning then scrollFrame.panning = false end
-				--handle clicks on enemy blips
-				if MouseIsOver(MethodDungeonToolsScrollFrame) then
-					for i=1,numDungeonEnemyBlips do
-						if MouseIsOver(dungeonEnemyBlips[i]) then
-							local isCTRLKeyDown = IsControlKeyDown() 
-							MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,not dungeonEnemyBlips[i].selected,isCTRLKeyDown)
-							MethodDungeonTools:UpdateEnemyBlipSelection(i,nil,isCTRLKeyDown)
-							MethodDungeonTools:UpdateEnemiesSelected()	
-							break;
-						end
-					end
-					
-				end
-			elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
-				cursorX, cursorY = GetCursorPosition()
-				L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
-                frame.contextDropdown:Show()
-			end
-		end)
+		frame.scrollFrame:SetScript("OnMouseDown", MethodDungeonTools.OnMouseDown)
+		frame.scrollFrame:SetScript("OnMouseUp", MethodDungeonTools.OnMouseUp)
 		
 		frame.scrollFrame:SetScript("OnHide", function() 
 			tooltipLastShown = nil
@@ -3016,6 +3034,8 @@ function initFrames()
 	}
 	MethodDungeonTools:RegisterOptions()
 
+
+	MethodDungeonTools:initToolbar(main_frame)
 	main_frame:Hide();
 end
 
