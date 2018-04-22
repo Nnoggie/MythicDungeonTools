@@ -3017,10 +3017,10 @@ function initFrames()
 			},
             tooltipSelect ={
                 type = 'select',
-                name = "Chose npc tooltip position",
+                name = "Choose NPC tooltip position",
                 desc = "Where the tooltip should be positioned",
                 values = {
-                    [1] = "Next to the npc",
+                    [1] = "Next to the NPC",
                     [2] = "In the bottom right corner",
                 },
                 get = function() return db.tooltipInCorner and 2 or 1 end,
