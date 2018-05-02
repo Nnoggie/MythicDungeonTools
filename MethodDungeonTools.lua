@@ -1922,6 +1922,7 @@ function MethodDungeonTools:OpenImportPresetDialog()
 	MethodDungeonTools:HideAllDialogs()
 	MethodDungeonTools.main_frame.presetImportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 	MethodDungeonTools.main_frame.presetImportFrame:Show()
+	MethodDungeonTools.main_frame.presetImportBox:SetText("")
 	MethodDungeonTools.main_frame.presetImportBox:SetFocus()
 end
 
