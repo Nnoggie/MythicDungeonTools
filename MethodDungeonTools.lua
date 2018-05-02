@@ -955,6 +955,7 @@ local lastModelId
 local cloneOffset = 0
 
 function MethodDungeonTools:ZoomMap(delta,resetZoom)
+    print("zooming")
 	local scrollFrame = MethodDungeonToolsScrollFrame;
 	local oldScrollH = scrollFrame:GetHorizontalScroll();
 	local oldScrollV = scrollFrame:GetVerticalScroll();
