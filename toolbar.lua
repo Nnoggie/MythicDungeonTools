@@ -224,57 +224,121 @@ function MethodDungeonTools:RestoreScrollframeScripts()
     frame.scrollFrame:SetScript("OnMouseUp", MethodDungeonTools.OnMouseUp)
 end
 
-function MethodDungeonTools:StartPencilDrawing()
+---returns cursor position relative to the map frame
+function MethodDungeonTools:GetCursorPosition()
     local frame = MethodDungeonTools.main_frame
     local scrollFrame = frame.scrollFrame
-    local relativeFrame = UIParent		--UIParent
+    local relativeFrame = UIParent      --UIParent
     local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-    local lastmx = nil
-    local lastmy = nil
-    local timeSinceLast = 0
+    local cursorX, cursorY = GetCursorPosition()
+    local mapScale = mapPanelFrame:GetScale()
+    local scrollH = scrollFrame:GetHorizontalScroll();
+    local scrollV = scrollFrame:GetVerticalScroll();
+    local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
+    local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
+    frameX=(frameX/mapScale)+scrollH
+    frameY=(frameY/mapScale)+scrollV
+    return frameX,-frameY
+end
+
+
+local threshold = 10
+function MethodDungeonTools:StartPencilDrawing()
+    local frame = MethodDungeonTools.main_frame
+    local oldx,oldy
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
-        timeSinceLast = timeSinceLast + tick
-        if timeSinceLast>0.005 then
-            timeSinceLast = 0
-            if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
-            local cursorX, cursorY = GetCursorPosition()
-            local mapScale = mapPanelFrame:GetScale()
-            local scrollH = scrollFrame:GetHorizontalScroll();
-            local scrollV = scrollFrame:GetVerticalScroll();
-            local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-            local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-            frameX=(frameX/mapScale)+scrollH
-            frameY=(frameY/mapScale)+scrollV
-            frameX,frameY = floor(frameX),floor(frameY)
-            --credit to qooning for this part
-            if lastmx ~= nil then
-                local step = 3
-                while (lastmx - frameX)^2 + (lastmy - frameY)^2 > 25 do --interpolate
-                    local dx = (frameX - lastmx)
-                    local dy = (frameY - lastmy)
-                    local n = math.sqrt(dx^2 + dy^2)
-                    dx = dx / n
-                    dy = dy / n
-                    lastmx = lastmx + dx * step
-                    lastmy = lastmy + dy * step
-                    print("iteration")
-                    MethodDungeonTools:DrawPencilPoint(lastmx, -lastmy)
-                end
-            end
-            lastmx = frameX
-            lastmy = frameY
-            MethodDungeonTools:DrawPencilPoint(frameX, -frameY)
+        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        x,y = floor(x),floor(y)
+        local scale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
+        threshold = threshold * 1/scale
+        if not oldx or not oldy then
+            oldx,oldy = x,y
+            return
+        end
+        if (oldx and math.abs(x-oldx)>threshold) or (oldy and math.abs(y-oldy)>threshold)  then
+            MethodDungeonTools:DrawLine(x,y,oldx,oldy,1,db.toolbar.color)
+            oldx,oldy = x,y
         end
     end)
 end
+
+
 
 local prevBlip
 function MethodDungeonTools:StopPencilDrawing()
     local frame = MethodDungeonTools.main_frame
     frame.toolbar:SetScript("OnUpdate",nil)
     prevBlip = nil
-    ViragDevTool_AddData(MethodDungeonTools.pencilBlips)
+    --ViragDevTool_AddData(MethodDungeonTools.pencilBlips)
 end
+
+---Projection
+function MethodDungeonTools.GetCoordsForTransform(A, B, C, D, E, F)
+    -- http://www.wowwiki.com/SetTexCoord_Transformations
+    local det = A*E - B*D;
+    local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy;
+
+    ULx, ULy = ( B*F - C*E ) / det, ( -(A*F) + C*D ) / det;
+    LLx, LLy = ( -B + B*F - C*E ) / det, ( A - A*F + C*D ) / det;
+    URx, URy = ( E + B*F - C*E ) / det, ( -D - A*F + C*D ) / det;
+    LRx, LRy = ( E - B + B*F - C*E ) / det, ( -D + A -(A*F) + C*D ) / det;
+
+    return ULx, ULy, LLx, LLy, URx, URy, LRx, LRy;
+end;
+
+---DrawLine
+function MethodDungeonTools:DrawLine(x,y,a,b,size,color)
+    --print("Drawing Line from: "..x,y.." to "..oldx,oldy)
+
+    local ix = math.floor(x);
+    local iy = math.floor(y);
+    local ia = math.floor(a);
+    local ib = math.floor(b);
+
+    local cx, cy = (ix + ia)/2, (iy + ib)/2;
+    local dx, dy = ix-ia, iy-ib;
+    local dmax = math.max(math.abs(dx),math.abs(dy));
+    local dr = math.sqrt(dx*dx + dy*dy);
+    local scale = 1/dmax*32;
+    local sinA, cosA = dy/dr*scale, dx/dr*scale;
+    if dr == 0 then
+        return nil;
+    end
+
+    local pix;
+    --if #(self.junkLines) > 0 then
+    --  pix = table.remove(self.junkLines); -- Recycling ftw!
+    --else
+    pix = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY");
+    pix:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\line.tga");
+    --end;
+    pix:ClearAllPoints();
+    pix:SetPoint("CENTER", MethodDungeonTools.main_frame.mapPanelTile1, "TOPLEFT", cx, cy)
+    pix:SetWidth(dmax); pix:SetHeight(dmax)
+    pix:SetTexCoord(MethodDungeonTools.GetCoordsForTransform(
+            cosA, sinA, -(cosA+sinA)/2+0.5,
+            -sinA, cosA, -(-sinA+cosA)/2+0.5))
+    pix:Show()
+    pix["lax"] = ix
+    pix["lay"] = iy
+    pix["lbx"] = ia
+    pix["lby"] = ib
+    pix["r"] = color.r
+    pix["g"] = color.g
+    pix["b"] = color.b
+    pix["a"] = color.a
+
+    if index then
+        --self.mainLines[index] = pix
+    else
+        --table.insert(self.mainLines, pix)
+    end
+
+    --return pix, #self.mainLines
+
+end
+
 
 ---DrawPencilPoint
 ---Draw a point on the map
@@ -334,6 +398,10 @@ function MethodDungeonTools:DrawPencilPoint(frameX, frameY)
         currLine.Fill1:SetEndPoint("CENTER",prevBlip, 0, 0)
         currLine.Point2:SetPoint("CENTER",prevBlip, 0, 0)
     end
+
+    --artpad
+
+
 
     prevBlip = currentBlip
 end

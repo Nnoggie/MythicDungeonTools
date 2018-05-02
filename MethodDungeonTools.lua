@@ -13,7 +13,6 @@ local methodColor = "|cFFF49D38"
 
 local Dialog = LibStub("LibDialog-1.0")
 local dropDownLib,_ = LibStub("PhanxConfig-Dropdown")
-local HBD = LibStub("HereBeDragons-1.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local icon = LibStub("LibDBIcon-1.0")
@@ -40,7 +39,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 	end,
 })
 
-
+local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
 
 -- Made by: Nnogga - Tarren Mill <Method>, 2017
 
@@ -793,10 +792,12 @@ end
 
 function MethodDungeonTools:OnPan(cursorX, cursorY)
 	local scrollFrame = MethodDungeonToolsScrollFrame
-	local mainFrame = MethodDungeonToolsMapPanelFrame
 
-	local deltaX = scrollFrame.cursorX - cursorX
-	local deltaY = cursorY - scrollFrame.cursorY
+    local scale = MethodDungeonToolsMapPanelFrame:GetScale()/1.5
+
+
+	local deltaX = (scrollFrame.cursorX - cursorX)/scale
+	local deltaY = (cursorY - scrollFrame.cursorY)/scale
 
 	if(abs(deltaX) >= 1 or abs(deltaY) >= 1)then
 		local newHorizontalPosition = max(0, deltaX + scrollFrame:GetHorizontalScroll());
@@ -955,7 +956,6 @@ local lastModelId
 local cloneOffset = 0
 
 function MethodDungeonTools:ZoomMap(delta,resetZoom)
-    print("zooming")
 	local scrollFrame = MethodDungeonToolsScrollFrame;
 	local oldScrollH = scrollFrame:GetHorizontalScroll();
 	local oldScrollV = scrollFrame:GetVerticalScroll();
@@ -966,7 +966,7 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	local newScale = oldScale + delta * 0.3;
 
 	newScale = max(1, newScale);
-	newScale = min(2.2, newScale);
+	newScale = min(7, newScale);
 	if resetZoom then newScale = 1 end
 
 	mainFrame:SetScale(newScale)
@@ -1670,7 +1670,7 @@ function MethodDungeonTools:UpdateDungeonBossButtons()
 				local _, _, _, displayInfo = EJ_GetCreatureInfo(1, encounterID);
 				dungeonBossButtons[i].displayInfo = displayInfo;
 				if ( displayInfo ) then
-					SetPortraitTexture(dungeonBossButtons[i].bgImage, displayInfo);
+                    SetPortraitTextureFromCreatureDisplayID(dungeonBossButtons[i].bgImage, displayInfo);
 					dungeonBossButtons[i]:Show()
 				else
 					dungeonBossButtons[i].bgImage:SetTexture("DoesNotExist");
@@ -1776,39 +1776,45 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						
 						
 						--patrol waypoints/lines
-						if clone.patrol then
-							if clone.patrolFacing then
-								if not dungeonEnemyBlips[idx].patrolIndicator then
-									dungeonEnemyBlips[idx].patrolIndicator = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator","BACKGROUND")
-								end
-								dungeonEnemyBlips[idx].patrolIndicator:SetDrawLayer("ARTWORK", 6)
-								dungeonEnemyBlips[idx].patrolIndicator:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
-								dungeonEnemyBlips[idx].patrolIndicator:SetWidth(18)
-								dungeonEnemyBlips[idx].patrolIndicator:SetHeight(18)
-								dungeonEnemyBlips[idx].patrolIndicator:SetVertexColor(1,1,1,0.8)
-								local xoffset = clone.patrolFacing < 2/4*(pi) and -0.5 or 0
-								dungeonEnemyBlips[idx].patrolIndicator:SetPoint("BOTTOM",dungeonEnemyBlips[idx],"CENTER",xoffset,-9.5)
-								dungeonEnemyBlips[idx].patrolIndicator:SetRotation(clone.patrolFacing,0.5,0.8)
-								dungeonEnemyBlips[idx].patrolIndicator:Hide()
-							end
+                        if clone.patrol then
+                            local distance = 5
+                            local arrowScale = 0.7
+                            if clone.patrolFacing then
+                                if not dungeonEnemyBlips[idx].patrolIndicator then
+                                    dungeonEnemyBlips[idx].patrolIndicator = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator","BACKGROUND")
+                                end
+                                dungeonEnemyBlips[idx].patrolIndicator:SetDrawLayer("ARTWORK", 6)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
+                                dungeonEnemyBlips[idx].patrolIndicator:SetWidth(18)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetHeight(18)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetScale(arrowScale)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetVertexColor(1,1,1,0.8)
+                                local xoffset = distance * math.cos(clone.patrolFacing+math.pi*1/2)
+                                local yoffset = distance * math.sin(clone.patrolFacing+math.pi*1/2)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset,yoffset)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetRotation(clone.patrolFacing)
+                                dungeonEnemyBlips[idx].patrolIndicator:Hide()
+                            end
 
-							if clone.patrolFacing2 then
-								if not dungeonEnemyBlips[idx].patrolIndicator2 then
-									dungeonEnemyBlips[idx].patrolIndicator2 = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator2","BACKGROUND")
-								end
-								dungeonEnemyBlips[idx].patrolIndicator2:SetDrawLayer("ARTWORK", 6)
-								dungeonEnemyBlips[idx].patrolIndicator2:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
-								dungeonEnemyBlips[idx].patrolIndicator2:SetWidth(18)
-								dungeonEnemyBlips[idx].patrolIndicator2:SetHeight(18)
-								dungeonEnemyBlips[idx].patrolIndicator2:SetVertexColor(1,1,1,0.8)
-								local xoffset = clone.patrolFacing2 < 2/4*(pi) and -0.5 or 0
-								dungeonEnemyBlips[idx].patrolIndicator2:SetPoint("BOTTOM",dungeonEnemyBlips[idx],"CENTER",xoffset,-9.5)
-								dungeonEnemyBlips[idx].patrolIndicator2:SetRotation(clone.patrolFacing2,0.5,0.8)
-								dungeonEnemyBlips[idx].patrolIndicator2:Hide()
-								dungeonEnemyBlips[idx].patrolIndicator2.active = true
-							elseif dungeonEnemyBlips[idx].patrolIndicator2 then
-								dungeonEnemyBlips[idx].patrolIndicator2.active = nil
-							end
+                            if clone.patrolFacing2 then
+                                if not dungeonEnemyBlips[idx].patrolIndicator2 then
+                                    dungeonEnemyBlips[idx].patrolIndicator2 = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator2","BACKGROUND")
+                                end
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetDrawLayer("ARTWORK", 6)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetWidth(18)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetHeight(18)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetScale(arrowScale)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetVertexColor(1,1,1,0.8)
+                                local xoffset = distance * math.cos(clone.patrolFacing2+math.pi*1/2)
+                                local yoffset = distance * math.sin(clone.patrolFacing2+math.pi*1/2)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset,yoffset)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetRotation(clone.patrolFacing2)
+                                dungeonEnemyBlips[idx].patrolIndicator2:Hide()
+                                dungeonEnemyBlips[idx].patrolIndicator2.active = true
+                            elseif dungeonEnemyBlips[idx].patrolIndicator2 then
+                                dungeonEnemyBlips[idx].patrolIndicator2.active = nil
+                            end
 
 
 							dungeonEnemyBlips[idx].patrol = dungeonEnemyBlips[idx].patrol or {}
@@ -2050,16 +2056,13 @@ end
 
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
-function MethodDungeonTools:UpdateToDungeon(dungeonIdx,forceZone) --on open and dungeon change from dropdown TODO: decide if needed
+function MethodDungeonTools:UpdateToDungeon(dungeonIdx)
     local frame = MethodDungeonTools.main_frame
     db.currentDungeonIdx = dungeonIdx
     --populate 2nd dropdown with apropritate list of sublevels
     frame.DungeonSublevelSelectDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
     frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][1])
 
-	local zoneId = HBD:GetPlayerZone()
-	--local dungIdx = zoneIdToIdx[zoneId]
-	--if forceZone and dungIdx then db.currentDungeonIdx = dungIdx end TODO HERE
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
 	frame.DungeonSelectDropdown:SetValue(dungeonList[db.currentDungeonIdx])
 	--populate 2nd dropdown with apropritate list of sublevels

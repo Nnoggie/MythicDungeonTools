@@ -1,7 +1,7 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 1.5.2
+## Version: 1.6.0
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: LibStub, LibUIDropDownMenu
 ## SavedVariables: MethodDungeonToolsDB
@@ -11,7 +11,6 @@
 #@no-lib-strip@
 libs\LibStub-1.0\LibStub.lua
 libs\PhanxConfig-Dropdown\PhanxConfig-Dropdown.lua
-libs\HereBeDragons-1.0\HereBeDragons-1.0.lua
 libs\AceAddon-3.0\AceAddon-3.0.xml
 libs\AceDB-3.0\AceDB-3.0.xml
 libs\AceGUI-3.0\AceGUI-3.0.xml
