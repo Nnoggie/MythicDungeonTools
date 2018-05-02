@@ -79,6 +79,7 @@ local defaultSavedVars = {
 		},
         toolbar ={
             color = {r=1,g=1,b=1,a=1},
+            brushSize = 3,
         },
 		presets = {
 			[1] = {
@@ -1727,6 +1728,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						dungeonEnemyBlips[idx].level = data["level"]
 						dungeonEnemyBlips[idx]:SetDrawLayer("ARTWORK", 5)
 						dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
+						dungeonEnemyBlips[idx]:SetAlpha(1)
 						dungeonEnemyBlips[idx]:SetWidth(10*data["scale"])
 						dungeonEnemyBlips[idx]:SetHeight(10*data["scale"])
 						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)

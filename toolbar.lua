@@ -164,6 +164,19 @@ function MethodDungeonTools:initToolbar(frame)
     end)
     frame.toolbar.widgetGroup:AddChild(eraser)
 
+    ---size slider
+    local slider = AceGUI:Create("Slider")
+    slider:SetSliderValues(1,15,1)
+    slider:SetWidth(120)
+    slider:SetHeight(20)
+    slider.label:SetHeight(0)
+    slider:SetValue(db.toolbar.brushSize)
+    slider:SetCallback("OnValueChanged",function(widget,callbackName,value)
+        local size = tonumber(value)
+        db.toolbar.brushSize = size or db.toolbar.brushSize
+    end)
+    frame.toolbar.widgetGroup:AddChild(slider)
+
 
     frame.toolbar:SetSize(sizex, sizey)
     frame.toolbar:SetPoint("TOP", frame, "TOP", 0, 0)
@@ -249,7 +262,7 @@ function MethodDungeonTools:StartPencilDrawing()
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local x,y = MethodDungeonTools:GetCursorPosition()
-        x,y = floor(x),floor(y)
+        --x,y = floor(x),floor(y)
         local scale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
         threshold = threshold * 1/scale
         if not oldx or not oldy then
@@ -257,151 +270,37 @@ function MethodDungeonTools:StartPencilDrawing()
             return
         end
         if (oldx and math.abs(x-oldx)>threshold) or (oldy and math.abs(y-oldy)>threshold)  then
-            MethodDungeonTools:DrawLine(x,y,oldx,oldy,1,db.toolbar.color)
+            MethodDungeonTools:DrawLine(oldx,oldy,x,y,db.toolbar.brushSize-0.8,db.toolbar.color,true)
             oldx,oldy = x,y
         end
     end)
 end
 
 
-
-local prevBlip
 function MethodDungeonTools:StopPencilDrawing()
     local frame = MethodDungeonTools.main_frame
     frame.toolbar:SetScript("OnUpdate",nil)
-    prevBlip = nil
-    --ViragDevTool_AddData(MethodDungeonTools.pencilBlips)
 end
-
----Projection
-function MethodDungeonTools.GetCoordsForTransform(A, B, C, D, E, F)
-    -- http://www.wowwiki.com/SetTexCoord_Transformations
-    local det = A*E - B*D;
-    local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy;
-
-    ULx, ULy = ( B*F - C*E ) / det, ( -(A*F) + C*D ) / det;
-    LLx, LLy = ( -B + B*F - C*E ) / det, ( A - A*F + C*D ) / det;
-    URx, URy = ( E + B*F - C*E ) / det, ( -D - A*F + C*D ) / det;
-    LRx, LRy = ( E - B + B*F - C*E ) / det, ( -D + A -(A*F) + C*D ) / det;
-
-    return ULx, ULy, LLx, LLy, URx, URy, LRx, LRy;
-end;
 
 ---DrawLine
-function MethodDungeonTools:DrawLine(x,y,a,b,size,color)
+function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth)
     --print("Drawing Line from: "..x,y.." to "..oldx,oldy)
+    local line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    line:SetDrawLayer("ARTWORK", 3)
+    line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
+    line:SetVertexColor(color.r,color.g,color.b,color.a)
+    DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, 40/30,"TOPLEFT")
 
-    local ix = math.floor(x);
-    local iy = math.floor(y);
-    local ia = math.floor(a);
-    local ib = math.floor(b);
-
-    local cx, cy = (ix + ia)/2, (iy + ib)/2;
-    local dx, dy = ix-ia, iy-ib;
-    local dmax = math.max(math.abs(dx),math.abs(dy));
-    local dr = math.sqrt(dx*dx + dy*dy);
-    local scale = 1/dmax*32;
-    local sinA, cosA = dy/dr*scale, dx/dr*scale;
-    if dr == 0 then
-        return nil;
+    if smooth == true then
+        local circle = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+        circle:SetDrawLayer("ARTWORK", 4)
+        circle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
+        circle:SetVertexColor(color.r,color.g,color.b,color.a)
+        circle:SetWidth(1.4*size)
+        circle:SetHeight(1.4*size)
+        circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+        circle:Show()
     end
-
-    local pix;
-    --if #(self.junkLines) > 0 then
-    --  pix = table.remove(self.junkLines); -- Recycling ftw!
-    --else
-    pix = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY");
-    pix:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\line.tga");
-    --end;
-    pix:ClearAllPoints();
-    pix:SetPoint("CENTER", MethodDungeonTools.main_frame.mapPanelTile1, "TOPLEFT", cx, cy)
-    pix:SetWidth(dmax); pix:SetHeight(dmax)
-    pix:SetTexCoord(MethodDungeonTools.GetCoordsForTransform(
-            cosA, sinA, -(cosA+sinA)/2+0.5,
-            -sinA, cosA, -(-sinA+cosA)/2+0.5))
-    pix:Show()
-    pix["lax"] = ix
-    pix["lay"] = iy
-    pix["lbx"] = ia
-    pix["lby"] = ib
-    pix["r"] = color.r
-    pix["g"] = color.g
-    pix["b"] = color.b
-    pix["a"] = color.a
-
-    if index then
-        --self.mainLines[index] = pix
-    else
-        --table.insert(self.mainLines, pix)
-    end
-
-    --return pix, #self.mainLines
 
 end
 
-
----DrawPencilPoint
----Draw a point on the map
-local delta = 0
-function MethodDungeonTools:DrawPencilPoint(frameX, frameY)
-    --print("Drawing Point at:",frameX,frameY)
-    local currentBlip
-    local idx = 0
-    for _,blip in pairs(MethodDungeonTools.pencilBlips) do
-        idx = idx + 1
-        if (blip.frameX <= frameX+delta and blip.frameX >= frameX-delta) and (blip.frameY <= frameY+delta and blip.frameY >= frameY-delta) then
-            currentBlip = blip
-            currentBlip.frameX,currentBlip.frameY = frameX,frameY
-            print("from storage")
-        end
-    end
-    if not currentBlip then
-        currentBlip = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsPencilBlip"..idx,"BACKGROUND")
-        currentBlip.frameX,currentBlip.frameY = frameX,frameY
-        table.insert(MethodDungeonTools.pencilBlips,currentBlip)
-    end
-
-    local  r, g, b, a = db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b, db.toolbar.color.a
-    currentBlip:SetDrawLayer("ARTWORK", 4)
-    --blip:SetTexture("Interface\\Artifacts\\_Artifacts-DependencyBar-Fill")
-    currentBlip:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
-    currentBlip:SetVertexColor(r,g,b,a)
-    currentBlip:SetWidth(3)
-    currentBlip:SetHeight(3)
-    currentBlip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",frameX,frameY)
-    currentBlip:Show()
-
-
-    --Timosh
-    if prevBlip and false then
-        local currLine
-        currentBlip.line = currentBlip.line or CreateFrame("Frame",nil,MethodDungeonTools.main_frame.mapPanelFrame)
-        currLine = currentBlip.line
-        currLine:SetPoint("TOPLEFT")
-        currLine:SetSize(1,1)
-
-        currLine.Fill1 = currLine:CreateLine(nil, "BACKGROUND", nil, -5)
-        currLine.Fill1:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
-
-        currLine.Fill1:SetVertexColor(r,g,b,a)
-        currLine.Fill1:SetAlpha(1)
-        currLine.Fill1:SetThickness(floor(3))
-
-        currLine.Point1 = currLine.Point1 or currLine:CreateTexture()
-        currLine.Point1:SetSize(1,1)
-        currLine.Point2 = currLine.Point2 or currLine:CreateTexture()
-        currLine.Point2:SetSize(1,1)
-
-        currLine.Fill1:SetStartPoint("CENTER",currentBlip, 0, 0)
-        currLine.Point1:SetPoint("CENTER",currentBlip, 0, 0)
-
-        currLine.Fill1:SetEndPoint("CENTER",prevBlip, 0, 0)
-        currLine.Point2:SetPoint("CENTER",prevBlip, 0, 0)
-    end
-
-    --artpad
-
-
-
-    prevBlip = currentBlip
-end
