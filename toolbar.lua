@@ -270,7 +270,7 @@ function MethodDungeonTools:StartPencilDrawing()
             return
         end
         if (oldx and math.abs(x-oldx)>threshold) or (oldy and math.abs(y-oldy)>threshold)  then
-            MethodDungeonTools:DrawLine(oldx,oldy,x,y,db.toolbar.brushSize-0.8,db.toolbar.color,true)
+            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true)
             oldx,oldy = x,y
         end
     end)
@@ -301,6 +301,5 @@ function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth)
         circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
         circle:Show()
     end
-
 end
 
