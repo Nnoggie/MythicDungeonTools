@@ -31,6 +31,7 @@ function MethodDungeonTools:initToolbar(frame)
     frame.toolbar:SetScript("OnHide",function()
         MethodDungeonTools:UpdateSelectedToolbarTool(nil)
     end)
+    MethodDungeonTools:CreateToolbarTooltip(frame.toolbar)
 
     frame.toolbar.toggleButton:SetScript("OnClick", function()
         if frame.toolbar:IsShown() then
@@ -87,6 +88,26 @@ function MethodDungeonTools:initToolbar(frame)
     local widgetWidth = 24
     local widgetHeight = 65
 
+    ---back
+    local back = AceGUI:Create("Icon")
+    back:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.5,0.75,0.5,0.75)
+    back:SetWidth(widgetWidth)
+    back:SetImageSize(20,20)
+    back:SetCallback("OnClick",function (widget,callbackName)
+
+    end)
+    frame.toolbar.widgetGroup:AddChild(back)
+
+    ---forward
+    local forward = AceGUI:Create("Icon")
+    forward:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.75,1,0.5,0.75)
+    forward:SetWidth(widgetWidth)
+    forward:SetImageSize(20,20)
+    forward:SetCallback("OnClick",function (widget,callbackName)
+
+    end)
+    frame.toolbar.widgetGroup:AddChild(forward)
+
     ---colorPicker
     local colorPicker = AceGUI:Create("ColorPicker")
     colorPicker:SetHasAlpha(true)
@@ -96,7 +117,75 @@ function MethodDungeonTools:initToolbar(frame)
         colorPicker:SetColor(r, g, b, a)
     end)
     colorPicker:SetWidth(widgetWidth)
+    colorPicker.tooltipText = "colorpicker"
+    colorPicker:SetCallback("OnEnter",function(widget,callbackName)
+        MethodDungeonTools:ToggleToolbarTooltip(true,widget)
+    end)
+    colorPicker:SetCallback("OnLeave",function()
+        MethodDungeonTools:ToggleToolbarTooltip(false)
+    end)
     frame.toolbar.widgetGroup:AddChild(colorPicker)
+
+    local sizeIndicator
+    ---minus
+    local minus = AceGUI:Create("Icon")
+    minus:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0,0.25,0.5,0.75)
+    minus:SetWidth(widgetWidth)
+    minus:SetImageSize(20,20)
+    minus:SetCallback("OnClick",function (widget,callbackName)
+        db.toolbar.brushSize = db.toolbar.brushSize - 1
+        if db.toolbar.brushSize < 1 then db.toolbar.brushSize = 1 end
+        sizeIndicator:SetText(db.toolbar.brushSize)
+    end)
+    minus.tooltipText = "decrease brush size"
+    minus:SetCallback("OnEnter",function(widget,callbackName)
+        MethodDungeonTools:ToggleToolbarTooltip(true,widget)
+    end)
+    minus:SetCallback("OnLeave",function()
+        MethodDungeonTools:ToggleToolbarTooltip(false)
+    end)
+    frame.toolbar.widgetGroup:AddChild(minus)
+
+    ---sizeIndicator
+    sizeIndicator = AceGUI:Create("EditBox")
+    sizeIndicator:SetWidth(30)
+    sizeIndicator:DisableButton(true)
+    sizeIndicator:SetMaxLetters(2)
+    sizeIndicator.editbox:SetNumeric(true)
+    sizeIndicator:SetText(db.toolbar.brushSize)
+    local function updateBrushSize(size)
+        db.toolbar.brushSize = size
+    end
+    sizeIndicator:SetCallback("OnEnterPressed",function (widget,callback,text)
+        sizeIndicator:ClearFocus()
+        local size = tonumber(text)
+        updateBrushSize(size)
+    end)
+    sizeIndicator:SetCallback("OnTextChanged",function (widget,callback,text)
+        local size = tonumber(text)
+        updateBrushSize(size)
+    end)
+    --Enable mousewheel scrolling
+    sizeIndicator.editbox:EnableMouseWheel(true)
+    sizeIndicator.editbox:SetScript("OnMouseWheel", function(self, delta)
+        local newSize = db.toolbar.brushSize+delta
+        if newSize<1 then newSize = 1 end
+        if newSize>99 then newSize = 99 end
+        db.toolbar.brushSize = newSize
+        sizeIndicator:SetText(db.toolbar.brushSize)
+    end)
+    frame.toolbar.widgetGroup:AddChild(sizeIndicator)
+
+    ---plus
+    local plus = AceGUI:Create("Icon")
+    plus:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.25,0.5,0.5,0.75)
+    plus:SetWidth(widgetWidth)
+    plus:SetImageSize(20,20)
+    plus:SetCallback("OnClick",function (widget,callbackName)
+        db.toolbar.brushSize = db.toolbar.brushSize + 1
+        sizeIndicator:SetText(db.toolbar.brushSize)
+    end)
+    frame.toolbar.widgetGroup:AddChild(plus)
 
 
     ---pencil
@@ -109,6 +198,17 @@ function MethodDungeonTools:initToolbar(frame)
         if currentTool == "pencil" then MethodDungeonTools:UpdateSelectedToolbarTool() else MethodDungeonTools:UpdateSelectedToolbarTool("pencil") end
     end)
     frame.toolbar.widgetGroup:AddChild(pencil)
+
+    ---line
+    local line = AceGUI:Create("Icon")
+    line:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0,0.25,0.75,1)
+    line:SetWidth(widgetWidth)
+    line:SetImageSize(20,20)
+    toolbarTools["line"] = line
+    line:SetCallback("OnClick",function (widget,callbackName)
+        if currentTool == "line" then MethodDungeonTools:UpdateSelectedToolbarTool() else MethodDungeonTools:UpdateSelectedToolbarTool("line") end
+    end)
+    frame.toolbar.widgetGroup:AddChild(line)
 
     ---arrow
     local arrow = AceGUI:Create("Icon")
@@ -175,13 +275,44 @@ function MethodDungeonTools:initToolbar(frame)
         local size = tonumber(value)
         db.toolbar.brushSize = size or db.toolbar.brushSize
     end)
-    frame.toolbar.widgetGroup:AddChild(slider)
+    --frame.toolbar.widgetGroup:AddChild(slider)
 
 
     frame.toolbar:SetSize(sizex, sizey)
     frame.toolbar:SetPoint("TOP", frame, "TOP", 0, 0)
 
     MethodDungeonTools:UpdateSelectedToolbarTool()
+end
+
+---CreateToolbarTooltip
+function MethodDungeonTools:CreateToolbarTooltip(frame)
+    frame.tooltip = CreateFrame("Frame", "MethodDungeonToolsToolbarTooltip", UIParent, "TooltipBorderedFrameTemplate")
+    frame.tooltip:SetClampedToScreen(true)
+    frame.tooltip:SetFrameStrata("TOOLTIP")
+    frame.tooltip:SetSize(90, 25)
+    frame.tooltip:Hide()
+
+    frame.tooltip.text = frame.tooltip:CreateFontString("MethodDungeonToolsToolbarTooltipString")
+    frame.tooltip.text:SetFont("Fonts\\FRIZQT__.TTF", 12)
+    frame.tooltip.text:SetTextColor(1, 1, 1, 1);
+    frame.tooltip.text:SetJustifyH("CENTER")
+    frame.tooltip.text:SetJustifyV("TOP")
+    frame.tooltip.text:SetHeight(30)
+    frame.tooltip.text:SetWidth(90)
+    frame.tooltip.text:SetPoint("TOPLEFT", frame.tooltip, "TOPLEFT", 0, -5)
+end
+
+---ToggleToolbarTooltip
+function MethodDungeonTools:ToggleToolbarTooltip(show,widget)
+    local tooltip = MethodDungeonTools.main_frame.toolbar.tooltip
+    if not show then
+        tooltip:Hide()
+    else
+        --set text
+        tooltip.text:SetText(widget.tooltipText)
+        tooltip:SetPoint("TOP",widget.frame,"BOTTOM")
+        --tooltip:Show()
+    end
 end
 
 ---UpdateSelectedToolbarTool
@@ -219,11 +350,15 @@ function MethodDungeonTools:OverrideScrollframeScripts()
     frame.scrollFrame:SetScript("OnMouseDown", function(self,button)
         if ( button == "LeftButton") then
             if currentTool == "pencil" then MethodDungeonTools:StartPencilDrawing() end
+            if currentTool == "arrow" then MethodDungeonTools:StartArrowDrawing() end
+            if currentTool == "line" then MethodDungeonTools:StartLineDrawing() end
         end
     end)
     frame.scrollFrame:SetScript("OnMouseUp", function(self,button)
         if ( button == "LeftButton") then
             if currentTool == "pencil" then MethodDungeonTools:StopPencilDrawing() end
+            if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
+            if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
         end
     end)
 end
@@ -254,8 +389,71 @@ function MethodDungeonTools:GetCursorPosition()
     return frameX,-frameY
 end
 
+---StartArrowDrawing
+function MethodDungeonTools:StartArrowDrawing()
+    local frame = MethodDungeonTools.main_frame
+    local startx,starty = MethodDungeonTools:GetCursorPosition()
+    local line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    line:SetDrawLayer("ARTWORK", 3)
+    line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
+    line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
 
-local threshold = 10
+    local arrow = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    arrow:SetDrawLayer("ARTWORK", 3)
+    arrow:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\triangle")
+    arrow:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
+
+    frame.toolbar:SetScript("OnUpdate", function(self, tick)
+        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        if x~= startx and y~=starty then
+            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3), 1,"TOPLEFT")
+        end
+        --position arrow head
+        arrow:Show()
+        arrow:SetWidth(1*db.toolbar.brushSize)
+        arrow:SetHeight(1*db.toolbar.brushSize)
+        --calculate rotation
+        local rotation = math.atan2(starty-y,startx-x)
+        arrow:SetRotation(rotation+math.pi)
+        arrow:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+    end)
+end
+
+---StopArrowDrawing
+function MethodDungeonTools:StopArrowDrawing()
+    local frame = MethodDungeonTools.main_frame
+    frame.toolbar:SetScript("OnUpdate",nil)
+end
+
+---StartLineDrawing
+function MethodDungeonTools:StartLineDrawing()
+    local frame = MethodDungeonTools.main_frame
+    local startx,starty = MethodDungeonTools:GetCursorPosition()
+    local line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    line:SetDrawLayer("ARTWORK", 3)
+    line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
+    line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
+
+    frame.toolbar:SetScript("OnUpdate", function(self, tick)
+        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        if x~= startx and y~=starty then
+            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3), 1,"TOPLEFT")
+        end
+    end)
+end
+
+---StopLineDrawing
+function MethodDungeonTools:StopLineDrawing()
+    local frame = MethodDungeonTools.main_frame
+    frame.toolbar:SetScript("OnUpdate",nil)
+end
+
+
+local thresholdDefault = 10
+---StartPencilDrawing
+---Starts the pencil drawing script, fired on mouse down with pencil tool selected
 function MethodDungeonTools:StartPencilDrawing()
     local frame = MethodDungeonTools.main_frame
     local oldx,oldy
@@ -264,7 +462,7 @@ function MethodDungeonTools:StartPencilDrawing()
         local x,y = MethodDungeonTools:GetCursorPosition()
         --x,y = floor(x),floor(y)
         local scale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
-        threshold = threshold * 1/scale
+        local threshold = thresholdDefault * 1/scale
         if not oldx or not oldy then
             oldx,oldy = x,y
             return
@@ -276,7 +474,8 @@ function MethodDungeonTools:StartPencilDrawing()
     end)
 end
 
-
+---StopPencilDrawing
+---End the pencil drawing script, fired on mouse up with the pencil tool selected
 function MethodDungeonTools:StopPencilDrawing()
     local frame = MethodDungeonTools.main_frame
     frame.toolbar:SetScript("OnUpdate",nil)
@@ -289,17 +488,17 @@ function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth)
     line:SetDrawLayer("ARTWORK", 3)
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(color.r,color.g,color.b,color.a)
-    DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, 40/30,"TOPLEFT")
+    DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, 1,"TOPLEFT")
 
-    if smooth == true then
+    if smooth == true  then
         local circle = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
         circle:SetDrawLayer("ARTWORK", 4)
         circle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
         circle:SetVertexColor(color.r,color.g,color.b,color.a)
-        circle:SetWidth(1.4*size)
-        circle:SetHeight(1.4*size)
+        circle:SetWidth(1*size)
+        circle:SetHeight(1*size)
         circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-        circle:Show()
+        --circle:Hide()
     end
 end
 

@@ -967,7 +967,7 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	local newScale = oldScale + delta * 0.3;
 
 	newScale = max(1, newScale);
-	newScale = min(7, newScale);
+	newScale = min(15, newScale);
 	if resetZoom then newScale = 1 end
 
 	mainFrame:SetScale(newScale)
