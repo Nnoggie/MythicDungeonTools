@@ -1628,6 +1628,7 @@ function MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,baseH
 end
 
 function MethodDungeonTools:FormatEnemyHealth(amount)
+	amount = tonumber(amount)
     if amount < 1e3 then
         return ""
     elseif amount >= 1e12 then
