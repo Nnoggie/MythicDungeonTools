@@ -6,6 +6,7 @@ local AceGUI = LibStub("AceGUI-3.0")
 local db
 local toolbarTools = {}
 local currentTool
+local texturePool = {}
 
 ---initToolbar
 ---sets up the toolbar frame and the widgets in it
@@ -431,7 +432,7 @@ function MethodDungeonTools:StartLineDrawing()
     local frame = MethodDungeonTools.main_frame
     local startx,starty = MethodDungeonTools:GetCursorPosition()
     local line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
-    line:SetDrawLayer("ARTWORK", 3)
+    --line:SetDrawLayer("ARTWORK", 3)
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
 
@@ -450,6 +451,18 @@ function MethodDungeonTools:StopLineDrawing()
     frame.toolbar:SetScript("OnUpdate",nil)
 end
 
+---GetHighestFrameLevelAtCursor
+function MethodDungeonTools:GetHighestFrameLevelAtCursor()
+    local currentSublevel = -8
+    for k,v in pairs(texturePool) do
+        if MouseIsOver(v) and v:IsShown() then
+            local _, sublevel = v:GetDrawLayer()
+            currentSublevel = math.max(currentSublevel,sublevel+2)
+        end
+    end
+    if currentSublevel > 7 then currentSublevel = 7 end
+    return currentSublevel
+end
 
 local thresholdDefault = 10
 ---StartPencilDrawing
@@ -457,8 +470,11 @@ local thresholdDefault = 10
 function MethodDungeonTools:StartPencilDrawing()
     local frame = MethodDungeonTools.main_frame
     local oldx,oldy
+    local drawLayer = -8
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+        local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
+        drawLayer = math.max(drawLayer,currentDrawLayer)
         local x,y = MethodDungeonTools:GetCursorPosition()
         --x,y = floor(x),floor(y)
         local scale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
@@ -468,7 +484,7 @@ function MethodDungeonTools:StartPencilDrawing()
             return
         end
         if (oldx and math.abs(x-oldx)>threshold) or (oldy and math.abs(y-oldy)>threshold)  then
-            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true)
+            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,drawLayer)
             oldx,oldy = x,y
         end
     end)
@@ -482,22 +498,24 @@ function MethodDungeonTools:StopPencilDrawing()
 end
 
 ---DrawLine
-function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth)
+function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,drawLayer)
     --print("Drawing Line from: "..x,y.." to "..oldx,oldy)
     local line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
-    line:SetDrawLayer("ARTWORK", 3)
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(color.r,color.g,color.b,color.a)
-    DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, 1,"TOPLEFT")
-
+    line:SetDrawLayer("OVERLAY", drawLayer)
+    DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, 1.1,"TOPLEFT")
+    table.insert(texturePool,line)
     if smooth == true  then
         local circle = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
-        circle:SetDrawLayer("ARTWORK", 4)
+        circle:SetDrawLayer("OVERLAY", drawLayer)
+
         circle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
         circle:SetVertexColor(color.r,color.g,color.b,color.a)
         circle:SetWidth(1*size)
         circle:SetHeight(1*size)
         circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+        table.insert(texturePool,circle)
         --circle:Hide()
     end
 end
