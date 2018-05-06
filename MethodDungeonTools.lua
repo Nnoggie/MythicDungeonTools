@@ -3,6 +3,8 @@ local _, MethodDungeonTools = ...
 
 
 local mainFrameStrata = "HIGH"
+local canvasDrawLayer = "BORDER"
+local blipDrawLayer = "OVERLAY"
 
 _G["MethodDungeonTools"] = MethodDungeonTools
 
@@ -439,7 +441,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanel = CreateFrame("Frame", "MethodDungeonToolsTopPanel", frame)
 		frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND")
 		frame.topPanelTex:SetAllPoints()
-		frame.topPanelTex:SetDrawLayer("ARTWORK", -5)
+		frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
 		frame.topPanelTex:SetColorTexture(0, 0, 0, 0.7)
 		
 		frame.topPanelString = frame.topPanel:CreateFontString("MethodDungeonTools name")
@@ -486,7 +488,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
         frame.bottomPanel = CreateFrame("Frame", "MethodDungeonToolsBottomPanel", frame)
         frame.bottomPanelTex = frame.bottomPanel:CreateTexture(nil, "BACKGROUND")
         frame.bottomPanelTex:SetAllPoints()
-        frame.bottomPanelTex:SetDrawLayer("ARTWORK", -5)
+        frame.bottomPanelTex:SetDrawLayer(canvasDrawLayer, -5)
         frame.bottomPanelTex:SetColorTexture(0, 0, 0, 0.7)
 
     end
@@ -522,7 +524,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		frame.sidePanel = CreateFrame("Frame", "MethodDungeonToolsSidePanel", frame);
 		frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND");
 		frame.sidePanelTex:SetAllPoints();
-		frame.sidePanelTex:SetDrawLayer("ARTWORK", -5);
+		frame.sidePanelTex:SetDrawLayer(canvasDrawLayer, -5);
 		frame.sidePanelTex:SetColorTexture(0, 0, 0, 0.7);
 		frame.sidePanelTex:Show()
 	end
@@ -1585,7 +1587,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		do
 			if not dungeonEnemyBlipMouseoverHighlight then
 				dungeonEnemyBlipMouseoverHighlight = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlipMouseoverHighlight","BACKGROUND")
-				dungeonEnemyBlipMouseoverHighlight:SetDrawLayer("ARTWORK", 4);				
+				dungeonEnemyBlipMouseoverHighlight:SetDrawLayer(blipDrawLayer, 4);
 				dungeonEnemyBlipMouseoverHighlight:SetTexture("Interface\\MINIMAP\\TRACKING\\Target")
 				dungeonEnemyBlipMouseoverHighlight:SetVertexColor(1,1,1,1)
 				dungeonEnemyBlipMouseoverHighlight:SetWidth(10)
@@ -1597,7 +1599,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		--create the 12 tiles and set the scrollchild
 		for i=1,12 do
 			frame["mapPanelTile"..i] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsmapPanelTile"..i, "BACKGROUND");
-			frame["mapPanelTile"..i]:SetDrawLayer("ARTWORK", 0);
+			frame["mapPanelTile"..i]:SetDrawLayer(canvasDrawLayer, 0);
 			--frame["mapPanelTile"..i]:SetAlpha(0.3)
 			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+4,frame:GetWidth()/4+4);
 		end
@@ -1726,7 +1728,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						dungeonEnemyBlips[idx].creatureType = data["creatureType"]				
 						dungeonEnemyBlips[idx].health = data["health"]
 						dungeonEnemyBlips[idx].level = data["level"]
-						dungeonEnemyBlips[idx]:SetDrawLayer("ARTWORK", 5)
+						dungeonEnemyBlips[idx]:SetDrawLayer(blipDrawLayer, 5)
 						dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
 						dungeonEnemyBlips[idx]:SetAlpha(1)
 						dungeonEnemyBlips[idx]:SetWidth(10*data["scale"])
@@ -1785,7 +1787,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                                 if not dungeonEnemyBlips[idx].patrolIndicator then
                                     dungeonEnemyBlips[idx].patrolIndicator = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator","BACKGROUND")
                                 end
-                                dungeonEnemyBlips[idx].patrolIndicator:SetDrawLayer("ARTWORK", 6)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetDrawLayer(blipDrawLayer, 6)
                                 dungeonEnemyBlips[idx].patrolIndicator:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
                                 dungeonEnemyBlips[idx].patrolIndicator:SetWidth(18)
                                 dungeonEnemyBlips[idx].patrolIndicator:SetHeight(18)
@@ -1802,7 +1804,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                                 if not dungeonEnemyBlips[idx].patrolIndicator2 then
                                     dungeonEnemyBlips[idx].patrolIndicator2 = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator2","BACKGROUND")
                                 end
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetDrawLayer("ARTWORK", 6)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetDrawLayer(blipDrawLayer, 6)
                                 dungeonEnemyBlips[idx].patrolIndicator2:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
                                 dungeonEnemyBlips[idx].patrolIndicator2:SetWidth(18)
                                 dungeonEnemyBlips[idx].patrolIndicator2:SetHeight(18)
@@ -1831,7 +1833,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 								if not dungeonEnemyBlips[idx].patrol[patrolIdx] then
 								dungeonEnemyBlips[idx].patrol[patrolIdx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx,"BACKGROUND")
 								end
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetDrawLayer("ARTWORK", 5)				
+								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetDrawLayer(blipDrawLayer, 5)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetTexture("Interface\\Worldmap\\X_Mark_64Grey")
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetWidth(10*0.4)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetHeight(10*0.4)
@@ -1843,7 +1845,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 								if not dungeonEnemyBlips[idx].patrol[patrolIdx].line then
 									dungeonEnemyBlips[idx].patrol[patrolIdx].line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx.."line","BACKGROUND")
 								end
-								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetDrawLayer("ARTWORK", 5)
+								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetDrawLayer(blipDrawLayer, 5)
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetVertexColor(0,0.2,0.5,0.6) 
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:Hide()
@@ -2799,7 +2801,7 @@ function initFrames()
 	main_frame:SetFrameLevel(1)
 	main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND");
 	main_frame.background:SetAllPoints();
-	main_frame.background:SetDrawLayer("ARTWORK", 1);
+	main_frame.background:SetDrawLayer(canvasDrawLayer, 1);
 	main_frame.background:SetColorTexture(0, 0, 0, 0.5);
 	main_frame.background:SetAlpha(0.2)
 	main_frame:SetSize(sizex, sizey);
