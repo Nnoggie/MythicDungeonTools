@@ -773,6 +773,13 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	
 end
 
+---FormatEnemyForces
+function MethodDungeonTools:FormatEnemyForces(forces,forcesmax,percentage)
+	if not percentage then return forces end
+	local perc = string.format(" (%.1f%)",forces/forcesmax)
+	return forces..perc
+end
+
 ---Progressbar_SetValue
 ---Sets the value/progress/color of the count progressbar to the apropriate data
 function MethodDungeonTools:Progressbar_SetValue(self, pullCurrent,totalCurrent,totalMax)
@@ -1064,7 +1071,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
             local pullForces = MethodDungeonTools:CountForces(tooltip.currentPull,true)
             local totalForces = MethodDungeonTools:CountForces(tooltip.currentPull,false)
             local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
-            text = string.format(MethodDungeonTools.pullTooltip.botString.defaultText,pullForces,totalForces,totalForcesMax)
+            local text = string.format(MethodDungeonTools.pullTooltip.botString.defaultText,pullForces,totalForces,totalForcesMax)
             tooltip.botString:SetText(text)
             tooltip.botString:Show()
 		end
@@ -1140,6 +1147,18 @@ MethodDungeonTools.OnMouseUp = function(self,button)
 		L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
 		frame.contextDropdown:Show()
 	end
+end
+
+---GetCurrentSubLevel
+---Returns the sublevel of the currently active preset
+function MethodDungeonTools:GetCurrentSubLevel()
+	return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
+end
+
+---GetCurrentPreset
+---Returns the current preset
+function MethodDungeonTools:GetCurrentPreset()
+    return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 end
 
 function MethodDungeonTools:MakeMapTexture(frame)
@@ -1653,11 +1672,13 @@ end
 function MethodDungeonTools:MakeDungeonBossButtons(frame)
 	if not dungeonBossButtons then
 		dungeonBossButtons = {}
+		--TEST_TABLEMDT = {}
 		for i=1,5 do
-			dungeonBossButtons[i] = CreateFrame("Button", "MethodDungeonToolsBossButton"..i, frame.mapPanelFrame, "EncounterMapButtonTemplate");
+			dungeonBossButtons[i] = CreateFrame("Button", "MethodDungeonToolsBossButton"..i, frame.mapPanelFrame, "EncounterJournalPinTemplate");
 			dungeonBossButtons[i]:SetScript("OnClick",nil)
 			dungeonBossButtons[i]:SetSize(25,25)
 			dungeonBossButtons[i]:Hide()
+			--TEST_TABLEMDT[i] = dungeonBossButtons[i]
 		end
 	end
 end
@@ -1673,12 +1694,12 @@ function MethodDungeonTools:UpdateDungeonBossButtons()
 				local _, _, _, displayInfo = EJ_GetCreatureInfo(1, encounterID);
 				dungeonBossButtons[i].displayInfo = displayInfo;
 				if ( displayInfo ) then
-                    SetPortraitTextureFromCreatureDisplayID(dungeonBossButtons[i].bgImage, displayInfo);
+                    SetPortraitTextureFromCreatureDisplayID(dungeonBossButtons[i].Background, displayInfo);
 					dungeonBossButtons[i]:Show()
 				else
-					dungeonBossButtons[i].bgImage:SetTexture("DoesNotExist");
+					dungeonBossButtons[i].Background:SetTexture("DoesNotExist");
 				end
-				dungeonBossButtons[i].bgImage:SetSize(16,16)
+				dungeonBossButtons[i].Background:SetSize(16,16)
 				dungeonBossButtons[i]:SetScript("OnClick",function()
 					if MouseIsOver(MethodDungeonToolsScrollFrame) then
 						MethodDungeonTools:DisplayEncounterInformation(encounterID)
@@ -2056,6 +2077,8 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
 	--update Sublevel select dropdown
 	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
+
+    MethodDungeonTools:DrawAllPresetObjects()
 end
 
 ---UpdateToDungeon
@@ -2792,6 +2815,56 @@ function MethodDungeonTools:RegisterOptions()
 	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools");
 end
 
+---DeepCopy
+function MethodDungeonTools:DeepCopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[MethodDungeonTools:DeepCopy(orig_key)] = MethodDungeonTools:DeepCopy(orig_value)
+        end
+        setmetatable(copy, MethodDungeonTools:DeepCopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
+
+---StorePresetObject
+function MethodDungeonTools:StorePresetObject(obj)
+	local currentPreset = MethodDungeonTools:GetCurrentPreset()
+	currentPreset.objects = currentPreset.objects or {}
+	tinsert(currentPreset.objects,MethodDungeonTools:DeepCopy(obj))
+end
+
+---DrawAllPresetObjects
+---Draws all Preset objects on the map canvas/sublevel
+function MethodDungeonTools:DrawAllPresetObjects()
+    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
+    MethodDungeonTools:ReleaseAllActiveTextures()
+    currentPreset.objects = currentPreset.objects or {}
+    --ViragDevTool_AddData(currentPreset.objects)
+    for k,obj in pairs(currentPreset.objects) do
+        if obj.sublevel == currentSublevel and obj.shown then
+            --lines
+            local lastx,lasty
+            for k,l in pairs(obj.lines) do
+                MethodDungeonTools:DrawLine(l.x,l.y,l.xb,l.yb,obj.size*0.3,obj.color,obj.smooth,obj.layer,obj.layerSublevel,obj.lineFactor)
+                if obj.smooth then
+                    lastx,lasty = l.xb,l.yb
+                end
+            end
+            if lastx and lasty then MethodDungeonTools:DrawCircle(lastx,lasty,obj.size*0.3,obj.color,obj.layer,obj.layerSublevel) end
+
+            --triangle
+            if obj.triangle then
+                MethodDungeonTools:DrawTriangle(obj.triangle.x,obj.triangle.y,obj.triangle.rotation,obj.size,obj.color,obj.layer,obj.layerSublevel)
+            end
+        end
+    end
+end
 
 function initFrames()
 	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent);
