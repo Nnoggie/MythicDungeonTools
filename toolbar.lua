@@ -1,13 +1,12 @@
 ---
 --- DateTime: 07.04.2018 15:26
 ---
-local sizex,sizey = 350,30
+local sizex,sizey = 350,33
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local toolbarTools = {}
 local drawingActive = false
 local currentTool
-local tempObject = {}
 local objectDrawLayer = "ARTWORK"
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition
@@ -454,46 +453,23 @@ function MethodDungeonTools:GetCursorPosition()
     return frameX-1,-frameY
 end
 
----Table pool
-local tableStorage = {}
-local function getTable()
-    local size = tgetn(tableStorage)
-    if size == 0 then
-        return {}
-    else
-        local tab = tableStorage[size]
-        tremove(tableStorage, size)
-        return tab
+---GetHighestFrameLevelAtCursor
+function MethodDungeonTools:GetHighestFrameLevelAtCursor()
+    local currentSublevel = -8
+    for k,v in pairs(activeTextures) do
+        if MouseIsOver(v) and v:IsShown() and (not v.isOwn) then
+            local _, sublevel = v:GetDrawLayer()
+            currentSublevel = max(currentSublevel,sublevel+1)
+        end
     end
-end
-local function giveTable(tab)
-    twipe(tab)
-    tinsert(tableStorage, tab)
+    if currentSublevel > 7 then currentSublevel = 7 end
+    return currentSublevel
 end
 
----GetNewTempObject
-function MethodDungeonTools:GetNewTempObject()
-    tempObject.lines = tempObject.lines or {}
-    tempObject.color = tempObject.color or {}
-    tempObject.width = 0
-    --release line tables
-    for k,v in pairs(tempObject.lines) do
-        giveTable(tremove(tempObject.lines,k))
-    end
-    twipe(tempObject.lines)
-    if tempObject.triangle then
-        giveTable(tempObject.triangle)
-    end
-    tempObject.triangle = nil
-    tempObject.smooth = nil
-    return tempObject
-end
-
-
+local nobj
 ---StartArrowDrawing
 function MethodDungeonTools:StartArrowDrawing()
     drawingActive = true
-    local tempActiveTextures = MethodDungeonTools:DeepCopy(activeTextures)
     local frame = MethodDungeonTools.main_frame
     local startx,starty = MethodDungeonTools:GetCursorPosition()
     local line = getTexture()
@@ -503,32 +479,28 @@ function MethodDungeonTools:StartArrowDrawing()
     local arrow = getTexture()
     arrow:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\triangle")
     arrow:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
+    line.isOwn = true
+    arrow.isOwn = true
     tinsert(activeTextures,line)
     tinsert(activeTextures,arrow)
     local drawLayer = -8
 
-    --tempObject
-    local obj = MethodDungeonTools:GetNewTempObject()
-    local objectLine = getTable()
-    objectLine.x,objectLine.y = startx,starty
-    objectLine.xb,objectLine.yb = startx,starty
-    obj.lineFactor = 1
-    tinsert(obj.lines,objectLine)
-    obj.triangle = getTable()
-    obj.triangle.x,obj.triangle.y = startx,starty
-
-    obj.color.r,obj.color.g,obj.color.b,obj.color.a =  db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a
-    obj.size = db.toolbar.brushSize
-    obj.sublevel = MethodDungeonTools:GetCurrentSubLevel()
-    obj.shown = true
+    ---new object for storage
+    ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
+    ---l: x1,y1,x2,y2,...
+    ---t: triangleroation
+    nobj = {d={db.toolbar.brushSize,1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b)},l={}}
+    nobj.l = {MethodDungeonTools:Round(startx,1),MethodDungeonTools:Round(starty,1)}
+    nobj.t = {}
 
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
-        local x,y = MethodDungeonTools:GetCursorPosition()local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor(tempActiveTextures)
+        local x,y = MethodDungeonTools:GetCursorPosition()local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         drawLayer = max(drawLayer,currentDrawLayer)
         if x~= startx and y~=starty then
             DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3), 1,"TOPLEFT")
-            obj.lines[1].xb,obj.lines[1].yb = x,y
+            nobj.l[3] = MethodDungeonTools:Round(x,1)
+            nobj.l[4] = MethodDungeonTools:Round(y,1)
         end
         --position arrow head
         arrow:Show()
@@ -540,16 +512,21 @@ function MethodDungeonTools:StartArrowDrawing()
         arrow:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
         arrow:SetDrawLayer(objectDrawLayer, drawLayer)
         line:SetDrawLayer(objectDrawLayer, drawLayer)
-        obj.triangle.x,obj.triangle.y,obj.triangle.rotation = x,y,rotation
-        obj.layer,obj.layerSublevel = objectDrawLayer,drawLayer
+
+        nobj.d[6] = drawLayer
+        nobj.t[1] = rotation
     end)
 end
 
 ---StopArrowDrawing
 function MethodDungeonTools:StopArrowDrawing()
     local frame = MethodDungeonTools.main_frame
-    MethodDungeonTools:StorePresetObject(tempObject)
+    --ViragDevTool_AddData(nobj)
+    MethodDungeonTools:StorePresetObject(nobj)
     frame.toolbar:SetScript("OnUpdate",nil)
+    for k,v in pairs(activeTextures) do
+        v.isOwn = nil
+    end
     drawingActive = false
 end
 
@@ -559,36 +536,31 @@ function MethodDungeonTools:StartLineDrawing()
     drawingActive = true
     local frame = MethodDungeonTools.main_frame
     local startx,starty = MethodDungeonTools:GetCursorPosition()
-    local tempActiveTextures = MethodDungeonTools:DeepCopy(activeTextures)
     local line = getTexture()
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
+    line.isOwn = true
     tinsert(activeTextures,line)
     local drawLayer = -8
-
-    --tempObject
-    local obj = MethodDungeonTools:GetNewTempObject()
-    local objectLine = getTable()
-    objectLine.x,objectLine.y = startx,starty
-    objectLine.xb,objectLine.yb = startx,starty
-    obj.lineFactor = 1
-    tinsert(obj.lines,objectLine)
-    obj.color.r,obj.color.g,obj.color.b,obj.color.a =  db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a
-    obj.size = db.toolbar.brushSize
-    obj.sublevel = MethodDungeonTools:GetCurrentSubLevel()
-    obj.shown = true
+    ---new object
+    ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
+    ---l: x1,y1,x2,y2,...
+    nobj = {d={db.toolbar.brushSize,1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b)},l={}}
+    nobj.l = {MethodDungeonTools:Round(startx,1),MethodDungeonTools:Round(starty,1)}
 
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
-        local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor(tempActiveTextures)
+        local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         drawLayer = max(drawLayer,currentDrawLayer)
         local x,y = MethodDungeonTools:GetCursorPosition()
         if x~= startx and y~=starty then
             DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3), 1,"TOPLEFT")
             line:SetDrawLayer(objectDrawLayer,drawLayer)
             line:Show()
-            obj.layer,obj.layerSublevel = objectDrawLayer,drawLayer
-            obj.lines[1].xb,obj.lines[1].yb = x,y
+            ---new object
+            nobj.d[6] = drawLayer
+            nobj.l[3] = MethodDungeonTools:Round(x,1)
+            nobj.l[4] = MethodDungeonTools:Round(y,1)
         end
     end)
 end
@@ -597,25 +569,11 @@ end
 function MethodDungeonTools:StopLineDrawing()
     local frame = MethodDungeonTools.main_frame
     frame.toolbar:SetScript("OnUpdate",nil)
-    MethodDungeonTools:StorePresetObject(tempObject)
-    --ViragDevTool_AddData(tempObject)
-    ViragDevTool_AddData(string.len(MethodDungeonTools:TableToString(tempObject,true)))
-    drawingActive = false
-end
-
----GetHighestFrameLevelAtCursor
-function MethodDungeonTools:GetHighestFrameLevelAtCursor(table)
-    local texturesToCheck = activeTextures
-    if table then texturesToCheck = table end
-    local currentSublevel = -8
-    for k,v in pairs(texturesToCheck) do
-        if MouseIsOver(v) and v:IsShown() then
-            local _, sublevel = v:GetDrawLayer()
-            currentSublevel = max(currentSublevel,sublevel+1)
-        end
+    for k,v in pairs(activeTextures) do
+        v.isOwn = nil
     end
-    if currentSublevel > 7 then currentSublevel = 7 end
-    return currentSublevel
+    MethodDungeonTools:StorePresetObject(nobj)
+    drawingActive = false
 end
 
 local oldx,oldy
@@ -628,20 +586,17 @@ function MethodDungeonTools:StartPencilDrawing()
     oldy = nil
     local layerSublevel = -8
     local thresholdDefault = 10
-    local tempActiveTextures = MethodDungeonTools:DeepCopy(activeTextures)
 
-    --tempObject
-    local obj = MethodDungeonTools:GetNewTempObject()
-    obj.lineFactor = 1.1
-    obj.color.r,obj.color.g,obj.color.b,obj.color.a =  db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a
-    obj.size = db.toolbar.brushSize
-    obj.sublevel = MethodDungeonTools:GetCurrentSubLevel()
-    obj.smooth = true
-    obj.shown = true
+    ---new object
+    ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
+    ---l: x1,y1,x2,y2,...
+    nobj = {d={db.toolbar.brushSize,1.1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b),0,true},l={}}
+    nobj.l = {}
 
+    local lineIdx = 1
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
-        local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor(tempActiveTextures)
+        local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         layerSublevel = max(layerSublevel,currentDrawLayer)
         local x,y = MethodDungeonTools:GetCursorPosition()
         local scale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
@@ -653,11 +608,12 @@ function MethodDungeonTools:StartPencilDrawing()
         if (oldx and abs(x-oldx)>threshold) or (oldy and abs(y-oldy)>threshold)  then
             MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel)
 
-            local objectLine = getTable()
-            objectLine.x,objectLine.y = oldx,oldy
-            objectLine.xb,objectLine.yb = x,y
-            tinsert(obj.lines,objectLine)
-            obj.layer,obj.layerSublevel = objectDrawLayer,layerSublevel
+            nobj.d[6] = layerSublevel
+            nobj.l[lineIdx] = oldx
+            nobj.l[lineIdx+1] = oldy
+            nobj.l[lineIdx+2] = x
+            nobj.l[lineIdx+3] = y
+            lineIdx = lineIdx + 4
 
             oldx,oldy = x,y
         end
@@ -672,20 +628,31 @@ function MethodDungeonTools:StopPencilDrawing()
     local layerSublevel = MethodDungeonTools:GetHighestFrameLevelAtCursor()
     --finish line
     MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel)
-    local objectLine = getTable()
-    objectLine.x,objectLine.y = oldx,oldy
-    objectLine.xb,objectLine.yb = x,y
-    tinsert(tempObject.lines,objectLine)
-    --draw end circle
+    --store it
+    local size = 0
+    for k,v in ipairs(nobj.l) do
+        size = size+1
+    end
+    nobj.l[size+1] = oldx
+    nobj.l[size+2] = oldy
+    nobj.l[size+3] = x
+    nobj.l[size+4] = y
+
+    --draw end circle, dont need to store it as we draw it when we restore the line automatically
     MethodDungeonTools:DrawCircle(x,y,db.toolbar.brushSize*0.3,db.toolbar.color,objectDrawLayer,layerSublevel)
     frame.toolbar:SetScript("OnUpdate",nil)
-    MethodDungeonTools:StorePresetObject(tempObject)
+    --clear own flag
+    for k,v in pairs(activeTextures) do
+        v.isOwn = nil
+    end
+    MethodDungeonTools:StorePresetObject(nobj)
     drawingActive = false
 end
 
 ---DrawCircle
 function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel)
     local circle = getTexture()
+    if not layer then layer = objectDrawLayer end
     circle:SetDrawLayer(layer, layerSublevel)
     circle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
     circle:SetVertexColor(color.r,color.g,color.b,color.a)
@@ -693,17 +660,20 @@ function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel)
     circle:SetHeight(1.1*size)
     circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     circle:Show()
+    circle.isOwn = true
     tinsert(activeTextures,circle)
 end
 
 ---DrawLine
 function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublevel,lineFactor)
     local line = getTexture()
+    if not layer then layer = objectDrawLayer end
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(color.r,color.g,color.b,color.a)
     DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, lineFactor and lineFactor or 1.1,"TOPLEFT")
     line:SetDrawLayer(layer, layerSublevel)
     line:Show()
+    line.isOwn = true
     tinsert(activeTextures,line)
     if smooth == true  then
         MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel)
@@ -713,6 +683,7 @@ end
 ---DrawTriangle
 function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSublevel)
     local triangle = getTexture()
+    if not layer then layer = objectDrawLayer end
     triangle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\triangle")
     triangle:SetVertexColor(color.r,color.g,color.b,color.a)
     triangle:Show()
@@ -721,5 +692,6 @@ function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSubl
     triangle:SetRotation(rotation+pi)
     triangle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     triangle:SetDrawLayer(layer, layerSublevel)
+    triangle.isOwn = true
     tinsert(activeTextures,triangle)
 end

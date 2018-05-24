@@ -2815,6 +2815,32 @@ function MethodDungeonTools:RegisterOptions()
 	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools");
 end
 
+---Round
+function MethodDungeonTools:Round(number, decimals)
+	return (("%%.%df"):format(decimals)):format(number)
+end
+
+---RGBToHex
+function MethodDungeonTools:RGBToHex(r,g,b)
+	r = r*255
+	g = g*255
+	b = b*255
+	return ("%.2x%.2x%.2x"):format(r, g, b)
+end
+---HexToRGB
+function MethodDungeonTools:HexToRGB(rgb)
+	if string.len(rgb) == 6 then
+		local r, g, b
+		r, g, b = tonumber('0x'..strsub(rgb, 0, 2)), tonumber('0x'..strsub(rgb, 3, 4)), tonumber('0x'..strsub(rgb, 5, 6))
+		if not r then r = 0 else r = r/255 end
+		if not g then g = 0 else g = g/255 end
+		if not b then b = 0 else b = b/255 end
+		return r,g,b
+	else
+		return
+	end
+end
+
 ---DeepCopy
 function MethodDungeonTools:DeepCopy(orig)
     local orig_type = type(orig)
@@ -2846,21 +2872,36 @@ function MethodDungeonTools:DrawAllPresetObjects()
     MethodDungeonTools:ReleaseAllActiveTextures()
     currentPreset.objects = currentPreset.objects or {}
     --ViragDevTool_AddData(currentPreset.objects)
+	--d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
+	--l: x1,y1,x2,y2,...
+	local color = {}
     for k,obj in pairs(currentPreset.objects) do
-        if obj.sublevel == currentSublevel and obj.shown then
+        if obj.d[3] == currentSublevel and obj.d[4] then
+			color.r,color.g,color.b = MethodDungeonTools:HexToRGB(obj.d[5])
             --lines
-            local lastx,lasty
-            for k,l in pairs(obj.lines) do
-                MethodDungeonTools:DrawLine(l.x,l.y,l.xb,l.yb,obj.size*0.3,obj.color,obj.smooth,obj.layer,obj.layerSublevel,obj.lineFactor)
-                if obj.smooth then
-                    lastx,lasty = l.xb,l.yb
-                end
+            local x1,y1,x2,y2
+			local lastx,lasty
+            for k,coord in pairs(obj.l) do
+				if not x1 then x1 = coord
+				elseif not y1 then y1 = coord
+				elseif not x2 then
+					x2 = coord
+					lastx = coord
+				elseif not y2 then
+					y2 = coord
+					lasty = coord
+				end
+				if x1 and y1 and x2 and y2 then
+					MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3,color,obj.d[7],nil,obj.d[6],obj.d[2])
+					x1,y1,x2,y2 = nil,nil,nil,nil
+				end
             end
-            if lastx and lasty then MethodDungeonTools:DrawCircle(lastx,lasty,obj.size*0.3,obj.color,obj.layer,obj.layerSublevel) end
+			--ending circle if smooth
+            if obj.d[7] and lastx and lasty then MethodDungeonTools:DrawCircle(lastx,lasty,obj.d[1]*0.3,color,nil,obj.d[6]) end
 
             --triangle
-            if obj.triangle then
-                MethodDungeonTools:DrawTriangle(obj.triangle.x,obj.triangle.y,obj.triangle.rotation,obj.size,obj.color,obj.layer,obj.layerSublevel)
+            if obj.t and lastx and lasty then
+                MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6])
             end
         end
     end
