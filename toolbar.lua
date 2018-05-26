@@ -381,7 +381,7 @@ end
 ---Called when a tool is selected/deselected
 function MethodDungeonTools:UpdateSelectedToolbarTool(widgetName)
     local toolbar = MethodDungeonTools.main_frame.toolbar
-    if not widgetName then
+    if not widgetName or (not toolbarTools[widgetName]) then
         if toolbar.highlight then toolbar.highlight:Hide() end
         MethodDungeonTools:RestoreScrollframeScripts()
         MethodDungeonTools:DisableBrushPreview()
@@ -389,25 +389,13 @@ function MethodDungeonTools:UpdateSelectedToolbarTool(widgetName)
             if currentTool == "pencil" then MethodDungeonTools:StopPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
+            if currentTool == "mover" then MethodDungeonTools:StopMovingDrawing() end
         end
         currentTool = nil
         toolbar:SetScript("OnUpdate",nil)
         return
     end
     local widget = toolbarTools[widgetName]
-    if not widget then
-        if toolbar.highlight then toolbar.highlight:Hide() end
-        MethodDungeonTools:RestoreScrollframeScripts()
-        MethodDungeonTools:DisableBrushPreview()
-        if drawingActive then
-            if currentTool == "pencil" then MethodDungeonTools:StopPencilDrawing() end
-            if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
-            if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
-        end
-        currentTool = nil
-        toolbar:SetScript("OnUpdate",nil)
-        return
-    end
     currentTool = widgetName
     toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil,"HIGH",nil,7)
     toolbar.highlight:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons")
@@ -429,6 +417,7 @@ function MethodDungeonTools:OverrideScrollframeScripts()
             if currentTool == "pencil" then MethodDungeonTools:StartPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StartArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StartLineDrawing() end
+            if currentTool == "mover" then MethodDungeonTools:StartMovingDrawing() end
         end
     end)
     frame.scrollFrame:SetScript("OnMouseUp", function(self,button)
@@ -436,6 +425,7 @@ function MethodDungeonTools:OverrideScrollframeScripts()
             if currentTool == "pencil" then MethodDungeonTools:StopPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
+            if currentTool == "mover" then MethodDungeonTools:StopMovingDrawing() end
         end
     end)
 end
@@ -662,8 +652,78 @@ function MethodDungeonTools:StopPencilDrawing()
     drawingActive = false
 end
 
+---StartMovingDrawing
+local objectIndex
+local originalX,originalY
+function MethodDungeonTools:StartMovingDrawing()
+    --we have to redraw all objects first, as the objectIndex needs to be set on every texture
+    --this index also changes when undo/redo is used
+    MethodDungeonTools:DrawAllPresetObjects()
+    drawingActive = true
+    local frame = MethodDungeonTools.main_frame
+    objectIndex = MethodDungeonTools:GetHighestPresetObjectAtCursor()
+    local startx,starty = MethodDungeonTools:GetCursorPosition()
+    originalX,originalY = MethodDungeonTools:GetCursorPosition()
+    frame.toolbar:SetScript("OnUpdate", function(self, tick)
+        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        if x~=startx or y ~=starty then
+            for j,tex in pairs(activeTextures) do
+                if tex.objectIndex == objectIndex then
+                    for i=1,tex:GetNumPoints() do
+                        local point,relativeTo,relativePoint,xOffset,yOffset = tex:GetPoint(i)
+                        tex:SetPoint(point,relativeTo,relativePoint,xOffset+(x-startx),yOffset+(y-starty))
+                    end
+                end
+            end
+            startx,starty = MethodDungeonTools:GetCursorPosition()
+        end
+    end)
+end
+
+---StopMovingDrawing
+function MethodDungeonTools:StopMovingDrawing()
+    local frame = MethodDungeonTools.main_frame
+    frame.toolbar:SetScript("OnUpdate",nil)
+    if objectIndex then
+        local newX,newY = MethodDungeonTools:GetCursorPosition()
+        MethodDungeonTools:UpdatePresetObjectOffsets(objectIndex,originalX-newX,originalY-newY)
+    end
+    objectIndex = nil
+    drawingActive = false
+end
+
+---GetHighestPresetObjectAt
+function MethodDungeonTools:GetHighestPresetObjectAtCursor()
+
+    local currentSublevel = -8
+    local highestTexture
+    for k,v in pairs(activeTextures) do
+        if MouseIsOver(v) and v:IsShown() then
+            local _, sublevel = v:GetDrawLayer()
+            if sublevel>=currentSublevel then
+                highestTexture = v
+            end
+            currentSublevel = max(currentSublevel,sublevel+1)
+        end
+    end
+    if highestTexture then
+        return highestTexture.objectIndex
+    end
+
+
+
+    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    currentPreset.objects = currentPreset.objects or {}
+    for k,v in ipairs(currentPreset.objects) do
+        for i,j in ipairs(v.l) do
+
+        end
+    end
+end
+
 ---DrawCircle
-function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn)
+function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,objectIndex)
     local circle = getTexture()
     if not layer then layer = objectDrawLayer end
     circle:SetDrawLayer(layer, layerSublevel)
@@ -674,11 +734,12 @@ function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn)
     circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     circle:Show()
     circle.isOwn = isOwn
+    circle.objectIndex = objectIndex
     tinsert(activeTextures,circle)
 end
 
 ---DrawLine
-function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublevel,lineFactor,isOwn)
+function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublevel,lineFactor,isOwn,objectIndex)
     local line = getTexture()
     if not layer then layer = objectDrawLayer end
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
@@ -687,14 +748,15 @@ function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublev
     line:SetDrawLayer(layer, layerSublevel)
     line:Show()
     line.isOwn = isOwn
+    line.objectIndex = objectIndex
     tinsert(activeTextures,line)
     if smooth == true  then
-        MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn)
+        MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,objectIndex)
     end
 end
 
 ---DrawTriangle
-function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSublevel,isOwn)
+function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSublevel,isOwn,objectIndex)
     local triangle = getTexture()
     if not layer then layer = objectDrawLayer end
     triangle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\triangle")
@@ -706,5 +768,6 @@ function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSubl
     triangle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     triangle:SetDrawLayer(layer, layerSublevel)
     triangle.isOwn = isOwn
+    triangle.objectIndex = objectIndex
     tinsert(activeTextures,triangle)
 end

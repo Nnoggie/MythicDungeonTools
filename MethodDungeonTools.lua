@@ -2879,13 +2879,31 @@ function MethodDungeonTools:StorePresetObject(obj)
 		tinsert(currentPreset.objects,MethodDungeonTools:DeepCopy(obj))
 	end
 end
+
+---UpdatePresetObject
+function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
+	local currentPreset = MethodDungeonTools:GetCurrentPreset()
+	for objectIndex,obj in pairs(currentPreset.objects) do
+		if objectIndex == idx then
+			for coordIdx,coord in pairs(obj.l) do
+				if coordIdx%2==1 then
+					obj.l[coordIdx] = coord-x
+				else
+					obj.l[coordIdx] = coord-y
+				end
+			end
+		end
+	end
+	MethodDungeonTools:DrawAllPresetObjects()
+end
+
 ---DrawAllPresetObjects
 ---Draws all Preset objects on the map canvas/sublevel
 function MethodDungeonTools:DrawAllPresetObjects()
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
 
-	ViragDevTool_AddData(currentPreset.objects)
+	--ViragDevTool_AddData(currentPreset.objects)
 	--ViragDevTool_AddData(currentPreset)
 	--ViragDevTool_AddData(string.len(MethodDungeonTools:TableToString(currentPreset, true)))
 
@@ -2895,13 +2913,13 @@ function MethodDungeonTools:DrawAllPresetObjects()
 	--d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
 	--l: x1,y1,x2,y2,...
 	local color = {}
-    for k,obj in pairs(currentPreset.objects) do
+    for objectIndex,obj in pairs(currentPreset.objects) do
         if obj.d[3] == currentSublevel and obj.d[4] then
 			color.r,color.g,color.b = MethodDungeonTools:HexToRGB(obj.d[5])
             --lines
             local x1,y1,x2,y2
 			local lastx,lasty
-            for k,coord in pairs(obj.l) do
+            for _,coord in pairs(obj.l) do
 				if not x1 then x1 = coord
 				elseif not y1 then y1 = coord
 				elseif not x2 then
@@ -2912,16 +2930,16 @@ function MethodDungeonTools:DrawAllPresetObjects()
 					lasty = coord
 				end
 				if x1 and y1 and x2 and y2 then
-					MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3,color,obj.d[7],nil,obj.d[6],obj.d[2])
+					MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
 					x1,y1,x2,y2 = nil,nil,nil,nil
 				end
             end
 			--ending circle if smooth
-            if obj.d[7] and lastx and lasty then MethodDungeonTools:DrawCircle(lastx,lasty,obj.d[1]*0.3,color,nil,obj.d[6]) end
+            if obj.d[7] and lastx and lasty then MethodDungeonTools:DrawCircle(lastx,lasty,obj.d[1]*0.3,color,nil,obj.d[6],nil,objectIndex) end
 
             --triangle
             if obj.t and lastx and lasty then
-                MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6])
+                MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6],nil,objectIndex)
             end
         end
     end
