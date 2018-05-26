@@ -1652,14 +1652,17 @@ end
 
 function MethodDungeonTools:FormatEnemyHealth(amount)
 	amount = tonumber(amount)
-	if amount<1000 then return ""; end
-    if amount<10000 then return string.sub(amount,1,1).."k"; end --1k
-    if amount<100000 then return string.sub(amount,1,2).."k"; end --10k
-    if amount<1000000 then return string.sub(amount,1,3).."k"; end --100k
-    if amount<10000000 then return string.sub(amount,1,1).."."..string.sub(amount,2,3).."m"; end --1.11m
-    if amount<100000000 then return string.sub(amount,1,2).."."..string.sub(amount,3,4).."m"; end --11.11m
-    if amount<1000000000 then return string.sub(amount,1,3).."."..string.sub(amount,4,5).."m"; end --111.11m
-    return string.sub(amount,1,1).."."..string.sub(amount,2,3).."b"; --1.11b
+    if amount < 1e3 then
+        return string.sub(amount)
+    elseif amount >= 1e12 then
+        return string.format("%.3ft", amount/1e12)
+    elseif amount >= 1e9 then
+        return string.format("%.3fb", amount/1e9)
+    elseif amount >= 1e6 then
+        return string.format("%.2fm", amount/1e6)
+    elseif amount >= 1e3 then
+        return string.format("%.1fk", amount/1e3)
+    end
 end
 
 function MethodDungeonTools:DisplayEncounterInformation(encounterID)
