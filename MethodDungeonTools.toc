@@ -9,7 +9,7 @@
 ## OptionalDeps: Ace3
 
 #@no-lib-strip@
-libs\LibStub-1.0\LibStub.lua
+libs\LibStub\LibStub.lua
 libs\PhanxConfig-Dropdown\PhanxConfig-Dropdown.lua
 libs\AceAddon-3.0\AceAddon-3.0.xml
 libs\AceDB-3.0\AceDB-3.0.xml

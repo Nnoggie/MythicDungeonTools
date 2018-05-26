@@ -97,7 +97,7 @@ function MethodDungeonTools:initToolbar(frame)
     local back = AceGUI:Create("Icon")
     back:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.5,0.75,0.5,0.75)
     back:SetCallback("OnClick",function (widget,callbackName)
-        --
+        MethodDungeonTools:PresetObjectStepBack()
     end)
     back.tooltipText = "Undo"
     tinsert(widgets,back)
@@ -106,7 +106,7 @@ function MethodDungeonTools:initToolbar(frame)
     local forward = AceGUI:Create("Icon")
     forward:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.75,1,0.5,0.75)
     forward:SetCallback("OnClick",function (widget,callbackName)
-
+        MethodDungeonTools:PresetObjectStepForward()
     end)
     forward.tooltipText = "Redo"
     tinsert(widgets,forward)
@@ -243,6 +243,14 @@ function MethodDungeonTools:initToolbar(frame)
     eraser.tooltipText = "Drawing: Eraser"
     tinsert(widgets,eraser)
 
+    ---delete
+    local delete = AceGUI:Create("Icon")
+    delete:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
+    delete:SetCallback("OnClick",function (widget,callbackName)
+        MethodDungeonTools:DeleteAllPresetObjects()
+    end)
+    delete.tooltipText = "Clear all drawings"
+    tinsert(widgets,delete)
 
     for k,widget in ipairs(widgets) do
         widget:SetWidth(widgetWidth)
@@ -323,8 +331,9 @@ function MethodDungeonTools:CreateBrushPreview(frame)
 end
 
 ---EnableBrushPreview
-function MethodDungeonTools:EnableBrushPreview()
+function MethodDungeonTools:EnableBrushPreview(tool)
     local frame = MethodDungeonTools.main_frame
+    if tool == "mover" then return end
     frame.brushPreview:Show()
     frame.brushPreview:SetScript("OnUpdate", function(self, tick)
         if MouseIsOver(MethodDungeonToolsScrollFrame) and not MouseIsOver(MethodDungeonToolsToolbarFrame) then
@@ -332,7 +341,11 @@ function MethodDungeonTools:EnableBrushPreview()
             x = x/UIParent:GetScale()
             y = y/UIParent:GetScale()
             self:SetPoint("CENTER",UIParent,"BOTTOMLEFT",x,y)
-            frame.brushPreview.tex:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
+            if tool == "eraser" then
+                frame.brushPreview.tex:SetVertexColor(1,1,1,1)
+            else
+                frame.brushPreview.tex:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
+            end
             local mapScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
             frame.brushPreview:SetSize(max(2,0.475*db.toolbar.brushSize*mapScale), max(2,0.475*db.toolbar.brushSize*mapScale))
             frame.brushPreview.tex:SetAllPoints()
@@ -402,7 +415,7 @@ function MethodDungeonTools:UpdateSelectedToolbarTool(widgetName)
     toolbar.highlight:SetSize(widget.frame:GetWidth(),widget.frame:GetWidth())
     toolbar.highlight:SetPoint("CENTER",widget.frame,"CENTER")
     MethodDungeonTools:OverrideScrollframeScripts()
-    MethodDungeonTools:EnableBrushPreview()
+    MethodDungeonTools:EnableBrushPreview(currentTool)
     toolbar.highlight:Show()
 end
 
@@ -606,7 +619,7 @@ function MethodDungeonTools:StartPencilDrawing()
             return
         end
         if (oldx and abs(x-oldx)>threshold) or (oldy and abs(y-oldy)>threshold)  then
-            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel)
+            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel,nil,true)
 
             nobj.d[6] = layerSublevel
             nobj.l[lineIdx] = oldx
@@ -650,7 +663,7 @@ function MethodDungeonTools:StopPencilDrawing()
 end
 
 ---DrawCircle
-function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel)
+function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn)
     local circle = getTexture()
     if not layer then layer = objectDrawLayer end
     circle:SetDrawLayer(layer, layerSublevel)
@@ -660,12 +673,12 @@ function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel)
     circle:SetHeight(1.1*size)
     circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     circle:Show()
-    circle.isOwn = true
+    circle.isOwn = isOwn
     tinsert(activeTextures,circle)
 end
 
 ---DrawLine
-function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublevel,lineFactor)
+function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublevel,lineFactor,isOwn)
     local line = getTexture()
     if not layer then layer = objectDrawLayer end
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
@@ -673,15 +686,15 @@ function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublev
     DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, x, y, a, b, size, lineFactor and lineFactor or 1.1,"TOPLEFT")
     line:SetDrawLayer(layer, layerSublevel)
     line:Show()
-    line.isOwn = true
+    line.isOwn = isOwn
     tinsert(activeTextures,line)
     if smooth == true  then
-        MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel)
+        MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn)
     end
 end
 
 ---DrawTriangle
-function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSublevel)
+function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSublevel,isOwn)
     local triangle = getTexture()
     if not layer then layer = objectDrawLayer end
     triangle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\triangle")
@@ -692,6 +705,6 @@ function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSubl
     triangle:SetRotation(rotation+pi)
     triangle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     triangle:SetDrawLayer(layer, layerSublevel)
-    triangle.isOwn = true
+    triangle.isOwn = isOwn
     tinsert(activeTextures,triangle)
 end

@@ -2111,6 +2111,7 @@ end
 function MethodDungeonTools:ClearPreset(index)
 	table.wipe(db.presets[db.currentDungeonIdx][index].value.pulls)
 	db.presets[db.currentDungeonIdx][index].value.currentPull = 1
+	--MethodDungeonTools:DeleteAllPresetObjects()
 	MethodDungeonTools:EnsureDBTables()
 	MethodDungeonTools:UpdateMap()
 	MethodDungeonTools:ReloadPullButtons()
@@ -2861,14 +2862,30 @@ end
 function MethodDungeonTools:StorePresetObject(obj)
 	local currentPreset = MethodDungeonTools:GetCurrentPreset()
 	currentPreset.objects = currentPreset.objects or {}
-	tinsert(currentPreset.objects,MethodDungeonTools:DeepCopy(obj))
+	--we insert the object infront of the first hidden oject
+	local pos = 1
+	for k,v in ipairs(currentPreset.objects) do
+		pos = pos + 1
+		if v.d[4]==false then
+			pos = pos - 1
+		end
+	end
+	if pos>1 then
+		tinsert(currentPreset.objects,pos,MethodDungeonTools:DeepCopy(obj))
+	else
+		tinsert(currentPreset.objects,MethodDungeonTools:DeepCopy(obj))
+	end
 end
-
 ---DrawAllPresetObjects
 ---Draws all Preset objects on the map canvas/sublevel
 function MethodDungeonTools:DrawAllPresetObjects()
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
+
+	ViragDevTool_AddData(currentPreset.objects)
+	--ViragDevTool_AddData(currentPreset)
+	--ViragDevTool_AddData(string.len(MethodDungeonTools:TableToString(currentPreset, true)))
+
     MethodDungeonTools:ReleaseAllActiveTextures()
     currentPreset.objects = currentPreset.objects or {}
     --ViragDevTool_AddData(currentPreset.objects)
@@ -2902,6 +2919,54 @@ function MethodDungeonTools:DrawAllPresetObjects()
             --triangle
             if obj.t and lastx and lasty then
                 MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6])
+            end
+        end
+    end
+end
+
+---DeleteAllPresetObjects
+---Deletes all objects from the current preset
+function MethodDungeonTools:DeleteAllPresetObjects()
+	MethodDungeonTools:ReleaseAllActiveTextures()
+	local currentPreset = MethodDungeonTools:GetCurrentPreset()
+	currentPreset.objects = {}
+end
+
+---StepBack
+---
+function MethodDungeonTools:PresetObjectStepBack()
+    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    currentPreset.objects = currentPreset.objects or {}
+    local length = 0
+    for k,v in ipairs(currentPreset.objects) do
+        length = length + 1
+    end
+    if length>0 then
+        for i = length,1,-1 do
+            if currentPreset.objects[i] and currentPreset.objects[i].d[4] then
+                currentPreset.objects[i].d[4] = false
+                MethodDungeonTools:DrawAllPresetObjects()
+                break
+            end
+        end
+    end
+end
+
+---StepForward
+---
+function MethodDungeonTools:PresetObjectStepForward()
+    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    currentPreset.objects = currentPreset.objects or {}
+    local length = 0
+    for k,v in ipairs(currentPreset.objects) do
+        length = length + 1
+    end
+    if length>0 then
+        for i = 1,length do
+            if currentPreset.objects[i] and not currentPreset.objects[i].d[4] then
+                currentPreset.objects[i].d[4] = true
+                MethodDungeonTools:DrawAllPresetObjects()
+                break
             end
         end
     end
