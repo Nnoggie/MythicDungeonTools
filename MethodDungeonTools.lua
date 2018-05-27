@@ -2880,7 +2880,7 @@ function MethodDungeonTools:StorePresetObject(obj)
 	end
 end
 
----UpdatePresetObject
+---UpdatePresetObjectOffsets
 function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
 	local currentPreset = MethodDungeonTools:GetCurrentPreset()
 	for objectIndex,obj in pairs(currentPreset.objects) do
@@ -2894,12 +2894,15 @@ function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
 			end
 		end
 	end
+    --redraw everything
 	MethodDungeonTools:DrawAllPresetObjects()
 end
+
 
 ---DrawAllPresetObjects
 ---Draws all Preset objects on the map canvas/sublevel
 function MethodDungeonTools:DrawAllPresetObjects()
+
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
 
@@ -2946,11 +2949,16 @@ function MethodDungeonTools:DrawAllPresetObjects()
 end
 
 ---DeleteAllPresetObjects
----Deletes all objects from the current preset
-function MethodDungeonTools:DeleteAllPresetObjects()
-	MethodDungeonTools:ReleaseAllActiveTextures()
+---Deletes objects from the current preset in the current sublevel
+function MethodDungeonTools:DeletePresetObjects()
 	local currentPreset = MethodDungeonTools:GetCurrentPreset()
-	currentPreset.objects = {}
+    local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
+    for objectIndex,obj in pairs(currentPreset.objects) do
+        if obj.d[3] == currentSublevel then
+            currentPreset.objects[objectIndex] = nil
+        end
+    end
+    MethodDungeonTools:DrawAllPresetObjects()
 end
 
 ---StepBack

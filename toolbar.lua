@@ -228,7 +228,9 @@ function MethodDungeonTools:initToolbar(frame)
     local cogwheel = AceGUI:Create("Icon")
     cogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0,0.25,0.25,0.5)
     cogwheel:SetCallback("OnClick",function (widget,callbackName)
-
+        InterfaceOptionsFrame_OpenToCategory("MethodDungeonTools")
+        InterfaceOptionsFrame_OpenToCategory("MethodDungeonTools")
+        MethodDungeonTools:HideInterface()
     end)
     cogwheel.tooltipText = "Settings"
     tinsert(widgets,cogwheel)
@@ -247,7 +249,7 @@ function MethodDungeonTools:initToolbar(frame)
     local delete = AceGUI:Create("Icon")
     delete:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
     delete:SetCallback("OnClick",function (widget,callbackName)
-        MethodDungeonTools:DeleteAllPresetObjects()
+        MethodDungeonTools:DeletePresetObjects()
     end)
     delete.tooltipText = "Clear all drawings"
     tinsert(widgets,delete)
@@ -390,6 +392,7 @@ function MethodDungeonTools:UpdateSelectedToolbarTool(widgetName)
             if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
             if currentTool == "mover" then MethodDungeonTools:StopMovingDrawing() end
+            if currentTool == "eraser" then MethodDungeonTools:StopEraserDrawing() end
         end
         currentTool = nil
         toolbar:SetScript("OnUpdate",nil)
@@ -418,6 +421,7 @@ function MethodDungeonTools:OverrideScrollframeScripts()
             if currentTool == "arrow" then MethodDungeonTools:StartArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StartLineDrawing() end
             if currentTool == "mover" then MethodDungeonTools:StartMovingDrawing() end
+            if currentTool == "eraser" then MethodDungeonTools:StartEraserDrawing() end
         end
     end)
     frame.scrollFrame:SetScript("OnMouseUp", function(self,button)
@@ -426,6 +430,7 @@ function MethodDungeonTools:OverrideScrollframeScripts()
             if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
             if currentTool == "mover" then MethodDungeonTools:StopMovingDrawing() end
+            if currentTool == "eraser" then MethodDungeonTools:StopEraserDrawing() end
         end
     end)
 end
@@ -610,14 +615,12 @@ function MethodDungeonTools:StartPencilDrawing()
         end
         if (oldx and abs(x-oldx)>threshold) or (oldy and abs(y-oldy)>threshold)  then
             MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel,nil,true)
-
             nobj.d[6] = layerSublevel
-            nobj.l[lineIdx] = oldx
-            nobj.l[lineIdx+1] = oldy
-            nobj.l[lineIdx+2] = x
-            nobj.l[lineIdx+3] = y
+            nobj.l[lineIdx] = MethodDungeonTools:Round(oldx,1)
+            nobj.l[lineIdx+1] = MethodDungeonTools:Round(oldy,1)
+            nobj.l[lineIdx+2] = MethodDungeonTools:Round(x,1)
+            nobj.l[lineIdx+3] = MethodDungeonTools:Round(y,1)
             lineIdx = lineIdx + 4
-
             oldx,oldy = x,y
         end
     end)
@@ -657,11 +660,10 @@ local objectIndex
 local originalX,originalY
 function MethodDungeonTools:StartMovingDrawing()
     --we have to redraw all objects first, as the objectIndex needs to be set on every texture
-    --this index also changes when undo/redo is used
     MethodDungeonTools:DrawAllPresetObjects()
     drawingActive = true
     local frame = MethodDungeonTools.main_frame
-    objectIndex = MethodDungeonTools:GetHighestPresetObjectAtCursor()
+    objectIndex = MethodDungeonTools:GetHighestPresetObjectIndexAtCursor()
     local startx,starty = MethodDungeonTools:GetCursorPosition()
     originalX,originalY = MethodDungeonTools:GetCursorPosition()
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
@@ -693,9 +695,8 @@ function MethodDungeonTools:StopMovingDrawing()
     drawingActive = false
 end
 
----GetHighestPresetObjectAt
-function MethodDungeonTools:GetHighestPresetObjectAtCursor()
-
+---GetHighestPresetObjectIndexAtCursor
+function MethodDungeonTools:GetHighestPresetObjectIndexAtCursor()
     local currentSublevel = -8
     local highestTexture
     for k,v in pairs(activeTextures) do
@@ -710,16 +711,43 @@ function MethodDungeonTools:GetHighestPresetObjectAtCursor()
     if highestTexture then
         return highestTexture.objectIndex
     end
+end
 
-
-
-    local currentPreset = MethodDungeonTools:GetCurrentPreset()
-    currentPreset.objects = currentPreset.objects or {}
-    for k,v in ipairs(currentPreset.objects) do
-        for i,j in ipairs(v.l) do
-
+---StartEraserDrawing
+function MethodDungeonTools:StartEraserDrawing()
+    MethodDungeonTools:DrawAllPresetObjects()
+    drawingActive = true
+    local frame = MethodDungeonTools.main_frame
+    local startx,starty
+    frame.toolbar:SetScript("OnUpdate", function(self, tick)
+        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        if x~=startx or y ~=starty then
+            local highestObjectIdx = MethodDungeonTools:GetHighestPresetObjectIndexAtCursor()
+            local removeObject = false
+            for j,tex in pairs(activeTextures) do
+                if tex.objectIndex == highestObjectIdx then
+                    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+                    for objectIndex,obj in pairs(currentPreset.objects) do
+                        if objectIndex == highestObjectIdx then
+                            tremove(currentPreset.objects,objectIndex)
+                        end
+                    end
+                    MethodDungeonTools:DrawAllPresetObjects()
+                    break
+                end
+            end
+            startx,starty = x,y
         end
-    end
+    end)
+end
+
+---StopEraserDrawing
+function MethodDungeonTools:StopEraserDrawing()
+    local frame = MethodDungeonTools.main_frame
+    frame.toolbar:SetScript("OnUpdate",nil)
+    MethodDungeonTools:DrawAllPresetObjects()
+    drawingActive = false
 end
 
 ---DrawCircle

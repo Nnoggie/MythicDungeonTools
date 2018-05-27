@@ -1,0 +1,5 @@
+<Bindings>
+  <Binding name="Toggle Window" runOnUp="false" category="Method Dungeon Tools">
+      MethodDungeonTools:ShowInterface()
+  </Binding>
+</Bindings>
