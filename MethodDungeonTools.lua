@@ -9,6 +9,8 @@ local blipDrawLayer = "OVERLAY"
 
 _G["MethodDungeonTools"] = MethodDungeonTools
 
+local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
+
 local sizex = 840
 local sizey = 555
 local buttonTextFontSize = 12
@@ -85,92 +87,19 @@ local defaultSavedVars = {
             color = {r=1,g=1,b=1,a=1},
             brushSize = 3,
         },
-		presets = {
-			[1] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[2] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[3] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[4] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[5] = {
-				[1] = {text="Default",value={}},
-				--[[
-				 --preset
-					[1] = { --pull 1
-						[1] = {1,2}, --wandering shellback
-						[3] = {1,2},	 --warrior
-					},
-					[2] = { --pull 2
-						[1] = {3},
-						[3] = {4},
-					},
-					[3] = { --pull 3
-						[1] = {8},
-						[3] = {4,5},
-					},
-				]]
-				[2] = {text="<New Preset>",value=0},
-			},
-			[6] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[7] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[8] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[9] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[10] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[11] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[12] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-			[13] = {
-				[1] = {text="Default",value={}},
-				[2] = {text="<New Preset>",value=0},
-			},
-		},
-		currentPreset = {
-			[1] = 1,
-			[2] = 1,
-			[3] = 1,
-			[4] = 1,
-			[5] = 1,
-			[6] = 1,
-			[7] = 1,
-			[8] = 1,
-			[9] = 1,
-			[10] = 1,
-			[11] = 1,
-			[12] = 1,
-			[13] = 1,
-		},
+		presets = {},
+		currentPreset = {},
 	},
 }
+do
+    for i=1,24 do
+        defaultSavedVars.global.presets[i] = {
+            [1] = {text="Default",value={}},
+            [2] = {text="<New Preset>",value=0},
+        }
+        defaultSavedVars.global.currentPreset[i] = 1
+    end
+end
 
 
 -- Init db
@@ -220,111 +149,152 @@ local tooltip
 local tooltipLastShown
 local dungeonEnemyBlipMouseoverHighlight
 local dungeonEnemiesSelected = {}
+local mapLinkButtons
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.pencilBlips = {}
 
---expansions: 1=legion 2=bfa
 local dungeonList = {
-	[1] = {		
-		[1] = "Black Rook Hold",
-		[2] = "Cathedral of Eternal Night",
-		[3] = "Court of Stars",
-		[4] = "Darkheart Thicket",
-		[5] = "Eye of Azshara",
-		[6] = "Halls of Valor",
-		[7] = "Maw of Souls",
-		[8] = "Neltharion's Lair",
-		[9] = "Return to Karazhan Lower",
-		[10] = "Return to Karazhan Upper",
-		[11] = "Seat of the Triumvirate",
-		[12] = "The Arcway",
-		[13] = "Vault of the Wardens",
-		[14] = " >Battle for Azeroth"
-	},
-	[2] = {
-		[1] = "Atal'Dazar",
-		[2] = " >Legion",
-	},
+    [1] = "Black Rook Hold",
+    [2] = "Cathedral of Eternal Night",
+    [3] = "Court of Stars",
+    [4] = "Darkheart Thicket",
+    [5] = "Eye of Azshara",
+    [6] = "Halls of Valor",
+    [7] = "Maw of Souls",
+    [8] = "Neltharion's Lair",
+    [9] = "Return to Karazhan Lower",
+    [10] = "Return to Karazhan Upper",
+    [11] = "Seat of the Triumvirate",
+    [12] = "The Arcway",
+    [13] = "Vault of the Wardens",
+    [14] = " >Battle for Azeroth",
+    [15] = "Atal'Dazar",
+    [16] = "Freehold",
+    [17] = "Kings' Rest",
+    [18] = "Shrine of the Storm",
+    [19] = "Siege of Boralus",
+    [20] = "Temple of Sethraliss",
+    [21] = "The MOTHERLODE!!",
+    [22] = "The Underrot",
+    [23] = "Tol Dagor",
+    [24] = "Waycrest Manor",
+    [25] = " >Legion",
 }
 
 local dungeonSubLevels = {
-	[1] = {
-		[1] = {
-			[1] = "The Ravenscrypt",
-			[2] = "The Grand Hall",
-			[3] = "Ravenshold",
-			[4] = "The Rook's Host",
-			[5] = "Lord Ravencrest's Chamber",
-			[6] = "The Raven's Crown",
-		},
-		[2] = {
-			[1] = "Hall of the Moon",
-			[2] = "Twilight Grove",
-			[3] = "The Emerald Archives",
-			[4] = "Path of Illumination",
-			[5] = "Sacristy of Elune",
-		},
-		[3] = {
-			[1] = "Court of Stars",
-			[2] = "The Jeweled Estate",
-			[3] = "The Balconies",
-		},
-		[4] = {
-			[1] = "Darkheart Thicket",
-		},
-		[5] = {
-			[1] = "Eye of Azshara",
-		},
-		[6] = {
-			[1] = "The High Gate",
-			[2] = "Field of the Eternal Hunt",
-			[3] = "Halls of Valor",
-		},
-		[7] = {
-			[1] = "Helmouth Cliffs",
-			[2] = "The Hold",
-			[3] = "The Naglfar",
-		},
-		[8] = {
-			[1] = "Neltharion's Lair",
-		},
-		[9] = {
-			[1] = "Master's Terrace",
-			[2] = "Opera Hall Balcony",
-			[3] = "The Guest Chambers",
-			[4] = "The Banquet Hall",
-			[5] = "Upper Livery Stables",
-			[6] = "The Servant's Quarters",		
-		},
-		[10] = {
-			[1] = "Lower Broken Stair",
-			[2] = "Upper Broken Stair",
-			[3] = "The Menagerie",
-			[4] = "Guardian's Library",
-			[5] = "Library Floor",
-			[6] = "Upper Library",
-			[7] = "Gamesman's Hall",
-			[8] = "Netherspace",
-		},
-		[11] = {
-			[1] = "Seat of the Triumvirate", 
-		},
-		[12] = {
-			[1] = "The Arcway", 
-		},
-		[13] = {
-			[1] = "The Warden's Court", 
-			[2] = "Vault of the Wardens", 
-			[3] = "Vault of the Betrayer", 
-		},
-	},
-	[2] = {
-		[1] = {
-			[1] = "Atal'Dazar",
-		},
-	},
+    [1] = {
+        [1] = "The Ravenscrypt",
+        [2] = "The Grand Hall",
+        [3] = "Ravenshold",
+        [4] = "The Rook's Host",
+        [5] = "Lord Ravencrest's Chamber",
+        [6] = "The Raven's Crown",
+    },
+    [2] = {
+        [1] = "Hall of the Moon",
+        [2] = "Twilight Grove",
+        [3] = "The Emerald Archives",
+        [4] = "Path of Illumination",
+        [5] = "Sacristy of Elune",
+    },
+    [3] = {
+        [1] = "Court of Stars",
+        [2] = "The Jeweled Estate",
+        [3] = "The Balconies",
+    },
+    [4] = {
+        [1] = "Darkheart Thicket",
+    },
+    [5] = {
+        [1] = "Eye of Azshara",
+    },
+    [6] = {
+        [1] = "The High Gate",
+        [2] = "Field of the Eternal Hunt",
+        [3] = "Halls of Valor",
+    },
+    [7] = {
+        [1] = "Helmouth Cliffs",
+        [2] = "The Hold",
+        [3] = "The Naglfar",
+    },
+    [8] = {
+        [1] = "Neltharion's Lair",
+    },
+    [9] = {
+        [1] = "Master's Terrace",
+        [2] = "Opera Hall Balcony",
+        [3] = "The Guest Chambers",
+        [4] = "The Banquet Hall",
+        [5] = "Upper Livery Stables",
+        [6] = "The Servant's Quarters",
+    },
+    [10] = {
+        [1] = "Lower Broken Stair",
+        [2] = "Upper Broken Stair",
+        [3] = "The Menagerie",
+        [4] = "Guardian's Library",
+        [5] = "Library Floor",
+        [6] = "Upper Library",
+        [7] = "Gamesman's Hall",
+        [8] = "Netherspace",
+    },
+    [11] = {
+        [1] = "Seat of the Triumvirate",
+    },
+    [12] = {
+        [1] = "The Arcway",
+    },
+    [13] = {
+        [1] = "The Warden's Court",
+        [2] = "Vault of the Wardens",
+        [3] = "Vault of the Betrayer",
+    },
+    [15] = {
+        [1] = "Atal'Dazar",
+        [2] = "Sacrificial Pits",
+    },
+    [16] = {
+        [1] = "Freehold",
+    },
+    [17] = {
+        [1] = "Kings' Rest",
+    },
+    [18] = {
+        [1] = "Shrine of the Storm",
+        [2] = "Shrine Interior TEMP",
+    },
+    [19] = {
+        [1] = "Siege of Boralus",
+    },
+    [20] = {
+        [1] = "Temple of Sethraliss",
+        [2] = "Atrium of Sethraliss",
+    },
+    [21] = {
+        [1] = "The MOTHERLODE!!",
+    },
+    [22] = {
+        [1] = "The Underrot",
+        [2] = "Temple Interior TEMP",
+    },
+    [23] = {
+        [1] = "Tol Dagor",
+        [2] = "The Drain",
+        [3] = "The Brig",
+        [4] = "Detention Block",
+        [5] = "Officer Quarters",
+        [6] = "Overseer's Redoubt",
+        [7] = "Overseer's Summit",
+    },
+    [24] = {
+        [1] = "The Grand Foyer",
+        [2] = "Upstairs",
+        [3] = "The Cellar",
+        [4] = "Catacombs",
+        [5] = "The Rupture",
+    },
 }
-
 
 MethodDungeonTools.dungeonMaps = {
 	[1] = {
@@ -409,10 +379,65 @@ MethodDungeonTools.dungeonMaps = {
 		[2]= "VaultOfTheWardens2_",
 		[3]= "VaultOfTheWardens3_",
 	},
+	[15] = {
+		[0]= "CityOfGold",
+		[1]= "CityOfGold1_",
+		[2]= "CityOfGold2_",
+	},
+	[16] = {
+		[0]= "KulTirasPirateTownDungeon",
+		[1]= "KulTirasPirateTownDungeon",
+	},
+	[17] = {
+        [0] = "KingsRest",
+        [1] = "KingsRest1_"
+	},
+    [18] = {
+        [0] = "ShrineOfTheStorm",
+        [1] = "ShrineOfTheStorm",
+        [2] = "ShrineOfTheStorm1_",
+    },
+    [19] = {
+        [0] = "SiegeOfBoralus",
+        [1] = "SiegeOfBoralus",
+    },
+    [20] = {
+        [0] = "TempleOfSethralissA",
+        [1] = "TempleOfSethralissA",
+        [2] = "TempleOfSethralissB",
+    },
+    [21] = {
+        [0] = "KezanDungeon",
+        [1] = "KezanDungeon",
+    },
+    [22] = {
+        [0] = "UnderrotExterior",
+        [1] = "UnderrotExterior",
+        [2] = "UnderrotInterior",
+    },
+    [23] = {
+        [0] = "PrisonDungeon",
+        [1] = "PrisonDungeon",
+        [2] = "PrisonDungeon1_",
+        [3] = "PrisonDungeon2_",
+        [4] = "PrisonDungeon3_",
+        [5] = "PrisonDungeon4_",
+        [6] = "PrisonDungeon5_",
+        [7] = "PrisonDungeon6_",
+    },
+    [24] = {
+        [0] = "Waycrest",
+        [1] = "Waycrest1_",
+        [2] = "Waycrest2_",
+        [3] = "Waycrest3_",
+        [4] = "Waycrest4_",
+        [5] = "Waycrest5_",
+    },
 	
 }
 MethodDungeonTools.dungeonBosses = {}
 MethodDungeonTools.dungeonEnemies = {}
+MethodDungeonTools.mapLinks = {}
 
 function MethodDungeonTools:GetDB()
     return db
@@ -1229,6 +1254,13 @@ MethodDungeonTools.OnMouseUp = function(self,button)
 	end
 end
 
+---SetCurrentSubLevel
+---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
+function MethodDungeonTools:SetCurrentSubLevel(sublevel)
+    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = sublevel
+end
+
+
 ---GetCurrentSubLevel
 ---Returns the sublevel of the currently active preset
 function MethodDungeonTools:GetCurrentSubLevel()
@@ -2041,9 +2073,18 @@ end
 
 function MethodDungeonTools:UpdateDungeonDropDown()
 	local group = MethodDungeonTools.main_frame.DungeonSelectionGroup
-	group.DungeonDropdown:SetList(dungeonList[db.currentExpansion])
+    group.DungeonDropdown:SetList({})
+    if db.currentExpansion == 1 then
+        for i=1,14 do
+            group.DungeonDropdown:AddItem(i,dungeonList[i])
+        end
+    elseif db.currentExpansion == 2 then
+        for i=15,25 do
+            group.DungeonDropdown:AddItem(i,dungeonList[i])
+        end
+    end
 	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
-	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentExpansion][db.currentDungeonIdx])
+	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
 	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
 end
 
@@ -2073,11 +2114,13 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	group.DungeonDropdown = AceGUI:Create("Dropdown")
 	group.DungeonDropdown.text:SetJustifyH("LEFT")
 	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-		if key<#dungeonList[db.currentExpansion] then
-			MethodDungeonTools:UpdateToDungeon(key)
+		if key==14 or key == 25 then
+            db.currentExpansion = (db.currentExpansion%2)+1
+            db.currentDungeonIdx = key==14 and 15 or 1
+            MethodDungeonTools:UpdateDungeonDropDown()
+            MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 		else
-			db.currentExpansion = (db.currentExpansion%2)+1
-			MethodDungeonTools:UpdateDungeonDropDown()
+            MethodDungeonTools:UpdateToDungeon(key)
 		end
 	end)
 	group:AddChild(group.DungeonDropdown)	
@@ -2119,6 +2162,54 @@ function MethodDungeonTools:EnsureDBTables()
 
 end
 
+
+--MapLinkPinTemplate
+
+
+
+---UpdateMapLinks
+---Draws all map links on the current sublevel
+function MethodDungeonTools:UpdateMapLinks()
+    if not mapLinkButtons then
+        mapLinkButtons = {}
+        for i =1,7 do
+            mapLinkButtons[i] = CreateFrame("Button", "MethodDungeonToolsBossButton"..i, MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate")
+            mapLinkButtons[i]:SetSize(22,22)--default 32x32
+            mapLinkButtons[i].Texture:SetSize(22,22)--default 32x32
+            mapLinkButtons[i].HighlightTexture:SetSize(22,22)--default 32x32
+            --ViragDevTool_AddData(mapLinkButtons[i])
+        end
+    end
+    for _,v in pairs(mapLinkButtons) do
+        v:Hide()
+    end
+    local links = MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+    if not links then return end
+    for linkIdx,link in pairs(links) do
+        if link.direction>0 then
+            mapLinkButtons[linkIdx].HighlightTexture:SetAtlas("poi-door-up")
+            mapLinkButtons[linkIdx].Texture:SetAtlas("poi-door-up")
+        else
+            mapLinkButtons[linkIdx].HighlightTexture:SetAtlas("poi-door-down")
+            mapLinkButtons[linkIdx].Texture:SetAtlas("poi-door-down")
+        end
+        mapLinkButtons[linkIdx]:SetScript("OnClick",function()
+            MethodDungeonTools:SetCurrentSubLevel(link.target)
+            MethodDungeonTools:UpdateMap()
+        end)
+        mapLinkButtons[linkIdx]:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText(dungeonSubLevels[db.currentDungeonIdx][link.target])
+            GameTooltip:Show()
+        end)
+        mapLinkButtons[linkIdx]:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+        mapLinkButtons[linkIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",link.x,link.y)
+        mapLinkButtons[linkIdx]:Show()
+    end
+end
+
 function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons)
 	local mapPanel = self.main_frame.mapPanel
 	local mapName
@@ -2153,6 +2244,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
+    MethodDungeonTools:UpdateMapLinks()
     MethodDungeonTools:DrawAllPresetObjects()
 end
 
@@ -2420,10 +2512,6 @@ end
 
 function MethodDungeonTools:PresetsDeletePull(p,j)	
 	tremove(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,p)
-	--TODO remove all pulls from j to end? bug where u have to remove multiple times to remove "invisible pulls"
-	for k,v in ipairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
-		--print(k,v,j)
-	end
 end
 
 function MethodDungeonTools:CopyObject(obj,seen)
