@@ -116,11 +116,13 @@ local function Constructor()
 	image:SetHeight(64)
 	image:SetPoint("TOP", 0, -5)
 
+	
 	local highlight = frame:CreateTexture(nil, "HIGHLIGHT")
 	highlight:SetAllPoints(image)
 	highlight:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
 	highlight:SetTexCoord(0, 1, 0.23, 0.77)
 	highlight:SetBlendMode("ADD")
+	
 
 	local widget = {
 		label = label,

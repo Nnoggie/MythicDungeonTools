@@ -9,7 +9,7 @@ local drawingActive = false
 local currentTool
 local objectDrawLayer = "ARTWORK"
 
-local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition
+local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
 local MethodDungeonTools = MethodDungeonTools
 
 ---initToolbar
@@ -22,7 +22,7 @@ function MethodDungeonTools:initToolbar(frame)
     frame.toolbar:SetFrameLevel(5)
     frame.toolbar.tex = frame.toolbar:CreateTexture(nil,"HIGH",nil,6)
     frame.toolbar.tex:SetAllPoints()
-    frame.toolbar.tex:SetColorTexture(0, 0, 0, 0.7)
+    frame.toolbar.tex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))--unpack(MethodDungeonTools.BackdropColor)
     frame.toolbar.toggleButton = CreateFrame("Button", nil, frame);
     frame.toolbar.toggleButton:SetFrameStrata("HIGH")
     frame.toolbar.toggleButton:SetFrameLevel(6)
@@ -36,7 +36,6 @@ function MethodDungeonTools:initToolbar(frame)
     frame.toolbar:SetScript("OnHide",function()
         MethodDungeonTools:UpdateSelectedToolbarTool(nil)
     end)
-    MethodDungeonTools:CreateToolbarTooltip(frame.toolbar)
 
     frame.toolbar.toggleButton:SetScript("OnClick", function()
         if frame.toolbar:IsShown() then
@@ -52,6 +51,7 @@ function MethodDungeonTools:initToolbar(frame)
 
     frame.toolbar.widgetGroup = AceGUI:Create("SimpleGroup")
     frame.toolbar.widgetGroup.frame:SetAllPoints(frame.toolbar)
+    frame.toolbar.widgetGroup.frame:SetBackdropColor(0,0,0,0)
     --frame.toolbar.widgetGroup:SetWidth(350)
     --frame.toolbar.widgetGroup:SetHeight(15)
     --frame.toolbar.widgetGroup:SetPoint("TOP",frame.toolbar,"TOP",0,0)
@@ -92,6 +92,7 @@ function MethodDungeonTools:initToolbar(frame)
     ---TOOLBAR WIDGETS
     local widgetWidth = 24
     local widgets = {}
+    MethodDungeonTools.tempWidgets = widgets
 
     ---back
     local back = AceGUI:Create("Icon")
@@ -100,6 +101,8 @@ function MethodDungeonTools:initToolbar(frame)
         MethodDungeonTools:PresetObjectStepBack()
     end)
     back.tooltipText = "Undo"
+    local t = back.frame:CreateTexture(nil,"ARTWORK")
+    back.frame:SetHighlightTexture(t)
     tinsert(widgets,back)
 
     ---forward
@@ -233,7 +236,7 @@ function MethodDungeonTools:initToolbar(frame)
         MethodDungeonTools:HideInterface()
     end)
     cogwheel.tooltipText = "Settings"
-    tinsert(widgets,cogwheel)
+    --tinsert(widgets,cogwheel)
 
     ---eraser
     local eraser = AceGUI:Create("Icon")
@@ -265,12 +268,12 @@ function MethodDungeonTools:initToolbar(frame)
             MethodDungeonTools:ToggleToolbarTooltip(false)
         end)
         frame.toolbar.widgetGroup:AddChild(widget)
+
     end
 
     frame.toolbar:SetSize(sizex, sizey)
     frame.toolbar:SetPoint("TOP", frame, "TOP", 0, 0)
 
-    MethodDungeonTools:CreateToolbarTooltip(frame)
     MethodDungeonTools:CreateBrushPreview(frame)
     MethodDungeonTools:UpdateSelectedToolbarTool()
 
@@ -289,6 +292,8 @@ local function getTexture()
         tex:SetRotation(0)
         tex:SetTexCoord(0, 1, 0, 1)
         tex:ClearAllPoints()
+        tex.coords = nil
+        tex.points = nil
         return tex
     end
 end
@@ -303,22 +308,6 @@ function MethodDungeonTools:ReleaseAllActiveTextures()
         releaseTexture(tex)
     end
     twipe(activeTextures)
-end
-
----CreateToolbarTooltip
-function MethodDungeonTools:CreateToolbarTooltip(frame)
-    frame.tooltip = CreateFrame("Frame", "MethodDungeonToolsToolbarTooltip", UIParent, "TooltipBorderedFrameTemplate")
-    frame.tooltip:SetClampedToScreen(true)
-    frame.tooltip:SetFrameStrata("TOOLTIP")
-    frame.tooltip:SetSize(90, 40)
-    frame.tooltip:Hide()
-
-    frame.tooltip.text = frame.tooltip:CreateFontString("MethodDungeonToolsToolbarTooltipString")
-    frame.tooltip.text:SetFont("Fonts\\FRIZQT__.TTF", 12)
-    frame.tooltip.text:SetTextColor(1, 1, 1, 1);
-    frame.tooltip.text:SetJustifyH("CENTER")
-    frame.tooltip.text:SetJustifyV("TOP")
-    frame.tooltip.text:SetPoint("CENTER", frame.tooltip, "CENTER", 0, 0)
 end
 
 ---CreateBrushPreview
@@ -367,15 +356,15 @@ end
 
 ---ToggleToolbarTooltip
 function MethodDungeonTools:ToggleToolbarTooltip(show,widget)
-    local tooltip = MethodDungeonTools.main_frame.toolbar.tooltip
     if not show then
-        tooltip:Hide()
+        GameTooltip:Hide()
     else
-        --set text
-        tooltip.text:SetText(widget.tooltipText)
-        tooltip:SetWidth(tooltip.text:GetWidth()+20)
-        tooltip:SetPoint("TOP",widget.frame,"BOTTOM",0)
-        tooltip:Show()
+        local yOffset = -1
+        if widget.type == "EditBox" then yOffset = yOffset-1 end
+        if widget.type == "ColorPicker" then yOffset = yOffset-3 end
+        GameTooltip:SetOwner(widget.frame, "ANCHOR_BOTTOM",0,yOffset)
+        GameTooltip:SetText(widget.tooltipText,1,1,1,1)
+        GameTooltip:Show()
     end
 end
 
@@ -538,37 +527,44 @@ function MethodDungeonTools:StopArrowDrawing()
     drawingActive = false
 end
 
-
+local startx,starty,endx,endy
 ---StartLineDrawing
 function MethodDungeonTools:StartLineDrawing()
     drawingActive = true
     local frame = MethodDungeonTools.main_frame
-    local startx,starty = MethodDungeonTools:GetCursorPosition()
+    startx,starty = MethodDungeonTools:GetCursorPosition()
     local line = getTexture()
     line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
     line.isOwn = true
     tinsert(activeTextures,line)
+
+    local circle1 = getTexture()
+    tinsert(activeTextures,circle1)
+    local circle2 = getTexture()
+    tinsert(activeTextures,circle2)
+
     local drawLayer = -8
     ---new object
     ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
     ---l: x1,y1,x2,y2,...
-    nobj = {d={db.toolbar.brushSize,1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b)},l={}}
-    nobj.l = {MethodDungeonTools:Round(startx,1),MethodDungeonTools:Round(starty,1)}
+    nobj = {d={db.toolbar.brushSize,1.1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b),nil,true},l={}}
+    nobj.l = {}
 
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         drawLayer = max(drawLayer,currentDrawLayer)
-        local x,y = MethodDungeonTools:GetCursorPosition()
-        if x~= startx and y~=starty then
-            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3), 1,"TOPLEFT")
+        endx,endy = MethodDungeonTools:GetCursorPosition()
+        if endx~= startx and endy~=starty then
+            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, endx, endy, (db.toolbar.brushSize*0.3)*1.1, 1.00,"TOPLEFT")
             line:SetDrawLayer(objectDrawLayer,drawLayer)
             line:Show()
-            ---new object
+            MethodDungeonTools:DrawCircle(startx,starty,(db.toolbar.brushSize*0.3),db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle1,true)
+            MethodDungeonTools:DrawCircle(endx,endy,(db.toolbar.brushSize*0.3),db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle2,true)
+
+
             nobj.d[6] = drawLayer
-            nobj.l[3] = MethodDungeonTools:Round(x,1)
-            nobj.l[4] = MethodDungeonTools:Round(y,1)
         end
     end)
 end
@@ -580,8 +576,29 @@ function MethodDungeonTools:StopLineDrawing()
     for k,v in pairs(activeTextures) do
         v.isOwn = nil
     end
+    --split the line into multiple parts
+    local d = math.sqrt((endx-startx)^2+(endy-starty)^2)
+    local numSegments = d*2/(math.max(db.toolbar.brushSize,5))
+    numSegments = math.max(numSegments,1)
+    local x,y = startx,starty
+    for i=1,numSegments do
+        local t =  i/numSegments
+        local newx = startx+(endx-startx)*t
+        local newy = starty+(endy-starty)*t
+        nobj.l[4*i-3] = MethodDungeonTools:Round(x,1)
+        nobj.l[4*i-2] = MethodDungeonTools:Round(y,1)
+        nobj.l[4*i-1] = MethodDungeonTools:Round(newx,1)
+        nobj.l[4*i] = MethodDungeonTools:Round(newy,1)
+        x,y = newx,newy
+    end
+    tinsert(nobj.l,MethodDungeonTools:Round(x,1))
+    tinsert(nobj.l,MethodDungeonTools:Round(y,1))
+    tinsert(nobj.l,MethodDungeonTools:Round(endx,1))
+    tinsert(nobj.l,MethodDungeonTools:Round(endy,1))
+
     MethodDungeonTools:StorePresetObject(nobj)
     drawingActive = false
+    MethodDungeonTools:DrawAllPresetObjects()
 end
 
 local oldx,oldy
@@ -633,21 +650,22 @@ function MethodDungeonTools:StopPencilDrawing()
     local x,y = MethodDungeonTools:GetCursorPosition()
     local layerSublevel = MethodDungeonTools:GetHighestFrameLevelAtCursor()
     --finish line
-    MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel)
-    --store it
-    local size = 0
-    for k,v in ipairs(nobj.l) do
-        size = size+1
+    if x~=oldx or y~=oldy then
+        MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3),db.toolbar.color,true,objectDrawLayer,layerSublevel)
+        --store it
+        local size = 0
+        for k,v in ipairs(nobj.l) do
+            size = size+1
+        end
+        nobj.l[size+1] = MethodDungeonTools:Round(oldx,1)
+        nobj.l[size+2] = MethodDungeonTools:Round(oldy,1)
+        nobj.l[size+3] = MethodDungeonTools:Round(x,1)
+        nobj.l[size+4] = MethodDungeonTools:Round(y,1)
     end
-    nobj.l[size+1] = oldx
-    nobj.l[size+2] = oldy
-    nobj.l[size+3] = x
-    nobj.l[size+4] = y
-
-    --draw end circle, dont need to store it as we draw it when we restore the line automatically
+    --draw end circle, dont need to store it as we draw it when we restore the line from db
     MethodDungeonTools:DrawCircle(x,y,db.toolbar.brushSize*0.3,db.toolbar.color,objectDrawLayer,layerSublevel)
     frame.toolbar:SetScript("OnUpdate",nil)
-    --clear own flag
+    --clear own flags
     for k,v in pairs(activeTextures) do
         v.isOwn = nil
     end
@@ -724,16 +742,32 @@ function MethodDungeonTools:StartEraserDrawing()
         local x,y = MethodDungeonTools:GetCursorPosition()
         if x~=startx or y ~=starty then
             local highestObjectIdx = MethodDungeonTools:GetHighestPresetObjectIndexAtCursor()
-            local removeObject = false
             for j,tex in pairs(activeTextures) do
-                if tex.objectIndex == highestObjectIdx then
-                    local currentPreset = MethodDungeonTools:GetCurrentPreset()
-                    for objectIndex,obj in pairs(currentPreset.objects) do
-                        if objectIndex == highestObjectIdx then
-                            tremove(currentPreset.objects,objectIndex)
+                if MouseIsOver(tex) and tex:IsShown() and tex.objectIndex == highestObjectIdx  then --tex.coords means this is a line
+                    tex:Hide()
+                    if tex.coords then
+                        local x1,y1,x2,y2 = unpack(tex.coords)
+                        --hide circle textures of lines
+                        for k,v in pairs(activeTextures) do
+                            if v.points then
+                                if (v.points[1] == x1 and v.points[2] == y1) or (v.points[1] == x2 and v.points[2] == y2) then
+                                    v:Hide()
+                                end
+                            end
+                        end
+                        --delete saved lines
+                        local currentPreset = MethodDungeonTools:GetCurrentPreset()
+                        for objectIndex,obj in pairs(currentPreset.objects) do
+                            if objectIndex == highestObjectIdx then
+                                for coordIdx,coord in pairs(obj.l) do
+                                    if coord == x1 and obj.l[coordIdx+1] == y1 and obj.l[coordIdx+2] == x2 and obj.l[coordIdx+3] == y2 then
+                                        for i=1,4 do tremove(obj.l,coordIdx) end
+                                        break
+                                    end
+                                end
+                            end
                         end
                     end
-                    MethodDungeonTools:DrawAllPresetObjects()
                     break
                 end
             end
@@ -751,8 +785,8 @@ function MethodDungeonTools:StopEraserDrawing()
 end
 
 ---DrawCircle
-function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,objectIndex)
-    local circle = getTexture()
+function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,objectIndex,tex,noinsert,extrax,extray)
+    local circle = tex or getTexture()
     if not layer then layer = objectDrawLayer end
     circle:SetDrawLayer(layer, layerSublevel)
     circle:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Circle_White")
@@ -763,7 +797,10 @@ function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,
     circle:Show()
     circle.isOwn = isOwn
     circle.objectIndex = objectIndex
-    tinsert(activeTextures,circle)
+    circle.points = {x,y,extrax,extray}
+    if not noinsert then
+        tinsert(activeTextures,circle)
+    end
 end
 
 ---DrawLine
@@ -777,6 +814,7 @@ function MethodDungeonTools:DrawLine(x,y,a,b,size,color,smooth,layer,layerSublev
     line:Show()
     line.isOwn = isOwn
     line.objectIndex = objectIndex
+    line.coords = {x,y,a,b}
     tinsert(activeTextures,line)
     if smooth == true  then
         MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,objectIndex)

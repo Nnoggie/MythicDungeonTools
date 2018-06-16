@@ -1,5 +1,6 @@
 
-local _, MethodDungeonTools = ...
+local AddonName, MethodDungeonTools = ...
+
 
 
 local mainFrameStrata = "HIGH"
@@ -12,9 +13,9 @@ local sizex = 840
 local sizey = 555
 local buttonTextFontSize = 12
 local methodColor = "|cFFF49D38"
+MethodDungeonTools.BackdropColor = {0.058823399245739,0.058823399245739,0.058823399245739,0.9}
 
 local Dialog = LibStub("LibDialog-1.0")
-local dropDownLib,_ = LibStub("PhanxConfig-Dropdown")
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local icon = LibStub("LibDBIcon-1.0")
@@ -43,7 +44,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 
 local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
 
--- Made by: Nnogga - Tarren Mill <Method>, 2017
+-- Made by: Nnogga - Tarren Mill <Method>, 2017-2018
 
 SLASH_METHODDUNGEONTOOLS1 = "/mplus"
 SLASH_METHODDUNGEONTOOLS2 = "/mdt"
@@ -69,6 +70,7 @@ local initFrames
 -------------------------
 local defaultSavedVars = {
 	global = {
+		currentExpansion = 1,
 		currentDungeonIdx = 1,
 		currentDifficulty = 15,
 		xoffset = 0,
@@ -221,8 +223,9 @@ local dungeonEnemiesSelected = {}
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.pencilBlips = {}
 
-
-local dungeonList = {		
+--expansions: 1=legion 2=bfa
+local dungeonList = {
+	[1] = {		
 		[1] = "Black Rook Hold",
 		[2] = "Cathedral of Eternal Night",
 		[3] = "Court of Stars",
@@ -236,78 +239,90 @@ local dungeonList = {
 		[11] = "Seat of the Triumvirate",
 		[12] = "The Arcway",
 		[13] = "Vault of the Wardens",
+		[14] = " >Battle for Azeroth"
+	},
+	[2] = {
+		[1] = "Atal'Dazar",
+		[2] = " >Legion",
+	},
 }
 
 local dungeonSubLevels = {
 	[1] = {
-		[1] = "The Ravenscrypt",
-		[2] = "The Grand Hall",
-		[3] = "Ravenshold",
-		[4] = "The Rook's Host",
-		[5] = "Lord Ravencrest's Chamber",
-		[6] = "The Raven's Crown",
+		[1] = {
+			[1] = "The Ravenscrypt",
+			[2] = "The Grand Hall",
+			[3] = "Ravenshold",
+			[4] = "The Rook's Host",
+			[5] = "Lord Ravencrest's Chamber",
+			[6] = "The Raven's Crown",
+		},
+		[2] = {
+			[1] = "Hall of the Moon",
+			[2] = "Twilight Grove",
+			[3] = "The Emerald Archives",
+			[4] = "Path of Illumination",
+			[5] = "Sacristy of Elune",
+		},
+		[3] = {
+			[1] = "Court of Stars",
+			[2] = "The Jeweled Estate",
+			[3] = "The Balconies",
+		},
+		[4] = {
+			[1] = "Darkheart Thicket",
+		},
+		[5] = {
+			[1] = "Eye of Azshara",
+		},
+		[6] = {
+			[1] = "The High Gate",
+			[2] = "Field of the Eternal Hunt",
+			[3] = "Halls of Valor",
+		},
+		[7] = {
+			[1] = "Helmouth Cliffs",
+			[2] = "The Hold",
+			[3] = "The Naglfar",
+		},
+		[8] = {
+			[1] = "Neltharion's Lair",
+		},
+		[9] = {
+			[1] = "Master's Terrace",
+			[2] = "Opera Hall Balcony",
+			[3] = "The Guest Chambers",
+			[4] = "The Banquet Hall",
+			[5] = "Upper Livery Stables",
+			[6] = "The Servant's Quarters",		
+		},
+		[10] = {
+			[1] = "Lower Broken Stair",
+			[2] = "Upper Broken Stair",
+			[3] = "The Menagerie",
+			[4] = "Guardian's Library",
+			[5] = "Library Floor",
+			[6] = "Upper Library",
+			[7] = "Gamesman's Hall",
+			[8] = "Netherspace",
+		},
+		[11] = {
+			[1] = "Seat of the Triumvirate", 
+		},
+		[12] = {
+			[1] = "The Arcway", 
+		},
+		[13] = {
+			[1] = "The Warden's Court", 
+			[2] = "Vault of the Wardens", 
+			[3] = "Vault of the Betrayer", 
+		},
 	},
 	[2] = {
-		[1] = "Hall of the Moon",
-		[2] = "Twilight Grove",
-		[3] = "The Emerald Archives",
-		[4] = "Path of Illumination",
-		[5] = "Sacristy of Elune",
+		[1] = {
+			[1] = "Atal'Dazar",
+		},
 	},
-	[3] = {
-		[1] = "Court of Stars",
-		[2] = "The Jeweled Estate",
-		[3] = "The Balconies",
-	},
-	[4] = {
-		[1] = "Darkheart Thicket",
-	},
-	[5] = {
-		[1] = "Eye of Azshara",
-	},
-	[6] = {
-		[1] = "The High Gate",
-		[2] = "Field of the Eternal Hunt",
-		[3] = "Halls of Valor",
-	},
-	[7] = {
-		[1] = "Helmouth Cliffs",
-		[2] = "The Hold",
-		[3] = "The Naglfar",
-	},
-	[8] = {
-		[1] = "Neltharion's Lair",
-	},
-	[9] = {
-		[1] = "Master's Terrace",
-		[2] = "Opera Hall Balcony",
-		[3] = "The Guest Chambers",
-		[4] = "The Banquet Hall",
-		[5] = "Upper Livery Stables",
-		[6] = "The Servant's Quarters",		
-	},
-	[10] = {
-		[1] = "Lower Broken Stair",
-		[2] = "Upper Broken Stair",
-		[3] = "The Menagerie",
-		[4] = "Guardian's Library",
-		[5] = "Library Floor",
-		[6] = "Upper Library",
-		[7] = "Gamesman's Hall",
-		[8] = "Netherspace",
-	},
-	[11] = {
-		[1] = "Seat of the Triumvirate", 
-	},
-	[12] = {
-		[1] = "The Arcway", 
-	},
-	[13] = {
-		[1] = "The Warden's Court", 
-		[2] = "Vault of the Wardens", 
-		[3] = "Vault of the Betrayer", 
-	},
-
 }
 
 
@@ -429,9 +444,26 @@ function MethodDungeonTools:CreateMenu()
 	self.main_frame.closeButton = CreateFrame("Button", "CloseButton", self.main_frame, "UIPanelCloseButton");
 	self.main_frame.closeButton:ClearAllPoints()
 	self.main_frame.closeButton:SetPoint("BOTTOMRIGHT", self.main_frame, "TOPRIGHT", 240, -2);
-	self.main_frame.closeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end);
-	--self.main_frame.closeButton:SetSize(32, h);
+	self.main_frame.closeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end)
+	self.main_frame.closeButton:SetFrameLevel(4)
+	--self.main_frame.closeButton:SetSize(32, h);#
+
+	MethodDungeonTools:SkinCloseButton()
+
 end
+
+function MethodDungeonTools:SkinCloseButton()
+	--attempt to skin close button for ElvUI
+	if IsAddOnLoaded("ElvUI") then
+	   local E, L, V, P, G = unpack(ElvUI)
+	   local S
+	   if E then S = E:GetModule("Skins") end
+	   if S then
+	      S:HandleCloseButton(MethodDungeonTools.main_frame.closeButton)
+	   end
+	end
+end
+
 
 function MethodDungeonTools:MakeTopBottomTextures(frame)
 
@@ -442,14 +474,24 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND")
 		frame.topPanelTex:SetAllPoints()
 		frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
-		frame.topPanelTex:SetColorTexture(0, 0, 0, 0.7)
-		
+		frame.topPanelTex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))		
+
 		frame.topPanelString = frame.topPanel:CreateFontString("MethodDungeonTools name")
-		frame.topPanelString:SetFont("Fonts\\FRIZQT__.TTF", 20)
+		
+		--use default font if ElvUI is enabled
+		if IsAddOnLoaded("ElvUI") then
+			frame.topPanelString:SetFontObject("GameFontNormalLarge")
+			frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
+		else
+			frame.topPanelString:SetFont("Fonts\\FRIZQT__.TTF", 20)
+		end
+
+
+
 		frame.topPanelString:SetTextColor(1, 1, 1, 1)
 		frame.topPanelString:SetJustifyH("CENTER")
 		frame.topPanelString:SetJustifyV("CENTER")
-		frame.topPanelString:SetWidth(600)
+		--frame.topPanelString:SetWidth(600)
 		frame.topPanelString:SetHeight(20)
 		frame.topPanelString:SetText("Method Dungeon Tools")
 		frame.topPanelString:ClearAllPoints()
@@ -460,7 +502,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelLogo:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Method")
 		frame.topPanelLogo:SetWidth(24)
 		frame.topPanelLogo:SetHeight(24)
-		frame.topPanelLogo:SetPoint("RIGHT",frame.topPanelString,"LEFT",183,0)
+		frame.topPanelLogo:SetPoint("RIGHT",frame.topPanelString,"LEFT",-5,0)
 		frame.topPanelLogo:Show()
 
 	end
@@ -489,7 +531,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
         frame.bottomPanelTex = frame.bottomPanel:CreateTexture(nil, "BACKGROUND")
         frame.bottomPanelTex:SetAllPoints()
         frame.bottomPanelTex:SetDrawLayer(canvasDrawLayer, -5)
-        frame.bottomPanelTex:SetColorTexture(0, 0, 0, 0.7)
+        frame.bottomPanelTex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 
     end
 
@@ -497,8 +539,14 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
     frame.bottomPanel:SetSize(frame:GetWidth(), 30)
     frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, 0)
 
-
-
+    frame.bottomPanelString = frame.topPanel:CreateFontString("MethodDungeonTools Version")
+    frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
+    frame.bottomPanelString:SetJustifyH("CENTER")
+	frame.bottomPanelString:SetJustifyV("CENTER")
+	frame.bottomPanelString:SetText("v"..GetAddOnMetadata(AddonName, "Version"))
+	frame.bottomPanelString:SetPoint("CENTER", frame.bottomPanel, "CENTER", 0, 0)
+	frame.bottomPanelString:SetTextColor(1, 1, 1, 1)
+	frame.bottomPanelString:Show()
 
 
 	frame.bottomPanel:EnableMouse(true)
@@ -521,34 +569,34 @@ end
 function MethodDungeonTools:MakeSidePanel(frame)
 	
 	if frame.sidePanel == nil then
-		frame.sidePanel = CreateFrame("Frame", "MethodDungeonToolsSidePanel", frame);
-		frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND");
-		frame.sidePanelTex:SetAllPoints();
-		frame.sidePanelTex:SetDrawLayer(canvasDrawLayer, -5);
-		frame.sidePanelTex:SetColorTexture(0, 0, 0, 0.7);
+		frame.sidePanel = CreateFrame("Frame", "MethodDungeonToolsSidePanel", frame)
+		frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND")
+		frame.sidePanelTex:SetAllPoints()
+		frame.sidePanelTex:SetDrawLayer(canvasDrawLayer, -5)
+		frame.sidePanelTex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 		frame.sidePanelTex:Show()
 	end
 	
 	
 	frame.sidePanel:ClearAllPoints();
-	frame.sidePanel:SetSize(250, frame:GetHeight()+(frame.topPanel:GetHeight()*2));
-	frame.sidePanel:SetPoint("TOPLEFT", frame.topPanel, "TOPRIGHT", -1, 0);
+	frame.sidePanel:SetSize(250, frame:GetHeight()+(frame.topPanel:GetHeight()*2))
+	frame.sidePanel:SetPoint("TOPLEFT", frame.topPanel, "TOPRIGHT", -1, 0)
 	
-	frame.sidePanelTopString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelTopText");
+	frame.sidePanelTopString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelTopText")
 	frame.sidePanelTopString:SetFont("Fonts\\FRIZQT__.TTF", 20)
-	frame.sidePanelTopString:SetTextColor(1, 1, 1, 1);
+	frame.sidePanelTopString:SetTextColor(1, 1, 1, 1)
 	frame.sidePanelTopString:SetJustifyH("CENTER")
 	frame.sidePanelTopString:SetJustifyV("TOP")
 	frame.sidePanelTopString:SetWidth(200)
 	frame.sidePanelTopString:SetHeight(500)
-	frame.sidePanelTopString:SetText("");
-	frame.sidePanelTopString:ClearAllPoints();
+	frame.sidePanelTopString:SetText("")
+	frame.sidePanelTopString:ClearAllPoints()
 	frame.sidePanelTopString:SetPoint("CENTER", frame.sidePanel, "CENTER", 0, -40-30);
-	frame.sidePanelTopString:Show();
-	frame.sidePanelTopString:Hide();
+	frame.sidePanelTopString:Show()
+	frame.sidePanelTopString:Hide()
 	
 	
-	frame.sidePanelString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelText");
+	frame.sidePanelString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelText")
 	frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10)
 	frame.sidePanelString:SetTextColor(1, 1, 1, 1);
 	frame.sidePanelString:SetJustifyH("LEFT")
@@ -565,10 +613,11 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
 	frame.sidePanel.WidgetGroup:SetWidth(245);
 	frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight()+(frame.topPanel:GetHeight()*2)-31);
-	frame.sidePanel.WidgetGroup:SetPoint("TOP",frame.sidePanel,"TOP",3,-31)
+	frame.sidePanel.WidgetGroup:SetPoint("TOP",frame.sidePanel,"TOP",3,-1)
 	frame.sidePanel.WidgetGroup:SetLayout("Flow")
 	
 	frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
+	frame.sidePanel.WidgetGroup.frame:SetBackdropColor(1,1,1,0)
 	frame.sidePanel.WidgetGroup.frame:Hide()
 	
 	--dirty hook to make widgetgroup show/hide
@@ -583,9 +632,30 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		return originalHide(self, ...);
 	end
 	
-	local buttonWidth = 80
-	
+	--preset selection
+	frame.sidePanel.WidgetGroup.PresetDropDown = AceGUI:Create("Dropdown")
+	local dropdown = frame.sidePanel.WidgetGroup.PresetDropDown
+	dropdown.text:SetJustifyH("LEFT")
+	dropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
+		if db.presets[db.currentDungeonIdx][key].value==0 then
+			MethodDungeonTools:OpenNewPresetDialog()
+			MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(true)	
+		else 
+			if key == 1 then
+				MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(true)	
+			else
+				MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)	
+			end
+			db.currentPreset[db.currentDungeonIdx] = key
+			MethodDungeonTools:UpdateMap()
+		end
+	end)
+	MethodDungeonTools:UpdatePresetDropDown()	
+	frame.sidePanel.WidgetGroup:AddChild(dropdown)
+
+
 	---new profile,rename,export,delete
+	local buttonWidth = 80	
 	frame.sidePanelNewButton = AceGUI:Create("Button")
 	frame.sidePanelNewButton:SetText("New")
 	frame.sidePanelNewButton:SetWidth(buttonWidth)
@@ -600,7 +670,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelNewButton:SetCallback("OnClick",function(widget,callbackName,value)
 		MethodDungeonTools:OpenNewPresetDialog()
 	end)
-
 	
 	frame.sidePanelRenameButton = AceGUI:Create("Button")	
 	frame.sidePanelRenameButton:SetWidth(buttonWidth)
@@ -759,7 +828,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.middleLine = AceGUI:Create("Heading")
 	frame.sidePanel.middleLine:SetWidth(240)		
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.middleLine)
-    frame.sidePanel.WidgetGroup.frame:SetFrameLevel(7)
+    frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
 	
 	--progress bar
 	
@@ -772,6 +841,17 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.ProgressBar.Bar.IconBG:Hide();
 	
 end
+
+function MethodDungeonTools:UpdatePresetDropDown()
+	local dropdown = MethodDungeonTools.main_frame.sidePanel.WidgetGroup.PresetDropDown
+	local presetList = {}
+	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
+		table.insert(presetList,k,v.text)
+	end
+	dropdown:SetList(presetList)
+	dropdown:SetValue(db.currentPreset[db.currentDungeonIdx])
+end
+
 
 ---FormatEnemyForces
 function MethodDungeonTools:FormatEnemyForces(forces,forcesmax,percentage)
@@ -1959,66 +2039,60 @@ function MethodDungeonTools:UpdateSidePanelCheckBoxes()
 
 end
 
-function MethodDungeonTools:CreateDungeonPresetDropdown(frame)
-	frame.DungeonPresetDropdown = dropDownLib:New(frame, nil, "Select Preset", db.presets[db.currentDungeonIdx],false)
-	frame.DungeonPresetDropdown:SetPoint("TOPLEFT",frame,"TOPLEFT",5,17)
-	frame.DungeonPresetDropdown:SetFrameStrata(mainFrameStrata)
-	frame.DungeonPresetDropdown:SetFrameLevel(5)
-	function frame.DungeonPresetDropdown:OnValueChanged(value, text)
-		for presetIdx,preset in pairs(db.presets[db.currentDungeonIdx]) do
-			if preset.value == value then
-				if value == 0 then
-					MethodDungeonTools:OpenNewPresetDialog()
-					MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(true)	
-				else 
-					if presetIdx == 1 then
-						MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(true)	
-					else
-						MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)	
-					end
-					db.currentPreset[db.currentDungeonIdx] = presetIdx
-					MethodDungeonTools:UpdateMap()
-				end
-			end
-		end
-	end
-
+function MethodDungeonTools:UpdateDungeonDropDown()
+	local group = MethodDungeonTools.main_frame.DungeonSelectionGroup
+	group.DungeonDropdown:SetList(dungeonList[db.currentExpansion])
+	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
+	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentExpansion][db.currentDungeonIdx])
+	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
 end
 
-function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
-	
+---CreateDungeonSelectDropdown
+---Creates both dungeon and sublevel dropdowns
+function MethodDungeonTools:CreateDungeonSelectDropdown(frame)	
+	--Simple Group to hold both dropdowns
+	frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
+	local group = frame.DungeonSelectionGroup
+	group:SetWidth(200);
+	group:SetHeight(50);
+	group:SetPoint("TOPLEFT",frame.topPanel,"BOTTOMLEFT",0,2)
+	group:SetLayout("List")
+
+	--dirty hook to make group show/hide
+    local originalShow,originalHide = MethodDungeonTools.main_frame.Show,MethodDungeonTools.main_frame.Hide
+    function MethodDungeonTools.main_frame:Show(...)
+        group.frame:Show()
+        return originalShow(self, ...);
+    end
+    function MethodDungeonTools.main_frame:Hide(...)
+        group.frame:Hide()
+        return originalHide(self, ...);
+    end
+
+    --dungeon select
+	group.DungeonDropdown = AceGUI:Create("Dropdown")
+	group.DungeonDropdown.text:SetJustifyH("LEFT")
+	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
+		if key<#dungeonList[db.currentExpansion] then
+			MethodDungeonTools:UpdateToDungeon(key)
+		else
+			db.currentExpansion = (db.currentExpansion%2)+1
+			MethodDungeonTools:UpdateDungeonDropDown()
+		end
+	end)
+	group:AddChild(group.DungeonDropdown)	
+
 	--sublevel select
-	frame.DungeonSublevelSelectDropdown = dropDownLib:New(frame, nil, "Select Sublevel", subLevelTable,false)
-	frame.DungeonSublevelSelectDropdown:SetPoint("TOPLEFT",frame.topPanel,"TOPLEFT",0,-35)
-	frame.DungeonSublevelSelectDropdown:SetFrameStrata(mainFrameStrata)
-	frame.DungeonSublevelSelectDropdown:SetFrameLevel(5)
-	function frame.DungeonSublevelSelectDropdown:OnValueChanged(value, text)
-		for k,v in pairs(dungeonSubLevels[db.currentDungeonIdx]) do
-			if v == text then
-				db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = k
-				MethodDungeonTools:UpdateMap()
-                MethodDungeonTools:ZoomMap(1,true)
-				return
-			end
-		end
-	end
-	
-	--dungeon select
-	frame.DungeonSelectDropdown = dropDownLib:New(frame, nil, "Select Dungeon", dungeonList,false)
-	frame.DungeonSelectDropdown:SetPoint("TOPLEFT",frame.topPanel,"TOPLEFT",0,-10)
-	frame.DungeonSelectDropdown:SetFrameStrata(mainFrameStrata)
-	frame.DungeonSelectDropdown:SetFrameLevel(5)
-	function frame.DungeonSelectDropdown:OnValueChanged(value, text)
-		for k,v in pairs(dungeonList) do
-			if v == text then
-				MethodDungeonTools:UpdateToDungeon(k)
-				return
-			end
-		end
-	end
-	
-	
-	
+	group.SublevelDropdown = AceGUI:Create("Dropdown")
+	group.SublevelDropdown.text:SetJustifyH("LEFT")
+	group.SublevelDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
+		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
+		MethodDungeonTools:UpdateMap()
+        MethodDungeonTools:ZoomMap(1,true)
+	end)
+	group:AddChild(group.SublevelDropdown)
+
+	MethodDungeonTools:UpdateDungeonDropDown()
 end
 
 ---EnsureDBTables
@@ -2078,28 +2152,16 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	end
 	
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
-	--update Sublevel select dropdown
-	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
-
+	MethodDungeonTools:UpdateDungeonDropDown()
     MethodDungeonTools:DrawAllPresetObjects()
 end
 
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
 function MethodDungeonTools:UpdateToDungeon(dungeonIdx)
-    local frame = MethodDungeonTools.main_frame
     db.currentDungeonIdx = dungeonIdx
-    --populate 2nd dropdown with apropritate list of sublevels
-    frame.DungeonSublevelSelectDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
-    frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][1])
-
-	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
-	frame.DungeonSelectDropdown:SetValue(dungeonList[db.currentDungeonIdx])
-	--populate 2nd dropdown with apropritate list of sublevels
-	frame.DungeonSublevelSelectDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
-	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
-	frame.sidePanel.DungeonPresetDropdown:SetList(db.presets[db.currentDungeonIdx])
-	frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value)	
+	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end	
+	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
     MethodDungeonTools:ZoomMap(1,true)
 end
@@ -2107,7 +2169,7 @@ end
 function MethodDungeonTools:DeletePreset(index)
 	tremove(db.presets[db.currentDungeonIdx],index)
 	db.currentPreset[db.currentDungeonIdx] = index-1
-	MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][index-1].value)
+	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
 end
 
@@ -2146,7 +2208,7 @@ function MethodDungeonTools:CreateNewPreset(name)
 
 		db.currentPreset[db.currentDungeonIdx] = countPresets
 		MethodDungeonTools.main_frame.presetCreationFrame:Hide()
-		MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][countPresets].value)	
+		MethodDungeonTools:UpdatePresetDropDown()	
 		MethodDungeonTools:UpdateMap()		
 	else
 		MethodDungeonTools.main_frame.presetCreationLabel:SetText("'"..name.."' already exists.")
@@ -2182,11 +2244,9 @@ function MethodDungeonTools:MakePresetImportFrame(frame)
 	--frame.presetCreationFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 	frame.presetImportFrame:SetLayout("Flow")
 	frame.presetImportFrame:SetCallback("OnClose", function(widget)
-		if MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown then
-			MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value)
-			if db.currentPreset[db.currentDungeonIdx] ~= 1 then
-				MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)
-			end
+		MethodDungeonTools:UpdatePresetDropDown()
+		if db.currentPreset[db.currentDungeonIdx] ~= 1 then
+			MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)
 		end
 	end)
 
@@ -2229,11 +2289,9 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 	--frame.presetCreationFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 	frame.presetCreationFrame:SetLayout("Flow")
 	frame.presetCreationFrame:SetCallback("OnClose", function(widget)
-		if MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown then
-			MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value)
-			if db.currentPreset[db.currentDungeonIdx] ~= 1 then
-				MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)	
-			end
+		MethodDungeonTools:UpdatePresetDropDown()
+		if db.currentPreset[db.currentDungeonIdx] ~= 1 then
+			MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)	
 		end
 	end)
 	
@@ -2272,6 +2330,7 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 	
 	frame.PresetCreationDropDown = AceGUI:Create("Dropdown")
 	frame.PresetCreationDropDown:SetLabel("Use as a starting point:")
+	frame.PresetCreationDropDown.text:SetJustifyH("LEFT")
 	frame.presetCreationFrame:AddChild(frame.PresetCreationDropDown)
 
 	frame.presetCreationFrame:Hide()
@@ -2313,7 +2372,7 @@ function MethodDungeonTools:ImportPreset(preset)
 	db.presets[db.currentDungeonIdx][countPresets+1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list	
 	db.presets[db.currentDungeonIdx][countPresets] = preset
 	db.currentPreset[db.currentDungeonIdx] = countPresets
-	MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][countPresets].value)	
+	MethodDungeonTools:UpdatePresetDropDown()	
 	MethodDungeonTools:UpdateMap()	
 end
 
@@ -2326,9 +2385,10 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",0,30)
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
+    frame.PullButtonScrollGroup.frame:SetBackdropColor(1,1,1,0)
     frame.PullButtonScrollGroup.frame:Show()
 
-    --dirty hook to make PullButtonScrollGroup show/hide
+    --dirty hook to make group show/hide
     local originalShow,originalHide = MethodDungeonTools.main_frame.Show,MethodDungeonTools.main_frame.Hide
     function MethodDungeonTools.main_frame:Show(...)
         frame.PullButtonScrollGroup.frame:Show()
@@ -2339,17 +2399,12 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
         return originalHide(self, ...);
     end
 
-
-
     frame.pullButtonsScrollFrame = AceGUI:Create("ScrollFrame")
     frame.pullButtonsScrollFrame:SetLayout("Flow")
 
     frame.PullButtonScrollGroup:AddChild(frame.pullButtonsScrollFrame)
 
     frame.newPullButtons = {}
-
-
-
 	--rightclick context menu
 	frame.optionsDropDown = CreateFrame("Frame", "PullButtonsOptionsDropDown", nil, "L_UIDropDownMenuTemplate")
 end
@@ -2406,9 +2461,7 @@ function MethodDungeonTools:SetMapSublevel(pull)
 		MethodDungeonTools:UpdateMap(true,true)
 	end
 	
-	--update dropdown
-	local frame = MethodDungeonTools.main_frame
-	frame.DungeonSublevelSelectDropdown:SetValue(dungeonSubLevels[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel])
+	MethodDungeonTools:UpdateDungeonDropDown()
     if shouldResetZoom then MethodDungeonTools:ZoomMap(1,true) end
 end
 
@@ -2604,8 +2657,7 @@ end
 function MethodDungeonTools:RenamePreset(renameText)
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text = renameText
 	MethodDungeonTools.main_frame.RenameFrame:Hide()
-	MethodDungeonTools.main_frame.sidePanel.DungeonPresetDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value)
-
+	MethodDungeonTools:UpdatePresetDropDown()
 end
 
 
@@ -2934,21 +2986,35 @@ function MethodDungeonTools:DrawAllPresetObjects()
 				end
 				if x1 and y1 and x2 and y2 then
 					MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
+					--circles if smooth
+					if obj.d[7] then
+						MethodDungeonTools:DrawCircle(x1,y1,obj.d[1]*0.3,color,nil,obj.d[6],nil,objectIndex)
+						MethodDungeonTools:DrawCircle(x2,y2,obj.d[1]*0.3,color,nil,obj.d[6],nil,objectIndex)
+					end
 					x1,y1,x2,y2 = nil,nil,nil,nil
 				end
             end
 			--ending circle if smooth
-            if obj.d[7] and lastx and lasty then MethodDungeonTools:DrawCircle(lastx,lasty,obj.d[1]*0.3,color,nil,obj.d[6],nil,objectIndex) end
 
             --triangle
             if obj.t and lastx and lasty then
                 MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6],nil,objectIndex)
             end
+			--remove empty objects leftover from erasing
+			if obj.l then
+				local lineCount = 0
+				for _,_ in pairs(obj.l) do
+					lineCount = lineCount +1
+				end
+				if lineCount == 0 then
+					currentPreset.objects[objectIndex] = nil
+				end
+			end
         end
     end
 end
 
----DeleteAllPresetObjects
+---DeletePresetObjects
 ---Deletes objects from the current preset in the current sublevel
 function MethodDungeonTools:DeletePresetObjects()
 	local currentPreset = MethodDungeonTools:GetCurrentPreset()
@@ -2962,12 +3028,12 @@ function MethodDungeonTools:DeletePresetObjects()
 end
 
 ---StepBack
----
+---Undo the latest drawing
 function MethodDungeonTools:PresetObjectStepBack()
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     currentPreset.objects = currentPreset.objects or {}
     local length = 0
-    for k,v in ipairs(currentPreset.objects) do
+    for k,v in pairs(currentPreset.objects) do
         length = length + 1
     end
     if length>0 then
@@ -2982,7 +3048,7 @@ function MethodDungeonTools:PresetObjectStepBack()
 end
 
 ---StepForward
----
+---Redo the latest drawing
 function MethodDungeonTools:PresetObjectStepForward()
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     currentPreset.objects = currentPreset.objects or {}
@@ -3001,39 +3067,38 @@ function MethodDungeonTools:PresetObjectStepForward()
     end
 end
 
+
 function initFrames()
-	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent);
-	
+	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)	
 	
 	main_frame:SetFrameStrata(mainFrameStrata)
 	main_frame:SetFrameLevel(1)
-	main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND");
-	main_frame.background:SetAllPoints();
-	main_frame.background:SetDrawLayer(canvasDrawLayer, 1);
-	main_frame.background:SetColorTexture(0, 0, 0, 0.5);
+	main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND")
+	main_frame.background:SetAllPoints()
+	main_frame.background:SetDrawLayer(canvasDrawLayer, 1)
+	main_frame.background:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 	main_frame.background:SetAlpha(0.2)
-	main_frame:SetSize(sizex, sizey);
-	MethodDungeonTools.main_frame = main_frame;	
+	main_frame:SetSize(sizex, sizey)
+	MethodDungeonTools.main_frame = main_frame
 	
 	tinsert(UISpecialFrames,"MethodDungeonToolsFrame") 
 	-- Set frame position
 	main_frame:ClearAllPoints();
-	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset);
-	
+	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
+	--main_frame:SetClampedToScreen(true)
 	--TODO: fix all these
 	main_frame:SetScript("OnEvent", function(self, ...)
 		local event, loaded = ...;
 		if event == "ADDON_LOADED" then
 			if addon == loaded then
-				--AltManager:OnLoad();
+
 			end
 		end
 		if event == "PLAYER_LOGIN" then
-			--AltManager:OnLogin();
+
 		end
 		if event == "PLAYER_LOGOUT" or event == "ARTIFACT_XP_UPDATE" then
-			--local data = AltManager:CollectData();
-			--AltManager:StoreData(data);
+
 		end
 		
 	end)
@@ -3051,7 +3116,7 @@ function initFrames()
 	MethodDungeonTools:UpdateDungeonEnemies(main_frame)	
 	
 	MethodDungeonTools:CreateDungeonSelectDropdown(main_frame)
-	MethodDungeonTools:CreateDungeonPresetDropdown(main_frame.sidePanel)
+
 	
 	MethodDungeonTools:MakePullSelectionButtons(main_frame.sidePanel)
 	
