@@ -201,6 +201,11 @@ function MethodDungeonTools:CreateDevPanel(frame)
         dropdown:SetCallback("OnValueChanged", function(widget,callbackName,key)
             currentEnemyIdx = key
             updateFields(nil,nil,nil,nil,nil,nil,key)
+            local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
+            for _,v in ipairs(dungeonEnemyBlips) do
+                v.devSelected = nil
+            end
+            MethodDungeonTools:UpdateMap()
         end)
 
         container:AddChild(dropdown)
@@ -428,6 +433,11 @@ function MethodDungeonTools:CreateDevPanel(frame)
         for k,v in pairs(devPanel.tabs) do
             if v.selected == true then selectedTab = v.value; break end
         end
+        --currentEnemyIdx
+        local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+        if currentBlip then
+            currentEnemyIdx=currentBlip.enemyIdx
+        end
         devPanel:SelectTab(selectedTab)
         --show patrol
         local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
@@ -438,6 +448,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
 
 end
+
+
 
 ---AddCloneAtCursorPosition
 ---Adds a clone at the cursor position to the dungeon enemy table
@@ -450,6 +462,7 @@ function MethodDungeonTools:AddCloneAtCursorPosition()
         tinsert(data.clones,{x=cursorx,y=cursory,sublevel=MethodDungeonTools:GetCurrentSubLevel(),g=currentCloneGroup,teeming=currentTeeming})
         print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,cursorx,cursory))
         MethodDungeonTools:UpdateMap()
+        MethodDungeonTools:SetCurrentDevmodeBlip(currentEnemyIdx,#data.clones)
     end
 end
 
@@ -464,6 +477,18 @@ function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
         cloneData.patrol = cloneData.patrol or {}
         cloneData.patrol[1] = {x=cloneData.x,y=cloneData.y}
         local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
+        --snap onto other waypoints
+        local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
+        for blipIdx,blip in pairs(dungeonEnemyBlips) do
+            if blip.patrol then
+                for idx,waypoint in pairs(blip.patrol) do
+                    if MouseIsOver(waypoint) then
+                        cursorx = waypoint.x
+                        cursory = waypoint.y
+                    end
+                end
+            end
+        end
         tinsert(cloneData.patrol,{x=cursorx,y=cursory})
         print(string.format("MDT: Created Waypoint %d of %s %d at %d,%d",1,data.name,#cloneData.patrol,cursorx,cursory))
         MethodDungeonTools:UpdateMap()

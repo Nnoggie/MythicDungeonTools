@@ -1224,7 +1224,7 @@ end
 
 
 local currentBlip
-local currentWaypoint
+local currentWaypoints
 local currentWaypointBlip
 function MethodDungeonTools:GetCurrentDevmodeBlip()
     for blipIdx,blip in pairs(dungeonEnemyBlips) do
@@ -1234,7 +1234,18 @@ function MethodDungeonTools:GetCurrentDevmodeBlip()
     end
 end
 
+function MethodDungeonTools:SetCurrentDevmodeBlip(enemyIdx,cloneIdx)
+    for blipIdx,blip in pairs(dungeonEnemyBlips) do
+        if blip.enemyIdx == enemyIdx and blip.cloneIdx == cloneIdx then
+            blip.devSelected = true
+        else
+            blip.devSelected = nil
+        end
+    end
+end
+
 local moverFrame = CreateFrame("Frame")
+local blipMoverFrame = CreateFrame("Frame")
 ---MethodDungeonTools.OnMouseDown
 ---Handles mouse-down events on the map scrollframe
 MethodDungeonTools.OnMouseDown = function(self,button)
@@ -1244,11 +1255,12 @@ MethodDungeonTools.OnMouseDown = function(self,button)
 
             for blipIdx,blip in pairs(dungeonEnemyBlips) do
                 --drag blips
+                local blipFound
                 if MouseIsOver(blip) then
                     local startx,starty = MethodDungeonTools:GetCursorPosition()
                     currentBlip = blip
-                    moverFrame.isMoving = true
-                    moverFrame:SetScript("OnUpdate", function(self, tick)
+                    blipMoverFrame.isMoving = true
+                    blipMoverFrame:SetScript("OnUpdate", function(self, tick)
                         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
                         local x,y = MethodDungeonTools:GetCursorPosition()
                         blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
@@ -1256,29 +1268,35 @@ MethodDungeonTools.OnMouseDown = function(self,button)
                         blip.y = y
                         startx,starty = MethodDungeonTools:GetCursorPosition()
                     end)
-                    return
+                    blipFound = true
                 end
                 --drag patrol pathway
                 if blip.patrol then
+                    local found
                     for idx,waypoint in pairs(blip.patrol) do
                         if MouseIsOver(waypoint) then
+                            found = true
                             local startx,starty = MethodDungeonTools:GetCursorPosition()
-                            currentWaypoint = waypoint
+                            currentWaypoints = currentWaypoints or {}
+                            tinsert(currentWaypoints,waypoint)
                             waypoint.index = idx
                             currentWaypointBlip = blip
                             moverFrame.isMoving = true
                             moverFrame:SetScript("OnUpdate", function(self, tick)
                                 if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
                                 local x,y = MethodDungeonTools:GetCursorPosition()
-                                waypoint:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-                                waypoint.x = x
-                                waypoint.y = y
+                                for _,waypoint in pairs(currentWaypoints) do
+                                    waypoint:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+                                    waypoint.x = x
+                                    waypoint.y = y
+                                end
                                 startx,starty = MethodDungeonTools:GetCursorPosition()
                             end)
-                            return
                         end
                     end
+                    if found then return end
                 end
+                if blipFound then return end
             end
 
         end
@@ -1318,6 +1336,8 @@ MethodDungeonTools.OnMouseUp = function(self,button)
 
         --end dragging blip
         if db.devMode then
+            blipMoverFrame:SetScript("OnUpdate",nil)
+            blipMoverFrame.isMoving = nil
             moverFrame:SetScript("OnUpdate",nil)
             moverFrame.isMoving = nil
             if currentBlip then
@@ -1330,14 +1350,16 @@ MethodDungeonTools.OnMouseUp = function(self,button)
                     end
                 end
             end
-            if currentWaypoint then
-                local cloneData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentWaypointBlip.enemyIdx].clones[currentWaypointBlip.cloneIdx]
-                if cloneData and cloneData.patrol and cloneData.patrol[currentWaypoint.index]then
-                    cloneData.patrol[currentWaypoint.index].x = currentWaypoint.x
-                    cloneData.patrol[currentWaypoint.index].y = currentWaypoint.y
+            if currentWaypoints then
+                for _,currentWaypoint in pairs(currentWaypoints) do
+                    local cloneData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentWaypointBlip.enemyIdx].clones[currentWaypointBlip.cloneIdx]
+                    if cloneData and cloneData.patrol and cloneData.patrol[currentWaypoint.index]then
+                        cloneData.patrol[currentWaypoint.index].x = currentWaypoint.x
+                        cloneData.patrol[currentWaypoint.index].y = currentWaypoint.y
+                    end
                 end
             end
-            currentWaypoint = nil
+            currentWaypoints = nil
             currentBlip = nil
             MethodDungeonTools:UpdateMap()
             return
@@ -1867,7 +1889,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		do
 			if not dungeonEnemyBlipMouseoverHighlight then
 				dungeonEnemyBlipMouseoverHighlight = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlipMouseoverHighlight","BACKGROUND")
-				dungeonEnemyBlipMouseoverHighlight:SetDrawLayer(blipDrawLayer, 4);
+				dungeonEnemyBlipMouseoverHighlight:SetDrawLayer(blipDrawLayer, 3);
 				dungeonEnemyBlipMouseoverHighlight:SetTexture("Interface\\MINIMAP\\TRACKING\\Target")
 				dungeonEnemyBlipMouseoverHighlight:SetVertexColor(1,1,1,1)
 				dungeonEnemyBlipMouseoverHighlight:SetWidth(10)
@@ -2124,19 +2146,21 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 								if not dungeonEnemyBlips[idx].patrol[patrolIdx] then
 								dungeonEnemyBlips[idx].patrol[patrolIdx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx,"BACKGROUND")
 								end
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetDrawLayer(blipDrawLayer, 5)
+								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetDrawLayer(blipDrawLayer, 2)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetTexture("Interface\\Worldmap\\X_Mark_64Grey")
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetWidth(10*0.4)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetHeight(10*0.4)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetVertexColor(0,0.2,0.5,0.6)
 								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",waypoint.x,waypoint.y)
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:Hide()
+                                dungeonEnemyBlips[idx].patrol[patrolIdx].x = waypoint.x
+                                dungeonEnemyBlips[idx].patrol[patrolIdx].y = waypoint.y
+                                dungeonEnemyBlips[idx].patrol[patrolIdx]:Hide()
 								dungeonEnemyBlips[idx].patrol[patrolIdx].isActive = true
 
 								if not dungeonEnemyBlips[idx].patrol[patrolIdx].line then
 									dungeonEnemyBlips[idx].patrol[patrolIdx].line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx.."line","BACKGROUND")
 								end
-								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetDrawLayer(blipDrawLayer, 5)
+								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetDrawLayer(blipDrawLayer, 1)
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetVertexColor(0,0.2,0.5,0.6)
 								dungeonEnemyBlips[idx].patrol[patrolIdx].line:Hide()
