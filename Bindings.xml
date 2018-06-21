@@ -8,4 +8,7 @@
     <Binding name="New Patrol Waypoint at Cursor Position" runOnUp="false" category="Method Dungeon Tools">
         MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
     </Binding>
+    <Binding name="New Boss at Cursor Position" runOnUp="false" category="Method Dungeon Tools">
+        MethodDungeonTools:AddBossAtCursorPosition()
+    </Binding>
 </Bindings>

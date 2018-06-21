@@ -93,13 +93,14 @@ local currentTeeming
 local currentPatrol
 local currentPatrolfacing1 = 0
 local currentPatrolfacing2 = 0
+local currentBossEnemyIdx = 1
 ---CreateDevPanel
 ---Creates the dev panel which contains buttons to add npcs, objects to the map
 function MethodDungeonTools:CreateDevPanel(frame)
     db = MethodDungeonTools:GetDB()
     frame.devPanel = AceGUI:Create("TabGroup")
     local devPanel = frame.devPanel
-    devPanel:SetTabs({{text="Door", value="tab1"}, {text="Enemy", value="tab2"}})
+    devPanel:SetTabs({{text="Door", value="tab1"}, {text="Enemy", value="tab2"}, {text="Boss", value="tab3"}})
     devPanel:SetWidth(250)
     devPanel:SetPoint("TOPRIGHT",frame.topPanel,"TOPLEFT",0,0)
     devPanel:SetLayout("Flow")
@@ -277,7 +278,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     health = npcHealth,
                     level = npcLevel,
                     creatureType = npcCreatureType,
-                    id = npcId,
+                    id = tonumber(npcId),
                     scale = npcScale,
                     count = npcCount,
                     clones = {},
@@ -415,6 +416,29 @@ function MethodDungeonTools:CreateDevPanel(frame)
             updateDropdown(nil,currentEnemyIdx)
         end
 
+    local function DrawGroup3(container)
+        local bossEnemyIndex = AceGUI:Create("EditBox")
+        bossEnemyIndex:SetLabel("Boss Index")
+        bossEnemyIndex:SetText(1)
+        bossEnemyIndex:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            currentBossEnemyIdx = tonumber(text) and tonumber(text) or 1
+        end)
+        container:AddChild(bossEnemyIndex)
+
+        local button2 = AceGUI:Create("Button")
+        button2:SetText("Export to LUA")
+        button2:SetCallback("OnClick",function()
+            local export = tshow(MethodDungeonTools.dungeonBosses[db.currentDungeonIdx],"MethodDungeonTools.dungeonBosses[dungeonIndex]")
+            MethodDungeonTools.main_frame.ExportFrame:Show()
+            MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+            MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
+            MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
+            MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+        end)
+        container:AddChild(button2)
+
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -422,6 +446,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
             DrawGroup1(container)
         elseif group == "tab2" then
             DrawGroup2(container)
+        elseif group == "tab3" then
+            DrawGroup3(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)
@@ -470,7 +496,7 @@ function MethodDungeonTools:AddCloneAtCursorPosition()
 end
 
 ---AddPatrolWaypointAtCursorPosition
-
+---Adds a patrol waypoint to the selected enemy
 function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
     if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
     local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
@@ -495,5 +521,46 @@ function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
         tinsert(cloneData.patrol,{x=cursorx,y=cursory})
         print(string.format("MDT: Created Waypoint %d of %s %d at %d,%d",1,data.name,#cloneData.patrol,cursorx,cursory))
         MethodDungeonTools:UpdateMap()
+    end
+end
+
+
+---AddBossAtCursorPosition
+---Adds a boss at the cursor position to the dungeon boss table
+function MethodDungeonTools:AddBossAtCursorPosition()
+    local bosses = MethodDungeonTools.dungeonBosses[db.currentDungeonIdx]
+    local sublevel = MethodDungeonTools:GetCurrentSubLevel()
+    local nid
+    local guid = UnitGUID("target")
+    if guid then nid = select(6,strsplit("-", guid)) else return end
+    if nid then
+
+        local encounterIDx, encounterName, description, displayInfo, iconImage = EJ_GetCreatureInfo(currentBossEnemyIdx)
+        if not encounterIDx then return end
+
+        for i=1,10000 do
+            local ixd = EJ_GetCreatureInfo(currentBossEnemyIdx,i)
+            if ixd == encounterIDx then
+                encounterIDx = i
+                break
+            end
+        end
+
+        local encounterHealth = UnitHealthMax("target")
+        local encounterLevel = UnitLevel("target")
+        local encounterCreatureType = UnitCreatureType("target")
+        local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
+        bosses[sublevel] = bosses[sublevel] or {}
+        tinsert(bosses[sublevel],{
+            name = encounterName,
+            health = encounterHealth,
+            encounterID = encounterIDx,
+            level = encounterLevel,
+            creatureType = encounterCreatureType,
+            id = tonumber(nid),
+            x = cursorx,
+            y = cursory,
+        })
+        MethodDungeonTools:UpdateDungeonBossButtons()
     end
 end
