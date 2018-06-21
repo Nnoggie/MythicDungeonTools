@@ -297,7 +297,6 @@ function MethodDungeonTools:CreateDevPanel(frame)
             if value and value>0 then currentCloneGroup = value else currentCloneGroup = nil end
             local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
             if currentBlip then
-                cloneGroup:SetText(currentBlip.g)
                 local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
                 data.clones[currentBlip.cloneIdx].g = currentCloneGroup
                 MethodDungeonTools:UpdateMap()
@@ -382,6 +381,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
         local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
         if currentBlip then
             cloneGroup:SetText(currentBlip.g)
+            currentCloneGroup = currentBlip.g
             teemingCheckbox:SetValue(currentBlip.teeming)
             currentTeeming = currentBlip.teeming
             currentPatrol = currentBlip.patrol and true or nil
@@ -392,26 +392,28 @@ function MethodDungeonTools:CreateDevPanel(frame)
             patrolSlider2:SetDisabled(not (currentPatrol and currentBlip.patrolActive))
             currentPatrolfacing2 = currentBlip.patrolIndicator2 and currentBlip.patrolIndicator2:GetRotation() or 0
             patrolSlider2:SetValue(currentPatrolfacing2)
+        else
+            cloneGroup:SetText(currentCloneGroup)
         end
 
-        local button2 = AceGUI:Create("Button")
-        button2:SetText("Export to LUA")
-        button2:SetCallback("OnClick",function()
-            local export = tshow(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx],"MethodDungeonTools.dungeonEnemies[dungeonIndex]")
-            MethodDungeonTools.main_frame.ExportFrame:Show()
-            MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-            MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
-            MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-            MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
-        end)
-        container:AddChild(button2)
+            local button2 = AceGUI:Create("Button")
+            button2:SetText("Export to LUA")
+            button2:SetCallback("OnClick",function()
+                local export = tshow(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx],"MethodDungeonTools.dungeonEnemies[dungeonIndex]")
+                MethodDungeonTools.main_frame.ExportFrame:Show()
+                MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+                MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
+                MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
+                MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+            end)
+            container:AddChild(button2)
 
 
 
 
 
-        updateDropdown(nil,currentEnemyIdx)
-    end
+            updateDropdown(nil,currentEnemyIdx)
+        end
 
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
@@ -463,6 +465,7 @@ function MethodDungeonTools:AddCloneAtCursorPosition()
         print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,cursorx,cursory))
         MethodDungeonTools:UpdateMap()
         MethodDungeonTools:SetCurrentDevmodeBlip(currentEnemyIdx,#data.clones)
+        MethodDungeonTools:UpdateMap()
     end
 end
 
