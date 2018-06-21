@@ -147,7 +147,6 @@ local dungeonEnemyBlips
 local numDungeonEnemyBlips = 0
 local tooltip
 local tooltipLastShown
-local dungeonEnemyBlipMouseoverHighlight
 local dungeonEnemiesSelected = {}
 local mapLinkButtons
 MethodDungeonTools.dungeonTotalCount = {}
@@ -607,20 +606,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel:SetSize(250, frame:GetHeight()+(frame.topPanel:GetHeight()*2))
 	frame.sidePanel:SetPoint("TOPLEFT", frame.topPanel, "TOPRIGHT", -1, 0)
 
-	frame.sidePanelTopString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelTopText")
-	frame.sidePanelTopString:SetFont("Fonts\\FRIZQT__.TTF", 20)
-	frame.sidePanelTopString:SetTextColor(1, 1, 1, 1)
-	frame.sidePanelTopString:SetJustifyH("CENTER")
-	frame.sidePanelTopString:SetJustifyV("TOP")
-	frame.sidePanelTopString:SetWidth(200)
-	frame.sidePanelTopString:SetHeight(500)
-	frame.sidePanelTopString:SetText("")
-	frame.sidePanelTopString:ClearAllPoints()
-	frame.sidePanelTopString:SetPoint("CENTER", frame.sidePanel, "CENTER", 0, -40-30);
-	frame.sidePanelTopString:Show()
-	frame.sidePanelTopString:Hide()
-
-
 	frame.sidePanelString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelText")
 	frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10)
 	frame.sidePanelString:SetTextColor(1, 1, 1, 1);
@@ -907,22 +892,16 @@ end
 
 function MethodDungeonTools:OnPan(cursorX, cursorY)
 	local scrollFrame = MethodDungeonToolsScrollFrame
-
     local scale = MethodDungeonToolsMapPanelFrame:GetScale()/1.5
-
-
 	local deltaX = (scrollFrame.cursorX - cursorX)/scale
 	local deltaY = (cursorY - scrollFrame.cursorY)/scale
-
 	if(abs(deltaX) >= 1 or abs(deltaY) >= 1)then
 		local newHorizontalPosition = max(0, deltaX + scrollFrame:GetHorizontalScroll());
 		newHorizontalPosition = min(newHorizontalPosition, scrollFrame.maxX);
 		local newVerticalPosition = max(0, deltaY + scrollFrame:GetVerticalScroll());
 		newVerticalPosition = min(newVerticalPosition, scrollFrame.maxY);
-
 		scrollFrame:SetHorizontalScroll(newHorizontalPosition)
 		scrollFrame:SetVerticalScroll(newVerticalPosition)
-
 		scrollFrame.cursorX = cursorX
 		scrollFrame.cursorY = cursorY
 	end
@@ -972,8 +951,6 @@ function MethodDungeonTools:UpdateEnemiesSelected()
 			end
 		end
 	end
-	--self.main_frame.sidePanelTopString:SetText("Method Dungeon Tools")
-
 	--count up to and including the currently selected pull
 	local pullCurrent = 0
 	for pullIdx,pull in pairs(preset.value.pulls) do
@@ -1044,16 +1021,16 @@ end
 function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLinked, otherPull)
 
 	if otherPull and otherPull == true then
-		dungeonEnemyBlips[i]:SetVertexColor(0,1,0,0.4)
+		dungeonEnemyBlips[i].border:SetVertexColor(0,1,0,0.4)
 	else
 		if forceDeselect and forceDeselect == true then
 			dungeonEnemyBlips[i].selected = false
 		else
 			dungeonEnemyBlips[i].selected = not dungeonEnemyBlips[i].selected
 		end
-		if dungeonEnemyBlips[i].selected == true then dungeonEnemyBlips[i]:SetVertexColor(0,1,0,1) else
+		if dungeonEnemyBlips[i].selected == true then dungeonEnemyBlips[i].border:SetVertexColor(0,1,0,1) else
 			local r,g,b,a = dungeonEnemyBlips[i].color.r,dungeonEnemyBlips[i].color.g,dungeonEnemyBlips[i].color.b,dungeonEnemyBlips[i].color.a
-			dungeonEnemyBlips[i]:SetVertexColor(r,g,b,a)
+			dungeonEnemyBlips[i].border:SetVertexColor(r,g,b,a)
 		end
 		--select/deselect linked npcs
 		if not ignoreLinked then
@@ -1064,9 +1041,9 @@ function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLin
 					else
 						dungeonEnemyBlips[idx].selected = dungeonEnemyBlips[i].selected
 					end
-					if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx]:SetVertexColor(0,1,0,1) else
+					if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx].border:SetVertexColor(0,1,0,1) else
 						local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
-						dungeonEnemyBlips[idx]:SetVertexColor(r,g,b,a)
+						dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
 					end
 				end
 			end
@@ -1436,8 +1413,12 @@ function MethodDungeonTools:ShowBlipPatrol(blip,show)
                     waypointBlip.line:Show()
                 end
             end
-            if blip.patrolIndicator then blip.patrolIndicator:Show()end
-            if blip.patrolIndicator2 and blip.patrolIndicator2.active then blip.patrolIndicator2:Show() end
+            if blip.patrolIndicator then
+                --blip.patrolIndicator:Show()
+            end
+            if blip.patrolIndicator2 and blip.patrolIndicator2.active then
+                --blip.patrolIndicator2:Show()
+            end
         elseif show == false then
             for patrolIdx,waypointBlip in ipairs(blip.patrol) do
                 waypointBlip:Hide()
@@ -1453,189 +1434,11 @@ end
 function MethodDungeonTools:MakeMapTexture(frame)
     MethodDungeonTools.contextMenuList = {}
 
-    if db.devMode then
-        tinsert(MethodDungeonTools.contextMenuList, {
-            text = "Copy Position",
-            notCheckable = true,
-            func = function()
-                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-                local relativeFrame = UIParent		--UIParent
-                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-                local mapScale = mapPanelFrame:GetScale()
-                local scrollH = scrollFrame:GetHorizontalScroll();
-                local scrollV = scrollFrame:GetVerticalScroll();
-                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-                frameX=(frameX/mapScale)+scrollH
-                frameY=(frameY/mapScale)+scrollV
-
-
-                local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
-                local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
-
-                local cloneIdx = 1
-                local targetName = UnitName("target")
-                if targetName then
-                    for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-                        if v["name"]==targetName then
-                            for k,v in pairs(v["clones"]) do
-                                cloneIdx = cloneIdx+1
-                            end
-                            break
-                        end
-                    end
-                end
-
-
-                local activeDialog = Dialog:ActiveDialog("MethodDungeonToolsPosCopyDialog")
-                if activeDialog then
-                    cloneOffset = cloneOffset + 1
-                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .. ",sublevel="..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel..",g="..group..teeming.."},"
-                    activeDialog.editboxes[1]:SetText(activeDialog.editboxes[1]:GetText().."\n			"..position)
-                else
-                    cloneOffset = 0
-                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .. ",sublevel="..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel..",g="..group..teeming.."},"
-                    Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=position})
-                end
-            end,
-        })
-        tinsert(MethodDungeonTools.contextMenuList, {
-            text = "Copy Patrol Waypoint",
-            notCheckable = true,
-            func = function()
-                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-                local relativeFrame = UIParent		--UIParent
-                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-                local mapScale = mapPanelFrame:GetScale()
-                local scrollH = scrollFrame:GetHorizontalScroll();
-                local scrollV = scrollFrame:GetVerticalScroll();
-                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-                frameX=(frameX/mapScale)+scrollH
-                frameY=(frameY/mapScale)+scrollV
-                local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming and ",teeming=true" or ""
-                local group = db.currentDifficulty --hijack difficulty slider to determine linked group xd
-
-                local cloneIdx = 1
-                local targetName = UnitName("target")
-                if targetName then
-                    for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-                        if v["name"]==targetName then
-                            for k,v in pairs(v["clones"]) do
-                                cloneIdx = cloneIdx+1
-                            end
-                            break
-                        end
-                    end
-                end
-
-
-                local activeDialog = Dialog:ActiveDialog("MethodDungeonToolsPosCopyDialog")
-                if activeDialog then
-                    cloneOffset = cloneOffset + 1
-                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .."},"
-                    activeDialog.editboxes[1]:SetText(activeDialog.editboxes[1]:GetText().."\n			"..position)
-                else
-                    cloneOffset = 0
-                    local position = "["..cloneIdx+cloneOffset.."] = {x = " .. frameX .. ",y = "..-frameY .."},"
-                    Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=position})
-                end
-            end,
-        })
-        tinsert(MethodDungeonTools.contextMenuList, {
-            text = "Create new NPC from Target here",
-            notCheckable = true,
-            func = function()
-                local frameX,frameY = MethodDungeonTools:GetCursorPosition()
-                local id
-                local guid = UnitGUID("target")
-                if guid then
-                    id = select(6,strsplit("-", guid))
-                end
-                if id then
-                    local newIdx = 1
-                    for enemyIdx,data in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-                        newIdx = newIdx + 1
-                    end
-                    local name = UnitName("target")
-                    local health = UnitHealthMax("target").."*nerfMultiplier"
-                    local level = UnitLevel("target")
-                    local creatureType = UnitCreatureType("target")
-                    local x,y = frameX,-frameY
-                    local sublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
-                    local s = string.format('[%s] = {\n        ["name"] = "%s",\n        ["health"] = %s,\n        ["level"] = %s,\n        ["creatureType"] = "%s",\n        ["id"] = %s,\n        ["count"] = XXX,\n        ["scale"] = 1,\n        ["color"] = {r=1,g=1,b=1,a=0.8},\n        ["clones"] = {\n            [1] = {x = %s,y = %s,sublevel=%s},\n        },\n    },',newIdx,name,health,level,creatureType,id,x,y,sublevel)
-
-                    lastDialog = Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=s})
-                end
-            end,
-        })
-        tinsert(MethodDungeonTools.contextMenuList, {
-            text = "Create new Boss from Target here",
-            notCheckable = true,
-            func = function()
-                local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-                local relativeFrame = UIParent		--UIParent
-                local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-                local mapScale = mapPanelFrame:GetScale()
-                local scrollH = scrollFrame:GetHorizontalScroll();
-                local scrollV = scrollFrame:GetVerticalScroll();
-                local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-                local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-                frameX=(frameX/mapScale)+scrollH
-                frameY=(frameY/mapScale)+scrollV
-
-                local id
-                local guid = UnitGUID("target")
-                if guid then
-                    id = select(6,strsplit("-", guid))
-                end
-                if id then
-                    local encounterID
-                    for i=1,10000 do
-                        local id, name, description, displayInfo, iconImage = EJ_GetCreatureInfo(1,i)
-                        --cordana fix, encouner name was "Cordana"
-
-                        if name then
-                            if string.find(name,"Galind") then print(id,name) end
-                        end
-                        if name == UnitName("target") --[[or name == "Lord Kur'talos Ravencrest"]] then encounterID=i; break; end
-
-                    end
-
-                    --with ej open
-                    if false then
-                        local id, name, description, displayInfo, iconImage = EJ_GetCreatureInfo(1)
-                    end
-
-                    if encounterID then
-                        local name = UnitName("target")
-                        local health = UnitHealthMax("target")
-                        local level = UnitLevel("target")
-                        local creatureType = UnitCreatureType("target")
-                        local x,y = frameX,-frameY
-                        local s = string.format('[1] = {\n            ["name"] = "%s",\n            ["health"] = %s,\n            ["encounterID"] = %s,\n            ["level"] = %s,\n            ["creatureType"] = "%s",\n            ["id"] = %s,\n            ["x"] = %s,\n            ["y"] = %s,\n        },',name,health,encounterID,level,creatureType,id,x,y)
-
-                        Dialog:Spawn("MethodDungeonToolsPosCopyDialog", {pos=s})
-                    end
-                end
-            end,
-        })
-        tinsert(MethodDungeonTools.contextMenuList, {
-            text = " ",
-            notClickable = 1,
-            notCheckable = 1,
-            func = nil
-        })
-    end
-
-
     tinsert(MethodDungeonTools.contextMenuList, {
         text = "Close",
         notCheckable = 1,
         func = frame.contextDropdown:Hide()
     })
-
-
 
 	-- Scroll Frame
 	if frame.scrollFrame == nil then
@@ -1661,30 +1464,15 @@ function MethodDungeonTools:MakeMapTexture(frame)
 			tooltip:Hide()
 		end)
 
+        local lastMouseoverBlip
 		frame.scrollFrame:SetScript("OnUpdate", function(self, button)
-
-
 			local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-			local cursorX, cursorY = GetCursorPosition();
-			local relativeFrame = UIParent		--UIParent
-			local mapPanelFrame = MethodDungeonTools.main_frame.mapPanelFrame
-			local mapScale = mapPanelFrame:GetScale()
-			local scrollH = scrollFrame:GetHorizontalScroll();
-			local scrollV = scrollFrame:GetVerticalScroll();
-			local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft();
-			local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale());
-			frameX=(frameX/mapScale)+scrollH
-			frameY=(frameY/mapScale)+scrollV
-
-
+            local frameX,frameY = MethodDungeonTools:GetCursorPosition()
 			--MethodDungeonTools.main_frame.topPanelString:SetText(string.format("%.1f",frameX).."    "..string.format("%.1f",frameY));
-
-
 			if ( scrollFrame.panning ) then
 				local x, y = GetCursorPosition();
 				MethodDungeonTools:OnPan(x, y);
 			end
-
 			--handle mouseover on enemy blips
 			local mouseoverBlip
 			if MouseIsOver(MethodDungeonToolsScrollFrame) then
@@ -1707,10 +1495,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				end
 			end
 			if mouseOverBoss then
-				local data
+
 
 			end
-
 			if mouseoverBlip then
 				local data = dungeonEnemyBlips[mouseoverBlip]
 				local fortified = false
@@ -1767,12 +1554,21 @@ function MethodDungeonTools:MakeMapTexture(frame)
 
 				lastMouseoverBlip = mouseoverBlip
 				tooltipLastShown = GetTime()
-				if dungeonEnemyBlipMouseoverHighlight then
-					dungeonEnemyBlipMouseoverHighlight:SetPoint("TOPLEFT", dungeonEnemyBlips[mouseoverBlip] ,"TOPLEFT", 0, 0)
-					dungeonEnemyBlipMouseoverHighlight:SetPoint("BOTTOMRIGHT", dungeonEnemyBlips[mouseoverBlip] ,"BOTTOMRIGHT", -1, 0)
-					dungeonEnemyBlipMouseoverHighlight:Show()
-				end
-
+                for k,blip in pairs(dungeonEnemyBlips) do
+                    if k == mouseoverBlip then
+                        blip:SetSize(blip.storedSize*1.2,blip.storedSize*1.2)
+                        blip:SetDrawLayer(blipDrawLayer, 6)
+                        blip.border:SetSize(blip.border.storedSize*1.2,blip.border.storedSize*1.2)
+                        blip.border:SetDrawLayer(blipDrawLayer, 5)
+                        blip.highlight:Show()
+                    else
+                        blip:SetSize(blip.storedSize*1,blip.storedSize*1)
+                        blip:SetDrawLayer(blipDrawLayer, 5)
+                        blip.border:SetSize(blip.border.storedSize*1,blip.border.storedSize*1)
+                        blip.border:SetDrawLayer(blipDrawLayer, 4)
+                        blip.highlight:Hide()
+                    end
+                end
 
 				--check if blip is in a patrol but not the "leader"
 				if data.patrolFollower then
@@ -1796,10 +1592,10 @@ function MethodDungeonTools:MakeMapTexture(frame)
                                 end
 							end
 							if blip.patrolIndicator then
-								blip.patrolIndicator:Show()
+								--blip.patrolIndicator:Show()
 							end
 							if blip.patrolIndicator2 and blip.patrolIndicator2.active then
-								blip.patrolIndicator2:Show()
+								--blip.patrolIndicator2:Show()
 							end
 						else
                             if not db.devMode or not blip.devSelected then
@@ -1818,15 +1614,11 @@ function MethodDungeonTools:MakeMapTexture(frame)
 					end
 				end
 
-
 			elseif tooltipLastShown and GetTime()-tooltipLastShown>0.2 then
 				tooltipLastShown = nil
 				--GameTooltip:Hide()
 				tooltip.Model:Hide()
 				tooltip:Hide()
-				if dungeonEnemyBlipMouseoverHighlight then
-					dungeonEnemyBlipMouseoverHighlight:Hide()
-				end
 				--hide all patrol waypoints and facing indicators
                 for blipIdx,blip in pairs(dungeonEnemyBlips) do
                     if not db.devMode or not blip.devSelected then
@@ -1844,34 +1636,17 @@ function MethodDungeonTools:MakeMapTexture(frame)
                         end
                     end
                 end
+                --reset mySizes
+                for k,blip in pairs(dungeonEnemyBlips) do
+                    blip:SetSize(blip.storedSize*1,blip.storedSize*1)
+                    blip:SetDrawLayer(blipDrawLayer, 5)
+                    blip.border:SetSize(blip.border.storedSize*1,blip.border.storedSize*1)
+                    blip.border:SetDrawLayer(blipDrawLayer, 4)
+                    blip.highlight:Hide()
+                end
 			end
-
-			--mouseover pull button
-			--[[
-
-			elseif mouseOverPullButton then
-				--tooltip.String:Show()
-				--tooltip:Show()
-				--tooltipLastShown = GetTime()
-
-
-			local mouseOverPullButton
-			if MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then
-				for idx,_ in pairs(MethodDungeonTools.main_frame.sidePanel.newPullButtons) do
-					mouseOverPullButton = idx
-					break
-				end
-			end
-
-			]]
-
-
-
 
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
-
-
-
         end)
 
 
@@ -1884,26 +1659,12 @@ function MethodDungeonTools:MakeMapTexture(frame)
 
 		end
 
-
-		--mouseover glow tex
-		do
-			if not dungeonEnemyBlipMouseoverHighlight then
-				dungeonEnemyBlipMouseoverHighlight = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlipMouseoverHighlight","BACKGROUND")
-				dungeonEnemyBlipMouseoverHighlight:SetDrawLayer(blipDrawLayer, 3);
-				dungeonEnemyBlipMouseoverHighlight:SetTexture("Interface\\MINIMAP\\TRACKING\\Target")
-				dungeonEnemyBlipMouseoverHighlight:SetVertexColor(1,1,1,1)
-				dungeonEnemyBlipMouseoverHighlight:SetWidth(10)
-				dungeonEnemyBlipMouseoverHighlight:SetHeight(10)
-				dungeonEnemyBlipMouseoverHighlight:Hide()
-			end
-		end
-
 		--create the 12 tiles and set the scrollchild
 		for i=1,12 do
 			frame["mapPanelTile"..i] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsmapPanelTile"..i, "BACKGROUND");
 			frame["mapPanelTile"..i]:SetDrawLayer(canvasDrawLayer, 0);
 			--frame["mapPanelTile"..i]:SetAlpha(0.3)
-			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+4,frame:GetWidth()/4+4);
+			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+4,frame:GetWidth()/4+4)
 		end
 		frame.mapPanelTile1:SetPoint("TOPLEFT",frame.mapPanelFrame,"TOPLEFT",1,0)
 		frame.mapPanelTile2:SetPoint("TOPLEFT",frame.mapPanelTile1,"TOPRIGHT")
@@ -1958,13 +1719,11 @@ end
 function MethodDungeonTools:MakeDungeonBossButtons(frame)
 	if not dungeonBossButtons then
 		dungeonBossButtons = {}
-		--TEST_TABLEMDT = {}
 		for i=1,5 do
 			dungeonBossButtons[i] = CreateFrame("Button", "MethodDungeonToolsBossButton"..i, frame.mapPanelFrame, "EncounterJournalPinTemplate");
 			dungeonBossButtons[i]:SetScript("OnClick",nil)
 			dungeonBossButtons[i]:SetSize(25,25)
 			dungeonBossButtons[i]:Hide()
-			--TEST_TABLEMDT[i] = dungeonBossButtons[i]
 		end
 	end
 end
@@ -2040,16 +1799,33 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						dungeonEnemyBlips[idx].health = data["health"]
 						dungeonEnemyBlips[idx].level = data["level"]
 						dungeonEnemyBlips[idx]:SetDrawLayer(blipDrawLayer, 5)
-						dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
+						--dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
+                        SetPortraitTextureFromCreatureDisplayID(dungeonEnemyBlips[idx],data.displayId)
 						dungeonEnemyBlips[idx]:SetAlpha(1)
-						dungeonEnemyBlips[idx]:SetWidth(10*data["scale"])
-						dungeonEnemyBlips[idx]:SetHeight(10*data["scale"])
+						dungeonEnemyBlips[idx]:SetSize(8*data["scale"],8*data["scale"])
+                        dungeonEnemyBlips[idx].storedSize = 8*data["scale"]
 						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
+
+                        dungeonEnemyBlips[idx].border = dungeonEnemyBlips[idx].border or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
+                        dungeonEnemyBlips[idx].border:SetTexture("Interface\\Addons\\MethodDungeonTools\\Textures\\Circle_White")
+                        dungeonEnemyBlips[idx].border:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
+                        dungeonEnemyBlips[idx].border:SetSize(dungeonEnemyBlips[idx]:GetSize()+1,dungeonEnemyBlips[idx]:GetSize()+1)
+                        dungeonEnemyBlips[idx].border.storedSize = dungeonEnemyBlips[idx].storedSize+1
+                        dungeonEnemyBlips[idx].border:SetDrawLayer(blipDrawLayer, 4)
+                        dungeonEnemyBlips[idx].border:Show()
+
+                        dungeonEnemyBlips[idx].highlight = dungeonEnemyBlips[idx].highlight or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
+                        dungeonEnemyBlips[idx].highlight:SetTexture("Interface\\Addons\\MethodDungeonTools\\Textures\\Circle_White")
+                        dungeonEnemyBlips[idx].highlight:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
+                        dungeonEnemyBlips[idx].highlight:SetSize(dungeonEnemyBlips[idx]:GetSize()*1.2,dungeonEnemyBlips[idx]:GetSize()*1.2)
+                        dungeonEnemyBlips[idx].highlight:SetDrawLayer(blipDrawLayer, 7)
+                        dungeonEnemyBlips[idx].highlight:SetAlpha(0.2)
+                        dungeonEnemyBlips[idx].highlight:Hide()
 
                         --color patrol
                         dungeonEnemyBlips[idx].patrolFollower = nil
                         if clone.patrol then
-                            dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
+                            --dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
                             dungeonEnemyBlips[idx].color = patrolColor
                         else
                             --iterate over all enemies again to find if this npc is linked to a patrol
@@ -2062,7 +1838,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                                         if (patrolCheckDataTeeming==true) or (patrolCheckDataTeeming==false and ((not patrolCheckClone.teeming) or patrolCheckClone.teeming==false))  then
                                             if clone.g and patrolCheckClone.g then
                                                 if clone.g == patrolCheckClone.g and patrolCheckClone.patrol then
-                                                    dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
+                                                    --dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
                                                     dungeonEnemyBlips[idx].color = patrolColor
                                                     dungeonEnemyBlips[idx].patrolFollower = true
                                                 end
@@ -2073,15 +1849,10 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                             end
                         end
 
-						if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx]:SetVertexColor(0,1,0,1) else
+						if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx].border:SetVertexColor(0,1,0,1) else
 							local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
-							dungeonEnemyBlips[idx]:SetVertexColor(r,g,b,a)
+                            dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
 						end
-
-
-
-
-
 
 						dungeonEnemyBlips[idx]:Show()
 
@@ -2094,7 +1865,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 
 						--patrol waypoints/lines
                         if clone.patrol then
-                            local distance = 5
+                            local distance = 7
                             local arrowScale = 0.7
                             if clone.patrolFacing then
                                 if not dungeonEnemyBlips[idx].patrolIndicator then
@@ -2792,7 +2563,7 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 	end
     for k,v in ipairs(dungeonEnemyBlips) do
         if db.devMode and v.devSelected then
-            v:SetVertexColor(1,0,0,1)
+            v.border:SetVertexColor(1,0,0,1)
         end
     end
 
