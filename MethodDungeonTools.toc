@@ -17,6 +17,7 @@ AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 MethodDungeonTools.lua
 Transmission.lua
 toolbar.lua
+devpanel.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 

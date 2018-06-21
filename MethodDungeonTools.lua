@@ -460,7 +460,7 @@ end
 
 function MethodDungeonTools:ToggleDevMode()
     db.devMode = not db.devMode
-    print("MDT: Reload Interface to enable dev mode features")
+    print(string.format("%sMDT|r: DevMode %s. Reload Interface!",methodColor,db.devMode and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
 end
 
 
@@ -961,10 +961,14 @@ function MethodDungeonTools:UpdateEnemiesSelected()
 	for pullIdx,pull in pairs(preset.value.pulls) do
 		for enemyIdx,clones in pairs(pull) do
 			for k,v in pairs(clones) do
-				local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-				if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-					grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-				end
+                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
+                    clones[v] = nil
+                else
+                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                    if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                        grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                    end
+                end
 			end
 		end
 	end
@@ -976,10 +980,14 @@ function MethodDungeonTools:UpdateEnemiesSelected()
 		if pullIdx <= db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull then
 			for enemyIdx,clones in pairs(pull) do
 				for k,v in pairs(clones) do
-					local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-					if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-						pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-					end
+                    if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
+                        clones[v] = nil
+                    else
+                        local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                        if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                        end
+                    end
 				end
 			end
 		else
@@ -1134,7 +1142,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
 				if MouseIsOver(v) then
 					if v:IsShown() then
                         --model
-						if not tooltip.modelNpcId or (tooltip.modelNpcId ~= v.enemyData.displayId) then
+						if v.enemyData.displayId and (not tooltip.modelNpcId or (tooltip.modelNpcId ~= v.enemyData.displayId)) then
 							tooltip.Model:SetDisplayInfo(v.enemyData.displayId)
 							tooltip.modelNpcId = v.enemyData.displayId
 						end
@@ -1214,10 +1222,83 @@ function MethodDungeonTools:IsCurrentPresetTeeming()
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 end
 
+
+local currentBlip
+local currentWaypoint
+local currentWaypointBlip
+function MethodDungeonTools:GetCurrentDevmodeBlip()
+    for blipIdx,blip in pairs(dungeonEnemyBlips) do
+        if blip.devSelected then
+            return blip
+        end
+    end
+end
+
+local moverFrame = CreateFrame("Frame")
 ---MethodDungeonTools.OnMouseDown
 ---Handles mouse-down events on the map scrollframe
 MethodDungeonTools.OnMouseDown = function(self,button)
 	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+    if db.devMode then
+        if button == "LeftButton" then
+
+            for blipIdx,blip in pairs(dungeonEnemyBlips) do
+                --drag blips
+                if MouseIsOver(blip) then
+                    local startx,starty = MethodDungeonTools:GetCursorPosition()
+                    currentBlip = blip
+                    moverFrame.isMoving = true
+                    moverFrame:SetScript("OnUpdate", function(self, tick)
+                        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+                        local x,y = MethodDungeonTools:GetCursorPosition()
+                        blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+                        blip.x = x
+                        blip.y = y
+                        startx,starty = MethodDungeonTools:GetCursorPosition()
+                    end)
+                    return
+                end
+                --drag patrol pathway
+                if blip.patrol then
+                    for idx,waypoint in pairs(blip.patrol) do
+                        if MouseIsOver(waypoint) then
+                            local startx,starty = MethodDungeonTools:GetCursorPosition()
+                            currentWaypoint = waypoint
+                            waypoint.index = idx
+                            currentWaypointBlip = blip
+                            moverFrame.isMoving = true
+                            moverFrame:SetScript("OnUpdate", function(self, tick)
+                                if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
+                                local x,y = MethodDungeonTools:GetCursorPosition()
+                                waypoint:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+                                waypoint.x = x
+                                waypoint.y = y
+                                startx,starty = MethodDungeonTools:GetCursorPosition()
+                            end)
+                            return
+                        end
+                    end
+                end
+            end
+
+        end
+        if button == "RightButton" then
+            if moverFrame.isMoving then return end
+            for blipIdx,blip in pairs(dungeonEnemyBlips) do
+                if MouseIsOver(blip) then
+                    currentBlip = blip
+                    if IsAltKeyDown() then
+                        tremove(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx].clones,currentBlip.cloneIdx)
+                        MethodDungeonTools:UpdateMap()
+                    end
+                    return
+                end
+            end
+            return
+        end
+
+        if IsAltKeyDown() then return end
+    end
 	if ( button == "LeftButton" and scrollFrame.zoomedIn ) then
 		scrollFrame.panning = true;
 		scrollFrame.cursorX,scrollFrame.cursorY = GetCursorPosition()
@@ -1234,23 +1315,72 @@ MethodDungeonTools.OnMouseUp = function(self,button)
 	if ( button == "LeftButton") then
 		frame.contextDropdown:Hide()
 		if scrollFrame.panning then scrollFrame.panning = false end
+
+        --end dragging blip
+        if db.devMode then
+            moverFrame:SetScript("OnUpdate",nil)
+            moverFrame.isMoving = nil
+            if currentBlip then
+                local cloneData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx].clones[currentBlip.cloneIdx]
+                if cloneData and currentBlip.x and currentBlip.y then
+                    cloneData.x = currentBlip.x
+                    cloneData.y = currentBlip.y
+                    if cloneData.patrol and cloneData.patrol[1] then
+                        cloneData.patrol[1] = {x=cloneData.x,y=cloneData.y}
+                    end
+                end
+            end
+            if currentWaypoint then
+                local cloneData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentWaypointBlip.enemyIdx].clones[currentWaypointBlip.cloneIdx]
+                if cloneData and cloneData.patrol and cloneData.patrol[currentWaypoint.index]then
+                    cloneData.patrol[currentWaypoint.index].x = currentWaypoint.x
+                    cloneData.patrol[currentWaypoint.index].y = currentWaypoint.y
+                end
+            end
+            currentWaypoint = nil
+            currentBlip = nil
+            MethodDungeonTools:UpdateMap()
+            return
+        end
+
 		--handle clicks on enemy blips
 		if MouseIsOver(MethodDungeonToolsScrollFrame) then
 			for i=1,numDungeonEnemyBlips do
 				if MouseIsOver(dungeonEnemyBlips[i]) then
-					local isCTRLKeyDown = IsControlKeyDown()
-					MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,not dungeonEnemyBlips[i].selected,isCTRLKeyDown)
-					MethodDungeonTools:UpdateEnemyBlipSelection(i,nil,isCTRLKeyDown)
-					MethodDungeonTools:UpdateEnemiesSelected()
-					break;
+
+                    local isCTRLKeyDown = IsControlKeyDown()
+                    MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,not dungeonEnemyBlips[i].selected,isCTRLKeyDown)
+                    MethodDungeonTools:UpdateEnemyBlipSelection(i,nil,isCTRLKeyDown)
+                    MethodDungeonTools:UpdateEnemiesSelected()
+                    break;
 				end
 			end
-
 		end
 	elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
-		cursorX, cursorY = GetCursorPosition()
-		L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
-		frame.contextDropdown:Show()
+        if db.devMode then
+            moverFrame:SetScript("OnUpdate",nil)
+            moverFrame.isMoving = nil
+            if currentBlip then
+                if not currentBlip.devSelected then
+                    currentBlip.devSelected = true
+                else
+                    currentBlip.devSelected = nil
+                end
+                for blipIdx,blip in pairs(dungeonEnemyBlips) do
+                    if blip ~= currentBlip then
+                        blip.devSelected = nil
+                    end
+                end
+            end
+            currentBlip = nil
+            MethodDungeonTools:UpdateMap()
+            return
+
+        else
+            cursorX, cursorY = GetCursorPosition()
+            L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
+            frame.contextDropdown:Show()
+        end
 	end
 end
 
@@ -1272,6 +1402,31 @@ end
 function MethodDungeonTools:GetCurrentPreset()
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 end
+
+---ShowBlipPatrol
+---Displays patrol waypoints and lines
+function MethodDungeonTools:ShowBlipPatrol(blip,show)
+    if blip and blip.patrol then
+        if show == true and blip.patrolActive then
+            for patrolIdx,waypointBlip in ipairs(blip.patrol) do
+                if waypointBlip.isActive then
+                    waypointBlip:Show()
+                    waypointBlip.line:Show()
+                end
+            end
+            if blip.patrolIndicator then blip.patrolIndicator:Show()end
+            if blip.patrolIndicator2 and blip.patrolIndicator2.active then blip.patrolIndicator2:Show() end
+        elseif show == false then
+            for patrolIdx,waypointBlip in ipairs(blip.patrol) do
+                waypointBlip:Hide()
+                waypointBlip.line:Hide()
+            end
+            if blip.patrolIndicator then blip.patrolIndicator:Hide() end
+            if blip.patrolIndicator2 then blip.patrolIndicator2:Hide() end
+        end
+    end
+end
+
 
 function MethodDungeonTools:MakeMapTexture(frame)
     MethodDungeonTools.contextMenuList = {}
@@ -1625,16 +1780,18 @@ function MethodDungeonTools:MakeMapTexture(frame)
 								blip.patrolIndicator2:Show()
 							end
 						else
-							for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-								waypointBlip:Hide()
-								waypointBlip.line:Hide()
-							end
-							if blip.patrolIndicator then
-								blip.patrolIndicator:Hide()
-							end
-							if blip.patrolIndicator2 then
-								blip.patrolIndicator2:Hide()
-							end
+                            if not db.devMode or not blip.devSelected then
+                                for patrolIdx,waypointBlip in ipairs(blip.patrol) do
+                                    waypointBlip:Hide()
+                                    waypointBlip.line:Hide()
+                                end
+                                if blip.patrolIndicator then
+                                    blip.patrolIndicator:Hide()
+                                end
+                                if blip.patrolIndicator2 then
+                                    blip.patrolIndicator2:Hide()
+                                end
+                            end
 						end
 					end
 				end
@@ -1649,20 +1806,22 @@ function MethodDungeonTools:MakeMapTexture(frame)
 					dungeonEnemyBlipMouseoverHighlight:Hide()
 				end
 				--hide all patrol waypoints and facing indicators
-				for blipIdx,blip in pairs(dungeonEnemyBlips) do
-					if blip.patrol then
-						for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-							waypointBlip:Hide()
-							waypointBlip.line:Hide()
-						end
-						if blip.patrolIndicator then
-							blip.patrolIndicator:Hide()
-						end
-						if blip.patrolIndicator2 then
-							blip.patrolIndicator2:Hide()
-						end
-					end
-				end
+                for blipIdx,blip in pairs(dungeonEnemyBlips) do
+                    if not db.devMode or not blip.devSelected then
+                        if blip.patrol then
+                            for patrolIdx,waypointBlip in ipairs(blip.patrol) do
+                                waypointBlip:Hide()
+                                waypointBlip.line:Hide()
+                            end
+                            if blip.patrolIndicator then
+                                blip.patrolIndicator:Hide()
+                            end
+                            if blip.patrolIndicator2 then
+                                blip.patrolIndicator2:Hide()
+                            end
+                        end
+                    end
+                end
 			end
 
 			--mouseover pull button
@@ -1817,9 +1976,8 @@ function MethodDungeonTools:UpdateDungeonBossButtons()
 	end
 end
 
-
+local defaultBlipColor = {r=1,g=1,b=1,a=0.8}
 local patrolColor = {r=0,g=.5,b=1,a=0.8}
-
 function MethodDungeonTools:UpdateDungeonEnemies()
 	if not dungeonEnemyBlips then
 		dungeonEnemyBlips = {}
@@ -1842,14 +2000,19 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 							dungeonEnemyBlips[idx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx,"BACKGROUND")
 							dungeonEnemyBlips[idx].selected = false
 						end
+
 						dungeonEnemyBlips[idx].count = data["count"]
 						dungeonEnemyBlips[idx].name = data["name"]
 						dungeonEnemyBlips[idx].color = data["color"]
+                        if not dungeonEnemyBlips[idx].color then
+                            dungeonEnemyBlips[idx].color = defaultBlipColor
+                        end
 
 						dungeonEnemyBlips[idx].cloneIdx = cloneIdx
 						dungeonEnemyBlips[idx].enemyIdx = enemyIdx
 						dungeonEnemyBlips[idx].id = data["id"]
 						dungeonEnemyBlips[idx].g = clone.g
+						dungeonEnemyBlips[idx].teeming = clone.teeming
 						dungeonEnemyBlips[idx].sublevel = clone.sublevel or 1
 						dungeonEnemyBlips[idx].creatureType = data["creatureType"]
 						dungeonEnemyBlips[idx].health = data["health"]
@@ -1896,6 +2059,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 
 
 
+
+
 						dungeonEnemyBlips[idx]:Show()
 
 
@@ -1921,7 +2086,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                                 dungeonEnemyBlips[idx].patrolIndicator:SetVertexColor(1,1,1,0.8)
                                 local xoffset = distance * math.cos(clone.patrolFacing+math.pi*1/2)
                                 local yoffset = distance * math.sin(clone.patrolFacing+math.pi*1/2)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset,yoffset)
+                                dungeonEnemyBlips[idx].patrolIndicator:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset-0.5,yoffset)
                                 dungeonEnemyBlips[idx].patrolIndicator:SetRotation(clone.patrolFacing)
                                 dungeonEnemyBlips[idx].patrolIndicator:Hide()
                             end
@@ -1938,7 +2103,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                                 dungeonEnemyBlips[idx].patrolIndicator2:SetVertexColor(1,1,1,0.8)
                                 local xoffset = distance * math.cos(clone.patrolFacing2+math.pi*1/2)
                                 local yoffset = distance * math.sin(clone.patrolFacing2+math.pi*1/2)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset,yoffset)
+                                dungeonEnemyBlips[idx].patrolIndicator2:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset-0.5,yoffset)
                                 dungeonEnemyBlips[idx].patrolIndicator2:SetRotation(clone.patrolFacing2)
                                 dungeonEnemyBlips[idx].patrolIndicator2:Hide()
                                 dungeonEnemyBlips[idx].patrolIndicator2.active = true
@@ -2089,16 +2254,7 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	group:SetPoint("TOPLEFT",frame.topPanel,"BOTTOMLEFT",0,2)
 	group:SetLayout("List")
 
-	--dirty hook to make group show/hide
-    local originalShow,originalHide = MethodDungeonTools.main_frame.Show,MethodDungeonTools.main_frame.Hide
-    function MethodDungeonTools.main_frame:Show(...)
-        group.frame:Show()
-        return originalShow(self, ...);
-    end
-    function MethodDungeonTools.main_frame:Hide(...)
-        group.frame:Hide()
-        return originalHide(self, ...);
-    end
+    MethodDungeonTools:FixAceGUIShowHide(group)
 
     --dungeon select
 	group.DungeonDropdown = AceGUI:Create("Dropdown")
@@ -2501,16 +2657,7 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup.frame:SetBackdropColor(1,1,1,0)
     frame.PullButtonScrollGroup.frame:Show()
 
-    --dirty hook to make group show/hide
-    local originalShow,originalHide = MethodDungeonTools.main_frame.Show,MethodDungeonTools.main_frame.Hide
-    function MethodDungeonTools.main_frame:Show(...)
-        frame.PullButtonScrollGroup.frame:Show()
-        return originalShow(self, ...);
-    end
-    function MethodDungeonTools.main_frame:Hide(...)
-        frame.PullButtonScrollGroup.frame:Hide()
-        return originalHide(self, ...);
-    end
+    MethodDungeonTools:FixAceGUIShowHide(frame.PullButtonScrollGroup)
 
     frame.pullButtonsScrollFrame = AceGUI:Create("ScrollFrame")
     frame.pullButtonsScrollFrame:SetLayout("Flow")
@@ -2619,12 +2766,24 @@ function MethodDungeonTools:SetSelectionToPull(pull)
             end
         end
 	end
+    for k,v in ipairs(dungeonEnemyBlips) do
+        if db.devMode and v.devSelected then
+            v:SetVertexColor(1,0,0,1)
+        end
+    end
+
+
 	MethodDungeonTools:UpdateEnemiesSelected()
+end
+
+function MethodDungeonTools:GetDungeonEnemyBlips()
+    return dungeonEnemyBlips
 end
 
 ---UpdatePullButtonNPCData
 ---Updates the portraits display of a button to show which and how many npcs are selected
 function MethodDungeonTools:UpdatePullButtonNPCData(idx)
+    if db.devMode then return end
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 	local frame = MethodDungeonTools.main_frame.sidePanel
     local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
@@ -2632,29 +2791,39 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 	if preset.value.pulls[idx] then
 		local enemyTableIdx = 0
 		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
-			local incremented = false
-			local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
-            local name = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
-            local creatureType = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
-            local level = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["level"]
-            local baseHealth = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
-            for k,cloneIdx in pairs(clones) do
-                --check for teeming
-                local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
-                if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
-                    if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
-                    if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-                    enemyTable[enemyTableIdx].npcId = npcId
-                    enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                    enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
-                    enemyTable[enemyTableIdx].name = name
-                    enemyTable[enemyTableIdx].level = level
-                    enemyTable[enemyTableIdx].creatureType = creatureType
-                    enemyTable[enemyTableIdx].baseHealth = baseHealth
+            --check if enemy exists, remove if not
+            if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+
+            else
+                local incremented = false
+                local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
+                local name = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
+                local creatureType = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
+                local level = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["level"]
+                local baseHealth = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
+                for k,cloneIdx in pairs(clones) do
+                    --check if clone exists, remove if not
+                    if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
+
+                    else
+                        --check for teeming
+                        local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
+                        if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
+                            if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+                            if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+                            enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+                            enemyTable[enemyTableIdx].npcId = npcId
+                            enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                            enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+                            enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                            enemyTable[enemyTableIdx].name = name
+                            enemyTable[enemyTableIdx].level = level
+                            enemyTable[enemyTableIdx].creatureType = creatureType
+                            enemyTable[enemyTableIdx].baseHealth = baseHealth
+                        end
+                    end
                 end
-			end
+            end
 		end
 	end
 	frame.newPullButtons[idx]:SetNPCData(enemyTable)
@@ -2664,6 +2833,7 @@ end
 ---ReloadPullButtons
 ---Reloads all pull buttons in the scroll frame
 function MethodDungeonTools:ReloadPullButtons()
+
 	local frame = MethodDungeonTools.main_frame.sidePanel
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 
@@ -2677,17 +2847,19 @@ function MethodDungeonTools:ReloadPullButtons()
 
 	--add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
 
-	local idx = 0
-	for k,pull in pairs(preset.value.pulls) do
-		idx = idx+1
-		frame.newPullButtons[idx] = AceGUI:Create("MethodDungeonToolsPullButton")
-		frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
-		frame.newPullButtons[idx]:SetIndex(idx)
-		MethodDungeonTools:UpdatePullButtonNPCData(idx)
-		frame.newPullButtons[idx]:Initialize()
-		frame.newPullButtons[idx]:Enable()
-		frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
-	end
+    if not db.devMode then
+        local idx = 0
+        for k,pull in pairs(preset.value.pulls) do
+            idx = idx+1
+            frame.newPullButtons[idx] = AceGUI:Create("MethodDungeonToolsPullButton")
+            frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
+            frame.newPullButtons[idx]:SetIndex(idx)
+            MethodDungeonTools:UpdatePullButtonNPCData(idx)
+            frame.newPullButtons[idx]:Initialize()
+            frame.newPullButtons[idx]:Enable()
+            frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
+        end
+    end
 
 	--add the "new pull" button
 	frame.newPullButton = AceGUI:Create("MethodDungeonToolsNewPullButton")
@@ -2710,6 +2882,7 @@ end
 ---PickPullButton
 ---Selects the current pull button and deselects all other buttons
 function MethodDungeonTools:PickPullButton(idx)
+    if db.devMode then return end
 	MethodDungeonTools:ClearPullButtonPicks()
 	local frame = MethodDungeonTools.main_frame.sidePanel
 	frame.newPullButtons[idx]:Pick()
@@ -2926,303 +3099,6 @@ function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 end
 
 
-local function tshow(t, name, indent)
-    local cart     -- a container
-    local autoref  -- for self references
-
-    --[[ counts the number of elements in a table
-    local function tablecount(t)
-       local n = 0
-       for _, _ in pairs(t) do n = n+1 end
-       return n
-    end
-    ]]
-    -- (RiciLake) returns true if the table is empty
-    local function isemptytable(t) return next(t) == nil end
-
-    local function basicSerialize (o)
-        local so = tostring(o)
-        if type(o) == "function" then
-            local info = debug.getinfo(o, "S")
-            -- info.name is nil because o is not a calling level
-            if info.what == "C" then
-                return string.format("%q", so .. ", C function")
-            else
-                -- the information is defined through lines
-                return string.format("%q", so .. ", defined in (" ..
-                        info.linedefined .. "-" .. info.lastlinedefined ..
-                        ")" .. info.source)
-            end
-        elseif type(o) == "number" or type(o) == "boolean" then
-            return so
-        else
-            return string.format("%q", so)
-        end
-    end
-
-    local function addtocart (value, name, indent, saved, field)
-        indent = indent or ""
-        saved = saved or {}
-        field = field or name
-
-        cart = cart .. indent .. field
-
-        if type(value) ~= "table" then
-            cart = cart .. " = " .. basicSerialize(value) .. ";\n"
-        else
-            if saved[value] then
-                cart = cart .. " = {}; -- " .. saved[value]
-                        .. " (self reference)\n"
-                autoref = autoref ..  name .. " = " .. saved[value] .. ";\n"
-            else
-                saved[value] = name
-                --if tablecount(value) == 0 then
-                if isemptytable(value) then
-                    cart = cart .. " = {};\n"
-                else
-                    cart = cart .. " = {\n"
-                    for k, v in pairs(value) do
-                        k = basicSerialize(k)
-                        local fname = string.format("%s[%s]", name, k)
-                        field = string.format("[%s]", k)
-                        -- three spaces between levels
-                        addtocart(v, fname, indent .. "   ", saved, field)
-                    end
-                    cart = cart .. indent .. "};\n"
-                end
-            end
-        end
-    end
-
-    name = name or "__unnamed__"
-    if type(t) ~= "table" then
-        return name .. " = " .. basicSerialize(t)
-    end
-    cart, autoref = "", ""
-    addtocart(t, name, indent)
-    return cart .. autoref
-end
-
----CreateDevPanel
----Creates the dev panel which contains buttons to add npcs, objects to the map
-function MethodDungeonTools:CreateDevPanel(frame)
-    frame.devPanel = AceGUI:Create("TabGroup")
-    local devPanel = frame.devPanel
-    devPanel:SetTabs({{text="Door", value="tab1"}, {text="Enemy", value="tab2"}})
-    devPanel:SetWidth(250)
-    devPanel:SetPoint("TOPRIGHT",frame.topPanel,"TOPLEFT",0,0)
-    devPanel:SetLayout("Flow")
-    devPanel.frame:Hide()
-
-    --dirty hook to make widgetgroup show/hide
-    local originalShow,originalHide = frame.Show,frame.Hide
-    function frame:Show(...)
-        devPanel.frame:Show()
-        return originalShow(self, ...);
-    end
-    function frame:Hide(...)
-        devPanel.frame:Hide()
-        return originalHide(self, ...);
-    end
-
-    -- function that draws the widgets for the first tab
-    local function DrawGroup1(container)
-        local option1 = AceGUI:Create("EditBox")
-        option1:SetLabel("Target Floor")
-        option1:SetText(1)
-        local option2 = AceGUI:Create("EditBox")
-        option2:SetLabel("Direction 1up -1d 2r -2l")
-        option2:SetText(1)
-        container:AddChild(option1)
-        container:AddChild(option2)
-
-        local buttons = {
-            [1] = {
-                text="Add Door",
-                func=function()
-                    if not MethodDungeonTools.mapLinks[db.currentDungeonIdx] then MethodDungeonTools.mapLinks[db.currentDungeonIdx] = {} end
-                    if not MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
-                        MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
-                    end
-                    local links = MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
-                    local posx,posy = 300,-200
-                    local t = tonumber(option1:GetText())
-                    local d = tonumber(option2:GetText())
-                    if t and d then
-                        tinsert(links,{x=posx,y=posy,target=t,direction=d})
-                        MethodDungeonTools:UpdateMapLinks()
-                    end
-                end,
-            },
-            [2] = {
-                text="Export to LUA",
-                func=function()
-                    local export = tshow(MethodDungeonTools.mapLinks[db.currentDungeonIdx],"MethodDungeonTools.mapLinks[dungeonIndex]")
-                    MethodDungeonTools.main_frame.ExportFrame:Show()
-                    MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-                    MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
-                    MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
-                    MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
-                end,
-            },
-        }
-        for buttonIdx,buttonData in ipairs(buttons) do
-            local button = AceGUI:Create("Button")
-            button:SetText(buttonData.text)
-            button:SetCallback("OnClick",buttonData.func)
-            container:AddChild(button)
-        end
-    end
-
-    -- function that draws the widgets for the second tab
-    local function DrawGroup2(container)
-        local editBoxes = {}
-        local countSlider
-        local dropdown
-
-        local function updateFields(health,level,creatureType,id,scale,count,idx)
-            if idx then
-                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][idx]
-                if not data then return end
-                health = data.health
-                level = data.level
-                creatureType = data.creatureType
-                id = data.id
-                scale = data.scale
-                count = data.count
-            end
-            editBoxes[1]:SetText(id)
-            editBoxes[2]:SetText(health)
-            editBoxes[3]:SetText(level)
-            editBoxes[4]:SetText(creatureType)
-            editBoxes[5]:SetText(scale)
-            countSlider:SetValue(count)
-        end
-        local function updateDropdown()
-            if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx] then return end
-            local enemies = {}
-            for mobIdx,data in ipairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
-                tinsert(enemies,mobIdx,data.name)
-            end
-            dropdown:SetList(enemies)
-            dropdown:SetValue(1)
-            updateFields(nil,nil,nil,nil,nil,nil,1)
-        end
-
-        dropdown = AceGUI:Create("Dropdown")
-        dropdown:SetCallback("OnValueChanged", function(widget,callbackName,key)
-            updateFields(nil,nil,nil,nil,nil,nil,key)
-        end)
-
-        container:AddChild(dropdown)
-
-        countSlider = AceGUI:Create("Slider")
-        countSlider:SetLabel("Count")
-        countSlider:SetSliderValues(0,15,1)
-        countSlider:SetValue(4)
-        countSlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
-            local count = tonumber(value)
-            local npcIdx = dropdown:GetValue()
-            local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][npcIdx]
-            data["count"] = value
-        end)
-        container:AddChild(countSlider)
-        local fields = {
-            [1] = "id",
-            [2] = "health",
-            [3] = "level",
-            [4] = "creatureType",
-            [5] = "scale",
-        }
-        for idx,name in ipairs(fields) do
-            editBoxes[idx] = AceGUI:Create("EditBox")
-            editBoxes[idx]:SetLabel(name)
-            editBoxes[idx]:SetCallback("OnEnterPressed",function(widget,callbackName,text)
-                local value = text
-                if name ~= "creatureType" then
-                    value = tonumber(text)
-                end
-                local npcIdx = dropdown:GetValue()
-                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][npcIdx]
-                data[name] = value
-            end)
-            container:AddChild(editBoxes[idx])
-        end
-
-
-
-        local button1 = AceGUI:Create("Button")
-        button1:SetText("Create from Target")
-        button1:SetCallback("OnClick",function()
-            local npcId
-            local guid = UnitGUID("target")
-            if guid then
-                npcId = select(6,strsplit("-", guid))
-            end
-            if npcId then
-                local npcName = UnitName("target")
-                local npcHealth = UnitHealthMax("target")
-                local npcLevel = UnitLevel("target")
-                local npcCreatureType = UnitCreatureType("target")
-                local npcScale = 1
-                local npcCount = 0
-                tinsert(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx], {
-                    name = npcName,
-                    health = npcHealth,
-                    level = npcLevel,
-                    creatureType = npcCreatureType,
-                    id = npcId,
-                    scale = npcScale,
-                    count = npcCount,
-                    clones = {},
-                })
-                updateFields(npcHealth,npcLevel,npcCreatureType,npcId,npcScale,npcCount)
-                updateDropdown()
-            end
-
-        end)
-        container:AddChild(button1)
-
-        local button2 = AceGUI:Create("Button")
-        button2:SetText("Export to LUA")
-        button2:SetCallback("OnClick",function()
-            local export = tshow(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx],"MethodDungeonTools.dungeonEnemies[dungeonIndex]")
-            MethodDungeonTools.main_frame.ExportFrame:Show()
-            MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-            MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
-            MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
-            MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
-        end)
-        container:AddChild(button2)
-
-        updateDropdown()
-    end
-
-    -- Callback function for OnGroupSelected
-    local function SelectGroup(container, event, group)
-        container:ReleaseChildren()
-        if group == "tab1" then
-            DrawGroup1(container)
-        elseif group == "tab2" then
-            DrawGroup2(container)
-        end
-    end
-    devPanel:SetCallback("OnGroupSelected", SelectGroup)
-    devPanel:SelectTab("tab1")
-
-    --hook UpdateMap
-    local originalFunc = MethodDungeonTools.UpdateMap
-    function MethodDungeonTools:UpdateMap(...)
-        originalFunc(...)
-        local selectedTab
-        for k,v in pairs(devPanel.tabs) do
-            if v.selected == true then selectedTab = v.value; break end
-        end
-        devPanel:SelectTab(selectedTab)
-    end
-end
-
-
 ---CreateTutorialButton
 ---Creates the tutorial button and sets up the help plate frames
 function MethodDungeonTools:CreateTutorialButton(parent)
@@ -3233,7 +3109,7 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 	button:SetFrameLevel(6)
 	button:Hide()
 
-	--dirty hook to make button hide
+	--hook to make button hide
 	local originalHide = parent.Hide
 	function parent:Hide(...)
 		button:Hide()
@@ -3471,6 +3347,18 @@ function MethodDungeonTools:PresetObjectStepForward()
     end
 end
 
+function MethodDungeonTools:FixAceGUIShowHide(widget,frame)
+    frame = frame or MethodDungeonTools.main_frame
+    local originalShow,originalHide = frame.Show,frame.Hide
+    function frame:Show(...)
+        widget.frame:Show()
+        return originalShow(self, ...);
+    end
+    function frame:Hide(...)
+        widget.frame:Hide()
+        return originalHide(self, ...);
+    end
+end
 
 function initFrames()
 	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
@@ -3507,6 +3395,16 @@ function initFrames()
 
 	end)
 
+
+    local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+
+
+    preset.value.currentPull = 1
+    preset.value.pulls= {
+        {
+        }, -- [1]
+    }
+
     main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "L_UIDropDownMenuTemplate")
 
 	MethodDungeonTools:CreateMenu();
@@ -3532,9 +3430,10 @@ function initFrames()
 	MethodDungeonTools:CreateTutorialButton(main_frame)
 
     --devMode
-    if db.devMode then
-        MethodDungeonTools:CreateDevPanel(main_frame)
+    if db.devMode and MethodDungeonTools.CreateDevPanel then
+        MethodDungeonTools:CreateDevPanel(MethodDungeonTools.main_frame)
     end
+
 
 	--tooltip
     do

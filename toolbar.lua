@@ -62,18 +62,8 @@ function MethodDungeonTools:initToolbar(frame)
     frame.toolbar.widgetGroup.frame:SetFrameStrata("High")
     frame.toolbar.widgetGroup.frame:SetFrameLevel(7)
 
-    --dirty hook to make widgetgroup show/hide
-    do
-        local originalShow,originalHide = frame.toolbar.Show,frame.toolbar.Hide
-        function frame.toolbar:Show(...)
-            frame.toolbar.widgetGroup.frame:Show()
-            return originalShow(self, ...)
-        end
-        function frame.toolbar:Hide(...)
-            frame.toolbar.widgetGroup.frame:Hide()
-            return originalHide(self, ...)
-        end
-    end
+    MethodDungeonTools:FixAceGUIShowHide(frame.toolbar.widgetGroup,frame.toolbar)
+
     do
         --dirty hook to make widgetgroup show/hide
         local originalShow,originalHide = frame.Show,frame.Hide

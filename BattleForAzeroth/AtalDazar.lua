@@ -38,7 +38,7 @@ MethodDungeonTools.mapLinks[dungeonIndex] = {
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {
     
 }
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
-	
-}
+MethodDungeonTools.dungeonEnemies[dungeonIndex] = {};
+
+
 
