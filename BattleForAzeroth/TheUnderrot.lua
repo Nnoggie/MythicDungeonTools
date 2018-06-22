@@ -21,155 +21,7 @@ MethodDungeonTools.mapLinks[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.dungeonBosses[dungeonIndex] = {
-    [1] = {
-        [1] = {
-            ["y"] = -298.13829962759;
-            ["x"] = 607.9062337719;
-            ["name"] = "Cragmaw the Infested";
-            ["id"] = 131817;
-            ["displayId"] = 78855;
-            ["creatureType"] = "Beast";
-            ["level"] = 122;
-            ["health"] = 2060240;
-            ["encounterID"] = 2131;
-        };
-        [2] = {
-            ["y"] = -293.85257376801;
-            ["x"] = 400.40622134074;
-            ["name"] = "Elder Leaxa";
-            ["id"] = 131318;
-            ["displayId"] = 82394;
-            ["creatureType"] = "Humanoid";
-            ["level"] = 122;
-            ["health"] = 1412730;
-            ["encounterID"] = 2157;
-        };
-        [3] = {
-            ["y"] = -160.59527469259;
-            ["x"] = 539.60126075153;
-            ["name"] = "Sporecaller Zancha";
-            ["id"] = 131383;
-            ["displayId"] = 81977;
-            ["creatureType"] = "Undead";
-            ["level"] = 122;
-            ["health"] = 2060240;
-            ["encounterID"] = 2130;
-        };
-    };
-};
-
-
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
-    [13] = {
-        ["clones"] = {
-            [7] = {
-                ["y"] = -163.69658088263;
-                ["x"] = 380.32819211063;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -170.48576221326;
-                ["x"] = 588.95270033963;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -200.00291828189;
-                ["x"] = 461.43076922658;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -193.34578110629;
-                ["x"] = 420.58768832364;
-                ["sublevel"] = 1;
-            };
-            [8] = {
-                ["y"] = -136.87189004833;
-                ["x"] = 392.69766631869;
-                ["sublevel"] = 1;
-            };
-            [9] = {
-                ["y"] = -123.16756387727;
-                ["x"] = 369.14310543743;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -215.11212197615;
-                ["x"] = 400.70815960366;
-                ["sublevel"] = 1;
-            };
-            [10] = {
-                ["y"] = -121.90763402295;
-                ["x"] = 347.31640246703;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -218.81297584915;
-                ["x"] = 441.9240190781;
-                ["sublevel"] = 1;
-            };
-            [6] = {
-                ["y"] = -177.85162217553;
-                ["x"] = 393.07373940232;
-                ["sublevel"] = 1;
-            };
-            [12] = {
-                ["y"] = -128.52076146999;
-                ["x"] = 473.03660895624;
-                ["sublevel"] = 1;
-            };
-            [11] = {
-                ["y"] = -100.98960838451;
-                ["x"] = 465.66045440626;
-                ["sublevel"] = 1;
-            };
-        };
-        ["name"] = "Grotesque Horror";
-        ["health"] = 294320;
-        ["creatureType"] = "Aberration";
-        ["id"] = 138187;
-        ["displayId"] = 84808;
-        ["level"] = 120;
-        ["scale"] = 1;
-        ["count"] = 0;
-    };
-    [7] = {
-        ["clones"] = {
-            [2] = {
-                ["y"] = -298.03961017513;
-                ["x"] = 575.99398200605;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -284.64116574299;
-                ["x"] = 619.34488294085;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -329.22598792743;
-                ["x"] = 583.00118873735;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -291.84974624689;
-                ["x"] = 625.89822982769;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -332.42597938132;
-                ["x"] = 598.20111810256;
-                ["sublevel"] = 1;
-            };
-        };
-        ["name"] = "Feral Bloodswarmer";
-        ["health"] = 294320;
-        ["creatureType"] = "Beast";
-        ["id"] = 133835;
-        ["displayId"] = 76653;
-        ["level"] = 120;
-        ["scale"] = 1;
-        ["count"] = 0;
-    };
     [1] = {
         ["clones"] = {
             [1] = {
@@ -293,14 +145,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Underrot Tick";
         ["scale"] = 0.6;
+        ["health"] = 66401;
+        ["count"] = 0;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 131402;
         ["displayId"] = 81808;
-        ["health"] = 66401;
+        ["name"] = "Underrot Tick";
     };
     [2] = {
         ["clones"] = {
@@ -422,14 +274,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Chosen Blood Matron";
         ["scale"] = 1.2;
+        ["health"] = 531208;
+        ["count"] = 0;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 131436;
         ["displayId"] = 85816;
-        ["health"] = 531208;
+        ["name"] = "Chosen Blood Matron";
     };
     [4] = {
         ["clones"] = {
@@ -482,14 +334,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["health"] = 294320;
-        ["count"] = 0;
         ["id"] = 133663;
         ["displayId"] = 79499;
-        ["scale"] = 1;
-        ["level"] = 120;
-        ["creatureType"] = "Humanoid";
         ["name"] = "Fanatical Headhunter";
+        ["health"] = 294320;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["scale"] = 1;
+        ["count"] = 0;
     };
     [8] = {
         ["clones"] = {
@@ -547,13 +399,53 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["name"] = "Living Rot";
-        ["health"] = 294320;
-        ["creatureType"] = "Aberration";
         ["id"] = 133852;
         ["displayId"] = 83311;
+        ["count"] = 0;
+        ["name"] = "Living Rot";
+        ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["scale"] = 1;
+        ["health"] = 294320;
+    };
+    [16] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -299.99401008897;
+                ["x"] = 606.00182475336;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["isBoss"] = true;
+        ["encounterID"] = 2131;
+        ["instanceID"] = 1022;
+        ["id"] = 131817;
+        ["displayId"] = 78855;
+        ["name"] = "Cragmaw the Infested";
+        ["creatureType"] = "Beast";
+        ["level"] = 122;
+        ["count"] = 0;
+        ["health"] = 2060240;
+    };
+    [17] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -159.22605219978;
+                ["x"] = 539.77082858281;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 131383;
+        ["displayId"] = 81977;
+        ["isBoss"] = true;
+        ["encounterID"] = 2130;
+        ["instanceID"] = 1022;
+        ["scale"] = 1;
+        ["health"] = 2060240;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["name"] = "Sporecaller Zancha";
         ["count"] = 0;
     };
     [9] = {
@@ -628,14 +520,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["name"] = "Diseased Lasher";
-        ["health"] = 294320;
-        ["creatureType"] = "Elemental";
         ["id"] = 133870;
         ["displayId"] = 80467;
+        ["count"] = 0;
+        ["name"] = "Diseased Lasher";
+        ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["scale"] = 1;
-        ["count"] = 0;
+        ["health"] = 294320;
     };
     [5] = {
         ["clones"] = {
@@ -676,14 +568,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["health"] = 294320;
-        ["count"] = 0;
         ["id"] = 131492;
         ["displayId"] = 75861;
-        ["scale"] = 1;
-        ["level"] = 120;
-        ["creatureType"] = "Humanoid";
         ["name"] = "Devout Blood Priest";
+        ["health"] = 294320;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["scale"] = 1;
+        ["count"] = 0;
     };
     [10] = {
         ["clones"] = {
@@ -747,16 +639,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 18;
                 ["sublevel"] = 1;
             };
-            [14] = {
-                ["y"] = -113.47191639641;
-                ["x"] = 423.60785433361;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
             [3] = {
                 ["y"] = -230.49051343173;
                 ["x"] = 643.71022311246;
                 ["g"] = 13;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -188.74904961906;
+                ["x"] = 485.35646454082;
+                ["g"] = 18;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -771,21 +663,21 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 19;
                 ["sublevel"] = 1;
             };
-            [11] = {
-                ["y"] = -188.74904961906;
-                ["x"] = 485.35646454082;
-                ["g"] = 18;
+            [14] = {
+                ["y"] = -113.47191639641;
+                ["x"] = 423.60785433361;
+                ["g"] = 19;
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Reanimated Guardian";
         ["scale"] = 1;
+        ["health"] = 294320;
+        ["count"] = 0;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133836;
         ["displayId"] = 88121;
-        ["health"] = 294320;
+        ["name"] = "Reanimated Guardian";
     };
     [11] = {
         ["clones"] = {
@@ -884,14 +776,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Fallen Deathspeaker";
         ["scale"] = 1;
+        ["health"] = 294320;
+        ["count"] = 0;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 134284;
         ["displayId"] = 85815;
-        ["health"] = 294320;
+        ["name"] = "Fallen Deathspeaker";
     };
     [3] = {
         ["clones"] = {
@@ -940,14 +832,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Fetid Maggot";
         ["scale"] = 1;
+        ["health"] = 332005;
+        ["count"] = 0;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 130909;
         ["displayId"] = 77026;
-        ["health"] = 332005;
+        ["name"] = "Fetid Maggot";
     };
     [6] = {
         ["clones"] = {
@@ -964,14 +856,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Befouled Spirit";
         ["scale"] = 1.4;
+        ["health"] = 294320;
+        ["count"] = 0;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 133685;
         ["displayId"] = 80852;
-        ["health"] = 294320;
+        ["name"] = "Befouled Spirit";
     };
     [12] = {
         ["clones"] = {
@@ -1049,13 +941,172 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Bloodsworn Defiler";
         ["scale"] = 1;
+        ["health"] = 294320;
+        ["count"] = 0;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133912;
         ["displayId"] = 79182;
+        ["name"] = "Bloodsworn Defiler";
+    };
+    [13] = {
+        ["clones"] = {
+            [7] = {
+                ["y"] = -163.69658088263;
+                ["x"] = 380.32819211063;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["y"] = -170.48576221326;
+                ["x"] = 588.95270033963;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -200.00291828189;
+                ["x"] = 461.43076922658;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -193.34578110629;
+                ["x"] = 420.58768832364;
+                ["sublevel"] = 1;
+            };
+            [8] = {
+                ["y"] = -136.87189004833;
+                ["x"] = 392.69766631869;
+                ["sublevel"] = 1;
+            };
+            [9] = {
+                ["y"] = -123.16756387727;
+                ["x"] = 369.14310543743;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -215.11212197615;
+                ["x"] = 400.70815960366;
+                ["sublevel"] = 1;
+            };
+            [10] = {
+                ["y"] = -121.90763402295;
+                ["x"] = 347.31640246703;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -218.81297584915;
+                ["x"] = 441.9240190781;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -177.85162217553;
+                ["x"] = 393.07373940232;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -128.52076146999;
+                ["x"] = 473.03660895624;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -100.98960838451;
+                ["x"] = 465.66045440626;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 138187;
+        ["displayId"] = 84808;
+        ["count"] = 0;
+        ["name"] = "Grotesque Horror";
+        ["creatureType"] = "Aberration";
+        ["level"] = 120;
+        ["scale"] = 1;
+        ["health"] = 294320;
+    };
+    [7] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -329.22598792743;
+                ["x"] = 583.00118873735;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -298.03961017513;
+                ["x"] = 575.99398200605;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -284.64116574299;
+                ["x"] = 619.34488294085;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -291.84974624689;
+                ["x"] = 625.89822982769;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -332.42597938132;
+                ["x"] = 598.20111810256;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -100.6168287739;
+                ["x"] = 587.8905741338;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -115.48168469297;
+                ["x"] = 613.02572240115;
+                ["sublevel"] = 1;
+            };
+            [8] = {
+                ["y"] = -125.93215377974;
+                ["x"] = 603.80056459396;
+                ["sublevel"] = 1;
+            };
+            [9] = {
+                ["y"] = -125.2114437859;
+                ["x"] = 585.7284073527;
+                ["sublevel"] = 1;
+            };
+            [10] = {
+                ["y"] = -120.11234688418;
+                ["x"] = 564.57530028673;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -98.995185352471;
+                ["x"] = 567.3500126347;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -114.13035292438;
+                ["x"] = 580.32299887372;
+                ["sublevel"] = 1;
+            };
+            [13] = {
+                ["y"] = -110.07631396327;
+                ["x"] = 595.45815189384;
+                ["sublevel"] = 1;
+            };
+            [14] = {
+                ["y"] = -100.34655487033;
+                ["x"] = 610.59328046649;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["y"] = -122.5086901984;
+                ["x"] = 630.32302025488;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 133835;
+        ["displayId"] = 76653;
+        ["count"] = 0;
+        ["name"] = "Feral Bloodswarmer";
+        ["creatureType"] = "Beast";
+        ["level"] = 120;
+        ["scale"] = 1;
         ["health"] = 294320;
     };
     [14] = {
@@ -1128,16 +1179,41 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["health"] = 470912;
-        ["count"] = 0;
         ["id"] = 138281;
         ["displayId"] = 84376;
-        ["scale"] = 1.4;
-        ["level"] = 120;
-        ["creatureType"] = "Humanoid";
         ["name"] = "Faceless Corruptor";
+        ["health"] = 470912;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["scale"] = 1.4;
+        ["count"] = 0;
+    };
+    [15] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -293.36277790688;
+                ["x"] = 400.98001091909;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 131318;
+        ["displayId"] = 82394;
+        ["isBoss"] = true;
+        ["encounterID"] = 2157;
+        ["instanceID"] = 1022;
+        ["scale"] = 1;
+        ["health"] = 1412730;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 122;
+        ["name"] = "Elder Leaxa";
+        ["count"] = 0;
     };
 };
+
+
+
+
+
 
 
 
