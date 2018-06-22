@@ -91,8 +91,6 @@ local currentEnemyIdx
 local currentCloneGroup
 local currentTeeming
 local currentPatrol
-local currentPatrolfacing1 = 0
-local currentPatrolfacing2 = 0
 local currentBossEnemyIdx = 1
 ---CreateDevPanel
 ---Creates the dev panel which contains buttons to add npcs, objects to the map
@@ -284,11 +282,44 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     clones = {},
                 })
                 --updateFields(npcHealth,npcLevel,npcCreatureType,npcId,npcScale,npcCount)
-                updateDropdown(npcId)
+
+                updateDropdown(tonumber(npcId))
             end
 
         end)
         container:AddChild(button1)
+
+        --make boss
+        local button2 = AceGUI:Create("Button")
+        button2:SetText("Make Boss")
+        button2:SetCallback("OnClick",function()
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            if currentBlip then
+                --encounterID
+                local encounterID, encounterName, description, displayInfo, iconImage = EJ_GetCreatureInfo(1)
+                if not encounterID then
+                    print("MDT: Error - Make sure to open Encounter Journal and navigate to the boss you want to add!")
+                    return
+                end
+                for i=1,10000 do
+                    local ixd = EJ_GetCreatureInfo(currentBossEnemyIdx,i)
+                    if ixd == encounterID then
+                        encounterID = i
+                        break
+                    end
+                end
+                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.isBoss = true
+                local mapID = C_Map.GetBestMapForUnit("player")
+                data.instanceID = mapID and EJ_GetInstanceForMap(mapID) or 0
+                data.encounterID = encounterID
+                --use this data as follows:
+                --if (not EncounterJournal) then LoadAddOn('Blizzard_EncounterJournal') end
+                --EncounterJournal_OpenJournal(23,data.instanceID,data.encounterID)
+                MethodDungeonTools:UpdateMap()
+            end
+        end)
+        container:AddChild(button2)
 
         --clone options
         local cloneGroup = AceGUI:Create("EditBox")
@@ -306,6 +337,20 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
         container:AddChild(cloneGroup)
 
+        local cloneGroupMaxButton = AceGUI:Create("Button")
+        cloneGroupMaxButton:SetText("New Group")
+        cloneGroupMaxButton:SetCallback("OnClick",function (widget,callbackName)
+            local maxGroup = 0
+            for _,data in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+                for _,clone in pairs(data.clones) do
+                    maxGroup = (clone.g and (clone.g>maxGroup)) and clone.g or maxGroup
+                end
+            end
+            currentCloneGroup = maxGroup+1
+            cloneGroup:SetText(currentCloneGroup)
+        end)
+        container:AddChild(cloneGroupMaxButton)
+
         local teemingCheckbox = AceGUI:Create("CheckBox")
         teemingCheckbox:SetLabel("Teeming")
         teemingCheckbox:SetCallback("OnValueChanged",function(widget,callbackName,value)
@@ -320,63 +365,46 @@ function MethodDungeonTools:CreateDevPanel(frame)
         teemingCheckbox:SetValue(currentTeeming)
         container:AddChild(teemingCheckbox)
 
-        --patrol sliders
-        local pi = math.pi
-        local patrolSlider1 = AceGUI:Create("Slider")
-        patrolSlider1:SetLabel("Patrol Facing 1")
-        patrolSlider1:SetSliderValues(0,2*pi,1/16)
-        patrolSlider1.hightext:SetText("2pi")
-        patrolSlider1:SetValue(currentPatrolfacing1 or 0)
-        patrolSlider1:SetDisabled(not currentPatrol)
-        patrolSlider1:SetCallback("OnMouseUp",function(widget,callbackName,value)
-            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
-            if currentBlip then
-                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
-                currentPatrolfacing1 = value ~= 0 and value or nil
-                data.clones[currentBlip.cloneIdx].patrolFacing = currentPatrolfacing1 or 0
-                MethodDungeonTools:UpdateMap()
-            end
-        end)
-
-        local patrolSlider2 = AceGUI:Create("Slider")
-        patrolSlider2:SetLabel("Patrol Facing 2")
-        patrolSlider2:SetSliderValues(0,2*pi,1/16)
-        patrolSlider2.hightext:SetText("2pi")
-        patrolSlider2:SetValue(currentPatrolfacing2 or 0)
-        patrolSlider2:SetDisabled(not currentPatrol)
-        patrolSlider2:SetCallback("OnMouseUp",function(widget,callbackName,value)
-            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
-            if currentBlip then
-                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
-                currentPatrolfacing2 = value ~= 0 and value or nil
-                data.clones[currentBlip.cloneIdx].patrolFacing2 = currentPatrolfacing2 or 0
-                MethodDungeonTools:UpdateMap()
-            end
-        end)
 
         --patrol
         local patrolCheckbox = AceGUI:Create("CheckBox")
         patrolCheckbox:SetLabel("Patrol")
         patrolCheckbox:SetCallback("OnValueChanged",function(widget,callbackName,value)
             currentPatrol = value or nil
-            patrolSlider1:SetDisabled(not currentPatrol)
             local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
             if currentBlip then
                 local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
                 data.clones[currentBlip.cloneIdx].patrol = currentPatrol and (data.clones[currentBlip.cloneIdx].patrol or {}) or nil
                 if not data.clones[currentBlip.cloneIdx].patrol then
-                    data.clones[currentBlip.cloneIdx].patrolFacing = nil
-                    data.clones[currentBlip.cloneIdx].patrolFacing2 = nil
                     currentBlip.patrolActive = false
-                    currentBlip.patrolIndicator2.active = false
                 end
                 MethodDungeonTools:ShowBlipPatrol(currentBlip,false)
                 MethodDungeonTools:UpdateMap()
             end
         end)
         container:AddChild(patrolCheckbox)
-        container:AddChild(patrolSlider1)
-        container:AddChild(patrolSlider2)
+
+        --stealthdetect
+        local stealthDetectCheckbox = AceGUI:Create("CheckBox")
+        stealthDetectCheckbox:SetLabel("Stealth Detect")
+        stealthDetectCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+            data.stealthDetect = value or nil
+            MethodDungeonTools:UpdateMap()
+        end)
+        container:AddChild(stealthDetectCheckbox)
+
+        --stealth
+        local stealthCheckbox = AceGUI:Create("CheckBox")
+        stealthCheckbox:SetLabel("Stealthed")
+        stealthCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+            data.stealth = value or nil
+            MethodDungeonTools:UpdateMap()
+        end)
+        container:AddChild(stealthCheckbox)
 
         --enter clone options into the GUI (red)
         local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
@@ -387,33 +415,29 @@ function MethodDungeonTools:CreateDevPanel(frame)
             currentTeeming = currentBlip.teeming
             currentPatrol = currentBlip.patrol and true or nil
             patrolCheckbox:SetValue(currentPatrol and currentBlip.patrolActive)
-            patrolSlider1:SetDisabled(not (currentPatrol and currentBlip.patrolActive))
-            currentPatrolfacing1 = currentBlip.patrolIndicator and currentBlip.patrolIndicator:GetRotation() or 0
-            patrolSlider1:SetValue(currentPatrolfacing1)
-            patrolSlider2:SetDisabled(not (currentPatrol and currentBlip.patrolActive))
-            currentPatrolfacing2 = currentBlip.patrolIndicator2 and currentBlip.patrolIndicator2:GetRotation() or 0
-            patrolSlider2:SetValue(currentPatrolfacing2)
+            stealthDetectCheckbox:SetValue(currentBlip.stealthDetect)
+            stealthCheckbox:SetValue(currentBlip.stealth)
         else
             cloneGroup:SetText(currentCloneGroup)
         end
 
-            local button2 = AceGUI:Create("Button")
-            button2:SetText("Export to LUA")
-            button2:SetCallback("OnClick",function()
-                local export = tshow(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx],"MethodDungeonTools.dungeonEnemies[dungeonIndex]")
-                MethodDungeonTools.main_frame.ExportFrame:Show()
-                MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-                MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
-                MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-                MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
-            end)
-            container:AddChild(button2)
+        local button3 = AceGUI:Create("Button")
+        button3:SetText("Export to LUA")
+        button3:SetCallback("OnClick",function()
+            local export = tshow(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx],"MethodDungeonTools.dungeonEnemies[dungeonIndex]")
+            MethodDungeonTools.main_frame.ExportFrame:Show()
+            MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+            MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
+            MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
+            MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+        end)
+        container:AddChild(button3)
 
 
 
 
 
-            updateDropdown(nil,currentEnemyIdx)
+        updateDropdown(nil,currentEnemyIdx)
         end
 
     local function DrawGroup3(container)
@@ -472,12 +496,10 @@ function MethodDungeonTools:CreateDevPanel(frame)
         for _,v in ipairs(dungeonEnemyBlips) do
             MethodDungeonTools:ShowBlipPatrol(v,v.devSelected)
         end
+
     end
 
-
 end
-
-
 
 ---AddCloneAtCursorPosition
 ---Adds a clone at the cursor position to the dungeon enemy table

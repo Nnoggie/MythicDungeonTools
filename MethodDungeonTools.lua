@@ -142,7 +142,6 @@ do
     end
 end
 
-local dungeonBossButtons
 local dungeonEnemyBlips
 local numDungeonEnemyBlips = 0
 local tooltip
@@ -1022,15 +1021,20 @@ function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLin
 
 	if otherPull and otherPull == true then
 		dungeonEnemyBlips[i].border:SetVertexColor(0,1,0,0.4)
+		dungeonEnemyBlips[i]:SetVertexColor(0,1,0,1)
 	else
 		if forceDeselect and forceDeselect == true then
 			dungeonEnemyBlips[i].selected = false
 		else
 			dungeonEnemyBlips[i].selected = not dungeonEnemyBlips[i].selected
 		end
-		if dungeonEnemyBlips[i].selected == true then dungeonEnemyBlips[i].border:SetVertexColor(0,1,0,1) else
+		if dungeonEnemyBlips[i].selected == true then
+            dungeonEnemyBlips[i].border:SetVertexColor(0,1,0,1)
+            dungeonEnemyBlips[i]:SetVertexColor(0,1,0,1)
+        else
 			local r,g,b,a = dungeonEnemyBlips[i].color.r,dungeonEnemyBlips[i].color.g,dungeonEnemyBlips[i].color.b,dungeonEnemyBlips[i].color.a
 			dungeonEnemyBlips[i].border:SetVertexColor(r,g,b,a)
+            dungeonEnemyBlips[i]:SetVertexColor(1,1,1,1)
 		end
 		--select/deselect linked npcs
 		if not ignoreLinked then
@@ -1041,9 +1045,13 @@ function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLin
 					else
 						dungeonEnemyBlips[idx].selected = dungeonEnemyBlips[i].selected
 					end
-					if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx].border:SetVertexColor(0,1,0,1) else
+					if dungeonEnemyBlips[idx].selected == true then
+                        dungeonEnemyBlips[idx].border:SetVertexColor(0,1,0,1)
+                        dungeonEnemyBlips[idx]:SetVertexColor(0,1,0,1)
+                    else
 						local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
 						dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
+                        dungeonEnemyBlips[idx]:SetVertexColor(1,1,1,1)
 					end
 				end
 			end
@@ -1413,19 +1421,11 @@ function MethodDungeonTools:ShowBlipPatrol(blip,show)
                     waypointBlip.line:Show()
                 end
             end
-            if blip.patrolIndicator then
-                --blip.patrolIndicator:Show()
-            end
-            if blip.patrolIndicator2 and blip.patrolIndicator2.active then
-                --blip.patrolIndicator2:Show()
-            end
         elseif show == false then
             for patrolIdx,waypointBlip in ipairs(blip.patrol) do
                 waypointBlip:Hide()
                 waypointBlip.line:Hide()
             end
-            if blip.patrolIndicator then blip.patrolIndicator:Hide() end
-            if blip.patrolIndicator2 then blip.patrolIndicator2:Hide() end
         end
     end
 end
@@ -1482,21 +1482,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
 						break;
 					end
 				end
-			end
-			local mouseOverBoss
-			--handle mouseover on bosses
-			if MouseIsOver(MethodDungeonToolsScrollFrame) then
-				for k,v in pairs(dungeonBossButtons) do
-					if MouseIsOver(v) then
-						mouseoverBlip = nil
-						mouseOverBoss = k
-						break
-					end
-				end
-			end
-			if mouseOverBoss then
-
-
 			end
 			if mouseoverBlip then
 				local data = dungeonEnemyBlips[mouseoverBlip]
@@ -1557,15 +1542,17 @@ function MethodDungeonTools:MakeMapTexture(frame)
                 for k,blip in pairs(dungeonEnemyBlips) do
                     if k == mouseoverBlip then
                         blip:SetSize(blip.storedSize*1.2,blip.storedSize*1.2)
-                        blip:SetDrawLayer(blipDrawLayer, 6)
+                        blip:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.mouseover.blip)
                         blip.border:SetSize(blip.border.storedSize*1.2,blip.border.storedSize*1.2)
-                        blip.border:SetDrawLayer(blipDrawLayer, 5)
+                        blip.border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.mouseover.border)
                         blip.highlight:Show()
+                        blip.dragon:SetSize(blip.dragon.storedSize*1.2,blip.dragon.storedSize*1.2)
                     else
-                        blip:SetSize(blip.storedSize*1,blip.storedSize*1)
-                        blip:SetDrawLayer(blipDrawLayer, 5)
-                        blip.border:SetSize(blip.border.storedSize*1,blip.border.storedSize*1)
-                        blip.border:SetDrawLayer(blipDrawLayer, 4)
+                        blip:SetSize(blip.storedSize,blip.storedSize)
+                        blip:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.blip)
+                        blip.border:SetSize(blip.border.storedSize,blip.border.storedSize)
+                        blip.border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.border)
+                        blip.dragon:SetSize(blip.dragon.storedSize,blip.dragon.storedSize)
                         blip.highlight:Hide()
                     end
                 end
@@ -1591,23 +1578,11 @@ function MethodDungeonTools:MakeMapTexture(frame)
                                     waypointBlip.line:Show()
                                 end
 							end
-							if blip.patrolIndicator then
-								--blip.patrolIndicator:Show()
-							end
-							if blip.patrolIndicator2 and blip.patrolIndicator2.active then
-								--blip.patrolIndicator2:Show()
-							end
 						else
                             if not db.devMode or not blip.devSelected then
                                 for patrolIdx,waypointBlip in ipairs(blip.patrol) do
                                     waypointBlip:Hide()
                                     waypointBlip.line:Hide()
-                                end
-                                if blip.patrolIndicator then
-                                    blip.patrolIndicator:Hide()
-                                end
-                                if blip.patrolIndicator2 then
-                                    blip.patrolIndicator2:Hide()
                                 end
                             end
 						end
@@ -1627,12 +1602,6 @@ function MethodDungeonTools:MakeMapTexture(frame)
                                 waypointBlip:Hide()
                                 waypointBlip.line:Hide()
                             end
-                            if blip.patrolIndicator then
-                                blip.patrolIndicator:Hide()
-                            end
-                            if blip.patrolIndicator2 then
-                                blip.patrolIndicator2:Hide()
-                            end
                         end
                     end
                 end
@@ -1642,6 +1611,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
                     blip:SetDrawLayer(blipDrawLayer, 5)
                     blip.border:SetSize(blip.border.storedSize*1,blip.border.storedSize*1)
                     blip.border:SetDrawLayer(blipDrawLayer, 4)
+                    blip.dragon:SetSize(blip.dragon.storedSize,blip.dragon.storedSize)
                     blip.highlight:Hide()
                 end
 			end
@@ -1716,57 +1686,32 @@ function MethodDungeonTools:DisplayEncounterInformation(encounterID)
 
 end
 
-function MethodDungeonTools:MakeDungeonBossButtons(frame)
-	if not dungeonBossButtons then
-		dungeonBossButtons = {}
-		for i=1,5 do
-			dungeonBossButtons[i] = CreateFrame("Button", "MethodDungeonToolsBossButton"..i, frame.mapPanelFrame, "EncounterJournalPinTemplate");
-			dungeonBossButtons[i]:SetScript("OnClick",nil)
-			dungeonBossButtons[i]:SetSize(25,25)
-			dungeonBossButtons[i]:Hide()
-		end
-	end
-end
 
-function MethodDungeonTools:UpdateDungeonBossButtons()
-	if dungeonBossButtons then
-		for i=1,5 do
-			dungeonBossButtons[i]:Hide()
-			if MethodDungeonTools.dungeonBosses[db.currentDungeonIdx] and MethodDungeonTools.dungeonBosses[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel] and MethodDungeonTools.dungeonBosses[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel][i] then
-				local data = MethodDungeonTools.dungeonBosses[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel][i]
-				dungeonBossButtons[i].tooltipTitle = data["name"]
-				local encounterID = data["encounterID"]
-				local _, _, _, displayInfo = EJ_GetCreatureInfo(1, encounterID);
-				dungeonBossButtons[i].displayInfo = displayInfo;
-				if ( displayInfo ) then
-                    SetPortraitTextureFromCreatureDisplayID(dungeonBossButtons[i].Background, displayInfo);
-					dungeonBossButtons[i]:Show()
-				else
-					dungeonBossButtons[i].Background:SetTexture("DoesNotExist");
-				end
-				dungeonBossButtons[i].Background:SetSize(16,16)
-				dungeonBossButtons[i]:SetScript("OnClick",function()
-					if MouseIsOver(MethodDungeonToolsScrollFrame) then
-						MethodDungeonTools:DisplayEncounterInformation(encounterID)
-					end
-				end)
-				dungeonBossButtons[i]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",data["x"],data["y"])
-
-			end
-		end
-	end
-end
 
 local defaultBlipColor = {r=1,g=1,b=1,a=0.8}
 local patrolColor = {r=0,g=.5,b=1,a=0.8}
+MethodDungeonTools.BlipDrawlayers = {
+    normal = {
+        blip = 4,
+        border = 3,
+        highlight = 7,
+        dragon = 2,
+    },
+    mouseover = {
+        blip = 6,
+        border = 5,
+    },
+}
 function MethodDungeonTools:UpdateDungeonEnemies()
 	if not dungeonEnemyBlips then
 		dungeonEnemyBlips = {}
 	end
-	for k,v in pairs(dungeonEnemyBlips) do
-		v:Hide()
-		if v.patrolIndicator then v.patrolIndicator:Hide() end
-	end
+    for _,blip in pairs(dungeonEnemyBlips) do
+        blip:Hide()
+        blip.border:Hide()
+        blip.highlight:Hide()
+        blip.dragon:Hide()
+    end
 	local idx = 1
 	if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx] then
 		local enemies = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
@@ -1781,46 +1726,66 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 							dungeonEnemyBlips[idx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx,"BACKGROUND")
 							dungeonEnemyBlips[idx].selected = false
 						end
+                        local blip = dungeonEnemyBlips[idx]
 
-						dungeonEnemyBlips[idx].count = data["count"]
-						dungeonEnemyBlips[idx].name = data["name"]
-						dungeonEnemyBlips[idx].color = data["color"]
-                        if not dungeonEnemyBlips[idx].color then
-                            dungeonEnemyBlips[idx].color = defaultBlipColor
+						blip.count = data["count"]
+						blip.name = data["name"]
+						blip.color = data["color"]
+                        blip.isBoss = data["isBoss"]
+                        if not blip.color then
+                            blip.color = defaultBlipColor
                         end
 
 						dungeonEnemyBlips[idx].cloneIdx = cloneIdx
 						dungeonEnemyBlips[idx].enemyIdx = enemyIdx
 						dungeonEnemyBlips[idx].id = data["id"]
 						dungeonEnemyBlips[idx].g = clone.g
+						dungeonEnemyBlips[idx].stealth = data.stealth
+						dungeonEnemyBlips[idx].stealthDetect = data.stealthDetect
 						dungeonEnemyBlips[idx].teeming = clone.teeming
 						dungeonEnemyBlips[idx].sublevel = clone.sublevel or 1
 						dungeonEnemyBlips[idx].creatureType = data["creatureType"]
 						dungeonEnemyBlips[idx].health = data["health"]
-						dungeonEnemyBlips[idx].level = data["level"]
-						dungeonEnemyBlips[idx]:SetDrawLayer(blipDrawLayer, 5)
-						--dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
-                        SetPortraitTextureFromCreatureDisplayID(dungeonEnemyBlips[idx],data.displayId)
+                        dungeonEnemyBlips[idx].level = data["level"]
+                        dungeonEnemyBlips[idx]:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.blip)
+                        --seagull 39490 as placeholder for when the python script has not ran yet
+                        SetPortraitTextureFromCreatureDisplayID(dungeonEnemyBlips[idx],data.displayId or 39490)
 						dungeonEnemyBlips[idx]:SetAlpha(1)
-						dungeonEnemyBlips[idx]:SetSize(8*data["scale"],8*data["scale"])
-                        dungeonEnemyBlips[idx].storedSize = 8*data["scale"]
+                        --scale up blip if this is a boss
+                        dungeonEnemyBlips[idx].scale = data["scale"]*(dungeonEnemyBlips[idx].isBoss and 1.7 or 1)
+                        dungeonEnemyBlips[idx].storedSize = 8*dungeonEnemyBlips[idx].scale
+						dungeonEnemyBlips[idx]:SetSize(dungeonEnemyBlips[idx].storedSize,dungeonEnemyBlips[idx].storedSize)
 						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
+						dungeonEnemyBlips[idx]:SetVertexColor(1,0,0,1)
 
                         dungeonEnemyBlips[idx].border = dungeonEnemyBlips[idx].border or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        dungeonEnemyBlips[idx].border:SetTexture("Interface\\Addons\\MethodDungeonTools\\Textures\\Circle_White")
-                        dungeonEnemyBlips[idx].border:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
-                        dungeonEnemyBlips[idx].border:SetSize(dungeonEnemyBlips[idx]:GetSize()+1,dungeonEnemyBlips[idx]:GetSize()+1)
-                        dungeonEnemyBlips[idx].border.storedSize = dungeonEnemyBlips[idx].storedSize+1
-                        dungeonEnemyBlips[idx].border:SetDrawLayer(blipDrawLayer, 4)
+                        dungeonEnemyBlips[idx].border:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\UI-EncounterJournalTextures")
+                        dungeonEnemyBlips[idx].border:SetTexCoord(0.85,0.97,0.43,0.4865)
+
+                        --if dungeonEnemyBlips[idx].isBoss then dungeonEnemyBlips[idx].border:SetAtlas("worldquest-questmarker-dragon") end
+                        dungeonEnemyBlips[idx].border:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",0,-0)
+                        dungeonEnemyBlips[idx].border.storedSize = 12*dungeonEnemyBlips[idx].scale
+                        dungeonEnemyBlips[idx].border:SetSize(dungeonEnemyBlips[idx].border.storedSize,dungeonEnemyBlips[idx].border.storedSize)
+                        dungeonEnemyBlips[idx].border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.border)
                         dungeonEnemyBlips[idx].border:Show()
 
                         dungeonEnemyBlips[idx].highlight = dungeonEnemyBlips[idx].highlight or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        dungeonEnemyBlips[idx].highlight:SetTexture("Interface\\Addons\\MethodDungeonTools\\Textures\\Circle_White")
+                        dungeonEnemyBlips[idx].highlight:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\UI-EncounterJournalTextures")
+                        dungeonEnemyBlips[idx].highlight:SetTexCoord(0.69,0.81,0.39,0.333)
                         dungeonEnemyBlips[idx].highlight:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
-                        dungeonEnemyBlips[idx].highlight:SetSize(dungeonEnemyBlips[idx]:GetSize()*1.2,dungeonEnemyBlips[idx]:GetSize()*1.2)
-                        dungeonEnemyBlips[idx].highlight:SetDrawLayer(blipDrawLayer, 7)
-                        dungeonEnemyBlips[idx].highlight:SetAlpha(0.2)
+                        dungeonEnemyBlips[idx].highlight:SetSize(14*dungeonEnemyBlips[idx].scale,14*dungeonEnemyBlips[idx].scale)
+                        dungeonEnemyBlips[idx].highlight:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight)
+                        dungeonEnemyBlips[idx].highlight:SetAlpha(0.4)
                         dungeonEnemyBlips[idx].highlight:Hide()
+
+                        blip.dragon = blip.dragon or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
+                        blip.dragon:SetAtlas("worldquest-questmarker-dragon")
+                        blip.dragon:SetPoint("CENTER",blip,"CENTER")
+                        blip.dragon.storedSize = 14*dungeonEnemyBlips[idx].scale
+                        blip.dragon:SetSize(blip.dragon.storedSize,blip.dragon.storedSize)
+                        blip.dragon:SetDrawLayer(blipDrawLayer,MethodDungeonTools.BlipDrawlayers.normal.dragon)
+                        blip.dragon:Hide()
+                        if blip.isBoss then blip.dragon:Show() end
 
                         --color patrol
                         dungeonEnemyBlips[idx].patrolFollower = nil
@@ -1850,7 +1815,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                         end
 
 						if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx].border:SetVertexColor(0,1,0,1) else
-							local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
+
+                            local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
                             dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
 						end
 
@@ -1862,47 +1828,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 							dungeonEnemyBlips[idx].patrolActive = nil
 						end
 
-
 						--patrol waypoints/lines
                         if clone.patrol then
-                            local distance = 7
-                            local arrowScale = 0.7
-                            if clone.patrolFacing then
-                                if not dungeonEnemyBlips[idx].patrolIndicator then
-                                    dungeonEnemyBlips[idx].patrolIndicator = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator","BACKGROUND")
-                                end
-                                dungeonEnemyBlips[idx].patrolIndicator:SetDrawLayer(blipDrawLayer, 6)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
-                                dungeonEnemyBlips[idx].patrolIndicator:SetWidth(18)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetHeight(18)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetScale(arrowScale)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetVertexColor(1,1,1,0.8)
-                                local xoffset = distance * math.cos(clone.patrolFacing+math.pi*1/2)
-                                local yoffset = distance * math.sin(clone.patrolFacing+math.pi*1/2)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset-0.5,yoffset)
-                                dungeonEnemyBlips[idx].patrolIndicator:SetRotation(clone.patrolFacing)
-                                dungeonEnemyBlips[idx].patrolIndicator:Hide()
-                            end
-
-                            if clone.patrolFacing2 then
-                                if not dungeonEnemyBlips[idx].patrolIndicator2 then
-                                    dungeonEnemyBlips[idx].patrolIndicator2 = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."PatrolIndicator2","BACKGROUND")
-                                end
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetDrawLayer(blipDrawLayer, 6)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetTexture("Interface\\MINIMAP\\ROTATING-MINIMAPGROUPARROW")
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetWidth(18)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetHeight(18)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetScale(arrowScale)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetVertexColor(1,1,1,0.8)
-                                local xoffset = distance * math.cos(clone.patrolFacing2+math.pi*1/2)
-                                local yoffset = distance * math.sin(clone.patrolFacing2+math.pi*1/2)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",xoffset-0.5,yoffset)
-                                dungeonEnemyBlips[idx].patrolIndicator2:SetRotation(clone.patrolFacing2)
-                                dungeonEnemyBlips[idx].patrolIndicator2:Hide()
-                                dungeonEnemyBlips[idx].patrolIndicator2.active = true
-                            elseif dungeonEnemyBlips[idx].patrolIndicator2 then
-                                dungeonEnemyBlips[idx].patrolIndicator2.active = nil
-                            end
 
 
 							dungeonEnemyBlips[idx].patrol = dungeonEnemyBlips[idx].patrol or {}
@@ -2003,8 +1930,6 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	MethodDungeonTools.main_frame.PresetCreationEditbox:SetFocus()
 	MethodDungeonTools.main_frame.PresetCreationEditbox:HighlightText(0,50)
 	MethodDungeonTools.main_frame.presetImportBox:SetText("")
-
-
 end
 
 function MethodDungeonTools:UpdateSidePanelCheckBoxes()
@@ -2109,7 +2034,7 @@ function MethodDungeonTools:UpdateMapLinks()
     if not mapLinkButtons then
         mapLinkButtons = {}
         for i =1,7 do
-            mapLinkButtons[i] = CreateFrame("Button", "MethodDungeonToolsBossButton"..i, MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate")
+            mapLinkButtons[i] = CreateFrame("Button", "MethodDungeonToolsMapLink"..i, MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate")
             mapLinkButtons[i]:SetSize(22,22)--default 32x32
             mapLinkButtons[i].Texture:SetSize(22,22)--default 32x32
             mapLinkButtons[i].HighlightTexture:SetSize(22,22)--default 32x32
@@ -2196,7 +2121,6 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 			frame["mapPanelTile"..i]:SetTexture(texName)
 		end
 	end
-	MethodDungeonTools:UpdateDungeonBossButtons()
 	MethodDungeonTools:UpdateDungeonEnemies()
 	if not ignoreReloadPullButtons then
 		MethodDungeonTools:ReloadPullButtons()
@@ -2441,7 +2365,6 @@ function MethodDungeonTools:ImportPreset(preset)
 end
 
 function MethodDungeonTools:MakePullSelectionButtons(frame)
-
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
     frame.PullButtonScrollGroup:SetWidth(249);
     frame.PullButtonScrollGroup:SetHeight(410)
@@ -2628,20 +2551,15 @@ end
 ---ReloadPullButtons
 ---Reloads all pull buttons in the scroll frame
 function MethodDungeonTools:ReloadPullButtons()
-
 	local frame = MethodDungeonTools.main_frame.sidePanel
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
-
 	--first release all children of the scroll frame
 	frame.pullButtonsScrollFrame:ReleaseChildren()
-
 	local maxPulls =  0
 	for k,v in pairs(preset.value.pulls) do
 		maxPulls = maxPulls + 1
 	end
-
 	--add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
-
     if not db.devMode then
         local idx = 0
         for k,pull in pairs(preset.value.pulls) do
@@ -2655,14 +2573,11 @@ function MethodDungeonTools:ReloadPullButtons()
             frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
         end
     end
-
 	--add the "new pull" button
 	frame.newPullButton = AceGUI:Create("MethodDungeonToolsNewPullButton")
 	frame.newPullButton:Initialize()
 	frame.newPullButton:Enable()
 	frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)
-
-
 end
 
 ---ClearPullButtonPicks
@@ -2903,14 +2818,12 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 	button:SetFrameStrata(mainFrameStrata)
 	button:SetFrameLevel(6)
 	button:Hide()
-
 	--hook to make button hide
 	local originalHide = parent.Hide
 	function parent:Hide(...)
 		button:Hide()
 		return originalHide(self, ...);
 	end
-
 	local helpPlate = {
 		FramePos = { x = 0,	y = 0 },
 		FrameSize = { width = sizex, height = sizey	},
@@ -2920,7 +2833,6 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 		[4] = { ButtonPos = { x = 828,	y = -87 }, HighLightBox = { x = 838, y = 30-87, width = 251, height = 83 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon Options" },
 		[5] = { ButtonPos = { x = 828,	y = -(87+83) }, HighLightBox = { x = 838, y = 30-(87+83), width = 251, height = 415 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
 	}
-
 	local function TutorialButtonOnClick(self)
 		if not HelpPlate_IsShowing(helpPlate) then
 			HelpPlate_Show(helpPlate, MethodDungeonTools.main_frame, self)
@@ -2928,13 +2840,10 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 			HelpPlate_Hide(true)
 		end
 	end
-
 	local function TutorialButtonOnHide(self)
 		HelpPlate_Hide(true)
 	end
-
 	parent.HelpButton = button
-
     button:SetScript("OnClick",TutorialButtonOnClick)
     button:SetScript("OnHide",TutorialButtonOnHide)
 end
@@ -3069,8 +2978,6 @@ function MethodDungeonTools:DrawAllPresetObjects()
 					x1,y1,x2,y2 = nil,nil,nil,nil
 				end
             end
-			--ending circle if smooth
-
             --triangle
             if obj.t and lastx and lasty then
                 MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6],nil,objectIndex)
@@ -3172,33 +3079,6 @@ function initFrames()
 	-- Set frame position
 	main_frame:ClearAllPoints();
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
-	--main_frame:SetClampedToScreen(true)
-	--TODO: fix all these
-	main_frame:SetScript("OnEvent", function(self, ...)
-		local event, loaded = ...;
-		if event == "ADDON_LOADED" then
-			if addon == loaded then
-
-			end
-		end
-		if event == "PLAYER_LOGIN" then
-
-		end
-		if event == "PLAYER_LOGOUT" or event == "ARTIFACT_XP_UPDATE" then
-
-		end
-
-	end)
-
-
-    local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
-
-
-    preset.value.currentPull = 1
-    preset.value.pulls= {
-        {
-        }, -- [1]
-    }
 
     main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "L_UIDropDownMenuTemplate")
 
@@ -3208,20 +3088,13 @@ function initFrames()
 	MethodDungeonTools:MakeSidePanel(main_frame)
 	MethodDungeonTools:MakePresetCreationFrame(main_frame)
 	MethodDungeonTools:MakePresetImportFrame(main_frame)
-
-	MethodDungeonTools:MakeDungeonBossButtons(main_frame)
 	MethodDungeonTools:UpdateDungeonEnemies(main_frame)
-
 	MethodDungeonTools:CreateDungeonSelectDropdown(main_frame)
-
-
 	MethodDungeonTools:MakePullSelectionButtons(main_frame.sidePanel)
-
 	MethodDungeonTools:MakeExportFrame(main_frame)
 	MethodDungeonTools:MakeRenameFrame(main_frame)
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
 	MethodDungeonTools:MakeClearConfirmationFrame(main_frame)
-
 	MethodDungeonTools:CreateTutorialButton(main_frame)
 
     --devMode
@@ -3295,7 +3168,6 @@ function initFrames()
                     self.fac = 0
                 end
                 self:SetFacing(PI*2 / 360 * self.fac)
-                --print(tooltip.Model:GetModelFileID())
             end)
 
         else
@@ -3377,9 +3249,7 @@ function initFrames()
 		}
 	}
 	MethodDungeonTools:RegisterOptions()
-
-
 	MethodDungeonTools:initToolbar(main_frame)
-	main_frame:Hide();
+	main_frame:Hide()
 end
 
