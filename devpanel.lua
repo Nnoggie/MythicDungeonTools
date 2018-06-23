@@ -98,7 +98,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
     db = MethodDungeonTools:GetDB()
     frame.devPanel = AceGUI:Create("TabGroup")
     local devPanel = frame.devPanel
-    devPanel:SetTabs({{text="Door", value="tab1"}, {text="Enemy", value="tab2"}, {text="Boss", value="tab3"}})
+    devPanel:SetTabs({{text="POI", value="tab1"}, {text="Enemy", value="tab2"}, {text="Boss", value="tab3"}})
     devPanel:SetWidth(250)
     devPanel:SetPoint("TOPRIGHT",frame.topPanel,"TOPLEFT",0,0)
     devPanel:SetLayout("Flow")
@@ -108,6 +108,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
     -- function that draws the widgets for the first tab
     local function DrawGroup1(container)
+        --mapLink Options
         local option1 = AceGUI:Create("EditBox")
         option1:SetLabel("Target Floor")
         option1:SetText(1)
@@ -117,28 +118,78 @@ function MethodDungeonTools:CreateDevPanel(frame)
         container:AddChild(option1)
         container:AddChild(option2)
 
+        --door options
+        local option3 = AceGUI:Create("EditBox")
+        option3:SetLabel("Door Name")
+        option3:SetText("")
+        local option4 = AceGUI:Create("EditBox")
+        option4:SetLabel("Door Descripting")
+        option4:SetText("")
+        local lockedCheckbox = AceGUI:Create("CheckBox")
+        lockedCheckbox:SetLabel("Lockpickable")
+        container:AddChild(option3)
+        container:AddChild(option4)
+        container:AddChild(lockedCheckbox)
+
+        --graveyard options
+        local option5 = AceGUI:Create("EditBox")
+        option5:SetLabel("Graveyard Description")
+        option5:SetText("")
+        container:AddChild(option5)
+
+
         local buttons = {
             [1] = {
-                text="Add Door",
+                text="MapLink",
                 func=function()
-                    if not MethodDungeonTools.mapLinks[db.currentDungeonIdx] then MethodDungeonTools.mapLinks[db.currentDungeonIdx] = {} end
-                    if not MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
-                        MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
                     end
-                    local links = MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
                     local posx,posy = 300,-200
                     local t = tonumber(option1:GetText())
                     local d = tonumber(option2:GetText())
                     if t and d then
-                        tinsert(links,{x=posx,y=posy,target=t,direction=d})
-                        MethodDungeonTools:UpdateMapLinks()
+                        tinsert(links,{x=posx,y=posy,target=t,direction=d,template="MapLinkPinTemplate",type="mapLink"})
+                        MethodDungeonTools:POI_UpdateAll()
                     end
                 end,
             },
             [2] = {
+                text="Door",
+                func=function()
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    end
+                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local posx,posy = 300,-200
+                    local doorNameText = option3:GetText()
+                    local doorDescriptionText = option4:GetText()
+                    local lockpickableStatus = lockedCheckbox:GetValue() or nil
+                    tinsert(links,{x=posx,y=posy,template="MapLinkPinTemplate",type="door",doorName=doorNameText,doorDescription = doorDescriptionText,lockpick=lockpickableStatus})
+                    MethodDungeonTools:POI_UpdateAll()
+                end,
+            },
+            [3] = {
+                text="Graveyard",
+                func=function()
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    end
+                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local posx,posy = 300,-200
+                    local graveyardDescriptionText = option5:GetText()
+                    tinsert(links,{x=posx,y=posy,template="DeathReleasePinTemplate",type="graveyard",graveyardDescription=graveyardDescriptionText})
+                    MethodDungeonTools:POI_UpdateAll()
+                end,
+            },
+            [4] = {
                 text="Export to LUA",
                 func=function()
-                    local export = tshow(MethodDungeonTools.mapLinks[db.currentDungeonIdx],"MethodDungeonTools.mapLinks[dungeonIndex]")
+                    local export = tshow(MethodDungeonTools.mapPOIs[db.currentDungeonIdx],"MethodDungeonTools.mapPOIs[dungeonIndex]")
                     MethodDungeonTools.main_frame.ExportFrame:Show()
                     MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
                     MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)

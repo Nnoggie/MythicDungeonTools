@@ -147,7 +147,6 @@ local numDungeonEnemyBlips = 0
 local tooltip
 local tooltipLastShown
 local dungeonEnemiesSelected = {}
-local mapLinkButtons
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.pencilBlips = {}
 
@@ -293,6 +292,9 @@ local dungeonSubLevels = {
         [5] = "The Rupture",
     },
 }
+function MethodDungeonTools:GetDungeonSublevels()
+    return dungeonSubLevels
+end
 
 MethodDungeonTools.dungeonMaps = {
 	[1] = {
@@ -435,7 +437,7 @@ MethodDungeonTools.dungeonMaps = {
 }
 MethodDungeonTools.dungeonBosses = {}
 MethodDungeonTools.dungeonEnemies = {}
-MethodDungeonTools.mapLinks = {}
+MethodDungeonTools.mapPOIs = {}
 
 function MethodDungeonTools:GetDB()
     return db
@@ -2028,85 +2030,7 @@ function MethodDungeonTools:EnsureDBTables()
 
 end
 
----UpdateMapLinks
----Draws all map links on the current sublevel
-function MethodDungeonTools:UpdateMapLinks()
-    if not mapLinkButtons then
-        mapLinkButtons = {}
-        for i =1,7 do
-            mapLinkButtons[i] = CreateFrame("Button", "MethodDungeonToolsMapLink"..i, MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate")
-            mapLinkButtons[i]:SetSize(22,22)--default 32x32
-            mapLinkButtons[i].Texture:SetSize(22,22)--default 32x32
-            mapLinkButtons[i].HighlightTexture:SetSize(22,22)--default 32x32
-            --ViragDevTool_AddData(mapLinkButtons[i])
-            if db.devMode then
-                mapLinkButtons[i]:SetMovable(true)
-                mapLinkButtons[i]:EnableMouse(true)
-                mapLinkButtons[i]:SetScript("OnMouseDown", function(self, button)
-                    if button == "LeftButton" and not self.isMoving then
-                        self:StartMoving();
-                        self.isMoving = true;
-                    end
-                    if button == "RightButton" then
-                        local links = MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
-                        tremove(links,self.linkIdx)
-                        MethodDungeonTools:UpdateMapLinks()
-                    end
-                end)
-                mapLinkButtons[i]:SetScript("OnMouseUp", function(self, button)
-                    if button == "LeftButton" and self.isMoving then
-                        self.isMoving = false;
-                        self:StopMovingOrSizing();
-                        local newx,newy = MethodDungeonTools:GetCursorPosition()
-                        local links = MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
-                        links[self.linkIdx].x = newx
-                        links[self.linkIdx].y = newy
-                        self:ClearAllPoints()
-                        MethodDungeonTools:UpdateMapLinks()
-                    end
-                end)
-            end
-        end
-    end
-    for _,v in pairs(mapLinkButtons) do
-        v:Hide()
-    end
-    if not MethodDungeonTools.mapLinks[db.currentDungeonIdx] then return end
-    local links = MethodDungeonTools.mapLinks[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
-    if not links then return end
-    for linkIdx,link in pairs(links) do
-        if link.direction==1 then
-            mapLinkButtons[linkIdx].HighlightTexture:SetAtlas("poi-door-up")
-            mapLinkButtons[linkIdx].Texture:SetAtlas("poi-door-up")
-        elseif link.direction==-1 then
-            mapLinkButtons[linkIdx].HighlightTexture:SetAtlas("poi-door-down")
-            mapLinkButtons[linkIdx].Texture:SetAtlas("poi-door-down")
-        elseif link.direction==2 then
-            mapLinkButtons[linkIdx].HighlightTexture:SetAtlas("poi-door-right")
-            mapLinkButtons[linkIdx].Texture:SetAtlas("poi-door-right")
-        elseif link.direction==-2 then
-            mapLinkButtons[linkIdx].HighlightTexture:SetAtlas("poi-door-left")
-            mapLinkButtons[linkIdx].Texture:SetAtlas("poi-door-left")
-        end
-        mapLinkButtons[linkIdx]:SetScript("OnClick",function()
-            MethodDungeonTools:SetCurrentSubLevel(link.target)
-            MethodDungeonTools:UpdateMap()
-        end)
-        mapLinkButtons[linkIdx]:SetScript("OnEnter",function()
-            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:SetText(dungeonSubLevels[db.currentDungeonIdx][link.target])
-            GameTooltip:Show()
-        end)
-        mapLinkButtons[linkIdx]:SetScript("OnLeave",function()
-            GameTooltip:Hide()
-        end)
-        mapLinkButtons[linkIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",link.x,link.y)
-        mapLinkButtons[linkIdx].linkx = link.x
-        mapLinkButtons[linkIdx].linky = link.y
-        mapLinkButtons[linkIdx].linkIdx = linkIdx
-        mapLinkButtons[linkIdx]:Show()
-    end
-end
+
 
 function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons)
 	local mapName
@@ -2140,7 +2064,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
-    MethodDungeonTools:UpdateMapLinks()
+    MethodDungeonTools:POI_UpdateAll()
     MethodDungeonTools:DrawAllPresetObjects()
 end
 
@@ -3096,6 +3020,7 @@ function initFrames()
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
 	MethodDungeonTools:MakeClearConfirmationFrame(main_frame)
 	MethodDungeonTools:CreateTutorialButton(main_frame)
+    MethodDungeonTools:POI_CreateFramePools()
 
     --devMode
     if db.devMode and MethodDungeonTools.CreateDevPanel then

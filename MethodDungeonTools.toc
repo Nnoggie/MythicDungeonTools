@@ -15,6 +15,7 @@ libs\load_libs.xml
 AceGUIWidget-MethodDungeonToolsPullButton.lua
 AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 MethodDungeonTools.lua
+Pointsofinterest.lua
 Transmission.lua
 toolbar.lua
 devpanel.lua
