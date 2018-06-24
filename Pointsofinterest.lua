@@ -43,7 +43,6 @@ local function POI_SetDevOptions(frame,poi)
 end
 
 local function POI_SetOptions(frame,type,poi)
-    ViragDevTool_AddData(frame)
     if type == "mapLink" then
         frame:SetSize(22,22)
         frame.Texture:SetSize(22,22)
@@ -78,7 +77,7 @@ local function POI_SetOptions(frame,type,poi)
         frame:SetScript("OnClick",nil)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:SetText(poi.doorName..(slen(poi.doorDescription)>0 and "\n"..poi.doorDescription or "")..(poi.lockpick and "\n".."|cFF32CD32Lockpickable" or ""))
+            GameTooltip:SetText(poi.doorName..(slen(poi.doorDescription)>0 and "\n"..poi.doorDescription or "")..(poi.lockpick and "\n".."|cFF32CD32Locked" or ""))
             GameTooltip:Show()
         end)
         frame:SetScript("OnLeave",function()

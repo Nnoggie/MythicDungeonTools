@@ -457,6 +457,17 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end)
         container:AddChild(stealthCheckbox)
 
+        --neutral
+        local neutralCheckbox = AceGUI:Create("CheckBox")
+        neutralCheckbox:SetLabel("Neutral")
+        neutralCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+            data.neutral = value or nil
+            MethodDungeonTools:UpdateMap()
+        end)
+        container:AddChild(neutralCheckbox)
+
         --enter clone options into the GUI (red)
         local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
         if currentBlip then
@@ -468,6 +479,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             patrolCheckbox:SetValue(currentPatrol and currentBlip.patrolActive)
             stealthDetectCheckbox:SetValue(currentBlip.stealthDetect)
             stealthCheckbox:SetValue(currentBlip.stealth)
+            neutralCheckbox:SetValue(currentBlip.neutral)
         else
             cloneGroup:SetText(currentCloneGroup)
         end
