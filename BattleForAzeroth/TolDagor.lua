@@ -234,10 +234,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
         ["health"] = 88296;
         ["count"] = 0;
-        ["displayId"] = 5990;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 127480;
+        ["displayId"] = 5990;
         ["name"] = "Stinging Parasite";
     };
     [3] = {
@@ -280,10 +280,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 323752;
         ["count"] = 0;
-        ["displayId"] = 84333;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 127482;
+        ["displayId"] = 84333;
         ["name"] = "Sewer Vicejaw";
     };
     [1] = {
@@ -312,10 +312,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 353184;
         ["count"] = 0;
-        ["displayId"] = 46043;
         ["creatureType"] = "Beast";
         ["level"] = 121;
         ["id"] = 127477;
+        ["displayId"] = 46043;
         ["name"] = "Saltwater Snapper";
     };
     [4] = {
@@ -413,10 +413,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 42978;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 127381;
+        ["displayId"] = 42978;
         ["name"] = "Silt Crab";
     };
     [5] = {
@@ -428,12 +428,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 127479;
+        ["displayId"] = 82983;
         ["isBoss"] = true;
         ["encounterID"] = 2097;
         ["instanceID"] = 1002;
         ["scale"] = 1;
         ["health"] = 2060240;
-        ["displayId"] = 82983;
         ["creatureType"] = "Beast";
         ["level"] = 122;
         ["name"] = "The Sand Queen";
