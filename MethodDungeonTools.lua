@@ -1054,48 +1054,59 @@ end
 ---Colors blips green when they are selected
 function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLinked, otherPull)
 
-	if otherPull and otherPull == true then
-		dungeonEnemyBlips[i].border:SetVertexColor(unpack(selectedGreen))
-        dungeonEnemyBlips[i].highlight2:Show()
-	else
-		if forceDeselect and forceDeselect == true then
-			dungeonEnemyBlips[i].selected = false
-		else
-			dungeonEnemyBlips[i].selected = not dungeonEnemyBlips[i].selected
-		end
-		if dungeonEnemyBlips[i].selected == true then
+    if dungeonEnemyBlips[i]:IsShown() then
+        if otherPull and otherPull == true then
             dungeonEnemyBlips[i].border:SetVertexColor(unpack(selectedGreen))
             dungeonEnemyBlips[i].highlight2:Show()
-            dungeonEnemyBlips[i].highlight3:Show()
         else
-			local r,g,b,a = dungeonEnemyBlips[i].color.r,dungeonEnemyBlips[i].color.g,dungeonEnemyBlips[i].color.b,dungeonEnemyBlips[i].color.a
-			dungeonEnemyBlips[i].border:SetVertexColor(r,g,b,a)
-            dungeonEnemyBlips[i].highlight2:Hide()
-            dungeonEnemyBlips[i].highlight3:Hide()
-		end
-		--select/deselect linked npcs
-		if not ignoreLinked then
-			for idx=1,numDungeonEnemyBlips do
-				if dungeonEnemyBlips[i].g and dungeonEnemyBlips[idx].g == dungeonEnemyBlips[i].g and i~=idx then
-					if forceDeselect and forceDeselect == true then
-						dungeonEnemyBlips[idx].selected = false
-					else
-						dungeonEnemyBlips[idx].selected = dungeonEnemyBlips[i].selected
-					end
-					if dungeonEnemyBlips[idx].selected == true then
-                        dungeonEnemyBlips[idx].border:SetVertexColor(unpack(selectedGreen))
-                        dungeonEnemyBlips[idx].highlight2:Show()
-                        dungeonEnemyBlips[idx].highlight3:Show()
-                    else
-						local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
-						dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
-                        dungeonEnemyBlips[idx].highlight2:Hide()
-                        dungeonEnemyBlips[idx].highlight3:Hide()
-					end
-				end
-			end
-		end
-	end
+            if forceDeselect and forceDeselect == true then
+                dungeonEnemyBlips[i].selected = false
+            else
+                dungeonEnemyBlips[i].selected = not dungeonEnemyBlips[i].selected
+            end
+            if dungeonEnemyBlips[i].selected == true then
+                dungeonEnemyBlips[i].border:SetVertexColor(unpack(selectedGreen))
+                dungeonEnemyBlips[i].highlight2:Show()
+                dungeonEnemyBlips[i].highlight3:Show()
+            else
+                local r,g,b,a = dungeonEnemyBlips[i].color.r,dungeonEnemyBlips[i].color.g,dungeonEnemyBlips[i].color.b,dungeonEnemyBlips[i].color.a
+                dungeonEnemyBlips[i].border:SetVertexColor(r,g,b,a)
+                dungeonEnemyBlips[i].highlight2:Hide()
+                dungeonEnemyBlips[i].highlight3:Hide()
+            end
+            --select/deselect linked npcs
+            if not ignoreLinked then
+                for idx=1,numDungeonEnemyBlips do
+                    if dungeonEnemyBlips[i].g and dungeonEnemyBlips[idx].g == dungeonEnemyBlips[i].g and i~=idx then
+                        if dungeonEnemyBlips[idx]:IsShown() then
+                            if forceDeselect and forceDeselect == true then
+                                dungeonEnemyBlips[idx].selected = false
+                            else
+                                dungeonEnemyBlips[idx].selected = dungeonEnemyBlips[i].selected
+                            end
+                            if dungeonEnemyBlips[idx].selected == true then
+                                dungeonEnemyBlips[idx].border:SetVertexColor(unpack(selectedGreen))
+                                dungeonEnemyBlips[idx].highlight2:Show()
+                                dungeonEnemyBlips[idx].highlight3:Show()
+                            else
+                                local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
+                                dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
+                                dungeonEnemyBlips[idx].highlight2:Hide()
+                                dungeonEnemyBlips[idx].highlight3:Hide()
+                            end
+                        else
+                            dungeonEnemyBlips[idx].highlight2:Hide()
+                            dungeonEnemyBlips[idx].highlight3:Hide()
+                        end
+                    end
+                end
+            end
+        end
+
+    else
+        dungeonEnemyBlips[i].highlight2:Hide()
+        dungeonEnemyBlips[i].highlight3:Hide()
+    end
 
 end
 
