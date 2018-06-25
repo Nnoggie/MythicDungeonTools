@@ -138,6 +138,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
         container:AddChild(option5)
 
 
+
+
         local buttons = {
             [1] = {
                 text="MapLink",
@@ -187,6 +189,19 @@ function MethodDungeonTools:CreateDevPanel(frame)
                 end,
             },
             [4] = {
+                text="Discarded Cell Key",
+                func=function()
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    end
+                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local posx,posy = 300,-200
+                    tinsert(links,{x=posx,y=posy,template="MapLinkPinTemplate",type="tdprisonkey"})
+                    MethodDungeonTools:POI_UpdateAll()
+                end,
+            },
+            [5] = {
                 text="Export to LUA",
                 func=function()
                     local export = tshow(MethodDungeonTools.mapPOIs[db.currentDungeonIdx],"MethodDungeonTools.mapPOIs[dungeonIndex]")
@@ -373,6 +388,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
         container:AddChild(button2)
 
         --clone options
+
+        --group
         local cloneGroup = AceGUI:Create("EditBox")
         cloneGroup:SetLabel("Group of clone:")
         cloneGroup:SetCallback("OnEnterPressed",function(widget,callbackName,text)
@@ -385,7 +402,6 @@ function MethodDungeonTools:CreateDevPanel(frame)
                 MethodDungeonTools:UpdateMap()
             end
         end)
-
         container:AddChild(cloneGroup)
 
         local cloneGroupMaxButton = AceGUI:Create("Button")
@@ -467,6 +483,9 @@ function MethodDungeonTools:CreateDevPanel(frame)
             MethodDungeonTools:UpdateMap()
         end)
         container:AddChild(neutralCheckbox)
+
+        --infested
+
 
         --enter clone options into the GUI (red)
         local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()

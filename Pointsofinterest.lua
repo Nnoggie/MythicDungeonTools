@@ -96,6 +96,24 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:Hide()
         end)
     end
+    if type =="tdprisonkey" then
+        frame:SetSize(10,10)
+        frame.Texture:SetSize(10,10)
+        frame.HighlightTexture:SetSize(10,10)
+        frame.HighlightTexture:SetAtlas("QuestNormal")
+        frame.Texture:SetAtlas("QuestNormal")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Discarded Cell Key\nPossible Spawn Location\nOpens 1x Prison Bars")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
     if db.devMode then POI_SetDevOptions(frame,poi) end
 end
 
