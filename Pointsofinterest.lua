@@ -150,6 +150,24 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:Hide()
         end)
     end
+    if type == "krSpiritGuide" then
+        frame:SetSize(20,20)
+        frame.Texture:SetSize(20,20)
+        frame.HighlightTexture:SetSize(20,20)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Untainted Spirit Guide\nUnlocks after defeating ???")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
     if db.devMode then POI_SetDevOptions(frame,poi) end
 end
 
