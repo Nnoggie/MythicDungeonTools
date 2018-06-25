@@ -89,12 +89,25 @@ Legendlarkin
 Morthan
 Munaurek
 Ayolo
+Belorei
+Holyrox
+Rodox
+Reloe
 
 Shrine of the Storm
 Belorei
 Weorn-Azralon
 Taykee-Azralon
 Squantoon
+
+Siege of Boralus
+Taykee-Azralon
+Reloe
+Rodox
+Holyrox
+
+
+
 
 Zoom Fixer: Grimmonja <3
 Plus/Minus icons: https://www.iconfinder.com/magicons

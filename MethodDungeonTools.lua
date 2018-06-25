@@ -1760,12 +1760,14 @@ MethodDungeonTools.BlipDrawlayers = {
         blip = 4,
         border = 3,
         highlight = 7,
+        highlight2 = 7,
         highlight3 = 2,
         dragon = 1,
     },
     mouseover = {
         blip = 6,
         border = 5,
+        highlight2 = 7,
         highlight3 = 4,
     },
 }
@@ -1853,7 +1855,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                         dungeonEnemyBlips[idx].highlight2:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
                         dungeonEnemyBlips[idx].highlight2.storedSize = 12*dungeonEnemyBlips[idx].scale
                         dungeonEnemyBlips[idx].highlight2:SetSize(dungeonEnemyBlips[idx].highlight2.storedSize,dungeonEnemyBlips[idx].highlight2.storedSize)
-                        dungeonEnemyBlips[idx].highlight2:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight)
+                        dungeonEnemyBlips[idx].highlight2:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight2)
                         dungeonEnemyBlips[idx].highlight2:SetVertexColor(unpack(selectedGreen))
                         dungeonEnemyBlips[idx].highlight2:Hide()
 
