@@ -1731,8 +1731,9 @@ end
 
 function MethodDungeonTools:FormatEnemyHealth(amount)
 	amount = tonumber(amount)
+    if not amount then return "" end
     if amount < 1e3 then
-        return string.sub(amount)
+        return 0
     elseif amount >= 1e12 then
         return string.format("%.3ft", amount/1e12)
     elseif amount >= 1e9 then

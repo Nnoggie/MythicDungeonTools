@@ -114,6 +114,42 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:Hide()
         end)
     end
+    if type == "heavyCannon" then
+        frame:SetSize(20,20)
+        frame.Texture:SetSize(20,20)
+        frame.HighlightTexture:SetSize(20,20)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Heavy Cannon\nUsable by players\nDamages both enemies and allies")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
+    if type == "templeEye" then
+        frame:SetSize(20,20)
+        frame.Texture:SetSize(20,20)
+        frame.HighlightTexture:SetSize(20,20)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Eye of Sethraliss\nBring both Eyes to the Skull of Sethraliss")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
     if db.devMode then POI_SetDevOptions(frame,poi) end
 end
 

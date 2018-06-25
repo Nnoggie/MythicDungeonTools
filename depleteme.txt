@@ -93,6 +93,8 @@ Belorei
 Holyrox
 Rodox
 Reloe
+Piorc
+Fatebtw
 
 Shrine of the Storm
 Belorei
@@ -105,6 +107,15 @@ Taykee-Azralon
 Reloe
 Rodox
 Holyrox
+
+Temple of Sethraliss
+Reloe
+Holyrox
+TheTrakker
+Kugamid
+
+Kings' Rest
+
 
 
 

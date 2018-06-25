@@ -5,13 +5,12 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,tee
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [6] = {
-        [1] = {
-            ["y"] = -155.99833837338;
-            ["x"] = 452.00002179295;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 5;
-            ["direction"] = -1;
-            ["type"] = "mapLink";
+        [6] = {
+            ["y"] = -482.48947620288;
+            ["x"] = 427.66171594679;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after killing Knight Captain Valyri";
+            ["type"] = "graveyard";
         };
         [2] = {
             ["y"] = -199.9983239565;
@@ -21,13 +20,47 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
+        [3] = {
+            ["y"] = -98.627695689899;
+            ["x"] = 387.54905152042;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "heavyCannon";
+        };
+        [1] = {
+            ["y"] = -155.99833837338;
+            ["x"] = 452.00002179295;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 5;
+            ["direction"] = -1;
+            ["type"] = "mapLink";
+        };
+        [4] = {
+            ["y"] = -346.99535709868;
+            ["x"] = 213.88916580021;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "heavyCannon";
+        };
+        [5] = {
+            ["y"] = -238.8518062721;
+            ["x"] = 587.3175423851;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "heavyCannon";
+        };
     };
     [2] = {
-        [6] = {
-            ["y"] = -198.70891225244;
-            ["x"] = 570.90039133419;
+        [7] = {
+            ["y"] = -161.93013251665;
+            ["x"] = 438.08534915751;
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "tdprisonkey";
+        };
+        [1] = {
+            ["y"] = -293.64644125367;
+            ["x"] = 592.87359409387;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 1;
+            ["direction"] = 2;
+            ["type"] = "mapLink";
         };
         [2] = {
             ["y"] = -120.99821179174;
@@ -36,6 +69,30 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["target"] = 3;
             ["direction"] = -2;
             ["type"] = "mapLink";
+        };
+        [4] = {
+            ["y"] = -259.49817884669;
+            ["x"] = 327.37631924595;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [8] = {
+            ["y"] = -246.92767963576;
+            ["x"] = 413.76855097664;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [9] = {
+            ["y"] = -145.16687134973;
+            ["x"] = 461.34582715726;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [5] = {
+            ["y"] = -252.32441542972;
+            ["x"] = 541.88933589202;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
         };
         [3] = {
             ["y"] = -226.92509913277;
@@ -46,23 +103,9 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["doorName"] = "Sewer Gate";
             ["type"] = "door";
         };
-        [1] = {
-            ["y"] = -293.64644125367;
-            ["x"] = 592.87359409387;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 1;
-            ["direction"] = 2;
-            ["type"] = "mapLink";
-        };
-        [4] = {
-            ["y"] = -259.49817884669;
-            ["x"] = 327.37631924595;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tdprisonkey";
-        };
-        [5] = {
-            ["y"] = -252.32441542972;
-            ["x"] = 541.88933589202;
+        [6] = {
+            ["y"] = -198.70891225244;
+            ["x"] = 570.90039133419;
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "tdprisonkey";
         };
@@ -84,15 +127,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
-        [3] = {
-            ["y"] = -350.76394802461;
-            ["x"] = 310.03890671508;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Gate";
-            ["type"] = "door";
-        };
         [4] = {
             ["y"] = -294.67309052738;
             ["x"] = 478.42943341834;
@@ -102,95 +136,18 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["doorName"] = "Prison Gate";
             ["type"] = "door";
         };
-        [5] = {
-            ["y"] = -326.6835033043;
-            ["x"] = 298.43826548799;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
-        [6] = {
-            ["y"] = -236.06541579087;
-            ["x"] = 358.09242143672;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
-        [7] = {
-            ["y"] = -418.6335527449;
-            ["x"] = 429.49956431235;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
         [8] = {
             ["y"] = -303.0449876628;
             ["x"] = 317.04689195555;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
-        };
-        [9] = {
-            ["y"] = -254.86541064356;
-            ["x"] = 347.29237946953;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
-        [10] = {
-            ["y"] = -369.72975641613;
-            ["x"] = 461.57195383542;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
-        [11] = {
-            ["y"] = -392.9440473463;
-            ["x"] = 445.50049335717;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
-        [12] = {
-            ["y"] = -322.22977757645;
-            ["x"] = 491.92910587132;
-            ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\nOrc: 10% Str/Agi\nUndead: 10% Stamina\nTauren: 1% HP+Mana per 10s\nBlood Elf: 10% Intellect";
-            ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
-            ["type"] = "door";
-        };
-        [13] = {
-            ["y"] = -324.41146834197;
-            ["x"] = 357.03975190127;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tdprisonkey";
-        };
-        [14] = {
-            ["y"] = -323.00387569819;
-            ["x"] = 308.69262661692;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tdprisonkey";
-        };
-        [15] = {
-            ["y"] = -170.64246587206;
-            ["x"] = 414.72803284209;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tdprisonkey";
         };
         [16] = {
             ["y"] = -200.28001925019;
@@ -204,9 +161,133 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "tdprisonkey";
         };
+        [9] = {
+            ["y"] = -254.86541064356;
+            ["x"] = 347.29237946953;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
         [18] = {
             ["y"] = -237.49898650692;
             ["x"] = 414.00297776122;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [5] = {
+            ["y"] = -326.6835033043;
+            ["x"] = 298.43826548799;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [10] = {
+            ["y"] = -369.72975641613;
+            ["x"] = 461.57195383542;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [11] = {
+            ["y"] = -392.9440473463;
+            ["x"] = 445.50049335717;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [3] = {
+            ["y"] = -350.76394802461;
+            ["x"] = 310.03890671508;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Gate";
+            ["type"] = "door";
+        };
+        [6] = {
+            ["y"] = -236.06541579087;
+            ["x"] = 358.09242143672;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [12] = {
+            ["y"] = -322.22977757645;
+            ["x"] = 491.92910587132;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [13] = {
+            ["y"] = -324.41146834197;
+            ["x"] = 357.03975190127;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [7] = {
+            ["y"] = -418.6335527449;
+            ["x"] = 429.49956431235;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
+Orc: 10% Str/Agi\
+Undead: 10% Stamina\
+Tauren: 1% HP+Mana per 10s\
+Blood Elf: 10% Intellect";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [14] = {
+            ["y"] = -323.00387569819;
+            ["x"] = 308.69262661692;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [15] = {
+            ["y"] = -170.64246587206;
+            ["x"] = 414.72803284209;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
+        [19] = {
+            ["y"] = -178.47965873006;
+            ["x"] = 384.77433124093;
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "tdprisonkey";
         };
@@ -236,6 +317,15 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
         };
     };
     [4] = {
+        [7] = {
+            ["y"] = -278.27853729051;
+            ["x"] = 491.23264157131;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
         [1] = {
             ["y"] = -441.99833049439;
             ["x"] = 313.00005758367;
@@ -251,6 +341,58 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["target"] = 5;
             ["direction"] = 1;
             ["type"] = "mapLink";
+        };
+        [4] = {
+            ["y"] = -234.18683041859;
+            ["x"] = 322.38299113063;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [8] = {
+            ["y"] = -305.64700893053;
+            ["x"] = 475.44313696461;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [9] = {
+            ["y"] = -330.91014402277;
+            ["x"] = 460.17995520134;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [5] = {
+            ["y"] = -183.15399599877;
+            ["x"] = 359.05915201413;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
+        };
+        [3] = {
+            ["y"] = -358.690180572;
+            ["x"] = 336.15677336968;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after killing Jes Howlis";
+            ["type"] = "graveyard";
+        };
+        [6] = {
+            ["y"] = -208.98680115971;
+            ["x"] = 341.18300314946;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Bars";
+            ["type"] = "door";
         };
     };
     [5] = {
@@ -270,6 +412,24 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
+        [4] = {
+            ["y"] = -270.18747899972;
+            ["x"] = 484.87937131732;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Gate";
+            ["type"] = "door";
+        };
+        [3] = {
+            ["y"] = -404.49679019861;
+            ["x"] = 356.9995854944;
+            ["template"] = "MapLinkPinTemplate";
+            ["doorDescription"] = "";
+            ["lockpick"] = true;
+            ["doorName"] = "Prison Gate";
+            ["type"] = "door";
+        };
     };
     [7] = {
         [1] = {
@@ -285,27 +445,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
 
 
 
-
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
-    [7] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -171.61955940192;
-                ["x"] = 438.91364326191;
-                ["g"] = 11;
-                ["sublevel"] = 3;
-            };
-        };
-        ["scale"] = 1.2;
-        ["count"] = 0;
-        ["name"] = "Cutwater Striker";
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131112;
-        ["displayId"] = 78990;
-        ["displayId"] = 78990;
-        ["health"] = 294320;
-    };
     [1] = {
         ["clones"] = {
             [1] = {
@@ -330,13 +470,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["count"] = 0;
         ["name"] = "Saltwater Snapper";
+        ["health"] = 353184;
         ["creatureType"] = "Beast";
         ["level"] = 121;
         ["id"] = 127477;
         ["displayId"] = 46043;
-        ["health"] = 353184;
+        ["count"] = 0;
     };
     [2] = {
         ["clones"] = {
@@ -520,13 +660,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 0.6;
-        ["count"] = 0;
         ["name"] = "Stinging Parasite";
+        ["health"] = 88296;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 127480;
         ["displayId"] = 5990;
-        ["health"] = 88296;
+        ["count"] = 0;
     };
     [4] = {
         ["clones"] = {
@@ -621,36 +761,37 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["count"] = 0;
         ["name"] = "Silt Crab";
+        ["health"] = 294320;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 127381;
         ["displayId"] = 42978;
-        ["health"] = 294320;
+        ["count"] = 0;
     };
     [8] = {
         ["clones"] = {
-            [6] = {
-                ["y"] = -459.48779564915;
-                ["x"] = 338.82048561533;
+            [13] = {
+                ["y"] = -299.29694782543;
+                ["x"] = 310.19898101028;
+                ["g"] = 23;
                 ["sublevel"] = 4;
             };
-            [2] = {
-                ["y"] = -223.16651558537;
-                ["x"] = 339.97985221193;
-                ["sublevel"] = 3;
-            };
-            [3] = {
-                ["y"] = -306.25231313575;
-                ["x"] = 469.30896999818;
-                ["g"] = 16;
-                ["sublevel"] = 3;
+            [7] = {
+                ["y"] = -297.28269037781;
+                ["x"] = 452.92765290393;
+                ["g"] = 21;
+                ["sublevel"] = 4;
             };
             [1] = {
                 ["y"] = -161.21952280377;
                 ["x"] = 444.91362080064;
                 ["g"] = 11;
+                ["sublevel"] = 3;
+            };
+            [2] = {
+                ["y"] = -223.16651558537;
+                ["x"] = 339.97985221193;
                 ["sublevel"] = 3;
             };
             [4] = {
@@ -659,61 +800,189 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 16;
                 ["sublevel"] = 3;
             };
+            [8] = {
+                ["y"] = -189.2636595395;
+                ["x"] = 576.99310183786;
+                ["sublevel"] = 4;
+            };
+            [9] = {
+                ["y"] = -243.80912399546;
+                ["x"] = 592.90225009449;
+                ["sublevel"] = 4;
+            };
             [5] = {
                 ["y"] = -411.51882344584;
                 ["x"] = 463.16095012299;
                 ["sublevel"] = 3;
             };
+            [10] = {
+                ["y"] = -168.1755326815;
+                ["x"] = 411.29177304573;
+                ["g"] = 22;
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -306.25231313575;
+                ["x"] = 469.30896999818;
+                ["g"] = 16;
+                ["sublevel"] = 3;
+            };
+            [6] = {
+                ["y"] = -459.48779564915;
+                ["x"] = 338.82048561533;
+                ["sublevel"] = 4;
+            };
+            [12] = {
+                ["y"] = -153.17026228029;
+                ["x"] = 399.33868110829;
+                ["g"] = 22;
+                ["sublevel"] = 4;
+            };
+            [11] = {
+                ["y"] = -166.08252131348;
+                ["x"] = 398.50106374076;
+                ["g"] = 22;
+                ["sublevel"] = 4;
+            };
         };
         ["scale"] = 1.2;
-        ["count"] = 0;
         ["name"] = "Blacktooth Arsonist";
+        ["health"] = 323752;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 135366;
         ["displayId"] = 84394;
-        ["health"] = 323752;
+        ["count"] = 0;
+    };
+    [16] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -321.60115034702;
+                ["x"] = 263.2873792635;
+                ["g"] = 24;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 135699;
+        ["displayId"] = 81513;
+        ["stealthDetect"] = true;
+        ["count"] = 0;
+        ["health"] = 470912;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Ashvane Jailer";
+        ["scale"] = 1.2;
+    };
+    [17] = {
+        ["clones"] = {
+            [13] = {
+                ["y"] = -428.72700391062;
+                ["x"] = 337.61022896149;
+                ["g"] = 37;
+                ["sublevel"] = 6;
+            };
+            [7] = {
+                ["y"] = -116.52643540471;
+                ["x"] = 436.89852951953;
+                ["g"] = 31;
+                ["sublevel"] = 5;
+            };
+            [1] = {
+                ["y"] = -425.28124755098;
+                ["x"] = 277.37442832049;
+                ["g"] = 25;
+                ["sublevel"] = 5;
+            };
+            [2] = {
+                ["y"] = -355.54579160493;
+                ["x"] = 416.80476578975;
+                ["g"] = 26;
+                ["sublevel"] = 5;
+            };
+            [4] = {
+                ["y"] = -236.49684323045;
+                ["x"] = 339.97462175159;
+                ["sublevel"] = 5;
+            };
+            [8] = {
+                ["y"] = -128.13931468112;
+                ["x"] = 429.47915806449;
+                ["g"] = 31;
+                ["sublevel"] = 5;
+            };
+            [9] = {
+                ["y"] = -116.73914881196;
+                ["x"] = 407.00029696023;
+                ["g"] = 33;
+                ["sublevel"] = 6;
+            };
+            [5] = {
+                ["y"] = -184.2656017754;
+                ["x"] = 309.71831615463;
+                ["g"] = 29;
+                ["sublevel"] = 5;
+            };
+            [10] = {
+                ["y"] = -188.70847958861;
+                ["x"] = 341.32534143007;
+                ["g"] = 34;
+                ["sublevel"] = 6;
+            };
+            [3] = {
+                ["y"] = -399.09683310571;
+                ["x"] = 445.3997130528;
+                ["g"] = 27;
+                ["sublevel"] = 5;
+            };
+            [6] = {
+                ["y"] = -184.62271877494;
+                ["x"] = 324.00409967373;
+                ["g"] = 29;
+                ["sublevel"] = 5;
+            };
+            [12] = {
+                ["y"] = -419.02110471566;
+                ["x"] = 343.49253473649;
+                ["g"] = 37;
+                ["sublevel"] = 6;
+            };
+            [11] = {
+                ["y"] = -268.13304911185;
+                ["x"] = 282.00011311733;
+                ["g"] = 35;
+                ["sublevel"] = 6;
+            };
+        };
+        ["id"] = 127486;
+        ["displayId"] = 84380;
+        ["stealthDetect"] = true;
+        ["scale"] = 1.2;
+        ["health"] = 470912;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Ashvane Officer";
+        ["count"] = 0;
     };
     [9] = {
         ["clones"] = {
-            [11] = {
-                ["y"] = -264.81075196189;
-                ["x"] = 358.95549013445;
-                ["sublevel"] = 3;
-            };
-            [13] = {
-                ["y"] = -309.89522410862;
-                ["x"] = 279.96680331062;
-                ["sublevel"] = 3;
-            };
-            [7] = {
-                ["y"] = -259.67823664231;
-                ["x"] = 490.45741287849;
-                ["g"] = 13;
-                ["sublevel"] = 3;
-            };
             [1] = {
                 ["y"] = -195.50662589192;
                 ["x"] = 390.42427034967;
-                ["g"] = 12;
                 ["sublevel"] = 3;
             };
             [2] = {
                 ["y"] = -180.80077309929;
                 ["x"] = 378.95365417789;
-                ["g"] = 12;
                 ["sublevel"] = 3;
             };
-            [15] = {
-                ["y"] = -340.10398455655;
-                ["x"] = 512.17985588983;
-                ["g"] = 17;
+            [4] = {
+                ["y"] = -202.85959015472;
+                ["x"] = 371.60074040374;
                 ["sublevel"] = 3;
             };
             [8] = {
                 ["y"] = -270.17822762617;
                 ["x"] = 497.95742789606;
-                ["g"] = 13;
                 ["sublevel"] = 3;
             };
             [16] = {
@@ -721,10 +990,25 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 485.10320075226;
                 ["sublevel"] = 3;
             };
+            [17] = {
+                ["y"] = -416.71908917301;
+                ["x"] = 421.62820196217;
+                ["sublevel"] = 4;
+            };
             [9] = {
                 ["y"] = -292.67824049239;
                 ["x"] = 517.20740779021;
                 ["sublevel"] = 3;
+            };
+            [18] = {
+                ["y"] = -440.20744651337;
+                ["x"] = 408.13980889411;
+                ["sublevel"] = 4;
+            };
+            [19] = {
+                ["y"] = -363.82208697561;
+                ["x"] = 398.98219030411;
+                ["sublevel"] = 4;
             };
             [5] = {
                 ["y"] = -247.58941250354;
@@ -736,16 +1020,34 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 367.92955528628;
                 ["sublevel"] = 3;
             };
-            [14] = {
-                ["y"] = -334.06950346075;
-                ["x"] = 509.24879748026;
-                ["g"] = 17;
+            [20] = {
+                ["y"] = -215.84435874927;
+                ["x"] = 512.72816932252;
+                ["sublevel"] = 4;
+            };
+            [30] = {
+                ["y"] = -382.21391295582;
+                ["x"] = 350.36039252306;
+                ["sublevel"] = 5;
+            };
+            [21] = {
+                ["y"] = -246.48948875714;
+                ["x"] = 511.43785709384;
+                ["sublevel"] = 4;
+            };
+            [11] = {
+                ["y"] = -264.81075196189;
+                ["x"] = 358.95549013445;
                 ["sublevel"] = 3;
+            };
+            [22] = {
+                ["y"] = -170.49694998748;
+                ["x"] = 537.99899643287;
+                ["sublevel"] = 4;
             };
             [3] = {
                 ["y"] = -196.38901593574;
                 ["x"] = 361.3066358756;
-                ["g"] = 12;
                 ["sublevel"] = 3;
             };
             [6] = {
@@ -758,22 +1060,165 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 292.83791167328;
                 ["sublevel"] = 3;
             };
-            [4] = {
-                ["y"] = -202.85959015472;
-                ["x"] = 371.60074040374;
-                ["g"] = 12;
+            [24] = {
+                ["y"] = -227.6260183297;
+                ["x"] = 552.22488520648;
+                ["sublevel"] = 4;
+            };
+            [23] = {
+                ["y"] = -275.49689022452;
+                ["x"] = 558.99893298186;
+                ["sublevel"] = 4;
+            };
+            [25] = {
+                ["y"] = -164.27339713864;
+                ["x"] = 387.4814552537;
+                ["sublevel"] = 4;
+            };
+            [13] = {
+                ["y"] = -309.89522410862;
+                ["x"] = 279.96680331062;
                 ["sublevel"] = 3;
+            };
+            [26] = {
+                ["y"] = -145.920272082;
+                ["x"] = 407.0886780298;
+                ["sublevel"] = 4;
+            };
+            [27] = {
+                ["y"] = -118.29703487586;
+                ["x"] = 413.89915895692;
+                ["sublevel"] = 4;
+            };
+            [7] = {
+                ["y"] = -259.67823664231;
+                ["x"] = 490.45741287849;
+                ["sublevel"] = 3;
+            };
+            [14] = {
+                ["y"] = -334.06950346075;
+                ["x"] = 509.24879748026;
+                ["sublevel"] = 3;
+            };
+            [28] = {
+                ["y"] = -128.29708350953;
+                ["x"] = 432.89913548945;
+                ["sublevel"] = 4;
+            };
+            [15] = {
+                ["y"] = -340.10398455655;
+                ["x"] = 512.17985588983;
+                ["sublevel"] = 3;
+            };
+            [29] = {
+                ["y"] = -174.95063873074;
+                ["x"] = 333.97210038108;
+                ["sublevel"] = 4;
+            };
+            [31] = {
+                ["y"] = -394.60521477265;
+                ["x"] = 321.22994208553;
+                ["sublevel"] = 5;
             };
         };
         ["id"] = 130582;
         ["displayId"] = 82828;
         ["neutral"] = true;
-        ["count"] = 0;
         ["name"] = "Despondent Scallywag";
+        ["health"] = 88296;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["health"] = 88296;
+        ["count"] = 0;
         ["scale"] = 1;
+    };
+    [18] = {
+        ["clones"] = {
+            [13] = {
+                ["y"] = -428.13876071096;
+                ["x"] = 347.90433348963;
+                ["g"] = 37;
+                ["sublevel"] = 6;
+            };
+            [7] = {
+                ["y"] = -129.89677011403;
+                ["x"] = 453.72596677257;
+                ["g"] = 31;
+                ["sublevel"] = 5;
+            };
+            [1] = {
+                ["y"] = -358.2227190239;
+                ["x"] = 431.58260215269;
+                ["g"] = 26;
+                ["sublevel"] = 5;
+            };
+            [2] = {
+                ["y"] = -338.42129253843;
+                ["x"] = 528.13019744539;
+                ["g"] = 28;
+                ["sublevel"] = 5;
+            };
+            [4] = {
+                ["y"] = -268.29541605535;
+                ["x"] = 255.27295069291;
+                ["g"] = 30;
+                ["sublevel"] = 5;
+            };
+            [8] = {
+                ["y"] = -139.10706553052;
+                ["x"] = 441.41463616357;
+                ["g"] = 31;
+                ["sublevel"] = 5;
+            };
+            [9] = {
+                ["y"] = -121.06264448015;
+                ["x"] = 395.54529956391;
+                ["g"] = 33;
+                ["sublevel"] = 6;
+            };
+            [5] = {
+                ["y"] = -279.49539472702;
+                ["x"] = 258.07295394389;
+                ["g"] = 30;
+                ["sublevel"] = 5;
+            };
+            [10] = {
+                ["y"] = -185.76728883463;
+                ["x"] = 330.73709005778;
+                ["g"] = 34;
+                ["sublevel"] = 6;
+            };
+            [3] = {
+                ["y"] = -348.02078743969;
+                ["x"] = 284.23766854546;
+                ["sublevel"] = 5;
+            };
+            [6] = {
+                ["y"] = -284.69537869382;
+                ["x"] = 272.07297019883;
+                ["g"] = 30;
+                ["sublevel"] = 5;
+            };
+            [12] = {
+                ["y"] = -390.9274552797;
+                ["x"] = 279.43087112963;
+                ["g"] = 36;
+                ["sublevel"] = 6;
+            };
+            [11] = {
+                ["y"] = -378.52744333478;
+                ["x"] = 288.23092058391;
+                ["g"] = 36;
+                ["sublevel"] = 6;
+            };
+        };
+        ["scale"] = 1.2;
+        ["name"] = "Ashvane Marine";
+        ["health"] = 470912;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 130027;
+        ["displayId"] = 81513;
+        ["count"] = 0;
     };
     [5] = {
         ["clones"] = {
@@ -829,6 +1274,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 18;
                 ["sublevel"] = 3;
             };
+            [14] = {
+                ["y"] = -328.02968549221;
+                ["x"] = 258.28740407793;
+                ["g"] = 24;
+                ["sublevel"] = 4;
+            };
             [9] = {
                 ["y"] = -459.19877691377;
                 ["x"] = 392.33470730792;
@@ -852,6 +1303,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 15;
                 ["sublevel"] = 3;
             };
+            [11] = {
+                ["y"] = -452.05373643056;
+                ["x"] = 377.45568019118;
+                ["g"] = 18;
+                ["sublevel"] = 3;
+            };
             [6] = {
                 ["y"] = -429.6626044022;
                 ["x"] = 446.81472496499;
@@ -863,21 +1320,131 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 18;
                 ["sublevel"] = 3;
             };
-            [11] = {
-                ["y"] = -452.05373643056;
-                ["x"] = 377.45568019118;
-                ["g"] = 18;
-                ["sublevel"] = 3;
+            [15] = {
+                ["y"] = -417.8618899396;
+                ["x"] = 263.82608070106;
+                ["g"] = 25;
+                ["sublevel"] = 5;
             };
         };
         ["scale"] = 1;
-        ["name"] = "Bilge Rat Looter";
         ["health"] = 176592;
+        ["count"] = 0;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 127485;
         ["displayId"] = 79322;
+        ["name"] = "Bilge Rat Looter";
+    };
+    [20] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -196.61444212221;
+                ["x"] = 465.70560778831;
+                ["sublevel"] = 5;
+            };
+        };
+        ["scale"] = 1.2;
+        ["name"] = "Ashvane Spotter";
+        ["health"] = 470912;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 136665;
+        ["displayId"] = 81513;
         ["count"] = 0;
+    };
+    [21] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -469.85788606973;
+                ["x"] = 408.18795143608;
+                ["sublevel"] = 6;
+            };
+        };
+        ["id"] = 127490;
+        ["displayId"] = 81498;
+        ["isBoss"] = true;
+        ["encounterID"] = 2099;
+        ["instanceID"] = 1002;
+        ["scale"] = 1.4;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 122;
+        ["name"] = "Knight Captain Valyri";
+        ["health"] = 2060240;
+    };
+    [11] = {
+        ["clones"] = {
+            [2] = {
+                ["y"] = -336.34531991941;
+                ["x"] = 302.13192386986;
+                ["g"] = 14;
+                ["sublevel"] = 3;
+            };
+            [3] = {
+                ["y"] = -316.18093011396;
+                ["x"] = 467.21370615805;
+                ["g"] = 16;
+                ["sublevel"] = 3;
+            };
+            [1] = {
+                ["y"] = -342.85695519908;
+                ["x"] = 303.06214892669;
+                ["g"] = 14;
+                ["sublevel"] = 3;
+            };
+            [4] = {
+                ["y"] = -446.34556786155;
+                ["x"] = 290.27940164397;
+                ["g"] = 19;
+                ["sublevel"] = 3;
+            };
+            [5] = {
+                ["y"] = -232.54112799194;
+                ["x"] = 358.86758599858;
+                ["g"] = 23;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1;
+        ["health"] = 294320;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131112;
+        ["displayId"] = 78990;
+        ["displayId"] = 78990;
+        ["name"] = "Cutwater Striker";
+    };
+    [22] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -349.60682645817;
+                ["x"] = 507.95729835021;
+                ["sublevel"] = 6;
+            };
+            [2] = {
+                ["y"] = -171.92045801987;
+                ["x"] = 466.69231767646;
+                ["g"] = 39;
+                ["sublevel"] = 7;
+            };
+            [3] = {
+                ["y"] = -184.22818275919;
+                ["x"] = 484.38466373628;
+                ["g"] = 39;
+                ["sublevel"] = 7;
+            };
+        };
+        ["id"] = 127497;
+        ["displayId"] = 81496;
+        ["stealthDetect"] = true;
+        ["count"] = 0;
+        ["health"] = 529776;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 121;
+        ["name"] = "Ashvane Warden";
+        ["scale"] = 1.2;
     };
     [3] = {
         ["clones"] = {
@@ -949,13 +1516,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1.2;
-        ["count"] = 0;
         ["name"] = "Sewer Vicejaw";
+        ["health"] = 323752;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 127482;
         ["displayId"] = 84333;
-        ["health"] = 323752;
+        ["count"] = 0;
     };
     [6] = {
         ["clones"] = {
@@ -996,6 +1563,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 15;
                 ["sublevel"] = 3;
             };
+            [3] = {
+                ["y"] = -432.05543520436;
+                ["x"] = 260.60025859838;
+                ["g"] = 25;
+                ["sublevel"] = 5;
+            };
         };
         ["id"] = 130025;
         ["displayId"] = 81499;
@@ -1009,11 +1582,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     };
     [12] = {
         ["clones"] = {
-            [1] = {
-                ["y"] = -447.49873407591;
-                ["x"] = 280.78690373476;
-                ["g"] = 19;
-                ["sublevel"] = 3;
+            [6] = {
+                ["y"] = -240.04115207794;
+                ["x"] = 351.01046023995;
+                ["g"] = 23;
+                ["sublevel"] = 4;
             };
             [2] = {
                 ["y"] = -436.58963338193;
@@ -1021,44 +1594,107 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 19;
                 ["sublevel"] = 3;
             };
-        };
-        ["health"] = 264888;
-        ["count"] = 0;
-        ["id"] = 130026;
-        ["displayId"] = 42840;
-        ["scale"] = 1.2;
-        ["level"] = 120;
-        ["creatureType"] = "Humanoid";
-        ["name"] = "Bilge Rat Seaspeaker";
-    };
-    [11] = {
-        ["clones"] = {
+            [3] = {
+                ["y"] = -309.06839434267;
+                ["x"] = 440.07049065209;
+                ["g"] = 21;
+                ["sublevel"] = 4;
+            };
             [1] = {
-                ["y"] = -342.85695519908;
-                ["x"] = 303.06214892669;
-                ["g"] = 14;
-                ["sublevel"] = 3;
-            };
-            [2] = {
-                ["y"] = -336.34531991941;
-                ["x"] = 302.13192386986;
-                ["g"] = 14;
-                ["sublevel"] = 3;
-            };
-            [4] = {
-                ["y"] = -446.34556786155;
-                ["x"] = 290.27940164397;
+                ["y"] = -447.49873407591;
+                ["x"] = 280.78690373476;
                 ["g"] = 19;
                 ["sublevel"] = 3;
             };
+            [4] = {
+                ["y"] = -280.49696524666;
+                ["x"] = 461.14195696974;
+                ["g"] = 21;
+                ["sublevel"] = 4;
+            };
+            [5] = {
+                ["y"] = -221.11258700735;
+                ["x"] = 367.79621602493;
+                ["g"] = 23;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 130026;
+        ["displayId"] = 42840;
+        ["count"] = 0;
+        ["name"] = "Bilge Rat Seaspeaker";
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["scale"] = 1.2;
+        ["health"] = 264888;
+    };
+    [24] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -379.05602618369;
+                ["x"] = 336.40231150178;
+                ["sublevel"] = 7;
+            };
+        };
+        ["id"] = 127503;
+        ["displayId"] = 81505;
+        ["isBoss"] = true;
+        ["encounterID"] = 2096;
+        ["instanceID"] = 1002;
+        ["count"] = 0;
+        ["health"] = 2531152;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 122;
+        ["name"] = "Overseer Korgus";
+        ["scale"] = 1;
+    };
+    [13] = {
+        ["clones"] = {
+            [2] = {
+                ["y"] = -294.94335528054;
+                ["x"] = 519.73551776178;
+                ["sublevel"] = 4;
+            };
             [3] = {
-                ["y"] = -316.18093011396;
-                ["x"] = 467.21370615805;
-                ["g"] = 16;
-                ["sublevel"] = 3;
+                ["y"] = -162.51820154885;
+                ["x"] = 331.53965844642;
+                ["sublevel"] = 4;
+            };
+            [1] = {
+                ["y"] = -323.56841311087;
+                ["x"] = 509.64193698534;
+                ["sublevel"] = 4;
+            };
+            [4] = {
+                ["y"] = -187.09743281643;
+                ["x"] = 315.99131365628;
+                ["sublevel"] = 4;
+            };
+            [5] = {
+                ["y"] = -215.21126254028;
+                ["x"] = 294.92759545372;
+                ["sublevel"] = 4;
             };
         };
         ["scale"] = 1;
+        ["health"] = 176592;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 135254;
+        ["displayId"] = 79064;
+        ["name"] = "Irontide Raider";
+    };
+    [7] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -171.61955940192;
+                ["x"] = 438.91364326191;
+                ["g"] = 11;
+                ["sublevel"] = 3;
+            };
+        };
+        ["scale"] = 1.2;
         ["name"] = "Cutwater Striker";
         ["health"] = 294320;
         ["creatureType"] = "Humanoid";
@@ -1068,7 +1704,147 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 78990;
         ["count"] = 0;
     };
+    [14] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -221.11258700735;
+                ["x"] = 352.79616785293;
+                ["g"] = 23;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1.2;
+        ["health"] = 529776;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 121;
+        ["id"] = 131445;
+        ["displayId"] = 81496;
+        ["name"] = "Block Warden";
+    };
+    [23] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -259.55412635752;
+                ["x"] = 557.92331321717;
+                ["g"] = 38;
+                ["sublevel"] = 6;
+            };
+            [2] = {
+                ["y"] = -264.55413219691;
+                ["x"] = 565.7804389758;
+                ["g"] = 38;
+                ["sublevel"] = 6;
+            };
+        };
+        ["scale"] = 1;
+        ["name"] = "Ashvane Priest";
+        ["health"] = 470912;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 130028;
+        ["displayId"] = 81550;
+        ["count"] = 0;
+    };
+    [19] = {
+        ["clones"] = {
+            [7] = {
+                ["y"] = -274.16641241129;
+                ["x"] = 537.36915862756;
+                ["g"] = 32;
+                ["sublevel"] = 5;
+            };
+            [1] = {
+                ["y"] = -401.59213388675;
+                ["x"] = 484.78556244655;
+                ["g"] = 27;
+                ["sublevel"] = 5;
+            };
+            [2] = {
+                ["y"] = -329.84984081926;
+                ["x"] = 494.2015688759;
+                ["g"] = 28;
+                ["sublevel"] = 5;
+            };
+            [4] = {
+                ["y"] = -135.34504030478;
+                ["x"] = 414.93683941251;
+                ["g"] = 31;
+                ["sublevel"] = 5;
+            };
+            [8] = {
+                ["y"] = -275.40575689854;
+                ["x"] = 269.27286473714;
+                ["g"] = 35;
+                ["sublevel"] = 6;
+            };
+            [9] = {
+                ["y"] = -280.86029749204;
+                ["x"] = 280.63649747593;
+                ["g"] = 35;
+                ["sublevel"] = 6;
+            };
+            [5] = {
+                ["y"] = -255.32920031569;
+                ["x"] = 534.1133210271;
+                ["g"] = 32;
+                ["sublevel"] = 5;
+            };
+            [10] = {
+                ["y"] = -390.9274552797;
+                ["x"] = 291.0309238349;
+                ["g"] = 36;
+                ["sublevel"] = 6;
+            };
+            [3] = {
+                ["y"] = -315.20698628135;
+                ["x"] = 507.4158787811;
+                ["g"] = 28;
+                ["sublevel"] = 5;
+            };
+            [6] = {
+                ["y"] = -279.98036392787;
+                ["x"] = 520.62492795904;
+                ["g"] = 32;
+                ["sublevel"] = 5;
+            };
+        };
+        ["scale"] = 1.2;
+        ["name"] = "Ashvane Flamecaster";
+        ["health"] = 412048;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 127488;
+        ["displayId"] = 81520;
+        ["count"] = 0;
+    };
+    [15] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -342.9850555754;
+                ["x"] = 318.27236291642;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 127484;
+        ["displayId"] = 81739;
+        ["isBoss"] = true;
+        ["encounterID"] = 2098;
+        ["instanceID"] = 1002;
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 122;
+        ["name"] = "Jes Howlis";
+        ["health"] = 1765920;
+    };
 };
+
+
+
+
+
+
 
 
 

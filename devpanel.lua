@@ -202,6 +202,19 @@ function MethodDungeonTools:CreateDevPanel(frame)
                 end,
             },
             [5] = {
+                text="Heavy Cannon",
+                func=function()
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    end
+                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local posx,posy = 300,-200
+                    tinsert(links,{x=posx,y=posy,template="MapLinkPinTemplate",type="heavyCannon"})
+                    MethodDungeonTools:POI_UpdateAll()
+                end,
+            },
+            [6] = {
                 text="Export to LUA",
                 func=function()
                     local export = tshow(MethodDungeonTools.mapPOIs[db.currentDungeonIdx],"MethodDungeonTools.mapPOIs[dungeonIndex]")
