@@ -61,10 +61,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 500344;
         ["count"] = 0;
-        ["displayId"] = 83252;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133935;
+        ["displayId"] = 83252;
         ["name"] = "Animated Guardian";
     };
     [2] = {
@@ -195,10 +195,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
         ["health"] = 24;
         ["count"] = 0;
-        ["displayId"] = 76055;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 133943;
+        ["displayId"] = 76055;
         ["name"] = "Minion of Zul";
     };
     [4] = {
@@ -219,10 +219,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 83364;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134158;
+        ["displayId"] = 83364;
         ["name"] = "Shadow-Borne Champion";
     };
     [8] = {
@@ -235,9 +235,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137486;
+        ["displayId"] = 85287;
         ["name"] = "Queen Patlaa";
         ["health"] = 470912;
-        ["displayId"] = 85287;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["scale"] = 1;
@@ -252,9 +252,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134739;
+        ["displayId"] = 83836;
         ["count"] = 0;
         ["name"] = "Purification Construct";
-        ["displayId"] = 83836;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1.2;
@@ -274,9 +274,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137969;
+        ["displayId"] = 85677;
         ["count"] = 0;
         ["name"] = "Interment Construct";
-        ["displayId"] = 85677;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1;
@@ -292,9 +292,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137484;
+        ["displayId"] = 85284;
         ["name"] = "King A'akul";
         ["health"] = 765232;
-        ["displayId"] = 85284;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["scale"] = 1;
@@ -309,12 +309,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134993;
+        ["displayId"] = 83529;
         ["isBoss"] = true;
         ["encounterID"] = 2171;
         ["instanceID"] = 1041;
         ["health"] = 2060240;
         ["count"] = 0;
-        ["displayId"] = 83529;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Mchimba the Embalmer";
@@ -362,10 +362,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 83363;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 134157;
+        ["displayId"] = 83363;
         ["name"] = "Shadow-Borne Warrior";
     };
     [10] = {
@@ -396,9 +396,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137485;
+        ["displayId"] = 85285;
         ["name"] = "Bloodsworn Agent";
         ["health"] = 294320;
-        ["displayId"] = 85285;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -446,10 +446,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 353184;
         ["count"] = 0;
-        ["displayId"] = 84112;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 135167;
+        ["displayId"] = 84112;
         ["name"] = "Spectral Berserker";
     };
     [15] = {
@@ -464,10 +464,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 85274;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 137478;
+        ["displayId"] = 85274;
         ["name"] = "Queen Wasi";
     };
     [21] = {
@@ -500,10 +500,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 84163;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135239;
+        ["displayId"] = 84163;
         ["name"] = "Spectral Witch Doctor";
     };
     [11] = {
@@ -516,9 +516,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134251;
+        ["displayId"] = 83517;
         ["name"] = "Seneschal M'bara";
         ["health"] = 470912;
-        ["displayId"] = 83517;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1;
@@ -617,10 +617,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 588640;
         ["count"] = 0;
-        ["displayId"] = 85125;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 135231;
+        ["displayId"] = 85125;
         ["name"] = "Spectral Brute";
     };
     [3] = {
@@ -647,10 +647,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 441480;
         ["count"] = 0;
-        ["displayId"] = 83371;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134174;
+        ["displayId"] = 83371;
         ["name"] = "Shadow-Borne Witch Doctor";
     };
     [6] = {
@@ -662,12 +662,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135322;
+        ["displayId"] = 84202;
         ["isBoss"] = true;
         ["encounterID"] = 2165;
         ["instanceID"] = 1041;
         ["health"] = 2060240;
         ["count"] = 0;
-        ["displayId"] = 84202;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
         ["name"] = "The Golden Serpent";
@@ -683,9 +683,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137473;
+        ["displayId"] = 85270;
         ["name"] = "Guard Captain Atu";
         ["health"] = 478270;
-        ["displayId"] = 85270;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1;
@@ -715,10 +715,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 84133;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135192;
+        ["displayId"] = 84133;
         ["name"] = "Honored Raptor";
     };
     [19] = {
@@ -757,10 +757,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 264888;
         ["count"] = 0;
-        ["displayId"] = 84140;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135204;
+        ["displayId"] = 84140;
         ["name"] = "Spectral Hex Priest";
     };
     [25] = {
@@ -781,10 +781,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Spectral Headhunter";
-        ["displayId"] = 84026;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 134994;
+        ["displayId"] = 84026;
         ["health"] = 95654;
     };
     [13] = {
@@ -799,10 +799,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 83544;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134331;
+        ["displayId"] = 83544;
         ["name"] = "King Rahu'ai";
     };
     [26] = {
@@ -819,8 +819,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["encounterID"] = 2170;
         ["instanceID"] = 1041;
         ["id"] = 135472;
-        ["name"] = "Zanazal the Wise";
         ["displayId"] = 84271;
+        ["name"] = "Zanazal the Wise";
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["health"] = 1059552;
@@ -844,10 +844,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 279604;
         ["count"] = 0;
-        ["displayId"] = 84112;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135235;
+        ["displayId"] = 84112;
         ["name"] = "Spectral Beastmaster";
     };
     [7] = {
@@ -860,9 +860,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137487;
+        ["displayId"] = 33733;
         ["name"] = "Skeletal Hunting Raptor";
         ["health"] = 294320;
-        ["displayId"] = 33733;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 0.8;
@@ -880,10 +880,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 85272;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 137474;
+        ["displayId"] = 85272;
         ["name"] = "King Timalji";
     };
     [28] = {
@@ -896,12 +896,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135470;
+        ["displayId"] = 84269;
         ["isBoss"] = true;
         ["encounterID"] = 2170;
         ["instanceID"] = 1041;
         ["scale"] = 1;
         ["count"] = 0;
-        ["displayId"] = 84269;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["name"] = "Aka'ali the Conqueror";
@@ -917,12 +917,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135475;
+        ["displayId"] = 84272;
         ["isBoss"] = true;
         ["encounterID"] = 2170;
         ["instanceID"] = 1041;
         ["scale"] = 1;
         ["count"] = 0;
-        ["displayId"] = 84272;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["name"] = "Kula the Butcher";
@@ -939,10 +939,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 1000688;
         ["count"] = 0;
-        ["displayId"] = 85860;
         ["creatureType"] = "Humanoid";
         ["level"] = -1;
         ["id"] = 138489;
+        ["displayId"] = 85860;
         ["name"] = "Shadow of Zul";
     };
     [30] = {
@@ -954,12 +954,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 136160;
+        ["displayId"] = 84352;
         ["isBoss"] = true;
         ["encounterID"] = 2172;
         ["instanceID"] = 1041;
         ["scale"] = 1;
         ["health"] = 2295696;
-        ["displayId"] = 84352;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["name"] = "King Dazar";
