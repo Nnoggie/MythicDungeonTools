@@ -61,8 +61,8 @@ function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
 	local rqst, arg = strsplit(' ', cmd)
 	if rqst == "devmode" then
 		MethodDungeonTools:ToggleDevMode()
-	elseif rqst == "remove" then
-		--
+	elseif rqst == "reset" then
+        MethodDungeonTools:ResetMainFramePos()
 	else
 		MethodDungeonTools:ShowInterface()
 	end
@@ -3074,6 +3074,16 @@ function MethodDungeonTools:FixAceGUIShowHide(widget,frame)
         widget.frame:Hide()
         return originalHide(self, ...);
     end
+end
+
+function MethodDungeonTools:ResetMainFramePos()
+    local f = MethodDungeonTools.main_frame
+    db.xoffset = 0
+    db.yoffset = -150
+    db.anchorFrom = "TOP"
+    db.anchorTo = "TOP"
+    f:ClearAllPoints()
+    f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
 end
 
 function initFrames()
