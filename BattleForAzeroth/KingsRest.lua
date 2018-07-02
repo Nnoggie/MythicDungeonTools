@@ -35,20 +35,15 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
-            [2] = {
-                ["y"] = -275.22575718711;
-                ["x"] = 573.00042347891;
-                ["sublevel"] = 1;
-            };
             [3] = {
                 ["y"] = -336.89009664748;
                 ["x"] = 582.72610222429;
                 ["g"] = 2;
                 ["sublevel"] = 1;
             };
-            [1] = {
-                ["y"] = -252.7257765074;
-                ["x"] = 572.75039865962;
+            [2] = {
+                ["y"] = -275.22575718711;
+                ["x"] = 573.00042347891;
                 ["sublevel"] = 1;
             };
             [4] = {
@@ -57,15 +52,20 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 2;
                 ["sublevel"] = 1;
             };
+            [1] = {
+                ["y"] = -252.7257765074;
+                ["x"] = 572.75039865962;
+                ["sublevel"] = 1;
+            };
         };
         ["scale"] = 1.2;
-        ["health"] = 500344;
         ["count"] = 0;
+        ["name"] = "Animated Guardian";
+        ["displayId"] = 83252;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133935;
-        ["displayId"] = 83252;
-        ["name"] = "Animated Guardian";
+        ["health"] = 500344;
     };
     [2] = {
         ["clones"] = {
@@ -167,10 +167,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 4;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -290.15158621081;
-                ["x"] = 581.80652505638;
-                ["g"] = 1;
+            [11] = {
+                ["y"] = -373.49389241899;
+                ["x"] = 660.44908432399;
+                ["g"] = 4;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -185,21 +185,21 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 4;
                 ["sublevel"] = 1;
             };
-            [11] = {
-                ["y"] = -373.49389241899;
-                ["x"] = 660.44908432399;
-                ["g"] = 4;
+            [3] = {
+                ["y"] = -290.15158621081;
+                ["x"] = 581.80652505638;
+                ["g"] = 1;
                 ["sublevel"] = 1;
             };
         };
         ["scale"] = 0.6;
-        ["health"] = 24;
         ["count"] = 0;
+        ["name"] = "Minion of Zul";
+        ["displayId"] = 76055;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 133943;
-        ["displayId"] = 76055;
-        ["name"] = "Minion of Zul";
+        ["health"] = 24;
     };
     [4] = {
         ["clones"] = {
@@ -215,15 +215,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 7;
                 ["sublevel"] = 1;
             };
+            [3] = {
+                ["y"] = -410.09512343855;
+                ["x"] = 620.57219064592;
+                ["teeming"] = true;
+                ["g"] = 7;
+                ["sublevel"] = 1;
+            };
         };
         ["scale"] = 1.2;
-        ["health"] = 470912;
         ["count"] = 0;
+        ["name"] = "Shadow-Borne Champion";
+        ["displayId"] = 83364;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134158;
-        ["displayId"] = 83364;
-        ["name"] = "Shadow-Borne Champion";
+        ["health"] = 470912;
     };
     [8] = {
         ["clones"] = {
@@ -235,30 +242,94 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137486;
-        ["displayId"] = 85287;
-        ["name"] = "Queen Patlaa";
         ["health"] = 470912;
+        ["count"] = 0;
+        ["displayId"] = 85287;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["scale"] = 1;
-        ["count"] = 0;
+        ["name"] = "Queen Patlaa";
     };
     [16] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -289.82565234156;
-                ["x"] = 456.03280038038;
+                ["y"] = -292.70994846155;
+                ["x"] = 450.42818474658;
+                ["g"] = 26;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -293.03254728421;
+                ["x"] = 462.04110555397;
+                ["teeming"] = true;
+                ["g"] = 26;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -154.52287652609;
+                ["x"] = 435.79581678115;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -154.52287652609;
+                        ["x"] = 435.79581678115;
+                    };
+                    [2] = {
+                        ["y"] = -165.52340305175;
+                        ["x"] = 448.56290445001;
+                    };
+                    [3] = {
+                        ["y"] = -168.21570521217;
+                        ["x"] = 480.1013389141;
+                    };
+                    [4] = {
+                        ["y"] = -165.52340305175;
+                        ["x"] = 448.56290445001;
+                    };
+                    [5] = {
+                        ["y"] = -154.52287652609;
+                        ["x"] = 435.79581678115;
+                    };
+                    [6] = {
+                        ["y"] = -140.15923724727;
+                        ["x"] = 431.0685438846;
+                    };
+                    [7] = {
+                        ["y"] = -127.66456407374;
+                        ["x"] = 429.56321964007;
+                    };
+                    [8] = {
+                        ["y"] = -120.54920056281;
+                        ["x"] = 440.14015104888;
+                    };
+                    [9] = {
+                        ["y"] = -103.43379511228;
+                        ["x"] = 441.29397950501;
+                    };
+                    [10] = {
+                        ["y"] = -120.54920056281;
+                        ["x"] = 440.14015104888;
+                    };
+                    [11] = {
+                        ["y"] = -127.66456407374;
+                        ["x"] = 429.56321964007;
+                    };
+                    [12] = {
+                        ["y"] = -140.15923724727;
+                        ["x"] = 431.0685438846;
+                    };
+                };
+                ["teeming"] = true;
                 ["sublevel"] = 1;
             };
         };
         ["id"] = 134739;
-        ["displayId"] = 83836;
-        ["count"] = 0;
         ["name"] = "Purification Construct";
+        ["health"] = 706368;
+        ["displayId"] = 83836;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1.2;
-        ["health"] = 706368;
+        ["count"] = 0;
     };
     [17] = {
         ["clones"] = {
@@ -274,13 +345,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137969;
-        ["displayId"] = 85677;
-        ["count"] = 0;
         ["name"] = "Interment Construct";
+        ["health"] = 588640;
+        ["displayId"] = 85677;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1;
-        ["health"] = 588640;
+        ["count"] = 0;
     };
     [9] = {
         ["clones"] = {
@@ -292,13 +363,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137484;
-        ["displayId"] = 85284;
-        ["name"] = "King A'akul";
         ["health"] = 765232;
+        ["count"] = 0;
+        ["displayId"] = 85284;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["scale"] = 1;
-        ["count"] = 0;
+        ["name"] = "King A'akul";
     };
     [18] = {
         ["clones"] = {
@@ -309,16 +380,34 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134993;
-        ["displayId"] = 83529;
         ["isBoss"] = true;
         ["encounterID"] = 2171;
         ["instanceID"] = 1041;
-        ["health"] = 2060240;
         ["count"] = 0;
+        ["health"] = 2060240;
+        ["displayId"] = 83529;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Mchimba the Embalmer";
         ["scale"] = 1;
+    };
+    [15] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -425.39626051626;
+                ["x"] = 548.07059910979;
+                ["g"] = 11;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "Queen Wasi";
+        ["displayId"] = 85274;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["id"] = 137478;
+        ["health"] = 470912;
     };
     [5] = {
         ["clones"] = {
@@ -360,13 +449,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["health"] = 294320;
         ["count"] = 0;
+        ["name"] = "Shadow-Borne Warrior";
+        ["displayId"] = 83363;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 134157;
-        ["displayId"] = 83363;
-        ["name"] = "Shadow-Borne Warrior";
+        ["health"] = 294320;
     };
     [10] = {
         ["clones"] = {
@@ -382,27 +471,41 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 9;
                 ["sublevel"] = 1;
             };
-            [4] = {
-                ["y"] = -459.59492148032;
-                ["x"] = 528.1635677677;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
             [3] = {
                 ["y"] = -452.52344758657;
                 ["x"] = 527.69851004025;
                 ["g"] = 9;
                 ["sublevel"] = 1;
             };
+            [4] = {
+                ["y"] = -459.59492148032;
+                ["x"] = 528.1635677677;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -447.94700576529;
+                ["x"] = 524.89757341655;
+                ["teeming"] = true;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -447.94700576529;
+                ["x"] = 518.17881544181;
+                ["teeming"] = true;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
         };
         ["id"] = 137485;
-        ["displayId"] = 85285;
-        ["name"] = "Bloodsworn Agent";
         ["health"] = 294320;
+        ["count"] = 0;
+        ["displayId"] = 85285;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["count"] = 0;
+        ["name"] = "Bloodsworn Agent";
     };
     [20] = {
         ["clones"] = {
@@ -431,44 +534,46 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -319.12502092145;
-                ["x"] = 368.04250982844;
-                ["g"] = 17;
+                ["y"] = -323.47662382868;
+                ["x"] = 367.75409053435;
+                ["g"] = 27;
                 ["sublevel"] = 1;
             };
             [5] = {
                 ["y"] = -343.09623270224;
                 ["x"] = 363.2796783636;
-                ["g"] = 18;
+                ["g"] = 29;
                 ["sublevel"] = 1;
             };
         };
         ["scale"] = 1;
-        ["health"] = 353184;
         ["count"] = 0;
+        ["name"] = "Spectral Berserker";
+        ["displayId"] = 84112;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 135167;
-        ["displayId"] = 84112;
-        ["name"] = "Spectral Berserker";
+        ["health"] = 353184;
     };
-    [15] = {
+    [30] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -425.39626051626;
-                ["x"] = 548.07059910979;
-                ["g"] = 11;
+                ["y"] = -264.67742362195;
+                ["x"] = 138.54486286561;
                 ["sublevel"] = 1;
             };
         };
+        ["id"] = 136160;
+        ["isBoss"] = true;
+        ["encounterID"] = 2172;
+        ["instanceID"] = 1041;
         ["scale"] = 1;
-        ["health"] = 470912;
         ["count"] = 0;
+        ["displayId"] = 84352;
         ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 137478;
-        ["displayId"] = 85274;
-        ["name"] = "Queen Wasi";
+        ["level"] = 122;
+        ["name"] = "King Dazar";
+        ["health"] = 2295696;
     };
     [21] = {
         ["clones"] = {
@@ -487,7 +592,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [4] = {
                 ["y"] = -305.34123741919;
                 ["x"] = 374.79926462779;
-                ["g"] = 17;
+                ["g"] = 28;
                 ["sublevel"] = 1;
             };
             [3] = {
@@ -498,13 +603,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["health"] = 294320;
         ["count"] = 0;
+        ["name"] = "Spectral Witch Doctor";
+        ["displayId"] = 84163;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135239;
-        ["displayId"] = 84163;
-        ["name"] = "Spectral Witch Doctor";
+        ["health"] = 294320;
     };
     [11] = {
         ["clones"] = {
@@ -516,13 +621,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134251;
-        ["displayId"] = 83517;
-        ["name"] = "Seneschal M'bara";
         ["health"] = 470912;
+        ["count"] = 0;
+        ["displayId"] = 83517;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1;
-        ["count"] = 0;
+        ["name"] = "Seneschal M'bara";
     };
     [22] = {
         ["clones"] = {
@@ -613,15 +718,35 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 };
                 ["sublevel"] = 1;
             };
+            [2] = {
+                ["y"] = -122.24355092931;
+                ["x"] = 367.74162815005;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -337.10588758322;
+                ["x"] = 378.53477869393;
+                ["teeming"] = true;
+                ["g"] = 18;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -335.6513462781;
+                ["x"] = 358.5347947838;
+                ["teeming"] = true;
+                ["g"] = 29;
+                ["sublevel"] = 1;
+            };
         };
         ["scale"] = 1;
-        ["health"] = 588640;
         ["count"] = 0;
+        ["name"] = "Spectral Brute";
+        ["displayId"] = 85125;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 135231;
-        ["displayId"] = 85125;
-        ["name"] = "Spectral Brute";
+        ["health"] = 588640;
     };
     [3] = {
         ["clones"] = {
@@ -645,13 +770,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["health"] = 441480;
         ["count"] = 0;
+        ["name"] = "Shadow-Borne Witch Doctor";
+        ["displayId"] = 83371;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134174;
-        ["displayId"] = 83371;
-        ["name"] = "Shadow-Borne Witch Doctor";
+        ["health"] = 441480;
     };
     [6] = {
         ["clones"] = {
@@ -662,12 +787,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135322;
-        ["displayId"] = 84202;
         ["isBoss"] = true;
         ["encounterID"] = 2165;
         ["instanceID"] = 1041;
-        ["health"] = 2060240;
         ["count"] = 0;
+        ["health"] = 2060240;
+        ["displayId"] = 84202;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
         ["name"] = "The Golden Serpent";
@@ -683,13 +808,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137473;
-        ["displayId"] = 85270;
-        ["name"] = "Guard Captain Atu";
         ["health"] = 478270;
+        ["count"] = 0;
+        ["displayId"] = 85270;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["scale"] = 1;
-        ["count"] = 0;
+        ["name"] = "Guard Captain Atu";
     };
     [24] = {
         ["clones"] = {
@@ -705,6 +830,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 14;
                 ["sublevel"] = 1;
             };
+            [4] = {
+                ["y"] = -319.65113478992;
+                ["x"] = 361.1921892781;
+                ["teeming"] = true;
+                ["g"] = 27;
+                ["sublevel"] = 1;
+            };
             [3] = {
                 ["y"] = -260.40448798552;
                 ["x"] = 364.12400057492;
@@ -713,13 +845,199 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["health"] = 294320;
         ["count"] = 0;
+        ["name"] = "Honored Raptor";
+        ["displayId"] = 84133;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135192;
-        ["displayId"] = 84133;
-        ["name"] = "Honored Raptor";
+        ["health"] = 294320;
+    };
+    [23] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -187.22974113695;
+                ["x"] = 364.05986661838;
+                ["g"] = 14;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -269.58804107506;
+                ["x"] = 364.46537713183;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -320.40112337237;
+                ["x"] = 374.69217688127;
+                ["teeming"] = true;
+                ["g"] = 27;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "Spectral Beastmaster";
+        ["displayId"] = 84112;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["id"] = 135235;
+        ["health"] = 279604;
+    };
+    [25] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -313.17907623408;
+                ["x"] = 374.52899072422;
+                ["g"] = 28;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -312.90879073176;
+                ["x"] = 360.74523041944;
+                ["g"] = 17;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["name"] = "Spectral Headhunter";
+        ["health"] = 95654;
+        ["displayId"] = 84026;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["id"] = 134994;
+        ["count"] = 0;
+    };
+    [13] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -459.67649699281;
+                ["x"] = 548.0568362321;
+                ["g"] = 10;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "King Rahu'ai";
+        ["displayId"] = 83544;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["id"] = 134331;
+        ["health"] = 470912;
+    };
+    [26] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -452.64135913698;
+                ["x"] = 368.54412153426;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["isBoss"] = true;
+        ["encounterID"] = 2170;
+        ["instanceID"] = 1041;
+        ["id"] = 135472;
+        ["count"] = 0;
+        ["displayId"] = 84271;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["health"] = 1059552;
+        ["name"] = "Zanazal the Wise";
+    };
+    [7] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -431.61883843803;
+                ["x"] = 525.57585072102;
+                ["g"] = 8;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -433.41881831972;
+                ["x"] = 520.41075946472;
+                ["teeming"] = true;
+                ["g"] = 8;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -432.185937208;
+                ["x"] = 515.75322296867;
+                ["teeming"] = true;
+                ["g"] = 8;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 137487;
+        ["health"] = 294320;
+        ["count"] = 0;
+        ["displayId"] = 33733;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["scale"] = 0.8;
+        ["name"] = "Skeletal Hunting Raptor";
+    };
+    [27] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -443.23180510135;
+                ["x"] = 392.4457697218;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 135475;
+        ["isBoss"] = true;
+        ["encounterID"] = 2170;
+        ["instanceID"] = 1041;
+        ["scale"] = 1;
+        ["health"] = 1059552;
+        ["displayId"] = 84272;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["name"] = "Kula the Butcher";
+        ["count"] = 0;
+    };
+    [14] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -430.9731833347;
+                ["x"] = 544.60908072961;
+                ["g"] = 11;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "King Timalji";
+        ["displayId"] = 85272;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["id"] = 137474;
+        ["health"] = 470912;
+    };
+    [28] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -443.04952612989;
+                ["x"] = 344.87061736905;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 135470;
+        ["isBoss"] = true;
+        ["encounterID"] = 2170;
+        ["instanceID"] = 1041;
+        ["scale"] = 1;
+        ["health"] = 1059552;
+        ["displayId"] = 84269;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["name"] = "Aka'ali the Conqueror";
+        ["count"] = 0;
     };
     [19] = {
         ["clones"] = {
@@ -755,178 +1073,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["health"] = 264888;
         ["count"] = 0;
+        ["name"] = "Spectral Hex Priest";
+        ["displayId"] = 84140;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135204;
-        ["displayId"] = 84140;
-        ["name"] = "Spectral Hex Priest";
-    };
-    [25] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -313.17907623408;
-                ["x"] = 374.52899072422;
-                ["g"] = 17;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -312.90879073176;
-                ["x"] = 360.74523041944;
-                ["g"] = 17;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["count"] = 0;
-        ["name"] = "Spectral Headhunter";
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 134994;
-        ["displayId"] = 84026;
-        ["health"] = 95654;
-    };
-    [13] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -459.67649699281;
-                ["x"] = 548.0568362321;
-                ["g"] = 10;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["health"] = 470912;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 134331;
-        ["displayId"] = 83544;
-        ["name"] = "King Rahu'ai";
-    };
-    [26] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -452.64135913698;
-                ["x"] = 368.54412153426;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["isBoss"] = true;
-        ["encounterID"] = 2170;
-        ["instanceID"] = 1041;
-        ["id"] = 135472;
-        ["displayId"] = 84271;
-        ["name"] = "Zanazal the Wise";
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["health"] = 1059552;
-        ["count"] = 0;
-    };
-    [23] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -187.22974113695;
-                ["x"] = 364.05986661838;
-                ["g"] = 14;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -269.58804107506;
-                ["x"] = 364.46537713183;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["health"] = 279604;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 135235;
-        ["displayId"] = 84112;
-        ["name"] = "Spectral Beastmaster";
-    };
-    [7] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -431.61883843803;
-                ["x"] = 525.57585072102;
-                ["g"] = 8;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 137487;
-        ["displayId"] = 33733;
-        ["name"] = "Skeletal Hunting Raptor";
-        ["health"] = 294320;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["scale"] = 0.8;
-        ["count"] = 0;
-    };
-    [14] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -430.9731833347;
-                ["x"] = 544.60908072961;
-                ["g"] = 11;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["health"] = 470912;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 137474;
-        ["displayId"] = 85272;
-        ["name"] = "King Timalji";
-    };
-    [28] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -443.04952612989;
-                ["x"] = 344.87061736905;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 135470;
-        ["displayId"] = 84269;
-        ["isBoss"] = true;
-        ["encounterID"] = 2170;
-        ["instanceID"] = 1041;
-        ["scale"] = 1;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "Aka'ali the Conqueror";
-        ["health"] = 1059552;
-    };
-    [27] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -443.23180510135;
-                ["x"] = 392.4457697218;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 135475;
-        ["displayId"] = 84272;
-        ["isBoss"] = true;
-        ["encounterID"] = 2170;
-        ["instanceID"] = 1041;
-        ["scale"] = 1;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "Kula the Butcher";
-        ["health"] = 1059552;
+        ["health"] = 264888;
     };
     [29] = {
         ["clones"] = {
@@ -937,35 +1090,131 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1.2;
-        ["health"] = 1000688;
         ["count"] = 0;
+        ["name"] = "Shadow of Zul";
+        ["displayId"] = 85860;
         ["creatureType"] = "Humanoid";
         ["level"] = -1;
         ["id"] = 138489;
-        ["displayId"] = 85860;
-        ["name"] = "Shadow of Zul";
+        ["health"] = 1000688;
     };
-    [30] = {
+    [31] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -264.67742362195;
-                ["x"] = 138.54486286561;
+                ["y"] = -150.52339378653;
+                ["x"] = 430.10136855165;
+                ["g"] = 20;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -151.4849450098;
+                ["x"] = 441.25521418853;
+                ["g"] = 20;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -163.40800686645;
+                ["x"] = 431.83212774174;
+                ["g"] = 20;
+                ["sublevel"] = 1;
+            };
+            [8] = {
+                ["y"] = -170.1560238531;
+                ["x"] = 420.42490764921;
+                ["g"] = 22;
+                ["sublevel"] = 1;
+            };
+            [16] = {
+                ["y"] = -112.23817582473;
+                ["x"] = 445.24638463891;
+                ["g"] = 25;
+                ["sublevel"] = 1;
+            };
+            [17] = {
+                ["y"] = -118.42239388716;
+                ["x"] = 445.37796530849;
+                ["g"] = 25;
+                ["sublevel"] = 1;
+            };
+            [9] = {
+                ["y"] = -174.57461782382;
+                ["x"] = 423.44816403468;
+                ["g"] = 22;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -157.12851357868;
+                ["x"] = 428.17379966119;
+                ["g"] = 20;
+                ["sublevel"] = 1;
+            };
+            [10] = {
+                ["y"] = -138.10193453494;
+                ["x"] = 416.82675422692;
+                ["g"] = 23;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -138.10193453494;
+                ["x"] = 421.6093707841;
+                ["g"] = 23;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -160.71570470603;
+                ["x"] = 439.33214475378;
+                ["g"] = 20;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -172.59592291074;
+                ["x"] = 454.6196161264;
+                ["g"] = 21;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -143.31932084543;
+                ["x"] = 418.78328342278;
+                ["g"] = 23;
+                ["sublevel"] = 1;
+            };
+            [13] = {
+                ["y"] = -118.6855326393;
+                ["x"] = 424.85164060479;
+                ["g"] = 24;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -173.95538022775;
+                ["x"] = 459.85519814966;
+                ["g"] = 21;
+                ["sublevel"] = 1;
+            };
+            [14] = {
+                ["y"] = -123.42238592338;
+                ["x"] = 425.90427466792;
+                ["g"] = 24;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["y"] = -114.8697553358;
+                ["x"] = 440.64111767117;
+                ["g"] = 25;
                 ["sublevel"] = 1;
             };
         };
-        ["id"] = 136160;
-        ["displayId"] = 84352;
-        ["isBoss"] = true;
-        ["encounterID"] = 2172;
-        ["instanceID"] = 1041;
-        ["scale"] = 1;
-        ["health"] = 2295696;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "King Dazar";
+        ["scale"] = 0.7;
+        ["health"] = 176592;
         ["count"] = 0;
+        ["displayId"] = 33008;
+        ["creatureType"] = "Aberration";
+        ["level"] = 120;
+        ["id"] = 137989;
+        ["name"] = "Embalming Fluid";
     };
 };
+
+
 
 
 

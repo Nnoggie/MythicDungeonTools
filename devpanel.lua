@@ -195,9 +195,9 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
                         MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
                     end
-                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
                     local posx,posy = 300,-200
-                    tinsert(links,{x=posx,y=posy,template="MapLinkPinTemplate",type="tdprisonkey"})
+                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="tdprisonkey"})
                     MethodDungeonTools:POI_UpdateAll()
                 end,
             },
@@ -208,9 +208,9 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
                         MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
                     end
-                    local links = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
                     local posx,posy = 300,-200
-                    tinsert(links,{x=posx,y=posy,template="MapLinkPinTemplate",type="heavyCannon"})
+                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="heavyCannon"})
                     MethodDungeonTools:POI_UpdateAll()
                 end,
             },
@@ -497,6 +497,19 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end)
         container:AddChild(neutralCheckbox)
 
+        --upstairs
+        local upstairsCheckbox = AceGUI:Create("CheckBox")
+        upstairsCheckbox:SetLabel("Upstairs")
+        upstairsCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            if currentBlip then
+                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].upstairs = value or nil
+                MethodDungeonTools:UpdateMap()
+            end
+        end)
+        container:AddChild(upstairsCheckbox)
+
         --infested
 
 
@@ -512,6 +525,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             stealthDetectCheckbox:SetValue(currentBlip.stealthDetect)
             stealthCheckbox:SetValue(currentBlip.stealth)
             neutralCheckbox:SetValue(currentBlip.neutral)
+            upstairsCheckbox:SetValue(currentBlip.upstairs)
         else
             cloneGroup:SetText(currentCloneGroup)
         end
@@ -536,25 +550,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end
 
     local function DrawGroup3(container)
-        local bossEnemyIndex = AceGUI:Create("EditBox")
-        bossEnemyIndex:SetLabel("Boss Index")
-        bossEnemyIndex:SetText(1)
-        bossEnemyIndex:SetCallback("OnEnterPressed",function(widget,callbackName,text)
-            currentBossEnemyIdx = tonumber(text) and tonumber(text) or 1
-        end)
-        container:AddChild(bossEnemyIndex)
 
-        local button2 = AceGUI:Create("Button")
-        button2:SetText("Export to LUA")
-        button2:SetCallback("OnClick",function()
-            local export = tshow(MethodDungeonTools.dungeonBosses[db.currentDungeonIdx],"MethodDungeonTools.dungeonBosses[dungeonIndex]")
-            MethodDungeonTools.main_frame.ExportFrame:Show()
-            MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-            MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
-            MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-            MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
-        end)
-        container:AddChild(button2)
 
     end
 

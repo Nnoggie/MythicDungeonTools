@@ -1,5 +1,6 @@
 --- DateTime: 23.06.2018 17:18
 local MethodDungeonTools = MethodDungeonTools
+local AceGUI = LibStub("AceGUI-3.0")
 local db
 local tonumber,tinsert,slen,pairs,ipairs,tostring,next,type,sformat,tremove = tonumber,table.insert,string.len,pairs,ipairs,tostring,next,type,string.format,table.remove
 local UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel = UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel
@@ -132,6 +133,60 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:Hide()
         end)
     end
+    if type == "mlFrackingTotem" then
+        frame:SetSize(12,12)
+        frame.Texture:SetSize(12,12)
+        frame.HighlightTexture:SetSize(12,12)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Fracking Totem\nUsable by players\nIncapacitates Earthrager for 1min - Breaks on Damage")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
+    if type == "mlMineCart" then
+        frame:SetSize(12,12)
+        frame.Texture:SetSize(12,12)
+        frame.HighlightTexture:SetSize(12,12)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Mine Cart\nUsable by players")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
+    if type == "tuSkip" then
+        frame:SetSize(12,12)
+        frame.Texture:SetSize(12,12)
+        frame.HighlightTexture:SetSize(12,12)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:SetText("Shortcut\nUnlocks after killing Sporecaller Zancha")
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
     if type == "templeEye" then
         frame:SetSize(20,20)
         frame.Texture:SetSize(20,20)
@@ -161,7 +216,7 @@ local function POI_SetOptions(frame,type,poi)
         end)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:SetText("Untainted Spirit Guide\nUnlocks after defeating ???")
+            GameTooltip:SetText("Untainted Spirit Guide\nUnlocks after defeating Purification Construct 1")
             GameTooltip:Show()
         end)
         frame:SetScript("OnLeave",function()
@@ -172,12 +227,67 @@ local function POI_SetOptions(frame,type,poi)
 end
 
 
+local selectorGroup
+local function toggleFreeholdSelector(show)
+
+    if not selectorGroup then
+        selectorGroup = AceGUI:Create("SimpleGroup")
+        MethodDungeonTools:FixAceGUIShowHide(selectorGroup)
+        selectorGroup:SetLayout("Flow")
+        local label = AceGUI:Create("Label")
+        label:SetText("  Join Crew:")
+        selectorGroup:AddChild(label)
+        local checkBoxes = {}
+        for i = 1,3 do
+            local check = AceGUI:Create("CheckBox")
+            check:SetLabel((i==1 and "Bilge Rats") or (i==2 and "Blacktooth") or (i==3 and "Cutwater"))
+            selectorGroup:AddChild(check)
+            tinsert(checkBoxes,check)
+            check:SetCallback("OnValueChanged",function(widget,callbackName,value)
+                for idx,box in ipairs(checkBoxes) do
+                    box:SetValue(idx==i and value)
+                end
+                MethodDungeonTools:GetCurrentPreset().freeholdCrew = (value and i) or nil
+                MethodDungeonTools:UpdateMap()
+            end)
+        end
+        selectorGroup.frame:ClearAllPoints()
+        selectorGroup:ClearAllPoints()
+        selectorGroup:SetWidth(120)
+        selectorGroup:SetHeight(90)
+        selectorGroup.frame:SetPoint("TOPRIGHT",MethodDungeonTools.main_frame,"TOPRIGHT",0,0)
+
+        local function updateCheckboxStates()
+            for idx,box in ipairs(checkBoxes) do
+                local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew
+                box:SetValue(crew and idx==crew)
+            end
+        end
+        --hook UpdateMap
+        local originalFunc = MethodDungeonTools.UpdateMap
+        function MethodDungeonTools:UpdateMap(...)
+            originalFunc(...)
+            updateCheckboxStates()
+        end
+        updateCheckboxStates()
+
+    end
+
+    if show then
+        selectorGroup.frame:Show()
+    else
+        selectorGroup.frame:Hide()
+    end
+
+end
+
 
 ---UpdateMapLinks
 ---Draws all map links on the current sublevel
 function MethodDungeonTools:POI_UpdateAll()
-    local framePools = MethodDungeonTools.POI_framePools
     db = MethodDungeonTools:GetDB()
+    toggleFreeholdSelector(db.currentDungeonIdx == 16)
+    local framePools = MethodDungeonTools.POI_framePools
     framePools:ReleaseAll()
     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then return end
     local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
@@ -189,4 +299,5 @@ function MethodDungeonTools:POI_UpdateAll()
         poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x,poi.y)
         poiFrame:Show()
     end
+
 end

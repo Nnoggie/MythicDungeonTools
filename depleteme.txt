@@ -101,6 +101,7 @@ Belorei
 Weorn-Azralon
 Taykee-Azralon
 Squantoon
+Larkin
 
 Siege of Boralus
 Taykee-Azralon
@@ -115,8 +116,20 @@ TheTrakker
 Kugamid
 
 Kings' Rest
+Reloe
+Rodox
+Vuticos
+Canax
+Cayna
+Larkin
 
 
+Underrot
+Shaso
+
+Freehold
+Canax (Big Thanks!)
+Matrox
 
 
 

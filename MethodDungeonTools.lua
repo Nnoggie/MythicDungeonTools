@@ -152,6 +152,7 @@ local tooltipLastShown
 local dungeonEnemiesSelected = {}
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.pencilBlips = {}
+MethodDungeonTools.scaleMultiplier = {}
 
 local dungeonList = {
     [1] = "Black Rook Hold",
@@ -1550,7 +1551,11 @@ function MethodDungeonTools:MakeMapTexture(frame)
 				local tyrannical = not fortified
 				local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,data.health,db.currentDifficulty)
 				local group = data.g and " (G "..data.g..")" or ""
-				local text = "\n\n"..data.name.." "..data.cloneIdx..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
+                local upstairs = data.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
+				--[[
+				    function CreateAtlasMarkup(atlasName, height, width, offsetX, offsetY) return ("|A:%s:%d:%d:%d:%d|a"):format( atlasName , height or 0 , width or 0 , offsetX or 0 , offsetY or 0 );end
+				]]
+                local text = upstairs..data.name.." "..data.cloneIdx..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
                 text = text .."Enemy Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
                 tooltip.String:SetText(text)
 				tooltip.String:Show()
@@ -1752,6 +1757,41 @@ function MethodDungeonTools:DisplayEncounterInformation(encounterID)
 
 end
 
+---Frehold Crews
+local freeholdCrews = {
+    [1] = {
+        [129550] = true,
+        [129527] = true,
+        [129600] = true,
+        [129526] = true,
+        [126848] = true,
+    },
+    [2] = {
+       [129548] = true,
+       [129529] = true,
+       [129547] = true,
+       [126847] = true,
+    },
+    [3] = {
+        [129559] = true,
+        [129599] = true,
+        [126845] = true,
+        [129601] = true,
+    },
+}
+local function freeholdCrewOverride(blip)
+    local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew
+    if not crew then return end
+    for npcId,_ in pairs(freeholdCrews[crew]) do
+        if blip.id == npcId then
+            blip:SetDesaturated(1)
+            blip:SetAlpha(0.3)
+            blip.border:SetDesaturated(1)
+            blip.border:SetAlpha(0.3)
+        end
+    end
+end
+
 
 
 local defaultBlipColor = {r=1,g=1,b=1,a=0.8}
@@ -1807,6 +1847,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                         if not blip.color then
                             blip.color = defaultBlipColor
                         end
+                        blip:SetDesaturated(nil)
 
 						dungeonEnemyBlips[idx].cloneIdx = cloneIdx
 						dungeonEnemyBlips[idx].enemyIdx = enemyIdx
@@ -1815,6 +1856,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 						dungeonEnemyBlips[idx].stealth = data.stealth
 						dungeonEnemyBlips[idx].stealthDetect = data.stealthDetect
 						dungeonEnemyBlips[idx].neutral = data.neutral
+						dungeonEnemyBlips[idx].upstairs = clone.upstairs
 						dungeonEnemyBlips[idx].teeming = clone.teeming
 						dungeonEnemyBlips[idx].sublevel = clone.sublevel or 1
 						dungeonEnemyBlips[idx].creatureType = data["creatureType"]
@@ -1825,7 +1867,7 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                         SetPortraitTextureFromCreatureDisplayID(dungeonEnemyBlips[idx],data.displayId or 39490)
 						dungeonEnemyBlips[idx]:SetAlpha(1)
                         --scale up blip if this is a boss
-                        dungeonEnemyBlips[idx].scale = data["scale"]*(dungeonEnemyBlips[idx].isBoss and 1.7 or 1)
+                        dungeonEnemyBlips[idx].scale = data["scale"]*(dungeonEnemyBlips[idx].isBoss and 1.7 or 1) * (MethodDungeonTools.scaleMultiplier[db.currentDungeonIdx] or 1)
                         dungeonEnemyBlips[idx].storedSize = 8*dungeonEnemyBlips[idx].scale
 						dungeonEnemyBlips[idx]:SetSize(dungeonEnemyBlips[idx].storedSize,dungeonEnemyBlips[idx].storedSize)
 						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
@@ -1839,6 +1881,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                         dungeonEnemyBlips[idx].border.storedSize = 12*dungeonEnemyBlips[idx].scale
                         dungeonEnemyBlips[idx].border:SetSize(dungeonEnemyBlips[idx].border.storedSize,dungeonEnemyBlips[idx].border.storedSize)
                         dungeonEnemyBlips[idx].border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.border)
+                        dungeonEnemyBlips[idx].border:SetAlpha(1)
+                        dungeonEnemyBlips[idx].border:SetDesaturated(nil)
                         dungeonEnemyBlips[idx].border:Show()
 
                         dungeonEnemyBlips[idx].highlight = dungeonEnemyBlips[idx].highlight or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
@@ -1869,6 +1913,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
                         dungeonEnemyBlips[idx].highlight3:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight3)
                         dungeonEnemyBlips[idx].highlight3:SetVertexColor(1,1,1,0.75)
                         dungeonEnemyBlips[idx].highlight3:Hide()
+
+
 
                         blip.dragon = blip.dragon or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
                         blip.dragon:SetAtlas("worldquest-questmarker-dragon")
@@ -1975,6 +2021,8 @@ function MethodDungeonTools:UpdateDungeonEnemies()
 							end
 							dungeonEnemyBlips[idx].patrolActive = true
 						end
+                        --freehold
+                        if db.currentDungeonIdx == 16 then freeholdCrewOverride(blip) end
 
 						idx = idx + 1
 					end
@@ -3166,10 +3214,10 @@ function initFrames()
 		tooltip.String:SetJustifyH("LEFT")
 		tooltip.String:SetJustifyV("CENTER")
 		tooltip.String:SetWidth(tooltip:GetWidth())
-		tooltip.String:SetHeight(80)
+		tooltip.String:SetHeight(60)
 		tooltip.String:SetWidth(120)
 		tooltip.String:SetText(" ");
-		tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -7)
+		tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -27)
 		tooltip.String:Show();
 	end
 
