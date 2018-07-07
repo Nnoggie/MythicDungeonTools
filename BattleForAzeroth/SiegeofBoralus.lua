@@ -100,10 +100,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Kul Tiran Halberd";
-        ["displayId"] = 84074;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 141283;
+        ["displayId"] = 84074;
         ["health"] = 294320;
     };
     [2] = {
@@ -286,10 +286,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.5;
         ["count"] = 0;
         ["name"] = "Kul Tiran Footman";
-        ["displayId"] = 86025;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 141495;
+        ["displayId"] = 86025;
         ["health"] = 95654;
     };
     [4] = {
@@ -331,10 +331,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Kul Tiran Marksman";
-        ["displayId"] = 88463;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 141285;
+        ["displayId"] = 88463;
         ["health"] = 264888;
     };
     [8] = {
@@ -349,10 +349,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Kul Tiran Marksman";
         ["health"] = 294320;
-        ["displayId"] = 88463;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 132532;
+        ["displayId"] = 88463;
         ["count"] = 0;
     };
     [16] = {
@@ -409,9 +409,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 128969;
+        ["displayId"] = 84067;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 84067;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["scale"] = 0.8;
@@ -426,12 +426,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 128652;
+        ["displayId"] = 87990;
         ["isBoss"] = true;
         ["encounterID"] = 2140;
         ["instanceID"] = 1023;
         ["scale"] = 1;
         ["health"] = 2943200;
-        ["displayId"] = 87990;
         ["creatureType"] = "Aberration";
         ["level"] = 122;
         ["name"] = "Viq'Goth";
@@ -504,9 +504,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 137521;
+        ["displayId"] = 85144;
         ["health"] = 58864;
         ["count"] = 0;
-        ["displayId"] = 85144;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -522,9 +522,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129373;
+        ["displayId"] = 84143;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 84143;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -552,9 +552,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 138255;
+        ["displayId"] = 86436;
         ["name"] = "Ashvane Spotter";
         ["health"] = 294320;
-        ["displayId"] = 86436;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["scale"] = 0.7;
@@ -587,12 +587,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 128651;
+        ["displayId"] = 67541;
         ["isBoss"] = true;
         ["encounterID"] = 2134;
         ["instanceID"] = 1023;
         ["count"] = 0;
         ["health"] = 2060240;
-        ["displayId"] = 67541;
         ["creatureType"] = "Giant";
         ["level"] = 122;
         ["name"] = "Hadal Darkfathom";
@@ -694,10 +694,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.5;
         ["health"] = 58864;
         ["count"] = 0;
-        ["displayId"] = 86025;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 141565;
+        ["displayId"] = 86025;
         ["name"] = "Kul Tiran Footman";
     };
     [10] = {
@@ -710,9 +710,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129640;
+        ["displayId"] = 30222;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 30222;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -742,10 +742,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Ashvane Deckhand";
-        ["displayId"] = 84385;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 138464;
+        ["displayId"] = 84385;
         ["health"] = 294320;
     };
     [30] = {
@@ -769,10 +769,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Ashvane Destroyer";
         ["health"] = 294320;
-        ["displayId"] = 82852;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 137517;
+        ["displayId"] = 82852;
         ["count"] = 0;
     };
     [21] = {
@@ -787,10 +787,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Ashvane Cannoneer";
-        ["displayId"] = 88542;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 138465;
+        ["displayId"] = 88542;
         ["health"] = 294320;
     };
     [11] = {
@@ -806,9 +806,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129371;
+        ["displayId"] = 86085;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 86085;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -823,12 +823,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129208;
+        ["displayId"] = 88579;
         ["isBoss"] = true;
         ["encounterID"] = 2173;
         ["instanceID"] = 1023;
         ["count"] = 0;
         ["health"] = 1442168;
-        ["displayId"] = 88579;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Dread Captain Lockwood";
@@ -864,10 +864,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Kul Tiran Wavetender";
-        ["displayId"] = 81778;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 141284;
+        ["displayId"] = 81778;
         ["health"] = 235455;
     };
     [6] = {
@@ -880,12 +880,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 128649;
+        ["displayId"] = 84382;
         ["isBoss"] = true;
         ["encounterID"] = 2133;
         ["instanceID"] = 1023;
         ["scale"] = 0.8;
         ["count"] = 0;
-        ["displayId"] = 84382;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Sergeant Bainbridge";
@@ -901,9 +901,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129372;
+        ["displayId"] = 84136;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 84136;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -1008,10 +1008,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 588640;
         ["count"] = 0;
-        ["displayId"] = 68059;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 135245;
+        ["displayId"] = 68059;
         ["name"] = "Bilge Rat Demolisher";
     };
     [15] = {
@@ -1045,9 +1045,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129370;
+        ["displayId"] = 79077;
         ["health"] = 235455;
         ["count"] = 0;
-        ["displayId"] = 79077;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
@@ -1093,10 +1093,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 52277;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 135241;
+        ["displayId"] = 52277;
         ["name"] = "Bilge Rat Pillager";
     };
     [13] = {
@@ -1120,9 +1120,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129369;
+        ["displayId"] = 84134;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 84134;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["scale"] = 0.7;
@@ -1152,10 +1152,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["health"] = 235455;
         ["count"] = 0;
-        ["displayId"] = 80475;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129367;
+        ["displayId"] = 80475;
         ["name"] = "Bilge Rat Tempest";
     };
     [27] = {
@@ -1176,10 +1176,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Bilge Rat Cutthroat";
         ["health"] = 235456;
-        ["displayId"] = 80319;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 137511;
+        ["displayId"] = 80319;
         ["count"] = 0;
     };
     [7] = {
@@ -1194,10 +1194,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Kul Tiran Vanguard";
         ["health"] = 294320;
-        ["displayId"] = 84074;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 132530;
+        ["displayId"] = 84074;
         ["count"] = 0;
     };
     [14] = {
@@ -1325,9 +1325,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135258;
+        ["displayId"] = 79068;
         ["health"] = 58864;
         ["count"] = 0;
-        ["displayId"] = 79068;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.5;
@@ -1381,10 +1381,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Ashvane Sniper";
         ["health"] = 294320;
-        ["displayId"] = 82843;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 128967;
+        ["displayId"] = 82843;
         ["count"] = 0;
     };
     [23] = {
@@ -1483,10 +1483,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 81424;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129366;
+        ["displayId"] = 81424;
         ["name"] = "Bilge Rat Buccaneer";
     };
     [29] = {
@@ -1525,10 +1525,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Ashvane Invader";
         ["health"] = 294320;
-        ["displayId"] = 79889;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 137516;
+        ["displayId"] = 79889;
         ["count"] = 0;
     };
     [5] = {
@@ -1687,10 +1687,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.5;
         ["count"] = 0;
         ["name"] = "Scrimshaw Gutter";
-        ["displayId"] = 83892;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 141566;
+        ["displayId"] = 83892;
         ["health"] = 58864;
     };
 };

@@ -97,10 +97,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Dazar'ai Honor Guard";
-        ["displayId"] = 81326;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 127799;
+        ["displayId"] = 81326;
         ["health"] = 294320;
     };
     [2] = {
@@ -196,10 +196,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Dazar'ai Juggernaut";
-        ["displayId"] = 81325;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 122971;
+        ["displayId"] = 81325;
         ["health"] = 338468;
     };
     [4] = {
@@ -256,10 +256,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Dazar'ai Augur";
-        ["displayId"] = 81336;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 122972;
+        ["displayId"] = 81336;
         ["health"] = 294320;
     };
     [8] = {
@@ -349,10 +349,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 122970;
+        ["displayId"] = 84712;
         ["scale"] = 1;
         ["name"] = "Shadowblade Stalker";
         ["count"] = 0;
-        ["displayId"] = 84712;
         ["creatureType"] = "Humanoid";
         ["stealth"] = true;
         ["level"] = 120;
@@ -401,12 +401,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 122963;
+        ["displayId"] = 78188;
         ["isBoss"] = true;
         ["encounterID"] = 2083;
         ["instanceID"] = 968;
         ["scale"] = 1;
         ["health"] = 2060240;
-        ["displayId"] = 78188;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["name"] = "Rezan";
@@ -445,10 +445,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 706368;
         ["count"] = 0;
-        ["displayId"] = 80709;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 129553;
+        ["displayId"] = 80709;
         ["name"] = "Dinomancer Kish'o";
     };
     [9] = {
@@ -525,10 +525,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Reanimated Honor Guard";
         ["health"] = 323752;
-        ["displayId"] = 80376;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 127757;
+        ["displayId"] = 80376;
         ["count"] = 0;
     };
     [18] = {
@@ -543,10 +543,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 588640;
         ["count"] = 0;
-        ["displayId"] = 47659;
         ["creatureType"] = "Beast";
         ["level"] = 121;
         ["id"] = 128455;
+        ["displayId"] = 47659;
         ["name"] = "T'lonja";
     };
     [5] = {
@@ -571,10 +571,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["stealthDetect"] = true;
         ["count"] = 0;
         ["name"] = "Dazar'ai Colossus";
-        ["displayId"] = 80338;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 122984;
+        ["displayId"] = 80338;
         ["health"] = 500344;
     };
     [10] = {
@@ -626,10 +626,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
         ["name"] = "Reanimation Totem";
         ["health"] = 58864;
-        ["displayId"] = 82388;
         ["creatureType"] = "Not specified";
         ["level"] = 120;
         ["id"] = 127315;
+        ["displayId"] = 82388;
         ["count"] = 0;
     };
     [20] = {
@@ -641,12 +641,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 122968;
+        ["displayId"] = 79568;
         ["isBoss"] = true;
         ["encounterID"] = 2030;
         ["instanceID"] = 968;
         ["health"] = 2295696;
         ["count"] = 0;
-        ["displayId"] = 79568;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Yazma";
@@ -672,10 +672,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Shieldbearer of Zul";
         ["health"] = 291377;
-        ["displayId"] = 80904;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135989;
+        ["displayId"] = 80904;
         ["count"] = 0;
     };
     [11] = {
@@ -742,10 +742,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Zanchuli Witch-Doctor";
         ["health"] = 294320;
-        ["displayId"] = 80622;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 122969;
+        ["displayId"] = 80622;
         ["count"] = 0;
     };
     [3] = {
@@ -805,10 +805,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Dazar'ai Confessor";
-        ["displayId"] = 81330;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 122973;
+        ["displayId"] = 81330;
         ["health"] = 294320;
     };
     [6] = {
@@ -844,9 +844,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 132126;
+        ["displayId"] = 82238;
         ["name"] = "Gilded Priestess";
         ["health"] = 294320;
-        ["displayId"] = 82238;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -941,10 +941,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 127879;
+        ["displayId"] = 80904;
         ["stealthDetect"] = true;
         ["health"] = 291377;
         ["count"] = 0;
-        ["displayId"] = 80904;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["name"] = "Shieldbearer of Zul";
@@ -964,11 +964,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 968;
         ["health"] = 1883648;
         ["name"] = "Vol'kaal";
-        ["displayId"] = 79453;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["count"] = 0;
         ["id"] = 122965;
+        ["displayId"] = 79453;
     };
     [7] = {
         ["clones"] = {
@@ -979,12 +979,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 122967;
+        ["displayId"] = 80293;
         ["isBoss"] = true;
         ["encounterID"] = 2082;
         ["instanceID"] = 968;
         ["count"] = 0;
         ["health"] = 2648880;
-        ["displayId"] = 80293;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Priestess Alun'za";
@@ -1228,9 +1228,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 128435;
+        ["displayId"] = 81323;
         ["count"] = 0;
         ["name"] = "Toxic Saurid";
-        ["displayId"] = 81323;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["scale"] = 0.6;
@@ -1313,10 +1313,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Feasting Skyscreamer";
         ["health"] = 288434;
-        ["displayId"] = 76913;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 128434;
+        ["displayId"] = 76913;
         ["count"] = 0;
     };
     [19] = {
@@ -1331,10 +1331,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 600413;
         ["count"] = 0;
-        ["displayId"] = 76483;
         ["creatureType"] = "Beast";
         ["level"] = 121;
         ["id"] = 129552;
+        ["displayId"] = 76483;
         ["name"] = "Monzumi";
     };
 };
