@@ -395,21 +395,32 @@ end
 function MethodDungeonTools:OverrideScrollframeScripts()
     local frame = MethodDungeonTools.main_frame
     frame.scrollFrame:SetScript("OnMouseDown", function(self,button)
-        if ( button == "LeftButton") then
+        if button == "LeftButton" then
             if currentTool == "pencil" then MethodDungeonTools:StartPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StartArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StartLineDrawing() end
             if currentTool == "mover" then MethodDungeonTools:StartMovingDrawing() end
             if currentTool == "eraser" then MethodDungeonTools:StartEraserDrawing() end
         end
+        if button == "RightButton" then
+            local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+            if scrollFrame.zoomedIn then
+                scrollFrame.panning = true;
+                scrollFrame.cursorX,scrollFrame.cursorY = GetCursorPosition()
+            end
+        end
     end)
     frame.scrollFrame:SetScript("OnMouseUp", function(self,button)
-        if ( button == "LeftButton") then
+        if button == "LeftButton" then
             if currentTool == "pencil" then MethodDungeonTools:StopPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
             if currentTool == "mover" then MethodDungeonTools:StopMovingDrawing() end
             if currentTool == "eraser" then MethodDungeonTools:StopEraserDrawing() end
+        end
+        if button == "RightButton" then
+            local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
+            if scrollFrame.panning then scrollFrame.panning = false end
         end
     end)
 end

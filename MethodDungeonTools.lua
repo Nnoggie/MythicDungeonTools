@@ -5,7 +5,6 @@ local AddonName, MethodDungeonTools = ...
 
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
-local blipDrawLayer = "OVERLAY"
 
 _G["MethodDungeonTools"] = MethodDungeonTools
 
@@ -13,7 +12,6 @@ local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pair
 
 local sizex = 840
 local sizey = 555
-local buttonTextFontSize = 12
 local methodColor = "|cFFF49D38"
 local selectedGreen = {0,1,0,0.4}
 selectedGreen = {34/255,139/255,34/255,0.7}
@@ -145,14 +143,23 @@ do
     end
 end
 
-local dungeonEnemyBlips
-local numDungeonEnemyBlips = 0
-local tooltip
-local tooltipLastShown
-local dungeonEnemiesSelected = {}
 MethodDungeonTools.dungeonTotalCount = {}
-MethodDungeonTools.pencilBlips = {}
 MethodDungeonTools.scaleMultiplier = {}
+
+local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
+    [1] = {[1]=9,[2]=6,[3]=3,[4]=16},
+    [2] = {[1]=10,[2]=5,[3]=13,[4]=16},
+    [3] = {[1]=9,[2]=7,[3]=12,[4]=16},
+    [4] = {[1]=10,[2]=8,[3]=4,[4]=16},
+    [5] = {[1]=9,[2]=11,[3]=2,[4]=16},
+    [6] = {[1]=10,[2]=5,[3]=14,[4]=16},
+    [7] = {[1]=9,[2]=6,[3]=4,[4]=16},
+    [8] = {[1]=10,[2]=7,[3]=2,[4]=16},
+    [9] = {[1]=9,[2]=5,[3]=3,[4]=16},
+    [10] = {[1]=10,[2]=8,[3]=12,[4]=16},
+    [11] = {[1]=9,[2]=7,[3]=13,[4]=16},
+    [12] = {[1]=10,[2]=11,[3]=14,[4]=16},
+}
 
 local dungeonList = {
     [1] = "Black Rook Hold",
@@ -451,7 +458,7 @@ function MethodDungeonTools:ShowInterface()
 	if self.main_frame:IsShown() then
 		MethodDungeonTools:HideInterface()
 	else
-		self.main_frame:Show();
+		self.main_frame:Show()
 		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 		self.main_frame.HelpButton:Show()
 	end
@@ -475,10 +482,7 @@ function MethodDungeonTools:CreateMenu()
 	self.main_frame.closeButton:SetPoint("BOTTOMRIGHT", self.main_frame, "TOPRIGHT", 240, -2);
 	self.main_frame.closeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end)
 	self.main_frame.closeButton:SetFrameLevel(4)
-	--self.main_frame.closeButton:SetSize(32, h);#
-
 	MethodDungeonTools:SkinCloseButton()
-
 end
 
 function MethodDungeonTools:SkinCloseButton()
@@ -595,7 +599,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
     frame.bottomPanel:SetSize(frame:GetWidth(), 30)
     frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, 0)
 
-    frame.bottomPanelString = frame.topPanel:CreateFontString("MethodDungeonTools Version")
+    frame.bottomPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Version")
     frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
     frame.bottomPanelString:SetJustifyH("CENTER")
 	frame.bottomPanelString:SetJustifyV("CENTER")
@@ -689,7 +693,11 @@ function MethodDungeonTools:MakeSidePanel(frame)
 				MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)
 			end
 			db.currentPreset[db.currentDungeonIdx] = key
-			MethodDungeonTools:UpdateMap()
+            --Set affix dropdown to preset week
+            --frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek())
+			--UpdateMap is called in SetAffixWeek, no need to call twice
+            MethodDungeonTools:UpdateMap()
+            frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek() or 1)
 		end
 	end)
 	MethodDungeonTools:UpdatePresetDropDown()
@@ -792,63 +800,97 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
 
 
-	--Tyranical/Fortified toggle
-	frame.sidePanelFortifiedCheckBox = AceGUI:Create("CheckBox")
-	frame.sidePanelFortifiedCheckBox:SetLabel("Fort")
-	frame.sidePanelFortifiedCheckBox.text:SetTextHeight(10)
-	frame.sidePanelFortifiedCheckBox:SetWidth(65)
-	frame.sidePanelFortifiedCheckBox:SetHeight(15)
-	if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix then
-		if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix == "fortified" then frame.sidePanelFortifiedCheckBox:SetValue(true) end
-	end
-	frame.sidePanelFortifiedCheckBox:SetImage("Interface\\ICONS\\ability_toughness")
-	frame.sidePanelFortifiedCheckBox:SetCallback("OnValueChanged",function(widget,callbackName,value)
-		if value == true then
-			db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = "fortified"
-		elseif value == false then
-			db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = "tyrannical"
-		end
-		frame.sidePanelTyrannicalCheckBox:SetValue(not value)
-	end)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelFortifiedCheckBox)
 
+    --Week Dropdown (Infested / Affixes)
+    local function makeAffixString(week,affixes,longText)
+        local ret
+        local sep = ""
+        for _,affixID in ipairs(affixes) do
+            local name, _, filedataid = C_ChallengeMode.GetAffixInfo(affixID)
+            if longText then
+                ret = ret or ""
+                ret = ret..sep..name
+                sep = ", "
+            else
+                ret = ret or week..(week>9 and ". " or ".   ")
+                if week == MethodDungeonTools:GetCurrentAffixWeek() then
+                    ret = WrapTextInColorCode(ret, "FF00FF00")
+                end
+                ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0).."  "
+            end
+        end
+        return ret
+    end
 
-	frame.sidePanelTyrannicalCheckBox = AceGUI:Create("CheckBox")
-	frame.sidePanelTyrannicalCheckBox:SetLabel("Tyran")
-	frame.sidePanelTyrannicalCheckBox.text:SetTextHeight(10)
-	frame.sidePanelTyrannicalCheckBox:SetWidth(74)
-	frame.sidePanelTyrannicalCheckBox:SetHeight(15)
-	if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix then
-		if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix == "tyrannical" then frame.sidePanelTyrannicalCheckBox:SetValue(true) end
-	end
-	frame.sidePanelTyrannicalCheckBox:SetImage("Interface\\ICONS\\achievement_boss_archaedas")
-	frame.sidePanelTyrannicalCheckBox:SetCallback("OnValueChanged",function(widget,callbackName,value)
-		if value == true then
-			db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = "tyrannical"
-		elseif value == false then
-			db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = "fortified"
-		end
-		frame.sidePanelFortifiedCheckBox:SetValue(not value)
-	end)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelTyrannicalCheckBox)
+    local affixWeekMarkups = {}
+    for week,affixes in ipairs(affixWeeks) do
+        tinsert(affixWeekMarkups,makeAffixString(week,affixes))
+    end
 
-	frame.sidePanelTeemingCheckBox = AceGUI:Create("CheckBox")
-	frame.sidePanelTeemingCheckBox:SetLabel("Teeming")
-	frame.sidePanelTeemingCheckBox.text:SetTextHeight(10)
-	frame.sidePanelTeemingCheckBox:SetWidth(90)
-	frame.sidePanelTeemingCheckBox:SetHeight(15)
-	frame.sidePanelTeemingCheckBox:SetDisabled(false)
+    frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
+    local affixDropdown = frame.sidePanel.affixDropdown
+    affixDropdown.text:SetJustifyH("LEFT")
+    affixDropdown:SetLabel("Affixes")
 
-	if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming then
-		if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming == true then frame.sidePanelTeemingCheckBox:SetValue(true) end
-	end
-	frame.sidePanelTeemingCheckBox:SetImage("Interface\\ICONS\\spell_nature_massteleport")
-	frame.sidePanelTeemingCheckBox:SetCallback("OnValueChanged",function(widget,callbackName,value)
-		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming = value
-		MethodDungeonTools:UpdateMap()
+    function affixDropdown:SetAffixWeek(key)
+        affixDropdown:SetValue(key)
+        if MethodDungeonTools:GetCurrentAffixWeek() and MethodDungeonTools:GetCurrentAffixWeek() == key then
+            frame.sidePanel.affixWeekWarning.image:Hide()
+            frame.sidePanel.affixWeekWarning:SetDisabled(true)
+        else
+            frame.sidePanel.affixWeekWarning.image:Show()
+            frame.sidePanel.affixWeekWarning:SetDisabled(false)
+        end
+        MethodDungeonTools:GetCurrentPreset().week = key
+        local teeming = (affixWeeks[key][2] == 5) or (affixWeeks[key][3] == 5)
+        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming = teeming
+        --dont need this here as we just change teeming and infested
+        --MethodDungeonTools:UpdateMap()
+        MethodDungeonTools:DungeonEnemies_UpdateTeeming()
+        MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
+        MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-	end)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelTeemingCheckBox)
+    end
+    affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
+        affixDropdown:SetAffixWeek(key)
+    end)
+    affixDropdown:SetCallback("OnEnter",function(...)
+        local selectedWeek = affixDropdown:GetValue()
+        if not selectedWeek then return end
+        GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_LEFT",-6,-40)
+        local v = affixWeeks[selectedWeek]
+        GameTooltip:SetText(makeAffixString(nil,v,true))
+        GameTooltip:Show()
+    end)
+    affixDropdown:SetCallback("OnLeave",function(...)
+        GameTooltip:Hide()
+    end)
+    affixDropdown:SetList(affixWeekMarkups)
+    frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
+
+    --affix not current week warning
+    frame.sidePanel.affixWeekWarning = AceGUI:Create("Icon")
+    local affixWeekWarning = frame.sidePanel.affixWeekWarning
+    affixWeekWarning:SetImage("Interface\\DialogFrame\\UI-Dialog-Icon-AlertNew")
+    affixWeekWarning:SetImageSize(25,25)
+    affixWeekWarning:SetWidth(35)
+    affixWeekWarning:SetCallback("OnEnter",function(...)
+        GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_CURSOR")
+        GameTooltip:SetText("The selected affixes are not the ones of the current week")
+        GameTooltip:Show()
+    end)
+    affixWeekWarning:SetCallback("OnLeave",function(...)
+        GameTooltip:Hide()
+    end)
+    affixWeekWarning:SetCallback("OnClick",function(...)
+        if not MethodDungeonTools:GetCurrentAffixWeek() then return end
+        affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentAffixWeek())
+    end)
+    frame.sidePanel.WidgetGroup:AddChild(affixWeekWarning)
+    affixWeekWarning.image:Hide()
+    affixWeekWarning:SetDisabled(true)
+
+
 
 	--Difficulty Selection
 	frame.sidePanel.DifficultySliderLabel = AceGUI:Create("Label")
@@ -867,18 +909,16 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
 
+
 	frame.sidePanel.middleLine = AceGUI:Create("Heading")
 	frame.sidePanel.middleLine:SetWidth(240)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.middleLine)
     frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
 
 	--progress bar
-
-
 	frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioTrackerProgressBarTemplate")
 	frame.sidePanel.ProgressBar:Show()
 	frame.sidePanel.ProgressBar:SetPoint("TOP",frame.sidePanel.WidgetGroup.frame,"BOTTOM",-10,5)
-	MethodDungeonTools:Progressbar_SetValue(frame.sidePanel.ProgressBar, 50,205,205)
     MethodDungeonTools:SkinProgressBar(frame.sidePanel.ProgressBar)
 end
 
@@ -907,7 +947,7 @@ end
 
 ---Progressbar_SetValue
 ---Sets the value/progress/color of the count progressbar to the apropriate data
-function MethodDungeonTools:Progressbar_SetValue(self, pullCurrent,totalCurrent,totalMax)
+function MethodDungeonTools:Progressbar_SetValue(self,totalCurrent,totalMax)
 	local percent = (totalCurrent/totalMax)*100
 	if percent >= 102 then
 		if totalCurrent-totalMax > 8 then
@@ -921,7 +961,7 @@ function MethodDungeonTools:Progressbar_SetValue(self, pullCurrent,totalCurrent,
 		self.Bar:SetStatusBarColor(0.26,0.42,1)
 	end
 	self.Bar:SetValue(percent);
-	self.Bar.Label:SetText(pullCurrent.." - "..MethodDungeonTools:FormatEnemyForces(totalCurrent,totalMax,true));
+	self.Bar.Label:SetText(MethodDungeonTools:FormatEnemyForces(totalCurrent,totalMax,true));
 	self.AnimValue = percent;
 end
 
@@ -942,35 +982,11 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
 	end
 end
 
---Update list of selected Enemies shown in side panel
-function MethodDungeonTools:UpdateEnemiesSelected()
+---UpdateProgressbar
+---Update the progressbar on the sidepanel with the correct values
+function MethodDungeonTools:UpdateProgressbar()
 	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
-	table.wipe(dungeonEnemiesSelected)
-
-
-	for enemyIdx,clones in pairs(preset.value.pulls[preset.value.currentPull]) do
-		for k,cloneIdx in pairs(clones) do
-			local enemyName = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
-			local count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-			if not dungeonEnemiesSelected[enemyName] then dungeonEnemiesSelected[enemyName] = {} end
-			dungeonEnemiesSelected[enemyName].count = count
-			dungeonEnemiesSelected[enemyName].quantity = dungeonEnemiesSelected[enemyName].quantity or 0
-			dungeonEnemiesSelected[enemyName].quantity = dungeonEnemiesSelected[enemyName].quantity + 1
-		end
-	end
-
-	local sidePanelStringText = ""
-	local newLineString = ""
-	local currentTotalCount = 0
-	for enemyName,v in pairs(dungeonEnemiesSelected) do
-		sidePanelStringText = sidePanelStringText..newLineString..v.quantity.."x "..enemyName.."("..v.count*v.quantity..")"
-		newLineString = "\n"
-		currentTotalCount = currentTotalCount + (v.count*v.quantity)
-	end
-	sidePanelStringText = sidePanelStringText..newLineString..newLineString.."Count: "..currentTotalCount
-	self.main_frame.sidePanelString:SetText(sidePanelStringText)
-
 	local grandTotal = 0
 	for pullIdx,pull in pairs(preset.value.pulls) do
 		for enemyIdx,clones in pairs(pull) do
@@ -986,133 +1002,9 @@ function MethodDungeonTools:UpdateEnemiesSelected()
 			end
 		end
 	end
-	--count up to and including the currently selected pull
-	local pullCurrent = 0
-	for pullIdx,pull in pairs(preset.value.pulls) do
-		if pullIdx <= db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull then
-			for enemyIdx,clones in pairs(pull) do
-				for k,v in pairs(clones) do
-                    if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
-                        clones[v] = nil
-                    else
-                        local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                        if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                        end
-                    end
-				end
-			end
-		else
-			break
-		end
-	end
-	MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar, pullCurrent,grandTotal,teeming==true and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
-
-
+	MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,grandTotal,teeming==true and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
 end
 
-function MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,add,ignoreGrouped)
-	local pull = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull
-	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
-	preset.value.pulls = preset.value.pulls or {}
-	preset.value.pulls[pull] = preset.value.pulls[pull] or {}
-	preset.value.pulls[pull][dungeonEnemyBlips[i].enemyIdx] = preset.value.pulls[pull][dungeonEnemyBlips[i].enemyIdx] or {}
-	if add == true then
-		local found = false
-		for k,v in pairs(preset.value.pulls[pull][dungeonEnemyBlips[i].enemyIdx]) do
-			if v == dungeonEnemyBlips[i].cloneIdx then found = true end
-		end
-		if found==false then tinsert(preset.value.pulls[pull][dungeonEnemyBlips[i].enemyIdx],dungeonEnemyBlips[i].cloneIdx) end
-		--make sure this pull is the only one that contains this npc clone (no double dipping)
-		for pullIdx,p in pairs(preset.value.pulls) do
-			if pullIdx ~= pull and p[dungeonEnemyBlips[i].enemyIdx] then
-				for k,v in pairs(p[dungeonEnemyBlips[i].enemyIdx]) do
-					if v == dungeonEnemyBlips[i].cloneIdx then
-						tremove(preset.value.pulls[pullIdx][dungeonEnemyBlips[i].enemyIdx],k)
-                        MethodDungeonTools:UpdatePullButtonNPCData(pullIdx)
-						--print("Removing "..dungeonEnemyBlips[i].name.." "..dungeonEnemyBlips[i].cloneIdx.." from pull"..pullIdx)
-					end
-				end
-			end
-		end
-	elseif add == false then
-		for k,v in pairs(preset.value.pulls[pull][dungeonEnemyBlips[i].enemyIdx]) do
-			if v == dungeonEnemyBlips[i].cloneIdx then tremove(preset.value.pulls[pull][dungeonEnemyBlips[i].enemyIdx],k) end
-		end
-	end
-	--linked npcs
-	if not ignoreGrouped then
-		for idx=1,numDungeonEnemyBlips do
-			if dungeonEnemyBlips[i].g and dungeonEnemyBlips[idx].g == dungeonEnemyBlips[i].g and i~=idx then
-				MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(idx,add,true)
-			end
-		end
-	end
-	MethodDungeonTools:UpdatePullButtonNPCData(pull)
-end
-
----UpdateEnemyBlipSelection
----Colors blips green when they are selected
-function MethodDungeonTools:UpdateEnemyBlipSelection(i, forceDeselect, ignoreLinked, otherPull)
-
-    if dungeonEnemyBlips[i]:IsShown() then
-        if otherPull and otherPull == true then
-            dungeonEnemyBlips[i].border:SetVertexColor(unpack(selectedGreen))
-            dungeonEnemyBlips[i].highlight2:Show()
-        else
-            if forceDeselect and forceDeselect == true then
-                dungeonEnemyBlips[i].selected = false
-            else
-                dungeonEnemyBlips[i].selected = not dungeonEnemyBlips[i].selected
-            end
-            if dungeonEnemyBlips[i].selected == true then
-                dungeonEnemyBlips[i].border:SetVertexColor(unpack(selectedGreen))
-                dungeonEnemyBlips[i].highlight2:Show()
-                dungeonEnemyBlips[i].highlight3:Show()
-            else
-                local r,g,b,a = dungeonEnemyBlips[i].color.r,dungeonEnemyBlips[i].color.g,dungeonEnemyBlips[i].color.b,dungeonEnemyBlips[i].color.a
-                dungeonEnemyBlips[i].border:SetVertexColor(r,g,b,a)
-                dungeonEnemyBlips[i].highlight2:Hide()
-                dungeonEnemyBlips[i].highlight3:Hide()
-            end
-            --select/deselect linked npcs
-            if not ignoreLinked then
-                for idx=1,numDungeonEnemyBlips do
-                    if dungeonEnemyBlips[i].g and dungeonEnemyBlips[idx].g == dungeonEnemyBlips[i].g and i~=idx then
-                        if dungeonEnemyBlips[idx]:IsShown() then
-                            if forceDeselect and forceDeselect == true then
-                                dungeonEnemyBlips[idx].selected = false
-                            else
-                                dungeonEnemyBlips[idx].selected = dungeonEnemyBlips[i].selected
-                            end
-                            if dungeonEnemyBlips[idx].selected == true then
-                                dungeonEnemyBlips[idx].border:SetVertexColor(unpack(selectedGreen))
-                                dungeonEnemyBlips[idx].highlight2:Show()
-                                dungeonEnemyBlips[idx].highlight3:Show()
-                            else
-                                local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
-                                dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
-                                dungeonEnemyBlips[idx].highlight2:Hide()
-                                dungeonEnemyBlips[idx].highlight3:Hide()
-                            end
-                        else
-                            dungeonEnemyBlips[idx].highlight2:Hide()
-                            dungeonEnemyBlips[idx].highlight3:Hide()
-                        end
-                    end
-                end
-            end
-        end
-
-    else
-        dungeonEnemyBlips[i].highlight2:Hide()
-        dungeonEnemyBlips[i].highlight3:Hide()
-    end
-
-end
-
-local lastModelId
-local cloneOffset = 0
 
 function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	local scrollFrame = MethodDungeonToolsScrollFrame;
@@ -1155,11 +1047,19 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 
 end
 
+
 ---ActivatePullTooltip
 ---
 function MethodDungeonTools:ActivatePullTooltip(pull)
     local pullTooltip = MethodDungeonTools.pullTooltip
-
+    if not pullTooltip.ranOnce then
+        --fix elvui skinning
+        pullTooltip:SetPoint("TOPRIGHT",UIParent,"BOTTOMRIGHT")
+        pullTooltip:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT")
+        pullTooltip:Show()
+        pullTooltip:Hide()
+        pullTooltip.ranOnce = true
+    end
     pullTooltip.currentPull = pull
     pullTooltip:Show()
 end
@@ -1262,6 +1162,7 @@ end
 ---IsCurrentPresetTeeming
 ---Returns true if the current preset has teeming turned on, false otherwise
 function MethodDungeonTools:IsCurrentPresetTeeming()
+    --return self:GetCurrentPreset().week
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 end
 
@@ -1269,98 +1170,15 @@ end
 local currentBlip
 local currentWaypoints
 local currentWaypointBlip
-function MethodDungeonTools:GetCurrentDevmodeBlip()
-    for blipIdx,blip in pairs(dungeonEnemyBlips) do
-        if blip.devSelected then
-            return blip
-        end
-    end
-end
-
-function MethodDungeonTools:SetCurrentDevmodeBlip(enemyIdx,cloneIdx)
-    for blipIdx,blip in pairs(dungeonEnemyBlips) do
-        if blip.enemyIdx == enemyIdx and blip.cloneIdx == cloneIdx then
-            blip.devSelected = true
-        else
-            blip.devSelected = nil
-        end
-    end
-end
 
 local moverFrame = CreateFrame("Frame")
 local blipMoverFrame = CreateFrame("Frame")
+
 ---MethodDungeonTools.OnMouseDown
 ---Handles mouse-down events on the map scrollframe
 MethodDungeonTools.OnMouseDown = function(self,button)
 	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-    if db.devMode then
-        if button == "LeftButton" then
-
-            for blipIdx,blip in pairs(dungeonEnemyBlips) do
-                --drag blips
-                local blipFound
-                if MouseIsOver(blip) then
-                    local startx,starty = MethodDungeonTools:GetCursorPosition()
-                    currentBlip = blip
-                    blipMoverFrame.isMoving = true
-                    blipMoverFrame:SetScript("OnUpdate", function(self, tick)
-                        if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
-                        local x,y = MethodDungeonTools:GetCursorPosition()
-                        blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-                        blip.x = x
-                        blip.y = y
-                        startx,starty = MethodDungeonTools:GetCursorPosition()
-                    end)
-                    blipFound = true
-                end
-                --drag patrol pathway
-                if blip.patrol then
-                    local found
-                    for idx,waypoint in pairs(blip.patrol) do
-                        if MouseIsOver(waypoint) and waypoint:IsShown() then
-                            found = true
-                            local startx,starty = MethodDungeonTools:GetCursorPosition()
-                            currentWaypoints = currentWaypoints or {}
-                            tinsert(currentWaypoints,waypoint)
-                            waypoint.index = idx
-                            currentWaypointBlip = blip
-                            moverFrame.isMoving = true
-                            moverFrame:SetScript("OnUpdate", function(self, tick)
-                                if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
-                                local x,y = MethodDungeonTools:GetCursorPosition()
-                                for _,waypoint in pairs(currentWaypoints) do
-                                    waypoint:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-                                    waypoint.x = x
-                                    waypoint.y = y
-                                end
-                                startx,starty = MethodDungeonTools:GetCursorPosition()
-                            end)
-                        end
-                    end
-                    if found then return end
-                end
-                if blipFound then return end
-            end
-
-        end
-        if button == "RightButton" then
-            if moverFrame.isMoving then return end
-            for blipIdx,blip in pairs(dungeonEnemyBlips) do
-                if MouseIsOver(blip) then
-                    currentBlip = blip
-                    if IsAltKeyDown() then
-                        tremove(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx].clones,currentBlip.cloneIdx)
-                        MethodDungeonTools:UpdateMap()
-                    end
-                    return
-                end
-            end
-            return
-        end
-
-        if IsAltKeyDown() then return end
-    end
-	if ( button == "LeftButton" and scrollFrame.zoomedIn ) then
+	if scrollFrame.zoomedIn then
 		scrollFrame.panning = true;
 		scrollFrame.cursorX,scrollFrame.cursorY = GetCursorPosition()
 	end
@@ -1372,81 +1190,14 @@ local cursorX, cursorY
 ---handles mouse-up events on the map scrollframe
 MethodDungeonTools.OnMouseUp = function(self,button)
 	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-	local frame = MethodDungeonTools.main_frame
-	if ( button == "LeftButton") then
-		frame.contextDropdown:Hide()
-		if scrollFrame.panning then scrollFrame.panning = false end
+	--local frame = MethodDungeonTools.main_frame
+    --frame.contextDropdown:Hide()
+    if scrollFrame.panning then scrollFrame.panning = false end
+        --cursorX, cursorY = GetCursorPosition()
+        --L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
+        --frame.contextDropdown:Show()
+        --dont need context menu for now
 
-        --end dragging blip
-        if db.devMode then
-            blipMoverFrame:SetScript("OnUpdate",nil)
-            blipMoverFrame.isMoving = nil
-            moverFrame:SetScript("OnUpdate",nil)
-            moverFrame.isMoving = nil
-            if currentBlip then
-                local cloneData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx].clones[currentBlip.cloneIdx]
-                if cloneData and currentBlip.x and currentBlip.y then
-                    cloneData.x = currentBlip.x
-                    cloneData.y = currentBlip.y
-                    if cloneData.patrol and cloneData.patrol[1] then
-                        cloneData.patrol[1] = {x=cloneData.x,y=cloneData.y}
-                    end
-                end
-            end
-            if currentWaypoints then
-                for _,currentWaypoint in pairs(currentWaypoints) do
-                    local cloneData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentWaypointBlip.enemyIdx].clones[currentWaypointBlip.cloneIdx]
-                    if cloneData and cloneData.patrol and cloneData.patrol[currentWaypoint.index]then
-                        cloneData.patrol[currentWaypoint.index].x = currentWaypoint.x
-                        cloneData.patrol[currentWaypoint.index].y = currentWaypoint.y
-                    end
-                end
-            end
-            currentWaypoints = nil
-            currentBlip = nil
-            MethodDungeonTools:UpdateMap()
-            return
-        end
-
-		--handle clicks on enemy blips
-		if MouseIsOver(MethodDungeonToolsScrollFrame) then
-			for i=1,numDungeonEnemyBlips do
-				if MouseIsOver(dungeonEnemyBlips[i]) then
-
-                    local isCTRLKeyDown = IsControlKeyDown()
-                    MethodDungeonTools:AddOrRemoveEnemyBlipToCurrentPull(i,not dungeonEnemyBlips[i].selected,isCTRLKeyDown)
-                    MethodDungeonTools:UpdateEnemyBlipSelection(i,nil,isCTRLKeyDown)
-                    MethodDungeonTools:UpdateEnemiesSelected()
-                    break;
-				end
-			end
-		end
-	elseif (button=="RightButton") and MouseIsOver(MethodDungeonToolsScrollFrame) then
-        if db.devMode then
-            moverFrame:SetScript("OnUpdate",nil)
-            moverFrame.isMoving = nil
-            if currentBlip then
-                if not currentBlip.devSelected then
-                    currentBlip.devSelected = true
-                else
-                    currentBlip.devSelected = nil
-                end
-                for blipIdx,blip in pairs(dungeonEnemyBlips) do
-                    if blip ~= currentBlip then
-                        blip.devSelected = nil
-                    end
-                end
-            end
-            currentBlip = nil
-            MethodDungeonTools:UpdateMap()
-            return
-
-        else
-            cursorX, cursorY = GetCursorPosition()
-            L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
-            frame.contextDropdown:Show()
-        end
-	end
 end
 
 ---SetCurrentSubLevel
@@ -1468,24 +1219,17 @@ function MethodDungeonTools:GetCurrentPreset()
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 end
 
----ShowBlipPatrol
----Displays patrol waypoints and lines
-function MethodDungeonTools:ShowBlipPatrol(blip,show)
-    if blip and blip.patrol then
-        if show == true and blip.patrolActive then
-            for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-                if waypointBlip.isActive then
-                    waypointBlip:Show()
-                    waypointBlip.line:Show()
-                end
-            end
-        elseif show == false then
-            for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-                waypointBlip:Hide()
-                waypointBlip.line:Hide()
-            end
-        end
-    end
+---GetCurrentTeeming
+---Returns if the current week has an affix week set that inlcludes the teeming affix
+function MethodDungeonTools:IsWeekTeeming(week)
+    if not week then week = MethodDungeonTools:GetCurrentAffixWeek() end
+    return (affixWeeks[week][2] == 5) or (affixWeeks[week][3] == 5)
+end
+
+---IsPresetTeeming
+---Returns if the preset is set to a week which contains the teeming affix
+function MethodDungeonTools:IsPresetTeeming(preset)
+    return MethodDungeonTools:IsWeekTeeming(preset.week)
 end
 
 
@@ -1516,177 +1260,15 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.scrollFrame:SetScript("OnMouseDown", MethodDungeonTools.OnMouseDown)
 		frame.scrollFrame:SetScript("OnMouseUp", MethodDungeonTools.OnMouseUp)
 
-		frame.scrollFrame:SetScript("OnHide", function()
-			tooltipLastShown = nil
-			tooltip.Model:Hide()
-			tooltip:Hide()
-		end)
 
-        local lastMouseoverBlip
 		frame.scrollFrame:SetScript("OnUpdate", function(self, button)
-			local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-            local frameX,frameY = MethodDungeonTools:GetCursorPosition()
-			--MethodDungeonTools.main_frame.topPanelString:SetText(string.format("%.1f",frameX).."    "..string.format("%.1f",frameY));
-			if ( scrollFrame.panning ) then
+			if (MethodDungeonTools.main_frame.scrollFrame.panning) then
 				local x, y = GetCursorPosition();
 				MethodDungeonTools:OnPan(x, y);
 			end
-			--handle mouseover on enemy blips
-			local mouseoverBlip
-			if MouseIsOver(MethodDungeonToolsScrollFrame) then
-				for i=1,numDungeonEnemyBlips do
-					if MouseIsOver(dungeonEnemyBlips[i]) then
-						mouseoverBlip = i
-						break;
-					end
-				end
-			end
-			if mouseoverBlip then
-				local data = dungeonEnemyBlips[mouseoverBlip]
-				local fortified = false
-				local boss = false
-				if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix then
-					if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix == "fortified" then fortified = true end
-				end
-				local tyrannical = not fortified
-				local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,data.health,db.currentDifficulty)
-				local group = data.g and " (G "..data.g..")" or ""
-                local upstairs = data.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
-				--[[
-				    function CreateAtlasMarkup(atlasName, height, width, offsetX, offsetY) return ("|A:%s:%d:%d:%d:%d|a"):format( atlasName , height or 0 , width or 0 , offsetX or 0 , offsetY or 0 );end
-				]]
-                local text = upstairs..data.name.." "..data.cloneIdx..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
-                text = text .."Enemy Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
-                tooltip.String:SetText(text)
-				tooltip.String:Show()
-				tooltip:Show()
-                if db.tooltipInCorner then
-                    tooltip:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",0,0)
-                    tooltip:SetPoint("TOPLEFT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",-tooltip.mySizes.x,tooltip.mySizes.y)
-                else
-                    --check for bottom clipping
-                    tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30,0)
-                    tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x,-tooltip.mySizes.y)
-                    local bottomOffset = 0
-                    local rightOffset = 0
-                    local tooltipBottom = tooltip:GetBottom()
-                    local mainFrameBottom = MethodDungeonTools.main_frame:GetBottom()
-                    if tooltipBottom<mainFrameBottom then
-                        bottomOffset = tooltip.mySizes.y
-                    end
-                    --right side clipping
-                    local tooltipRight = tooltip:GetRight()
-                    local mainFrameRight = MethodDungeonTools.main_frame:GetRight()
-                    if tooltipRight>mainFrameRight then
-                        rightOffset = -(tooltip.mySizes.x+60)
-                    end
-
-                    tooltip:SetPoint("TOPLEFT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+rightOffset,bottomOffset)
-                    tooltip:SetPoint("BOTTOMRIGHT",dungeonEnemyBlips[mouseoverBlip],"BOTTOMRIGHT",30+tooltip.mySizes.x+rightOffset,-tooltip.mySizes.y+bottomOffset)
-                end
-				local id = dungeonEnemyBlips[mouseoverBlip].id
-				if id then
-					if lastModelId then
-						if lastModelId ~= id then
-							tooltip.Model:SetCreature(id)
-							lastModelId = id
-						end
-					else
-						tooltip.Model:SetCreature(id)
-						lastModelId = id
-					end
-					tooltip.Model:Show()
-				else
-					tooltip.Model:ClearModel()
-					tooltip.Model:Hide()
-				end
-
-				lastMouseoverBlip = mouseoverBlip
-				tooltipLastShown = GetTime()
-                for k,blip in pairs(dungeonEnemyBlips) do
-                    if k == mouseoverBlip then
-                        blip:SetSize(blip.storedSize*1.2,blip.storedSize*1.2)
-                        blip:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.mouseover.blip)
-                        blip.border:SetSize(blip.border.storedSize*1.2,blip.border.storedSize*1.2)
-                        blip.border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.mouseover.border)
-                        blip.highlight:Show()
-                        blip.highlight2:SetSize(blip.highlight2.storedSize*1.2,blip.highlight2.storedSize*1.2)
-                        blip.highlight3:SetSize(blip.highlight3.storedSize*1.2,blip.highlight3.storedSize*1.2)
-                        blip.dragon:SetSize(blip.dragon.storedSize*1.2,blip.dragon.storedSize*1.2)
-                    else
-                        blip:SetSize(blip.storedSize,blip.storedSize)
-                        blip:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.blip)
-                        blip.border:SetSize(blip.border.storedSize,blip.border.storedSize)
-                        blip.border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.border)
-                        blip.highlight:Hide()
-                        blip.highlight2:SetSize(blip.highlight2.storedSize,blip.highlight2.storedSize)
-                        blip.highlight3:SetSize(blip.highlight3.storedSize,blip.highlight3.storedSize)
-                        blip.dragon:SetSize(blip.dragon.storedSize,blip.dragon.storedSize)
-                    end
-                end
-
-				--check if blip is in a patrol but not the "leader"
-				if data.patrolFollower then
-					for blipIdx,blip in pairs(dungeonEnemyBlips) do
-						if blip:IsShown() and blip.g and data.g then
-							if blip.g == data.g and blip.patrol then
-								mouseoverBlip = blipIdx
-							end
-						end
-					end
-				end
-
-				--display patrol waypoints and lines
-				for idx,blip in pairs(dungeonEnemyBlips) do
-					if blip.patrol then
-						if idx == mouseoverBlip and blip.patrolActive then
-							for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-                                if waypointBlip.isActive then
-                                    waypointBlip:Show()
-                                    waypointBlip.line:Show()
-                                end
-							end
-						else
-                            if not db.devMode or not blip.devSelected then
-                                for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-                                    waypointBlip:Hide()
-                                    waypointBlip.line:Hide()
-                                end
-                            end
-						end
-					end
-				end
-
-			elseif tooltipLastShown and GetTime()-tooltipLastShown>0.2 then
-				tooltipLastShown = nil
-				--GameTooltip:Hide()
-				tooltip.Model:Hide()
-				tooltip:Hide()
-				--hide all patrol waypoints and facing indicators
-                for blipIdx,blip in pairs(dungeonEnemyBlips) do
-                    if not db.devMode or not blip.devSelected then
-                        if blip.patrol then
-                            for patrolIdx,waypointBlip in ipairs(blip.patrol) do
-                                waypointBlip:Hide()
-                                waypointBlip.line:Hide()
-                            end
-                        end
-                    end
-                end
-                --reset mySizes
-                for k,blip in pairs(dungeonEnemyBlips) do
-                    blip:SetSize(blip.storedSize*1,blip.storedSize*1)
-                    blip:SetDrawLayer(blipDrawLayer, 5)
-                    blip.border:SetSize(blip.border.storedSize*1,blip.border.storedSize*1)
-                    blip.border:SetDrawLayer(blipDrawLayer, 4)
-                    blip.dragon:SetSize(blip.dragon.storedSize,blip.dragon.storedSize)
-                    blip.highlight:Hide()
-                    blip.highlight2:SetSize(blip.highlight2.storedSize,blip.highlight2.storedSize)
-                    blip.highlight3:SetSize(blip.highlight3.storedSize,blip.highlight3.storedSize)
-                end
-			end
-
+            --what's this one still doing here ¯\_(ツ)_/¯
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+
         end)
 
 
@@ -1750,287 +1332,14 @@ function MethodDungeonTools:FormatEnemyHealth(amount)
     end
 end
 
-function MethodDungeonTools:DisplayEncounterInformation(encounterID)
-
-	--print(db.currentDungeonIdx)
-
-
-end
-
----Frehold Crews
-local freeholdCrews = {
-    [1] = {
-        [129550] = true,
-        [129527] = true,
-        [129600] = true,
-        [129526] = true,
-        [126848] = true,
-    },
-    [2] = {
-       [129548] = true,
-       [129529] = true,
-       [129547] = true,
-       [126847] = true,
-    },
-    [3] = {
-        [129559] = true,
-        [129599] = true,
-        [126845] = true,
-        [129601] = true,
-    },
-}
-local function freeholdCrewOverride(blip)
-    local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew
-    if not crew then return end
-    for npcId,_ in pairs(freeholdCrews[crew]) do
-        if blip.id == npcId then
-            blip:SetDesaturated(1)
-            blip:SetAlpha(0.3)
-            blip.border:SetDesaturated(1)
-            blip.border:SetAlpha(0.3)
-        end
-    end
-end
 
 
 
-local defaultBlipColor = {r=1,g=1,b=1,a=0.8}
-local patrolColor = {r=0,g=.5,b=1,a=0.8}
-MethodDungeonTools.BlipDrawlayers = {
-    normal = {
-        blip = 4,
-        border = 3,
-        highlight = 7,
-        highlight2 = 7,
-        highlight3 = 2,
-        dragon = 1,
-    },
-    mouseover = {
-        blip = 6,
-        border = 5,
-        highlight2 = 7,
-        highlight3 = 4,
-    },
-}
+
+
+
 function MethodDungeonTools:UpdateDungeonEnemies()
-	if not dungeonEnemyBlips then
-		dungeonEnemyBlips = {}
-	end
-    for _,blip in pairs(dungeonEnemyBlips) do
-        blip:Hide()
-        blip.border:Hide()
-        blip.highlight:Hide()
-        blip.highlight2:Hide()
-        blip.highlight3:Hide()
-        blip.dragon:Hide()
-    end
-	local idx = 1
-	if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx] then
-		local enemies = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
-		for enemyIdx,data in pairs(enemies) do
-			for cloneIdx,clone in pairs(data["clones"]) do
-				--check sublevel
-				if (clone.sublevel and clone.sublevel == db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel) or ((not clone.sublevel) and db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel == 1) then
-					--check for teeming
-					local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-					if (teeming==true) or (teeming==false and ((not clone.teeming) or clone.teeming==false))  then
-						if not dungeonEnemyBlips[idx] then
-							dungeonEnemyBlips[idx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx,"BACKGROUND")
-							dungeonEnemyBlips[idx].selected = false
-						end
-                        local blip = dungeonEnemyBlips[idx]
-
-						blip.count = data["count"]
-						blip.name = data["name"]
-						blip.color = data["color"]
-                        blip.isBoss = data["isBoss"]
-                        if not blip.color then
-                            blip.color = defaultBlipColor
-                        end
-                        blip:SetDesaturated(nil)
-
-						dungeonEnemyBlips[idx].cloneIdx = cloneIdx
-						dungeonEnemyBlips[idx].enemyIdx = enemyIdx
-						dungeonEnemyBlips[idx].id = data["id"]
-						dungeonEnemyBlips[idx].g = clone.g
-						dungeonEnemyBlips[idx].stealth = data.stealth
-						dungeonEnemyBlips[idx].stealthDetect = data.stealthDetect
-						dungeonEnemyBlips[idx].neutral = data.neutral
-						dungeonEnemyBlips[idx].upstairs = clone.upstairs
-						dungeonEnemyBlips[idx].teeming = clone.teeming
-						dungeonEnemyBlips[idx].sublevel = clone.sublevel or 1
-						dungeonEnemyBlips[idx].creatureType = data["creatureType"]
-						dungeonEnemyBlips[idx].health = data["health"]
-                        dungeonEnemyBlips[idx].level = data["level"]
-                        dungeonEnemyBlips[idx]:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.blip)
-                        --seagull 39490 as placeholder for when the python script has not ran yet
-                        SetPortraitTextureFromCreatureDisplayID(dungeonEnemyBlips[idx],data.displayId or 39490)
-						dungeonEnemyBlips[idx]:SetAlpha(1)
-                        --scale up blip if this is a boss
-                        dungeonEnemyBlips[idx].scale = data["scale"]*(dungeonEnemyBlips[idx].isBoss and 1.7 or 1) * (MethodDungeonTools.scaleMultiplier[db.currentDungeonIdx] or 1)
-                        dungeonEnemyBlips[idx].storedSize = 8*dungeonEnemyBlips[idx].scale
-						dungeonEnemyBlips[idx]:SetSize(dungeonEnemyBlips[idx].storedSize,dungeonEnemyBlips[idx].storedSize)
-						dungeonEnemyBlips[idx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
-
-                        dungeonEnemyBlips[idx].border = dungeonEnemyBlips[idx].border or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        dungeonEnemyBlips[idx].border:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\UI-EncounterJournalTextures")
-                        dungeonEnemyBlips[idx].border:SetTexCoord(0.85,0.97,0.43,0.4865)
-
-                        --if dungeonEnemyBlips[idx].isBoss then dungeonEnemyBlips[idx].border:SetAtlas("worldquest-questmarker-dragon") end
-                        dungeonEnemyBlips[idx].border:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER",0,-0)
-                        dungeonEnemyBlips[idx].border.storedSize = 12*dungeonEnemyBlips[idx].scale
-                        dungeonEnemyBlips[idx].border:SetSize(dungeonEnemyBlips[idx].border.storedSize,dungeonEnemyBlips[idx].border.storedSize)
-                        dungeonEnemyBlips[idx].border:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.border)
-                        dungeonEnemyBlips[idx].border:SetAlpha(1)
-                        dungeonEnemyBlips[idx].border:SetDesaturated(nil)
-                        dungeonEnemyBlips[idx].border:Show()
-
-                        dungeonEnemyBlips[idx].highlight = dungeonEnemyBlips[idx].highlight or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        dungeonEnemyBlips[idx].highlight:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\UI-EncounterJournalTextures")
-                        dungeonEnemyBlips[idx].highlight:SetTexCoord(0.69,0.81,0.39,0.333)
-                        dungeonEnemyBlips[idx].highlight:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
-                        dungeonEnemyBlips[idx].highlight:SetSize(14*dungeonEnemyBlips[idx].scale,14*dungeonEnemyBlips[idx].scale)
-                        dungeonEnemyBlips[idx].highlight:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight)
-                        dungeonEnemyBlips[idx].highlight:SetAlpha(0.4)
-                        dungeonEnemyBlips[idx].highlight:Hide()
-
-                        dungeonEnemyBlips[idx].highlight2 = dungeonEnemyBlips[idx].highlight2 or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        dungeonEnemyBlips[idx].highlight2:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\UI-EncounterJournalTextures")
-                        dungeonEnemyBlips[idx].highlight2:SetTexCoord(0.69,0.81,0.39,0.333)
-                        dungeonEnemyBlips[idx].highlight2:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
-                        dungeonEnemyBlips[idx].highlight2.storedSize = 12*dungeonEnemyBlips[idx].scale
-                        dungeonEnemyBlips[idx].highlight2:SetSize(dungeonEnemyBlips[idx].highlight2.storedSize,dungeonEnemyBlips[idx].highlight2.storedSize)
-                        dungeonEnemyBlips[idx].highlight2:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight2)
-                        dungeonEnemyBlips[idx].highlight2:SetVertexColor(unpack(selectedGreen))
-                        dungeonEnemyBlips[idx].highlight2:Hide()
-
-                        dungeonEnemyBlips[idx].highlight3 = dungeonEnemyBlips[idx].highlight3 or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        dungeonEnemyBlips[idx].highlight3:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\UI-EncounterJournalTextures")
-                        dungeonEnemyBlips[idx].highlight3:SetTexCoord(0.69,0.81,0.39,0.333)
-                        dungeonEnemyBlips[idx].highlight3:SetPoint("CENTER",dungeonEnemyBlips[idx],"CENTER")
-                        dungeonEnemyBlips[idx].highlight3.storedSize = 14*dungeonEnemyBlips[idx].scale
-                        dungeonEnemyBlips[idx].highlight3:SetSize(dungeonEnemyBlips[idx].highlight3.storedSize,dungeonEnemyBlips[idx].highlight3.storedSize)
-                        dungeonEnemyBlips[idx].highlight3:SetDrawLayer(blipDrawLayer, MethodDungeonTools.BlipDrawlayers.normal.highlight3)
-                        dungeonEnemyBlips[idx].highlight3:SetVertexColor(1,1,1,0.75)
-                        dungeonEnemyBlips[idx].highlight3:Hide()
-
-
-
-                        blip.dragon = blip.dragon or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture(nil, "BACKGROUND")
-                        blip.dragon:SetAtlas("worldquest-questmarker-dragon")
-                        blip.dragon:SetPoint("CENTER",blip,"CENTER")
-                        blip.dragon.storedSize = 14*dungeonEnemyBlips[idx].scale
-                        blip.dragon:SetSize(blip.dragon.storedSize,blip.dragon.storedSize)
-                        blip.dragon:SetDrawLayer(blipDrawLayer,MethodDungeonTools.BlipDrawlayers.normal.dragon)
-                        blip.dragon:Hide()
-                        if blip.isBoss then blip.dragon:Show() end
-
-                        --color patrol
-                        dungeonEnemyBlips[idx].patrolFollower = nil
-                        if clone.patrol then
-                            --dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
-                            dungeonEnemyBlips[idx].color = patrolColor
-                        else
-                            --iterate over all enemies again to find if this npc is linked to a patrol
-                            for _,patrolCheckData in pairs(enemies) do
-                                for _,patrolCheckClone in pairs(patrolCheckData["clones"]) do
-                                    --check sublevel
-                                    if (patrolCheckClone.sublevel and patrolCheckClone.sublevel == db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel) or ((not patrolCheckClone.sublevel) and db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel == 1) then
-                                        --check for teeming
-                                        local patrolCheckDataTeeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-                                        if (patrolCheckDataTeeming==true) or (patrolCheckDataTeeming==false and ((not patrolCheckClone.teeming) or patrolCheckClone.teeming==false))  then
-                                            if clone.g and patrolCheckClone.g then
-                                                if clone.g == patrolCheckClone.g and patrolCheckClone.patrol then
-                                                    --dungeonEnemyBlips[idx]:SetTexture("Interface\\Worldmap\\WorldMapPlayerIcon")
-                                                    dungeonEnemyBlips[idx].color = patrolColor
-                                                    dungeonEnemyBlips[idx].patrolFollower = true
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-
-						if dungeonEnemyBlips[idx].selected == true then dungeonEnemyBlips[idx].border:SetVertexColor(0,1,0,1) else
-
-                            local r,g,b,a = dungeonEnemyBlips[idx].color.r,dungeonEnemyBlips[idx].color.g,dungeonEnemyBlips[idx].color.b,dungeonEnemyBlips[idx].color.a
-                            dungeonEnemyBlips[idx].border:SetVertexColor(r,g,b,a)
-						end
-
-						dungeonEnemyBlips[idx]:Show()
-
-
-						--clear patrol flag
-						if dungeonEnemyBlips[idx].patrol then
-							dungeonEnemyBlips[idx].patrolActive = nil
-						end
-
-						--patrol waypoints/lines
-                        if clone.patrol then
-
-
-							dungeonEnemyBlips[idx].patrol = dungeonEnemyBlips[idx].patrol or {}
-							local firstWaypointBlip
-							local oldWaypointBlip
-
-                            for k,v in pairs(dungeonEnemyBlips[idx].patrol) do
-                                v.isActive = false
-                            end
-
-							for patrolIdx,waypoint in ipairs(clone.patrol) do
-								if not dungeonEnemyBlips[idx].patrol[patrolIdx] then
-								dungeonEnemyBlips[idx].patrol[patrolIdx] = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx,"BACKGROUND")
-								end
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetDrawLayer(blipDrawLayer, 2)
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetTexture("Interface\\Worldmap\\X_Mark_64Grey")
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetWidth(10*0.4)
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetHeight(10*0.4)
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetVertexColor(0,0.2,0.5,0.6)
-								dungeonEnemyBlips[idx].patrol[patrolIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",waypoint.x,waypoint.y)
-                                dungeonEnemyBlips[idx].patrol[patrolIdx].x = waypoint.x
-                                dungeonEnemyBlips[idx].patrol[patrolIdx].y = waypoint.y
-                                dungeonEnemyBlips[idx].patrol[patrolIdx]:Hide()
-								dungeonEnemyBlips[idx].patrol[patrolIdx].isActive = true
-
-								if not dungeonEnemyBlips[idx].patrol[patrolIdx].line then
-									dungeonEnemyBlips[idx].patrol[patrolIdx].line = MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsDungeonEnemyBlip"..idx.."Patrol"..patrolIdx.."line","BACKGROUND")
-								end
-								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetDrawLayer(blipDrawLayer, 1)
-								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
-								dungeonEnemyBlips[idx].patrol[patrolIdx].line:SetVertexColor(0,0.2,0.5,0.6)
-								dungeonEnemyBlips[idx].patrol[patrolIdx].line:Hide()
-
-								--connect 2 waypoints
-								if oldWaypointBlip then
-									local startPoint, startRelativeTo, startRelativePoint, startX, startY = dungeonEnemyBlips[idx].patrol[patrolIdx]:GetPoint()
-									local endPoint, endRelativeTo, endRelativePoint, endX, endY = oldWaypointBlip:GetPoint()
-									DrawLine(dungeonEnemyBlips[idx].patrol[patrolIdx].line, MethodDungeonTools.main_frame.mapPanelTile1, startX, startY, endX, endY, 1, 1,"TOPLEFT")
-									dungeonEnemyBlips[idx].patrol[patrolIdx].line:Hide()
-								else
-									firstWaypointBlip = dungeonEnemyBlips[idx].patrol[patrolIdx]
-								end
-								oldWaypointBlip = dungeonEnemyBlips[idx].patrol[patrolIdx]
-							end
-							--connect last 2 waypoints
-							if firstWaypointBlip and oldWaypointBlip then
-								local startPoint, startRelativeTo, startRelativePoint, startX, startY = firstWaypointBlip:GetPoint()
-								local endPoint, endRelativeTo, endRelativePoint, endX, endY = oldWaypointBlip:GetPoint()
-								DrawLine(firstWaypointBlip.line, MethodDungeonTools.main_frame.mapPanelTile1, startX, startY, endX, endY, 1, 1,"TOPLEFT")
-								firstWaypointBlip.line:Hide()
-							end
-							dungeonEnemyBlips[idx].patrolActive = true
-						end
-                        --freehold
-                        if db.currentDungeonIdx == 16 then freeholdCrewOverride(blip) end
-
-						idx = idx + 1
-					end
-				end
-			end
-		end
-	end
-	numDungeonEnemyBlips = idx-1
+    MethodDungeonTools:DungeonEnemies_UpdateEnemies()
 end
 
 function MethodDungeonTools:HideAllDialogs()
@@ -2072,19 +1381,6 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	MethodDungeonTools.main_frame.presetImportBox:SetText("")
 end
 
-function MethodDungeonTools:UpdateSidePanelCheckBoxes()
-	local frame = MethodDungeonTools.main_frame
-	local affix = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix
-	frame.sidePanelTyrannicalCheckBox:SetValue(affix~="fortified")
-	frame.sidePanelFortifiedCheckBox:SetValue(affix=="fortified")
-
-
-	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-	frame.sidePanelTeemingCheckBox:SetValue(teeming)
-	local teemingEnabled = MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teemingEnabled
-	frame.sidePanelTeemingCheckBox:SetDisabled(not teemingEnabled)
-
-end
 
 function MethodDungeonTools:UpdateDungeonDropDown()
 	local group = MethodDungeonTools.main_frame.DungeonSelectionGroup
@@ -2148,13 +1444,8 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MethodDungeonTools:EnsureDBTables()
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
-	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix or "fortified"
-
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
-
-	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming or false
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel or 1
-
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls or {}
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] or {}
@@ -2165,7 +1456,7 @@ function MethodDungeonTools:EnsureDBTables()
 			break;
 		end
 	end
-
+    MethodDungeonTools:GetCurrentPreset().week = MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek()
 end
 
 
@@ -2187,8 +1478,6 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	if not ignoreReloadPullButtons then
 		MethodDungeonTools:ReloadPullButtons()
 	end
-	MethodDungeonTools:UpdateSidePanelCheckBoxes()
-
 	--handle delete button disable/enable
 	local presetCount = 0
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -2202,6 +1491,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
+    frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week)
     MethodDungeonTools:POI_UpdateAll()
     MethodDungeonTools:DrawAllPresetObjects()
 end
@@ -2452,14 +1742,14 @@ end
 
 function MethodDungeonTools:PresetsAddPull(index)
 	if index then
-		tinsert(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,index,{})
+		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,index,{})
 	else
-		tinsert(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,{})
+		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,{})
 	end
 end
 
 function MethodDungeonTools:PresetsDeletePull(p,j)
-	tremove(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls,p)
+	tremove(MethodDungeonTools:GetCurrentPreset().value.pulls,p)
 end
 
 function MethodDungeonTools:CopyObject(obj,seen)
@@ -2473,11 +1763,10 @@ function MethodDungeonTools:CopyObject(obj,seen)
 end
 
 function MethodDungeonTools:PresetsSwapPulls(p1,p2)
-
-	local p1copy = MethodDungeonTools:CopyObject(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p1])
-	local p2copy = MethodDungeonTools:CopyObject(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p2])
-	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p1] = p2copy
-	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[p2] = p1copy
+	local p1copy = MethodDungeonTools:CopyObject(MethodDungeonTools:GetCurrentPreset().value.pulls[p1])
+	local p2copy = MethodDungeonTools:CopyObject(MethodDungeonTools:GetCurrentPreset().value.pulls[p2])
+    MethodDungeonTools:GetCurrentPreset().value.pulls[p1] = p2copy
+    MethodDungeonTools:GetCurrentPreset().value.pulls[p2] = p1copy
 end
 
 function MethodDungeonTools:SetMapSublevel(pull)
@@ -2506,67 +1795,27 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 	--if pull is not specified set pull to last pull in preset (for adding new pulls)
 	if not pull then
 		local count = 0
-		for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
+		for k,v in pairs(MethodDungeonTools:GetCurrentPreset().value.pulls) do
 			count = count + 1
 		end
 		pull = count
 	end
 	--SaveCurrentPresetPull
-	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = pull
+    MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
 	MethodDungeonTools:PickPullButton(pull)
 
-
-	--deselect all
-	for k,v in pairs(dungeonEnemyBlips) do
-		MethodDungeonTools:UpdateEnemyBlipSelection(k,true)
-	end
-
-	--highlight current pull enemies
-	for enemyIdx,clones in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[pull]) do
-		for j,cloneIdx in pairs(clones) do
-			for k,v in ipairs(dungeonEnemyBlips) do
-				if (v.enemyIdx == enemyIdx) and (v.cloneIdx == cloneIdx) then
-					MethodDungeonTools:UpdateEnemyBlipSelection(k,nil,true)
-				end
-			end
-		end
-	end
-
-	--highlight other pull enemies
-	for pullIdx,p in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
-        if pullIdx~=pull then
-            for enemyIdx,clones in pairs(p) do
-                for j,cloneIdx in pairs(clones) do
-                    for k,v in ipairs(dungeonEnemyBlips) do
-                        if (v.enemyIdx == enemyIdx) and (v.cloneIdx == cloneIdx) then
-                            MethodDungeonTools:UpdateEnemyBlipSelection(k,nil,true,true)
-                        end
-                    end
-                end
-            end
-        end
-	end
-    for k,v in ipairs(dungeonEnemyBlips) do
-        if db.devMode and v.devSelected then
-            v.border:SetVertexColor(1,0,0,1)
-        end
-    end
-
-
-	MethodDungeonTools:UpdateEnemiesSelected()
+    MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
+	MethodDungeonTools:UpdateProgressbar()
 end
 
-function MethodDungeonTools:GetDungeonEnemyBlips()
-    return dungeonEnemyBlips
-end
 
 ---UpdatePullButtonNPCData
 ---Updates the portraits display of a button to show which and how many npcs are selected
 function MethodDungeonTools:UpdatePullButtonNPCData(idx)
     if db.devMode then return end
-	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+	local preset = MethodDungeonTools:GetCurrentPreset()
 	local frame = MethodDungeonTools.main_frame.sidePanel
-    local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
+    local teeming = MethodDungeonTools:IsPresetTeeming(preset)
 	local enemyTable = {}
 	if preset.value.pulls[idx] then
 		local enemyTableIdx = 0
@@ -2614,6 +1863,7 @@ end
 ---Reloads all pull buttons in the scroll frame
 function MethodDungeonTools:ReloadPullButtons()
 	local frame = MethodDungeonTools.main_frame.sidePanel
+    if not frame.pullButtonsScrollFrame then return end
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 	--first release all children of the scroll frame
 	frame.pullButtonsScrollFrame:ReleaseChildren()
@@ -2695,7 +1945,6 @@ end
 ---DeletePull
 ---Deletes the selected pull and makes sure that a pull will be selected afterwards
 function MethodDungeonTools:DeletePull(index)
-
 	MethodDungeonTools:PresetsDeletePull(index)
 	MethodDungeonTools:ReloadPullButtons()
 	local pullCount = 0
@@ -2704,7 +1953,6 @@ function MethodDungeonTools:DeletePull(index)
 	end
 	if index>pullCount then index = pullCount end
 	MethodDungeonTools:SetSelectionToPull(index)
-
 end
 
 ---RenamePreset
@@ -2765,7 +2013,6 @@ end
 
 ---MakeExportFrame
 ---Creates the frame used to export presets to a string which can be uploaded to text sharing websites like pastebin
----@param frame frame
 function MethodDungeonTools:MakeExportFrame(frame)
 	frame.ExportFrame = AceGUI:Create("Frame")
 	frame.ExportFrame:SetTitle("Preset Export")
@@ -3124,6 +2371,20 @@ function MethodDungeonTools:FixAceGUIShowHide(widget,frame)
     end
 end
 
+function MethodDungeonTools:GetCurrentAffixWeek()
+    if not IsAddOnLoaded("Blizzard_ChallengesUI") then
+        LoadAddOn("Blizzard_ChallengesUI")
+    end
+    C_MythicPlus.RequestCurrentAffixes()
+    local affixIds = C_MythicPlus.GetCurrentAffixes() --table
+    if not affixIds then return end
+    for week,affixes in ipairs(affixWeeks) do
+        if affixes[1] == affixIds[1] and affixes[2] == affixIds[2] and affixes[3] == affixIds[3] and affixes[4] == affixIds[4] then
+            return week
+        end
+    end
+end
+
 function MethodDungeonTools:ResetMainFramePos()
     local f = MethodDungeonTools.main_frame
     db.xoffset = 0
@@ -3136,6 +2397,7 @@ end
 
 function initFrames()
 	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
+    tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
 	main_frame:SetFrameStrata(mainFrameStrata)
 	main_frame:SetFrameLevel(1)
@@ -3147,10 +2409,10 @@ function initFrames()
 	main_frame:SetSize(sizex, sizey)
 	MethodDungeonTools.main_frame = main_frame
 
-	tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 	-- Set frame position
 	main_frame:ClearAllPoints();
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
+
 
     main_frame.contextDropdown = CreateFrame("Frame", "MethodDungeonToolsContextDropDown", nil, "L_UIDropDownMenuTemplate")
 
@@ -3160,6 +2422,7 @@ function initFrames()
 	MethodDungeonTools:MakeSidePanel(main_frame)
 	MethodDungeonTools:MakePresetCreationFrame(main_frame)
 	MethodDungeonTools:MakePresetImportFrame(main_frame)
+    MethodDungeonTools:DungeonEnemies_CreateFramePools()
 	MethodDungeonTools:UpdateDungeonEnemies(main_frame)
 	MethodDungeonTools:CreateDungeonSelectDropdown(main_frame)
 	MethodDungeonTools:MakePullSelectionButtons(main_frame.sidePanel)
@@ -3168,6 +2431,7 @@ function initFrames()
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
 	MethodDungeonTools:MakeClearConfirmationFrame(main_frame)
 	MethodDungeonTools:CreateTutorialButton(main_frame)
+
     MethodDungeonTools:POI_CreateFramePools()
 
     --devMode
@@ -3176,19 +2440,19 @@ function initFrames()
     end
 
 
-	--tooltip
+
+    --tooltip new
     do
-        tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
+        MethodDungeonTools.tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "GameTooltipTemplate")
+        local tooltip = MethodDungeonTools.tooltip
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
         tooltip.mySizes ={x=265,y=110}
-        tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
-        tooltip:Hide()
 
+        tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
         tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
         tooltip.Model:SetFrameLevel(1)
         tooltip.Model:SetSize(100,100)
-
         tooltip.Model.fac = 0
         if true then
             tooltip.Model:SetScript("OnUpdate",function (self,elapsed)
@@ -3197,38 +2461,35 @@ function initFrames()
                     self.fac = 0
                 end
                 self:SetFacing(PI*2 / 360 * self.fac)
-				--print(tooltip.Model:GetModelFileID())
+                --print(tooltip.Model:GetModelFileID())
             end)
 
         else
             tooltip.Model:SetPortraitZoom(1)
             tooltip.Model:SetFacing(PI*2 / 360 * 2)
         end
-
-
-		tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT",7,-7)
-
-		tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString");
-		tooltip.String:SetFont("Fonts\\FRIZQT__.TTF", 10)
-		tooltip.String:SetTextColor(1, 1, 1, 1);
-		tooltip.String:SetJustifyH("LEFT")
-		tooltip.String:SetJustifyV("CENTER")
-		tooltip.String:SetWidth(tooltip:GetWidth())
-		tooltip.String:SetHeight(60)
-		tooltip.String:SetWidth(120)
-		tooltip.String:SetText(" ");
-		tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -27)
-		tooltip.String:Show();
-	end
+        tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT",7,-7)
+        tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString");
+        tooltip.String:SetFontObject("GameFontNormal")
+        tooltip.String:SetFont(tooltip.String:GetFont(),11)
+        tooltip.String:SetTextColor(1, 1, 1, 1);
+        tooltip.String:SetJustifyH("LEFT")
+        tooltip.String:SetJustifyV("CENTER")
+        tooltip.String:SetWidth(tooltip:GetWidth())
+        tooltip.String:SetHeight(60)
+        tooltip.String:SetWidth(120)
+        tooltip.String:SetText(" ");
+        tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -17)
+        tooltip.String:Show();
+    end
 
 	--pullTooltip
 	do
-		MethodDungeonTools.pullTooltip = CreateFrame("Frame", "MethodDungeonToolsPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
+		MethodDungeonTools.pullTooltip = CreateFrame("Frame", "MethodDungeonToolsPullTooltip", UIParent, "GameTooltipTemplate")
 		MethodDungeonTools.pullTooltip:SetClampedToScreen(true)
 		MethodDungeonTools.pullTooltip:SetFrameStrata("TOOLTIP")
         MethodDungeonTools.pullTooltip.myHeight = 160
 		MethodDungeonTools.pullTooltip:SetSize(250, MethodDungeonTools.pullTooltip.myHeight)
-		MethodDungeonTools.pullTooltip:Hide()
 
         MethodDungeonTools.pullTooltip.Model = CreateFrame("PlayerModel", nil, MethodDungeonTools.pullTooltip)
         MethodDungeonTools.pullTooltip.Model:SetFrameLevel(1)
@@ -3252,7 +2513,9 @@ function initFrames()
         MethodDungeonTools.pullTooltip.Model:SetPoint("TOPLEFT", MethodDungeonTools.pullTooltip, "TOPLEFT",7,-7)
 
         MethodDungeonTools.pullTooltip.topString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
-        MethodDungeonTools.pullTooltip.topString:SetFont("Fonts\\FRIZQT__.TTF", 10)
+
+        MethodDungeonTools.pullTooltip.topString:SetFontObject("GameFontNormal")
+        MethodDungeonTools.pullTooltip.topString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),11)
         MethodDungeonTools.pullTooltip.topString:SetTextColor(1, 1, 1, 1);
         MethodDungeonTools.pullTooltip.topString:SetJustifyH("LEFT")
         MethodDungeonTools.pullTooltip.topString:SetJustifyV("TOP")
@@ -3271,7 +2534,8 @@ function initFrames()
 
         MethodDungeonTools.pullTooltip.botString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
         local botString = MethodDungeonTools.pullTooltip.botString
-        botString:SetFont("Fonts\\FRIZQT__.TTF", 10)
+        botString:SetFontObject("GameFontNormal")
+        botString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),11)
         botString:SetTextColor(1, 1, 1, 1);
         botString:SetJustifyH("TOP")
         botString:SetJustifyV("TOP")
@@ -3333,6 +2597,10 @@ function initFrames()
 	}
 	MethodDungeonTools:RegisterOptions()
 	MethodDungeonTools:initToolbar(main_frame)
+
+    --Set affix dropdown to preset week
+    main_frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or (MethodDungeonTools:GetCurrentAffixWeek() or 1))
+
 	main_frame:Hide()
 end
 

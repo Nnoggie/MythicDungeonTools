@@ -98,7 +98,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
     db = MethodDungeonTools:GetDB()
     frame.devPanel = AceGUI:Create("TabGroup")
     local devPanel = frame.devPanel
-    devPanel:SetTabs({{text="POI", value="tab1"}, {text="Enemy", value="tab2"}, {text="Boss", value="tab3"}})
+    devPanel:SetTabs({{text="POI", value="tab1"}, {text="Enemy", value="tab2"}, {text="Infested", value="tab3"}})
     devPanel:SetWidth(250)
     devPanel:SetPoint("TOPRIGHT",frame.topPanel,"TOPLEFT",0,0)
     devPanel:SetLayout("Flow")
@@ -510,22 +510,34 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end)
         container:AddChild(upstairsCheckbox)
 
-        --infested
+        --negative teeming
+        local negativeteemingCheckbox = AceGUI:Create("CheckBox")
+        negativeteemingCheckbox:SetLabel("Negative Teeming")
+        negativeteemingCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            if currentBlip then
+                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].negativeTeeming = value or nil
+                MethodDungeonTools:UpdateMap()
+            end
+        end)
+        container:AddChild(negativeteemingCheckbox)
 
 
         --enter clone options into the GUI (red)
         local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
         if currentBlip then
-            cloneGroup:SetText(currentBlip.g)
-            currentCloneGroup = currentBlip.g
-            teemingCheckbox:SetValue(currentBlip.teeming)
-            currentTeeming = currentBlip.teeming
+            cloneGroup:SetText(currentBlip.clone.g)
+            currentCloneGroup = currentBlip.clone.g
+            teemingCheckbox:SetValue(currentBlip.clone.teeming)
+            currentTeeming = currentBlip.clone.teeming
             currentPatrol = currentBlip.patrol and true or nil
             patrolCheckbox:SetValue(currentPatrol and currentBlip.patrolActive)
-            stealthDetectCheckbox:SetValue(currentBlip.stealthDetect)
-            stealthCheckbox:SetValue(currentBlip.stealth)
-            neutralCheckbox:SetValue(currentBlip.neutral)
-            upstairsCheckbox:SetValue(currentBlip.upstairs)
+            stealthDetectCheckbox:SetValue(currentBlip.data.stealthDetect)
+            stealthCheckbox:SetValue(currentBlip.data.stealth)
+            neutralCheckbox:SetValue(currentBlip.data.neutral)
+            upstairsCheckbox:SetValue(currentBlip.clone.upstairs)
+            negativeteemingCheckbox:SetValue(currentBlip.clone.negativeTeeming)
         else
             cloneGroup:SetText(currentCloneGroup)
         end
@@ -550,6 +562,22 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end
 
     local function DrawGroup3(container)
+        for i=1,12 do
+            local infestedCheckbox = AceGUI:Create("CheckBox")
+            infestedCheckbox:SetLabel("Infested Week "..i)
+            infestedCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+                local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].infested = data.clones[currentBlip.cloneIdx].infested or {}
+                data.clones[currentBlip.cloneIdx].infested[i] = value or nil
+                MethodDungeonTools:UpdateMap()
+            end)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            if currentBlip then
+                infestedCheckbox:SetValue(currentBlip.clone.infested and currentBlip.clone.infested[i])
+            end
+            container:AddChild(infestedCheckbox)
+        end
 
 
     end
@@ -585,7 +613,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
         --show patrol
         local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
         for _,v in ipairs(dungeonEnemyBlips) do
-            MethodDungeonTools:ShowBlipPatrol(v,v.devSelected)
+            v:DisplayPatrol(v.devSelected)
         end
 
     end
