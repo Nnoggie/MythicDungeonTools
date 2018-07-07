@@ -123,6 +123,8 @@ Vuticos
 Canax
 Cayna
 Larkin
+Hippopoceros
+
 
 Atal'DAzar
 Trellsky (Youtube)
@@ -136,6 +138,7 @@ Treenutsdk
 Freehold
 Canax (Big Thanks!)
 Matrox
+Caldalt
 
 The Motherlode
 
