@@ -95,6 +95,7 @@ Rodox
 Reloe
 Piorc
 Fatebtw
+Xarchs
 
 Shrine of the Storm
 Belorei
@@ -124,9 +125,12 @@ Canax
 Cayna
 Larkin
 Hippopoceros
+Looqdk
+TheTrakker
+Zitel
+Shaso
 
-
-Atal'DAzar
+Atal'Dazar
 Trellsky (Youtube)
 
 
@@ -134,6 +138,9 @@ Trellsky (Youtube)
 Underrot
 Shaso
 Treenutsdk
+Looqdk
+TheTrakker
+Zitel
 
 Freehold
 Canax (Big Thanks!)
@@ -141,6 +148,12 @@ Matrox
 Caldalt
 
 The Motherlode
+
+Waycrest Manor
+Looqdk
+Combatlog
+Ponti
+Keryl
 
 
 Special Thanks to Shakib for helping with Infested Mapping

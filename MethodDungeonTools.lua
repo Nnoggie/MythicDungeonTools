@@ -1166,14 +1166,6 @@ function MethodDungeonTools:IsCurrentPresetTeeming()
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 end
 
-
-local currentBlip
-local currentWaypoints
-local currentWaypointBlip
-
-local moverFrame = CreateFrame("Frame")
-local blipMoverFrame = CreateFrame("Frame")
-
 ---MethodDungeonTools.OnMouseDown
 ---Handles mouse-down events on the map scrollframe
 MethodDungeonTools.OnMouseDown = function(self,button)
@@ -1405,6 +1397,8 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	--Simple Group to hold both dropdowns
 	frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
 	local group = frame.DungeonSelectionGroup
+    group.frame:SetFrameStrata("HIGH")
+    group.frame:SetFrameLevel(50)
 	group:SetWidth(200);
 	group:SetHeight(50);
 	group:SetPoint("TOPLEFT",frame.topPanel,"BOTTOMLEFT",0,2)

@@ -232,6 +232,8 @@ local function toggleFreeholdSelector(show)
 
     if not selectorGroup then
         selectorGroup = AceGUI:Create("SimpleGroup")
+        selectorGroup.frame:SetFrameStrata("HIGH")
+        selectorGroup.frame:SetFrameLevel(50)
         MethodDungeonTools:FixAceGUIShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")
         local label = AceGUI:Create("Label")
@@ -248,7 +250,7 @@ local function toggleFreeholdSelector(show)
                     box:SetValue(idx==i and value)
                 end
                 MethodDungeonTools:GetCurrentPreset().freeholdCrew = (value and i) or nil
-                MethodDungeonTools:UpdateMap()
+
             end)
         end
         selectorGroup.frame:ClearAllPoints()

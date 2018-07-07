@@ -91,8 +91,9 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
 
     elseif button == "RightButton" then
         if db.devMode then
-            if IsControlKeyDown() then
-
+            if IsAltKeyDown() then
+                tremove(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][self.enemyIdx].clones,self.cloneIdx)
+                self:Hide()
             else
                 self.devSelected = (not self.devSelected) or nil
                 self:DisplayPatrol(self.devSelected)
@@ -206,12 +207,14 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     end
     local tyrannical = not fortified
     local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,data.health,db.currentDifficulty)
-    local group = data.g and " (G "..data.g..")" or ""
-    local upstairs = data.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
+    local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
+    local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
     --[[
         function CreateAtlasMarkup(atlasName, height, width, offsetX, offsetY) return ("|A:%s:%d:%d:%d:%d|a"):format( atlasName , height or 0 , width or 0 , offsetX or 0 , offsetY or 0 );end
     ]]
-    local text = upstairs..data.name.." "..blip.cloneIdx..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
+    local occurence = (blip.data.isBoss and "") or blip.cloneIdx
+
+    local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
     text = text .."Enemy Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
     tooltip.String:SetText(text)
 
@@ -257,8 +260,6 @@ local function blipDevModeSetup(blip)
     blip:SetMovable(true)
     blip:RegisterForDrag("LeftButton")
     blip:SetScript("OnDragStart", function()
-        local x,y = MethodDungeonTools:GetCursorPosition()
-        --  blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
         blip:StartMoving()
     end)
     blip:SetScript("OnDragStop", function()
@@ -311,7 +312,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
     for enemyIdx,data in pairs(enemies) do
         for cloneIdx,clone in pairs(data["clones"]) do
             --check sublevel
-            if clone.sublevel == currentSublevel then
+            if clone.sublevel == currentSublevel or (not clone.sublevel) then
                 local blip = MethodDungeonTools.dungeonEnemies_framePools:Acquire("MDTDungeonEnemyTemplate")
                 blip:SetUp(data,clone)
                 blip.enemyIdx = enemyIdx
@@ -319,10 +320,6 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
             end
         end
     end
-
-
-
-
 end
 
 function MethodDungeonTools:DungeonEnemies_CreateFramePools()
@@ -434,7 +431,6 @@ function MethodDungeonTools:DungeonEnemies_UpdateInfested(week)
             blip.texture_Indicator:Hide()
         end
     end
-
 end
 
 ---Frehold Crews

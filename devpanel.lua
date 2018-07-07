@@ -98,6 +98,9 @@ function MethodDungeonTools:CreateDevPanel(frame)
     db = MethodDungeonTools:GetDB()
     frame.devPanel = AceGUI:Create("TabGroup")
     local devPanel = frame.devPanel
+    devPanel.frame:SetFrameStrata("HIGH")
+    devPanel.frame:SetFrameLevel(50)
+
     devPanel:SetTabs({{text="POI", value="tab1"}, {text="Enemy", value="tab2"}, {text="Infested", value="tab3"}})
     devPanel:SetWidth(250)
     devPanel:SetPoint("TOPRIGHT",frame.topPanel,"TOPLEFT",0,0)
