@@ -4,7 +4,7 @@ local pi = math.pi
 
 MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.6
 
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=261,teeming=0,teemingEnabled=true}
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {

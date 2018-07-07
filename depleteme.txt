@@ -102,6 +102,7 @@ Weorn-Azralon
 Taykee-Azralon
 Squantoon
 Larkin
+Trellsky (Youtube)
 
 Siege of Boralus
 Taykee-Azralon
@@ -123,14 +124,23 @@ Canax
 Cayna
 Larkin
 
+Atal'DAzar
+Trellsky (Youtube)
+
+
 
 Underrot
 Shaso
+Treenutsdk
 
 Freehold
 Canax (Big Thanks!)
 Matrox
 
+The Motherlode
+
+
+Special Thanks to Shakib for helping with Infested Mapping
 
 
 Zoom Fixer: Grimmonja <3

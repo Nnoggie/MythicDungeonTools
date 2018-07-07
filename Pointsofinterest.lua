@@ -7,9 +7,9 @@ local UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel = UnitName,Unit
 
 
 function MethodDungeonTools:POI_CreateFramePools()
-    MethodDungeonTools.POI_framePools = CreatePoolCollection()
-    MethodDungeonTools.POI_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate");
-    MethodDungeonTools.POI_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "DeathReleasePinTemplate");
+    MethodDungeonTools.poi_framePools = MethodDungeonTools.poi_framePools or CreatePoolCollection()
+    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate");
+    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "DeathReleasePinTemplate");
 end
 
 
@@ -287,7 +287,7 @@ end
 function MethodDungeonTools:POI_UpdateAll()
     db = MethodDungeonTools:GetDB()
     toggleFreeholdSelector(db.currentDungeonIdx == 16)
-    local framePools = MethodDungeonTools.POI_framePools
+    local framePools = MethodDungeonTools.poi_framePools
     framePools:ReleaseAll()
     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then return end
     local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
