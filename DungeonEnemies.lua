@@ -260,9 +260,11 @@ local function blipDevModeSetup(blip)
     blip:SetMovable(true)
     blip:RegisterForDrag("LeftButton")
     blip:SetScript("OnDragStart", function()
+        if not db.devModeBlipsMovable then return end
         blip:StartMoving()
     end)
     blip:SetScript("OnDragStop", function()
+        if not db.devModeBlipsMovable then return end
         local x,y = MethodDungeonTools:GetCursorPosition()
         blip:StopMovingOrSizing()
         blip:ClearAllPoints()

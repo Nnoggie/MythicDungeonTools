@@ -403,6 +403,14 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end)
         container:AddChild(button2)
 
+        --blips movable toggle
+        local blipsMovableCheckbox = AceGUI:Create("CheckBox")
+        blipsMovableCheckbox:SetLabel("Blips Movable")
+        blipsMovableCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            db.devModeBlipsMovable = value or nil
+        end)
+        container:AddChild(blipsMovableCheckbox)
+
         --clone options
 
         --group
@@ -544,6 +552,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
         else
             cloneGroup:SetText(currentCloneGroup)
         end
+        blipsMovableCheckbox:SetValue(db.devModeBlipsMovable)
 
         local button3 = AceGUI:Create("Button")
         button3:SetText("Export to LUA")
