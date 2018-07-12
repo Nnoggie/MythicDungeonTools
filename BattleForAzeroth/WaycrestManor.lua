@@ -1,6 +1,6 @@
 local dungeonIndex = 24
 local nerfMultiplier = 1
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=289,teeming=0,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=289,teeming=1,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [2] = {
         [1] = {
@@ -159,87 +159,56 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
 
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
-    [1] = {
+    [27] = {
         ["clones"] = {
-            [1] = {
-                ["y"] = -383.47614917053;
-                ["x"] = 386.23331439027;
+            [6] = {
+                ["y"] = -306.64628988387;
+                ["x"] = 453.21993765066;
+                ["g"] = 32;
                 ["sublevel"] = 1;
             };
             [2] = {
-                ["y"] = -373.97616090426;
-                ["x"] = 398.98333562862;
-                ["g"] = 1;
+                ["y"] = -152.70658754095;
+                ["x"] = 420.39801393984;
                 ["sublevel"] = 1;
             };
             [3] = {
-                ["y"] = -369.37870827025;
-                ["x"] = 409.00647115891;
-                ["g"] = 1;
+                ["y"] = -209.97799796419;
+                ["x"] = 430.83823771866;
+                ["g"] = 30;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["y"] = -152.24145505191;
+                ["x"] = 448.77010772026;
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -372.08816045239;
-                ["x"] = 448.88455256882;
-                ["g"] = 2;
+                ["y"] = -259.56666724211;
+                ["x"] = 431.21385726458;
+                ["g"] = 31;
                 ["sublevel"] = 1;
             };
             [5] = {
-                ["y"] = -374.18119178103;
-                ["x"] = 461.21013936507;
-                ["g"] = 2;
-                ["sublevel"] = 1;
-            };
-            [6] = {
-                ["y"] = -413.74857219218;
-                ["x"] = 482.01842526572;
-                ["g"] = 3;
+                ["y"] = -297.57652072746;
+                ["x"] = 462.98739057016;
+                ["g"] = 32;
                 ["sublevel"] = 1;
             };
             [7] = {
-                ["y"] = -422.87901689438;
-                ["x"] = 475.06190396546;
-                ["g"] = 3;
-                ["sublevel"] = 1;
-            };
-            [8] = {
-                ["y"] = -309.34139656167;
-                ["x"] = 288.90519695162;
-                ["g"] = 43;
+                ["y"] = -162.70567152007;
+                ["x"] = 533.50012982393;
+                ["g"] = 40;
                 ["sublevel"] = 3;
-            };
-            [9] = {
-                ["y"] = -424.40524561898;
-                ["x"] = 428.36883017003;
-                ["g"] = 44;
-                ["sublevel"] = 4;
-            };
-            [10] = {
-                ["y"] = -437.97667252372;
-                ["x"] = 428.36883017003;
-                ["g"] = 44;
-                ["sublevel"] = 4;
-            };
-            [11] = {
-                ["y"] = -332.85572616561;
-                ["x"] = 465.85881938412;
-                ["g"] = 45;
-                ["sublevel"] = 4;
-            };
-            [12] = {
-                ["y"] = -331.06998789881;
-                ["x"] = 411.57311176515;
-                ["g"] = 45;
-                ["sublevel"] = 4;
             };
         };
         ["scale"] = 1;
-        ["name"] = "Soul Essence";
-        ["health"] = 176592;
-        ["creatureType"] = "Elemental";
+        ["name"] = "Coven Thornshaper";
+        ["health"] = 294320;
+        ["displayId"] = 80939;
+        ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["id"] = 135240;
-        ["displayId"] = 84408;
+        ["id"] = 131666;
         ["count"] = 0;
     };
     [2] = {
@@ -258,13 +227,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131850;
-        ["displayId"] = 82094;
+        ["name"] = "Maddened Survivalist";
         ["health"] = 294320;
-        ["count"] = 0;
+        ["displayId"] = 82094;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
-        ["name"] = "Maddened Survivalist";
+        ["count"] = 0;
     };
     [3] = {
         ["clones"] = {
@@ -294,13 +263,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135234;
-        ["displayId"] = 30221;
+        ["name"] = "Diseased Mastiff";
         ["health"] = 286962;
-        ["count"] = 0;
+        ["displayId"] = 30221;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["scale"] = 1;
-        ["name"] = "Diseased Mastiff";
+        ["count"] = 0;
     };
     [4] = {
         ["clones"] = {
@@ -330,13 +299,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131849;
-        ["displayId"] = 82092;
+        ["name"] = "Crazed Marksman";
         ["health"] = 294320;
-        ["count"] = 0;
+        ["displayId"] = 82092;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
-        ["name"] = "Crazed Marksman";
+        ["count"] = 0;
     };
     [5] = {
         ["clones"] = {
@@ -478,16 +447,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 11;
                 ["sublevel"] = 1;
             };
-            [15] = {
-                ["y"] = -252.85504930732;
-                ["x"] = 510.58573595387;
-                ["g"] = 11;
-                ["sublevel"] = 1;
-            };
-            [19] = {
-                ["y"] = -155.93288535435;
-                ["x"] = 561.36537556722;
-                ["g"] = 35;
+            [27] = {
+                ["y"] = -140.67900112419;
+                ["x"] = 547.55763713902;
+                ["g"] = 37;
                 ["sublevel"] = 1;
             };
             [23] = {
@@ -496,21 +459,27 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 36;
                 ["sublevel"] = 1;
             };
-            [27] = {
-                ["y"] = -140.67900112419;
-                ["x"] = 547.55763713902;
-                ["g"] = 37;
+            [19] = {
+                ["y"] = -155.93288535435;
+                ["x"] = 561.36537556722;
+                ["g"] = 35;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["y"] = -252.85504930732;
+                ["x"] = 510.58573595387;
+                ["g"] = 11;
                 ["sublevel"] = 1;
             };
         };
         ["id"] = 134024;
-        ["displayId"] = 77759;
+        ["name"] = "Devouring Maggot";
         ["health"] = 58864;
-        ["count"] = 0;
+        ["displayId"] = 77759;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["name"] = "Devouring Maggot";
+        ["count"] = 0;
     };
     [6] = {
         ["clones"] = {
@@ -735,13 +704,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135048;
-        ["displayId"] = 84115;
+        ["name"] = "Gorestained Piglet";
         ["health"] = 147160;
-        ["count"] = 0;
+        ["displayId"] = 84115;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["name"] = "Gorestained Piglet";
+        ["count"] = 0;
     };
     [7] = {
         ["clones"] = {
@@ -765,13 +734,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
+        ["health"] = 294320;
         ["count"] = 0;
-        ["name"] = "Infected Peasant";
+        ["displayId"] = 83298;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 134041;
-        ["displayId"] = 83298;
-        ["health"] = 294320;
+        ["name"] = "Infected Peasant";
     };
     [8] = {
         ["clones"] = {
@@ -871,13 +840,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                         ["y"] = -206.00148547292;
                         ["x"] = 505.96659244918;
                     };
-                    [15] = {
-                        ["y"] = -226.21886675548;
-                        ["x"] = 507.05354482072;
-                    };
                     [19] = {
                         ["y"] = -300.16071159213;
                         ["x"] = 506.61880408017;
+                    };
+                    [15] = {
+                        ["y"] = -226.21886675548;
+                        ["x"] = 507.05354482072;
                     };
                 };
                 ["g"] = 13;
@@ -897,55 +866,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
+        ["count"] = 0;
         ["name"] = "Pallid Gorger";
-        ["health"] = 478270;
+        ["displayId"] = 85446;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 137830;
-        ["displayId"] = 85446;
-        ["count"] = 0;
-    };
-    [9] = {
-        ["clones"] = {
-            [2] = {
-                ["y"] = -234.29590859246;
-                ["x"] = 544.89826676309;
-                ["g"] = 15;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -196.1694608809;
-                ["x"] = 549.6578754452;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -271.0651113617;
-                ["x"] = 579.23437180011;
-                ["g"] = 14;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -199.53796001274;
-                ["x"] = 542.80820619386;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -204.66944642956;
-                ["x"] = 549.40785062591;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["health"] = 176592;
-        ["count"] = 0;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131847;
-        ["displayId"] = 25983;
-        ["name"] = "Waycrest Reveler";
+        ["health"] = 478270;
     };
     [10] = {
         ["clones"] = {
@@ -1014,33 +941,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
+        ["name"] = "Banquet Steward";
         ["health"] = 294320;
-        ["count"] = 0;
+        ["displayId"] = 81344;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 131586;
-        ["displayId"] = 81344;
-        ["name"] = "Banquet Steward";
-    };
-    [11] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -237.9673703252;
-                ["x"] = 585.40426302096;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 131863;
-        ["displayId"] = 83656;
-        ["isBoss"] = true;
-        ["encounterID"] = 2127;
-        ["instanceID"] = 1021;
-        ["scale"] = 1;
         ["count"] = 0;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["name"] = "Raal the Gluttonous";
-        ["health"] = 1648192;
     };
     [12] = {
         ["clones"] = {
@@ -1110,67 +1017,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
+        ["health"] = 294320;
         ["count"] = 0;
-        ["name"] = "Runic Disciple";
+        ["displayId"] = 78911;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 131685;
-        ["displayId"] = 78911;
-        ["health"] = 294320;
-    };
-    [13] = {
-        ["clones"] = {
-            [6] = {
-                ["y"] = -186.90959205227;
-                ["x"] = 244.08017843762;
-                ["g"] = 18;
-                ["sublevel"] = 2;
-            };
-            [2] = {
-                ["y"] = -335.68672932191;
-                ["x"] = 322.85179072902;
-                ["g"] = 22;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -292.81656719291;
-                ["x"] = 305.40460986361;
-                ["g"] = 23;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -373.12031900731;
-                ["x"] = 271.60049996834;
-                ["g"] = 18;
-                ["sublevel"] = 2;
-            };
-            [4] = {
-                ["y"] = -222.66599621981;
-                ["x"] = 298.10027184853;
-                ["g"] = 24;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -217.08460595759;
-                ["x"] = 305.0770096763;
-                ["g"] = 24;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -257.1841849153;
-                ["x"] = 229.23391494565;
-                ["g"] = 42;
-                ["sublevel"] = 3;
-            };
-        };
-        ["scale"] = 1;
-        ["count"] = 0;
-        ["name"] = "Enthralled Guard";
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131585;
-        ["displayId"] = 76992;
-        ["health"] = 294320;
+        ["name"] = "Runic Disciple";
     };
     [14] = {
         ["clones"] = {
@@ -1184,39 +1037,25 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 582.50081228573;
                 ["sublevel"] = 1;
             };
+            [3] = {
+                ["y"] = -333.87237760531;
+                ["x"] = 321.75141293375;
+                ["sublevel"] = 2;
+            };
+            [4] = {
+                ["y"] = -146.17915908286;
+                ["x"] = 565.63778130716;
+                ["sublevel"] = 1;
+            };
         };
         ["scale"] = 1.2;
+        ["health"] = 470912;
         ["count"] = 0;
-        ["name"] = "Heartsbane Runeweaver";
+        ["displayId"] = 81999;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 131677;
-        ["displayId"] = 81999;
-        ["health"] = 470912;
-    };
-    [15] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -457.60024247062;
-                ["x"] = 254.17767714282;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -326.90578356993;
-                ["x"] = 234.32939762157;
-                ["g"] = 20;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["count"] = 0;
-        ["name"] = "Thistle Acolyte";
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 135474;
-        ["displayId"] = 84270;
-        ["health"] = 294320;
+        ["name"] = "Heartsbane Runeweaver";
     };
     [16] = {
         ["clones"] = {
@@ -1264,13 +1103,175 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 0.7;
+        ["health"] = 58864;
         ["count"] = 0;
-        ["name"] = "Blight Toad";
+        ["displayId"] = 76785;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 135052;
-        ["displayId"] = 76785;
-        ["health"] = 58864;
+        ["name"] = "Blight Toad";
+    };
+    [20] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -174.47251289199;
+                ["x"] = 195.14171737527;
+                ["g"] = 25;
+                ["sublevel"] = 2;
+            };
+            [2] = {
+                ["y"] = -394.56227746994;
+                ["x"] = 610.51361865403;
+                ["sublevel"] = 2;
+            };
+            [3] = {
+                ["y"] = -321.1402499349;
+                ["x"] = 316.78718127353;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1.2;
+        ["count"] = 0;
+        ["name"] = "Heartsbane Vinetwister";
+        ["displayId"] = 81996;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131670;
+        ["health"] = 470912;
+    };
+    [24] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -97.497810208371;
+                ["x"] = 434.536075751;
+                ["g"] = 6;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 131667;
+        ["isBoss"] = true;
+        ["encounterID"] = 2126;
+        ["instanceID"] = 1021;
+        ["count"] = 0;
+        ["health"] = 2060240;
+        ["displayId"] = 79398;
+        ["creatureType"] = "Giant";
+        ["level"] = 120;
+        ["name"] = "Soulbound Goliath";
+        ["scale"] = 1;
+    };
+    [28] = {
+        ["clones"] = {
+            [1] = {
+                ["sublevel"] = 1;
+                ["x"] = 430.83823771866;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -199.43746650856;
+                        ["x"] = 430.83823771866;
+                    };
+                    [2] = {
+                        ["y"] = -203.84489874368;
+                        ["x"] = 557.51167871012;
+                    };
+                };
+                ["g"] = 30;
+                ["y"] = -199.43746650856;
+            };
+            [2] = {
+                ["y"] = -305.94859614047;
+                ["x"] = 460.66181794778;
+                ["g"] = 32;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["name"] = "Thornguard";
+        ["health"] = 294320;
+        ["displayId"] = 80957;
+        ["creatureType"] = "Aberration";
+        ["level"] = 120;
+        ["id"] = 131858;
+        ["count"] = 0;
+    };
+    [32] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -332.41732237891;
+                ["x"] = 272.11057787537;
+                ["g"] = 43;
+                ["sublevel"] = 3;
+            };
+            [2] = {
+                ["y"] = -432.61954968478;
+                ["x"] = 434.79742662286;
+                ["patrol"] = {
+                    [6] = {
+                        ["y"] = -426.90526386558;
+                        ["x"] = 379.79742369718;
+                    };
+                    [2] = {
+                        ["y"] = -428.69095615165;
+                        ["x"] = 480.8687995222;
+                    };
+                    [8] = {
+                        ["y"] = -426.90526386558;
+                        ["x"] = 379.08309773664;
+                    };
+                    [3] = {
+                        ["y"] = -380.8338143317;
+                        ["x"] = 528.72600264979;
+                    };
+                    [1] = {
+                        ["y"] = -432.61954968478;
+                        ["x"] = 434.79742662286;
+                    };
+                    [4] = {
+                        ["y"] = -428.69095615165;
+                        ["x"] = 480.51171317648;
+                    };
+                    [5] = {
+                        ["y"] = -431.54812205162;
+                        ["x"] = 434.4402789695;
+                    };
+                    [7] = {
+                        ["y"] = -382.61952194467;
+                        ["x"] = 335.51166644936;
+                    };
+                };
+                ["g"] = 44;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1;
+        ["health"] = 294335;
+        ["count"] = 0;
+        ["displayId"] = 82073;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131819;
+        ["name"] = "Coven Diviner";
+    };
+    [33] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -156.99857505411;
+                ["x"] = 447.00176616386;
+                ["g"] = 46;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 131527;
+        ["isBoss"] = true;
+        ["encounterID"] = 2128;
+        ["instanceID"] = 1021;
+        ["scale"] = 1;
+        ["health"] = 529803;
+        ["displayId"] = 83349;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["name"] = "Lord Waycrest";
+        ["count"] = 0;
     };
     [17] = {
         ["clones"] = {
@@ -1282,111 +1283,19 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131824;
-        ["displayId"] = 82071;
         ["isBoss"] = true;
         ["encounterID"] = 2125;
         ["instanceID"] = 1021;
+        ["scale"] = 1;
         ["count"] = 0;
-        ["health"] = 588640;
+        ["displayId"] = 82071;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Sister Solena";
-        ["scale"] = 1;
-    };
-    [18] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -374.21153909155;
-                ["x"] = 227.06817823283;
-                ["g"] = 21;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 131823;
-        ["displayId"] = 81999;
-        ["isBoss"] = true;
-        ["encounterID"] = 2125;
-        ["instanceID"] = 1021;
-        ["count"] = 0;
         ["health"] = 588640;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["name"] = "Sister Malady";
-        ["scale"] = 1;
-    };
-    [19] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -404.21153836512;
-                ["x"] = 227.6931864599;
-                ["g"] = 21;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 131825;
-        ["displayId"] = 81996;
-        ["isBoss"] = true;
-        ["encounterID"] = 2125;
-        ["instanceID"] = 1021;
-        ["count"] = 0;
-        ["health"] = 588640;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["name"] = "Sister Briar";
-        ["scale"] = 1;
-    };
-    [20] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -174.47251289199;
-                ["x"] = 195.14171737527;
-                ["g"] = 25;
-                ["sublevel"] = 2;
-            };
-        };
-        ["scale"] = 1.2;
-        ["name"] = "Heartsbane Vinetwister";
-        ["health"] = 470912;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131670;
-        ["displayId"] = 81996;
-        ["count"] = 0;
     };
     [21] = {
         ["clones"] = {
-            [1] = {
-                ["y"] = -335.91928059596;
-                ["x"] = 315.87503294062;
-                ["patrol"] = {
-                    [6] = {
-                        ["y"] = -366.61695697907;
-                        ["x"] = 315.17734917753;
-                    };
-                    [2] = {
-                        ["y"] = -305.68671674125;
-                        ["x"] = 315.87503294062;
-                    };
-                    [3] = {
-                        ["y"] = -335.91928059596;
-                        ["x"] = 315.87503294062;
-                    };
-                    [1] = {
-                        ["y"] = -335.91928059596;
-                        ["x"] = 315.87503294062;
-                    };
-                    [4] = {
-                        ["y"] = -366.61695697907;
-                        ["x"] = 315.17734917753;
-                    };
-                    [5] = {
-                        ["y"] = -412.43092526985;
-                        ["x"] = 315.17734917753;
-                    };
-                };
-                ["g"] = 22;
-                ["sublevel"] = 1;
-            };
             [2] = {
                 ["y"] = -284.70848927068;
                 ["x"] = 303.51271573609;
@@ -1446,8 +1355,40 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                         ["x"] = 301.28948850719;
                     };
                 };
-                ["g"] = 18;
+                ["g"] = 50;
                 ["sublevel"] = 2;
+            };
+            [1] = {
+                ["y"] = -335.91928059596;
+                ["x"] = 315.87503294062;
+                ["patrol"] = {
+                    [6] = {
+                        ["y"] = -366.61695697907;
+                        ["x"] = 315.17734917753;
+                    };
+                    [2] = {
+                        ["y"] = -305.68671674125;
+                        ["x"] = 315.87503294062;
+                    };
+                    [3] = {
+                        ["y"] = -335.91928059596;
+                        ["x"] = 315.87503294062;
+                    };
+                    [1] = {
+                        ["y"] = -335.91928059596;
+                        ["x"] = 315.87503294062;
+                    };
+                    [4] = {
+                        ["y"] = -366.61695697907;
+                        ["x"] = 315.17734917753;
+                    };
+                    [5] = {
+                        ["y"] = -412.43092526985;
+                        ["x"] = 315.17734917753;
+                    };
+                };
+                ["g"] = 22;
+                ["sublevel"] = 1;
             };
             [4] = {
                 ["y"] = -377.50144148804;
@@ -1463,13 +1404,237 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
+        ["count"] = 0;
         ["name"] = "Bewitched Captain";
-        ["health"] = 470912;
+        ["displayId"] = 84078;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 131587;
-        ["displayId"] = 84078;
+        ["health"] = 470912;
+    };
+    [25] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -123.13807059484;
+                ["x"] = 434.14255739642;
+                ["g"] = 28;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1.2;
+        ["name"] = "Matron Bryndle";
+        ["health"] = 765232;
+        ["displayId"] = 84208;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["id"] = 135329;
         ["count"] = 0;
+    };
+    [29] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -261.12576592066;
+                ["x"] = 638.67759350097;
+                ["g"] = 39;
+                ["sublevel"] = 2;
+            };
+            [2] = {
+                ["y"] = -265.0387963241;
+                ["x"] = 597.59062965878;
+                ["g"] = 39;
+                ["sublevel"] = 2;
+            };
+        };
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "Faceless Maiden";
+        ["displayId"] = 82075;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131821;
+        ["health"] = 176592;
+    };
+    [34] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -157.79857716301;
+                ["x"] = 417.20184046484;
+                ["g"] = 46;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 131545;
+        ["isBoss"] = true;
+        ["encounterID"] = 2128;
+        ["instanceID"] = 1021;
+        ["scale"] = 1;
+        ["health"] = 5886700;
+        ["displayId"] = 87188;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["name"] = "Lady Waycrest";
+        ["count"] = 0;
+    };
+    [9] = {
+        ["clones"] = {
+            [2] = {
+                ["y"] = -234.29590859246;
+                ["x"] = 544.89826676309;
+                ["g"] = 15;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -196.1694608809;
+                ["x"] = 549.6578754452;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["y"] = -271.0651113617;
+                ["x"] = 579.23437180011;
+                ["g"] = 14;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -199.53796001274;
+                ["x"] = 542.80820619386;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -204.66944642956;
+                ["x"] = 549.40785062591;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["name"] = "Waycrest Reveler";
+        ["health"] = 176592;
+        ["displayId"] = 25983;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131847;
+        ["count"] = 0;
+    };
+    [11] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -237.9673703252;
+                ["x"] = 585.40426302096;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 131863;
+        ["isBoss"] = true;
+        ["encounterID"] = 2127;
+        ["instanceID"] = 1021;
+        ["health"] = 1648192;
+        ["count"] = 0;
+        ["displayId"] = 83656;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Raal the Gluttonous";
+        ["scale"] = 1;
+    };
+    [13] = {
+        ["clones"] = {
+            [6] = {
+                ["y"] = -186.90959205227;
+                ["x"] = 244.08017843762;
+                ["g"] = 50;
+                ["sublevel"] = 2;
+            };
+            [2] = {
+                ["y"] = -335.68672932191;
+                ["x"] = 322.85179072902;
+                ["g"] = 22;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -292.81656719291;
+                ["x"] = 305.40460986361;
+                ["g"] = 23;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["y"] = -373.12031900731;
+                ["x"] = 271.60049996834;
+                ["g"] = 18;
+                ["sublevel"] = 2;
+            };
+            [4] = {
+                ["y"] = -222.66599621981;
+                ["x"] = 298.10027184853;
+                ["g"] = 24;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -217.08460595759;
+                ["x"] = 305.0770096763;
+                ["g"] = 24;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -257.1841849153;
+                ["x"] = 229.23391494565;
+                ["g"] = 42;
+                ["sublevel"] = 3;
+            };
+        };
+        ["scale"] = 1;
+        ["health"] = 294320;
+        ["count"] = 0;
+        ["displayId"] = 76992;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131585;
+        ["name"] = "Enthralled Guard";
+    };
+    [15] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -457.60024247062;
+                ["x"] = 254.17767714282;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -326.90578356993;
+                ["x"] = 234.32939762157;
+                ["g"] = 20;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["health"] = 294320;
+        ["count"] = 0;
+        ["displayId"] = 84270;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 135474;
+        ["name"] = "Thistle Acolyte";
+    };
+    [18] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -374.21153909155;
+                ["x"] = 227.06817823283;
+                ["g"] = 21;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 131823;
+        ["isBoss"] = true;
+        ["encounterID"] = 2125;
+        ["instanceID"] = 1021;
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["displayId"] = 81999;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Sister Malady";
+        ["health"] = 588640;
     };
     [22] = {
         ["clones"] = {
@@ -1498,87 +1663,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 0.8;
+        ["count"] = 0;
         ["name"] = "Dreadwing Raven";
-        ["health"] = 176592;
+        ["displayId"] = 47534;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 135049;
-        ["displayId"] = 47534;
-        ["count"] = 0;
-    };
-    [23] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -283.65704264727;
-                ["x"] = 166.47196240206;
-                ["g"] = 26;
-                ["sublevel"] = 2;
-            };
-            [2] = {
-                ["y"] = -376.84926819923;
-                ["x"] = 486.45193604404;
-                ["g"] = 41;
-                ["sublevel"] = 3;
-            };
-            [3] = {
-                ["y"] = -231.8780585113;
-                ["x"] = 239.84616093712;
-                ["g"] = 42;
-                ["sublevel"] = 3;
-            };
-            [4] = {
-                ["y"] = -446.39856666783;
-                ["x"] = 525.18446628339;
-                ["sublevel"] = 4;
-            };
-        };
-        ["scale"] = 1;
-        ["name"] = "Marked Sister";
-        ["health"] = 294320;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131818;
-        ["displayId"] = 81995;
-        ["count"] = 0;
-    };
-    [24] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -97.497810208371;
-                ["x"] = 434.536075751;
-                ["g"] = 6;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 131667;
-        ["displayId"] = 79398;
-        ["isBoss"] = true;
-        ["encounterID"] = 2126;
-        ["instanceID"] = 1021;
-        ["scale"] = 1;
-        ["health"] = 2060240;
-        ["creatureType"] = "Giant";
-        ["level"] = 120;
-        ["name"] = "Soulbound Goliath";
-        ["count"] = 0;
-    };
-    [25] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -123.13807059484;
-                ["x"] = 434.14255739642;
-                ["g"] = 28;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1.2;
-        ["health"] = 765232;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 135329;
-        ["displayId"] = 84208;
-        ["name"] = "Matron Bryndle";
+        ["health"] = 176592;
     };
     [26] = {
         ["clones"] = {
@@ -1594,34 +1685,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 28;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -128.90416020998;
-                ["x"] = 424.87376398751;
-                ["g"] = 28;
-                ["sublevel"] = 1;
-            };
             [4] = {
                 ["y"] = -261.6121330887;
                 ["x"] = 438.56180707349;
                 ["g"] = 31;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -262.26430637751;
-                ["x"] = 424.21395740196;
-                ["g"] = 31;
-                ["sublevel"] = 1;
-            };
-            [6] = {
-                ["y"] = -252.04692796261;
-                ["x"] = 430.95310315499;
-                ["g"] = 31;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -174.45302446066;
-                ["x"] = 430.07972041071;
-                ["g"] = 33;
                 ["sublevel"] = 1;
             };
             [8] = {
@@ -1680,10 +1747,28 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 33;
                 ["sublevel"] = 1;
             };
+            [16] = {
+                ["y"] = -149.99623828051;
+                ["x"] = 497.64802937448;
+                ["g"] = 40;
+                ["sublevel"] = 3;
+            };
+            [17] = {
+                ["y"] = -145.7462240485;
+                ["x"] = 564.14806525555;
+                ["g"] = 40;
+                ["sublevel"] = 3;
+            };
             [9] = {
                 ["y"] = -179.80185346851;
                 ["x"] = 431.00994546753;
                 ["g"] = 33;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -262.26430637751;
+                ["x"] = 424.21395740196;
+                ["g"] = 31;
                 ["sublevel"] = 1;
             };
             [10] = {
@@ -1744,6 +1829,18 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 34;
                 ["sublevel"] = 1;
             };
+            [3] = {
+                ["y"] = -128.90416020998;
+                ["x"] = 424.87376398751;
+                ["g"] = 28;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -252.04692796261;
+                ["x"] = 430.95310315499;
+                ["g"] = 31;
+                ["sublevel"] = 1;
+            };
             [12] = {
                 ["y"] = -217.70884889438;
                 ["x"] = 456.12622160812;
@@ -1754,6 +1851,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -216.3134813682;
                 ["x"] = 449.14950374098;
                 ["g"] = 34;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -174.45302446066;
+                ["x"] = 430.07972041071;
+                ["g"] = 33;
                 ["sublevel"] = 1;
             };
             [14] = {
@@ -1768,138 +1871,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 40;
                 ["sublevel"] = 3;
             };
-            [16] = {
-                ["y"] = -149.99623828051;
-                ["x"] = 497.64802937448;
-                ["g"] = 40;
-                ["sublevel"] = 3;
-            };
-            [17] = {
-                ["y"] = -145.7462240485;
-                ["x"] = 564.14806525555;
-                ["g"] = 40;
-                ["sublevel"] = 3;
-            };
         };
         ["scale"] = 0.7;
+        ["name"] = "Jagged Hound";
         ["health"] = 58864;
-        ["count"] = 0;
+        ["displayId"] = 79871;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 131669;
-        ["displayId"] = 79871;
-        ["name"] = "Jagged Hound";
-    };
-    [27] = {
-        ["clones"] = {
-            [6] = {
-                ["y"] = -306.64628988387;
-                ["x"] = 453.21993765066;
-                ["g"] = 32;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -152.70658754095;
-                ["x"] = 420.39801393984;
-                ["g"] = 29;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -209.97799796419;
-                ["x"] = 430.83823771866;
-                ["g"] = 30;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -152.24145505191;
-                ["x"] = 448.77010772026;
-                ["g"] = 29;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -259.56666724211;
-                ["x"] = 431.21385726458;
-                ["g"] = 31;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -297.57652072746;
-                ["x"] = 462.98739057016;
-                ["g"] = 32;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -162.70567152007;
-                ["x"] = 533.50012982393;
-                ["g"] = 40;
-                ["sublevel"] = 3;
-            };
-        };
-        ["scale"] = 1;
-        ["health"] = 294320;
-        ["count"] = 0;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131666;
-        ["displayId"] = 80939;
-        ["name"] = "Coven Thornshaper";
-    };
-    [28] = {
-        ["clones"] = {
-            [1] = {
-                ["sublevel"] = 1;
-                ["x"] = 430.83823771866;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -199.43746650856;
-                        ["x"] = 430.83823771866;
-                    };
-                    [2] = {
-                        ["y"] = -203.84489874368;
-                        ["x"] = 557.51167871012;
-                    };
-                };
-                ["g"] = 30;
-                ["y"] = -199.43746650856;
-            };
-            [2] = {
-                ["y"] = -305.94859614047;
-                ["x"] = 460.66181794778;
-                ["g"] = 32;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["health"] = 294320;
-        ["count"] = 0;
-        ["creatureType"] = "Aberration";
-        ["level"] = 120;
-        ["id"] = 131858;
-        ["displayId"] = 80957;
-        ["name"] = "Thornguard";
-    };
-    [29] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -261.12576592066;
-                ["x"] = 638.67759350097;
-                ["g"] = 39;
-                ["sublevel"] = 2;
-            };
-            [2] = {
-                ["y"] = -265.0387963241;
-                ["x"] = 597.59062965878;
-                ["g"] = 39;
-                ["sublevel"] = 2;
-            };
-        };
-        ["scale"] = 1;
-        ["name"] = "Faceless Maiden";
-        ["health"] = 176592;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131821;
-        ["displayId"] = 82075;
         ["count"] = 0;
     };
     [30] = {
@@ -1921,164 +1900,42 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 4;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Heartsbane Soulcharmer";
         ["scale"] = 1.2;
+        ["health"] = 470936;
+        ["count"] = 0;
+        ["displayId"] = 82071;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 131812;
-        ["displayId"] = 82071;
-        ["health"] = 470936;
+        ["name"] = "Heartsbane Soulcharmer";
     };
-    [31] = {
+    [36] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -275.51348990295;
-                ["x"] = 392.61917117724;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -275.51348990295;
-                        ["x"] = 392.61917117724;
-                    };
-                    [2] = {
-                        ["y"] = -273.41465611388;
-                        ["x"] = 232.06888238521;
-                    };
-                    [3] = {
-                        ["y"] = -318.05749970742;
-                        ["x"] = 233.14029469147;
-                    };
-                    [4] = {
-                        ["y"] = -273.41465611388;
-                        ["x"] = 232.06888238521;
-                    };
-                    [5] = {
-                        ["y"] = -275.55751138021;
-                        ["x"] = 392.42600232241;
-                    };
-                    [6] = {
-                        ["y"] = -276.63182585267;
-                        ["x"] = 546.36372005945;
-                    };
-                };
-                ["sublevel"] = 3;
+                ["y"] = -154.57482225174;
+                ["x"] = 477.89740541704;
+                ["g"] = 49;
+                ["sublevel"] = 5;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Matron Alma";
-        ["scale"] = 1.5;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 135365;
-        ["displayId"] = 84236;
-        ["health"] = 706404;
-    };
-    [32] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -332.41732237891;
-                ["x"] = 272.11057787537;
-                ["g"] = 43;
-                ["sublevel"] = 3;
-            };
-            [2] = {
-                ["y"] = -432.61954968478;
-                ["x"] = 434.79742662286;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -432.61954968478;
-                        ["x"] = 434.79742662286;
-                    };
-                    [2] = {
-                        ["y"] = -428.69095615165;
-                        ["x"] = 480.8687995222;
-                    };
-                    [3] = {
-                        ["y"] = -380.8338143317;
-                        ["x"] = 528.72600264979;
-                    };
-                    [4] = {
-                        ["y"] = -428.69095615165;
-                        ["x"] = 480.51171317648;
-                    };
-                    [5] = {
-                        ["y"] = -431.54812205162;
-                        ["x"] = 434.4402789695;
-                    };
-                    [6] = {
-                        ["y"] = -426.90526386558;
-                        ["x"] = 379.79742369718;
-                    };
-                    [7] = {
-                        ["y"] = -382.61952194467;
-                        ["x"] = 335.51166644936;
-                    };
-                    [8] = {
-                        ["y"] = -426.90526386558;
-                        ["x"] = 379.08309773664;
-                    };
-                };
-                ["g"] = 44;
-                ["sublevel"] = 4;
-            };
-        };
-        ["count"] = 0;
-        ["name"] = "Coven Diviner";
+        ["id"] = 131864;
+        ["isBoss"] = true;
+        ["encounterID"] = 2129;
+        ["instanceID"] = 1021;
         ["scale"] = 1;
+        ["health"] = 1883744;
+        ["displayId"] = 85983;
         ["creatureType"] = "Humanoid";
-        ["level"] = 120;
-        ["id"] = 131819;
-        ["displayId"] = 82073;
-        ["health"] = 294335;
-    };
-    [33] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -156.99857505411;
-                ["x"] = 447.00176616386;
-                ["g"] = 46;
-                ["sublevel"] = 4;
-            };
-        };
-        ["id"] = 131527;
-        ["displayId"] = 83349;
-        ["isBoss"] = true;
-        ["encounterID"] = 2128;
-        ["instanceID"] = 1021;
-        ["health"] = 529803;
-        ["count"] = 0;
-        ["creatureType"] = "Undead";
         ["level"] = 122;
-        ["name"] = "Lord Waycrest";
-        ["scale"] = 1;
-    };
-    [34] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -157.79857716301;
-                ["x"] = 417.20184046484;
-                ["g"] = 46;
-                ["sublevel"] = 4;
-            };
-        };
-        ["id"] = 131545;
-        ["displayId"] = 87188;
-        ["isBoss"] = true;
-        ["encounterID"] = 2128;
-        ["instanceID"] = 1021;
-        ["health"] = 5886700;
+        ["name"] = "Gorak Tul";
         ["count"] = 0;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "Lady Waycrest";
-        ["scale"] = 1;
     };
     [35] = {
         ["clones"] = {
-            [1] = {
-                ["y"] = -261.85382948067;
-                ["x"] = 420.00525329407;
-                ["g"] = 47;
+            [6] = {
+                ["y"] = -232.25384359058;
+                ["x"] = 524.67210834991;
+                ["g"] = 49;
                 ["sublevel"] = 4;
             };
             [2] = {
@@ -2090,6 +1947,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [3] = {
                 ["y"] = -260.10381667824;
                 ["x"] = 456.75527538178;
+                ["g"] = 47;
+                ["sublevel"] = 4;
+            };
+            [1] = {
+                ["y"] = -261.85382948067;
+                ["x"] = 420.00525329407;
                 ["g"] = 47;
                 ["sublevel"] = 4;
             };
@@ -2105,12 +1968,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 48;
                 ["sublevel"] = 4;
             };
-            [6] = {
-                ["y"] = -232.25384359058;
-                ["x"] = 524.67210834991;
-                ["g"] = 49;
-                ["sublevel"] = 4;
-            };
             [7] = {
                 ["y"] = -218.00383436908;
                 ["x"] = 538.67210348095;
@@ -2118,37 +1975,199 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 4;
             };
         };
-        ["count"] = 0;
-        ["name"] = "Gloom Horror";
         ["scale"] = 1;
+        ["health"] = 294335;
+        ["count"] = 0;
+        ["displayId"] = 86207;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 139269;
-        ["displayId"] = 86207;
-        ["health"] = 294335;
+        ["name"] = "Gloom Horror";
     };
-    [36] = {
+    [1] = {
         ["clones"] = {
+            [7] = {
+                ["y"] = -422.87901689438;
+                ["x"] = 475.06190396546;
+                ["g"] = 3;
+                ["sublevel"] = 1;
+            };
             [1] = {
-                ["y"] = -154.57482225174;
-                ["x"] = 477.89740541704;
-                ["g"] = 49;
-                ["sublevel"] = 5;
+                ["y"] = -383.47614917053;
+                ["x"] = 386.23331439027;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -373.97616090426;
+                ["x"] = 398.98333562862;
+                ["g"] = 1;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -372.08816045239;
+                ["x"] = 448.88455256882;
+                ["g"] = 2;
+                ["sublevel"] = 1;
+            };
+            [8] = {
+                ["y"] = -309.34139656167;
+                ["x"] = 288.90519695162;
+                ["g"] = 43;
+                ["sublevel"] = 3;
+            };
+            [9] = {
+                ["y"] = -424.40524561898;
+                ["x"] = 428.36883017003;
+                ["g"] = 44;
+                ["sublevel"] = 4;
+            };
+            [5] = {
+                ["y"] = -374.18119178103;
+                ["x"] = 461.21013936507;
+                ["g"] = 2;
+                ["sublevel"] = 1;
+            };
+            [10] = {
+                ["y"] = -437.97667252372;
+                ["x"] = 428.36883017003;
+                ["g"] = 44;
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -369.37870827025;
+                ["x"] = 409.00647115891;
+                ["g"] = 1;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -413.74857219218;
+                ["x"] = 482.01842526572;
+                ["g"] = 3;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -331.06998789881;
+                ["x"] = 411.57311176515;
+                ["g"] = 45;
+                ["sublevel"] = 4;
+            };
+            [11] = {
+                ["y"] = -332.85572616561;
+                ["x"] = 465.85881938412;
+                ["g"] = 45;
+                ["sublevel"] = 4;
             };
         };
-        ["id"] = 131864;
-        ["displayId"] = 85983;
-        ["isBoss"] = true;
-        ["encounterID"] = 2129;
-        ["instanceID"] = 1021;
-        ["health"] = 1883744;
-        ["count"] = 0;
-        ["creatureType"] = "Humanoid";
-        ["level"] = 122;
-        ["name"] = "Gorak Tul";
         ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "Soul Essence";
+        ["displayId"] = 84408;
+        ["creatureType"] = "Elemental";
+        ["level"] = 120;
+        ["id"] = 135240;
+        ["health"] = 176592;
+    };
+    [19] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -404.21153836512;
+                ["x"] = 227.6931864599;
+                ["g"] = 21;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 131825;
+        ["isBoss"] = true;
+        ["encounterID"] = 2125;
+        ["instanceID"] = 1021;
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["displayId"] = 81996;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Sister Briar";
+        ["health"] = 588640;
+    };
+    [23] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -283.65704264727;
+                ["x"] = 166.47196240206;
+                ["g"] = 26;
+                ["sublevel"] = 2;
+            };
+            [2] = {
+                ["y"] = -376.84926819923;
+                ["x"] = 486.45193604404;
+                ["g"] = 41;
+                ["sublevel"] = 3;
+            };
+            [4] = {
+                ["y"] = -446.39856666783;
+                ["x"] = 525.18446628339;
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -231.8780585113;
+                ["x"] = 239.84616093712;
+                ["g"] = 42;
+                ["sublevel"] = 3;
+            };
+        };
+        ["scale"] = 1;
+        ["count"] = 0;
+        ["name"] = "Marked Sister";
+        ["displayId"] = 81995;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 131818;
+        ["health"] = 294320;
+    };
+    [31] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -275.51348990295;
+                ["x"] = 392.61917117724;
+                ["patrol"] = {
+                    [6] = {
+                        ["y"] = -276.63182585267;
+                        ["x"] = 546.36372005945;
+                    };
+                    [2] = {
+                        ["y"] = -273.41465611388;
+                        ["x"] = 232.06888238521;
+                    };
+                    [3] = {
+                        ["y"] = -318.05749970742;
+                        ["x"] = 233.14029469147;
+                    };
+                    [1] = {
+                        ["y"] = -275.51348990295;
+                        ["x"] = 392.61917117724;
+                    };
+                    [4] = {
+                        ["y"] = -273.41465611388;
+                        ["x"] = 232.06888238521;
+                    };
+                    [5] = {
+                        ["y"] = -275.55751138021;
+                        ["x"] = 392.42600232241;
+                    };
+                };
+                ["sublevel"] = 3;
+            };
+        };
+        ["scale"] = 1.5;
+        ["health"] = 706404;
+        ["count"] = 0;
+        ["displayId"] = 84236;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["id"] = 135365;
+        ["name"] = "Matron Alma";
     };
 };
+
 
 
 
