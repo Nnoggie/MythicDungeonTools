@@ -67,7 +67,15 @@ function MDTDungeonEnemyMixin:OnEnter()
     self:SetFrameLevel(self:GetFrameLevel()+5)
     self:DisplayPatrol(true)
     MethodDungeonTools:DisplayBlipTooltip(self,true)
-
+    if not self.clone.g then
+        self.fontstring_Text1:Show()
+        return
+    end
+    for _,blip in pairs(blips) do
+        if blip.clone.g == self.clone.g then
+            blip.fontstring_Text1:Show()
+        end
+    end
 end
 
 function MDTDungeonEnemyMixin:OnLeave()
@@ -79,6 +87,15 @@ function MDTDungeonEnemyMixin:OnLeave()
         self:DisplayPatrol(false)
     end
     MethodDungeonTools:DisplayBlipTooltip(self,false)
+    if not self.clone.g then
+        self.fontstring_Text1:Hide()
+        return
+    end
+    for _,blip in pairs(blips) do
+        if blip.clone.g == self.clone.g then
+            blip.fontstring_Text1:Hide()
+        end
+    end
 end
 
 function MDTDungeonEnemyMixin:OnClick(button, down)
@@ -280,6 +297,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.normalScale = self.normalScale * 0.6
     self:SetSize(self.normalScale*13,self.normalScale*13)
     self:updateSizes(1)
+    self.texture_Portrait:SetDesaturated(false)
     local raise = 4
     for k,v in pairs(blips) do
         if framesOverlap(self, v,0) then raise = max(raise,v:GetFrameLevel()+1) end
@@ -355,6 +373,7 @@ function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add
         for _,v in pairs(pulls[pull][blip.enemyIdx]) do
             if v == blip.cloneIdx then found = true end
         end
+        --print(blip:IsEnabled())
         if found==false then tinsert(pulls[pull][blip.enemyIdx],blip.cloneIdx) end
     else
         blip.selected = false
@@ -436,8 +455,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateInfested(week)
 end
 
 ---Frehold Crews
----TODO
-local freeholdCrews = {
+MethodDungeonTools.freeholdCrews = {
     [1] = {
         [129550] = true,
         [129527] = true,
@@ -458,17 +476,28 @@ local freeholdCrews = {
         [129601] = true,
     },
 }
---this is old code
-local function freeholdCrewOverride(blip)
-    local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew
-    if not crew then return end
-    for npcId,_ in pairs(freeholdCrews[crew]) do
-        if blip.id == npcId then
-            blip:SetDesaturated(1)
+---DungeonEnemies_UpdateFreeholdCrew
+---Updates the enemies in Freehold to reflect the weekly event of "joining" a crew i.e. disabling npcs of the crew
+function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
+    --if we are not in freehold map we need to tidy up our mess a bit
+    if not crewIdx then
+        for _,blip in pairs(blips) do
+            blip:Enable()
+            blip:SetAlpha(1)
+            blip.texture_Portrait:SetDesaturated(false)
+        end
+        return
+    end
+    local crew = MethodDungeonTools.freeholdCrews[crewIdx]
+    for _,blip in pairs(blips) do
+        if crew[blip.data.id] then
+            blip:Disable()
             blip:SetAlpha(0.3)
-            blip.border:SetDesaturated(1)
-            blip.border:SetAlpha(0.3)
+            blip.texture_Portrait:SetDesaturated(true)
+        else
+            blip:Enable()
+            blip:SetAlpha(1)
+            blip.texture_Portrait:SetDesaturated(false)
         end
     end
 end
-
