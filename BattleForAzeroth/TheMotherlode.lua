@@ -192,10 +192,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Venture Co. Alchemist";
         ["health"] = 294320;
-        ["displayId"] = 82915;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133432;
+        ["displayId"] = 82915;
         ["count"] = 4;
     };
     [2] = {
@@ -229,10 +229,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Bottom Feeder";
         ["health"] = 58864;
-        ["displayId"] = 32023;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137716;
+        ["displayId"] = 32023;
         ["count"] = 0;
     };
     [3] = {
@@ -314,10 +314,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 138061;
+        ["displayId"] = 81226;
         ["neutral"] = true;
         ["count"] = 0;
         ["name"] = "Venture Co. Longshoreman";
-        ["displayId"] = 81226;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 117728;
@@ -372,10 +372,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 138064;
+        ["displayId"] = 85704;
         ["neutral"] = true;
         ["count"] = 0;
         ["name"] = "Posh Vacationer";
-        ["displayId"] = 85704;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 58864;
@@ -575,10 +575,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.8;
         ["name"] = "Off-Duty Laborer";
         ["health"] = 117728;
-        ["displayId"] = 81226;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130436;
+        ["displayId"] = 81226;
         ["count"] = 1;
     };
     [6] = {
@@ -690,10 +690,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Refreshment Vendor";
         ["health"] = 294320;
-        ["displayId"] = 84784;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 136470;
+        ["displayId"] = 84784;
         ["count"] = 4;
     };
     [7] = {
@@ -832,10 +832,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Mech Jockey";
         ["health"] = 294320;
-        ["displayId"] = 81265;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130488;
+        ["displayId"] = 81265;
         ["count"] = 4;
     };
     [8] = {
@@ -947,10 +947,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["name"] = "Addled Thug";
         ["health"] = 382616;
-        ["displayId"] = 30262;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130435;
+        ["displayId"] = 30262;
         ["count"] = 5;
     };
     [10] = {
@@ -1208,10 +1208,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 136006;
+        ["displayId"] = 85710;
         ["neutral"] = true;
         ["count"] = 1;
         ["name"] = "Rowdy Reveler";
-        ["displayId"] = 85710;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 58864;
@@ -1226,12 +1226,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129214;
+        ["displayId"] = 80443;
         ["isBoss"] = true;
         ["encounterID"] = 2109;
         ["instanceID"] = 1012;
         ["count"] = 0;
         ["health"] = 3414112;
-        ["displayId"] = 80443;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Coin-Operated Crowd Pummeler";
@@ -1327,10 +1327,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.8;
         ["health"] = 176592;
         ["count"] = 2;
-        ["displayId"] = 65436;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130437;
+        ["displayId"] = 65436;
         ["name"] = "Mine Rat";
     };
     [16] = {
@@ -1363,10 +1363,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 470912;
         ["count"] = 6;
-        ["displayId"] = 84881;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 136643;
+        ["displayId"] = 84881;
         ["name"] = "Azerite Extractor";
     };
     [20] = {
@@ -1381,10 +1381,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["count"] = 5;
         ["name"] = "Taskmaster Askari";
-        ["displayId"] = 83286;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 134012;
+        ["displayId"] = 83286;
         ["health"] = 470912;
     };
     [24] = {
@@ -1518,10 +1518,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133430;
+        ["displayId"] = 83136;
         ["stealthDetect"] = true;
         ["health"] = 470912;
         ["count"] = 6;
-        ["displayId"] = 83136;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["name"] = "Venture Co. Mastermind";
@@ -1710,10 +1710,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.5;
         ["name"] = "Test Subject";
         ["health"] = 58864;
-        ["displayId"] = 1141;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133963;
+        ["displayId"] = 1141;
         ["count"] = 1;
     };
     [32] = {
@@ -1762,10 +1762,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Ordnance Specialist";
         ["health"] = 294320;
-        ["displayId"] = 85024;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 137029;
+        ["displayId"] = 85024;
         ["count"] = 4;
     };
     [33] = {
@@ -1824,10 +1824,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Venture Co. Skyscorcher";
         ["health"] = 294320;
-        ["displayId"] = 82922;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133436;
+        ["displayId"] = 82922;
         ["count"] = 4;
     };
     [17] = {
@@ -1852,12 +1852,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1.2;
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Safety Shark";
-        ["displayId"] = 12207;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137940;
+        ["displayId"] = 12207;
         ["health"] = 294320;
     };
     [21] = {
@@ -1870,12 +1870,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129227;
+        ["displayId"] = 83891;
         ["isBoss"] = true;
         ["encounterID"] = 2114;
         ["instanceID"] = 1012;
         ["scale"] = 1;
         ["health"] = 1813011;
-        ["displayId"] = 83891;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
         ["name"] = "Azerokk";
@@ -1977,10 +1977,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.8;
         ["name"] = "Feckless Assistant";
         ["health"] = 294320;
-        ["displayId"] = 82866;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133345;
+        ["displayId"] = 82866;
         ["count"] = 4;
     };
     [29] = {
@@ -1992,12 +1992,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129231;
+        ["displayId"] = 81489;
         ["isBoss"] = true;
         ["encounterID"] = 2115;
         ["instanceID"] = 1012;
         ["scale"] = 1;
         ["health"] = 2060240;
-        ["displayId"] = 81489;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Rixxa Fluxflame";
@@ -2012,12 +2012,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129232;
+        ["displayId"] = 81816;
         ["isBoss"] = true;
         ["encounterID"] = 2116;
         ["instanceID"] = 1012;
         ["scale"] = 1;
         ["health"] = 2295696;
-        ["displayId"] = 81816;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Mogul Razdunk";
@@ -2108,10 +2108,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Hired Assassin";
         ["health"] = 294320;
-        ["displayId"] = 83395;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 134232;
+        ["displayId"] = 83395;
         ["count"] = 4;
     };
     [11] = {
@@ -2149,10 +2149,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.6;
         ["name"] = "Mechanized Peacekeeper";
         ["health"] = 470912;
-        ["displayId"] = 82943;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 136139;
+        ["displayId"] = 82943;
         ["count"] = 6;
     };
     [13] = {
@@ -2275,10 +2275,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 8;
-        ["displayId"] = 81333;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130661;
+        ["displayId"] = 81333;
         ["name"] = "Venture Co. Earthshaper";
     };
     [15] = {
@@ -2377,10 +2377,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 4;
-        ["displayId"] = 81316;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130653;
+        ["displayId"] = 81316;
         ["name"] = "Wanton Sapper";
     };
     [18] = {
@@ -2453,10 +2453,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 1;
         ["name"] = "Shalebiter";
-        ["displayId"] = 88196;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["id"] = 134005;
+        ["displayId"] = 88196;
         ["health"] = 58864;
     };
     [22] = {
@@ -2489,10 +2489,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Earthrager";
-        ["displayId"] = 83052;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["id"] = 129802;
+        ["displayId"] = 83052;
         ["health"] = 206024;
     };
     [26] = {
@@ -2555,10 +2555,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.8;
         ["name"] = "Weapons Tester";
         ["health"] = 294320;
-        ["displayId"] = 84962;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 136934;
+        ["displayId"] = 84962;
         ["count"] = 4;
     };
     [30] = {
@@ -2597,10 +2597,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Expert Technician";
         ["health"] = 294320;
-        ["displayId"] = 83034;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133593;
+        ["displayId"] = 83034;
         ["count"] = 4;
     };
     [35] = {
@@ -2708,10 +2708,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Crawler Mine";
         ["health"] = 29014;
-        ["displayId"] = 49134;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 133482;
+        ["displayId"] = 49134;
         ["count"] = 0;
     };
     [1] = {
@@ -2750,10 +2750,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Big Money Crab";
         ["health"] = 58864;
-        ["displayId"] = 32024;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137713;
+        ["displayId"] = 32024;
         ["count"] = 0;
     };
     [19] = {
@@ -2803,10 +2803,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Stonefury";
-        ["displayId"] = 83052;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["id"] = 130635;
+        ["displayId"] = 83052;
         ["health"] = 294320;
     };
     [23] = {
@@ -2917,10 +2917,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
         ["name"] = "Footbomb Hooligan";
         ["health"] = 58864;
-        ["displayId"] = 85829;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 138369;
+        ["displayId"] = 85829;
         ["count"] = 0;
     };
     [31] = {
@@ -3014,10 +3014,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133463;
+        ["displayId"] = 83391;
         ["stealthDetect"] = true;
         ["scale"] = 1.5;
         ["health"] = 470912;
-        ["displayId"] = 83391;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["name"] = "Venture Co. War Machine";

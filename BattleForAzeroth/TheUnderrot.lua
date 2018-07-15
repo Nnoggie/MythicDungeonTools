@@ -1042,7 +1042,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 130909;
-        ["displayId"] = 77026;
+        ["displayId"] = 88361;
         ["count"] = 4;
     };
     [6] = {

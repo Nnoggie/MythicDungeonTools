@@ -110,9 +110,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126919;
+        ["displayId"] = 79077;
         ["count"] = 0;
         ["name"] = "Irontide Stormcaller";
-        ["displayId"] = 79077;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -206,9 +206,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 128551;
-        ["count"] = 0;
-        ["name"] = "Irontide Mastiff";
         ["displayId"] = 30221;
+        ["count"] = 4;
+        ["name"] = "Irontide Mastiff";
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["scale"] = 1;
@@ -371,11 +371,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 264888;
-        ["count"] = 0;
-        ["displayId"] = 81254;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 126918;
+        ["displayId"] = 81254;
         ["name"] = "Irontide Crackshot";
     };
     [4] = {
@@ -590,9 +590,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126928;
-        ["count"] = 0;
-        ["name"] = "Irontide Corsair";
         ["displayId"] = 81253;
+        ["count"] = 4;
+        ["name"] = "Irontide Corsair";
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -748,9 +748,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129788;
-        ["count"] = 0;
-        ["name"] = "Irontide Bonesaw";
         ["displayId"] = 81255;
+        ["count"] = 4;
+        ["name"] = "Irontide Bonesaw";
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -815,10 +815,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129598;
+        ["displayId"] = 88571;
         ["neutral"] = true;
         ["scale"] = 0.6;
-        ["count"] = 0;
-        ["displayId"] = 88571;
+        ["count"] = 2;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["name"] = "Freehold Pack Mule";
@@ -834,12 +834,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129732;
+        ["displayId"] = 80382;
         ["isBoss"] = true;
         ["encounterID"] = 2095;
         ["instanceID"] = 1001;
         ["scale"] = 1;
         ["health"] = 11772800;
-        ["displayId"] = 80382;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Skycap'n Kragg";
@@ -904,10 +904,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 181335;
         ["count"] = 0;
-        ["displayId"] = 80339;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129559;
+        ["displayId"] = 80339;
         ["name"] = "Cutwater Duelist";
     };
     [10] = {
@@ -987,9 +987,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129548;
+        ["displayId"] = 80389;
         ["health"] = 294320;
         ["name"] = "Blacktooth Brute";
-        ["displayId"] = 80389;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -1065,11 +1065,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 0.6;
         ["health"] = 29432;
-        ["count"] = 0;
-        ["displayId"] = 81400;
+        ["count"] = 1;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 130024;
+        ["displayId"] = 81400;
         ["name"] = "Soggy Shiprat";
     };
     [14] = {
@@ -1193,9 +1193,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129529;
+        ["displayId"] = 80380;
         ["count"] = 0;
         ["name"] = "Blacktooth Scrapper";
-        ["displayId"] = 80380;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -1296,9 +1296,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129527;
+        ["displayId"] = 81424;
         ["count"] = 0;
         ["name"] = "Bilge Rat Buccaneer";
-        ["displayId"] = 81424;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -1314,12 +1314,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126848;
+        ["displayId"] = 80346;
         ["isBoss"] = true;
         ["encounterID"] = 2093;
         ["instanceID"] = 1001;
         ["scale"] = 1;
         ["health"] = 2590016;
-        ["displayId"] = 80346;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Captain Eudora";
@@ -1383,10 +1383,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["health"] = 588640;
         ["count"] = 0;
-        ["displayId"] = 68059;
         ["creatureType"] = "Giant";
         ["level"] = 121;
         ["id"] = 130400;
+        ["displayId"] = 68059;
         ["name"] = "Irontide Crusher";
     };
     [28] = {
@@ -1414,9 +1414,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 130012;
+        ["displayId"] = 81507;
         ["count"] = 0;
         ["name"] = "Irontide Ravager";
-        ["displayId"] = 81507;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -1603,10 +1603,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 127119;
+        ["displayId"] = 78623;
         ["scale"] = 0.6;
         ["name"] = "Freehold Deckhand";
-        ["count"] = 0;
-        ["displayId"] = 78623;
+        ["count"] = 1;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 58864;
@@ -1685,10 +1685,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 130522;
+        ["displayId"] = 80087;
         ["scale"] = 0.6;
         ["name"] = "Freehold Shipmate";
         ["count"] = 0;
-        ["displayId"] = 80087;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 60883;
@@ -1789,10 +1789,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 15;
         ["health"] = 188364;
-        ["displayId"] = 80475;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129600;
+        ["displayId"] = 80475;
         ["name"] = "Bilge Rat Brinescale";
     };
     [21] = {
@@ -1805,12 +1805,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126847;
+        ["displayId"] = 81060;
         ["isBoss"] = true;
         ["encounterID"] = 2093;
         ["instanceID"] = 1001;
         ["scale"] = 1;
         ["health"] = 2590016;
-        ["displayId"] = 81060;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Captain Raoul";
@@ -1825,9 +1825,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129699;
+        ["displayId"] = 80792;
         ["count"] = 0;
         ["name"] = "Ludwig Von Tortollan";
-        ["displayId"] = 80792;
         ["creatureType"] = "Beast";
         ["level"] = 121;
         ["scale"] = 1.5;
@@ -1876,9 +1876,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 127106;
+        ["displayId"] = 81286;
         ["count"] = 0;
         ["name"] = "Irontide Officer";
-        ["displayId"] = 81286;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["scale"] = 1.2;
@@ -1901,10 +1901,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 127124;
-        ["neutral"] = true;
-        ["count"] = 0;
-        ["name"] = "Freehold Barhand";
         ["displayId"] = 79066;
+        ["neutral"] = true;
+        ["count"] = 1;
+        ["name"] = "Freehold Barhand";
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 44148;
@@ -1972,10 +1972,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 470912;
         ["count"] = 0;
-        ["displayId"] = 81279;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 127111;
+        ["displayId"] = 81279;
         ["name"] = "Irontide Oarsman";
     };
     [11] = {
@@ -2055,11 +2055,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 470912;
-        ["count"] = 0;
-        ["displayId"] = 87975;
+        ["count"] = 6;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130404;
+        ["displayId"] = 87975;
         ["name"] = "Vermin Trapper";
     };
     [13] = {
@@ -2147,10 +2147,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 87973;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129550;
+        ["displayId"] = 87973;
         ["name"] = "Bilge Rat Padfoot";
     };
     [15] = {
@@ -2203,9 +2203,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 130011;
+        ["displayId"] = 79069;
         ["count"] = 0;
         ["name"] = "Irontide Buccaneer";
-        ["displayId"] = 79069;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -2308,9 +2308,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129547;
+        ["displayId"] = 81207;
         ["name"] = "Blacktooth Knuckleduster";
         ["health"] = 323752;
-        ["displayId"] = 81207;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -2326,12 +2326,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126845;
+        ["displayId"] = 80532;
         ["isBoss"] = true;
         ["encounterID"] = 2093;
         ["instanceID"] = 1001;
         ["scale"] = 1;
         ["health"] = 2590016;
-        ["displayId"] = 80532;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Captain Jolly";
@@ -2346,12 +2346,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126969;
+        ["displayId"] = 55657;
         ["isBoss"] = true;
         ["encounterID"] = 2094;
         ["instanceID"] = 1001;
         ["scale"] = 1;
         ["health"] = 2119104;
-        ["displayId"] = 55657;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Trothak";
@@ -2367,12 +2367,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 126983;
+        ["displayId"] = 80841;
         ["isBoss"] = true;
         ["encounterID"] = 2095;
         ["instanceID"] = 1001;
         ["scale"] = 1;
         ["health"] = 2943200;
-        ["displayId"] = 80841;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Harlan Sweete";
@@ -2500,9 +2500,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129602;
-        ["count"] = 0;
-        ["name"] = "Irontide Enforcer";
         ["displayId"] = 81224;
+        ["count"] = 4;
+        ["name"] = "Irontide Enforcer";
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["scale"] = 1.2;
@@ -2603,9 +2603,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129599;
+        ["displayId"] = 80335;
         ["name"] = "Cutwater Knife Juggler";
         ["health"] = 264888;
-        ["displayId"] = 80335;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -2687,10 +2687,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 0;
-        ["displayId"] = 80343;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129601;
+        ["displayId"] = 80343;
         ["name"] = "Cutwater Harpooner";
     };
     [31] = {
@@ -2729,10 +2729,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129526;
+        ["displayId"] = 80322;
         ["neutral"] = true;
         ["name"] = "Bilge Rat Swabby";
         ["health"] = 294320;
-        ["displayId"] = 80322;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 0;
