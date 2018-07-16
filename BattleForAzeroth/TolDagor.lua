@@ -141,10 +141,10 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 317.04689195555;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -166,10 +166,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 347.29237946953;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -185,10 +185,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 298.43826548799;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -198,10 +198,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 461.57195383542;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -211,10 +211,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 445.50049335717;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -233,10 +233,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 358.09242143672;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -246,10 +246,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 491.92910587132;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
@@ -265,10 +265,10 @@ Blood Elf: 10% Intellect";
             ["x"] = 429.49956431235;
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc: 10% Str/Agi\
-Undead: 10% Stamina\
-Tauren: 1% HP+Mana per 10s\
-Blood Elf: 10% Intellect";
+Orc/Dwarf: 10% Str/Agi\
+Undead/Human: 10% Stamina\
+Tauren/Draenei: 1% HP+Mana per 10s\
+Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
