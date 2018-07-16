@@ -3,7 +3,7 @@ local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
 local maxPortraitCount = 7
-local tinsert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTexture,GetItemQualityColor,MouseIsOver
+local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
 
 --Methods
 local methods = {
@@ -36,7 +36,7 @@ local methods = {
 
         function self.callbacks.OnEnter()
             --ViragDevTool_AddData(self,"pullButton"..self.index)
-            MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,4)
+            MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,0)
             MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"TOPLEFT",-250,-(4+MethodDungeonTools.pullTooltip.myHeight))
             local tooltipBottom = MethodDungeonTools.pullTooltip:GetBottom()
             local mainFrameBottom = MethodDungeonTools.main_frame:GetBottom()
@@ -176,7 +176,7 @@ local methods = {
             if not self.enemyPortraits[idx] then break end
             self.enemyPortraits[idx].enemyData = data
             if data.displayId then
-                SetPortraitTexture(self.enemyPortraits[idx],data.displayId)
+                SetPortraitTextureFromCreatureDisplayID(self.enemyPortraits[idx],data.displayId)
             else
                 SetPortraitToTexture(self.enemyPortraits[idx],"Interface\\Icons\\achievement_boss_hellfire_mannorothreanimated")
             end

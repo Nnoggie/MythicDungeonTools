@@ -1,48 +1,27 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 1.5.2
+## Version: 2.1.2
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
-## OptionalDeps: LibStub, LibUIDropDownMenu
+## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu
 ## SavedVariables: MethodDungeonToolsDB
 
 ## OptionalDeps: Ace3
 
 #@no-lib-strip@
-libs\LibStub-1.0\LibStub.lua
-libs\PhanxConfig-Dropdown\PhanxConfig-Dropdown.lua
-libs\HereBeDragons-1.0\HereBeDragons-1.0.lua
-libs\AceAddon-3.0\AceAddon-3.0.xml
-libs\AceDB-3.0\AceDB-3.0.xml
-libs\AceGUI-3.0\AceGUI-3.0.xml
-libs\LibDialog-1.0\LibDialog-1.0.lua
-libs\AceComm-3.0\AceComm-3.0.lua
-libs\AceSerializer-3.0\AceSerializer-3.0.lua
-libs\LibCompress\LibCompress.lua
-libs\LibUIDropDownMenu\LibUIDropDownMenu.xml
-libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
-libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
-libs\LibDBIcon-1.0\lib.xml
-libs\AceConfig-3.0\AceConfig-3.0.xml
+libs\load_libs.xml
 #@end-no-lib-strip@
 
 AceGUIWidget-MethodDungeonToolsPullButton.lua
 AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 MethodDungeonTools.lua
+DungeonEnemies.xml
+EnemyInfo.xml
+Pointsofinterest.lua
 Transmission.lua
-CathedralOfEternalNight.lua
-EyeOfAzshara.lua
-CourtOfStars.lua
-MawOfSouls.lua
-NeltharionsLair.lua
-DarkheartThicket.lua
-HallsofValor.lua
-VaultoftheWardens.lua
-ReturntoKarazhanLower.lua
-ReturntoKarazhanUpper.lua
-SeatoftheTriumvirate.lua
-BlackRookHold.lua
-TheArcway.lua
 toolbar.lua
+devpanel.lua
+Legion\load_legion.xml
+BattleForAzeroth\load_bfa.xml
 
 

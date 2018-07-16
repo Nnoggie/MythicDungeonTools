@@ -1,0 +1,11 @@
+<Bindings>
+    <Binding name="Toggle Window" runOnUp="false" category="Method Dungeon Tools">
+      MethodDungeonTools:ShowInterface()
+    </Binding>
+    <Binding name="New NPC at Cursor Position" runOnUp="false" category="Method Dungeon Tools">
+        MethodDungeonTools:AddCloneAtCursorPosition()
+    </Binding>
+    <Binding name="New Patrol Waypoint at Cursor Position" runOnUp="false" category="Method Dungeon Tools">
+        MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
+    </Binding>
+</Bindings>
