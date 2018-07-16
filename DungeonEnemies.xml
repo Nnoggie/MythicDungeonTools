@@ -1,0 +1,84 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Script file="DungeonEnemies.lua"/>
+
+    <Button name="MDTDungeonEnemyTemplate" enableMouse="true" virtual="true" mixin="MDTDungeonEnemyMixin">
+
+        <Layers>
+
+            <Layer level="BACKGROUND">
+                <Texture name="$parent_Dragon" hidden="true" parentKey="texture_Dragon"  atlas="worldquest-questmarker-dragon">
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BORDER">
+                <Texture name="$parent_Portrait" hidden="false" parentKey="texture_Portrait">
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+
+            <Layer level="ARTWORK">
+                <Texture name="$parent_Background" hidden="false" parentKey="texture_Background" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+
+                <Texture name="$parent_SelectedHighlight"  hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+
+            <Layer level="OVERLAY">
+                <Texture name="$parent_Indicator" hidden="false" parentKey="texture_Indicator" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
+                    <Color r="1.0" g="0" b="0.4" a="1"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+                <FontString name="$parent_Text1" hidden="true" parentKey="fontstring_Text1">
+                    <Color r="1" g="1" b="1" a="1"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                    <Shadow>
+                        <Offset x="0" y="0" />
+                        <Color r="0" g="0" b="0"/>
+                    </Shadow>
+                </FontString>
+            </Layer>
+
+            <Layer level="HIGHLIGHT">
+
+                <Texture name="$parent_MouseHighlight" parentKey="texture_MouseHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+
+            </Layer>
+        </Layers>
+
+
+
+
+        <Scripts>
+            <OnLoad>
+                self:RegisterForClicks("AnyUp")
+            </OnLoad>
+            <OnEnter method="OnEnter"/>
+            <OnLeave method="OnLeave"/>
+            <OnClick method="OnClick"/>
+        </Scripts>
+    </Button>
+</Ui>

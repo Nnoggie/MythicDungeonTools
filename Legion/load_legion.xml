@@ -1,0 +1,15 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='BlackRookHold.lua'/>
+	<Script file='CathedralOfEternalNight.lua'/>
+	<Script file='CourtOfStars.lua'/>
+	<Script file='DarkheartThicket.lua'/>
+	<Script file='EyeOfAzshara.lua'/>
+	<Script file='HallsofValor.lua'/>
+	<Script file='MawOfSouls.lua'/>
+	<Script file='NeltharionsLair.lua'/>
+	<Script file='ReturntoKarazhanLower.lua'/>
+	<Script file='ReturntoKarazhanUpper.lua'/>
+	<Script file='SeatoftheTriumvirate.lua'/>
+	<Script file='TheArcway.lua'/>
+	<Script file='VaultoftheWardens.lua'/>
+</Ui>

@@ -1,0 +1,28 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Script file="EnemyInfo.lua"/>
+
+
+
+    <Frame name="MDTEnemeyInfo" setAllPoints="true" enableMouse="true">
+
+        <Anchors>
+            <Anchor point="CENTER" relativeTo="MethodDungeonToolsFrame"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\AddOns\MethodDungeonTools\Textures\Square_White">
+            <Color />
+            <!--BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets-->
+        </Backdrop>
+        <!--Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="MDTEnemyInfoBackground" setAllPoints="true" parentKey="texture_EnemyInfoBackground" file="Interface\AddOns\MethodDungeonTools\Textures\Square_White">
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers-->
+    </Frame>
+</Ui>
