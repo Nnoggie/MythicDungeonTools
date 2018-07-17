@@ -305,7 +305,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
     self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(),10*self.normalScale,"OUTLINE")
-    self.fontstring_Text1:SetText(data.count>0 and data.count or "")
+    self.fontstring_Text1:SetText((clone.isBoss and data.count == 0 and "") or data.count)
     self.texture_MouseHighlight:SetAlpha(0.4)
     self.texture_SelectedHighlight:SetVertexColor(unpack(selectedGreen))
     if data.isBoss then self.texture_Dragon:Show() else self.texture_Dragon:Hide() end
