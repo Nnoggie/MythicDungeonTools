@@ -44,16 +44,17 @@ local methods = {
                 MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",-250,-4)
             end
             MethodDungeonTools:ActivatePullTooltip(self.index)
+            self.frame:SetScript("OnUpdate", function()
+                MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+            end)
         end
 
         function self.callbacks.OnLeave()
-            --model
             MethodDungeonTools.pullTooltip.Model:Hide()
-            --topString
             MethodDungeonTools.pullTooltip.topString:Hide()
+            self.frame:SetScript("OnUpdate", nil)
+            MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
         end
-
-
 
         function self.callbacks.OnDragStart()
             --

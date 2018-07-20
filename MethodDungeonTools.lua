@@ -855,7 +855,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if not selectedWeek then return end
         GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_LEFT",-6,-40)
         local v = affixWeeks[selectedWeek]
-        GameTooltip:SetText(makeAffixString(nil,v,true))
+        GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
         GameTooltip:Show()
     end)
     affixDropdown:SetCallback("OnLeave",function(...)
@@ -1053,14 +1053,15 @@ end
 ---
 function MethodDungeonTools:ActivatePullTooltip(pull)
     local pullTooltip = MethodDungeonTools.pullTooltip
+    --[[
     if not pullTooltip.ranOnce then
         --fix elvui skinning
         pullTooltip:SetPoint("TOPRIGHT",UIParent,"BOTTOMRIGHT")
         pullTooltip:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT")
         pullTooltip:Show()
-        pullTooltip:Hide()
         pullTooltip.ranOnce = true
     end
+    ]]
     pullTooltip.currentPull = pull
     pullTooltip:Show()
 end
@@ -1257,17 +1258,12 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.scrollFrame:SetScript("OnMouseUp", MethodDungeonTools.OnMouseUp)
 
 
-		frame.scrollFrame:SetScript("OnUpdate", function(self, button)
+		frame.scrollFrame:SetScript("OnUpdate", function(self)
 			if (MethodDungeonTools.main_frame.scrollFrame.panning) then
 				local x, y = GetCursorPosition();
 				MethodDungeonTools:OnPan(x, y);
 			end
-            --what's this one still doing here ¯\_(ツ)_/¯
-            MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
-
         end)
-
-
 
 		if frame.mapPanelFrame == nil then
 			frame.mapPanelFrame = CreateFrame("frame","MethodDungeonToolsMapPanelFrame",nil)
@@ -2459,16 +2455,15 @@ function initFrames()
                 local r, g, b = self:GetBackdropColor()
                 self:SetBackdropColor(r, g, b, ElvUI[1].Tooltip.db.colorAlpha)
             end)
+            if tooltip.String then tooltip.String:SetFont(tooltip.String:GetFont(),11) end
+            if tooltip.topString then tooltip.topString:SetFont(tooltip.topString:GetFont(),11) end
+            if tooltip.botString then tooltip.botString:SetFont(tooltip.botString:GetFont(),11) end
         end
     end
     --tooltip new
     do
         MethodDungeonTools.tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
         local tooltip = MethodDungeonTools.tooltip
-        skinTooltip(tooltip)
-
-
-
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
         tooltip.mySizes ={x=265,y=110}
@@ -2494,8 +2489,8 @@ function initFrames()
         end
         tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT",7,-7)
         tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString");
-        tooltip.String:SetFontObject("GameFontNormal")
-        tooltip.String:SetFont(tooltip.String:GetFont(),11)
+        tooltip.String:SetFontObject("GameFontNormalSmall")
+        tooltip.String:SetFont(tooltip.String:GetFont(),10)
         tooltip.String:SetTextColor(1, 1, 1, 1);
         tooltip.String:SetJustifyH("LEFT")
         tooltip.String:SetJustifyV("CENTER")
@@ -2505,6 +2500,7 @@ function initFrames()
         tooltip.String:SetText(" ");
         tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -17)
         tooltip.String:Show();
+        skinTooltip(tooltip)
     end
 
 	--pullTooltip
@@ -2512,7 +2508,6 @@ function initFrames()
 		MethodDungeonTools.pullTooltip = CreateFrame("Frame", "MethodDungeonToolsPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
         --MethodDungeonTools.pullTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         local pullTT = MethodDungeonTools.pullTooltip
-        skinTooltip(pullTT)
         MethodDungeonTools.pullTooltip:SetClampedToScreen(true)
 		MethodDungeonTools.pullTooltip:SetFrameStrata("TOOLTIP")
         MethodDungeonTools.pullTooltip.myHeight = 160
@@ -2540,9 +2535,8 @@ function initFrames()
         MethodDungeonTools.pullTooltip.Model:SetPoint("TOPLEFT", MethodDungeonTools.pullTooltip, "TOPLEFT",7,-7)
 
         MethodDungeonTools.pullTooltip.topString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
-
-        MethodDungeonTools.pullTooltip.topString:SetFontObject("GameFontNormal")
-        MethodDungeonTools.pullTooltip.topString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),11)
+        MethodDungeonTools.pullTooltip.topString:SetFontObject("GameFontNormalSmall")
+        MethodDungeonTools.pullTooltip.topString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),10)
         MethodDungeonTools.pullTooltip.topString:SetTextColor(1, 1, 1, 1);
         MethodDungeonTools.pullTooltip.topString:SetJustifyH("LEFT")
         MethodDungeonTools.pullTooltip.topString:SetJustifyV("TOP")
@@ -2561,25 +2555,17 @@ function initFrames()
 
         MethodDungeonTools.pullTooltip.botString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
         local botString = MethodDungeonTools.pullTooltip.botString
-        botString:SetFontObject("GameFontNormal")
-        botString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),11)
+        botString:SetFontObject("GameFontNormalSmall")
+        botString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),10)
         botString:SetTextColor(1, 1, 1, 1);
         botString:SetJustifyH("TOP")
         botString:SetJustifyV("TOP")
         botString:SetHeight(23)
         botString:SetWidth(250)
-        botString.defaultText = "Enemy Forces: %d\nTotal: %d/%d"
+        botString.defaultText = "Forces: %d\nTotal: %d/%d"
         botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
         botString:Hide()
-
-        --8.0 fixes
-        --pullTT:SetScript("OnTooltipSetDefaultAnchor", function() end)
-
-        --
-
-        --MethodDungeonTools.pullTooltip:AddLine("New tooltip line", 1, 1, 1)
-        --MethodDungeonTools.pullTooltip:Show()
-
+        skinTooltip(pullTT)
 	end
 
 	--Blizzard Options
