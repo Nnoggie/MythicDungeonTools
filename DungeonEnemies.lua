@@ -408,10 +408,12 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
         blip.texture_SelectedHighlight:Hide()
         blip.selected = false
         blip.texture_PullIndicator:Hide()
-        if db.enemyStyle == 2 then
-            blip.texture_Portrait:SetVertexColor(1,1,1,1)
-        else
-            blip.texture_Portrait:SetVertexColor(1,1,1,1)
+        if not db.devMode then
+            if db.enemyStyle == 2 then
+                blip.texture_Portrait:SetVertexColor(1,1,1,1)
+            else
+                blip.texture_Portrait:SetVertexColor(1,1,1,1)
+            end
         end
     end
     --highlight all pull enemies
@@ -422,10 +424,12 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
                     if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
                         blip.texture_SelectedHighlight:Show()
                         blip.selected = true
-                        if db.enemyStyle == 2 then
-                            blip.texture_Portrait:SetVertexColor(0,1,0,1)
-                        else
-                            blip.texture_Portrait:SetVertexColor(0,0.8,0,1)
+                        if not db.devMode then
+                            if db.enemyStyle == 2 then
+                                blip.texture_Portrait:SetVertexColor(0,1,0,1)
+                            else
+                                blip.texture_Portrait:SetVertexColor(0,0.8,0,1)
+                            end
                         end
                         if pullIdx == pull then
                             blip.texture_PullIndicator:Show()

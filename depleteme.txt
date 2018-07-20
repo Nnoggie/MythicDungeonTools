@@ -146,6 +146,7 @@ Freehold
 Canax (Big Thanks!)
 Matrox
 Caldalt
+George
 
 The Motherlode
 
@@ -154,9 +155,10 @@ Looqdk
 Combatlog
 Ponti
 Keryl
+Zix
 
 
-Special Thanks to Shakib for helping with Infested Mapping
+Special Thanks to Shakib and Reloe
 
 
 Zoom Fixer: Grimmonja <3
