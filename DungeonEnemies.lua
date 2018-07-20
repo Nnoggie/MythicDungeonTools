@@ -54,6 +54,7 @@ local defaultSizes = {
     ["texture_SelectedHighlight"] = 20,
     ["texture_Dragon"] = 23,
     ["texture_Indicator"] = 20,
+    ["texture_PullIndicator"] = 24,
 }
 
 function MDTDungeonEnemyMixin:updateSizes(scale)
@@ -103,7 +104,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
     if button == "LeftButton" then
         local isCTRLKeyDown = IsControlKeyDown()
         MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,isCTRLKeyDown)
-        MethodDungeonTools:DungeonEnemies_UpdateSelected()
+        MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
         MethodDungeonTools:UpdateProgressbar()
 
     elseif button == "RightButton" then
@@ -407,6 +408,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
     for _,blip in pairs(blips) do
         blip.texture_SelectedHighlight:Hide()
         blip.selected = false
+        blip.texture_PullIndicator:Hide()
         if db.enemyStyle == 2 then
             blip.texture_Portrait:SetVertexColor(1,1,1,1)
         else
@@ -426,8 +428,11 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
                         else
                             blip.texture_Portrait:SetVertexColor(0,0.8,0,1)
                         end
+                        if pullIdx == pull then
+                            blip.texture_PullIndicator:Show()
+                        end
                         break
-                    end
+                        end
                 end
             end
         end

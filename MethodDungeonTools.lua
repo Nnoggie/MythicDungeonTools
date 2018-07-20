@@ -1204,6 +1204,11 @@ function MethodDungeonTools:SetCurrentSubLevel(sublevel)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = sublevel
 end
 
+---GetCurrentPull
+---Returns the current pull of the currently active preset
+function MethodDungeonTools:GetCurrentPull()
+    return MethodDungeonTools:GetCurrentPreset().value.currentPull
+end
 
 ---GetCurrentSubLevel
 ---Returns the sublevel of the currently active preset

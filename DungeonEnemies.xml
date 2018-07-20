@@ -45,6 +45,13 @@
                         <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
+                <Texture name="$parent_Indicator" hidden="true" parentKey="texture_PullIndicator" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
+                    <Color r="1.0" g="1" b="1" a="1"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
                 <FontString name="$parent_Text1" hidden="true" parentKey="fontstring_Text1">
                     <Color r="1" g="1" b="1" a="1"/>
                     <Anchors>

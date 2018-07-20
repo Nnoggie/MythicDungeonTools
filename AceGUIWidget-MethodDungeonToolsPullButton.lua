@@ -54,6 +54,7 @@ local methods = {
             MethodDungeonTools.pullTooltip.topString:Hide()
             self.frame:SetScript("OnUpdate", nil)
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+            MethodDungeonTools.pullTooltip:Hide()
         end
 
         function self.callbacks.OnDragStart()
