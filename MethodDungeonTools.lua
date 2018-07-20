@@ -854,7 +854,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixDropdown:SetCallback("OnEnter",function(...)
         local selectedWeek = affixDropdown:GetValue()
         if not selectedWeek then return end
-        GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_LEFT",-6,-40)
+        GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_LEFT",-6,-41)
         local v = affixWeeks[selectedWeek]
         GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
         GameTooltip:Show()
@@ -863,6 +863,18 @@ function MethodDungeonTools:MakeSidePanel(frame)
         GameTooltip:Hide()
     end)
     affixDropdown:SetList(affixWeekMarkups)
+    --mouseover list items
+    for itemIdx,item in ipairs(affixDropdown.pullout.items) do
+        item:SetOnEnter(function()
+            GameTooltip:SetOwner(item.frame, "ANCHOR_LEFT",-11,-25)
+            local v = affixWeeks[itemIdx]
+            GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
+            GameTooltip:Show()
+        end)
+        item:SetOnLeave(function()
+            GameTooltip:Hide()
+        end)
+    end
     frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
 
     --affix not current week warning
