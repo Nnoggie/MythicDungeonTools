@@ -9,7 +9,6 @@ local blips = {}
 local preset
 local selectedGreen = {34/255,139/255,34/255,0.7}
 local patrolColor = {0,0.5,1,0.8}
-local infestedColor = {1,0,0.4,0.8}
 
 function MethodDungeonTools:GetDungeonEnemyBlips()
     return blips
@@ -54,7 +53,7 @@ local defaultSizes = {
     ["texture_SelectedHighlight"] = 20,
     ["texture_Dragon"] = 23,
     ["texture_Indicator"] = 20,
-    ["texture_PullIndicator"] = 24,
+    ["texture_PullIndicator"] = 23,
 }
 
 function MDTDungeonEnemyMixin:updateSizes(scale)
@@ -301,7 +300,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.texture_Portrait:SetDesaturated(false)
     local raise = 4
     for k,v in pairs(blips) do
-        if framesOverlap(self, v,0) then raise = max(raise,v:GetFrameLevel()+1) end
+        if framesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
