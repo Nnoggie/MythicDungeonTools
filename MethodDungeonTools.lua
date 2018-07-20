@@ -74,6 +74,7 @@ local defaultSavedVars = {
 	global = {
 		currentExpansion = 1,
         enemyForcesFormat = 2,
+        enemyStyle = 1,
 		currentDungeonIdx = 1,
 		currentDifficulty = 15,
 		xoffset = 0,
@@ -2614,6 +2615,19 @@ function initFrames()
               set = function(_,newValue) db.enemyForcesFormat = newValue end,
               style = "dropdown",
             },
+            --[[
+            enemyStyle = {
+              type = "select",
+              name = "Choose Enemy Style. Requires Reload",
+              values = {
+                [1] = "Portrait",
+                [2] = "Plain Texture",
+              },
+              get = function() return db.enemyStyle end,
+              set = function(_,newValue) db.enemyStyle = newValue end,
+              style = "dropdown",
+            },
+            ]]
 		}
 	}
 	MethodDungeonTools:RegisterOptions()

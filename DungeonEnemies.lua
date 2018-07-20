@@ -314,7 +314,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.data = data
     self.clone = clone
     tinsert(blips,self)
-    SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
+    if db.enemyStyle == 2 then
+        self.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
+    else
+        SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
+    end
     self:Show()
 
     if db.devMode then blipDevModeSetup(self) end
@@ -403,6 +407,11 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
     for _,blip in pairs(blips) do
         blip.texture_SelectedHighlight:Hide()
         blip.selected = false
+        if db.enemyStyle == 2 then
+            blip.texture_Portrait:SetVertexColor(1,1,1,1)
+        else
+            blip.texture_Portrait:SetVertexColor(1,1,1,1)
+        end
     end
     --highlight all pull enemies
     for pullIdx,p in pairs(preset.value.pulls) do
@@ -412,6 +421,11 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
                     if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
                         blip.texture_SelectedHighlight:Show()
                         blip.selected = true
+                        if db.enemyStyle == 2 then
+                            blip.texture_Portrait:SetVertexColor(0,1,0,1)
+                        else
+                            blip.texture_Portrait:SetVertexColor(0,0.8,0,1)
+                        end
                         break
                     end
                 end
