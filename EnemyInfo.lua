@@ -5,5 +5,5 @@
 ---
 
 function MethodDungeonTools:TestFunc()
-    print("hello")
+
 end

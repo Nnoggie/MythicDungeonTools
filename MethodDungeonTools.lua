@@ -114,7 +114,7 @@ do
     function MethodDungeonTools.ADDON_LOADED(self,addon)
         if addon == "MethodDungeonTools" then
 			db = LibStub("AceDB-3.0"):New("MethodDungeonToolsDB", defaultSavedVars).global
-			initFrames()
+
 			icon:Register("MethodDungeonTools", LDB, db.minimap)
 			if not db.minimap.hide then
 				icon:Show("MethodDungeonTools")
@@ -454,7 +454,9 @@ function MethodDungeonTools:GetDB()
     return db
 end
 
+local framesInitialized
 function MethodDungeonTools:ShowInterface()
+    if not framesInitialized then initFrames() end
 	if self.main_frame:IsShown() then
 		MethodDungeonTools:HideInterface()
 	else
@@ -539,15 +541,8 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelString = frame.topPanel:CreateFontString("MethodDungeonTools name")
 
 		--use default font if ElvUI is enabled
-		if IsAddOnLoaded("ElvUI") then
-			frame.topPanelString:SetFontObject("GameFontNormalLarge")
-			frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
-		else
-			frame.topPanelString:SetFont("Fonts\\FRIZQT__.TTF", 20)
-		end
-
-
-
+		--if IsAddOnLoaded("ElvUI") then
+			frame.topPanelString:SetFontObject("GameFontNormalMed3")
 		frame.topPanelString:SetTextColor(1, 1, 1, 1)
 		frame.topPanelString:SetJustifyH("CENTER")
 		frame.topPanelString:SetJustifyV("CENTER")
@@ -557,6 +552,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelString:ClearAllPoints()
 		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 0, 0)
 		frame.topPanelString:Show()
+        --frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
 
 		frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "HIGH", nil, 7)
 		frame.topPanelLogo:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Method")
@@ -2403,8 +2399,10 @@ function MethodDungeonTools:ResetMainFramePos()
     f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
 end
 
+
+
 function initFrames()
-	local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
+    local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
 	main_frame:SetFrameStrata(mainFrameStrata)
@@ -2447,12 +2445,30 @@ function initFrames()
         MethodDungeonTools:CreateDevPanel(MethodDungeonTools.main_frame)
     end
 
-
-
+    --ElvUI skinning
+    local skinTooltip = function(tooltip)
+        if IsAddOnLoaded("ElvUI") then
+            local borderTextures = {"BorderBottom","BorderBottomLeft","BorderBottomRight","BorderLeft","BorderRight","BorderTop","BorderTopLeft","BorderTopRight"}
+            for k,v in pairs(borderTextures) do
+                tooltip[v]:Kill()
+            end
+            tooltip.Background:Kill()
+            tooltip:HookScript("OnShow",function(self)
+                if self:IsForbidden() then return end
+                self:SetTemplate("Transparent", nil, true) --ignore updates
+                local r, g, b = self:GetBackdropColor()
+                self:SetBackdropColor(r, g, b, ElvUI[1].Tooltip.db.colorAlpha)
+            end)
+        end
+    end
     --tooltip new
     do
-        MethodDungeonTools.tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "GameTooltipTemplate")
+        MethodDungeonTools.tooltip = CreateFrame("Frame", "MethodDungeonToolsModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
         local tooltip = MethodDungeonTools.tooltip
+        skinTooltip(tooltip)
+
+
+
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
         tooltip.mySizes ={x=265,y=110}
@@ -2493,8 +2509,11 @@ function initFrames()
 
 	--pullTooltip
 	do
-		MethodDungeonTools.pullTooltip = CreateFrame("Frame", "MethodDungeonToolsPullTooltip", UIParent, "GameTooltipTemplate")
-		MethodDungeonTools.pullTooltip:SetClampedToScreen(true)
+		MethodDungeonTools.pullTooltip = CreateFrame("Frame", "MethodDungeonToolsPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
+        --MethodDungeonTools.pullTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        local pullTT = MethodDungeonTools.pullTooltip
+        skinTooltip(pullTT)
+        MethodDungeonTools.pullTooltip:SetClampedToScreen(true)
 		MethodDungeonTools.pullTooltip:SetFrameStrata("TOOLTIP")
         MethodDungeonTools.pullTooltip.myHeight = 160
 		MethodDungeonTools.pullTooltip:SetSize(250, MethodDungeonTools.pullTooltip.myHeight)
@@ -2553,6 +2572,14 @@ function initFrames()
         botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
         botString:Hide()
 
+        --8.0 fixes
+        --pullTT:SetScript("OnTooltipSetDefaultAnchor", function() end)
+
+        --
+
+        --MethodDungeonTools.pullTooltip:AddLine("New tooltip line", 1, 1, 1)
+        --MethodDungeonTools.pullTooltip:Show()
+
 	end
 
 	--Blizzard Options
@@ -2610,5 +2637,6 @@ function initFrames()
     main_frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or (MethodDungeonTools:GetCurrentAffixWeek() or 1))
 
 	main_frame:Hide()
+    framesInitialized = true
 end
 

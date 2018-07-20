@@ -35,7 +35,6 @@ local methods = {
         end
 
         function self.callbacks.OnEnter()
-            --ViragDevTool_AddData(self,"pullButton"..self.index)
             MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,0)
             MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"TOPLEFT",-250,-(4+MethodDungeonTools.pullTooltip.myHeight))
             local tooltipBottom = MethodDungeonTools.pullTooltip:GetBottom()
