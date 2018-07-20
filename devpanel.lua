@@ -101,7 +101,13 @@ function MethodDungeonTools:CreateDevPanel(frame)
     devPanel.frame:SetFrameStrata("HIGH")
     devPanel.frame:SetFrameLevel(50)
 
-    devPanel:SetTabs({{text="POI", value="tab1"}, {text="Enemy", value="tab2"}, {text="Infested", value="tab3"}})
+    devPanel:SetTabs(
+        {
+            {text="POI", value="tab1"},
+            {text="Enemy", value="tab2"},
+            {text="Infested", value="tab3"},
+        }
+    )
     devPanel:SetWidth(250)
     devPanel:SetPoint("TOPRIGHT",frame.topPanel,"TOPLEFT",0,0)
     devPanel:SetLayout("Flow")
