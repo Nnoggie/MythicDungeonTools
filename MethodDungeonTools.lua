@@ -996,6 +996,7 @@ end
 function MethodDungeonTools:UpdateProgressbar()
 	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+    MethodDungeonTools:EnsureDBTables()
 	local grandTotal = 0
 	for pullIdx,pull in pairs(preset.value.pulls) do
 		for enemyIdx,clones in pairs(pull) do
