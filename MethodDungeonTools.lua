@@ -2632,7 +2632,6 @@ function initFrames()
               set = function(_,newValue) db.enemyForcesFormat = newValue end,
               style = "dropdown",
             },
-            --[[
             enemyStyle = {
               type = "select",
               name = "Choose Enemy Style. Requires Reload",
@@ -2644,7 +2643,7 @@ function initFrames()
               set = function(_,newValue) db.enemyStyle = newValue end,
               style = "dropdown",
             },
-            ]]
+
 		}
 	}
 	MethodDungeonTools:RegisterOptions()

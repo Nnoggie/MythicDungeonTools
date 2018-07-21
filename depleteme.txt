@@ -110,12 +110,14 @@ Taykee-Azralon
 Reloe
 Rodox
 Holyrox
+Irsix
 
 Temple of Sethraliss
 Reloe
 Holyrox
 TheTrakker
 Kugamid
+Nohealdps
 
 Kings' Rest
 Reloe
@@ -141,6 +143,7 @@ Treenutsdk
 Looqdk
 TheTrakker
 Zitel
+Seife
 
 Freehold
 Canax (Big Thanks!)

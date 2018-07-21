@@ -649,8 +649,6 @@ function MethodDungeonTools:AddCloneAtCursorPosition()
         tinsert(data.clones,{x=cursorx,y=cursory,sublevel=MethodDungeonTools:GetCurrentSubLevel(),g=currentCloneGroup,teeming=currentTeeming})
         print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,cursorx,cursory))
         MethodDungeonTools:UpdateMap()
-        MethodDungeonTools:SetCurrentDevmodeBlip(currentEnemyIdx,#data.clones)
-        MethodDungeonTools:UpdateMap()
     end
 end
 
