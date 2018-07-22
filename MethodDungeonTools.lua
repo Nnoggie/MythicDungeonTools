@@ -831,7 +831,10 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
     function affixDropdown:SetAffixWeek(key)
         affixDropdown:SetValue(key)
-        if MethodDungeonTools:GetCurrentAffixWeek() and MethodDungeonTools:GetCurrentAffixWeek() == key then
+        if not MethodDungeonTools:GetCurrentAffixWeek() then
+            frame.sidePanel.affixWeekWarning.image:Hide()
+            frame.sidePanel.affixWeekWarning:SetDisabled(true)
+        elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
             frame.sidePanel.affixWeekWarning.image:Hide()
             frame.sidePanel.affixWeekWarning:SetDisabled(true)
         else
@@ -839,7 +842,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             frame.sidePanel.affixWeekWarning:SetDisabled(false)
         end
         MethodDungeonTools:GetCurrentPreset().week = key
-        local teeming = (affixWeeks[key][2] == 5) or (affixWeeks[key][3] == 5)
+        local teeming = MethodDungeonTools:IsPresetTeeming(MethodDungeonTools:GetCurrentPreset())
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming = teeming
         --dont need this here as we just change teeming and infested
         --MethodDungeonTools:UpdateMap()
@@ -1238,7 +1241,7 @@ end
 ---GetCurrentTeeming
 ---Returns if the current week has an affix week set that inlcludes the teeming affix
 function MethodDungeonTools:IsWeekTeeming(week)
-    if not week then week = MethodDungeonTools:GetCurrentAffixWeek() end
+    if not week then week = MethodDungeonTools:GetCurrentAffixWeek() or 1 end
     return (affixWeeks[week][2] == 5) or (affixWeeks[week][3] == 5)
 end
 
@@ -1457,6 +1460,8 @@ end
 ---EnsureDBTables
 ---Makes sure profiles are valid and have their fields set
 function MethodDungeonTools:EnsureDBTables()
+    local preset = MethodDungeonTools:GetCurrentPreset()
+    preset.week = preset.week or 1
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel or 1
