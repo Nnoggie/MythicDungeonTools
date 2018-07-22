@@ -331,7 +331,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 470912;
-        ["count"] = 0;
+        ["count"] = 6;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 134991;
@@ -1137,7 +1137,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["level"] = 120;
         ["id"] = 134686;
         ["displayId"] = 75595;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [26] = {
         ["clones"] = {
