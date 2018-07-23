@@ -1,7 +1,9 @@
 local Compresser = LibStub:GetLibrary("LibCompress");
 local Encoder = Compresser:GetAddonEncodeTable()
 local Serializer = LibStub:GetLibrary("AceSerializer-3.0");
---local Comm = LibStub:GetLibrary("AceComm-3.0");
+local Comm = LibStub:GetLibrary("AceComm-3.0");
+
+MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
 -- Lua APIs
 --local tinsert = table.insert
@@ -119,4 +121,96 @@ function MethodDungeonTools:StringToTable(inString, fromChat)
         return "Error deserializing "..deserialized;
     end
     return deserialized;
+end
+
+
+
+local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
+    if flag == "GM" or flag == "DEV" then
+        return
+    end
+    local newMsg = "";
+    local remaining = msg;
+    local done;
+    repeat
+        local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]");
+        if(characterName and displayName) then
+            characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "");
+            displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "");
+            newMsg = newMsg..remaining:sub(1, start-1);
+            newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38["..characterName.." |r|cFFF49D38- "..displayName.."]|h|r";
+            remaining = remaining:sub(finish + 1);
+        else
+            done = true;
+        end
+    until(done)
+    if newMsg ~= "" then
+        return false, newMsg, player, l, cs, t, flag, channelId, ...;
+    end
+end
+
+local presetCommPrefix = "MDTPreset"
+function MDTcommsObject:OnEnable()
+    self:RegisterComm(presetCommPrefix)
+    MethodDungeonTools.transmissionCache = {}
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterFunc)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterFunc)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filterFunc)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filterFunc)
+end
+
+local OriginalSetHyperlink = ItemRefTooltip.SetHyperlink
+function ItemRefTooltip:SetHyperlink(link, ...)
+    if(link and link:sub(0, 18) == "MethodDungeonTools") then
+        local sender = link:sub(20, string.len(link))
+        local preset = MethodDungeonTools.transmissionCache[sender]
+        if preset then
+            MethodDungeonTools:ShowInterface(true)
+            MethodDungeonTools:OpenImportPresetDialog(sender,preset)
+        end
+        return;
+    end
+    return OriginalSetHyperlink(self, link, ...);
+end
+
+local OriginalHandleModifiedItemClick = HandleModifiedItemClick
+function HandleModifiedItemClick(link, ...)
+    if(link and link:find("|HMethodDungeonTools|h")) then
+        return;
+    end
+    return OriginalHandleModifiedItemClick(link, ...);
+end
+
+
+function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
+    --ignore own broadcasts
+    --if sender == UnitName("player") then return end
+    --standard preset transmission
+    if prefix == presetCommPrefix then
+        local preset = MethodDungeonTools:StringToTable(message,true)
+        MethodDungeonTools.transmissionCache[sender] = preset
+    end
+end
+
+
+local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
+    print(string.format("Progress: %.1f",bytesSent/bytesToSend*100))
+    if bytesSent == bytesToSend then
+        MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
+        local distribution = userArgs[1]
+        local preset = userArgs[2]
+        local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
+        local name = preset.text
+        SendChatMessage("[MethodDungeonTools: "..UnitName("player").." - "..dungeon..": "..name.."]",distribution)
+    end
+end
+
+---SendToGroup
+---Send current preset to group/raid
+function MethodDungeonTools:SendToGroup()
+    local preset = MethodDungeonTools:GetCurrentPreset()
+    local export = MethodDungeonTools:TableToString(preset,true)
+    local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+    if not distribution then return end
+    MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset})
 end

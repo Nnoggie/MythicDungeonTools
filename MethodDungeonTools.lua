@@ -115,7 +115,6 @@ do
     function MethodDungeonTools.ADDON_LOADED(self,addon)
         if addon == "MethodDungeonTools" then
 			db = LibStub("AceDB-3.0"):New("MethodDungeonToolsDB", defaultSavedVars).global
-
 			icon:Register("MethodDungeonTools", LDB, db.minimap)
 			if not db.minimap.hide then
 				icon:Show("MethodDungeonTools")
@@ -189,6 +188,7 @@ local dungeonList = {
     [24] = "Waycrest Manor",
     [25] = " >Legion",
 }
+function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
 
 local dungeonSubLevels = {
     [1] = {
@@ -456,9 +456,9 @@ function MethodDungeonTools:GetDB()
 end
 
 local framesInitialized
-function MethodDungeonTools:ShowInterface()
+function MethodDungeonTools:ShowInterface(force)
     if not framesInitialized then initFrames() end
-	if self.main_frame:IsShown() then
+	if self.main_frame:IsShown() and not force then
 		MethodDungeonTools:HideInterface()
 	else
 		self.main_frame:Show()
@@ -775,25 +775,22 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		frame.DeleteConfirmationFrame:Show()
 	end)
 
-	frame.sidePanelClearButton = AceGUI:Create("Button")
-	frame.sidePanelClearButton:SetText("Clear")
-	frame.sidePanelClearButton:SetWidth(buttonWidth)
-	frame.sidePanelClearButton.frame:SetNormalFontObject(fontInstance)
-	frame.sidePanelClearButton.frame:SetHighlightFontObject(fontInstance)
-	frame.sidePanelClearButton.frame:SetDisabledFontObject(fontInstance)
-	frame.sidePanelClearButton:SetCallback("OnClick",function(widget,callbackName,value)
-		MethodDungeonTools:HideAllDialogs()
-		frame.ClearConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-		frame.ClearConfirmationFrame.label:SetText("Clear "..currentPresetName.."?")
-		frame.ClearConfirmationFrame:Show()
+	frame.LinkToChatButton = AceGUI:Create("Button")
+	frame.LinkToChatButton:SetText("Send")
+	frame.LinkToChatButton:SetWidth(buttonWidth)
+	frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
+	frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
+	frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
+	frame.LinkToChatButton:SetCallback("OnClick",function(widget,callbackName,value)
+        frame.LinkToChatButton:SetDisabled(true)
+        MethodDungeonTools:SendToGroup()
 	end)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelClearButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
 
 
@@ -1396,6 +1393,14 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	MethodDungeonTools.main_frame.presetImportBox:SetText("")
 end
 
+function MethodDungeonTools:OpenClearPresetDialog()
+    MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.ClearConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+    local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
+    MethodDungeonTools.main_frame.ClearConfirmationFrame.label:SetText("Clear "..currentPresetName.."?")
+    MethodDungeonTools.main_frame.ClearConfirmationFrame:Show()
+end
+
 
 function MethodDungeonTools:UpdateDungeonDropDown()
 	local group = MethodDungeonTools.main_frame.DungeonSelectionGroup
@@ -1594,6 +1599,56 @@ function MethodDungeonTools:SanitizePresetName(text)
 end
 
 
+function MethodDungeonTools:MakeChatPresetImportFrame(frame)
+    frame.chatPresetImportFrame = AceGUI:Create("Frame")
+    local chatImport = frame.chatPresetImportFrame
+    chatImport:SetTitle("Import Preset")
+    chatImport:SetWidth(400)
+    chatImport:SetHeight(200)
+    chatImport:EnableResize(false)
+    chatImport:SetLayout("Flow")
+    chatImport:SetCallback("OnClose", function(widget)
+        MethodDungeonTools:UpdatePresetDropDown()
+        if db.currentPreset[db.currentDungeonIdx] ~= 1 then
+            MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)
+        end
+    end)
+    chatImport.defaultText = "Import Preset:\n"
+    chatImport.importLabel = AceGUI:Create("Label")
+    chatImport.importLabel:SetText(chatImport.defaultText)
+    chatImport.importLabel:SetWidth(390)
+    --chatImport.importLabel:SetColor(1,0,0)
+
+
+    local importButton = AceGUI:Create("Button")
+    importButton:SetText("Import")
+    importButton:SetWidth(100)
+    importButton:SetCallback("OnClick", function()
+        local newPreset = chatImport.currentPreset
+        if MethodDungeonTools:ValidateImportPreset(newPreset) then
+            chatImport:Hide()
+            MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset))
+        else
+            print("MDT: Error importing preset report to author")
+        end
+    end)
+    chatImport:AddChild(chatImport.importLabel)
+    chatImport:AddChild(importButton)
+    chatImport:Hide()
+
+end
+
+function MethodDungeonTools:OpenImportPresetDialog(sender,preset)
+    MethodDungeonTools:HideAllDialogs()
+    local chatImport = MethodDungeonTools.main_frame.chatPresetImportFrame
+    chatImport:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+    chatImport.currentPreset = preset
+    local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
+    local name = preset.text
+    chatImport.importLabel:SetText(chatImport.defaultText..sender.. ": "..dungeon.." - "..name)
+    chatImport:Show()
+end
+
 function MethodDungeonTools:MakePresetImportFrame(frame)
 	frame.presetImportFrame = AceGUI:Create("Frame")
 	frame.presetImportFrame:SetTitle("Import Preset")
@@ -1701,7 +1756,6 @@ function MethodDungeonTools:ValidateImportPreset(preset)
     if not preset.value then return false end
     if type(preset.text) ~= "string" then return false end
     if type(preset.value) ~= "table" then return false end
-    if not preset.value.currentAffix then return false end
     if not preset.value.currentDungeonIdx then return false end
     if not preset.value.currentPull then return false end
     if not preset.value.currentSublevel then return false end
@@ -2457,8 +2511,8 @@ function initFrames()
 	MethodDungeonTools:MakeDeleteConfirmationFrame(main_frame)
 	MethodDungeonTools:MakeClearConfirmationFrame(main_frame)
 	MethodDungeonTools:CreateTutorialButton(main_frame)
-
     MethodDungeonTools:POI_CreateFramePools()
+    MethodDungeonTools:MakeChatPresetImportFrame(main_frame)
 
     --devMode
     if db.devMode and MethodDungeonTools.CreateDevPanel then
