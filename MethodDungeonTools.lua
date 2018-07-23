@@ -782,9 +782,11 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
 	frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
 	frame.LinkToChatButton:SetCallback("OnClick",function(widget,callbackName,value)
+        local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+        if not distribution then return end
         frame.LinkToChatButton:SetDisabled(true)
         frame.LinkToChatButton:SetText("Sending")
-        MethodDungeonTools:SendToGroup()
+        MethodDungeonTools:SendToGroup(distribution)
 	end)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
@@ -1605,7 +1607,7 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
     local chatImport = frame.chatPresetImportFrame
     chatImport:SetTitle("Import Preset")
     chatImport:SetWidth(400)
-    chatImport:SetHeight(200)
+    chatImport:SetHeight(100)
     chatImport:EnableResize(false)
     chatImport:SetLayout("Flow")
     chatImport:SetCallback("OnClose", function(widget)
@@ -1617,7 +1619,7 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
     chatImport.defaultText = "Import Preset:\n"
     chatImport.importLabel = AceGUI:Create("Label")
     chatImport.importLabel:SetText(chatImport.defaultText)
-    chatImport.importLabel:SetWidth(390)
+    chatImport.importLabel:SetWidth(250)
     --chatImport.importLabel:SetColor(1,0,0)
 
 
@@ -1639,7 +1641,7 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
 
 end
 
-function MethodDungeonTools:OpenImportPresetDialog(sender,preset)
+function MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
     MethodDungeonTools:HideAllDialogs()
     local chatImport = MethodDungeonTools.main_frame.chatPresetImportFrame
     chatImport:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
