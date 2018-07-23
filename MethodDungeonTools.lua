@@ -783,6 +783,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
 	frame.LinkToChatButton:SetCallback("OnClick",function(widget,callbackName,value)
         frame.LinkToChatButton:SetDisabled(true)
+        frame.LinkToChatButton:SetText("Sending")
         MethodDungeonTools:SendToGroup()
 	end)
 

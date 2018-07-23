@@ -194,9 +194,10 @@ end
 
 
 local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
-    print(string.format("Progress: %.1f",bytesSent/bytesToSend*100))
+    --print(string.format("Progress: %.1f",bytesSent/bytesToSend*100))
     if bytesSent == bytesToSend then
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
+        MethodDungeonTools.main_frame.LinkToChatButton:SetText("Send")
         local distribution = userArgs[1]
         local preset = userArgs[2]
         local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
