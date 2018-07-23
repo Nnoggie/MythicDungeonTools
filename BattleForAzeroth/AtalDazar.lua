@@ -478,7 +478,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1.2;
         ["health"] = 706368;
-        ["count"] = 0;
+        ["count"] = 10;
         ["displayId"] = 80709;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
@@ -579,7 +579,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 588640;
-        ["count"] = 0;
+        ["count"] = 6;
         ["displayId"] = 47659;
         ["creatureType"] = "Beast";
         ["level"] = 121;
@@ -1385,7 +1385,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 600413;
-        ["count"] = 0;
+        ["count"] = 6;
         ["displayId"] = 76483;
         ["creatureType"] = "Beast";
         ["level"] = 121;

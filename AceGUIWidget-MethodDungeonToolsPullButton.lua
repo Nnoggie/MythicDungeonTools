@@ -93,6 +93,11 @@ local methods = {
             func = function() MethodDungeonTools:ClearPull(self.index) end
         })
         tinsert(self.menu, {
+            text = "Clear Preset",
+            notCheckable = 1,
+            func = function() MethodDungeonTools:OpenClearPresetDialog() end
+        })
+        tinsert(self.menu, {
             text = " ",
             notClickable = 1,
             notCheckable = 1,
