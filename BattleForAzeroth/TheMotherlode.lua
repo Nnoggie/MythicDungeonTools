@@ -74,8 +74,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -109.54597719213;
-                ["x"] = 406.8353926133;
+                ["y"] = -105.19209900133;
+                ["x"] = 405.95380706931;
                 ["g"] = 65;
                 ["sublevel"] = 1;
             };
@@ -92,8 +92,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [17] = {
-                ["y"] = -125.42772214795;
-                ["x"] = 370.21421476111;
+                ["y"] = -123.22261528122;
+                ["x"] = 373.34321129826;
                 ["g"] = 75;
                 ["sublevel"] = 1;
             };
@@ -110,21 +110,45 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [5] = {
-                ["y"] = -125.21849852576;
-                ["x"] = 423.31883979899;
+                ["y"] = -127.90752708398;
+                ["x"] = 425.7219165469;
                 ["g"] = 66;
                 ["sublevel"] = 1;
             };
             [10] = {
-                ["y"] = -171.12315932201;
+                ["sublevel"] = 1;
                 ["x"] = 390.98602676877;
+                ["infested"] = {
+                    [6] = true;
+                };
                 ["g"] = 71;
+                ["y"] = -171.12315932201;
+            };
+            [20] = {
+                ["y"] = -110.88177015262;
+                ["x"] = 398.54000480425;
+                ["teeming"] = true;
+                ["g"] = 65;
+                ["sublevel"] = 1;
+            };
+            [21] = {
+                ["y"] = -103.96001581964;
+                ["x"] = 423.19038315941;
+                ["teeming"] = true;
+                ["g"] = 66;
                 ["sublevel"] = 1;
             };
             [11] = {
                 ["y"] = -159.81880987673;
                 ["x"] = 385.1164764989;
                 ["g"] = 71;
+                ["sublevel"] = 1;
+            };
+            [22] = {
+                ["y"] = -122.80716290171;
+                ["x"] = 362.11289539306;
+                ["teeming"] = true;
+                ["g"] = 75;
                 ["sublevel"] = 1;
             };
             [3] = {
@@ -176,26 +200,26 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 73;
                 ["sublevel"] = 1;
             };
-            [19] = {
-                ["y"] = -141.97633420248;
-                ["x"] = 365.27023237456;
-                ["g"] = 77;
-                ["sublevel"] = 1;
-            };
             [15] = {
                 ["y"] = -151.01280214673;
                 ["x"] = 374.92301263338;
                 ["g"] = 73;
                 ["sublevel"] = 1;
             };
+            [19] = {
+                ["y"] = -141.97633420248;
+                ["x"] = 365.27023237456;
+                ["g"] = 77;
+                ["sublevel"] = 1;
+            };
         };
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Venture Co. Alchemist";
+        ["displayId"] = 82915;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133432;
-        ["displayId"] = 82915;
         ["health"] = 294320;
     };
     [2] = {
@@ -229,10 +253,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Bottom Feeder";
+        ["displayId"] = 32023;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137716;
-        ["displayId"] = 32023;
         ["health"] = 58864;
     };
     [3] = {
@@ -286,15 +310,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 473.55560139048;
                 ["sublevel"] = 1;
             };
-            [14] = {
-                ["y"] = -481.28385124899;
-                ["x"] = 460.2539811199;
-                ["sublevel"] = 1;
-            };
             [11] = {
                 ["y"] = -456.47780215629;
                 ["x"] = 465.73199190146;
                 ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -523.21446339563;
+                ["x"] = 418.27288128767;
+                ["sublevel"] = 1;
+                ["upstairs"] = true;
             };
             [6] = {
                 ["y"] = -459.78643311087;
@@ -306,22 +331,21 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 456.19712019695;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -523.21446339563;
-                ["x"] = 418.27288128767;
+            [14] = {
+                ["y"] = -481.28385124899;
+                ["x"] = 460.2539811199;
                 ["sublevel"] = 1;
-                ["upstairs"] = true;
             };
         };
         ["id"] = 138061;
-        ["displayId"] = 81226;
-        ["scale"] = 0.7;
+        ["neutral"] = true;
         ["health"] = 117728;
         ["count"] = 0;
+        ["displayId"] = 81226;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Venture Co. Longshoreman";
-        ["neutral"] = true;
+        ["scale"] = 0.7;
     };
     [4] = {
         ["clones"] = {
@@ -372,14 +396,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 138064;
-        ["displayId"] = 85704;
-        ["scale"] = 0.7;
+        ["neutral"] = true;
         ["health"] = 58864;
         ["count"] = 0;
+        ["displayId"] = 85704;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Posh Vacationer";
-        ["neutral"] = true;
+        ["scale"] = 0.7;
     };
     [5] = {
         ["clones"] = {
@@ -431,10 +455,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 27;
                 ["sublevel"] = 1;
             };
-            [15] = {
-                ["y"] = -346.88202285883;
-                ["x"] = 458.7848088263;
-                ["g"] = 20;
+            [31] = {
+                ["y"] = -416.02358442115;
+                ["x"] = 438.77025155148;
+                ["teeming"] = true;
+                ["g"] = 4;
                 ["sublevel"] = 1;
             };
             [5] = {
@@ -503,10 +528,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 38;
                 ["sublevel"] = 1;
             };
-            [23] = {
-                ["y"] = -361.44398874944;
-                ["x"] = 430.84077766723;
-                ["g"] = 38;
+            [19] = {
+                ["y"] = -311.27839494951;
+                ["x"] = 408.93014594969;
+                ["g"] = 31;
                 ["sublevel"] = 1;
             };
             [25] = {
@@ -524,20 +549,20 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [26] = {
                 ["sublevel"] = 1;
                 ["x"] = 436.1251307314;
-                ["infested"] = {};
-                ["g"] = 39;
                 ["y"] = -342.89427712404;
-            };
-            [7] = {
-                ["y"] = -416.59957778435;
-                ["x"] = 435.35094745914;
-                ["g"] = 4;
-                ["sublevel"] = 1;
+                ["g"] = 39;
+                ["infested"] = {};
             };
             [27] = {
                 ["y"] = -347.6085695264;
                 ["x"] = 442.83941872568;
                 ["g"] = 39;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -416.59957778435;
+                ["x"] = 435.35094745914;
+                ["g"] = 4;
                 ["sublevel"] = 1;
             };
             [14] = {
@@ -552,10 +577,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 39;
                 ["sublevel"] = 1;
             };
-            [19] = {
-                ["y"] = -311.27839494951;
-                ["x"] = 408.93014594969;
-                ["g"] = 31;
+            [23] = {
+                ["y"] = -361.44398874944;
+                ["x"] = 430.84077766723;
+                ["g"] = 38;
                 ["sublevel"] = 1;
             };
             [29] = {
@@ -564,21 +589,20 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 39;
                 ["sublevel"] = 1;
             };
-            [31] = {
-                ["y"] = -418.27250011915;
-                ["x"] = 440.771184582;
-                ["teeming"] = true;
-                ["g"] = 4;
+            [15] = {
+                ["y"] = -346.88202285883;
+                ["x"] = 458.7848088263;
+                ["g"] = 20;
                 ["sublevel"] = 1;
             };
         };
         ["scale"] = 0.8;
         ["count"] = 1;
         ["name"] = "Off-Duty Laborer";
+        ["displayId"] = 81226;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130436;
-        ["displayId"] = 81226;
         ["health"] = 117728;
     };
     [6] = {
@@ -645,10 +669,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [3] = {
-                ["y"] = -414.53336685115;
+                ["sublevel"] = 1;
                 ["x"] = 439.3794102781;
                 ["g"] = 4;
-                ["sublevel"] = 1;
+                ["negativeTeeming"] = true;
+                ["y"] = -414.53336685115;
             };
             [6] = {
                 ["y"] = -395.21057359874;
@@ -690,10 +715,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Refreshment Vendor";
+        ["displayId"] = 84784;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 136470;
-        ["displayId"] = 84784;
         ["health"] = 294320;
     };
     [7] = {
@@ -804,38 +829,38 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [14] = {
                 ["sublevel"] = 1;
                 ["x"] = 412.42958839315;
-                ["infested"] = {
-                    [7] = true;
-                };
-                ["g"] = 31;
                 ["y"] = -316.77206590988;
-            };
-            [15] = {
-                ["sublevel"] = 1;
-                ["x"] = 425.97839125071;
+                ["g"] = 31;
                 ["infested"] = {
                     [7] = true;
                 };
-                ["g"] = 32;
-                ["y"] = -328.26965213076;
             };
             [19] = {
                 ["sublevel"] = 1;
                 ["x"] = 439.09323382847;
+                ["y"] = -347.1190505885;
+                ["g"] = 39;
                 ["infested"] = {
                     [7] = true;
                 };
-                ["g"] = 39;
-                ["y"] = -347.1190505885;
+            };
+            [15] = {
+                ["sublevel"] = 1;
+                ["x"] = 425.97839125071;
+                ["y"] = -328.26965213076;
+                ["g"] = 32;
+                ["infested"] = {
+                    [7] = true;
+                };
             };
         };
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Mech Jockey";
+        ["displayId"] = 81265;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130488;
-        ["displayId"] = 81265;
         ["health"] = 294320;
     };
     [8] = {
@@ -896,16 +921,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [11] = {
-                ["y"] = -305.73344743986;
-                ["x"] = 471.28511852648;
-                ["g"] = 26;
                 ["sublevel"] = 1;
+                ["x"] = 471.28511852648;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 26;
+                ["y"] = -305.73344743986;
             };
             [3] = {
-                ["y"] = -385.65146149395;
-                ["x"] = 441.82179359542;
-                ["g"] = 7;
                 ["sublevel"] = 1;
+                ["x"] = 441.82179359542;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 7;
+                ["y"] = -385.65146149395;
             };
             [6] = {
                 ["y"] = -320.12873055453;
@@ -926,16 +957,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [7] = {
-                ["y"] = -323.97488753215;
-                ["x"] = 485.03859030068;
-                ["g"] = 24;
                 ["sublevel"] = 1;
+                ["x"] = 485.03859030068;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 24;
+                ["y"] = -323.97488753215;
             };
             [14] = {
-                ["y"] = -336.98255024376;
-                ["x"] = 408.07555384685;
-                ["g"] = 34;
                 ["sublevel"] = 1;
+                ["x"] = 408.07555384685;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 34;
+                ["y"] = -336.98255024376;
             };
             [15] = {
                 ["y"] = -355.71634412717;
@@ -947,10 +984,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["count"] = 5;
         ["name"] = "Addled Thug";
+        ["displayId"] = 30262;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130435;
-        ["displayId"] = 30262;
         ["health"] = 382616;
     };
     [10] = {
@@ -1170,10 +1207,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 37;
                 ["sublevel"] = 1;
             };
-            [31] = {
-                ["y"] = -363.01578806743;
-                ["x"] = 398.58672965892;
-                ["g"] = 36;
+            [39] = {
+                ["y"] = -351.20346091122;
+                ["x"] = 398.73887072976;
+                ["g"] = 37;
                 ["sublevel"] = 1;
             };
             [35] = {
@@ -1200,22 +1237,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 15;
                 ["sublevel"] = 1;
             };
-            [39] = {
-                ["y"] = -351.20346091122;
-                ["x"] = 398.73887072976;
-                ["g"] = 37;
+            [31] = {
+                ["y"] = -363.01578806743;
+                ["x"] = 398.58672965892;
+                ["g"] = 36;
                 ["sublevel"] = 1;
             };
         };
         ["id"] = 136006;
-        ["displayId"] = 85710;
-        ["scale"] = 0.7;
+        ["neutral"] = true;
         ["health"] = 58864;
         ["count"] = 1;
+        ["displayId"] = 85710;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Rowdy Reveler";
-        ["neutral"] = true;
+        ["scale"] = 0.7;
     };
     [12] = {
         ["clones"] = {
@@ -1226,42 +1263,42 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129214;
-        ["displayId"] = 80443;
         ["isBoss"] = true;
         ["encounterID"] = 2109;
         ["instanceID"] = 1012;
-        ["scale"] = 1;
         ["count"] = 0;
+        ["health"] = 3414112;
+        ["displayId"] = 80443;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Coin-Operated Crowd Pummeler";
-        ["health"] = 3414112;
+        ["scale"] = 1;
     };
     [14] = {
         ["clones"] = {
             [13] = {
-                ["y"] = -242.6827576548;
-                ["x"] = 278.77358321266;
+                ["y"] = -245.17868348992;
+                ["x"] = 283.13794501145;
                 ["g"] = 52;
                 ["sublevel"] = 1;
             };
             [7] = {
                 ["sublevel"] = 1;
                 ["x"] = 285.73839641588;
+                ["y"] = -263.39813899924;
+                ["g"] = 48;
                 ["infested"] = {
                     [7] = true;
                 };
-                ["g"] = 48;
-                ["y"] = -263.39813899924;
             };
             [1] = {
                 ["sublevel"] = 1;
                 ["x"] = 338.72379158713;
+                ["y"] = -244.27219248283;
+                ["g"] = 42;
                 ["infested"] = {
                     [7] = true;
                 };
-                ["g"] = 42;
-                ["y"] = -244.27219248283;
             };
             [2] = {
                 ["y"] = -245.76324221763;
@@ -1299,21 +1336,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 51;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -268.21899812818;
-                ["x"] = 335.10276641521;
-                ["g"] = 43;
-                ["sublevel"] = 1;
-            };
-            [6] = {
-                ["y"] = -249.94928491429;
-                ["x"] = 313.47405318336;
-                ["g"] = 44;
-                ["sublevel"] = 1;
-            };
-            [12] = {
-                ["y"] = -241.05487877582;
-                ["x"] = 287.6107911147;
+            [14] = {
+                ["y"] = -240.69591743684;
+                ["x"] = 284.34485750885;
                 ["g"] = 52;
                 ["sublevel"] = 1;
             };
@@ -1323,14 +1348,32 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 51;
                 ["sublevel"] = 1;
             };
+            [6] = {
+                ["y"] = -249.94928491429;
+                ["x"] = 313.47405318336;
+                ["g"] = 44;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -236.55801312265;
+                ["x"] = 283.31036848171;
+                ["g"] = 52;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -268.21899812818;
+                ["x"] = 335.10276641521;
+                ["g"] = 43;
+                ["sublevel"] = 1;
+            };
         };
         ["scale"] = 0.8;
         ["name"] = "Mine Rat";
         ["health"] = 176592;
+        ["displayId"] = 65436;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130437;
-        ["displayId"] = 65436;
         ["count"] = 2;
     };
     [16] = {
@@ -1348,25 +1391,31 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -228.71705961668;
-                ["x"] = 295.50634014471;
-                ["g"] = 54;
                 ["sublevel"] = 1;
+                ["x"] = 295.50634014471;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 54;
+                ["y"] = -228.71705961668;
             };
             [3] = {
-                ["y"] = -271.5298510703;
-                ["x"] = 253.56174912058;
-                ["g"] = 51;
                 ["sublevel"] = 1;
+                ["x"] = 253.56174912058;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 51;
+                ["y"] = -271.5298510703;
             };
         };
         ["scale"] = 1.2;
         ["name"] = "Azerite Extractor";
         ["health"] = 470912;
+        ["displayId"] = 84881;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 136643;
-        ["displayId"] = 84881;
         ["count"] = 6;
     };
     [20] = {
@@ -1381,35 +1430,44 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["health"] = 470912;
         ["count"] = 5;
+        ["displayId"] = 83286;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 134012;
-        ["displayId"] = 83286;
         ["name"] = "Taskmaster Askari";
     };
     [24] = {
         ["clones"] = {
-            [6] = {
-                ["y"] = -127.95643401756;
-                ["x"] = 391.28214632718;
+            [7] = {
+                ["sublevel"] = 1;
+                ["x"] = 371.83635399335;
                 ["patrol"] = {
                     [1] = {
-                        ["y"] = -127.95643401756;
-                        ["x"] = 391.28214632718;
+                        ["y"] = -134.454518109;
+                        ["x"] = 367.57290486676;
                     };
                     [2] = {
-                        ["y"] = -134.6805572;
-                        ["x"] = 384.90282569007;
+                        ["y"] = -140.73360211461;
+                        ["x"] = 377.57289908;
                     };
                     [4] = {
-                        ["y"] = -121.23230343592;
-                        ["x"] = 396.28215319424;
+                        ["y"] = -128.64055661211;
+                        ["x"] = 358.03803316225;
                     };
                     [3] = {
-                        ["y"] = -127.95643401756;
-                        ["x"] = 391.28214632718;
+                        ["y"] = -134.454518109;
+                        ["x"] = 367.57290486676;
                     };
                 };
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["y"] = -135.82534968228;
+            };
+            [1] = {
+                ["y"] = -114.87366004873;
+                ["x"] = 426.4223142796;
+                ["g"] = 66;
                 ["sublevel"] = 1;
             };
             [2] = {
@@ -1418,37 +1476,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 66;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -148.69317920568;
-                ["x"] = 361.86321322224;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -148.69317920568;
-                        ["x"] = 361.86321322224;
-                    };
-                    [2] = {
-                        ["y"] = -143.91056264851;
-                        ["x"] = 354.03715241535;
-                    };
-                    [4] = {
-                        ["y"] = -149.87321883214;
-                        ["x"] = 373.13469152513;
-                    };
-                    [3] = {
-                        ["y"] = -148.69317920568;
-                        ["x"] = 361.86321322224;
-                    };
-                };
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -114.87366004873;
-                ["x"] = 426.4223142796;
-                ["g"] = 66;
-                ["sublevel"] = 1;
-            };
             [4] = {
-                ["y"] = -111.94521274864;
+                ["sublevel"] = 1;
                 ["x"] = 364.22819552767;
                 ["patrol"] = {
                     [1] = {
@@ -1468,6 +1497,26 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                         ["x"] = 364.22819552767;
                     };
                 };
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["y"] = -111.94521274864;
+            };
+            [8] = {
+                ["y"] = -109.67485765522;
+                ["x"] = 409.74688664058;
+                ["teeming"] = true;
+                ["g"] = 65;
+                ["sublevel"] = 1;
+            };
+            [9] = {
+                ["y"] = -126.78425288335;
+                ["x"] = 370.46648478504;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["teeming"] = true;
+                ["g"] = 75;
                 ["sublevel"] = 1;
             };
             [5] = {
@@ -1493,39 +1542,65 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 };
                 ["sublevel"] = 1;
             };
-            [7] = {
-                ["y"] = -134.454518109;
-                ["x"] = 367.57290486676;
+            [3] = {
+                ["y"] = -148.69317920568;
+                ["x"] = 361.86321322224;
                 ["patrol"] = {
                     [1] = {
-                        ["y"] = -134.454518109;
-                        ["x"] = 367.57290486676;
+                        ["y"] = -148.69317920568;
+                        ["x"] = 361.86321322224;
                     };
                     [2] = {
-                        ["y"] = -140.73360211461;
-                        ["x"] = 377.57289908;
+                        ["y"] = -143.91056264851;
+                        ["x"] = 354.03715241535;
                     };
                     [4] = {
-                        ["y"] = -128.64055661211;
-                        ["x"] = 358.03803316225;
+                        ["y"] = -149.87321883214;
+                        ["x"] = 373.13469152513;
                     };
                     [3] = {
-                        ["y"] = -134.454518109;
-                        ["x"] = 367.57290486676;
+                        ["y"] = -148.69317920568;
+                        ["x"] = 361.86321322224;
                     };
                 };
                 ["sublevel"] = 1;
             };
+            [6] = {
+                ["sublevel"] = 1;
+                ["x"] = 391.28214632718;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -127.95643401756;
+                        ["x"] = 391.28214632718;
+                    };
+                    [2] = {
+                        ["y"] = -134.6805572;
+                        ["x"] = 384.90282569007;
+                    };
+                    [4] = {
+                        ["y"] = -121.23230343592;
+                        ["x"] = 396.28215319424;
+                    };
+                    [3] = {
+                        ["y"] = -127.95643401756;
+                        ["x"] = 391.28214632718;
+                    };
+                };
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["y"] = -127.95643401756;
+            };
         };
         ["id"] = 133430;
-        ["displayId"] = 83136;
         ["stealthDetect"] = true;
-        ["scale"] = 1.4;
         ["health"] = 470912;
+        ["count"] = 6;
+        ["displayId"] = 83136;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["name"] = "Venture Co. Mastermind";
-        ["count"] = 6;
+        ["scale"] = 1.2;
     };
     [28] = {
         ["clones"] = {
@@ -1616,11 +1691,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [3] = {
                 ["sublevel"] = 1;
                 ["x"] = 350.190717349;
-                ["y"] = -112.7747742898;
-                ["g"] = 61;
                 ["infested"] = {
                     [7] = true;
                 };
+                ["g"] = 61;
+                ["y"] = -112.7747742898;
             };
             [6] = {
                 ["y"] = -89.948031358933;
@@ -1640,9 +1715,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 71;
                 ["sublevel"] = 1;
             };
-            [19] = {
-                ["y"] = -115.45457574642;
-                ["x"] = 385.8618748753;
+            [15] = {
+                ["y"] = -119.36467831552;
+                ["x"] = 386.12787103318;
                 ["g"] = 69;
                 ["sublevel"] = 1;
             };
@@ -1664,16 +1739,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 77;
                 ["sublevel"] = 1;
             };
-            [27] = {
-                ["y"] = -145.4252921068;
-                ["x"] = 366.83223308703;
-                ["g"] = 77;
-                ["sublevel"] = 1;
-            };
             [7] = {
                 ["y"] = -92.002829292588;
                 ["x"] = 357.86398658135;
                 ["g"] = 62;
+                ["sublevel"] = 1;
+            };
+            [27] = {
+                ["y"] = -145.4252921068;
+                ["x"] = 366.83223308703;
+                ["g"] = 77;
                 ["sublevel"] = 1;
             };
             [14] = {
@@ -1700,9 +1775,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 77;
                 ["sublevel"] = 1;
             };
-            [15] = {
-                ["y"] = -119.36467831552;
-                ["x"] = 386.12787103318;
+            [19] = {
+                ["y"] = -115.45457574642;
+                ["x"] = 385.8618748753;
                 ["g"] = 69;
                 ["sublevel"] = 1;
             };
@@ -1710,18 +1785,18 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.5;
         ["count"] = 1;
         ["name"] = "Test Subject";
+        ["displayId"] = 1141;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133963;
-        ["displayId"] = 1141;
         ["health"] = 58864;
     };
     [32] = {
         ["clones"] = {
             [6] = {
-                ["y"] = -118.15494269766;
-                ["x"] = 560.76499627596;
-                ["g"] = 82;
+                ["y"] = -147.43362106064;
+                ["x"] = 586.47345853923;
+                ["g"] = 84;
                 ["sublevel"] = 1;
             };
             [2] = {
@@ -1743,29 +1818,24 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -109.20167255386;
-                ["x"] = 545.75114630873;
+                ["y"] = -108.8101506555;
+                ["x"] = 547.55938846329;
                 ["sublevel"] = 1;
             };
             [5] = {
-                ["y"] = -119.55557534984;
-                ["x"] = 549.99334281368;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -153.03984729926;
-                ["x"] = 580.52831156507;
-                ["g"] = 84;
+                ["y"] = -118.15494269766;
+                ["x"] = 560.76499627596;
+                ["g"] = 82;
                 ["sublevel"] = 1;
             };
         };
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Ordnance Specialist";
+        ["displayId"] = 85024;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 137029;
-        ["displayId"] = 85024;
         ["health"] = 294320;
     };
     [33] = {
@@ -1774,10 +1844,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -130.64835797805;
                 ["x"] = 602.10878780705;
                 ["sublevel"] = 1;
+                ["infested"] = {
+                    [6] = true;
+                };
             };
             [1] = {
-                ["y"] = -114.59868623642;
-                ["x"] = 533.07059039848;
+                ["y"] = -114.90501753788;
+                ["x"] = 535.86383501739;
                 ["sublevel"] = 1;
             };
             [2] = {
@@ -1792,14 +1865,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [8] = {
-                ["y"] = -156.88432128066;
-                ["x"] = 612.81746696032;
+                ["y"] = -158.96290439736;
+                ["x"] = 612.93507584307;
                 ["g"] = 85;
                 ["sublevel"] = 1;
             };
             [9] = {
-                ["y"] = -164.54056477391;
-                ["x"] = 602.34872667838;
+                ["y"] = -166.42558655613;
+                ["x"] = 603.68135099104;
                 ["g"] = 85;
                 ["sublevel"] = 1;
             };
@@ -1810,13 +1883,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [3] = {
-                ["y"] = -126.40754385396;
-                ["x"] = 557.30562097889;
+                ["y"] = -127.01005945566;
+                ["x"] = 554.9281381064;
                 ["sublevel"] = 1;
             };
             [6] = {
-                ["y"] = -146.65463810505;
-                ["x"] = 583.97774106314;
+                ["y"] = -153.32402103198;
+                ["x"] = 579.89810044849;
                 ["g"] = 84;
                 ["sublevel"] = 1;
             };
@@ -1824,10 +1897,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Venture Co. Skyscorcher";
+        ["displayId"] = 82922;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133436;
-        ["displayId"] = 82922;
         ["health"] = 294320;
     };
     [17] = {
@@ -1854,10 +1927,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 294320;
         ["count"] = 4;
+        ["displayId"] = 12207;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137940;
-        ["displayId"] = 12207;
         ["name"] = "Safety Shark";
     };
     [21] = {
@@ -1870,16 +1943,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129227;
-        ["displayId"] = 83891;
         ["isBoss"] = true;
         ["encounterID"] = 2114;
         ["instanceID"] = 1012;
-        ["count"] = 0;
+        ["scale"] = 1;
         ["health"] = 1813011;
+        ["displayId"] = 83891;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
         ["name"] = "Azerokk";
-        ["scale"] = 1;
+        ["count"] = 0;
     };
     [25] = {
         ["clones"] = {
@@ -1919,9 +1992,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 67;
                 ["sublevel"] = 1;
             };
-            [15] = {
-                ["y"] = -119.82945369751;
-                ["x"] = 368.56608126072;
+            [14] = {
+                ["y"] = -119.66097180029;
+                ["x"] = 364.57607893489;
                 ["g"] = 75;
                 ["sublevel"] = 1;
             };
@@ -1932,10 +2005,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [5] = {
-                ["y"] = -88.467782982899;
-                ["x"] = 371.70169599061;
-                ["g"] = 63;
                 ["sublevel"] = 1;
+                ["x"] = 371.70169599061;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 63;
+                ["y"] = -88.467782982899;
             };
             [10] = {
                 ["y"] = -147.01887501311;
@@ -1943,16 +2019,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 70;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -110.67757559578;
-                ["x"] = 352.86760421168;
-                ["g"] = 61;
-                ["sublevel"] = 1;
-            };
             [11] = {
                 ["y"] = -149.01886971947;
                 ["x"] = 383.48745285442;
                 ["g"] = 70;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -110.67757559578;
+                ["x"] = 352.86760421168;
+                ["g"] = 61;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -1967,9 +2043,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 73;
                 ["sublevel"] = 1;
             };
-            [14] = {
-                ["y"] = -122.00305500599;
-                ["x"] = 364.18682081436;
+            [15] = {
+                ["y"] = -118.56508466398;
+                ["x"] = 369.7815560597;
                 ["g"] = 75;
                 ["sublevel"] = 1;
             };
@@ -1977,10 +2053,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.8;
         ["count"] = 4;
         ["name"] = "Feckless Assistant";
+        ["displayId"] = 82866;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133345;
-        ["displayId"] = 82866;
         ["health"] = 294320;
     };
     [29] = {
@@ -1992,16 +2068,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129231;
-        ["displayId"] = 81489;
         ["isBoss"] = true;
         ["encounterID"] = 2115;
         ["instanceID"] = 1012;
-        ["count"] = 0;
+        ["scale"] = 1;
         ["health"] = 2060240;
+        ["displayId"] = 81489;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Rixxa Fluxflame";
-        ["scale"] = 1;
+        ["count"] = 0;
     };
     [34] = {
         ["clones"] = {
@@ -2012,16 +2088,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 129232;
-        ["displayId"] = 81816;
         ["isBoss"] = true;
         ["encounterID"] = 2116;
         ["instanceID"] = 1012;
-        ["count"] = 0;
+        ["scale"] = 1;
         ["health"] = 2295696;
+        ["displayId"] = 81816;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Mogul Razdunk";
-        ["scale"] = 1;
+        ["count"] = 0;
     };
     [9] = {
         ["clones"] = {
@@ -2108,10 +2184,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Hired Assassin";
+        ["displayId"] = 83395;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 134232;
-        ["displayId"] = 83395;
         ["health"] = 294320;
     };
     [11] = {
@@ -2123,7 +2199,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [2] = {
-                ["y"] = -351.32147778175;
+                ["sublevel"] = 1;
                 ["x"] = 425.25199455151;
                 ["patrol"] = {
                     [1] = {
@@ -2143,38 +2219,23 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                         ["x"] = 425.25199455151;
                     };
                 };
-                ["sublevel"] = 1;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["y"] = -351.32147778175;
             };
         };
         ["scale"] = 1.6;
         ["count"] = 6;
         ["name"] = "Mechanized Peacekeeper";
+        ["displayId"] = 82943;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 136139;
-        ["displayId"] = 82943;
         ["health"] = 470912;
     };
     [13] = {
         ["clones"] = {
-            [4] = {
-                ["y"] = -263.73314604072;
-                ["x"] = 316.12501726763;
-                ["g"] = 45;
-                ["sublevel"] = 1;
-            };
-            [13] = {
-                ["y"] = -246.42064877628;
-                ["x"] = 303.15100025553;
-                ["g"] = 53;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -263.24188694247;
-                ["x"] = 291.36338999324;
-                ["g"] = 48;
-                ["sublevel"] = 1;
-            };
             [1] = {
                 ["y"] = -245.96023641259;
                 ["x"] = 333.83167446155;
@@ -2187,10 +2248,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 44;
                 ["sublevel"] = 1;
             };
-            [15] = {
-                ["y"] = -181.59798986633;
-                ["x"] = 242.56805188946;
-                ["g"] = 78;
+            [4] = {
+                ["y"] = -263.73314604072;
+                ["x"] = 316.12501726763;
+                ["g"] = 45;
                 ["sublevel"] = 1;
             };
             [8] = {
@@ -2200,8 +2261,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [16] = {
-                ["y"] = -181.9104738633;
-                ["x"] = 251.78680253935;
+                ["y"] = -250.35140742937;
+                ["x"] = 300.81151282232;
+                ["teeming"] = true;
+                ["g"] = 53;
+                ["sublevel"] = 1;
+            };
+            [17] = {
+                ["y"] = -177.10228965329;
+                ["x"] = 254.87533569424;
+                ["teeming"] = true;
                 ["g"] = 78;
                 ["sublevel"] = 1;
             };
@@ -2232,25 +2301,28 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                         ["x"] = 309.44674265138;
                     };
                 };
+                ["infested"] = {
+                    [6] = true;
+                };
                 ["g"] = 46;
                 ["sublevel"] = 1;
             };
             [10] = {
-                ["y"] = -245.24091149217;
-                ["x"] = 282.95964586994;
+                ["y"] = -244.14421666037;
+                ["x"] = 278.31036161465;
                 ["g"] = 52;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -244.00686077747;
+                ["x"] = 298.66824160164;
+                ["g"] = 53;
                 ["sublevel"] = 1;
             };
             [3] = {
                 ["y"] = -269.85254617954;
                 ["x"] = 321.94589961546;
                 ["g"] = 45;
-                ["sublevel"] = 1;
-            };
-            [11] = {
-                ["y"] = -236.40368362949;
-                ["x"] = 283.65730967241;
-                ["g"] = 52;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -2260,46 +2332,55 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [12] = {
-                ["y"] = -244.00686077747;
-                ["x"] = 298.66824160164;
+                ["y"] = -246.42064877628;
+                ["x"] = 303.15100025553;
                 ["g"] = 53;
                 ["sublevel"] = 1;
             };
-            [14] = {
+            [13] = {
                 ["y"] = -227.66443120031;
                 ["x"] = 290.63791183782;
                 ["g"] = 54;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -263.24188694247;
+                ["x"] = 291.36338999324;
+                ["g"] = 48;
+                ["sublevel"] = 1;
+            };
+            [14] = {
+                ["y"] = -183.26444850217;
+                ["x"] = 244.43731355328;
+                ["g"] = 78;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["y"] = -181.49230059643;
+                ["x"] = 252.0322517744;
+                ["g"] = 78;
                 ["sublevel"] = 1;
             };
         };
         ["scale"] = 1;
         ["name"] = "Venture Co. Earthshaper";
         ["health"] = 294320;
+        ["displayId"] = 81333;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130661;
-        ["displayId"] = 81333;
         ["count"] = 8;
     };
     [15] = {
         ["clones"] = {
-            [13] = {
-                ["y"] = -229.50653234065;
-                ["x"] = 301.42737992772;
-                ["g"] = 54;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -271.96379312677;
-                ["x"] = 300.27007619482;
-                ["g"] = 47;
-                ["sublevel"] = 1;
-            };
             [1] = {
-                ["y"] = -265.9740878109;
-                ["x"] = 331.22521634267;
-                ["g"] = 43;
                 ["sublevel"] = 1;
+                ["x"] = 331.22521634267;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 43;
+                ["y"] = -265.9740878109;
             };
             [2] = {
                 ["y"] = -248.32138607469;
@@ -2319,16 +2400,31 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 49;
                 ["sublevel"] = 1;
             };
-            [15] = {
-                ["y"] = -176.12923493469;
-                ["x"] = 239.13054687371;
-                ["g"] = 78;
+            [16] = {
+                ["y"] = -238.63711512839;
+                ["x"] = 307.81150045942;
+                ["teeming"] = true;
+                ["g"] = 53;
+                ["sublevel"] = 1;
+            };
+            [17] = {
+                ["y"] = -248.49425859348;
+                ["x"] = 296.95437452528;
+                ["teeming"] = true;
+                ["g"] = 53;
                 ["sublevel"] = 1;
             };
             [9] = {
                 ["y"] = -271.08418338594;
                 ["x"] = 269.70900859751;
                 ["g"] = 49;
+                ["sublevel"] = 1;
+            };
+            [18] = {
+                ["y"] = -180.2668553939;
+                ["x"] = 239.30571288417;
+                ["teeming"] = true;
+                ["g"] = 78;
                 ["sublevel"] = 1;
             };
             [5] = {
@@ -2343,16 +2439,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 52;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -263.97210902399;
-                ["x"] = 321.53747031719;
-                ["g"] = 45;
-                ["sublevel"] = 1;
-            };
             [11] = {
                 ["y"] = -240.73099982258;
                 ["x"] = 302.4613507697;
                 ["g"] = 53;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -263.97210902399;
+                ["x"] = 321.53747031719;
+                ["g"] = 45;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -2367,9 +2463,27 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 53;
                 ["sublevel"] = 1;
             };
+            [13] = {
+                ["y"] = -229.50653234065;
+                ["x"] = 301.42737992772;
+                ["g"] = 54;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -271.96379312677;
+                ["x"] = 300.27007619482;
+                ["g"] = 47;
+                ["sublevel"] = 1;
+            };
             [14] = {
-                ["y"] = -175.81672411563;
-                ["x"] = 255.38055961187;
+                ["y"] = -172.75811240719;
+                ["x"] = 256.71579212167;
+                ["g"] = 78;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["y"] = -176.93532788558;
+                ["x"] = 235.82972559439;
                 ["g"] = 78;
                 ["sublevel"] = 1;
             };
@@ -2377,10 +2491,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Wanton Sapper";
         ["health"] = 294320;
+        ["displayId"] = 81316;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 130653;
-        ["displayId"] = 81316;
         ["count"] = 4;
     };
     [18] = {
@@ -2418,11 +2532,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [9] = {
                 ["sublevel"] = 1;
                 ["x"] = 250.90672173647;
+                ["y"] = -196.31675876466;
+                ["g"] = 57;
                 ["infested"] = {
                     [7] = true;
                 };
-                ["g"] = 57;
-                ["y"] = -196.31675876466;
             };
             [5] = {
                 ["y"] = -214.11179728301;
@@ -2445,18 +2559,18 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [6] = {
                 ["sublevel"] = 1;
                 ["x"] = 261.50585528269;
-                ["infested"] = {};
-                ["g"] = 56;
                 ["y"] = -209.56009207996;
+                ["g"] = 56;
+                ["infested"] = {};
             };
         };
         ["scale"] = 0.7;
         ["health"] = 58864;
         ["count"] = 1;
+        ["displayId"] = 88196;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["id"] = 134005;
-        ["displayId"] = 88196;
         ["name"] = "Shalebiter";
     };
     [22] = {
@@ -2489,10 +2603,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 206024;
         ["count"] = 0;
+        ["displayId"] = 83052;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["id"] = 129802;
-        ["displayId"] = 83052;
         ["name"] = "Earthrager";
     };
     [26] = {
@@ -2516,14 +2630,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -113.69099133416;
-                ["x"] = 403.88904110737;
+                ["y"] = -111.22658749633;
+                ["x"] = 403.53999687291;
                 ["g"] = 65;
                 ["sublevel"] = 1;
             };
             [8] = {
-                ["y"] = -125.83867468011;
-                ["x"] = 364.87173778208;
+                ["y"] = -123.08563894226;
+                ["x"] = 366.63087686854;
                 ["g"] = 75;
                 ["sublevel"] = 1;
             };
@@ -2539,9 +2653,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 68;
                 ["sublevel"] = 1;
             };
+            [10] = {
+                ["y"] = -125.54013500524;
+                ["x"] = 420.55310548812;
+                ["teeming"] = true;
+                ["g"] = 66;
+                ["sublevel"] = 1;
+            };
             [3] = {
-                ["y"] = -109.40525504811;
-                ["x"] = 401.23599712597;
+                ["y"] = -106.22658062928;
+                ["x"] = 400.78138413119;
                 ["g"] = 65;
                 ["sublevel"] = 1;
             };
@@ -2555,14 +2676,19 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.8;
         ["count"] = 4;
         ["name"] = "Weapons Tester";
+        ["displayId"] = 84962;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 136934;
-        ["displayId"] = 84962;
         ["health"] = 294320;
     };
     [30] = {
         ["clones"] = {
+            [6] = {
+                ["y"] = -121.57230531622;
+                ["x"] = 550.29518805671;
+                ["sublevel"] = 1;
+            };
             [2] = {
                 ["y"] = -122.22200752438;
                 ["x"] = 496.95625852331;
@@ -2582,14 +2708,17 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [4] = {
-                ["y"] = -138.97133650933;
-                ["x"] = 602.49991019652;
-                ["g"] = 86;
                 ["sublevel"] = 1;
+                ["x"] = 602.49991019652;
+                ["y"] = -138.97133650933;
+                ["g"] = 86;
+                ["infested"] = {
+                    [6] = true;
+                };
             };
             [5] = {
-                ["y"] = -155.80414741552;
-                ["x"] = 602.80389987363;
+                ["y"] = -160.00768784213;
+                ["x"] = 606.66641360611;
                 ["g"] = 85;
                 ["sublevel"] = 1;
             };
@@ -2597,14 +2726,19 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Expert Technician";
+        ["displayId"] = 83034;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 133593;
-        ["displayId"] = 83034;
         ["health"] = 294320;
     };
     [36] = {
         ["clones"] = {
+            [7] = {
+                ["y"] = -303.97643978494;
+                ["x"] = 456.33809052917;
+                ["sublevel"] = 1;
+            };
             [1] = {
                 ["y"] = -349.0153562019;
                 ["x"] = 452.76276992635;
@@ -2615,29 +2749,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 463.47855634964;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -342.42002021961;
-                ["x"] = 484.79616675868;
-                ["sublevel"] = 1;
-            };
             [4] = {
                 ["y"] = -318.04557343147;
                 ["x"] = 488.31144996733;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -309.96847934857;
-                ["x"] = 478.79527896381;
-                ["sublevel"] = 1;
-            };
-            [6] = {
-                ["y"] = -300.0470909243;
-                ["x"] = 464.44097692694;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -303.97643978494;
-                ["x"] = 456.33809052917;
                 ["sublevel"] = 1;
             };
             [8] = {
@@ -2650,115 +2764,394 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 424.26441507197;
                 ["sublevel"] = 1;
             };
-        };
-        ["count"] = 6;
-        ["name"] = "Mechanized Peacekeeper";
-        ["scale"] = 1.2;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 121;
-        ["id"] = 130485;
-        ["displayId"] = 82943;
-        ["health"] = 470936;
-    };
-    [31] = {
-        ["clones"] = {
-            [6] = {
-                ["y"] = -161.02153372601;
-                ["x"] = 607.36912222473;
-                ["g"] = 85;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -128.99618133409;
-                ["x"] = 501.79495014634;
-                ["g"] = 80;
+            [5] = {
+                ["y"] = -309.96847934857;
+                ["x"] = 478.79527896381;
                 ["sublevel"] = 1;
             };
             [3] = {
-                ["y"] = -116.09386714438;
-                ["x"] = 591.63697586743;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -116.09386714438;
-                        ["x"] = 591.63697586743;
-                    };
-                    [2] = {
-                        ["y"] = -108.63118498562;
-                        ["x"] = 586.26383497711;
-                    };
-                    [4] = {
-                        ["y"] = -125.49684768927;
-                        ["x"] = 598.20413667957;
-                    };
-                    [3] = {
-                        ["y"] = -116.09386714438;
-                        ["x"] = 591.63697586743;
-                    };
-                };
+                ["y"] = -342.42002021961;
+                ["x"] = 484.79616675868;
                 ["sublevel"] = 1;
             };
-            [1] = {
-                ["y"] = -104.40698471469;
-                ["x"] = 507.03313398718;
-                ["g"] = 79;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -126.52056756911;
-                ["x"] = 576.08848904957;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -126.52056756911;
-                        ["x"] = 576.08848904957;
-                    };
-                    [2] = {
-                        ["y"] = -113.72897735969;
-                        ["x"] = 570.14284059589;
-                    };
-                    [4] = {
-                        ["y"] = -145.2302194779;
-                        ["x"] = 584.15297508797;
-                    };
-                    [3] = {
-                        ["y"] = -126.52056756911;
-                        ["x"] = 576.08848904957;
-                    };
-                };
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -149.69133509057;
-                ["x"] = 564.63620385762;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -149.69133509057;
-                        ["x"] = 564.63620385762;
-                    };
-                    [2] = {
-                        ["y"] = -140.28280291519;
-                        ["x"] = 557.72836194741;
-                    };
-                    [4] = {
-                        ["y"] = -157.17932630602;
-                        ["x"] = 570.6594044943;
-                    };
-                    [3] = {
-                        ["y"] = -149.69133509057;
-                        ["x"] = 564.63620385762;
-                    };
-                };
+            [6] = {
+                ["y"] = -300.0470909243;
+                ["x"] = 464.44097692694;
                 ["sublevel"] = 1;
             };
         };
-        ["id"] = 133463;
-        ["displayId"] = 83391;
-        ["stealthDetect"] = true;
+        ["scale"] = 1.2;
         ["count"] = 6;
-        ["health"] = 470912;
+        ["name"] = "Mechanized Peacekeeper";
+        ["displayId"] = 82943;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
-        ["name"] = "Venture Co. War Machine";
-        ["scale"] = 1.5;
+        ["id"] = 130485;
+        ["health"] = 470936;
+    };
+    [37] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -260.93717892805;
+                ["x"] = 592.36265829;
+                ["g"] = 87;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -257.0565821558;
+                ["x"] = 597.13880202998;
+                ["g"] = 87;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -253.62374605687;
+                ["x"] = 602.06415022062;
+                ["g"] = 87;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -261.68344458181;
+                ["x"] = 597.73577355924;
+                ["g"] = 87;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -258.39986417575;
+                ["x"] = 602.21341872403;
+                ["g"] = 87;
+                ["sublevel"] = 1;
+            };
+        };
+        ["count"] = 0;
+        ["name"] = "Asset Manager";
+        ["scale"] = 1;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 144286;
+        ["health"] = 58867;
+    };
+    [35] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -108.78406381848;
+                ["x"] = 524.82558464553;
+                ["g"] = 81;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -118.95296105033;
+                ["x"] = 525.2051065873;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -96.483800295248;
+                ["x"] = 518.01036176257;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -107.38158500302;
+                ["x"] = 534.41653050984;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -91.606328234521;
+                ["x"] = 529.03708273502;
+                ["sublevel"] = 1;
+            };
+            [6] = {
+                ["y"] = -100.5006560559;
+                ["x"] = 549.24948717915;
+                ["sublevel"] = 1;
+            };
+            [7] = {
+                ["y"] = -127.04978404908;
+                ["x"] = 549.62471512875;
+                ["sublevel"] = 1;
+            };
+            [8] = {
+                ["y"] = -140.92006428613;
+                ["x"] = 556.63460193472;
+                ["sublevel"] = 1;
+            };
+            [9] = {
+                ["y"] = -157.62893163199;
+                ["x"] = 570.05231417427;
+                ["sublevel"] = 1;
+            };
+            [10] = {
+                ["y"] = -106.05627477129;
+                ["x"] = 563.56908813178;
+                ["g"] = 83;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -106.38411980599;
+                ["x"] = 576.68383225024;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -107.99152043245;
+                ["x"] = 591.85388397318;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [13] = {
+                ["y"] = -125.16008960038;
+                ["x"] = 594.5664396924;
+                ["sublevel"] = 1;
+            };
+            [14] = {
+                ["y"] = -135.01951743756;
+                ["x"] = 604.86618540451;
+                ["g"] = 86;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["y"] = -126.05401492818;
+                ["x"] = 608.83169584523;
+                ["sublevel"] = 1;
+            };
+            [16] = {
+                ["y"] = -151.90464432582;
+                ["x"] = 584.22776588243;
+                ["g"] = 84;
+                ["sublevel"] = 1;
+            };
+            [17] = {
+                ["y"] = -137.84301532828;
+                ["x"] = 581.15178658182;
+                ["sublevel"] = 1;
+            };
+            [18] = {
+                ["y"] = -146.71115472387;
+                ["x"] = 606.88765938666;
+                ["sublevel"] = 1;
+            };
+            [19] = {
+                ["y"] = -155.25615121062;
+                ["x"] = 592.88160026492;
+                ["sublevel"] = 1;
+            };
+            [20] = {
+                ["y"] = -115.80533111013;
+                ["x"] = 509.80713301933;
+                ["sublevel"] = 1;
+                ["teeming"] = true;
+            };
+            [21] = {
+                ["y"] = -107.33546284624;
+                ["x"] = 513.83208429377;
+                ["sublevel"] = 1;
+                ["teeming"] = true;
+            };
+            [22] = {
+                ["y"] = -94.548304939461;
+                ["x"] = 506.47917628214;
+                ["sublevel"] = 1;
+                ["teeming"] = true;
+            };
+            [23] = {
+                ["y"] = -100.91005338954;
+                ["x"] = 527.13681712595;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [24] = {
+                ["y"] = -125.28207080228;
+                ["x"] = 535.58484788426;
+                ["sublevel"] = 1;
+                ["teeming"] = true;
+            };
+            [25] = {
+                ["y"] = -115.97993013796;
+                ["x"] = 541.40060177078;
+                ["sublevel"] = 1;
+                ["teeming"] = true;
+            };
+            [26] = {
+                ["y"] = -98.666493950436;
+                ["x"] = 540.80359180988;
+                ["sublevel"] = 1;
+                ["teeming"] = true;
+            };
+            [27] = {
+                ["y"] = -121.88478260767;
+                ["x"] = 544.82644653611;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [28] = {
+                ["y"] = -133.34091628591;
+                ["x"] = 554.8770274508;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [29] = {
+                ["y"] = -127.67563974225;
+                ["x"] = 563.16808646352;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [30] = {
+                ["y"] = -111.16442897852;
+                ["x"] = 571.86393774025;
+                ["teeming"] = true;
+                ["g"] = 83;
+                ["sublevel"] = 1;
+            };
+            [31] = {
+                ["y"] = -101.56834191083;
+                ["x"] = 562.16665302173;
+                ["teeming"] = true;
+                ["g"] = 83;
+                ["sublevel"] = 1;
+            };
+            [32] = {
+                ["y"] = -120.04592027901;
+                ["x"] = 565.77933429885;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [33] = {
+                ["y"] = -99.173610444957;
+                ["x"] = 556.01992984082;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [34] = {
+                ["y"] = -104.56835013666;
+                ["x"] = 554.70415702555;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [35] = {
+                ["y"] = -94.253148660481;
+                ["x"] = 548.47635582227;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [36] = {
+                ["y"] = -106.29985863928;
+                ["x"] = 582.18172379917;
+                ["sublevel"] = 1;
+            };
+            [37] = {
+                ["y"] = -109.51050590374;
+                ["x"] = 596.53743518509;
+                ["sublevel"] = 1;
+            };
+            [38] = {
+                ["y"] = -111.15608617306;
+                ["x"] = 600.20831492994;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [39] = {
+                ["y"] = -118.78321712905;
+                ["x"] = 605.8443155563;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [40] = {
+                ["y"] = -131.62350528358;
+                ["x"] = 595.29813567361;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [41] = {
+                ["y"] = -142.33604101177;
+                ["x"] = 596.52717017579;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [42] = {
+                ["y"] = -140.40398789756;
+                ["x"] = 591.76156671819;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [43] = {
+                ["y"] = -142.96496046685;
+                ["x"] = 583.34691639408;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [44] = {
+                ["y"] = -126.25765561352;
+                ["x"] = 577.50961307488;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [45] = {
+                ["y"] = -131.37961121924;
+                ["x"] = 578.97302597162;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [46] = {
+                ["y"] = -124.55033707827;
+                ["x"] = 585.31447836842;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [47] = {
+                ["y"] = -137.23326280618;
+                ["x"] = 573.36326955603;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [48] = {
+                ["y"] = -154.18679268376;
+                ["x"] = 604.27836095194;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [49] = {
+                ["y"] = -159.41067147595;
+                ["x"] = 597.86046864322;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [50] = {
+                ["y"] = -152.9927599514;
+                ["x"] = 612.63657726789;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [51] = {
+                ["y"] = -158.06738305073;
+                ["x"] = 620.09924661611;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [52] = {
+                ["y"] = -168.51515344566;
+                ["x"] = 619.05448238716;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [53] = {
+                ["y"] = -174.63454717921;
+                ["x"] = 610.24852461372;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [54] = {
+                ["y"] = -169.41067479229;
+                ["x"] = 598.60672148644;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 0.7;
+        ["count"] = 0;
+        ["name"] = "Crawler Mine";
+        ["displayId"] = 49134;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["id"] = 133482;
+        ["health"] = 29014;
     };
     [1] = {
         ["clones"] = {
@@ -2780,6 +3173,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [1] = {
                 ["y"] = -478.2259243172;
                 ["x"] = 425.40178176878;
+                ["infested"] = {
+                    [6] = true;
+                };
                 ["sublevel"] = 1;
             };
             [4] = {
@@ -2796,10 +3192,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["count"] = 0;
         ["name"] = "Big Money Crab";
+        ["displayId"] = 32024;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137713;
-        ["displayId"] = 32024;
         ["health"] = 58864;
     };
     [19] = {
@@ -2840,19 +3236,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [3] = {
-                ["y"] = -200.73534275506;
-                ["x"] = 257.41833705551;
-                ["g"] = 57;
                 ["sublevel"] = 1;
+                ["x"] = 257.41833705551;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 57;
+                ["y"] = -200.73534275506;
             };
         };
         ["scale"] = 1;
         ["health"] = 294320;
         ["count"] = 4;
+        ["displayId"] = 83052;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["id"] = 130635;
-        ["displayId"] = 83052;
         ["name"] = "Stonefury";
     };
     [23] = {
@@ -2963,124 +3362,130 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
         ["count"] = 0;
         ["name"] = "Footbomb Hooligan";
+        ["displayId"] = 85829;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 138369;
-        ["displayId"] = 85829;
         ["health"] = 58864;
     };
-    [35] = {
+    [31] = {
         ["clones"] = {
-            [1] = {
-                ["y"] = -108.78406381848;
-                ["x"] = 524.82558464553;
-                ["g"] = 81;
+            [6] = {
+                ["y"] = -165.32110385425;
+                ["x"] = 610.70629446065;
+                ["g"] = 85;
                 ["sublevel"] = 1;
             };
             [2] = {
-                ["y"] = -120.8316341756;
-                ["x"] = 526.48862384654;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -106.59657525686;
-                ["x"] = 531.85681991172;
-                ["sublevel"] = 1;
-            };
-            [8] = {
-                ["y"] = -140.92006428613;
-                ["x"] = 556.63460193472;
-                ["sublevel"] = 1;
-            };
-            [16] = {
-                ["y"] = -151.90464432582;
-                ["x"] = 584.22776588243;
-                ["g"] = 84;
-                ["sublevel"] = 1;
-            };
-            [17] = {
-                ["y"] = -138.93402511019;
-                ["x"] = 585.18515535355;
-                ["sublevel"] = 1;
-            };
-            [9] = {
-                ["y"] = -157.62893163199;
-                ["x"] = 570.05231417427;
-                ["sublevel"] = 1;
-            };
-            [18] = {
-                ["y"] = -146.71115472387;
-                ["x"] = 606.88765938666;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -91.606328234521;
-                ["x"] = 529.03708273502;
-                ["sublevel"] = 1;
-            };
-            [10] = {
-                ["y"] = -106.05627477129;
-                ["x"] = 563.56908813178;
-                ["g"] = 83;
-                ["sublevel"] = 1;
-            };
-            [11] = {
-                ["y"] = -106.38411980599;
-                ["x"] = 576.68383225024;
+                ["y"] = -128.99618133409;
+                ["x"] = 501.79495014634;
+                ["g"] = 80;
                 ["sublevel"] = 1;
             };
             [3] = {
-                ["y"] = -96.483800295248;
-                ["x"] = 518.01036176257;
+                ["y"] = -116.09386714438;
+                ["x"] = 591.63697586743;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -116.09386714438;
+                        ["x"] = 591.63697586743;
+                    };
+                    [2] = {
+                        ["y"] = -108.63118498562;
+                        ["x"] = 586.26383497711;
+                    };
+                    [4] = {
+                        ["y"] = -125.49684768927;
+                        ["x"] = 598.20413667957;
+                    };
+                    [3] = {
+                        ["y"] = -116.09386714438;
+                        ["x"] = 591.63697586743;
+                    };
+                };
                 ["sublevel"] = 1;
             };
-            [6] = {
-                ["y"] = -100.5006560559;
-                ["x"] = 549.24948717915;
+            [1] = {
                 ["sublevel"] = 1;
+                ["x"] = 507.03313398718;
+                ["infested"] = {
+                    [6] = true;
+                };
+                ["g"] = 79;
+                ["y"] = -104.40698471469;
             };
-            [12] = {
-                ["y"] = -107.16950669307;
-                ["x"] = 587.22685954734;
+            [4] = {
                 ["sublevel"] = 1;
+                ["x"] = 574.2169183565;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -126.52056756911;
+                        ["x"] = 576.08848904957;
+                    };
+                    [2] = {
+                        ["y"] = -113.72897735969;
+                        ["x"] = 570.14284059589;
+                    };
+                    [4] = {
+                        ["y"] = -145.2302194779;
+                        ["x"] = 584.15297508797;
+                    };
+                    [3] = {
+                        ["y"] = -126.52056756911;
+                        ["x"] = 576.08848904957;
+                    };
+                };
+                ["y"] = -119.0625439491;
+                ["infested"] = {
+                    [6] = true;
+                };
             };
-            [13] = {
-                ["y"] = -121.65698019381;
-                ["x"] = 599.06513690209;
-                ["sublevel"] = 1;
-            };
-            [7] = {
-                ["y"] = -127.04978404908;
-                ["x"] = 549.62471512875;
-                ["sublevel"] = 1;
-            };
-            [14] = {
-                ["y"] = -135.01951743756;
-                ["x"] = 604.86618540451;
-                ["g"] = 86;
-                ["sublevel"] = 1;
-            };
-            [19] = {
-                ["y"] = -155.25615121062;
-                ["x"] = 592.88160026492;
-                ["sublevel"] = 1;
-            };
-            [15] = {
-                ["y"] = -126.05401492818;
-                ["x"] = 608.83169584523;
+            [5] = {
+                ["y"] = -149.69133509057;
+                ["x"] = 564.63620385762;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -149.69133509057;
+                        ["x"] = 564.63620385762;
+                    };
+                    [2] = {
+                        ["y"] = -140.28280291519;
+                        ["x"] = 557.72836194741;
+                    };
+                    [4] = {
+                        ["y"] = -157.17932630602;
+                        ["x"] = 570.6594044943;
+                    };
+                    [3] = {
+                        ["y"] = -149.69133509057;
+                        ["x"] = 564.63620385762;
+                    };
+                };
                 ["sublevel"] = 1;
             };
         };
-        ["scale"] = 0.7;
-        ["count"] = 0;
-        ["name"] = "Crawler Mine";
+        ["id"] = 133463;
+        ["stealthDetect"] = true;
+        ["scale"] = 1.3;
+        ["health"] = 470912;
+        ["displayId"] = 83391;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
-        ["id"] = 133482;
-        ["displayId"] = 49134;
-        ["health"] = 29014;
+        ["name"] = "Venture Co. War Machine";
+        ["count"] = 6;
     };
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 
