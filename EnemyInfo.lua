@@ -55,7 +55,7 @@ local function MakeEnemeyInfoFrame()
         --model
         f.model = f.model or CreateFrame("PlayerModel", nil, f.frame,"ModelWithControlsTemplate")
         local model = f.model
-        ViragDevTool_AddData(model)
+        --ViragDevTool_AddData(model)
         model:SetFrameLevel(1)
         model:SetSize(300,300)
         model:SetScript("OnEnter",nil)
