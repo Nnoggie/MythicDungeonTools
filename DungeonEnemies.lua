@@ -126,6 +126,8 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
                 end
             end
             MethodDungeonTools:UpdateMap()
+        else
+            MethodDungeonTools:ShowEnemyInfoFrame(self)
         end
     end
 end
@@ -465,10 +467,12 @@ function MethodDungeonTools:DungeonEnemies_UpdateTeeming()
 end
 
 ---DungeonEnemies_UpdateInfested
----Updates which blips should display infested state based on week
+---Updates which blips should display infested state based on preset.week
 function MethodDungeonTools:DungeonEnemies_UpdateInfested(week)
+    week = preset.week%3
+    if week == 0 then week = 3 end
     for _,blip in pairs(blips) do
-        if blip.clone.infested and blip.clone.infested[preset.week] then
+        if blip.clone.infested and blip.clone.infested[week] then
             blip.texture_Indicator:Show()
         else
             blip.texture_Indicator:Hide()
