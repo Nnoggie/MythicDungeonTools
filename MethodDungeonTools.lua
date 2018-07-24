@@ -108,6 +108,8 @@ end
 do
     local frame = CreateFrame("Frame")
     frame:RegisterEvent("ADDON_LOADED")
+    frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+    --TODO Register Affix Changed event
     frame:SetScript("OnEvent", function(self, event, ...)
         return MethodDungeonTools[event](self,...)
     end)
@@ -140,6 +142,10 @@ do
 			})
             self:UnregisterEvent("ADDON_LOADED")
         end
+    end
+    function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
+        local inGroup = UnitInRaid("player") or IsInGroup()
+        MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
     end
 end
 
@@ -788,6 +794,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
         frame.LinkToChatButton:SetText("Sending")
         MethodDungeonTools:SendToGroup(distribution)
 	end)
+    local inGroup = UnitInRaid("player") or IsInGroup()
+    MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
@@ -2439,15 +2447,18 @@ function MethodDungeonTools:PresetObjectStepForward()
     end
 end
 
-function MethodDungeonTools:FixAceGUIShowHide(widget,frame)
+function MethodDungeonTools:FixAceGUIShowHide(widget,frame,isFrame)
     frame = frame or MethodDungeonTools.main_frame
     local originalShow,originalHide = frame.Show,frame.Hide
+    if not isFrame then
+        widget = widget.frame
+    end
     function frame:Show(...)
-        widget.frame:Show()
+        widget:Show()
         return originalShow(self, ...);
     end
     function frame:Hide(...)
-        widget.frame:Hide()
+        widget:Hide()
         return originalHide(self, ...);
     end
 end
