@@ -144,6 +144,7 @@ do
         end
     end
     function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
+        if not MethodDungeonTools.main_frame then return end
         local inGroup = UnitInRaid("player") or IsInGroup()
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
     end
