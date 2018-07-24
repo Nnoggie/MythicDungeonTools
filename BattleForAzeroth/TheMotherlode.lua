@@ -119,7 +119,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 390.98602676877;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 71;
                 ["y"] = -171.12315932201;
@@ -832,7 +832,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -316.77206590988;
                 ["g"] = 31;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
             };
             [19] = {
@@ -841,7 +841,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -347.1190505885;
                 ["g"] = 39;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
             };
             [15] = {
@@ -850,7 +850,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -328.26965213076;
                 ["g"] = 32;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
             };
         };
@@ -924,7 +924,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 471.28511852648;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 26;
                 ["y"] = -305.73344743986;
@@ -933,7 +933,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 441.82179359542;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 7;
                 ["y"] = -385.65146149395;
@@ -960,7 +960,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 485.03859030068;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 24;
                 ["y"] = -323.97488753215;
@@ -969,7 +969,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 408.07555384685;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 34;
                 ["y"] = -336.98255024376;
@@ -1288,7 +1288,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -263.39813899924;
                 ["g"] = 48;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
             };
             [1] = {
@@ -1297,7 +1297,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -244.27219248283;
                 ["g"] = 42;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
             };
             [2] = {
@@ -1394,7 +1394,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 295.50634014471;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 54;
                 ["y"] = -228.71705961668;
@@ -1403,7 +1403,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 253.56174912058;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 51;
                 ["y"] = -271.5298510703;
@@ -1460,7 +1460,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                     };
                 };
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["y"] = -135.82534968228;
             };
@@ -1498,7 +1498,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                     };
                 };
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["y"] = -111.94521274864;
             };
@@ -1513,7 +1513,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -126.78425288335;
                 ["x"] = 370.46648478504;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["teeming"] = true;
                 ["g"] = 75;
@@ -1587,7 +1587,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                     };
                 };
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["y"] = -127.95643401756;
             };
@@ -1692,7 +1692,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 350.190717349;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
                 ["g"] = 61;
                 ["y"] = -112.7747742898;
@@ -1845,7 +1845,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 602.10878780705;
                 ["sublevel"] = 1;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
             };
             [1] = {
@@ -2008,7 +2008,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 371.70169599061;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 63;
                 ["y"] = -88.467782982899;
@@ -2220,7 +2220,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                     };
                 };
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["y"] = -351.32147778175;
             };
@@ -2302,7 +2302,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                     };
                 };
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 46;
                 ["sublevel"] = 1;
@@ -2377,7 +2377,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 331.22521634267;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 43;
                 ["y"] = -265.9740878109;
@@ -2535,7 +2535,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -196.31675876466;
                 ["g"] = 57;
                 ["infested"] = {
-                    [7] = true;
+                    [1] = true;
                 };
             };
             [5] = {
@@ -2713,7 +2713,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -138.97133650933;
                 ["g"] = 86;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
             };
             [5] = {
@@ -3174,7 +3174,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -478.2259243172;
                 ["x"] = 425.40178176878;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["sublevel"] = 1;
             };
@@ -3239,7 +3239,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 257.41833705551;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 57;
                 ["y"] = -200.73534275506;
@@ -3409,7 +3409,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
                 ["x"] = 507.03313398718;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
                 ["g"] = 79;
                 ["y"] = -104.40698471469;
@@ -3437,7 +3437,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 };
                 ["y"] = -119.0625439491;
                 ["infested"] = {
-                    [6] = true;
+                    [3] = true;
                 };
             };
             [5] = {
@@ -3475,6 +3475,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["count"] = 6;
     };
 };
+
 
 
 
