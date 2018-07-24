@@ -168,10 +168,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
         ["count"] = 1;
         ["name"] = "Underrot Tick";
-        ["displayId"] = 81808;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 131402;
+        ["displayId"] = 81808;
         ["health"] = 66401;
     };
     [2] = {
@@ -317,10 +317,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["count"] = 6;
         ["name"] = "Chosen Blood Matron";
-        ["displayId"] = 85816;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["id"] = 131436;
+        ["displayId"] = 85816;
         ["health"] = 531208;
     };
     [4] = {
@@ -384,9 +384,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133663;
+        ["displayId"] = 79499;
         ["health"] = 294320;
         ["count"] = 4;
-        ["displayId"] = 79499;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -495,9 +495,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133852;
+        ["displayId"] = 83311;
         ["name"] = "Living Rot";
         ["health"] = 294320;
-        ["displayId"] = 83311;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["scale"] = 1;
@@ -516,8 +516,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["encounterID"] = 2131;
         ["instanceID"] = 1022;
         ["id"] = 131817;
-        ["health"] = 2060240;
         ["displayId"] = 78855;
+        ["health"] = 2060240;
         ["creatureType"] = "Beast";
         ["level"] = 122;
         ["count"] = 0;
@@ -532,12 +532,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131383;
+        ["displayId"] = 81977;
         ["isBoss"] = true;
         ["encounterID"] = 2130;
         ["instanceID"] = 1022;
         ["scale"] = 1;
         ["count"] = 0;
-        ["displayId"] = 81977;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["name"] = "Sporecaller Zancha";
@@ -647,9 +647,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133870;
+        ["displayId"] = 80467;
         ["name"] = "Diseased Lasher";
         ["health"] = 294320;
-        ["displayId"] = 80467;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["scale"] = 1;
@@ -665,12 +665,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133007;
+        ["displayId"] = 86632;
         ["isBoss"] = true;
         ["encounterID"] = 2158;
         ["instanceID"] = 1022;
         ["health"] = 2295813;
         ["count"] = 0;
-        ["displayId"] = 86632;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Unbound Abomination";
@@ -716,9 +716,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131492;
+        ["displayId"] = 75861;
         ["health"] = 294320;
         ["count"] = 4;
-        ["displayId"] = 75861;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
@@ -826,10 +826,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Reanimated Guardian";
-        ["displayId"] = 88121;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133836;
+        ["displayId"] = 88121;
         ["health"] = 294320;
     };
     [11] = {
@@ -952,10 +952,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Fallen Deathspeaker";
-        ["displayId"] = 85815;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 134284;
+        ["displayId"] = 85815;
         ["health"] = 294320;
     };
     [3] = {
@@ -1050,10 +1050,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 4;
         ["name"] = "Fetid Maggot";
-        ["displayId"] = 88361;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 130909;
+        ["displayId"] = 88361;
         ["health"] = 332005;
     };
     [6] = {
@@ -1074,10 +1074,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["count"] = 4;
         ["name"] = "Befouled Spirit";
-        ["displayId"] = 80852;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["id"] = 133685;
+        ["displayId"] = 80852;
         ["health"] = 294320;
     };
     [12] = {
@@ -1171,10 +1171,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 6;
         ["name"] = "Bloodsworn Defiler";
-        ["displayId"] = 79182;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133912;
+        ["displayId"] = 79182;
         ["health"] = 294320;
     };
     [13] = {
@@ -1298,9 +1298,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 138187;
+        ["displayId"] = 84808;
         ["name"] = "Grotesque Horror";
         ["health"] = 294320;
-        ["displayId"] = 84808;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["scale"] = 1;
@@ -1436,9 +1436,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 133835;
+        ["displayId"] = 76653;
         ["name"] = "Feral Bloodswarmer";
         ["health"] = 294320;
-        ["displayId"] = 76653;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["scale"] = 1;
@@ -1547,9 +1547,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 138281;
+        ["displayId"] = 84376;
         ["health"] = 470912;
         ["count"] = 6;
-        ["displayId"] = 84376;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1.4;
@@ -1564,12 +1564,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131318;
+        ["displayId"] = 82394;
         ["isBoss"] = true;
         ["encounterID"] = 2157;
         ["instanceID"] = 1022;
         ["scale"] = 1;
         ["count"] = 0;
-        ["displayId"] = 82394;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["name"] = "Elder Leaxa";
