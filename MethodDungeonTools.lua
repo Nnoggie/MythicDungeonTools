@@ -785,7 +785,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 
 	frame.LinkToChatButton = AceGUI:Create("Button")
-	frame.LinkToChatButton:SetText("Send")
+	frame.LinkToChatButton:SetText("Share")
 	frame.LinkToChatButton:SetWidth(buttonWidth)
 	frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
 	frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
@@ -2538,7 +2538,7 @@ function initFrames()
 
     --ElvUI skinning
     local skinTooltip = function(tooltip)
-        if IsAddOnLoaded("ElvUI") then
+        if IsAddOnLoaded("ElvUI") and ElvUI[1].Tooltip then
             local borderTextures = {"BorderBottom","BorderBottomLeft","BorderBottomRight","BorderLeft","BorderRight","BorderTop","BorderTopLeft","BorderTopRight"}
             for k,v in pairs(borderTextures) do
                 tooltip[v]:Kill()

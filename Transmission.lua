@@ -214,7 +214,7 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
     if bytesSent == bytesToSend then
         --restore "Send" button
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
-        MethodDungeonTools.main_frame.LinkToChatButton:SetText("Send")
+        MethodDungeonTools.main_frame.LinkToChatButton:SetText("Share")
         --output chat link
         local distribution = userArgs[1]
         local preset = userArgs[2]
