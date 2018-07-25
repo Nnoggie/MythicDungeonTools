@@ -1,7 +1,7 @@
 ## Interface: 80000
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 2.2.0
+## Version: 2.2.1
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MethodDungeonToolsDB
@@ -12,6 +12,7 @@ libs\load_libs.xml
 
 AceGUIWidget-MethodDungeonToolsPullButton.lua
 AceGUIWidget-MethodDungeonToolsNewPullButton.lua
+AceGUIWidget-MethodDungeonToolsSpellButton.lua
 MethodDungeonTools.lua
 DungeonEnemies.xml
 EnemyInfo.xml
@@ -19,6 +20,7 @@ Pointsofinterest.lua
 Transmission.lua
 toolbar.lua
 devpanel.lua
+DataCollection.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 
