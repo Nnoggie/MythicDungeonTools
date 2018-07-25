@@ -141,6 +141,7 @@ do
 				hide_on_escape = true,
 			})
             self:UnregisterEvent("ADDON_LOADED")
+            MethodDungeonTools.DataCollection:Init()
         end
     end
     function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
@@ -148,6 +149,7 @@ do
         local inGroup = UnitInRaid("player") or IsInGroup()
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
     end
+
 end
 
 MethodDungeonTools.dungeonTotalCount = {}
