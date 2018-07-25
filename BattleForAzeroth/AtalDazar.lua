@@ -391,6 +391,26 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["level"] = 120;
         ["count"] = 4;
         ["scale"] = 1;
+        ["characteristics"] = {
+          ["Sap"] = true,
+          ["Stun"] = true,
+          ["Taunt"] = true,
+          ["Silence"] = true,
+          ["Incapacitate"] = true,
+          ["Repentance"] = true,
+          ["Disorient"] = true,
+          ["Fear"] = true,
+          ["Root"] = true,
+          ["Polymorph"] = true,
+          ["Grip"] = true,
+          ["Knock"] = true,
+          ["Slow"] = true,
+        };
+        ["spells"] = {
+            [252666] = true;
+            [252687] = true;
+            [252692] = true;
+        };
     };
     [16] = {
         ["clones"] = {
