@@ -14,8 +14,12 @@ function DC:Init()
     db = MethodDungeonTools:GetDB()
     db.dataCollection = db.dataCollection or {}
     db.dataCollectionCC = db.dataCollectionCC or {}
+    db.dataCollectionGUID = db.dataCollectionGUID or {}
     f = CreateFrame("Frame")
     f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    f:RegisterEvent("CHALLENGE_MODE_START")
+    f:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+    f:RegisterEvent("PLAYER_ENTERING_WORLD")
     f:SetScript("OnEvent", function(self, event, ...)
         return DC[event](self,...)
     end)
@@ -151,6 +155,24 @@ local characteristicsSpells = {
         [1098] = true,
     },
 }
+local cmsTimeStamp
+function DC.CHALLENGE_MODE_START(self,...)
+    local _, timeCM = GetWorldElapsedTime(1)
+    if timeCM>0 then print("discarding")return end
+    print("starting")
+    cmsTimeStamp = GetTime()
+end
+function DC.CHALLENGE_MODE_COMPLETED(self,...)
+    cmsTimeStamp = nil
+end
+function DC.PLAYER_ENTERING_WORLD(self,...)
+    if C_ChallengeMode.IsChallengeModeActive() then
+    else
+        print("ending")
+        cmsTimeStamp = nil
+    end
+end
+
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
     local timestamp,subevent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool = CombatLogGetCurrentEventInfo()
     --enemy spells
@@ -170,9 +192,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
                     enemy.spells[spellId] = true
                     break
                 end
-
             end
-
         end
     end
     --characteristics
@@ -194,6 +214,11 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
                             enemy.characteristics[characteristic] = true
                         end
                     end
+                    if cmsTimeStamp then
+                        db.dataCollectionGUID[cmsTimeStamp] = db.dataCollectionGUID[cmsTimeStamp] or {}
+                        db.dataCollectionGUID[cmsTimeStamp][id] = db.dataCollectionGUID[cmsTimeStamp][id] or {}
+                        db.dataCollectionGUID[cmsTimeStamp][id][destGUID] = true
+                    end
                     break
                 end
 
@@ -201,6 +226,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
 
         end
     end
+
 
 end
 
