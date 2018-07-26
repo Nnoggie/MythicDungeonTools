@@ -380,7 +380,7 @@ function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add
             if v == blip.cloneIdx then found = true end
         end
         --print(blip:IsEnabled())
-        if found==false then tinsert(pulls[pull][blip.enemyIdx],blip.cloneIdx) end
+        if found==false and blip:IsEnabled() then tinsert(pulls[pull][blip.enemyIdx],blip.cloneIdx) end
     else
         blip.selected = false
         for k,v in pairs(preset.value.pulls[pull][blip.enemyIdx]) do
@@ -437,7 +437,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
                             blip.texture_PullIndicator:Show()
                         end
                         break
-                        end
+                    end
                 end
             end
         end

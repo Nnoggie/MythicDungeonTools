@@ -1018,14 +1018,9 @@ function MethodDungeonTools:UpdateProgressbar()
                 if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
                     clones[v] = nil
                 else
-                    local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew and MethodDungeonTools.freeholdCrews[MethodDungeonTools:GetCurrentPreset().freeholdCrew]
-                    local disabled = crew and crew[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id]
-
-                    if not disabled then
-                        local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                        if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                            grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                        end
+                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                    if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                        grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
                     end
                 end
 			end
@@ -1922,25 +1917,20 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                     if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
 
                     else
-                        --check for disabled in freehold
-                        local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew and MethodDungeonTools.freeholdCrews[MethodDungeonTools:GetCurrentPreset().freeholdCrew]
-                        local disabled = crew and crew[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id]
-                        if not disabled then
-                            --check for teeming
-                            local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
-                            if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
-                                if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
-                                if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-                                enemyTable[enemyTableIdx].npcId = npcId
-                                enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                                enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
-                                enemyTable[enemyTableIdx].name = name
-                                enemyTable[enemyTableIdx].level = level
-                                enemyTable[enemyTableIdx].creatureType = creatureType
-                                enemyTable[enemyTableIdx].baseHealth = baseHealth
-                            end
+                        --check for teeming
+                        local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
+                        if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
+                            if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+                            if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+                            enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+                            enemyTable[enemyTableIdx].npcId = npcId
+                            enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                            enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+                            enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                            enemyTable[enemyTableIdx].name = name
+                            enemyTable[enemyTableIdx].level = level
+                            enemyTable[enemyTableIdx].creatureType = creatureType
+                            enemyTable[enemyTableIdx].baseHealth = baseHealth
                         end
                     end
                 end
