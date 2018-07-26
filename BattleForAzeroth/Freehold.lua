@@ -8,12 +8,32 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=261,teeming=313,tee
 
 local selectorGroup
 local AceGUI = LibStub("AceGUI-3.0")
+local db
+local function fixFreeholdShowHide(widget,frame,isFrame)
+    frame = frame or MethodDungeonTools.main_frame
+    local originalShow,originalHide = frame.Show,frame.Hide
+    if not isFrame then
+        widget = widget.frame
+    end
+    function frame:Show(...)
+        if db.currentDungeonIdx == 16 then
+            widget:Show()
+        end
+        return originalShow(self, ...);
+    end
+    function frame:Hide(...)
+        widget:Hide()
+        return originalHide(self, ...);
+    end
+end
+
 function MethodDungeonTools:ToggleFreeholdSelector(show)
+    db = MethodDungeonTools:GetDB()
     if not selectorGroup then
         selectorGroup = AceGUI:Create("SimpleGroup")
         selectorGroup.frame:SetFrameStrata("HIGH")
         selectorGroup.frame:SetFrameLevel(50)
-        MethodDungeonTools:FixAceGUIShowHide(selectorGroup)
+        fixFreeholdShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")
         local label = AceGUI:Create("Label")
         label:SetText("  Join Crew:")
