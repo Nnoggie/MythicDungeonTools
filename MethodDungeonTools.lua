@@ -280,7 +280,7 @@ local dungeonSubLevels = {
     },
     [18] = {
         [1] = "Shrine of the Storm",
-        [2] = "Shrine Interior TEMP",
+        [2] = "Storm's End",
     },
     [19] = {
         [1] = "Siege of Boralus",
@@ -294,7 +294,7 @@ local dungeonSubLevels = {
     },
     [22] = {
         [1] = "The Underrot",
-        [2] = "Temple Interior TEMP",
+        [2] = "Ruin's Descent",
     },
     [23] = {
         [1] = "Tol Dagor",
