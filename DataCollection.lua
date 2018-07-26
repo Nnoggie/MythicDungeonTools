@@ -158,19 +158,15 @@ local characteristicsSpells = {
 local cmsTimeStamp
 function DC.CHALLENGE_MODE_START(self,...)
     local _, timeCM = GetWorldElapsedTime(1)
-    if timeCM>0 then print("discarding")return end
-    print("starting")
+    if timeCM>0 then return end
     cmsTimeStamp = GetTime()
 end
 function DC.CHALLENGE_MODE_COMPLETED(self,...)
     cmsTimeStamp = nil
 end
 function DC.PLAYER_ENTERING_WORLD(self,...)
-    if C_ChallengeMode.IsChallengeModeActive() then
-    else
-        print("ending")
-        cmsTimeStamp = nil
-    end
+    if C_ChallengeMode.IsChallengeModeActive() then return end
+    cmsTimeStamp = nil
 end
 
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
