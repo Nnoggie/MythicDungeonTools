@@ -471,7 +471,7 @@ function MethodDungeonTools:ShowInterface(force)
 		MethodDungeonTools:HideInterface()
 	else
 		self.main_frame:Show()
-		MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
+		--MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 		self.main_frame.HelpButton:Show()
 	end
 end
@@ -2728,7 +2728,7 @@ function initFrames()
 
     --Set affix dropdown to preset week
     main_frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or (MethodDungeonTools:GetCurrentAffixWeek() or 1))
-
+    MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 	main_frame:Hide()
     framesInitialized = true
 end
