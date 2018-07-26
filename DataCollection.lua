@@ -32,7 +32,7 @@ function DC:Init()
                     if enemy.id == id then
                         enemy.spells = enemy.spells or {}
                         for spellId,_ in pairs(spells) do
-                            enemy.spells[spellId] = true
+                            enemy.spells[spellId] = enemy.spells[spellId] or {}
                         end
                     end
 
