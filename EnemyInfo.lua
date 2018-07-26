@@ -371,7 +371,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     if data.spells then
         for spellId,spellData in pairs(data.spells) do
             local spellButton = AceGUI:Create("MethodDungeonToolsSpellButton")
-            spellButton:SetSpell(spellId)
+            spellButton:SetSpell(spellId,spellData)
             spellButton:Initialize()
             spellButton:Enable()
             f.spellScroll:AddChild(spellButton)

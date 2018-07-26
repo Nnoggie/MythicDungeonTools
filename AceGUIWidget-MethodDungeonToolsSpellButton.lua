@@ -26,6 +26,10 @@ local methods = {
         function self.callbacks.OnEnter()
             GameTooltip:SetOwner(self.frame, "ANCHOR_BOTTOMLEFT",0,self.frame:GetHeight())
             GameTooltip:SetSpellByID(self.spellId)
+            if self.interruptible then
+                local interruptible = CreateTextureMarkup("Interface\\EncounterJournal\\UI-EJ-Icons", 64, 64, 32, 32, 0.75, 0.88, 0, 0.5,0,0).. "Interruptible"
+                GameTooltip:AddLine(interruptible)
+            end
             GameTooltip:Show()
         end
 
@@ -57,7 +61,7 @@ local methods = {
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
         self:Enable();
     end,
-    ["SetSpell"] = function(self, spellId)
+    ["SetSpell"] = function(self, spellId,spellData)
         self.spellId = spellId
         local name,_,icon = GetSpellInfo(spellId)
         self.icon:SetTexture(icon)
@@ -66,6 +70,13 @@ local methods = {
             AS:SkinTexture(self.icon)
         end
         self.title:SetText(name);
+        if spellData.interruptible then
+            self.interruptible = true
+            self.interruptibleIcon:Show()
+        else
+            self.interruptible = false
+            self.interruptibleIcon:Hide()
+        end
     end,
     ["Disable"] = function(self)
         self.background:Hide();
@@ -116,6 +127,15 @@ local function Constructor()
     icon:SetHeight(height);
     icon:SetPoint("LEFT", button, "LEFT");
 
+    local interruptibleIcon = button:CreateTexture(nil, "OVERLAY");
+    interruptibleIcon:SetWidth(height*0.8);
+    interruptibleIcon:SetHeight(height*0.8);
+    interruptibleIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
+    interruptibleIcon:SetTexCoord(0.75,0,0.75,0.5,0.88,0,0.88,0.5)
+    interruptibleIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT",0,-5);
+    interruptibleIcon:Hide()
+
+
     local title = button:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     button.title = title;
     title:SetHeight(14);
@@ -137,6 +157,7 @@ local function Constructor()
         frame = button,
         title = title,
         icon = icon,
+        interruptibleIcon = interruptibleIcon,
         background = background,
         type = Type
     }
