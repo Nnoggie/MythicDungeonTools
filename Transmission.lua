@@ -193,7 +193,10 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         We append our realm if there is no realm
     ]]
     local name, realm = UnitFullName(sender)
-    if not realm or string.len(realm)<3 then _,realm = UnitFullName("player") end
+    if not realm or string.len(realm)<3 then
+        local _,r = UnitFullName("player")
+        realm = r
+    end
     local fullName = name.."-"..realm
 
     --standard preset transmission
