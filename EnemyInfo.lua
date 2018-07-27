@@ -305,6 +305,7 @@ local characteristics = {
     ["Control Undead"] = "Interface\\ICONS\\inv_misc_bone_skull_01",
     ["Enslave Demon"] = "Interface\\ICONS\\spell_shadow_enslavedemon",
     ["Slow"] = "Interface\\ICONS\\ability_rogue_trip",
+    ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
 }
 
 function MDT:UpdateEnemyInfoFrame(enemyIdx)

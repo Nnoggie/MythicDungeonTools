@@ -80,6 +80,9 @@ local characteristicsSpells = {
     ["Sap"] ={
         [6770] = true,
     },
+    ["Imprison"] = {
+        [217832] = true,
+    },
     ["Incapacitate"] ={
         [1776] = true, --Gouge
         [115078] = true, --Paralysis
