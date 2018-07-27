@@ -183,9 +183,9 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
                 if enemy.id == id then
                     db.dataCollection[i] = db.dataCollection[i] or {}
                     db.dataCollection[i][id] = db.dataCollection[i][id] or {}
-                    db.dataCollection[i][id][spellId] = true
+                    db.dataCollection[i][id][spellId] = {}
                     enemy.spells = enemy.spells or {}
-                    enemy.spells[spellId] = true
+                    enemy.spells[spellId] = enemy.spells[spellId] or {}
                     break
                 end
             end
