@@ -156,6 +156,21 @@ MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.scaleMultiplier = {}
 
 local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
+    [1] = {[1]=6,[2]=3,[3]=9,[4]=16},
+    [2] = {[1]=5,[2]=13,[3]=10,[4]=16},
+    [3] = {[1]=7,[2]=12,[3]=9,[4]=16},
+    [4] = {[1]=8,[2]=4,[3]=10,[4]=16},
+    [5] = {[1]=11,[2]=2,[3]=9,[4]=16},
+    [6] = {[1]=5,[2]=14,[3]=10,[4]=16},
+    [7] = {[1]=6,[2]=4,[3]=9,[4]=16},
+    [8] = {[1]=7,[2]=2,[3]=10,[4]=16},
+    [9] = {[1]=5,[2]=3,[3]=9,[4]=16},
+    [10] = {[1]=8,[2]=12,[3]=10,[4]=16},
+    [11] = {[1]=7,[2]=13,[3]=9,[4]=16},
+    [12] = {[1]=11,[2]=14,[3]=10,[4]=16},
+}
+--TODO Change this once BFA hits
+local affixWeeksBFA = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
     [1] = {[1]=9,[2]=6,[3]=3,[4]=16},
     [2] = {[1]=10,[2]=5,[3]=13,[4]=16},
     [3] = {[1]=9,[2]=7,[3]=12,[4]=16},
@@ -861,6 +876,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
+        MethodDungeonTools:UpdateFreeholdSelector(key)
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -2464,7 +2480,7 @@ function MethodDungeonTools:GetCurrentAffixWeek()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
     for week,affixes in ipairs(affixWeeks) do
-        if affixes[1] == affixIds[1] and affixes[2] == affixIds[2] and affixes[3] == affixIds[3] and affixes[4] == affixIds[4] then
+        if affixes[1] == affixIds[1] and affixes[2] == affixIds[2] and affixes[3] == affixIds[3] then
             return week
         end
     end
