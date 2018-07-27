@@ -874,9 +874,10 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:UpdateMap()
         MethodDungeonTools:DungeonEnemies_UpdateTeeming()
         MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
+        MethodDungeonTools:UpdateFreeholdSelector(key)
+        MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-        MethodDungeonTools:UpdateFreeholdSelector(key)
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -1035,8 +1036,18 @@ function MethodDungeonTools:UpdateProgressbar()
                     clones[v] = nil
                 else
                     local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                    local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
                     if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                        grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                        local week = preset.week%3
+                        if week == 0 then week = 3 end
+                        local isBlacktoothWeek = week == 2
+                        if isCloneBlacktoothEvent then
+                            if isBlacktoothWeek then
+                                grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                            end
+                        else
+                            grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                        end
                     end
                 end
 			end
@@ -1903,7 +1914,6 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 	MethodDungeonTools:PickPullButton(pull)
 
     MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
-	MethodDungeonTools:UpdateProgressbar()
 end
 
 
@@ -1936,17 +1946,33 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                         --check for teeming
                         local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
                         if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
-                            if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
-                            if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-                            enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-                            enemyTable[enemyTableIdx].npcId = npcId
-                            enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                            enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-                            enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
-                            enemyTable[enemyTableIdx].name = name
-                            enemyTable[enemyTableIdx].level = level
-                            enemyTable[enemyTableIdx].creatureType = creatureType
-                            enemyTable[enemyTableIdx].baseHealth = baseHealth
+
+                            local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
+                            local continue = false
+                            local week = preset.week%3
+                            if week == 0 then week = 3 end
+                            local isBlacktoothWeek = week == 2
+                            if isCloneBlacktoothEvent then
+                                if isBlacktoothWeek then
+                                    continue = true
+                                end
+                            else
+                                continue = true
+                            end
+
+                            if continue then
+                                if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+                                if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+                                enemyTable[enemyTableIdx].npcId = npcId
+                                enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                                enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                                enemyTable[enemyTableIdx].name = name
+                                enemyTable[enemyTableIdx].level = level
+                                enemyTable[enemyTableIdx].creatureType = creatureType
+                                enemyTable[enemyTableIdx].baseHealth = baseHealth
+                            end
                         end
                     end
                 end

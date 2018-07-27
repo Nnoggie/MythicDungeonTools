@@ -312,7 +312,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
     local f = MDT.EnemyInfoFrame
     f:SetTitle(data.name)
-    f.model:SetDisplayInfo(data.displayId)
+    f.model:SetDisplayInfo(data.displayId or 39490)
     Model_Reset(f.model)
 
     local enemies = {}

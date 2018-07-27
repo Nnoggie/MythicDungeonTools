@@ -464,7 +464,29 @@ function MethodDungeonTools:DungeonEnemies_UpdateTeeming()
             end
         end
     end
+    MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
 end
+
+---DungeonEnemies_UpdateBlacktoothEvent
+---Updates visibility state of blacktooth event blips
+function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+    local week = preset.week%3
+    if week == 0 then week = 3 end
+    local isBlacktoothWeek = week == 1
+    for _,blip in pairs(blips) do
+        if blip.clone.blacktoothEvent then
+            if isBlacktoothWeek then
+                blip:Enable()
+                blip:Show()
+            else
+                blip:Disable()
+                blip:Hide()
+            end
+        end
+    end
+end
+
+
 
 ---DungeonEnemies_UpdateInfested
 ---Updates which blips should display infested state based on preset.week
@@ -483,23 +505,23 @@ end
 ---Frehold Crews
 MethodDungeonTools.freeholdCrews = {
     [1] = {
-        [129550] = true,
-        [129527] = true,
-        [129600] = true,
-        [129526] = true,
-        [126848] = true,
-    },
-    [2] = {
         [129548] = true,
         [129529] = true,
         [129547] = true,
         [126847] = true,
     },
-    [3] = {
+    [2] = {
         [129559] = true,
         [129599] = true,
         [126845] = true,
         [129601] = true,
+    },
+    [3] = {
+        [129550] = true,
+        [129527] = true,
+        [129600] = true,
+        [129526] = true,
+        [126848] = true,
     },
 }
 ---DungeonEnemies_UpdateFreeholdCrew
@@ -516,7 +538,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
     end
     local crew = MethodDungeonTools.freeholdCrews[crewIdx]
     for _,blip in pairs(blips) do
-        if crew[blip.data.id] then
+        if crew[blip.data.id] and not blip.clone.blacktoothEvent then
             blip:Disable()
             blip:SetAlpha(0.3)
             blip.texture_Portrait:SetDesaturated(true)
