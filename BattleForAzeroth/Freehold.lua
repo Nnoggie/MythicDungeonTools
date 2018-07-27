@@ -35,46 +35,15 @@ function MethodDungeonTools:ToggleFreeholdSelector(show)
         selectorGroup.frame:SetFrameLevel(50)
         fixFreeholdShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")
-        local label = AceGUI:Create("Label")
-        label:SetText("  Join Crew:")
-        selectorGroup:AddChild(label)
-        local checkBoxes = {}
-        for i = 1,3 do
-            local check = AceGUI:Create("CheckBox")
-            check:SetLabel((i==1 and "Bilge Rats") or (i==2 and "Blacktooth") or (i==3 and "Cutwater"))
-            selectorGroup:AddChild(check)
-            tinsert(checkBoxes,check)
-            check:SetCallback("OnValueChanged",function(widget,callbackName,value)
-                for idx,box in ipairs(checkBoxes) do
-                    box:SetValue(idx==i and value)
-                end
-                MethodDungeonTools:GetCurrentPreset().freeholdCrew = (value and i) or nil
-                MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:UpdateProgressbar()
-            end)
-        end
+
         selectorGroup.frame:ClearAllPoints()
         selectorGroup:ClearAllPoints()
         selectorGroup:SetWidth(120)
         selectorGroup:SetHeight(90)
         selectorGroup.frame:SetPoint("TOPRIGHT",MethodDungeonTools.main_frame,"TOPRIGHT",0,0)
 
-        local function updateCheckboxStates()
-            for idx,box in ipairs(checkBoxes) do
-                local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew
-                box:SetValue(crew and idx==crew)
-            end
-        end
-        --hook UpdateMap
-        local originalFunc = MethodDungeonTools.UpdateMap
-        function MethodDungeonTools:UpdateMap(...)
-            originalFunc(...)
-            updateCheckboxStates()
-        end
-        updateCheckboxStates()
-
     end
+    MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
     if show then
         selectorGroup.frame:Show()
         MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
@@ -84,6 +53,28 @@ function MethodDungeonTools:ToggleFreeholdSelector(show)
         selectorGroup.frame:Hide()
         MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
     end
+end
+
+function MethodDungeonTools:UpdateFreeholdSelector(week)
+    if not selectorGroup then return end
+    week = week%3
+    if week == 0 then week = 3 end
+    selectorGroup:ReleaseChildren()
+    MethodDungeonTools:GetCurrentPreset().freeholdCrew = (MethodDungeonTools:GetCurrentPreset().freeholdCrew and week) or nil
+    local label = AceGUI:Create("Label")
+    label:SetText("  Join Crew:")
+    selectorGroup:AddChild(label)
+    local check = AceGUI:Create("CheckBox")
+    check:SetLabel((week==1 and "Bilge Rats") or (week==2 and "Blacktooth") or (week==3 and "Cutwater"))
+    selectorGroup:AddChild(check)
+    check:SetCallback("OnValueChanged",function(widget,callbackName,value)
+        MethodDungeonTools:GetCurrentPreset().freeholdCrew = (value and week) or nil
+        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
+        MethodDungeonTools:ReloadPullButtons()
+        MethodDungeonTools:UpdateProgressbar()
+    end)
+    check:SetValue(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
+    MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
 end
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
@@ -950,7 +941,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 181335;
-        ["count"] = 0;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129559;
@@ -1864,7 +1855,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
-        ["count"] = 15;
+        ["count"] = 4;
         ["health"] = 188364;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2065,7 +2056,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 470912;
-        ["count"] = 0;
+        ["count"] = 6;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 127111;
@@ -2249,7 +2240,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 294320;
-        ["count"] = 0;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 129550;
@@ -2309,7 +2300,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 130011;
         ["displayId"] = 79069;
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Irontide Buccaneer";
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2766,7 +2757,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 1;
-        ["count"] = 15;
+        ["count"] = 4;
     };
     [23] = {
         ["clones"] = {
@@ -2899,7 +2890,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["health"] = 294320;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["count"] = 0;
+        ["count"] = 4;
         ["neutral"] = true;
     };
 };
