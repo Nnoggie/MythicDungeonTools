@@ -254,8 +254,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1.2;
         ["spells"] = {
-            [267981] = true;
-            [277564] = true;
         };
         ["stealthDetect"] = true;
         ["id"] = 134139;
@@ -627,8 +625,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 136347;
         ["spells"] = {
-            [277242] = true;
-            [277564] = true;
         };
         ["count"] = 1;
         ["name"] = "Tidesage Initiate";
@@ -943,8 +939,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 0.5;
         ["spells"] = {
-            [277242] = true;
-            [277564] = true;
         };
         ["health"] = 41205;
         ["count"] = 1;
@@ -1043,7 +1037,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["spells"] = {
-            [277564] = true;
         };
         ["count"] = 6;
         ["name"] = "Galecaller Apprentice";
@@ -1166,9 +1159,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 0.5;
         ["spells"] = {
-            [277564] = true;
-            [277242] = true;
-            [274210] = true;
         };
         ["name"] = "Dredged Sailor";
         ["health"] = 14716;
@@ -1260,8 +1250,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 134338;
         ["spells"] = {
-            [277564] = true;
-            [268273] = true;
         };
         ["stealthDetect"] = true;
         ["health"] = 294320;
@@ -1286,7 +1274,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1.2;
         ["spells"] = {
-            [277564] = true;
         };
         ["count"] = 9;
         ["name"] = "Windspeaker Heldis";
@@ -1340,7 +1327,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 134418;
         ["spells"] = {
-            [274212] = true;
         };
         ["health"] = 294320;
         ["count"] = 6;
@@ -1440,9 +1426,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 136186;
         ["spells"] = {
-            [277564] = true;
-            [276266] = true;
-            [277242] = true;
         };
         ["count"] = 6;
         ["name"] = "Tidesage Spiritualist";
@@ -1597,7 +1580,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["spells"] = {
-            [277564] = true;
         };
         ["count"] = 6;
         ["name"] = "Ironhull Apprentice";
@@ -1938,9 +1920,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 0.5;
         ["spells"] = {
-            [277564] = true;
-            [277242] = true;
-            [274212] = true;
         };
         ["count"] = 1;
         ["name"] = "Abyss Dweller";
@@ -1964,7 +1943,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1.2;
         ["spells"] = {
-            [277564] = true;
         };
         ["count"] = 9;
         ["name"] = "Runecarver Sorn";
@@ -2118,9 +2096,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["spells"] = {
-            [277564] = true;
-            [277242] = true;
-            [267969] = true;
         };
         ["health"] = 294320;
         ["count"] = 6;
@@ -2189,7 +2164,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1.2;
         ["spells"] = {
-            [267548] = true;
         };
         ["name"] = "Sunken Denizen";
         ["health"] = 470912;
@@ -2264,7 +2238,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 134056;
         ["spells"] = {
-            [277564] = true;
         };
         ["isBoss"] = true;
         ["encounterID"] = 2153;
@@ -2535,8 +2508,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["spells"] = {
-            [277242] = true;
-            [277564] = true;
         };
         ["name"] = "Abyssal Eel";
         ["health"] = 117728;
@@ -2582,8 +2553,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1.2;
         ["spells"] = {
-            [277564] = true;
-            [268309] = true;
         };
         ["name"] = "Deepsea Ritualist";
         ["health"] = 647504;
@@ -2695,8 +2664,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["spells"] = {
-            [277242] = true;
-            [277564] = true;
         };
         ["name"] = "Abyssal Cultist";
         ["health"] = 294320;
