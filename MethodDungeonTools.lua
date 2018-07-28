@@ -825,6 +825,14 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 
     --Week Dropdown (Infested / Affixes)
+
+
+
+    frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
+    local affixDropdown = frame.sidePanel.affixDropdown
+    affixDropdown.text:SetJustifyH("LEFT")
+    affixDropdown:SetLabel("Affixes")
+
     local function makeAffixString(week,affixes,longText)
         local ret
         local sep = ""
@@ -844,17 +852,14 @@ function MethodDungeonTools:MakeSidePanel(frame)
         end
         return ret
     end
-
-    local affixWeekMarkups = {}
-    for week,affixes in ipairs(affixWeeks) do
-        tinsert(affixWeekMarkups,makeAffixString(week,affixes))
+    function affixDropdown:UpdateList()
+        local affixWeekMarkups = {}
+        for week,affixes in ipairs(affixWeeks) do
+            tinsert(affixWeekMarkups,makeAffixString(week,affixes))
+        end
+        affixDropdown:SetList(affixWeekMarkups)
     end
-
-    frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
-    local affixDropdown = frame.sidePanel.affixDropdown
-    affixDropdown.text:SetJustifyH("LEFT")
-    affixDropdown:SetLabel("Affixes")
-
+    affixDropdown:UpdateList()
     function affixDropdown:SetAffixWeek(key)
         affixDropdown:SetValue(key)
         if not MethodDungeonTools:GetCurrentAffixWeek() then
@@ -878,6 +883,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
+        affixDropdown:UpdateList()
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -893,7 +899,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixDropdown:SetCallback("OnLeave",function(...)
         GameTooltip:Hide()
     end)
-    affixDropdown:SetList(affixWeekMarkups)
     --mouseover list items
     for itemIdx,item in ipairs(affixDropdown.pullout.items) do
         item:SetOnEnter(function()
