@@ -825,14 +825,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 
     --Week Dropdown (Infested / Affixes)
-
-
-
-    frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
-    local affixDropdown = frame.sidePanel.affixDropdown
-    affixDropdown.text:SetJustifyH("LEFT")
-    affixDropdown:SetLabel("Affixes")
-
     local function makeAffixString(week,affixes,longText)
         local ret
         local sep = ""
@@ -852,14 +844,31 @@ function MethodDungeonTools:MakeSidePanel(frame)
         end
         return ret
     end
-    function affixDropdown:UpdateList()
+    frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
+    local affixDropdown = frame.sidePanel.affixDropdown
+    affixDropdown.text:SetJustifyH("LEFT")
+    affixDropdown:SetLabel("Affixes")
+
+
+    function affixDropdown:UpdateAffixList()
         local affixWeekMarkups = {}
         for week,affixes in ipairs(affixWeeks) do
             tinsert(affixWeekMarkups,makeAffixString(week,affixes))
         end
         affixDropdown:SetList(affixWeekMarkups)
+        --mouseover list items
+        for itemIdx,item in ipairs(affixDropdown.pullout.items) do
+            item:SetOnEnter(function()
+                GameTooltip:SetOwner(item.frame, "ANCHOR_LEFT",-11,-25)
+                local v = affixWeeks[itemIdx]
+                GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
+                GameTooltip:Show()
+            end)
+            item:SetOnLeave(function()
+                GameTooltip:Hide()
+            end)
+        end
     end
-    affixDropdown:UpdateList()
     function affixDropdown:SetAffixWeek(key)
         affixDropdown:SetValue(key)
         if not MethodDungeonTools:GetCurrentAffixWeek() then
@@ -883,7 +892,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-        affixDropdown:UpdateList()
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -899,18 +907,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixDropdown:SetCallback("OnLeave",function(...)
         GameTooltip:Hide()
     end)
-    --mouseover list items
-    for itemIdx,item in ipairs(affixDropdown.pullout.items) do
-        item:SetOnEnter(function()
-            GameTooltip:SetOwner(item.frame, "ANCHOR_LEFT",-11,-25)
-            local v = affixWeeks[itemIdx]
-            GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
-            GameTooltip:Show()
-        end)
-        item:SetOnLeave(function()
-            GameTooltip:Hide()
-        end)
-    end
+
     frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
 
     --affix not current week warning
@@ -2757,9 +2754,12 @@ function initFrames()
 	MethodDungeonTools:initToolbar(main_frame)
 
     --Set affix dropdown to preset week
+    --gotta set the list here, as affixes are not ready to be retrieved yet on login
+    main_frame.sidePanel.affixDropdown:UpdateAffixList()
     main_frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or (MethodDungeonTools:GetCurrentAffixWeek() or 1))
     MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 	main_frame:Hide()
+
     framesInitialized = true
 end
 
