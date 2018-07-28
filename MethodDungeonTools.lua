@@ -2600,20 +2600,13 @@ function initFrames()
         tooltip.Model:SetFrameLevel(1)
         tooltip.Model:SetSize(100,100)
         tooltip.Model.fac = 0
-        if true then
-            tooltip.Model:SetScript("OnUpdate",function (self,elapsed)
-                self.fac = self.fac + 0.5
-                if self.fac >= 360 then
-                    self.fac = 0
-                end
-                self:SetFacing(PI*2 / 360 * self.fac)
-                --print(tooltip.Model:GetModelFileID())
-            end)
-
-        else
-            tooltip.Model:SetPortraitZoom(1)
-            tooltip.Model:SetFacing(PI*2 / 360 * 2)
-        end
+        tooltip.Model:SetScript("OnUpdate",function (self,elapsed)
+            self.fac = self.fac + 0.5
+            if self.fac >= 360 then
+                self.fac = 0
+            end
+            self:SetFacing(PI*2 / 360 * self.fac)
+        end)
         tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT",7,-7)
         tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString");
         tooltip.String:SetFontObject("GameFontNormalSmall")
