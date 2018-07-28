@@ -330,6 +330,10 @@ local characteristics = {
     ["Slow"] = "Interface\\ICONS\\ability_rogue_trip",
     ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
 }
+local spellBlacklist = {
+    [277564] = true, --Regenrative Blood
+    [277242] = true, --Infested
+}
 
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
@@ -394,11 +398,13 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     f.spellScroll:ReleaseChildren()
     if data.spells then
         for spellId,spellData in pairs(data.spells) do
-            local spellButton = AceGUI:Create("MethodDungeonToolsSpellButton")
-            spellButton:SetSpell(spellId,spellData)
-            spellButton:Initialize()
-            spellButton:Enable()
-            f.spellScroll:AddChild(spellButton)
+            if not spellBlacklist[spellId] then
+                local spellButton = AceGUI:Create("MethodDungeonToolsSpellButton")
+                spellButton:SetSpell(spellId,spellData)
+                spellButton:Initialize()
+                spellButton:Enable()
+                f.spellScroll:AddChild(spellButton)
+            end
         end
     end
 
