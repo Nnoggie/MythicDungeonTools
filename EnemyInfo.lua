@@ -124,7 +124,6 @@ local function MakeEnemeyInfoFrame()
         --model
         f.model = f.model or CreateFrame("PlayerModel", nil, f.frame,"ModelWithControlsTemplate")
         local model = f.model
-        --ViragDevTool_AddData(model)
         model:SetFrameLevel(1)
         model:SetSize(leftContainer.frame:GetWidth()-30,269)
         model:SetScript("OnEnter",nil)
@@ -256,7 +255,31 @@ local function MakeEnemeyInfoFrame()
         f.spellScroll:SetLayout("List")
         spellScrollContainer:AddChild(f.spellScroll)
 
+        --spellButtons
+        local spellButtonsContainer = AceGUI:Create("InlineGroup")
+        spellButtonsContainer.frame:SetBackdropColor(1,1,1,0)
+        spellButtonsContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        spellScrollContainer:SetLayout("Flow")
+
+        local buttonWidth = 80
+        local sendSpellsButton = AceGUI:Create("Button")
+        sendSpellsButton:SetText("Report")
+        sendSpellsButton:SetWidth(buttonWidth)
+        sendSpellsButton:SetCallback("OnClick",function()
+            if#f.spellScroll.children<1 then return end
+            local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+            if not distribution then return end
+            local enemyName = f.enemyDropDown.text:GetText()
+            SendChatMessage("MDT: Spells for "..enemyName..":" ,distribution)
+            for i,child in pairs(f.spellScroll.children) do
+                local link = GetSpellLink(child.spellId)
+                SendChatMessage(i..". "..link ,distribution)
+            end
+        end)
+        spellButtonsContainer:AddChild(sendSpellsButton)
+
         rightContainer:AddChild(spellScrollContainer)
+        rightContainer:AddChild(spellButtonsContainer)
 
 
         container:AddChild(leftContainer)
@@ -336,7 +359,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
             icon:SetWidth(25)
             icon:SetHeight(27)
             icon:SetCallback("OnEnter",function()
-                GameTooltip:SetOwner(icon.frame, "ANCHOR_BOTTOM",0,3)
+                GameTooltip:SetOwner(icon.frame, "ANCHOR_BOTTOM",0,-5)
                 GameTooltip:SetText(text,1,1,1,1)
                 GameTooltip:Show()
             end)
