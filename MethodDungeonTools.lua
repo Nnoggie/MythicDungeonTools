@@ -1252,7 +1252,7 @@ end
 ---SetCurrentSubLevel
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
 function MethodDungeonTools:SetCurrentSubLevel(sublevel)
-    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = sublevel
+    MethodDungeonTools:GetCurrentPreset().value.currentSublevel = sublevel
 end
 
 ---GetCurrentPull
@@ -1264,7 +1264,7 @@ end
 ---GetCurrentSubLevel
 ---Returns the sublevel of the currently active preset
 function MethodDungeonTools:GetCurrentSubLevel()
-	return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
+	return MethodDungeonTools:GetCurrentPreset().value.currentSublevel
 end
 
 ---GetCurrentPreset
