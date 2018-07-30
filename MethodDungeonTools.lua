@@ -869,7 +869,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             end)
         end
     end
-    function affixDropdown:SetAffixWeek(key)
+    function affixDropdown:SetAffixWeek(key,ignoreReloadPullButtons)
         affixDropdown:SetValue(key)
         if not MethodDungeonTools:GetCurrentAffixWeek() then
             frame.sidePanel.affixWeekWarning.image:Hide()
@@ -891,7 +891,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:UpdateProgressbar()
-        MethodDungeonTools:ReloadPullButtons()
+        if not ignoreReloadPullButtons then MethodDungeonTools:ReloadPullButtons() end
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -1553,7 +1553,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
-    frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week)
+    frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons)
     MethodDungeonTools:POI_UpdateAll()
     MethodDungeonTools:DrawAllPresetObjects()
 end
