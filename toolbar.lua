@@ -272,6 +272,7 @@ end
 ---TexturePool
 local activeTextures = {}
 local texturePool = {}
+local notePoolCollection
 local function getTexture()
     local size = tgetn(texturePool)
     if size == 0 then
@@ -298,6 +299,7 @@ function MethodDungeonTools:ReleaseAllActiveTextures()
         releaseTexture(tex)
     end
     twipe(activeTextures)
+    if notePoolCollection then notePoolCollection:ReleaseAll() end
 end
 
 ---CreateBrushPreview
@@ -399,7 +401,7 @@ function MethodDungeonTools:OverrideScrollframeScripts()
             if currentTool == "pencil" then MethodDungeonTools:StartPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StartArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StartLineDrawing() end
-            if currentTool == "mover" then MethodDungeonTools:StartMovingDrawing() end
+            if currentTool == "mover" then MethodDungeonTools:StartMovingObject() end
             if currentTool == "eraser" then MethodDungeonTools:StartEraserDrawing() end
         end
         if button == "RightButton" then
@@ -415,14 +417,50 @@ function MethodDungeonTools:OverrideScrollframeScripts()
             if currentTool == "pencil" then MethodDungeonTools:StopPencilDrawing() end
             if currentTool == "arrow" then MethodDungeonTools:StopArrowDrawing() end
             if currentTool == "line" then MethodDungeonTools:StopLineDrawing() end
-            if currentTool == "mover" then MethodDungeonTools:StopMovingDrawing() end
+            if currentTool == "mover" then MethodDungeonTools:StopMovingObject() end
             if currentTool == "eraser" then MethodDungeonTools:StopEraserDrawing() end
+            if currentTool == "note" then MethodDungeonTools:StartNoteDrawing() end
         end
         if button == "RightButton" then
             local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
             if scrollFrame.panning then scrollFrame.panning = false end
         end
     end)
+    --make notes draggable
+    if notePoolCollection then
+        if currentTool == "mover" then
+            for note,_ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+                note:SetMovable(true)
+                note:RegisterForDrag("LeftButton")
+                local xOffset,yOffset
+
+                note:SetScript("OnMouseDown",function()
+                    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+                    local x,y = MethodDungeonTools:GetCursorPosition()
+                    local nx = currentPreset.objects[note.objectIndex].d[1]
+                    local ny = currentPreset.objects[note.objectIndex].d[2]
+                    xOffset = x-nx
+                    yOffset = y-ny
+                end)
+                note:SetScript("OnDragStart", function()
+                    note:StartMoving()
+                end)
+                note:SetScript("OnDragStop", function()
+                    note:StopMovingOrSizing()
+                    local x,y = MethodDungeonTools:GetCursorPosition()
+                    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+                    currentPreset.objects[note.objectIndex].d[1]=x-xOffset
+                    currentPreset.objects[note.objectIndex].d[2]=y-yOffset
+                    MethodDungeonTools:DrawAllPresetObjects()
+                end)
+            end
+        else
+            for note,_ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+                note:SetMovable(false)
+                note:RegisterForDrag()
+            end
+        end
+    end
 end
 
 ---RestoreScrollframeScripts
@@ -432,6 +470,13 @@ function MethodDungeonTools:RestoreScrollframeScripts()
     local frame = MethodDungeonTools.main_frame
     frame.scrollFrame:SetScript("OnMouseDown", MethodDungeonTools.OnMouseDown)
     frame.scrollFrame:SetScript("OnMouseUp", MethodDungeonTools.OnMouseUp)
+    --make notes not draggable
+    if notePoolCollection then
+        for note,_ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+            note:SetMovable(false)
+            note:RegisterForDrag()
+        end
+    end
 end
 
 ---returns cursor position relative to the map frame
@@ -674,10 +719,10 @@ function MethodDungeonTools:StopPencilDrawing()
     drawingActive = false
 end
 
----StartMovingDrawing
+---StartMovingObject
 local objectIndex
 local originalX,originalY
-function MethodDungeonTools:StartMovingDrawing()
+function MethodDungeonTools:StartMovingObject()
     --we have to redraw all objects first, as the objectIndex needs to be set on every texture
     MethodDungeonTools:DrawAllPresetObjects()
     drawingActive = true
@@ -703,7 +748,7 @@ function MethodDungeonTools:StartMovingDrawing()
 end
 
 ---StopMovingDrawing
-function MethodDungeonTools:StopMovingDrawing()
+function MethodDungeonTools:StopMovingObject()
     local frame = MethodDungeonTools.main_frame
     frame.toolbar:SetScript("OnUpdate",nil)
     if objectIndex then
@@ -784,6 +829,23 @@ function MethodDungeonTools:StopEraserDrawing()
     MethodDungeonTools:DrawAllPresetObjects()
     drawingActive = false
 end
+---StartNoteDrawing
+function MethodDungeonTools:StartNoteDrawing()
+    local frame = MethodDungeonTools.main_frame
+    local layerSublevel = MethodDungeonTools:GetHighestFrameLevelAtCursor()
+    local x,y = MethodDungeonTools:GetCursorPosition()
+
+    ---new object for storage
+    ---x,y,sublevel,shown,text,n=true
+    nobj = {d={x,y,MethodDungeonTools:GetCurrentSubLevel(),true,""}}
+    nobj.n = true
+    MethodDungeonTools:StorePresetObject(nobj)
+    MethodDungeonTools:DrawAllPresetObjects()
+
+    if not IsShiftKeyDown() then
+        MethodDungeonTools:UpdateSelectedToolbarTool()
+    end
+end
 
 ---DrawCircle
 function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,objectIndex,tex,noinsert,extrax,extray)
@@ -837,4 +899,160 @@ function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSubl
     triangle.isOwn = isOwn
     triangle.objectIndex = objectIndex
     tinsert(activeTextures,triangle)
+end
+
+local noteEditbox
+
+--store text in nobj
+local function updateNoteObjText(text,note)
+    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    currentPreset.objects[note.objectIndex].d[5]=text
+end
+local function deleteNoteObj(note)
+    local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    tremove(currentPreset.objects,note.objectIndex)
+    MethodDungeonTools:DrawAllPresetObjects()
+end
+
+local function makeNoteEditbox()
+    local editbox = AceGUI:Create("SimpleGroup")
+    editbox:SetWidth(240)
+    editbox:SetHeight(120)
+    editbox.frame:SetFrameStrata("HIGH")
+    editbox.frame:SetFrameLevel(50)
+    editbox.frame:SetBackdropColor(1,1,1,0)
+    editbox:SetLayout("Flow")
+    editbox.multiBox = AceGUI:Create("MultiLineEditBox")
+    editbox.multiBox:SetLabel("Note Text:")
+    editbox.multiBox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+        for note,_ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+            if note.noteIdx == editbox.noteIdx then
+                note.tooltipText = text
+                updateNoteObjText(text,note)
+                break
+            end
+        end
+
+        editbox.frame:Hide()
+    end)
+    editbox.multiBox:SetWidth(240)
+    editbox.multiBox:SetHeight(120)
+    editbox.multiBox.label:Hide()
+    editbox.multiBox.scrollBar:Hide()
+    editbox.multiBox.scrollBar:SetPoint("BOTTOM", editbox.multiBox.button, "TOP", 0, 16)
+    editbox.multiBox.scrollBar.ScrollUpButton:SetPoint("BOTTOM", editbox.multiBox.scrollBar, "TOP",0,3)
+    editbox.frame:Hide()
+    editbox:AddChild(editbox.multiBox)
+    MethodDungeonTools:FixAceGUIShowHide(editbox,nil,nil,true)
+    editbox.frame:SetScript("OnShow",function()
+        hooksecurefunc(MethodDungeonTools, "OnPan", function() editbox.frame:Hide() end)
+        hooksecurefunc(MethodDungeonTools, "ZoomMap", function() editbox.frame:Hide() end)
+    end)
+
+    return editbox
+end
+
+local noteDropDown = CreateFrame("Frame", "noteDropDown", nil, "L_UIDropDownMenuTemplate")
+local currentNote
+local noteMenu = {}
+do
+    tinsert(noteMenu, {
+        text = "Edit",
+        notCheckable = 1,
+        func = function()
+            currentNote:OpenEditBox()
+        end
+    })
+    tinsert(noteMenu, {
+        text = " ",
+        notClickable = 1,
+        notCheckable = 1,
+        func = nil
+    })
+    tinsert(noteMenu, {
+        text = "Delete",
+        notCheckable = 1,
+        func = function()
+            deleteNoteObj(currentNote)
+        end
+    })
+    tinsert(noteMenu, {
+        text = " ",
+        notClickable = 1,
+        notCheckable = 1,
+        func = nil
+    })
+    tinsert(noteMenu, {
+        text = "Close",
+        notCheckable = 1,
+        func = function()
+            noteDropDown:Hide()
+        end
+    })
+end
+
+---DrawNote
+function MethodDungeonTools:DrawNote(x,y,text,objectIndex)
+    if not notePoolCollection then
+        notePoolCollection = CreatePoolCollection()
+        notePoolCollection:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "QuestPinTemplate")
+    end
+    --setup
+    local note = notePoolCollection:Acquire("QuestPinTemplate")
+    note.noteIdx = notePoolCollection.pools.QuestPinTemplate.numActiveObjects
+    note.objectIndex = objectIndex
+    note:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+    note:SetSize(12,12)
+    note.Texture:SetSize(15, 15);
+    note.PushedTexture:SetSize(15, 15);
+    note.Highlight:SetSize(15, 15);
+    note.Number:SetSize(16, 16);
+    note.Texture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
+    note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
+    note.Highlight:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
+    note.Number:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
+    note.Texture:SetTexCoord(0.500, 0.625, 0.375, 0.5);
+    note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5);
+    note.Highlight:SetTexCoord(0.625, 0.750, 0.375, 0.5);
+    note.Number:SetTexCoord(QuestPOI_CalculateNumericTexCoords(note.noteIdx, QUEST_POI_COLOR_BLACK ))
+    note.Number:Show();
+    note.tooltipText = text or ""
+
+    note:RegisterForClicks("AnyUp")
+    --click
+    function note:OpenEditBox()
+        if not noteEditbox then noteEditbox = makeNoteEditbox() end
+        if noteEditbox.frame:IsShown() and noteEditbox.noteIdx == note.noteIdx then
+            noteEditbox.frame:Hide()
+        else
+            noteEditbox.noteIdx = note.noteIdx
+            noteEditbox:ClearAllPoints()
+            noteEditbox.frame:SetPoint("TOPLEFT",note,"TOPRIGHT")
+            noteEditbox.frame:Show()
+            noteEditbox.multiBox:SetText(note.tooltipText)
+            noteEditbox.multiBox.button:Enable()
+        end
+    end
+    note:SetScript("OnClick",function(self,button,down)
+        if button == "LeftButton" then
+            L_CloseDropDownMenus()
+            self:OpenEditBox()
+        elseif button == "RightButton" then
+            currentNote = note
+            L_EasyMenu(noteMenu,noteDropDown, "cursor", 0 , -15, "MENU")
+            if noteEditbox and noteEditbox.frame:IsShown() then
+                noteEditbox.frame:Hide()
+            end
+        end
+    end)
+    note:SetScript("OnEnter",function()
+        GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+        GameTooltip:AddLine(note.tooltipText , 1, 1, 1, 1)
+        GameTooltip:Show()
+    end)
+    note:SetScript("OnLeave",function()
+        GameTooltip:Hide()
+    end)
+
+    note:Show()
 end
