@@ -278,6 +278,15 @@ end
 local function blipDevModeSetup(blip)
     blip:SetMovable(true)
     blip:RegisterForDrag("LeftButton")
+
+    local xOffset,yOffset
+    blip:SetScript("OnMouseDown",function()
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        local nx = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x
+        local ny = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y
+        xOffset = x-nx
+        yOffset = y-ny
+    end)
     blip:SetScript("OnDragStart", function()
         if not db.devModeBlipsMovable then return end
         blip:StartMoving()
@@ -285,6 +294,8 @@ local function blipDevModeSetup(blip)
     blip:SetScript("OnDragStop", function()
         if not db.devModeBlipsMovable then return end
         local x,y = MethodDungeonTools:GetCursorPosition()
+        x = x-xOffset
+        y = y-yOffset
         blip:StopMovingOrSizing()
         blip:ClearAllPoints()
         blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
