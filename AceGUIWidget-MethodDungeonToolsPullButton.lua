@@ -47,6 +47,12 @@ local methods = {
             self.frame:SetScript("OnUpdate", function()
                 MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
             end)
+            --progressbar
+            if MethodDungeonTools.ProgressBarResetTimer then MethodDungeonTools.ProgressBarResetTimer:Cancel() end
+            local currentForces = MethodDungeonTools:CountForces(self.index)
+            local db = MethodDungeonTools:GetDB()
+            local teeming = MethodDungeonTools:IsCurrentPresetTeeming()
+            MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,currentForces,teeming and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
         end
 
         function self.callbacks.OnLeave()
@@ -55,6 +61,9 @@ local methods = {
             self.frame:SetScript("OnUpdate", nil)
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
             MethodDungeonTools.pullTooltip:Hide()
+            MethodDungeonTools.ProgressBarResetTimer = C_Timer.NewTimer(0.2, function()
+                MethodDungeonTools:UpdateProgressbar()
+            end)
         end
 
         function self.callbacks.OnDragStart()
