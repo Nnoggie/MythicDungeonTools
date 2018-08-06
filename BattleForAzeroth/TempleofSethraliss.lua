@@ -1049,7 +1049,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [277564] = {};
         };
         ["health"] = 294320;
-        ["count"] = 6 ;
+        ["count"] = 6;
         ["displayId"] = 84024;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
