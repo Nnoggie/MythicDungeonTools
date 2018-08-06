@@ -61,7 +61,7 @@ local methods = {
             self.frame:SetScript("OnUpdate", nil)
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
             MethodDungeonTools.pullTooltip:Hide()
-            MethodDungeonTools.ProgressBarResetTimer = C_Timer.NewTimer(0.2, function()
+            MethodDungeonTools.ProgressBarResetTimer = C_Timer.NewTimer(0.35, function()
                 MethodDungeonTools:UpdateProgressbar()
             end)
         end
