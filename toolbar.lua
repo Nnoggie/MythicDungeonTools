@@ -831,12 +831,14 @@ function MethodDungeonTools:StopEraserDrawing()
 end
 ---StartNoteDrawing
 function MethodDungeonTools:StartNoteDrawing()
-    local frame = MethodDungeonTools.main_frame
-    local layerSublevel = MethodDungeonTools:GetHighestFrameLevelAtCursor()
-    local x,y = MethodDungeonTools:GetCursorPosition()
-
+    --check if we have less than 25 notes
+    if notePoolCollection and notePoolCollection.pools.QuestPinTemplate.numActiveObjects>24 then
+        MethodDungeonTools:UpdateSelectedToolbarTool()
+        return
+    end
     ---new object for storage
     ---x,y,sublevel,shown,text,n=true
+    local x,y = MethodDungeonTools:GetCursorPosition()
     nobj = {d={x,y,MethodDungeonTools:GetCurrentSubLevel(),true,""}}
     nobj.n = true
     MethodDungeonTools:StorePresetObject(nobj)
