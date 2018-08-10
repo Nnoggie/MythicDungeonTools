@@ -333,6 +333,7 @@ local characteristics = {
 local spellBlacklist = {
     [277564] = true, --Regenrative Blood
     [277242] = true, --Infested
+    [209859] = true, --Bolster
 }
 
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
