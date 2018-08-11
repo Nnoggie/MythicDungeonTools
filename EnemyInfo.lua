@@ -331,9 +331,23 @@ local characteristics = {
     ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
 }
 local spellBlacklist = {
-    [277564] = true, --Regenrative Blood
+    [277564] = true, --Regenerative Blood
+    [277247] = true, --Regenerative Blood
     [277242] = true, --Infested
     [209859] = true, --Bolster
+    [233490] = true, --UA
+    [91021]  = true, --Find Weakness
+    [2094]   = true, --Blind
+    [273836] = true, --Filthy Transfusion
+    [205708] = true, --Chilled
+    [212792] = true, --Cone of Cold
+    [48181]  = true, --Haunt
+    [191380] = true, --Mark of the Distant Army
+    [236299] = true, --Chrono Shift
+    [1490]   = true, --Chaos Brand
+    [205276] = true, --Phantom Singularity
+    [132951] = true, --Flare
+    [255228] = true, --Polymorphed
 }
 
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
