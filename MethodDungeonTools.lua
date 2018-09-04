@@ -71,11 +71,11 @@ local initFrames
 -------------------------
 local defaultSavedVars = {
 	global = {
-		currentExpansion = 1,
+		currentExpansion = 2,
         enemyForcesFormat = 2,
         enemyStyle = 1,
-		currentDungeonIdx = 1,
-		currentDifficulty = 15,
+		currentDungeonIdx = 15,
+		currentDifficulty = 10,
 		xoffset = 0,
 		yoffset = -150,
 		anchorFrom = "TOP",
