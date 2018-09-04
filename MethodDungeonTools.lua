@@ -60,7 +60,9 @@ function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
 		MethodDungeonTools:ToggleDevMode()
 	elseif rqst == "reset" then
         MethodDungeonTools:ResetMainFramePos()
-	else
+	elseif rqst == "dc" then
+        MethodDungeonTools:ToggleDataCollection()
+    else
 		MethodDungeonTools:ShowInterface()
 	end
 end
@@ -90,6 +92,7 @@ local defaultSavedVars = {
         },
 		presets = {},
 		currentPreset = {},
+        dataCollectionActive = false,
 	},
 }
 do
@@ -140,7 +143,7 @@ do
 				hide_on_escape = true,
 			})
             self:UnregisterEvent("ADDON_LOADED")
-            MethodDungeonTools.DataCollection:Init()
+            if db.dataCollectionActive then MethodDungeonTools.DataCollection:Init() end
         end
     end
     function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
@@ -498,6 +501,11 @@ end
 function MethodDungeonTools:ToggleDevMode()
     db.devMode = not db.devMode
     print(string.format("%sMDT|r: DevMode %s. Reload Interface!",methodColor,db.devMode and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
+end
+
+function MethodDungeonTools:ToggleDataCollection()
+    db.dataCollectionActive = not db.dataCollectionActive
+    print(string.format("%sMDT|r: DataCollection %s. Reload Interface!",methodColor,db.dataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
 end
 
 
