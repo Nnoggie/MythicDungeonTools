@@ -1525,6 +1525,18 @@ function MethodDungeonTools:EnsureDBTables()
 			break;
 		end
 	end
+
+    --removed clones: remove data from presets
+    for pullIdx,pull in pairs(preset.value.pulls) do
+        for enemyIdx,clones in pairs(pull) do
+            for k,v in pairs(clones) do
+                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
+                    clones[k] = nil
+                end
+            end
+        end
+    end
+
     MethodDungeonTools:GetCurrentPreset().week = MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek()
 end
 
