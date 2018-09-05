@@ -1413,6 +1413,7 @@ function MethodDungeonTools:OpenImportPresetDialog()
 	MethodDungeonTools.main_frame.presetImportFrame:Show()
 	MethodDungeonTools.main_frame.presetImportBox:SetText("")
 	MethodDungeonTools.main_frame.presetImportBox:SetFocus()
+    MethodDungeonTools.main_frame.presetImportLabel:SetText(nil)
 end
 
 function MethodDungeonTools:OpenNewPresetDialog()
