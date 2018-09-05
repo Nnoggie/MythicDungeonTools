@@ -348,6 +348,28 @@ local spellBlacklist = {
     [205276] = true, --Phantom Singularity
     [132951] = true, --Flare
     [255228] = true, --Polymorphed
+    [122]    = true, --Frost Nova
+    [12654]  = true, --Ignite
+    [2818]   = true, --Deadly Poison
+    [55095]  = true, --Frost Fever
+    [408]    = true, --Kidney Shot
+    [34914]  = true, --Vampiric Touch
+    [205369] = true, --Mind Bomb
+    [154953] = true, --Internal Bleeding
+    [51490]  = true, --Thunderstorm
+    [3409]   = true, --Crippling Poison
+    [272970] = true, --Packed Ice
+    [262115] = true, --Deep Wounds
+    [226943] = true, --Mind Bomb
+    [198813] = true, --Vengeful Retreat
+    [121308] = true, --Disguise
+    [224729] = true, --Bursting Shot
+    [186439] = true, --Shadow Mend
+    [113746] = true, --Mystic Touch
+    [280404] = true, --Tidal Surge
+    [589]    = true, --Shadow Word: Pain
+    [5116]   = true, --Concussive Shot
+    --[X]  = true,
 }
 
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
