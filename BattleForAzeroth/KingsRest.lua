@@ -1,7 +1,7 @@
 local dungeonIndex = 17
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=264,teeming=50,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=224,teeming=50,teemingEnabled=true}
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
@@ -68,7 +68,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 133935;
-        ["count"] = 0;
+        ["count"] = 5;
     };
     [2] = {
         ["clones"] = {
@@ -254,7 +254,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134158;
-        ["count"] = 0;
+        ["count"] = 6;
     };
     [8] = {
         ["clones"] = {
@@ -273,7 +273,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Queen Patlaa";
         ["displayId"] = 85287;
         ["creatureType"] = "Undead";
@@ -362,7 +362,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["health"] = 706368;
-        ["count"] = 0;
+        ["count"] = 8;
         ["displayId"] = 83836;
         ["creatureType"] = "Undead";
         ["level"] = 120;
@@ -392,7 +392,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["health"] = 588640;
-        ["count"] = 0;
+        ["count"] = 6;
         ["displayId"] = 85677;
         ["creatureType"] = "Undead";
         ["level"] = 120;
@@ -415,7 +415,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 6;
         ["name"] = "King A'akul";
         ["displayId"] = 85284;
         ["creatureType"] = "Undead";
@@ -570,7 +570,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Root"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 1;
         ["name"] = "Embalming Fluid";
         ["displayId"] = 33008;
         ["creatureType"] = "Aberration";
@@ -634,7 +634,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 134157;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [10] = {
         ["clones"] = {
@@ -687,7 +687,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
             ["Stun"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Bloodsworn Agent";
         ["displayId"] = 85285;
         ["creatureType"] = "Undead";
@@ -757,7 +757,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 135167;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [30] = {
         ["clones"] = {
@@ -839,7 +839,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135239;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [11] = {
         ["clones"] = {
@@ -857,7 +857,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Seneschal M'bara";
         ["displayId"] = 83517;
         ["creatureType"] = "Undead";
@@ -988,7 +988,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 135231;
-        ["count"] = 0;
+        ["count"] = 8;
     };
     [3] = {
         ["clones"] = {
@@ -1025,7 +1025,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134174;
-        ["count"] = 0;
+        ["count"] = 5;
     };
     [6] = {
         ["clones"] = {
@@ -1075,7 +1075,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
             ["Taunt"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Guard Captain Atu";
         ["displayId"] = 85270;
         ["creatureType"] = "Undead";
@@ -1128,7 +1128,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135192;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [19] = {
         ["clones"] = {
@@ -1185,7 +1185,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135204;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [25] = {
         ["clones"] = {
@@ -1209,7 +1209,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
         };
         ["health"] = 95654;
-        ["count"] = 0;
+        ["count"] = 1;
         ["displayId"] = 84026;
         ["creatureType"] = "Undead";
         ["level"] = 120;
@@ -1236,7 +1236,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 134331;
-        ["count"] = 0;
+        ["count"] = 6;
     };
     [26] = {
         ["clones"] = {
@@ -1327,7 +1327,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Skeletal Hunting Raptor";
         ["displayId"] = 33733;
         ["creatureType"] = "Undead";
@@ -1358,7 +1358,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 137474;
-        ["count"] = 0;
+        ["count"] = 6;
     };
     [28] = {
         ["clones"] = {
@@ -1431,7 +1431,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["id"] = 135235;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [29] = {
         ["clones"] = {
@@ -1485,7 +1485,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["id"] = 137478;
-        ["count"] = 0;
+        ["count"] = 6;
     };
 };
 
