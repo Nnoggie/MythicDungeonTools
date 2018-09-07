@@ -762,7 +762,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 80338;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
-        ["count"] = 0;
+        ["count"] = 6;
         ["id"] = 122984;
     };
     [10] = {
