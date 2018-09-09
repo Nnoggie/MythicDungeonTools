@@ -822,7 +822,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["health"] = 294320;
-        ["count"] = 6;
+        ["count"] = 3;
         ["displayId"] = 42978;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -944,7 +944,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["health"] = 323752;
-        ["count"] = 0;
+        ["count"] = 6;
         ["displayId"] = 84394;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -979,7 +979,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["scale"] = 1.2;
-        ["count"] = 0;
+        ["count"] = 7;
         ["displayId"] = 81513;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1314,7 +1314,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Fear"] = true;
         };
-        ["scale"] = 1;
+        ["scale"] = 0;
         ["name"] = "Despondent Scallywag";
         ["count"] = 1;
         ["displayId"] = 82828;
@@ -1629,7 +1629,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["health"] = 470912;
-        ["count"] = 0;
+        ["count"] = 7;
         ["displayId"] = 81513;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1943,7 +1943,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["health"] = 323752;
-        ["count"] = 6;
+        ["count"] = 4;
         ["displayId"] = 84333;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -2259,7 +2259,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["health"] = 294320;
-        ["count"] = 0;
+        ["count"] = 6;
         ["displayId"] = 78990;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
