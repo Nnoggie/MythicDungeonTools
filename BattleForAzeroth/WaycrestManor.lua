@@ -1516,7 +1516,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 470912;
         ["id"] = 131677;
-        ["count"] = 4;
+        ["count"] = 6;
         ["displayId"] = 81999;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1655,7 +1655,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [209859] = {};
             [263899] = {};
         };
-        ["count"] = 0;
+        ["count"] = 6;
         ["id"] = 131670;
         ["name"] = "Heartsbane Vinetwister";
         ["displayId"] = 81996;
@@ -2775,7 +2775,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 470936;
         ["id"] = 131812;
-        ["count"] = 4;
+        ["count"] = 6;
         ["displayId"] = 82071;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;

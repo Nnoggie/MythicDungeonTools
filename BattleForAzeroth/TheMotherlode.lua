@@ -227,7 +227,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 133432;
-        ["count"] = 4;
+        ["count"] = 5;
         ["displayId"] = 82915;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1632,7 +1632,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83286;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
-        ["count"] = 5;
+        ["count"] = 6;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
@@ -1807,7 +1807,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["health"] = 470912;
-        ["count"] = 6;
+        ["count"] = 8;
         ["displayId"] = 83136;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
@@ -2074,7 +2074,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 137029;
         ["health"] = 294320;
-        ["count"] = 4;
+        ["count"] = 5;
         ["displayId"] = 85024;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2161,7 +2161,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["health"] = 294320;
-        ["count"] = 4;
+        ["count"] = 5;
         ["displayId"] = 82922;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2344,7 +2344,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 133345;
-        ["count"] = 4;
+        ["count"] = 5;
         ["displayId"] = 82866;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3190,7 +3190,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 133593;
-        ["count"] = 4;
+        ["count"] = 5;
         ["displayId"] = 83034;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3641,7 +3641,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Slow"] = true;
         };
         ["health"] = 29014;
-        ["count"] = 0;
+        ["count"] = 1;
         ["displayId"] = 49134;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
@@ -3691,7 +3691,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 137713;
         ["health"] = 58864;
-        ["count"] = 0;
+        ["count"] = 1;
         ["displayId"] = 32024;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -4014,7 +4014,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["name"] = "Venture Co. War Machine";
-        ["count"] = 6;
+        ["count"] = 8;
     };
 };
 

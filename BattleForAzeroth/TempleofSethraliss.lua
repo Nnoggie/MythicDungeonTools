@@ -292,7 +292,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [264587] = {};
             [277564] = {};
         };
-        ["count"] = 3;
+        ["count"] = 2;
         ["id"] = 134616;
         ["name"] = "Krolusk Pup";
         ["displayId"] = 83787;
@@ -1206,7 +1206,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [265968] = {};
             [209859] = {};
         };
-        ["count"] = 6;
+        ["count"] = 4;
         ["id"] = 134990;
         ["name"] = "Charged Dust Devil";
         ["displayId"] = 84024;
@@ -1282,7 +1282,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["neutral"] = true;
         ["health"] = 3627;
         ["name"] = "Krolusk Hatchling";
-        ["count"] = 0;
+        ["count"] = 1;
         ["displayId"] = 83790;
         ["creatureType"] = "Beast";
         ["level"] = 120;

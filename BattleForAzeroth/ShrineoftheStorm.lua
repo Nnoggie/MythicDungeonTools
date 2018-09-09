@@ -1581,7 +1581,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Repentance"] = true;
             ["Imprison"] = true;
         };
-        ["count"] = 7;
+        ["count"] = 9;
         ["name"] = "Tidesage Spiritualist";
         ["displayId"] = 83304;
         ["creatureType"] = "Humanoid";
@@ -2372,7 +2372,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [277564] = {};
         };
         ["stealthDetect"] = true;
-        ["count"] = 9;
+        ["count"] = 13;
         ["name"] = "Living Current";
         ["health"] = 529776;
         ["displayId"] = 88525;

@@ -134,7 +134,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [259092] = {};
             [277564] = {};
         };
-        ["count"] = 4;
+        ["count"] = 3;
         ["scale"] = 1;
         ["name"] = "Irontide Stormcaller";
         ["displayId"] = 79077;
@@ -1716,7 +1716,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 588640;
         ["id"] = 130400;
-        ["count"] = 5;
+        ["count"] = 6;
         ["displayId"] = 68059;
         ["creatureType"] = "Giant";
         ["level"] = 121;
@@ -2184,7 +2184,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [281420] = {};
             [277564] = {};
         };
-        ["count"] = 4;
+        ["count"] = 3;
         ["id"] = 129600;
         ["health"] = 188364;
         ["displayId"] = 80475;
@@ -2554,7 +2554,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 130404;
         ["health"] = 470912;
-        ["count"] = 6;
+        ["count"] = 4;
         ["displayId"] = 87975;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3374,7 +3374,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 80335;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["count"] = 4;
+        ["count"] = 3;
         ["scale"] = 1;
     };
     [23] = {

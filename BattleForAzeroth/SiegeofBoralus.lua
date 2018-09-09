@@ -611,7 +611,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [12] = {
         ["clones"] = {
@@ -644,7 +644,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [14] = {
         ["clones"] = {
@@ -1488,7 +1488,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [11] = {
         ["clones"] = {
@@ -1522,7 +1522,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["scale"] = 0.7;
-        ["count"] = 0;
+        ["count"] = 4;
     };
     [13] = {
         ["clones"] = {
