@@ -1,7 +1,7 @@
 local dungeonIndex = 21
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=438,teeming=468,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=416,teeming=468,teemingEnabled=true}
 MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.7
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
