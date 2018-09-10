@@ -1314,9 +1314,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Fear"] = true;
         };
-        ["scale"] = 0;
+        ["scale"] = 1;
         ["name"] = "Despondent Scallywag";
-        ["count"] = 1;
+        ["count"] = 0;
         ["displayId"] = 82828;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2494,7 +2494,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["id"] = 130028;
     };
 };
-
 
 
 
