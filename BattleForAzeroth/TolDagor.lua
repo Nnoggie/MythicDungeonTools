@@ -2160,7 +2160,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 3;
         ["name"] = "Bilge Rat Looter";
         ["displayId"] = 79322;
         ["creatureType"] = "Humanoid";
@@ -2207,7 +2207,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Slow"] = true;
             ["Root"] = true;
         };
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Irontide Raider";
         ["displayId"] = 79064;
         ["creatureType"] = "Humanoid";
