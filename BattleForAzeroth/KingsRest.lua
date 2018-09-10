@@ -1455,7 +1455,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = -1;
         ["id"] = 138489;
-        ["count"] = 0;
+        ["count"] = 8;
     };
     [15] = {
         ["clones"] = {
