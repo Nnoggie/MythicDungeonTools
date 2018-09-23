@@ -521,13 +521,13 @@ MethodDungeonTools.freeholdCrews = {
         [129547] = true,
         [126847] = true,
     },
-    [2] = {
+    [3] = {
         [129559] = true,
         [129599] = true,
         [126845] = true,
         [129601] = true,
     },
-    [3] = {
+    [2] = {
         [129550] = true,
         [129527] = true,
         [129600] = true,

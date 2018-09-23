@@ -204,6 +204,42 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:Hide()
         end)
     end
+    if type == "tuMatronNote" then
+        frame:SetSize(10,10)
+        frame.Texture:SetSize(10,10)
+        frame.HighlightTexture:SetSize(10,10)
+        frame.HighlightTexture:SetAtlas("QuestNormal")
+        frame.Texture:SetAtlas("QuestNormal")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:AddLine("Matron 4+5 can spawn on either left or right platform.", 1, 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
+    if type == "shrineSkip" then
+        frame:SetSize(12,12)
+        frame.Texture:SetSize(12,12)
+        frame.HighlightTexture:SetSize(12,12)
+        frame.HighlightTexture:SetAtlas("TaxiNode_Continent_Horde")
+        frame.Texture:SetAtlas("TaxiNode_Continent_Horde")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:AddLine("Shortcut", 1, 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
     if type == "templeEye" then
         frame:SetSize(20,20)
         frame.Texture:SetSize(20,20)

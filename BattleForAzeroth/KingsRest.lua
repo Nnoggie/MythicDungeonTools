@@ -1,7 +1,7 @@
 local dungeonIndex = 17
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=224,teeming=50,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=224,teeming=260,teemingEnabled=true}
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
@@ -40,6 +40,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [2] = {
                 ["y"] = -275.22575718711;
                 ["x"] = 573.00042347891;
+                ["infested"] = {
+                    [3] = true;
+                };
                 ["sublevel"] = 1;
             };
             [4] = {
@@ -59,16 +62,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [270003] = {};
             [270016] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["count"] = 5;
+        ["id"] = 133935;
         ["name"] = "Animated Guardian";
-        ["health"] = 500344;
         ["displayId"] = 83252;
         ["creatureType"] = "Undead";
         ["level"] = 120;
-        ["id"] = 133935;
-        ["count"] = 5;
+        ["health"] = 500344;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [2] = {
         ["clones"] = {
@@ -155,11 +158,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [5] = {
                 ["sublevel"] = 1;
                 ["x"] = 575.86059196775;
-                ["y"] = -299.07048584376;
-                ["g"] = 1;
                 ["infested"] = {
                     [1] = true;
                 };
+                ["g"] = 1;
+                ["y"] = -299.07048584376;
             };
             [10] = {
                 ["y"] = -374.84003111977;
@@ -167,16 +170,19 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 4;
                 ["sublevel"] = 1;
             };
+            [14] = {
+                ["sublevel"] = 1;
+                ["x"] = 662.94908449271;
+                ["infested"] = {
+                    [1] = true;
+                };
+                ["g"] = 4;
+                ["y"] = -382.14772138125;
+            };
             [3] = {
                 ["y"] = -290.15158621081;
                 ["x"] = 581.80652505638;
                 ["g"] = 1;
-                ["sublevel"] = 1;
-            };
-            [11] = {
-                ["y"] = -373.49389241899;
-                ["x"] = 660.44908432399;
-                ["g"] = 4;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -191,14 +197,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 4;
                 ["sublevel"] = 1;
             };
-            [14] = {
-                ["sublevel"] = 1;
-                ["x"] = 662.94908449271;
-                ["y"] = -382.14772138125;
+            [11] = {
+                ["y"] = -373.49389241899;
+                ["x"] = 660.44908432399;
                 ["g"] = 4;
-                ["infested"] = {
-                    [1] = true;
-                };
+                ["sublevel"] = 1;
             };
         };
         ["scale"] = 0.6;
@@ -206,17 +209,17 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [269935] = {};
             [269936] = {};
         };
+        ["count"] = 0;
+        ["id"] = 133943;
+        ["name"] = "Minion of Zul";
+        ["displayId"] = 76055;
+        ["creatureType"] = "Aberration";
+        ["level"] = 120;
+        ["health"] = 24;
         ["characteristics"] = {
             ["Taunt"] = true;
             ["Slow"] = true;
         };
-        ["name"] = "Minion of Zul";
-        ["health"] = 24;
-        ["displayId"] = 76055;
-        ["creatureType"] = "Aberration";
-        ["level"] = 120;
-        ["id"] = 133943;
-        ["count"] = 0;
     };
     [4] = {
         ["clones"] = {
@@ -245,24 +248,27 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [269928] = {};
             [269976] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["count"] = 6;
+        ["id"] = 134158;
         ["name"] = "Shadow-Borne Champion";
-        ["health"] = 470912;
         ["displayId"] = 83364;
         ["creatureType"] = "Undead";
         ["level"] = 121;
-        ["id"] = 134158;
-        ["count"] = 6;
+        ["health"] = 470912;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [8] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -426.40147078639;
-                ["x"] = 521.22807855253;
-                ["g"] = 8;
                 ["sublevel"] = 1;
+                ["x"] = 521.22807855253;
+                ["infested"] = {
+                    [3] = true;
+                };
+                ["g"] = 8;
+                ["y"] = -426.40147078639;
             };
         };
         ["id"] = 137486;
@@ -270,16 +276,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [270505] = {};
             [270930] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["health"] = 470912;
+        ["scale"] = 1;
         ["count"] = 4;
-        ["name"] = "Queen Patlaa";
         ["displayId"] = 85287;
         ["creatureType"] = "Undead";
         ["level"] = 121;
-        ["scale"] = 1;
-        ["health"] = 470912;
+        ["name"] = "Queen Patlaa";
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [16] = {
         ["clones"] = {
@@ -290,13 +296,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
             [2] = {
-                ["y"] = -293.03254728421;
-                ["x"] = 462.04110555397;
-                ["teeming"] = true;
-                ["g"] = 26;
-                ["sublevel"] = 1;
-            };
-            [3] = {
                 ["y"] = -154.52287652609;
                 ["x"] = 435.79581678115;
                 ["patrol"] = {
@@ -358,22 +357,25 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [270293] = {};
             [270284] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["name"] = "Purification Construct";
+        ["scale"] = 1.2;
         ["health"] = 706368;
-        ["count"] = 8;
         ["displayId"] = 83836;
         ["creatureType"] = "Undead";
         ["level"] = 120;
-        ["scale"] = 1.2;
-        ["name"] = "Purification Construct";
+        ["count"] = 8;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [17] = {
         ["clones"] = {
             [1] = {
                 ["y"] = -154.42099320188;
                 ["x"] = 489.18748663995;
+                ["infested"] = {
+                    [3] = true;
+                };
                 ["sublevel"] = 1;
             };
             [2] = {
@@ -388,16 +390,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [271562] = {};
             [271555] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["name"] = "Interment Construct";
+        ["scale"] = 1;
         ["health"] = 588640;
-        ["count"] = 6;
         ["displayId"] = 85677;
         ["creatureType"] = "Undead";
         ["level"] = 120;
-        ["scale"] = 1;
-        ["name"] = "Interment Construct";
+        ["count"] = 6;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [9] = {
         ["clones"] = {
@@ -412,16 +414,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [270865] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["health"] = 765232;
+        ["scale"] = 1;
         ["count"] = 6;
-        ["name"] = "King A'akul";
         ["displayId"] = 85284;
         ["creatureType"] = "Undead";
         ["level"] = 121;
-        ["scale"] = 1;
-        ["health"] = 765232;
+        ["name"] = "King A'akul";
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [18] = {
         ["clones"] = {
@@ -431,26 +433,913 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
+        ["health"] = 2060240;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["id"] = 134993;
         ["spells"] = {
+            [271290] = {};
+            [267702] = {};
             [267639] = {};
             [267618] = {};
-            [267702] = {};
-            [271290] = {};
         };
         ["isBoss"] = true;
         ["encounterID"] = 2171;
         ["instanceID"] = 1041;
-        ["scale"] = 1;
+        ["name"] = "Mchimba the Embalmer";
         ["count"] = 0;
         ["displayId"] = 83529;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
-        ["name"] = "Mchimba the Embalmer";
+        ["scale"] = 1;
+        ["id"] = 134993;
+    };
+    [15] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -425.39626051626;
+                ["x"] = 548.07059910979;
+                ["g"] = 11;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [280404] = {};
+            [5116] = {};
+            [270923] = {};
+            [212792] = {};
+            [270920] = {};
+            [186439] = {};
+            [589] = {};
+        };
+        ["count"] = 6;
+        ["id"] = 137478;
+        ["name"] = "Queen Wasi";
+        ["displayId"] = 85274;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["health"] = 470912;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [5] = {
+        ["clones"] = {
+            [6] = {
+                ["y"] = -397.57817954204;
+                ["x"] = 611.11041646257;
+                ["g"] = 7;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -404.07080041865;
+                ["x"] = 656.98756594381;
+                ["g"] = 5;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -363.91468550014;
+                ["x"] = 617.28195299766;
+                ["g"] = 6;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["y"] = -398.49388585316;
+                ["x"] = 652.56447983445;
+                ["g"] = 5;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -379.70414562625;
+                ["x"] = 610.96617120592;
+                ["g"] = 6;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -407.83867796512;
+                ["x"] = 631.06612958635;
+                ["g"] = 7;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [269931] = {};
+        };
+        ["count"] = 4;
+        ["id"] = 134157;
+        ["name"] = "Shadow-Borne Warrior";
+        ["displayId"] = 83363;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["health"] = 294320;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Disorient"] = true;
+            ["Stun"] = true;
+            ["Slow"] = true;
+            ["Fear"] = true;
+        };
+    };
+    [10] = {
+        ["clones"] = {
+            [2] = {
+                ["y"] = -452.87850497532;
+                ["x"] = 514.88000326111;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -452.52344758657;
+                ["x"] = 527.69851004025;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["y"] = -460.34119353936;
+                ["x"] = 514.43224899307;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -459.59492148032;
+                ["x"] = 528.1635677677;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -448.86805921663;
+                ["x"] = 521.59986789148;
+                ["teeming"] = true;
+                ["g"] = 9;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 137485;
+        ["spells"] = {
+            [270872] = {};
+        };
+        ["health"] = 294320;
+        ["scale"] = 0.7;
+        ["count"] = 4;
+        ["displayId"] = 85285;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["name"] = "Bloodsworn Agent";
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Slow"] = true;
+            ["Stun"] = true;
+            ["Disorient"] = true;
+        };
+    };
+    [20] = {
+        ["clones"] = {
+            [6] = {
+                ["y"] = -343.91254388122;
+                ["x"] = 374.09595637265;
+                ["g"] = 18;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -148.52496076889;
+                ["x"] = 375.20441685604;
+                ["g"] = 13;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -218.35896156667;
+                ["x"] = 373.25945672219;
+                ["g"] = 15;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["sublevel"] = 1;
+                ["x"] = 364.99983778371;
+                ["y"] = -112.24218638895;
+                ["negativeTeeming"] = true;
+                ["g"] = 12;
+            };
+            [4] = {
+                ["y"] = -323.47662382868;
+                ["x"] = 367.75409053435;
+                ["g"] = 27;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -343.70848580739;
+                ["x"] = 362.25927403815;
+                ["g"] = 29;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270487] = {};
+            [270482] = {};
+            [270485] = {};
+        };
+        ["count"] = 4;
+        ["id"] = 135167;
+        ["name"] = "Spectral Berserker";
+        ["displayId"] = 84112;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["health"] = 353184;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Incapacitate"] = true;
+            ["Shackle Undead"] = true;
+            ["Silence"] = true;
+            ["Root"] = true;
+            ["Slow"] = true;
+            ["Stun"] = true;
+            ["Disorient"] = true;
+        };
+    };
+    [30] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -264.67742362195;
+                ["x"] = 138.54486286561;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [268586] = {};
+            [268932] = {};
+            [268590] = {};
+            [268403] = {};
+            [268587] = {};
+            [268589] = {};
+            [268591] = {};
+            [268936] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2172;
+        ["instanceID"] = 1041;
+        ["name"] = "King Dazar";
+        ["health"] = 2295696;
+        ["displayId"] = 84352;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["count"] = 0;
+        ["id"] = 136160;
+    };
+    [21] = {
+        ["clones"] = {
+            [1] = {
+                ["sublevel"] = 1;
+                ["x"] = 371.39982069148;
+                ["y"] = -112.64217459185;
+                ["negativeTeeming"] = true;
+                ["g"] = 12;
+            };
+            [2] = {
+                ["sublevel"] = 1;
+                ["x"] = 362.30121150729;
+                ["infested"] = {
+                    [3] = true;
+                };
+                ["g"] = 13;
+                ["y"] = -148.20237578989;
+            };
+            [4] = {
+                ["y"] = -305.34123741919;
+                ["x"] = 374.79926462779;
+                ["g"] = 28;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -214.51280619128;
+                ["x"] = 363.06714580268;
+                ["g"] = 15;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270499] = {};
+            [270497] = {};
+            [205276] = {};
+        };
+        ["count"] = 4;
+        ["id"] = 135239;
+        ["name"] = "Spectral Witch Doctor";
+        ["displayId"] = 84163;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["health"] = 294320;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Disorient"] = true;
+            ["Stun"] = true;
+            ["Slow"] = true;
+            ["Silence"] = true;
+        };
+    };
+    [11] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -454.48417815778;
+                ["x"] = 553.05683656952;
+                ["g"] = 10;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 134251;
+        ["spells"] = {
+            [270901] = {};
+        };
+        ["health"] = 470912;
+        ["scale"] = 1;
+        ["count"] = 4;
+        ["displayId"] = 83517;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["name"] = "Seneschal M'bara";
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [22] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -197.3859907164;
+                ["x"] = 368.59110920942;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -197.3859907164;
+                        ["x"] = 368.59110920942;
+                    };
+                    [2] = {
+                        ["y"] = -182.76004846191;
+                        ["x"] = 368.59110920942;
+                    };
+                    [4] = {
+                        ["y"] = -154.23062132159;
+                        ["x"] = 368.59110920942;
+                    };
+                    [8] = {
+                        ["y"] = -211.87768089417;
+                        ["x"] = 368.59110920942;
+                    };
+                    [16] = {
+                        ["y"] = -279.95599464804;
+                        ["x"] = 368.59110920942;
+                    };
+                    [17] = {
+                        ["y"] = -265.11729441018;
+                        ["x"] = 368.59110920942;
+                    };
+                    [9] = {
+                        ["y"] = -233.34826586652;
+                        ["x"] = 368.59110920942;
+                    };
+                    [18] = {
+                        ["y"] = -249.52475076828;
+                        ["x"] = 368.59110920942;
+                    };
+                    [5] = {
+                        ["y"] = -168.0541335897;
+                        ["x"] = 368.59110920942;
+                    };
+                    [10] = {
+                        ["y"] = -249.52475076828;
+                        ["x"] = 368.59110920942;
+                    };
+                    [20] = {
+                        ["y"] = -211.87768089417;
+                        ["x"] = 368.59110920942;
+                    };
+                    [11] = {
+                        ["y"] = -265.11729441018;
+                        ["x"] = 368.59110920942;
+                    };
+                    [3] = {
+                        ["y"] = -168.0541335897;
+                        ["x"] = 368.59110920942;
+                    };
+                    [6] = {
+                        ["y"] = -182.76004846191;
+                        ["x"] = 368.59110920942;
+                    };
+                    [12] = {
+                        ["y"] = -279.95599464804;
+                        ["x"] = 368.59110920942;
+                    };
+                    [13] = {
+                        ["y"] = -294.79470872956;
+                        ["x"] = 368.59110920942;
+                    };
+                    [7] = {
+                        ["y"] = -197.3859907164;
+                        ["x"] = 368.59110920942;
+                    };
+                    [14] = {
+                        ["y"] = -308.9882529027;
+                        ["x"] = 368.59110920942;
+                    };
+                    [15] = {
+                        ["y"] = -294.79470872956;
+                        ["x"] = 368.59110920942;
+                    };
+                    [19] = {
+                        ["y"] = -233.34826586652;
+                        ["x"] = 368.59110920942;
+                    };
+                };
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -122.24355092931;
+                ["x"] = 367.74162815005;
+                ["teeming"] = true;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -350.81947079959;
+                ["x"] = 368.16673221867;
+                ["teeming"] = true;
+                ["g"] = 18;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270514] = {};
+        };
+        ["count"] = 8;
+        ["id"] = 135231;
+        ["name"] = "Spectral Brute";
+        ["displayId"] = 85125;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["health"] = 588640;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [3] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -369.15880658614;
+                ["x"] = 644.48115161493;
+                ["g"] = 3;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -371.99492624218;
+                ["x"] = 613.48433294179;
+                ["g"] = 6;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -404.14303243834;
+                ["x"] = 625.19654199879;
+                ["g"] = 7;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [269973] = {};
+            [269972] = {};
+        };
+        ["count"] = 5;
+        ["id"] = 134174;
+        ["name"] = "Shadow-Borne Witch Doctor";
+        ["displayId"] = 83371;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["health"] = 441480;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [6] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -372.2704342334;
+                ["x"] = 688.65120787074;
+                ["sublevel"] = 1;
+            };
+        };
         ["health"] = 2060240;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [265773] = {};
+            [265910] = {};
+            [265923] = {};
+            [265781] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2165;
+        ["instanceID"] = 1041;
+        ["name"] = "The Golden Serpent";
+        ["count"] = 0;
+        ["displayId"] = 84202;
+        ["creatureType"] = "Elemental";
+        ["level"] = 122;
+        ["scale"] = 1;
+        ["id"] = 135322;
+    };
+    [12] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -455.0611006388;
+                ["x"] = 542.47992166661;
+                ["g"] = 10;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 137473;
+        ["spells"] = {
+            [270084] = {};
+        };
+        ["health"] = 478270;
+        ["scale"] = 1;
+        ["count"] = 4;
+        ["displayId"] = 85270;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["name"] = "Guard Captain Atu";
+        ["characteristics"] = {
+            ["Stun"] = true;
+            ["Slow"] = true;
+            ["Taunt"] = true;
+            ["Disorient"] = true;
+        };
+    };
+    [24] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -181.62832952506;
+                ["x"] = 361.22817730788;
+                ["g"] = 14;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -182.0364982221;
+                ["x"] = 373.88123175164;
+                ["g"] = 14;
+                ["sublevel"] = 1;
+            };
+            [4] = {
+                ["y"] = -319.65113478992;
+                ["x"] = 361.1921892781;
+                ["teeming"] = true;
+                ["g"] = 27;
+                ["sublevel"] = 1;
+            };
+            [3] = {
+                ["y"] = -260.40448798552;
+                ["x"] = 364.12400057492;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270502] = {};
+            [270500] = {};
+            [270503] = {};
+        };
+        ["count"] = 4;
+        ["id"] = 135192;
+        ["name"] = "Honored Raptor";
+        ["displayId"] = 84133;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["health"] = 294320;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Disorient"] = true;
+            ["Stun"] = true;
+        };
+    };
+    [23] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -187.22974113695;
+                ["x"] = 364.05986661838;
+                ["g"] = 14;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -269.58804107506;
+                ["x"] = 364.46537713183;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270505] = {};
+            [270506] = {};
+            [270507] = {};
+        };
+        ["count"] = 4;
+        ["id"] = 135235;
+        ["name"] = "Spectral Beastmaster";
+        ["displayId"] = 84112;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["health"] = 279604;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Disorient"] = true;
+            ["Shackle Undead"] = true;
+            ["Stun"] = true;
+            ["Silence"] = true;
+        };
+    };
+    [25] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -313.17907623408;
+                ["x"] = 374.52899072422;
+                ["g"] = 28;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -312.90879073176;
+                ["x"] = 360.74523041944;
+                ["g"] = 17;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["name"] = "Spectral Headhunter";
+        ["id"] = 134994;
+        ["health"] = 95654;
+        ["displayId"] = 84026;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["count"] = 1;
+        ["characteristics"] = {
+            ["Silence"] = true;
+            ["Disorient"] = true;
+            ["Stun"] = true;
+        };
+    };
+    [13] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -459.67649699281;
+                ["x"] = 548.0568362321;
+                ["g"] = 10;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270889] = {};
+            [270891] = {};
+        };
+        ["count"] = 6;
+        ["name"] = "King Rahu'ai";
+        ["displayId"] = 83544;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["id"] = 134331;
+        ["health"] = 470912;
+    };
+    [26] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -452.64135913698;
+                ["x"] = 368.54412153426;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 135472;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [267308] = {};
+            [267273] = {};
+            [267060] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2170;
+        ["instanceID"] = 1041;
+        ["health"] = 1059552;
+        ["name"] = "Zanazal the Wise";
+        ["displayId"] = 84271;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["count"] = 0;
+        ["scale"] = 1;
+    };
+    [7] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -431.61883843803;
+                ["x"] = 525.57585072102;
+                ["g"] = 8;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -433.41881831972;
+                ["x"] = 520.41075946472;
+                ["teeming"] = true;
+                ["g"] = 8;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 137487;
+        ["spells"] = {
+            [270502] = {};
+            [270500] = {};
+            [270503] = {};
+        };
+        ["health"] = 294320;
+        ["scale"] = 0.8;
+        ["count"] = 4;
+        ["displayId"] = 33733;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["name"] = "Skeletal Hunting Raptor";
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [27] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -443.23180510135;
+                ["x"] = 392.4457697218;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [266206] = {};
+            [266231] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2170;
+        ["instanceID"] = 1041;
+        ["name"] = "Kula the Butcher";
+        ["count"] = 0;
+        ["displayId"] = 84272;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["health"] = 1059552;
+        ["id"] = 135475;
+    };
+    [14] = {
+        ["clones"] = {
+            [1] = {
+                ["sublevel"] = 1;
+                ["x"] = 544.60908072961;
+                ["infested"] = {
+                    [3] = true;
+                };
+                ["g"] = 11;
+                ["y"] = -430.9731833347;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270927] = {};
+            [270928] = {};
+        };
+        ["count"] = 6;
+        ["id"] = 137474;
+        ["name"] = "King Timalji";
+        ["displayId"] = 85272;
+        ["creatureType"] = "Undead";
+        ["level"] = 121;
+        ["health"] = 470912;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [28] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -443.04952612989;
+                ["x"] = 344.87061736905;
+                ["g"] = 19;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [266237] = {};
+            [266951] = {};
+            [266940] = {};
+            [266939] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2170;
+        ["instanceID"] = 1041;
+        ["name"] = "Aka'ali the Conqueror";
+        ["count"] = 0;
+        ["displayId"] = 84269;
+        ["creatureType"] = "Undead";
+        ["level"] = 122;
+        ["health"] = 1059552;
+        ["id"] = 135470;
+    };
+    [19] = {
+        ["clones"] = {
+            [2] = {
+                ["sublevel"] = 1;
+                ["x"] = 377.3998325625;
+                ["y"] = -108.64218956602;
+                ["negativeTeeming"] = true;
+                ["g"] = 12;
+            };
+            [3] = {
+                ["y"] = -221.4358842164;
+                ["x"] = 363.8363702754;
+                ["g"] = 15;
+                ["sublevel"] = 1;
+            };
+            [1] = {
+                ["sublevel"] = 1;
+                ["x"] = 357.39977010427;
+                ["y"] = -108.24218419699;
+                ["negativeTeeming"] = true;
+                ["g"] = 12;
+            };
+            [4] = {
+                ["y"] = -265.35726521035;
+                ["x"] = 372.54227536014;
+                ["g"] = 16;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -304.8006780133;
+                ["x"] = 361.2857550291;
+                ["g"] = 17;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [270493] = {};
+            [270492] = {};
+        };
+        ["count"] = 4;
+        ["id"] = 135204;
+        ["name"] = "Spectral Hex Priest";
+        ["displayId"] = 84140;
+        ["creatureType"] = "Undead";
+        ["level"] = 120;
+        ["health"] = 264888;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Incapacitate"] = true;
+            ["Shackle Undead"] = true;
+            ["Silence"] = true;
+            ["Slow"] = true;
+            ["Stun"] = true;
+            ["Disorient"] = true;
+        };
+    };
+    [29] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -265.0199630942;
+                ["x"] = 248.16149326946;
+                ["sublevel"] = 1;
+            };
+        };
+        ["scale"] = 1.2;
+        ["spells"] = {
+            [272388] = {};
+            [271640] = {};
+        };
+        ["count"] = 8;
+        ["id"] = 138489;
+        ["name"] = "Shadow of Zul";
+        ["displayId"] = 85860;
+        ["creatureType"] = "Humanoid";
+        ["level"] = -1;
+        ["health"] = 1000688;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [31] = {
         ["clones"] = {
@@ -562,932 +1451,24 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [271565] = {};
             [271563] = {};
         };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Disorient"] = true;
-            ["Stun"] = true;
-            ["Slow"] = true;
-            ["Silence"] = true;
-            ["Root"] = true;
-        };
+        ["health"] = 176592;
+        ["id"] = 137989;
         ["count"] = 1;
-        ["name"] = "Embalming Fluid";
         ["displayId"] = 33008;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
-        ["id"] = 137989;
-        ["health"] = 176592;
-    };
-    [5] = {
-        ["clones"] = {
-            [6] = {
-                ["y"] = -397.57817954204;
-                ["x"] = 611.11041646257;
-                ["g"] = 7;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -404.07080041865;
-                ["x"] = 656.98756594381;
-                ["g"] = 5;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -363.91468550014;
-                ["x"] = 617.28195299766;
-                ["g"] = 6;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -398.49388585316;
-                ["x"] = 652.56447983445;
-                ["g"] = 5;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -379.70414562625;
-                ["x"] = 610.96617120592;
-                ["g"] = 6;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -407.83867796512;
-                ["x"] = 631.06612958635;
-                ["g"] = 7;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [269931] = {};
-        };
+        ["name"] = "Embalming Fluid";
         ["characteristics"] = {
             ["Taunt"] = true;
             ["Disorient"] = true;
             ["Stun"] = true;
             ["Slow"] = true;
-            ["Fear"] = true;
-        };
-        ["name"] = "Shadow-Borne Warrior";
-        ["health"] = 294320;
-        ["displayId"] = 83363;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 134157;
-        ["count"] = 4;
-    };
-    [10] = {
-        ["clones"] = {
-            [6] = {
-                ["y"] = -447.94700576529;
-                ["x"] = 518.17881544181;
-                ["teeming"] = true;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -452.87850497532;
-                ["x"] = 514.88000326111;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -452.52344758657;
-                ["x"] = 527.69851004025;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["y"] = -460.34119353936;
-                ["x"] = 514.43224899307;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -459.59492148032;
-                ["x"] = 528.1635677677;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -447.94700576529;
-                ["x"] = 524.89757341655;
-                ["teeming"] = true;
-                ["g"] = 9;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 137485;
-        ["spells"] = {
-            [270872] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Slow"] = true;
-            ["Disorient"] = true;
-            ["Stun"] = true;
-        };
-        ["count"] = 4;
-        ["name"] = "Bloodsworn Agent";
-        ["displayId"] = 85285;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["scale"] = 0.7;
-        ["health"] = 294320;
-    };
-    [20] = {
-        ["clones"] = {
-            [6] = {
-                ["y"] = -343.3002995343;
-                ["x"] = 371.85108086984;
-                ["g"] = 18;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -148.52496076889;
-                ["x"] = 375.20441685604;
-                ["g"] = 13;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -218.35896156667;
-                ["x"] = 373.25945672219;
-                ["g"] = 15;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["sublevel"] = 1;
-                ["x"] = 364.99983778371;
-                ["negativeTeeming"] = true;
-                ["g"] = 12;
-                ["y"] = -112.24218638895;
-            };
-            [4] = {
-                ["y"] = -323.47662382868;
-                ["x"] = 367.75409053435;
-                ["g"] = 27;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -343.09623270224;
-                ["x"] = 363.2796783636;
-                ["g"] = 29;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270487] = {};
-            [270482] = {};
-            [270485] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Incapacitate"] = true;
-            ["Shackle Undead"] = true;
-            ["Disorient"] = true;
             ["Root"] = true;
-            ["Slow"] = true;
-            ["Stun"] = true;
             ["Silence"] = true;
         };
-        ["name"] = "Spectral Berserker";
-        ["health"] = 353184;
-        ["displayId"] = 84112;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 135167;
-        ["count"] = 4;
-    };
-    [30] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -264.67742362195;
-                ["x"] = 138.54486286561;
-                ["sublevel"] = 1;
-            };
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["id"] = 136160;
-        ["spells"] = {
-            [268586] = {};
-            [268936] = {};
-            [268590] = {};
-            [268403] = {};
-            [268587] = {};
-            [268589] = {};
-            [268591] = {};
-            [268932] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2172;
-        ["instanceID"] = 1041;
-        ["health"] = 2295696;
-        ["count"] = 0;
-        ["displayId"] = 84352;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "King Dazar";
-        ["scale"] = 1;
-    };
-    [21] = {
-        ["clones"] = {
-            [1] = {
-                ["sublevel"] = 1;
-                ["x"] = 371.39982069148;
-                ["negativeTeeming"] = true;
-                ["g"] = 12;
-                ["y"] = -112.64217459185;
-            };
-            [2] = {
-                ["y"] = -148.20237578989;
-                ["x"] = 362.30121150729;
-                ["g"] = 13;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -305.34123741919;
-                ["x"] = 374.79926462779;
-                ["g"] = 28;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -214.51280619128;
-                ["x"] = 363.06714580268;
-                ["g"] = 15;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270499] = {};
-            [270497] = {};
-            [205276] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Disorient"] = true;
-            ["Stun"] = true;
-            ["Slow"] = true;
-            ["Silence"] = true;
-        };
-        ["name"] = "Spectral Witch Doctor";
-        ["health"] = 294320;
-        ["displayId"] = 84163;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 135239;
-        ["count"] = 4;
-    };
-    [11] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -454.48417815778;
-                ["x"] = 553.05683656952;
-                ["g"] = 10;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 134251;
-        ["spells"] = {
-            [270901] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["count"] = 4;
-        ["name"] = "Seneschal M'bara";
-        ["displayId"] = 83517;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["scale"] = 1;
-        ["health"] = 470912;
-    };
-    [22] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -197.3859907164;
-                ["x"] = 368.59110920942;
-                ["patrol"] = {
-                    [1] = {
-                        ["y"] = -197.3859907164;
-                        ["x"] = 368.59110920942;
-                    };
-                    [2] = {
-                        ["y"] = -182.76004846191;
-                        ["x"] = 368.59110920942;
-                    };
-                    [4] = {
-                        ["y"] = -154.23062132159;
-                        ["x"] = 368.59110920942;
-                    };
-                    [8] = {
-                        ["y"] = -211.87768089417;
-                        ["x"] = 368.59110920942;
-                    };
-                    [16] = {
-                        ["y"] = -279.95599464804;
-                        ["x"] = 368.59110920942;
-                    };
-                    [17] = {
-                        ["y"] = -265.11729441018;
-                        ["x"] = 368.59110920942;
-                    };
-                    [9] = {
-                        ["y"] = -233.34826586652;
-                        ["x"] = 368.59110920942;
-                    };
-                    [18] = {
-                        ["y"] = -249.52475076828;
-                        ["x"] = 368.59110920942;
-                    };
-                    [5] = {
-                        ["y"] = -168.0541335897;
-                        ["x"] = 368.59110920942;
-                    };
-                    [10] = {
-                        ["y"] = -249.52475076828;
-                        ["x"] = 368.59110920942;
-                    };
-                    [20] = {
-                        ["y"] = -211.87768089417;
-                        ["x"] = 368.59110920942;
-                    };
-                    [11] = {
-                        ["y"] = -265.11729441018;
-                        ["x"] = 368.59110920942;
-                    };
-                    [3] = {
-                        ["y"] = -168.0541335897;
-                        ["x"] = 368.59110920942;
-                    };
-                    [6] = {
-                        ["y"] = -182.76004846191;
-                        ["x"] = 368.59110920942;
-                    };
-                    [12] = {
-                        ["y"] = -279.95599464804;
-                        ["x"] = 368.59110920942;
-                    };
-                    [13] = {
-                        ["y"] = -294.79470872956;
-                        ["x"] = 368.59110920942;
-                    };
-                    [7] = {
-                        ["y"] = -197.3859907164;
-                        ["x"] = 368.59110920942;
-                    };
-                    [14] = {
-                        ["y"] = -308.9882529027;
-                        ["x"] = 368.59110920942;
-                    };
-                    [19] = {
-                        ["y"] = -233.34826586652;
-                        ["x"] = 368.59110920942;
-                    };
-                    [15] = {
-                        ["y"] = -294.79470872956;
-                        ["x"] = 368.59110920942;
-                    };
-                };
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -122.24355092931;
-                ["x"] = 367.74162815005;
-                ["sublevel"] = 1;
-                ["teeming"] = true;
-            };
-            [4] = {
-                ["y"] = -335.6513462781;
-                ["x"] = 358.5347947838;
-                ["teeming"] = true;
-                ["g"] = 29;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -337.10588758322;
-                ["x"] = 378.53477869393;
-                ["teeming"] = true;
-                ["g"] = 18;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270514] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["name"] = "Spectral Brute";
-        ["health"] = 588640;
-        ["displayId"] = 85125;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 135231;
-        ["count"] = 8;
-    };
-    [3] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -369.15880658614;
-                ["x"] = 644.48115161493;
-                ["g"] = 3;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -371.99492624218;
-                ["x"] = 613.48433294179;
-                ["g"] = 6;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -404.14303243834;
-                ["x"] = 625.19654199879;
-                ["g"] = 7;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [269973] = {};
-            [269972] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["name"] = "Shadow-Borne Witch Doctor";
-        ["health"] = 441480;
-        ["displayId"] = 83371;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 134174;
-        ["count"] = 5;
-    };
-    [6] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -372.2704342334;
-                ["x"] = 688.65120787074;
-                ["sublevel"] = 1;
-            };
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["id"] = 135322;
-        ["spells"] = {
-            [265910] = {};
-            [265781] = {};
-            [265923] = {};
-            [265773] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2165;
-        ["instanceID"] = 1041;
-        ["scale"] = 1;
-        ["count"] = 0;
-        ["displayId"] = 84202;
-        ["creatureType"] = "Elemental";
-        ["level"] = 122;
-        ["name"] = "The Golden Serpent";
-        ["health"] = 2060240;
-    };
-    [12] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -455.0611006388;
-                ["x"] = 542.47992166661;
-                ["g"] = 10;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 137473;
-        ["spells"] = {
-            [270084] = {};
-        };
-        ["characteristics"] = {
-            ["Stun"] = true;
-            ["Slow"] = true;
-            ["Disorient"] = true;
-            ["Taunt"] = true;
-        };
-        ["count"] = 4;
-        ["name"] = "Guard Captain Atu";
-        ["displayId"] = 85270;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["scale"] = 1;
-        ["health"] = 478270;
-    };
-    [24] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -181.62832952506;
-                ["x"] = 361.22817730788;
-                ["g"] = 14;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -182.0364982221;
-                ["x"] = 373.88123175164;
-                ["g"] = 14;
-                ["sublevel"] = 1;
-            };
-            [4] = {
-                ["y"] = -319.65113478992;
-                ["x"] = 361.1921892781;
-                ["teeming"] = true;
-                ["g"] = 27;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -260.40448798552;
-                ["x"] = 364.12400057492;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270502] = {};
-            [270500] = {};
-            [270503] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Disorient"] = true;
-            ["Stun"] = true;
-        };
-        ["name"] = "Honored Raptor";
-        ["health"] = 294320;
-        ["displayId"] = 84133;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 135192;
-        ["count"] = 4;
-    };
-    [19] = {
-        ["clones"] = {
-            [2] = {
-                ["sublevel"] = 1;
-                ["x"] = 377.3998325625;
-                ["negativeTeeming"] = true;
-                ["g"] = 12;
-                ["y"] = -108.64218956602;
-            };
-            [3] = {
-                ["y"] = -221.4358842164;
-                ["x"] = 363.8363702754;
-                ["g"] = 15;
-                ["sublevel"] = 1;
-            };
-            [1] = {
-                ["sublevel"] = 1;
-                ["x"] = 357.39977010427;
-                ["negativeTeeming"] = true;
-                ["g"] = 12;
-                ["y"] = -108.24218419699;
-            };
-            [4] = {
-                ["y"] = -265.35726521035;
-                ["x"] = 372.54227536014;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-            [5] = {
-                ["y"] = -304.8006780133;
-                ["x"] = 361.2857550291;
-                ["g"] = 17;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270493] = {};
-            [270492] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Incapacitate"] = true;
-            ["Shackle Undead"] = true;
-            ["Silence"] = true;
-            ["Slow"] = true;
-            ["Disorient"] = true;
-            ["Stun"] = true;
-        };
-        ["name"] = "Spectral Hex Priest";
-        ["health"] = 264888;
-        ["displayId"] = 84140;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 135204;
-        ["count"] = 4;
-    };
-    [25] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -313.17907623408;
-                ["x"] = 374.52899072422;
-                ["g"] = 28;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -312.90879073176;
-                ["x"] = 360.74523041944;
-                ["g"] = 17;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["characteristics"] = {
-            ["Silence"] = true;
-            ["Disorient"] = true;
-            ["Stun"] = true;
-        };
-        ["health"] = 95654;
-        ["count"] = 1;
-        ["displayId"] = 84026;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 134994;
-        ["name"] = "Spectral Headhunter";
-    };
-    [13] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -459.67649699281;
-                ["x"] = 548.0568362321;
-                ["g"] = 10;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270889] = {};
-            [270891] = {};
-        };
-        ["name"] = "King Rahu'ai";
-        ["health"] = 470912;
-        ["displayId"] = 83544;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 134331;
-        ["count"] = 6;
-    };
-    [26] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -452.64135913698;
-                ["x"] = 368.54412153426;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [267308] = {};
-            [267273] = {};
-            [267060] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2170;
-        ["instanceID"] = 1041;
-        ["name"] = "Zanazal the Wise";
-        ["count"] = 0;
-        ["displayId"] = 84271;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["health"] = 1059552;
-        ["id"] = 135472;
-    };
-    [27] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -443.23180510135;
-                ["x"] = 392.4457697218;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["id"] = 135475;
-        ["spells"] = {
-            [266206] = {};
-            [266231] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2170;
-        ["instanceID"] = 1041;
-        ["count"] = 0;
-        ["health"] = 1059552;
-        ["displayId"] = 84272;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "Kula the Butcher";
-        ["scale"] = 1;
-    };
-    [7] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -431.61883843803;
-                ["x"] = 525.57585072102;
-                ["g"] = 8;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -433.41881831972;
-                ["x"] = 520.41075946472;
-                ["teeming"] = true;
-                ["g"] = 8;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -432.185937208;
-                ["x"] = 515.75322296867;
-                ["teeming"] = true;
-                ["g"] = 8;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 137487;
-        ["spells"] = {
-            [270502] = {};
-            [270500] = {};
-            [270503] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["count"] = 4;
-        ["name"] = "Skeletal Hunting Raptor";
-        ["displayId"] = 33733;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["scale"] = 0.8;
-        ["health"] = 294320;
-    };
-    [14] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -430.9731833347;
-                ["x"] = 544.60908072961;
-                ["g"] = 11;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270927] = {};
-            [270928] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["name"] = "King Timalji";
-        ["health"] = 470912;
-        ["displayId"] = 85272;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 137474;
-        ["count"] = 6;
-    };
-    [28] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -443.04952612989;
-                ["x"] = 344.87061736905;
-                ["g"] = 19;
-                ["sublevel"] = 1;
-            };
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["id"] = 135470;
-        ["spells"] = {
-            [266951] = {};
-            [266939] = {};
-            [266940] = {};
-            [266237] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2170;
-        ["instanceID"] = 1041;
-        ["count"] = 0;
-        ["health"] = 1059552;
-        ["displayId"] = 84269;
-        ["creatureType"] = "Undead";
-        ["level"] = 122;
-        ["name"] = "Aka'ali the Conqueror";
-        ["scale"] = 1;
-    };
-    [23] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -187.22974113695;
-                ["x"] = 364.05986661838;
-                ["g"] = 14;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -269.58804107506;
-                ["x"] = 364.46537713183;
-                ["g"] = 16;
-                ["sublevel"] = 1;
-            };
-            [3] = {
-                ["y"] = -320.40112337237;
-                ["x"] = 374.69217688127;
-                ["teeming"] = true;
-                ["g"] = 27;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [270505] = {};
-            [270506] = {};
-            [270507] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Disorient"] = true;
-            ["Shackle Undead"] = true;
-            ["Stun"] = true;
-            ["Silence"] = true;
-        };
-        ["name"] = "Spectral Beastmaster";
-        ["health"] = 279604;
-        ["displayId"] = 84112;
-        ["creatureType"] = "Undead";
-        ["level"] = 120;
-        ["id"] = 135235;
-        ["count"] = 4;
-    };
-    [29] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -265.0199630942;
-                ["x"] = 248.16149326946;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1.2;
-        ["spells"] = {
-            [272388] = {};
-            [271640] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["name"] = "Shadow of Zul";
-        ["health"] = 1000688;
-        ["displayId"] = 85860;
-        ["creatureType"] = "Humanoid";
-        ["level"] = -1;
-        ["id"] = 138489;
-        ["count"] = 8;
-    };
-    [15] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -425.39626051626;
-                ["x"] = 548.07059910979;
-                ["g"] = 11;
-                ["sublevel"] = 1;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [280404] = {};
-            [5116] = {};
-            [270923] = {};
-            [212792] = {};
-            [270920] = {};
-            [186439] = {};
-            [589] = {};
-        };
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["name"] = "Queen Wasi";
-        ["health"] = 470912;
-        ["displayId"] = 85274;
-        ["creatureType"] = "Undead";
-        ["level"] = 121;
-        ["id"] = 137478;
-        ["count"] = 6;
     };
 };
+
 
 
 
