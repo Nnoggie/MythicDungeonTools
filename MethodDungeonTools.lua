@@ -876,7 +876,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             end)
         end
     end
-    function affixDropdown:SetAffixWeek(key,ignoreReloadPullButtons)
+    function affixDropdown:SetAffixWeek(key,ignoreReloadPullButtons,ignoreUpdateProgressBar)
         affixDropdown:SetValue(key)
         if not MethodDungeonTools:GetCurrentAffixWeek() then
             frame.sidePanel.affixWeekWarning.image:Hide()
@@ -897,7 +897,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
-        MethodDungeonTools:UpdateProgressbar()
+        if not ignoreUpdateProgressBar then
+            MethodDungeonTools:UpdateProgressbar()
+        end
         if not ignoreReloadPullButtons then MethodDungeonTools:ReloadPullButtons() end
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
@@ -1543,7 +1545,7 @@ end
 
 
 
-function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons)
+function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons,ignoreUpdateProgressBar)
 	local mapName
 	local frame = MethodDungeonTools.main_frame
 	mapName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][0]
@@ -1573,7 +1575,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
-    frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons)
+    frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     MethodDungeonTools:POI_UpdateAll()
     MethodDungeonTools:DrawAllPresetObjects()
 end
@@ -1914,7 +1916,9 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	if lastSubLevel then
 		shouldResetZoom = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel ~= lastSubLevel
 		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = lastSubLevel
-		MethodDungeonTools:UpdateMap(true,true)
+        if shouldResetZoom then
+            MethodDungeonTools:UpdateMap(true,true,true)
+        end
 	end
 
 	MethodDungeonTools:UpdateDungeonDropDown()
