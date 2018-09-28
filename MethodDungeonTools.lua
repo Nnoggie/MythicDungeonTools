@@ -1977,7 +1977,7 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                             local continue = false
                             local week = preset.week%3
                             if week == 0 then week = 3 end
-                            local isBlacktoothWeek = week == 2
+                            local isBlacktoothWeek = week == 1
                             if isCloneBlacktoothEvent then
                                 if isBlacktoothWeek then
                                     continue = true

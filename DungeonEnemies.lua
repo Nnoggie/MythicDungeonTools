@@ -413,7 +413,6 @@ end
 
 ---DungeonEnemies_UpdateSelected
 ---Updates the selected Enemies on the map and marks them green
----TODO: Enemies of the current pull get specially marked
 function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
     preset = MethodDungeonTools:GetCurrentPreset()
     --deselect all
