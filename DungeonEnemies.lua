@@ -235,6 +235,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
 
     local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
     text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
+    text = text .."\n\n[Right click for more info]"
     tooltip.String:SetText(text)
 
     if db.tooltipInCorner then

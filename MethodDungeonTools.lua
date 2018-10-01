@@ -2632,7 +2632,7 @@ function initFrames()
         local tooltip = MethodDungeonTools.tooltip
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
-        tooltip.mySizes ={x=265,y=110}
+        tooltip.mySizes ={x=270,y=120}
 
         tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
         tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
@@ -2654,10 +2654,10 @@ function initFrames()
         tooltip.String:SetJustifyH("LEFT")
         tooltip.String:SetJustifyV("CENTER")
         tooltip.String:SetWidth(tooltip:GetWidth())
-        tooltip.String:SetHeight(60)
-        tooltip.String:SetWidth(120)
+        tooltip.String:SetHeight(90)
+        tooltip.String:SetWidth(140)
         tooltip.String:SetText(" ");
-        tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -17)
+        tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
         tooltip.String:Show();
         skinTooltip(tooltip)
     end
