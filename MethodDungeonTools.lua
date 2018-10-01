@@ -1514,7 +1514,6 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MethodDungeonTools:EnsureDBTables()
     local preset = MethodDungeonTools:GetCurrentPreset()
-    print(MethodDungeonTools:GetCurrentAffixWeek())
     preset.week = preset.week or MethodDungeonTools:GetCurrentAffixWeek()
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
