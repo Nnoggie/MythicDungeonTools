@@ -1,7 +1,7 @@
 ## Interface: 80000
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 2.2.28
+## Version: 2.2.29
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MethodDungeonToolsDB
