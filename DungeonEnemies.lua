@@ -234,7 +234,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     local occurence = (blip.data.isBoss and "") or blip.cloneIdx
 
     local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
-    text = text .."Enemy Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
+    text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
     tooltip.String:SetText(text)
 
     if db.tooltipInCorner then

@@ -991,8 +991,8 @@ function MethodDungeonTools:FormatEnemyForces(forces,forcesmax,progressbar)
         if progressbar then return forces.."/"..forcesmax end
         return forces
     elseif db.enemyForcesFormat == 2 then
-        if progressbar then return string.format((forces.."/"..forcesmax.." (%.1f%%)"),(forces/forcesmax)*100) end
-        return string.format(forces.." (%.1f%%)",(forces/forcesmax)*100)
+        if progressbar then return string.format((forces.."/"..forcesmax.." (%.2f%%)"),(forces/forcesmax)*100) end
+        return string.format(forces.." (%.2f%%)",(forces/forcesmax)*100)
     end
 end
 
@@ -1161,7 +1161,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         text = text..MethodDungeonTools:FormatEnemyHealth(health).." HP"..newLine
 
                         local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
-                        text = text.."Enemy Forces: "..MethodDungeonTools:FormatEnemyForces(v.enemyData.count,totalForcesMax,false)
+                        text = text.."Forces: "..MethodDungeonTools:FormatEnemyForces(v.enemyData.count,totalForcesMax,false)
 
                         tooltip.topString:SetText(text)
                         tooltip.topString:Show()
@@ -1187,7 +1187,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
             local totalForces = MethodDungeonTools:CountForces(tooltip.currentPull,false)
             local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
 
-            local text = "Enemy Forces: "..MethodDungeonTools:FormatEnemyForces(pullForces,totalForcesMax,false)
+            local text = "Forces: "..MethodDungeonTools:FormatEnemyForces(pullForces,totalForcesMax,false)
             text = text.. "\nTotal :"..MethodDungeonTools:FormatEnemyForces(totalForces,totalForcesMax,true)
 
             tooltip.botString:SetText(text)
@@ -1514,7 +1514,8 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MethodDungeonTools:EnsureDBTables()
     local preset = MethodDungeonTools:GetCurrentPreset()
-    preset.week = preset.week or 1
+    print(MethodDungeonTools:GetCurrentAffixWeek())
+    preset.week = preset.week or MethodDungeonTools:GetCurrentAffixWeek()
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel or 1
@@ -2540,7 +2541,7 @@ function MethodDungeonTools:GetCurrentAffixWeek()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
     for week,affixes in ipairs(affixWeeks) do
-        if affixes[1] == affixIds[1] and affixes[2] == affixIds[2] and affixes[3] == affixIds[3] then
+        if affixes[1] == affixIds[2] and affixes[2] == affixIds[3] and affixes[3] == affixIds[1] then
             return week
         end
     end
