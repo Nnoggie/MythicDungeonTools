@@ -24,8 +24,6 @@ local methods = {
                 else
                     --normal click?
                     MethodDungeonTools:AddPull()
-                    MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.scrollframe.obj:SetScroll(10000)
-                    MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.scrollframe.obj:FixScroll()
                 end
             end
         end

@@ -2015,6 +2015,8 @@ function MethodDungeonTools:ReloadPullButtons()
 	local frame = MethodDungeonTools.main_frame.sidePanel
     if not frame.pullButtonsScrollFrame then return end
 	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+    --store scroll value
+    local oldScrollValue = frame.pullButtonsScrollFrame.localstatus.scrollvalue
 	--first release all children of the scroll frame
 	frame.pullButtonsScrollFrame:ReleaseChildren()
 	local maxPulls =  0
@@ -2040,6 +2042,9 @@ function MethodDungeonTools:ReloadPullButtons()
 	frame.newPullButton:Initialize()
 	frame.newPullButton:Enable()
 	frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)
+    --set the scroll value back to the old value
+    frame.pullButtonsScrollFrame.scrollframe.obj:SetScroll(oldScrollValue)
+    frame.pullButtonsScrollFrame.scrollframe.obj:FixScroll()
 end
 
 ---ClearPullButtonPicks
