@@ -1933,18 +1933,7 @@ function MethodDungeonTools:PresetsMergePulls(pulls, destination)
         destination = pulls[#pulls]
     end
 
-    --TODO Find a sweet place for this helper function
-    local count_if = function(t, func)
-        local count = 0
-
-        for k, v in pairs(t) do
-            if func(v) then
-                count = count + 1
-            end
-        end
-
-        return count
-    end
+    local count_if = MethodDungeonTools.U.count_if
 
     local newPull = {}
     local removed_pulls = {}

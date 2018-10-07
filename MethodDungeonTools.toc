@@ -13,6 +13,7 @@ libs\load_libs.xml
 AceGUIWidget-MethodDungeonToolsPullButton.lua
 AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 AceGUIWidget-MethodDungeonToolsSpellButton.lua
+Utility.lua
 MethodDungeonTools.lua
 DungeonEnemies.xml
 EnemyInfo.xml
