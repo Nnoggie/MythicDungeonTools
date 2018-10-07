@@ -266,10 +266,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["health"] = 353184;
         ["name"] = "Shrine Templar";
         ["count"] = 10;
-        ["displayId"] = 84416;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 134139;
+        ["displayId"] = 84416;
         ["characteristics"] = {
             ["Taunt"] = true;
             ["Incapacitate"] = true;
@@ -646,6 +646,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 136347;
+        ["displayId"] = 83301;
         ["spells"] = {
             [277564] = {};
             [132951] = {};
@@ -667,7 +668,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 58864;
         ["count"] = 1;
-        ["displayId"] = 83301;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Tidesage Initiate";
@@ -983,9 +983,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [277242] = {};
         };
         ["id"] = 134173;
+        ["displayId"] = 88636;
         ["name"] = "Animated Droplet";
         ["health"] = 41205;
-        ["displayId"] = 88636;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["count"] = 1;
@@ -1102,9 +1102,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [274434] = {};
         };
         ["id"] = 139800;
+        ["displayId"] = 83301;
         ["health"] = 294320;
         ["count"] = 9;
-        ["displayId"] = 83301;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Galecaller Apprentice";
@@ -1247,9 +1247,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [274210] = {};
         };
         ["id"] = 139626;
+        ["displayId"] = 79406;
         ["count"] = 1;
         ["name"] = "Dredged Sailor";
-        ["displayId"] = 79406;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["health"] = 14716;
@@ -1358,6 +1358,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134338;
+        ["displayId"] = 84817;
         ["spells"] = {
             [268280] = {};
             [277242] = {};
@@ -1382,7 +1383,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 1;
         ["health"] = 294320;
-        ["displayId"] = 84817;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Tidesage Enforcer";
@@ -1411,9 +1411,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["stealthDetect"] = true;
         ["id"] = 136214;
+        ["displayId"] = 84789;
         ["health"] = 1059552;
         ["count"] = 18;
-        ["displayId"] = 84789;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["name"] = "Windspeaker Heldis";
@@ -1464,6 +1464,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134418;
+        ["displayId"] = 84023;
         ["spells"] = {
             [268322] = {};
             [277564] = {};
@@ -1475,7 +1476,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Drowned Depthbringer";
         ["health"] = 294320;
-        ["displayId"] = 84023;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 9;
@@ -1584,6 +1584,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 136186;
+        ["displayId"] = 83304;
         ["spells"] = {
             [276265] = {};
             [277242] = {};
@@ -1610,7 +1611,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 353184;
         ["count"] = 9;
-        ["displayId"] = 83304;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Tidesage Spiritualist";
@@ -1786,11 +1786,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["count"] = 9;
-        ["displayId"] = 84337;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Ironhull Apprentice";
         ["id"] = 139799;
+        ["displayId"] = 84337;
     };
     [20] = {
         ["clones"] = {
@@ -1816,11 +1816,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Colossal Tentacle";
         ["health"] = 323752;
-        ["displayId"] = 88530;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["count"] = 10;
         ["id"] = 136353;
+        ["displayId"] = 88530;
     };
     [21] = {
         ["clones"] = {
@@ -2087,9 +2087,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [205276] = {};
         };
         ["id"] = 134423;
+        ["displayId"] = 88530;
         ["health"] = 41205;
         ["count"] = 1;
-        ["displayId"] = 88530;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["name"] = "Abyss Dweller";
@@ -2126,9 +2126,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["stealthDetect"] = true;
         ["id"] = 134150;
+        ["displayId"] = 84796;
         ["health"] = 941824;
         ["count"] = 18;
-        ["displayId"] = 84796;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["name"] = "Runecarver Sorn";
@@ -2161,11 +2161,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1036;
         ["count"] = 0;
         ["name"] = "Lord Stormsong";
-        ["displayId"] = 85180;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["scale"] = 1;
         ["id"] = 134060;
+        ["displayId"] = 85180;
     };
     [3] = {
         ["clones"] = {
@@ -2302,9 +2302,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [132951] = {};
         };
         ["id"] = 134137;
+        ["displayId"] = 84637;
         ["name"] = "Temple Attendant";
         ["health"] = 294320;
-        ["displayId"] = 84637;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 9;
@@ -2344,6 +2344,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134144;
+        ["displayId"] = 88525;
         ["spells"] = {
             [268027] = {};
             [268028] = {};
@@ -2354,7 +2355,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["health"] = 529776;
         ["count"] = 13;
         ["name"] = "Living Current";
-        ["displayId"] = 88525;
         ["creatureType"] = "Elemental";
         ["level"] = 121;
         ["scale"] = 1.2;
@@ -2371,6 +2371,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 136249;
+        ["displayId"] = 65631;
         ["spells"] = {
             [268233] = {};
             [268239] = {};
@@ -2380,7 +2381,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2;
         ["health"] = 882960;
         ["name"] = "Guardian Elemental";
-        ["displayId"] = 65631;
         ["creatureType"] = "Elemental";
         ["level"] = 121;
         ["count"] = 18;
@@ -2404,9 +2404,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [209859] = {};
         };
         ["id"] = 136295;
+        ["displayId"] = 68714;
         ["count"] = 13;
         ["name"] = "Sunken Denizen";
-        ["displayId"] = 68714;
         ["creatureType"] = "Aberration";
         ["level"] = 121;
         ["health"] = 470912;
@@ -2435,9 +2435,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [209859] = {};
         };
         ["id"] = 136297;
+        ["displayId"] = 68244;
         ["count"] = 9;
         ["name"] = "Forgotten Denizen";
-        ["displayId"] = 68244;
         ["creatureType"] = "Aberration";
         ["level"] = 121;
         ["health"] = 294320;
@@ -2448,6 +2448,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [13] = {
         ["clones"] = {};
         ["id"] = 134058;
+        ["displayId"] = 83273;
+        ["displayId"] = 83273;
         ["spells"] = {
             [267841] = {};
             [267818] = {};
@@ -2457,7 +2459,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["count"] = 0;
         ["name"] = "Galecaller Faye";
-        ["displayId"] = 83273;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["health"] = 1545180;
@@ -2474,6 +2475,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134069;
+        ["displayId"] = 84502;
         ["scale"] = 1;
         ["spells"] = {
             [267034] = {};
@@ -2488,7 +2490,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1036;
         ["count"] = 0;
         ["name"] = "Vol'zith the Whisperer";
-        ["displayId"] = 84502;
         ["creatureType"] = "Aberration";
         ["level"] = 122;
         ["health"] = 2060240;
@@ -2523,11 +2524,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1036;
         ["health"] = 2354560;
         ["name"] = "Aqu'sirr";
-        ["displayId"] = 85628;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
         ["scale"] = 1;
         ["id"] = 134056;
+        ["displayId"] = 85628;
     };
     [14] = {
         ["clones"] = {
@@ -2539,6 +2540,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134063;
+        ["displayId"] = 84679;
         ["scale"] = 1;
         ["spells"] = {
             [267901] = {};
@@ -2550,7 +2552,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1036;
         ["count"] = 0;
         ["name"] = "Brother Ironhull";
-        ["displayId"] = 84679;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["health"] = 1545180;
@@ -2683,11 +2684,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 9;
         ["name"] = "Abyssal Cultist";
-        ["displayId"] = 87365;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 294320;
         ["id"] = 134514;
+        ["displayId"] = 87365;
     };
     [15] = {
         ["clones"] = {
@@ -2732,9 +2733,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [277242] = {};
         };
         ["id"] = 134417;
+        ["displayId"] = 79040;
         ["count"] = 10;
         ["name"] = "Deepsea Ritualist";
-        ["displayId"] = 79040;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["health"] = 647504;
@@ -2964,9 +2965,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [274720] = {};
         };
         ["id"] = 140038;
+        ["displayId"] = 74319;
         ["count"] = 3;
         ["name"] = "Abyssal Eel";
-        ["displayId"] = 74319;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["health"] = 117728;
@@ -2991,6 +2992,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134058;
+        ["displayId"] = 83273;
+        ["displayId"] = 83273;
         ["scale"] = 1;
         ["spells"] = {
             [267841] = {};
@@ -3003,7 +3006,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1036;
         ["count"] = 0;
         ["name"] = "Galecaller Faye";
-        ["displayId"] = 83273;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["health"] = 1545180;

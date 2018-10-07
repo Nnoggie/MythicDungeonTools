@@ -897,6 +897,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
+        MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         if not ignoreUpdateProgressBar then
             MethodDungeonTools:UpdateProgressbar()
         end
@@ -1048,16 +1049,23 @@ function MethodDungeonTools:UpdateProgressbar()
                 else
                     local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
                     local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
+                    local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
                     if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
                         local week = preset.week%3
                         if week == 0 then week = 3 end
-                        local isBlacktoothWeek = week == 2
+                        local isBlacktoothWeek = week == 1
                         if isCloneBlacktoothEvent then
                             if isBlacktoothWeek then
                                 grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
                             end
                         else
-                            grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                            if cloneFaction  then
+                                if cloneFaction == preset.faction then
+                                    grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                end
+                            else
+                                grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                            end
                         end
                     end
                 end
@@ -1208,13 +1216,27 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
                 for enemyIdx,clones in pairs(pull) do
                     for k,v in pairs(clones) do
                         local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew and MethodDungeonTools.freeholdCrews[MethodDungeonTools:GetCurrentPreset().freeholdCrew]
+
+                        local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
+                        local week = preset.week%3
+                        if week == 0 then week = 3 end
+                        local isBlacktoothWeek = week == 1
+
                         local disabled = crew and crew[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id]
-                        if not disabled then
-                            local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                            if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                                pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+
+                        local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
+
+                        if (not disabled) or (isCloneBlacktoothEvent and isBlacktoothWeek) then
+                            if not isCloneBlacktoothEvent or isBlacktoothWeek then
+                                if not (cloneFaction and cloneFaction~= preset.faction) then
+                                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                                    if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                                        pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                    end
+                                end
                             end
                         end
+
                     end
                 end
             else
@@ -1541,6 +1563,12 @@ function MethodDungeonTools:EnsureDBTables()
     end
 
     MethodDungeonTools:GetCurrentPreset().week = MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek()
+
+    if db.currentDungeonIdx == 19 then
+        local englishFaction = UnitFactionGroup("player")
+        preset.faction  = preset.faction or (englishFaction and englishFaction=="Alliance") and 2 or 1
+    end
+
 end
 
 
@@ -1577,6 +1605,8 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	MethodDungeonTools:UpdateDungeonDropDown()
     frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     MethodDungeonTools:POI_UpdateAll()
+    MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
+    MethodDungeonTools:ToggleBoralusSelector(db.currentDungeonIdx == 19)
     MethodDungeonTools:DrawAllPresetObjects()
 end
 
@@ -1984,6 +2014,12 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 end
                             else
                                 continue = true
+                            end
+
+                            --check for faction
+                            local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
+                            if cloneFaction then
+                                if cloneFaction ~= preset.faction then continue = false end
                             end
 
                             if continue then

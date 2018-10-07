@@ -497,6 +497,18 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
     end
 end
 
+function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
+    for _,blip in pairs(blips) do
+        if blip.clone.faction then
+            if blip.clone.faction == faction then
+                blip:Show()
+            else
+                blip:Hide()
+            end
+        end
+    end
+end
+
 
 
 ---DungeonEnemies_UpdateInfested

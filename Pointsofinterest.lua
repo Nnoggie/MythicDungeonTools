@@ -283,11 +283,9 @@ end
 
 
 
----UpdateMapLinks
----Draws all map links on the current sublevel
+---POI_UpdateAll
 function MethodDungeonTools:POI_UpdateAll()
     db = MethodDungeonTools:GetDB()
-    MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     local framePools = MethodDungeonTools.poi_framePools
     framePools:ReleaseAll()
     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then return end
