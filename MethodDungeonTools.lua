@@ -1903,12 +1903,86 @@ function MethodDungeonTools:MakePullSelectionButtons(frame)
 end
 
 
-function MethodDungeonTools:PresetsAddPull(index)
+function MethodDungeonTools:PresetsAddPull(index, data)
+    if not data then
+        data = {}
+    end
+
 	if index then
-		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,index,{})
+		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,index,data)
 	else
-		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,{})
+		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,data)
 	end
+end
+
+---MethodDungeonTools:PresetsMergePulls
+---Merges a list of pulls and inserts them at a specified destination.
+---
+---@param pulls table List of all pull indices, that shall be merged (and deleted). If pulls
+---                   is a number, then the pull list is automatically generated from pulls
+---                   and destination.
+---@param destination number The pull index, where the merged pull shall be inserted.
+---
+---@author Dradux
+function MethodDungeonTools:PresetsMergePulls(pulls, destination)
+    if type(pulls) == "number" then
+        pulls = {pulls, destination}
+    end
+
+    if not destination then
+        destination = pulls[#pulls]
+    end
+
+    --TODO Find a sweet place for this helper function
+    local count_if = function(t, func)
+        local count = 0
+
+        for k, v in pairs(t) do
+            if func(v) then
+                count = count + 1
+            end
+        end
+
+        return count
+    end
+
+    local newPull = {}
+    local removed_pulls = {}
+    for _, pullIdx in ipairs(pulls) do
+        local offset = count_if(removed_pulls, function(entry)
+            return entry < pullIdx
+        end)
+
+        local index = pullIdx - offset
+        local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[index]
+
+        for enemyIdx,clones in pairs(pull) do
+            if not newPull[enemyIdx] then
+                newPull[enemyIdx] = clones
+            else
+                for k,v in pairs(clones) do
+                    if newPull[enemyIdx][k] ~= nil then
+                        local newIndex = #newPull[enemyIdx] + 1
+                        newPull[enemyIdx][newIndex] = v
+                    else
+                        newPull[enemyIdx][k] = v
+                    end
+
+                end
+            end
+        end
+
+        MethodDungeonTools:PresetsDeletePull(index)
+        tinsert(removed_pulls, pullIdx)
+    end
+
+    local offset = count_if(removed_pulls, function(entry)
+        return entry < destination
+    end)
+
+    local index = destination - offset
+    MethodDungeonTools:PresetsAddPull(index, newPull)
+    return index
 end
 
 function MethodDungeonTools:PresetsDeletePull(p,j)

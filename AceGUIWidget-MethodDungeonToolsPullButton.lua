@@ -96,6 +96,69 @@ local methods = {
                 func = function() MethodDungeonTools:MovePullDown(self.index) end
             })
         end
+        if self.index ~= 1 or self.index < self.maxPulls then
+            tinsert(self.menu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
+        end
+        tinsert(self.menu, {
+            text = "Insert before",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:PresetsAddPull(self.index)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(self.index)
+            end
+        })
+
+        tinsert(self.menu, {
+            text = "Insert after",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:PresetsAddPull(self.index + 1)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(self.index + 1)
+            end
+        })
+        tinsert(self.menu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+        if self.index ~= 1 then
+            tinsert(self.menu, {
+                text = "Merge up",
+                notCheckable = 1,
+                func = function()
+                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
+                    MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:SetSelectionToPull(newIndex)
+                end
+            })
+        end
+        if self.index < self.maxPulls then
+            tinsert(self.menu, {
+                text = "Merge down",
+                notCheckable = 1,
+                func = function()
+                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
+                    MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:SetSelectionToPull(newIndex)
+                end
+            })
+        end
+        if self.index ~= 1 or self.index < self.maxPulls then
+            tinsert(self.menu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
+        end
         tinsert(self.menu, {
             text = "Clear",
             notCheckable = 1,
@@ -118,13 +181,14 @@ local methods = {
                 notCheckable = 1,
                 func = function() MethodDungeonTools:DeletePull(self.index) end
             })
+            tinsert(self.menu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
         end
-        tinsert(self.menu, {
-            text = " ",
-            notClickable = 1,
-            notCheckable = 1,
-            func = nil
-        })
+
         tinsert(self.menu, {
             text = "Close",
             notCheckable = 1,
