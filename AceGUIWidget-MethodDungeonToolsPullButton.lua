@@ -5,6 +5,10 @@ local width,height = 248,32
 local maxPortraitCount = 7
 local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
 
+local function GetDropTarget()
+    return 2
+end
+
 --Methods
 local methods = {
     ["OnAcquire"] = function(self)
@@ -67,11 +71,13 @@ local methods = {
         end
 
         function self.callbacks.OnDragStart()
-            --
+            print("Drag started")
+            self:Drag()
         end
 
         function self.callbacks.OnDragStop()
-            --
+            print("Drag stopped")
+            self:Drop()
         end
 
         function self.callbacks.OnKeyDown(self, key)
@@ -212,6 +218,55 @@ local methods = {
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
         self:Enable();
         --self:SetRenameAction(self.callbacks.OnRenameAction);
+    end,
+    ["Drag"] = function(self)
+        local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
+        local x, w = self.frame:GetLeft(), self.frame:GetWidth()
+        local _, y = GetCursorPosition()
+
+        MethodDungeonTools.pullTooltip:Hide()
+
+        self.dragging = true
+        self.frame:StartMoving()
+        self.frame:ClearAllPoints()
+        self.frame.temp = {
+            parent = self.frame:GetParent(),
+            strata = self.frame:GetFrameStrata()
+        }
+        self.frame:SetParent(UIParent)
+        self.frame:SetFrameStrata("FULLSCREEN_DIALOG")
+        self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
+        self.frame:SetScript("OnUpdate", function(self, elapsed)
+            self.elapsed = (self.elapsed or 0) + elapsed
+            if self.elapsed > 0.1 then
+                --print("Show Drop Indicator")
+                self.elapsed = 0
+            end
+        end)
+    end,
+    ["Drop"] = function(self)
+        local insertID = GetDropTarget()
+        self.frame:StopMovingOrSizing()
+        self.frame:SetScript("OnUpdate", nil)
+
+        if self.dragging then
+            self.frame:SetParent(self.frame.temp.parent)
+            self.frame:SetFrameStrata(self.frame.temp.strata)
+            self.frame.temp = nil
+        end
+
+        self.dragging = false
+        local index = self.index
+        if index > insertID then
+            index = index + 1
+        end
+
+        MethodDungeonTools:PresetsAddPull(insertID)
+        local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
+        MethodDungeonTools:ReloadPullButtons()
+        MethodDungeonTools:SetSelectionToPull(newIndex)
+
+        MethodDungeonTools.pullTooltip:Hide()
     end,
     ["SetTitle"] = function(self, title)
         self.titletext = title;
