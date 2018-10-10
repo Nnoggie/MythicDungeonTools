@@ -4,8 +4,10 @@ local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local width,height = 248,32
 local maxPortraitCount = 7
 local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
+local next = next
 
 local function GetDropTarget()
+    -- MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
     return 2
 end
 
