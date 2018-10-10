@@ -17,7 +17,11 @@ local methods = {
             if(IsControlKeyDown())then
 
             elseif(IsShiftKeyDown()) then
-
+                if DEFAULT_CHAT_FRAME.editBox and DEFAULT_CHAT_FRAME.editBox:IsVisible() then
+                    local old = DEFAULT_CHAT_FRAME.editBox:GetText()
+                    local link = GetSpellLink(self.spellId) or ""
+                    DEFAULT_CHAT_FRAME.editBox:SetText(old .. link)
+                end
             else
 
             end
