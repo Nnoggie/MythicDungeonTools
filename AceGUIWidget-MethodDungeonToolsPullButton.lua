@@ -10,6 +10,7 @@ local function GetDropTarget()
     local buttonList = MethodDungeonTools.main_frame.sidePanel.newPullButtons
     local id, button, pos, offset
 
+    -- Find hovered pull
     repeat
         repeat
             id, button = next(buttonList, id)
@@ -21,6 +22,46 @@ local function GetDropTarget()
                or (button.frame:IsMouseOver(-offset, -1) and "BOTTOM")
         end
     until not id or pos
+
+    -- Is add new pull hovered?
+    if not id then
+        local addNewPullButton = MethodDungeonTools.main_frame.sidePanel.newPullButton
+        if addNewPullButton.frame:IsMouseOver() then
+            local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+            id = maxPulls
+            button = buttonList[id]
+            pos = "BOTTOM"
+
+            -- Is the last button dragged?
+            if button.dragging and id > 1 then
+                id = id - 1
+                button = buttonList[id]
+                pos = "BOTTOM"
+            end
+        end
+    end
+
+    -- Seems to be outside of the list
+    -- drop it back to it's original position
+    if not id then
+        repeat
+            id, button = next(buttonList, id)
+        until button.dragging
+
+        print("dragged button is", id)
+        print("button", button)
+        print("dragging", button and button.dragging)
+
+        if id > 1 then
+            id = id - 1
+            button = buttonList[id]
+            pos = "BOTTOM"
+        elseif id == 1 then
+            id = 2
+            button = buttonList[id]
+            pos = "TOP"
+        end
+    end
 
     return id, button, pos
 end
