@@ -7,8 +7,23 @@ local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetIt
 local next = next
 
 local function GetDropTarget()
-    -- MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
-    return 2
+    local buttonList = MethodDungeonTools.main_frame.sidePanel.newPullButtons
+    local id, button, pos, offset
+
+    repeat
+        repeat
+            id, button = next(buttonList, id)
+        until not id or not button.dragging and button:IsShown()
+
+        if id and button then
+            offset = (button.frame.height or button.frame:GetHeight() or 16) / 2
+            pos = (button.frame:IsMouseOver(1, offset) and "TOP")
+               or (button.frame:IsMouseOver(-offset, -1) and "BOTTOM")
+        end
+    until not id or pos
+
+    print(id, button.index, pos)
+    return id, button, pos
 end
 
 --Methods
@@ -247,7 +262,7 @@ local methods = {
         end)
     end,
     ["Drop"] = function(self)
-        local insertID = GetDropTarget()
+        local insertID, button, pos = GetDropTarget()
         self.frame:StopMovingOrSizing()
         self.frame:SetScript("OnUpdate", nil)
 
@@ -255,6 +270,10 @@ local methods = {
             self.frame:SetParent(self.frame.temp.parent)
             self.frame:SetFrameStrata(self.frame.temp.strata)
             self.frame.temp = nil
+        end
+
+        if pos == "BOTTOM" then
+            insertID = insertID + 1
         end
 
         self.dragging = false
