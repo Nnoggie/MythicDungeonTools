@@ -22,7 +22,6 @@ local function GetDropTarget()
         end
     until not id or pos
 
-    print(id, button.index, pos)
     return id, button, pos
 end
 
@@ -88,12 +87,10 @@ local methods = {
         end
 
         function self.callbacks.OnDragStart()
-            print("Drag started")
             self:Drag()
         end
 
         function self.callbacks.OnDragStop()
-            print("Drag stopped")
             self:Drop()
         end
 
@@ -256,13 +253,20 @@ local methods = {
         self.frame:SetScript("OnUpdate", function(self, elapsed)
             self.elapsed = (self.elapsed or 0) + elapsed
             if self.elapsed > 0.1 then
-                --print("Show Drop Indicator")
+                local button, pos = select(2, GetDropTarget())
+                MethodDungeonTools:Show_DropIndicator(button, pos)
                 self.elapsed = 0
             end
         end)
     end,
     ["Drop"] = function(self)
         local insertID, button, pos = GetDropTarget()
+
+        if not insertID then
+            insertID = self.maxPulls
+            pos = "TOP"
+        end
+
         self.frame:StopMovingOrSizing()
         self.frame:SetScript("OnUpdate", nil)
 
@@ -287,7 +291,8 @@ local methods = {
         MethodDungeonTools:ReloadPullButtons()
         MethodDungeonTools:SetSelectionToPull(newIndex)
 
-        MethodDungeonTools.pullTooltip:Hide()
+        MethodDungeonTools:Hide_DropIndicator()
+        MethodDungeonTools.pullTooltip:Show()
     end,
     ["SetTitle"] = function(self, title)
         self.titletext = title;

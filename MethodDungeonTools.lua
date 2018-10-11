@@ -2660,6 +2660,51 @@ function MethodDungeonTools:ResetMainFramePos()
     f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
 end
 
+function MethodDungeonTools:DropIndicator()
+    local indicator = MethodDungeonTools.main_frame.drop_indicator
+    if not indicator then
+        indicator = CreateFrame("Frame", "MethodDungeonTools_DropIndicator")
+        indicator:SetHeight(4)
+        indicator:SetFrameStrata("FULLSCREEN")
+
+        local texture = indicator:CreateTexture(nil, "FULLSCREEN")
+        texture:SetBlendMode("ADD")
+        texture:SetAllPoints(indicator)
+        texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
+
+        local icon = indicator:CreateTexture(nil, "OVERLAY")
+        icon:SetSize(16, 16)
+        icon:SetPoint("CENTER", indicator)
+
+        indicator.icon = icon
+        indicator.texture = texture
+        MethodDungeonTools.main_frame.drop_indicator = indicator
+
+        indicator:Hide()
+    end
+
+    return indicator
+end
+
+function MethodDungeonTools:Show_DropIndicator(target, pos)
+    local indicator = MethodDungeonTools:DropIndicator()
+
+    indicator:ClearAllPoints()
+    if pos == "TOP" then
+        indicator:SetPoint("BOTTOMLEFT", target.frame, "TOPLEFT", 0, -1)
+        indicator:SetPoint("BOTTOMRIGHT", target.frame, "TOPRIGHT", 0, -1)
+        indicator:Show()
+    elseif pos == "BOTTOM" then
+        indicator:SetPoint("TOPLEFT", target.frame, "BOTTOMLEFT", 0, 1)
+        indicator:SetPoint("TOPRIGHT", target.frame, "BOTTOMRIGHT", 0, 1)
+        indicator:Show()
+    end
+end
+
+function MethodDungeonTools:Hide_DropIndicator()
+    local indicator = MethodDungeonTools:DropIndicator()
+    indicator:Hide()
+end
 
 
 function initFrames()
