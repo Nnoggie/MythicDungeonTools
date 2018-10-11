@@ -7,36 +7,39 @@ local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetIt
 local next = next
 
 local function GetDropTarget()
+    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
     local buttonList = MethodDungeonTools.main_frame.sidePanel.newPullButtons
     local id, button, pos, offset
 
-    -- Find hovered pull
-    repeat
+    if scrollFrame.frame:IsMouseOver() then
+        -- Find hovered pull
         repeat
-            id, button = next(buttonList, id)
-        until not id or not button.dragging and button:IsShown()
+            repeat
+                id, button = next(buttonList, id)
+            until not id or not button.dragging and button:IsShown()
 
-        if id and button then
-            offset = (button.frame.height or button.frame:GetHeight() or 16) / 2
-            pos = (button.frame:IsMouseOver(1, offset) and "TOP")
-               or (button.frame:IsMouseOver(-offset, -1) and "BOTTOM")
-        end
-    until not id or pos
+            if id and button then
+                offset = (button.frame.height or button.frame:GetHeight() or 16) / 2
+                pos = (button.frame:IsMouseOver(1, offset) and "TOP")
+                        or (button.frame:IsMouseOver(-offset, -1) and "BOTTOM")
+            end
+        until not id or pos
 
-    -- Is add new pull hovered?
-    if not id then
-        local addNewPullButton = MethodDungeonTools.main_frame.sidePanel.newPullButton
-        if addNewPullButton.frame:IsMouseOver() then
-            local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
-            id = maxPulls
-            button = buttonList[id]
-            pos = "BOTTOM"
-
-            -- Is the last button dragged?
-            if button.dragging and id > 1 then
-                id = id - 1
+        -- Is add new pull hovered?
+        if not id then
+            local addNewPullButton = MethodDungeonTools.main_frame.sidePanel.newPullButton
+            if addNewPullButton.frame:IsMouseOver() then
+                local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                id = maxPulls
                 button = buttonList[id]
                 pos = "BOTTOM"
+
+                -- Is the last button dragged?
+                if button.dragging and id > 1 then
+                    id = id - 1
+                    button = buttonList[id]
+                    pos = "BOTTOM"
+                end
             end
         end
     end
@@ -47,10 +50,6 @@ local function GetDropTarget()
         repeat
             id, button = next(buttonList, id)
         until button.dragging
-
-        print("dragged button is", id)
-        print("button", button)
-        print("dragging", button and button.dragging)
 
         if id > 1 then
             id = id - 1
