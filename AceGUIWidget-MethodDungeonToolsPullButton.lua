@@ -118,7 +118,9 @@ local methods = {
         function self.callbacks.OnLeave()
             MethodDungeonTools.pullTooltip.Model:Hide()
             MethodDungeonTools.pullTooltip.topString:Hide()
-            self.frame:SetScript("OnUpdate", nil)
+            if not self.dragging then
+                self.frame:SetScript("OnUpdate", nil)
+            end
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
             MethodDungeonTools.pullTooltip:Hide()
             MethodDungeonTools.ProgressBarResetTimer = C_Timer.NewTimer(0.35, function()
@@ -319,7 +321,7 @@ local methods = {
                     local oldvalue = scrollFrame.localstatus.scrollvalue
                     scrollFrame.scrollframe.obj:SetScroll(oldvalue + scroll_hover_amount)
                     scrollFrame.scrollframe.obj:FixScroll()
-                    
+
                     self.bottom_hover = 0
                 end
             else
