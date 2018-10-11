@@ -291,6 +291,42 @@ local methods = {
         self.frame:SetFrameStrata("FULLSCREEN_DIALOG")
         self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
         self.frame:SetScript("OnUpdate", function(self, elapsed)
+            local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+            local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+            local scroll_hover_offset = 20
+            local scroll_hover_timeout = 0.05
+            local scroll_hover_amount = 20
+
+            if scrollFrame.frame:IsMouseOver(1, height - scroll_hover_offset) then
+                self.top_hover = (self.top_hover or 0) + elapsed
+                self.bottom_hover = 0
+
+                if self.top_hover > scroll_hover_timeout then
+                    local oldvalue = scrollFrame.localstatus.scrollvalue
+                    local newvalue = oldvalue - scroll_hover_amount
+                    if newvalue < 0 then
+                        newvalue = 0
+                    end
+                    scrollFrame.scrollframe.obj:SetScroll(newvalue)
+                    scrollFrame.scrollframe.obj:FixScroll()
+                    self.top_hover = 0
+                end
+            elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -1) then
+                self.bottom_hover = (self.bottom_hover or 0) + elapsed
+                self.top_hover = 0
+
+                if self.bottom_hover > scroll_hover_timeout then
+                    local oldvalue = scrollFrame.localstatus.scrollvalue
+                    scrollFrame.scrollframe.obj:SetScroll(oldvalue + scroll_hover_amount)
+                    scrollFrame.scrollframe.obj:FixScroll()
+                    
+                    self.bottom_hover = 0
+                end
+            else
+                self.top_hover = 0
+                self.bottom_hover = 0
+            end
+
             self.elapsed = (self.elapsed or 0) + elapsed
             if self.elapsed > 0.1 then
                 local button, pos = select(2, GetDropTarget())
