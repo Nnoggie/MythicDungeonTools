@@ -103,10 +103,9 @@ local methods = {
                 MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"BOTTOMLEFT",0,(4+MethodDungeonTools.pullTooltip.myHeight))
                 MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",-250,-4)
             end
+            self.entered = true
             MethodDungeonTools:ActivatePullTooltip(self.index)
-            self.frame:SetScript("OnUpdate", function()
-                MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
-            end)
+            self.frame:SetScript("OnUpdate", self:CreateUpdateFunction())
             --progressbar
             if MethodDungeonTools.ProgressBarResetTimer then MethodDungeonTools.ProgressBarResetTimer:Cancel() end
             local currentForces = MethodDungeonTools:CountForces(self.index)
@@ -118,9 +117,8 @@ local methods = {
         function self.callbacks.OnLeave()
             MethodDungeonTools.pullTooltip.Model:Hide()
             MethodDungeonTools.pullTooltip.topString:Hide()
-            if not self.dragging then
-                self.frame:SetScript("OnUpdate", nil)
-            end
+            self.entered = false
+            self.frame:SetScript("OnUpdate", nil)
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
             MethodDungeonTools.pullTooltip:Hide()
             MethodDungeonTools.ProgressBarResetTimer = C_Timer.NewTimer(0.35, function()
@@ -275,6 +273,66 @@ local methods = {
         self:Enable();
         --self:SetRenameAction(self.callbacks.OnRenameAction);
     end,
+    ["CreateUpdateFunction"] = function(self)
+        if not self.updateFunction then
+            self.updateFunction = function(frame, elapsed)
+                if self.entered and not self.dragging then
+                    MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+                end
+
+                if self.dragging then
+                    if MethodDungeonTools.pullTooltip:IsShown() then
+                        MethodDungeonTools.pullTooltip:Hide()
+                    end
+
+                    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+                    local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+                    local scroll_hover_offset = 20
+                    local scroll_hover_timeout = 0.05
+                    local scroll_hover_amount = 20
+
+                    if scrollFrame.frame:IsMouseOver(1, height - scroll_hover_offset) then
+                        self.top_hover = (self.top_hover or 0) + elapsed
+                        self.bottom_hover = 0
+
+                        if self.top_hover > scroll_hover_timeout then
+                            local oldvalue = scrollFrame.localstatus.scrollvalue
+                            local newvalue = oldvalue - scroll_hover_amount
+                            if newvalue < 0 then
+                                newvalue = 0
+                            end
+                            scrollFrame.scrollframe.obj:SetScroll(newvalue)
+                            scrollFrame.scrollframe.obj:FixScroll()
+                            self.top_hover = 0
+                        end
+                    elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -1) then
+                        self.bottom_hover = (self.bottom_hover or 0) + elapsed
+                        self.top_hover = 0
+
+                        if self.bottom_hover > scroll_hover_timeout then
+                            local oldvalue = scrollFrame.localstatus.scrollvalue
+                            scrollFrame.scrollframe.obj:SetScroll(oldvalue + scroll_hover_amount)
+                            scrollFrame.scrollframe.obj:FixScroll()
+
+                            self.bottom_hover = 0
+                        end
+                    else
+                        self.top_hover = 0
+                        self.bottom_hover = 0
+                    end
+
+                    self.elapsed = (self.elapsed or 0) + elapsed
+                    if self.elapsed > 0.1 then
+                        local button, pos = select(2, GetDropTarget())
+                        MethodDungeonTools:Show_DropIndicator(button, pos)
+                        self.elapsed = 0
+                    end
+                end
+            end
+        end
+
+        return self.updateFunction
+    end,
     ["Drag"] = function(self)
         local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
         local x, w = self.frame:GetLeft(), self.frame:GetWidth()
@@ -283,6 +341,7 @@ local methods = {
         MethodDungeonTools.pullTooltip:Hide()
 
         self.dragging = true
+
         self.frame:StartMoving()
         self.frame:ClearAllPoints()
         self.frame.temp = {
@@ -292,50 +351,8 @@ local methods = {
         self.frame:SetParent(UIParent)
         self.frame:SetFrameStrata("FULLSCREEN_DIALOG")
         self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
-        self.frame:SetScript("OnUpdate", function(self, elapsed)
-            local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
-            local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
-            local scroll_hover_offset = 20
-            local scroll_hover_timeout = 0.05
-            local scroll_hover_amount = 20
 
-            if scrollFrame.frame:IsMouseOver(1, height - scroll_hover_offset) then
-                self.top_hover = (self.top_hover or 0) + elapsed
-                self.bottom_hover = 0
-
-                if self.top_hover > scroll_hover_timeout then
-                    local oldvalue = scrollFrame.localstatus.scrollvalue
-                    local newvalue = oldvalue - scroll_hover_amount
-                    if newvalue < 0 then
-                        newvalue = 0
-                    end
-                    scrollFrame.scrollframe.obj:SetScroll(newvalue)
-                    scrollFrame.scrollframe.obj:FixScroll()
-                    self.top_hover = 0
-                end
-            elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -1) then
-                self.bottom_hover = (self.bottom_hover or 0) + elapsed
-                self.top_hover = 0
-
-                if self.bottom_hover > scroll_hover_timeout then
-                    local oldvalue = scrollFrame.localstatus.scrollvalue
-                    scrollFrame.scrollframe.obj:SetScroll(oldvalue + scroll_hover_amount)
-                    scrollFrame.scrollframe.obj:FixScroll()
-
-                    self.bottom_hover = 0
-                end
-            else
-                self.top_hover = 0
-                self.bottom_hover = 0
-            end
-
-            self.elapsed = (self.elapsed or 0) + elapsed
-            if self.elapsed > 0.1 then
-                local button, pos = select(2, GetDropTarget())
-                MethodDungeonTools:Show_DropIndicator(button, pos)
-                self.elapsed = 0
-            end
-        end)
+        self.frame:SetScript("OnUpdate", self:CreateUpdateFunction())
     end,
     ["Drop"] = function(self)
         local insertID, button, pos = GetDropTarget()
@@ -346,6 +363,7 @@ local methods = {
         end
 
         self.frame:StopMovingOrSizing()
+        self.dragging = false
         self.frame:SetScript("OnUpdate", nil)
 
         if self.dragging then
@@ -358,7 +376,6 @@ local methods = {
             insertID = insertID + 1
         end
 
-        self.dragging = false
         local index = self.index
         if index > insertID then
             index = index + 1
