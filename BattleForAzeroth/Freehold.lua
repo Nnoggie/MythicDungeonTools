@@ -1916,7 +1916,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["neutral"] = true;
-        ["count"] = 0;
+        ["count"] = 1;
         ["health"] = 58864;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2003,7 +2003,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [1604] = {};
         };
         ["neutral"] = true;
-        ["count"] = 2;
+        ["count"] = 1;
         ["name"] = "Freehold Shipmate";
         ["health"] = 60883;
         ["creatureType"] = "Humanoid";
@@ -2282,7 +2282,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [277564] = {};
         };
         ["scale"] = 0.6;
-        ["count"] = 0;
+        ["count"] = 1;
         ["health"] = 44148;
         ["name"] = "Freehold Barhand";
         ["creatureType"] = "Humanoid";

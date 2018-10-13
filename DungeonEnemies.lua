@@ -498,9 +498,11 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
 end
 
 function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
+    preset = MethodDungeonTools:GetCurrentPreset()
+    local teeming = MethodDungeonTools:IsPresetTeeming(preset)
     for _,blip in pairs(blips) do
         if blip.clone.faction then
-            if blip.clone.faction == faction then
+            if blip.clone.faction == faction and ((teeming and blip.clone.teeming) or (not blip.clone.teeming)) then
                 blip:Show()
             else
                 blip:Hide()
