@@ -1570,6 +1570,14 @@ function MethodDungeonTools:EnsureDBTables()
         preset.faction  = preset.faction or (englishFaction and englishFaction=="Alliance") and 2 or 1
     end
 
+    if db.currentDungeonIdx == 16 and (not preset.freeholdCrewSelected) then
+        local week = preset.week
+        week = week%3
+        if week == 0 then week = 3 end
+        preset.freeholdCrew = week
+        preset.freeholdCrewSelected = true
+    end
+
 end
 
 
