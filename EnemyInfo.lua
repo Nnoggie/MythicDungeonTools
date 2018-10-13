@@ -418,8 +418,14 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     --data
     f.enemyDataContainer.idEditBox:SetText(data.id)
     f.enemyDataContainer.idEditBox.defaultText = data.id
-    f.enemyDataContainer.healthEditBox:SetText(data.health)
-    f.enemyDataContainer.healthEditBox.defaultText = data.health
+
+    local boss = data.isBoss or false
+    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
+    local healthText = MethodDungeonTools:FormatEnemyHealth(health)
+
+    f.enemyDataContainer.healthEditBox:SetText(healthText)
+    f.enemyDataContainer.healthEditBox.defaultText = healthText
+
     f.enemyDataContainer.creatureTypeEditBox:SetText(data.creatureType)
     f.enemyDataContainer.creatureTypeEditBox.defaultText = data.creatureType
     f.enemyDataContainer.levelEditBox:SetText(data.level)

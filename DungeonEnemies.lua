@@ -219,13 +219,8 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
         return
     end
 
-    local fortified = false
-    local boss = false
-    if MethodDungeonTools:GetCurrentPreset().value.currentAffix then
-        if MethodDungeonTools:GetCurrentPreset().value.currentAffix == "fortified" then fortified = true end
-    end
-    local tyrannical = not fortified
-    local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,data.health,db.currentDifficulty)
+    local boss = blip.data.isBoss or false
+    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
     local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
     local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
     --[[
