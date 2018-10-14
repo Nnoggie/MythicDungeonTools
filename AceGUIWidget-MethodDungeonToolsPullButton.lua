@@ -6,12 +6,15 @@ local maxPortraitCount = 7
 local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
 local next = next
 
+local dragdrop_overlap = 2000
+
 local function GetDropTarget()
     local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
     local buttonList = MethodDungeonTools.main_frame.sidePanel.newPullButtons
     local id, button, pos, offset
 
-    if scrollFrame.frame:IsMouseOver() then
+
+    if scrollFrame.frame:IsMouseOver(1, -1, -dragdrop_overlap, dragdrop_overlap) then
         -- Find hovered pull
         repeat
             repeat
@@ -20,8 +23,8 @@ local function GetDropTarget()
 
             if id and button then
                 offset = (button.frame.height or button.frame:GetHeight() or 16) / 2
-                pos = (button.frame:IsMouseOver(1, offset) and "TOP")
-                        or (button.frame:IsMouseOver(-offset, -1) and "BOTTOM")
+                pos = (button.frame:IsMouseOver(1, offset, -dragdrop_overlap, dragdrop_overlap) and "TOP")
+                        or (button.frame:IsMouseOver(-offset, -1, -dragdrop_overlap, dragdrop_overlap) and "BOTTOM")
             end
         until not id or pos
 
@@ -41,6 +44,35 @@ local function GetDropTarget()
                     pos = "BOTTOM"
                 end
             end
+        end
+    end
+
+    local scroll_value_min = 25
+    local scroll_value_max = 975
+    local scroll_value = scrollFrame.localstatus.scrollvalue
+    local scroll_frame_height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+
+    -- Top Graceful Area
+    if scrollFrame.frame:IsMouseOver(50, scroll_frame_height+1, -dragdrop_overlap, dragdrop_overlap) and scroll_value < scroll_value_min then
+        id, button, pos = 1, buttonList[1], "TOP"
+
+        if button.dragging then
+            id, button, pos = 2, buttonList[2], "TOP"
+        end
+    end
+
+    -- Bottom Graceful Area
+    if scrollFrame.frame:IsMouseOver(-(scroll_frame_height+1), -50, -dragdrop_overlap, dragdrop_overlap) and scroll_value > scroll_value_max then
+        local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+        id = maxPulls
+        button = buttonList[id]
+        pos = "BOTTOM"
+
+        -- Is the last button dragged?
+        if button.dragging and id > 1 then
+            id = id - 1
+            button = buttonList[id]
+            pos = "BOTTOM"
         end
     end
 
@@ -291,7 +323,7 @@ local methods = {
                     local scroll_hover_timeout = 0.05
                     local scroll_hover_amount = 20
 
-                    if scrollFrame.frame:IsMouseOver(1, height - scroll_hover_offset) then
+                    if scrollFrame.frame:IsMouseOver(1, height - scroll_hover_offset, -dragdrop_overlap, dragdrop_overlap) then
                         self.top_hover = (self.top_hover or 0) + elapsed
                         self.bottom_hover = 0
 
@@ -305,7 +337,7 @@ local methods = {
                             scrollFrame.scrollframe.obj:FixScroll()
                             self.top_hover = 0
                         end
-                    elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -1) then
+                    elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -1, -dragdrop_overlap, dragdrop_overlap) then
                         self.bottom_hover = (self.bottom_hover or 0) + elapsed
                         self.top_hover = 0
 
