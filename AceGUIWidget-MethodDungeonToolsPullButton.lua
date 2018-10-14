@@ -53,7 +53,7 @@ local function GetDropTarget()
     local scroll_frame_height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
 
     -- Top Graceful Area
-    if scrollFrame.frame:IsMouseOver(50, scroll_frame_height+1, -dragdrop_overlap, dragdrop_overlap) and scroll_value < scroll_value_min then
+    if scrollFrame.frame:IsMouseOver(100, scroll_frame_height+1, -dragdrop_overlap, dragdrop_overlap) and scroll_value < scroll_value_min then
         id, button, pos = 1, buttonList[1], "TOP"
 
         if button.dragging then
@@ -62,7 +62,7 @@ local function GetDropTarget()
     end
 
     -- Bottom Graceful Area
-    if scrollFrame.frame:IsMouseOver(-(scroll_frame_height+1), -50, -dragdrop_overlap, dragdrop_overlap) and scroll_value > scroll_value_max then
+    if scrollFrame.frame:IsMouseOver(-(scroll_frame_height+1), -100, -dragdrop_overlap, dragdrop_overlap) and scroll_value > scroll_value_max then
         local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
         id = maxPulls
         button = buttonList[id]
@@ -323,7 +323,7 @@ local methods = {
                     local scroll_hover_timeout = 0.05
                     local scroll_hover_amount = 20
 
-                    if scrollFrame.frame:IsMouseOver(1, height - scroll_hover_offset, -dragdrop_overlap, dragdrop_overlap) then
+                    if scrollFrame.frame:IsMouseOver(100, height - scroll_hover_offset, -dragdrop_overlap, dragdrop_overlap) then
                         self.top_hover = (self.top_hover or 0) + elapsed
                         self.bottom_hover = 0
 
@@ -337,7 +337,7 @@ local methods = {
                             scrollFrame.scrollframe.obj:FixScroll()
                             self.top_hover = 0
                         end
-                    elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -1, -dragdrop_overlap, dragdrop_overlap) then
+                    elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -100, -dragdrop_overlap, dragdrop_overlap) then
                         self.bottom_hover = (self.bottom_hover or 0) + elapsed
                         self.top_hover = 0
 
