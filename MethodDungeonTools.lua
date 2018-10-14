@@ -1160,7 +1160,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         local text = newLine..newLine..newLine..v.enemyData.name.." x"..v.enemyData.quantity..newLine
                         text = text.."Level "..v.enemyData.level.." "..v.enemyData.creatureType..newLine
                         --ViragDevTool_AddData(v.enemyData)
-                        local boss = v.data.isBoss or false
+                        local boss = v.enemyData.isBoss or false
                         local health = MethodDungeonTools:CalculateEnemyHealth(boss,v.enemyData.baseHealth,db.currentDifficulty)
                         text = text..MethodDungeonTools:FormatEnemyHealth(health).." HP"..newLine
 
