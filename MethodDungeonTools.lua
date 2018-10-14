@@ -2706,6 +2706,10 @@ function MethodDungeonTools:Hide_DropIndicator()
     indicator:Hide()
 end
 
+function MethodDungeonTools:GetScrollingAmount(scrollFrame, pixelPerSecond)
+    local viewheight = scrollFrame.frame.obj.content:GetHeight()
+    return (pixelPerSecond / viewheight) * 1000
+end
 
 function initFrames()
     local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)

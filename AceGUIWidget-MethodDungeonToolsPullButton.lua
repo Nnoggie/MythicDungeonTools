@@ -22,7 +22,7 @@ local function GetDropTarget()
             until not id or not button.dragging and button:IsShown()
 
             if id and button then
-                offset = (button.frame.height or button.frame:GetHeight() or 16) / 2
+                offset = (button.frame.height or button.frame:GetHeight() or 32) / 2
                 pos = (button.frame:IsMouseOver(1, offset, -dragdrop_overlap, dragdrop_overlap) and "TOP")
                         or (button.frame:IsMouseOver(-offset, -1, -dragdrop_overlap, dragdrop_overlap) and "BOTTOM")
             end
@@ -304,6 +304,110 @@ local methods = {
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
         self:Enable();
         --self:SetRenameAction(self.callbacks.OnRenameAction);
+
+        self:InitializeScrollHover()
+    end,
+    ["InitializeScrollHover"] = function(self)
+        local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+        local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+
+        self.scroll_hover = {
+            height = 100,
+            offset = 20,
+            timeout = 0.05,
+            pulls_per_second = {
+                min = 2,
+                max = 10
+            },
+            top = {},
+            bottom = {}
+        }
+
+        -- Top
+        tinsert(self.scroll_hover.top, {
+            speed = 0.20,
+            mouseover = {
+                top = ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.top, {
+            speed = 0.4,
+            mouseover = {
+                top = 2 * ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.top, {
+            speed = 0.6,
+            mouseover = {
+                top = 3 * ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.top, {
+            speed = 0.8,
+            mouseover = {
+                top = 4 * ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+
+        -- Bottom
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.2,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.4,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = 2 * (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.6,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = 3 * (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.8,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = 4 * (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+    end,
+    ["GetScrollSpeed"] = function(self, frame, speedList)
+        for index, entry in ipairs(speedList) do
+            local m = entry.mouseover
+            if frame:IsMouseOver(m.top, m.bottom, m.left, m.right) then
+                return entry.speed
+            end
+        end
+
+        return 1
     end,
     ["CreateUpdateFunction"] = function(self)
         if not self.updateFunction then
@@ -317,19 +421,23 @@ local methods = {
                         MethodDungeonTools.pullTooltip:Hide()
                     end
 
+                    local scroll_hover = self.scroll_hover
                     local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
                     local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
-                    local scroll_hover_offset = 20
-                    local scroll_hover_timeout = 0.05
-                    local scroll_hover_amount = 20
 
-                    if scrollFrame.frame:IsMouseOver(100, height - scroll_hover_offset, -dragdrop_overlap, dragdrop_overlap) then
+
+                    if scrollFrame.frame:IsMouseOver(scroll_hover.height, height - scroll_hover.offset, -dragdrop_overlap, dragdrop_overlap) then
                         self.top_hover = (self.top_hover or 0) + elapsed
                         self.bottom_hover = 0
 
-                        if self.top_hover > scroll_hover_timeout then
+                        if self.top_hover > scroll_hover.timeout then
+                            local scroll_speed = self:GetScrollSpeed(scrollFrame.frame, scroll_hover.top)
+                            local scroll_pulls = MethodDungeonTools.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
+                            local scroll_pixel = scroll_pulls * self.frame:GetHeight()
+                            local scroll_amount = MethodDungeonTools:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
+
                             local oldvalue = scrollFrame.localstatus.scrollvalue
-                            local newvalue = oldvalue - scroll_hover_amount
+                            local newvalue = oldvalue - scroll_amount
                             if newvalue < 0 then
                                 newvalue = 0
                             end
@@ -337,14 +445,29 @@ local methods = {
                             scrollFrame.scrollframe.obj:FixScroll()
                             self.top_hover = 0
                         end
-                    elseif scrollFrame.frame:IsMouseOver(scroll_hover_offset - height , -100, -dragdrop_overlap, dragdrop_overlap) then
+                    elseif scrollFrame.frame:IsMouseOver(scroll_hover.offset - height , -scroll_hover.height, -dragdrop_overlap, dragdrop_overlap) then
                         self.bottom_hover = (self.bottom_hover or 0) + elapsed
                         self.top_hover = 0
 
-                        if self.bottom_hover > scroll_hover_timeout then
+                        if self.bottom_hover > scroll_hover.timeout then
+                            local scroll_speed = self:GetScrollSpeed(scrollFrame.frame, scroll_hover.bottom)
+                            local scroll_pulls = MethodDungeonTools.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
+                            local scroll_pixel = scroll_pulls * self.frame:GetHeight()
+                            local scroll_amount = MethodDungeonTools:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
+
                             local oldvalue = scrollFrame.localstatus.scrollvalue
-                            scrollFrame.scrollframe.obj:SetScroll(oldvalue + scroll_hover_amount)
+                            local newvalue = oldvalue + scroll_amount
+                            if newvalue > 1000 then
+                                newvalue = 1000
+                            end
+                            scrollFrame.scrollframe.obj:SetScroll(newvalue)
                             scrollFrame.scrollframe.obj:FixScroll()
+
+                            -- if FixScroll() messed up
+                            if scrollFrame.localstatus.scrollvalue == oldvalue and newvalue >= 0 and newvalue <= 1000 and oldvalue < 985 then
+                                scrollFrame.scrollframe.obj.scrollbar:SetValue(newvalue)
+                                scrollFrame.scrollframe.obj:SetScroll(newvalue)
+                            end
 
                             self.bottom_hover = 0
                         end

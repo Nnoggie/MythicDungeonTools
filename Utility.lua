@@ -14,3 +14,7 @@ U.count_if = function(t, func)
 
     return count
 end
+
+U.lerp = function(a, b, alpha)
+    return (b - a) * alpha + a
+end
