@@ -316,8 +316,8 @@ local methods = {
             offset = 20,
             timeout = 0.05,
             pulls_per_second = {
-                min = 2,
-                max = 10
+                min = 2.5,
+                max = 15
             },
             top = {},
             bottom = {}
