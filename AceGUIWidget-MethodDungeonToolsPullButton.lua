@@ -23,7 +23,7 @@ local function GetDropTarget()
 
             if id and button then
                 offset = (button.frame.height or button.frame:GetHeight() or 32) / 2
-                pos = (button.frame:IsMouseOver(1, offset, -dragdrop_overlap, dragdrop_overlap) and "TOP")
+                pos = (button.frame:IsMouseOver(2, offset, -dragdrop_overlap, dragdrop_overlap) and "TOP")
                         or (button.frame:IsMouseOver(-offset, -1, -dragdrop_overlap, dragdrop_overlap) and "BOTTOM")
             end
         until not id or pos
@@ -31,7 +31,26 @@ local function GetDropTarget()
         -- Is add new pull hovered?
         if not id then
             local addNewPullButton = MethodDungeonTools.main_frame.sidePanel.newPullButton
-            if addNewPullButton.frame:IsMouseOver() then
+            if addNewPullButton.frame:IsMouseOver(2) then
+                local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                id = maxPulls
+                button = buttonList[id]
+                pos = "BOTTOM"
+
+                -- Is the last button dragged?
+                if button.dragging and id > 1 then
+                    id = id - 1
+                    button = buttonList[id]
+                    pos = "BOTTOM"
+                end
+            end
+        end
+
+        -- Is pull over space between add pull button and
+        -- bottom border of the scroll frame?
+        local viewheight = scrollFrame.frame.obj.content:GetHeight()
+        if not id and viewheight < scrollFrame.frame:GetHeight() then
+            if scrollFrame.frame:IsMouseOver(-viewheight, -1, -dragdrop_overlap, dragdrop_overlap) then
                 local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
                 id = maxPulls
                 button = buttonList[id]
