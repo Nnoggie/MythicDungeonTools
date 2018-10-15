@@ -2783,7 +2783,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 129547;
         ["displayId"] = 81207;
-        ["displayId"] = 81207;
         ["spells"] = {
             [266950] = {};
             [277242] = {};

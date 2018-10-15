@@ -234,8 +234,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Coven Thornshaper";
         ["id"] = 131666;
-        ["health"] = 294320;
         ["displayId"] = 80939;
+        ["health"] = 294320;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
@@ -283,6 +283,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131850;
+        ["displayId"] = 82094;
         ["spells"] = {
             [278463] = {};
             [277242] = {};
@@ -294,7 +295,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Maddened Survivalist";
         ["health"] = 294320;
-        ["displayId"] = 82094;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
@@ -339,6 +339,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135234;
+        ["displayId"] = 30221;
         ["spells"] = {
             [265642] = {};
             [209859] = {};
@@ -351,7 +352,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Diseased Mastiff";
         ["health"] = 286962;
-        ["displayId"] = 30221;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["count"] = 3;
@@ -382,6 +382,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 131849;
+        ["displayId"] = 82092;
         ["spells"] = {
             [264456] = {};
             [277564] = {};
@@ -393,7 +394,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["name"] = "Crazed Marksman";
         ["health"] = 294320;
-        ["displayId"] = 82092;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
@@ -727,6 +727,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 134024;
+        ["displayId"] = 7572;
         ["spells"] = {
             [278456] = {};
             [278444] = {};
@@ -739,7 +740,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Devouring Maggot";
         ["health"] = 58864;
-        ["displayId"] = 7572;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["count"] = 1;
@@ -984,6 +984,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 135048;
+        ["displayId"] = 84115;
         ["spells"] = {
             [277564] = {};
             [209859] = {};
@@ -993,7 +994,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.7;
         ["name"] = "Gorestained Piglet";
         ["health"] = 147160;
-        ["displayId"] = 84115;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["count"] = 0;
@@ -1072,8 +1072,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 134041;
-        ["count"] = 4;
         ["displayId"] = 83298;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Infected Peasant";
@@ -1230,8 +1230,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 4;
         ["id"] = 137830;
-        ["name"] = "Pallid Gorger";
         ["displayId"] = 85446;
+        ["name"] = "Pallid Gorger";
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["health"] = 478270;
@@ -1331,8 +1331,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Banquet Steward";
         ["id"] = 131586;
-        ["health"] = 294320;
         ["displayId"] = 81344;
+        ["health"] = 294320;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
@@ -1437,8 +1437,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 131685;
-        ["count"] = 4;
         ["displayId"] = 78911;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Runic Disciple";
@@ -1501,11 +1501,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 470912;
         ["count"] = 6;
-        ["displayId"] = 81999;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Heartsbane Runeweaver";
         ["id"] = 131677;
+        ["displayId"] = 81999;
     };
     [16] = {
         ["clones"] = {
@@ -1602,11 +1602,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 58864;
         ["count"] = 1;
-        ["displayId"] = 76785;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["name"] = "Blight Toad";
         ["id"] = 135052;
+        ["displayId"] = 76785;
     };
     [20] = {
         ["clones"] = {
@@ -1637,11 +1637,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 6;
         ["name"] = "Heartsbane Vinetwister";
-        ["displayId"] = 81996;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 470912;
         ["id"] = 131670;
+        ["displayId"] = 81996;
     };
     [24] = {
         ["clones"] = {
@@ -1667,11 +1667,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["name"] = "Soulbound Goliath";
         ["health"] = 2060240;
-        ["displayId"] = 79398;
         ["creatureType"] = "Giant";
         ["level"] = 120;
         ["count"] = 0;
         ["id"] = 131667;
+        ["displayId"] = 79398;
     };
     [28] = {
         ["clones"] = {
@@ -1712,8 +1712,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Thornguard";
         ["id"] = 131858;
-        ["health"] = 294320;
         ["displayId"] = 80957;
+        ["health"] = 294320;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["count"] = 4;
@@ -1814,11 +1814,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294335;
         ["count"] = 4;
-        ["displayId"] = 82073;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Coven Diviner";
         ["id"] = 131819;
+        ["displayId"] = 82073;
     };
     [33] = {
         ["clones"] = {
@@ -1833,6 +1833,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 131527;
+        ["displayId"] = 83349;
         ["spells"] = {
             [261438] = {};
             [261439] = {};
@@ -1845,7 +1846,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["scale"] = 1;
         ["name"] = "Lord Waycrest";
-        ["displayId"] = 83349;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["health"] = 529803;
@@ -1864,6 +1864,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 131824;
+        ["displayId"] = 82071;
         ["spells"] = {
             [260773] = {};
             [260907] = {};
@@ -1907,7 +1908,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["scale"] = 1;
         ["name"] = "Sister Solena";
-        ["displayId"] = 82071;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 0;
@@ -2040,8 +2040,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 5;
         ["id"] = 131587;
-        ["name"] = "Bewitched Captain";
         ["displayId"] = 84078;
+        ["name"] = "Bewitched Captain";
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 470912;
@@ -2085,11 +2085,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Matron Bryndle";
         ["health"] = 765232;
-        ["displayId"] = 84208;
         ["creatureType"] = "Undead";
         ["level"] = 120;
         ["count"] = 8;
         ["id"] = 135329;
+        ["displayId"] = 84208;
     };
     [29] = {
         ["clones"] = {
@@ -2115,10 +2115,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 0;
         ["name"] = "Faceless Maiden";
-        ["displayId"] = 82075;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 131821;
+        ["displayId"] = 82075;
         ["health"] = 176592;
     };
     [34] = {
@@ -2134,6 +2134,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 131545;
+        ["displayId"] = 87188;
         ["spells"] = {
             [268278] = {};
             [261446] = {};
@@ -2147,7 +2148,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["scale"] = 1;
         ["name"] = "Lady Waycrest";
-        ["displayId"] = 87188;
         ["creatureType"] = "Undead";
         ["level"] = 122;
         ["health"] = 5886700;
@@ -2195,8 +2195,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Waycrest Reveler";
         ["id"] = 131847;
-        ["health"] = 176592;
         ["displayId"] = 25983;
+        ["health"] = 176592;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
@@ -2238,11 +2238,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["name"] = "Raal the Gluttonous";
         ["count"] = 0;
-        ["displayId"] = 83656;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 1648192;
         ["id"] = 131863;
+        ["displayId"] = 83656;
     };
     [13] = {
         ["clones"] = {
@@ -2301,8 +2301,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 131585;
-        ["count"] = 4;
         ["displayId"] = 76992;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Enthralled Guard";
@@ -2351,8 +2351,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294320;
         ["id"] = 135474;
-        ["count"] = 4;
         ["displayId"] = 84270;
+        ["count"] = 4;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["name"] = "Thistle Acolyte";
@@ -2380,6 +2380,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 131823;
+        ["displayId"] = 81999;
         ["spells"] = {
             [260696] = {};
             [260773] = {};
@@ -2395,7 +2396,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["scale"] = 1;
         ["name"] = "Sister Malady";
-        ["displayId"] = 81999;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 0;
@@ -2447,11 +2447,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 2;
         ["name"] = "Dreadwing Raven";
-        ["displayId"] = 47534;
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["health"] = 176592;
         ["id"] = 135049;
+        ["displayId"] = 47534;
     };
     [26] = {
         ["clones"] = {
@@ -2678,8 +2678,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["name"] = "Jagged Hound";
         ["id"] = 131669;
-        ["health"] = 58864;
         ["displayId"] = 79871;
+        ["health"] = 58864;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["count"] = 1;
@@ -2741,11 +2741,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 470936;
         ["count"] = 6;
-        ["displayId"] = 82071;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
         ["name"] = "Heartsbane Soulcharmer";
         ["id"] = 131812;
+        ["displayId"] = 82071;
     };
     [36] = {
         ["clones"] = {
@@ -2760,6 +2760,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 131864;
+        ["displayId"] = 85983;
         ["spells"] = {
             [266266] = {};
             [266225] = {};
@@ -2770,7 +2771,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["scale"] = 1;
         ["name"] = "Gorak Tul";
-        ["displayId"] = 85983;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
         ["health"] = 1883744;
@@ -2830,8 +2830,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 294335;
         ["id"] = 139269;
-        ["count"] = 4;
         ["displayId"] = 86207;
+        ["count"] = 4;
         ["creatureType"] = "Aberration";
         ["level"] = 120;
         ["name"] = "Gloom Horror";
@@ -2936,8 +2936,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 2;
         ["id"] = 135240;
-        ["name"] = "Soul Essence";
         ["displayId"] = 84408;
+        ["name"] = "Soul Essence";
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["health"] = 176592;
@@ -2966,6 +2966,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 131825;
+        ["displayId"] = 81996;
         ["spells"] = {
             [260741] = {};
             [260773] = {};
@@ -2982,7 +2983,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["instanceID"] = 1021;
         ["scale"] = 1;
         ["name"] = "Sister Briar";
-        ["displayId"] = 81996;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 0;
@@ -3053,8 +3053,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 4;
         ["id"] = 131818;
-        ["name"] = "Marked Sister";
         ["displayId"] = 81995;
+        ["name"] = "Marked Sister";
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["health"] = 294320;
@@ -3120,11 +3120,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["health"] = 706404;
         ["count"] = 8;
-        ["displayId"] = 84236;
         ["creatureType"] = "Undead";
         ["level"] = 121;
         ["name"] = "Matron Alma";
         ["id"] = 135365;
+        ["displayId"] = 84236;
     };
 };
 
