@@ -4,6 +4,117 @@ local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local width,height = 248,32
 local maxPortraitCount = 7
 local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
+local next = next
+
+local dragdrop_overlap = 2000
+
+local function GetDropTarget()
+    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+    local buttonList = MethodDungeonTools.main_frame.sidePanel.newPullButtons
+    local id, button, pos, offset
+
+
+    if scrollFrame.frame:IsMouseOver(1, -1, -dragdrop_overlap, dragdrop_overlap) then
+        -- Find hovered pull
+        repeat
+            repeat
+                id, button = next(buttonList, id)
+            until not id or not button.dragging and button:IsShown()
+
+            if id and button then
+                offset = (button.frame.height or button.frame:GetHeight() or 32) / 2
+                pos = (button.frame:IsMouseOver(2, offset, -dragdrop_overlap, dragdrop_overlap) and "TOP")
+                        or (button.frame:IsMouseOver(-offset, -1, -dragdrop_overlap, dragdrop_overlap) and "BOTTOM")
+            end
+        until not id or pos
+
+        -- Is add new pull hovered?
+        if not id then
+            local addNewPullButton = MethodDungeonTools.main_frame.sidePanel.newPullButton
+            if addNewPullButton.frame:IsMouseOver(2) then
+                local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                id = maxPulls
+                button = buttonList[id]
+                pos = "BOTTOM"
+
+                -- Is the last button dragged?
+                if button.dragging and id > 1 then
+                    id = id - 1
+                    button = buttonList[id]
+                    pos = "BOTTOM"
+                end
+            end
+        end
+
+        -- Is pull over space between add pull button and
+        -- bottom border of the scroll frame?
+        local viewheight = scrollFrame.frame.obj.content:GetHeight()
+        if not id and viewheight < scrollFrame.frame:GetHeight() then
+            if scrollFrame.frame:IsMouseOver(-viewheight, -1, -dragdrop_overlap, dragdrop_overlap) then
+                local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                id = maxPulls
+                button = buttonList[id]
+                pos = "BOTTOM"
+
+                -- Is the last button dragged?
+                if button.dragging and id > 1 then
+                    id = id - 1
+                    button = buttonList[id]
+                    pos = "BOTTOM"
+                end
+            end
+        end
+    end
+
+    local scroll_value_min = 25
+    local scroll_value_max = 975
+    local scroll_value = scrollFrame.localstatus.scrollvalue
+    local scroll_frame_height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+
+    -- Top Graceful Area
+    if scrollFrame.frame:IsMouseOver(100, scroll_frame_height+1, -dragdrop_overlap, dragdrop_overlap) and scroll_value < scroll_value_min then
+        id, button, pos = 1, buttonList[1], "TOP"
+
+        if button.dragging then
+            id, button, pos = 2, buttonList[2], "TOP"
+        end
+    end
+
+    -- Bottom Graceful Area
+    if scrollFrame.frame:IsMouseOver(-(scroll_frame_height+1), -100, -dragdrop_overlap, dragdrop_overlap) and scroll_value > scroll_value_max then
+        local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+        id = maxPulls
+        button = buttonList[id]
+        pos = "BOTTOM"
+
+        -- Is the last button dragged?
+        if button.dragging and id > 1 then
+            id = id - 1
+            button = buttonList[id]
+            pos = "BOTTOM"
+        end
+    end
+
+    -- Seems to be outside of the list
+    -- drop it back to it's original position
+    if not id then
+        repeat
+            id, button = next(buttonList, id)
+        until button.dragging
+
+        if id > 1 then
+            id = id - 1
+            button = buttonList[id]
+            pos = "BOTTOM"
+        elseif id == 1 then
+            id = 2
+            button = buttonList[id]
+            pos = "TOP"
+        end
+    end
+
+    return id, button, pos
+end
 
 --Methods
 local methods = {
@@ -43,10 +154,9 @@ local methods = {
                 MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"BOTTOMLEFT",0,(4+MethodDungeonTools.pullTooltip.myHeight))
                 MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",-250,-4)
             end
+            self.entered = true
             MethodDungeonTools:ActivatePullTooltip(self.index)
-            self.frame:SetScript("OnUpdate", function()
-                MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
-            end)
+            self.frame:SetScript("OnUpdate", self:CreateUpdateFunction())
             --progressbar
             if MethodDungeonTools.ProgressBarResetTimer then MethodDungeonTools.ProgressBarResetTimer:Cancel() end
             local currentForces = MethodDungeonTools:CountForces(self.index)
@@ -58,6 +168,7 @@ local methods = {
         function self.callbacks.OnLeave()
             MethodDungeonTools.pullTooltip.Model:Hide()
             MethodDungeonTools.pullTooltip.topString:Hide()
+            self.entered = false
             self.frame:SetScript("OnUpdate", nil)
             MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
             MethodDungeonTools.pullTooltip:Hide()
@@ -67,11 +178,11 @@ local methods = {
         end
 
         function self.callbacks.OnDragStart()
-            --
+            self:Drag()
         end
 
         function self.callbacks.OnDragStop()
-            --
+            self:Drop()
         end
 
         function self.callbacks.OnKeyDown(self, key)
@@ -212,6 +323,245 @@ local methods = {
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
         self:Enable();
         --self:SetRenameAction(self.callbacks.OnRenameAction);
+
+        self:InitializeScrollHover()
+    end,
+    ["InitializeScrollHover"] = function(self)
+        local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+        local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+
+        self.scroll_hover = {
+            height = 100,
+            offset = 20,
+            timeout = 0.05,
+            pulls_per_second = {
+                min = 2.5,
+                max = 15
+            },
+            top = {},
+            bottom = {}
+        }
+
+        -- Top
+        tinsert(self.scroll_hover.top, {
+            speed = 0.20,
+            mouseover = {
+                top = ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.top, {
+            speed = 0.4,
+            mouseover = {
+                top = 2 * ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.top, {
+            speed = 0.6,
+            mouseover = {
+                top = 3 * ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.top, {
+            speed = 0.8,
+            mouseover = {
+                top = 4 * ((self.scroll_hover.height + self.scroll_hover.offset) / 5) - self.scroll_hover.offset,
+                bottom = height - self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+
+        -- Bottom
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.2,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.4,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = 2 * (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.6,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = 3 * (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+        tinsert(self.scroll_hover.bottom, {
+            speed = 0.8,
+            mouseover = {
+                top  = self.scroll_hover.offset - height,
+                bottom = 4 * (-(self.scroll_hover.height + self.scroll_hover.offset) / 5) + self.scroll_hover.offset,
+                left = -dragdrop_overlap,
+                right = dragdrop_overlap
+            }
+        })
+    end,
+    ["GetScrollSpeed"] = function(self, frame, speedList)
+        for index, entry in ipairs(speedList) do
+            local m = entry.mouseover
+            if frame:IsMouseOver(m.top, m.bottom, m.left, m.right) then
+                return entry.speed
+            end
+        end
+
+        return 1
+    end,
+    ["CreateUpdateFunction"] = function(self)
+        if not self.updateFunction then
+            self.updateFunction = function(frame, elapsed)
+                if self.entered and not self.dragging then
+                    MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+                end
+
+                if self.dragging then
+                    if MethodDungeonTools.pullTooltip:IsShown() then
+                        MethodDungeonTools.pullTooltip:Hide()
+                    end
+
+                    local scroll_hover = self.scroll_hover
+                    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+                    local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
+
+
+                    if scrollFrame.frame:IsMouseOver(scroll_hover.height, height - scroll_hover.offset, -dragdrop_overlap, dragdrop_overlap) then
+                        self.top_hover = (self.top_hover or 0) + elapsed
+                        self.bottom_hover = 0
+
+                        if self.top_hover > scroll_hover.timeout then
+                            local scroll_speed = self:GetScrollSpeed(scrollFrame.frame, scroll_hover.top)
+                            local scroll_pulls = MethodDungeonTools.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
+                            local scroll_pixel = scroll_pulls * self.frame:GetHeight()
+                            local scroll_amount = MethodDungeonTools:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
+
+                            local oldvalue = scrollFrame.localstatus.scrollvalue
+                            local newvalue = oldvalue - scroll_amount
+                            if newvalue < 0 then
+                                newvalue = 0
+                            end
+                            scrollFrame.scrollframe.obj:SetScroll(newvalue)
+                            scrollFrame.scrollframe.obj:FixScroll()
+                            self.top_hover = 0
+                        end
+                    elseif scrollFrame.frame:IsMouseOver(scroll_hover.offset - height , -scroll_hover.height, -dragdrop_overlap, dragdrop_overlap) then
+                        self.bottom_hover = (self.bottom_hover or 0) + elapsed
+                        self.top_hover = 0
+
+                        if self.bottom_hover > scroll_hover.timeout then
+                            local scroll_speed = self:GetScrollSpeed(scrollFrame.frame, scroll_hover.bottom)
+                            local scroll_pulls = MethodDungeonTools.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
+                            local scroll_pixel = scroll_pulls * self.frame:GetHeight()
+                            local scroll_amount = MethodDungeonTools:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
+
+                            local oldvalue = scrollFrame.localstatus.scrollvalue
+                            local newvalue = oldvalue + scroll_amount
+                            if newvalue > 1000 then
+                                newvalue = 1000
+                            end
+                            scrollFrame.scrollframe.obj:SetScroll(newvalue)
+                            scrollFrame.scrollframe.obj:FixScroll()
+
+                            -- if FixScroll() messed up
+                            if scrollFrame.localstatus.scrollvalue == oldvalue and newvalue >= 0 and newvalue <= 1000 and oldvalue < 985 then
+                                scrollFrame.scrollframe.obj.scrollbar:SetValue(newvalue)
+                                scrollFrame.scrollframe.obj:SetScroll(newvalue)
+                            end
+
+                            self.bottom_hover = 0
+                        end
+                    else
+                        self.top_hover = 0
+                        self.bottom_hover = 0
+                    end
+
+                    self.elapsed = (self.elapsed or 0) + elapsed
+                    if self.elapsed > 0.1 then
+                        local button, pos = select(2, GetDropTarget())
+                        MethodDungeonTools:Show_DropIndicator(button, pos)
+                        self.elapsed = 0
+                    end
+                end
+            end
+        end
+
+        return self.updateFunction
+    end,
+    ["Drag"] = function(self)
+        local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
+        local x, w = self.frame:GetLeft(), self.frame:GetWidth()
+        local _, y = GetCursorPosition()
+
+        MethodDungeonTools.pullTooltip:Hide()
+
+        self.dragging = true
+
+        self.frame:StartMoving()
+        self.frame:ClearAllPoints()
+        self.frame.temp = {
+            parent = self.frame:GetParent(),
+            strata = self.frame:GetFrameStrata()
+        }
+        self.frame:SetParent(UIParent)
+        self.frame:SetFrameStrata("FULLSCREEN_DIALOG")
+        self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
+
+        self.frame:SetScript("OnUpdate", self:CreateUpdateFunction())
+    end,
+    ["Drop"] = function(self)
+        local insertID, button, pos = GetDropTarget()
+
+        if not insertID then
+            insertID = self.maxPulls
+            pos = "TOP"
+        end
+
+        self.frame:StopMovingOrSizing()
+        self.dragging = false
+        self.frame:SetScript("OnUpdate", nil)
+
+        if self.dragging then
+            self.frame:SetParent(self.frame.temp.parent)
+            self.frame:SetFrameStrata(self.frame.temp.strata)
+            self.frame.temp = nil
+        end
+
+        if pos == "BOTTOM" then
+            insertID = insertID + 1
+        end
+
+        local index = self.index
+        if index > insertID then
+            index = index + 1
+        end
+
+        MethodDungeonTools:PresetsAddPull(insertID)
+        local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
+        MethodDungeonTools:ReloadPullButtons()
+        MethodDungeonTools:SetSelectionToPull(newIndex)
+
+        MethodDungeonTools:Hide_DropIndicator()
+        MethodDungeonTools.pullTooltip:Show()
     end,
     ["SetTitle"] = function(self, title)
         self.titletext = title;
