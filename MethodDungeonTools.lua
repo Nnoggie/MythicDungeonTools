@@ -500,7 +500,7 @@ end
 
 function MethodDungeonTools:ToggleDevMode()
     db.devMode = not db.devMode
-    print(string.format("%sMDT|r: DevMode %s. Reload Interface!",methodColor,db.devMode and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
+    ReloadUI()
 end
 
 function MethodDungeonTools:ToggleDataCollection()
