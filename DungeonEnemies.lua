@@ -102,6 +102,12 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
 
     if button == "LeftButton" then
         local isCTRLKeyDown = IsControlKeyDown()
+        --create new pull and select it with shift held down
+        if IsShiftKeyDown() then
+            MethodDungeonTools:PresetsAddPull(MethodDungeonTools:GetCurrentPull() + 1)
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull() + 1)
+        end
         MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,isCTRLKeyDown)
         MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
         MethodDungeonTools:UpdateProgressbar()
