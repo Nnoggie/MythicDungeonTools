@@ -1039,40 +1039,8 @@ end
 ---Update the progressbar on the sidepanel with the correct values
 function MethodDungeonTools:UpdateProgressbar()
 	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-	local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
     MethodDungeonTools:EnsureDBTables()
-	local grandTotal = 0
-	for pullIdx,pull in pairs(preset.value.pulls) do
-		for enemyIdx,clones in pairs(pull) do
-			for k,v in pairs(clones) do
-                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
-                    clones[v] = nil
-                else
-                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                    local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
-                    local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
-                    if teeming == true or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                        local week = preset.week%3
-                        if week == 0 then week = 3 end
-                        local isBlacktoothWeek = week == 1
-                        if isCloneBlacktoothEvent then
-                            if isBlacktoothWeek then
-                                grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                            end
-                        else
-                            if cloneFaction  then
-                                if cloneFaction == preset.faction then
-                                    grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                                end
-                            else
-                                grandTotal = grandTotal + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                            end
-                        end
-                    end
-                end
-			end
-		end
-	end
+    local grandTotal = MethodDungeonTools:CountForces()
 	MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,grandTotal,teeming==true and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
 end
 
@@ -1204,6 +1172,7 @@ end
 ---Counts total selected enemy forces in the current preset up to pull
 function MethodDungeonTools:CountForces(currentPull,currentOnly)
     --count up to and including the currently selected pull
+    currentPull = currentPull or 1000
     local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
     local pullCurrent = 0
     for pullIdx,pull in pairs(preset.value.pulls) do
@@ -1226,8 +1195,11 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
                             if not isCloneBlacktoothEvent or isBlacktoothWeek then
                                 if not (cloneFaction and cloneFaction~= preset.faction) then
                                     local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                                    local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
                                     if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                                        pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                        if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
+                                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                        end
                                     end
                                 end
                             end
