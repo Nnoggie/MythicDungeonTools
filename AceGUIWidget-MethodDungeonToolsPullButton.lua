@@ -131,7 +131,10 @@ local methods = {
 
             elseif(IsShiftKeyDown()) then
                 if(mouseButton == "RightButton") then
-                    MethodDungeonTools:DeletePull(self.index)
+                    local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                    if maxPulls>1 then
+                        MethodDungeonTools:DeletePull(self.index)
+                    end
                 end
             else
                 MethodDungeonTools:EnsureDBTables()
