@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="enUS.lua"/>
+	<Include file="zhCN.lua"/>
+</Ui>
