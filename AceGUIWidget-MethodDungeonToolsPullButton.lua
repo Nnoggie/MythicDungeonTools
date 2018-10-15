@@ -130,7 +130,9 @@ local methods = {
             if(IsControlKeyDown())then
 
             elseif(IsShiftKeyDown()) then
-
+                if(mouseButton == "RightButton") then
+                    MethodDungeonTools:DeletePull(self.index)
+                end
             else
                 MethodDungeonTools:EnsureDBTables()
                 if(mouseButton == "RightButton") then
