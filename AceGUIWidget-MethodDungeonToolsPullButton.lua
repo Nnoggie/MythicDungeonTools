@@ -1,3 +1,5 @@
+local L = LibStub ("AceLocale-3.0"):GetLocale ( "mdt" )
+
 local Type, Version = "MethodDungeonToolsPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
@@ -84,14 +86,14 @@ local methods = {
         self.menu = {}
         if self.index ~= 1 then
             tinsert(self.menu, {
-                text = "Move up",
+                text = L["Move up"],
                 notCheckable = 1,
                 func = function() MethodDungeonTools:MovePullUp(self.index) end
             })
         end
         if self.index<self.maxPulls then
             tinsert(self.menu, {
-                text = "Move down",
+                text = L["Move down"],
                 notCheckable = 1,
                 func = function() MethodDungeonTools:MovePullDown(self.index) end
             })
@@ -105,7 +107,7 @@ local methods = {
             })
         end
         tinsert(self.menu, {
-            text = "Insert before",
+            text = L["Insert before"],
             notCheckable = 1,
             func = function()
                 MethodDungeonTools:PresetsAddPull(self.index)
@@ -115,7 +117,7 @@ local methods = {
         })
 
         tinsert(self.menu, {
-            text = "Insert after",
+            text = L["Insert after"],
             notCheckable = 1,
             func = function()
                 MethodDungeonTools:PresetsAddPull(self.index + 1)
@@ -131,7 +133,7 @@ local methods = {
         })
         if self.index ~= 1 then
             tinsert(self.menu, {
-                text = "Merge up",
+                text = L["Merge up"],
                 notCheckable = 1,
                 func = function()
                     local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
@@ -142,7 +144,7 @@ local methods = {
         end
         if self.index < self.maxPulls then
             tinsert(self.menu, {
-                text = "Merge down",
+                text = L["Merge down"],
                 notCheckable = 1,
                 func = function()
                     local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
@@ -160,12 +162,12 @@ local methods = {
             })
         end
         tinsert(self.menu, {
-            text = "Clear",
+            text = L["Clear"],
             notCheckable = 1,
             func = function() MethodDungeonTools:ClearPull(self.index) end
         })
         tinsert(self.menu, {
-            text = "Clear Preset",
+            text = L["Clear Preset"],
             notCheckable = 1,
             func = function() MethodDungeonTools:OpenClearPresetDialog() end
         })
@@ -177,7 +179,7 @@ local methods = {
         })
         if self.maxPulls > 1 then
             tinsert(self.menu, {
-                text = "Delete",
+                text = L["Delete"],
                 notCheckable = 1,
                 func = function() MethodDungeonTools:DeletePull(self.index) end
             })
@@ -190,7 +192,7 @@ local methods = {
         end
 
         tinsert(self.menu, {
-            text = "Close",
+            text = L["Close"],
             notCheckable = 1,
             func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
         })

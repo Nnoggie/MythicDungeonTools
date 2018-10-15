@@ -1,3 +1,5 @@
+
+local L = LibStub ("AceLocale-3.0"):GetLocale ( "mdt" )
 local AddonName, MethodDungeonTools = ...
 
 
@@ -15,6 +17,7 @@ local methodColor = "|cFFF49D38"
 local selectedGreen = {0,1,0,0.4}
 selectedGreen = {34/255,139/255,34/255,0.7}
 MethodDungeonTools.BackdropColor = {0.058823399245739,0.058823399245739,0.058823399245739,0.9}
+
 
 local Dialog = LibStub("LibDialog-1.0")
 local AceGUI = LibStub("AceGUI-3.0")
@@ -38,8 +41,8 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 	OnTooltipShow = function(tooltip)
 		if not tooltip or not tooltip.AddLine then return end
 		tooltip:AddLine(methodColor.."Method Dungeon Tools|r")
-		tooltip:AddLine("Click to toggle AddOn Window")
-		tooltip:AddLine("Right-click to lock Minimap Button")
+		tooltip:AddLine(L["Click to toggle AddOn Window"])
+		tooltip:AddLine(L["Right-click to lock Minimap Button"])
 	end,
 })
 
@@ -98,8 +101,8 @@ local defaultSavedVars = {
 do
     for i=1,24 do
         defaultSavedVars.global.presets[i] = {
-            [1] = {text="Default",value={}},
-            [2] = {text="<New Preset>",value=0},
+            [1] = {text=L["Default"],value={}},
+            [2] = {text=L["<New Preset>"],value=0},
         }
         defaultSavedVars.global.currentPreset[i] = 1
     end
@@ -188,146 +191,146 @@ local affixWeeksBFA = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixI
 }
 
 local dungeonList = {
-    [1] = "Black Rook Hold",
-    [2] = "Cathedral of Eternal Night",
-    [3] = "Court of Stars",
-    [4] = "Darkheart Thicket",
-    [5] = "Eye of Azshara",
-    [6] = "Halls of Valor",
-    [7] = "Maw of Souls",
-    [8] = "Neltharion's Lair",
-    [9] = "Return to Karazhan Lower",
-    [10] = "Return to Karazhan Upper",
-    [11] = "Seat of the Triumvirate",
-    [12] = "The Arcway",
-    [13] = "Vault of the Wardens",
-    [14] = " >Battle for Azeroth",
-    [15] = "Atal'Dazar",
-    [16] = "Freehold",
-    [17] = "Kings' Rest",
-    [18] = "Shrine of the Storm",
-    [19] = "Siege of Boralus",
-    [20] = "Temple of Sethraliss",
-    [21] = "The MOTHERLODE!!",
-    [22] = "The Underrot",
-    [23] = "Tol Dagor",
-    [24] = "Waycrest Manor",
-    [25] = " >Legion",
+    [1] = L["Black Rook Hold"],
+    [2] = L["Cathedral of Eternal Night"],
+    [3] = L["Court of Stars"],
+    [4] = L["Darkheart Thicket"],
+    [5] = L["Eye of Azshara"],
+    [6] = L["Halls of Valor"],
+    [7] = L["Maw of Souls"],
+    [8] = L["Neltharion's Lair"],
+    [9] = L["Return to Karazhan Lower"],
+    [10] = L["Return to Karazhan Upper"],
+    [11] = L["Seat of the Triumvirate"],
+    [12] = L["The Arcway"],
+    [13] = L["Vault of the Wardens"],
+    [14] = L[" >Battle for Azeroth"],
+    [15] = L["Atal'Dazar"],
+    [16] = L["Freehold"],
+    [17] = L["Kings' Rest"],
+    [18] = L["Shrine of the Storm"],
+    [19] = L["Siege of Boralus"],
+    [20] = L["Temple of Sethraliss"],
+    [21] = L["The MOTHERLODE!!"],
+    [22] = L["The Underrot"],
+    [23] = L["Tol Dagor"],
+    [24] = L["Waycrest Manor"],
+    [25] = L[" >Legion"],
 }
 function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
 
 local dungeonSubLevels = {
     [1] = {
-        [1] = "The Ravenscrypt",
-        [2] = "The Grand Hall",
-        [3] = "Ravenshold",
-        [4] = "The Rook's Host",
-        [5] = "Lord Ravencrest's Chamber",
-        [6] = "The Raven's Crown",
+        [1] = L["The Ravenscrypt"],
+        [2] = L["The Grand Hall"],
+        [3] = L["Ravenshold"],
+        [4] = L["The Rook's Host"],
+        [5] = L["Lord Ravencrest's Chamber"],
+        [6] = L["The Raven's Crown"],
     },
     [2] = {
-        [1] = "Hall of the Moon",
-        [2] = "Twilight Grove",
-        [3] = "The Emerald Archives",
-        [4] = "Path of Illumination",
-        [5] = "Sacristy of Elune",
+        [1] = L["Hall of the Moon"],
+        [2] = L["Twilight Grove"],
+        [3] = L["The Emerald Archives"],
+        [4] = L["Path of Illumination"],
+        [5] = L["Sacristy of Elune"],
     },
     [3] = {
-        [1] = "Court of Stars",
-        [2] = "The Jeweled Estate",
-        [3] = "The Balconies",
+        [1] = L["Court of Stars"],
+        [2] = L["The Jeweled Estate"],
+        [3] = L["The Balconies"],
     },
     [4] = {
-        [1] = "Darkheart Thicket",
+        [1] = L["Darkheart Thicket"],
     },
     [5] = {
-        [1] = "Eye of Azshara",
+        [1] = L["Eye of Azshara"],
     },
     [6] = {
-        [1] = "The High Gate",
-        [2] = "Field of the Eternal Hunt",
-        [3] = "Halls of Valor",
+        [1] = L["The High Gate"],
+        [2] = L["Field of the Eternal Hunt"],
+        [3] = L["Halls of Valor"],
     },
     [7] = {
-        [1] = "Helmouth Cliffs",
-        [2] = "The Hold",
-        [3] = "The Naglfar",
+        [1] = L["Helmouth Cliffs"],
+        [2] = L["The Hold"],
+        [3] = L["The Naglfar"],
     },
     [8] = {
-        [1] = "Neltharion's Lair",
+        [1] = L["Neltharion's Lair"],
     },
     [9] = {
-        [1] = "Master's Terrace",
-        [2] = "Opera Hall Balcony",
-        [3] = "The Guest Chambers",
-        [4] = "The Banquet Hall",
-        [5] = "Upper Livery Stables",
-        [6] = "The Servant's Quarters",
+        [1] = L["Master's Terrace"],
+        [2] = L["Opera Hall Balcony"],
+        [3] = L["The Guest Chambers"],
+        [4] = L["The Banquet Hall"],
+        [5] = L["Upper Livery Stables"],
+        [6] = L["The Servant's Quarters"],
     },
     [10] = {
-        [1] = "Lower Broken Stair",
-        [2] = "Upper Broken Stair",
-        [3] = "The Menagerie",
-        [4] = "Guardian's Library",
-        [5] = "Library Floor",
-        [6] = "Upper Library",
-        [7] = "Gamesman's Hall",
-        [8] = "Netherspace",
+        [1] = L["Lower Broken Stair"],
+        [2] = L["Upper Broken Stair"],
+        [3] = L["The Menagerie"],
+        [4] = L["Guardian's Library"],
+        [5] = L["Library Floor"],
+        [6] = L["Upper Library"],
+        [7] = L["Gamesman's Hall"],
+        [8] = L["Netherspace"],
     },
     [11] = {
-        [1] = "Seat of the Triumvirate",
+        [1] = L["Seat of the Triumvirate"],
     },
     [12] = {
-        [1] = "The Arcway",
+        [1] = L["The Arcway"],
     },
     [13] = {
-        [1] = "The Warden's Court",
-        [2] = "Vault of the Wardens",
-        [3] = "Vault of the Betrayer",
+        [1] = L["The Warden's Court"],
+        [2] = L["Vault of the Wardens"],
+        [3] = L["Vault of the Betrayer"],
     },
     [15] = {
-        [1] = "Atal'Dazar",
-        [2] = "Sacrificial Pits",
+        [1] = L["Atal'Dazar"],
+        [2] = L["Sacrificial Pits"],
     },
     [16] = {
-        [1] = "Freehold",
+        [1] = L["Freehold"],
     },
     [17] = {
-        [1] = "Kings' Rest",
+        [1] = L["Kings' Rest"],
     },
     [18] = {
-        [1] = "Shrine of the Storm",
-        [2] = "Storm's End",
+        [1] = L["Shrine of the Storm"],
+        [2] = L["Storm's End"],
     },
     [19] = {
-        [1] = "Siege of Boralus",
+        [1] = L["Siege of Boralus"],
     },
     [20] = {
-        [1] = "Temple of Sethraliss",
-        [2] = "Atrium of Sethraliss",
+        [1] = L["Temple of Sethraliss"],
+        [2] = L["Atrium of Sethraliss"],
     },
     [21] = {
-        [1] = "The MOTHERLODE!!",
+        [1] = L["The MOTHERLODE!!"],
     },
     [22] = {
-        [1] = "The Underrot",
-        [2] = "Ruin's Descent",
+        [1] = L["The Underrot"],
+        [2] = L["Ruin's Descent"],
     },
     [23] = {
-        [1] = "Tol Dagor",
-        [2] = "The Drain",
-        [3] = "The Brig",
-        [4] = "Detention Block",
-        [5] = "Officer Quarters",
-        [6] = "Overseer's Redoubt",
-        [7] = "Overseer's Summit",
+        [1] = L["Tol Dagor"],
+        [2] = L["The Drain"],
+        [3] = L["The Brig"],
+        [4] = L["Detention Block"],
+        [5] = L["Officer Quarters"],
+        [6] = L["Overseer's Redoubt"],
+        [7] = L["Overseer's Summit"],
     },
     [24] = {
-        [1] = "The Grand Foyer",
-        [2] = "Upstairs",
-        [3] = "The Cellar",
-        [4] = "Catacombs",
-        [5] = "The Rupture",
+        [1] = L["The Grand Foyer"],
+        [2] = L["Upstairs"],
+        [3] = L["The Cellar"],
+        [4] = L["Catacombs"],
+        [5] = L["The Rupture"],
     },
 }
 function MethodDungeonTools:GetDungeonSublevels()
@@ -336,140 +339,140 @@ end
 
 MethodDungeonTools.dungeonMaps = {
 	[1] = {
-		[0]= "BlackRookHoldDungeon",
-		[1]= "BlackRookHoldDungeon1_",
-		[2]= "BlackRookHoldDungeon2_",
-		[3]= "BlackRookHoldDungeon3_",
-		[4]= "BlackRookHoldDungeon4_",
-		[5]= "BlackRookHoldDungeon5_",
-		[6]= "BlackRookHoldDungeon6_",
+		[0]= L["BlackRookHoldDungeon"],
+		[1]= L["BlackRookHoldDungeon1_"],
+		[2]= L["BlackRookHoldDungeon2_"],
+		[3]= L["BlackRookHoldDungeon3_"],
+		[4]= L["BlackRookHoldDungeon4_"],
+		[5]= L["BlackRookHoldDungeon5_"],
+		[6]= L["BlackRookHoldDungeon6_"],
 	},
 	[2] = {
-		[0]= "TombofSargerasDungeon",
-		[1]= "TombofSargerasDungeon1_",
-		[2]= "TombofSargerasDungeon2_",
-		[3]= "TombofSargerasDungeon3_",
-		[4]= "TombofSargerasDungeon4_",
-		[5]= "TombofSargerasDungeon5_",
+		[0]= L["TombofSargerasDungeon"],
+		[1]= L["TombofSargerasDungeon1_"],
+		[2]= L["TombofSargerasDungeon2_"],
+		[3]= L["TombofSargerasDungeon3_"],
+		[4]= L["TombofSargerasDungeon4_"],
+		[5]= L["TombofSargerasDungeon5_"],
 	},
 	[3] = {
-		[0] = "SuramarNoblesDistrict",
-		[1] = "SuramarNoblesDistrict",
-		[2] = "SuramarNoblesDistrict1_",
-		[3] = "SuramarNoblesDistrict2_",
+		[0] = L["SuramarNoblesDistrict"],
+		[1] = L["SuramarNoblesDistrict"],
+		[2] = L["SuramarNoblesDistrict1_"],
+		[3] = L["SuramarNoblesDistrict2_"],
 	},
 	[4] = {
-		[0] = "DarkheartThicket",
-		[1] = "DarkheartThicket",
+		[0] = L["DarkheartThicket"],
+		[1] = L["DarkheartThicket"],
 	},
 	[5] = {
-		[0]= "AszunaDungeon",
-		[1]= "AszunaDungeon",
+		[0]= L["AszunaDungeon"],
+		[1]= L["AszunaDungeon"],
 	},
 	[6] = {
-		[0]= "Hallsofvalor",
-		[1]= "Hallsofvalor1_",
-		[2]= "Hallsofvalor",
-		[3]= "Hallsofvalor2_",
+		[0]= L["Hallsofvalor"],
+		[1]= L["Hallsofvalor1_"],
+		[2]= L["Hallsofvalor"],
+		[3]= L["Hallsofvalor2_"],
 	},
 
 	[7] = {
-		[0] = "HelheimDungeonDock",
-		[1] = "HelheimDungeonDock",
-		[2] = "HelheimDungeonDock1_",
-		[3] = "HelheimDungeonDock2_",
+		[0] = L["HelheimDungeonDock"],
+		[1] = L["HelheimDungeonDock"],
+		[2] = L["HelheimDungeonDock1_"],
+		[3] = L["HelheimDungeonDock2_"],
 	},
 	[8] = {
-		[0] = "NeltharionsLair",
-		[1] = "NeltharionsLair",
+		[0] = L["NeltharionsLair"],
+		[1] = L["NeltharionsLair"],
 	},
 	[9] = {
-		[0] = "LegionKarazhanDungeon",
-		[1] = "LegionKarazhanDungeon6_",
-		[2] = "LegionKarazhanDungeon5_",
-		[3] = "LegionKarazhanDungeon4_",
-		[4] = "LegionKarazhanDungeon3_",
-		[5] = "LegionKarazhanDungeon2_",
-		[6] = "LegionKarazhanDungeon1_",
+		[0] = L["LegionKarazhanDungeon"],
+		[1] = L["LegionKarazhanDungeon6_"],
+		[2] = L["LegionKarazhanDungeon5_"],
+		[3] = L["LegionKarazhanDungeon4_"],
+		[4] = L["LegionKarazhanDungeon3_"],
+		[5] = L["LegionKarazhanDungeon2_"],
+		[6] = L["LegionKarazhanDungeon1_"],
 	},
 	[10] = {
-		[0] = "LegionKarazhanDungeon",
-		[1] = "LegionKarazhanDungeon7_",
-		[2] = "LegionKarazhanDungeon8_",
-		[3] = "LegionKarazhanDungeon9_",
-		[4] = "LegionKarazhanDungeon10_",
-		[5] = "LegionKarazhanDungeon11_",
-		[6] = "LegionKarazhanDungeon12_",
-		[7] = "LegionKarazhanDungeon13_",
-		[8] = "LegionKarazhanDungeon14_",
+		[0] = L["LegionKarazhanDungeon"],
+		[1] = L["LegionKarazhanDungeon7_"],
+		[2] = L["LegionKarazhanDungeon8_"],
+		[3] = L["LegionKarazhanDungeon9_"],
+		[4] = L["LegionKarazhanDungeon10_"],
+		[5] = L["LegionKarazhanDungeon11_"],
+		[6] = L["LegionKarazhanDungeon12_"],
+		[7] = L["LegionKarazhanDungeon13_"],
+		[8] = L["LegionKarazhanDungeon14_"],
 	},
 	[11] = {
-		[0] = "ArgusDungeon",
-		[1] = "ArgusDungeon",
+		[0] = L["ArgusDungeon"],
+		[1] = L["ArgusDungeon"],
 	},
 	[12] = {
-		[0]= "SuamarCatacombsDungeon",
-		[1]= "SuamarCatacombsDungeon1_",
+		[0]= L["SuamarCatacombsDungeon"],
+		[1]= L["SuamarCatacombsDungeon1_"],
 	},
 	[13] = {
-		[0]= "VaultOfTheWardens",
-		[1]= "VaultOfTheWardens1_",
-		[2]= "VaultOfTheWardens2_",
-		[3]= "VaultOfTheWardens3_",
+		[0]= L["VaultOfTheWardens"],
+		[1]= L["VaultOfTheWardens1_"],
+		[2]= L["VaultOfTheWardens2_"],
+		[3]= L["VaultOfTheWardens3_"],
 	},
 	[15] = {
-		[0]= "CityOfGold",
-		[1]= "CityOfGold1_",
-		[2]= "CityOfGold2_",
+		[0]= L["CityOfGold"],
+		[1]= L["CityOfGold1_"],
+		[2]= L["CityOfGold2_"],
 	},
 	[16] = {
-		[0]= "KulTirasPirateTownDungeon",
-		[1]= "KulTirasPirateTownDungeon",
+		[0]= L["KulTirasPirateTownDungeon"],
+		[1]= L["KulTirasPirateTownDungeon"],
 	},
 	[17] = {
-        [0] = "KingsRest",
-        [1] = "KingsRest1_"
+        [0] = L["KingsRest"],
+        [1] = L["KingsRest1_"]
 	},
     [18] = {
-        [0] = "ShrineOfTheStorm",
-        [1] = "ShrineOfTheStorm",
-        [2] = "ShrineOfTheStorm1_",
+        [0] = L["ShrineOfTheStorm"],
+        [1] = L["ShrineOfTheStorm"],
+        [2] = L["ShrineOfTheStorm1_"],
     },
     [19] = {
-        [0] = "SiegeOfBoralus",
-        [1] = "SiegeOfBoralus",
+        [0] = L["SiegeOfBoralus"],
+        [1] = L["SiegeOfBoralus"],
     },
     [20] = {
-        [0] = "TempleOfSethralissA",
-        [1] = "TempleOfSethralissA",
-        [2] = "TempleOfSethralissB",
+        [0] = L["TempleOfSethralissA"],
+        [1] = L["TempleOfSethralissA"],
+        [2] = L["TempleOfSethralissB"],
     },
     [21] = {
-        [0] = "KezanDungeon",
-        [1] = "KezanDungeon",
+        [0] = L["KezanDungeon"],
+        [1] = L["KezanDungeon"],
     },
     [22] = {
-        [0] = "UnderrotExterior",
-        [1] = "UnderrotExterior",
-        [2] = "UnderrotInterior",
+        [0] = L["UnderrotExterior"],
+        [1] = L["UnderrotExterior"],
+        [2] = L["UnderrotInterior"],
     },
     [23] = {
-        [0] = "PrisonDungeon",
-        [1] = "PrisonDungeon",
-        [2] = "PrisonDungeon1_",
-        [3] = "PrisonDungeon2_",
-        [4] = "PrisonDungeon3_",
-        [5] = "PrisonDungeon4_",
-        [6] = "PrisonDungeon5_",
-        [7] = "PrisonDungeon6_",
+        [0] = L["PrisonDungeon"],
+        [1] = L["PrisonDungeon"],
+        [2] = L["PrisonDungeon1_"],
+        [3] = L["PrisonDungeon2_"],
+        [4] = L["PrisonDungeon3_"],
+        [5] = L["PrisonDungeon4_"],
+        [6] = L["PrisonDungeon5_"],
+        [7] = L["PrisonDungeon6_"],
     },
     [24] = {
-        [0] = "Waycrest",
-        [1] = "Waycrest1_",
-        [2] = "Waycrest2_",
-        [3] = "Waycrest3_",
-        [4] = "Waycrest4_",
-        [5] = "Waycrest5_",
+        [0] = L["Waycrest"],
+        [1] = L["Waycrest1_"],
+        [2] = L["Waycrest2_"],
+        [3] = L["Waycrest3_"],
+        [4] = L["Waycrest4_"],
+        [5] = L["Waycrest5_"],
     },
 
 }
@@ -735,7 +738,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	---new profile,rename,export,delete
 	local buttonWidth = 80
 	frame.sidePanelNewButton = AceGUI:Create("Button")
-	frame.sidePanelNewButton:SetText("New")
+	frame.sidePanelNewButton:SetText(L["New"])
 	frame.sidePanelNewButton:SetWidth(buttonWidth)
 	--button fontInstance
 	local fontInstance = CreateFont("MDTButtonFont");
@@ -751,7 +754,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 	frame.sidePanelRenameButton = AceGUI:Create("Button")
 	frame.sidePanelRenameButton:SetWidth(buttonWidth)
-	frame.sidePanelRenameButton:SetText("Rename")
+	frame.sidePanelRenameButton:SetText(L["Rename"])
 	frame.sidePanelRenameButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelRenameButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelRenameButton.frame:SetDisabledFontObject(fontInstance)
@@ -767,7 +770,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 
 	frame.sidePanelImportButton = AceGUI:Create("Button")
-	frame.sidePanelImportButton:SetText("Import")
+	frame.sidePanelImportButton:SetText(L["Import"])
 	frame.sidePanelImportButton:SetWidth(buttonWidth)
 	frame.sidePanelImportButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelImportButton.frame:SetHighlightFontObject(fontInstance)
@@ -777,7 +780,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 
 	frame.sidePanelExportButton = AceGUI:Create("Button")
-	frame.sidePanelExportButton:SetText("Export")
+	frame.sidePanelExportButton:SetText(L["Export"])
 	frame.sidePanelExportButton:SetWidth(buttonWidth)
 	frame.sidePanelExportButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
@@ -793,7 +796,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 
 	frame.sidePanelDeleteButton = AceGUI:Create("Button")
-	frame.sidePanelDeleteButton:SetText("Delete")
+	frame.sidePanelDeleteButton:SetText(L["Delete"])
 	frame.sidePanelDeleteButton:SetWidth(buttonWidth)
 	frame.sidePanelDeleteButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
@@ -807,7 +810,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 
 	frame.LinkToChatButton = AceGUI:Create("Button")
-	frame.LinkToChatButton:SetText("Share")
+	frame.LinkToChatButton:SetText(L["Share"])
 	frame.LinkToChatButton:SetWidth(buttonWidth)
 	frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
 	frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
@@ -816,7 +819,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
         if not distribution then return end
         frame.LinkToChatButton:SetDisabled(true)
-        frame.LinkToChatButton:SetText("Sending")
+        frame.LinkToChatButton:SetText(L["Sending"])
         MethodDungeonTools:SendToGroup(distribution)
 	end)
     local inGroup = UnitInRaid("player") or IsInGroup()
@@ -854,7 +857,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
     local affixDropdown = frame.sidePanel.affixDropdown
     affixDropdown.text:SetJustifyH("LEFT")
-    affixDropdown:SetLabel("Affixes")
+    affixDropdown:SetLabel(L["Affixes"])
 
 
     function affixDropdown:UpdateAffixList()
@@ -898,7 +901,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
-        MethodDungeonTools:POI_UpdateAll()
         if not ignoreUpdateProgressBar then
             MethodDungeonTools:UpdateProgressbar()
         end
@@ -929,7 +931,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixWeekWarning:SetWidth(35)
     affixWeekWarning:SetCallback("OnEnter",function(...)
         GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_CURSOR")
-        GameTooltip:SetText("The selected affixes are not the ones of the current week")
+        GameTooltip:SetText(L["The selected affixes are not the ones of the current week"])
         GameTooltip:Show()
     end)
     affixWeekWarning:SetCallback("OnLeave",function(...)
@@ -947,7 +949,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 	--Difficulty Selection
 	frame.sidePanel.DifficultySliderLabel = AceGUI:Create("Label")
-	frame.sidePanel.DifficultySliderLabel:SetText(" Level: ")
+	frame.sidePanel.DifficultySliderLabel:SetText(L[" Level: "])
 	frame.sidePanel.DifficultySliderLabel:SetWidth(35)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySliderLabel)
 
@@ -1158,14 +1160,19 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         --topString
                         local newLine = "\n"
                         local text = newLine..newLine..newLine..v.enemyData.name.." x"..v.enemyData.quantity..newLine
-                        text = text.."Level "..v.enemyData.level.." "..v.enemyData.creatureType..newLine
+                        text = text..L["Level "]..v.enemyData.level.." "..v.enemyData.creatureType..newLine
                         --ViragDevTool_AddData(v.enemyData)
-                        local boss = v.enemyData.isBoss or false
-                        local health = MethodDungeonTools:CalculateEnemyHealth(boss,v.enemyData.baseHealth,db.currentDifficulty)
+                        local fortified = false
+                        local boss = false
+                        if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix then
+                            if db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentAffix == "fortified" then fortified = true end
+                        end
+                        local tyrannical = not fortified
+                        local health = MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,v.enemyData.baseHealth,db.currentDifficulty)
                         text = text..MethodDungeonTools:FormatEnemyHealth(health).." HP"..newLine
 
                         local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
-                        text = text.."Forces: "..MethodDungeonTools:FormatEnemyForces(v.enemyData.count,totalForcesMax,false)
+                        text = text..L["Forces: "]..MethodDungeonTools:FormatEnemyForces(v.enemyData.count,totalForcesMax,false)
 
                         tooltip.topString:SetText(text)
                         tooltip.topString:Show()
@@ -1191,8 +1198,8 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
             local totalForces = MethodDungeonTools:CountForces(tooltip.currentPull,false)
             local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
 
-            local text = "Forces: "..MethodDungeonTools:FormatEnemyForces(pullForces,totalForcesMax,false)
-            text = text.. "\nTotal :"..MethodDungeonTools:FormatEnemyForces(totalForces,totalForcesMax,true)
+            local text = L["Forces: "]..MethodDungeonTools:FormatEnemyForces(pullForces,totalForcesMax,false)
+            text = text.. L["\nTotal :"]..MethodDungeonTools:FormatEnemyForces(totalForces,totalForcesMax,true)
 
             tooltip.botString:SetText(text)
             tooltip.botString:Show()
@@ -1248,16 +1255,6 @@ end
 function MethodDungeonTools:IsCurrentPresetTeeming()
     --return self:GetCurrentPreset().week
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-end
-
----IsCurrentPresetFortified
-function MethodDungeonTools:IsCurrentPresetFortified()
-    return self:GetCurrentPreset().week%2 == 0
-end
-
----IsCurrentPresetTyrannical
-function MethodDungeonTools:IsCurrentPresetTyrannical()
-    return self:GetCurrentPreset().week%2 == 1
 end
 
 ---MethodDungeonTools.OnMouseDown
@@ -1394,9 +1391,7 @@ end
 local function round(number, decimals)
     return (("%%.%df"):format(decimals)):format(number)
 end
-function MethodDungeonTools:CalculateEnemyHealth(boss,baseHealth,level)
-    local fortified = MethodDungeonTools:IsCurrentPresetFortified()
-    local tyrannical = MethodDungeonTools:IsCurrentPresetTyrannical()
+function MethodDungeonTools:CalculateEnemyHealth(boss,fortified,tyrannical,baseHealth,level)
 	local mult = 1
 	if boss == false and fortified == true then mult = 1.2 end
 	if boss == true and tyrannical == true then mult = 1.4 end
@@ -1453,7 +1448,7 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	local presetList = {}
 	local countPresets = 0
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
-		if v.text ~= "<New Preset>" then
+		if v.text ~= L["<New Preset>"] then
 			table.insert(presetList,k,v.text)
 			countPresets=countPresets+1
 		end
@@ -1461,7 +1456,7 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	table.insert(presetList,1,"Empty")
 	MethodDungeonTools.main_frame.PresetCreationDropDown:SetList(presetList)
 	MethodDungeonTools.main_frame.PresetCreationDropDown:SetValue(1)
-	MethodDungeonTools.main_frame.PresetCreationEditbox:SetText("Preset "..countPresets+1)
+	MethodDungeonTools.main_frame.PresetCreationEditbox:SetText(L["Preset "]..countPresets+1)
 	MethodDungeonTools.main_frame.presetCreationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 	MethodDungeonTools.main_frame.presetCreationFrame:SetStatusText("")
 	MethodDungeonTools.main_frame.presetCreationFrame:Show()
@@ -1475,7 +1470,7 @@ function MethodDungeonTools:OpenClearPresetDialog()
     MethodDungeonTools:HideAllDialogs()
     MethodDungeonTools.main_frame.ClearConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
     local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-    MethodDungeonTools.main_frame.ClearConfirmationFrame.label:SetText("Clear "..currentPresetName.."?")
+    MethodDungeonTools.main_frame.ClearConfirmationFrame.label:SetText(L["Clear "]..currentPresetName.."?")
     MethodDungeonTools.main_frame.ClearConfirmationFrame:Show()
 end
 
@@ -1577,14 +1572,6 @@ function MethodDungeonTools:EnsureDBTables()
         preset.faction  = preset.faction or (englishFaction and englishFaction=="Alliance") and 2 or 1
     end
 
-    if db.currentDungeonIdx == 16 and (not preset.freeholdCrewSelected) then
-        local week = preset.week
-        week = week%3
-        if week == 0 then week = 3 end
-        preset.freeholdCrew = week
-        preset.freeholdCrewSelected = true
-    end
-
 end
 
 
@@ -1653,8 +1640,8 @@ function MethodDungeonTools:ClearPreset(index)
 end
 
 function MethodDungeonTools:CreateNewPreset(name)
-	if name == "<New Preset>" then
-		MethodDungeonTools.main_frame.presetCreationLabel:SetText("Cannot create preset '"..name.."'")
+	if name == L["<New Preset>"] then
+		MethodDungeonTools.main_frame.presetCreationLabel:SetText(L["Cannot create preset '"]..name.."'")
 		MethodDungeonTools.main_frame.presetCreationCreateButton:SetDisabled(true)
 		MethodDungeonTools.main_frame.presetCreationFrame:DoLayout()
 		return
@@ -1681,7 +1668,7 @@ function MethodDungeonTools:CreateNewPreset(name)
 		MethodDungeonTools:UpdatePresetDropDown()
 		MethodDungeonTools:UpdateMap()
 	else
-		MethodDungeonTools.main_frame.presetCreationLabel:SetText("'"..name.."' already exists.")
+		MethodDungeonTools.main_frame.presetCreationLabel:SetText("'"..name..L["' already exists."])
 		MethodDungeonTools.main_frame.presetCreationCreateButton:SetDisabled(true)
 		MethodDungeonTools.main_frame.presetCreationFrame:DoLayout()
 	end
@@ -1691,7 +1678,7 @@ end
 
 function MethodDungeonTools:SanitizePresetName(text)
 	--check if name is valid, block button if so, unblock if valid
-	if text == "<New Preset>" then
+	if text == L["<New Preset>"] then
 		return false
 	else
 		local duplicate = false
@@ -1708,7 +1695,7 @@ end
 function MethodDungeonTools:MakeChatPresetImportFrame(frame)
     frame.chatPresetImportFrame = AceGUI:Create("Frame")
     local chatImport = frame.chatPresetImportFrame
-    chatImport:SetTitle("Import Preset")
+    chatImport:SetTitle(L["Import Preset"])
     chatImport:SetWidth(400)
     chatImport:SetHeight(100)
     chatImport:EnableResize(false)
@@ -1727,7 +1714,7 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
 
 
     local importButton = AceGUI:Create("Button")
-    importButton:SetText("Import")
+    importButton:SetText(L["Import"])
     importButton:SetWidth(100)
     importButton:SetCallback("OnClick", function()
         local newPreset = chatImport.currentPreset
@@ -1777,13 +1764,13 @@ function MethodDungeonTools:MakePresetImportFrame(frame)
 
 	local importString	= ""
 	frame.presetImportBox = AceGUI:Create("EditBox")
-	frame.presetImportBox:SetLabel("Import Preset:")
+	frame.presetImportBox:SetLabel(L["Import Preset:"])
 	frame.presetImportBox:SetWidth(255)
 	frame.presetImportBox:SetCallback("OnEnterPressed", function(widget, event, text) importString = text end)
 	frame.presetImportFrame:AddChild(frame.presetImportBox)
 
 	local importButton = AceGUI:Create("Button")
-	importButton:SetText("Import")
+	importButton:SetText(L["Import"])
 	importButton:SetWidth(100)
 	importButton:SetCallback("OnClick", function()
 		local newPreset = MethodDungeonTools:StringToTable(importString, true)
@@ -1791,7 +1778,7 @@ function MethodDungeonTools:MakePresetImportFrame(frame)
 			MethodDungeonTools.main_frame.presetImportFrame:Hide()
 			MethodDungeonTools:ImportPreset(newPreset)
 		else
-			frame.presetImportLabel:SetText("Invalid import string")
+			frame.presetImportLabel:SetText(L["Invalid import string"])
 		end
 	end)
 	frame.presetImportFrame:AddChild(importButton)
@@ -1802,7 +1789,7 @@ end
 
 function MethodDungeonTools:MakePresetCreationFrame(frame)
 	frame.presetCreationFrame = AceGUI:Create("Frame")
-	frame.presetCreationFrame:SetTitle("New Preset")
+	frame.presetCreationFrame:SetTitle(L["New Preset"])
 	frame.presetCreationFrame:SetWidth(400)
 	frame.presetCreationFrame:SetHeight(200)
 	frame.presetCreationFrame:EnableResize(false)
@@ -1825,7 +1812,7 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 			frame.presetCreationLabel:SetText(nil)
 			frame.presetCreationCreateButton:SetDisabled(false)
 		else
-			frame.presetCreationLabel:SetText("Cannot create preset '"..text.."'")
+			frame.presetCreationLabel:SetText(L["Cannot create preset '"]..text.."'")
 			frame.presetCreationCreateButton:SetDisabled(true)
 		end
 		frame.presetCreationFrame:DoLayout()
@@ -1833,7 +1820,7 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 	frame.presetCreationFrame:AddChild(frame.PresetCreationEditbox)
 
 	frame.presetCreationCreateButton = AceGUI:Create("Button")
-	frame.presetCreationCreateButton:SetText("Create")
+	frame.presetCreationCreateButton:SetText(L["Create"])
 	frame.presetCreationCreateButton:SetWidth(100)
 	frame.presetCreationCreateButton:SetCallback("OnClick", function()
 		local name = frame.PresetCreationEditbox:GetText()
@@ -1849,7 +1836,7 @@ function MethodDungeonTools:MakePresetCreationFrame(frame)
 
 
 	frame.PresetCreationDropDown = AceGUI:Create("Dropdown")
-	frame.PresetCreationDropDown:SetLabel("Use as a starting point:")
+	frame.PresetCreationDropDown:SetLabel(L["Use as a starting point:"])
 	frame.PresetCreationDropDown.text:SetJustifyH("LEFT")
 	frame.presetCreationFrame:AddChild(frame.PresetCreationDropDown)
 
@@ -2235,7 +2222,7 @@ end
 
 function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame = AceGUI:Create("Frame")
-	frame.RenameFrame:SetTitle("Rename Preset")
+	frame.RenameFrame:SetTitle(L["Rename Preset"])
 	frame.RenameFrame:SetWidth(350)
 	frame.RenameFrame:SetHeight(150)
 	frame.RenameFrame:EnableResize(false)
@@ -2247,7 +2234,7 @@ function MethodDungeonTools:MakeRenameFrame(frame)
 
 	local renameText
 	frame.RenameFrame.Editbox = AceGUI:Create("EditBox")
-	frame.RenameFrame.Editbox:SetLabel("Insert new Preset Name:")
+	frame.RenameFrame.Editbox:SetLabel(L["Insert new Preset Name:"])
 	frame.RenameFrame.Editbox:SetWidth(200)
 	frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(...)
         local widget, event, text = ...
@@ -2257,7 +2244,7 @@ function MethodDungeonTools:MakeRenameFrame(frame)
 			frame.RenameFrame.RenameButton:SetDisabled(false)
 			renameText = text
 		else
-			frame.RenameFrame.PresetRenameLabel:SetText("Cannot rename preset to '"..text.."'")
+			frame.RenameFrame.PresetRenameLabel:SetText(L["Cannot rename preset to '"]..text.."'")
 			frame.RenameFrame.RenameButton:SetDisabled(true)
 			renameText = nil
 		end
@@ -2267,7 +2254,7 @@ function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame:AddChild(frame.RenameFrame.Editbox)
 
 	frame.RenameFrame.RenameButton = AceGUI:Create("Button")
-	frame.RenameFrame.RenameButton:SetText("Rename")
+	frame.RenameFrame.RenameButton:SetText(L["Rename"])
 	frame.RenameFrame.RenameButton:SetWidth(100)
 	frame.RenameFrame.RenameButton:SetCallback("OnClick",function() MethodDungeonTools:RenamePreset(renameText) end)
 	frame.RenameFrame:AddChild(frame.RenameFrame.RenameButton)
@@ -2285,7 +2272,7 @@ end
 ---Creates the frame used to export presets to a string which can be uploaded to text sharing websites like pastebin
 function MethodDungeonTools:MakeExportFrame(frame)
 	frame.ExportFrame = AceGUI:Create("Frame")
-	frame.ExportFrame:SetTitle("Preset Export")
+	frame.ExportFrame:SetTitle(L["Preset Export"])
 	frame.ExportFrame:SetWidth(600)
 	frame.ExportFrame:SetHeight(400)
 	frame.ExportFrame:EnableResize(false)
@@ -2295,7 +2282,7 @@ function MethodDungeonTools:MakeExportFrame(frame)
 	end)
 
 	frame.ExportFrameEditbox = AceGUI:Create("MultiLineEditBox")
-	frame.ExportFrameEditbox:SetLabel("Preset Export:")
+	frame.ExportFrameEditbox:SetLabel(L["Preset Export:"])
 	frame.ExportFrameEditbox:SetWidth(600)
 	frame.ExportFrameEditbox:DisableButton(true)
 	frame.ExportFrameEditbox:SetNumLines(20)
@@ -2312,7 +2299,7 @@ end
 ---Creates the delete confirmation dialog that pops up when a user wants to delete a preset
 function MethodDungeonTools:MakeDeleteConfirmationFrame(frame)
 	frame.DeleteConfirmationFrame = AceGUI:Create("Frame")
-	frame.DeleteConfirmationFrame:SetTitle("Delete Preset")
+	frame.DeleteConfirmationFrame:SetTitle(L["Delete Preset"])
 	frame.DeleteConfirmationFrame:SetWidth(250)
 	frame.DeleteConfirmationFrame:SetHeight(120)
 	frame.DeleteConfirmationFrame:EnableResize(false)
@@ -2328,14 +2315,14 @@ function MethodDungeonTools:MakeDeleteConfirmationFrame(frame)
 	frame.DeleteConfirmationFrame:AddChild(frame.DeleteConfirmationFrame.label)
 
 	frame.DeleteConfirmationFrame.OkayButton = AceGUI:Create("Button")
-	frame.DeleteConfirmationFrame.OkayButton:SetText("Delete")
+	frame.DeleteConfirmationFrame.OkayButton:SetText(L["Delete"])
 	frame.DeleteConfirmationFrame.OkayButton:SetWidth(100)
 	frame.DeleteConfirmationFrame.OkayButton:SetCallback("OnClick",function()
 		MethodDungeonTools:DeletePreset(db.currentPreset[db.currentDungeonIdx])
 		frame.DeleteConfirmationFrame:Hide()
 	end)
 	frame.DeleteConfirmationFrame.CancelButton = AceGUI:Create("Button")
-	frame.DeleteConfirmationFrame.CancelButton:SetText("Cancel")
+	frame.DeleteConfirmationFrame.CancelButton:SetText(L["Cancel"])
 	frame.DeleteConfirmationFrame.CancelButton:SetWidth(100)
 	frame.DeleteConfirmationFrame.CancelButton:SetCallback("OnClick",function()
 		frame.DeleteConfirmationFrame:Hide()
@@ -2352,7 +2339,7 @@ end
 ---Creates the clear confirmation dialog that pops up when a user wants to clear a preset
 function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame = AceGUI:Create("Frame")
-	frame.ClearConfirmationFrame:SetTitle("Clear Preset")
+	frame.ClearConfirmationFrame:SetTitle(L["Clear Preset"])
 	frame.ClearConfirmationFrame:SetWidth(250)
 	frame.ClearConfirmationFrame:SetHeight(120)
 	frame.ClearConfirmationFrame:EnableResize(false)
@@ -2368,14 +2355,14 @@ function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.label)
 
 	frame.ClearConfirmationFrame.OkayButton = AceGUI:Create("Button")
-	frame.ClearConfirmationFrame.OkayButton:SetText("Clear")
+	frame.ClearConfirmationFrame.OkayButton:SetText(L["Clear"])
 	frame.ClearConfirmationFrame.OkayButton:SetWidth(100)
 	frame.ClearConfirmationFrame.OkayButton:SetCallback("OnClick",function()
 		MethodDungeonTools:ClearPreset(db.currentPreset[db.currentDungeonIdx])
 		frame.ClearConfirmationFrame:Hide()
 	end)
 	frame.ClearConfirmationFrame.CancelButton = AceGUI:Create("Button")
-	frame.ClearConfirmationFrame.CancelButton:SetText("Cancel")
+	frame.ClearConfirmationFrame.CancelButton:SetText(L["Cancel"])
 	frame.ClearConfirmationFrame.CancelButton:SetWidth(100)
 	frame.ClearConfirmationFrame.CancelButton:SetCallback("OnClick",function()
 		frame.ClearConfirmationFrame:Hide()

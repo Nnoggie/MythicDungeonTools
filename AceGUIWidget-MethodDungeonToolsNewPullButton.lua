@@ -1,3 +1,5 @@
+local L = LibStub ("AceLocale-3.0"):GetLocale ( "mdt" )
+
 local Type, Version = "MethodDungeonToolsNewPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
@@ -46,7 +48,7 @@ local methods = {
 
 
         --Set pullNumber
-        self.pullNumber:SetText("+ Add pull")
+        self.pullNumber:SetText(L["+ Add pull"])
         self.pullNumber:Show()
 
 
