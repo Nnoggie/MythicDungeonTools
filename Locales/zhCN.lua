@@ -1,6 +1,6 @@
 ﻿local L = LibStub("AceLocale-3.0"):NewLocale("mdt", "zhCN") 
 if not L then return end
-L["Click to toggle AddOn Window"]="单击以切换配置窗口（locales）"
+L["Click to toggle AddOn Window"]="单击以切换配置窗口"
 L["Right-click to lock Minimap Button"]="右键单击以锁定迷你地图按钮"
 L["Default"]="默认"
 L["<New Preset>"]="<新预设>"
