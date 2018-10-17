@@ -104,13 +104,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["graveyardDescription"] = "";
             ["type"] = "graveyard";
         };
-        [4] = {
-            ["y"] = -462.91658652644;
-            ["x"] = 405.60201958621;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeating Hadal Darkfathom";
-            ["type"] = "graveyard";
-        };
         [3] = {
             ["y"] = -334.61016080079;
             ["x"] = 432.0393310099;
@@ -118,8 +111,28 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["graveyardDescription"] = "Unlocks after killing Dread Captain Lockwood";
             ["type"] = "graveyard";
         };
+        [4] = {
+            ["y"] = -462.91658652644;
+            ["x"] = 405.60201958621;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after defeating Hadal Darkfathom";
+            ["type"] = "graveyard";
+        };
+        [5] = {
+            ["y"] = -125.7844916914;
+            ["x"] = 480.91360238615;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "sobGutters";
+        };
+        [6] = {
+            ["y"] = -279.04184468091;
+            ["x"] = 540.43646488041;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "sobGutters";
+        };
     };
 };
+
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [27] = {

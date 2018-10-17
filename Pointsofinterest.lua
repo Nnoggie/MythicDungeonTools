@@ -295,6 +295,24 @@ local function POI_SetOptions(frame,type,poi)
         end)
         frame.teeming = true
     end
+    if type =="sobGutters" then
+        frame:SetSize(10,10)
+        frame.Texture:SetSize(10,10)
+        frame.HighlightTexture:SetSize(10,10)
+        frame.HighlightTexture:SetAtlas("QuestNormal")
+        frame.Texture:SetAtlas("QuestNormal")
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:AddLine("Note on Gutters:\nFootmen will insta-kill Gutters when a player comes near them. If they die without taking damage from the group they will not give any enemy forces.", 1, 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
     if db.devMode then POI_SetDevOptions(frame,poi) end
 end
 
