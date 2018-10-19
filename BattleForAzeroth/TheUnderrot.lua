@@ -1396,6 +1396,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -121.90763402295;
                 ["x"] = 347.31640246703;
                 ["sublevel"] = 1;
+                ["infested"] = {
+                    [1] = true;
+                };
             };
             [11] = {
                 ["y"] = -101.11832338886;
