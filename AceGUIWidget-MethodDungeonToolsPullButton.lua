@@ -414,35 +414,21 @@ local methods = {
             notCheckable = 1,
             func = nil
         })
-        if self.index ~= 1 then
-            tinsert(self.multiselectMenu, {
-                text = "Merge up",
-                notCheckable = 1,
-                func = function()
-                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:SetSelectionToPull(newIndex)
-                end
-            })
-        end
         tinsert(self.multiselectMenu, {
             text = "Merge",
             notCheckable = 1,
             func = function()
-                print("NIY")
+                local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetCurrentPreset().value.selection)
+                if not MethodDungeonTools.U.contains(selected_pulls, self.index) then
+                    tinsert(selected_pulls, self.index)
+                end
+
+                local newIndex = MethodDungeonTools:PresetsMergePulls(selected_pulls, self.index)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:GetCurrentPreset().value.selection = { newIndex }
+                MethodDungeonTools:SetSelectionToPull(newIndex)
             end
         })
-        if self.index < self.maxPulls then
-            tinsert(self.multiselectMenu, {
-                text = "Merge down",
-                notCheckable = 1,
-                func = function()
-                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:SetSelectionToPull(newIndex)
-                end
-            })
-        end
         if self.index ~= 1 or self.index < self.maxPulls then
             tinsert(self.multiselectMenu, {
                 text = " ",
