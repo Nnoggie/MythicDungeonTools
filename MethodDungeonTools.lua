@@ -2149,7 +2149,16 @@ function MethodDungeonTools:PickPullButton(idx)
     if db.devMode then return end
 	MethodDungeonTools:ClearPullButtonPicks()
 	local frame = MethodDungeonTools.main_frame.sidePanel
-	frame.newPullButtons[idx]:Pick()
+
+    if MethodDungeonTools:GetCurrentPreset().value.selection and #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+        for _, buttonIndex in ipairs(MethodDungeonTools:GetCurrentPreset().value.selection) do
+            frame.newPullButtons[buttonIndex]:Pick()
+        end
+
+    else
+        frame.newPullButtons[idx]:Pick()
+    end
+
 end
 
 ---AddPull

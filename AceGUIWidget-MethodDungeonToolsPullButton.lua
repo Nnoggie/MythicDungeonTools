@@ -127,10 +127,46 @@ local methods = {
 
         function self.callbacks.OnClickNormal(_, mouseButton)
             if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
-            if(IsControlKeyDown())then
 
+            if(IsControlKeyDown())then
+                if (mouseButton == "LeftButton") then
+                    print("CTRL+MouseButton:Left")
+                    if not MethodDungeonTools:GetCurrentPreset().value.selection then
+                        MethodDungeonTools:GetCurrentPreset().value.selection = { MethodDungeonTools:GetCurrentPreset().value.currentPull }
+                    end
+
+                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, self.index) then
+                        tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, self.index)
+                        MethodDungeonTools:SetMapSublevel(self.index)
+                        MethodDungeonTools:SetSelectionToPull(self.index)
+                        print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                    else
+                        MethodDungeonTools.U.iremove_if(MethodDungeonTools.GetCurrentPreset().value.selection, function(entry)
+                            return entry == self.index
+                        end)
+                        self:ClearPick()
+                        print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                    end
+                end
             elseif(IsShiftKeyDown()) then
-                if(mouseButton == "RightButton") then
+                if (mouseButton == "LeftButton") then
+                    print("SHIFT*MouseButton:Left")
+                    if not MethodDungeonTools:GetCurrentPreset().value.selection then
+                        MethodDungeonTools:GetCurrentPreset().value.selection = { MethodDungeonTools:GetCurrentPreset().value.currentPull }
+                    end
+
+                    local lastPull = MethodDungeonTools:GetCurrentPreset().value.selection[#MethodDungeonTools:GetCurrentPreset().value.selection]
+
+                    for i=lastPull, self.index do
+                        if not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, i) then
+                            tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, i)
+                        end
+                    end
+
+                    MethodDungeonTools:SetMapSublevel(self.index)
+                    MethodDungeonTools:SetSelectionToPull(self.index)
+                    print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                elseif (mouseButton == "RightButton") then
                     local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
                     if maxPulls>1 then
                         MethodDungeonTools:DeletePull(self.index)
@@ -141,9 +177,21 @@ local methods = {
                 if(mouseButton == "RightButton") then
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
-                    L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+
+                    if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 and not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, self.index) then
+                        tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, self.index)
+                    end
+
+                    if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+                        L_EasyMenu(self.multiselectMenu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                    else
+                        L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                    end
+
                 else
                     --normal click
+                    MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
+                    print(#MethodDungeonTools:GetCurrentPreset().value.selection)
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
                 end
@@ -197,6 +245,7 @@ local methods = {
         end
 
 
+        -- Normal Dropdown menu
         self.menu = {}
         if self.index ~= 1 then
             tinsert(self.menu, {
@@ -306,6 +355,107 @@ local methods = {
         end
 
         tinsert(self.menu, {
+            text = "Close",
+            notCheckable = 1,
+            func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
+        })
+
+
+        -- Multiselect drop down menu
+        self.multiselectMenu = {}
+        tinsert(self.multiselectMenu, {
+            text = "Insert before",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:PresetsAddPull(self.index)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(self.index)
+            end
+        })
+
+        tinsert(self.multiselectMenu, {
+            text = "Insert after",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:PresetsAddPull(self.index + 1)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(self.index + 1)
+            end
+        })
+        tinsert(self.multiselectMenu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+        if self.index ~= 1 then
+            tinsert(self.multiselectMenu, {
+                text = "Merge up",
+                notCheckable = 1,
+                func = function()
+                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
+                    MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:SetSelectionToPull(newIndex)
+                end
+            })
+        end
+        tinsert(self.multiselectMenu, {
+            text = "Merge",
+            nonCheckable = 1,
+            func = function()
+                print("NIY")
+            end
+        })
+        if self.index < self.maxPulls then
+            tinsert(self.multiselectMenu, {
+                text = "Merge down",
+                notCheckable = 1,
+                func = function()
+                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
+                    MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:SetSelectionToPull(newIndex)
+                end
+            })
+        end
+        if self.index ~= 1 or self.index < self.maxPulls then
+            tinsert(self.multiselectMenu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
+        end
+        tinsert(self.multiselectMenu, {
+            text = "Clear",
+            notCheckable = 1,
+            func = function() MethodDungeonTools:ClearPull(self.index) end
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Clear Preset",
+            notCheckable = 1,
+            func = function() MethodDungeonTools:OpenClearPresetDialog() end
+        })
+        tinsert(self.multiselectMenu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+        if self.maxPulls > 1 then
+            tinsert(self.multiselectMenu, {
+                text = "Delete",
+                notCheckable = 1,
+                func = function() MethodDungeonTools:DeletePull(self.index) end
+            })
+            tinsert(self.multiselectMenu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
+        end
+
+        tinsert(self.multiselectMenu, {
             text = "Close",
             notCheckable = 1,
             func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
