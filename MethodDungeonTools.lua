@@ -2152,6 +2152,7 @@ function MethodDungeonTools:PickPullButton(idx)
 
     if MethodDungeonTools:GetCurrentPreset().value.selection and #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
         for _, buttonIndex in ipairs(MethodDungeonTools:GetCurrentPreset().value.selection) do
+            print("Picking", buttonIndex)
             frame.newPullButtons[buttonIndex]:Pick()
         end
 
@@ -2213,6 +2214,28 @@ function MethodDungeonTools:RenamePreset(renameText)
 	MethodDungeonTools:UpdatePresetDropDown()
 end
 
+---GetFirstNotSelectedPullButton
+function MethodDungeonTools:GetFirstNotSelectedPullButton(start, direction)
+    if not direction then
+        direction = -1
+    elseif direction == "UP" then
+        direction = -1
+    elseif direction == "DOWN" then
+        direction = 1
+    end
+
+    local pullIdx = start
+    while MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, pullIdx)
+            and MethodDungeonTools.U.isInRange(pullIdx, 1, #MethodDungeonTools:GetCurrentPreset().value.pulls) do
+       pullIdx = pullIdx + direction
+    end
+
+    if not MethodDungeonTools.U.isInRange(pullIdx, 1, #MethodDungeonTools:GetCurrentPreset().value.pulls) then
+        return
+    end
+
+    return pullIdx
+end
 
 function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame = AceGUI:Create("Frame")

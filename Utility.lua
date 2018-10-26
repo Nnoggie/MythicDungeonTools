@@ -15,12 +15,12 @@ U.count_if = function(t, func)
     return count
 end
 
-U.do_if = function(t, condition, update)
+U.do_if = function(t, func)
     local updated = 0
 
     for k, v in pairs(t) do
-        if condition(v) then
-            update(v)
+        if func.condition(v) then
+            func.update(t, k)
             updated = updated + 1
         end
     end
@@ -71,4 +71,8 @@ end
 
 U.lerp = function(a, b, alpha)
     return (b - a) * alpha + a
+end
+
+U.isInRange = function(value, min, max)
+    return (value >= min and value <= max)
 end
