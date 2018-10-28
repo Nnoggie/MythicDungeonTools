@@ -722,6 +722,20 @@ local methods = {
 
         MethodDungeonTools.pullTooltip:Hide()
 
+        if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+            local sidePanel = MethodDungeonTools.main_frame.sidePanel
+            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetCurrentPreset().value.selection)
+            table.sort(selected_pulls)
+
+            for _, pullIdx in ipairs(selected_pulls) do
+                if pullIdx ~= self.index then
+                    sidePanel.newPullButtons[pullIdx]:Disable()
+                    sidePanel.newPullButtons[pullIdx].dragging = true
+                end
+            end
+
+        end
+
         self.dragging = true
 
         self.frame:StartMoving()
@@ -758,15 +772,64 @@ local methods = {
             insertID = insertID + 1
         end
 
-        local index = self.index
-        if index > insertID then
-            index = index + 1
-        end
+        if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+            local sidePanel = MethodDungeonTools.main_frame.sidePanel
+            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetCurrentPreset().value.selection)
+            local new_pulls = {}
+            local progressed_pulls = {}
+            table.sort(selected_pulls)
 
-        MethodDungeonTools:PresetsAddPull(insertID)
-        local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
-        MethodDungeonTools:ReloadPullButtons()
-        MethodDungeonTools:SetSelectionToPull(newIndex)
+            print("insert id", insertID)
+            for offset, pullIdx in ipairs(selected_pulls) do
+                print("offset", offset, "pull", pullIdx)
+
+                local pos = insertID + (offset - 1)
+                print("pos", pos)
+
+                local progressed_above = MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
+                    return entry < pos
+                end)
+                print("progressed above", progressed_above)
+
+                pos = pos - progressed_above
+                print("pos", pos)
+
+                local correctPullIndex = pullIdx
+                print("correctPullIndex", correctPullIndex)
+                if pos > correctPullIndex then
+                    correctPullIndex = correctPullIndex - MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
+                        return entry < correctPullIndex
+                    end)
+                    print("correctPullIndex", correctPullIndex)
+                end
+
+                if pos <= correctPullIndex then
+                    correctPullIndex = correctPullIndex + 1
+                end
+                print("correctPullIndex", correctPullIndex)
+
+                MethodDungeonTools:PresetsAddPull(pos)
+                local newID =  MethodDungeonTools:PresetsMergePulls(correctPullIndex, pos)
+                print("newID", newID)
+
+                tinsert(progressed_pulls, pullIdx)
+                tinsert(new_pulls, newID)
+            end
+
+            MethodDungeonTools:GetCurrentPreset().value.selection = new_pulls
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:SetSelectionToPull(1)
+        else
+            local index = self.index
+            if index > insertID then
+                index = index + 1
+            end
+
+            MethodDungeonTools:PresetsAddPull(insertID)
+            local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:SetSelectionToPull(newIndex)
+        end
 
         MethodDungeonTools:Hide_DropIndicator()
         MethodDungeonTools.pullTooltip:Show()
@@ -778,6 +841,12 @@ local methods = {
     ["Disable"] = function(self)
         self.background:Hide();
         self.frame:Disable();
+
+        for k,v in pairs(self.enemyPortraits) do
+            v:Hide()
+            v.overlay:Hide()
+            v.fontString:Hide()
+        end
     end,
     ["Enable"] = function(self)
         self.background:Show();
