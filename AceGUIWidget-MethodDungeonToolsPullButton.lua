@@ -440,7 +440,16 @@ local methods = {
         tinsert(self.multiselectMenu, {
             text = "Clear",
             notCheckable = 1,
-            func = function() MethodDungeonTools:ClearPull(self.index) end
+            func = function()
+                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, self.index) then
+                    tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, self.index)
+                    self:Pick()
+                end
+
+                for _, pullIdx in ipairs(MethodDungeonTools:GetCurrentPreset().value.selection) do
+                    MethodDungeonTools:ClearPull(pullIdx)
+                end
+            end
         })
         tinsert(self.multiselectMenu, {
             text = "Clear Preset",
