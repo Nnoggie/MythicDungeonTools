@@ -198,7 +198,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
                 end,
             },
             [4] = {
-                text="Discarded Cell Key",
+                text="General Note",
                 func=function()
                     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
                     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
@@ -206,7 +206,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     end
                     local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
                     local posx,posy = 300,-200
-                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="tdprisonkey"})
+                    local noteText = option5:GetText()
+                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="generalNote",text=noteText})
                     MethodDungeonTools:POI_UpdateAll()
                 end,
             },
