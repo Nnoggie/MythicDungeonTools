@@ -150,8 +150,14 @@ local methods = {
                     print("SHIFT+MouseButton:Left")
                     local selection = MethodDungeonTools:GetSelection()
                     local lastPull = selection[#selection]
+                    local step = 1
 
-                    for i=lastPull, self.index do
+
+                    if self.index <= lastPull then
+                        step = -1
+                    end
+
+                    for i=lastPull, self.index, step do
                         if not MethodDungeonTools.U.contains(selection, i) then
                             tinsert(selection, i)
                         end
@@ -174,7 +180,7 @@ local methods = {
                     else
                         MethodDungeonTools:SetMapSublevel(self.index)
                         MethodDungeonTools:SetSelectionToPull(self.index)
-                        
+
                         L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     end
 
