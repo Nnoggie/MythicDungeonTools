@@ -1267,7 +1267,8 @@ end
 ---GetCurrentPull
 ---Returns the current pull of the currently active preset
 function MethodDungeonTools:GetCurrentPull()
-    return MethodDungeonTools:GetCurrentPreset().value.currentPull
+    local selection = MethodDungeonTools:GetSelection()
+    return selection[#selection]
 end
 
 ---GetCurrentSubLevel
@@ -2016,11 +2017,25 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 		end
 		pull = count
 	end
-	--SaveCurrentPresetPull
-    MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
-	MethodDungeonTools:PickPullButton(pull)
 
-    MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
+	--SaveCurrentPresetPull
+    if type(pull) == "number" and pull > 0 then
+        print("SetSelectionToPull(): pull = ", pull)
+        MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
+        MethodDungeonTools:GetCurrentPreset().value.selection = { pull }
+        MethodDungeonTools:PickPullButton(pull)
+
+        MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
+    elseif type(pull) == "table" then
+        MethodDungeonTools:GetCurrentPreset().value.currentPull = pull[#pull]
+        MethodDungeonTools:GetCurrentPreset().value.selection = pull
+
+        MethodDungeonTools:ClearPullButtonPicks()
+        for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+            MethodDungeonTools:PickPullButton(pullIdx, true)
+            MethodDungeonTools:DungeonEnemies_UpdateSelected(pullIdx)
+        end
+    end
 end
 
 
@@ -2145,21 +2160,14 @@ end
 
 ---PickPullButton
 ---Selects the current pull button and deselects all other buttons
-function MethodDungeonTools:PickPullButton(idx)
+function MethodDungeonTools:PickPullButton(idx, keepPicked)
     if db.devMode then return end
-	MethodDungeonTools:ClearPullButtonPicks()
-	local frame = MethodDungeonTools.main_frame.sidePanel
 
-    if MethodDungeonTools:GetCurrentPreset().value.selection and #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
-        for _, buttonIndex in ipairs(MethodDungeonTools:GetCurrentPreset().value.selection) do
-            print("Picking", buttonIndex)
-            frame.newPullButtons[buttonIndex]:Pick()
-        end
-
-    else
-        frame.newPullButtons[idx]:Pick()
+    if not keepPicked then
+        MethodDungeonTools:ClearPullButtonPicks()
     end
-
+	local frame = MethodDungeonTools.main_frame.sidePanel
+    frame.newPullButtons[idx]:Pick()
 end
 
 ---AddPull

@@ -135,7 +135,7 @@ local methods = {
                     if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
                         tinsert(MethodDungeonTools:GetSelection(), self.index)
                         MethodDungeonTools:SetMapSublevel(self.index)
-                        MethodDungeonTools:SetSelectionToPull(self.index)
+                        MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetSelection())
                         print(#MethodDungeonTools:GetSelection())
                     else
                         MethodDungeonTools.U.iremove_if(MethodDungeonTools:GetSelection(), function(entry)
@@ -158,7 +158,7 @@ local methods = {
                     end
 
                     MethodDungeonTools:SetMapSublevel(self.index)
-                    MethodDungeonTools:SetSelectionToPull(self.index)
+                    MethodDungeonTools:SetSelectionToPull(selection)
                     print(#selection)
                 elseif (mouseButton == "RightButton") then
                     local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
@@ -716,7 +716,7 @@ local methods = {
                 MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
                 self:Pick()
             end
-            
+
             local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
             table.sort(selected_pulls)
 
