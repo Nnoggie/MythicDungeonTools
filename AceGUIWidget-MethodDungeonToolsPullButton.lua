@@ -131,41 +131,35 @@ local methods = {
             if(IsControlKeyDown())then
                 if (mouseButton == "LeftButton") then
                     print("CTRL+MouseButton:Left")
-                    if not MethodDungeonTools:GetCurrentPreset().value.selection then
-                        MethodDungeonTools:GetCurrentPreset().value.selection = { MethodDungeonTools:GetCurrentPreset().value.currentPull }
-                    end
 
-                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, self.index) then
-                        tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, self.index)
+                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                        tinsert(MethodDungeonTools:GetSelection(), self.index)
                         MethodDungeonTools:SetMapSublevel(self.index)
                         MethodDungeonTools:SetSelectionToPull(self.index)
-                        print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                        print(#MethodDungeonTools:GetSelection())
                     else
-                        MethodDungeonTools.U.iremove_if(MethodDungeonTools.GetCurrentPreset().value.selection, function(entry)
+                        MethodDungeonTools.U.iremove_if(MethodDungeonTools:GetSelection(), function(entry)
                             return entry == self.index
                         end)
                         self:ClearPick()
-                        print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                        print(#MethodDungeonTools:GetSelection())
                     end
                 end
             elseif(IsShiftKeyDown()) then
                 if (mouseButton == "LeftButton") then
                     print("SHIFT+MouseButton:Left")
-                    if not MethodDungeonTools:GetCurrentPreset().value.selection or #MethodDungeonTools:GetCurrentPreset().value.selection == 0 then
-                        MethodDungeonTools:GetCurrentPreset().value.selection = { MethodDungeonTools:GetCurrentPreset().value.currentPull }
-                    end
-
-                    local lastPull = MethodDungeonTools:GetCurrentPreset().value.selection[#MethodDungeonTools:GetCurrentPreset().value.selection]
+                    local selection = MethodDungeonTools:GetSelection()
+                    local lastPull = selection[#selection]
 
                     for i=lastPull, self.index do
-                        if not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, i) then
-                            tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, i)
+                        if not MethodDungeonTools.U.contains(selection, i) then
+                            tinsert(selection, i)
                         end
                     end
 
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
-                    print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                    print(#selection)
                 elseif (mouseButton == "RightButton") then
                     local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
                     if maxPulls>1 then
@@ -178,11 +172,7 @@ local methods = {
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
 
-                    --if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 and not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, self.index) then
-                    --    tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, self.index)
-                    --end
-
-                    if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+                    if #MethodDungeonTools:GetSelection() > 1 then
                         L_EasyMenu(self.multiselectMenu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     else
                         L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
@@ -367,7 +357,7 @@ local methods = {
             text = "Insert before",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools.U.do_if(MethodDungeonTools:GetCurrentPreset().value.selection, {
+                MethodDungeonTools.U.do_if(MethodDungeonTools:GetSelection(), {
                     condition = function(entry)
                         return entry >= self.index
                     end,
@@ -385,15 +375,7 @@ local methods = {
             text = "Insert after",
             notCheckable = 1,
             func = function()
-                --[[MethodDungeonTools.U.do_if(MethodDungeonTools:GetCurrentPreset().value.selection, {
-                    condition = function(entry)
-                        return entry == self.index
-                    end,
-                    update = function(t, key)
-                        t[key] = t[key] - 1
-                    end
-                })]]
-                MethodDungeonTools.U.do_if(MethodDungeonTools:GetCurrentPreset().value.selection, {
+                MethodDungeonTools.U.do_if(MethodDungeonTools:GetSelection(), {
                     condition = function(entry)
                         return entry > self.index
                     end,
@@ -418,7 +400,7 @@ local methods = {
             text = "Merge",
             notCheckable = 1,
             func = function()
-                local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetCurrentPreset().value.selection)
+                local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
                 if not MethodDungeonTools.U.contains(selected_pulls, self.index) then
                     tinsert(selected_pulls, self.index)
                 end
@@ -441,12 +423,12 @@ local methods = {
             text = "Clear",
             notCheckable = 1,
             func = function()
-                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, self.index) then
-                    tinsert(MethodDungeonTools:GetCurrentPreset().value.selection, self.index)
+                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                    tinsert(MethodDungeonTools:GetSelection(), self.index)
                     self:Pick()
                 end
 
-                for _, pullIdx in ipairs(MethodDungeonTools:GetCurrentPreset().value.selection) do
+                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
                     MethodDungeonTools:ClearPull(pullIdx)
                 end
             end
@@ -478,7 +460,7 @@ local methods = {
                     end
 
                     local removed_pulls = {}
-                    for _, pullIdx in pairs(MethodDungeonTools.GetCurrentPreset().value.selection) do
+                    for _, pullIdx in pairs(MethodDungeonTools.GetSelection()) do
                         local offset = MethodDungeonTools.U.count_if(removed_pulls, function(entry)
                             return entry < pullIdx
                         end)
@@ -706,6 +688,7 @@ local methods = {
                     self.elapsed = (self.elapsed or 0) + elapsed
                     if self.elapsed > 0.1 then
                         local button, pos = select(2, GetDropTarget())
+                        print("Updating", self.index)
                         MethodDungeonTools:Show_DropIndicator(button, pos)
                         self.elapsed = 0
                     end
@@ -722,9 +705,9 @@ local methods = {
 
         MethodDungeonTools.pullTooltip:Hide()
 
-        if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+        if #MethodDungeonTools:GetSelection() > 1 then
             local sidePanel = MethodDungeonTools.main_frame.sidePanel
-            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetCurrentPreset().value.selection)
+            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
             table.sort(selected_pulls)
 
             for _, pullIdx in ipairs(selected_pulls) do
@@ -772,12 +755,14 @@ local methods = {
             insertID = insertID + 1
         end
 
-        if #MethodDungeonTools:GetCurrentPreset().value.selection > 1 then
+        if #MethodDungeonTools:GetSelection() > 1 then
             local sidePanel = MethodDungeonTools.main_frame.sidePanel
-            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetCurrentPreset().value.selection)
+            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
             local new_pulls = {}
             local progressed_pulls = {}
             table.sort(selected_pulls)
+
+            self.dragging = false
 
             print("insert id", insertID)
             for offset, pullIdx in ipairs(selected_pulls) do

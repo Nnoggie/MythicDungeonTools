@@ -2706,7 +2706,13 @@ function MethodDungeonTools:DropIndicator()
     return indicator
 end
 
+function MethodDungeonTools:IsShown_DropIndicator()
+    local indicator = MethodDungeonTools:DropIndicator()
+    return indicator:IsShown()
+end
+
 function MethodDungeonTools:Show_DropIndicator(target, pos)
+    print("Show_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
 
     indicator:ClearAllPoints()
@@ -2722,8 +2728,17 @@ function MethodDungeonTools:Show_DropIndicator(target, pos)
 end
 
 function MethodDungeonTools:Hide_DropIndicator()
+    print("Hide_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
     indicator:Hide()
+end
+
+function MethodDungeonTools:GetSelection()
+    if not MethodDungeonTools:GetCurrentPreset().value.selection or #MethodDungeonTools:GetCurrentPreset().value.selection == 0 then
+        MethodDungeonTools:GetCurrentPreset().value.selection = { MethodDungeonTools:GetCurrentPreset().value.currentPull }
+    end
+
+    return MethodDungeonTools:GetCurrentPreset().value.selection
 end
 
 function MethodDungeonTools:GetScrollingAmount(scrollFrame, pixelPerSecond)
