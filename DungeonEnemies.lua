@@ -129,6 +129,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
                     MethodDungeonTools:PresetsAddPull(MethodDungeonTools:GetCurrentPull() + 1)
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull() + 1)
+                    MethodDungeonTools:ScrollToPull(MethodDungeonTools:GetCurrentPull())
                 end
 
                 MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)

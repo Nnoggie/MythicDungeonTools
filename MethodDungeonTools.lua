@@ -2754,6 +2754,20 @@ function MethodDungeonTools:GetScrollingAmount(scrollFrame, pixelPerSecond)
     return (pixelPerSecond / viewheight) * 1000
 end
 
+function MethodDungeonTools:ScrollToPull(pullIdx)
+    -- Get scroll frame
+    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+
+    -- Get amount of total pulls plus the extra button "+ Add Pull"
+    local pulls = #MethodDungeonTools:GetCurrentPreset().value.pulls + 1 or 1
+
+    local percentage = pullIdx / pulls
+    local value = percentage * 1000
+    print("value =", value)
+    scrollFrame:SetScroll(value)
+    scrollFrame:FixScroll()
+end
+
 function initFrames()
     local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
