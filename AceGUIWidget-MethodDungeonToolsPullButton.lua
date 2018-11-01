@@ -699,6 +699,7 @@ local methods = {
         return self.updateFunction
     end,
     ["Drag"] = function(self)
+        local sidePanel = MethodDungeonTools.main_frame.sidePanel
         local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
         local x, w = self.frame:GetLeft(), self.frame:GetWidth()
         local _, y = GetCursorPosition()
@@ -706,7 +707,16 @@ local methods = {
         MethodDungeonTools.pullTooltip:Hide()
 
         if #MethodDungeonTools:GetSelection() > 1 then
-            local sidePanel = MethodDungeonTools.main_frame.sidePanel
+            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                for _, pullIdx in pairs(MethodDungeonTools:GetSelection()) do
+                    sidePanel.newPullButtons[pullIdx]:ClearPick()
+                end
+
+                MethodDungeonTools:GetCurrentPreset().value.currentPull = self.index
+                MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
+                self:Pick()
+            end
+            
             local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
             table.sort(selected_pulls)
 
@@ -762,7 +772,10 @@ local methods = {
             local progressed_pulls = {}
             table.sort(selected_pulls)
 
-            self.dragging = false
+            for _, pullIdx in ipairs(selected_pulls) do
+                sidePanel.newPullButtons[pullIdx].dragging = false
+                self.dragging = false
+            end
 
             print("insert id", insertID)
             for offset, pullIdx in ipairs(selected_pulls) do
