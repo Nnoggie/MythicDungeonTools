@@ -169,12 +169,12 @@ local methods = {
             else
                 MethodDungeonTools:EnsureDBTables()
                 if(mouseButton == "RightButton") then
-                    MethodDungeonTools:SetMapSublevel(self.index)
-                    MethodDungeonTools:SetSelectionToPull(self.index)
-
                     if #MethodDungeonTools:GetSelection() > 1 then
                         L_EasyMenu(self.multiselectMenu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     else
+                        MethodDungeonTools:SetMapSublevel(self.index)
+                        MethodDungeonTools:SetSelectionToPull(self.index)
+                        
                         L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     end
 
