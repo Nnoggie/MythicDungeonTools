@@ -376,6 +376,13 @@ Blood Elf/Gnome: 10% Intellect";
             ["doorName"] = "Prison Bars";
             ["type"] = "door";
         };
+        [10] = {
+            ["y"] = -210.61333863941;
+            ["x"] = 359.14450923037;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "G23 is fighting and will eventually kill Block Warden 1.";
+            ["type"] = "generalNote";
+        };
         [3] = {
             ["y"] = -358.690180572;
             ["x"] = 336.15677336968;
@@ -440,6 +447,8 @@ Blood Elf/Gnome: 10% Intellect";
         };
     };
 };
+
+
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [1] = {
