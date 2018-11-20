@@ -723,7 +723,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [1] = {
                 ["y"] = -232.39348563361;
                 ["x"] = 295.11071231186;
-                ["g"] = 2;
                 ["sublevel"] = 2;
             };
         };
