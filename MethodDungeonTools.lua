@@ -1180,31 +1180,23 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
             if pullIdx <= currentPull then
                 for enemyIdx,clones in pairs(pull) do
                     for k,v in pairs(clones) do
-                        local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew and MethodDungeonTools.freeholdCrews[MethodDungeonTools:GetCurrentPreset().freeholdCrew]
-
                         local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
                         local week = preset.week%3
                         if week == 0 then week = 3 end
                         local isBlacktoothWeek = week == 1
-
-                        local disabled = crew and crew[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id]
-
                         local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
 
-                        if (not disabled) or (isCloneBlacktoothEvent and isBlacktoothWeek) then
-                            if not isCloneBlacktoothEvent or isBlacktoothWeek then
-                                if not (cloneFaction and cloneFaction~= preset.faction) then
-                                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                                    local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
-                                    if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                                        if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
-                                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                                        end
+                        if not isCloneBlacktoothEvent or isBlacktoothWeek then
+                            if not (cloneFaction and cloneFaction~= preset.faction) then
+                                local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                                local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
+                                if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                                    if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
+                                        pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
                                     end
                                 end
                             end
                         end
-
                     end
                 end
             else
