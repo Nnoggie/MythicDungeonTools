@@ -2624,7 +2624,7 @@ function MethodDungeonTools:GetCurrentAffixWeek()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
     for week,affixes in ipairs(affixWeeks) do
-        if affixes[1] == affixIds[2] and affixes[2] == affixIds[3] and affixes[3] == affixIds[1] then
+        if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
             return week
         end
     end
