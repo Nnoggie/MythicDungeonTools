@@ -111,6 +111,7 @@ do
     local frame = CreateFrame("Frame")
     frame:RegisterEvent("ADDON_LOADED")
     frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+    frame:RegisterEvent("PLAYER_ENTERING_WORLD")
     --TODO Register Affix Changed event
     frame:SetScript("OnEvent", function(self, event, ...)
         return MethodDungeonTools[event](self,...)
@@ -142,14 +143,18 @@ do
 				show_while_dead = true,
 				hide_on_escape = true,
 			})
-            self:UnregisterEvent("ADDON_LOADED")
             if db.dataCollectionActive then MethodDungeonTools.DataCollection:Init() end
+            self:UnregisterEvent("ADDON_LOADED")
         end
     end
     function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
         if not MethodDungeonTools.main_frame then return end
         local inGroup = UnitInRaid("player") or IsInGroup()
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
+    end
+    function MethodDungeonTools.PLAYER_ENTERING_WORLD(self,addon)
+        MethodDungeonTools:GetCurrentAffixWeek()
+        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     end
 
 end
@@ -2621,6 +2626,8 @@ function MethodDungeonTools:GetCurrentAffixWeek()
         LoadAddOn("Blizzard_ChallengesUI")
     end
     C_MythicPlus.RequestCurrentAffixes()
+    C_MythicPlus.RequestMapInfo()
+    C_MythicPlus.RequestRewards()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
     for week,affixes in ipairs(affixWeeks) do
