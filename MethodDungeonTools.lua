@@ -144,6 +144,22 @@ do
 				hide_on_escape = true,
 			})
             if db.dataCollectionActive then MethodDungeonTools.DataCollection:Init() end
+            --fix db corruption
+            do
+                for _,presets in pairs(db.presets) do
+                    for presetIdx,preset in pairs(presets) do
+                        if presetIdx == 1 then
+                            if preset.text ~= "Default" then
+                                preset.text = "Default"
+                                preset.value = {}
+                            end
+                        end
+                    end
+                end
+                for k,v in pairs(db.currentPreset) do
+                    if v == 0 then db.currentPreset[k] = 1 end
+                end
+            end
             self:UnregisterEvent("ADDON_LOADED")
         end
     end
@@ -158,6 +174,8 @@ do
     end
 
 end
+
+
 
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.scaleMultiplier = {}
