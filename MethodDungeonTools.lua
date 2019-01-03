@@ -157,7 +157,7 @@ do
                     end
                 end
                 for k,v in pairs(db.currentPreset) do
-                    if v == 0 then db.currentPreset[k] = 1 end
+                    if v <= 0 then db.currentPreset[k] = 1 end
                 end
             end
             self:UnregisterEvent("ADDON_LOADED")
