@@ -575,3 +575,16 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
         end
     end
 end
+
+function MethodDungeonTools:GetEnemyForces(npcId)
+    for i = 1,24 do
+        local data = MethodDungeonTools.dungeonEnemies[i]
+        if data then
+            for enemyIdx,enemy in pairs(data) do
+                if enemy.id == npcId then
+
+                end
+            end
+        end
+    end
+end
