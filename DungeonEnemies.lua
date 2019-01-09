@@ -639,3 +639,17 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
         end
     end
 end
+
+---returns count, maxCountNormal, maxCountTeeming
+function MethodDungeonTools:GetEnemyForces(npcId)
+    for i = 1,24 do
+        local data = MethodDungeonTools.dungeonEnemies[i]
+        if data then
+            for enemyIdx,enemy in pairs(data) do
+                if enemy.id == npcId then
+                    return enemy.count,MethodDungeonTools.dungeonTotalCount[i].normal,MethodDungeonTools.dungeonTotalCount[i].teeming
+                end
+            end
+        end
+    end
+end

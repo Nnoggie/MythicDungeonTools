@@ -111,6 +111,7 @@ do
     local frame = CreateFrame("Frame")
     frame:RegisterEvent("ADDON_LOADED")
     frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+    frame:RegisterEvent("PLAYER_ENTERING_WORLD")
     --TODO Register Affix Changed event
     frame:SetScript("OnEvent", function(self, event, ...)
         return MethodDungeonTools[event](self,...)
@@ -142,8 +143,24 @@ do
 				show_while_dead = true,
 				hide_on_escape = true,
 			})
-            self:UnregisterEvent("ADDON_LOADED")
             if db.dataCollectionActive then MethodDungeonTools.DataCollection:Init() end
+            --fix db corruption
+            do
+                for _,presets in pairs(db.presets) do
+                    for presetIdx,preset in pairs(presets) do
+                        if presetIdx == 1 then
+                            if preset.text ~= "Default" then
+                                preset.text = "Default"
+                                preset.value = {}
+                            end
+                        end
+                    end
+                end
+                for k,v in pairs(db.currentPreset) do
+                    if v <= 0 then db.currentPreset[k] = 1 end
+                end
+            end
+            self:UnregisterEvent("ADDON_LOADED")
         end
     end
     function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
@@ -151,8 +168,14 @@ do
         local inGroup = UnitInRaid("player") or IsInGroup()
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
     end
+    function MethodDungeonTools.PLAYER_ENTERING_WORLD(self,addon)
+        MethodDungeonTools:GetCurrentAffixWeek()
+        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+    end
 
 end
+
+
 
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.scaleMultiplier = {}
@@ -1180,31 +1203,23 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
             if pullIdx <= currentPull then
                 for enemyIdx,clones in pairs(pull) do
                     for k,v in pairs(clones) do
-                        local crew = MethodDungeonTools:GetCurrentPreset().freeholdCrew and MethodDungeonTools.freeholdCrews[MethodDungeonTools:GetCurrentPreset().freeholdCrew]
-
                         local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
                         local week = preset.week%3
                         if week == 0 then week = 3 end
                         local isBlacktoothWeek = week == 1
-
-                        local disabled = crew and crew[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id]
-
                         local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
 
-                        if (not disabled) or (isCloneBlacktoothEvent and isBlacktoothWeek) then
-                            if not isCloneBlacktoothEvent or isBlacktoothWeek then
-                                if not (cloneFaction and cloneFaction~= preset.faction) then
-                                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                                    local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
-                                    if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                                        if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
-                                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                                        end
+                        if not isCloneBlacktoothEvent or isBlacktoothWeek then
+                            if not (cloneFaction and cloneFaction~= preset.faction) then
+                                local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                                local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
+                                if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                                    if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
+                                        pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
                                     end
                                 end
                             end
                         end
-
                     end
                 end
             else
@@ -2669,10 +2684,12 @@ function MethodDungeonTools:GetCurrentAffixWeek()
         LoadAddOn("Blizzard_ChallengesUI")
     end
     C_MythicPlus.RequestCurrentAffixes()
+    C_MythicPlus.RequestMapInfo()
+    C_MythicPlus.RequestRewards()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
     for week,affixes in ipairs(affixWeeks) do
-        if affixes[1] == affixIds[2] and affixes[2] == affixIds[3] and affixes[3] == affixIds[1] then
+        if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
             return week
         end
     end
