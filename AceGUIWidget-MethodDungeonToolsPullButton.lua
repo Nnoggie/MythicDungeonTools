@@ -127,10 +127,46 @@ local methods = {
 
         function self.callbacks.OnClickNormal(_, mouseButton)
             if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
-            if(IsControlKeyDown())then
 
+            if(IsControlKeyDown())then
+                if (mouseButton == "LeftButton") then
+                    print("CTRL+MouseButton:Left")
+
+                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                        tinsert(MethodDungeonTools:GetSelection(), self.index)
+                        MethodDungeonTools:SetMapSublevel(self.index)
+                        MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetSelection())
+                        print(#MethodDungeonTools:GetSelection())
+                    else
+                        MethodDungeonTools.U.iremove_if(MethodDungeonTools:GetSelection(), function(entry)
+                            return entry == self.index
+                        end)
+                        self:ClearPick()
+                        print(#MethodDungeonTools:GetSelection())
+                    end
+                end
             elseif(IsShiftKeyDown()) then
-                if(mouseButton == "RightButton") then
+                if (mouseButton == "LeftButton") then
+                    print("SHIFT+MouseButton:Left")
+                    local selection = MethodDungeonTools:GetSelection()
+                    local lastPull = selection[#selection]
+                    local step = 1
+
+
+                    if self.index <= lastPull then
+                        step = -1
+                    end
+
+                    for i=lastPull, self.index, step do
+                        if not MethodDungeonTools.U.contains(selection, i) then
+                            tinsert(selection, i)
+                        end
+                    end
+
+                    MethodDungeonTools:SetMapSublevel(self.index)
+                    MethodDungeonTools:SetSelectionToPull(selection)
+                    print(#selection)
+                elseif (mouseButton == "RightButton") then
                     local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
                     if maxPulls>1 then
                         MethodDungeonTools:DeletePull(self.index)
@@ -139,11 +175,19 @@ local methods = {
             else
                 MethodDungeonTools:EnsureDBTables()
                 if(mouseButton == "RightButton") then
-                    MethodDungeonTools:SetMapSublevel(self.index)
-                    MethodDungeonTools:SetSelectionToPull(self.index)
-                    L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                    if #MethodDungeonTools:GetSelection() > 1 then
+                        L_EasyMenu(self.multiselectMenu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                    else
+                        MethodDungeonTools:SetMapSublevel(self.index)
+                        MethodDungeonTools:SetSelectionToPull(self.index)
+
+                        L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                    end
+
                 else
                     --normal click
+                    MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
+                    print(#MethodDungeonTools:GetCurrentPreset().value.selection)
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
                 end
@@ -197,6 +241,7 @@ local methods = {
         end
 
 
+        -- Normal Dropdown menu
         self.menu = {}
         if self.index ~= 1 then
             tinsert(self.menu, {
@@ -306,6 +351,152 @@ local methods = {
         end
 
         tinsert(self.menu, {
+            text = "Close",
+            notCheckable = 1,
+            func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
+        })
+
+
+        -- Multiselect drop down menu
+        self.multiselectMenu = {}
+        tinsert(self.multiselectMenu, {
+            text = "Insert before",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools.U.do_if(MethodDungeonTools:GetSelection(), {
+                    condition = function(entry)
+                        return entry >= self.index
+                    end,
+                    update = function(t, key)
+                        t[key] = t[key] + 1
+                    end
+                })
+                MethodDungeonTools:PresetsAddPull(self.index)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(self.index)
+            end
+        })
+
+        tinsert(self.multiselectMenu, {
+            text = "Insert after",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools.U.do_if(MethodDungeonTools:GetSelection(), {
+                    condition = function(entry)
+                        return entry > self.index
+                    end,
+                    update = function(t, key)
+                        t[key] = t[key] + 1
+                    end
+                })
+                print("Adding", self.index + 1)
+                MethodDungeonTools:PresetsAddPull(self.index + 1)
+                MethodDungeonTools:ReloadPullButtons()
+                print("Selecting", self.index + 1)
+                MethodDungeonTools:SetSelectionToPull(self.index + 1)
+            end
+        })
+        tinsert(self.multiselectMenu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Merge",
+            notCheckable = 1,
+            func = function()
+                local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+                if not MethodDungeonTools.U.contains(selected_pulls, self.index) then
+                    tinsert(selected_pulls, self.index)
+                end
+
+                local newIndex = MethodDungeonTools:PresetsMergePulls(selected_pulls, self.index)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:GetCurrentPreset().value.selection = { newIndex }
+                MethodDungeonTools:SetSelectionToPull(newIndex)
+            end
+        })
+        if self.index ~= 1 or self.index < self.maxPulls then
+            tinsert(self.multiselectMenu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
+        end
+        tinsert(self.multiselectMenu, {
+            text = "Clear",
+            notCheckable = 1,
+            func = function()
+                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                    tinsert(MethodDungeonTools:GetSelection(), self.index)
+                    self:Pick()
+                end
+
+                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                    MethodDungeonTools:ClearPull(pullIdx)
+                end
+            end
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Clear Preset",
+            notCheckable = 1,
+            func = function() MethodDungeonTools:OpenClearPresetDialog() end
+        })
+        tinsert(self.multiselectMenu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+        if self.maxPulls > 1 then
+            tinsert(self.multiselectMenu, {
+                text = "Delete",
+                notCheckable = 1,
+                func = function()
+                    local addPull = false
+                    local button = MethodDungeonTools:GetFirstNotSelectedPullButton(self.index, "UP")
+                    if not button then
+                        button = MethodDungeonTools:GetFirstNotSelectedPullButton(self.index, "DOWN")
+                        if not button then
+                            addPull = true
+                            button = 1
+                        end
+                    end
+
+                    local removed_pulls = {}
+                    for _, pullIdx in pairs(MethodDungeonTools.GetSelection()) do
+                        local offset = MethodDungeonTools.U.count_if(removed_pulls, function(entry)
+                            return entry < pullIdx
+                        end)
+
+                        MethodDungeonTools:DeletePull(pullIdx - offset)
+                        tinsert(removed_pulls, pullIdx)
+                    end
+
+                    MethodDungeonTools.GetCurrentPreset().value.selection = {}
+
+                    if not addPull then
+                        local offset = MethodDungeonTools.U.count_if(removed_pulls, function(entry)
+                            return entry < button
+                        end)
+                        MethodDungeonTools:SetSelectionToPull(button - offset)
+                    else
+                        MethodDungeonTools:AddPull(1)
+                        MethodDungeonTools:SetSelectionToPull(1)
+                    end
+                end
+            })
+            tinsert(self.multiselectMenu, {
+                text = " ",
+                notClickable = 1,
+                notCheckable = 1,
+                func = nil
+            })
+        end
+
+        tinsert(self.multiselectMenu, {
             text = "Close",
             notCheckable = 1,
             func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
@@ -503,6 +694,7 @@ local methods = {
                     self.elapsed = (self.elapsed or 0) + elapsed
                     if self.elapsed > 0.1 then
                         local button, pos = select(2, GetDropTarget())
+                        print("Updating", self.index)
                         MethodDungeonTools:Show_DropIndicator(button, pos)
                         self.elapsed = 0
                     end
@@ -513,11 +705,35 @@ local methods = {
         return self.updateFunction
     end,
     ["Drag"] = function(self)
+        local sidePanel = MethodDungeonTools.main_frame.sidePanel
         local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
         local x, w = self.frame:GetLeft(), self.frame:GetWidth()
         local _, y = GetCursorPosition()
 
         MethodDungeonTools.pullTooltip:Hide()
+
+        if #MethodDungeonTools:GetSelection() > 1 then
+            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                for _, pullIdx in pairs(MethodDungeonTools:GetSelection()) do
+                    sidePanel.newPullButtons[pullIdx]:ClearPick()
+                end
+
+                MethodDungeonTools:GetCurrentPreset().value.currentPull = self.index
+                MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
+                self:Pick()
+            end
+
+            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+            table.sort(selected_pulls)
+
+            for _, pullIdx in ipairs(selected_pulls) do
+                if pullIdx ~= self.index then
+                    sidePanel.newPullButtons[pullIdx]:Disable()
+                    sidePanel.newPullButtons[pullIdx].dragging = true
+                end
+            end
+
+        end
 
         self.dragging = true
 
@@ -555,15 +771,69 @@ local methods = {
             insertID = insertID + 1
         end
 
-        local index = self.index
-        if index > insertID then
-            index = index + 1
-        end
+        if #MethodDungeonTools:GetSelection() > 1 then
+            local sidePanel = MethodDungeonTools.main_frame.sidePanel
+            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+            local new_pulls = {}
+            local progressed_pulls = {}
+            table.sort(selected_pulls)
 
-        MethodDungeonTools:PresetsAddPull(insertID)
-        local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
-        MethodDungeonTools:ReloadPullButtons()
-        MethodDungeonTools:SetSelectionToPull(newIndex)
+            for _, pullIdx in ipairs(selected_pulls) do
+                sidePanel.newPullButtons[pullIdx].dragging = false
+                self.dragging = false
+            end
+
+            print("insert id", insertID)
+            for offset, pullIdx in ipairs(selected_pulls) do
+                print("offset", offset, "pull", pullIdx)
+
+                local pos = insertID + (offset - 1)
+                print("pos", pos)
+
+                local progressed_above = MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
+                    return entry < pos
+                end)
+                print("progressed above", progressed_above)
+
+                pos = pos - progressed_above
+                print("pos", pos)
+
+                local correctPullIndex = pullIdx
+                print("correctPullIndex", correctPullIndex)
+                if pos > correctPullIndex then
+                    correctPullIndex = correctPullIndex - MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
+                        return entry < correctPullIndex
+                    end)
+                    print("correctPullIndex", correctPullIndex)
+                end
+
+                if pos <= correctPullIndex then
+                    correctPullIndex = correctPullIndex + 1
+                end
+                print("correctPullIndex", correctPullIndex)
+
+                MethodDungeonTools:PresetsAddPull(pos)
+                local newID =  MethodDungeonTools:PresetsMergePulls(correctPullIndex, pos)
+                print("newID", newID)
+
+                tinsert(progressed_pulls, pullIdx)
+                tinsert(new_pulls, newID)
+            end
+
+            MethodDungeonTools:GetCurrentPreset().value.selection = new_pulls
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:SetSelectionToPull(1)
+        else
+            local index = self.index
+            if index > insertID then
+                index = index + 1
+            end
+
+            MethodDungeonTools:PresetsAddPull(insertID)
+            local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:SetSelectionToPull(newIndex)
+        end
 
         MethodDungeonTools:Hide_DropIndicator()
         MethodDungeonTools.pullTooltip:Show()
@@ -575,6 +845,12 @@ local methods = {
     ["Disable"] = function(self)
         self.background:Hide();
         self.frame:Disable();
+
+        for k,v in pairs(self.enemyPortraits) do
+            v:Hide()
+            v.overlay:Hide()
+            v.fontString:Hide()
+        end
     end,
     ["Enable"] = function(self)
         self.background:Show();

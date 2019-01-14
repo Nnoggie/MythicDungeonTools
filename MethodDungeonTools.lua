@@ -1282,7 +1282,8 @@ end
 ---GetCurrentPull
 ---Returns the current pull of the currently active preset
 function MethodDungeonTools:GetCurrentPull()
-    return MethodDungeonTools:GetCurrentPreset().value.currentPull
+    local selection = MethodDungeonTools:GetSelection()
+    return selection[#selection]
 end
 
 ---GetCurrentSubLevel
@@ -2031,11 +2032,25 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 		end
 		pull = count
 	end
-	--SaveCurrentPresetPull
-    MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
-	MethodDungeonTools:PickPullButton(pull)
 
-    MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
+	--SaveCurrentPresetPull
+    if type(pull) == "number" and pull > 0 then
+        print("SetSelectionToPull(): pull = ", pull)
+        MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
+        MethodDungeonTools:GetCurrentPreset().value.selection = { pull }
+        MethodDungeonTools:PickPullButton(pull)
+
+        MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
+    elseif type(pull) == "table" then
+        MethodDungeonTools:GetCurrentPreset().value.currentPull = pull[#pull]
+        MethodDungeonTools:GetCurrentPreset().value.selection = pull
+
+        MethodDungeonTools:ClearPullButtonPicks()
+        for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+            MethodDungeonTools:PickPullButton(pullIdx, true)
+            MethodDungeonTools:DungeonEnemies_UpdateSelected(pullIdx)
+        end
+    end
 end
 
 
@@ -2160,11 +2175,14 @@ end
 
 ---PickPullButton
 ---Selects the current pull button and deselects all other buttons
-function MethodDungeonTools:PickPullButton(idx)
+function MethodDungeonTools:PickPullButton(idx, keepPicked)
     if db.devMode then return end
-	MethodDungeonTools:ClearPullButtonPicks()
+
+    if not keepPicked then
+        MethodDungeonTools:ClearPullButtonPicks()
+    end
 	local frame = MethodDungeonTools.main_frame.sidePanel
-	frame.newPullButtons[idx]:Pick()
+    frame.newPullButtons[idx]:Pick()
 end
 
 ---AddPull
@@ -2219,6 +2237,28 @@ function MethodDungeonTools:RenamePreset(renameText)
 	MethodDungeonTools:UpdatePresetDropDown()
 end
 
+---GetFirstNotSelectedPullButton
+function MethodDungeonTools:GetFirstNotSelectedPullButton(start, direction)
+    if not direction then
+        direction = -1
+    elseif direction == "UP" then
+        direction = -1
+    elseif direction == "DOWN" then
+        direction = 1
+    end
+
+    local pullIdx = start
+    while MethodDungeonTools.U.contains(MethodDungeonTools:GetCurrentPreset().value.selection, pullIdx)
+            and MethodDungeonTools.U.isInRange(pullIdx, 1, #MethodDungeonTools:GetCurrentPreset().value.pulls) do
+       pullIdx = pullIdx + direction
+    end
+
+    if not MethodDungeonTools.U.isInRange(pullIdx, 1, #MethodDungeonTools:GetCurrentPreset().value.pulls) then
+        return
+    end
+
+    return pullIdx
+end
 
 function MethodDungeonTools:MakeRenameFrame(frame)
 	frame.RenameFrame = AceGUI:Create("Frame")
@@ -2691,7 +2731,13 @@ function MethodDungeonTools:DropIndicator()
     return indicator
 end
 
+function MethodDungeonTools:IsShown_DropIndicator()
+    local indicator = MethodDungeonTools:DropIndicator()
+    return indicator:IsShown()
+end
+
 function MethodDungeonTools:Show_DropIndicator(target, pos)
+    print("Show_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
 
     indicator:ClearAllPoints()
@@ -2707,13 +2753,36 @@ function MethodDungeonTools:Show_DropIndicator(target, pos)
 end
 
 function MethodDungeonTools:Hide_DropIndicator()
+    print("Hide_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
     indicator:Hide()
+end
+
+function MethodDungeonTools:GetSelection()
+    if not MethodDungeonTools:GetCurrentPreset().value.selection or #MethodDungeonTools:GetCurrentPreset().value.selection == 0 then
+        MethodDungeonTools:GetCurrentPreset().value.selection = { MethodDungeonTools:GetCurrentPreset().value.currentPull }
+    end
+
+    return MethodDungeonTools:GetCurrentPreset().value.selection
 end
 
 function MethodDungeonTools:GetScrollingAmount(scrollFrame, pixelPerSecond)
     local viewheight = scrollFrame.frame.obj.content:GetHeight()
     return (pixelPerSecond / viewheight) * 1000
+end
+
+function MethodDungeonTools:ScrollToPull(pullIdx)
+    -- Get scroll frame
+    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+
+    -- Get amount of total pulls plus the extra button "+ Add Pull"
+    local pulls = #MethodDungeonTools:GetCurrentPreset().value.pulls + 1 or 1
+
+    local percentage = pullIdx / pulls
+    local value = percentage * 1000
+    print("value =", value)
+    scrollFrame:SetScroll(value)
+    scrollFrame:FixScroll()
 end
 
 function initFrames()
