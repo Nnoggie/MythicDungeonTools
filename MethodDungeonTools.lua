@@ -194,21 +194,6 @@ local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
     [11] = {[1]=7,[2]=13,[3]=9,[4]=16},
     [12] = {[1]=11,[2]=14,[3]=10,[4]=16},
 }
---TODO Change this once BFA hits
-local affixWeeksBFA = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
-    [1] = {[1]=9,[2]=6,[3]=3,[4]=16},
-    [2] = {[1]=10,[2]=5,[3]=13,[4]=16},
-    [3] = {[1]=9,[2]=7,[3]=12,[4]=16},
-    [4] = {[1]=10,[2]=8,[3]=4,[4]=16},
-    [5] = {[1]=9,[2]=11,[3]=2,[4]=16},
-    [6] = {[1]=10,[2]=5,[3]=14,[4]=16},
-    [7] = {[1]=9,[2]=6,[3]=4,[4]=16},
-    [8] = {[1]=10,[2]=7,[3]=2,[4]=16},
-    [9] = {[1]=9,[2]=5,[3]=3,[4]=16},
-    [10] = {[1]=10,[2]=8,[3]=12,[4]=16},
-    [11] = {[1]=9,[2]=7,[3]=13,[4]=16},
-    [12] = {[1]=10,[2]=11,[3]=14,[4]=16},
-}
 
 local dungeonList = {
     [1] = "Black Rook Hold",
@@ -917,7 +902,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --dont need this here as we just change teeming and infested
         --MethodDungeonTools:UpdateMap()
         MethodDungeonTools:DungeonEnemies_UpdateTeeming()
-        MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
+        --MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)

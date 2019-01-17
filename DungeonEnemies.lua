@@ -385,6 +385,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
     end
     self:Show()
+    self.texture_Indicator:Hide()
 
     if db.devMode then blipDevModeSetup(self) end
 end
