@@ -2181,7 +2181,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [257904] = {};
         };
         ["scale"] = 1.5;
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Ludwig Von Tortollan";
         ["displayId"] = 80792;
         ["creatureType"] = "Beast";
