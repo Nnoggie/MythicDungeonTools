@@ -116,7 +116,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
                 return #entry > 0
             end)
 
-            print("Enemy Count", enemyCount)
+            --print("Enemy Count", enemyCount)
 
             if not self.selected then
                 -- Add new Pull, if the current one isn't empty
