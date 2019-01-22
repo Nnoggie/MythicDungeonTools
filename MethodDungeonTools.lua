@@ -2035,7 +2035,7 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 
 	--SaveCurrentPresetPull
     if type(pull) == "number" and pull > 0 then
-        print("SetSelectionToPull(): pull = ", pull)
+        --print("SetSelectionToPull(): pull = ", pull)
         MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
         MethodDungeonTools:GetCurrentPreset().value.selection = { pull }
         MethodDungeonTools:PickPullButton(pull)
@@ -2737,7 +2737,7 @@ function MethodDungeonTools:IsShown_DropIndicator()
 end
 
 function MethodDungeonTools:Show_DropIndicator(target, pos)
-    print("Show_DropIndicator()")
+    --print("Show_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
 
     indicator:ClearAllPoints()
@@ -2753,7 +2753,7 @@ function MethodDungeonTools:Show_DropIndicator(target, pos)
 end
 
 function MethodDungeonTools:Hide_DropIndicator()
-    print("Hide_DropIndicator()")
+    --print("Hide_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
     indicator:Hide()
 end
@@ -2780,7 +2780,7 @@ function MethodDungeonTools:ScrollToPull(pullIdx)
 
     local percentage = pullIdx / pulls
     local value = percentage * 1000
-    print("value =", value)
+    --print("value =", value)
     scrollFrame:SetScroll(value)
     scrollFrame:FixScroll()
 end
