@@ -130,24 +130,24 @@ local methods = {
 
             if(IsControlKeyDown())then
                 if (mouseButton == "LeftButton") then
-                    print("CTRL+MouseButton:Left")
+                    --print("CTRL+MouseButton:Left")
 
                     if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
                         tinsert(MethodDungeonTools:GetSelection(), self.index)
                         MethodDungeonTools:SetMapSublevel(self.index)
                         MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetSelection())
-                        print(#MethodDungeonTools:GetSelection())
+                        --print(#MethodDungeonTools:GetSelection())
                     else
                         MethodDungeonTools.U.iremove_if(MethodDungeonTools:GetSelection(), function(entry)
                             return entry == self.index
                         end)
                         self:ClearPick()
-                        print(#MethodDungeonTools:GetSelection())
+                        --print(#MethodDungeonTools:GetSelection())
                     end
                 end
             elseif(IsShiftKeyDown()) then
                 if (mouseButton == "LeftButton") then
-                    print("SHIFT+MouseButton:Left")
+                    --print("SHIFT+MouseButton:Left")
                     local selection = MethodDungeonTools:GetSelection()
                     local lastPull = selection[#selection]
                     local step = 1
@@ -165,7 +165,7 @@ local methods = {
 
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(selection)
-                    print(#selection)
+                    --print(#selection)
                 elseif (mouseButton == "RightButton") then
                     local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
                     if maxPulls>1 then
@@ -187,7 +187,7 @@ local methods = {
                 else
                     --normal click
                     MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
-                    print(#MethodDungeonTools:GetCurrentPreset().value.selection)
+                    --print(#MethodDungeonTools:GetCurrentPreset().value.selection)
                     MethodDungeonTools:SetMapSublevel(self.index)
                     MethodDungeonTools:SetSelectionToPull(self.index)
                 end
@@ -389,10 +389,10 @@ local methods = {
                         t[key] = t[key] + 1
                     end
                 })
-                print("Adding", self.index + 1)
+                --print("Adding", self.index + 1)
                 MethodDungeonTools:PresetsAddPull(self.index + 1)
                 MethodDungeonTools:ReloadPullButtons()
-                print("Selecting", self.index + 1)
+                --print("Selecting", self.index + 1)
                 MethodDungeonTools:SetSelectionToPull(self.index + 1)
             end
         })
@@ -694,7 +694,7 @@ local methods = {
                     self.elapsed = (self.elapsed or 0) + elapsed
                     if self.elapsed > 0.1 then
                         local button, pos = select(2, GetDropTarget())
-                        print("Updating", self.index)
+                        --print("Updating", self.index)
                         MethodDungeonTools:Show_DropIndicator(button, pos)
                         self.elapsed = 0
                     end
@@ -783,38 +783,38 @@ local methods = {
                 self.dragging = false
             end
 
-            print("insert id", insertID)
+            --print("insert id", insertID)
             for offset, pullIdx in ipairs(selected_pulls) do
-                print("offset", offset, "pull", pullIdx)
+                --print("offset", offset, "pull", pullIdx)
 
                 local pos = insertID + (offset - 1)
-                print("pos", pos)
+                --print("pos", pos)
 
                 local progressed_above = MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
                     return entry < pos
                 end)
-                print("progressed above", progressed_above)
+                --print("progressed above", progressed_above)
 
                 pos = pos - progressed_above
-                print("pos", pos)
+                --print("pos", pos)
 
                 local correctPullIndex = pullIdx
-                print("correctPullIndex", correctPullIndex)
+                --print("correctPullIndex", correctPullIndex)
                 if pos > correctPullIndex then
                     correctPullIndex = correctPullIndex - MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
                         return entry < correctPullIndex
                     end)
-                    print("correctPullIndex", correctPullIndex)
+                    --print("correctPullIndex", correctPullIndex)
                 end
 
                 if pos <= correctPullIndex then
                     correctPullIndex = correctPullIndex + 1
                 end
-                print("correctPullIndex", correctPullIndex)
+                --print("correctPullIndex", correctPullIndex)
 
                 MethodDungeonTools:PresetsAddPull(pos)
                 local newID =  MethodDungeonTools:PresetsMergePulls(correctPullIndex, pos)
-                print("newID", newID)
+                --print("newID", newID)
 
                 tinsert(progressed_pulls, pullIdx)
                 tinsert(new_pulls, newID)
