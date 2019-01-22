@@ -954,7 +954,7 @@ local function makeNoteEditbox()
     return editbox
 end
 
-local noteDropDown = CreateFrame("Frame", "noteDropDown", nil, "L_UIDropDownMenuTemplate")
+local noteDropDown = L_Create_UIDropDownMenu("noteDropDown", nil)
 local currentNote
 local noteMenu = {}
 do
