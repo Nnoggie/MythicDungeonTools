@@ -102,60 +102,74 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
 
     if button == "LeftButton" then
         if IsShiftKeyDown() then
-            -- Add to current pull
-            MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
+            MethodDungeonTools:PresetsAddPull(MethodDungeonTools:GetCurrentPull() + 1)
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull() + 1)
+            MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,isCTRLKeyDown)
             MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
             MethodDungeonTools:UpdateProgressbar()
+            if false then
+                -- Add to current pull
+                MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
+                MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
+                MethodDungeonTools:UpdateProgressbar()
+            end
         elseif IsControlKeyDown() then
             MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, true)
             MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
             MethodDungeonTools:UpdateProgressbar()
         else
-            local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[MethodDungeonTools:GetCurrentPull()]
-            local enemyCount = MethodDungeonTools.U.count_if(pull, function(entry)
-                return #entry > 0
-            end)
+            MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,isCTRLKeyDown)
+            MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
+            MethodDungeonTools:UpdateProgressbar()
+            if false then
 
-            --print("Enemy Count", enemyCount)
-
-            if not self.selected then
-                -- Add new Pull, if the current one isn't empty
                 local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[MethodDungeonTools:GetCurrentPull()]
                 local enemyCount = MethodDungeonTools.U.count_if(pull, function(entry)
                     return #entry > 0
                 end)
 
-                if enemyCount > 0 then
-                    MethodDungeonTools:PresetsAddPull(MethodDungeonTools:GetCurrentPull() + 1)
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull() + 1)
-                    MethodDungeonTools:ScrollToPull(MethodDungeonTools:GetCurrentPull())
-                end
+                --print("Enemy Count", enemyCount)
 
-                MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
-                MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
-                MethodDungeonTools:UpdateProgressbar()
-            else
-                local pullIdx = MethodDungeonTools:FindPullOfBlip(self)
-                if pullIdx then
-                    MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
-                    MethodDungeonTools:DungeonEnemies_UpdateSelected(pullIdx)
-
-                    local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[pullIdx]
+                if not self.selected then
+                    -- Add new Pull, if the current one isn't empty
+                    local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[MethodDungeonTools:GetCurrentPull()]
                     local enemyCount = MethodDungeonTools.U.count_if(pull, function(entry)
                         return #entry > 0
                     end)
 
-                    if enemyCount == 0 then
-                        MethodDungeonTools:DeletePull(pullIdx)
+                    if enemyCount > 0 then
+                        MethodDungeonTools:PresetsAddPull(MethodDungeonTools:GetCurrentPull() + 1)
                         MethodDungeonTools:ReloadPullButtons()
-
-                        if pullIdx > #MethodDungeonTools:GetCurrentPreset().value.pulls then
-                            MethodDungeonTools:SetSelectionToPull(#MethodDungeonTools:GetCurrentPreset().value.pulls)
-                        end
+                        MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull() + 1)
+                        MethodDungeonTools:ScrollToPull(MethodDungeonTools:GetCurrentPull())
                     end
 
+                    MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
+                    MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
                     MethodDungeonTools:UpdateProgressbar()
+                else
+                    local pullIdx = MethodDungeonTools:FindPullOfBlip(self)
+                    if pullIdx then
+                        MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
+                        MethodDungeonTools:DungeonEnemies_UpdateSelected(pullIdx)
+
+                        local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[pullIdx]
+                        local enemyCount = MethodDungeonTools.U.count_if(pull, function(entry)
+                            return #entry > 0
+                        end)
+
+                        if enemyCount == 0 then
+                            MethodDungeonTools:DeletePull(pullIdx)
+                            MethodDungeonTools:ReloadPullButtons()
+
+                            if pullIdx > #MethodDungeonTools:GetCurrentPreset().value.pulls then
+                                MethodDungeonTools:SetSelectionToPull(#MethodDungeonTools:GetCurrentPreset().value.pulls)
+                            end
+                        end
+
+                        MethodDungeonTools:UpdateProgressbar()
+                    end
                 end
             end
 
