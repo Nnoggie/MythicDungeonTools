@@ -1456,7 +1456,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 84761;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
-        ["count"] = 4;
+        ["count"] = 6;
         ["scale"] = 1;
     };
     [25] = {

@@ -1,5 +1,5 @@
 local dungeonIndex = 21
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=416,teeming=499,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=384,teeming=499,teemingEnabled=true}
 MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.7
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
@@ -2679,7 +2679,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [271579] = {};
         };
         ["id"] = 130661;
-        ["count"] = 8;
+        ["count"] = 4;
         ["name"] = "Venture Co. Earthshaper";
         ["displayId"] = 81333;
         ["creatureType"] = "Humanoid";
