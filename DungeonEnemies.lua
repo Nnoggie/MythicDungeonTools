@@ -607,16 +607,22 @@ end
 function MethodDungeonTools:UpdateReaping()
     for _,blip in pairs(blips) do
         if blip.data.reaping then
-            if blip.data.reaping == 148716 then -- Risen Soul
-                blip.reapRisen_texture_Indicator:Show()
+            -- Lost: Interface\Icons\ability_warlock_improvedsoulleech
+            -- Risen: Interface\Icons\ability_warlock_soulsiphon
+            -- Torrmented: Interface\Icons\spell_shadow_soulleech_1
+            if db.currentDifficulty < 10 then
+                blip.reaping_texture:Hide()
+            elseif blip.data.reaping == 148716 then -- Risen Soul
+                blip.reaping_texture:SetTexture("Interface\\Icons\\ability_warlock_soulsiphon")
+                blip.reaping_texture:Show()
             elseif blip.data.reaping == 148893 then -- Tormented Soul
-                blip.reapTormented_texture_Indicator:Show()
+                blip.reaping_texture:SetTexture("Interface\\Icons\\spell_shadow_soulleech_1")
+                blip.reaping_texture:Show()
             elseif blip.data.reaping == 148894 then -- Lost Soul
-                blip.reapLost_texture_Indicator:Show()
+                blip.reaping_texture:SetTexture("Interface\\Icons\\ability_warlock_improvedsoulleech")
+                blip.reaping_texture:Show()
             else
-                blip.reapRisen_texture_Indicator:Hide()
-                blip.reapTormented_texture_Indicator:Hide()
-                blip.reapLost_texture_Indicator:Hide()
+                blip.reaping_texture:Hide()
             end
         end
     end

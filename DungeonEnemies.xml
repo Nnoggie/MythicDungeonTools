@@ -52,7 +52,7 @@
                         <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
-                <Texture name="$reapLost_parent_Indicator" hidden="true" parentKey="reapLost_texture_Indicator" file = "Interface\Icons\ability_warlock_improvedsoulleech">
+                <Texture name="$reaping_texture" hidden="true" parentKey="reaping_texture" file = "Interface\Icons\ability_warlock_improvedsoulleech">
                     <Size>
                         <AbsDimension x="5" y="5"/>
                     </Size>
@@ -60,28 +60,6 @@
                     <Anchors>
                         <Anchor point="TOP">
                             <Offset><AbsDimension x="0" y="2"/></Offset>
-                        </Anchor>
-                    </Anchors>
-                </Texture>
-                <Texture name="r$eapRisen_parent_Indicator" hidden="true" parentKey="reapRisen_texture_Indicator" file = "Interface\Icons\ability_warlock_soulsiphon">
-                    <Size>
-                        <AbsDimension x="5" y="5"/>
-                    </Size>
-                    <Color r="0" g="0" b="0" a="0"/>
-                    <Anchors>
-                        <Anchor point="TOP">
-                            <Offset><AbsDimension x="0" y="2"/></Offset>
-                        </Anchor>
-                    </Anchors>
-                </Texture>
-                <Texture name="$reapTormented_parent_Indicator" hidden="true" parentKey="reapTormented_texture_Indicator" file = "Interface\Icons\spell_shadow_soulleech_1">
-                    <Size>
-                        <AbsDimension x="5" y="5"/>
-                    </Size>
-                    <Color r="0" g="0" b="0" a="0"/>
-                    <Anchors>
-                        <Anchor point="TOP">
-                           <Offset><AbsDimension x="0" y="2"/></Offset>
                         </Anchor>
                     </Anchors>
                 </Texture>
