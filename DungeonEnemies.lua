@@ -391,6 +391,19 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.texture_Background:SetVertexColor(1,1,1,1)
     if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
     self.data = data
+
+    self.data.reaping 
+
+    if MethodDungeonTools.reapingIndex["148716"]["spawns"]["".. data["id"] ..""] then
+        self.data.reaping  = 148716 -- Risen Soul
+    else if MethodDungeonTools.reapingIndex["148893"]["spawns"]["".. data["id"] ..""] then
+        self.data.reaping  = 148893 -- Tormented Soul
+    else if MethodDungeonTools.reapingIndex["148894"]["spawns"]["".. data["id"] ..""] then
+        self.data.reaping  = 148894 --Lost Soul
+    else
+        self.data.reaping  = 0
+    end
+
     self.clone = clone
     tinsert(blips,self)
     if db.enemyStyle == 2 then
@@ -591,7 +604,23 @@ function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
     end
 end
 
-
+function MethodDungeonTools:UpdateReaping()
+    for _,blip in pairs(blips) do
+        if blip.data.reaping then
+            if blip.data.reaping == 148716 then -- Risen Soul
+                blip.reapRisen_texture_Indicator:Show()
+            else if blip.data.reaping == 148893 then -- Tormented Soul
+                blip.reapTormented_texture_Indicator:Show()
+            else if blip.data.reaping == 148894 then -- Lost Soul
+                blip.reapLost_texture_Indicator:Show()
+            else
+                blip.reapRisen_texture_Indicator:Hide()
+                blip.reapTormented_texture_Indicator:Hide()
+                blip.reapLost_texture_Indicator:Hide()
+            end
+        end
+    end
+end
 
 ---DungeonEnemies_UpdateInfested
 ---Updates which blips should display infested state based on preset.week
