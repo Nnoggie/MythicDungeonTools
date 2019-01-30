@@ -45,32 +45,44 @@
                         <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
-                <Texture name="$parent_Indicator" hidden="false" parentKey="reapLost_texture_Indicator" file = "Interface\Icons\ability_warlock_improvedsoulleech">
-                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
-                    <Color r="0" g="0" b="0" a="0"/>
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-                <Texture name="$parent_Indicator" hidden="false" parentKey="reapRisen_texture_Indicator" file = "Interface\Icons\ability_warlock_soulsiphon">
-                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
-                    <Color r="0" g="0" b="0" a="0"/>
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-                <Texture name="$parent_Indicator" hidden="false" parentKey="reapTormented_texture_Indicator" file = "Interface\Icons\spell_shadow_soulleech_1">
-                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
-                    <Color r="0" g="0" b="0" a="0"/>
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
                 <Texture name="$parent_Indicator" hidden="true" parentKey="texture_PullIndicator" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
                     <Color r="1.0" g="1" b="1" a="1"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+                <Texture name="$reapLost_parent_Indicator" hidden="true" parentKey="reapLost_texture_Indicator" file = "Interface\Icons\ability_warlock_improvedsoulleech">
+                    <Size>
+                        <AbsDimension x="5" y="5"/>
+                    </Size>
+                    <Color r="0" g="0" b="0" a="0"/>
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset><AbsDimension x="0" y="2"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="r$eapRisen_parent_Indicator" hidden="true" parentKey="reapRisen_texture_Indicator" file = "Interface\Icons\ability_warlock_soulsiphon">
+                    <Size>
+                        <AbsDimension x="5" y="5"/>
+                    </Size>
+                    <Color r="0" g="0" b="0" a="0"/>
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset><AbsDimension x="0" y="2"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="$reapTormented_parent_Indicator" hidden="true" parentKey="reapTormented_texture_Indicator" file = "Interface\Icons\spell_shadow_soulleech_1">
+                    <Size>
+                        <AbsDimension x="5" y="5"/>
+                    </Size>
+                    <Color r="0" g="0" b="0" a="0"/>
+                    <Anchors>
+                        <Anchor point="TOP">
+                           <Offset><AbsDimension x="0" y="2"/></Offset>
+                        </Anchor>
                     </Anchors>
                 </Texture>
                 <FontString name="$parent_Text1" hidden="true" parentKey="fontstring_Text1">

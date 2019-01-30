@@ -1,5 +1,4 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='ReapingIndex.lua'/>
 	<Script file='AtalDazar.lua'/>
 	<Script file='Freehold.lua'/>
 	<Script file='KingsRest.lua'/>

@@ -1,3 +1,5 @@
+local AddonName, MethodDungeonTools = ...
+
 MethodDungeonTools.reapingIndex = {
     ["148716"]= {
         ["name"] = "Risen Soul",
