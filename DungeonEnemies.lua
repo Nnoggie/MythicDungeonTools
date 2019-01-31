@@ -231,7 +231,7 @@ local patrolPoints =  {}
 local patrolLines = {}
 
 function MethodDungeonTools:DungeonEnemies_UpdateReapingPulls()
-
+    
 end
 
 function MDTDungeonEnemyMixin:DisplayPatrol(shown)
