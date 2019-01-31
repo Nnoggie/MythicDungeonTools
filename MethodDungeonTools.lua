@@ -903,7 +903,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:UpdateMap()
         MethodDungeonTools:DungeonEnemies_UpdateTeeming()
         --MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
-        MethodDungeonTools:UpdateReaping()
+        MethodDungeonTools:DungeonEnemies_UpdateReaping()
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
@@ -967,7 +967,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		local difficulty = tonumber(value)
-		db.currentDifficulty = difficulty or db.currentDifficulty
+        db.currentDifficulty = difficulty or db.currentDifficulty
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
 

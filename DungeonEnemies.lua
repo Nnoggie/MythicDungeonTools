@@ -14,6 +14,30 @@ function MethodDungeonTools:GetDungeonEnemyBlips()
     return blips
 end
 
+MethodDungeonTools.reapingStatic = {
+    ["148716"] = {
+        ["name"] = "Risen Soul",
+        ["iconTexture"] = "Interface\\Icons\\Ability_warlock_soulsiphon",
+        ["abilities"] = {},
+        ["npcId"] = 148716,
+        ["outline"] = { 1.02, 0, 2.04, 1 }
+    },
+    ["148893"] = {
+        ["name"] = "Tormented Soul",
+        ["iconTexture"] = "Interface\\Icons\\spell_shadow_soulleech_1",
+        ["abilities"] = {},
+        ["npcId"] = 148893,
+            ["outline"] = { 0, 2.04, 1.02, 1 }
+    },
+    ["148894"] = {
+        ["name"] = "Lost Soul",
+        ["iconTexture"] = "Interface\\Icons\\ability_warlock_improvedsoulleech",
+        ["abilities"] = {},
+        ["npcId"] = 148894,
+        ["outline"] = { 2.04, 0, 2.04, 1 }
+    },
+}
+
 --From http://wow.gamepedia.com/UI_coordinates
 local function framesOverlap(frameA, frameB,offset)
     if not frameA or not frameB then return	end
@@ -51,6 +75,7 @@ local defaultSizes = {
     ["texture_Portrait"] = 15,
     ["texture_MouseHighlight"] = 20,
     ["texture_SelectedHighlight"] = 20,
+    ["texture_Reaping"] = 8,
     ["texture_Dragon"] = 23,
     ["texture_Indicator"] = 20,
     ["texture_PullIndicator"] = 23,
@@ -290,6 +315,10 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     end
 
     local boss = blip.data.isBoss or false
+    local reapingText = ''
+    if blip.data.reaping then
+        reapingText = "Reaping: " .. MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
+    end
     local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
     local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
     local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
@@ -298,7 +327,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     ]]
     local occurence = (blip.data.isBoss and "") or blip.cloneIdx
 
-    local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
+    local text = upstairs..reapingText..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
     text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
     text = text .."\n\n[Right click for more info]"
     tooltip.String:SetText(text)
@@ -392,17 +421,21 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
     self.data = data
 
+
+
     self.data.reaping = nil
-    print(self.data.id)
-    if MethodDungeonTools.reapingIndex["148716"]["spawns"]["" .. self.data.id .. ""] then
-        self.data.reaping  = 148716 -- Risen Soul
-    elseif MethodDungeonTools.reapingIndex["148893"]["spawns"]["".. self.data.id ..""] then
-        self.data.reaping  = 148893 -- Tormented Soul
-    elseif MethodDungeonTools.reapingIndex["148894"]["spawns"]["".. self.data.id ..""] then
-        self.data.reaping  = 148894 --Lost Soul
-    else
-        self.data.reaping  = 0
+
+    for key,value in pairs(MethodDungeonTools.reapingStatic) do 
+
+        if MethodDungeonTools.reapingIndex[key]["spawns"][tostring(self.data.id)] then
+            self.data.reaping = value.npcId
+            self.texture_Reaping:SetTexture(value.iconTexture)
+            --self.texture_Reaping_Outline:SetColorTexture(value.outline)
+            self.texture_Reaping:Hide()
+        end
+
     end
+    
 
     self.clone = clone
     tinsert(blips,self)
@@ -604,26 +637,16 @@ function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
     end
 end
 
-function MethodDungeonTools:UpdateReaping()
+function MethodDungeonTools:DungeonEnemies_UpdateReaping()
     for _,blip in pairs(blips) do
-        if blip.data.reaping then
-            -- Lost: Interface\Icons\ability_warlock_improvedsoulleech
-            -- Risen: Interface\Icons\ability_warlock_soulsiphon
-            -- Torrmented: Interface\Icons\spell_shadow_soulleech_1
-            if db.currentDifficulty < 10 then
-                blip.reaping_texture:Hide()
-            elseif blip.data.reaping == 148716 then -- Risen Soul
-                blip.reaping_texture:SetTexture("Interface\\Icons\\ability_warlock_soulsiphon")
-                blip.reaping_texture:Show()
-            elseif blip.data.reaping == 148893 then -- Tormented Soul
-                blip.reaping_texture:SetTexture("Interface\\Icons\\spell_shadow_soulleech_1")
-                blip.reaping_texture:Show()
-            elseif blip.data.reaping == 148894 then -- Lost Soul
-                blip.reaping_texture:SetTexture("Interface\\Icons\\ability_warlock_improvedsoulleech")
-                blip.reaping_texture:Show()
-            else
-                blip.reaping_texture:Hide()
-            end
+        if blip.data.reaping ~= nil and blip.data.reaping ~= 0 then
+            blip.texture_Reaping:Show()
+        else
+            blip.texture_Reaping:Hide()
+        end
+
+        if db.currentDifficulty < 10 then
+            blip.texture_Reaping:Hide()
         end
     end
 end
