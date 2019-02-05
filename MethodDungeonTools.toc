@@ -13,7 +13,6 @@ libs\load_libs.xml
 AceGUIWidget-MethodDungeonToolsPullButton.lua
 AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 AceGUIWidget-MethodDungeonToolsSpellButton.lua
-BattleForAzeroth\ReapingIndex.lua
 Utility.lua
 MethodDungeonTools.lua
 DungeonEnemies.xml

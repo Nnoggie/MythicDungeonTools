@@ -427,19 +427,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
 
 
 
-    self.data.reaping = nil
-
-    for key,value in pairs(MethodDungeonTools.reapingStatic) do 
-
-        if MethodDungeonTools.reapingIndex[key]["spawns"][tostring(self.data.id)] then
-            self.data.reaping = value.npcId
-            self.texture_Reaping:SetTexture(value.iconTexture)
-            --self.texture_Reaping_Outline:SetColorTexture(value.outline)
-            self.texture_Reaping:Hide()
-        end
-
+    if self.data.reaping then
+        self.texture_Reaping:SetTexture(value.iconTexture)
+        --self.texture_Reaping_Outline:SetColorTexture(value.outline)
+        self.texture_Reaping:Hide()
     end
-    
 
     self.clone = clone
     tinsert(blips,self)
@@ -643,7 +635,7 @@ end
 
 function MethodDungeonTools:DungeonEnemies_UpdateReaping()
     for _,blip in pairs(blips) do
-        if blip.data.reaping ~= nil and blip.data.reaping ~= 0 then
+        if blip.data.reaping then
             blip.texture_Reaping:Show()
         else
             blip.texture_Reaping:Hide()
