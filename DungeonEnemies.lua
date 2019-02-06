@@ -428,7 +428,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
 
 
     if self.data.reaping then
-        self.texture_Reaping:SetTexture(value.iconTexture)
+        self.texture_Reaping:SetTexture(MethodDungeonTools.reapingStatic[tostring(self.data.reaping)].iconTexture)
         --self.texture_Reaping_Outline:SetColorTexture(value.outline)
         self.texture_Reaping:Hide()
     end
