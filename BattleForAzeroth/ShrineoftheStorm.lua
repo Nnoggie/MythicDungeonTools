@@ -2456,7 +2456,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     };
     [13] = {
        ["clones"] = {};
-       ["reaping"] = 148894;
        ["id"] = 134058;
        ["spells"] = {
           [267841] = {};
