@@ -1406,7 +1406,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
              };
           };
        };
-       ["reaping"] = 148894;
        ["scale"] = 1.2;
        ["spells"] = {
           [268187] = {};
@@ -2122,7 +2121,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
              };
           };
        };
-       ["reaping"] = 148894;
        ["scale"] = 1.2;
        ["spells"] = {
           [277564] = {};
@@ -2577,7 +2575,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
           };
        };
        ["id"] = 134058;
-       ["reaping"] = 148894;
        ["scale"] = 1;
        ["spells"] = {
           [267841] = {};
