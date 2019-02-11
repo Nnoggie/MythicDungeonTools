@@ -29,7 +29,7 @@
                     </Anchors>
                 </Texture>
 
-                <Texture name="$parent_SelectedHighlight"  hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_SelectedHighlight" textureSubLevel="6" hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
