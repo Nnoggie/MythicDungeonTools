@@ -968,6 +968,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		local difficulty = tonumber(value)
         db.currentDifficulty = difficulty or db.currentDifficulty
+        MethodDungeonTools:DungeonEnemies_UpdateReaping()
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
 
