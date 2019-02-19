@@ -940,7 +940,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
        };
        ["neutral"] = true;
        ["health"] = 36267;
-       ["count"] = 2;
+       ["count"] = 0;
        ["displayId"] = 88571;
        ["creatureType"] = "Beast";
        ["level"] = 120;
@@ -1737,14 +1737,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
              ["sublevel"] = 1;
              ["infested"] = {};
           };
-          [4] = {
-             ["y"] = -431.35423955244;
-             ["x"] = 392.48611128988;
-             ["sublevel"] = 1;
-             ["infested"] = {
-                [1] = true;
-             };
-          };
           [8] = {
              ["sublevel"] = 1;
              ["x"] = 409.90550033856;
@@ -1791,60 +1783,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 [1] = true;
              };
           };
-          [16] = {
-             ["y"] = -344.6063341927;
-             ["x"] = 343.23381235593;
-             ["g"] = 70;
-             ["sublevel"] = 1;
-          };
-          [17] = {
-             ["y"] = -393.04170939424;
-             ["x"] = 245.04100602619;
-             ["sublevel"] = 1;
-          };
           [9] = {
              ["y"] = -375.39600941973;
              ["x"] = 425.73693709783;
              ["sublevel"] = 1;
              ["infested"] = {};
-          };
-          [18] = {
-             ["y"] = -397.58700738667;
-             ["x"] = 247.76755448611;
-             ["sublevel"] = 1;
-          };
-          [5] = {
-             ["y"] = -431.35423955244;
-             ["x"] = 389.72296240274;
-             ["sublevel"] = 1;
-          };
-          [10] = {
-             ["y"] = -444.682195676;
-             ["x"] = 359.73697530238;
-             ["sublevel"] = 1;
-             ["upstairs"] = true;
-          };
-          [20] = {
-             ["y"] = -396.0520724445;
-             ["x"] = 262.90768116939;
-             ["sublevel"] = 1;
-          };
-          [21] = {
-             ["y"] = -386.78688288329;
-             ["x"] = 266.48977407349;
-             ["sublevel"] = 1;
-          };
-          [11] = {
-             ["y"] = -438.79178982585;
-             ["x"] = 358.77807038385;
-             ["sublevel"] = 1;
-             ["upstairs"] = true;
-          };
-          [22] = {
-             ["y"] = -432.78722978124;
-             ["x"] = 369.90063436546;
-             ["sublevel"] = 1;
-             ["upstairs"] = true;
           };
           [3] = {
              ["y"] = -439.98643884986;
@@ -1854,17 +1797,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
              };
              ["sublevel"] = 1;
           };
-          [6] = {
-             ["y"] = -428.72266004137;
-             ["x"] = 389.72296240274;
-             ["sublevel"] = 1;
-          };
-          [12] = {
-             ["y"] = -420.13504628936;
-             ["x"] = 373.56751166519;
-             ["sublevel"] = 1;
-             ["upstairs"] = true;
-          };
           [13] = {
              ["sublevel"] = 1;
              ["x"] = 417.33293235944;
@@ -1873,34 +1805,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
              ["infested"] = {
                 [1] = true;
              };
-          };
-          [7] = {
-             ["y"] = -421.58180185169;
-             ["x"] = 384.48718115197;
-             ["sublevel"] = 1;
-             ["infested"] = {
-                [1] = true;
-             };
-          };
-          [14] = {
-             ["y"] = -339.97945761309;
-             ["x"] = 344.57703227835;
-             ["g"] = 70;
-             ["sublevel"] = 1;
-          };
-          [15] = {
-             ["sublevel"] = 1;
-             ["x"] = 351.14424878273;
-             ["y"] = -341.77050805467;
-             ["g"] = 70;
-             ["infested"] = {
-                [1] = true;
-             };
-          };
-          [19] = {
-             ["y"] = -389.92092650624;
-             ["x"] = 262.34779401948;
-             ["sublevel"] = 1;
           };
           [23] = {
              ["y"] = -384.66372890629;
@@ -1920,7 +1824,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 0.6;
        ["health"] = 58864;
        ["name"] = "Freehold Deckhand";
-       ["count"] = 1;
+       ["count"] = 0;
        ["displayId"] = 78623;
        ["creatureType"] = "Humanoid";
        ["level"] = 120;
@@ -2031,7 +1935,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 80087;
        ["creatureType"] = "Humanoid";
        ["level"] = 120;
-       ["count"] = 1;
+       ["count"] = 2;
        ["neutral"] = true;
     };
     [17] = {
@@ -2311,7 +2215,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 79066;
        ["creatureType"] = "Humanoid";
        ["level"] = 120;
-       ["count"] = 1;
+       ["count"] = 0;
        ["scale"] = 0.6;
     };
     [9] = {
@@ -3420,5 +3324,129 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
        ["level"] = 120;
        ["name"] = "Bilge Rat Swabby";
        ["scale"] = 0.6;
+    };
+    [37] = {
+        ["clones"] = {
+            [4] = {
+                ["y"] = -431.35423955244;
+                ["x"] = 392.48611128988;
+                ["sublevel"] = 1;
+                ["infested"] = {
+                    [1] = true;
+                };
+            };
+            [16] = {
+                ["y"] = -344.6063341927;
+                ["x"] = 343.23381235593;
+                ["g"] = 70;
+                ["sublevel"] = 1;
+            };
+            [17] = {
+                ["y"] = -393.04170939424;
+                ["x"] = 245.04100602619;
+                ["sublevel"] = 1;
+            };
+            [18] = {
+                ["y"] = -397.58700738667;
+                ["x"] = 247.76755448611;
+                ["sublevel"] = 1;
+            };
+            [5] = {
+                ["y"] = -431.35423955244;
+                ["x"] = 389.72296240274;
+                ["sublevel"] = 1;
+            };
+            [10] = {
+                ["y"] = -444.682195676;
+                ["x"] = 359.73697530238;
+                ["sublevel"] = 1;
+                ["upstairs"] = true;
+            };
+            [20] = {
+                ["y"] = -396.0520724445;
+                ["x"] = 262.90768116939;
+                ["sublevel"] = 1;
+            };
+            [21] = {
+                ["y"] = -386.78688288329;
+                ["x"] = 266.48977407349;
+                ["sublevel"] = 1;
+            };
+            [11] = {
+                ["y"] = -438.79178982585;
+                ["x"] = 358.77807038385;
+                ["sublevel"] = 1;
+                ["upstairs"] = true;
+            };
+            [22] = {
+                ["y"] = -432.78722978124;
+                ["x"] = 369.90063436546;
+                ["sublevel"] = 1;
+                ["upstairs"] = true;
+            };
+            [6] = {
+                ["y"] = -428.72266004137;
+                ["x"] = 389.72296240274;
+                ["sublevel"] = 1;
+            };
+            [12] = {
+                ["y"] = -420.13504628936;
+                ["x"] = 373.56751166519;
+                ["sublevel"] = 1;
+                ["upstairs"] = true;
+            };
+            [7] = {
+                ["y"] = -421.58180185169;
+                ["x"] = 384.48718115197;
+                ["sublevel"] = 1;
+                ["infested"] = {
+                    [1] = true;
+                };
+            };
+            [14] = {
+                ["y"] = -339.97945761309;
+                ["x"] = 344.57703227835;
+                ["g"] = 70;
+                ["sublevel"] = 1;
+            };
+            [15] = {
+                ["sublevel"] = 1;
+                ["x"] = 351.14424878273;
+                ["y"] = -341.77050805467;
+                ["g"] = 70;
+                ["infested"] = {
+                    [1] = true;
+                };
+            };
+            [19] = {
+                ["y"] = -389.92092650624;
+                ["x"] = 262.34779401948;
+                ["sublevel"] = 1;
+            };
+        };
+        ["reaping"] = 148716;
+        ["id"] = 130521;
+        ["spells"] = {
+            [277242] = {};
+            [277564] = {};
+        };
+        ["scale"] = 0.6;
+        ["health"] = 58864;
+        ["name"] = "Freehold Deckhand";
+        ["count"] = 1;
+        ["displayId"] = 78623;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["neutral"] = true;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Incapacitate"] = true;
+            ["Sap"] = true;
+            ["Root"] = true;
+            ["Silence"] = true;
+            ["Slow"] = true;
+            ["Stun"] = true;
+            ["Fear"] = true;
+        };
     };
  };
