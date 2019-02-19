@@ -1462,7 +1462,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
           [209859] = {};
        };
        ["scale"] = 1;
-       ["count"] = 6;
+       ["count"] = 4;
        ["health"] = 470912;
        ["name"] = "Heart Guardian";
        ["displayId"] = 84761;
