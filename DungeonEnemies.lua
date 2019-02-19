@@ -14,6 +14,30 @@ function MethodDungeonTools:GetDungeonEnemyBlips()
     return blips
 end
 
+MethodDungeonTools.reapingStatic = {
+    ["148716"] = {
+        ["name"] = "Risen Soul",
+        ["iconTexture"] = "Interface\\Icons\\Ability_warlock_soulsiphon",
+        ["abilities"] = {},
+        ["npcId"] = 148716,
+        ["outline"] = { 1.02, 0, 2.04, 1 }
+    },
+    ["148893"] = {
+        ["name"] = "Tormented Soul",
+        ["iconTexture"] = "Interface\\Icons\\spell_shadow_soulleech_1",
+        ["abilities"] = {},
+        ["npcId"] = 148893,
+            ["outline"] = { 0, 2.04, 1.02, 1 }
+    },
+    ["148894"] = {
+        ["name"] = "Lost Soul",
+        ["iconTexture"] = "Interface\\Icons\\ability_warlock_improvedsoulleech",
+        ["abilities"] = {},
+        ["npcId"] = 148894,
+        ["outline"] = { 2.04, 0, 2.04, 1 }
+    },
+}
+
 --From http://wow.gamepedia.com/UI_coordinates
 local function framesOverlap(frameA, frameB,offset)
     if not frameA or not frameB then return	end
@@ -51,6 +75,7 @@ local defaultSizes = {
     ["texture_Portrait"] = 15,
     ["texture_MouseHighlight"] = 20,
     ["texture_SelectedHighlight"] = 20,
+    ["texture_Reaping"] = 8,
     ["texture_Dragon"] = 23,
     ["texture_Indicator"] = 20,
     ["texture_PullIndicator"] = 23,
@@ -205,6 +230,10 @@ end
 local patrolPoints =  {}
 local patrolLines = {}
 
+function MethodDungeonTools:DungeonEnemies_UpdateReapingPulls()
+    
+end
+
 function MDTDungeonEnemyMixin:DisplayPatrol(shown)
 
     --Hide all points/line
@@ -290,6 +319,10 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     end
 
     local boss = blip.data.isBoss or false
+    local reapingText = ''
+    if blip.data.reaping then
+        reapingText = "Reaping: " .. MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
+    end
     local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
     local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
     local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
@@ -300,6 +333,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
 
     local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
     text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
+    text = text .. "\n" .. reapingText
     text = text .."\n\n[Right click for more info]"
     tooltip.String:SetText(text)
 
@@ -391,6 +425,15 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.texture_Background:SetVertexColor(1,1,1,1)
     if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
     self.data = data
+
+
+
+    if self.data.reaping then
+        self.texture_Reaping:SetTexture(MethodDungeonTools.reapingStatic[tostring(self.data.reaping)].iconTexture)
+        --self.texture_Reaping_Outline:SetColorTexture(value.outline)
+        self.texture_Reaping:Hide()
+    end
+
     self.clone = clone
     tinsert(blips,self)
     if db.enemyStyle == 2 then
@@ -591,7 +634,19 @@ function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
     end
 end
 
+function MethodDungeonTools:DungeonEnemies_UpdateReaping()
+    for _,blip in pairs(blips) do
+        if blip.data.reaping then
+            blip.texture_Reaping:Show()
+        else
+            blip.texture_Reaping:Hide()
+        end
 
+        if db.currentDifficulty < 10 then
+            blip.texture_Reaping:Hide()
+        end
+    end
+end
 
 ---DungeonEnemies_UpdateInfested
 ---Updates which blips should display infested state based on preset.week
