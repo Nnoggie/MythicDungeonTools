@@ -938,7 +938,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
           [209859] = {};
        };
        ["health"] = 291377;
-       ["id"] = 127879;
+       ["id"] = 135989;
        ["count"] = 0;
        ["displayId"] = 80904;
        ["creatureType"] = "Undead";
