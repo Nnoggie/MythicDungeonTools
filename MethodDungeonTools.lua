@@ -62,6 +62,8 @@ function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
         MethodDungeonTools:ResetMainFramePos()
 	elseif rqst == "dc" then
         MethodDungeonTools:ToggleDataCollection()
+    elseif rqst == "hptrack" then
+        MethodDungeonTools:ToggleHealthTrack()
     else
 		MethodDungeonTools:ShowInterface()
 	end
@@ -514,6 +516,11 @@ end
 function MethodDungeonTools:ToggleDataCollection()
     db.dataCollectionActive = not db.dataCollectionActive
     print(string.format("%sMDT|r: DataCollection %s. Reload Interface!",methodColor,db.dataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
+end
+
+function MethodDungeonTools:ToggleHealthTrack()
+    MethodDungeonTools.DataCollection:InitHealthTrack()
+    print(string.format("%sMDT|r: HealthTrack %s.",methodColor,"|cFF00FF00Enabled|r"))
 end
 
 

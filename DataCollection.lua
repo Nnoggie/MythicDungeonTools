@@ -229,4 +229,47 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
 
 end
 
+---HealthTrack
+function DC:InitHealthTrack()
+    db = MethodDungeonTools:GetDB()
+    local enemyCount = 0
+    local totalEnemies = 0
+    local changedEnemies = {}
+    for _,enemy in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+        totalEnemies = totalEnemies + 1
+    end
+    f = CreateFrame("Frame")
+    f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    f:SetScript("OnEvent", function(self, event, ...)
+        if event == "NAME_PLATE_UNIT_ADDED" then
+            local unit = ...
+            local npcId
+            local guid = UnitGUID(unit)
+            if guid then
+                npcId = select(6,strsplit("-", guid))
+            end
+            if npcId then
+                local npcHealth = UnitHealthMax(unit)
+                for enemyIdx,enemy in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+                    if enemy.id == tonumber(npcId) then
+                        if enemy.health ~= npcHealth then
+                            enemy.health = npcHealth
+                            enemyCount = enemyCount + 1
+                            changedEnemies[enemyIdx] = true
+                            local enemiesLeft = " "
+                            for k,v in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+                                if not changedEnemies[k] then
+                                    enemiesLeft = enemiesLeft..v.name..", "
+                                end
+                            end
+                            print(enemyCount.."/"..totalEnemies..enemiesLeft)
+                        end
+                        break
+                    end
+                end
+            end
+        end
+    end)
+end
+
 
