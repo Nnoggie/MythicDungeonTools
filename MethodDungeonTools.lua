@@ -2117,6 +2117,26 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 		end
 	end
 	frame.newPullButtons[idx]:SetNPCData(enemyTable)
+
+    --color pull based on reaping
+    local pullForces = MethodDungeonTools:CountForces(idx,false)
+    local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
+    local currentPercent = pullForces/totalForcesMax
+
+    local oldPullForces
+    if idx == 1 then
+        oldPullForces = 0
+    else
+        oldPullForces =  MethodDungeonTools:CountForces(idx-1,false)
+    end
+    local oldPercent = oldPullForces/totalForcesMax
+
+    if math.floor(currentPercent/0.2)>math.floor(oldPercent/0.2) then
+        frame.newPullButtons[idx].background:SetVertexColor(0.7, 0, 0.3, 0.8)
+    else
+        frame.newPullButtons[idx].background:SetVertexColor(0.5, 0.5, 0.5, 0.25);
+    end
+
 end
 
 
