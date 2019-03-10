@@ -842,7 +842,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -319.07510818626;
             };
         };
-        ["reaping"] = 148716;
+        ["reaping"] = 148893;
         ["id"] = 129788;
         ["spells"] = {
             [258323] = {};
