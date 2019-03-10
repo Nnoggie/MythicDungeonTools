@@ -910,7 +910,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:UpdateMap()
         MethodDungeonTools:DungeonEnemies_UpdateTeeming()
         --MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
-        MethodDungeonTools:DungeonEnemies_UpdateReaping()
+        --MethodDungeonTools:DungeonEnemies_UpdateReaping()
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
@@ -975,7 +975,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		local difficulty = tonumber(value)
         db.currentDifficulty = difficulty or db.currentDifficulty
-        MethodDungeonTools:DungeonEnemies_UpdateReaping()
+        --MethodDungeonTools:DungeonEnemies_UpdateReaping()
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
 
@@ -2868,7 +2868,7 @@ function initFrames()
         local tooltip = MethodDungeonTools.tooltip
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
-        tooltip.mySizes ={x=270,y=120}
+        tooltip.mySizes ={x=290,y=120}
 
         tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
         tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
@@ -2888,10 +2888,10 @@ function initFrames()
         tooltip.String:SetFont(tooltip.String:GetFont(),10)
         tooltip.String:SetTextColor(1, 1, 1, 1);
         tooltip.String:SetJustifyH("LEFT")
-        tooltip.String:SetJustifyV("CENTER")
+        --tooltip.String:SetJustifyV("CENTER")
         tooltip.String:SetWidth(tooltip:GetWidth())
         tooltip.String:SetHeight(90)
-        tooltip.String:SetWidth(140)
+        tooltip.String:SetWidth(175)
         tooltip.String:SetText(" ");
         tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
         tooltip.String:Show();
