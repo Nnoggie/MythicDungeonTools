@@ -2,7 +2,7 @@ local Type, Version = "MethodDungeonToolsPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
-local maxPortraitCount = 7
+local maxPortraitCount = 5
 local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
 local next = next
 
@@ -507,7 +507,6 @@ local methods = {
         self.pullNumber:SetText(self.index)
         self.pullNumber:Show()
 
-
         self.frame:SetScript("OnClick", self.callbacks.OnClickNormal);
         self.frame:SetScript("OnKeyDown", self.callbacks.OnKeyDown);
         self.frame:SetScript("OnEnter", self.callbacks.OnEnter);
@@ -518,7 +517,6 @@ local methods = {
         self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
         self:Enable();
-        --self:SetRenameAction(self.callbacks.OnRenameAction);
 
         self:InitializeScrollHover()
     end,
@@ -905,6 +903,9 @@ local methods = {
             self.enemyPortraits[idx].fontString:Show()
         end
     end,
+    ["ShowReapingIcon"] = function(self,show)
+        if show then self.reapingIcon:Show() else self.reapingIcon:Hide() end
+    end,
 }
 
 --Constructor
@@ -955,42 +956,8 @@ local function Constructor()
 
     end);
 
-
-
-
-
-
-    local renamebox = CreateFrame("EDITBOX", nil, button, "InputBoxTemplate");
-    renamebox:SetHeight(height/2);
-    renamebox:SetPoint("TOP", button, "TOP");
-    renamebox:SetPoint("LEFT", icon, "RIGHT", 6, 0);
-    renamebox:SetPoint("RIGHT", button, "RIGHT", -4, 0);
-    renamebox:SetFont("Fonts\\FRIZQT__.TTF", 10);
-    renamebox:Hide();
-
-    renamebox.func = function() --[[By default, do nothing!]] end;
-    renamebox:SetScript("OnEnterPressed", function()
-        local oldid = button.title:GetText();
-        local newid = renamebox:GetText();
-        if(newid == "" or (newid ~= oldid --[[and WeakAuras.GetData(newid)]] )) then
-            --if name exists
-            renamebox:SetText(button.title:GetText());
-        else
-            renamebox.func();
-            title:SetText(renamebox:GetText());
-            title:Show();
-            renamebox:Hide();
-        end
-    end);
-
-    renamebox:SetScript("OnEscapePressed", function()
-        title:Show();
-        renamebox:Hide();
-    end);
-
     --enemy portraits
     local enemyPortraits = {}
-
     for i=1,maxPortraitCount do
         enemyPortraits[i] = button:CreateTexture(nil, "BACKGROUND", nil, 2)
         enemyPortraits[i]:SetSize(height-2,height-2)
@@ -1014,19 +981,23 @@ local function Constructor()
         enemyPortraits[i].fontString:SetPoint("BOTTOM", enemyPortraits[i], "BOTTOM", 0, 0);
         enemyPortraits[i].fontString:Hide();
 
-
     end
 
-
+    --reaping icon
+    local reapingIcon = button:CreateTexture(nil, "BACKGROUND", nil, 2)
+    reapingIcon:SetSize(height-2,height-2)
+    reapingIcon:SetPoint("LEFT",enemyPortraits[maxPortraitCount],"RIGHT",height-2,0)
+    SetPortraitToTexture(reapingIcon,"Interface\\Icons\\ability_racial_embraceoftheloa_bwonsomdi")
+    reapingIcon:Hide()
 
     local widget = {
         frame = button,
         title = title,
         icon = icon,
         pullNumber = pullNumber,
-        renamebox = renamebox,
         background = background,
         enemyPortraits = enemyPortraits,
+        reapingIcon = reapingIcon,
         type = Type
     }
     for method, func in pairs(methods) do
