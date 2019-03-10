@@ -903,8 +903,16 @@ local methods = {
             self.enemyPortraits[idx].fontString:Show()
         end
     end,
-    ["ShowReapingIcon"] = function(self,show)
-        if show then self.reapingIcon:Show() else self.reapingIcon:Hide() end
+    ["ShowReapingIcon"] = function(self,show,currentPercent)
+        if show then
+            self.reapingIcon:Show()
+            self.reapingIcon.fontString:SetText(math.floor(currentPercent/0.2))
+            self.reapingIcon.fontString:Show()
+        else
+            self.reapingIcon:Hide()
+            self.reapingIcon.fontString:Hide()
+        end
+
     end,
 }
 
@@ -978,8 +986,8 @@ local function Constructor()
         enemyPortraits[i].fontString:SetTextColor(1, 1, 1, 1);
         enemyPortraits[i].fontString:SetWidth(25)
         enemyPortraits[i].fontString:SetHeight(10)
-        enemyPortraits[i].fontString:SetPoint("BOTTOM", enemyPortraits[i], "BOTTOM", 0, 0);
-        enemyPortraits[i].fontString:Hide();
+        enemyPortraits[i].fontString:SetPoint("BOTTOM", enemyPortraits[i], "BOTTOM", 0, 0)
+        enemyPortraits[i].fontString:Hide()
 
     end
 
@@ -989,6 +997,15 @@ local function Constructor()
     reapingIcon:SetPoint("LEFT",enemyPortraits[maxPortraitCount],"RIGHT",height-2,0)
     SetPortraitToTexture(reapingIcon,"Interface\\Icons\\ability_racial_embraceoftheloa_bwonsomdi")
     reapingIcon:Hide()
+
+    reapingIcon.fontString = button:CreateFontString(nil,"BACKGROUND",nil)
+    reapingIcon.fontString:SetFontObject("GameFontNormal")
+    reapingIcon.fontString:SetFont(reapingIcon.fontString:GetFont(),20,"OUTLINE")
+    reapingIcon.fontString:SetTextColor(1, 1, 1, 1);
+    reapingIcon.fontString:SetWidth(25)
+    reapingIcon.fontString:SetHeight(10)
+    reapingIcon.fontString:SetPoint("CENTER", reapingIcon, "CENTER", 0, 0)
+    reapingIcon.fontString:Hide()
 
     local widget = {
         frame = button,

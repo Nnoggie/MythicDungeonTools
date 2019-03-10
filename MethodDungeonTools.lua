@@ -2132,9 +2132,9 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
     local oldPercent = oldPullForces/totalForcesMax
 
     if math.floor(currentPercent/0.2)>math.floor(oldPercent/0.2) then
-        frame.newPullButtons[idx]:ShowReapingIcon(true)
+        frame.newPullButtons[idx]:ShowReapingIcon(true,currentPercent)
     else
-        frame.newPullButtons[idx]:ShowReapingIcon(false)
+        frame.newPullButtons[idx]:ShowReapingIcon(false,currentPercent)
     end
 
 end
