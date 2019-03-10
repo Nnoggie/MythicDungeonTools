@@ -321,7 +321,8 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     local boss = blip.data.isBoss or false
     local reapingText = ''
     if blip.data.reaping then
-        reapingText = "Reaping: " .. MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
+        local reapingIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
+        reapingText = "Reaping: "..reapingIcon.." "..MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
     end
     local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
     local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
