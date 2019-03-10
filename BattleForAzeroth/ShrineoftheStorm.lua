@@ -253,7 +253,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["reaping"] = 148716;
+      ["reaping"] = 148893;
       ["scale"] = 1.2;
       ["spells"] = {
          [267977] = {};
