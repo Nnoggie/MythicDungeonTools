@@ -534,7 +534,30 @@ function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add
     MethodDungeonTools:UpdatePullButtonNPCData(pull)
 end
 
-
+---DungeonEnemies_UpdateBlipColors
+---Updates the colors of all selected blips of the specified pull
+function MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pull,r,g,b)
+    local p = preset.value.pulls[pull]
+    for enemyIdx,clones in pairs(p) do
+        if tonumber(enemyIdx) then
+            for _,cloneIdx in pairs(clones) do
+                for _,blip in pairs(blips) do
+                    if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
+                        if not db.devMode then
+                            if db.enemyStyle == 2 then
+                                blip.texture_Portrait:SetVertexColor(r,g,b,1)
+                            else
+                                blip.texture_Portrait:SetVertexColor(r,g,b,1)
+                                blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
+                            end
+                        end
+                        break
+                    end
+                end
+            end
+        end
+    end
+end
 
 ---DungeonEnemies_UpdateSelected
 ---Updates the selected Enemies on the map and marks them green
@@ -555,28 +578,46 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
     end
     --highlight all pull enemies
     for pullIdx,p in pairs(preset.value.pulls) do
+        local r,g,b = MethodDungeonTools:HexToRGB(p["color"])
         for enemyIdx,clones in pairs(p) do
-            for _,cloneIdx in pairs(clones) do
-                for _,blip in pairs(blips) do
-                    if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
-                        blip.texture_SelectedHighlight:Show()
-                        blip.selected = true
-                        if not db.devMode then
-                            if db.enemyStyle == 2 then
-                                blip.texture_Portrait:SetVertexColor(0,1,0,1)
-                            else
-                                blip.texture_Portrait:SetVertexColor(0,0.8,0,1)
+            if tonumber(enemyIdx) then
+                for _,cloneIdx in pairs(clones) do
+                    for _,blip in pairs(blips) do
+                        if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
+                            blip.texture_SelectedHighlight:Show()
+                            blip.selected = true
+                            if not db.devMode then
+                                if db.enemyStyle == 2 then
+                                    blip.texture_Portrait:SetVertexColor(0,1,0,1)
+                                else
+                                    blip.texture_Portrait:SetVertexColor(r,g,b,1)
+                                    blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
+                                end
                             end
+                            if pullIdx == pull then
+                                blip.texture_PullIndicator:Show()
+                            end
+                            break
                         end
-                        if pullIdx == pull then
-                            blip.texture_PullIndicator:Show()
-                        end
-                        break
                     end
                 end
             end
         end
     end
+end
+
+---DungeonEnemies_SetPullColor
+---Sets a custom color for a pull
+function MethodDungeonTools:DungeonEnemies_SetPullColor(pull,r,g,b)
+    preset = MethodDungeonTools:GetCurrentPreset()
+    preset.value.pulls[pull]["color"] = MethodDungeonTools:RGBToHex(r,g,b)
+end
+
+---DungeonEnemies_GetPullColor
+---Returns the custom color for a pull (if specified)
+function MethodDungeonTools:DungeonEnemies_GetPullColor(pull)
+    local r,g,b = MethodDungeonTools:HexToRGB(preset.value.pulls[pull]["color"])
+    return r,g,b
 end
 
 ---DungeonEnemies_UpdateTeeming

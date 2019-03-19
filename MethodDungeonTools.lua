@@ -1196,20 +1196,22 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
         if not currentOnly or (currentOnly and pullIdx == currentPull) then
             if pullIdx <= currentPull then
                 for enemyIdx,clones in pairs(pull) do
-                    for k,v in pairs(clones) do
-                        local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
-                        local week = preset.week%3
-                        if week == 0 then week = 3 end
-                        local isBlacktoothWeek = week == 1
-                        local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
+                    if tonumber(enemyIdx) then
+                        for k,v in pairs(clones) do
+                            local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
+                            local week = preset.week%3
+                            if week == 0 then week = 3 end
+                            local isBlacktoothWeek = week == 1
+                            local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
 
-                        if not isCloneBlacktoothEvent or isBlacktoothWeek then
-                            if not (cloneFaction and cloneFaction~= preset.faction) then
-                                local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                                local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
-                                if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                                    if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
-                                        pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                            if not isCloneBlacktoothEvent or isBlacktoothWeek then
+                                if not (cloneFaction and cloneFaction~= preset.faction) then
+                                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
+                                    local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
+                                    if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
+                                        if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
+                                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                        end
                                     end
                                 end
                             end
@@ -1544,12 +1546,15 @@ function MethodDungeonTools:EnsureDBTables()
     --removed clones: remove data from presets
     for pullIdx,pull in pairs(preset.value.pulls) do
         for enemyIdx,clones in pairs(pull) do
-            for k,v in pairs(clones) do
-                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
-                    clones[k] = nil
+            if tonumber(enemyIdx) then
+                for k,v in pairs(clones) do
+                    if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
+                        clones[k] = nil
+                    end
                 end
             end
         end
+        pull["color"] = pull["color"] or "228b22"
     end
 
     MethodDungeonTools:GetCurrentPreset().week = MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek()
@@ -1566,6 +1571,7 @@ function MethodDungeonTools:EnsureDBTables()
         preset.freeholdCrew = week
         preset.freeholdCrewSelected = true
     end
+
 
 end
 
@@ -1911,6 +1917,7 @@ function MethodDungeonTools:PresetsAddPull(index, data)
 	else
 		tinsert(MethodDungeonTools:GetCurrentPreset().value.pulls,data)
 	end
+    MethodDungeonTools:EnsureDBTables()
 end
 
 ---MethodDungeonTools:PresetsMergePulls
@@ -1944,17 +1951,19 @@ function MethodDungeonTools:PresetsMergePulls(pulls, destination)
         local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[index]
 
         for enemyIdx,clones in pairs(pull) do
-            if not newPull[enemyIdx] then
-                newPull[enemyIdx] = clones
-            else
-                for k,v in pairs(clones) do
-                    if newPull[enemyIdx][k] ~= nil then
-                        local newIndex = #newPull[enemyIdx] + 1
-                        newPull[enemyIdx][newIndex] = v
-                    else
-                        newPull[enemyIdx][k] = v
-                    end
+            if tonumber(enemyIdx) then
+                if not newPull[enemyIdx] then
+                    newPull[enemyIdx] = clones
+                else
+                    for k,v in pairs(clones) do
+                        if newPull[enemyIdx][k] ~= nil then
+                            local newIndex = #newPull[enemyIdx] + 1
+                            newPull[enemyIdx][newIndex] = v
+                        else
+                            newPull[enemyIdx][k] = v
+                        end
 
+                    end
                 end
             end
         end
@@ -1998,11 +2007,13 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	local shouldResetZoom = false
 	local lastSubLevel
 	for enemyIdx,clones in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[pull]) do
-		for idx,cloneIdx in pairs(clones) do
-			if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
-				lastSubLevel = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].sublevel
-			end
-		end
+        if tonumber(enemyIdx) then
+            for idx,cloneIdx in pairs(clones) do
+                if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
+                    lastSubLevel = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].sublevel
+                end
+            end
+        end
 	end
 	if lastSubLevel then
 		shouldResetZoom = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel ~= lastSubLevel
@@ -2059,56 +2070,58 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 	if preset.value.pulls[idx] then
 		local enemyTableIdx = 0
 		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
-            --check if enemy exists, remove if not
-            if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+            if tonumber(enemyIdx) then
+                --check if enemy exists, remove if not
+                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
 
-            else
-                local incremented = false
-                local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
-                local name = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
-                local creatureType = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
-                local level = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["level"]
-                local baseHealth = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
-                for k,cloneIdx in pairs(clones) do
-                    --check if clone exists, remove if not
-                    if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
+                else
+                    local incremented = false
+                    local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
+                    local name = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
+                    local creatureType = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
+                    local level = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["level"]
+                    local baseHealth = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
+                    for k,cloneIdx in pairs(clones) do
+                        --check if clone exists, remove if not
+                        if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
 
-                    else
-                        --check for teeming
-                        local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
-                        if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
+                        else
+                            --check for teeming
+                            local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
+                            if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
 
-                            local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
-                            local continue = false
-                            local week = preset.week%3
-                            if week == 0 then week = 3 end
-                            local isBlacktoothWeek = week == 1
-                            if isCloneBlacktoothEvent then
-                                if isBlacktoothWeek then
+                                local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
+                                local continue = false
+                                local week = preset.week%3
+                                if week == 0 then week = 3 end
+                                local isBlacktoothWeek = week == 1
+                                if isCloneBlacktoothEvent then
+                                    if isBlacktoothWeek then
+                                        continue = true
+                                    end
+                                else
                                     continue = true
                                 end
-                            else
-                                continue = true
-                            end
 
-                            --check for faction
-                            local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
-                            if cloneFaction then
-                                if cloneFaction ~= preset.faction then continue = false end
-                            end
+                                --check for faction
+                                local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
+                                if cloneFaction then
+                                    if cloneFaction ~= preset.faction then continue = false end
+                                end
 
-                            if continue then
-                                if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
-                                if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-                                enemyTable[enemyTableIdx].npcId = npcId
-                                enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                                enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
-                                enemyTable[enemyTableIdx].name = name
-                                enemyTable[enemyTableIdx].level = level
-                                enemyTable[enemyTableIdx].creatureType = creatureType
-                                enemyTable[enemyTableIdx].baseHealth = baseHealth
+                                if continue then
+                                    if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+                                    if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+                                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+                                    enemyTable[enemyTableIdx].npcId = npcId
+                                    enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                                    enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+                                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                                    enemyTable[enemyTableIdx].name = name
+                                    enemyTable[enemyTableIdx].level = level
+                                    enemyTable[enemyTableIdx].creatureType = creatureType
+                                    enemyTable[enemyTableIdx].baseHealth = baseHealth
+                                end
                             end
                         end
                     end
@@ -2211,6 +2224,7 @@ end
 ---Clears all the npcs out of a pull
 function MethodDungeonTools:ClearPull(index)
 	table.wipe(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[index])
+    MethodDungeonTools:EnsureDBTables()
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index)
 end

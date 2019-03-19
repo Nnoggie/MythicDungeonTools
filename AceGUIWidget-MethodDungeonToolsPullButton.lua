@@ -257,6 +257,7 @@ local methods = {
                 func = function() MethodDungeonTools:MovePullDown(self.index) end
             })
         end
+        --[[
         if self.index ~= 1 or self.index < self.maxPulls then
             tinsert(self.menu, {
                 text = " ",
@@ -265,6 +266,7 @@ local methods = {
                 func = nil
             })
         end
+        ]]--
         tinsert(self.menu, {
             text = "Insert before",
             notCheckable = 1,
@@ -283,12 +285,6 @@ local methods = {
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(self.index + 1)
             end
-        })
-        tinsert(self.menu, {
-            text = " ",
-            notClickable = 1,
-            notCheckable = 1,
-            func = nil
         })
         if self.index ~= 1 then
             tinsert(self.menu, {
@@ -320,6 +316,59 @@ local methods = {
                 func = nil
             })
         end
+        local updateColorSwatchValues = function(r,g,b)
+            for k,v in pairs(self.menu) do
+                if v.hasColorSwatch then
+                    v.r,v.g,v.b = r,g,b
+                    self.color.r,self.color.g,self.color.b = r,g,b
+                    return
+                end
+            end
+        end
+        tinsert(self.menu, {
+            text = "Color: ",
+            notCheckable = 1,
+            hasColorSwatch = true,
+            r = self.color.r,
+            g = self.color.g,
+            b = self.color.b,
+            swatchFunc = function()
+                local r,g,b = ColorPickerFrame:GetColorRGB()
+                local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
+                if colorHex == "228b22" then
+                    r,g,b = 2*r,2*g,2*b
+                    ColorPickerFrame:SetColorRGB(r,g,b)
+                end
+                MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
+                updateColorSwatchValues(r,g,b)
+                self:UpdateColor()
+                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+                L_CloseDropDownMenus()
+            end,
+            cancelFunc = function(colors)
+                MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,colors.r,colors.g,colors.b)
+                updateColorSwatchValues(colors.r,colors.g,colors.b)
+                self:UpdateColor()
+                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,colors.r,colors.g,colors.b)
+            end,
+        })
+        tinsert(self.menu, {
+            text = "Reset Color",
+            notCheckable = 1,
+            func = function()
+                local r,g,b = 34/255,139/255,34/255
+                MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
+                updateColorSwatchValues(r,g,b)
+                self:UpdateColor()
+                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+            end
+        })
+        tinsert(self.menu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
         tinsert(self.menu, {
             text = "Clear",
             notCheckable = 1,
@@ -329,12 +378,6 @@ local methods = {
             text = "Clear Preset",
             notCheckable = 1,
             func = function() MethodDungeonTools:OpenClearPresetDialog() end
-        })
-        tinsert(self.menu, {
-            text = " ",
-            notClickable = 1,
-            notCheckable = 1,
-            func = nil
         })
         if self.maxPulls > 1 then
             tinsert(self.menu, {
@@ -353,7 +396,8 @@ local methods = {
         tinsert(self.menu, {
             text = "Close",
             notCheckable = 1,
-            func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
+            --func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
+            func = nil
         })
 
 
@@ -506,6 +550,7 @@ local methods = {
         --Set pullNumber
         self.pullNumber:SetText(self.index)
         self.pullNumber:Show()
+
 
         self.frame:SetScript("OnClick", self.callbacks.OnClickNormal);
         self.frame:SetScript("OnKeyDown", self.callbacks.OnKeyDown);
@@ -862,6 +907,9 @@ local methods = {
     end,
     ["SetIndex"] = function(self, index)
         self.index = index
+        --set custom pull color
+        self.color.r,self.color.g,self.color.b = MethodDungeonTools:DungeonEnemies_GetPullColor(self.index)
+        self:UpdateColor()
     end,
     ["SetMaxPulls"] = function(self, maxPulls)
         self.maxPulls = maxPulls
@@ -914,8 +962,15 @@ local methods = {
         end
 
     end,
+    ["UpdateColor"] = function(self)
+        local colorHex = MethodDungeonTools:RGBToHex(self.color.r,self.color.g,self.color.b)
+        if colorHex == "228b22" then
+            self.background:SetVertexColor(0.5,0.5,0.5,0.25)
+        else
+            self.background:SetVertexColor(self.color.r,self.color.g,self.color.b, 0.75)
+        end
+    end,
 }
-
 --Constructor
 local function Constructor()
     local name = "MethodDungeonToolsPullButton"..AceGUI:GetNextWidgetNum(Type);
@@ -1007,6 +1062,9 @@ local function Constructor()
     reapingIcon.fontString:SetPoint("CENTER", reapingIcon, "CENTER", 0, 0)
     reapingIcon.fontString:Hide()
 
+    --custom colors
+    local color = {}
+
     local widget = {
         frame = button,
         title = title,
@@ -1015,6 +1073,7 @@ local function Constructor()
         background = background,
         enemyPortraits = enemyPortraits,
         reapingIcon = reapingIcon,
+        color = color,
         type = Type
     }
     for method, func in pairs(methods) do
