@@ -451,6 +451,10 @@ local methods = {
             notCheckable = 1,
             func = function()
                 local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+                MethodDungeonTools.U.iremove_if(selected_pulls, function(pullIdx)
+                    return pullIdx == self.index
+                end)
+
                 if not MethodDungeonTools.U.contains(selected_pulls, self.index) then
                     tinsert(selected_pulls, self.index)
                 end

@@ -1534,7 +1534,9 @@ function MethodDungeonTools:EnsureDBTables()
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls or {}
-	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] or {}
+    if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] then
+        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = #db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls
+    end
 
 	for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
 		if k ==0  then
@@ -1942,6 +1944,7 @@ function MethodDungeonTools:PresetsMergePulls(pulls, destination)
 
     local newPull = {}
     local removed_pulls = {}
+
     for _, pullIdx in ipairs(pulls) do
         local offset = count_if(removed_pulls, function(entry)
             return entry < pullIdx
@@ -1951,20 +1954,28 @@ function MethodDungeonTools:PresetsMergePulls(pulls, destination)
         local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[index]
 
         for enemyIdx,clones in pairs(pull) do
-            if tonumber(enemyIdx) then
-                if not newPull[enemyIdx] then
-                    newPull[enemyIdx] = clones
-                else
-                    for k,v in pairs(clones) do
-                        if newPull[enemyIdx][k] ~= nil then
-                            local newIndex = #newPull[enemyIdx] + 1
-                            newPull[enemyIdx][newIndex] = v
-                        else
-                            newPull[enemyIdx][k] = v
-                        end
+            if string.match(enemyIdx, "^%d+$") then
+                -- it's really an enemy index
+                if tonumber(enemyIdx) then
+                    if not newPull[enemyIdx] then
+                        newPull[enemyIdx] = clones
+                    else
+                        for k,v in pairs(clones) do
+                            if newPull[enemyIdx][k] ~= nil then
+                                local newIndex = #newPull[enemyIdx] + 1
+                                newPull[enemyIdx][newIndex] = v
+                            else
+                                newPull[enemyIdx][k] = v
+                            end
 
+                        end
                     end
                 end
+            else
+                -- it's another pull option like color
+                local optionName = enemyIdx
+                local optionValue = clones
+                newPull[optionName] = optionValue
             end
         end
 
@@ -1982,6 +1993,10 @@ function MethodDungeonTools:PresetsMergePulls(pulls, destination)
 end
 
 function MethodDungeonTools:PresetsDeletePull(p,j)
+    if p == db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull then
+        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = math.max(p - 1, 1)
+    end
+
 	tremove(MethodDungeonTools:GetCurrentPreset().value.pulls,p)
 end
 
