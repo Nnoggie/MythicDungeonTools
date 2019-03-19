@@ -1534,6 +1534,12 @@ function MethodDungeonTools:EnsureDBTables()
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull or 1
 	db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls or {}
+    -- make sure, that at least 1 pull exists
+    if #db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls == 0 then
+        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[1] = {}
+    end
+
+    -- Set current pull to last pull, if the actual current pull does not exists anymore
     if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] then
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = #db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls
     end
@@ -2826,6 +2832,45 @@ function MethodDungeonTools:ScrollToPull(pullIdx)
     --print("value =", value)
     scrollFrame:SetScroll(value)
     scrollFrame:FixScroll()
+end
+
+function MethodDungeonTools:CopyPullOptions(sourceIdx, destinationIdx)
+    local preset = MethodDungeonTools:GetCurrentPreset()
+    local pulls = preset.value.pulls
+    local source = pulls[sourceIdx]
+    local destination = pulls[destinationIdx]
+
+    if source and destination then
+        for optionName, optionValue in pairs(source) do
+            -- Assure, that it is an option and not an enemy index
+            if not string.match(optionName, "^%d+$") then
+                destination[optionName] = optionValue
+            end
+        end
+    end
+end
+
+function MethodDungeonTools:GetPullButton(pullIdx)
+    local frame = MethodDungeonTools.main_frame.sidePanel
+    return frame.newPullButtons[pullIdx]
+end
+
+function MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
+    local button = MethodDungeonTools:GetPullButton(pullIdx)
+
+    local function updateSwatch(t)
+        for k,v in pairs(t) do
+            if v.hasColorSwatch then
+                v.r,v.g,v.b = r,g,b
+                return
+            end
+        end
+    end
+
+    button.color.r, button.color.g, button.color.b = r, g, b
+    updateSwatch(button.menu)
+    updateSwatch(button.multiselectMenu)
+    button:UpdateColor()
 end
 
 function initFrames()
