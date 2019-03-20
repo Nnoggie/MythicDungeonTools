@@ -552,7 +552,7 @@ local methods = {
                 L_CloseDropDownMenus()
             end,
             swatchFunc = swatchMultiFunc,
-            cancelFunc = cancelMultiFunc,
+            cancelFunc = cancelMultiFunc
         })
         tinsert(self.multiselectMenu, {
             text = "Reset Color",
