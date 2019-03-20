@@ -316,15 +316,6 @@ local methods = {
                 func = nil
             })
         end
-        local updateColorSwatchValues = function(r,g,b)
-            for k,v in pairs(self.menu) do
-                if v.hasColorSwatch then
-                    v.r,v.g,v.b = r,g,b
-                    self.color.r,self.color.g,self.color.b = r,g,b
-                    return
-                end
-            end
-        end
         tinsert(self.menu, {
             text = "Color: ",
             notCheckable = 1,
@@ -340,15 +331,13 @@ local methods = {
                     ColorPickerFrame:SetColorRGB(r,g,b)
                 end
                 MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
-                updateColorSwatchValues(r,g,b)
-                self:UpdateColor()
+                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
                 MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
                 L_CloseDropDownMenus()
             end,
             cancelFunc = function(colors)
                 MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,colors.r,colors.g,colors.b)
-                updateColorSwatchValues(colors.r,colors.g,colors.b)
-                self:UpdateColor()
+                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
                 MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,colors.r,colors.g,colors.b)
             end,
         })
@@ -358,8 +347,7 @@ local methods = {
             func = function()
                 local r,g,b = 34/255,139/255,34/255
                 MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
-                updateColorSwatchValues(r,g,b)
-                self:UpdateColor()
+                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
                 MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
             end
         })
@@ -441,16 +429,15 @@ local methods = {
             end
         })
         tinsert(self.multiselectMenu, {
-            text = " ",
-            notClickable = 1,
-            notCheckable = 1,
-            func = nil
-        })
-        tinsert(self.multiselectMenu, {
             text = "Merge",
             notCheckable = 1,
             func = function()
                 local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+                -- Assure, that the destination is always the last selected_pull, to copy it's options at last
+                MethodDungeonTools.U.iremove_if(selected_pulls, function(pullIdx)
+                    return pullIdx == self.index
+                end)
+
                 if not MethodDungeonTools.U.contains(selected_pulls, self.index) then
                     tinsert(selected_pulls, self.index)
                 end
@@ -459,6 +446,71 @@ local methods = {
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:GetCurrentPreset().value.selection = { newIndex }
                 MethodDungeonTools:SetSelectionToPull(newIndex)
+            end
+        })
+        tinsert(self.multiselectMenu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Color: ",
+            notCheckable = 1,
+            hasColorSwatch = true,
+            r = self.color.r,
+            g = self.color.g,
+            b = self.color.b,
+            swatchFunc = function()
+                local r,g,b = ColorPickerFrame:GetColorRGB()
+                local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
+                if colorHex == "228b22" then
+                    r,g,b = 2*r,2*g,2*b
+                    ColorPickerFrame:SetColorRGB(r,g,b)
+                end
+
+                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                    tinsert(MethodDungeonTools:GetSelection(), self.index)
+                    self:Pick()
+                end
+
+                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
+                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+                    L_CloseDropDownMenus()
+                end
+            end,
+            cancelFunc = function(colors)
+                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                    tinsert(MethodDungeonTools:GetSelection(), self.index)
+                    self:Pick()
+                end
+
+                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,colors.r,colors.g,colors.b)
+                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, colors.r,colors.g,colors.b)
+                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,colors.r,colors.g,colors.b)
+                end
+            end,
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Reset Color",
+            notCheckable = 1,
+            func = function()
+                local r,g,b = 34/255,139/255,34/255
+
+                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                    tinsert(MethodDungeonTools:GetSelection(), self.index)
+                    self:Pick()
+                end
+
+                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
+                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+                    L_CloseDropDownMenus()
+                end
             end
         })
         if self.index ~= 1 or self.index < self.maxPulls then
@@ -487,12 +539,6 @@ local methods = {
             text = "Clear Preset",
             notCheckable = 1,
             func = function() MethodDungeonTools:OpenClearPresetDialog() end
-        })
-        tinsert(self.multiselectMenu, {
-            text = " ",
-            notClickable = 1,
-            notCheckable = 1,
-            func = nil
         })
         if self.maxPulls > 1 then
             tinsert(self.multiselectMenu, {
@@ -539,6 +585,12 @@ local methods = {
                 func = nil
             })
         end
+        tinsert(self.multiselectMenu, {
+            text = " ",
+            notClickable = 1,
+            notCheckable = 1,
+            func = nil
+        })
 
         tinsert(self.multiselectMenu, {
             text = "Close",
@@ -856,6 +908,7 @@ local methods = {
                 --print("correctPullIndex", correctPullIndex)
 
                 MethodDungeonTools:PresetsAddPull(pos)
+                MethodDungeonTools:CopyPullOptions(correctPullIndex, pos)
                 local newID =  MethodDungeonTools:PresetsMergePulls(correctPullIndex, pos)
                 --print("newID", newID)
 
@@ -873,6 +926,7 @@ local methods = {
             end
 
             MethodDungeonTools:PresetsAddPull(insertID)
+            MethodDungeonTools:CopyPullOptions(index, insertID)
             local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:SetSelectionToPull(newIndex)
