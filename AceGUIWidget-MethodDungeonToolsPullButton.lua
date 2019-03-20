@@ -175,6 +175,24 @@ local methods = {
             else
                 MethodDungeonTools:EnsureDBTables()
                 if(mouseButton == "RightButton") then
+                    -- Add current pull to selection, if not already selected
+                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                        if #MethodDungeonTools:GetSelection() == 1 then
+                            MethodDungeonTools:SetSelectionToPull(self.index)
+                        else
+                            tinsert(MethodDungeonTools:GetSelection(), self.index)
+                            self:Pick()
+                        end
+                    end
+
+                    -- Backup color for every selected pull
+                    for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                        local button = MethodDungeonTools:GetPullButton(pullIdx)
+                        if button then
+                            button:BackupColor()
+                        end
+                    end
+
                     if #MethodDungeonTools:GetSelection() > 1 then
                         L_EasyMenu(self.multiselectMenu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     else
@@ -316,6 +334,24 @@ local methods = {
                 func = nil
             })
         end
+        local function swatchFunc()
+            local r,g,b = ColorPickerFrame:GetColorRGB()
+            local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
+            if colorHex == "228b22" then
+                r,g,b = 2*r,2*g,2*b
+                ColorPickerFrame:SetColorRGB(r,g,b)
+            end
+            MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
+            MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
+            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+            L_CloseDropDownMenus()
+        end
+        local function cancelFunc()
+            self:RevertColor()
+            MethodDungeonTools:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
+            MethodDungeonTools:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
+            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+        end
         tinsert(self.menu, {
             text = "Color: ",
             notCheckable = 1,
@@ -323,23 +359,19 @@ local methods = {
             r = self.color.r,
             g = self.color.g,
             b = self.color.b,
-            swatchFunc = function()
-                local r,g,b = ColorPickerFrame:GetColorRGB()
-                local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
-                if colorHex == "228b22" then
-                    r,g,b = 2*r,2*g,2*b
-                    ColorPickerFrame:SetColorRGB(r,g,b)
-                end
-                MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
-                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
-                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+            func = function()
+                ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
+                ColorPickerFrame.hasOpacity = false
+                ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
+                ColorPickerFrame.func = swatchFunc
+                ColorPickerFrame.opacityFunc = nil
+                ColorPickerFrame.cancelFunc = cancelFunc
+                ColorPickerFrame:Hide() -- Need to run the OnShow
+                ColorPickerFrame:Show()
                 L_CloseDropDownMenus()
             end,
-            cancelFunc = function(colors)
-                MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,colors.r,colors.g,colors.b)
-                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
-                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,colors.r,colors.g,colors.b)
-            end,
+            swatchFunc = swatchFunc,
+            cancelFunc = cancelFunc,
         })
         tinsert(self.menu, {
             text = "Reset Color",
@@ -454,6 +486,53 @@ local methods = {
             notCheckable = 1,
             func = nil
         })
+        local function swatchMultiFunc()
+            local r,g,b = ColorPickerFrame:GetColorRGB()
+            local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
+            if colorHex == "228b22" then
+                r,g,b = 2*r,2*g,2*b
+                ColorPickerFrame:SetColorRGB(r,g,b)
+            end
+
+            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                tinsert(MethodDungeonTools:GetSelection(), self.index)
+                self:Pick()
+            end
+
+            for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+                MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
+                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+            end
+
+            L_CloseDropDownMenus()
+        end
+        local function cancelMultiFunc()
+            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
+                tinsert(MethodDungeonTools:GetSelection(), self.index)
+                self:Pick()
+            end
+
+            for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
+                local button = MethodDungeonTools:GetPullButton(pullIdx)
+                if button then
+                    button:RevertColor()
+                    local color = {
+                        r = button.color.r,
+                        g = button.color.g,
+                        b = button.color.b
+                    }
+                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx, color.r, color.g, color.b)
+                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, color.r, color.g, color.b)
+                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx, color.r, color.g, color.b)
+                end
+            end
+
+            self:RevertColor()
+            MethodDungeonTools:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
+            MethodDungeonTools:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
+            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+        end
         tinsert(self.multiselectMenu, {
             text = "Color: ",
             notCheckable = 1,
@@ -461,38 +540,19 @@ local methods = {
             r = self.color.r,
             g = self.color.g,
             b = self.color.b,
-            swatchFunc = function()
-                local r,g,b = ColorPickerFrame:GetColorRGB()
-                local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
-                if colorHex == "228b22" then
-                    r,g,b = 2*r,2*g,2*b
-                    ColorPickerFrame:SetColorRGB(r,g,b)
-                end
-
-                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                    tinsert(MethodDungeonTools:GetSelection(), self.index)
-                    self:Pick()
-                end
-
-                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
-                    L_CloseDropDownMenus()
-                end
+            func = function()
+                ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
+                ColorPickerFrame.hasOpacity = false
+                ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
+                ColorPickerFrame.func = swatchMultiFunc
+                ColorPickerFrame.opacityFunc = nil
+                ColorPickerFrame.cancelFunc = cancelMultiFunc
+                ColorPickerFrame:Hide() -- Need to run the OnShow
+                ColorPickerFrame:Show()
+                L_CloseDropDownMenus()
             end,
-            cancelFunc = function(colors)
-                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                    tinsert(MethodDungeonTools:GetSelection(), self.index)
-                    self:Pick()
-                end
-
-                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,colors.r,colors.g,colors.b)
-                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, colors.r,colors.g,colors.b)
-                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,colors.r,colors.g,colors.b)
-                end
-            end,
+            swatchFunc = swatchMultiFunc,
+            cancelFunc = cancelMultiFunc,
         })
         tinsert(self.multiselectMenu, {
             text = "Reset Color",
@@ -1024,6 +1084,22 @@ local methods = {
             self.background:SetVertexColor(self.color.r,self.color.g,self.color.b, 0.75)
         end
     end,
+    ["BackupColor"] = function(self)
+        -- Explicitly copy values, to avoid storing a reference
+        self.colorBackup = {
+            r = self.color.r,
+            g = self.color.g,
+            b = self.color.b
+        }
+    end,
+    ["RevertColor"] = function(self)
+        -- Explicitly copy values, to avoid storing a reference
+        self.color = {
+            r = self.colorBackup.r,
+            g = self.colorBackup.g,
+            b = self.colorBackup.b
+        }
+    end
 }
 --Constructor
 local function Constructor()
