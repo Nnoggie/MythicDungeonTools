@@ -337,8 +337,31 @@ local methods = {
             end,
             cancelFunc = function(colors)
                 MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,colors.r,colors.g,colors.b)
-                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
+                MethodDungeonTools:UpdatePullButtonColor(self.index,colors.r,colors.g,colors.b)
                 MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,colors.r,colors.g,colors.b)
+            end,
+            --user clicks text instead of color swatch
+            func = function()
+                ColorPickerFrame:SetColorRGB(self.color.r,self.color.g,self.color.b);
+                ColorPickerFrame.hasOpacity = false;
+                ColorPickerFrame.previousValues = {self.color.r,self.color.g,self.color.b,1};
+                local changedCallback = function(restore)
+                    local newR, newG, newB, newA;
+                    if restore then
+                        newR, newG, newB = unpack(restore);
+                    else
+                        newR, newG, newB = ColorPickerFrame:GetColorRGB();
+                    end
+                    self.color.r,self.color.g,self.color.b = newR, newG, newB;
+                    MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,newR, newG, newB)
+                    MethodDungeonTools:UpdatePullButtonColor(self.index, newR, newG, newB)
+                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,newR, newG, newB)
+                end
+                ColorPickerFrame.func, ColorPickerFrame.opacityFunc, ColorPickerFrame.cancelFunc =
+                changedCallback, changedCallback, changedCallback;
+                ColorPickerFrame:Hide(); -- Need to run the OnShow handler.
+                ColorPickerFrame:Show();
+                L_CloseDropDownMenus()
             end,
         })
         tinsert(self.menu, {
