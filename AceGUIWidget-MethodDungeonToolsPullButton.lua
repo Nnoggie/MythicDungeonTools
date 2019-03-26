@@ -341,6 +341,7 @@ local methods = {
                 r,g,b = 2*r,2*g,2*b
                 ColorPickerFrame:SetColorRGB(r,g,b)
             end
+
             MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
             MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
             MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
@@ -360,12 +361,12 @@ local methods = {
             g = self.color.g,
             b = self.color.b,
             func = function()
-                ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
-                ColorPickerFrame.hasOpacity = false
-                ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
                 ColorPickerFrame.func = swatchFunc
                 ColorPickerFrame.opacityFunc = nil
                 ColorPickerFrame.cancelFunc = cancelFunc
+                ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
+                ColorPickerFrame.hasOpacity = false
+                ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
                 ColorPickerFrame:Hide() -- Need to run the OnShow
                 ColorPickerFrame:Show()
                 L_CloseDropDownMenus()
@@ -541,12 +542,12 @@ local methods = {
             g = self.color.g,
             b = self.color.b,
             func = function()
-                ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
-                ColorPickerFrame.hasOpacity = false
-                ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
                 ColorPickerFrame.func = swatchMultiFunc
                 ColorPickerFrame.opacityFunc = nil
                 ColorPickerFrame.cancelFunc = cancelMultiFunc
+                ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
+                ColorPickerFrame.hasOpacity = false
+                ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
                 ColorPickerFrame:Hide() -- Need to run the OnShow
                 ColorPickerFrame:Show()
                 L_CloseDropDownMenus()
