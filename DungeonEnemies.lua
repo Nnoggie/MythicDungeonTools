@@ -578,7 +578,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
     end
     --highlight all pull enemies
     for pullIdx,p in pairs(preset.value.pulls) do
-        local r,g,b = MethodDungeonTools:HexToRGB(p["color"])
+        local r,g,b = MethodDungeonTools:DungeonEnemies_GetPullColor(pullIdx)
         for enemyIdx,clones in pairs(p) do
             if tonumber(enemyIdx) then
                 for _,cloneIdx in pairs(clones) do
