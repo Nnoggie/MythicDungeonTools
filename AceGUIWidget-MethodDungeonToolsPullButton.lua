@@ -1078,7 +1078,8 @@ local methods = {
     end,
     ["UpdateColor"] = function(self)
         local colorHex = MethodDungeonTools:RGBToHex(self.color.r,self.color.g,self.color.b)
-        if colorHex == "228b22" then
+        local db = MethodDungeonTools:GetDB()
+        if colorHex == db.defaultColor then
             self.background:SetVertexColor(0.5,0.5,0.5,0.25)
         else
             self.background:SetVertexColor(self.color.r,self.color.g,self.color.b, 0.75)

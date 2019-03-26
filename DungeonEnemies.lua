@@ -617,6 +617,10 @@ end
 ---Returns the custom color for a pull (if specified)
 function MethodDungeonTools:DungeonEnemies_GetPullColor(pull)
     local r,g,b = MethodDungeonTools:HexToRGB(preset.value.pulls[pull]["color"])
+    if not r then
+        r,g,b = MethodDungeonTools:HexToRGB(db.defaultColor)
+        MethodDungeonTools:DungeonEnemies_SetPullColor(pull,r,g,b)
+    end
     return r,g,b
 end
 
