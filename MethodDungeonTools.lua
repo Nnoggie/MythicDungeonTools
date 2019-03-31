@@ -163,6 +163,8 @@ do
                     if v <= 0 then db.currentPreset[k] = 1 end
                 end
             end
+            --register AddOn Options
+            MethodDungeonTools:RegisterOptions()
             self:UnregisterEvent("ADDON_LOADED")
         end
     end
@@ -2507,6 +2509,65 @@ end
 ---RegisterOptions
 ---Register the options of the addon to the blizzard options
 function MethodDungeonTools:RegisterOptions()
+    MethodDungeonTools.blizzardOptionsMenuTable = {
+        name = "Method Dungeon Tools",
+        type = 'group',
+        args = {
+            enable = {
+                type = 'toggle',
+                name = "Enable Minimap Button",
+                desc = "If the Minimap Button is enabled.",
+                get = function() return not db.minimap.hide end,
+                set = function(_, newValue)
+                    db.minimap.hide = not newValue
+                    if not db.minimap.hide then
+                        icon:Show("MethodDungeonTools")
+                    else
+                        icon:Hide("MethodDungeonTools")
+                    end
+                end,
+                order = 1,
+                width = "full",
+            },
+            tooltipSelect ={
+                type = 'select',
+                name = "Choose NPC tooltip position",
+                values = {
+                    [1] = "Next to the NPC",
+                    [2] = "In the bottom right corner",
+                },
+                get = function() return db.tooltipInCorner and 2 or 1 end,
+                set = function(_,newValue)
+                    if newValue == 1 then db.tooltipInCorner = false end
+                    if newValue == 2 then db.tooltipInCorner = true end
+                end,
+                style = 'dropdown',
+            },
+            enemyForcesFormat = {
+                type = "select",
+                name = "Choose Enemy Forces Format",
+                values = {
+                    [1] = "Forces only: 5/200",
+                    [2] = "Forces+%: 5/200 (2.5%)",
+                },
+                get = function() return db.enemyForcesFormat end,
+                set = function(_,newValue) db.enemyForcesFormat = newValue end,
+                style = "dropdown",
+            },
+            enemyStyle = {
+                type = "select",
+                name = "Choose Enemy Style. Requires Reload",
+                values = {
+                    [1] = "Portrait",
+                    [2] = "Plain Texture",
+                },
+                get = function() return db.enemyStyle end,
+                set = function(_,newValue) db.enemyStyle = newValue end,
+                style = "dropdown",
+            },
+
+        }
+    }
 	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MethodDungeonTools", MethodDungeonTools.blizzardOptionsMenuTable);
 	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools");
 end
@@ -3048,67 +3109,7 @@ function initFrames()
         skinTooltip(pullTT)
 	end
 
-	--Blizzard Options
-	MethodDungeonTools.blizzardOptionsMenuTable = {
-		name = "Method Dungeon Tools",
-		type = 'group',
-		args = {
-			enable = {
-				type = 'toggle',
-				name = "Enable Minimap Button",
-				desc = "If the Minimap Button is enabled.",
-				get = function() return not db.minimap.hide end,
-				set = function(_, newValue)
-					db.minimap.hide = not newValue
-					if not db.minimap.hide then
-						icon:Show("MethodDungeonTools")
-					else
-						icon:Hide("MethodDungeonTools")
-					end
-				end,
-				order = 1,
-				width = "full",
-			},
-            tooltipSelect ={
-                type = 'select',
-                name = "Choose NPC tooltip position",
-                values = {
-                    [1] = "Next to the NPC",
-                    [2] = "In the bottom right corner",
-                },
-                get = function() return db.tooltipInCorner and 2 or 1 end,
-                set = function(_,newValue)
-                    if newValue == 1 then db.tooltipInCorner = false end
-                    if newValue == 2 then db.tooltipInCorner = true end
-                end,
-                style = 'dropdown',
-            },
-            enemyForcesFormat = {
-              type = "select",
-              name = "Choose Enemy Forces Format",
-              values = {
-                [1] = "Forces only: 5/200",
-                [2] = "Forces+%: 5/200 (2.5%)",
-              },
-              get = function() return db.enemyForcesFormat end,
-              set = function(_,newValue) db.enemyForcesFormat = newValue end,
-              style = "dropdown",
-            },
-            enemyStyle = {
-              type = "select",
-              name = "Choose Enemy Style. Requires Reload",
-              values = {
-                [1] = "Portrait",
-                [2] = "Plain Texture",
-              },
-              get = function() return db.enemyStyle end,
-              set = function(_,newValue) db.enemyStyle = newValue end,
-              style = "dropdown",
-            },
 
-		}
-	}
-	MethodDungeonTools:RegisterOptions()
 	MethodDungeonTools:initToolbar(main_frame)
 
     --Set affix dropdown to preset week
