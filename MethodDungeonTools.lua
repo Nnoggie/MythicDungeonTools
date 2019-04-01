@@ -1169,6 +1169,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
 				end
 			end
             --reaping icon
+            --[[
             local reapingIcon = frame.sidePanel.newPullButtons[tooltip.currentPull].reapingIcon
             if MouseIsOver(reapingIcon) and reapingIcon:IsShown() then
                 --model
@@ -1189,6 +1190,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                 tooltip.topString:SetText(text)
                 showData = true
             end
+            ]]
 
             if showData then
                 tooltip.topString:Show()
