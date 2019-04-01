@@ -1053,20 +1053,38 @@ local methods = {
             self.enemyPortraits[idx].fontString:Show()
         end
     end,
-    ["ShowReapingIcon"] = function(self,show,currentPercent)
+    ["ShowReapingIcon"] = function(self,show,currentPercent,oldPercent)
         --set percentage here
         self.percentageFontString:Show()
         local perc = string.format("%.1f%%",currentPercent*100)
-        if show then
+        if show  then
             self.reapingIcon:Show()
             self.reapingIcon.overlay:Show()
             perc = "|cFF00FF00"..perc
+
+            local currentReaps = math.floor(currentPercent/0.2)
+            local oldReaps = math.floor(oldPercent/0.2)
+            local reapings = math.min(5,currentReaps-oldReaps)
+
+            if reapings>1 then
+                self.multiReapingFontString:SetText(reapings.."x")
+                self.multiReapingFontString:Show()
+            else
+                self.multiReapingFontString:Hide()
+            end
         else
             self.reapingIcon:Hide()
             self.reapingIcon.overlay:Hide()
+            self.multiReapingFontString:Hide()
             perc = "|cFFFFFFFF"..perc
         end
-        self.percentageFontString:SetText(perc)
+        local pullForces = MethodDungeonTools:CountForces(self.index,true)
+        if pullForces>0 then
+            self.percentageFontString:SetText(perc)
+            self.percentageFontString:Show()
+        else
+            self.percentageFontString:Hide()
+        end
     end,
     ["UpdateColor"] = function(self)
         local colorHex = MethodDungeonTools:RGBToHex(self.color.r,self.color.g,self.color.b)
@@ -1177,6 +1195,15 @@ local function Constructor()
     percentageFontString:SetPoint("RIGHT", button, "RIGHT",2,0)
     percentageFontString:Hide()
 
+    --multiple reaping wave indicator
+    local multiReapingFontString = button:CreateFontString(nil,"BACKGROUND",nil)
+    multiReapingFontString:SetFont("Fonts\\FRIZQT__.TTF", 10,"OUTLINE")
+    multiReapingFontString:SetTextColor(1, 1, 1, 1);
+    multiReapingFontString:SetWidth(50)
+    multiReapingFontString:SetHeight(10)
+    multiReapingFontString:SetPoint("RIGHT", button, "RIGHT",1,-12)
+    multiReapingFontString:Hide()
+
     --custom colors
     local color = {}
 
@@ -1187,6 +1214,7 @@ local function Constructor()
         enemyPortraits = enemyPortraits,
         reapingIcon = reapingIcon,
         percentageFontString = percentageFontString,
+        multiReapingFontString = multiReapingFontString,
         color = color,
         type = Type
     }

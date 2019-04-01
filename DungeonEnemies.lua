@@ -755,3 +755,26 @@ function MethodDungeonTools:GetEnemyForces(npcId)
         end
     end
 end
+
+---returns how many of each reaping type are in the specified pull
+local reapingTypeCount = {}
+function MethodDungeonTools:GetReapingTypesForPull(pullIdx)
+    preset = MethodDungeonTools:GetCurrentPreset()
+    db = db or MethodDungeonTools:GetDB()
+    table.wipe(reapingTypeCount)
+
+    for enemyIdx,clones in pairs(preset.value.pulls[pullIdx]) do
+        if tonumber(enemyIdx) then
+            local reapingType = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].reaping
+            if reapingType then
+                for _,cloneIdx in pairs(clones) do
+                    if MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx) then
+                        reapingTypeCount[reapingType] = reapingTypeCount[reapingType] and reapingTypeCount[reapingType]+1 or 1
+                    end
+                end
+            end
+        end
+    end
+
+    return reapingTypeCount[148716] or 0,reapingTypeCount[148893] or 0,reapingTypeCount[148894] or 0
+end
