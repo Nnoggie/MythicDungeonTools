@@ -133,13 +133,13 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
     local remaining = msg;
     local done;
     repeat
-        local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]");
+        local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]")
         if(characterName and displayName) then
-            characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "");
-            displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "");
-            newMsg = newMsg..remaining:sub(1, start-1);
-            newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38["..characterName.." |r|cFFF49D38- "..displayName.."]|h|r";
-            remaining = remaining:sub(finish + 1);
+            characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
+            displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
+            newMsg = newMsg..remaining:sub(1, start-1)
+            newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38[".."|r|cFFF49D38"..displayName.."]|h|r"
+            remaining = remaining:sub(finish + 1)
         else
             done = true;
         end
