@@ -1805,8 +1805,8 @@ function MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
     chatImport.currentPreset = preset
     local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
     local name = preset.text
-    chatImport.importLabel:SetText(chatImport.defaultText..sender.. ": "..dungeon.." - "..name)
     chatImport:Show()
+    chatImport.importLabel:SetText(chatImport.defaultText..sender.. ": "..dungeon.." - "..name)
 end
 
 function MethodDungeonTools:MakePresetImportFrame(frame)
