@@ -164,7 +164,7 @@ local OriginalSetHyperlink = ItemRefTooltip.SetHyperlink
 function ItemRefTooltip:SetHyperlink(link, ...)
     if(link and link:sub(0, 18) == "MethodDungeonTools") then
         local sender = link:sub(20, string.len(link))
-        local name,realm = string.match(sender,"(%u%l*)(%u%a*)")
+        local name,realm = string.match(sender,"(%u%l*)%-*(%u%a*)")
         sender = name.."-"..realm
         local preset = MethodDungeonTools.transmissionCache[sender]
         if preset then
