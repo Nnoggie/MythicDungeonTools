@@ -840,12 +840,51 @@ function MethodDungeonTools:MakeSidePanel(frame)
     local inGroup = UnitInRaid("player") or IsInGroup()
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
 
+
+    frame.ClearPresetButton = AceGUI:Create("Button")
+    frame.ClearPresetButton:SetText("Clear")
+    frame.ClearPresetButton:SetWidth(buttonWidth)
+    frame.ClearPresetButton.frame:SetNormalFontObject(fontInstance)
+    frame.ClearPresetButton.frame:SetHighlightFontObject(fontInstance)
+    frame.ClearPresetButton.frame:SetDisabledFontObject(fontInstance)
+    frame.ClearPresetButton:SetCallback("OnClick",function(widget,callbackName,value)
+        MethodDungeonTools:OpenClearPresetDialog()
+    end)
+
+    frame.LiveSessionButton = AceGUI:Create("Button")
+    frame.LiveSessionButton:SetText("Live")
+    frame.LiveSessionButton:SetWidth(buttonWidth)
+    frame.LiveSessionButton.frame:SetNormalFontObject(fontInstance)
+    frame.LiveSessionButton.frame:SetHighlightFontObject(fontInstance)
+    frame.LiveSessionButton.frame:SetDisabledFontObject(fontInstance)
+    local c1,c2,c3 = frame.LiveSessionButton.text:GetTextColor()
+    frame.LiveSessionButton.normalTextColor = {
+        r = c1,
+        g = c2,
+        b = c3,
+    }
+    --TEMP
+    local liveSessionActive = false
+    frame.LiveSessionButton:SetCallback("OnClick",function(widget,callbackName,value)
+        if liveSessionActive then
+            widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
+            widget.text:SetText("Live")
+            liveSessionActive = false
+        else
+            widget.text:SetTextColor(0,1,0)
+            widget.text:SetText("*Live*")
+            liveSessionActive = true
+        end
+    end)
+
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
+    frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
+    frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
+    frame.sidePanel.WidgetGroup:AddChild(frame.ClearPresetButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
-	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 
 
 
