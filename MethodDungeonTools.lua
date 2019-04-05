@@ -863,17 +863,15 @@ function MethodDungeonTools:MakeSidePanel(frame)
         g = c2,
         b = c3,
     }
-    --TEMP
-    local liveSessionActive = false
     frame.LiveSessionButton:SetCallback("OnClick",function(widget,callbackName,value)
-        if liveSessionActive then
+        if MethodDungeonTools.liveSessionActive then
             widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
             widget.text:SetText("Live")
-            liveSessionActive = false
+            MethodDungeonTools:LiveSession_Disable()
         else
             widget.text:SetTextColor(0,1,0)
             widget.text:SetText("*Live*")
-            liveSessionActive = true
+            MethodDungeonTools:LiveSession_Enable()
         end
     end)
 
