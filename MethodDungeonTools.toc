@@ -22,6 +22,7 @@ Transmission.lua
 toolbar.lua
 devpanel.lua
 DataCollection.lua
+LiveSession.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 
