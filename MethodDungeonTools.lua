@@ -168,10 +168,18 @@ do
             self:UnregisterEvent("ADDON_LOADED")
         end
     end
+    local last = 0
     function MethodDungeonTools.GROUP_ROSTER_UPDATE(self,addon)
-        if not MethodDungeonTools.main_frame then return end
-        local inGroup = UnitInRaid("player") or IsInGroup()
-        MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
+        --check not more than once per second (blizzard event spam)
+        local now = GetTime()
+        if last < now - 1 then
+            if not MethodDungeonTools.main_frame then return end
+            local inGroup = UnitInRaid("player") or IsInGroup()
+            MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
+            MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(not inGroup)
+            MethodDungeonTools:LiveSession_RequestSessions()
+            last = now
+        end
     end
     function MethodDungeonTools.PLAYER_ENTERING_WORLD(self,addon)
         MethodDungeonTools:GetCurrentAffixWeek()
@@ -501,7 +509,7 @@ function MethodDungeonTools:ShowInterface(force)
 		MethodDungeonTools:HideInterface()
 	else
 		self.main_frame:Show()
-		--MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
+        self:LiveSession_RequestSessions()
 		self.main_frame.HelpButton:Show()
 	end
 end
@@ -831,7 +839,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
 	frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
 	frame.LinkToChatButton:SetCallback("OnClick",function(widget,callbackName,value)
-        local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+        local distribution = MethodDungeonTools:IsPlayerInGroup()
         if not distribution then return end
         frame.LinkToChatButton:SetDisabled(true)
         frame.LinkToChatButton:SetText("Sending")
@@ -874,6 +882,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             MethodDungeonTools:LiveSession_Enable()
         end
     end)
+    MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(not inGroup)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
@@ -1141,6 +1150,8 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	scrollFrame:SetHorizontalScroll(newScrollH);
 	scrollFrame:SetVerticalScroll(newScrollV);
 
+    MethodDungeonTools:SetPingOffsets(newScale)
+
 end
 
 
@@ -1348,20 +1359,34 @@ MethodDungeonTools.OnMouseDown = function(self,button)
 	end
 end
 
---local here to be used for dev context menu
-local cursorX, cursorY
 ---MethodDungeonTools.OnMouseUp
 ---handles mouse-up events on the map scrollframe
 MethodDungeonTools.OnMouseUp = function(self,button)
 	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
-	--local frame = MethodDungeonTools.main_frame
-    --frame.contextDropdown:Hide()
     if scrollFrame.panning then scrollFrame.panning = false end
-        --cursorX, cursorY = GetCursorPosition()
-        --L_EasyMenu(MethodDungeonTools.contextMenuList, frame.contextDropdown, "cursor", 0 , -15, "MENU",5)
-        --frame.contextDropdown:Show()
-        --dont need context menu for now
 
+    --play minimap ping on right click at cursor position
+    if button == "RightButton" then
+        local x,y = MethodDungeonTools:GetCursorPosition()
+        MethodDungeonTools.ping:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+        if not MethodDungeonTools.ping.modelSet then
+            MethodDungeonTools.ping:SetModel("interface/minimap/ping/minimapping.m2")
+            MethodDungeonTools.ping.modelSet = true
+        end
+        local mainFrame = MethodDungeonToolsMapPanelFrame
+        local mapScale = mainFrame:GetScale()
+        MethodDungeonTools:SetPingOffsets(mapScale)
+        MethodDungeonTools.ping:Show()
+        UIFrameFadeOut(MethodDungeonTools.ping, 2, 1, 0)
+        MethodDungeonTools.ping:SetSequence(0)
+    end
+
+end
+
+function MethodDungeonTools:SetPingOffsets(mapScale)
+    local scale = 0.35
+    local offset = (10.25/1000)*mapScale
+    MethodDungeonTools.ping:SetTransform(offset,offset,0,0,0,0,scale)
 end
 
 ---SetCurrentSubLevel
@@ -2899,6 +2924,13 @@ function MethodDungeonTools:GetCurrentAffixWeek()
     end
 end
 
+---IsPlayerInGroup
+---Checks if the players is in a group/raid and returns the type
+function MethodDungeonTools:IsPlayerInGroup()
+    local inGroup = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+    return inGroup
+end
+
 function MethodDungeonTools:ResetMainFramePos()
     if not framesInitialized then initFrames() end
     local f = MethodDungeonTools.main_frame
@@ -3204,6 +3236,24 @@ function initFrames()
 
 
 	MethodDungeonTools:initToolbar(main_frame)
+
+    --ping
+    MethodDungeonTools.ping = CreateFrame("PlayerModel", nil, MethodDungeonTools.main_frame.mapPanelFrame)
+    local ping = MethodDungeonTools.ping
+    --ping:SetModel("interface/minimap/ping/minimapping.m2")
+    ping:SetModel("Character\\NightElf\\Female\\NightElfFemale.mdx");
+    ping:SetPortraitZoom(1)
+    ping:SetCamera(1)
+    ping:SetFrameLevel(50)
+    ping:SetFrameStrata("DIALOG")
+    ping.mySize = 45
+    ping:SetSize(ping.mySize,ping.mySize)
+    ping:Hide()
+
+    --temporary background
+    --ping.background = ping:CreateTexture(nil,"BACKGROUND")
+    --ping.background:SetAllPoints()
+    --ping.background:SetColorTexture(0,0,0,1)
 
     --Set affix dropdown to preset week
     --gotta set the list here, as affixes are not ready to be retrieved yet on login
