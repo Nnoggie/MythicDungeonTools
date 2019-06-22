@@ -1509,6 +1509,7 @@ function MethodDungeonTools:CalculateEnemyHealth(boss,baseHealth,level)
 	mult = round((1.10^(level-2))*mult,2)
 	return round(mult*baseHealth,0)
 end
+--613437
 
 function MethodDungeonTools:FormatEnemyHealth(amount)
 	amount = tonumber(amount)
@@ -3244,7 +3245,7 @@ function initFrames()
     MethodDungeonTools.ping = CreateFrame("PlayerModel", nil, MethodDungeonTools.main_frame.mapPanelFrame)
     local ping = MethodDungeonTools.ping
     --ping:SetModel("interface/minimap/ping/minimapping.m2")
-    ping:SetModel("Character\\NightElf\\Female\\NightElfFemale.mdx");
+    --ping:SetModel("Character\\NightElf\\Female\\NightElfFemale.mdx");
     ping:SetPortraitZoom(1)
     ping:SetCamera(1)
     ping:SetFrameLevel(50)
