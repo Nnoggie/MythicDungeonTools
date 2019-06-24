@@ -1371,6 +1371,7 @@ MethodDungeonTools.OnMouseUp = function(self,button)
     --play minimap ping on right click at cursor position
     if button == "RightButton" then
         local x,y = MethodDungeonTools:GetCursorPosition()
+        MethodDungeonTools.ping:ClearAllPoints()
         MethodDungeonTools.ping:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
         if not MethodDungeonTools.ping.modelSet then
             MethodDungeonTools.ping:SetModel("interface/minimap/ping/minimapping.m2")
@@ -1549,6 +1550,7 @@ end
 
 function MethodDungeonTools:OpenImportPresetDialog()
 	MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.presetImportFrame:ClearAllPoints()
 	MethodDungeonTools.main_frame.presetImportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 	MethodDungeonTools.main_frame.presetImportFrame:Show()
 	MethodDungeonTools.main_frame.presetImportBox:SetText("")
@@ -1570,6 +1572,7 @@ function MethodDungeonTools:OpenNewPresetDialog()
 	MethodDungeonTools.main_frame.PresetCreationDropDown:SetList(presetList)
 	MethodDungeonTools.main_frame.PresetCreationDropDown:SetValue(1)
 	MethodDungeonTools.main_frame.PresetCreationEditbox:SetText("Preset "..countPresets+1)
+    MethodDungeonTools.main_frame.presetCreationFrame:ClearAllPoints()
 	MethodDungeonTools.main_frame.presetCreationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 	MethodDungeonTools.main_frame.presetCreationFrame:SetStatusText("")
 	MethodDungeonTools.main_frame.presetCreationFrame:Show()
@@ -1581,6 +1584,7 @@ end
 
 function MethodDungeonTools:OpenClearPresetDialog()
     MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.ClearConfirmationFrame:ClearAllPoints()
     MethodDungeonTools.main_frame.ClearConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
     local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
     MethodDungeonTools.main_frame.ClearConfirmationFrame.label:SetText("Clear "..currentPresetName.."?")
@@ -1867,6 +1871,7 @@ end
 function MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
     MethodDungeonTools:HideAllDialogs()
     local chatImport = MethodDungeonTools.main_frame.chatPresetImportFrame
+    chatImport:ClearAllPoints()
     chatImport:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
     chatImport.currentPreset = preset
     local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
@@ -2592,6 +2597,7 @@ end
 ---Creates the tutorial button and sets up the help plate frames
 function MethodDungeonTools:CreateTutorialButton(parent)
     local button = CreateFrame("Button",parent,parent,"MainHelpPlateButton")
+    button:ClearAllPoints()
     button:SetPoint("TOPLEFT",parent,"TOPLEFT",0,48)
 	button:SetScale(0.8)
 	button:SetFrameStrata(mainFrameStrata)
@@ -2958,6 +2964,7 @@ function MethodDungeonTools:DropIndicator()
         texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
 
         local icon = indicator:CreateTexture(nil, "OVERLAY")
+        icon:ClearAllPoints()
         icon:SetSize(16, 16)
         icon:SetPoint("CENTER", indicator)
 
@@ -3244,7 +3251,7 @@ function initFrames()
     MethodDungeonTools.ping = CreateFrame("PlayerModel", nil, MethodDungeonTools.main_frame.mapPanelFrame)
     local ping = MethodDungeonTools.ping
     --ping:SetModel("interface/minimap/ping/minimapping.m2")
-    --ping:SetModel("Character\\NightElf\\Female\\NightElfFemale.mdx");
+    ping:SetModel(120590);
     ping:SetPortraitZoom(1)
     ping:SetCamera(1)
     ping:SetFrameLevel(50)

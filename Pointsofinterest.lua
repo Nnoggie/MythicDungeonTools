@@ -352,6 +352,7 @@ function MethodDungeonTools:POI_UpdateAll()
         local poiFrame = framePools:Acquire(poi.template)
         poiFrame.poiIdx = poiIdx
         POI_SetOptions(poiFrame,poi.type,poi)
+        poiFrame:ClearAllPoints()
         poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x,poi.y)
         poiFrame:Show()
         if not teeming and poiFrame.teeming then

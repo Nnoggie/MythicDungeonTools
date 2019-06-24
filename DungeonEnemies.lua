@@ -239,6 +239,7 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
             patrolPoints[patrolIdx]:SetTexture("Interface\\Worldmap\\X_Mark_64Grey")
             patrolPoints[patrolIdx]:SetSize(4,4)
             patrolPoints[patrolIdx]:SetVertexColor(0,0.2,0.5,0.6)
+            patrolPoints[patrolIdx]:ClearAllPoints()
             patrolPoints[patrolIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",waypoint.x,waypoint.y)
             patrolPoints[patrolIdx].x = waypoint.x
             patrolPoints[patrolIdx].y = waypoint.y
@@ -286,6 +287,7 @@ local ranOnce
 function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     if not ranOnce then
         --fix elvui skinning
+        MethodDungeonTools.tooltip:ClearAllPoints()
         MethodDungeonTools.tooltip:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT")
         MethodDungeonTools.tooltip:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT")
         MethodDungeonTools.tooltip:Show()
@@ -325,6 +327,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     text = text .."\n\n[Right click for more info]"
     tooltip.String:SetText(text)
 
+    tooltip:ClearAllPoints()
     if db.tooltipInCorner then
         tooltip:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",0,0)
         tooltip:SetPoint("TOPLEFT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",-tooltip.mySizes.x,tooltip.mySizes.y)
@@ -394,6 +397,7 @@ local function blipDevModeSetup(blip)
 end
 
 function MDTDungeonEnemyMixin:SetUp(data,clone)
+    self:ClearAllPoints()
     self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
     self.normalScale = data.scale*(data.isBoss and 1.7 or 1)*(MethodDungeonTools.scaleMultiplier[db.currentDungeonIdx] or 1)
     self.normalScale = self.normalScale * 0.6

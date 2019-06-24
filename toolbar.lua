@@ -40,10 +40,12 @@ function MethodDungeonTools:initToolbar(frame)
     frame.toolbar.toggleButton:SetScript("OnClick", function()
         if frame.toolbar:IsShown() then
             frame.toolbar:Hide()
+            frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame,"TOP")
             frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.65,1)
         else
             frame.toolbar:Show()
+            frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame.toolbar,"BOTTOM")
             frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0,0.35)
         end
@@ -262,6 +264,7 @@ function MethodDungeonTools:initToolbar(frame)
     end
 
     frame.toolbar:SetSize(sizex, sizey)
+    frame.toolbar:ClearAllPoints()
     frame.toolbar:SetPoint("TOP", frame, "TOP", 0, 0)
 
     MethodDungeonTools:CreateBrushPreview(frame)
@@ -323,6 +326,7 @@ function MethodDungeonTools:EnableBrushPreview(tool)
             local x,y = GetCursorPosition()
             x = x/UIParent:GetScale()
             y = y/UIParent:GetScale()
+            self:ClearAllPoints()
             self:SetPoint("CENTER",UIParent,"BOTTOMLEFT",x,y)
             if tool == "eraser" then
                 frame.brushPreview.tex:SetVertexColor(1,1,1,1)
@@ -385,6 +389,7 @@ function MethodDungeonTools:UpdateSelectedToolbarTool(widgetName)
     toolbar.highlight:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons")
     toolbar.highlight:SetTexCoord(0.5,0.75,0.25,0.5)
     toolbar.highlight:SetSize(widget.frame:GetWidth(),widget.frame:GetWidth())
+    toolbar.highlight:ClearAllPoints()
     toolbar.highlight:SetPoint("CENTER",widget.frame,"CENTER")
     MethodDungeonTools:OverrideScrollframeScripts()
     MethodDungeonTools:EnableBrushPreview(currentTool)
@@ -552,6 +557,7 @@ function MethodDungeonTools:StartArrowDrawing()
         --calculate rotation
         local rotation = atan2(starty-y,startx-x)
         arrow:SetRotation(rotation+pi)
+        arrow:ClearAllPoints()
         arrow:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
         arrow:SetDrawLayer(objectDrawLayer, drawLayer)
         line:SetDrawLayer(objectDrawLayer, drawLayer)
@@ -738,6 +744,7 @@ function MethodDungeonTools:StartMovingObject()
                 if tex.objectIndex == objectIndex then
                     for i=1,tex:GetNumPoints() do
                         local point,relativeTo,relativePoint,xOffset,yOffset = tex:GetPoint(i)
+                        tex:ClearAllPoints()
                         tex:SetPoint(point,relativeTo,relativePoint,xOffset+(x-startx),yOffset+(y-starty))
                     end
                 end
@@ -858,6 +865,7 @@ function MethodDungeonTools:DrawCircle(x,y,size,color,layer,layerSublevel,isOwn,
     circle:SetVertexColor(color.r,color.g,color.b,color.a)
     circle:SetWidth(1.1*size)
     circle:SetHeight(1.1*size)
+    circle:ClearAllPoints()
     circle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     circle:Show()
     circle.isOwn = isOwn
@@ -896,6 +904,7 @@ function MethodDungeonTools:DrawTriangle(x,y,rotation,size,color,layer,layerSubl
     triangle:SetWidth(size)
     triangle:SetHeight(size)
     triangle:SetRotation(rotation+pi)
+    triangle:ClearAllPoints()
     triangle:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     triangle:SetDrawLayer(layer, layerSublevel)
     triangle.isOwn = isOwn
@@ -941,6 +950,7 @@ local function makeNoteEditbox()
     editbox.multiBox:SetHeight(120)
     editbox.multiBox.label:Hide()
     editbox.multiBox.scrollBar:Hide()
+    editbox.multiBox.scrollBar:ClearAllPoints()
     editbox.multiBox.scrollBar:SetPoint("BOTTOM", editbox.multiBox.button, "TOP", 0, 16)
     editbox.multiBox.scrollBar.ScrollUpButton:SetPoint("BOTTOM", editbox.multiBox.scrollBar, "TOP",0,3)
     editbox.frame:Hide()
@@ -1003,6 +1013,7 @@ function MethodDungeonTools:DrawNote(x,y,text,objectIndex)
     local note = notePoolCollection:Acquire("QuestPinTemplate")
     note.noteIdx = notePoolCollection.pools.QuestPinTemplate.numActiveObjects
     note.objectIndex = objectIndex
+    note:ClearAllPoints()
     note:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
     note:SetSize(12,12)
     note.Texture:SetSize(15, 15);
