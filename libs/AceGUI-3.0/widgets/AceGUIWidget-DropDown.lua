@@ -1,4 +1,4 @@
---[[ $Id: AceGUIWidget-DropDown.lua 1205 2019-06-20 20:54:05Z funkydude $ ]]--
+--[[ $Id: AceGUIWidget-DropDown.lua 1206 2019-06-22 09:13:51Z nevcairiel $ ]]--
 local AceGUI = LibStub("AceGUI-3.0")
 
 -- Lua APIs
@@ -591,7 +591,7 @@ do
 	end
 
 	-- exported
-	local sortlist, originalList = {}, nil
+	local sortlist = {}
 	local function sortTbl(x,y)
 		return tostring(x) < tostring(y) -- Support numbers as keys
 	end
@@ -605,9 +605,7 @@ do
 			for v in pairs(list) do
 				sortlist[#sortlist + 1] = v
 			end
-			originalList = list
 			tsort(sortlist, sortTbl)
-			originalList = nil
 
 			for i, key in ipairs(sortlist) do
 				AddListItem(self, key, list[key], itemType)
