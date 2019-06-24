@@ -306,13 +306,11 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     end
 
     local boss = blip.data.isBoss or false
-    --[[
     local reapingText = ''
     if blip.data.reaping then
         local reapingIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
         reapingText = "Reaping: "..reapingIcon.." "..MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
     end
-    ]]
     local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
     local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
     local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
@@ -323,7 +321,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
 
     local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
     text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
-    --text = text .. "\n" .. reapingText
+    text = text .. "\n" .. reapingText
     text = text .."\n\n[Right click for more info]"
     tooltip.String:SetText(text)
 
@@ -417,13 +415,13 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.data = data
 
 
-    --[[
+
     if self.data.reaping then
         self.texture_Reaping:SetTexture(MethodDungeonTools.reapingStatic[tostring(self.data.reaping)].iconTexture)
         --self.texture_Reaping_Outline:SetColorTexture(value.outline)
         self.texture_Reaping:Hide()
     end
-    ]]
+
     self.clone = clone
     tinsert(blips,self)
     if db.enemyStyle == 2 then
