@@ -1,7 +1,7 @@
 ## Interface: 80100
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 2.5.6
+## Version: 2.6.0
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MethodDungeonToolsDB
@@ -22,6 +22,7 @@ Transmission.lua
 toolbar.lua
 devpanel.lua
 DataCollection.lua
+LiveSession.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 

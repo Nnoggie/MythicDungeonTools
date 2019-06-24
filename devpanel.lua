@@ -106,6 +106,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             {text="POI", value="tab1"},
             {text="Enemy", value="tab2"},
             {text="Infested", value="tab3"},
+            {text="Week", value="tab4"},
         }
     )
     devPanel:SetWidth(250)
@@ -615,6 +616,27 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
     end
 
+    local function DrawGroup4(container)
+        for i=1,12 do
+            local weekCheckbox = AceGUI:Create("CheckBox")
+            weekCheckbox:SetLabel("Week "..i)
+            weekCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+                local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].week = data.clones[currentBlip.cloneIdx].week or {}
+                data.clones[currentBlip.cloneIdx].week[i] = value or nil
+                MethodDungeonTools:UpdateMap()
+            end)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            if currentBlip then
+                weekCheckbox:SetValue(currentBlip.clone.week and currentBlip.clone.week[i])
+            end
+            container:AddChild(weekCheckbox)
+        end
+
+
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -624,6 +646,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
             DrawGroup2(container)
         elseif group == "tab3" then
             DrawGroup3(container)
+        elseif group == "tab4" then
+            DrawGroup4(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)

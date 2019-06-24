@@ -1,17 +1,13 @@
 local Compresser = LibStub:GetLibrary("LibCompress");
 local Encoder = Compresser:GetAddonEncodeTable()
 local Serializer = LibStub:GetLibrary("AceSerializer-3.0");
-local Comm = LibStub:GetLibrary("AceComm-3.0");
 
 MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
 -- Lua APIs
---local tinsert = table.insert
 local tostring, string_char, strsplit = tostring, string.char, strsplit
 local pairs, type, unpack = pairs, type, unpack
---local error = error
 local bit_band, bit_lshift, bit_rshift = bit.band, bit.lshift, bit.rshift
---local coroutine = coroutine
 
 --Based on code from WeakAuras2, all credit goes to the authors
 local bytetoB64 = {
@@ -133,13 +129,20 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
     local remaining = msg;
     local done;
     repeat
-        local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]");
+        local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]")
+        local startLive, finishLive, characterNameLive, displayNameLive = remaining:find("%[MDTLive: ([^%s]+) %- ([^%]]+)%]")
         if(characterName and displayName) then
-            characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "");
-            displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "");
-            newMsg = newMsg..remaining:sub(1, start-1);
-            newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38["..characterName.." |r|cFFF49D38- "..displayName.."]|h|r";
-            remaining = remaining:sub(finish + 1);
+            characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
+            displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
+            newMsg = newMsg..remaining:sub(1, start-1)
+            newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38[".."|r|cFFF49D38"..displayName.."]|h|r"
+            remaining = remaining:sub(finish + 1)
+        elseif (characterNameLive and displayNameLive) then
+            characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
+            displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
+            newMsg = newMsg..remaining:sub(1, startLive-1)
+            newMsg = newMsg.."|HMDTLive-"..characterNameLive.."|h|cFFF49D38[".."|cFF00FF00Live Session: |r".."|r|cFFF49D38"..displayNameLive.."]|h|r"
+            remaining = remaining:sub(finishLive + 1)
         else
             done = true;
         end
@@ -150,8 +153,18 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
 end
 
 local presetCommPrefix = "MDTPreset"
+
+MethodDungeonTools.liveSessionPrefixes = {
+    ["enabled"] = "MDTLiveStart",
+    ["disabled"] = "MDTLiveEnd",
+    ["request"] = "MDTLiveReq",
+}
+
 function MDTcommsObject:OnEnable()
     self:RegisterComm(presetCommPrefix)
+    for _,prefix in pairs(MethodDungeonTools.liveSessionPrefixes) do
+        self:RegisterComm(prefix)
+    end
     MethodDungeonTools.transmissionCache = {}
     ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterFunc)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterFunc)
@@ -164,11 +177,21 @@ local OriginalSetHyperlink = ItemRefTooltip.SetHyperlink
 function ItemRefTooltip:SetHyperlink(link, ...)
     if(link and link:sub(0, 18) == "MethodDungeonTools") then
         local sender = link:sub(20, string.len(link))
+        local name,realm = string.match(sender,"(%u%l*)%-*(%u%a*)")
+        --TODO: Pozo del eternia realm nil
+        sender = name.."-"..realm
         local preset = MethodDungeonTools.transmissionCache[sender]
         if preset then
             MethodDungeonTools:ShowInterface(true)
             MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
         end
+        return;
+    end
+    if(link and link:sub(0, 7) == "MDTLive") then
+        local sender = link:sub(9, string.len(link))
+        local name,realm = string.match(sender,"(%u%l*)%-*(%u%a*)")
+        sender = name.."-"..realm
+
         return;
     end
     return OriginalSetHyperlink(self, link, ...);
@@ -206,6 +229,22 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         local preset = MethodDungeonTools:StringToTable(message,true)
         MethodDungeonTools.transmissionCache[fullName] = preset
     end
+
+    if prefix == MethodDungeonTools.liveSessionPrefixes.enabled then
+        if sender == UnitFullName("player") then return end
+
+    end
+
+    if prefix == MethodDungeonTools.liveSessionPrefixes.disabled then
+        if sender == UnitFullName("player") then return end
+
+    end
+
+    if prefix == MethodDungeonTools.liveSessionPrefixes.request then
+        if sender == UnitFullName("player") then return end
+
+    end
+
 end
 
 --callback for SendCommMessage
@@ -224,7 +263,7 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
         local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
         local presetName = preset.text
         local name, realm = UnitFullName("player")
-        local fullName = name.."-"..realm
+        local fullName = name..realm
         SendChatMessage("[MethodDungeonTools: "..fullName.." - "..dungeon..": "..presetName.."]",distribution)
     end
 end

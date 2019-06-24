@@ -209,7 +209,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             end
             MethodDungeonTools:UpdateMap()
         else
-            MethodDungeonTools:ShowEnemyInfoFrame(self)
+            --MethodDungeonTools:ShowEnemyInfoFrame(self)
         end
     end
 end
