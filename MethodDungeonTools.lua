@@ -1673,10 +1673,17 @@ function MethodDungeonTools:EnsureDBTables()
     --removed clones: remove data from presets
     for pullIdx,pull in pairs(preset.value.pulls) do
         for enemyIdx,clones in pairs(pull) do
+
             if tonumber(enemyIdx) then
-                for k,v in pairs(clones) do
-                    if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
-                        clones[k] = nil
+                --enemy does not exist at all anymore
+                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+                    pull[enemyIdx] = nil
+                else
+                    --only clones
+                    for k,v in pairs(clones) do
+                        if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
+                            clones[k] = nil
+                        end
                     end
                 end
             end
