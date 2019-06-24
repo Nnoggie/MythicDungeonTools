@@ -927,7 +927,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
         for week,affixes in ipairs(affixWeeks) do
             tinsert(affixWeekMarkups,makeAffixString(week,affixes))
         end
-        affixDropdown:SetList(affixWeekMarkups)
+        local order = {1,2,3,4,5,6,7,8,9,10,11,12}
+        affixDropdown:SetList(affixWeekMarkups,order)
         --mouseover list items
         for itemIdx,item in ipairs(affixDropdown.pullout.items) do
             item:SetOnEnter(function()
