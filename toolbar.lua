@@ -52,6 +52,7 @@ function MethodDungeonTools:initToolbar(frame)
     end)
 
     frame.toolbar.widgetGroup = AceGUI:Create("SimpleGroup")
+    frame.toolbar.widgetGroup.frame:ClearAllPoints()
     frame.toolbar.widgetGroup.frame:SetAllPoints(frame.toolbar)
     frame.toolbar.widgetGroup.frame:SetBackdropColor(0,0,0,0)
     --frame.toolbar.widgetGroup:SetWidth(350)
@@ -335,6 +336,7 @@ function MethodDungeonTools:EnableBrushPreview(tool)
             end
             local mapScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
             frame.brushPreview:SetSize(max(2,0.475*db.toolbar.brushSize*mapScale), max(2,0.475*db.toolbar.brushSize*mapScale))
+            frame.brushPreview.tex:ClearAllPoints()
             frame.brushPreview.tex:SetAllPoints()
             frame.brushPreview.tex:Show()
         else

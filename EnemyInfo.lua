@@ -87,6 +87,7 @@ local function MakeEnemeyInfoFrame()
     f:SetCallback("OnClose", function(widget)
 
     end)
+    f.frame:ClearAllPoints()
     f.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
 
     local originalHide = MethodDungeonTools.main_frame.Hide

@@ -965,6 +965,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
+        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
         MethodDungeonTools:POI_UpdateAll()
         if not ignoreUpdateProgressBar then
             MethodDungeonTools:UpdateProgressbar()
@@ -1285,22 +1286,8 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
                 for enemyIdx,clones in pairs(pull) do
                     if tonumber(enemyIdx) then
                         for k,v in pairs(clones) do
-                            local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].blacktoothEvent
-                            local week = preset.week%3
-                            if week == 0 then week = 3 end
-                            local isBlacktoothWeek = week == 1
-                            local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].faction
-
-                            if not isCloneBlacktoothEvent or isBlacktoothWeek then
-                                if not (cloneFaction and cloneFaction~= preset.faction) then
-                                    local isCloneTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].teeming
-                                    local isCloneNegativeTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v].negativeTeeming
-                                    if MethodDungeonTools:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                                        if not(MethodDungeonTools:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
-                                            pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
-                                        end
-                                    end
-                                end
+                            if MethodDungeonTools:IsCloneIncluded(enemyIdx,v) then
+                                pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
                             end
                         end
                     end
@@ -1317,6 +1304,13 @@ end
 function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     local preset = MethodDungeonTools:GetCurrentPreset()
     local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
+
+    --beguiling weekly configuration
+    local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
+    if weekData then
+        if weekData[preset.week] then return true else return false end
+    end
+
     local week = preset.week%3
     if week == 0 then week = 3 end
     local isBlacktoothWeek = week == 1
@@ -2248,6 +2242,12 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                     end
                                 else
                                     continue = true
+                                end
+
+                                --beguiling weekly configuration
+                                local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
+                                if weekData then
+                                    if weekData[preset.week] then continue = true else continue = false end
                                 end
 
                                 --check for faction
