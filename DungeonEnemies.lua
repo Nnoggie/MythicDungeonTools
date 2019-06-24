@@ -209,7 +209,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             end
             MethodDungeonTools:UpdateMap()
         else
-            --MethodDungeonTools:ShowEnemyInfoFrame(self)
+            MethodDungeonTools:ShowEnemyInfoFrame(self)
         end
     end
 end
@@ -330,6 +330,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
         tooltip:SetPoint("TOPLEFT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",-tooltip.mySizes.x,tooltip.mySizes.y)
     else
         --check for bottom clipping
+        tooltip:ClearAllPoints()
         tooltip:SetPoint("TOPLEFT",blip,"BOTTOMRIGHT",30,0)
         tooltip:SetPoint("BOTTOMRIGHT",blip,"BOTTOMRIGHT",30+tooltip.mySizes.x,-tooltip.mySizes.y)
         local bottomOffset = 0

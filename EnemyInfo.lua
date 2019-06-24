@@ -7,7 +7,7 @@ local MDT = MethodDungeonTools
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 
-local tinsert,Model_Reset = table.insert,Model_Reset
+local tinsert = table.insert
 
 
 
@@ -377,7 +377,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     local f = MDT.EnemyInfoFrame
     f:SetTitle(data.name)
     f.model:SetDisplayInfo(data.displayId or 39490)
-    Model_Reset(f.model)
+    f.model:ResetModel()
 
     local enemies = {}
     for mobIdx,edata in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
