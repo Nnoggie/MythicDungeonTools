@@ -432,7 +432,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if db.enemyStyle == 2 then
         self.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
     else
-        SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
+        if data.iconTexture then
+            SetPortraitToTexture(self.texture_Portrait,data.iconTexture);
+        else
+            SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
+        end
     end
     self:Show()
     self.texture_Indicator:Hide()
@@ -637,6 +641,22 @@ function MethodDungeonTools:DungeonEnemies_UpdateTeeming()
         end
     end
     MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+end
+
+---DungeonEnemies_UpdateBeguiling
+---Updates visibility state of Beguiling NPCs
+function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+    local week = preset.week
+    for _,blip in pairs(blips) do
+        local weekData =  blip.clone.week
+        if weekData and not weekData[week] then
+            blip:Disable()
+            blip:Hide()
+        else
+            blip:Enable()
+            blip:Show()
+        end
+    end
 end
 
 ---DungeonEnemies_UpdateBlacktoothEvent
