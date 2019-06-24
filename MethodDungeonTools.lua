@@ -1373,10 +1373,7 @@ MethodDungeonTools.OnMouseUp = function(self,button)
         local x,y = MethodDungeonTools:GetCursorPosition()
         MethodDungeonTools.ping:ClearAllPoints()
         MethodDungeonTools.ping:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-        if not MethodDungeonTools.ping.modelSet then
-            MethodDungeonTools.ping:SetModel("interface/minimap/ping/minimapping.m2")
-            MethodDungeonTools.ping.modelSet = true
-        end
+        MethodDungeonTools.ping:SetModel("interface/minimap/ping/minimapping.m2")
         local mainFrame = MethodDungeonToolsMapPanelFrame
         local mapScale = mainFrame:GetScale()
         MethodDungeonTools:SetPingOffsets(mapScale)
