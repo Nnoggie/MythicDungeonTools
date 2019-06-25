@@ -1,4 +1,4 @@
-## Interface: 80100
+## Interface: 80200
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
 ## Version: 2.6.0
