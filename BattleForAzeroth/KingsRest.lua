@@ -1,5 +1,5 @@
 local dungeonIndex = 17
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=224,teeming=260,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=246,teeming=260,teemingEnabled=true}
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
@@ -64,7 +64,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["count"] = 5;
+      ["count"] = 8;
       ["name"] = "Animated Guardian";
       ["displayId"] = 83252;
       ["creatureType"] = "Undead";

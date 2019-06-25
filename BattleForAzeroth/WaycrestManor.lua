@@ -1,5 +1,5 @@
 local dungeonIndex = 24
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=289,teeming=346,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=346,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [2] = {
         [1] = {
@@ -1006,7 +1006,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["scale"] = 0.7;
         ["health"] = 191533;
-        ["count"] = 0;
+        ["count"] = 4;
         ["displayId"] = 84115;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -3145,7 +3145,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 8;
+        ["count"] = 14;
         ["name"] = "Matron Alma";
         ["displayId"] = 84236;
         ["creatureType"] = "Undead";

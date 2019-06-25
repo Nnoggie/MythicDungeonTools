@@ -1,5 +1,5 @@
 local dungeonIndex = 23
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=348,teeming=417,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=400,teeming=417,teemingEnabled=true}
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [6] = {
