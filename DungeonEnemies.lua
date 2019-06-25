@@ -652,7 +652,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
         if weekData and not weekData[week] then
             blip:Disable()
             blip:Hide()
-        else
+        elseif weekData and weekData[week] then
             blip:Enable()
             blip:Show()
         end
