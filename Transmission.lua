@@ -173,8 +173,8 @@ function MDTcommsObject:OnEnable()
 end
 
 --handle preset chat link clicks
-local OriginalSetHyperlink = ItemRefTooltip.SetHyperlink
-function ItemRefTooltip:SetHyperlink(link, ...)
+local OriginalSetItemRef = SetItemRef
+function SetItemRef(link, ...)
     if(link and link:sub(0, 18) == "MethodDungeonTools") then
         local sender = link:sub(20, string.len(link))
         local name,realm = string.match(sender,"(%u%l*)%-*(%u%a*)")
@@ -194,18 +194,8 @@ function ItemRefTooltip:SetHyperlink(link, ...)
 
         return;
     end
-    return OriginalSetHyperlink(self, link, ...);
+    return OriginalSetItemRef(link, ...);
 end
-
---ignore modified (alt/shift/ctrl) clicks on link
-local OriginalHandleModifiedItemClick = HandleModifiedItemClick
-function HandleModifiedItemClick(link, ...)
-    if(link and link:find("|HMethodDungeonTools|h")) then
-        return;
-    end
-    return OriginalHandleModifiedItemClick(link, ...);
-end
-
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --[[
