@@ -165,18 +165,18 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Sap"] = true;
-         ["Root"] = true;
          ["Stun"] = true;
+         ["Silence"] = true;
          ["Slow"] = true;
          ["Polymorph"] = true;
-         ["Silence"] = true;
+         ["Root"] = true;
       };
-      ["name"] = "Underrot Tick";
       ["health"] = 76613;
+      ["count"] = 1;
       ["displayId"] = 81808;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["count"] = 1;
+      ["name"] = "Underrot Tick";
       ["id"] = 131402;
    };
    [2] = {
@@ -320,12 +320,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Chosen Blood Matron";
       ["health"] = 612904;
+      ["count"] = 6;
       ["displayId"] = 85816;
       ["creatureType"] = "Humanoid";
       ["level"] = 121;
-      ["count"] = 6;
+      ["name"] = "Chosen Blood Matron";
       ["id"] = 131436;
    };
    [4] = {
@@ -415,12 +415,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Imprison"] = true;
       };
-      ["count"] = 4;
       ["name"] = "Fanatical Headhunter";
+      ["health"] = 383065;
       ["displayId"] = 79499;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["health"] = 383065;
+      ["count"] = 4;
       ["scale"] = 1;
    };
    [8] = {
@@ -545,12 +545,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
-      ["health"] = 383065;
       ["count"] = 4;
+      ["name"] = "Living Rot";
       ["displayId"] = 83311;
       ["creatureType"] = "Aberration";
       ["level"] = 120;
-      ["name"] = "Living Rot";
+      ["health"] = 383065;
       ["scale"] = 1;
    };
    [16] = {
@@ -561,10 +561,8 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
       ["id"] = 131817;
+      ["scale"] = 1;
       ["spells"] = {
          [260333] = {};
          [260334] = {};
@@ -575,13 +573,15 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2131;
       ["instanceID"] = 1022;
-      ["count"] = 0;
       ["name"] = "Cragmaw the Infested";
+      ["health"] = 2681455;
       ["displayId"] = 78855;
       ["creatureType"] = "Beast";
       ["level"] = 122;
-      ["health"] = 2681455;
-      ["scale"] = 1;
+      ["count"] = 0;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
    };
    [17] = {
       ["clones"] = {
@@ -591,10 +591,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["id"] = 131383;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["scale"] = 1;
       ["spells"] = {
          [272457] = {};
          [259718] = {};
@@ -607,13 +607,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2130;
       ["instanceID"] = 1022;
-      ["name"] = "Sporecaller Zancha";
       ["health"] = 2681455;
+      ["count"] = 0;
       ["displayId"] = 81977;
       ["creatureType"] = "Undead";
       ["level"] = 122;
-      ["count"] = 0;
-      ["scale"] = 1;
+      ["name"] = "Sporecaller Zancha";
+      ["id"] = 131383;
    };
    [9] = {
       ["clones"] = {
@@ -721,12 +721,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
-      ["health"] = 383065;
       ["count"] = 4;
+      ["name"] = "Diseased Lasher";
       ["displayId"] = 80467;
       ["creatureType"] = "Elemental";
       ["level"] = 120;
-      ["name"] = "Diseased Lasher";
+      ["health"] = 383065;
       ["scale"] = 1;
    };
    [18] = {
@@ -737,10 +737,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 2;
          };
       };
-      ["id"] = 133007;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["id"] = 133007;
       ["spells"] = {
          [269185] = {};
          [269843] = {};
@@ -750,12 +750,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2158;
       ["instanceID"] = 1022;
       ["scale"] = 1;
-      ["name"] = "Unbound Abomination";
+      ["health"] = 2987907;
       ["displayId"] = 86632;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
+      ["name"] = "Unbound Abomination";
       ["count"] = 0;
-      ["health"] = 2987907;
    };
    [5] = {
       ["clones"] = {
@@ -811,12 +811,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
-      ["count"] = 4;
       ["name"] = "Devout Blood Priest";
+      ["health"] = 383065;
       ["displayId"] = 75861;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["health"] = 383065;
+      ["count"] = 4;
       ["scale"] = 1;
    };
    [10] = {
@@ -911,23 +911,24 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["name"] = "Reanimated Guardian";
       ["health"] = 383065;
+      ["count"] = 4;
       ["displayId"] = 88121;
       ["creatureType"] = "Undead";
       ["level"] = 120;
-      ["count"] = 4;
+      ["name"] = "Reanimated Guardian";
       ["id"] = 133836;
    };
    [20] = {
       ["clones"] = {
-         [1] = {
-            ["y"] = -455.79414570553;
-            ["x"] = 394.81359707743;
+         [6] = {
+            ["y"] = -226.62639508113;
+            ["x"] = 652.66130315672;
+            ["sublevel"] = 1;
+            ["g"] = 27;
             ["week"] = {
                [7] = true;
             };
-            ["sublevel"] = 1;
          };
          [2] = {
             ["y"] = -413.16053341185;
@@ -947,6 +948,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["g"] = 22;
             ["sublevel"] = 1;
          };
+         [1] = {
+            ["y"] = -455.79414570553;
+            ["x"] = 394.81359707743;
+            ["week"] = {
+               [7] = true;
+            };
+            ["sublevel"] = 1;
+         };
          [4] = {
             ["y"] = -330.04105878079;
             ["x"] = 529.02911365561;
@@ -957,21 +966,21 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
          [5] = {
-            ["y"] = -226.65873318709;
-            ["x"] = 652.29380267162;
-            ["week"] = {
-               [7] = true;
-            };
-            ["g"] = 13;
-            ["sublevel"] = 1;
-         };
-         [6] = {
             ["y"] = -111.50702793987;
             ["x"] = 421.00906776769;
             ["week"] = {
                [7] = true;
             };
             ["g"] = 24;
+            ["sublevel"] = 1;
+         };
+         [7] = {
+            ["y"] = -168.78323987309;
+            ["x"] = 590.77647095195;
+            ["week"] = {
+               [7] = true;
+            };
+            ["g"] = 28;
             ["sublevel"] = 1;
          };
       };
@@ -988,11 +997,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 155433;
       ["name"] = "Void-Touched Emissary";
-      ["health"] = 497151;
+      ["count"] = 4;
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 122;
-      ["count"] = 4;
+      ["health"] = 497151;
       ["iconTexture"] = 132886;
    };
    [21] = {
@@ -1015,23 +1024,23 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["g"] = 12;
             ["sublevel"] = 1;
          };
-         [3] = {
-            ["y"] = -158.00316463537;
-            ["x"] = 490.10954053949;
-            ["week"] = {
-               [7] = true;
-            };
-            ["g"] = 16;
-            ["sublevel"] = 1;
-         };
          [4] = {
-            ["y"] = -202.85592093893;
-            ["x"] = 430.74535755067;
+            ["y"] = -200.72134442214;
+            ["x"] = 435.11300300949;
+            ["sublevel"] = 1;
+            ["g"] = 26;
             ["week"] = {
                [7] = true;
             };
-            ["g"] = 16;
+         };
+         [3] = {
+            ["y"] = -158.53555003455;
+            ["x"] = 491.92748146995;
             ["sublevel"] = 1;
+            ["g"] = 25;
+            ["week"] = {
+               [7] = true;
+            };
          };
       };
       ["scale"] = 1;
@@ -1045,11 +1054,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 155432;
       ["name"] = "Enchanted Emissary";
-      ["health"] = 7648472;
+      ["count"] = 0;
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 121;
-      ["count"] = 0;
+      ["health"] = 7648472;
       ["iconTexture"] = 135735;
    };
    [11] = {
@@ -1149,12 +1158,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["name"] = "Fallen Deathspeaker";
       ["health"] = 383065;
+      ["count"] = 4;
       ["displayId"] = 85815;
       ["creatureType"] = "Undead";
       ["level"] = 120;
-      ["count"] = 4;
+      ["name"] = "Fallen Deathspeaker";
       ["id"] = 134284;
    };
    [3] = {
@@ -1269,12 +1278,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Imprison"] = true;
       };
-      ["name"] = "Fetid Maggot";
       ["health"] = 383065;
+      ["count"] = 4;
       ["displayId"] = 88361;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["count"] = 4;
+      ["name"] = "Fetid Maggot";
       ["id"] = 130909;
    };
    [6] = {
@@ -1308,12 +1317,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
-      ["name"] = "Befouled Spirit";
       ["health"] = 383065;
+      ["count"] = 4;
       ["displayId"] = 80852;
       ["creatureType"] = "Aberration";
       ["level"] = 120;
-      ["count"] = 4;
+      ["name"] = "Befouled Spirit";
       ["id"] = 133685;
    };
    [12] = {
@@ -1418,21 +1427,23 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Bloodsworn Defiler";
       ["health"] = 383065;
+      ["count"] = 6;
       ["displayId"] = 79182;
       ["creatureType"] = "Undead";
       ["level"] = 120;
-      ["count"] = 6;
+      ["name"] = "Bloodsworn Defiler";
       ["id"] = 133912;
    };
    [13] = {
       ["clones"] = {
-         [14] = {
-            ["y"] = -143.45397434199;
-            ["x"] = 433.94467067722;
+         [1] = {
+            ["y"] = -174.53984242698;
+            ["x"] = 587.06078000163;
+            ["infested"] = {
+               [1] = true;
+            };
             ["sublevel"] = 1;
-            ["teeming"] = true;
          };
          [13] = {
             ["y"] = -230.06791722474;
@@ -1445,22 +1456,20 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["x"] = 392.69766631869;
             ["sublevel"] = 1;
          };
-         [1] = {
-            ["y"] = -170.48576221326;
-            ["x"] = 588.95270033963;
-            ["infested"] = {
-               [1] = true;
-            };
+         [14] = {
+            ["y"] = -143.45397434199;
+            ["x"] = 433.94467067722;
             ["sublevel"] = 1;
+            ["teeming"] = true;
          };
          [2] = {
             ["y"] = -218.81297584915;
             ["x"] = 441.9240190781;
             ["sublevel"] = 1;
          };
-         [4] = {
-            ["y"] = -215.11212197615;
-            ["x"] = 400.70815960366;
+         [15] = {
+            ["y"] = -90.806915772928;
+            ["x"] = 414.90311918307;
             ["sublevel"] = 1;
          };
          [8] = {
@@ -1517,9 +1526,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
             ["sublevel"] = 1;
          };
-         [15] = {
-            ["y"] = -90.806915772928;
-            ["x"] = 414.90311918307;
+         [4] = {
+            ["y"] = -215.11212197615;
+            ["x"] = 400.70815960366;
             ["sublevel"] = 1;
          };
       };
@@ -1541,12 +1550,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
-      ["health"] = 383065;
       ["count"] = 4;
+      ["name"] = "Grotesque Horror";
       ["displayId"] = 84808;
       ["creatureType"] = "Aberration";
       ["level"] = 120;
-      ["name"] = "Grotesque Horror";
+      ["health"] = 383065;
       ["scale"] = 1;
    };
    [7] = {
@@ -1657,13 +1666,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["reaping"] = 148716;
       ["id"] = 133835;
       ["spells"] = {
-         [277564] = {};
          [277242] = {};
+         [277564] = {};
          [266107] = {};
-         [209859] = {};
+         [266109] = {};
          [266106] = {};
          [205276] = {};
-         [266109] = {};
+         [209859] = {};
       };
       ["characteristics"] = {
          ["Taunt"] = true;
@@ -1677,12 +1686,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
-      ["health"] = 383065;
       ["count"] = 4;
+      ["name"] = "Feral Bloodswarmer";
       ["displayId"] = 76653;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Feral Bloodswarmer";
+      ["health"] = 383065;
       ["scale"] = 1;
    };
    [14] = {
@@ -1798,12 +1807,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["count"] = 6;
       ["name"] = "Faceless Corruptor";
+      ["health"] = 612904;
       ["displayId"] = 84376;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["health"] = 612904;
+      ["count"] = 6;
       ["scale"] = 1.4;
    };
    [19] = {
@@ -1847,11 +1856,11 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 155434;
       ["name"] = "Emissary of the Tides";
-      ["health"] = 305938;
+      ["count"] = 4;
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["count"] = 4;
+      ["health"] = 305938;
       ["iconTexture"] = 132315;
    };
    [15] = {
@@ -1862,10 +1871,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["id"] = 131318;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["scale"] = 1;
       ["spells"] = {
          [264603] = {};
          [260879] = {};
@@ -1876,12 +1885,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2157;
       ["instanceID"] = 1022;
-      ["name"] = "Elder Leaxa";
       ["health"] = 1838700;
+      ["count"] = 0;
       ["displayId"] = 82394;
       ["creatureType"] = "Humanoid";
       ["level"] = 122;
-      ["count"] = 0;
-      ["scale"] = 1;
+      ["name"] = "Elder Leaxa";
+      ["id"] = 131318;
    };
 };
