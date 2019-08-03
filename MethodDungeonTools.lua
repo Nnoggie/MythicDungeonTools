@@ -1222,44 +1222,12 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
                         text = text.."Forces: "..MethodDungeonTools:FormatEnemyForces(v.enemyData.count,totalForcesMax,false)
 
-
-                        local reapingText = ''
-                        if v.enemyData.reaping then
-                            local reapingIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic[tostring(v.enemyData.reaping)].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
-                            reapingText = "Reaping: "..reapingIcon.." "..MethodDungeonTools.reapingStatic[tostring(v.enemyData.reaping)].name .. "\n"
-                        end
-                        text = text.."\n"..reapingText
-
                         tooltip.topString:SetText(text)
                         showData = true
 					end
 					break;
 				end
 			end
-            --reaping icon
-            --[[
-            local reapingIcon = frame.sidePanel.newPullButtons[tooltip.currentPull].reapingIcon
-            if MouseIsOver(reapingIcon) and reapingIcon:IsShown() then
-                --model
-                local bwomsamdiId = 75961
-                if not tooltip.modelNpcId or (tooltip.modelNpcId ~= bwomsamdiId) then
-                    tooltip.Model:SetDisplayInfo(bwomsamdiId)
-                    tooltip.modelNpcId = bwomsamdiId
-                end
-                --topString
-                local risenIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic["148716"].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
-                local tormentedIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic["148893"].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
-                local lostIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic["148894"].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
-                local risenCount,tormentedCount,lostCount = MethodDungeonTools:GetReapingTypesForPull(tooltip.currentPull)
-                local newLine = "\n"
-                local text = newLine..newLine..risenCount.."x "..risenIcon.." Risen Soul"
-                text = text..newLine..newLine..tormentedCount.."x "..tormentedIcon.." Tormented Soul"
-                text = text..newLine..newLine..lostCount.."x "..lostIcon.." Lost Soul"
-                tooltip.topString:SetText(text)
-                showData = true
-            end
-            ]]
-
             if showData then
                 tooltip.topString:Show()
                 tooltip.Model:Show()
@@ -2291,7 +2259,6 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                     enemyTable[enemyTableIdx].level = level
                                     enemyTable[enemyTableIdx].creatureType = creatureType
                                     enemyTable[enemyTableIdx].baseHealth = baseHealth
-                                    enemyTable[enemyTableIdx].reaping = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["reaping"]
                                 end
                             end
                         end
@@ -2301,25 +2268,6 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 		end
 	end
 	frame.newPullButtons[idx]:SetNPCData(enemyTable)
-
-    --display reaping icon
-    local pullForces = MethodDungeonTools:CountForces(idx,false)
-    local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
-    local currentPercent = pullForces/totalForcesMax
-
-    local oldPullForces
-    if idx == 1 then
-        oldPullForces = 0
-    else
-        oldPullForces =  MethodDungeonTools:CountForces(idx-1,false)
-    end
-    local oldPercent = oldPullForces/totalForcesMax
-
-    if (math.floor(currentPercent/0.2)>math.floor(oldPercent/0.2)) and oldPercent<1 then
-        frame.newPullButtons[idx]:ShowReapingIcon(true,currentPercent,oldPercent)
-    else
-        frame.newPullButtons[idx]:ShowReapingIcon(false,currentPercent,oldPercent)
-    end
 end
 
 
