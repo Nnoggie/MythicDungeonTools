@@ -43,6 +43,7 @@ local function POI_SetDevOptions(frame,poi)
 end
 
 local function POI_SetOptions(frame,type,poi)
+    frame.teeming = nil
     if type == "mapLink" then
         frame:SetSize(22,22)
         frame.Texture:SetSize(22,22)
