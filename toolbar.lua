@@ -937,6 +937,7 @@ local function makeNoteEditbox()
     editbox:SetLayout("Flow")
     editbox.multiBox = AceGUI:Create("MultiLineEditBox")
     editbox.multiBox:SetLabel("Note Text:")
+
     editbox.multiBox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
         for note,_ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
             if note.noteIdx == editbox.noteIdx then
@@ -948,13 +949,16 @@ local function makeNoteEditbox()
 
         editbox.frame:Hide()
     end)
+
     editbox.multiBox:SetWidth(240)
     editbox.multiBox:SetHeight(120)
     editbox.multiBox.label:Hide()
+    --[[ hiding the scrollbar messes up the whole editbox
     editbox.multiBox.scrollBar:Hide()
     editbox.multiBox.scrollBar:ClearAllPoints()
     editbox.multiBox.scrollBar:SetPoint("BOTTOM", editbox.multiBox.button, "TOP", 0, 16)
     editbox.multiBox.scrollBar.ScrollUpButton:SetPoint("BOTTOM", editbox.multiBox.scrollBar, "TOP",0,3)
+    ]]
     editbox.frame:Hide()
     editbox:AddChild(editbox.multiBox)
     MethodDungeonTools:FixAceGUIShowHide(editbox,nil,nil,true)
