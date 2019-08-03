@@ -24,8 +24,8 @@
 -- f:AddChild(btn)
 -- @class file
 -- @name AceGUI-3.0
--- @release $Id: AceGUI-3.0.lua 1202 2019-05-15 23:11:22Z nevcairiel $
-local ACEGUI_MAJOR, ACEGUI_MINOR = "AceGUI-3.0", 36
+-- @release $Id: AceGUI-3.0.lua 1221 2019-07-20 18:23:00Z nevcairiel $
+local ACEGUI_MAJOR, ACEGUI_MINOR = "AceGUI-3.0", 39
 local AceGUI, oldminor = LibStub:NewLibrary(ACEGUI_MAJOR, ACEGUI_MINOR)
 
 if not AceGUI then return end -- No upgrade needed
@@ -51,6 +51,7 @@ AceGUI.LayoutRegistry = AceGUI.LayoutRegistry or {}
 AceGUI.WidgetBase = AceGUI.WidgetBase or {}
 AceGUI.WidgetContainerBase = AceGUI.WidgetContainerBase or {}
 AceGUI.WidgetVersions = AceGUI.WidgetVersions or {}
+AceGUI.tooltip = AceGUI.tooltip or CreateFrame("GameTooltip", "AceGUITooltip", UIParent, "GameTooltipTemplate")
 
 -- local upvalues
 local WidgetRegistry = AceGUI.WidgetRegistry
@@ -176,6 +177,7 @@ end
 -- @param widget The widget to release
 function AceGUI:Release(widget)
 	safecall(widget.PauseLayout, widget)
+	widget.frame:Hide()
 	widget:Fire("OnRelease")
 	safecall(widget.ReleaseChildren, widget)
 
@@ -638,6 +640,7 @@ AceGUI:RegisterLayout("Fill",
 		if children[1] then
 			children[1]:SetWidth(content:GetWidth() or 0)
 			children[1]:SetHeight(content:GetHeight() or 0)
+			children[1].frame:ClearAllPoints()
 			children[1].frame:SetAllPoints(content)
 			children[1].frame:Show()
 			safecall(content.obj.LayoutFinished, content.obj, nil, children[1].frame:GetHeight())

@@ -1,4 +1,4 @@
---[[ $Id: AceGUIWidget-DropDown.lua 1206 2019-06-22 09:13:51Z nevcairiel $ ]]--
+--[[ $Id: AceGUIWidget-DropDown.lua 1209 2019-06-24 21:01:01Z nevcairiel $ ]]--
 local AceGUI = LibStub("AceGUI-3.0")
 
 -- Lua APIs
@@ -356,7 +356,7 @@ end
 
 do
 	local widgetType = "Dropdown"
-	local widgetVersion = 33
+	local widgetVersion = 34
 
 	--[[ Static data ]]--
 
@@ -593,7 +593,12 @@ do
 	-- exported
 	local sortlist = {}
 	local function sortTbl(x,y)
-		return tostring(x) < tostring(y) -- Support numbers as keys
+		local num1, num2 = tonumber(x), tonumber(y)
+		if num1 and num2 then -- numeric comparison, either two numbers or numeric strings
+			return num1 < num2
+		else -- compare everything else tostring'ed
+			return tostring(x) < tostring(y)
+		end
 	end
 	local function SetList(self, list, order, itemType)
 		self.list = list
