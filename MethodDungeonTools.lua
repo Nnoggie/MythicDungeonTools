@@ -1483,10 +1483,21 @@ function MethodDungeonTools:CalculateEnemyHealth(boss,baseHealth,level)
 	local mult = 1
 	if boss == false and fortified == true then mult = 1.2 end
 	if boss == true and tyrannical == true then mult = 1.4 end
-	mult = round((1.10^(level-2))*mult,2)
+	mult = round((1.10^math.max(level-2,0))*mult,2)
 	return round(mult*baseHealth,0)
 end
---613437
+
+function MethodDungeonTools:ReverseCalcEnemyHealth(unit,level,boss)
+    local health = UnitHealthMax(unit)
+    local fortified = MethodDungeonTools:IsCurrentPresetFortified()
+    local tyrannical = MethodDungeonTools:IsCurrentPresetTyrannical()
+    local mult = 1
+    if boss == false and fortified == true then mult = 1.2 end
+    if boss == true and tyrannical == true then mult = 1.4 end
+    mult = round((1.10^math.max(level-2,0))*mult,2)
+    local baseHealth = health/mult
+    return baseHealth
+end
 
 function MethodDungeonTools:FormatEnemyHealth(amount)
 	amount = tonumber(amount)
