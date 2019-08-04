@@ -429,7 +429,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
-        ["health"] = 497151;
+        ["health"] = 546187;
         ["iconTexture"] = 132886;
     };
     [3] = {
@@ -3057,7 +3057,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["health"] = 305938;
+        ["health"] = 336115;
         ["iconTexture"] = 132315;
     };
     [39] = {
@@ -3123,7 +3123,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
-        ["health"] = 7648472;
+        ["health"] = 8402884;
         ["iconTexture"] = 135735;
     };
     [31] = {

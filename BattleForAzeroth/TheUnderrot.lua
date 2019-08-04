@@ -1012,7 +1012,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["health"] = 497151;
+      ["health"] = 546187;
       ["count"] = 4;
       ["name"] = "Void-Touched Emissary";
       ["displayId"] = 39391;
@@ -1103,7 +1103,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["health"] = 7648472;
+      ["health"] = 8402884;
       ["count"] = 0;
       ["name"] = "Enchanted Emissary";
       ["displayId"] = 39391;
@@ -2016,7 +2016,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["health"] = 305938;
+      ["health"] = 336115;
       ["count"] = 4;
       ["name"] = "Emissary of the Tides";
       ["displayId"] = 39391;
