@@ -900,6 +900,17 @@ function MethodDungeonTools:MakeSidePanel(frame)
     end)
     MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(not inGroup)
 
+    --MDI
+    frame.MDIButton = AceGUI:Create("Button")
+    frame.MDIButton:SetText("MDI")
+    frame.MDIButton:SetWidth(buttonWidth)
+    frame.MDIButton.frame:SetNormalFontObject(fontInstance)
+    frame.MDIButton.frame:SetHighlightFontObject(fontInstance)
+    frame.MDIButton.frame:SetDisabledFontObject(fontInstance)
+    frame.MDIButton:SetCallback("OnClick",function(widget,callbackName,value)
+        MethodDungeonTools:ToggleMDIMode()
+    end)
+
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
@@ -907,6 +918,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
 
 	--frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 
@@ -1059,6 +1071,111 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.ProgressBar:SetPoint("TOP",frame.sidePanel.WidgetGroup.frame,"BOTTOM",-10,5)
     MethodDungeonTools:SkinProgressBar(frame.sidePanel.ProgressBar)
 end
+
+---ToggleMDIMode
+---Enables display to override beguiling+freehold week
+function MethodDungeonTools:ToggleMDIMode()
+    db.MDI.enabled = not db.MDI.enabled
+    MethodDungeonTools:DisplayMDISelector()
+end
+
+function MethodDungeonTools:DisplayMDISelector()
+    local show = db.MDI.enabled
+    db = MethodDungeonTools:GetDB()
+    if not MethodDungeonTools.MDISelector then
+        MethodDungeonTools.MDISelector = AceGUI:Create("SimpleGroup")
+        MethodDungeonTools.MDISelector.frame:SetFrameStrata("HIGH")
+        MethodDungeonTools.MDISelector.frame:SetFrameLevel(50)
+        MethodDungeonTools.MDISelector.frame:SetBackdropColor(unpack(MethodDungeonTools.BackdropColor))
+        --fix show hide
+        local frame = MethodDungeonTools.main_frame
+        local originalShow,originalHide = frame.Show,frame.Hide
+        local widget = MethodDungeonTools.MDISelector.frame
+        function frame:Hide(...)
+            widget:Hide()
+            return originalHide(self, ...);
+        end
+        function frame:Show(...)
+            if db.MDI.enabled then widget:Show() end
+            return originalShow(self, ...);
+        end
+
+        MethodDungeonTools.MDISelector:SetLayout("Flow")
+        MethodDungeonTools.MDISelector.frame.bg = MethodDungeonTools.MDISelector.frame:CreateTexture(nil, "BACKGROUND")
+        MethodDungeonTools.MDISelector.frame.bg:SetAllPoints(MethodDungeonTools.MDISelector.frame)
+        MethodDungeonTools.MDISelector.frame.bg:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
+        MethodDungeonTools.MDISelector:SetWidth(120)
+        MethodDungeonTools.MDISelector:SetHeight(90)
+        MethodDungeonTools.MDISelector.frame:SetPoint("BOTTOMLEFT",MethodDungeonTools.main_frame,"BOTTOMLEFT",0,0)
+
+        local label = AceGUI:Create("Label")
+        label:SetText("MDI Mode")
+        MethodDungeonTools.MDISelector:AddChild(label)
+
+        --beguiling
+        MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
+        MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Beguiling:")
+        local beguilingList = {"1. Void","2. Tides","3. Enchanted"}
+        MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
+        MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
+            local preset = MethodDungeonTools:GetCurrentPreset()
+            preset.mdi.beguiling = key
+            MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        end)
+        MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.BeguilingDropDown)
+
+        --freehold
+        MethodDungeonTools.MDISelector.FreeholdDropDown = AceGUI:Create("Dropdown")
+        MethodDungeonTools.MDISelector.FreeholdDropDown:SetLabel("Freehold:")
+        local freeholdList = {"1. Blacktooth","2. Bilge Rats","3. Cutwater"}
+        MethodDungeonTools.MDISelector.FreeholdDropDown:SetList(freeholdList)
+        MethodDungeonTools.MDISelector.FreeholdDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
+            local preset = MethodDungeonTools:GetCurrentPreset()
+            preset.mdi.freehold = key
+            if preset.mdi.freeholdJoined then
+                MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
+            end
+            MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+        end)
+        MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.FreeholdDropDown)
+
+        MethodDungeonTools.MDISelector.FreeholdCheck = AceGUI:Create("CheckBox")
+        MethodDungeonTools.MDISelector.FreeholdCheck:SetLabel("Join Crew")
+        MethodDungeonTools.MDISelector.FreeholdCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
+            local preset = MethodDungeonTools:GetCurrentPreset()
+            preset.mdi.freeholdJoined = value
+            MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:UpdateProgressbar()
+        end)
+        MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.FreeholdCheck)
+
+
+    end
+    if show then
+        local preset = MethodDungeonTools:GetCurrentPreset()
+        preset.mdi = preset.mdi or {}
+        --beguiling
+        preset.mdi.beguiling = preset.mdi.beguiling or 1
+        MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
+        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        --freehold
+        preset.mdi.freehold = preset.mdi.freehold or 1
+        MethodDungeonTools.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
+        preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
+        MethodDungeonTools.MDISelector.FreeholdCheck:SetValue(preset.mdi.freeholdJoined)
+        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
+        MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+
+        MethodDungeonTools.MDISelector.frame:Show()
+    else
+        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
+        MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+        MethodDungeonTools.MDISelector.frame:Hide()
+    end
+end
+
 
 function MethodDungeonTools:UpdatePresetDropDown()
 	local dropdown = MethodDungeonTools.main_frame.sidePanel.WidgetGroup.PresetDropDown
@@ -1702,6 +1819,11 @@ function MethodDungeonTools:EnsureDBTables()
     end
 
 
+    db.MDI = db.MDI or {}
+    preset.mdi = preset.mdi or {}
+    preset.mdi.freehold = preset.mdi.freehold or 1
+    preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
+    preset.mdi.beguiling = preset.mdi.beguiling or 1
 end
 
 
@@ -1740,6 +1862,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
     MethodDungeonTools:POI_UpdateAll()
     MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     MethodDungeonTools:ToggleBoralusSelector(db.currentDungeonIdx == 19)
+    MethodDungeonTools:DisplayMDISelector()
     MethodDungeonTools:DrawAllPresetObjects()
 end
 

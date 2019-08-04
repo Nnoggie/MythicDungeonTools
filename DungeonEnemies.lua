@@ -633,7 +633,12 @@ end
 ---DungeonEnemies_UpdateBeguiling
 ---Updates visibility state of Beguiling NPCs
 function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
-    local week = preset.week
+    local week
+    if db.MDI.enabled then
+        week = preset.mdi.beguiling or 1
+    else
+        week = preset.week
+    end
     for _,blip in pairs(blips) do
         local weekData =  blip.clone.week
         if weekData and not weekData[week] then
@@ -644,12 +649,17 @@ function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
             blip:Show()
         end
     end
-end
+    end
 
 ---DungeonEnemies_UpdateBlacktoothEvent
 ---Updates visibility state of blacktooth event blips
 function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
-    local week = preset.week%3
+    local week
+    if db.MDI.enabled then
+        week = preset.mdi.freehold or 1
+    else
+        week = preset.week%3
+    end
     if week == 0 then week = 3 end
     local isBlacktoothWeek = week == 1
     for _,blip in pairs(blips) do
@@ -732,6 +742,10 @@ MethodDungeonTools.freeholdCrews = {
 ---DungeonEnemies_UpdateFreeholdCrew
 ---Updates the enemies in Freehold to reflect the weekly event of "joining" a crew i.e. disabling npcs of the crew
 function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
+    --override crew with mdi data
+    if db.MDI.enabled then
+        crewIdx = (preset.mdi.freeholdJoined and preset.mdi.freehold) or nil
+    end
     --if we are not in freehold map we need to tidy up our mess a bit
     if not crewIdx then
         for _,blip in pairs(blips) do
@@ -741,6 +755,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
         end
         return
     end
+
     local crew = MethodDungeonTools.freeholdCrews[crewIdx]
     for _,blip in pairs(blips) do
         if crew[blip.data.id] and not blip.clone.blacktoothEvent then
