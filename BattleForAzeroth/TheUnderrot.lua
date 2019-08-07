@@ -1014,7 +1014,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 155433;
       ["name"] = "Void-Touched Emissary";
-      ["health"] = 546187;
+      ["health"] = 654640;
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 122;
@@ -1105,7 +1105,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 155432;
       ["name"] = "Enchanted Emissary";
-      ["health"] = 8402884;
+      ["health"] = 10071399;
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 121;
@@ -1988,7 +1988,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 155434;
       ["name"] = "Emissary of the Tides";
-      ["health"] = 336115;
+      ["health"] = 402855;
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
