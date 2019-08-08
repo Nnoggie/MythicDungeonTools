@@ -3203,6 +3203,8 @@ function initFrames()
 
     main_frame.contextDropdown = L_Create_UIDropDownMenu("MethodDungeonToolsContextDropDown", nil)
 
+    MethodDungeonTools:EnsureDBTables()
+
 	MethodDungeonTools:CreateMenu();
 	MethodDungeonTools:MakeTopBottomTextures(main_frame);
 	MethodDungeonTools:MakeMapTexture(main_frame)
