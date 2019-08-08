@@ -177,7 +177,7 @@ local OriginalSetItemRef = SetItemRef
 function SetItemRef(link, ...)
     if(link and link:sub(0, 18) == "MethodDungeonTools") then
         local sender = link:sub(20, string.len(link))
-        local name,realm = string.match(sender,"(%u%U*)(%u%a*)")
+        local name,realm = string.match(sender,"(%u%U*)(%u.*)")
         sender = name.."-"..realm
         local preset = MethodDungeonTools.transmissionCache[sender]
         if preset then
