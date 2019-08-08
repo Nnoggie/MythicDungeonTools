@@ -3018,6 +3018,7 @@ function MethodDungeonTools:GetCurrentAffixWeek()
             return week
         end
     end
+    return 1
 end
 
 ---IsPlayerInGroup
