@@ -909,6 +909,20 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 
     --Week Dropdown (Infested / Affixes)
+    local beguilingInfo = {
+        [1] = {
+            ["text"]="Void",
+            ["icon"]= CreateTextureMarkup(132886, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
+        },
+        [2] = {
+            ["text"]="Tides",
+            ["icon"]= CreateTextureMarkup(132315, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
+        },
+        [3] = {
+            ["text"]="Enchanted",
+            ["icon"]= CreateTextureMarkup(135735, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
+        },
+    }
     local function makeAffixString(week,affixes,longText)
         local ret
         local sep = ""
@@ -925,6 +939,14 @@ function MethodDungeonTools:MakeSidePanel(frame)
                 end
                 ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0).."  "
             end
+        end
+        --beguiling configuration
+        local w = week%3
+        if w == 0 then w = 3 end
+        if longText then
+            ret = ret.." ("..beguilingInfo[w].text..")"
+        else
+            ret = ret..beguilingInfo[w].icon
         end
         return ret
     end
@@ -946,7 +968,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             item:SetOnEnter(function()
                 GameTooltip:SetOwner(item.frame, "ANCHOR_LEFT",-11,-25)
                 local v = affixWeeks[itemIdx]
-                GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
+                GameTooltip:SetText(makeAffixString(itemIdx,v,true),1,1,1,1)
                 GameTooltip:Show()
             end)
             item:SetOnLeave(function()
@@ -992,7 +1014,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if not selectedWeek then return end
         GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_LEFT",-6,-41)
         local v = affixWeeks[selectedWeek]
-        GameTooltip:SetText(makeAffixString(nil,v,true),1,1,1,1)
+        GameTooltip:SetText(makeAffixString(selectedWeek,v,true),1,1,1,1)
         GameTooltip:Show()
     end)
     affixDropdown:SetCallback("OnLeave",function(...)
