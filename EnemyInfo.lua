@@ -425,7 +425,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     f.enemyDataContainer.idEditBox.defaultText = data.id
 
     local boss = data.isBoss or false
-    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
+    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty,data.ignoreFortified)
     local healthText = MethodDungeonTools:FormatEnemyHealth(health)
 
     f.enemyDataContainer.healthEditBox:SetText(healthText)

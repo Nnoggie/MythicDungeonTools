@@ -310,7 +310,7 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     end
 
     local boss = blip.data.isBoss or false
-    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty)
+    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty,data.ignoreFortified)
     local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
     local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
     --[[

@@ -1333,7 +1333,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         local text = newLine..newLine..newLine..v.enemyData.name.." x"..v.enemyData.quantity..newLine
                         text = text.."Level "..v.enemyData.level.." "..v.enemyData.creatureType..newLine
                         local boss = v.enemyData.isBoss or false
-                        local health = MethodDungeonTools:CalculateEnemyHealth(boss,v.enemyData.baseHealth,db.currentDifficulty)
+                        local health = MethodDungeonTools:CalculateEnemyHealth(boss,v.enemyData.baseHealth,db.currentDifficulty,v.enemyData.ignoreFortified)
                         text = text..MethodDungeonTools:FormatEnemyHealth(health).." HP"..newLine
 
                         local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
@@ -1594,11 +1594,11 @@ end
 local function round(number, decimals)
     return (("%%.%df"):format(decimals)):format(number)
 end
-function MethodDungeonTools:CalculateEnemyHealth(boss,baseHealth,level)
+function MethodDungeonTools:CalculateEnemyHealth(boss,baseHealth,level,ignoreFortified)
     local fortified = MethodDungeonTools:IsCurrentPresetFortified()
     local tyrannical = MethodDungeonTools:IsCurrentPresetTyrannical()
 	local mult = 1
-	if boss == false and fortified == true then mult = 1.2 end
+	if boss == false and fortified == true and (not ignoreFortified) then mult = 1.2 end
 	if boss == true and tyrannical == true then mult = 1.4 end
 	mult = round((1.10^math.max(level-2,0))*mult,2)
 	return round(mult*baseHealth,0)
@@ -2393,6 +2393,7 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                     enemyTable[enemyTableIdx].level = level
                                     enemyTable[enemyTableIdx].creatureType = creatureType
                                     enemyTable[enemyTableIdx].baseHealth = baseHealth
+                                    enemyTable[enemyTableIdx].ignoreFortified = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["ignoreFortified"]
                                 end
                             end
                         end
