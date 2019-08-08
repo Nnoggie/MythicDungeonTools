@@ -1111,7 +1111,7 @@ function MethodDungeonTools:DisplayMDISelector()
         --freehold
         MethodDungeonTools.MDISelector.FreeholdDropDown = AceGUI:Create("Dropdown")
         MethodDungeonTools.MDISelector.FreeholdDropDown:SetLabel("Freehold:")
-        local freeholdList = {"1. Blacktooth","2. Bilge Rats","3. Cutwater"}
+        local freeholdList = {"1. Cutwater","2. Blacktooth","3. Bilge Rats"}
         MethodDungeonTools.MDISelector.FreeholdDropDown:SetList(freeholdList)
         MethodDungeonTools.MDISelector.FreeholdDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
             local preset = MethodDungeonTools:GetCurrentPreset()
@@ -1398,7 +1398,7 @@ function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
 
     local week = preset.week%3
     if week == 0 then week = 3 end
-    local isBlacktoothWeek = week == 1
+    local isBlacktoothWeek = week == 2
     local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
     if not isCloneBlacktoothEvent or isBlacktoothWeek then
@@ -2344,7 +2344,7 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 local continue = false
                                 local week = preset.week%3
                                 if week == 0 then week = 3 end
-                                local isBlacktoothWeek = week == 1
+                                local isBlacktoothWeek = week == 2
                                 if isCloneBlacktoothEvent then
                                     if isBlacktoothWeek then
                                         continue = true

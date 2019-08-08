@@ -661,7 +661,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
         week = preset.week%3
     end
     if week == 0 then week = 3 end
-    local isBlacktoothWeek = week == 1
+    local isBlacktoothWeek = week == 2
     for _,blip in pairs(blips) do
         if blip.clone.blacktoothEvent then
             if isBlacktoothWeek then
@@ -719,19 +719,19 @@ end
 
 ---Frehold Crews
 MethodDungeonTools.freeholdCrews = {
-    [1] = {
+    [2] = {--blacktooth
         [129548] = true,
         [129529] = true,
         [129547] = true,
         [126847] = true,
     },
-    [3] = {
+    [1] = {--cutwater
         [129559] = true,
         [129599] = true,
         [126845] = true,
         [129601] = true,
     },
-    [2] = {
+    [3] = {--bilge rat
         [129550] = true,
         [129527] = true,
         [129600] = true,
