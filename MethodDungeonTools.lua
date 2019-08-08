@@ -1130,6 +1130,8 @@ function MethodDungeonTools:DisplayMDISelector()
             local preset = MethodDungeonTools:GetCurrentPreset()
             preset.mdi.beguiling = key
             MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+            MethodDungeonTools:UpdateProgressbar()
+            MethodDungeonTools:ReloadPullButtons()
         end)
         MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.BeguilingDropDown)
 
@@ -1145,6 +1147,8 @@ function MethodDungeonTools:DisplayMDISelector()
                 MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
             end
             MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+            MethodDungeonTools:UpdateProgressbar()
+            MethodDungeonTools:ReloadPullButtons()
         end)
         MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.FreeholdDropDown)
 
@@ -1175,12 +1179,16 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.FreeholdCheck:SetValue(preset.mdi.freeholdJoined)
         MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+        MethodDungeonTools:UpdateProgressbar()
+        MethodDungeonTools:ReloadPullButtons()
 
         MethodDungeonTools.MDISelector.frame:Show()
     else
         MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+        MethodDungeonTools:UpdateProgressbar()
+        MethodDungeonTools:ReloadPullButtons()
         MethodDungeonTools.MDISelector.frame:Hide()
     end
 end
@@ -1415,13 +1423,21 @@ function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     local preset = MethodDungeonTools:GetCurrentPreset()
     local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
 
+    --MDI override
+    local week
+    if db.MDI.enabled then
+        week = preset.mdi.beguiling or 1
+    else
+        week = preset.week
+    end
+
     --beguiling weekly configuration
     local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
     if weekData then
-        if weekData[preset.week] then return true else return false end
+        if weekData[week] then return true else return false end
     end
 
-    local week = preset.week%3
+    week = week%3
     if week == 0 then week = 3 end
     local isBlacktoothWeek = week == 2
     local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
@@ -2365,9 +2381,17 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                             local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
                             if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
 
+                                --MDI override
+                                local week
+                                if db.MDI.enabled then
+                                    week = preset.mdi.beguiling or 1
+                                else
+                                    week = preset.week
+                                end
+
                                 local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
                                 local continue = false
-                                local week = preset.week%3
+                                week = week%3
                                 if week == 0 then week = 3 end
                                 local isBlacktoothWeek = week == 2
                                 if isCloneBlacktoothEvent then
@@ -2378,10 +2402,12 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                     continue = true
                                 end
 
+
+
                                 --beguiling weekly configuration
                                 local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
                                 if weekData then
-                                    if weekData[preset.week] then continue = true else continue = false end
+                                    if weekData[week] then continue = true else continue = false end
                                 end
 
                                 --check for faction
