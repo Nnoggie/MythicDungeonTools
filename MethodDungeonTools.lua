@@ -826,6 +826,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelDeleteButton:SetCallback("OnClick",function(widget,callbackName,value)
 		MethodDungeonTools:HideAllDialogs()
+        frame.DeleteConfirmationFrame:ClearAllPoints()
 		frame.DeleteConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
 		frame.DeleteConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
@@ -1074,6 +1075,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	--progress bar
 	frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioTrackerProgressBarTemplate")
 	frame.sidePanel.ProgressBar:Show()
+    frame.sidePanel.ProgressBar:ClearAllPoints()
 	frame.sidePanel.ProgressBar:SetPoint("TOP",frame.sidePanel.WidgetGroup.frame,"BOTTOM",-10,5)
     MethodDungeonTools:SkinProgressBar(frame.sidePanel.ProgressBar)
 end
@@ -1112,6 +1114,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame.bg:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
         MethodDungeonTools.MDISelector:SetWidth(120)
         MethodDungeonTools.MDISelector:SetHeight(90)
+        MethodDungeonTools.MDISelector.frame:ClearAllPoints()
         MethodDungeonTools.MDISelector.frame:SetPoint("BOTTOMLEFT",MethodDungeonTools.main_frame,"BOTTOMLEFT",0,0)
 
         local label = AceGUI:Create("Label")
