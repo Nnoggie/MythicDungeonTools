@@ -2273,6 +2273,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 155434;
         ["name"] = "Emissary of the Tides";
+        ["ignoreFortified"] = true;
         ["health"] = 402855;
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
@@ -2476,6 +2477,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 155432;
         ["name"] = "Enchanted Emissary";
+        ["ignoreFortified"] = true;
         ["health"] = 10071399;
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
@@ -3823,6 +3825,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 155433;
         ["name"] = "Void-Touched Emissary";
+        ["ignoreFortified"] = true;
         ["health"] = 654640;
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
