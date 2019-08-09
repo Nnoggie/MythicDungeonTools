@@ -1115,7 +1115,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector:SetWidth(120)
         MethodDungeonTools.MDISelector:SetHeight(90)
         MethodDungeonTools.MDISelector.frame:ClearAllPoints()
-        MethodDungeonTools.MDISelector.frame:SetPoint("BOTTOMLEFT",MethodDungeonTools.main_frame,"BOTTOMLEFT",0,0)
+        MethodDungeonTools.MDISelector.frame:SetPoint("TOPRIGHT",MethodDungeonTools.main_frame,"TOPRIGHT",0,0)
 
         local label = AceGUI:Create("Label")
         label:SetText("MDI Mode")
@@ -1181,8 +1181,8 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-
         MethodDungeonTools.MDISelector.frame:Show()
+        MethodDungeonTools:ToggleFreeholdSelector(false)
     else
         MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
@@ -1190,6 +1190,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
         MethodDungeonTools.MDISelector.frame:Hide()
+        MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     end
 end
 
