@@ -188,7 +188,7 @@ function SetItemRef(link, ...)
     end
     if(link and link:sub(0, 7) == "MDTLive") then
         local sender = link:sub(9, string.len(link))
-        local name,realm = string.match(sender,"(%u%U*)(%u%a*)")
+        local name,realm = string.match(sender,"(%u%U*)(%u.*)")
         sender = name.."-"..realm
         --TODO: finish this function
         return;
