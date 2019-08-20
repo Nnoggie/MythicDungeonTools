@@ -558,6 +558,20 @@ function MethodDungeonTools:CreateDevPanel(frame)
         end)
         container:AddChild(faction)
 
+        --sublevel
+        local sublevel = AceGUI:Create("EditBox")
+        sublevel:SetLabel("Sublevel:")
+        sublevel:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            local value = tonumber(text)
+            local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
+            if currentBlip then
+                local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].sublevel = value
+                MethodDungeonTools:UpdateMap()
+            end
+        end)
+        container:AddChild(sublevel)
+
         --enter clone options into the GUI (red)
         local currentBlip = MethodDungeonTools:GetCurrentDevmodeBlip()
         if currentBlip then
@@ -573,6 +587,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             upstairsCheckbox:SetValue(currentBlip.clone.upstairs)
             negativeteemingCheckbox:SetValue(currentBlip.clone.negativeTeeming)
             faction:SetText(currentBlip.clone.faction)
+            sublevel:SetText(currentBlip.clone.sublevel)
         else
             cloneGroup:SetText(currentCloneGroup)
         end
