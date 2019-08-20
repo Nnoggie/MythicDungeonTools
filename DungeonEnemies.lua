@@ -642,10 +642,8 @@ function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
     for _,blip in pairs(blips) do
         local weekData =  blip.clone.week
         if weekData and not weekData[week] then
-            blip:Disable()
             blip:Hide()
         elseif weekData and weekData[week] then
-            blip:Enable()
             blip:Show()
         end
     end
@@ -675,15 +673,36 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
     end
 end
 
+local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
 function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
     preset = MethodDungeonTools:GetCurrentPreset()
     local teeming = MethodDungeonTools:IsPresetTeeming(preset)
     for _,blip in pairs(blips) do
         if blip.clone.faction then
-            if blip.clone.faction == faction and ((teeming and blip.clone.teeming) or (not blip.clone.teeming)) then
-                blip:Show()
+            --handle beguiling npcs here
+            if emissaryIds[blip.data.id] then
+                local week
+                if db.MDI.enabled then
+                    week = preset.mdi.beguiling or 1
+                else
+                    week = preset.week
+                end
+                local weekData =  blip.clone.week
+                if weekData and not weekData[week] then
+                    blip:Hide()
+                elseif weekData and weekData[week] then
+                    if blip.clone.faction == faction then
+                        blip:Show()
+                    else
+                        blip:Hide()
+                    end
+                end
             else
-                blip:Hide()
+                if blip.clone.faction == faction and ((teeming and blip.clone.teeming) or (not blip.clone.teeming)) then
+                    blip:Show()
+                else
+                    blip:Hide()
+                end
             end
         end
     end
