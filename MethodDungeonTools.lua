@@ -1119,7 +1119,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector:SetWidth(120)
         MethodDungeonTools.MDISelector:SetHeight(90)
         MethodDungeonTools.MDISelector.frame:ClearAllPoints()
-        MethodDungeonTools.MDISelector.frame:SetPoint("TOPRIGHT",MethodDungeonTools.main_frame,"TOPRIGHT",0,0)
+        MethodDungeonTools.MDISelector.frame:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",0,0)
 
         local label = AceGUI:Create("Label")
         label:SetText("MDI Mode")
