@@ -649,7 +649,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
             blip:Show()
         end
     end
-    end
+end
 
 ---DungeonEnemies_UpdateBlacktoothEvent
 ---Updates visibility state of blacktooth event blips

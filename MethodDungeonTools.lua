@@ -322,6 +322,7 @@ local dungeonSubLevels = {
     },
     [19] = {
         [1] = "Siege of Boralus",
+        [2] = "Siege of Boralus (Upstairs)",
     },
     [20] = {
         [1] = "Temple of Sethraliss",
@@ -459,6 +460,7 @@ MethodDungeonTools.dungeonMaps = {
     [19] = {
         [0] = "SiegeOfBoralus",
         [1] = "SiegeOfBoralus",
+        [2] = "SiegeOfBoralus",
     },
     [20] = {
         [0] = "TempleOfSethralissA",
@@ -1001,8 +1003,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:DungeonEnemies_UpdateReaping()
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
-        MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:POI_UpdateAll()
         if not ignoreUpdateProgressBar then
             MethodDungeonTools:UpdateProgressbar()
@@ -1132,6 +1134,7 @@ function MethodDungeonTools:DisplayMDISelector()
             local preset = MethodDungeonTools:GetCurrentPreset()
             preset.mdi.beguiling = key
             MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+            MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
         end)
@@ -1174,6 +1177,7 @@ function MethodDungeonTools:DisplayMDISelector()
         preset.mdi.beguiling = preset.mdi.beguiling or 1
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
         MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         --freehold
         preset.mdi.freehold = preset.mdi.freehold or 1
         MethodDungeonTools.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
@@ -1187,6 +1191,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools:ToggleFreeholdSelector(false)
     else
         MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
         MethodDungeonTools:UpdateProgressbar()
