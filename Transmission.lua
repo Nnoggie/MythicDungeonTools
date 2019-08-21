@@ -179,7 +179,7 @@ function SetItemRef(link, ...)
         local sender = link:sub(20, string.len(link))
         local name,realm = string.match(sender,"(.*)+(.*)")
         if (not name) or (not realm) then
-            print("MDT could not find sender, please report to author! Sender: "..sender)
+            print("MDT could not properly receive a preset, please make sure sender "..sender.." has the latest version of MDT installed!")
             return
         end
         sender = name.."-"..realm
