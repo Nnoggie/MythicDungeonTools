@@ -1547,7 +1547,7 @@ end
 ---Returns if the current week has an affix week set that inlcludes the teeming affix
 function MethodDungeonTools:IsWeekTeeming(week)
     if not week then week = MethodDungeonTools:GetCurrentAffixWeek() or 1 end
-    return week == 1 or week == 4 or week == 8
+    return week == 1 or week == 8
 end
 
 ---IsPresetTeeming
