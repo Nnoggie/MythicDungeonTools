@@ -1430,6 +1430,7 @@ end
 function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     local preset = MethodDungeonTools:GetCurrentPreset()
     local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
+    local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
     --MDI override
     local week
@@ -1442,13 +1443,16 @@ function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     --beguiling weekly configuration
     local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
     if weekData then
-        if weekData[week] then return true else return false end
+        if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) then
+            return true
+        else
+            return false
+        end
     end
 
     week = week%3
     if week == 0 then week = 3 end
     local isBlacktoothWeek = week == 2
-    local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
     if not isCloneBlacktoothEvent or isBlacktoothWeek then
         if not (cloneFaction and cloneFaction~= preset.faction) then
@@ -2411,15 +2415,15 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 end
 
 
+                                local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
                                 --beguiling weekly configuration
                                 local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
                                 if weekData then
-                                    if weekData[week] then continue = true else continue = false end
+                                    if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) then continue = true else continue = false end
                                 end
 
                                 --check for faction
-                                local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
                                 if cloneFaction then
                                     if cloneFaction ~= preset.faction then continue = false end
                                 end
