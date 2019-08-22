@@ -1,2 +1,3 @@
 v2.7.8
-    - Siege of Boralus: Fixed Emissary Count Issues
+- Siege of Boralus: Fixed emissary count Issues
+- Updated affix list to include week 5 (Bolstering, Explosive, Tyrannical)
