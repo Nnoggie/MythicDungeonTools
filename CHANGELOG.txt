@@ -1,6 +1,2 @@
-Changelog Test:
-    -List1
-    -List2
-1. List1
-2. List2
-
+v2.7.8
+    - Siege of Boralus: Fixed Emissary Count Issues
