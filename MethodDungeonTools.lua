@@ -3084,6 +3084,38 @@ function MethodDungeonTools:GetCurrentAffixWeek()
     return 1
 end
 
+---PrintCurrentAffixes
+---Helper function to print out current affixes with their ids and their names
+function MethodDungeonTools:PrintCurrentAffixes()
+    --run this once so blizz stuff is loaded
+    MethodDungeonTools:GetCurrentAffixWeek()
+    --https://www.wowhead.com/affixes
+    local affixNames = {
+        [1] ="Overflowing",
+        [2] ="Skittish",
+        [3] ="Volcanic",
+        [4] ="Necrotic",
+        [5] ="Teeming",
+        [6] ="Raging",
+        [7] ="Bolstering",
+        [8] ="Sanguine",
+        [9] ="Tyrannical",
+        [10] ="Fortified",
+        [11] ="Bursting",
+        [12] ="Grievous",
+        [13] ="Explosive",
+        [14] ="Quaking",
+        [15] ="Relentless",
+        [16] ="Infested",
+        [117] ="Reaping",
+        [119] ="Beguiling",
+    }
+    local affixIds = C_MythicPlus.GetCurrentAffixes()
+    for idx,data in ipairs(affixIds) do
+        print(data.id,affixNames[data.id])
+    end
+end
+
 ---IsPlayerInGroup
 ---Checks if the players is in a group/raid and returns the type
 function MethodDungeonTools:IsPlayerInGroup()
