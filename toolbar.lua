@@ -245,7 +245,8 @@ function MethodDungeonTools:initToolbar(frame)
     local delete = AceGUI:Create("Icon")
     delete:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
     delete:SetCallback("OnClick",function (widget,callbackName)
-        MethodDungeonTools:DeletePresetObjects()
+        local prompt = "Do you wish to delete ALL drawings from the current preset?\nThis cannot be undone\n\n"
+        MethodDungeonTools:OpenConfirmationFrame(350,150,"Delete ALL drawings","Delete",prompt, MethodDungeonTools.DeletePresetObjects)
     end)
     delete.tooltipText = "Clear all drawings"
     tinsert(widgets,delete)
