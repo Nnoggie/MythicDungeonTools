@@ -1,3 +1,9 @@
+v2.8.0
+- Affixes for week 6 added (Bursting,Volcanic,Fortified,Beguiling (Arcane))
+- Clarified unknown affix weeks
+- Siege of Boralus: Void Week alliance emissaries fixed
+- fix nil error after disconnect in an ongoing keystone
+- New Feature: CTRL+SHIFT+ALT-clicking the delete button will prompt the user to delete all presets of the current dungeon
 v2.7.9
 - Siege of Boralus: Fixed more emissary count Issues
 v2.7.8
