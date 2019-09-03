@@ -829,12 +829,19 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelDeleteButton:SetCallback("OnClick",function(widget,callbackName,value)
-		MethodDungeonTools:HideAllDialogs()
-        frame.DeleteConfirmationFrame:ClearAllPoints()
-		frame.DeleteConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-		local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-		frame.DeleteConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
-		frame.DeleteConfirmationFrame:Show()
+        if IsAltKeyDown() and IsShiftKeyDown() and IsControlKeyDown() then
+            --delete all profiles
+            local numPresets = self:CountPresets()
+            local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of the current dungeon?\nYou are about to delete "..numPresets.." preset(s).\nThis cannot be undone\n\n"
+            MethodDungeonTools:OpenConfirmationFrame(450,150,"Delete ALL presets","Delete",prompt, MethodDungeonTools.DeleteAllPresets)
+        else
+            MethodDungeonTools:HideAllDialogs()
+            frame.DeleteConfirmationFrame:ClearAllPoints()
+            frame.DeleteConfirmationFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+            local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
+            frame.DeleteConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
+            frame.DeleteConfirmationFrame:Show()
+        end
 	end)
 
 	frame.LinkToChatButton = AceGUI:Create("Button")
@@ -1688,6 +1695,7 @@ function MethodDungeonTools:HideAllDialogs()
 	MethodDungeonTools.main_frame.RenameFrame:Hide()
 	MethodDungeonTools.main_frame.ClearConfirmationFrame:Hide()
 	MethodDungeonTools.main_frame.DeleteConfirmationFrame:Hide()
+    if MethodDungeonTools.main_frame.ConfirmationFrame then MethodDungeonTools.main_frame.ConfirmationFrame:Hide() end
 end
 
 function MethodDungeonTools:OpenImportPresetDialog()
@@ -1920,6 +1928,24 @@ function MethodDungeonTools:DeletePreset(index)
 	db.currentPreset[db.currentDungeonIdx] = index-1
 	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
+end
+
+---CountPresets
+---Counts the number of presets of the current dungeon
+function MethodDungeonTools:CountPresets()
+    return #db.presets[db.currentDungeonIdx]-2
+end
+
+---DeleteAllPresets
+---Deletes all presets from the current dungeon
+function MethodDungeonTools:DeleteAllPresets()
+    local countPresets = #db.presets[db.currentDungeonIdx]-1
+    for i=countPresets,2,-1 do
+        tremove(db.presets[db.currentDungeonIdx],i)
+        db.currentPreset[db.currentDungeonIdx] = i-1
+    end
+    MethodDungeonTools:UpdatePresetDropDown()
+    MethodDungeonTools:UpdateMap()
 end
 
 function MethodDungeonTools:ClearPreset(index)
@@ -2741,6 +2767,48 @@ function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.OkayButton)
 	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.CancelButton)
 	frame.ClearConfirmationFrame:Hide()
+
+end
+
+---OpenConfirmationFrame
+---Creates a generic dialog that pops up when a user wants needs confirmation for an action
+function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,prompt,callback)
+    local f = MethodDungeonTools.main_frame.ConfirmationFrame
+    if not f then
+        MethodDungeonTools.main_frame.ConfirmationFrame = AceGUI:Create("Frame")
+        f = MethodDungeonTools.main_frame.ConfirmationFrame
+        f:EnableResize(false)
+        f:SetLayout("Flow")
+        f:SetCallback("OnClose", function(widget) end)
+
+        f.label = AceGUI:Create("Label")
+        f.label:SetWidth(390)
+        f.label:SetHeight(10)
+        f:AddChild(f.label)
+
+        f.OkayButton = AceGUI:Create("Button")
+        f.OkayButton:SetWidth(100)
+        f:AddChild(f.OkayButton)
+
+        f.CancelButton = AceGUI:Create("Button")
+        f.CancelButton:SetText("Cancel")
+        f.CancelButton:SetWidth(100)
+        f.CancelButton:SetCallback("OnClick",function()
+            f:Hide()
+        end)
+        f:AddChild(f.CancelButton)
+    end
+    f:SetWidth(width or 250)
+    f:SetHeight(height or 120)
+    f:SetTitle(title)
+    f.OkayButton:SetText(buttonText)
+    f.OkayButton:SetCallback("OnClick",function()callback();MethodDungeonTools:HideAllDialogs() end)
+
+    MethodDungeonTools:HideAllDialogs()
+    f:ClearAllPoints()
+    f:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+    f.label:SetText(prompt)
+    f:Show()
 
 end
 
