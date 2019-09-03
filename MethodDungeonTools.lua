@@ -199,10 +199,10 @@ local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
     [3] = {[1]=11,[2]=4,[3]=9,[4]=119},
     [4] = {[1]=8,[2]=14,[3]=10,[4]=119},
     [5] = {[1]=7,[2]=13,[3]=9,[4]=119},
-    [6] = {[1]=8,[2]=4,[3]=10,[4]=119},
-    [7] = {[1]=11,[2]=3,[3]=9,[4]=119},
-    [8] = {[1]=5,[2]=13,[3]=10,[4]=119},
-    [9] = {[1]=6,[2]=14,[3]=9,[4]=119},
+    [6] = {[1]=11,[2]=3,[3]=10,[4]=119},
+    [7] = {[1]=0,[2]=0,[3]=9,[4]=119},--unknown
+    [8] = {[1]=0,[2]=0,[3]=10,[4]=119},--unknown
+    [9] = {[1]=0,[2]=0,[3]=9,[4]=119},--unknown
     [10] = {[1]=7,[2]=12,[3]=10,[4]=119},
     [11] = {[1]=6,[2]=13,[3]=9,[4]=119},
     [12] = {[1]=8,[2]=12,[3]=10,[4]=119},
@@ -933,6 +933,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
         local sep = ""
         for _,affixID in ipairs(affixes) do
             local name, _, filedataid = C_ChallengeMode.GetAffixInfo(affixID)
+            name = name or "Unknown"
+            filedataid = filedataid or 134400 --questionmark
             if longText then
                 ret = ret or ""
                 ret = ret..sep..name
