@@ -539,15 +539,25 @@ end
 
 function MethodDungeonTools:CreateMenu()
 	-- Close button
-	self.main_frame.closeButton = CreateFrame("Button", "CloseButton", self.main_frame, "UIPanelCloseButton");
+	self.main_frame.closeButton = CreateFrame("Button", "CloseButton", self.main_frame, "UIPanelCloseButton")
 	self.main_frame.closeButton:ClearAllPoints()
-	self.main_frame.closeButton:SetPoint("BOTTOMRIGHT", self.main_frame, "TOPRIGHT", 240, -2);
+	self.main_frame.closeButton:SetPoint("BOTTOMRIGHT", self.main_frame, "TOPRIGHT", 240, -2)
 	self.main_frame.closeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end)
 	self.main_frame.closeButton:SetFrameLevel(4)
-	MethodDungeonTools:SkinCloseButton()
+    --Maximize Button
+    self.main_frame.maximizeButton = CreateFrame("Button", "MaximizeButton", self.main_frame, "MaximizeMinimizeButtonFrameTemplate")
+    self.main_frame.maximizeButton:ClearAllPoints()
+    self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
+    self.main_frame.maximizeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end)
+    self.main_frame.maximizeButton:SetFrameLevel(4)
+    db.maximized = db.maximized or false
+    if not db.maximized then self.main_frame.maximizeButton:Minimize() end
+    self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
+    self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
+    MethodDungeonTools:SkinMenuButtons()
 end
 
-function MethodDungeonTools:SkinCloseButton()
+function MethodDungeonTools:SkinMenuButtons()
 	--attempt to skin close button for ElvUI
 	if IsAddOnLoaded("ElvUI") then
 	   local E, L, V, P, G = unpack(ElvUI)
@@ -555,8 +565,23 @@ function MethodDungeonTools:SkinCloseButton()
 	   if E then S = E:GetModule("Skins") end
 	   if S then
 	      S:HandleCloseButton(MethodDungeonTools.main_frame.closeButton)
+	      S:HandleMaxMinFrame(MethodDungeonTools.main_frame.maximizeButton)
 	   end
 	end
+end
+
+---Maximize
+---FULLSCREEN the UI
+function MethodDungeonTools:Maximize()
+
+    db.maximized = true
+end
+
+---Minimize
+---Restore normal UI
+function MethodDungeonTools:Minimize()
+
+    db.maximized = false
 end
 
 function MethodDungeonTools:SkinProgressBar(progressBar)
@@ -737,6 +762,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	--preset selection
 	frame.sidePanel.WidgetGroup.PresetDropDown = AceGUI:Create("Dropdown")
 	local dropdown = frame.sidePanel.WidgetGroup.PresetDropDown
+    dropdown.frame:SetWidth(170)
 	dropdown.text:SetJustifyH("LEFT")
 	dropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
 		if db.presets[db.currentDungeonIdx][key].value==0 then
@@ -3526,6 +3552,9 @@ function initFrames()
     main_frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week or (MethodDungeonTools:GetCurrentAffixWeek() or 1))
     MethodDungeonTools:UpdateToDungeon(db.currentDungeonIdx)
 	main_frame:Hide()
+
+    --Maximize if needed
+    if db.maximized then MethodDungeonTools:Maximize() end
 
     framesInitialized = true
 end
