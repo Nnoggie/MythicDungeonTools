@@ -113,6 +113,7 @@ local function MakeEnemeyInfoFrame()
 
         ---LEFT
         local leftContainer = AceGUI:Create("SimpleGroup")
+        f.leftContainer = leftContainer
         leftContainer.frame:SetBackdropColor(1,1,1,0)
         leftContainer:SetLayout("List")
         leftContainer:SetWidth(container.frame:GetWidth()/3)

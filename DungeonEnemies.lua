@@ -394,8 +394,8 @@ end
 
 function MDTDungeonEnemyMixin:SetUp(data,clone)
     self:ClearAllPoints()
-    self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x,clone.y)
-    self.normalScale = data.scale*(data.isBoss and 1.7 or 1)*(MethodDungeonTools.scaleMultiplier[db.currentDungeonIdx] or 1)
+    self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clone.x*MethodDungeonTools.scale,clone.y*MethodDungeonTools.scale)
+    self.normalScale = data.scale*(data.isBoss and 1.7 or 1)*(MethodDungeonTools.scaleMultiplier[db.currentDungeonIdx] or 1)*MethodDungeonTools.scale
     self.normalScale = self.normalScale * 0.6
     self:SetSize(self.normalScale*13,self.normalScale*13)
     self:updateSizes(1)

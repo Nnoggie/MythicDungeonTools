@@ -11,6 +11,10 @@ local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pair
 
 local sizex = 840
 local sizey = 555
+
+--sizex = sizex *1.4
+--sizey = sizey *1.4
+
 local methodColor = "|cFFF49D38"
 local selectedGreen = {0,1,0,0.4}
 selectedGreen = {34/255,139/255,34/255,0.7}
@@ -517,7 +521,7 @@ function MethodDungeonTools:ShowInterface(force)
 end
 
 function MethodDungeonTools:HideInterface()
-	self.main_frame:Hide();
+	self.main_frame:Hide()
 	self.main_frame.HelpButton:Hide()
 end
 
@@ -541,20 +545,19 @@ function MethodDungeonTools:CreateMenu()
 	-- Close button
 	self.main_frame.closeButton = CreateFrame("Button", "CloseButton", self.main_frame, "UIPanelCloseButton")
 	self.main_frame.closeButton:ClearAllPoints()
-	self.main_frame.closeButton:SetPoint("BOTTOMRIGHT", self.main_frame, "TOPRIGHT", 240, -2)
-	self.main_frame.closeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end)
+	self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", 0, 0)
+	self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
 	self.main_frame.closeButton:SetFrameLevel(4)
     --Maximize Button
     self.main_frame.maximizeButton = CreateFrame("Button", "MaximizeButton", self.main_frame, "MaximizeMinimizeButtonFrameTemplate")
     self.main_frame.maximizeButton:ClearAllPoints()
     self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
-    self.main_frame.maximizeButton:SetScript("OnClick", function() MethodDungeonTools:HideInterface(); end)
     self.main_frame.maximizeButton:SetFrameLevel(4)
     db.maximized = db.maximized or false
     if not db.maximized then self.main_frame.maximizeButton:Minimize() end
     self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
     self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
-    MethodDungeonTools:SkinMenuButtons()
+    self:SkinMenuButtons()
 end
 
 function MethodDungeonTools:SkinMenuButtons()
@@ -564,8 +567,8 @@ function MethodDungeonTools:SkinMenuButtons()
 	   local S
 	   if E then S = E:GetModule("Skins") end
 	   if S then
-	      S:HandleCloseButton(MethodDungeonTools.main_frame.closeButton)
-	      S:HandleMaxMinFrame(MethodDungeonTools.main_frame.maximizeButton)
+	      S:HandleCloseButton(self.main_frame.closeButton)
+	      S:HandleMaxMinFrame(self.main_frame.maximizeButton)
 	   end
 	end
 end
@@ -573,6 +576,43 @@ end
 ---Maximize
 ---FULLSCREEN the UI
 function MethodDungeonTools:Maximize()
+    local f = MethodDungeonTools.main_frame
+    if not f.blackoutFrame then
+        f.blackoutFrame = CreateFrame("Frame", "MethodDungeonToolsBlackoutFrame", f)
+        f.blackoutFrame:EnableMouse(true)
+        f.blackoutFrameTex = f.blackoutFrame:CreateTexture(nil, "BACKGROUND")
+        f.blackoutFrameTex:SetAllPoints()
+        f.blackoutFrameTex:SetDrawLayer(canvasDrawLayer, -6)
+        f.blackoutFrameTex:SetColorTexture(0.058823399245739,0.058823399245739,0.058823399245739,1)
+        f.blackoutFrame:ClearAllPoints()
+        f.blackoutFrame:SetAllPoints(UIParent)
+    end
+    f.blackoutFrame:Show()
+    f.topPanel:RegisterForDrag(nil)
+    f.bottomPanel:RegisterForDrag(nil)
+    local newSizey = GetScreenHeight()-60 --top and bottom panel 30 each
+    local newSizex = newSizey*(sizex/sizey)
+    MethodDungeonTools.scale = newSizey/sizey --use this for adjusting NPC / POI positions later
+    f:ClearAllPoints()
+    f:SetPoint("TOP", UIParent,"TOP", -(f.sidePanel:GetWidth()/2), -30)
+    f:SetSize(newSizex,newSizey)
+    f.scrollFrame:SetSize(newSizex, newSizey)
+    f.mapPanelFrame:SetSize(newSizex, newSizey)
+
+    f.bottomPanel:SetSize(newSizex, 30)
+    f.topPanel:SetSize(newSizex, 30)
+    f.sidePanel:SetSize(250, newSizex+60)
+
+    for i=1,12 do
+        f["mapPanelTile"..i]:SetSize((newSizex/4+5*MethodDungeonTools.scale),(newSizex/4+5*MethodDungeonTools.scale))
+    end
+
+    --local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame or MethodDungeonTools:ShowEnemyInfoFrame(nil,true)
+    --enemyInfoFrame.frame:ClearAllPoints()
+    --enemyInfoFrame.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
+    MethodDungeonTools:UpdateMap()
+
+    --do your magic here grim
 
     db.maximized = true
 end
@@ -580,6 +620,28 @@ end
 ---Minimize
 ---Restore normal UI
 function MethodDungeonTools:Minimize()
+    local f = MethodDungeonTools.main_frame
+    f.blackoutFrame:Hide()
+    f.topPanel:RegisterForDrag("LeftButton")
+    f.bottomPanel:RegisterForDrag("LeftButton")
+    MethodDungeonTools.scale = 1
+    f:ClearAllPoints()
+    f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
+    f:SetSize(sizex,sizey)
+    f.scrollFrame:SetSize(sizex, sizey)
+    f.mapPanelFrame:SetSize(sizex, sizey)
+    for i=1,12 do
+        f["mapPanelTile"..i]:SetSize(sizex/4+5,sizex/4+5)
+    end
+    f.bottomPanel:SetSize(sizex, 30)
+    f.topPanel:SetSize(sizex, 30)
+    f.sidePanel:SetSize(250, sizey+60)
+    local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame
+    --enemyInfoFrame.frame:ClearAllPoints()
+    --enemyInfoFrame.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
+    MethodDungeonTools:UpdateMap()
+
+    --do your magic here grim
 
     db.maximized = false
 end
@@ -650,7 +712,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 
     frame.topPanel:ClearAllPoints()
     frame.topPanel:SetSize(frame:GetWidth(), 30)
-    frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0)
+    frame.topPanel:SetPoint("BOTTOM", frame, "TOP", 0, 0)
 
     frame.topPanel:EnableMouse(true)
     frame.topPanel:RegisterForDrag("LeftButton")
@@ -659,8 +721,8 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
         frame:StartMoving()
     end)
     frame.topPanel:SetScript("OnDragStop", function(self,button)
-        frame:StopMovingOrSizing();
-        frame:SetMovable(false);
+        frame:StopMovingOrSizing()
+        frame:SetMovable(false)
         local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
         db.anchorFrom = from
         db.anchorTo = to
@@ -678,7 +740,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 
     frame.bottomPanel:ClearAllPoints()
     frame.bottomPanel:SetSize(frame:GetWidth(), 30)
-    frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, 0)
+    frame.bottomPanel:SetPoint("TOP", frame, "BOTTOM", 0, 0)
 
     frame.bottomPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Version")
     frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
@@ -717,29 +779,30 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		frame.sidePanelTex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 		frame.sidePanelTex:Show()
 	end
+    frame.sidePanel:EnableMouse(true)
 
 
-	frame.sidePanel:ClearAllPoints();
+	frame.sidePanel:ClearAllPoints()
 	frame.sidePanel:SetSize(250, frame:GetHeight()+(frame.topPanel:GetHeight()*2))
-	frame.sidePanel:SetPoint("TOPLEFT", frame.topPanel, "TOPRIGHT", -1, 0)
+	frame.sidePanel:SetPoint("TOPLEFT", frame, "TOPRIGHT", -1, 30)
 
 	frame.sidePanelString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelText")
 	frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10)
-	frame.sidePanelString:SetTextColor(1, 1, 1, 1);
+	frame.sidePanelString:SetTextColor(1, 1, 1, 1)
 	frame.sidePanelString:SetJustifyH("LEFT")
 	frame.sidePanelString:SetJustifyV("TOP")
 	frame.sidePanelString:SetWidth(200)
 	frame.sidePanelString:SetHeight(500)
-	frame.sidePanelString:SetText("");
-	frame.sidePanelString:ClearAllPoints();
-	frame.sidePanelString:SetPoint("TOPLEFT", frame.sidePanel, "TOPLEFT", 33, -120-30-25);
-	frame.sidePanelString:Hide();
+	frame.sidePanelString:SetText("")
+	frame.sidePanelString:ClearAllPoints()
+	frame.sidePanelString:SetPoint("TOPLEFT", frame.sidePanel, "TOPLEFT", 33, -120-30-25)
+	frame.sidePanelString:Hide()
 
 
 
 	frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
-	frame.sidePanel.WidgetGroup:SetWidth(245);
-	frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight()+(frame.topPanel:GetHeight()*2)-31);
+	frame.sidePanel.WidgetGroup:SetWidth(245)
+	frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight()+(frame.topPanel:GetHeight()*2)-31)
 	frame.sidePanel.WidgetGroup:SetPoint("TOP",frame.sidePanel,"TOP",3,-1)
 	frame.sidePanel.WidgetGroup:SetLayout("Flow")
 
@@ -751,12 +814,12 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	local originalShow,originalHide = frame.Show,frame.Hide
 	function frame:Show(...)
 		frame.sidePanel.WidgetGroup.frame:Show()
-		return originalShow(self, ...);
+		return originalShow(self, ...)
 	end
 	function frame:Hide(...)
 		frame.sidePanel.WidgetGroup.frame:Hide()
         MethodDungeonTools.pullTooltip:Hide()
-		return originalHide(self, ...);
+		return originalHide(self, ...)
 	end
 
 	--preset selection
@@ -792,8 +855,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelNewButton:SetText("New")
 	frame.sidePanelNewButton:SetWidth(buttonWidth)
 	--button fontInstance
-	local fontInstance = CreateFont("MDTButtonFont");
-	fontInstance:CopyFontObject(frame.sidePanelNewButton.frame:GetNormalFontObject());
+	local fontInstance = CreateFont("MDTButtonFont")
+	fontInstance:CopyFontObject(frame.sidePanelNewButton.frame:GetNormalFontObject())
 	local fontName,height = fontInstance:GetFont()
 	fontInstance:SetFont(fontName,10)
 	frame.sidePanelNewButton.frame:SetNormalFontObject(fontInstance)
@@ -1140,11 +1203,11 @@ function MethodDungeonTools:DisplayMDISelector()
         local widget = MethodDungeonTools.MDISelector.frame
         function frame:Hide(...)
             widget:Hide()
-            return originalHide(self, ...);
+            return originalHide(self, ...)
         end
         function frame:Show(...)
             if db.MDI.enabled then widget:Show() end
-            return originalShow(self, ...);
+            return originalShow(self, ...)
         end
 
         MethodDungeonTools.MDISelector:SetLayout("Flow")
@@ -1275,9 +1338,9 @@ function MethodDungeonTools:Progressbar_SetValue(self,totalCurrent,totalMax)
 	else
 		self.Bar:SetStatusBarColor(0.26,0.42,1)
 	end
-	self.Bar:SetValue(percent);
-	self.Bar.Label:SetText(MethodDungeonTools:FormatEnemyForces(totalCurrent,totalMax,true));
-	self.AnimValue = percent;
+	self.Bar:SetValue(percent)
+	self.Bar.Label:SetText(MethodDungeonTools:FormatEnemyForces(totalCurrent,totalMax,true))
+	self.AnimValue = percent
 end
 
 function MethodDungeonTools:OnPan(cursorX, cursorY)
@@ -1286,10 +1349,10 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
 	local deltaX = (scrollFrame.cursorX - cursorX)/scale
 	local deltaY = (cursorY - scrollFrame.cursorY)/scale
 	if(abs(deltaX) >= 1 or abs(deltaY) >= 1)then
-		local newHorizontalPosition = max(0, deltaX + scrollFrame:GetHorizontalScroll());
-		newHorizontalPosition = min(newHorizontalPosition, scrollFrame.maxX);
-		local newVerticalPosition = max(0, deltaY + scrollFrame:GetVerticalScroll());
-		newVerticalPosition = min(newVerticalPosition, scrollFrame.maxY);
+		local newHorizontalPosition = max(0, deltaX + scrollFrame:GetHorizontalScroll())
+		newHorizontalPosition = min(newHorizontalPosition, scrollFrame.maxX)
+		local newVerticalPosition = max(0, deltaY + scrollFrame:GetVerticalScroll())
+		newVerticalPosition = min(newVerticalPosition, scrollFrame.maxY)
 		scrollFrame:SetHorizontalScroll(newHorizontalPosition)
 		scrollFrame:SetVerticalScroll(newVerticalPosition)
 		scrollFrame.cursorX = cursorX
@@ -1308,17 +1371,17 @@ end
 
 
 function MethodDungeonTools:ZoomMap(delta,resetZoom)
-	local scrollFrame = MethodDungeonToolsScrollFrame;
-	local oldScrollH = scrollFrame:GetHorizontalScroll();
-	local oldScrollV = scrollFrame:GetVerticalScroll();
+	local scrollFrame = MethodDungeonToolsScrollFrame
+	local oldScrollH = scrollFrame:GetHorizontalScroll()
+	local oldScrollV = scrollFrame:GetVerticalScroll()
 
 	local mainFrame = MethodDungeonToolsMapPanelFrame
 
-	local oldScale = mainFrame:GetScale();
-	local newScale = oldScale + delta * 0.3;
+	local oldScale = mainFrame:GetScale()
+	local newScale = oldScale + delta * 0.3
 
-	newScale = max(1, newScale);
-	newScale = min(15, newScale);
+	newScale = max(1, newScale)
+	newScale = min(15, newScale)
 	if resetZoom then newScale = 1 end
 
 	mainFrame:SetScale(newScale)
@@ -1331,20 +1394,20 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	scrollFrame.zoomedIn = abs(newScale - 1) > 0.02
 
 	local cursorX,cursorY = GetCursorPosition()
-	local frameX = (cursorX / UIParent:GetScale()) - scrollFrame:GetLeft();
-	local frameY = scrollFrame:GetTop() - (cursorY / UIParent:GetScale());
+	local frameX = (cursorX / UIParent:GetScale()) - scrollFrame:GetLeft()
+	local frameY = scrollFrame:GetTop() - (cursorY / UIParent:GetScale())
 
 	local scaleChange = newScale / oldScale
 	local newScrollH =  (scaleChange * frameX - frameX) / newScale + oldScrollH
 	local newScrollV =  (scaleChange * frameY - frameY) / newScale + oldScrollV
 
-	newScrollH = min(newScrollH, scrollFrame.maxX);
-	newScrollH = max(0, newScrollH);
-	newScrollV = min(newScrollV, scrollFrame.maxY);
-	newScrollV = max(0, newScrollV);
+	newScrollH = min(newScrollH, scrollFrame.maxX)
+	newScrollH = max(0, newScrollH)
+	newScrollV = min(newScrollV, scrollFrame.maxY)
+	newScrollV = max(0, newScrollV)
 
-	scrollFrame:SetHorizontalScroll(newScrollH);
-	scrollFrame:SetVerticalScroll(newScrollV);
+	scrollFrame:SetHorizontalScroll(newScrollH)
+	scrollFrame:SetVerticalScroll(newScrollV)
 
     MethodDungeonTools:SetPingOffsets(newScale)
 
@@ -1402,7 +1465,7 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         tooltip.topString:SetText(text)
                         showData = true
 					end
-					break;
+					break
 				end
 			end
             if showData then
@@ -1524,7 +1587,7 @@ end
 MethodDungeonTools.OnMouseDown = function(self,button)
 	local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
 	if scrollFrame.zoomedIn then
-		scrollFrame.panning = true;
+		scrollFrame.panning = true
 		scrollFrame.cursorX,scrollFrame.cursorY = GetCursorPosition()
 	end
 end
@@ -1608,9 +1671,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 	-- Scroll Frame
 	if frame.scrollFrame == nil then
 		frame.scrollFrame = CreateFrame("ScrollFrame", "MethodDungeonToolsScrollFrame",frame)
-		frame.scrollFrame:ClearAllPoints();
-		frame.scrollFrame:SetSize(840, 555);
-		frame.scrollFrame:SetPoint("BOTTOM", frame, "BOTTOM", 0, 0);
+		frame.scrollFrame:ClearAllPoints()
+		frame.scrollFrame:SetSize(sizex, sizey)
+		frame.scrollFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
@@ -1626,27 +1689,27 @@ function MethodDungeonTools:MakeMapTexture(frame)
 
 		frame.scrollFrame:SetScript("OnUpdate", function(self)
 			if (MethodDungeonTools.main_frame.scrollFrame.panning) then
-				local x, y = GetCursorPosition();
-				MethodDungeonTools:OnPan(x, y);
+				local x, y = GetCursorPosition()
+				MethodDungeonTools:OnPan(x, y)
 			end
         end)
 
 		if frame.mapPanelFrame == nil then
 			frame.mapPanelFrame = CreateFrame("frame","MethodDungeonToolsMapPanelFrame",nil)
-			frame.mapPanelFrame:ClearAllPoints();
-			frame.mapPanelFrame:SetSize(frame:GetWidth(), frame:GetHeight());
-			frame.mapPanelFrame:SetPoint("BOTTOM", frame, "BOTTOM", 0, 0);
+			frame.mapPanelFrame:ClearAllPoints()
+			frame.mapPanelFrame:SetSize(sizex, sizey)
+			frame.mapPanelFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 
 		end
 
 		--create the 12 tiles and set the scrollchild
 		for i=1,12 do
-			frame["mapPanelTile"..i] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsmapPanelTile"..i, "BACKGROUND");
-			frame["mapPanelTile"..i]:SetDrawLayer(canvasDrawLayer, 0);
+			frame["mapPanelTile"..i] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsmapPanelTile"..i, "BACKGROUND")
+			frame["mapPanelTile"..i]:SetDrawLayer(canvasDrawLayer, 0)
 			--frame["mapPanelTile"..i]:SetAlpha(0.3)
-			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+4,frame:GetWidth()/4+4)
+			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+5,frame:GetWidth()/4+5)
 		end
-		frame.mapPanelTile1:SetPoint("TOPLEFT",frame.mapPanelFrame,"TOPLEFT",1,0)
+		frame.mapPanelTile1:SetPoint("TOPLEFT",frame.mapPanelFrame,"TOPLEFT",0,0)
 		frame.mapPanelTile2:SetPoint("TOPLEFT",frame.mapPanelTile1,"TOPRIGHT")
 		frame.mapPanelTile3:SetPoint("TOPLEFT",frame.mapPanelTile2,"TOPRIGHT")
 		frame.mapPanelTile4:SetPoint("TOPLEFT",frame.mapPanelTile3,"TOPRIGHT")
@@ -1793,8 +1856,8 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	local group = frame.DungeonSelectionGroup
     group.frame:SetFrameStrata("HIGH")
     group.frame:SetFrameLevel(50)
-	group:SetWidth(200);
-	group:SetHeight(50);
+	group:SetWidth(200)
+	group:SetHeight(50)
 	group:SetPoint("TOPLEFT",frame.topPanel,"BOTTOMLEFT",0,2)
     group:SetLayout("List")
 
@@ -1851,7 +1914,7 @@ function MethodDungeonTools:EnsureDBTables()
 	for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
 		if k ==0  then
 			db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[0] = nil
-			break;
+			break
 		end
 	end
 
@@ -1907,9 +1970,9 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	mapName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][0]
 	MethodDungeonTools:EnsureDBTables()
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel]
-	local path = "Interface\\WorldMap\\"..mapName.."\\";
+	local path = "Interface\\WorldMap\\"..mapName.."\\"
 	for i=1,12 do
-		local texName = path..fileName..i;
+		local texName = path..fileName..i
 		if frame["mapPanelTile"..i] then
 			frame["mapPanelTile"..i]:SetTexture(texName)
 		end
@@ -2206,7 +2269,7 @@ function MethodDungeonTools:ImportPreset(preset)
     --change dungeon to dungeon of the new preset
     MethodDungeonTools:UpdateToDungeon(preset.value.currentDungeonIdx)
 	local name = preset.text
-	local num = 2;
+	local num = 2
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
 		if name == v.text then
 			name = preset.text.." "..num
@@ -2229,7 +2292,7 @@ end
 
 function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
-    frame.PullButtonScrollGroup:SetWidth(249);
+    frame.PullButtonScrollGroup:SetWidth(249)
     frame.PullButtonScrollGroup:SetHeight(410)
     frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame.WidgetGroup.frame,"BOTTOMLEFT",-4,-32)
     frame.PullButtonScrollGroup:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",0,30)
@@ -2483,7 +2546,7 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 end
 
                                 if continue then
-                                    if not incremented then enemyTableIdx = enemyTableIdx + 1; incremented = true end
+                                    if not incremented then enemyTableIdx = enemyTableIdx + 1 incremented = true end
                                     if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
                                     enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
                                     enemyTable[enemyTableIdx].npcId = npcId
@@ -2828,7 +2891,7 @@ function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,
     f:SetHeight(height or 120)
     f:SetTitle(title)
     f.OkayButton:SetText(buttonText)
-    f.OkayButton:SetCallback("OnClick",function()callback();MethodDungeonTools:HideAllDialogs() end)
+    f.OkayButton:SetCallback("OnClick",function()callback()MethodDungeonTools:HideAllDialogs() end)
 
     MethodDungeonTools:HideAllDialogs()
     f:ClearAllPoints()
@@ -2853,7 +2916,7 @@ function MethodDungeonTools:CreateTutorialButton(parent)
 	local originalHide = parent.Hide
 	function parent:Hide(...)
 		button:Hide()
-		return originalHide(self, ...);
+		return originalHide(self, ...)
 	end
 	local helpPlate = {
 		FramePos = { x = 0,	y = 0 },
@@ -2941,8 +3004,8 @@ function MethodDungeonTools:RegisterOptions()
 
         }
     }
-	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MethodDungeonTools", MethodDungeonTools.blizzardOptionsMenuTable);
-	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools");
+	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MethodDungeonTools", MethodDungeonTools.blizzardOptionsMenuTable)
+	self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MethodDungeonTools", "MethodDungeonTools")
 end
 
 ---Round
@@ -2989,6 +3052,15 @@ end
 
 ---StorePresetObject
 function MethodDungeonTools:StorePresetObject(obj)
+    --adjust coords incase we drew in fullscreen
+    if obj.n then
+        obj.d[1] = obj.d[1]*(1/MethodDungeonTools.scale)
+        obj.d[2] = obj.d[2]*(1/MethodDungeonTools.scale)
+    else
+        for idx,coord in pairs(obj.l) do
+            obj.l[idx] = obj.l[idx]*(1/MethodDungeonTools.scale)
+        end
+    end
 	local currentPreset = MethodDungeonTools:GetCurrentPreset()
 	currentPreset.objects = currentPreset.objects or {}
 	--we insert the object infront of the first hidden oject
@@ -3007,7 +3079,11 @@ function MethodDungeonTools:StorePresetObject(obj)
 end
 
 ---UpdatePresetObjectOffsets
+---excluding notes, these are handled in OverrideScrollFrameScripts
 function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
+    --adjust coords incase we moved in fullscreen
+    x = x*(1/MethodDungeonTools.scale)
+    y = y*(1/MethodDungeonTools.scale)
 	local currentPreset = MethodDungeonTools:GetCurrentPreset()
 	for objectIndex,obj in pairs(currentPreset.objects) do
 		if objectIndex == idx then
@@ -3045,8 +3121,8 @@ function MethodDungeonTools:DrawAllPresetObjects()
     for objectIndex,obj in pairs(currentPreset.objects) do
         if obj.d[3] == currentSublevel and obj.d[4] then
             if obj.n then
-                local x = obj.d[1]
-                local y = obj.d[2]
+                local x = obj.d[1]*MethodDungeonTools.scale
+                local y = obj.d[2]*MethodDungeonTools.scale
                 local text = obj.d[5]
                 MethodDungeonTools:DrawNote(x,y,text,objectIndex)
             else
@@ -3065,18 +3141,24 @@ function MethodDungeonTools:DrawAllPresetObjects()
                         lasty = coord
                     end
                     if x1 and y1 and x2 and y2 then
-                        MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
+                        x1 = x1*MethodDungeonTools.scale
+                        x2 = x2*MethodDungeonTools.scale
+                        y1 = y1*MethodDungeonTools.scale
+                        y2 = y2*MethodDungeonTools.scale
+                        MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3*MethodDungeonTools.scale,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
                         --circles if smooth
                         if obj.d[7] then
-                            MethodDungeonTools:DrawCircle(x1,y1,obj.d[1]*0.3,color,nil,obj.d[6],nil,objectIndex)
-                            MethodDungeonTools:DrawCircle(x2,y2,obj.d[1]*0.3,color,nil,obj.d[6],nil,objectIndex)
+                            MethodDungeonTools:DrawCircle(x1,y1,obj.d[1]*0.3*MethodDungeonTools.scale,color,nil,obj.d[6],nil,objectIndex)
+                            MethodDungeonTools:DrawCircle(x2,y2,obj.d[1]*0.3*MethodDungeonTools.scale,color,nil,obj.d[6],nil,objectIndex)
                         end
                         x1,y1,x2,y2 = nil,nil,nil,nil
                     end
                 end
                 --triangle
                 if obj.t and lastx and lasty then
-                    MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1],color,nil,obj.d[6],nil,objectIndex)
+                    lastx = lastx*MethodDungeonTools.scale
+                    lasty = lasty*MethodDungeonTools.scale
+                    MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1]*MethodDungeonTools.scale,color,nil,obj.d[6],nil,objectIndex)
                 end
                 --remove empty objects leftover from erasing
                 if obj.l then
@@ -3154,12 +3236,12 @@ function MethodDungeonTools:FixAceGUIShowHide(widget,frame,isFrame,hideOnly)
     end
     function frame:Hide(...)
         widget:Hide()
-        return originalHide(self, ...);
+        return originalHide(self, ...)
     end
     if hideOnly then return end
     function frame:Show(...)
         widget:Show()
-        return originalShow(self, ...);
+        return originalShow(self, ...)
     end
 end
 
@@ -3374,18 +3456,18 @@ function initFrames()
     local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.","")
     db.version = tonumber(version)
 	-- Set frame position
-	main_frame:ClearAllPoints();
+	main_frame:ClearAllPoints()
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
 
 
     main_frame.contextDropdown = L_Create_UIDropDownMenu("MethodDungeonToolsContextDropDown", nil)
+    MethodDungeonTools.scale = 1
 
     MethodDungeonTools:EnsureDBTables()
-
-	MethodDungeonTools:CreateMenu();
-	MethodDungeonTools:MakeTopBottomTextures(main_frame);
+	MethodDungeonTools:MakeTopBottomTextures(main_frame)
 	MethodDungeonTools:MakeMapTexture(main_frame)
 	MethodDungeonTools:MakeSidePanel(main_frame)
+    MethodDungeonTools:CreateMenu()
 	MethodDungeonTools:MakePresetCreationFrame(main_frame)
 	MethodDungeonTools:MakePresetImportFrame(main_frame)
     MethodDungeonTools:DungeonEnemies_CreateFramePools()
@@ -3445,18 +3527,18 @@ function initFrames()
             self:SetFacing(PI*2 / 360 * self.fac)
         end)
         tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT",7,-7)
-        tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString");
+        tooltip.String = tooltip:CreateFontString("MethodDungeonToolsToolTipString")
         tooltip.String:SetFontObject("GameFontNormalSmall")
         tooltip.String:SetFont(tooltip.String:GetFont(),10)
-        tooltip.String:SetTextColor(1, 1, 1, 1);
+        tooltip.String:SetTextColor(1, 1, 1, 1)
         tooltip.String:SetJustifyH("LEFT")
         --tooltip.String:SetJustifyV("CENTER")
         tooltip.String:SetWidth(tooltip:GetWidth())
         tooltip.String:SetHeight(90)
         tooltip.String:SetWidth(175)
-        tooltip.String:SetText(" ");
+        tooltip.String:SetText(" ")
         tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
-        tooltip.String:Show();
+        tooltip.String:Show()
         skinTooltip(tooltip)
     end
 
@@ -3494,7 +3576,7 @@ function initFrames()
         MethodDungeonTools.pullTooltip.topString = MethodDungeonTools.pullTooltip:CreateFontString("MethodDungeonToolsToolTipString")
         MethodDungeonTools.pullTooltip.topString:SetFontObject("GameFontNormalSmall")
         MethodDungeonTools.pullTooltip.topString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),10)
-        MethodDungeonTools.pullTooltip.topString:SetTextColor(1, 1, 1, 1);
+        MethodDungeonTools.pullTooltip.topString:SetTextColor(1, 1, 1, 1)
         MethodDungeonTools.pullTooltip.topString:SetJustifyH("LEFT")
         MethodDungeonTools.pullTooltip.topString:SetJustifyV("TOP")
         MethodDungeonTools.pullTooltip.topString:SetHeight(110)
@@ -3514,7 +3596,7 @@ function initFrames()
         local botString = MethodDungeonTools.pullTooltip.botString
         botString:SetFontObject("GameFontNormalSmall")
         botString:SetFont(MethodDungeonTools.pullTooltip.topString:GetFont(),10)
-        botString:SetTextColor(1, 1, 1, 1);
+        botString:SetTextColor(1, 1, 1, 1)
         botString:SetJustifyH("TOP")
         botString:SetJustifyV("TOP")
         botString:SetHeight(23)
@@ -3532,7 +3614,7 @@ function initFrames()
     MethodDungeonTools.ping = CreateFrame("PlayerModel", nil, MethodDungeonTools.main_frame.mapPanelFrame)
     local ping = MethodDungeonTools.ping
     --ping:SetModel("interface/minimap/ping/minimapping.m2")
-    ping:SetModel(120590);
+    ping:SetModel(120590)
     ping:SetPortraitZoom(1)
     ping:SetCamera(1)
     ping:SetFrameLevel(50)

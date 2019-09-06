@@ -332,6 +332,11 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:Hide()
         end)
     end
+    --fullscreen sizes
+    frame:SetSize(frame:GetWidth()*MethodDungeonTools.scale,frame:GetHeight()*MethodDungeonTools.scale)
+    if frame.Texture then frame.Texture:SetSize(frame.Texture:GetWidth()*MethodDungeonTools.scale,frame.Texture:GetHeight()*MethodDungeonTools.scale) end
+    if frame.HighlightTexture then frame.HighlightTexture:SetSize(frame.HighlightTexture:GetWidth()*MethodDungeonTools.scale,frame.HighlightTexture:GetHeight()*MethodDungeonTools.scale) end
+
     if db.devMode then POI_SetDevOptions(frame,poi) end
 end
 
@@ -354,7 +359,7 @@ function MethodDungeonTools:POI_UpdateAll()
         poiFrame.poiIdx = poiIdx
         POI_SetOptions(poiFrame,poi.type,poi)
         poiFrame:ClearAllPoints()
-        poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x,poi.y)
+        poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x*MethodDungeonTools.scale,poi.y*MethodDungeonTools.scale)
         poiFrame:Show()
         if not teeming and poiFrame.teeming then
             poiFrame:Hide()
