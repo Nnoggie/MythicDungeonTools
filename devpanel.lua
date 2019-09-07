@@ -703,6 +703,8 @@ function MethodDungeonTools:AddCloneAtCursorPosition()
     if currentEnemyIdx then
         local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentEnemyIdx]
         local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
+        cursorx = cursorx*(1/MethodDungeonTools.scale)
+        cursory = cursory*(1/MethodDungeonTools.scale)
         tinsert(data.clones,{x=cursorx,y=cursory,sublevel=MethodDungeonTools:GetCurrentSubLevel(),g=currentCloneGroup,teeming=currentTeeming})
         print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,cursorx,cursory))
         MethodDungeonTools:UpdateMap()
@@ -738,43 +740,3 @@ function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
     end
 end
 
-
----AddBossAtCursorPosition
----Adds a boss at the cursor position to the dungeon boss table
-function MethodDungeonTools:AddBossAtCursorPosition()
-    local bosses = MethodDungeonTools.dungeonBosses[db.currentDungeonIdx]
-    local sublevel = MethodDungeonTools:GetCurrentSubLevel()
-    local nid
-    local guid = UnitGUID("target")
-    if guid then nid = select(6,strsplit("-", guid)) else return end
-    if nid then
-
-        local encounterIDx, encounterName, description, displayInfo, iconImage = EJ_GetCreatureInfo(currentBossEnemyIdx)
-        if not encounterIDx then return end
-
-        for i=1,10000 do
-            local ixd = EJ_GetCreatureInfo(currentBossEnemyIdx,i)
-            if ixd == encounterIDx then
-                encounterIDx = i
-                break
-            end
-        end
-
-        local encounterHealth = UnitHealthMax("target")
-        local encounterLevel = UnitLevel("target")
-        local encounterCreatureType = UnitCreatureType("target")
-        local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
-        bosses[sublevel] = bosses[sublevel] or {}
-        tinsert(bosses[sublevel],{
-            name = encounterName,
-            health = encounterHealth,
-            encounterID = encounterIDx,
-            level = encounterLevel,
-            creatureType = encounterCreatureType,
-            id = tonumber(nid),
-            x = cursorx,
-            y = cursory,
-        })
-        MethodDungeonTools:UpdateDungeonBossButtons()
-    end
-end
