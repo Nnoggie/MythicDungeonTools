@@ -6,11 +6,6 @@
 local MDT = MethodDungeonTools
 local AceGUI = LibStub("AceGUI-3.0")
 local db
-
-local tinsert = table.insert
-
-
-
 local tconcat, tremove, tinsert = table.concat, table.remove, table.insert
 
 local function CreateDispatcher(argCount)
@@ -51,21 +46,21 @@ end
 
 AceGUI:RegisterLayout("ThreeColums", function(content, children)
     if children[1] then
-        children[1]:SetWidth(content:GetWidth()/3)
+        children[1]:SetWidth(content:GetWidth()/3-10)
         children[1].frame:ClearAllPoints()
         children[1].frame:SetPoint("TOPLEFT", content, "TOPLEFT", 0, 0)
         children[1].frame:SetPoint("BOTTOMLEFT", content, "BOTTOMLEFT", 0, 0)
         children[1].frame:Show()
     end
     if children[2] then
-        children[2]:SetWidth(content:GetWidth()/3)
+        children[2]:SetWidth(content:GetWidth()/3-10)
         children[2].frame:ClearAllPoints()
         children[2].frame:SetPoint("TOPLEFT", children[1].frame, "TOPRIGHT", 0, 0)
         children[2].frame:SetPoint("BOTTOMLEFT", children[1].frame, "BOTTOMRIGHT", 0, 0)
         children[2].frame:Show()
     end
     if children[3] then
-        children[3]:SetWidth(content:GetWidth()/3)
+        children[3]:SetWidth(content:GetWidth()/3-10)
         children[3].frame:ClearAllPoints()
         children[3].frame:SetPoint("TOPLEFT", children[2].frame, "TOPRIGHT", 0, 0)
         children[3].frame:SetPoint("BOTTOMLEFT", children[2].frame, "BOTTOMRIGHT", 0, 0)
@@ -134,18 +129,20 @@ local function MakeEnemeyInfoFrame()
         model:SetScript("OnEnter",nil)
         model:SetFrameLevel(15)
         model:Show()
-        local modelContainer = AceGUI:Create("InlineGroup")
+        f.modelContainer = f.modelContainer or AceGUI:Create("InlineGroup")
+        local modelContainer = f.modelContainer
         modelContainer.frame:SetBackdropColor(1,1,1,0)
         modelContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         modelContainer:SetHeight(249)
         modelContainer:SetLayout("Flow")
-        local modelDummyIcon = AceGUI:Create("Icon")
+        f.modelDummyIcon = f.modelDummyIcon or AceGUI:Create("Icon")
+        local modelDummyIcon = f.modelDummyIcon
         modelDummyIcon:SetImageSize(leftContainer.frame:GetWidth()-20, 249)
         modelDummyIcon:SetDisabled(true)
         modelContainer:AddChild(modelDummyIcon)
         model:ClearAllPoints()
         model:SetPoint("BOTTOM",modelContainer.frame,"BOTTOM",0,10)
-        MethodDungeonTools:FixAceGUIShowHide(model,modelContainer.frame,true)
+        MDT:FixAceGUIShowHide(model,modelContainer.frame,true)
 
         f.characteristicsContainer = AceGUI:Create("InlineGroup")
         f.characteristicsContainer.frame:SetBackdropColor(1,1,1,0)
@@ -158,7 +155,8 @@ local function MakeEnemeyInfoFrame()
         leftContainer:AddChild(f.characteristicsContainer)
 
         ---MIDDLE
-        local midContainer = AceGUI:Create("SimpleGroup")
+        f.midContainer = f.midContainer or AceGUI:Create("SimpleGroup")
+        local midContainer = f.midContainer
         midContainer.frame:SetBackdropColor(1,1,1,0)
         midContainer:SetLayout("List")
         midContainer:SetWidth(container.frame:GetWidth()/3)
@@ -237,7 +235,8 @@ local function MakeEnemeyInfoFrame()
         midContainer:AddChild(f.enemyDataContainer)
 
         ---RIGHT
-        local rightContainer = AceGUI:Create("SimpleGroup")
+        f.rightContainer = f.rightContainer or AceGUI:Create("SimpleGroup")
+        local rightContainer = f.rightContainer
         rightContainer.frame:SetBackdropColor(1,1,1,0)
         rightContainer:SetLayout("List")
         rightContainer:SetWidth(container.frame:GetWidth()/3)
@@ -251,7 +250,8 @@ local function MakeEnemeyInfoFrame()
         rightContainer:AddChild(rightDummyIcon)
 
         --spells
-        local spellScrollContainer = AceGUI:Create("InlineGroup")
+        f.spellScrollContainer = f.spellScrollContainer or AceGUI:Create("InlineGroup")
+        local spellScrollContainer = f.spellScrollContainer
         spellScrollContainer.frame:SetBackdropColor(1,1,1,0)
         spellScrollContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         spellScrollContainer:SetHeight(282)
@@ -262,7 +262,8 @@ local function MakeEnemeyInfoFrame()
         spellScrollContainer:AddChild(f.spellScroll)
 
         --spellButtons
-        local spellButtonsContainer = AceGUI:Create("InlineGroup")
+        f.spellButtonsContainer = f.spellButtonsContainer or AceGUI:Create("InlineGroup")
+        local spellButtonsContainer = f.spellButtonsContainer
         spellButtonsContainer.frame:SetBackdropColor(1,1,1,0)
         spellButtonsContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         spellScrollContainer:SetLayout("Flow")
@@ -377,13 +378,35 @@ local spellBlacklist = {
     [5116]   = true, --Concussive Shot
     --[X]  = true,
 }
-
+local lastEnemyIdx
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
+    if not enemyIdx then enemyIdx = lastEnemyIdx end
+    lastEnemyIdx = enemyIdx
+    if not enemyIdx then return end
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
     local f = MDT.EnemyInfoFrame
     f:SetTitle(data.name)
     f.model:SetDisplayInfo(data.displayId or 39490)
     f.model:ResetModel()
+
+    local container = f.tabGroup
+    ---rescaling
+    ---LEFT
+    f.leftContainer:SetWidth(container.frame:GetWidth()/3)
+    f.leftContainer:SetHeight(container.frame:GetHeight())
+    f.model:SetSize(f.leftContainer.frame:GetWidth()-30,1.127*(f.leftContainer.frame:GetWidth()-30))
+    f.modelContainer:SetWidth(f.leftContainer.frame:GetWidth()-20)
+    f.modelDummyIcon:SetImageSize(f.leftContainer.frame:GetWidth()-20, f.leftContainer.frame:GetWidth()-20)
+    f.characteristicsContainer:SetWidth(f.leftContainer.frame:GetWidth()-20)
+    ---MIDDLE
+    f.midContainer:SetWidth(container.frame:GetWidth()/3)
+    f.midContainer:SetHeight(container.frame:GetHeight())
+    f.enemyDataContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
+    ---RIGHT
+    f.rightContainer:SetWidth(container.frame:GetWidth()/3)
+    f.rightContainer:SetHeight(container.frame:GetHeight())
+    f.spellScrollContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
+    f.spellButtonsContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
 
     local enemies = {}
     for mobIdx,edata in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
@@ -415,8 +438,10 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
             end)
             f.characteristicsContainer:AddChild(icon)
             if IsAddOnLoaded("AddOnSkins") then
-                local AS = unpack(AddOnSkins)
-                AS:SkinTexture(icon.image)
+                if AddOnSkins then
+                    local AS = unpack(AddOnSkins)
+                    AS:SkinTexture(icon.image)
+                end
             end
         end
     end
@@ -426,8 +451,8 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     f.enemyDataContainer.idEditBox.defaultText = data.id
 
     local boss = data.isBoss or false
-    local health = MethodDungeonTools:CalculateEnemyHealth(boss,data.health,db.currentDifficulty,data.ignoreFortified)
-    local healthText = MethodDungeonTools:FormatEnemyHealth(health)
+    local health = MDT:CalculateEnemyHealth(boss,data.health,db.currentDifficulty,data.ignoreFortified)
+    local healthText = MDT:FormatEnemyHealth(health)
 
     f.enemyDataContainer.healthEditBox:SetText(healthText)
     f.enemyDataContainer.healthEditBox.defaultText = healthText

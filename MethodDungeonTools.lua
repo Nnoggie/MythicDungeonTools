@@ -577,6 +577,12 @@ end
 ---FULLSCREEN the UI
 function MethodDungeonTools:Maximize()
     local f = MethodDungeonTools.main_frame
+
+    local oldScrollH = f.scrollFrame:GetHorizontalScroll()
+    local oldScrollV = f.scrollFrame:GetVerticalScroll()
+    local oldSizeX = f.scrollFrame:GetWidth();
+    local oldSizeY = f.scrollFrame:GetHeight();
+
     if not f.blackoutFrame then
         f.blackoutFrame = CreateFrame("Frame", "MethodDungeonToolsBlackoutFrame", f)
         f.blackoutFrame:EnableMouse(true)
@@ -610,9 +616,15 @@ function MethodDungeonTools:Maximize()
     --local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame or MethodDungeonTools:ShowEnemyInfoFrame(nil,true)
     --enemyInfoFrame.frame:ClearAllPoints()
     --enemyInfoFrame.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
-    MethodDungeonTools:UpdateMap()
 
-    --do your magic here grim
+    f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
+    f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
+    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
+    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
+    MethodDungeonTools:ZoomMap(0,false)
+    MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
+    MethodDungeonTools:UpdateEnemyInfoFrame()
+    MethodDungeonTools:UpdateMap()
 
     db.maximized = true
 end
@@ -621,6 +633,12 @@ end
 ---Restore normal UI
 function MethodDungeonTools:Minimize()
     local f = MethodDungeonTools.main_frame
+
+    local oldScrollH = f.scrollFrame:GetHorizontalScroll()
+    local oldScrollV = f.scrollFrame:GetVerticalScroll()
+    local oldSizeX = f.scrollFrame:GetWidth()
+    local oldSizeY = f.scrollFrame:GetHeight()
+
     f.blackoutFrame:Hide()
     f.topPanel:RegisterForDrag("LeftButton")
     f.bottomPanel:RegisterForDrag("LeftButton")
@@ -636,12 +654,19 @@ function MethodDungeonTools:Minimize()
     f.bottomPanel:SetSize(sizex, 30)
     f.topPanel:SetSize(sizex, 30)
     f.sidePanel:SetSize(250, sizey+60)
-    local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame
+
+    --local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame
     --enemyInfoFrame.frame:ClearAllPoints()
     --enemyInfoFrame.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
-    MethodDungeonTools:UpdateMap()
 
-    --do your magic here grim
+    f.scrollFrame:SetVerticalScroll(oldScrollV * (sizey / oldSizeY))
+    f.scrollFrame:SetHorizontalScroll(oldScrollH * (sizex / oldSizeX))
+    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (sizey / oldSizeY)
+    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (sizex / oldSizeX)
+    MethodDungeonTools:ZoomMap(0,false)
+    MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
+    MethodDungeonTools:UpdateEnemyInfoFrame()
+    MethodDungeonTools:UpdateMap()
 
     db.maximized = false
 end
@@ -1722,6 +1747,10 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.mapPanelTile11:SetPoint("TOPLEFT",frame.mapPanelTile10,"TOPRIGHT")
 		frame.mapPanelTile12:SetPoint("TOPLEFT",frame.mapPanelTile11,"TOPRIGHT")
 		frame.scrollFrame:SetScrollChild(frame.mapPanelFrame)
+
+        frame.scrollFrame.cursorX = 0;
+        frame.scrollFrame.cursorY = 0;
+        MethodDungeonTools:OnPan(frame.scrollFrame.cursorX,frame.scrollFrame.cursorY)
 	end
 
 end

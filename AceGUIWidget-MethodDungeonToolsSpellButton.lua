@@ -70,8 +70,10 @@ local methods = {
         local name,_,icon = GetSpellInfo(spellId)
         self.icon:SetTexture(icon)
         if IsAddOnLoaded("AddOnSkins") then
-            local AS = unpack(AddOnSkins)
-            AS:SkinTexture(self.icon)
+            if AddOnSkins then
+                local AS = unpack(AddOnSkins)
+                AS:SkinTexture(self.icon)
+            end
         end
         self.title:SetText(name);
         if spellData.interruptible then
