@@ -580,9 +580,8 @@ function MethodDungeonTools:Maximize()
 
     local oldScrollH = f.scrollFrame:GetHorizontalScroll()
     local oldScrollV = f.scrollFrame:GetVerticalScroll()
-    local oldSizeX = f.scrollFrame:GetWidth();
-    local oldSizeY = f.scrollFrame:GetHeight();
-
+    local oldSizeX = f.scrollFrame:GetWidth()
+    local oldSizeY = f.scrollFrame:GetHeight()
     if not f.blackoutFrame then
         f.blackoutFrame = CreateFrame("Frame", "MethodDungeonToolsBlackoutFrame", f)
         f.blackoutFrame:EnableMouse(true)
@@ -604,19 +603,12 @@ function MethodDungeonTools:Maximize()
     f:SetSize(newSizex,newSizey)
     f.scrollFrame:SetSize(newSizex, newSizey)
     f.mapPanelFrame:SetSize(newSizex, newSizey)
-
     f.bottomPanel:SetSize(newSizex, 30)
     f.topPanel:SetSize(newSizex, 30)
     f.sidePanel:SetSize(250, newSizex+60)
-
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize((newSizex/4+5*MethodDungeonTools.scale),(newSizex/4+5*MethodDungeonTools.scale))
     end
-
-    --local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame or MethodDungeonTools:ShowEnemyInfoFrame(nil,true)
-    --enemyInfoFrame.frame:ClearAllPoints()
-    --enemyInfoFrame.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
-
     f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
@@ -625,6 +617,10 @@ function MethodDungeonTools:Maximize()
     MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
     MethodDungeonTools:UpdateMap()
+    if db.devMode then
+        f.devPanel:ClearAllPoints()
+        f.devPanel:SetPoint("TOPLEFT",f,"TOPLEFT",0,-45)
+    end
 
     db.maximized = true
 end
@@ -638,7 +634,6 @@ function MethodDungeonTools:Minimize()
     local oldScrollV = f.scrollFrame:GetVerticalScroll()
     local oldSizeX = f.scrollFrame:GetWidth()
     local oldSizeY = f.scrollFrame:GetHeight()
-
     f.blackoutFrame:Hide()
     f.topPanel:RegisterForDrag("LeftButton")
     f.bottomPanel:RegisterForDrag("LeftButton")
@@ -654,11 +649,6 @@ function MethodDungeonTools:Minimize()
     f.bottomPanel:SetSize(sizex, 30)
     f.topPanel:SetSize(sizex, 30)
     f.sidePanel:SetSize(250, sizey+60)
-
-    --local enemyInfoFrame = MethodDungeonTools.EnemyInfoFrame
-    --enemyInfoFrame.frame:ClearAllPoints()
-    --enemyInfoFrame.frame:SetAllPoints(MethodDungeonToolsScrollFrame)
-
     f.scrollFrame:SetVerticalScroll(oldScrollV * (sizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (sizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (sizey / oldSizeY)
@@ -667,6 +657,10 @@ function MethodDungeonTools:Minimize()
     MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
     MethodDungeonTools:UpdateMap()
+    if db.devMode then
+        f.devPanel:ClearAllPoints()
+        f.devPanel:SetPoint("TOPRIGHT",f.topPanel,"TOPLEFT",0,0)
+    end
 
     db.maximized = false
 end
