@@ -548,6 +548,7 @@ function MethodDungeonTools:CreateMenu()
 	self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", 0, 0)
 	self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
 	self.main_frame.closeButton:SetFrameLevel(4)
+
     --Maximize Button
     self.main_frame.maximizeButton = CreateFrame("Button", "MaximizeButton", self.main_frame, "MaximizeMinimizeButtonFrameTemplate")
     self.main_frame.maximizeButton:ClearAllPoints()
@@ -558,6 +559,42 @@ function MethodDungeonTools:CreateMenu()
     self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
     self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
     self:SkinMenuButtons()
+
+    --Resize Handle
+    local callback = function()
+
+    end
+    self.main_frame.resizer = CreateFrame("BUTTON", nil, self.main_frame.sidePanel)
+    local resizer = self.main_frame.resizer
+    resizer:SetPoint("BOTTOMRIGHT", self.main_frame.sidePanel,"BOTTOMRIGHT",7,-7)
+    resizer:SetSize(25, 25)
+    resizer:EnableMouse()
+    resizer:SetScript("OnMouseDown", function()
+        self.main_frame:StartSizing("BOTTOMRIGHT")
+    end)
+    resizer:SetScript("OnMouseUp", function()
+        self.main_frame:StopMovingOrSizing()
+        callback()
+    end)
+    local normal = resizer:CreateTexture(nil, "OVERLAY")
+    normal:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+    normal:SetTexCoord(0, 1, 0, 1)
+    normal:SetPoint("BOTTOMLEFT", resizer, 0, 6)
+    normal:SetPoint("TOPRIGHT", resizer, -6, 0)
+    resizer:SetNormalTexture(normal)
+    local pushed = resizer:CreateTexture(nil, "OVERLAY")
+    pushed:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
+    pushed:SetTexCoord(0, 1, 0, 1)
+    pushed:SetPoint("BOTTOMLEFT", resizer, 0, 6)
+    pushed:SetPoint("TOPRIGHT", resizer, -6, 0)
+    resizer:SetPushedTexture(pushed)
+    local highlight = resizer:CreateTexture(nil, "OVERLAY")
+    highlight:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+    highlight:SetTexCoord(0, 1, 0, 1)
+    highlight:SetPoint("BOTTOMLEFT", resizer, 0, 6)
+    highlight:SetPoint("TOPRIGHT", resizer, -6, 0)
+    resizer:SetHighlightTexture(highlight)
+
 end
 
 function MethodDungeonTools:SkinMenuButtons()
@@ -603,9 +640,6 @@ function MethodDungeonTools:Maximize()
     f:SetSize(newSizex,newSizey)
     f.scrollFrame:SetSize(newSizex, newSizey)
     f.mapPanelFrame:SetSize(newSizex, newSizey)
-    f.bottomPanel:SetSize(newSizex, 30)
-    f.topPanel:SetSize(newSizex, 30)
-    f.sidePanel:SetSize(250, newSizex+60)
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize((newSizex/4+5*MethodDungeonTools.scale),(newSizex/4+5*MethodDungeonTools.scale))
     end
@@ -646,9 +680,6 @@ function MethodDungeonTools:Minimize()
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize(sizex/4+5,sizex/4+5)
     end
-    f.bottomPanel:SetSize(sizex, 30)
-    f.topPanel:SetSize(sizex, 30)
-    f.sidePanel:SetSize(250, sizey+60)
     f.scrollFrame:SetVerticalScroll(oldScrollV * (sizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (sizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (sizey / oldSizeY)
@@ -730,8 +761,9 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 	end
 
     frame.topPanel:ClearAllPoints()
-    frame.topPanel:SetSize(frame:GetWidth(), 30)
-    frame.topPanel:SetPoint("BOTTOM", frame, "TOP", 0, 0)
+    frame.topPanel:SetHeight(30)
+    frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT")
+    frame.topPanel:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT")
 
     frame.topPanel:EnableMouse(true)
     frame.topPanel:RegisterForDrag("LeftButton")
@@ -758,8 +790,9 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
     end
 
     frame.bottomPanel:ClearAllPoints()
-    frame.bottomPanel:SetSize(frame:GetWidth(), 30)
-    frame.bottomPanel:SetPoint("TOP", frame, "BOTTOM", 0, 0)
+    frame.bottomPanel:SetHeight(30)
+    frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT")
+    frame.bottomPanel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT")
 
     frame.bottomPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Version")
     frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
@@ -802,8 +835,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 
 	frame.sidePanel:ClearAllPoints()
-	frame.sidePanel:SetSize(250, frame:GetHeight()+(frame.topPanel:GetHeight()*2))
+	frame.sidePanel:SetWidth(250)
 	frame.sidePanel:SetPoint("TOPLEFT", frame, "TOPRIGHT", -1, 30)
+	frame.sidePanel:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", -1, -30)
 
 	frame.sidePanelString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelText")
 	frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10)
@@ -1171,7 +1205,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 	--Difficulty Selection
 	frame.sidePanel.DifficultySliderLabel = AceGUI:Create("Label")
-	frame.sidePanel.DifficultySliderLabel:SetText(" Level: ")
+	frame.sidePanel.DifficultySliderLabel:SetText("Level")
 	frame.sidePanel.DifficultySliderLabel:SetWidth(35)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySliderLabel)
 
@@ -3467,6 +3501,8 @@ function initFrames()
 	main_frame.background:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 	main_frame.background:SetAlpha(0.2)
 	main_frame:SetSize(sizex, sizey)
+	main_frame:SetResizable(true)
+    main_frame:SetMinResize(sizex*0.75,sizey*0.75)
 	MethodDungeonTools.main_frame = main_frame
 
     -- reset frame position after 8.1.5 scaling changes
