@@ -32,6 +32,8 @@ local function POI_SetDevOptions(frame,poi)
             self.isMoving = false;
             self:StopMovingOrSizing();
             local newx,newy = MethodDungeonTools:GetCursorPosition()
+            newx = newx*(1/MethodDungeonTools.scale)
+            newy = newy*(1/MethodDungeonTools.scale)
             local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
             pois[self.poiIdx].x = newx
             pois[self.poiIdx].y = newy
