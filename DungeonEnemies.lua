@@ -370,6 +370,8 @@ local function blipDevModeSetup(blip)
     local xOffset,yOffset
     blip:SetScript("OnMouseDown",function()
         local x,y = MethodDungeonTools:GetCursorPosition()
+        x = x*(1/MethodDungeonTools.scale)
+        y = y*(1/MethodDungeonTools.scale)
         local nx = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x
         local ny = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y
         xOffset = x-nx
@@ -382,11 +384,13 @@ local function blipDevModeSetup(blip)
     blip:SetScript("OnDragStop", function()
         if not db.devModeBlipsMovable then return end
         local x,y = MethodDungeonTools:GetCursorPosition()
+        x = x*(1/MethodDungeonTools.scale)
+        y = y*(1/MethodDungeonTools.scale)
         x = x-xOffset
         y = y-yOffset
         blip:StopMovingOrSizing()
         blip:ClearAllPoints()
-        blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+        blip:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*MethodDungeonTools.scale,y*MethodDungeonTools.scale)
         MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x = x
         MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y = y
     end)
