@@ -1,6 +1,7 @@
-v2.8.1
+v2.8.1-beta
 - fixed an issue with drawing textures not being drawn correctly while moving them around
 - added Maximize/Minimize Button to enable Fullscreen-Mode / restore normal size
+- added a resize handle to change the window size
 v2.8.0
 - Affixes for week 6 added (Bursting,Volcanic,Fortified,Beguiling (Arcane))
 - Clarified unknown affix weeks
