@@ -768,8 +768,14 @@ end
 ---HideAllPresetObjects
 ---Hide textures during rescaling
 function MethodDungeonTools:HideAllPresetObjects()
+    --drawings
     for _,tex in pairs(activeTextures) do
         tex:Hide()
+    end
+    --notes
+    local notes = notePoolCollection.pools.QuestPinTemplate.activeObjects
+    for note,_ in pairs(notes) do
+        note:Hide()
     end
 end
 

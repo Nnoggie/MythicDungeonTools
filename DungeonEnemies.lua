@@ -449,7 +449,6 @@ end
 ---DungeonEnemies_PositionBlip
 ---Used to position during scaling changes to the map
 function MethodDungeonTools:DungeonEnemies_PositionBlip(blip, scale)
-    blip:ClearAllPoints()
     blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",blip.clone.x*scale,blip.clone.y*scale)
 end
 
