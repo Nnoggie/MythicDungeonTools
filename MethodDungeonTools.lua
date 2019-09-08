@@ -723,7 +723,7 @@ function MethodDungeonTools:Minimize()
     local oldScrollV = f.scrollFrame:GetVerticalScroll()
     local oldSizeX = f.scrollFrame:GetWidth()
     local oldSizeY = f.scrollFrame:GetHeight()
-    f.blackoutFrame:Hide()
+    if f.blackoutFrame then f.blackoutFrame:Hide() end
     f.topPanel:RegisterForDrag("LeftButton")
     f.bottomPanel:RegisterForDrag("LeftButton")
     db.scale = db.nonFullscreenScale
@@ -3422,7 +3422,10 @@ function MethodDungeonTools:IsPlayerInGroup()
 end
 
 function MethodDungeonTools:ResetMainFramePos()
+    db.nonFullscreenScale = 1
+    db.maximized = false
     if not framesInitialized then initFrames() end
+    self.main_frame.maximizeButton:Minimize()
     local f = MethodDungeonTools.main_frame
     db.xoffset = 0
     db.yoffset = -150
