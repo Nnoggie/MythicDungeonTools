@@ -561,9 +561,6 @@ function MethodDungeonTools:CreateMenu()
     self:SkinMenuButtons()
 
     --Resize Handle
-    local callback = function()
-
-    end
     self.main_frame.resizer = CreateFrame("BUTTON", nil, self.main_frame.sidePanel)
     local resizer = self.main_frame.resizer
     resizer:SetPoint("BOTTOMRIGHT", self.main_frame.sidePanel,"BOTTOMRIGHT",7,-7)
@@ -571,10 +568,19 @@ function MethodDungeonTools:CreateMenu()
     resizer:EnableMouse()
     resizer:SetScript("OnMouseDown", function()
         self.main_frame:StartSizing("BOTTOMRIGHT")
+        self:StartScaling()
+        self:HideAllPresetObjects()
+        self.main_frame:SetScript("OnSizeChanged", function()
+            local height = self.main_frame:GetHeight()
+            self:SetScale(height/sizey)
+        end)
     end)
     resizer:SetScript("OnMouseUp", function()
         self.main_frame:StopMovingOrSizing()
-        callback()
+        self:UpdateEnemyInfoFrame()
+        self:UpdateMap()
+        self.main_frame:SetScript("OnSizeChanged", function()
+        end)
     end)
     local normal = resizer:CreateTexture(nil, "OVERLAY")
     normal:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
@@ -610,6 +616,54 @@ function MethodDungeonTools:SkinMenuButtons()
 	end
 end
 
+---GetScale
+---Returns scale factor stored in db
+function MethodDungeonTools:GetScale()
+    return db.scale
+end
+
+
+local oldScrollValues = {}
+---StartScaling
+---Stores values when we start scaling the frame
+function MethodDungeonTools:StartScaling()
+    local f = self.main_frame
+    oldScrollValues.oldScrollH = f.scrollFrame:GetHorizontalScroll()
+    oldScrollValues.oldScrollV = f.scrollFrame:GetVerticalScroll()
+    oldScrollValues.oldSizeX = f.scrollFrame:GetWidth()
+    oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
+end
+
+
+---SetScale
+---Scales the map frame and it's sub frames to a factor and stores the scale in db
+function MethodDungeonTools:SetScale(scale)
+    db.scale = scale
+    local f = self.main_frame
+    local newSizex = sizex*scale
+    local newSizey = sizey*scale
+    f:SetSize(newSizex,newSizey)
+    f.scrollFrame:SetSize(newSizex, newSizey)
+    f.mapPanelFrame:SetSize(newSizex, newSizey)
+    for i=1,12 do
+        f["mapPanelTile"..i]:SetSize((newSizex/4+5*scale),(newSizex/4+5*scale))
+    end
+    f.scrollFrame:SetVerticalScroll(oldScrollValues.oldScrollV * (newSizey / oldScrollValues.oldSizeY))
+    f.scrollFrame:SetHorizontalScroll(oldScrollValues.oldScrollH * (newSizex / oldScrollValues.oldSizeX))
+    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldScrollValues.oldSizeY)
+    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldScrollValues.oldSizeX)
+    self:ZoomMap(0,false)
+    self:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
+
+    db.scale = scale
+    db.nonFullscreenScale = scale
+    --position stuff temporarily with fast functions, ignoring size - avoid UpdateMap map here as that would be way too expensive
+    self:DungeonEnemies_PositionAllBlips(scale)
+    self:POI_PositionAllPoints(scale)
+
+end
+
+
 ---Maximize
 ---FULLSCREEN the UI
 function MethodDungeonTools:Maximize()
@@ -634,14 +688,14 @@ function MethodDungeonTools:Maximize()
     f.bottomPanel:RegisterForDrag(nil)
     local newSizey = GetScreenHeight()-60 --top and bottom panel 30 each
     local newSizex = newSizey*(sizex/sizey)
-    MethodDungeonTools.scale = newSizey/sizey --use this for adjusting NPC / POI positions later
+    db.scale = newSizey/sizey --use this for adjusting NPC / POI positions later
     f:ClearAllPoints()
     f:SetPoint("TOP", UIParent,"TOP", -(f.sidePanel:GetWidth()/2), -30)
     f:SetSize(newSizex,newSizey)
     f.scrollFrame:SetSize(newSizex, newSizey)
     f.mapPanelFrame:SetSize(newSizex, newSizey)
     for i=1,12 do
-        f["mapPanelTile"..i]:SetSize((newSizex/4+5*MethodDungeonTools.scale),(newSizex/4+5*MethodDungeonTools.scale))
+        f["mapPanelTile"..i]:SetSize((newSizex/4+5*db.scale),(newSizex/4+5*db.scale))
     end
     f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
@@ -655,6 +709,7 @@ function MethodDungeonTools:Maximize()
         f.devPanel:ClearAllPoints()
         f.devPanel:SetPoint("TOPLEFT",f,"TOPLEFT",0,-45)
     end
+    f.resizer:Hide()
 
     db.maximized = true
 end
@@ -671,19 +726,21 @@ function MethodDungeonTools:Minimize()
     f.blackoutFrame:Hide()
     f.topPanel:RegisterForDrag("LeftButton")
     f.bottomPanel:RegisterForDrag("LeftButton")
-    MethodDungeonTools.scale = 1
+    db.scale = db.nonFullscreenScale
+    local newSizex = sizex*db.scale
+    local newSizey = sizey*db.scale
     f:ClearAllPoints()
     f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
-    f:SetSize(sizex,sizey)
-    f.scrollFrame:SetSize(sizex, sizey)
-    f.mapPanelFrame:SetSize(sizex, sizey)
+    f:SetSize(newSizex,newSizey)
+    f.scrollFrame:SetSize(newSizex, newSizey)
+    f.mapPanelFrame:SetSize(newSizex, newSizey)
     for i=1,12 do
-        f["mapPanelTile"..i]:SetSize(sizex/4+5,sizex/4+5)
+        f["mapPanelTile"..i]:SetSize(newSizex/4+(5*db.scale),newSizex/4+(5*db.scale))
     end
-    f.scrollFrame:SetVerticalScroll(oldScrollV * (sizey / oldSizeY))
-    f.scrollFrame:SetHorizontalScroll(oldScrollH * (sizex / oldSizeX))
-    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (sizey / oldSizeY)
-    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (sizex / oldSizeX)
+    f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
+    f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
+    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
+    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
     MethodDungeonTools:ZoomMap(0,false)
     MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
@@ -692,6 +749,7 @@ function MethodDungeonTools:Minimize()
         f.devPanel:ClearAllPoints()
         f.devPanel:SetPoint("TOPRIGHT",f.topPanel,"TOPLEFT",0,0)
     end
+    f.resizer:Show()
 
     db.maximized = false
 end
@@ -1425,6 +1483,7 @@ end
 
 function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	local scrollFrame = MethodDungeonToolsScrollFrame
+    if not scrollFrame:GetLeft() then return end
 	local oldScrollH = scrollFrame:GetHorizontalScroll()
 	local oldScrollV = scrollFrame:GetVerticalScroll()
 
@@ -1725,8 +1784,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 	if frame.scrollFrame == nil then
 		frame.scrollFrame = CreateFrame("ScrollFrame", "MethodDungeonToolsScrollFrame",frame)
 		frame.scrollFrame:ClearAllPoints()
-		frame.scrollFrame:SetSize(sizex, sizey)
-		frame.scrollFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.scrollFrame:SetSize(sizex*db.scale, sizey*db.scale)
+		--frame.scrollFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+        frame.scrollFrame:SetAllPoints(frame)
 
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
@@ -1750,9 +1810,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		if frame.mapPanelFrame == nil then
 			frame.mapPanelFrame = CreateFrame("frame","MethodDungeonToolsMapPanelFrame",nil)
 			frame.mapPanelFrame:ClearAllPoints()
-			frame.mapPanelFrame:SetSize(sizex, sizey)
-			frame.mapPanelFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-
+			frame.mapPanelFrame:SetSize(sizex*db.scale, sizey*db.scale)
+			--frame.mapPanelFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+            frame.mapPanelFrame:SetAllPoints(frame)
 		end
 
 		--create the 12 tiles and set the scrollchild
@@ -3110,15 +3170,16 @@ end
 ---StorePresetObject
 function MethodDungeonTools:StorePresetObject(obj)
     --adjust coords incase we drew in fullscreen
+    local scale = self:GetScale()
     if obj.n then
-        obj.d[1] = obj.d[1]*(1/MethodDungeonTools.scale)
-        obj.d[2] = obj.d[2]*(1/MethodDungeonTools.scale)
+        obj.d[1] = obj.d[1]*(1/scale)
+        obj.d[2] = obj.d[2]*(1/scale)
     else
         for idx,coord in pairs(obj.l) do
-            obj.l[idx] = obj.l[idx]*(1/MethodDungeonTools.scale)
+            obj.l[idx] = MethodDungeonTools:Round(obj.l[idx]*(1/scale),1)
         end
     end
-	local currentPreset = MethodDungeonTools:GetCurrentPreset()
+	local currentPreset = self:GetCurrentPreset()
 	currentPreset.objects = currentPreset.objects or {}
 	--we insert the object infront of the first hidden oject
 	local pos = 1
@@ -3129,19 +3190,20 @@ function MethodDungeonTools:StorePresetObject(obj)
 		end
 	end
 	if pos>1 then
-		tinsert(currentPreset.objects,pos,MethodDungeonTools:DeepCopy(obj))
+		tinsert(currentPreset.objects,pos,self:DeepCopy(obj))
 	else
-		tinsert(currentPreset.objects,MethodDungeonTools:DeepCopy(obj))
+		tinsert(currentPreset.objects,self:DeepCopy(obj))
 	end
 end
 
 ---UpdatePresetObjectOffsets
 ---excluding notes, these are handled in OverrideScrollFrameScripts
 function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
-    --adjust coords incase we moved in fullscreen
-    x = x*(1/MethodDungeonTools.scale)
-    y = y*(1/MethodDungeonTools.scale)
-	local currentPreset = MethodDungeonTools:GetCurrentPreset()
+    --adjust coords to scale
+    local scale = self:GetScale()
+    x = MethodDungeonTools:Round(x*(1/scale),1)
+    y = MethodDungeonTools:Round(y*(1/scale),1)
+	local currentPreset = self:GetCurrentPreset()
 	for objectIndex,obj in pairs(currentPreset.objects) do
 		if objectIndex == idx then
 			for coordIdx,coord in pairs(obj.l) do
@@ -3154,13 +3216,14 @@ function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
 		end
 	end
     --redraw everything
-	MethodDungeonTools:DrawAllPresetObjects()
+	self:DrawAllPresetObjects()
 end
 
 
 ---DrawAllPresetObjects
 ---Draws all Preset objects on the map canvas/sublevel
 function MethodDungeonTools:DrawAllPresetObjects()
+    local scale = MethodDungeonTools:GetScale()
 
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
@@ -3178,8 +3241,8 @@ function MethodDungeonTools:DrawAllPresetObjects()
     for objectIndex,obj in pairs(currentPreset.objects) do
         if obj.d[3] == currentSublevel and obj.d[4] then
             if obj.n then
-                local x = obj.d[1]*MethodDungeonTools.scale
-                local y = obj.d[2]*MethodDungeonTools.scale
+                local x = obj.d[1]*scale
+                local y = obj.d[2]*scale
                 local text = obj.d[5]
                 MethodDungeonTools:DrawNote(x,y,text,objectIndex)
             else
@@ -3198,24 +3261,24 @@ function MethodDungeonTools:DrawAllPresetObjects()
                         lasty = coord
                     end
                     if x1 and y1 and x2 and y2 then
-                        x1 = x1*MethodDungeonTools.scale
-                        x2 = x2*MethodDungeonTools.scale
-                        y1 = y1*MethodDungeonTools.scale
-                        y2 = y2*MethodDungeonTools.scale
-                        MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3*MethodDungeonTools.scale,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
+                        x1 = x1*scale
+                        x2 = x2*scale
+                        y1 = y1*scale
+                        y2 = y2*scale
+                        MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3*scale,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
                         --circles if smooth
                         if obj.d[7] then
-                            MethodDungeonTools:DrawCircle(x1,y1,obj.d[1]*0.3*MethodDungeonTools.scale,color,nil,obj.d[6],nil,objectIndex)
-                            MethodDungeonTools:DrawCircle(x2,y2,obj.d[1]*0.3*MethodDungeonTools.scale,color,nil,obj.d[6],nil,objectIndex)
+                            MethodDungeonTools:DrawCircle(x1,y1,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
+                            MethodDungeonTools:DrawCircle(x2,y2,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
                         end
                         x1,y1,x2,y2 = nil,nil,nil,nil
                     end
                 end
                 --triangle
                 if obj.t and lastx and lasty then
-                    lastx = lastx*MethodDungeonTools.scale
-                    lasty = lasty*MethodDungeonTools.scale
-                    MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1]*MethodDungeonTools.scale,color,nil,obj.d[6],nil,objectIndex)
+                    lastx = lastx*scale
+                    lasty = lasty*scale
+                    MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1]*scale,color,nil,obj.d[6],nil,objectIndex)
                 end
                 --remove empty objects leftover from erasing
                 if obj.l then
@@ -3493,6 +3556,8 @@ function initFrames()
     local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
+    db.nonFullscreenScale = db.nonFullscreenScale or 1
+    if not db.maximized then db.scale = db.nonFullscreenScale end
 	main_frame:SetFrameStrata(mainFrameStrata)
 	main_frame:SetFrameLevel(1)
 	main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND")
@@ -3500,10 +3565,15 @@ function initFrames()
 	main_frame.background:SetDrawLayer(canvasDrawLayer, 1)
 	main_frame.background:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 	main_frame.background:SetAlpha(0.2)
-	main_frame:SetSize(sizex, sizey)
+	main_frame:SetSize(sizex*db.scale, sizey*db.scale)
 	main_frame:SetResizable(true)
     main_frame:SetMinResize(sizex*0.75,sizey*0.75)
 	MethodDungeonTools.main_frame = main_frame
+
+    main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND")
+    main_frame.mainFrametex:SetAllPoints()
+    main_frame.mainFrametex:SetDrawLayer(canvasDrawLayer, -5)
+    main_frame.mainFrametex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 
     -- reset frame position after 8.1.5 scaling changes
     if not db.version or db.version<250 then
@@ -3518,9 +3588,7 @@ function initFrames()
 	main_frame:ClearAllPoints()
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
 
-
     main_frame.contextDropdown = L_Create_UIDropDownMenu("MethodDungeonToolsContextDropDown", nil)
-    MethodDungeonTools.scale = 1
 
     MethodDungeonTools:EnsureDBTables()
 	MethodDungeonTools:MakeTopBottomTextures(main_frame)

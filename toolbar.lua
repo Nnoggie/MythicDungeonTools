@@ -248,7 +248,7 @@ function MethodDungeonTools:initToolbar(frame)
         local prompt = "Do you wish to delete ALL drawings from the current preset?\nThis cannot be undone\n\n"
         MethodDungeonTools:OpenConfirmationFrame(350,150,"Delete ALL drawings","Delete",prompt, MethodDungeonTools.DeletePresetObjects)
     end)
-    delete.tooltipText = "Clear all drawings"
+    delete.tooltipText = "Delete all drawings"
     tinsert(widgets,delete)
 
     for k,widget in ipairs(widgets) do
@@ -445,8 +445,9 @@ function MethodDungeonTools:OverrideScrollframeScripts()
                 note:SetScript("OnMouseDown",function()
                     local currentPreset = MethodDungeonTools:GetCurrentPreset()
                     local x,y = MethodDungeonTools:GetCursorPosition()
-                    x = x*(1/MethodDungeonTools.scale)
-                    y = y*(1/MethodDungeonTools.scale)
+                    local scale = MethodDungeonTools:GetScale()
+                    x = x*(1/scale)
+                    y = y*(1/scale)
                     local nx = currentPreset.objects[note.objectIndex].d[1]
                     local ny = currentPreset.objects[note.objectIndex].d[2]
                     xOffset = x-nx
@@ -458,8 +459,9 @@ function MethodDungeonTools:OverrideScrollframeScripts()
                 note:SetScript("OnDragStop", function()
                     note:StopMovingOrSizing()
                     local x,y = MethodDungeonTools:GetCursorPosition()
-                    x = x*(1/MethodDungeonTools.scale)
-                    y = y*(1/MethodDungeonTools.scale)
+                    local scale = MethodDungeonTools:GetScale()
+                    x = x*(1/scale)
+                    y = y*(1/scale)
                     local currentPreset = MethodDungeonTools:GetCurrentPreset()
                     currentPreset.objects[note.objectIndex].d[1]=x-xOffset
                     currentPreset.objects[note.objectIndex].d[2]=y-yOffset
@@ -547,20 +549,20 @@ function MethodDungeonTools:StartArrowDrawing()
     nobj = {d={db.toolbar.brushSize,1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b)},l={}}
     nobj.l = {MethodDungeonTools:Round(startx,1),MethodDungeonTools:Round(starty,1)}
     nobj.t = {}
-
+    local scale = MethodDungeonTools:GetScale()
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local x,y = MethodDungeonTools:GetCursorPosition()local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         drawLayer = max(drawLayer,currentDrawLayer)
         if x~= startx and y~=starty then
-            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3)*MethodDungeonTools.scale, 1,"TOPLEFT")
+            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3)*scale, 1,"TOPLEFT")
             nobj.l[3] = MethodDungeonTools:Round(x,1)
             nobj.l[4] = MethodDungeonTools:Round(y,1)
         end
         --position arrow head
         arrow:Show()
-        arrow:SetWidth(1*db.toolbar.brushSize*MethodDungeonTools.scale)
-        arrow:SetHeight(1*db.toolbar.brushSize*MethodDungeonTools.scale)
+        arrow:SetWidth(1*db.toolbar.brushSize*scale)
+        arrow:SetHeight(1*db.toolbar.brushSize*scale)
         --calculate rotation
         local rotation = atan2(starty-y,startx-x)
         arrow:SetRotation(rotation+pi)
@@ -610,17 +612,18 @@ function MethodDungeonTools:StartLineDrawing()
     nobj = {d={db.toolbar.brushSize,1.1,MethodDungeonTools:GetCurrentSubLevel(),true,MethodDungeonTools:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b),nil,true},l={}}
     nobj.l = {}
 
+    local scale = MethodDungeonTools:GetScale()
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         drawLayer = max(drawLayer,currentDrawLayer)
         endx,endy = MethodDungeonTools:GetCursorPosition()
         if endx~= startx and endy~=starty then
-            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, endx, endy, (db.toolbar.brushSize*0.3)*1.1*MethodDungeonTools.scale, 1.00,"TOPLEFT")
+            DrawLine(line, MethodDungeonTools.main_frame.mapPanelTile1, startx, starty, endx, endy, (db.toolbar.brushSize*0.3)*1.1*scale, 1.00,"TOPLEFT")
             line:SetDrawLayer(objectDrawLayer,drawLayer)
             line:Show()
-            MethodDungeonTools:DrawCircle(startx,starty,(db.toolbar.brushSize*0.3)*MethodDungeonTools.scale,db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle1,true)
-            MethodDungeonTools:DrawCircle(endx,endy,(db.toolbar.brushSize*0.3)*MethodDungeonTools.scale,db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle2,true)
+            MethodDungeonTools:DrawCircle(startx,starty,(db.toolbar.brushSize*0.3)*scale,db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle1,true)
+            MethodDungeonTools:DrawCircle(endx,endy,(db.toolbar.brushSize*0.3)*scale,db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle2,true)
 
 
             nobj.d[6] = drawLayer
@@ -678,19 +681,20 @@ function MethodDungeonTools:StartPencilDrawing()
     nobj.l = {}
 
     local lineIdx = 1
+    local scale = MethodDungeonTools:GetScale()
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local currentDrawLayer = MethodDungeonTools:GetHighestFrameLevelAtCursor()
         layerSublevel = max(layerSublevel,currentDrawLayer)
         local x,y = MethodDungeonTools:GetCursorPosition()
-        local scale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
-        local threshold = thresholdDefault * 1/scale
+        local mapScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
+        local threshold = thresholdDefault * 1/mapScale
         if not oldx or not oldy then
             oldx,oldy = x,y
             return
         end
         if (oldx and abs(x-oldx)>threshold) or (oldy and abs(y-oldy)>threshold)  then
-            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3)*MethodDungeonTools.scale,db.toolbar.color,true,objectDrawLayer,layerSublevel,nil,true)
+            MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3)*scale,db.toolbar.color,true,objectDrawLayer,layerSublevel,nil,true)
             nobj.d[6] = layerSublevel
             nobj.l[lineIdx] = MethodDungeonTools:Round(oldx,1)
             nobj.l[lineIdx+1] = MethodDungeonTools:Round(oldy,1)
@@ -708,9 +712,10 @@ function MethodDungeonTools:StopPencilDrawing()
     local frame = MethodDungeonTools.main_frame
     local x,y = MethodDungeonTools:GetCursorPosition()
     local layerSublevel = MethodDungeonTools:GetHighestFrameLevelAtCursor()
+    local scale = MethodDungeonTools:GetScale()
     --finish line
     if x~=oldx or y~=oldy then
-        MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3)*MethodDungeonTools.scale,db.toolbar.color,true,objectDrawLayer,layerSublevel)
+        MethodDungeonTools:DrawLine(oldx,oldy,x,y,(db.toolbar.brushSize*0.3)*scale,db.toolbar.color,true,objectDrawLayer,layerSublevel)
         --store it
         local size = 0
         for k,v in ipairs(nobj.l) do
@@ -722,7 +727,7 @@ function MethodDungeonTools:StopPencilDrawing()
         nobj.l[size+4] = MethodDungeonTools:Round(y,1)
     end
     --draw end circle, dont need to store it as we draw it when we restore the line from db
-    MethodDungeonTools:DrawCircle(x,y,db.toolbar.brushSize*0.3*MethodDungeonTools.scale,db.toolbar.color,objectDrawLayer,layerSublevel)
+    MethodDungeonTools:DrawCircle(x,y,db.toolbar.brushSize*0.3*scale,db.toolbar.color,objectDrawLayer,layerSublevel)
     frame.toolbar:SetScript("OnUpdate",nil)
     --clear own flags
     for k,v in pairs(activeTextures) do
@@ -758,6 +763,14 @@ function MethodDungeonTools:StartMovingObject()
             startx,starty = MethodDungeonTools:GetCursorPosition()
         end
     end)
+end
+
+---HideAllPresetObjects
+---Hide textures during rescaling
+function MethodDungeonTools:HideAllPresetObjects()
+    for _,tex in pairs(activeTextures) do
+        tex:Hide()
+    end
 end
 
 ---StopMovingDrawing
@@ -796,6 +809,7 @@ function MethodDungeonTools:StartEraserDrawing()
     drawingActive = true
     local frame = MethodDungeonTools.main_frame
     local startx,starty
+    local scale = MethodDungeonTools:GetScale()
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local x,y = MethodDungeonTools:GetCursorPosition()
@@ -819,7 +833,7 @@ function MethodDungeonTools:StartEraserDrawing()
                         for objectIndex,obj in pairs(currentPreset.objects) do
                             if objectIndex == highestObjectIdx then
                                 for coordIdx,coord in pairs(obj.l) do
-                                    if coord == x1 and obj.l[coordIdx+1] == y1 and obj.l[coordIdx+2] == x2 and obj.l[coordIdx+3] == y2 then
+                                    if coord*scale == x1 and obj.l[coordIdx+1]*scale == y1 and obj.l[coordIdx+2]*scale == x2 and obj.l[coordIdx+3]*scale == y2 then
                                         for i=1,4 do tremove(obj.l,coordIdx) end
                                         break
                                     end
@@ -1019,26 +1033,27 @@ function MethodDungeonTools:DrawNote(x,y,text,objectIndex)
         notePoolCollection = CreatePoolCollection()
         notePoolCollection:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "QuestPinTemplate")
     end
+    local scale = MethodDungeonTools:GetScale()
     --setup
     local note = notePoolCollection:Acquire("QuestPinTemplate")
     note.noteIdx = notePoolCollection.pools.QuestPinTemplate.numActiveObjects
     note.objectIndex = objectIndex
     note:ClearAllPoints()
     note:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-    note:SetSize(12*MethodDungeonTools.scale,12*MethodDungeonTools.scale)
-    note.Texture:SetSize(15*MethodDungeonTools.scale, 15*MethodDungeonTools.scale);
-    note.PushedTexture:SetSize(15*MethodDungeonTools.scale, 15*MethodDungeonTools.scale);
-    note.Highlight:SetSize(15*MethodDungeonTools.scale, 15*MethodDungeonTools.scale);
-    note.Number:SetSize(16*MethodDungeonTools.scale, 16*MethodDungeonTools.scale);
-    note.Texture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
-    note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
-    note.Highlight:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
-    note.Number:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons");
-    note.Texture:SetTexCoord(0.500, 0.625, 0.375, 0.5);
-    note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5);
-    note.Highlight:SetTexCoord(0.625, 0.750, 0.375, 0.5);
+    note:SetSize(12*scale,12*scale)
+    note.Texture:SetSize(15*scale, 15*scale)
+    note.PushedTexture:SetSize(15*scale, 15*scale)
+    note.Highlight:SetSize(15*scale, 15*scale)
+    note.Number:SetSize(16*scale, 16*scale)
+    note.Texture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.Highlight:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.Number:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.Texture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
+    note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
+    note.Highlight:SetTexCoord(0.625, 0.750, 0.375, 0.5)
     note.Number:SetTexCoord(QuestPOI_CalculateNumericTexCoords(note.noteIdx, QUEST_POI_COLOR_BLACK ))
-    note.Number:Show();
+    note.Number:Show()
     note.tooltipText = text or ""
 
     note:RegisterForClicks("AnyUp")

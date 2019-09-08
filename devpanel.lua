@@ -703,8 +703,9 @@ function MethodDungeonTools:AddCloneAtCursorPosition()
     if currentEnemyIdx then
         local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][currentEnemyIdx]
         local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
-        cursorx = cursorx*(1/MethodDungeonTools.scale)
-        cursory = cursory*(1/MethodDungeonTools.scale)
+        local scale = self:GetScale()
+        cursorx = cursorx*(1/scale)
+        cursory = cursory*(1/scale)
         tinsert(data.clones,{x=cursorx,y=cursory,sublevel=MethodDungeonTools:GetCurrentSubLevel(),g=currentCloneGroup,teeming=currentTeeming})
         print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,cursorx,cursory))
         MethodDungeonTools:UpdateMap()
