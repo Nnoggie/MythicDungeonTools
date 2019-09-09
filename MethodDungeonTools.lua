@@ -893,9 +893,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 
 	frame.sidePanel:ClearAllPoints()
-	frame.sidePanel:SetWidth(250)
-	frame.sidePanel:SetPoint("TOPLEFT", frame, "TOPRIGHT", -1, 30)
-	frame.sidePanel:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", -1, -30)
+	frame.sidePanel:SetWidth(251)
+	frame.sidePanel:SetPoint("TOPLEFT", frame, "TOPRIGHT", 0, 30)
+	frame.sidePanel:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, -30)
 
 	frame.sidePanelString = frame.sidePanel:CreateFontString("MethodDungeonToolsSidePanelText")
 	frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10)
@@ -1820,7 +1820,7 @@ function MethodDungeonTools:MakeMapTexture(frame)
 			frame["mapPanelTile"..i] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsmapPanelTile"..i, "BACKGROUND")
 			frame["mapPanelTile"..i]:SetDrawLayer(canvasDrawLayer, 0)
 			--frame["mapPanelTile"..i]:SetAlpha(0.3)
-			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+5,frame:GetWidth()/4+5)
+			frame["mapPanelTile"..i]:SetSize(frame:GetWidth()/4+(5*db.scale),frame:GetWidth()/4+(5*db.scale))
 		end
 		frame.mapPanelTile1:SetPoint("TOPLEFT",frame.mapPanelFrame,"TOPLEFT",0,0)
 		frame.mapPanelTile2:SetPoint("TOPLEFT",frame.mapPanelTile1,"TOPRIGHT")
@@ -1836,8 +1836,8 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.mapPanelTile12:SetPoint("TOPLEFT",frame.mapPanelTile11,"TOPRIGHT")
 		frame.scrollFrame:SetScrollChild(frame.mapPanelFrame)
 
-        frame.scrollFrame.cursorX = 0;
-        frame.scrollFrame.cursorY = 0;
+        frame.scrollFrame.cursorX = 0
+        frame.scrollFrame.cursorY = 0
         MethodDungeonTools:OnPan(frame.scrollFrame.cursorX,frame.scrollFrame.cursorY)
 	end
 
@@ -2409,10 +2409,10 @@ end
 
 function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
-    frame.PullButtonScrollGroup:SetWidth(249)
+    frame.PullButtonScrollGroup:SetWidth(248)
     frame.PullButtonScrollGroup:SetHeight(410)
     frame.PullButtonScrollGroup:SetPoint("TOPLEFT",frame.WidgetGroup.frame,"BOTTOMLEFT",-4,-32)
-    frame.PullButtonScrollGroup:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",0,30)
+    frame.PullButtonScrollGroup:SetPoint("BOTTOMLEFT",frame,"BOTTOMLEFT",0,30)
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
     frame.PullButtonScrollGroup.frame:SetBackdropColor(1,1,1,0)
