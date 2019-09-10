@@ -1,4 +1,5 @@
 v2.8.2
+- Affixes for week 7 added (Raging, Necrotic,Tyrannical,Beguiling (Void))
 - fixed an issue with drawing textures not being drawn correctly while moving them around
 - added Maximize/Minimize Button to enable Fullscreen-Mode / restore normal size
 - added a resize handle to change the window size
