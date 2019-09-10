@@ -1,3 +1,5 @@
+v2.8.3
+- fixed a nil error when scaling the frame
 v2.8.2
 - Affixes for week 7 added (Raging, Necrotic,Tyrannical,Beguiling (Void))
 - New: Maximize/Minimize Button to enable Fullscreen-Mode / restore normal size
@@ -5,15 +7,3 @@ v2.8.2
 - Users will now be warned if they are trying to share really large presets ingame
 - New: A progress bar will indicate the current sending status when sharing presets ingame
 - fixed an issue with drawing textures not being drawn correctly while moving them around
-v2.8.0
-- Affixes for week 6 added (Bursting,Volcanic,Fortified,Beguiling (Arcane))
-- Clarified unknown affix weeks
-- Siege of Boralus: Void Week alliance emissaries fixed
-- fix nil error after disconnect in an ongoing keystone
-- New Feature: CTRL+SHIFT+ALT-clicking the delete button will prompt the user to delete all presets of the current dungeon
-- Added a confirmation dialogue to the "Delete all drawings" button of the toolbar
-v2.7.9
-- Siege of Boralus: Fixed more emissary count Issues
-v2.7.8
-- Siege of Boralus: Fixed emissary count Issues
-- Updated affix list to include week 5 (Bolstering, Explosive, Tyrannical)
