@@ -773,9 +773,11 @@ function MethodDungeonTools:HideAllPresetObjects()
         tex:Hide()
     end
     --notes
-    local notes = notePoolCollection.pools.QuestPinTemplate.activeObjects
-    for note,_ in pairs(notes) do
-        note:Hide()
+    if  notePoolCollection then
+        local notes = notePoolCollection.pools.QuestPinTemplate.activeObjects
+        for note,_ in pairs(notes) do
+            note:Hide()
+        end
     end
 end
 
