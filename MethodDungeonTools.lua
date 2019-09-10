@@ -855,7 +855,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
     frame.bottomPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Version")
     frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
     frame.bottomPanelString:SetJustifyH("CENTER")
-	frame.bottomPanelString:SetJustifyV("CENTER")
+    frame.bottomPanelString:SetJustifyV("CENTER")
 	frame.bottomPanelString:SetText("v"..GetAddOnMetadata(AddonName, "Version"))--.." - Please report missing/wrongly positioned NPCs in discord.gg/nnogga or on github.com/nnogga/MethodDungeonTools"
 	frame.bottomPanelString:SetPoint("CENTER", frame.bottomPanel, "CENTER", 0, 0)
 	frame.bottomPanelString:SetTextColor(1, 1, 1, 1)
@@ -3622,6 +3622,7 @@ function initFrames()
 	MethodDungeonTools:CreateTutorialButton(main_frame)
     MethodDungeonTools:POI_CreateFramePools()
     MethodDungeonTools:MakeChatPresetImportFrame(main_frame)
+    MethodDungeonTools:MakeSendingStatusBar(main_frame)
 
     --devMode
     if db.devMode and MethodDungeonTools.CreateDevPanel then

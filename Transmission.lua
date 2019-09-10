@@ -242,11 +242,48 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
 
 end
 
---callback for SendCommMessage
---TODO animate a progressbar here if we want to
-local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
-    --print(string.format("Progress: %.1f",bytesSent/bytesToSend*100))
 
+---MakeSendingStatusBar
+---Creates a bar that indicates sending progress when sharing presets with your group
+---Called once from initFrames()
+function MethodDungeonTools:MakeSendingStatusBar(f)
+    f.SendingStatusBar = CreateFrame("StatusBar", nil, f)
+    local statusbar = f.SendingStatusBar
+    statusbar:SetMinMaxValues(0, 1)
+    statusbar:SetPoint("LEFT", f.bottomPanel, "LEFT", 5, 0)
+    statusbar:SetWidth(200)
+    statusbar:SetHeight(20)
+    statusbar:SetStatusBarTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
+    statusbar:GetStatusBarTexture():SetHorizTile(false)
+    statusbar:GetStatusBarTexture():SetVertTile(false)
+    statusbar:SetStatusBarColor(0.26,0.42,1)
+
+    statusbar.bg = statusbar:CreateTexture(nil, "BACKGROUND")
+    statusbar.bg:SetTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
+    statusbar.bg:SetAllPoints(true)
+    statusbar.bg:SetVertexColor(0.26,0.42,1)
+
+    statusbar.value = statusbar:CreateFontString(nil, "OVERLAY")
+    statusbar.value:SetPoint("CENTER", statusbar, "CENTER", 0, 0)
+    statusbar.value:SetFontObject("GameFontNormalSmall")
+    statusbar.value:SetJustifyH("CENTER")
+    statusbar.value:SetJustifyV("CENTER")
+    statusbar.value:SetShadowOffset(1, -1)
+    statusbar.value:SetTextColor(1, 1, 1)
+    statusbar.value:SetText("")
+    statusbar:Hide()
+
+    if IsAddOnLoaded("ElvUI") then
+        local E, L, V, P, G = unpack(ElvUI)
+        statusbar:SetStatusBarTexture(E.media.normTex)
+    end
+end
+
+--callback for SendCommMessage
+local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
+    MethodDungeonTools.main_frame.SendingStatusBar:Show()
+    MethodDungeonTools.main_frame.SendingStatusBar:SetValue(bytesSent/bytesToSend)
+    MethodDungeonTools.main_frame.SendingStatusBar.value:SetText(string.format("Sending: %.1f",bytesSent/bytesToSend*100).."%")
     --done sending
     if bytesSent == bytesToSend then
         --restore "Send" button
@@ -260,6 +297,8 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
         local name, realm = UnitFullName("player")
         local fullName = name.."+"..realm
         SendChatMessage("[MethodDungeonTools: "..fullName.." - "..dungeon..": "..presetName.."]",distribution)
+        MethodDungeonTools.main_frame.SendingStatusBar.value:SetText("")
+        MethodDungeonTools.main_frame.SendingStatusBar:Hide()
     end
 end
 
