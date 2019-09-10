@@ -1,8 +1,10 @@
 v2.8.2
 - Affixes for week 7 added (Raging, Necrotic,Tyrannical,Beguiling (Void))
+- New: Maximize/Minimize Button to enable Fullscreen-Mode / restore normal size
+- New: Resize handle to change the window size
+- Users will now be warned if they are trying to share really large presets ingame
+- New: A progress bar will indicate the current sending status when sharing presets ingame
 - fixed an issue with drawing textures not being drawn correctly while moving them around
-- added Maximize/Minimize Button to enable Fullscreen-Mode / restore normal size
-- added a resize handle to change the window size
 v2.8.0
 - Affixes for week 6 added (Bursting,Volcanic,Fortified,Beguiling (Arcane))
 - Clarified unknown affix weeks
