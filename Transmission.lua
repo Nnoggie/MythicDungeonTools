@@ -270,3 +270,11 @@ function MethodDungeonTools:SendToGroup(distribution)
     local export = MethodDungeonTools:TableToString(preset,true)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset})
 end
+
+---GetPresetSize
+---Returns the number of characters the string version of the preset contains
+function MethodDungeonTools:GetPresetSize()
+    local preset = MethodDungeonTools:GetCurrentPreset()
+    local export = MethodDungeonTools:TableToString(preset,true)
+    return string.len(export)
+end

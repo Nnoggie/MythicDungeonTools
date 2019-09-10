@@ -1053,9 +1053,18 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.LinkToChatButton:SetCallback("OnClick",function(widget,callbackName,value)
         local distribution = MethodDungeonTools:IsPlayerInGroup()
         if not distribution then return end
-        frame.LinkToChatButton:SetDisabled(true)
-        frame.LinkToChatButton:SetText("Sending")
-        MethodDungeonTools:SendToGroup(distribution)
+        local callback = function()
+            frame.LinkToChatButton:SetDisabled(true)
+            frame.LinkToChatButton:SetText("Sending")
+            MethodDungeonTools:SendToGroup(distribution)
+        end
+        local presetSize = self:GetPresetSize()
+        if presetSize>12000 then
+            local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you shure you want to share this preset?\n\n\n"
+            MethodDungeonTools:OpenConfirmationFrame(450,150,"Sharing large preset","Share",prompt, callback)
+        else
+            callback()
+        end
 	end)
     local inGroup = UnitInRaid("player") or IsInGroup()
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
