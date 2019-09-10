@@ -1963,6 +1963,8 @@ function MethodDungeonTools:UpdateDungeonDropDown()
 	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
 	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
 	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
+    group.DungeonDropdown:ClearFocus()
+    group.SublevelDropdown:ClearFocus()
 end
 
 ---CreateDungeonSelectDropdown
