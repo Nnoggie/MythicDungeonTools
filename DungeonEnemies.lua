@@ -224,6 +224,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateReapingPulls()
 end
 
 function MDTDungeonEnemyMixin:DisplayPatrol(shown)
+    local scale = MethodDungeonTools:GetScale()
 
     --Hide all points/line
     for _,point in pairs(patrolPoints) do point:Hide() end
@@ -239,10 +240,10 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
 
             patrolPoints[patrolIdx]:SetDrawLayer("OVERLAY", 2)
             patrolPoints[patrolIdx]:SetTexture("Interface\\Worldmap\\X_Mark_64Grey")
-            patrolPoints[patrolIdx]:SetSize(4,4)
+            patrolPoints[patrolIdx]:SetSize(4*scale,4*scale)
             patrolPoints[patrolIdx]:SetVertexColor(0,0.2,0.5,0.6)
             patrolPoints[patrolIdx]:ClearAllPoints()
-            patrolPoints[patrolIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",waypoint.x,waypoint.y)
+            patrolPoints[patrolIdx]:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",waypoint.x*scale,waypoint.y*scale)
             patrolPoints[patrolIdx].x = waypoint.x
             patrolPoints[patrolIdx].y = waypoint.y
             patrolPoints[patrolIdx]:Show()
@@ -257,7 +258,7 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
             if oldWaypointBlip then
                 local startPoint, startRelativeTo, startRelativePoint, startX, startY = patrolPoints[patrolIdx]:GetPoint()
                 local endPoint, endRelativeTo, endRelativePoint, endX, endY = oldWaypointBlip:GetPoint()
-                DrawLine(patrolLines[patrolIdx], MethodDungeonTools.main_frame.mapPanelTile1, startX, startY, endX, endY, 1, 1,"TOPLEFT")
+                DrawLine(patrolLines[patrolIdx], MethodDungeonTools.main_frame.mapPanelTile1, startX, startY, endX, endY, 1*scale, 1,"TOPLEFT")
                 patrolLines[patrolIdx]:Show()
             else
                 firstWaypointBlip = patrolPoints[patrolIdx]
@@ -268,7 +269,7 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
         if firstWaypointBlip and oldWaypointBlip then
             local startPoint, startRelativeTo, startRelativePoint, startX, startY = firstWaypointBlip:GetPoint()
             local endPoint, endRelativeTo, endRelativePoint, endX, endY = oldWaypointBlip:GetPoint()
-            DrawLine(patrolLines[1], MethodDungeonTools.main_frame.mapPanelTile1, startX, startY, endX, endY, 1, 1,"TOPLEFT")
+            DrawLine(patrolLines[1], MethodDungeonTools.main_frame.mapPanelTile1, startX, startY, endX, endY, 1*scale, 1,"TOPLEFT")
             patrolLines[1]:Show()
         end
 
