@@ -1055,7 +1055,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if not distribution then return end
         local callback = function()
             frame.LinkToChatButton:SetDisabled(true)
-            frame.LinkToChatButton:SetText("Sending")
+            frame.LiveSessionButton:SetDisabled(true)
+            frame.LinkToChatButton:SetText("...")
+            frame.LiveSessionButton:SetText("...")
             MethodDungeonTools:SendToGroup(distribution)
         end
         local presetSize = self:GetPresetSize()
@@ -1094,12 +1096,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
     }
     frame.LiveSessionButton:SetCallback("OnClick",function(widget,callbackName,value)
         if MethodDungeonTools.liveSessionActive then
-            widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
-            widget.text:SetText("Live")
             MethodDungeonTools:LiveSession_Disable()
         else
-            widget.text:SetTextColor(0,1,0)
-            widget.text:SetText("*Live*")
             MethodDungeonTools:LiveSession_Enable()
         end
     end)

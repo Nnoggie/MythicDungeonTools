@@ -286,9 +286,11 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
     MethodDungeonTools.main_frame.SendingStatusBar.value:SetText(string.format("Sending: %.1f",bytesSent/bytesToSend*100).."%")
     --done sending
     if bytesSent == bytesToSend then
-        --restore "Send" button
+        --restore "Send" and "Live" button
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
+        MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(false)
         MethodDungeonTools.main_frame.LinkToChatButton:SetText("Share")
+        MethodDungeonTools.main_frame.LiveSessionButton:SetText("Live")
         --output chat link
         local distribution = userArgs[1]
         local preset = userArgs[2]

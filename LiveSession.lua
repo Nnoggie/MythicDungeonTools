@@ -4,6 +4,11 @@ local db
 
 ---LiveSession_Enable
 function MethodDungeonTools:LiveSession_Enable()
+    local widget = MethodDungeonTools.main_frame.LiveSessionButton
+    widget.text:SetTextColor(0,1,0)
+    widget.text:SetText("*Live*")
+    MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(true)
+
     self.liveSessionActive = true
     self:LiveSession_NotifyEnabled()
     --output chat link
@@ -18,6 +23,11 @@ end
 
 ---LiveSession_Disable
 function MethodDungeonTools:LiveSession_Disable()
+    local widget = MethodDungeonTools.main_frame.LiveSessionButton
+    widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
+    widget.text:SetText("Live")
+    MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
+
     self.liveSessionActive = false
     self:LiveSession_NotifyDisabled()
 end
