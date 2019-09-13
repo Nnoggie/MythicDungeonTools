@@ -142,7 +142,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
             characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             newMsg = newMsg..remaining:sub(1, startLive-1)
-            newMsg = newMsg.."|HMDTLive-"..characterNameLive.."|h|cFFF49D38[".."|cFF00FF00Live Session: |r".."|r|cFFF49D38"..displayNameLive.."]|h|r"
+            newMsg = newMsg.."|HMDTLive-"..characterNameLive.."|h[".."|cFF00FF00Live Session: |cfff49d38"..""..displayNameLive.."]|h|r"
             remaining = remaining:sub(finishLive + 1)
         else
             done = true;
@@ -159,6 +159,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["enabled"] = "MDTLiveStart",
     ["disabled"] = "MDTLiveEnd",
     ["request"] = "MDTLiveReq",
+    ["ping"] = "MDTLivePing",
 }
 
 function MDTcommsObject:OnEnable()
@@ -189,16 +190,26 @@ function SetItemRef(link, ...)
             MethodDungeonTools:ShowInterface(true)
             MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
         end
-        return;
+        return
     end
     if(link and link:sub(0, 7) == "MDTLive") then
         local sender = link:sub(9, string.len(link))
         local name,realm = string.match(sender,"(.*)+(.*)")
         sender = name.."-"..realm
+        --ignore importing the live preset when sender is player, open MDT only, TODO: navigate to the preset
+        local playerName,playerRealm = UnitFullName("player")
+        playerName = playerName.."-"..playerRealm
+        if sender==playerName then
+            MethodDungeonTools:ShowInterface(true)
+        else
+            local preset = MethodDungeonTools.transmissionCache[sender]
+            MethodDungeonTools:ShowInterface(true)
+            MethodDungeonTools:OpenChatImportPresetDialog(sender,preset,true)
+        end
         --TODO: finish this function
-        return;
+        return
     end
-    return OriginalSetItemRef(link, ...);
+    return OriginalSetItemRef(link, ...)
 end
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
@@ -238,6 +249,15 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if prefix == MethodDungeonTools.liveSessionPrefixes.request then
         if sender == UnitFullName("player") then return end
 
+    end
+
+    if prefix == MethodDungeonTools.liveSessionPrefixes.ping then
+        if sender == UnitFullName("player") then return end
+        local x,y = string.match(message,"(.*):(.*)")
+        x = tonumber(x)
+        y = tonumber(y)
+        local scale = MethodDungeonTools:GetScale()
+        MethodDungeonTools:PingMap(x*scale,y*scale)
     end
 
 end
@@ -286,30 +306,47 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
     MethodDungeonTools.main_frame.SendingStatusBar.value:SetText(string.format("Sending: %.1f",bytesSent/bytesToSend*100).."%")
     --done sending
     if bytesSent == bytesToSend then
+        local distribution = userArgs[1]
+        local preset = userArgs[2]
+        local live = userArgs[3]
         --restore "Send" and "Live" button
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
         MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(false)
         MethodDungeonTools.main_frame.LinkToChatButton:SetText("Share")
-        MethodDungeonTools.main_frame.LiveSessionButton:SetText("Live")
+        MethodDungeonTools.main_frame.LiveSessionButton:SetText(live and "*Live*" or "Live")
         --output chat link
-        local distribution = userArgs[1]
-        local preset = userArgs[2]
+        local prefix = live and "[MDTLive: " or "[MethodDungeonTools: "
         local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
         local presetName = preset.text
         local name, realm = UnitFullName("player")
         local fullName = name.."+"..realm
-        SendChatMessage("[MethodDungeonTools: "..fullName.." - "..dungeon..": "..presetName.."]",distribution)
         MethodDungeonTools.main_frame.SendingStatusBar.value:SetText("")
         MethodDungeonTools.main_frame.SendingStatusBar:Hide()
+        SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
+    end
+end
+
+---SetUniqueID
+---generates a unique random 11 digit number in base64 and assigns it to a preset if it does not have one yet
+---credit to WeakAuras2
+function MethodDungeonTools:SetUniqueID(preset)
+    if not preset.uid then
+        local s = {}
+        for i=1,11 do
+            tinsert(s, bytetoB64[math.random(0, 63)])
+        end
+        preset.uid = table.concat(s)
     end
 end
 
 ---SendToGroup
 ---Send current preset to group/raid
-function MethodDungeonTools:SendToGroup(distribution)
+function MethodDungeonTools:SendToGroup(distribution,live)
     local preset = MethodDungeonTools:GetCurrentPreset()
+    --set unique id
+    MethodDungeonTools:SetUniqueID(preset)
     local export = MethodDungeonTools:TableToString(preset,true)
-    MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset})
+    MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,live})
 end
 
 ---GetPresetSize

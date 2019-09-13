@@ -1012,7 +1012,10 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelExportButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelExportButton:SetCallback("OnClick",function(widget,callbackName,value)
-		local export = MethodDungeonTools:TableToString(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]],true)
+        --set unique id
+        local preset = self:GetCurrentPreset()
+        preset.uid = preset.uid or self:GenerateUniqueID()
+		local export = MethodDungeonTools:TableToString(preset,true)
 		MethodDungeonTools:HideAllDialogs()
 		MethodDungeonTools.main_frame.ExportFrame:Show()
         MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
@@ -1717,17 +1720,24 @@ MethodDungeonTools.OnMouseUp = function(self,button)
     --play minimap ping on right click at cursor position
     if button == "RightButton" then
         local x,y = MethodDungeonTools:GetCursorPosition()
-        MethodDungeonTools.ping:ClearAllPoints()
-        MethodDungeonTools.ping:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x,y)
-        MethodDungeonTools.ping:SetModel("interface/minimap/ping/minimapping.m2")
-        local mainFrame = MethodDungeonToolsMapPanelFrame
-        local mapScale = mainFrame:GetScale()
-        MethodDungeonTools:SetPingOffsets(mapScale)
-        MethodDungeonTools.ping:Show()
-        UIFrameFadeOut(MethodDungeonTools.ping, 2, 1, 0)
-        MethodDungeonTools.ping:SetSequence(0)
+        MethodDungeonTools:PingMap(x,y)
+        if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendPing(x,y) end
     end
 
+end
+
+---PingMap
+---Pings the map
+function MethodDungeonTools:PingMap(x,y)
+    self.ping:ClearAllPoints()
+    self.ping:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",x,y)
+    self.ping:SetModel("interface/minimap/ping/minimapping.m2")
+    local mainFrame = MethodDungeonToolsMapPanelFrame
+    local mapScale = mainFrame:GetScale()
+    self:SetPingOffsets(mapScale)
+    self.ping:Show()
+    UIFrameFadeOut(self.ping, 2, 1, 0)
+    self.ping:SetSequence(0)
 end
 
 function MethodDungeonTools:SetPingOffsets(mapScale)
@@ -2242,15 +2252,16 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
     chatImport.importLabel:SetWidth(250)
     --chatImport.importLabel:SetColor(1,0,0)
 
-
-    local importButton = AceGUI:Create("Button")
+    chatImport.importButton = AceGUI:Create("Button")
+    local importButton = chatImport.importButton
     importButton:SetText("Import")
     importButton:SetWidth(100)
     importButton:SetCallback("OnClick", function()
         local newPreset = chatImport.currentPreset
+        local live = chatImport.live
         if MethodDungeonTools:ValidateImportPreset(newPreset) then
             chatImport:Hide()
-            MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset))
+            MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset),live)
         else
             print("MDT: Error importing preset report to author")
         end
@@ -2261,7 +2272,7 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
 
 end
 
-function MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
+function MethodDungeonTools:OpenChatImportPresetDialog(sender,preset,live)
     MethodDungeonTools:HideAllDialogs()
     local chatImport = MethodDungeonTools.main_frame.chatPresetImportFrame
     chatImport:ClearAllPoints()
@@ -2271,6 +2282,15 @@ function MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
     local name = preset.text
     chatImport:Show()
     chatImport.importLabel:SetText(chatImport.defaultText..sender.. ": "..dungeon.." - "..name)
+    chatImport:SetTitle("Import Preset")
+    chatImport.importButton:SetText("Import")
+    chatImport.live = nil
+    if live then
+        chatImport.importLabel:SetText("Join Live Session:\n"..sender.. ": "..dungeon.." - "..name)
+        chatImport:SetTitle("Live Session")
+        chatImport.importButton:SetText("Join")
+        chatImport.live = true
+    end
 end
 
 function MethodDungeonTools:MakePresetImportFrame(frame)
@@ -2388,7 +2408,7 @@ function MethodDungeonTools:ValidateImportPreset(preset)
     return true
 end
 
-function MethodDungeonTools:ImportPreset(preset)
+function MethodDungeonTools:ImportPreset(preset,live)
     --change dungeon to dungeon of the new preset
     MethodDungeonTools:UpdateToDungeon(preset.value.currentDungeonIdx)
 	local name = preset.text
@@ -2411,6 +2431,10 @@ function MethodDungeonTools:ImportPreset(preset)
 	db.currentPreset[db.currentDungeonIdx] = countPresets
 	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
+    --live
+    if live then
+        self:LiveSession_Enable(true)
+    end
 end
 
 function MethodDungeonTools:MakePullSelectionButtons(frame)
