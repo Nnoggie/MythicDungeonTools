@@ -156,8 +156,7 @@ end
 local presetCommPrefix = "MDTPreset"
 
 MethodDungeonTools.liveSessionPrefixes = {
-    ["enabled"] = "MDTLiveStart",
-    ["disabled"] = "MDTLiveEnd",
+    ["enabled"] = "MDTLiveEnabled",
     ["request"] = "MDTLiveReq",
     ["ping"] = "MDTLivePing",
 }
@@ -202,11 +201,9 @@ function SetItemRef(link, ...)
         if sender==playerName then
             MethodDungeonTools:ShowInterface(true)
         else
-            local preset = MethodDungeonTools.transmissionCache[sender]
             MethodDungeonTools:ShowInterface(true)
-            MethodDungeonTools:OpenChatImportPresetDialog(sender,preset,true)
+            MethodDungeonTools:LiveSession_Enable()
         end
-        --TODO: finish this function
         return
     end
     return OriginalSetItemRef(link, ...)
@@ -234,30 +231,43 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if prefix == presetCommPrefix then
         local preset = MethodDungeonTools:StringToTable(message,true)
         MethodDungeonTools.transmissionCache[fullName] = preset
+        --live session preset
+        if MethodDungeonTools.liveSessionActive and MethodDungeonTools.liveSessionAcceptingPreset and preset.uid == MethodDungeonTools.livePresetUID then
+            if MethodDungeonTools:ValidateImportPreset(preset) then
+                MethodDungeonTools:ImportPreset(preset)
+                MethodDungeonTools.liveSessionAcceptingPreset = false
+                MethodDungeonTools.main_frame.SendingStatusBar:Hide()
+                MethodDungeonTools.liveSessionRequested = false
+            end
+        end
     end
 
     if prefix == MethodDungeonTools.liveSessionPrefixes.enabled then
         if sender == UnitFullName("player") then return end
-
-    end
-
-    if prefix == MethodDungeonTools.liveSessionPrefixes.disabled then
-        if sender == UnitFullName("player") then return end
-
+        if MethodDungeonTools.liveSessionRequested == true then
+            MethodDungeonTools:LiveSession_SessionFound(message)
+        end
     end
 
     if prefix == MethodDungeonTools.liveSessionPrefixes.request then
         if sender == UnitFullName("player") then return end
-
+        if MethodDungeonTools.liveSessionActive then
+            MethodDungeonTools:LiveSession_NotifyEnabled(fullName)
+        end
     end
 
     if prefix == MethodDungeonTools.liveSessionPrefixes.ping then
-        if sender == UnitFullName("player") then return end
-        local x,y = string.match(message,"(.*):(.*)")
-        x = tonumber(x)
-        y = tonumber(y)
-        local scale = MethodDungeonTools:GetScale()
-        MethodDungeonTools:PingMap(x*scale,y*scale)
+        if MethodDungeonTools.liveSessionActive then --TODO: check for preset uid
+            if sender == UnitFullName("player") then return end
+            local x,y,sublevel = string.match(message,"(.*):(.*):(.*)")
+            x = tonumber(x)
+            y = tonumber(y)
+            sublevel = tonumber(sublevel)
+            local scale = MethodDungeonTools:GetScale()
+            if sublevel == MethodDungeonTools:GetCurrentSubLevel() then
+                MethodDungeonTools:PingMap(x*scale,y*scale)
+            end
+        end
     end
 
 end
@@ -290,7 +300,6 @@ function MethodDungeonTools:MakeSendingStatusBar(f)
     statusbar.value:SetJustifyV("CENTER")
     statusbar.value:SetShadowOffset(1, -1)
     statusbar.value:SetTextColor(1, 1, 1)
-    statusbar.value:SetText("")
     statusbar:Hide()
 
     if IsAddOnLoaded("ElvUI") then
@@ -308,21 +317,22 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
     if bytesSent == bytesToSend then
         local distribution = userArgs[1]
         local preset = userArgs[2]
-        local live = userArgs[3]
+        local silent = userArgs[3]
         --restore "Send" and "Live" button
         MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
         MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(false)
         MethodDungeonTools.main_frame.LinkToChatButton:SetText("Share")
-        MethodDungeonTools.main_frame.LiveSessionButton:SetText(live and "*Live*" or "Live")
-        --output chat link
-        local prefix = live and "[MDTLive: " or "[MethodDungeonTools: "
-        local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
-        local presetName = preset.text
-        local name, realm = UnitFullName("player")
-        local fullName = name.."+"..realm
-        MethodDungeonTools.main_frame.SendingStatusBar.value:SetText("")
+        MethodDungeonTools.main_frame.LiveSessionButton:SetText(MethodDungeonTools.liveSessionActive == true and "*Live*" or "Live")
         MethodDungeonTools.main_frame.SendingStatusBar:Hide()
-        SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
+        --output chat link
+        if not silent then
+            local prefix = "[MethodDungeonTools: "
+            local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
+            local presetName = preset.text
+            local name, realm = UnitFullName("player")
+            local fullName = name.."+"..realm
+            SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
+        end
     end
 end
 
@@ -341,12 +351,12 @@ end
 
 ---SendToGroup
 ---Send current preset to group/raid
-function MethodDungeonTools:SendToGroup(distribution,live)
+function MethodDungeonTools:SendToGroup(distribution,silent)
     local preset = MethodDungeonTools:GetCurrentPreset()
     --set unique id
     MethodDungeonTools:SetUniqueID(preset)
     local export = MethodDungeonTools:TableToString(preset,true)
-    MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,live})
+    MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,silent})
 end
 
 ---GetPresetSize

@@ -246,7 +246,7 @@ function MethodDungeonTools:initToolbar(frame)
     delete:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
     delete:SetCallback("OnClick",function (widget,callbackName)
         local prompt = "Do you wish to delete ALL drawings from the current preset?\nThis cannot be undone\n\n"
-        MethodDungeonTools:OpenConfirmationFrame(350,150,"Delete ALL drawings","Delete",prompt, MethodDungeonTools.DeletePresetObjects)
+        MethodDungeonTools:OpenConfirmationFrame(450,150,"Delete ALL drawings","Delete",prompt, MethodDungeonTools.DeletePresetObjects)
     end)
     delete.tooltipText = "Delete all drawings"
     tinsert(widgets,delete)
@@ -418,6 +418,8 @@ function MethodDungeonTools:OverrideScrollframeScripts()
                 scrollFrame.panning = true;
                 scrollFrame.cursorX,scrollFrame.cursorY = GetCursorPosition()
             end
+            scrollFrame.oldX = scrollFrame.cursorX
+            scrollFrame.oldY = scrollFrame.cursorY
         end
     end)
     frame.scrollFrame:SetScript("OnMouseUp", function(self,button)
@@ -432,6 +434,13 @@ function MethodDungeonTools:OverrideScrollframeScripts()
         if button == "RightButton" then
             local scrollFrame = MethodDungeonTools.main_frame.scrollFrame
             if scrollFrame.panning then scrollFrame.panning = false end
+            --only ping if we didnt pan
+            if scrollFrame.oldX==scrollFrame.cursorX or scrollFrame.oldY==scrollFrame.cursorY then
+                local x,y = MethodDungeonTools:GetCursorPosition()
+                MethodDungeonTools:PingMap(x,y)
+                local sublevel = MethodDungeonTools:GetCurrentSubLevel()
+                if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendPing(x,y,sublevel) end
+            end
         end
     end)
     --make notes draggable

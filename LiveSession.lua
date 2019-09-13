@@ -1,24 +1,34 @@
 local MethodDungeonTools = MethodDungeonTools
 local MDTcommsObject = MDTcommsObject
-local db
 
+local timer
 ---LiveSession_Enable
-function MethodDungeonTools:LiveSession_Enable(passive)
+function MethodDungeonTools:LiveSession_Enable()
     local widget = self.main_frame.LiveSessionButton
     widget.text:SetTextColor(0,1,0)
     self.main_frame.LinkToChatButton:SetDisabled(true)
-    --check if there are sessions
-    if not passive then
-        self.main_frame.LiveSessionButton:SetDisabled(true)
-        self.main_frame.LinkToChatButton:SetText("...")
-        self.main_frame.LiveSessionButton:SetText("...")
-        self:SendToGroup(self:IsPlayerInGroup(),true)
-    else
-        self.main_frame.LiveSessionButton:SetText("*Live*")
-    end
+    self.main_frame.LiveSessionButton:SetText("*Live*")
     self.liveSessionActive = true
-    self:LiveSession_NotifyEnabled()
+    --check if there is a session
+    self:LiveSession_RequestSession()
+    --set id here incase there is no other sessions
+    self:SetUniqueID(self:GetCurrentPreset())
     self.livePresetUID = self:GetCurrentPreset().uid
+
+    --send chat link (this one just opens MDT and calls this function
+    --cancel timer when we receive other sessions
+    timer = C_Timer.NewTimer(2, function()
+        local distribution = self:IsPlayerInGroup()
+        local preset = self:GetCurrentPreset()
+        local prefix = "[MDTLive: "
+        local dungeon = self:GetDungeonName(preset.value.currentDungeonIdx)
+        local presetName = preset.text
+        local name, realm = UnitFullName("player")
+        local fullName = name.."+"..realm
+        SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
+    end)
+
+
 
     --TODO: check preset size when starting live session
     --[[
@@ -38,46 +48,49 @@ function MethodDungeonTools:LiveSession_Disable()
     widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
     widget.text:SetText("Live")
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
-
     self.liveSessionActive = false
-    self:LiveSession_NotifyDisabled()
 end
 
 
 ---LiveSession_NotifyEnabled
----Notify Group/Raid Members that my live session has been started
-function MethodDungeonTools:LiveSession_NotifyEnabled()
-    local distribution = self:IsPlayerInGroup()
-    if (not distribution) or (not self.liveSessionActive) then return end
-    db = db or self:GetDB()
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.enabled, tostring(db.currentDungeonIdx), distribution, nil, "ALERT")
-end
-
----LiveSession_NotifyDisabled
----Notify Group/Raid Members that my live session has ended
-function MethodDungeonTools:LiveSession_NotifyDisabled()
-    local distribution = self:IsPlayerInGroup()
-    if (not distribution) or (self.liveSessionActive) then return end
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.disabled, "0", distribution, nil, "ALERT")
+---Notify specific group member that my live session is active
+function MethodDungeonTools:LiveSession_NotifyEnabled(fullName)
+    local distribution = "WHISPER"
+    local uid = self.livePresetUID
+    if not uid then return end
+    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.enabled, uid, distribution, fullName, "ALERT")
+    self:SendToGroup(self:IsPlayerInGroup(),true)
 end
 
 ---LiveSession_RequestSessions
 ---Send a request to the group to send notify messages for active sessions
-function MethodDungeonTools:LiveSession_RequestSessions()
+function MethodDungeonTools:LiveSession_RequestSession()
     local distribution = self:IsPlayerInGroup()
-    if (not distribution) or (self.liveSessionActive) then return end
+    if (not distribution) or (not self.liveSessionActive) then return end
+    self.liveSessionRequested = true
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.request, "0", distribution, nil, "ALERT")
 end
 
+function MethodDungeonTools:LiveSession_SessionFound(uid)
+    self.livePresetUID = uid
+    self.liveSessionAcceptingPreset = true
+    self.main_frame.SendingStatusBar:Show()
+    self.main_frame.SendingStatusBar:SetValue(0/1)
+    self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
+    if timer then timer:Cancel() end
+end
+
+
+
 ---LiveSession_SendPing
 ---Sends a map ping to connected live session clients
-function MethodDungeonTools:LiveSession_SendPing(x,y)
+function MethodDungeonTools:LiveSession_SendPing(x,y,sublevel)
     --only send ping if we are in the livesession preset
     if self:GetCurrentPreset().uid == self.livePresetUID then
         local distribution = self:IsPlayerInGroup()
         if distribution then
             local scale = self:GetScale()
-            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.ping, x*(1/scale)..":"..y*(1/scale), distribution, nil, "ALERT")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.ping, x*(1/scale)..":"..y*(1/scale)..":"..sublevel, distribution, nil, "ALERT")
         end
     end
 end

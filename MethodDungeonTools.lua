@@ -181,7 +181,6 @@ do
             local inGroup = UnitInRaid("player") or IsInGroup()
             MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(not inGroup)
             MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(not inGroup)
-            MethodDungeonTools:LiveSession_RequestSessions()
             last = now
         end
     end
@@ -515,7 +514,6 @@ function MethodDungeonTools:ShowInterface(force)
 		MethodDungeonTools:HideInterface()
 	else
 		self.main_frame:Show()
-        self:LiveSession_RequestSessions()
 		self.main_frame.HelpButton:Show()
 	end
 end
@@ -1035,7 +1033,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if IsAltKeyDown() and IsShiftKeyDown() and IsControlKeyDown() then
             --delete all profiles
             local numPresets = self:CountPresets()
-            local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of the current dungeon?\nYou are about to delete "..numPresets.." preset(s).\nThis cannot be undone\n\n"
+            local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of this dungeon?\nYou are about to delete "..numPresets.." preset(s).\nThis cannot be undone\n"
             MethodDungeonTools:OpenConfirmationFrame(450,150,"Delete ALL presets","Delete",prompt, MethodDungeonTools.DeleteAllPresets)
         else
             MethodDungeonTools:HideAllDialogs()
@@ -1065,7 +1063,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         end
         local presetSize = self:GetPresetSize()
         if presetSize>12000 then
-            local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you sure you want to share this preset?\n\n\n"
+            local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you sure you want to share this preset?\n"
             MethodDungeonTools:OpenConfirmationFrame(450,150,"Sharing large preset","Share",prompt, callback)
         else
             callback()
@@ -1709,6 +1707,8 @@ MethodDungeonTools.OnMouseDown = function(self,button)
 		scrollFrame.panning = true
 		scrollFrame.cursorX,scrollFrame.cursorY = GetCursorPosition()
 	end
+    scrollFrame.oldX = scrollFrame.cursorX
+    scrollFrame.oldY = scrollFrame.cursorY
 end
 
 ---MethodDungeonTools.OnMouseUp
@@ -1718,12 +1718,15 @@ MethodDungeonTools.OnMouseUp = function(self,button)
     if scrollFrame.panning then scrollFrame.panning = false end
 
     --play minimap ping on right click at cursor position
-    if button == "RightButton" then
-        local x,y = MethodDungeonTools:GetCursorPosition()
-        MethodDungeonTools:PingMap(x,y)
-        if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendPing(x,y) end
+    --only ping if we didnt pan
+    if scrollFrame.oldX==scrollFrame.cursorX or scrollFrame.oldY==scrollFrame.cursorY then
+        if button == "RightButton" then
+            local x,y = MethodDungeonTools:GetCursorPosition()
+            MethodDungeonTools:PingMap(x,y)
+            local sublevel = MethodDungeonTools:GetCurrentSubLevel()
+            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendPing(x,y,sublevel) end
+        end
     end
-
 end
 
 ---PingMap
@@ -2258,10 +2261,9 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
     importButton:SetWidth(100)
     importButton:SetCallback("OnClick", function()
         local newPreset = chatImport.currentPreset
-        local live = chatImport.live
         if MethodDungeonTools:ValidateImportPreset(newPreset) then
             chatImport:Hide()
-            MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset),live)
+            MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset))
         else
             print("MDT: Error importing preset report to author")
         end
@@ -2408,32 +2410,50 @@ function MethodDungeonTools:ValidateImportPreset(preset)
     return true
 end
 
-function MethodDungeonTools:ImportPreset(preset,live)
+function MethodDungeonTools:ImportPreset(preset)
     --change dungeon to dungeon of the new preset
     MethodDungeonTools:UpdateToDungeon(preset.value.currentDungeonIdx)
-	local name = preset.text
-	local num = 2
-	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
-		if name == v.text then
-			name = preset.text.." "..num
-			num = num + 1
-		end
-	end
+    --search for uid
+    local updateIndex
+    for k,v in pairs(db.presets[db.currentDungeonIdx]) do
+        if v.uid and v.uid == preset.uid then
+            updateIndex = k
+            break
+        end
+    end
 
-	preset.text = name
-	local countPresets = 0
+    local updateCallback = function()
+        db.presets[db.currentDungeonIdx][updateIndex] = preset
+        MethodDungeonTools:UpdatePresetDropDown()
+        MethodDungeonTools:UpdateMap()
+    end
+    local copyCallback = function()
+        local name = preset.text
+        local num = 2
+        for k,v in pairs(db.presets[db.currentDungeonIdx]) do
+            if name == v.text then
+                name = preset.text.." "..num
+                num = num + 1
+            end
+        end
+        preset.text = name
+        local countPresets = 0
+        for k,v in pairs(db.presets[db.currentDungeonIdx]) do
+            countPresets = countPresets + 1
+        end
+        db.presets[db.currentDungeonIdx][countPresets+1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
+        db.presets[db.currentDungeonIdx][countPresets] = preset
+        db.currentPreset[db.currentDungeonIdx] = countPresets
+        MethodDungeonTools:UpdatePresetDropDown()
+        MethodDungeonTools:UpdateMap()
+    end
 
-	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
-		countPresets = countPresets + 1
-	end
-	db.presets[db.currentDungeonIdx][countPresets+1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
-	db.presets[db.currentDungeonIdx][countPresets] = preset
-	db.currentPreset[db.currentDungeonIdx] = countPresets
-	MethodDungeonTools:UpdatePresetDropDown()
-	MethodDungeonTools:UpdateMap()
-    --live
-    if live then
-        self:LiveSession_Enable(true)
+    --open dialog to ask for replacing
+    if updateIndex then
+        local prompt = "You have an earlier version of this preset.\nDo you wish to update or create a new copy?\n\n\n"
+        MethodDungeonTools:OpenConfirmationFrame(450,150,"Import Preset","Update",prompt, updateCallback,"Copy",copyCallback)
+    else
+        copyCallback()
     end
 end
 
@@ -3008,7 +3028,7 @@ end
 
 ---OpenConfirmationFrame
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
-function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,prompt,callback)
+function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,prompt,callback,buttonText2,callback2)
     local f = MethodDungeonTools.main_frame.ConfirmationFrame
     if not f then
         MethodDungeonTools.main_frame.ConfirmationFrame = AceGUI:Create("Frame")
@@ -3019,7 +3039,7 @@ function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,
 
         f.label = AceGUI:Create("Label")
         f.label:SetWidth(390)
-        f.label:SetHeight(10)
+        f.label:SetHeight(height-20)
         f:AddChild(f.label)
 
         f.OkayButton = AceGUI:Create("Button")
@@ -3030,7 +3050,7 @@ function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,
         f.CancelButton:SetText("Cancel")
         f.CancelButton:SetWidth(100)
         f.CancelButton:SetCallback("OnClick",function()
-            f:Hide()
+            MethodDungeonTools:HideAllDialogs()
         end)
         f:AddChild(f.CancelButton)
     end
@@ -3039,13 +3059,20 @@ function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,
     f:SetTitle(title)
     f.OkayButton:SetText(buttonText)
     f.OkayButton:SetCallback("OnClick",function()callback()MethodDungeonTools:HideAllDialogs() end)
-
+    if buttonText2 then
+        f.CancelButton:SetText(buttonText2) else
+        f.CancelButton:SetText("Cancel")
+    end
+    if callback2 then
+        f.CancelButton:SetCallback("OnClick",function()callback2()MethodDungeonTools:HideAllDialogs() end)
+    else
+        f.CancelButton:SetCallback("OnClick",function()MethodDungeonTools:HideAllDialogs() end)
+    end
     MethodDungeonTools:HideAllDialogs()
     f:ClearAllPoints()
     f:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
     f.label:SetText(prompt)
     f:Show()
-
 end
 
 
