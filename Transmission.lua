@@ -5,7 +5,7 @@ local Serializer = LibStub:GetLibrary("AceSerializer-3.0");
 MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
 -- Lua APIs
-local tostring, string_char, strsplit = tostring, string.char, strsplit
+local tostring, string_char, strsplit,tremove = tostring, string.char, strsplit,table.remove
 local pairs, type, unpack = pairs, type, unpack
 local bit_band, bit_lshift, bit_rshift = bit.band, bit.lshift, bit.rshift
 
@@ -159,6 +159,11 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["enabled"] = "MDTLiveEnabled",
     ["request"] = "MDTLiveReq",
     ["ping"] = "MDTLivePing",
+    ["obj"] = "MDTLiveObj",
+    ["objOff"] = "MDTLiveObjOff",
+    ["objChg"] = "MDTLiveObjChg",
+    ["cmd"] = "MDTLiveCmd",
+    ["note"] = "MDTLiveNote",
 }
 
 function MDTcommsObject:OnEnable()
@@ -242,23 +247,25 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         end
     end
 
+    --live session messages from here on, we ignore our own messages
+    if sender == UnitFullName("player") then return end
+
     if prefix == MethodDungeonTools.liveSessionPrefixes.enabled then
-        if sender == UnitFullName("player") then return end
         if MethodDungeonTools.liveSessionRequested == true then
             MethodDungeonTools:LiveSession_SessionFound(message)
         end
     end
 
     if prefix == MethodDungeonTools.liveSessionPrefixes.request then
-        if sender == UnitFullName("player") then return end
         if MethodDungeonTools.liveSessionActive then
             MethodDungeonTools:LiveSession_NotifyEnabled(fullName)
         end
     end
 
+    --ping
     if prefix == MethodDungeonTools.liveSessionPrefixes.ping then
-        if MethodDungeonTools.liveSessionActive then --TODO: check for preset uid
-            if sender == UnitFullName("player") then return end
+        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
+        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
             local x,y,sublevel = string.match(message,"(.*):(.*):(.*)")
             x = tonumber(x)
             y = tonumber(y)
@@ -269,6 +276,77 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             end
         end
     end
+
+    --preset objects
+    if prefix == MethodDungeonTools.liveSessionPrefixes.obj then
+        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
+        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
+            local obj = MethodDungeonTools:StringToTable(message,true)
+            MethodDungeonTools:StorePresetObject(obj,true)
+            MethodDungeonTools:DrawAllPresetObjects()
+        end
+    end
+
+    --preset object offsets
+    if prefix == MethodDungeonTools.liveSessionPrefixes.objOff then
+        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
+        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
+            local objIdx,x,y = string.match(message,"(.*):(.*):(.*)")
+            objIdx = tonumber(objIdx)
+            x = tonumber(x)
+            y = tonumber(y)
+            MethodDungeonTools:UpdatePresetObjectOffsets(objIdx,x,y)
+            MethodDungeonTools:DrawAllPresetObjects()
+        end
+    end
+
+    --preset object changed (deletions, partial deletions)
+    if prefix == MethodDungeonTools.liveSessionPrefixes.objChg then
+        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
+        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
+            local changedObjects = MethodDungeonTools:StringToTable(message,true)
+            local objects = MethodDungeonTools:GetCurrentPreset().objects
+            for objIdx,obj in pairs(changedObjects) do
+                objects[objIdx] = obj
+            end
+            MethodDungeonTools:DrawAllPresetObjects()
+        end
+    end
+
+    --various commands
+    if prefix == MethodDungeonTools.liveSessionPrefixes.cmd then
+        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
+        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
+            if message == "deletePresetObjects" then MethodDungeonTools:DeletePresetObjects() end
+            if message == "undo" then MethodDungeonTools:PresetObjectStepBack() end
+            if message == "redo" then MethodDungeonTools:PresetObjectStepForward() end
+
+            --clear preset
+
+        end
+    end
+
+    --note text update, delete, move
+    if prefix == MethodDungeonTools.liveSessionPrefixes.note then
+        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
+        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
+            local action,noteIdx,text,y = string.match(message,"(.*):(.*):(.*):(.*)")
+            noteIdx = tonumber(noteIdx)
+            local currentPreset = MethodDungeonTools:GetCurrentPreset()
+            if action == "text" then
+                currentPreset.objects[noteIdx].d[5]=text
+            elseif action == "delete" then
+                tremove(currentPreset.objects,noteIdx)
+            elseif action == "move" then
+                local x = tonumber(text)
+                y = tonumber(y)
+                currentPreset.objects[noteIdx].d[1]=x
+                currentPreset.objects[noteIdx].d[2]=y
+            end
+            MethodDungeonTools:DrawAllPresetObjects()
+        end
+    end
+
 
 end
 

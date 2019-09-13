@@ -1,5 +1,6 @@
 local MethodDungeonTools = MethodDungeonTools
 local MDTcommsObject = MDTcommsObject
+local twipe,tinsert = table.wipe,table.insert
 
 local timer
 ---LiveSession_Enable
@@ -77,13 +78,14 @@ function MethodDungeonTools:LiveSession_SessionFound(uid)
     self.main_frame.SendingStatusBar:Show()
     self.main_frame.SendingStatusBar:SetValue(0/1)
     self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
+    --TODO: lockout ui elements?
     if timer then timer:Cancel() end
 end
 
 
 
 ---LiveSession_SendPing
----Sends a map ping to connected live session clients
+---Sends a map ping
 function MethodDungeonTools:LiveSession_SendPing(x,y,sublevel)
     --only send ping if we are in the livesession preset
     if self:GetCurrentPreset().uid == self.livePresetUID then
@@ -91,6 +93,64 @@ function MethodDungeonTools:LiveSession_SendPing(x,y,sublevel)
         if distribution then
             local scale = self:GetScale()
             MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.ping, x*(1/scale)..":"..y*(1/scale)..":"..sublevel, distribution, nil, "ALERT")
+        end
+    end
+end
+
+---LiveSession_SendObject
+---Sends a preset object
+function MethodDungeonTools:LiveSession_SendObject(obj)
+    if self:GetCurrentPreset().uid == self.livePresetUID then
+        local distribution = self:IsPlayerInGroup()
+        if distribution then
+            local export = MethodDungeonTools:TableToString(obj,true)
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.obj,export, distribution, nil, "ALERT")
+        end
+    end
+end
+
+---LiveSession_SendObjectOffsets
+---Sends updated object offsets (move object)
+function MethodDungeonTools:LiveSession_SendObjectOffsets(objIdx,x,y)
+    if self:GetCurrentPreset().uid == self.livePresetUID then
+        local distribution = self:IsPlayerInGroup()
+        if distribution then
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objOff,objIdx..":"..x..":"..y, distribution, nil, "ALERT")
+        end
+    end
+end
+
+---LiveSession_SendUpdatedObjects
+---Sends updated objects - instead of sending an update every time we erase a part of an object we send one message after mouse up
+function MethodDungeonTools:LiveSession_SendUpdatedObjects(changedObjects)
+    if self:GetCurrentPreset().uid == self.livePresetUID then
+        local distribution = self:IsPlayerInGroup()
+        if distribution then
+            local export = MethodDungeonTools:TableToString(changedObjects,true)
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objChg,export, distribution, nil, "ALERT")
+        end
+    end
+end
+
+---LiveSession_SendDeletePresetObjects
+---Sends a command to delete all preset objects
+function MethodDungeonTools:LiveSession_SendCommand(cmd)
+    if self:GetCurrentPreset().uid == self.livePresetUID then
+        local distribution = self:IsPlayerInGroup()
+        if distribution then
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.cmd,cmd, distribution, nil, "ALERT")
+        end
+    end
+end
+
+---LiveSession_SendNoteText
+---Sends a note text update
+function MethodDungeonTools:LiveSession_SendNoteCommand(cmd,noteIdx,text,y)
+    if self:GetCurrentPreset().uid == self.livePresetUID then
+        local distribution = self:IsPlayerInGroup()
+        if distribution then
+            text = text..":"..(y or "0")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.note,cmd..":"..noteIdx..":"..text, distribution, nil, "ALERT")
         end
     end
 end

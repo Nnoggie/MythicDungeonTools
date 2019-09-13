@@ -91,7 +91,8 @@ function MethodDungeonTools:initToolbar(frame)
     local back = AceGUI:Create("Icon")
     back:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.5,0.75,0.5,0.75)
     back:SetCallback("OnClick",function (widget,callbackName)
-        MethodDungeonTools:PresetObjectStepBack()
+        self:PresetObjectStepBack()
+        if self.liveSessionActive then self:LiveSession_SendCommand("undo") end
     end)
     back.tooltipText = "Undo"
     local t = back.frame:CreateTexture(nil,"ARTWORK")
@@ -102,7 +103,8 @@ function MethodDungeonTools:initToolbar(frame)
     local forward = AceGUI:Create("Icon")
     forward:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.75,1,0.5,0.75)
     forward:SetCallback("OnClick",function (widget,callbackName)
-        MethodDungeonTools:PresetObjectStepForward()
+        self:PresetObjectStepForward()
+        if self.liveSessionActive then self:LiveSession_SendCommand("redo") end
     end)
     forward.tooltipText = "Redo"
     tinsert(widgets,forward)
@@ -246,7 +248,10 @@ function MethodDungeonTools:initToolbar(frame)
     delete:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
     delete:SetCallback("OnClick",function (widget,callbackName)
         local prompt = "Do you wish to delete ALL drawings from the current preset?\nThis cannot be undone\n\n"
-        MethodDungeonTools:OpenConfirmationFrame(450,150,"Delete ALL drawings","Delete",prompt, MethodDungeonTools.DeletePresetObjects)
+        self:OpenConfirmationFrame(450,150,"Delete ALL drawings","Delete",prompt, function()
+            self:DeletePresetObjects()
+            if self.liveSessionActive then self:LiveSession_SendCommand("deletePresetObjects") end
+        end)
     end)
     delete.tooltipText = "Delete all drawings"
     tinsert(widgets,delete)
@@ -474,6 +479,7 @@ function MethodDungeonTools:OverrideScrollframeScripts()
                     local currentPreset = MethodDungeonTools:GetCurrentPreset()
                     currentPreset.objects[note.objectIndex].d[1]=x-xOffset
                     currentPreset.objects[note.objectIndex].d[2]=y-yOffset
+                    if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendNoteCommand("move",note.objectIndex,x-xOffset,y-yOffset) end
                     MethodDungeonTools:DrawAllPresetObjects()
                 end)
             end
@@ -588,8 +594,8 @@ end
 ---StopArrowDrawing
 function MethodDungeonTools:StopArrowDrawing()
     local frame = MethodDungeonTools.main_frame
-    --ViragDevTool_AddData(nobj)
     MethodDungeonTools:StorePresetObject(nobj)
+    if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
     frame.toolbar:SetScript("OnUpdate",nil)
     for k,v in pairs(activeTextures) do
         v.isOwn = nil
@@ -668,6 +674,7 @@ function MethodDungeonTools:StopLineDrawing()
     tinsert(nobj.l,MethodDungeonTools:Round(endy,1))
 
     MethodDungeonTools:StorePresetObject(nobj)
+    if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
     drawingActive = false
     MethodDungeonTools:DrawAllPresetObjects()
 end
@@ -743,6 +750,8 @@ function MethodDungeonTools:StopPencilDrawing()
         v.isOwn = nil
     end
     MethodDungeonTools:StorePresetObject(nobj)
+    --nobj will be scaled after StorePresetObject so no need to rescale again
+    if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
     drawingActive = false
 end
 
@@ -797,6 +806,7 @@ function MethodDungeonTools:StopMovingObject()
     if objectIndex then
         local newX,newY = MethodDungeonTools:GetCursorPosition()
         MethodDungeonTools:UpdatePresetObjectOffsets(objectIndex,originalX-newX,originalY-newY)
+        if self.liveSessionActive then self:LiveSession_SendObjectOffsets(objectIndex,originalX-newX,originalY-newY) end
     end
     objectIndex = nil
     drawingActive = false
@@ -821,12 +831,14 @@ function MethodDungeonTools:GetHighestPresetObjectIndexAtCursor()
 end
 
 ---StartEraserDrawing
+local changedObjects = {}
 function MethodDungeonTools:StartEraserDrawing()
     MethodDungeonTools:DrawAllPresetObjects()
     drawingActive = true
     local frame = MethodDungeonTools.main_frame
     local startx,starty
     local scale = MethodDungeonTools:GetScale()
+    twipe(changedObjects)
     frame.toolbar:SetScript("OnUpdate", function(self, tick)
         if not MouseIsOver(MethodDungeonToolsScrollFrame) then return end
         local x,y = MethodDungeonTools:GetCursorPosition()
@@ -852,6 +864,7 @@ function MethodDungeonTools:StartEraserDrawing()
                                 for coordIdx,coord in pairs(obj.l) do
                                     if coord*scale == x1 and obj.l[coordIdx+1]*scale == y1 and obj.l[coordIdx+2]*scale == x2 and obj.l[coordIdx+3]*scale == y2 then
                                         for i=1,4 do tremove(obj.l,coordIdx) end
+                                        changedObjects[objectIndex] = obj
                                         break
                                     end
                                 end
@@ -870,6 +883,7 @@ end
 function MethodDungeonTools:StopEraserDrawing()
     local frame = MethodDungeonTools.main_frame
     frame.toolbar:SetScript("OnUpdate",nil)
+    if self.liveSessionActive then self:LiveSession_SendUpdatedObjects(changedObjects) end
     MethodDungeonTools:DrawAllPresetObjects()
     drawingActive = false
 end
@@ -886,6 +900,7 @@ function MethodDungeonTools:StartNoteDrawing()
     nobj = {d={x,y,MethodDungeonTools:GetCurrentSubLevel(),true,""}}
     nobj.n = true
     MethodDungeonTools:StorePresetObject(nobj)
+    if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
     MethodDungeonTools:DrawAllPresetObjects()
 
     if not IsShiftKeyDown() then
@@ -955,10 +970,12 @@ local noteEditbox
 local function updateNoteObjText(text,note)
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     currentPreset.objects[note.objectIndex].d[5]=text
+    if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendNoteCommand("text",note.objectIndex,text) end
 end
 local function deleteNoteObj(note)
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     tremove(currentPreset.objects,note.objectIndex)
+    if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendNoteCommand("delete",note.objectIndex,"0") end
     MethodDungeonTools:DrawAllPresetObjects()
 end
 
@@ -981,7 +998,6 @@ local function makeNoteEditbox()
                 break
             end
         end
-
         editbox.frame:Hide()
     end)
 

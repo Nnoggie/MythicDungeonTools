@@ -2424,6 +2424,7 @@ function MethodDungeonTools:ImportPreset(preset)
 
     local updateCallback = function()
         db.presets[db.currentDungeonIdx][updateIndex] = preset
+        db.currentPreset[db.currentDungeonIdx] = updateIndex
         MethodDungeonTools:UpdatePresetDropDown()
         MethodDungeonTools:UpdateMap()
     end
@@ -3225,15 +3226,18 @@ function MethodDungeonTools:DeepCopy(orig)
 end
 
 ---StorePresetObject
-function MethodDungeonTools:StorePresetObject(obj)
-    --adjust coords incase we drew in fullscreen
-    local scale = self:GetScale()
-    if obj.n then
-        obj.d[1] = obj.d[1]*(1/scale)
-        obj.d[2] = obj.d[2]*(1/scale)
-    else
-        for idx,coord in pairs(obj.l) do
-            obj.l[idx] = MethodDungeonTools:Round(obj.l[idx]*(1/scale),1)
+---scale if preset comes from live session
+function MethodDungeonTools:StorePresetObject(obj,ignoreScale)
+    --adjust scale
+    if not ignoreScale then
+        local scale = self:GetScale()
+        if obj.n then
+            obj.d[1] = obj.d[1]*(1/scale)
+            obj.d[2] = obj.d[2]*(1/scale)
+        else
+            for idx,coord in pairs(obj.l) do
+                obj.l[idx] = self:Round(obj.l[idx]*(1/scale),1)
+            end
         end
     end
 	local currentPreset = self:GetCurrentPreset()
@@ -3258,8 +3262,8 @@ end
 function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
     --adjust coords to scale
     local scale = self:GetScale()
-    x = MethodDungeonTools:Round(x*(1/scale),1)
-    y = MethodDungeonTools:Round(y*(1/scale),1)
+    x = self:Round(x*(1/scale),1)
+    y = self:Round(y*(1/scale),1)
 	local currentPreset = self:GetCurrentPreset()
 	for objectIndex,obj in pairs(currentPreset.objects) do
 		if objectIndex == idx then
@@ -3285,13 +3289,8 @@ function MethodDungeonTools:DrawAllPresetObjects()
     local currentPreset = MethodDungeonTools:GetCurrentPreset()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
 
-	--ViragDevTool_AddData(currentPreset.objects)
-	--ViragDevTool_AddData(currentPreset)
-	--ViragDevTool_AddData(string.len(MethodDungeonTools:TableToString(currentPreset, true)))
-
     MethodDungeonTools:ReleaseAllActiveTextures()
     currentPreset.objects = currentPreset.objects or {}
-    --ViragDevTool_AddData(currentPreset.objects)
 	--d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
 	--l: x1,y1,x2,y2,...
 	local color = {}
