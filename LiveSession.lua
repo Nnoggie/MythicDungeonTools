@@ -133,7 +133,7 @@ function MethodDungeonTools:LiveSession_SendUpdatedObjects(changedObjects)
 end
 
 ---LiveSession_SendDeletePresetObjects
----Sends a command to delete all preset objects
+---Sends various commands: delete all drawings, clear preset, undo, redo
 function MethodDungeonTools:LiveSession_SendCommand(cmd)
     if self:GetCurrentPreset().uid == self.livePresetUID then
         local distribution = self:IsPlayerInGroup()

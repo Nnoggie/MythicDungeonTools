@@ -1774,6 +1774,18 @@ function MethodDungeonTools:GetCurrentPreset()
     return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
 end
 
+---GetCurrentLivePreset
+function MethodDungeonTools:GetCurrentLivePreset()
+    if not self.livePresetUID then return end
+    for dungeonIdx,presets in pairs(db.presets) do
+        for presetIdx,preset in pairs(presets) do
+            if preset.uid and preset.uid == self.livePresetUID then
+                return preset
+            end
+        end
+    end
+end
+
 ---IsWeekTeeming
 ---Returns if the current week has an affix week set that inlcludes the teeming affix
 function MethodDungeonTools:IsWeekTeeming(week)
@@ -2173,13 +2185,16 @@ function MethodDungeonTools:DeleteAllPresets()
     MethodDungeonTools:UpdateMap()
 end
 
-function MethodDungeonTools:ClearPreset(index)
-	table.wipe(db.presets[db.currentDungeonIdx][index].value.pulls)
-	db.presets[db.currentDungeonIdx][index].value.currentPull = 1
+function MethodDungeonTools:ClearPreset(preset,silent)
+    if preset == self:GetCurrentPreset() then silent = false end
+	table.wipe(preset.value.pulls)
+	preset.value.currentPull = 1
 	--MethodDungeonTools:DeleteAllPresetObjects()
-	MethodDungeonTools:EnsureDBTables()
-	MethodDungeonTools:UpdateMap()
-	MethodDungeonTools:ReloadPullButtons()
+    MethodDungeonTools:EnsureDBTables()
+    if not silent then
+        MethodDungeonTools:UpdateMap()
+        MethodDungeonTools:ReloadPullButtons()
+    end
 end
 
 function MethodDungeonTools:CreateNewPreset(name)
@@ -3011,7 +3026,8 @@ function MethodDungeonTools:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame.OkayButton:SetText("Clear")
 	frame.ClearConfirmationFrame.OkayButton:SetWidth(100)
 	frame.ClearConfirmationFrame.OkayButton:SetCallback("OnClick",function()
-		MethodDungeonTools:ClearPreset(db.currentPreset[db.currentDungeonIdx])
+		self:ClearPreset(self:GetCurrentPreset())
+        if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then MethodDungeonTools:LiveSession_SendCommand("clear") end
 		frame.ClearConfirmationFrame:Hide()
 	end)
 	frame.ClearConfirmationFrame.CancelButton = AceGUI:Create("Button")
@@ -3227,7 +3243,7 @@ end
 
 ---StorePresetObject
 ---scale if preset comes from live session
-function MethodDungeonTools:StorePresetObject(obj,ignoreScale)
+function MethodDungeonTools:StorePresetObject(obj,ignoreScale,preset)
     --adjust scale
     if not ignoreScale then
         local scale = self:GetScale()
@@ -3240,32 +3256,32 @@ function MethodDungeonTools:StorePresetObject(obj,ignoreScale)
             end
         end
     end
-	local currentPreset = self:GetCurrentPreset()
-	currentPreset.objects = currentPreset.objects or {}
+	preset = preset or self:GetCurrentPreset()
+    preset.objects = preset.objects or {}
 	--we insert the object infront of the first hidden oject
 	local pos = 1
-	for k,v in ipairs(currentPreset.objects) do
+	for k,v in ipairs(preset.objects) do
 		pos = pos + 1
 		if v.d[4]==false then
 			pos = pos - 1
 		end
 	end
 	if pos>1 then
-		tinsert(currentPreset.objects,pos,self:DeepCopy(obj))
+		tinsert(preset.objects,pos,self:DeepCopy(obj))
 	else
-		tinsert(currentPreset.objects,self:DeepCopy(obj))
+		tinsert(preset.objects,self:DeepCopy(obj))
 	end
 end
 
 ---UpdatePresetObjectOffsets
 ---excluding notes, these are handled in OverrideScrollFrameScripts
-function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
+function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y,preset,silent)
     --adjust coords to scale
     local scale = self:GetScale()
     x = self:Round(x*(1/scale),1)
     y = self:Round(y*(1/scale),1)
-	local currentPreset = self:GetCurrentPreset()
-	for objectIndex,obj in pairs(currentPreset.objects) do
+	preset = preset or self:GetCurrentPreset()
+	for objectIndex,obj in pairs(preset.objects) do
 		if objectIndex == idx then
 			for coordIdx,coord in pairs(obj.l) do
 				if coordIdx%2==1 then
@@ -3277,7 +3293,7 @@ function MethodDungeonTools:UpdatePresetObjectOffsets(idx,x,y)
 		end
 	end
     --redraw everything
-	self:DrawAllPresetObjects()
+	if not silent then self:DrawAllPresetObjects() end
 end
 
 
@@ -3353,31 +3369,33 @@ end
 
 ---DeletePresetObjects
 ---Deletes objects from the current preset in the current sublevel
-function MethodDungeonTools:DeletePresetObjects()
-	local currentPreset = MethodDungeonTools:GetCurrentPreset()
-    local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
-    for objectIndex,obj in pairs(currentPreset.objects) do
+function MethodDungeonTools:DeletePresetObjects(preset, silent)
+	preset = preset or self:GetCurrentPreset()
+    if preset == self:GetCurrentPreset() then silent = false end
+    local currentSublevel = self:GetCurrentSubLevel()
+    for objectIndex,obj in pairs(preset.objects) do
         if obj.d[3] == currentSublevel then
-            currentPreset.objects[objectIndex] = nil
+            preset.objects[objectIndex] = nil
         end
     end
-    MethodDungeonTools:DrawAllPresetObjects()
+    if not silent then self:DrawAllPresetObjects() end
 end
 
 ---StepBack
 ---Undo the latest drawing
-function MethodDungeonTools:PresetObjectStepBack()
-    local currentPreset = MethodDungeonTools:GetCurrentPreset()
-    currentPreset.objects = currentPreset.objects or {}
+function MethodDungeonTools:PresetObjectStepBack(preset,silent)
+    preset = preset or self:GetCurrentPreset()
+    if preset == self:GetCurrentPreset() then silent = false end
+    preset.objects = preset.objects or {}
     local length = 0
-    for k,v in pairs(currentPreset.objects) do
+    for k,v in pairs(preset.objects) do
         length = length + 1
     end
     if length>0 then
         for i = length,1,-1 do
-            if currentPreset.objects[i] and currentPreset.objects[i].d[4] then
-                currentPreset.objects[i].d[4] = false
-                MethodDungeonTools:DrawAllPresetObjects()
+            if preset.objects[i] and preset.objects[i].d[4] then
+                preset.objects[i].d[4] = false
+                if not silent then self:DrawAllPresetObjects() end
                 break
             end
         end
@@ -3386,18 +3404,19 @@ end
 
 ---StepForward
 ---Redo the latest drawing
-function MethodDungeonTools:PresetObjectStepForward()
-    local currentPreset = MethodDungeonTools:GetCurrentPreset()
-    currentPreset.objects = currentPreset.objects or {}
+function MethodDungeonTools:PresetObjectStepForward(preset,silent)
+    preset = preset or MethodDungeonTools:GetCurrentPreset()
+    if preset == self:GetCurrentPreset() then silent = false end
+    preset.objects = preset.objects or {}
     local length = 0
-    for k,v in ipairs(currentPreset.objects) do
+    for k,v in ipairs(preset.objects) do
         length = length + 1
     end
     if length>0 then
         for i = 1,length do
-            if currentPreset.objects[i] and not currentPreset.objects[i].d[4] then
-                currentPreset.objects[i].d[4] = true
-                MethodDungeonTools:DrawAllPresetObjects()
+            if preset.objects[i] and not preset.objects[i].d[4] then
+                preset.objects[i].d[4] = true
+                if not silent then self:DrawAllPresetObjects() end
                 break
             end
         end
