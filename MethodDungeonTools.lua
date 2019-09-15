@@ -80,6 +80,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
 		currentExpansion = 2,
+        scale = 1,
         enemyForcesFormat = 2,
         enemyStyle = 1,
 		currentDungeonIdx = 15,
@@ -619,6 +620,7 @@ end
 ---GetScale
 ---Returns scale factor stored in db
 function MethodDungeonTools:GetScale()
+    if not db.scale then db.scale = 1 end
     return db.scale
 end
 
@@ -638,7 +640,6 @@ end
 ---SetScale
 ---Scales the map frame and it's sub frames to a factor and stores the scale in db
 function MethodDungeonTools:SetScale(scale)
-    db.scale = scale
     local f = self.main_frame
     local newSizex = sizex*scale
     local newSizey = sizey*scale
@@ -3257,6 +3258,7 @@ function MethodDungeonTools:DrawAllPresetObjects()
                 local text = obj.d[5]
                 MethodDungeonTools:DrawNote(x,y,text,objectIndex)
             else
+                obj.d[1] = obj.d[1] or 5 --safety check
                 color.r,color.g,color.b = MethodDungeonTools:HexToRGB(obj.d[5])
                 --lines
                 local x1,y1,x2,y2
