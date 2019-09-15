@@ -540,15 +540,15 @@ end
 
 
 function MethodDungeonTools:CreateMenu()
-	-- Close button
-	self.main_frame.closeButton = CreateFrame("Button", "CloseButton", self.main_frame, "UIPanelCloseButton")
-	self.main_frame.closeButton:ClearAllPoints()
-	self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", 0, 0)
-	self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
-	self.main_frame.closeButton:SetFrameLevel(4)
+    -- Close button
+    self.main_frame.closeButton = CreateFrame("Button", "MDTCloseButton", self.main_frame, "UIPanelCloseButton")
+    self.main_frame.closeButton:ClearAllPoints()
+    self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", 0, 0)
+    self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
+    self.main_frame.closeButton:SetFrameLevel(4)
 
     --Maximize Button
-    self.main_frame.maximizeButton = CreateFrame("Button", "MaximizeButton", self.main_frame, "MaximizeMinimizeButtonFrameTemplate")
+    self.main_frame.maximizeButton = CreateFrame("Button", "MDTMaximizeButton", self.main_frame, "MaximizeMinimizeButtonFrameTemplate")
     self.main_frame.maximizeButton:ClearAllPoints()
     self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
     self.main_frame.maximizeButton:SetFrameLevel(4)
@@ -556,6 +556,34 @@ function MethodDungeonTools:CreateMenu()
     if not db.maximized then self.main_frame.maximizeButton:Minimize() end
     self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
     self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
+
+    --return to live preset
+    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "BrowserButtonTemplate")
+    local liveReturnButton = self.main_frame.liveReturnButton
+    liveReturnButton:ClearAllPoints()
+    liveReturnButton:SetPoint("RIGHT", self.main_frame.topPanel, "RIGHT", 0, 0)
+    liveReturnButton.Icon = liveReturnButton:CreateTexture(nil, "OVERLAY")
+    liveReturnButton.Icon:SetTexture("Interface\\Buttons\\UI-RefreshButton")
+    liveReturnButton.Icon:SetSize(16,16)
+    liveReturnButton.Icon:SetTexCoord(1, 0, 0, 1) --flipped image
+    liveReturnButton.Icon:SetPoint("CENTER",liveReturnButton,"CENTER")
+    liveReturnButton:SetScript("OnClick", function() self:ReturnToLivePreset() end)
+    liveReturnButton:SetFrameLevel(4)
+    liveReturnButton.tooltip = "Return to the live preset"
+
+    --set preset as new live preset
+    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "BrowserButtonTemplate")
+    local setLivePresetButton = self.main_frame.setLivePresetButton
+    setLivePresetButton:ClearAllPoints()
+    setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
+    setLivePresetButton.Icon = setLivePresetButton:CreateTexture(nil, "OVERLAY")
+    setLivePresetButton.Icon:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
+    setLivePresetButton.Icon:SetSize(16,16)
+    setLivePresetButton.Icon:SetPoint("CENTER",setLivePresetButton,"CENTER")
+    setLivePresetButton:SetScript("OnClick", function() self:SetLivePreset() end)
+    setLivePresetButton:SetFrameLevel(4)
+    setLivePresetButton.tooltip = "Make this preset the live preset"
+
     self:SkinMenuButtons()
 
     --Resize Handle
@@ -577,8 +605,7 @@ function MethodDungeonTools:CreateMenu()
         self.main_frame:StopMovingOrSizing()
         self:UpdateEnemyInfoFrame()
         self:UpdateMap()
-        self.main_frame:SetScript("OnSizeChanged", function()
-        end)
+        self.main_frame:SetScript("OnSizeChanged", function() end)
     end)
     local normal = resizer:CreateTexture(nil, "OVERLAY")
     normal:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
@@ -602,16 +629,22 @@ function MethodDungeonTools:CreateMenu()
 end
 
 function MethodDungeonTools:SkinMenuButtons()
-	--attempt to skin close button for ElvUI
-	if IsAddOnLoaded("ElvUI") then
-	   local E, L, V, P, G = unpack(ElvUI)
-	   local S
-	   if E then S = E:GetModule("Skins") end
-	   if S then
-	      S:HandleCloseButton(self.main_frame.closeButton)
-	      S:HandleMaxMinFrame(self.main_frame.maximizeButton)
-	   end
-	end
+    --attempt to skin close button for ElvUI
+    if IsAddOnLoaded("ElvUI") then
+    local E, L, V, P, G = unpack(ElvUI)
+    local S
+    if E then S = E:GetModule("Skins") end
+        if S then
+            S:HandleCloseButton(self.main_frame.closeButton)
+            S:HandleMaxMinFrame(self.main_frame.maximizeButton)
+            S:HandleButton(self.main_frame.liveReturnButton)
+            self.main_frame.liveReturnButton:Size(26)
+            --self.main_frame.liveReturnButton.Icon:SetVertexColor(0,1,1,1)
+            S:HandleButton(self.main_frame.setLivePresetButton)
+            self.main_frame.setLivePresetButton:Size(26)
+            self.main_frame.setLivePresetButton.Icon:SetVertexColor(1, .82, 0, 0.8)
+        end
+    end
 end
 
 ---GetScale
@@ -1424,6 +1457,19 @@ function MethodDungeonTools:UpdatePresetDropDown()
 	end
 	dropdown:SetList(presetList)
 	dropdown:SetValue(db.currentPreset[db.currentDungeonIdx])
+    dropdown:ClearFocus()
+end
+
+function MethodDungeonTools:UpdatePresetDropdownTextColor(forceReset)
+    local preset = self:GetCurrentPreset()
+    local livePreset = self:GetCurrentLivePreset()
+    if self.liveSessionActive and preset == livePreset and (not forceReset) then
+        local dropdown = MethodDungeonTools.main_frame.sidePanel.WidgetGroup.PresetDropDown
+        dropdown.text:SetTextColor(0,1,0,1)
+    else
+        local dropdown = MethodDungeonTools.main_frame.sidePanel.WidgetGroup.PresetDropDown
+        dropdown.text:SetTextColor(1,1,1,1)
+    end
 end
 
 
@@ -1780,10 +1826,28 @@ function MethodDungeonTools:GetCurrentLivePreset()
     for dungeonIdx,presets in pairs(db.presets) do
         for presetIdx,preset in pairs(presets) do
             if preset.uid and preset.uid == self.livePresetUID then
-                return preset
+                return preset,presetIdx
             end
         end
     end
+end
+
+---ReturnToLivePreset
+function MethodDungeonTools:ReturnToLivePreset()
+    local preset,presetIdx = self:GetCurrentLivePreset()
+    self:UpdateToDungeon(preset.value.currentDungeonIdx,true)
+    db.currentPreset[db.currentDungeonIdx] = presetIdx
+    self:UpdatePresetDropDown()
+    self:UpdateMap()
+end
+
+---SetLivePreset
+function MethodDungeonTools:SetLivePreset()
+    local preset = self:GetCurrentPreset()
+    self:SetUniqueID(preset)
+    self.livePresetUID = preset.uid
+    self:LiveSession_SendPreset(preset)
+    self:UpdatePresetDropdownTextColor()
 end
 
 ---IsWeekTeeming
@@ -2117,7 +2181,8 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	local frame = MethodDungeonTools.main_frame
 	mapName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][0]
 	MethodDungeonTools:EnsureDBTables()
-	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel]
+    local preset = self:GetCurrentPreset()
+	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
 	for i=1,12 do
 		local texName = path..fileName..i
@@ -2139,8 +2204,18 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	else
 		MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(false)
 	end
+    --live mode
+    local livePreset = self:GetCurrentLivePreset()
+    if self.liveSessionActive and preset ~= livePreset then
+        self.main_frame.liveReturnButton:Show()
+        self.main_frame.setLivePresetButton:Show()
+    else
+        self.main_frame.liveReturnButton:Hide()
+        self.main_frame.setLivePresetButton:Hide()
+    end
+    self:UpdatePresetDropdownTextColor()
 
-	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull) end
+	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(preset.value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
     frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     MethodDungeonTools:POI_UpdateAll()
@@ -2152,11 +2227,20 @@ end
 
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
-function MethodDungeonTools:UpdateToDungeon(dungeonIdx)
+function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap)
+    if db.currentExpansion == 1 then
+        if dungeonIdx>=15 then
+            db.currentExpansion = 2
+        end
+    elseif db.currentExpansion == 2 then
+        if dungeonIdx<=14 then
+            db.currentExpansion = 1
+        end
+    end
     db.currentDungeonIdx = dungeonIdx
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
 	MethodDungeonTools:UpdatePresetDropDown()
-	MethodDungeonTools:UpdateMap()
+	if not ignoreUpdateMap then MethodDungeonTools:UpdateMap() end
     MethodDungeonTools:ZoomMap(1,true)
 end
 
@@ -2217,6 +2301,7 @@ function MethodDungeonTools:CreateNewPreset(name)
 		if startingPointPresetIdx>0 then
 			db.presets[db.currentDungeonIdx][countPresets] = MethodDungeonTools:CopyObject(db.presets[db.currentDungeonIdx][startingPointPresetIdx])
 			db.presets[db.currentDungeonIdx][countPresets].text = name
+			db.presets[db.currentDungeonIdx][countPresets].uid = nil
 		else
 			db.presets[db.currentDungeonIdx][countPresets] = {text=name,value={}}
 		end
@@ -2425,25 +2510,33 @@ function MethodDungeonTools:ValidateImportPreset(preset)
     return true
 end
 
-function MethodDungeonTools:ImportPreset(preset)
+function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
     --change dungeon to dungeon of the new preset
-    MethodDungeonTools:UpdateToDungeon(preset.value.currentDungeonIdx)
+    MethodDungeonTools:UpdateToDungeon(preset.value.currentDungeonIdx,true)
     --search for uid
     local updateIndex
+    local duplicatePreset
     for k,v in pairs(db.presets[db.currentDungeonIdx]) do
         if v.uid and v.uid == preset.uid then
             updateIndex = k
+            duplicatePreset = v
             break
         end
     end
 
     local updateCallback = function()
+        if MethodDungeonTools.main_frame.ConfirmationFrame then
+            MethodDungeonTools.main_frame.ConfirmationFrame:SetCallback("OnClose", function() end)
+        end
         db.presets[db.currentDungeonIdx][updateIndex] = preset
         db.currentPreset[db.currentDungeonIdx] = updateIndex
         MethodDungeonTools:UpdatePresetDropDown()
         MethodDungeonTools:UpdateMap()
     end
     local copyCallback = function()
+        if MethodDungeonTools.main_frame.ConfirmationFrame then
+            MethodDungeonTools.main_frame.ConfirmationFrame:SetCallback("OnClose", function() end)
+        end
         local name = preset.text
         local num = 2
         for k,v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -2453,6 +2546,11 @@ function MethodDungeonTools:ImportPreset(preset)
             end
         end
         preset.text = name
+        if fromLiveSession then
+            if duplicatePreset then duplicatePreset.uid = nil end
+        else
+            preset.uid = nil
+        end
         local countPresets = 0
         for k,v in pairs(db.presets[db.currentDungeonIdx]) do
             countPresets = countPresets + 1
@@ -2463,11 +2561,18 @@ function MethodDungeonTools:ImportPreset(preset)
         MethodDungeonTools:UpdatePresetDropDown()
         MethodDungeonTools:UpdateMap()
     end
+    local closeCallback = function()
+        MethodDungeonTools:LiveSession_Disable()
+        MethodDungeonTools.main_frame.ConfirmationFrame:SetCallback("OnClose", function() end)
+    end
 
     --open dialog to ask for replacing
     if updateIndex then
-        local prompt = "You have an earlier version of this preset.\nDo you wish to update or create a new copy?\n\n\n"
+        local prompt = "You have an earlier version of this preset with the name '"..duplicatePreset.text.."'\nDo you wish to update or create a new copy?\n\n\n"
         MethodDungeonTools:OpenConfirmationFrame(450,150,"Import Preset","Update",prompt, updateCallback,"Copy",copyCallback)
+        if fromLiveSession then
+            MethodDungeonTools.main_frame.ConfirmationFrame:SetCallback("OnClose", function()closeCallback() end)
+        end
     else
         copyCallback()
     end
@@ -3096,7 +3201,7 @@ end
 ---CreateTutorialButton
 ---Creates the tutorial button and sets up the help plate frames
 function MethodDungeonTools:CreateTutorialButton(parent)
-    local button = CreateFrame("Button",parent,parent,"MainHelpPlateButton")
+    local button = CreateFrame("Button","MDTMainHelpPlateButton",parent,"MainHelpPlateButton")
     button:ClearAllPoints()
     button:SetPoint("TOPLEFT",parent,"TOPLEFT",0,48)
 	button:SetScale(0.8)

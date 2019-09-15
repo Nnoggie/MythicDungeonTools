@@ -15,7 +15,7 @@ function MethodDungeonTools:LiveSession_Enable()
     --set id here incase there is no other sessions
     self:SetUniqueID(self:GetCurrentPreset())
     self.livePresetUID = self:GetCurrentPreset().uid
-
+    self:UpdatePresetDropdownTextColor()
     --send chat link (this one just opens MDT and calls this function
     --cancel timer when we receive other sessions
     timer = C_Timer.NewTimer(2, function()
@@ -50,6 +50,7 @@ function MethodDungeonTools:LiveSession_Disable()
     widget.text:SetText("Live")
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
     self.liveSessionActive = false
+    self:UpdatePresetDropdownTextColor()
 end
 
 
@@ -60,7 +61,7 @@ function MethodDungeonTools:LiveSession_NotifyEnabled(fullName)
     local uid = self.livePresetUID
     if not uid then return end
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.enabled, uid, distribution, fullName, "ALERT")
-    self:SendToGroup(self:IsPlayerInGroup(),true)
+    self:SendToGroup(self:IsPlayerInGroup(),true,self:GetCurrentLivePreset())
 end
 
 ---LiveSession_RequestSessions
@@ -78,8 +79,15 @@ function MethodDungeonTools:LiveSession_SessionFound(uid)
     self.main_frame.SendingStatusBar:Show()
     self.main_frame.SendingStatusBar:SetValue(0/1)
     self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
-    --TODO: lockout ui elements?
+    if not self.main_frame.LoadingSpinner then
+        self.main_frame.LoadingSpinner = CreateFrame("Button", "MDTLoadingSpinner", self.main_frame, "LoadingSpinnerTemplate")
+        self.main_frame.LoadingSpinner:SetPoint("CENTER",self.main_frame,"CENTER")
+        self.main_frame.LoadingSpinner:Size(60,60)
+    end
+    self.main_frame.LoadingSpinner:Show()
+    self.main_frame.LoadingSpinner.Anim:Play()
     if timer then timer:Cancel() end
+    self:UpdatePresetDropdownTextColor(true)
 end
 
 
@@ -152,5 +160,15 @@ function MethodDungeonTools:LiveSession_SendNoteCommand(cmd,noteIdx,text,y)
             text = text..":"..(y or "0")
             MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.note,cmd..":"..noteIdx..":"..text, distribution, nil, "ALERT")
         end
+    end
+end
+
+---LiveSession_SendPreset
+---Sends a new preset to be used as the new live session preset
+function MethodDungeonTools:LiveSession_SendPreset(preset)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local export = MethodDungeonTools:TableToString(preset,true)
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset,export, distribution, nil, "ALERT")
     end
 end

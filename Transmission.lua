@@ -164,6 +164,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["objChg"] = "MDTLiveObjChg",
     ["cmd"] = "MDTLiveCmd",
     ["note"] = "MDTLiveNote",
+    ["preset"] = "MDTLivePreset",
 }
 
 function MDTcommsObject:OnEnable()
@@ -239,9 +240,11 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         --live session preset
         if MethodDungeonTools.liveSessionActive and MethodDungeonTools.liveSessionAcceptingPreset and preset.uid == MethodDungeonTools.livePresetUID then
             if MethodDungeonTools:ValidateImportPreset(preset) then
-                MethodDungeonTools:ImportPreset(preset)
+                MethodDungeonTools:ImportPreset(preset,true)
                 MethodDungeonTools.liveSessionAcceptingPreset = false
                 MethodDungeonTools.main_frame.SendingStatusBar:Hide()
+                MethodDungeonTools.main_frame.LoadingSpinner:Hide()
+                MethodDungeonTools.main_frame.LoadingSpinner.Anim:Stop()
                 MethodDungeonTools.liveSessionRequested = false
             end
         end
@@ -343,6 +346,16 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         end
     end
 
+    --preset
+    if prefix == MethodDungeonTools.liveSessionPrefixes.preset then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:StringToTable(message,true)
+            if MethodDungeonTools:ValidateImportPreset(preset) then
+                MethodDungeonTools.livePresetUID = preset.uid
+                MethodDungeonTools:ImportPreset(preset,true)
+            end
+        end
+    end
 
 end
 
@@ -425,8 +438,8 @@ end
 
 ---SendToGroup
 ---Send current preset to group/raid
-function MethodDungeonTools:SendToGroup(distribution,silent)
-    local preset = MethodDungeonTools:GetCurrentPreset()
+function MethodDungeonTools:SendToGroup(distribution,silent,preset)
+    preset = preset or MethodDungeonTools:GetCurrentPreset()
     --set unique id
     MethodDungeonTools:SetUniqueID(preset)
     local export = MethodDungeonTools:TableToString(preset,true)
