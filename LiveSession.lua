@@ -51,6 +51,8 @@ function MethodDungeonTools:LiveSession_Disable()
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
     self.liveSessionActive = false
     self:UpdatePresetDropdownTextColor()
+    self.main_frame.liveReturnButton:Hide()
+    self.main_frame.setLivePresetButton:Hide()
 end
 
 
