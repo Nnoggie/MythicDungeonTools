@@ -3405,67 +3405,80 @@ end
 ---DrawAllPresetObjects
 ---Draws all Preset objects on the map canvas/sublevel
 function MethodDungeonTools:DrawAllPresetObjects()
-    local scale = MethodDungeonTools:GetScale()
-
-    local currentPreset = MethodDungeonTools:GetCurrentPreset()
-    local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
-
-    MethodDungeonTools:ReleaseAllActiveTextures()
+    self:ReleaseAllActiveTextures()
+    local scale = self:GetScale()
+    local currentPreset = self:GetCurrentPreset()
+    local currentSublevel = self:GetCurrentSubLevel()
     currentPreset.objects = currentPreset.objects or {}
-	--d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
-	--l: x1,y1,x2,y2,...
-	local color = {}
     for objectIndex,obj in pairs(currentPreset.objects) do
-        if obj.d[3] == currentSublevel and obj.d[4] then
-            if obj.n then
-                local x = obj.d[1]*scale
-                local y = obj.d[2]*scale
-                local text = obj.d[5]
-                MethodDungeonTools:DrawNote(x,y,text,objectIndex)
-            else
-                color.r,color.g,color.b = MethodDungeonTools:HexToRGB(obj.d[5])
-                --lines
-                local x1,y1,x2,y2
-                local lastx,lasty
-                for _,coord in pairs(obj.l) do
-                    if not x1 then x1 = coord
-                    elseif not y1 then y1 = coord
-                    elseif not x2 then
-                        x2 = coord
-                        lastx = coord
-                    elseif not y2 then
-                        y2 = coord
-                        lasty = coord
-                    end
-                    if x1 and y1 and x2 and y2 then
-                        x1 = x1*scale
-                        x2 = x2*scale
-                        y1 = y1*scale
-                        y2 = y2*scale
-                        MethodDungeonTools:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3*scale,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
-                        --circles if smooth
-                        if obj.d[7] then
-                            MethodDungeonTools:DrawCircle(x1,y1,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
-                            MethodDungeonTools:DrawCircle(x2,y2,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
-                        end
-                        x1,y1,x2,y2 = nil,nil,nil,nil
-                    end
+        self:DrawPresetObject(obj,objectIndex,scale,currentPreset,currentSublevel)
+    end
+end
+
+---DrawPresetObject
+---Draws specific preset object
+function MethodDungeonTools:DrawPresetObject(obj,objectIndex,scale,currentPreset,currentSublevel)
+    if not objectIndex then
+        for oIndex,o in pairs(currentPreset.objects) do
+            if o == obj then
+                objectIndex = oIndex
+                break
+            end
+        end
+    end
+    --d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
+    --l: x1,y1,x2,y2,...
+    local color = {}
+    if obj.d[3] == currentSublevel and obj.d[4] then
+        if obj.n then
+            local x = obj.d[1]*scale
+            local y = obj.d[2]*scale
+            local text = obj.d[5]
+            self:DrawNote(x,y,text,objectIndex)
+        else
+            obj.d[1] = obj.d[1] or 5
+            color.r,color.g,color.b = self:HexToRGB(obj.d[5])
+            --lines
+            local x1,y1,x2,y2
+            local lastx,lasty
+            for _,coord in pairs(obj.l) do
+                if not x1 then x1 = coord
+                elseif not y1 then y1 = coord
+                elseif not x2 then
+                    x2 = coord
+                    lastx = coord
+                elseif not y2 then
+                    y2 = coord
+                    lasty = coord
                 end
-                --triangle
-                if obj.t and lastx and lasty then
-                    lastx = lastx*scale
-                    lasty = lasty*scale
-                    MethodDungeonTools:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1]*scale,color,nil,obj.d[6],nil,objectIndex)
+                if x1 and y1 and x2 and y2 then
+                    x1 = x1*scale
+                    x2 = x2*scale
+                    y1 = y1*scale
+                    y2 = y2*scale
+                    self:DrawLine(x1,y1,x2,y2,obj.d[1]*0.3*scale,color,obj.d[7],nil,obj.d[6],obj.d[2],nil,objectIndex)
+                    --circles if smooth
+                    if obj.d[7] then
+                        self:DrawCircle(x1,y1,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
+                        self:DrawCircle(x2,y2,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
+                    end
+                    x1,y1,x2,y2 = nil,nil,nil,nil
                 end
-                --remove empty objects leftover from erasing
-                if obj.l then
-                    local lineCount = 0
-                    for _,_ in pairs(obj.l) do
-                        lineCount = lineCount +1
-                    end
-                    if lineCount == 0 then
-                        currentPreset.objects[objectIndex] = nil
-                    end
+            end
+            --triangle
+            if obj.t and lastx and lasty then
+                lastx = lastx*scale
+                lasty = lasty*scale
+                self:DrawTriangle(lastx,lasty,obj.t[1],obj.d[1]*scale,color,nil,obj.d[6],nil,objectIndex)
+            end
+            --remove empty objects leftover from erasing
+            if obj.l then
+                local lineCount = 0
+                for _,_ in pairs(obj.l) do
+                    lineCount = lineCount +1
+                end
+                if lineCount == 0 then
+                    currentPreset.objects[objectIndex] = nil
                 end
             end
         end

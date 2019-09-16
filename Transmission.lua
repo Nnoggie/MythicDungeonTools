@@ -286,7 +286,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             local preset = MethodDungeonTools:GetCurrentLivePreset()
             local obj = MethodDungeonTools:StringToTable(message,true)
             MethodDungeonTools:StorePresetObject(obj,true,preset)
-            if preset == MethodDungeonTools:GetCurrentPreset() then MethodDungeonTools:DrawAllPresetObjects() end
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                local scale = MethodDungeonTools:GetScale()
+                local currentPreset = MethodDungeonTools:GetCurrentPreset()
+                local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
+                MethodDungeonTools:DrawPresetObject(obj,nil,scale,currentPreset,currentSublevel)
+            end
         end
     end
 
