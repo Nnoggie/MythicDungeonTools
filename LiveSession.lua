@@ -5,13 +5,12 @@ local twipe,tinsert = table.wipe,table.insert
 local timer
 ---LiveSession_Enable
 function MethodDungeonTools:LiveSession_Enable()
-    local widget = self.main_frame.LiveSessionButton
-    widget.text:SetTextColor(0,1,0)
+    self.main_frame.LiveSessionButton:SetText("*Live*")
+    self.main_frame.LiveSessionButton.text:SetTextColor(0,1,0)
     self.main_frame.LinkToChatButton:SetDisabled(true)
     self.main_frame.LinkToChatButton.text:SetTextColor(0.5,0.5,0.5)
     self.main_frame.sidePanelDeleteButton:SetDisabled(true)
     self.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5,0.5,0.5)
-    self.main_frame.LiveSessionButton:SetText("*Live*")
     self.liveSessionActive = true
     --check if there is a session
     self:LiveSession_RequestSession()
@@ -19,8 +18,6 @@ function MethodDungeonTools:LiveSession_Enable()
     self:SetUniqueID(self:GetCurrentPreset())
     self.livePresetUID = self:GetCurrentPreset().uid
     self:UpdatePresetDropdownTextColor()
-    --send chat link (this one just opens MDT and calls this function
-    --cancel timer when we receive other sessions
     timer = C_Timer.NewTimer(2, function()
         local distribution = self:IsPlayerInGroup()
         local preset = self:GetCurrentPreset()
@@ -31,19 +28,6 @@ function MethodDungeonTools:LiveSession_Enable()
         local fullName = name.."+"..realm
         SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
     end)
-
-
-
-    --TODO: check preset size when starting live session
-    --[[
-    local presetSize = self:GetPresetSize()
-    if presetSize>12000 then
-        local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you sure you want to share this preset?\n\n\n"
-        MethodDungeonTools:OpenConfirmationFrame(450,150,"Sharing large preset","Share",prompt, function() MethodDungeonTools:SendToGroup(self:IsPlayerInGroup(),true)  end)
-    else
-        MethodDungeonTools:SendToGroup(self:IsPlayerInGroup(),true)
-    end
-    ]]
 end
 
 ---LiveSession_Disable

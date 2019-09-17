@@ -204,7 +204,7 @@ function SetItemRef(link, ...)
         local sender = link:sub(9, string.len(link))
         local name,realm = string.match(sender,"(.*)+(.*)")
         sender = name.."-"..realm
-        --ignore importing the live preset when sender is player, open MDT only, TODO: navigate to the preset
+        --ignore importing the live preset when sender is player, open MDT only
         local playerName,playerRealm = UnitFullName("player")
         playerName = playerName.."-"..playerRealm
         if sender==playerName then
