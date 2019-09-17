@@ -170,6 +170,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["week"] = "MDTLiveWeek",
     ["free"] = "MDTLiveFree",
     ["bora"] = "MDTLiveBora",
+    ["mdi"] = "MDTLiveMDI",
 }
 
 function MDTcommsObject:OnEnable()
@@ -473,6 +474,48 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         end
     end
 
+    --MDI
+    if prefix == MethodDungeonTools.liveSessionPrefixes.mdi then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local updateUI = preset == MethodDungeonTools:GetCurrentPreset()
+            local action,data = string.match(message,"(.*):(.*)")
+            data = tonumber(data)
+            if action == "toggle" then
+                MethodDungeonTools:GetDB().MDI.enabled = data == 1 or false
+                MethodDungeonTools:DisplayMDISelector()
+            elseif action == "beguiling" then
+                preset.mdi.beguiling = data
+                if updateUI then
+                    MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
+                    MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+                    MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
+                    MethodDungeonTools:UpdateProgressbar()
+                    MethodDungeonTools:ReloadPullButtons()
+                end
+            elseif action == "freehold" then
+                preset.mdi.freehold = data
+                if updateUI then
+                    MethodDungeonTools.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
+                    if preset.mdi.freeholdJoined then
+                        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
+                    end
+                    MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
+                    MethodDungeonTools:UpdateProgressbar()
+                    MethodDungeonTools:ReloadPullButtons()
+                end
+            elseif action == "join" then
+                preset.mdi.freeholdJoined = data == 1 or false
+                if updateUI then
+                    MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
+                    MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:UpdateProgressbar()
+                end
+            end
+
+        end
+    end
+
 end
 
 
@@ -563,6 +606,8 @@ function MethodDungeonTools:SendToGroup(distribution,silent,preset)
     preset = preset or MethodDungeonTools:GetCurrentPreset()
     --set unique id
     MethodDungeonTools:SetUniqueID(preset)
+    --gotta encode mdi mode into preset
+    preset.mdiEnabled = MethodDungeonTools:GetDB().MDI.enabled
     local export = MethodDungeonTools:TableToString(preset,true)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,silent})
 end

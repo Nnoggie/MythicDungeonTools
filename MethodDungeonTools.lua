@@ -1366,7 +1366,8 @@ end
 ---Enables display to override beguiling+freehold week
 function MethodDungeonTools:ToggleMDIMode()
     db.MDI.enabled = not db.MDI.enabled
-    MethodDungeonTools:DisplayMDISelector()
+    self:DisplayMDISelector()
+    if self.liveSessionActive then self:LiveSession_SendMDI("toggle",db.MDI.enabled and "1" or "0") end
 end
 
 function MethodDungeonTools:DisplayMDISelector()
@@ -1415,6 +1416,9 @@ function MethodDungeonTools:DisplayMDISelector()
             MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
+            if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+                self:LiveSession_SendMDI("beguiling",key)
+            end
         end)
         MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.BeguilingDropDown)
 
@@ -1432,6 +1436,9 @@ function MethodDungeonTools:DisplayMDISelector()
             MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
+            if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+                self:LiveSession_SendMDI("freehold",key)
+            end
         end)
         MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.FreeholdDropDown)
 
@@ -1443,6 +1450,9 @@ function MethodDungeonTools:DisplayMDISelector()
             MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:UpdateProgressbar()
+            if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+                self:LiveSession_SendMDI("join",value and "1" or "0")
+            end
         end)
         MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.FreeholdCheck)
 
@@ -2562,6 +2572,7 @@ end
 function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
     --change dungeon to dungeon of the new preset
     self:UpdateToDungeon(preset.value.currentDungeonIdx,true)
+    local mdiEnabled = preset.mdiEnabled
     --search for uid
     local updateIndex
     local duplicatePreset
@@ -2577,6 +2588,7 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         if self.main_frame.ConfirmationFrame then
             self.main_frame.ConfirmationFrame:SetCallback("OnClose", function() end)
         end
+        db.MDI.enabled = mdiEnabled
         db.presets[db.currentDungeonIdx][updateIndex] = preset
         db.currentPreset[db.currentDungeonIdx] = updateIndex
         self:UpdatePresetDropDown()
@@ -2587,6 +2599,7 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         if self.main_frame.ConfirmationFrame then
             self.main_frame.ConfirmationFrame:SetCallback("OnClose", function() end)
         end
+        db.MDI.enabled = mdiEnabled
         local name = preset.text
         local num = 2
         for k,v in pairs(db.presets[db.currentDungeonIdx]) do

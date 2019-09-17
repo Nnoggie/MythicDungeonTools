@@ -160,6 +160,7 @@ end
 function MethodDungeonTools:LiveSession_SendPreset(preset)
     local distribution = self:IsPlayerInGroup()
     if distribution then
+        preset.mdiEnabled = self:GetDB().MDI.enabled
         local export = MethodDungeonTools:TableToString(preset,true)
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "ALERT")
     end
@@ -212,6 +213,16 @@ function MethodDungeonTools:LiveSession_SendBoralusSelector(faction)
     if distribution then
         local msg = faction..""
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.bora, msg, distribution, nil, "ALERT")
+    end
+end
+
+---LiveSession_SendMDI
+---Sends MDI selector updates
+function MethodDungeonTools:LiveSession_SendMDI(action,data)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local msg = action..":"..data
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.mdi, msg, distribution, nil, "ALERT")
     end
 end
 
