@@ -1079,7 +1079,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelDeleteButton:SetCallback("OnClick",function(widget,callbackName,value)
-        if IsAltKeyDown() and IsShiftKeyDown() and IsControlKeyDown() then
+        if IsShiftKeyDown() then
             --delete all profiles
             local numPresets = self:CountPresets()
             local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of this dungeon?\nYou are about to delete "..numPresets.." preset(s).\nThis cannot be undone\n"
