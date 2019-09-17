@@ -5,7 +5,7 @@ local Serializer = LibStub:GetLibrary("AceSerializer-3.0");
 MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
 -- Lua APIs
-local tostring, string_char, strsplit,tremove = tostring, string.char, strsplit,table.remove
+local tostring, string_char, strsplit,tremove,tinsert = tostring, string.char, strsplit,table.remove,table.insert
 local pairs, type, unpack = pairs, type, unpack
 local bit_band, bit_lshift, bit_rshift = bit.band, bit.lshift, bit.rshift
 
@@ -165,6 +165,9 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["cmd"] = "MDTLiveCmd",
     ["note"] = "MDTLiveNote",
     ["preset"] = "MDTLivePreset",
+    ["clone"] = "MDTLiveClone",
+    ["pull"] = "MDTLivePull",
+    ["week"] = "MDTLiveWeek",
 }
 
 function MDTcommsObject:OnEnable()
@@ -355,9 +358,84 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if prefix == MethodDungeonTools.liveSessionPrefixes.preset then
         if MethodDungeonTools.liveSessionActive then
             local preset = MethodDungeonTools:StringToTable(message,true)
+            MethodDungeonTools.transmissionCache[fullName] = preset
             if MethodDungeonTools:ValidateImportPreset(preset) then
                 MethodDungeonTools.livePresetUID = preset.uid
                 MethodDungeonTools:ImportPreset(preset,true)
+            end
+        end
+    end
+
+    --clone add or remove
+    if prefix == MethodDungeonTools.liveSessionPrefixes.clone then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local cloneActions = MethodDungeonTools:StringToTable(message,true)
+            local pulls = preset.value.pulls or {}
+            local pullIdx
+            for _,action in pairs(cloneActions) do
+                local operation,enemyIdx,cloneIdx
+                operation,pullIdx,enemyIdx,cloneIdx = unpack(action)
+                pulls[pullIdx] = pulls[pullIdx] or {}
+                pulls[pullIdx][enemyIdx] = pulls[pullIdx][enemyIdx] or {}
+                if operation == "I" then
+                    tinsert(pulls[pullIdx][enemyIdx],cloneIdx)
+                elseif operation == "R" then
+                    tremove(pulls[pullIdx][enemyIdx],cloneIdx)
+                end
+            end
+            MethodDungeonTools:EnsureDBTables()
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                MethodDungeonTools:UpdatePullButtonNPCData(pullIdx)
+                MethodDungeonTools:UpdateProgressbar()
+                MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
+            end
+
+        end
+    end
+
+    --pulls
+    if prefix == MethodDungeonTools.liveSessionPrefixes.pull then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local pulls = MethodDungeonTools:StringToTable(message,true)
+            preset.value.pulls = pulls
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
+            end
+        end
+    end
+
+    --week
+    if prefix == MethodDungeonTools.liveSessionPrefixes.week then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local week = tonumber(message)
+            preset.week = week
+            local teeming = MethodDungeonTools:IsPresetTeeming(preset)
+            preset.value.teeming = teeming
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                local affixDropdown = MethodDungeonTools.main_frame.sidePanel.affixDropdown
+                affixDropdown:SetValue(week)
+                if not MethodDungeonTools:GetCurrentAffixWeek() then
+                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
+                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
+                elseif MethodDungeonTools:GetCurrentAffixWeek() == week then
+                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
+                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
+                else
+                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Show()
+                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
+                end
+                MethodDungeonTools:DungeonEnemies_UpdateTeeming()
+                MethodDungeonTools:UpdateFreeholdSelector(week)
+                MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(week)
+                MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+                MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
+                MethodDungeonTools:POI_UpdateAll()
+                MethodDungeonTools:UpdateProgressbar()
+                MethodDungeonTools:ReloadPullButtons()
             end
         end
     end
@@ -411,10 +489,15 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
         local preset = userArgs[2]
         local silent = userArgs[3]
         --restore "Send" and "Live" button
-        MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
-        MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(false)
+        if MethodDungeonTools.liveSessionActive then
+            MethodDungeonTools.main_frame.LiveSessionButton:SetText("*Live*")
+        else
+            MethodDungeonTools.main_frame.LiveSessionButton:SetText("Live")
+            MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
+            MethodDungeonTools.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
+        end
         MethodDungeonTools.main_frame.LinkToChatButton:SetText("Share")
-        MethodDungeonTools.main_frame.LiveSessionButton:SetText(MethodDungeonTools.liveSessionActive == true and "*Live*" or "Live")
+        MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(false)
         MethodDungeonTools.main_frame.SendingStatusBar:Hide()
         --output chat link
         if not silent then

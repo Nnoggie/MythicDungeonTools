@@ -24,6 +24,9 @@ local methods = {
                 else
                     --normal click?
                     MethodDungeonTools:AddPull()
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
                 end
             end
         end

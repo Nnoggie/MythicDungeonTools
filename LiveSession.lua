@@ -8,6 +8,9 @@ function MethodDungeonTools:LiveSession_Enable()
     local widget = self.main_frame.LiveSessionButton
     widget.text:SetTextColor(0,1,0)
     self.main_frame.LinkToChatButton:SetDisabled(true)
+    self.main_frame.LinkToChatButton.text:SetTextColor(0.5,0.5,0.5)
+    self.main_frame.sidePanelDeleteButton:SetDisabled(true)
+    self.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5,0.5,0.5)
     self.main_frame.LiveSessionButton:SetText("*Live*")
     self.liveSessionActive = true
     --check if there is a session
@@ -49,6 +52,9 @@ function MethodDungeonTools:LiveSession_Disable()
     widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
     widget.text:SetText("Live")
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
+    self.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
+    self.main_frame.sidePanelDeleteButton:SetDisabled(false)
+    self.main_frame.sidePanelDeleteButton.text:SetTextColor(1,0.8196,0)
     self.liveSessionActive = false
     self:UpdatePresetDropdownTextColor()
     self.main_frame.liveReturnButton:Hide()
@@ -84,7 +90,7 @@ function MethodDungeonTools:LiveSession_SessionFound(uid)
     if not self.main_frame.LoadingSpinner then
         self.main_frame.LoadingSpinner = CreateFrame("Button", "MDTLoadingSpinner", self.main_frame, "LoadingSpinnerTemplate")
         self.main_frame.LoadingSpinner:SetPoint("CENTER",self.main_frame,"CENTER")
-        self.main_frame.LoadingSpinner:Size(60,60)
+        self.main_frame.LoadingSpinner:SetSize(60,60)
     end
     self.main_frame.LoadingSpinner:Show()
     self.main_frame.LoadingSpinner.Anim:Play()
@@ -114,7 +120,7 @@ function MethodDungeonTools:LiveSession_SendObject(obj)
         local distribution = self:IsPlayerInGroup()
         if distribution then
             local export = MethodDungeonTools:TableToString(obj,true)
-            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.obj,export, distribution, nil, "ALERT")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.obj, export, distribution, nil, "ALERT")
         end
     end
 end
@@ -125,7 +131,7 @@ function MethodDungeonTools:LiveSession_SendObjectOffsets(objIdx,x,y)
     if self:GetCurrentPreset().uid == self.livePresetUID then
         local distribution = self:IsPlayerInGroup()
         if distribution then
-            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objOff,objIdx..":"..x..":"..y, distribution, nil, "ALERT")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objOff, objIdx..":"..x..":"..y, distribution, nil, "ALERT")
         end
     end
 end
@@ -137,7 +143,7 @@ function MethodDungeonTools:LiveSession_SendUpdatedObjects(changedObjects)
         local distribution = self:IsPlayerInGroup()
         if distribution then
             local export = MethodDungeonTools:TableToString(changedObjects,true)
-            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objChg,export, distribution, nil, "ALERT")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objChg, export, distribution, nil, "ALERT")
         end
     end
 end
@@ -148,7 +154,7 @@ function MethodDungeonTools:LiveSession_SendCommand(cmd)
     if self:GetCurrentPreset().uid == self.livePresetUID then
         local distribution = self:IsPlayerInGroup()
         if distribution then
-            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.cmd,cmd, distribution, nil, "ALERT")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.cmd, cmd, distribution, nil, "ALERT")
         end
     end
 end
@@ -160,7 +166,7 @@ function MethodDungeonTools:LiveSession_SendNoteCommand(cmd,noteIdx,text,y)
         local distribution = self:IsPlayerInGroup()
         if distribution then
             text = text..":"..(y or "0")
-            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.note,cmd..":"..noteIdx..":"..text, distribution, nil, "ALERT")
+            MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.note, cmd..":"..noteIdx..":"..text, distribution, nil, "ALERT")
         end
     end
 end
@@ -171,6 +177,48 @@ function MethodDungeonTools:LiveSession_SendPreset(preset)
     local distribution = self:IsPlayerInGroup()
     if distribution then
         local export = MethodDungeonTools:TableToString(preset,true)
-        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset,export, distribution, nil, "ALERT")
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "ALERT")
+    end
+end
+
+---LiveSession_SendCloneActions
+---Sends a set of actions of adding or removing clones from pulls
+function MethodDungeonTools:LiveSession_SendCloneActions(cloneActions)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local msg = MethodDungeonTools:TableToString(cloneActions,true)
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.clone, msg, distribution, nil, "ALERT")
+    end
+end
+
+---LiveSession_SendPulls
+---Sends all pulls
+function MethodDungeonTools:LiveSession_SendPulls(pulls)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local msg = MethodDungeonTools:TableToString(pulls,true)
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.pull, msg, distribution, nil, "ALERT")
+    end
+end
+
+---LiveSession_SendAffixWeek
+---Sends all pulls
+function MethodDungeonTools:LiveSession_SendAffixWeek(week)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.week, week.."", distribution, nil, "ALERT")
+    end
+end
+
+do
+    local timer
+    ---LiveSession_QueueColorUpdate
+    ---Disgusting workaround for shitty colorpicker
+    ---Only send an update once a color of a pull has not changed for 0.2 seconds
+    function MethodDungeonTools:LiveSession_QueueColorUpdate()
+        if timer then timer:Cancel() end
+        timer = C_Timer.NewTimer(0.2, function()
+            self:LiveSession_SendPulls(self:GetPulls())
+        end)
     end
 end

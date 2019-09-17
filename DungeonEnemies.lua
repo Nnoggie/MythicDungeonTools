@@ -129,67 +129,17 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
         if IsShiftKeyDown() then
             local newPullIdx = MethodDungeonTools:GetCurrentPull() + 1
             MethodDungeonTools:PresetsAddPull(newPullIdx)
-            MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:GetCurrentPreset().value.selection = {newPullIdx}
+            MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:SetSelectionToPull(newPullIdx)
-            MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,isCTRLKeyDown)
-            MethodDungeonTools:DungeonEnemies_UpdateSelected(newPullIdx)
-            MethodDungeonTools:UpdateProgressbar()
-            if false then
-                -- Add to current pull
-                MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
-                MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
-                MethodDungeonTools:UpdateProgressbar()
-            end
-        elseif IsControlKeyDown() then
-            MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, true)
-            MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
-            MethodDungeonTools:UpdateProgressbar()
-        else
-            MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,isCTRLKeyDown)
-            MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
-            MethodDungeonTools:UpdateProgressbar()
-            if false then
-                if not self.selected then
-                    -- Add new Pull, if the current one isn't empty
-                    local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[MethodDungeonTools:GetCurrentPull()]
-                    local enemyCount = MethodDungeonTools.U.count_if(pull, function(entry)
-                        return #entry > 0
-                    end)
-
-                    if enemyCount > 0 then
-                        MethodDungeonTools:PresetsAddPull(MethodDungeonTools:GetCurrentPull() + 1)
-                        MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull() + 1)
-                        MethodDungeonTools:ScrollToPull(MethodDungeonTools:GetCurrentPull())
-                    end
-
-                    MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
-                    MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
-                    MethodDungeonTools:UpdateProgressbar()
-                else
-                    local pullIdx = MethodDungeonTools:FindPullOfBlip(self)
-                    if pullIdx then
-                        MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected, false)
-                        MethodDungeonTools:DungeonEnemies_UpdateSelected(pullIdx)
-
-                        local pull = MethodDungeonTools:GetCurrentPreset().value.pulls[pullIdx]
-                        local enemyCount = MethodDungeonTools.U.count_if(pull, function(entry)
-                            return #entry > 0
-                        end)
-
-                        if enemyCount == 0 then
-                            MethodDungeonTools:DeletePull(pullIdx)
-                            if pullIdx > #MethodDungeonTools:GetCurrentPreset().value.pulls then
-                                MethodDungeonTools:SetSelectionToPull(#MethodDungeonTools:GetCurrentPreset().value.pulls)
-                            end
-                        end
-                        MethodDungeonTools:UpdateProgressbar()
-                    end
-                end
-            end
         end
+        MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,IsControlKeyDown(),IsShiftKeyDown())
+        MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
+        MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-
+        if IsShiftKeyDown() and MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+            MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+        end
     elseif button == "RightButton" then
         if db.devMode then
             if IsAltKeyDown() then
@@ -218,10 +168,6 @@ end
 
 local patrolPoints =  {}
 local patrolLines = {}
-
-function MethodDungeonTools:DungeonEnemies_UpdateReapingPulls()
-    
-end
 
 function MDTDungeonEnemyMixin:DisplayPatrol(shown)
     local scale = MethodDungeonTools:GetScale()
@@ -495,48 +441,70 @@ function MethodDungeonTools:FindPullOfBlip(blip)
     end
 end
 
+
+function MethodDungeonTools:GetBlip(enemyIdx,cloneIdx,preset)
+    for blipIdx,blip in pairs(blips) do
+        if blip.enemyIdx == enemyIdx and blip.cloneIdx == cloneIdx then
+            return blip
+        end
+    end
+end
+
+local cloneActions = {} --{"action",pullIdx,enemyIdx,cloneIdx}
 ---DungeonEnemies_AddOrRemoveBlipToCurrentPull
 ---Adds or removes an enemy clone and all it's linked npcs to the currently selected pull
-function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add,ignoreGrouped)
-    local preset = MethodDungeonTools:GetCurrentPreset()
+function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add,ignoreGrouped,ignoreLiveMode,recursive)
+    if not ignoreGrouped then twipe(cloneActions) end
+    local preset = self:GetCurrentPreset()
+    local enemyIdx = blip.enemyIdx
+    local cloneIdx = blip.cloneIdx
     local pull = preset.value.currentPull
     local pulls = preset.value.pulls or {}
     pulls[pull] = pulls[pull] or {}
-    pulls[pull][blip.enemyIdx] = pulls[pull][blip.enemyIdx] or {}
+    pulls[pull][enemyIdx] = pulls[pull][enemyIdx] or {}
     --remove clone from all other pulls first
     for pullIdx,p in pairs(pulls) do
-        if pullIdx ~= pull and p[blip.enemyIdx] then
-            for k,v in pairs(p[blip.enemyIdx]) do
-                if v == blip.cloneIdx then
-                    tremove(preset.value.pulls[pullIdx][blip.enemyIdx],k)
+        if pullIdx ~= pull and p[enemyIdx] then
+            for k,v in pairs(p[enemyIdx]) do
+                if v == cloneIdx then
+                    tremove(preset.value.pulls[pullIdx][enemyIdx],k)
+                    tinsert(cloneActions,{ "R", pullIdx, enemyIdx, k})
                 end
             end
         end
-        MethodDungeonTools:UpdatePullButtonNPCData(pullIdx)
+        self:UpdatePullButtonNPCData(pullIdx)
     end
     if add then
-        blip.selected = true
+        if blip then blip.selected = true end
         local found = false
-        for _,v in pairs(pulls[pull][blip.enemyIdx]) do
-            if v == blip.cloneIdx then found = true end
+        for _,v in pairs(pulls[pull][enemyIdx]) do
+            if v == cloneIdx then found = true end
         end
-        --print(blip:IsEnabled())
-        if found==false and blip:IsEnabled() then tinsert(pulls[pull][blip.enemyIdx],blip.cloneIdx) end
+        if found==false and blip:IsEnabled() then
+            tinsert(pulls[pull][enemyIdx],cloneIdx)
+            tinsert(cloneActions,{ "I", pull, enemyIdx, cloneIdx})
+        end
     else
         blip.selected = false
-        for k,v in pairs(preset.value.pulls[pull][blip.enemyIdx]) do
-            if v == blip.cloneIdx then tremove(preset.value.pulls[pull][blip.enemyIdx],k) end
+        for k,v in pairs(preset.value.pulls[pull][enemyIdx]) do
+            if v == cloneIdx then
+                tremove(preset.value.pulls[pull][enemyIdx],k)
+                tinsert(cloneActions,{ "R", pull, enemyIdx, k})
+            end
         end
     end
     --linked npcs
     if not ignoreGrouped then
         for idx,otherBlip in pairs(blips) do
             if blip.clone.g and otherBlip.clone.g == blip.clone.g and blip~=otherBlip then
-                MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(otherBlip,add,true)
+                self:DungeonEnemies_AddOrRemoveBlipToCurrentPull(otherBlip,add,true,nil,true)
             end
         end
     end
-    MethodDungeonTools:UpdatePullButtonNPCData(pull)
+    self:UpdatePullButtonNPCData(pull)
+    if (not ignoreLiveMode) and not recursive and MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+        MethodDungeonTools:LiveSession_SendCloneActions(cloneActions)
+    end
 end
 
 ---DungeonEnemies_UpdateBlipColors
@@ -810,6 +778,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
         end
     end
 end
+
 
 ---returns count, maxCountNormal, maxCountTeeming
 function MethodDungeonTools:GetEnemyForces(npcId)
