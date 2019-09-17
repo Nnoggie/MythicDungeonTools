@@ -195,12 +195,23 @@ function MethodDungeonTools:LiveSession_SendAffixWeek(week)
 end
 
 ---MethodDungeonTools:LiveSession_SendFreeholdSelector(value)
+---Sends freehold selector updates
 function MethodDungeonTools:LiveSession_SendFreeholdSelector(value,week)
     local distribution = self:IsPlayerInGroup()
     if distribution then
         value = value and "T:" or "F:"
         local msg = value..week
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.free, msg, distribution, nil, "ALERT")
+    end
+end
+
+---LiveSession_SendBoralusSelector
+---sends boralus selector updates
+function MethodDungeonTools:LiveSession_SendBoralusSelector(faction)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local msg = faction..""
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.bora, msg, distribution, nil, "ALERT")
     end
 end
 

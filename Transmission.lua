@@ -169,6 +169,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["pull"] = "MDTLivePull",
     ["week"] = "MDTLiveWeek",
     ["free"] = "MDTLiveFree",
+    ["bora"] = "MDTLiveBora",
 }
 
 function MDTcommsObject:OnEnable()
@@ -452,6 +453,20 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             if preset == MethodDungeonTools:GetCurrentPreset() then
                 MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.freeholdCrew)
                 MethodDungeonTools:UpdateFreeholdSelector(week)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:UpdateProgressbar()
+            end
+        end
+    end
+
+    --Siege of Boralus
+    if prefix == MethodDungeonTools.liveSessionPrefixes.bora then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local faction = tonumber(message)
+            preset.faction = faction
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                MethodDungeonTools:UpdateBoralusSelector()
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:UpdateProgressbar()
             end

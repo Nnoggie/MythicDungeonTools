@@ -57,6 +57,9 @@ function MethodDungeonTools:ToggleBoralusSelector(show)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:UpdateProgressbar()
             end
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_SendBoralusSelector(1)
+            end
             check1:SetValue(true)
         end)
 
@@ -68,6 +71,9 @@ function MethodDungeonTools:ToggleBoralusSelector(show)
                 MethodDungeonTools:UpdateBoralusSelector()
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:UpdateProgressbar()
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendBoralusSelector(2)
+                end
             end
             check2:SetValue(true)
         end)
