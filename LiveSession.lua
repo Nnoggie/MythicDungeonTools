@@ -194,6 +194,16 @@ function MethodDungeonTools:LiveSession_SendAffixWeek(week)
     end
 end
 
+---MethodDungeonTools:LiveSession_SendFreeholdSelector(value)
+function MethodDungeonTools:LiveSession_SendFreeholdSelector(value,week)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        value = value and "T:" or "F:"
+        local msg = value..week
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.free, msg, distribution, nil, "ALERT")
+    end
+end
+
 do
     local timer
     ---LiveSession_QueueColorUpdate

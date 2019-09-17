@@ -168,6 +168,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["clone"] = "MDTLiveClone",
     ["pull"] = "MDTLivePull",
     ["week"] = "MDTLiveWeek",
+    ["free"] = "MDTLiveFree",
 }
 
 function MDTcommsObject:OnEnable()
@@ -436,6 +437,23 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 MethodDungeonTools:POI_UpdateAll()
                 MethodDungeonTools:UpdateProgressbar()
                 MethodDungeonTools:ReloadPullButtons()
+            end
+        end
+    end
+
+    --freehold
+    if prefix == MethodDungeonTools.liveSessionPrefixes.free then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local value,week = string.match(message,"(.*):(.*)")
+            value = value == "T" and true or false
+            week = tonumber(week)
+            preset.freeholdCrew = (value and week) or nil
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.freeholdCrew)
+                MethodDungeonTools:UpdateFreeholdSelector(week)
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:UpdateProgressbar()
             end
         end
     end
