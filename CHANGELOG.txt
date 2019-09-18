@@ -1,6 +1,2 @@
 v2.8.5
 - New Feature: Live mode - connect with your party members to work on presets simultaneously.
-- currently not working in livemode yet:
-    - switching faction in Siege of boralus
-    - joining crew in freehold
-    - turning on and changing mdi mode
