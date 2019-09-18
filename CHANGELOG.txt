@@ -1,2 +1,4 @@
-v2.8.5
+v2.8.6-alpha
 - New Feature: Live mode - connect with your party members to work on presets simultaneously.
+
+- MDI mode, freehold, siege selectors work in live session now
