@@ -133,11 +133,11 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:SetSelectionToPull(newPullIdx)
         end
-        MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,IsControlKeyDown(),IsShiftKeyDown())
+        MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,IsControlKeyDown())
         MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-        if IsShiftKeyDown() and MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
             MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
         end
     elseif button == "RightButton" then
@@ -450,11 +450,9 @@ function MethodDungeonTools:GetBlip(enemyIdx,cloneIdx,preset)
     end
 end
 
-local cloneActions = {} --{"action",pullIdx,enemyIdx,cloneIdx}
 ---DungeonEnemies_AddOrRemoveBlipToCurrentPull
 ---Adds or removes an enemy clone and all it's linked npcs to the currently selected pull
-function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add,ignoreGrouped,ignoreLiveMode,recursive)
-    if not ignoreGrouped then twipe(cloneActions) end
+function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add,ignoreGrouped)
     local preset = self:GetCurrentPreset()
     local enemyIdx = blip.enemyIdx
     local cloneIdx = blip.cloneIdx
@@ -468,7 +466,6 @@ function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add
             for k,v in pairs(p[enemyIdx]) do
                 if v == cloneIdx then
                     tremove(preset.value.pulls[pullIdx][enemyIdx],k)
-                    tinsert(cloneActions,{ "R", pullIdx, enemyIdx, k})
                 end
             end
         end
@@ -482,14 +479,12 @@ function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add
         end
         if found==false and blip:IsEnabled() then
             tinsert(pulls[pull][enemyIdx],cloneIdx)
-            tinsert(cloneActions,{ "I", pull, enemyIdx, cloneIdx})
         end
     else
         blip.selected = false
         for k,v in pairs(preset.value.pulls[pull][enemyIdx]) do
             if v == cloneIdx then
                 tremove(preset.value.pulls[pull][enemyIdx],k)
-                tinsert(cloneActions,{ "R", pull, enemyIdx, k})
             end
         end
     end
@@ -497,14 +492,11 @@ function MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip,add
     if not ignoreGrouped then
         for idx,otherBlip in pairs(blips) do
             if blip.clone.g and otherBlip.clone.g == blip.clone.g and blip~=otherBlip then
-                self:DungeonEnemies_AddOrRemoveBlipToCurrentPull(otherBlip,add,true,nil,true)
+                self:DungeonEnemies_AddOrRemoveBlipToCurrentPull(otherBlip,add,true,nil)
             end
         end
     end
     self:UpdatePullButtonNPCData(pull)
-    if (not ignoreLiveMode) and not recursive and MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-        MethodDungeonTools:LiveSession_SendCloneActions(cloneActions)
-    end
 end
 
 ---DungeonEnemies_UpdateBlipColors

@@ -166,16 +166,6 @@ function MethodDungeonTools:LiveSession_SendPreset(preset)
     end
 end
 
----LiveSession_SendCloneActions
----Sends a set of actions of adding or removing clones from pulls
-function MethodDungeonTools:LiveSession_SendCloneActions(cloneActions)
-    local distribution = self:IsPlayerInGroup()
-    if distribution then
-        local msg = MethodDungeonTools:TableToString(cloneActions,true)
-        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.clone, msg, distribution, nil, "ALERT")
-    end
-end
-
 ---LiveSession_SendPulls
 ---Sends all pulls
 function MethodDungeonTools:LiveSession_SendPulls(pulls)

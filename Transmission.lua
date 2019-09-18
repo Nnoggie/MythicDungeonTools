@@ -165,7 +165,6 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["cmd"] = "MDTLiveCmd",
     ["note"] = "MDTLiveNote",
     ["preset"] = "MDTLivePreset",
-    ["clone"] = "MDTLiveClone",
     ["pull"] = "MDTLivePull",
     ["week"] = "MDTLiveWeek",
     ["free"] = "MDTLiveFree",
@@ -366,34 +365,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 MethodDungeonTools.livePresetUID = preset.uid
                 MethodDungeonTools:ImportPreset(preset,true)
             end
-        end
-    end
-
-    --clone add or remove
-    if prefix == MethodDungeonTools.liveSessionPrefixes.clone then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local cloneActions = MethodDungeonTools:StringToTable(message,true)
-            local pulls = preset.value.pulls or {}
-            local pullIdx
-            for _,action in pairs(cloneActions) do
-                local operation,enemyIdx,cloneIdx
-                operation,pullIdx,enemyIdx,cloneIdx = unpack(action)
-                pulls[pullIdx] = pulls[pullIdx] or {}
-                pulls[pullIdx][enemyIdx] = pulls[pullIdx][enemyIdx] or {}
-                if operation == "I" then
-                    tinsert(pulls[pullIdx][enemyIdx],cloneIdx)
-                elseif operation == "R" then
-                    tremove(pulls[pullIdx][enemyIdx],cloneIdx)
-                end
-            end
-            MethodDungeonTools:EnsureDBTables()
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                MethodDungeonTools:UpdatePullButtonNPCData(pullIdx)
-                MethodDungeonTools:UpdateProgressbar()
-                MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
-            end
-
         end
     end
 
