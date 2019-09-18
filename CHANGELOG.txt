@@ -1,3 +1,5 @@
+v2.8.5
+- Hotfix: "Removed a Void Emissary near the pack of enemies by Galvazzt."
 v2.8.4
 - Affixes for week 8 and 9 added
 - fixed nil error on start up due to corrupted line data
