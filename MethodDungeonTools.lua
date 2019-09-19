@@ -1,7 +1,5 @@
 local AddonName, MethodDungeonTools = ...
 
-
-
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 
@@ -2232,7 +2230,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	local frame = MethodDungeonTools.main_frame
 	mapName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][0]
 	MethodDungeonTools:EnsureDBTables()
-    local preset = self:GetCurrentPreset()
+    local preset = MethodDungeonTools:GetCurrentPreset()
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
 	for i=1,12 do
@@ -2250,7 +2248,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	for k,v in pairs(db.presets[db.currentDungeonIdx]) do
 		presetCount = presetCount + 1
 	end
-	if (db.currentPreset[db.currentDungeonIdx] == 1 or db.currentPreset[db.currentDungeonIdx] == presetCount) or self.liveSessionActive then
+	if (db.currentPreset[db.currentDungeonIdx] == 1 or db.currentPreset[db.currentDungeonIdx] == presetCount) or MethodDungeonTools.liveSessionActive then
 		MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(true)
 		MethodDungeonTools.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5,0.5,0.5)
 	else
@@ -2258,15 +2256,15 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 		MethodDungeonTools.main_frame.sidePanelDeleteButton.text:SetTextColor(1,0.8196,0)
 	end
     --live mode
-    local livePreset = self:GetCurrentLivePreset()
-    if self.liveSessionActive and preset ~= livePreset then
-        self.main_frame.liveReturnButton:Show()
-        self.main_frame.setLivePresetButton:Show()
+    local livePreset = MethodDungeonTools:GetCurrentLivePreset()
+    if MethodDungeonTools.liveSessionActive and preset ~= livePreset then
+        MethodDungeonTools.main_frame.liveReturnButton:Show()
+        MethodDungeonTools.main_frame.setLivePresetButton:Show()
     else
-        self.main_frame.liveReturnButton:Hide()
-        self.main_frame.setLivePresetButton:Hide()
+        MethodDungeonTools.main_frame.liveReturnButton:Hide()
+        MethodDungeonTools.main_frame.setLivePresetButton:Hide()
     end
-    self:UpdatePresetDropdownTextColor()
+    MethodDungeonTools:UpdatePresetDropdownTextColor()
 
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(preset.value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
