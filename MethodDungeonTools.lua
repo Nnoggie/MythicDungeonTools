@@ -1,6 +1,5 @@
+-- Made by: Nnogga - Tarren Mill <Method>, 2017-2019
 local AddonName, MethodDungeonTools = ...
-
-
 
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
@@ -8,16 +7,12 @@ local canvasDrawLayer = "BORDER"
 _G["MethodDungeonTools"] = MethodDungeonTools
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
+local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
 
 local sizex = 840
 local sizey = 555
 
---sizex = sizex *1.4
---sizey = sizey *1.4
-
 local methodColor = "|cFFF49D38"
-local selectedGreen = {0,1,0,0.4}
-selectedGreen = {34/255,139/255,34/255,0.7}
 MethodDungeonTools.BackdropColor = {0.058823399245739,0.058823399245739,0.058823399245739,0.9}
 
 local Dialog = LibStub("LibDialog-1.0")
@@ -47,16 +42,9 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 	end,
 })
 
-local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
-
--- Made by: Nnogga - Tarren Mill <Method>, 2017-2018
-
 SLASH_METHODDUNGEONTOOLS1 = "/mplus"
 SLASH_METHODDUNGEONTOOLS2 = "/mdt"
 SLASH_METHODDUNGEONTOOLS3 = "/methoddungeontools"
-
---LUA API
-local pi,tinsert = math.pi,table.insert
 
 function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
 	local rqst, arg = strsplit(' ', cmd)
@@ -112,7 +100,6 @@ do
         defaultSavedVars.global.currentPreset[i] = 1
     end
 end
-
 
 -- Init db
 do
