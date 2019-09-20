@@ -1,6 +1,18 @@
-local Compresser = LibStub:GetLibrary("LibCompress");
+local Compresser = LibStub:GetLibrary("LibCompress")
 local Encoder = Compresser:GetAddonEncodeTable()
-local Serializer = LibStub:GetLibrary("AceSerializer-3.0");
+local Serializer = LibStub:GetLibrary("AceSerializer-3.0")
+local LibDeflate = LibStub:GetLibrary("LibDeflate")
+local configForDeflate = {
+    [1]= {level = 1},
+    [2]= {level = 2},
+    [3]= {level = 3},
+    [4]= {level = 4},
+    [5]= {level = 5},
+    [6]= {level = 6},
+    [7]= {level = 7},
+    [8]= {level = 8},
+    [9]= {level = 9},
+}
 
 MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
@@ -34,29 +46,29 @@ local B64tobyte = {
 
 -- This code is based on the Encode7Bit algorithm from LibCompress
 -- Credit goes to Galmok (galmok@gmail.com)
-local encodeB64Table = {};
+local encodeB64Table = {}
 
 function encodeB64(str)
-    local B64 = encodeB64Table;
-    local remainder = 0;
-    local remainder_length = 0;
-    local encoded_size = 0;
+    local B64 = encodeB64Table
+    local remainder = 0
+    local remainder_length = 0
+    local encoded_size = 0
     local l=#str
     local code
     for i=1,l do
-        code = string.byte(str, i);
-        remainder = remainder + bit_lshift(code, remainder_length);
-        remainder_length = remainder_length + 8;
+        code = string.byte(str, i)
+        remainder = remainder + bit_lshift(code, remainder_length)
+        remainder_length = remainder_length + 8
         while(remainder_length) >= 6 do
-            encoded_size = encoded_size + 1;
-            B64[encoded_size] = bytetoB64[bit_band(remainder, 63)];
-            remainder = bit_rshift(remainder, 6);
-            remainder_length = remainder_length - 6;
+            encoded_size = encoded_size + 1
+            B64[encoded_size] = bytetoB64[bit_band(remainder, 63)]
+            remainder = bit_rshift(remainder, 6)
+            remainder_length = remainder_length - 6
         end
     end
     if remainder_length > 0 then
-        encoded_size = encoded_size + 1;
-        B64[encoded_size] = bytetoB64[remainder];
+        encoded_size = encoded_size + 1
+        B64[encoded_size] = bytetoB64[remainder]
     end
     return table.concat(B64, "", 1, encoded_size)
 end
@@ -64,70 +76,87 @@ end
 local decodeB64Table = {}
 
 function decodeB64(str)
-    local bit8 = decodeB64Table;
-    local decoded_size = 0;
-    local ch;
-    local i = 1;
-    local bitfield_len = 0;
-    local bitfield = 0;
-    local l = #str;
+    local bit8 = decodeB64Table
+    local decoded_size = 0
+    local ch
+    local i = 1
+    local bitfield_len = 0
+    local bitfield = 0
+    local l = #str
     while true do
         if bitfield_len >= 8 then
-            decoded_size = decoded_size + 1;
-            bit8[decoded_size] = string_char(bit_band(bitfield, 255));
-            bitfield = bit_rshift(bitfield, 8);
-            bitfield_len = bitfield_len - 8;
+            decoded_size = decoded_size + 1
+            bit8[decoded_size] = string_char(bit_band(bitfield, 255))
+            bitfield = bit_rshift(bitfield, 8)
+            bitfield_len = bitfield_len - 8
         end
-        ch = B64tobyte[str:sub(i, i)];
-        bitfield = bitfield + bit_lshift(ch or 0, bitfield_len);
-        bitfield_len = bitfield_len + 6;
+        ch = B64tobyte[str:sub(i, i)]
+        bitfield = bitfield + bit_lshift(ch or 0, bitfield_len)
+        bitfield_len = bitfield_len + 6
         if i > l then
-            break;
+            break
         end
-        i = i + 1;
+        i = i + 1
     end
     return table.concat(bit8, "", 1, decoded_size)
 end
 
-function MethodDungeonTools:TableToString(inTable, forChat)
-    local serialized = Serializer:Serialize(inTable);
-    local compressed = Compresser:CompressHuffman(serialized);
+function MethodDungeonTools:TableToString(inTable, forChat,level)
+    local serialized = Serializer:Serialize(inTable)
+    local compressed = LibDeflate:CompressDeflate(serialized, configForDeflate[level])
+    -- prepend with "!" so that we know that it is not a legacy compression
+    -- also this way, old versions will error out due to the "bad" encoding
+    local encoded = "!"
     if(forChat) then
-        return encodeB64(compressed);
+        encoded = encoded .. LibDeflate:EncodeForPrint(compressed)
     else
-        return Encoder:Encode(compressed);
+        encoded = encoded .. LibDeflate:EncodeForWoWAddonChannel(compressed)
     end
+    return encoded
 end
 
 function MethodDungeonTools:StringToTable(inString, fromChat)
-    local decoded;
+    -- if gsub strips off a ! at the beginning then we know that this is not a legacy encoding
+    local encoded, usesDeflate = inString:gsub("^%!", "")
+    local decoded
     if(fromChat) then
-        decoded = decodeB64(inString);
+        if usesDeflate == 1 then
+            decoded = LibDeflate:DecodeForPrint(encoded)
+        else
+            decoded = decodeB64(encoded)
+        end
     else
-        decoded = Encoder:Decode(inString);
+        decoded = LibDeflate:DecodeForWoWAddonChannel(encoded)
     end
 
-    local decompressed, errorMsg = Compresser:Decompress(decoded);
+    if not decoded then
+        return "Error decoding."
+    end
+
+    local decompressed, errorMsg = nil, "unknown compression method"
+    if usesDeflate == 1 then
+        decompressed = LibDeflate:DecompressDeflate(decoded)
+    else
+        decompressed, errorMsg = Compresser:Decompress(decoded)
+    end
     if not(decompressed) then
-        return "Error decompressing: "..errorMsg;
+        return "Error decompressing: " .. errorMsg
     end
 
-    local success, deserialized = Serializer:Deserialize(decompressed);
+    local success, deserialized = Serializer:Deserialize(decompressed)
     if not(success) then
-        return "Error deserializing "..deserialized;
+        return "Error deserializing "..deserialized
     end
-    return deserialized;
+    return deserialized
 end
-
-
 
 local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
     if flag == "GM" or flag == "DEV" then
         return
     end
-    local newMsg = "";
-    local remaining = msg;
-    local done;
+    local newMsg = ""
+    local remaining = msg
+    local done
     repeat
         local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]")
         local startLive, finishLive, characterNameLive, displayNameLive = remaining:find("%[MDTLive: ([^%s]+) %- ([^%]]+)%]")
@@ -145,11 +174,11 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
             newMsg = newMsg.."|HMDTLive-"..characterNameLive.."|h[".."|cFF00FF00Live Session: |cfff49d38"..""..displayNameLive.."]|h|r"
             remaining = remaining:sub(finishLive + 1)
         else
-            done = true;
+            done = true
         end
     until(done)
     if newMsg ~= "" then
-        return false, newMsg, player, l, cs, t, flag, channelId, ...;
+        return false, newMsg, player, l, cs, t, flag, channelId, ...
     end
 end
 
@@ -240,7 +269,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --we cache the preset here already
     --the user still decides if he wants to click the chat link and add the preset to his db
     if prefix == presetCommPrefix then
-        local preset = MethodDungeonTools:StringToTable(message,true)
+        local preset = MethodDungeonTools:StringToTable(message,false)
         MethodDungeonTools.transmissionCache[fullName] = preset
         --live session preset
         if MethodDungeonTools.liveSessionActive and MethodDungeonTools.liveSessionAcceptingPreset and preset.uid == MethodDungeonTools.livePresetUID then
@@ -289,7 +318,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if prefix == MethodDungeonTools.liveSessionPrefixes.obj then
         if MethodDungeonTools.liveSessionActive then
             local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local obj = MethodDungeonTools:StringToTable(message,true)
+            local obj = MethodDungeonTools:StringToTable(message,false)
             MethodDungeonTools:StorePresetObject(obj,true,preset)
             if preset == MethodDungeonTools:GetCurrentPreset() then
                 local scale = MethodDungeonTools:GetScale()
@@ -317,7 +346,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if prefix == MethodDungeonTools.liveSessionPrefixes.objChg then
         if MethodDungeonTools.liveSessionActive then
             local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local changedObjects = MethodDungeonTools:StringToTable(message,true)
+            local changedObjects = MethodDungeonTools:StringToTable(message,false)
             for objIdx,obj in pairs(changedObjects) do
                 preset.objects[objIdx] = obj
             end
@@ -359,7 +388,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --preset
     if prefix == MethodDungeonTools.liveSessionPrefixes.preset then
         if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:StringToTable(message,true)
+            local preset = MethodDungeonTools:StringToTable(message,false)
             MethodDungeonTools.transmissionCache[fullName] = preset
             if MethodDungeonTools:ValidateImportPreset(preset) then
                 MethodDungeonTools.livePresetUID = preset.uid
@@ -372,7 +401,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if prefix == MethodDungeonTools.liveSessionPrefixes.pull then
         if MethodDungeonTools.liveSessionActive then
             local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local pulls = MethodDungeonTools:StringToTable(message,true)
+            local pulls = MethodDungeonTools:StringToTable(message,false)
             preset.value.pulls = pulls
             if preset == MethodDungeonTools:GetCurrentPreset() then
                 MethodDungeonTools:ReloadPullButtons()
@@ -540,6 +569,7 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
             MethodDungeonTools.main_frame.LiveSessionButton:SetText("*Live*")
         else
             MethodDungeonTools.main_frame.LiveSessionButton:SetText("Live")
+            MethodDungeonTools.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
             MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
             MethodDungeonTools.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
         end
@@ -579,14 +609,14 @@ function MethodDungeonTools:SendToGroup(distribution,silent,preset)
     MethodDungeonTools:SetUniqueID(preset)
     --gotta encode mdi mode into preset
     preset.mdiEnabled = MethodDungeonTools:GetDB().MDI.enabled
-    local export = MethodDungeonTools:TableToString(preset,true)
+    local export = MethodDungeonTools:TableToString(preset,false,5)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,silent})
 end
 
 ---GetPresetSize
 ---Returns the number of characters the string version of the preset contains
-function MethodDungeonTools:GetPresetSize()
+function MethodDungeonTools:GetPresetSize(forChat,level)
     local preset = MethodDungeonTools:GetCurrentPreset()
-    local export = MethodDungeonTools:TableToString(preset,true)
+    local export = MethodDungeonTools:TableToString(preset,forChat,level)
     return string.len(export)
 end

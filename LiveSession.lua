@@ -103,7 +103,7 @@ function MethodDungeonTools:LiveSession_SendObject(obj)
     if self:GetCurrentPreset().uid == self.livePresetUID then
         local distribution = self:IsPlayerInGroup()
         if distribution then
-            local export = MethodDungeonTools:TableToString(obj,true)
+            local export = MethodDungeonTools:TableToString(obj,false,5)
             MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.obj, export, distribution, nil, "ALERT")
         end
     end
@@ -126,7 +126,7 @@ function MethodDungeonTools:LiveSession_SendUpdatedObjects(changedObjects)
     if self:GetCurrentPreset().uid == self.livePresetUID then
         local distribution = self:IsPlayerInGroup()
         if distribution then
-            local export = MethodDungeonTools:TableToString(changedObjects,true)
+            local export = MethodDungeonTools:TableToString(changedObjects,false,5)
             MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objChg, export, distribution, nil, "ALERT")
         end
     end
@@ -161,7 +161,7 @@ function MethodDungeonTools:LiveSession_SendPreset(preset)
     local distribution = self:IsPlayerInGroup()
     if distribution then
         preset.mdiEnabled = self:GetDB().MDI.enabled
-        local export = MethodDungeonTools:TableToString(preset,true)
+        local export = MethodDungeonTools:TableToString(preset,false,5)
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "ALERT")
     end
 end
@@ -171,7 +171,7 @@ end
 function MethodDungeonTools:LiveSession_SendPulls(pulls)
     local distribution = self:IsPlayerInGroup()
     if distribution then
-        local msg = MethodDungeonTools:TableToString(pulls,true)
+        local msg = MethodDungeonTools:TableToString(pulls,false,5)
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.pull, msg, distribution, nil, "ALERT")
     end
 end

@@ -1057,10 +1057,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelExportButton.frame:SetDisabledFontObject(fontInstance)
 	frame.sidePanelExportButton:SetCallback("OnClick",function(widget,callbackName,value)
-        --set unique id
-        local preset = self:GetCurrentPreset()
-        preset.uid = preset.uid or self:GenerateUniqueID()
-		local export = MethodDungeonTools:TableToString(preset,true)
+        local preset = MethodDungeonTools:GetCurrentPreset()
+        MethodDungeonTools:SetUniqueID(preset)
+		local export = MethodDungeonTools:TableToString(preset,true,5)
 		MethodDungeonTools:HideAllDialogs()
 		MethodDungeonTools.main_frame.ExportFrame:Show()
         MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
@@ -1068,6 +1067,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
 		MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
 		MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+        MethodDungeonTools.main_frame.ExportFrameEditbox:SetLabel(preset.text.." "..string.len(export))
 	end)
 
 	frame.sidePanelDeleteButton = AceGUI:Create("Button")
@@ -1110,8 +1110,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
             frame.LiveSessionButton:SetText("...")
             MethodDungeonTools:SendToGroup(distribution)
         end
-        local presetSize = self:GetPresetSize()
-        if presetSize>12000 then
+        local presetSize = self:GetPresetSize(false,5)
+        if presetSize>16000 then
             local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you sure you want to share this preset?\n"
             MethodDungeonTools:OpenConfirmationFrame(450,150,"Sharing large preset","Share",prompt, callback)
         else
