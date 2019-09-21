@@ -41,8 +41,14 @@ function MethodDungeonTools:LiveSession_Disable()
     widget.text:SetText("Live")
     MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
     self.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
-    self.main_frame.sidePanelDeleteButton:SetDisabled(false)
-    self.main_frame.sidePanelDeleteButton.text:SetTextColor(1,0.8196,0)
+    local db = MethodDungeonTools:GetDB()
+    if db.presets[db.currentDungeonIdx][1] == MethodDungeonTools:GetCurrentPreset() then
+        MethodDungeonTools.main_frame.sidePanelDeleteButton:SetDisabled(true)
+        MethodDungeonTools.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5,0.5,0.5)
+    else
+        self.main_frame.sidePanelDeleteButton:SetDisabled(false)
+        self.main_frame.sidePanelDeleteButton.text:SetTextColor(1,0.8196,0)
+    end
     self.liveSessionActive = false
     self.liveSessionAcceptingPreset = false
     self:UpdatePresetDropdownTextColor()
