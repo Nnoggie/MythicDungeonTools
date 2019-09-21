@@ -1111,7 +1111,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             MethodDungeonTools:SendToGroup(distribution)
         end
         local presetSize = self:GetPresetSize(false,5)
-        if presetSize>16000 then
+        if presetSize>25000 then
             local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you sure you want to share this preset?\n"
             MethodDungeonTools:OpenConfirmationFrame(450,150,"Sharing large preset","Share",prompt, callback)
         else
