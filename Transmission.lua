@@ -643,8 +643,8 @@ function MethodDungeonTools:SetThrottleValues(default)
     if default then
         _G.ChatThrottleLib.MAX_CPS = 800
         _G.ChatThrottleLib.BURST = 4000
-    else
-        _G.ChatThrottleLib.MAX_CPS= 4000
-        _G.ChatThrottleLib.BURST = 16000
+    else --4000/16000 is fine but we go safe with 2000/10000
+        _G.ChatThrottleLib.MAX_CPS= 2000
+        _G.ChatThrottleLib.BURST = 10000
     end
 end
