@@ -46,33 +46,6 @@ local B64tobyte = {
 
 -- This code is based on the Encode7Bit algorithm from LibCompress
 -- Credit goes to Galmok (galmok@gmail.com)
-local encodeB64Table = {}
-
-function encodeB64(str)
-    local B64 = encodeB64Table
-    local remainder = 0
-    local remainder_length = 0
-    local encoded_size = 0
-    local l=#str
-    local code
-    for i=1,l do
-        code = string.byte(str, i)
-        remainder = remainder + bit_lshift(code, remainder_length)
-        remainder_length = remainder_length + 8
-        while(remainder_length) >= 6 do
-            encoded_size = encoded_size + 1
-            B64[encoded_size] = bytetoB64[bit_band(remainder, 63)]
-            remainder = bit_rshift(remainder, 6)
-            remainder_length = remainder_length - 6
-        end
-    end
-    if remainder_length > 0 then
-        encoded_size = encoded_size + 1
-        B64[encoded_size] = bytetoB64[remainder]
-    end
-    return table.concat(B64, "", 1, encoded_size)
-end
-
 local decodeB64Table = {}
 
 function decodeB64(str)
@@ -638,11 +611,13 @@ function MethodDungeonTools:GetPresetSize(forChat,level)
     return string.len(export)
 end
 
+local defaultCPS = tonumber(_G.ChatThrottleLib.MAX_CPS)
+local defaultBURST = tonumber(_G.ChatThrottleLib.BURST)
 function MethodDungeonTools:SetThrottleValues(default)
     if not _G.ChatThrottleLib then return end
     if default then
-        _G.ChatThrottleLib.MAX_CPS = 800
-        _G.ChatThrottleLib.BURST = 4000
+        _G.ChatThrottleLib.MAX_CPS = defaultCPS
+        _G.ChatThrottleLib.BURST = defaultBURST
     else --4000/16000 is fine but we go safe with 2000/10000
         _G.ChatThrottleLib.MAX_CPS= 2000
         _G.ChatThrottleLib.BURST = 10000
