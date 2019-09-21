@@ -742,16 +742,24 @@ function MethodDungeonTools:StopPencilDrawing()
         nobj.l[size+3] = MethodDungeonTools:Round(x,1)
         nobj.l[size+4] = MethodDungeonTools:Round(y,1)
     end
-    --draw end circle, dont need to store it as we draw it when we restore the line from db
-    MethodDungeonTools:DrawCircle(x,y,db.toolbar.brushSize*0.3*scale,db.toolbar.color,objectDrawLayer,layerSublevel)
     frame.toolbar:SetScript("OnUpdate",nil)
     --clear own flags
     for k,v in pairs(activeTextures) do
         v.isOwn = nil
     end
-    MethodDungeonTools:StorePresetObject(nobj)
-    --nobj will be scaled after StorePresetObject so no need to rescale again
-    if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
+
+    local lineCount = 0
+    for _,_ in pairs(nobj.l) do
+        lineCount = lineCount +1
+    end
+    if lineCount > 0 then
+        --draw end circle, dont need to store it as we draw it when we restore the line from db
+        MethodDungeonTools:DrawCircle(x,y,db.toolbar.brushSize*0.3*scale,db.toolbar.color,objectDrawLayer,layerSublevel)
+        MethodDungeonTools:StorePresetObject(nobj)
+        --nobj will be scaled after StorePresetObject so no need to rescale again
+        if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
+    end
+
     drawingActive = false
 end
 
