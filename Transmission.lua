@@ -222,7 +222,7 @@ function SetItemRef(link, ...)
     end
     return OriginalSetItemRef(link, ...)
 end
-local lastLivePresetSent
+
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --[[
         this is weird
@@ -278,12 +278,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
 
     --request preset
     if prefix == MethodDungeonTools.liveSessionPrefixes.reqPre then
-        local now = GetTime()
-        if not lastLivePresetSent or lastLivePresetSent < now - 2 then
-            lastLivePresetSent = now
-            print("sending preset")
-            MethodDungeonTools:SendToGroup(MethodDungeonTools:IsPlayerInGroup(),true,MethodDungeonTools:GetCurrentLivePreset())
-        end
+        MethodDungeonTools:SendToGroup(MethodDungeonTools:IsPlayerInGroup(),true,MethodDungeonTools:GetCurrentLivePreset())
     end
 
 
