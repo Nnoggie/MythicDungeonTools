@@ -2589,9 +2589,16 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         db.MDI.enabled = mdiEnabled
         db.presets[db.currentDungeonIdx][updateIndex] = preset
         db.currentPreset[db.currentDungeonIdx] = updateIndex
+        self.liveUpdateFrameOpen = nil
         self:UpdatePresetDropDown()
         self:UpdateMap()
-        self.liveUpdateFrameOpen = nil
+        if fromLiveSession then
+            self.main_frame.SendingStatusBar:Hide()
+            if self.main_frame.LoadingSpinner then
+                self.main_frame.LoadingSpinner:Hide()
+                self.main_frame.LoadingSpinner.Anim:Stop()
+            end
+        end
     end
     local copyCallback = function()
         if self.main_frame.ConfirmationFrame then
@@ -2619,14 +2626,28 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         db.presets[db.currentDungeonIdx][countPresets+1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
         db.presets[db.currentDungeonIdx][countPresets] = preset
         db.currentPreset[db.currentDungeonIdx] = countPresets
+        self.liveUpdateFrameOpen = nil
         self:UpdatePresetDropDown()
         self:UpdateMap()
-        self.liveUpdateFrameOpen = nil
+        if fromLiveSession then
+            self.main_frame.SendingStatusBar:Hide()
+            if self.main_frame.LoadingSpinner then
+                self.main_frame.LoadingSpinner:Hide()
+                self.main_frame.LoadingSpinner.Anim:Stop()
+            end
+        end
     end
     local closeCallback = function()
+        self.liveUpdateFrameOpen = nil
         self:LiveSession_Disable()
         self.main_frame.ConfirmationFrame:SetCallback("OnClose", function() end)
-        self.liveUpdateFrameOpen = nil
+        if fromLiveSession then
+            self.main_frame.SendingStatusBar:Hide()
+            if self.main_frame.LoadingSpinner then
+                self.main_frame.LoadingSpinner:Hide()
+                self.main_frame.LoadingSpinner.Anim:Stop()
+            end
+        end
     end
 
     --open dialog to ask for replacing
@@ -2815,7 +2836,6 @@ function MethodDungeonTools:SetSelectionToPull(pull)
 
 	--SaveCurrentPresetPull
     if type(pull) == "number" and pull > 0 then
-        --print("SetSelectionToPull(): pull = ", pull)
         MethodDungeonTools:GetCurrentPreset().value.currentPull = pull
         MethodDungeonTools:GetCurrentPreset().value.selection = { pull }
         MethodDungeonTools:PickPullButton(pull)
@@ -3733,9 +3753,7 @@ function MethodDungeonTools:IsShown_DropIndicator()
 end
 
 function MethodDungeonTools:Show_DropIndicator(target, pos)
-    --print("Show_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
-
     indicator:ClearAllPoints()
     if pos == "TOP" then
         indicator:SetPoint("BOTTOMLEFT", target.frame, "TOPLEFT", 0, -1)
@@ -3749,7 +3767,6 @@ function MethodDungeonTools:Show_DropIndicator(target, pos)
 end
 
 function MethodDungeonTools:Hide_DropIndicator()
-    --print("Hide_DropIndicator()")
     local indicator = MethodDungeonTools:DropIndicator()
     indicator:Hide()
 end
@@ -3770,13 +3787,10 @@ end
 function MethodDungeonTools:ScrollToPull(pullIdx)
     -- Get scroll frame
     local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
-
     -- Get amount of total pulls plus the extra button "+ Add Pull"
     local pulls = #MethodDungeonTools:GetCurrentPreset().value.pulls + 1 or 1
-
     local percentage = pullIdx / pulls
     local value = percentage * 1000
-    --print("value =", value)
     scrollFrame:SetScroll(value)
     scrollFrame:FixScroll()
 end
