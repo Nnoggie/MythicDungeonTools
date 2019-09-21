@@ -199,6 +199,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["free"] = "MDTLiveFree",
     ["bora"] = "MDTLiveBora",
     ["mdi"] = "MDTLiveMDI",
+    ["reqPre"] = "MDTLiveReqPre",
 }
 
 function MDTcommsObject:OnEnable()
@@ -248,7 +249,7 @@ function SetItemRef(link, ...)
     end
     return OriginalSetItemRef(link, ...)
 end
-
+local lastLivePresetSent
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --[[
         this is weird
@@ -277,27 +278,41 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 MethodDungeonTools:ImportPreset(preset,true)
                 MethodDungeonTools.liveSessionAcceptingPreset = false
                 MethodDungeonTools.main_frame.SendingStatusBar:Hide()
-                MethodDungeonTools.main_frame.LoadingSpinner:Hide()
-                MethodDungeonTools.main_frame.LoadingSpinner.Anim:Stop()
+                if MethodDungeonTools.main_frame.LoadingSpinner then
+                    MethodDungeonTools.main_frame.LoadingSpinner:Hide()
+                    MethodDungeonTools.main_frame.LoadingSpinner.Anim:Stop()
+                end
                 MethodDungeonTools.liveSessionRequested = false
             end
+        end
+    end
+
+    if prefix == MethodDungeonTools.liveSessionPrefixes.enabled then
+        if MethodDungeonTools.liveSessionRequested == true then
+            MethodDungeonTools:LiveSession_SessionFound(fullName,message)
         end
     end
 
     --live session messages from here on, we ignore our own messages
     if sender == UnitFullName("player") then return end
 
-    if prefix == MethodDungeonTools.liveSessionPrefixes.enabled then
-        if MethodDungeonTools.liveSessionRequested == true then
-            MethodDungeonTools:LiveSession_SessionFound(message)
-        end
-    end
 
     if prefix == MethodDungeonTools.liveSessionPrefixes.request then
         if MethodDungeonTools.liveSessionActive then
-            MethodDungeonTools:LiveSession_NotifyEnabled(fullName)
+            MethodDungeonTools:LiveSession_NotifyEnabled()
         end
     end
+
+    --request preset
+    if prefix == MethodDungeonTools.liveSessionPrefixes.reqPre then
+        local now = GetTime()
+        if not lastLivePresetSent or lastLivePresetSent < now - 2 then
+            lastLivePresetSent = now
+            print("sending preset")
+            MethodDungeonTools:SendToGroup(MethodDungeonTools:IsPlayerInGroup(),true,MethodDungeonTools:GetCurrentLivePreset())
+        end
+    end
+
 
     --ping
     if prefix == MethodDungeonTools.liveSessionPrefixes.ping then
@@ -584,6 +599,7 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
             local name, realm = UnitFullName("player")
             local fullName = name.."+"..realm
             SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
+            MethodDungeonTools:SetThrottleValues(true)
         end
     end
 end
@@ -604,6 +620,7 @@ end
 ---SendToGroup
 ---Send current preset to group/raid
 function MethodDungeonTools:SendToGroup(distribution,silent,preset)
+    MethodDungeonTools:SetThrottleValues()
     preset = preset or MethodDungeonTools:GetCurrentPreset()
     --set unique id
     MethodDungeonTools:SetUniqueID(preset)
@@ -619,4 +636,15 @@ function MethodDungeonTools:GetPresetSize(forChat,level)
     local preset = MethodDungeonTools:GetCurrentPreset()
     local export = MethodDungeonTools:TableToString(preset,forChat,level)
     return string.len(export)
+end
+
+function MethodDungeonTools:SetThrottleValues(default)
+    if not _G.ChatThrottleLib then return end
+    if default then
+        _G.ChatThrottleLib.MAX_CPS = 800
+        _G.ChatThrottleLib.BURST = 4000
+    else
+        _G.ChatThrottleLib.MAX_CPS= 4000
+        _G.ChatThrottleLib.BURST = 16000
+    end
 end

@@ -3,8 +3,10 @@ local MDTcommsObject = MDTcommsObject
 local twipe,tinsert = table.wipe,table.insert
 
 local timer
+local requestTimer
 ---LiveSession_Enable
 function MethodDungeonTools:LiveSession_Enable()
+    if self.liveSessionActive then return end
     self.main_frame.LiveSessionButton:SetText("*Live*")
     self.main_frame.LiveSessionButton.text:SetTextColor(0,1,0)
     self.main_frame.LinkToChatButton:SetDisabled(true)
@@ -12,13 +14,15 @@ function MethodDungeonTools:LiveSession_Enable()
     self.main_frame.sidePanelDeleteButton:SetDisabled(true)
     self.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5,0.5,0.5)
     self.liveSessionActive = true
-    --check if there is a session
+    --check if there is other clients having live mode active
     self:LiveSession_RequestSession()
     --set id here incase there is no other sessions
     self:SetUniqueID(self:GetCurrentPreset())
     self.livePresetUID = self:GetCurrentPreset().uid
     self:UpdatePresetDropdownTextColor()
+    self:SetThrottleValues()
     timer = C_Timer.NewTimer(2, function()
+        self.liveSessionRequested = false
         local distribution = self:IsPlayerInGroup()
         local preset = self:GetCurrentPreset()
         local prefix = "[MDTLive: "
@@ -40,20 +44,34 @@ function MethodDungeonTools:LiveSession_Disable()
     self.main_frame.sidePanelDeleteButton:SetDisabled(false)
     self.main_frame.sidePanelDeleteButton.text:SetTextColor(1,0.8196,0)
     self.liveSessionActive = false
+    self.liveSessionAcceptingPreset = false
     self:UpdatePresetDropdownTextColor()
     self.main_frame.liveReturnButton:Hide()
     self.main_frame.setLivePresetButton:Hide()
+    if timer then timer:Cancel() end
+    self.liveSessionRequested = false
+    self.main_frame.SendingStatusBar:Hide()
+    self:SetThrottleValues(true)
+    if self.main_frame.LoadingSpinner then
+        self.main_frame.LoadingSpinner:Hide()
+        self.main_frame.LoadingSpinner.Anim:Stop()
+    end
 end
 
 
 ---LiveSession_NotifyEnabled
 ---Notify specific group member that my live session is active
-function MethodDungeonTools:LiveSession_NotifyEnabled(fullName)
-    local distribution = "WHISPER"
-    local uid = self.livePresetUID
-    if not uid then return end
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.enabled, uid, distribution, fullName, "ALERT")
-    self:SendToGroup(self:IsPlayerInGroup(),true,self:GetCurrentLivePreset())
+local lastNotify
+function MethodDungeonTools:LiveSession_NotifyEnabled()
+    local now = GetTime()
+    if not lastNotify or lastNotify < now - 0.2 then
+        lastNotify = now
+        local distribution = self:IsPlayerInGroup()
+        if (not distribution) or (not self.liveSessionActive) then return end
+        local uid = self.livePresetUID
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.enabled, uid, distribution, nil, "ALERT")
+    end
+    --self:SendToGroup(self:IsPlayerInGroup(),true,self:GetCurrentLivePreset())
 end
 
 ---LiveSession_RequestSessions
@@ -62,26 +80,53 @@ function MethodDungeonTools:LiveSession_RequestSession()
     local distribution = self:IsPlayerInGroup()
     if (not distribution) or (not self.liveSessionActive) then return end
     self.liveSessionRequested = true
+    self.liveSessionActiveSessions = self.liveSessionActiveSessions or {}
+    twipe(self.liveSessionActiveSessions)
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.request, "0", distribution, nil, "ALERT")
 end
 
-function MethodDungeonTools:LiveSession_SessionFound(uid)
-    self.livePresetUID = uid
-    self.liveSessionAcceptingPreset = true
-    self.main_frame.SendingStatusBar:Show()
-    self.main_frame.SendingStatusBar:SetValue(0/1)
-    self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
-    if not self.main_frame.LoadingSpinner then
-        self.main_frame.LoadingSpinner = CreateFrame("Button", "MDTLoadingSpinner", self.main_frame, "LoadingSpinnerTemplate")
-        self.main_frame.LoadingSpinner:SetPoint("CENTER",self.main_frame,"CENTER")
-        self.main_frame.LoadingSpinner:SetSize(60,60)
+
+function MethodDungeonTools:LiveSession_SessionFound(fullName,uid)
+    local fullNamePlayer,realm = UnitFullName("player")
+    fullNamePlayer = fullNamePlayer.."-"..realm
+
+    if (not self.liveSessionAcceptingPreset) and fullNamePlayer ~= fullName then
+        if timer then timer:Cancel() end
+        self.liveSessionAcceptingPreset = true
+        --request the preset from one client only after a short delay
+        --we have to delay a bit to catch all active clients
+        requestTimer = C_Timer.NewTimer(0.5, function()
+            if self.liveSessionActiveSessions[1][1] ~= fullNamePlayer then
+
+                self.main_frame.SendingStatusBar:Show()
+                self.main_frame.SendingStatusBar:SetValue(0/1)
+                self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
+                if not self.main_frame.LoadingSpinner then
+                    self.main_frame.LoadingSpinner = CreateFrame("Button", "MDTLoadingSpinner", self.main_frame, "LoadingSpinnerTemplate")
+                    self.main_frame.LoadingSpinner:SetPoint("CENTER",self.main_frame,"CENTER")
+                    self.main_frame.LoadingSpinner:SetSize(60,60)
+                end
+                self.main_frame.LoadingSpinner:Show()
+                self.main_frame.LoadingSpinner.Anim:Play()
+                self:UpdatePresetDropdownTextColor(true)
+
+                self.liveSessionRequested = false
+                self:LiveSession_RequestPreset(self.liveSessionActiveSessions[1][1])
+                self.livePresetUID = self.liveSessionActiveSessions[1][2]
+
+            else
+                self.liveSessionAcceptingPreset = false
+                self.liveSessionRequested = false
+            end
+        end)
     end
-    self.main_frame.LoadingSpinner:Show()
-    self.main_frame.LoadingSpinner.Anim:Play()
-    if timer then timer:Cancel() end
-    self:UpdatePresetDropdownTextColor(true)
+    --catch clients
+    tinsert(self.liveSessionActiveSessions,{fullName,uid})
 end
 
+function MethodDungeonTools:LiveSession_RequestPreset(fullName)
+    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.reqPre, "0", "WHISPER", fullName, "ALERT")
+end
 
 
 ---LiveSession_SendPing
