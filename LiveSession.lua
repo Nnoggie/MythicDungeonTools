@@ -97,7 +97,6 @@ function MethodDungeonTools:LiveSession_SessionFound(fullName,uid)
         --we have to delay a bit to catch all active clients
         requestTimer = C_Timer.NewTimer(0.5, function()
             if self.liveSessionActiveSessions[1][1] ~= fullNamePlayer then
-
                 self.main_frame.SendingStatusBar:Show()
                 self.main_frame.SendingStatusBar:SetValue(0/1)
                 self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
@@ -113,7 +112,6 @@ function MethodDungeonTools:LiveSession_SessionFound(fullName,uid)
                 self.liveSessionRequested = false
                 self:LiveSession_RequestPreset(self.liveSessionActiveSessions[1][1])
                 self.livePresetUID = self.liveSessionActiveSessions[1][2]
-
             else
                 self.liveSessionAcceptingPreset = false
                 self.liveSessionRequested = false
