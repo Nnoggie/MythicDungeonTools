@@ -1,3 +1,4 @@
+-- Made by: Nnogga - Tarren Mill <Method>, 2017-2019
 local AddonName, MethodDungeonTools = ...
 
 local mainFrameStrata = "HIGH"
@@ -6,16 +7,12 @@ local canvasDrawLayer = "BORDER"
 _G["MethodDungeonTools"] = MethodDungeonTools
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
+local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
 
 local sizex = 840
 local sizey = 555
 
---sizex = sizex *1.4
---sizey = sizey *1.4
-
 local methodColor = "|cFFF49D38"
-local selectedGreen = {0,1,0,0.4}
-selectedGreen = {34/255,139/255,34/255,0.7}
 MethodDungeonTools.BackdropColor = {0.058823399245739,0.058823399245739,0.058823399245739,0.9}
 
 local Dialog = LibStub("LibDialog-1.0")
@@ -45,16 +42,9 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MethodDungeonTools", {
 	end,
 })
 
-local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
-
--- Made by: Nnogga - Tarren Mill <Method>, 2017-2018
-
 SLASH_METHODDUNGEONTOOLS1 = "/mplus"
 SLASH_METHODDUNGEONTOOLS2 = "/mdt"
 SLASH_METHODDUNGEONTOOLS3 = "/methoddungeontools"
-
---LUA API
-local pi,tinsert = math.pi,table.insert
 
 function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
 	local rqst, arg = strsplit(' ', cmd)
@@ -78,6 +68,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
 		currentExpansion = 2,
+        scale = 1,
         enemyForcesFormat = 2,
         enemyStyle = 1,
 		currentDungeonIdx = 15,
@@ -109,7 +100,6 @@ do
         defaultSavedVars.global.currentPreset[i] = 1
     end
 end
-
 
 -- Init db
 do
@@ -209,8 +199,8 @@ local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
     [5] = {[1]=7,[2]=13,[3]=9,[4]=119},
     [6] = {[1]=11,[2]=3,[3]=10,[4]=119},
     [7] = {[1]=6,[2]=4,[3]=9,[4]=119},
-    [8] = {[1]=0,[2]=0,[3]=10,[4]=119},--unknown
-    [9] = {[1]=0,[2]=0,[3]=9,[4]=119},--unknown
+    [8] = {[1]=5,[2]=14,[3]=10,[4]=119},
+    [9] = {[1]=11,[2]=2,[3]=9,[4]=119},
     [10] = {[1]=7,[2]=12,[3]=10,[4]=119},
     [11] = {[1]=6,[2]=13,[3]=9,[4]=119},
     [12] = {[1]=8,[2]=12,[3]=10,[4]=119},
@@ -655,6 +645,7 @@ end
 ---GetScale
 ---Returns scale factor stored in db
 function MethodDungeonTools:GetScale()
+    if not db.scale then db.scale = 1 end
     return db.scale
 end
 
@@ -674,7 +665,6 @@ end
 ---SetScale
 ---Scales the map frame and it's sub frames to a factor and stores the scale in db
 function MethodDungeonTools:SetScale(scale)
-    db.scale = scale
     local f = self.main_frame
     local newSizex = sizex*scale
     local newSizey = sizey*scale
@@ -3553,6 +3543,7 @@ function MethodDungeonTools:DrawPresetObject(obj,objectIndex,scale,currentPreset
                     if obj.d[7] then
                         self:DrawCircle(x1,y1,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
                         self:DrawCircle(x2,y2,obj.d[1]*0.3*scale,color,nil,obj.d[6],nil,objectIndex)
+
                     end
                     x1,y1,x2,y2 = nil,nil,nil,nil
                 end
