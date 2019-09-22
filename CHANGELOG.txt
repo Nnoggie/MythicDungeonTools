@@ -1,14 +1,5 @@
-v2.8.5
-- Hotfix: "Removed a Void Emissary near the pack of enemies by Galvazzt."
-v2.8.4
-- Affixes for week 8 and 9 added
-- fixed nil error on start up due to corrupted line data
-v2.8.3
-- fixed a nil error when scaling the frame
-v2.8.2
-- Affixes for week 7 added (Raging, Necrotic,Tyrannical,Beguiling (Void))
-- New: Maximize/Minimize Button to enable Fullscreen-Mode / restore normal size
-- New: Resize handle to change the window size
-- Users will now be warned if they are trying to share really large presets ingame
-- New: A progress bar will indicate the current sending status when sharing presets ingame
-- fixed an issue with drawing textures not being drawn correctly while moving them around
+v2.9.0
+- New Feature: Live mode - connect with your party members to work on presets simultaneously.
+- MDT now uses a better compression algorithm when sharing your presets ingame and via export strings. Clients below v2.9.0 cannot accept presets that have been shared with the new compression algorithm.
+- Greatly Increased the speed at which presets are shared to party members.
+- Deleting all presets of a dungeon just got easier! Shift click the delete button is enough.

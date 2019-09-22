@@ -68,6 +68,9 @@ function MethodDungeonTools:UpdateFreeholdSelector(week)
     selectorGroup:AddChild(check)
     check:SetCallback("OnValueChanged",function(widget,callbackName,value)
         MethodDungeonTools:GetCurrentPreset().freeholdCrew = (value and week) or nil
+        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+            MethodDungeonTools:LiveSession_SendFreeholdSelector(value,week)
+        end
         MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
         MethodDungeonTools:ReloadPullButtons()
         MethodDungeonTools:UpdateProgressbar()

@@ -265,14 +265,24 @@ local methods = {
             tinsert(self.menu, {
                 text = "Move up",
                 notCheckable = 1,
-                func = function() MethodDungeonTools:MovePullUp(self.index) end
+                func = function()
+                    MethodDungeonTools:MovePullUp(self.index)
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
+                end
             })
         end
         if self.index<self.maxPulls then
             tinsert(self.menu, {
                 text = "Move down",
                 notCheckable = 1,
-                func = function() MethodDungeonTools:MovePullDown(self.index) end
+                func = function()
+                    MethodDungeonTools:MovePullDown(self.index)
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
+                end
             })
         end
         --[[
@@ -292,6 +302,9 @@ local methods = {
                 MethodDungeonTools:PresetsAddPull(self.index)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(self.index)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
 
@@ -302,6 +315,9 @@ local methods = {
                 MethodDungeonTools:PresetsAddPull(self.index + 1)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(self.index + 1)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
         if self.index ~= 1 then
@@ -312,6 +328,9 @@ local methods = {
                     local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:SetSelectionToPull(newIndex)
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
                 end
             })
         end
@@ -323,6 +342,9 @@ local methods = {
                     local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:SetSelectionToPull(newIndex)
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
                 end
             })
         end
@@ -346,12 +368,18 @@ local methods = {
             MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
             MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
             L_CloseDropDownMenus()
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            end
         end
         local function cancelFunc()
             self:RevertColor()
             MethodDungeonTools:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
             MethodDungeonTools:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
             MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            end
         end
         tinsert(self.menu, {
             text = "Color: ",
@@ -382,6 +410,9 @@ local methods = {
                 MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
                 MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
                 MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
         tinsert(self.menu, {
@@ -393,7 +424,12 @@ local methods = {
         tinsert(self.menu, {
             text = "Clear",
             notCheckable = 1,
-            func = function() MethodDungeonTools:ClearPull(self.index) end
+            func = function()
+                MethodDungeonTools:ClearPull(self.index)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
+            end
         })
         tinsert(self.menu, {
             text = "Clear Preset",
@@ -404,7 +440,12 @@ local methods = {
             tinsert(self.menu, {
                 text = "Delete",
                 notCheckable = 1,
-                func = function() MethodDungeonTools:DeletePull(self.index) end
+                func = function()
+                    MethodDungeonTools:DeletePull(self.index)
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
+                end
             })
             tinsert(self.menu, {
                 text = " ",
@@ -439,6 +480,9 @@ local methods = {
                 MethodDungeonTools:PresetsAddPull(self.index)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(self.index)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
 
@@ -454,11 +498,12 @@ local methods = {
                         t[key] = t[key] + 1
                     end
                 })
-                --print("Adding", self.index + 1)
                 MethodDungeonTools:PresetsAddPull(self.index + 1)
                 MethodDungeonTools:ReloadPullButtons()
-                --print("Selecting", self.index + 1)
                 MethodDungeonTools:SetSelectionToPull(self.index + 1)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
         tinsert(self.multiselectMenu, {
@@ -479,6 +524,9 @@ local methods = {
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:GetCurrentPreset().value.selection = { newIndex }
                 MethodDungeonTools:SetSelectionToPull(newIndex)
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
         tinsert(self.multiselectMenu, {
@@ -507,6 +555,9 @@ local methods = {
             end
 
             L_CloseDropDownMenus()
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            end
         end
         local function cancelMultiFunc()
             if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
@@ -533,6 +584,9 @@ local methods = {
             MethodDungeonTools:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
             MethodDungeonTools:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
             MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            end
         end
         tinsert(self.multiselectMenu, {
             text = "Color: ",
@@ -572,6 +626,9 @@ local methods = {
                     MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
                     L_CloseDropDownMenus()
                 end
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                end
             end
         })
         if self.index ~= 1 or self.index < self.maxPulls then
@@ -593,6 +650,9 @@ local methods = {
 
                 for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
                     MethodDungeonTools:ClearPull(pullIdx)
+                end
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                 end
             end
         })
@@ -637,13 +697,10 @@ local methods = {
                         MethodDungeonTools:AddPull(1)
                         MethodDungeonTools:SetSelectionToPull(1)
                     end
+                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    end
                 end
-            })
-            tinsert(self.multiselectMenu, {
-                text = " ",
-                notClickable = 1,
-                notCheckable = 1,
-                func = nil
             })
         end
         tinsert(self.multiselectMenu, {
@@ -995,6 +1052,9 @@ local methods = {
 
         MethodDungeonTools:Hide_DropIndicator()
         MethodDungeonTools.pullTooltip:Show()
+        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+            MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+        end
     end,
     ["Disable"] = function(self)
         self.background:Hide();
