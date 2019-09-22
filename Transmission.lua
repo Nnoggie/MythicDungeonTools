@@ -266,6 +266,19 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         end
     end
 
+    --pulls
+    if prefix == MethodDungeonTools.liveSessionPrefixes.pull then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local pulls = MethodDungeonTools:StringToTable(message,false)
+            preset.value.pulls = pulls
+            if preset == MethodDungeonTools:GetCurrentPreset() then
+                MethodDungeonTools:ReloadPullButtons()
+                MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
+            end
+        end
+    end
+
     --live session messages from here on, we ignore our own messages
     if sender == UnitFullName("player") then return end
 
@@ -376,19 +389,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             if MethodDungeonTools:ValidateImportPreset(preset) then
                 MethodDungeonTools.livePresetUID = preset.uid
                 MethodDungeonTools:ImportPreset(preset,true)
-            end
-        end
-    end
-
-    --pulls
-    if prefix == MethodDungeonTools.liveSessionPrefixes.pull then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local pulls = MethodDungeonTools:StringToTable(message,false)
-            preset.value.pulls = pulls
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
             end
         end
     end
