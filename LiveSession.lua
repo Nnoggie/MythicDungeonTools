@@ -129,7 +129,9 @@ function MethodDungeonTools:LiveSession_SessionFound(fullName,uid)
 end
 
 function MethodDungeonTools:LiveSession_RequestPreset(fullName)
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.reqPre, "0", "WHISPER", fullName, "ALERT")
+    local distribution = self:IsPlayerInGroup()
+    if (not distribution) or (not self.liveSessionActive) then return end
+    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.reqPre, fullName, distribution,nil, "ALERT")
 end
 
 

@@ -291,7 +291,11 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
 
     --request preset
     if prefix == MethodDungeonTools.liveSessionPrefixes.reqPre then
-        MethodDungeonTools:SendToGroup(MethodDungeonTools:IsPlayerInGroup(),true,MethodDungeonTools:GetCurrentLivePreset())
+        local playerName,playerRealm = UnitFullName("player")
+        playerName = playerName.."-"..playerRealm
+        if playerName == message then
+            MethodDungeonTools:SendToGroup(MethodDungeonTools:IsPlayerInGroup(),true,MethodDungeonTools:GetCurrentLivePreset())
+        end
     end
 
 
