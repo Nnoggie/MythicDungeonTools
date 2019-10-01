@@ -415,7 +415,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                     MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Show()
                     MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
                 end
-                MethodDungeonTools:DungeonEnemies_UpdateTeemingDungeonEnemies_UpdateTeeming()
+                MethodDungeonTools:DungeonEnemies_UpdateTeeming()
                 MethodDungeonTools:UpdateFreeholdSelector(week)
                 MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(week)
                 MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
