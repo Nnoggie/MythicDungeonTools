@@ -124,7 +124,7 @@ function MethodDungeonTools:StringToTable(inString, fromChat)
 end
 
 local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
-    if flag == "GM" or flag == "DEV" then
+    if flag == "GM" or flag == "DEV" or (event == "CHAT_MSG_CHANNEL" and type(channelId) == "number" and channelId > 0) then
         return
     end
     local newMsg = ""
@@ -138,13 +138,13 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
             displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             newMsg = newMsg..remaining:sub(1, start-1)
             --newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38[".."|r|cFFF49D38"..displayName.."]|h|r"
-            newMsg = "|cfff49d38|HMethodDungeonTools-"..characterName.."|h["..displayName.."]|h|r"
+            newMsg = "|cfff49d38|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
             remaining = remaining:sub(finish + 1)
         elseif (characterNameLive and displayNameLive) then
             characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             newMsg = newMsg..remaining:sub(1, startLive-1)
-            newMsg = newMsg.."|HMDTLive-"..characterNameLive.."|h[".."|cFF00FF00Live Session: |cfff49d38"..""..displayNameLive.."]|h|r"
+            newMsg = newMsg.."|Hgarrmission:mdtlive-"..characterNameLive.."|h[".."|cFF00FF00Live Session: |cfff49d38"..""..displayNameLive.."]|h|r"
             remaining = remaining:sub(finishLive + 1)
         else
             done = true
@@ -188,10 +188,23 @@ function MDTcommsObject:OnEnable()
 end
 
 --handle preset chat link clicks
-local OriginalSetItemRef = SetItemRef
-function SetItemRef(link, ...)
-    if(link and link:sub(0, 18) == "MethodDungeonTools") then
-        local sender = link:sub(20, string.len(link))
+hooksecurefunc("SetItemRef", function(link, text)
+    if(link and link:sub(0, 19) == "garrmission:mdtlive") then
+        local sender = link:sub(21, string.len(link))
+        local name,realm = string.match(sender,"(.*)+(.*)")
+        sender = name.."-"..realm
+        --ignore importing the live preset when sender is player, open MDT only
+        local playerName,playerRealm = UnitFullName("player")
+        playerName = playerName.."-"..playerRealm
+        if sender==playerName then
+            MethodDungeonTools:ShowInterface(true)
+        else
+            MethodDungeonTools:ShowInterface(true)
+            MethodDungeonTools:LiveSession_Enable()
+        end
+        return
+    elseif (link and link:sub(0, 15) == "garrmission:mdt") then
+        local sender = link:sub(17, string.len(link))
         local name,realm = string.match(sender,"(.*)+(.*)")
         if (not name) or (not realm) then
             print("MDT could not properly receive a preset, please make sure sender "..sender.." has the latest version of MDT installed!")
@@ -205,23 +218,7 @@ function SetItemRef(link, ...)
         end
         return
     end
-    if(link and link:sub(0, 7) == "MDTLive") then
-        local sender = link:sub(9, string.len(link))
-        local name,realm = string.match(sender,"(.*)+(.*)")
-        sender = name.."-"..realm
-        --ignore importing the live preset when sender is player, open MDT only
-        local playerName,playerRealm = UnitFullName("player")
-        playerName = playerName.."-"..playerRealm
-        if sender==playerName then
-            MethodDungeonTools:ShowInterface(true)
-        else
-            MethodDungeonTools:ShowInterface(true)
-            MethodDungeonTools:LiveSession_Enable()
-        end
-        return
-    end
-    return OriginalSetItemRef(link, ...)
-end
+end)
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --[[
@@ -418,7 +415,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                     MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Show()
                     MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
                 end
-                MethodDungeonTools:DungeonEnemies_UpdateTeeming()
+                MethodDungeonTools:DungeonEnemies_UpdateTeemingDungeonEnemies_UpdateTeeming()
                 MethodDungeonTools:UpdateFreeholdSelector(week)
                 MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(week)
                 MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
