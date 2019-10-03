@@ -1,39 +1,66 @@
 local dungeonIndex = 22
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=252,teeming=286,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
-    [1] = {
-        [1] = {
-            ["y"] = -106.99817181006;
-            ["x"] = 313.99999540486;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 2;
-            ["direction"] = -2;
-            ["type"] = "mapLink";
-        };
-        [2] = {
-            ["y"] = -289.02272233371;
-            ["x"] = 467.89305691257;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tuSkip";
-        };
-        [3] = {
-            ["y"] = -342.93441674103;
-            ["x"] = 388.07413459747;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tuMatronNote";
-        };
-    };
-    [2] = {
-        [1] = {
-            ["y"] = -436.99827826023;
-            ["x"] = 612.99994620309;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 1;
-            ["direction"] = 2;
-            ["type"] = "mapLink";
-        };
-    };
+   [1] = {
+      [1] = {
+         ["y"] = -106.99817181006;
+         ["x"] = 313.99999540486;
+         ["template"] = "MapLinkPinTemplate";
+         ["target"] = 2;
+         ["type"] = "mapLink";
+         ["direction"] = -2;
+      };
+      [2] = {
+         ["y"] = -289.02272233371;
+         ["x"] = 467.89305691257;
+         ["template"] = "MapLinkPinTemplate";
+         ["type"] = "tuSkip";
+      };
+      [3] = {
+         ["y"] = -342.93441674103;
+         ["x"] = 388.07413459747;
+         ["template"] = "MapLinkPinTemplate";
+         ["type"] = "tuMatronNote";
+      };
+      [4] = {
+         ["y"] = -394.39160333787;
+         ["x"] = 356.40366885942;
+         ["template"] = "MapLinkPinTemplate";
+         ["text"] = "Void-Touched Emissary 3 is only present if Matron 4+5 are present on this side.";
+         ["type"] = "generalNote";
+         ["weeks"] = {
+            [1]=true;
+            [4]=true;
+            [7]=true;
+            [10]=true;
+         };
+      };
+      [5] = {
+         ["y"] = -403.4998312742;
+         ["x"] = 397.59771146364;
+         ["template"] = "MapLinkPinTemplate";
+         ["text"] = "Void-Touched Emissary 2 is only present if Matron 4+5 are present on this side.";
+         ["type"] = "generalNote";
+         ["weeks"] = {
+            [1]=true;
+            [4]=true;
+            [7]=true;
+            [10]=true;
+         };
+      };
+   };
+   [2] = {
+      [1] = {
+         ["y"] = -436.99827826023;
+         ["x"] = 612.99994620309;
+         ["template"] = "MapLinkPinTemplate";
+         ["target"] = 1;
+         ["type"] = "mapLink";
+         ["direction"] = 2;
+      };
+   };
 };
+
 
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
@@ -930,17 +957,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                [10] = true;
                [4] = true;
                [7] = true;
-            };
-         };
-         [1] = {
-            ["y"] = -455.79414570553;
-            ["x"] = 394.81359707743;
-            ["sublevel"] = 1;
-            ["week"] = {
-               [1] = true;
-               [10] = true;
-               [7] = true;
-               [4] = true;
             };
          };
          [2] = {
