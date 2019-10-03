@@ -21,10 +21,13 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["y"] = -198.38138258562;
          ["x"] = 375.6062297457;
          ["template"] = "MapLinkPinTemplate";
-         ["text"] = "Week 8: This Brute will stop patrolling, when he reaches Emissary of the Tides 7 (G13).";
+         ["text"] = "Week 2/5/8/11: This Brute will stop patrolling, when he reaches Emissary of the Tides 7 (G13).";
          ["type"] = "generalNote";
          ["weeks"] = {
+             [2]=true;
+             [5]=true;
              [8]=true;
+             [11]=true;
          };
       };
       [3] = {
