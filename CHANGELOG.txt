@@ -1,3 +1,7 @@
+v2.9.3
+- fixed an error when switching affix weeks during live mode
+- adjusted chat link handling to not break community invite links
+- Underrot Hotfixes: Removed Void-Touched Emissary 1. Added notes for spawning behavior changes for Void-Touched Emissary 2+3.
 v2.9.2
 - TOC update 8.2.5
 v2.9.1
