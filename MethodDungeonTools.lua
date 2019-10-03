@@ -1404,6 +1404,7 @@ function MethodDungeonTools:DisplayMDISelector()
             MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools:POI_UpdateAll()
             if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
                 self:LiveSession_SendMDI("beguiling",key)
             end
@@ -1475,6 +1476,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame:Hide()
         MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     end
+    MethodDungeonTools:POI_UpdateAll()
 end
 
 

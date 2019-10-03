@@ -476,6 +476,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                     MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
                     MethodDungeonTools:UpdateProgressbar()
                     MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:POI_UpdateAll()
                 end
             elseif action == "freehold" then
                 preset.mdi.freehold = data

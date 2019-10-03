@@ -48,6 +48,7 @@ end
 
 local function POI_SetOptions(frame,type,poi)
     frame.teeming = nil
+    frame.weeks = poi.weeks
     if type == "mapLink" then
         frame:SetSize(22,22)
         frame.Texture:SetSize(22,22)
@@ -377,6 +378,13 @@ function MethodDungeonTools:POI_UpdateAll()
         poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x*scale,poi.y*scale)
         poiFrame:Show()
         if not teeming and poiFrame.teeming then
+            poiFrame:Hide()
+        end
+        local week = preset.week
+        if db.MDI.enabled then
+            week = preset.mdi.beguiling or 1
+        end
+        if poiFrame.weeks and not poiFrame.weeks[week] then
             poiFrame:Hide()
         end
         tinsert(points,poiFrame)
