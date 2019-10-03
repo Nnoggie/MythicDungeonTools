@@ -23,6 +23,9 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["template"] = "MapLinkPinTemplate";
          ["text"] = "Week 8: This Brute will stop patrolling, when he reaches Emissary of the Tides 7 (G13).";
          ["type"] = "generalNote";
+         ["weeks"] = {
+             [8]=true;
+         };
       };
       [3] = {
          ["y"] = -310.7531169679;

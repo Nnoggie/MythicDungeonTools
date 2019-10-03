@@ -101,6 +101,12 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["text"] = "Week 2/5/8/11: G53 is not patrolling. It is stationary at Emissray of the Tides 14 (G53).";
             ["type"] = "generalNote";
+            ["weeks"] = {
+                [2]=true;
+                [5]=true;
+                [8]=true;
+                [11]=true;
+            };
         };
         [3] = {
             ["y"] = -343.53532845441;

@@ -128,7 +128,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["y"] = -430.03927979814;
             ["x"] = 465.16418914774;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "G39 can be not present if a World Quest is present in the area.";
+            ["text"] = "G39 can be duplicated if a World Quest is present in the area.";
             ["type"] = "generalNote";
         };
         [9] = {
