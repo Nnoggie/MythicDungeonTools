@@ -1394,8 +1394,8 @@ function MethodDungeonTools:DisplayMDISelector()
 
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
-        MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Beguiling:")
-        local beguilingList = {"1. Void","2. Tides","3. Enchanted"}
+        MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Beguiling / Reaping:")
+        local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
             local preset = MethodDungeonTools:GetCurrentPreset()
@@ -2887,9 +2887,9 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 
                                 local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
                                 local continue = false
-                                week = week%3
-                                if week == 0 then week = 3 end
-                                local isBlacktoothWeek = week == 2
+                                local btweek = week%3
+                                if btweek == 0 then btweek = 3 end
+                                local isBlacktoothWeek = btweek == 2
                                 if isCloneBlacktoothEvent then
                                     if isBlacktoothWeek then
                                         continue = true
@@ -2897,7 +2897,6 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 else
                                     continue = true
                                 end
-
 
                                 local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
@@ -2934,6 +2933,24 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
 		end
 	end
 	frame.newPullButtons[idx]:SetNPCData(enemyTable)
+
+    if db.MDI.enabled and preset.mdi.beguiling == 13 then end
+    --display reaping icon
+    local pullForces = MethodDungeonTools:CountForces(idx,false)
+    local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
+    local currentPercent = pullForces/totalForcesMax
+    local oldPullForces
+    if idx == 1 then
+        oldPullForces = 0
+    else
+        oldPullForces =  MethodDungeonTools:CountForces(idx-1,false)
+    end
+    local oldPercent = oldPullForces/totalForcesMax
+    if (math.floor(currentPercent/0.2)>math.floor(oldPercent/0.2)) and oldPercent<1 and db.MDI.enabled and preset.mdi.beguiling == 13 then
+        frame.newPullButtons[idx]:ShowReapingIcon(true,currentPercent,oldPercent)
+    else
+        frame.newPullButtons[idx]:ShowReapingIcon(false,currentPercent,oldPercent)
+    end
 end
 
 
