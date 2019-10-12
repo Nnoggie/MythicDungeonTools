@@ -1,3 +1,6 @@
+v2.9.4
+- MDI mode reaping updates
+- Clarified notes on random spawn void emissaries in Underrot Void week
 v2.9.3
 - fixed an error when switching affix weeks during live mode
 - adjusted chat link handling to not break community invite links
