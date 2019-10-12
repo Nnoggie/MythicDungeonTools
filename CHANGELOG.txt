@@ -1,3 +1,5 @@
+v2.9.5
+- Siege G39 Updates
 v2.9.4
 - MDI mode reaping updates
 - Clarified notes on random spawn void emissaries in Underrot Void week
