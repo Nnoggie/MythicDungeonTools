@@ -187,7 +187,7 @@ do
 end
 
 
-
+MethodDungeonTools.mapInfo = {}
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.scaleMultiplier = {}
 
@@ -231,8 +231,8 @@ local dungeonList = {
     [22] = "The Underrot",
     [23] = "Tol Dagor",
     [24] = "Waycrest Manor",
-    [25] = "Mechagon Island",
-    [26] = "Mechagon City",
+    [25] = "Mechagon - Junkyard",
+    [26] = "Mechagon - Workshop",
     [27] = " >Legion",
 }
 function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
@@ -696,6 +696,11 @@ function MethodDungeonTools:SetScale(scale)
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize((newSizex/4+5*scale),(newSizex/4+5*scale))
     end
+    for i=1,10 do
+        for j=1,15 do
+            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
+        end
+    end
     f.scrollFrame:SetVerticalScroll(oldScrollValues.oldScrollV * (newSizey / oldScrollValues.oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollValues.oldScrollH * (newSizex / oldScrollValues.oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldScrollValues.oldSizeY)
@@ -745,6 +750,11 @@ function MethodDungeonTools:Maximize()
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize((newSizex/4+5*db.scale),(newSizex/4+5*db.scale))
     end
+    for i=1,10 do
+        for j=1,15 do
+            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
+        end
+    end
     f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
@@ -784,6 +794,11 @@ function MethodDungeonTools:Minimize()
     f.mapPanelFrame:SetSize(newSizex, newSizey)
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize(newSizex/4+(5*db.scale),newSizex/4+(5*db.scale))
+    end
+    for i=1,10 do
+        for j=1,15 do
+            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
+        end
     end
     f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
@@ -1989,6 +2004,30 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.mapPanelTile10:SetPoint("TOPLEFT",frame.mapPanelTile9,"TOPRIGHT")
 		frame.mapPanelTile11:SetPoint("TOPLEFT",frame.mapPanelTile10,"TOPRIGHT")
 		frame.mapPanelTile12:SetPoint("TOPLEFT",frame.mapPanelTile11,"TOPRIGHT")
+
+        --create the 150 large map tiles
+        for i=1,10 do
+            for j=1,15 do
+                frame["largeMapPanelTile"..i..j] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsLargeMapPanelTile"..i..j, "BACKGROUND")
+                local tile = frame["largeMapPanelTile"..i..j]
+                tile:SetDrawLayer(canvasDrawLayer, 5)
+                tile:SetSize(frame:GetWidth()/15,frame:GetWidth()/15)
+                if i==1 and j==1 then
+                    --to mapPanel
+                    tile:SetPoint("TOPLEFT",frame.mapPanelFrame,"TOPLEFT",0,0)
+                elseif j==1 then
+                    --to tile above
+                    tile:SetPoint("TOPLEFT",frame["largeMapPanelTile"..(i-1)..j],"BOTTOMLEFT",0,0)
+                else
+                    --to tile to the left
+                    tile:SetPoint("TOPLEFT",frame["largeMapPanelTile"..i..(j-1)],"TOPRIGHT",0,0)
+                end
+                tile:SetColorTexture(i/10,j/10,0,1)
+                tile:Hide()
+            end
+        end
+
+
 		frame.scrollFrame:SetScrollChild(frame.mapPanelFrame)
 
         frame.scrollFrame.cursorX = 0
@@ -2237,7 +2276,10 @@ function MethodDungeonTools:EnsureDBTables()
     preset.mdi.beguiling = preset.mdi.beguiling or 1
 end
 
-
+function MethodDungeonTools:GetTileFormat(dungeonIdx)
+    local mapInfo = MethodDungeonTools.mapInfo[dungeonIdx]
+    return mapInfo and mapInfo.tileFormat or 4
+end
 
 function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons,ignoreUpdateProgressBar)
 	local mapName
@@ -2247,12 +2289,31 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
     local preset = MethodDungeonTools:GetCurrentPreset()
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
+    local tileFormat = MethodDungeonTools:GetTileFormat(db.currentDungeonIdx)
 	for i=1,12 do
-		local texName = path..fileName..i
-		if frame["mapPanelTile"..i] then
-			frame["mapPanelTile"..i]:SetTexture(texName)
-		end
+        if tileFormat == 4 then
+            local texName = path..fileName..i
+            if frame["mapPanelTile"..i] then
+                frame["mapPanelTile"..i]:SetTexture(texName)
+                frame["mapPanelTile"..i]:Show()
+            end
+        else
+            if frame["mapPanelTile"..i] then
+                frame["mapPanelTile"..i]:Hide()
+            end
+        end
 	end
+    for i=1,10 do
+        for j=1,15 do
+            if tileFormat == 15 then
+                local texName= path..fileName..((i - 1) * 15 + j)
+                frame["largeMapPanelTile"..i..j]:SetTexture(texName)
+                frame["largeMapPanelTile"..i..j]:Show()
+            else
+                frame["largeMapPanelTile"..i..j]:Hide()
+            end
+        end
+    end
 	MethodDungeonTools:UpdateDungeonEnemies()
 	if not ignoreReloadPullButtons then
 		MethodDungeonTools:ReloadPullButtons()
