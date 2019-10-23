@@ -92,7 +92,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,24 do
+    for i=1,26 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={}},
             [2] = {text="<New Preset>",value=0},
@@ -231,7 +231,9 @@ local dungeonList = {
     [22] = "The Underrot",
     [23] = "Tol Dagor",
     [24] = "Waycrest Manor",
-    [25] = " >Legion",
+    [25] = "Mechagon Island",
+    [26] = "Mechagon City",
+    [27] = " >Legion",
 }
 function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
 
@@ -348,6 +350,15 @@ local dungeonSubLevels = {
         [3] = "The Cellar",
         [4] = "Catacombs",
         [5] = "The Rupture",
+    },
+    [25] = {
+        [1] = "Mechagon Island",
+    },
+    [26] = {
+        [1] = "The Robodrome",
+        [2] = "Waste Pipes",
+        [3] = "The Under Junk",
+        [4] = "Mechagon City",
     },
 }
 function MethodDungeonTools:GetDungeonSublevels()
@@ -491,6 +502,17 @@ MethodDungeonTools.dungeonMaps = {
         [3] = "Waycrest3_",
         [4] = "Waycrest4_",
         [5] = "Waycrest5_",
+    },
+    [25] = {
+        [0] = "MechagonDungeon",
+        [1] = "MechagonDungeonExterior",
+    },
+    [26] = {
+        [0] = "MechagonDungeon",
+        [1] = "MechagonDungeon1_",
+        [2] = "MechagonDungeon2_",
+        [3] = "MechagonDungeon3_",
+        [4] = "MechagonDungeon4_",
     },
 
 }
@@ -2090,7 +2112,7 @@ function MethodDungeonTools:UpdateDungeonDropDown()
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     elseif db.currentExpansion == 2 then
-        for i=15,25 do
+        for i=15,27 do
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     end
@@ -2120,7 +2142,7 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	group.DungeonDropdown = AceGUI:Create("Dropdown")
 	group.DungeonDropdown.text:SetJustifyH("LEFT")
 	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-		if key==14 or key == 25 then
+		if key==14 or key == 27 then
             db.currentExpansion = (db.currentExpansion%2)+1
             db.currentDungeonIdx = key==14 and 15 or 1
             MethodDungeonTools:UpdateDungeonDropDown()

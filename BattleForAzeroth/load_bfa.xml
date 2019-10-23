@@ -9,5 +9,7 @@
 	<Script file='TheUnderrot.lua'/>
 	<Script file='TolDagor.lua'/>
 	<Script file='WaycrestManor.lua'/>
+	<Script file='MechagonIsland.lua'/>
+	<Script file='MechagonCity.lua'/>
 	<Script file='overrides.lua'/>
 </Ui>
