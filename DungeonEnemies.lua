@@ -9,6 +9,7 @@ local blips = {}
 local preset
 local selectedGreen = {34/255,139/255,34/255,0.7}
 local patrolColor = {0,0.5,1,0.8}
+local corruptedColor = {1,0,1,0.8}
 
 function MethodDungeonTools:GetDungeonEnemyBlips()
     return blips
@@ -373,6 +374,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if data.isBoss then self.texture_Dragon:Show() else self.texture_Dragon:Hide() end
     self.texture_Background:SetVertexColor(1,1,1,1)
     if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
+    if data.corrupted then self.texture_Background:SetVertexColor(unpack(corruptedColor)) end
     self.data = data
     self.clone = clone
     tinsert(blips,self)
