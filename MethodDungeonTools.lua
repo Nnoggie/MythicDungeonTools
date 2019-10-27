@@ -2214,6 +2214,7 @@ function MethodDungeonTools:EnsureDBTables()
     preset.mdi.beguiling = preset.mdi.beguiling or 1
 
     --make sure sublevel actually exists for the dungeon
+    --this might have been caused by bugged dropdowns in the past
     local maxSublevel = -1
     for _,_ in pairs(MethodDungeonTools.dungeonMaps[db.currentDungeonIdx]) do
         maxSublevel = maxSublevel + 1
