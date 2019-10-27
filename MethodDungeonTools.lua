@@ -2207,12 +2207,18 @@ function MethodDungeonTools:EnsureDBTables()
         preset.freeholdCrewSelected = true
     end
 
-
     db.MDI = db.MDI or {}
     preset.mdi = preset.mdi or {}
     preset.mdi.freehold = preset.mdi.freehold or 1
     preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
     preset.mdi.beguiling = preset.mdi.beguiling or 1
+
+    --make sure sublevel actually exists for the dungeon
+    local maxSublevel = -1
+    for _,_ in pairs(MethodDungeonTools.dungeonMaps[db.currentDungeonIdx]) do
+        maxSublevel = maxSublevel + 1
+    end
+    if preset.value.currentSublevel > maxSublevel then preset.value.currentSublevel = maxSublevel end
 end
 
 
