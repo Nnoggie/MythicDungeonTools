@@ -7,7 +7,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 462.98625748818;
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["index"] = 2;
+            ["index"] = 3;
             ["type"] = "nyalothaSpire";
         };
         [1] = {
@@ -36,7 +36,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["y"] = -268.41627095603;
             ["x"] = 476.98625748818;
             ["template"] = "VignettePinTemplate";
-            ["index"] = 2;
+            ["index"] = 3;
             ["type"] = "nyalothaRift";
         };
         [9] = {
@@ -44,7 +44,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 589.61001552416;
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["index"] = 3;
+            ["index"] = 1;
             ["type"] = "nyalothaSpire";
         };
         [5] = {
@@ -52,14 +52,14 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 416.13798472582;
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["index"] = 1;
+            ["index"] = 4;
             ["type"] = "nyalothaSpire";
         };
         [10] = {
             ["y"] = -198.12044676811;
             ["x"] = 572.7023234031;
             ["template"] = "VignettePinTemplate";
-            ["index"] = 3;
+            ["index"] = 1;
             ["type"] = "nyalothaRift";
         };
         [3] = {
@@ -72,14 +72,14 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["y"] = -141.77678486897;
             ["x"] = 432.27296978564;
             ["template"] = "VignettePinTemplate";
-            ["index"] = 1;
+            ["index"] = 4;
             ["type"] = "nyalothaRift";
         };
         [12] = {
             ["y"] = -351.61703481431;
             ["x"] = 594.56106685349;
             ["template"] = "VignettePinTemplate";
-            ["index"] = 4;
+            ["index"] = 2;
             ["type"] = "nyalothaRift";
         };
         [11] = {
@@ -87,7 +87,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 583.12155478803;
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["index"] = 4;
+            ["index"] = 2;
             ["type"] = "nyalothaSpire";
         };
     };
