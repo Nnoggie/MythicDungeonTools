@@ -51,11 +51,13 @@ local function POI_SetOptions(frame,type,poi)
     frame.teeming = nil
     frame.isSpire = nil
     frame.riftIndex = nil
+    frame.spireIndex = nil
     frame.defaultHidden = nil
     frame:SetMovable(false)
     frame:SetScript("OnMouseDown",nil)
     frame:SetScript("OnMouseUp",nil)
     frame.weeks = poi.weeks
+    if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
         frame:SetSize(22,22)
         frame.Texture:SetSize(22,22)
@@ -82,21 +84,32 @@ local function POI_SetOptions(frame,type,poi)
         end)
     end
     if type == "nyalothaSpire" then
-        frame:SetSize(16,22)
+        frame:SetSize(16,16)
         frame.Texture:SetSize(16,22)
         frame.Texture:SetAtlas("poi-nzothpylon")
         frame.HighlightTexture:SetSize(16,22)
         frame.HighlightTexture:SetAtlas("poi-nzothpylon")
         frame.isSpire = true
         frame.spireIndex = poi.index
+        if not frame.textString then
+            frame.textString = frame:CreateFontString()
+            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
+            frame.textString:SetFontObject("GameFontNormal")
+            frame.textString:SetFont(frame.textString:GetFont(),7,"OUTLINE")
+            frame.textString:SetTextColor(0.5, 1, 0, 1)
+        end
+        frame.textString:SetText((frame.spireIndex*2)-1)
+        frame:SetScript("OnClick",nil)
         frame:SetScript("OnMouseUp",function()
+            print(frame:GetHeight())
             if frame.isSpire then
-                frame:SetSize(16,16)
+                --frame:SetSize(16,16)
                 frame.Texture:SetSize(16,16)
                 frame.Texture:SetAtlas("poi-rift1")
                 frame.HighlightTexture:SetSize(16,16)
                 frame.HighlightTexture:SetAtlas("poi-rift1")
                 frame.isSpire = false
+                frame.textString:Show()
                 --show brother rift
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
@@ -108,12 +121,13 @@ local function POI_SetOptions(frame,type,poi)
                 end
                 frame.ShowAnim:Play()
             else
-                frame:SetSize(16,22)
+                --frame:SetSize(16,22)
                 frame.Texture:SetSize(16,22)
                 frame.Texture:SetAtlas("poi-nzothpylon")
                 frame.HighlightTexture:SetSize(16,22)
                 frame.HighlightTexture:SetAtlas("poi-nzothpylon")
                 frame.isSpire = true
+                frame.textString:Hide()
                 --hide brother rift
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
@@ -133,6 +147,7 @@ local function POI_SetOptions(frame,type,poi)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
         end)
+        ViragDevTool_AddData(frame)
     end
     if type == "nyalothaRift" then
         frame.riftIndex = poi.index
@@ -141,10 +156,20 @@ local function POI_SetOptions(frame,type,poi)
         frame.Texture:SetAtlas("poi-rift1")
         frame.HighlightTexture:SetSize(12,12)
         frame.HighlightTexture:SetAtlas("poi-rift1")
+        if not frame.textString then
+            frame.textString = frame:CreateFontString()
+            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
+            frame.textString:SetFontObject("GameFontNormal")
+            frame.textString:SetFont(frame.textString:GetFont(),7,"OUTLINE")
+            frame.textString:SetTextColor(0.5, 1, 0, 1)
+        end
+        frame.textString:SetText(frame.riftIndex*2)
+        frame.textString:Show()
         frame:SetScript("OnClick",nil)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine("Ny'alothan Rift")
+            GameTooltip:AddLine("[Drag to move]")
             GameTooltip:Show()
         end)
         frame:SetScript("OnLeave",function()
@@ -197,6 +222,7 @@ local function POI_SetOptions(frame,type,poi)
                         poiFrame.HighlightTexture:SetAtlas("poi-nzothpylon")
                         poiFrame.isSpire = true
                         poiFrame.ShowAnim:Play()
+                        poiFrame.textString:Hide()
                         break
                     end
                 end
@@ -505,9 +531,9 @@ function MethodDungeonTools:POI_UpdateAll()
         POI_SetOptions(poiFrame,poi.type,poi)
         poiFrame.x = poi.x
         poiFrame.y = poi.y
-        poiFrame:ClearAllPoints()
         local x = riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].x or poi.x
         local y = riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].y or poi.y
+        poiFrame:ClearAllPoints()
         poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
         if not poiFrame.defaultHidden then poiFrame:Show() end
         if not teeming and poiFrame.teeming then
