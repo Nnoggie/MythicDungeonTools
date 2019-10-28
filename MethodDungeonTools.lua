@@ -3955,7 +3955,6 @@ function initFrames()
 	-- Set frame position
 	main_frame:ClearAllPoints()
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
-
     main_frame.contextDropdown = L_Create_UIDropDownMenu("MethodDungeonToolsContextDropDown", nil)
 
     MethodDungeonTools:EnsureDBTables()
@@ -4009,7 +4008,6 @@ function initFrames()
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
         tooltip.mySizes ={x=290,y=120}
-
         tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
         tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
         tooltip.Model:SetFrameLevel(1)
@@ -4047,10 +4045,8 @@ function initFrames()
 		MethodDungeonTools.pullTooltip:SetFrameStrata("TOOLTIP")
         MethodDungeonTools.pullTooltip.myHeight = 160
 		MethodDungeonTools.pullTooltip:SetSize(250, MethodDungeonTools.pullTooltip.myHeight)
-
         MethodDungeonTools.pullTooltip.Model = CreateFrame("PlayerModel", nil, MethodDungeonTools.pullTooltip)
         MethodDungeonTools.pullTooltip.Model:SetFrameLevel(1)
-
         MethodDungeonTools.pullTooltip.Model.fac = 0
         if true then
             MethodDungeonTools.pullTooltip.Model:SetScript("OnUpdate",function (self,elapsed)
@@ -4060,7 +4056,6 @@ function initFrames()
                 end
                 self:SetFacing(PI*2 / 360 * self.fac)
             end)
-
         else
             MethodDungeonTools.pullTooltip.Model:SetPortraitZoom(1)
             MethodDungeonTools.pullTooltip.Model:SetFacing(PI*2 / 360 * 2)
@@ -4103,7 +4098,6 @@ function initFrames()
         skinTooltip(pullTT)
 	end
 
-
 	MethodDungeonTools:initToolbar(main_frame)
 
     --ping
@@ -4118,11 +4112,6 @@ function initFrames()
     ping.mySize = 45
     ping:SetSize(ping.mySize,ping.mySize)
     ping:Hide()
-
-    --temporary background
-    --ping.background = ping:CreateTexture(nil,"BACKGROUND")
-    --ping.background:SetAllPoints()
-    --ping.background:SetColorTexture(0,0,0,1)
 
     --Set affix dropdown to preset week
     --gotta set the list here, as affixes are not ready to be retrieved yet on login
