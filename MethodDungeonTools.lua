@@ -1327,6 +1327,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 
 	frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
 	frame.sidePanel.DifficultySlider:SetSliderValues(1,35,1)
+    frame.sidePanel.DifficultySlider:SetLabel("")
 	frame.sidePanel.DifficultySlider:SetWidth(195)	--240
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
