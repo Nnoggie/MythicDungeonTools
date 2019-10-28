@@ -3950,13 +3950,6 @@ function initFrames()
     main_frame.mainFrametex:SetDrawLayer(canvasDrawLayer, -5)
     main_frame.mainFrametex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 
-    -- reset frame position after 8.1.5 scaling changes
-    if not db.version or db.version<250 then
-        db.xoffset = 0
-        db.yoffset = -150
-        db.anchorFrom = "TOP"
-        db.anchorTo = "TOP"
-    end
     local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.","")
     db.version = tonumber(version)
 	-- Set frame position
