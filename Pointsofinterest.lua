@@ -84,10 +84,11 @@ local function POI_SetOptions(frame,type,poi)
         end)
     end
     if type == "nyalothaSpire" then
-        frame:SetSize(16,16)
-        frame.Texture:SetSize(16,22)
+        local poiScale = poi.scale or 1
+        frame:SetSize(10*poiScale,10*poiScale)
+        frame.Texture:SetSize(16*poiScale,22*poiScale)
         frame.Texture:SetAtlas("poi-nzothpylon")
-        frame.HighlightTexture:SetSize(16,22)
+        frame.HighlightTexture:SetSize(16*poiScale,22*poiScale)
         frame.HighlightTexture:SetAtlas("poi-nzothpylon")
         frame.isSpire = true
         frame.spireIndex = poi.index
@@ -95,18 +96,16 @@ local function POI_SetOptions(frame,type,poi)
             frame.textString = frame:CreateFontString()
             frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
             frame.textString:SetFontObject("GameFontNormal")
-            frame.textString:SetFont(frame.textString:GetFont(),7,"OUTLINE")
+            frame.textString:SetFont(frame.textString:GetFont(),7*poiScale,"OUTLINE")
             frame.textString:SetTextColor(0.5, 1, 0, 1)
         end
         frame.textString:SetText((frame.spireIndex*2)-1)
         frame:SetScript("OnClick",nil)
         frame:SetScript("OnMouseUp",function()
-            print(frame:GetHeight())
             if frame.isSpire then
-                --frame:SetSize(16,16)
-                frame.Texture:SetSize(16,16)
+                frame.Texture:SetSize(16*poiScale,16*poiScale)
                 frame.Texture:SetAtlas("poi-rift1")
-                frame.HighlightTexture:SetSize(16,16)
+                frame.HighlightTexture:SetSize(16*poiScale,16*poiScale)
                 frame.HighlightTexture:SetAtlas("poi-rift1")
                 frame.isSpire = false
                 frame.textString:Show()
@@ -121,10 +120,9 @@ local function POI_SetOptions(frame,type,poi)
                 end
                 frame.ShowAnim:Play()
             else
-                --frame:SetSize(16,22)
-                frame.Texture:SetSize(16,22)
+                frame.Texture:SetSize(16*poiScale,22*poiScale)
                 frame.Texture:SetAtlas("poi-nzothpylon")
-                frame.HighlightTexture:SetSize(16,22)
+                frame.HighlightTexture:SetSize(16*poiScale,22*poiScale)
                 frame.HighlightTexture:SetAtlas("poi-nzothpylon")
                 frame.isSpire = true
                 frame.textString:Hide()
@@ -147,20 +145,20 @@ local function POI_SetOptions(frame,type,poi)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
         end)
-        ViragDevTool_AddData(frame)
     end
     if type == "nyalothaRift" then
+        local poiScale = poi.scale or 1
         frame.riftIndex = poi.index
-        frame:SetSize(12,12)
-        frame.Texture:SetSize(12,12)
+        frame:SetSize(12*poiScale,12*poiScale)
+        frame.Texture:SetSize(12*poiScale,12*poiScale)
         frame.Texture:SetAtlas("poi-rift1")
-        frame.HighlightTexture:SetSize(12,12)
+        frame.HighlightTexture:SetSize(12*poiScale,12*poiScale)
         frame.HighlightTexture:SetAtlas("poi-rift1")
         if not frame.textString then
             frame.textString = frame:CreateFontString()
             frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
             frame.textString:SetFontObject("GameFontNormal")
-            frame.textString:SetFont(frame.textString:GetFont(),7,"OUTLINE")
+            frame.textString:SetFont(frame.textString:GetFont(),7*poiScale,"OUTLINE")
             frame.textString:SetTextColor(0.5, 1, 0, 1)
         end
         frame.textString:SetText(frame.riftIndex*2)
@@ -171,6 +169,14 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:AddLine("Ny'alothan Rift")
             GameTooltip:AddLine("[Drag to move]")
             GameTooltip:Show()
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.spireIndex and poiFrame.spireIndex == frame.riftIndex then
+                    --ViragDevTool_AddData(poiFrame.HighlightTexture)
+                    --TODO Show Highlight and animate line between rift and spire
+                    break
+                end
+            end
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
@@ -215,10 +221,9 @@ local function POI_SetOptions(frame,type,poi)
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
                     if poiFrame.spireIndex and poiFrame.spireIndex == frame.riftIndex then
-                        poiFrame:SetSize(16,22)
-                        poiFrame.Texture:SetSize(16,22)
+                        poiFrame.Texture:SetSize(16*poiScale,22*poiScale)
                         poiFrame.Texture:SetAtlas("poi-nzothpylon")
-                        poiFrame.HighlightTexture:SetSize(16,22)
+                        poiFrame.HighlightTexture:SetSize(16,22*poiScale,22,22*poiScale)
                         poiFrame.HighlightTexture:SetAtlas("poi-nzothpylon")
                         poiFrame.isSpire = true
                         poiFrame.ShowAnim:Play()
@@ -526,26 +531,22 @@ function MethodDungeonTools:POI_UpdateAll()
     local scale = MethodDungeonTools:GetScale()
     local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
     for poiIdx,poi in pairs(pois) do
-        local poiFrame = framePools:Acquire(poi.template)
-        poiFrame.poiIdx = poiIdx
-        POI_SetOptions(poiFrame,poi.type,poi)
-        poiFrame.x = poi.x
-        poiFrame.y = poi.y
-        local x = riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].x or poi.x
-        local y = riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].y or poi.y
-        poiFrame:ClearAllPoints()
-        poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
-        if not poiFrame.defaultHidden then poiFrame:Show() end
-        if not teeming and poiFrame.teeming then
-            poiFrame:Hide()
+        local week = MethodDungeonTools:GetEffectivePresetWeek(preset)
+        if (not poi.weeks) or poi.weeks[week] then
+            local poiFrame = framePools:Acquire(poi.template)
+            poiFrame.poiIdx = poiIdx
+            POI_SetOptions(poiFrame,poi.type,poi)
+            poiFrame.x = poi.x
+            poiFrame.y = poi.y
+            local x = db.devMode and poi.x or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].x or poi.x
+            local y = db.devMode and poi.y or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].y or poi.y
+            poiFrame:ClearAllPoints()
+            poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
+            if not poiFrame.defaultHidden or db.devMode then poiFrame:Show() end
+            if not teeming and poiFrame.teeming then
+                poiFrame:Hide()
+            end
+            tinsert(points,poiFrame)
         end
-        local week = preset.week
-        if db.MDI.enabled then
-            week = preset.mdi.beguiling or 1
-        end
-        if poiFrame.weeks and not poiFrame.weeks[week] then
-            poiFrame:Hide()
-        end
-        tinsert(points,poiFrame)
     end
 end

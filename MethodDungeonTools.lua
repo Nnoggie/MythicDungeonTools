@@ -1907,6 +1907,15 @@ function MethodDungeonTools:GetCurrentLivePreset()
     end
 end
 
+---GetEffectivePresetWeek
+function MethodDungeonTools:GetEffectivePresetWeek(preset,beguiling,corrupted)
+    local week = preset.week
+    if db.MDI.enabled then
+        week = preset.mdi.beguiling or 1
+    end
+    return week
+end
+
 ---ReturnToLivePreset
 function MethodDungeonTools:ReturnToLivePreset()
     local preset,presetIdx = self:GetCurrentLivePreset()
