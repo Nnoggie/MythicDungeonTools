@@ -791,6 +791,9 @@ function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
         cloneData.patrol = cloneData.patrol or {}
         cloneData.patrol[1] = {x=cloneData.x,y=cloneData.y}
         local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
+        local scale = MethodDungeonTools:GetScale()
+        cursorx = cursorx*(1/scale)
+        cursory = cursory*(1/scale)
         --snap onto other waypoints
         local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
         for blipIdx,blip in pairs(dungeonEnemyBlips) do
