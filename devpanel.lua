@@ -107,6 +107,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             {text="Enemy", value="tab2"},
             {text="Infested", value="tab3"},
             {text="Week", value="tab4"},
+            {text="Corrupted", value="tab5"},
         }
     )
     devPanel:SetWidth(250)
@@ -655,6 +656,71 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
     end
 
+    local spireNames = {
+        [1] = "Entropic Spire of Ny'alotha",
+        [2] = "Cursed Spire of Ny'alotha",
+        [3] = "Brutal Spire of Ny'alotha",
+        [4] = "Defiled Spire of Ny'alotha",
+    }
+
+    local function DrawGroup5(container)
+        local index,tooltipIndex,scale
+        local week = {}
+
+        local indexEditbox = AceGUI:Create("EditBox")
+        indexEditbox:SetLabel("Index")
+        indexEditbox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            index = tonumber(text)
+        end)
+        container:AddChild(indexEditbox)
+
+
+        local tooltipIndexEditbox = AceGUI:Create("EditBox")
+        tooltipIndexEditbox:SetLabel("Tooltip Index")
+        tooltipIndexEditbox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            tooltipIndex = tonumber(text)
+        end)
+        container:AddChild(tooltipIndexEditbox)
+
+        local tooltipIndexLabel = AceGUI:Create("Label")
+        tooltipIndexLabel:SetText("1 = Entropic Spire of Ny'alotha (Sam'rek)\n2 = Cursed Spire of Ny'alotha (Voidweaver)\n3 = Brutal Spire of Ny'alotha (Urg'roth)\n4 = Defiled Spire of Ny'alotha (Blood)\n")
+        container:AddChild(tooltipIndexLabel)
+
+        local scaleEditbox = AceGUI:Create("EditBox")
+        scaleEditbox:SetLabel("Scale")
+        scaleEditbox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            scale = tonumber(text)
+        end)
+        container:AddChild(scaleEditbox)
+
+        for i=1,12 do
+            local weekCheckbox = AceGUI:Create("CheckBox")
+            weekCheckbox:SetLabel("Week "..i)
+            weekCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+                if value then week[i] = true else week[i] = nil end
+            end)
+            container:AddChild(weekCheckbox)
+        end
+        local createSpireButton = AceGUI:Create("Button")
+        createSpireButton:SetText("Create")
+        createSpireButton:SetCallback("OnClick",function()
+            if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+            if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+            end
+            local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+            local posx,posy = 300,-200
+            local newWeek = MethodDungeonTools:DeepCopy(week)
+            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,tooltipText=spireNames[tooltipIndex],template="VignettePinTemplate",type="nyalothaSpire",scale=scale})
+            newWeek = MethodDungeonTools:DeepCopy(week)
+            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,template="VignettePinTemplate",type="nyalothaRift",scale=scale})
+            MethodDungeonTools:POI_UpdateAll()
+        end)
+        container:AddChild(createSpireButton)
+
+
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -666,6 +732,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
             DrawGroup3(container)
         elseif group == "tab4" then
             DrawGroup4(container)
+        elseif group == "tab5" then
+            DrawGroup5(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)
