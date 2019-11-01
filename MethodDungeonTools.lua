@@ -1334,6 +1334,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		local difficulty = tonumber(value)
         db.currentDifficulty = difficulty or db.currentDifficulty
         --MethodDungeonTools:DungeonEnemies_UpdateReaping()
+        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:UpdateProgressbar()
+        MethodDungeonTools:ReloadPullButtons()
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
 
@@ -1736,7 +1739,7 @@ function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     --beguiling weekly configuration
     local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
     if weekData then
-        if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) then
+        if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) and db.currentDifficulty >= 10 then
             return true
         else
             return false
@@ -2911,7 +2914,7 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 --beguiling weekly configuration
                                 local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
                                 if weekData then
-                                    if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) then continue = true else continue = false end
+                                    if weekData[week] and db.currentDifficulty >= 10 and not (cloneFaction and cloneFaction~= preset.faction) then continue = true else continue = false end
                                 end
 
                                 --check for faction

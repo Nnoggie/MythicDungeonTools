@@ -629,7 +629,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
     end
     for _,blip in pairs(blips) do
         local weekData =  blip.clone.week
-        if weekData and not weekData[week] then
+        if weekData and (not weekData[week] or db.currentDifficulty < 10) then
             blip:Hide()
         elseif weekData and weekData[week] then
             blip:Show()
