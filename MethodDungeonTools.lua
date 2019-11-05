@@ -807,19 +807,27 @@ function MethodDungeonTools:SkinProgressBar(progressBar)
     end
 end
 
+function MethodDungeonTools:IsFrameOffScreen()
+    local topPanel = MethodDungeonTools.main_frame.topPanel
+    local bottomPanel = MethodDungeonTools.main_frame.bottomPanel
+    local width = GetScreenWidth()
+    local height = GetScreenHeight()
+    local left = topPanel:GetLeft()-->width
+    local right = topPanel:GetRight()--<0
+    local bottom = topPanel:GetBottom()--<0
+    local top = bottomPanel:GetTop()-->height
+    return left>width or right<0 or bottom<0 or top>height
+end
+
 function MethodDungeonTools:MakeTopBottomTextures(frame)
-
     frame:SetMovable(true)
-
 	if frame.topPanel == nil then
 		frame.topPanel = CreateFrame("Frame", "MethodDungeonToolsTopPanel", frame)
 		frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND")
 		frame.topPanelTex:SetAllPoints()
 		frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
 		frame.topPanelTex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
-
 		frame.topPanelString = frame.topPanel:CreateFontString("MethodDungeonTools name")
-
 		--use default font if ElvUI is enabled
 		--if IsAddOnLoaded("ElvUI") then
         frame.topPanelString:SetFontObject("GameFontNormalMed3")
@@ -833,7 +841,6 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 0, 0)
 		frame.topPanelString:Show()
         --frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
-
 		frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "HIGH", nil, 7)
 		frame.topPanelLogo:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Method")
 		frame.topPanelLogo:SetWidth(24)
@@ -856,10 +863,14 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
     frame.topPanel:SetScript("OnDragStop", function(self,button)
         frame:StopMovingOrSizing()
         frame:SetMovable(false)
-        local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
-        db.anchorFrom = from
-        db.anchorTo = to
-        db.xoffset,db.yoffset = x,y
+        if MethodDungeonTools:IsFrameOffScreen() then
+            MethodDungeonTools:ResetMainFramePos(true)
+        else
+            local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
+            db.anchorFrom = from
+            db.anchorTo = to
+            db.xoffset,db.yoffset = x,y
+        end
     end)
 
     if frame.bottomPanel == nil then
@@ -893,10 +904,14 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 	frame.bottomPanel:SetScript("OnDragStop", function(self,button)
         frame:StopMovingOrSizing()
 		frame:SetMovable(false)
-		local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
-		db.anchorFrom = from
-		db.anchorTo = to
-		db.xoffset,db.yoffset = x,y
+        if MethodDungeonTools:IsFrameOffScreen() then
+            MethodDungeonTools:ResetMainFramePos(true)
+        else
+            local from,_,to,x,y = MethodDungeonTools.main_frame:GetPoint()
+            db.anchorFrom = from
+            db.anchorTo = to
+            db.xoffset,db.yoffset = x,y
+        end
     end)
 end
 
@@ -3703,16 +3718,19 @@ function MethodDungeonTools:IsPlayerInGroup()
     return inGroup
 end
 
-function MethodDungeonTools:ResetMainFramePos()
-    db.nonFullscreenScale = 1
-    db.maximized = false
-    if not framesInitialized then initFrames() end
-    self.main_frame.maximizeButton:Minimize()
-    local f = MethodDungeonTools.main_frame
-    db.xoffset = 0
-    db.yoffset = -150
-    db.anchorFrom = "TOP"
-    db.anchorTo = "TOP"
+function MethodDungeonTools:ResetMainFramePos(soft)
+    --soft reset just redraws the window with existing coordinates from db
+    local f = self.main_frame
+    if not soft then
+        db.nonFullscreenScale = 1
+        db.maximized = false
+        if not framesInitialized then initFrames() end
+        f.maximizeButton:Minimize()
+        db.xoffset = 0
+        db.yoffset = -150
+        db.anchorFrom = "TOP"
+        db.anchorTo = "TOP"
+    end
     f:ClearAllPoints()
     f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
 end
@@ -3854,13 +3872,6 @@ function initFrames()
     main_frame.mainFrametex:SetDrawLayer(canvasDrawLayer, -5)
     main_frame.mainFrametex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
 
-    -- reset frame position after 8.1.5 scaling changes
-    if not db.version or db.version<250 then
-        db.xoffset = 0
-        db.yoffset = -150
-        db.anchorFrom = "TOP"
-        db.anchorTo = "TOP"
-    end
     local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.","")
     db.version = tonumber(version)
 	-- Set frame position
@@ -4044,6 +4055,10 @@ function initFrames()
 
     --Maximize if needed
     if db.maximized then MethodDungeonTools:Maximize() end
+
+    if MethodDungeonTools:IsFrameOffScreen() then
+        MethodDungeonTools:ResetMainFramePos()
+    end
 
     framesInitialized = true
 end
