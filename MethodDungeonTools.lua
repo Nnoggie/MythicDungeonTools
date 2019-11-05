@@ -2817,7 +2817,6 @@ function MethodDungeonTools:SetMapSublevel(pull)
     if shouldResetZoom then MethodDungeonTools:ZoomMap(1,true) end
 end
 
-
 function MethodDungeonTools:SetSelectionToPull(pull)
 	--if pull is not specified set pull to last pull in preset (for adding new pulls)
 	if not pull then
@@ -2847,23 +2846,19 @@ function MethodDungeonTools:SetSelectionToPull(pull)
     end
 end
 
-
 ---UpdatePullButtonNPCData
 ---Updates the portraits display of a button to show which and how many npcs are selected
 function MethodDungeonTools:UpdatePullButtonNPCData(idx)
     if db.devMode then return end
 	local preset = MethodDungeonTools:GetCurrentPreset()
 	local frame = MethodDungeonTools.main_frame.sidePanel
-    local teeming = MethodDungeonTools:IsPresetTeeming(preset)
 	local enemyTable = {}
 	if preset.value.pulls[idx] then
 		local enemyTableIdx = 0
 		for enemyIdx,clones in pairs(preset.value.pulls[idx]) do
             if tonumber(enemyIdx) then
                 --check if enemy exists, remove if not
-                if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
-
-                else
+                if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
                     local incremented = false
                     local npcId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
                     local name = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
@@ -2872,61 +2867,20 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                     local baseHealth = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
                     for k,cloneIdx in pairs(clones) do
                         --check if clone exists, remove if not
-                        if not MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
-
-                        else
-                            --check for teeming
-                            local cloneIsTeeming = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
-                            if (cloneIsTeeming and teeming) or (not cloneIsTeeming and not teeming) or (not cloneIsTeeming and teeming) then
-
-                                --MDI override
-                                local week
-                                if db.MDI.enabled then
-                                    week = preset.mdi.beguiling or 1
-                                else
-                                    week = preset.week
-                                end
-
-                                local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
-                                local continue = false
-                                local btweek = week%3
-                                if btweek == 0 then btweek = 3 end
-                                local isBlacktoothWeek = btweek == 2
-                                if isCloneBlacktoothEvent then
-                                    if isBlacktoothWeek then
-                                        continue = true
-                                    end
-                                else
-                                    continue = true
-                                end
-
-                                local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
-
-                                --beguiling weekly configuration
-                                local weekData = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
-                                if weekData then
-                                    if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) then continue = true else continue = false end
-                                end
-
-                                --check for faction
-                                if cloneFaction then
-                                    if cloneFaction ~= preset.faction then continue = false end
-                                end
-
-                                if continue then
-                                    if not incremented then enemyTableIdx = enemyTableIdx + 1 incremented = true end
-                                    if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-                                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-                                    enemyTable[enemyTableIdx].npcId = npcId
-                                    enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                                    enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-                                    enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
-                                    enemyTable[enemyTableIdx].name = name
-                                    enemyTable[enemyTableIdx].level = level
-                                    enemyTable[enemyTableIdx].creatureType = creatureType
-                                    enemyTable[enemyTableIdx].baseHealth = baseHealth
-                                    enemyTable[enemyTableIdx].ignoreFortified = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["ignoreFortified"]
-                                end
+                        if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
+                            if self:IsCloneIncluded(enemyIdx,cloneIdx) then
+                                if not incremented then enemyTableIdx = enemyTableIdx + 1 incremented = true end
+                                if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
+                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
+                                enemyTable[enemyTableIdx].npcId = npcId
+                                enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                                enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
+                                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
+                                enemyTable[enemyTableIdx].name = name
+                                enemyTable[enemyTableIdx].level = level
+                                enemyTable[enemyTableIdx].creatureType = creatureType
+                                enemyTable[enemyTableIdx].baseHealth = baseHealth
+                                enemyTable[enemyTableIdx].ignoreFortified = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["ignoreFortified"]
                             end
                         end
                     end
@@ -2954,7 +2908,6 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
         frame.newPullButtons[idx]:ShowReapingIcon(false,currentPercent,oldPercent)
     end
 end
-
 
 ---ReloadPullButtons
 ---Reloads all pull buttons in the scroll frame
