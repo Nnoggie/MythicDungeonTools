@@ -2148,6 +2148,10 @@ end
 ---EnsureDBTables
 ---Makes sure profiles are valid and have their fields set
 function MethodDungeonTools:EnsureDBTables()
+    --dungeonIdx doesnt exist
+    if not dungeonList[db.currentDungeonIdx] or string.find(dungeonList[db.currentDungeonIdx],">") then
+        db.currentDungeonIdx = db.currentExpansion == 1 and 1 or db.currentExpansion == 2 and 15
+    end
     local preset = MethodDungeonTools:GetCurrentPreset()
     preset.week = preset.week or MethodDungeonTools:GetCurrentAffixWeek()
 	db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
