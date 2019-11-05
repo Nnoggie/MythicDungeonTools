@@ -1,3 +1,6 @@
+v2.9.6
+-
+- Users can no longer drag the AddOn window unrecoverably off screen
 v2.9.5
 - Siege G39 Updates
 v2.9.4
