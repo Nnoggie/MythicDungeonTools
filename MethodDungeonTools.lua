@@ -807,7 +807,6 @@ function MethodDungeonTools:SkinProgressBar(progressBar)
     end
 end
 
-
 function MethodDungeonTools:MakeTopBottomTextures(frame)
 
     frame:SetMovable(true)
@@ -823,7 +822,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 
 		--use default font if ElvUI is enabled
 		--if IsAddOnLoaded("ElvUI") then
-			frame.topPanelString:SetFontObject("GameFontNormalMed3")
+        frame.topPanelString:SetFontObject("GameFontNormalMed3")
 		frame.topPanelString:SetTextColor(1, 1, 1, 1)
 		frame.topPanelString:SetJustifyH("CENTER")
 		frame.topPanelString:SetJustifyV("CENTER")
@@ -841,7 +840,6 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelLogo:SetHeight(24)
 		frame.topPanelLogo:SetPoint("RIGHT",frame.topPanelString,"LEFT",-5,0)
 		frame.topPanelLogo:Show()
-
 	end
 
     frame.topPanel:ClearAllPoints()
@@ -870,7 +868,6 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
         frame.bottomPanelTex:SetAllPoints()
         frame.bottomPanelTex:SetDrawLayer(canvasDrawLayer, -5)
         frame.bottomPanelTex:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
-
     end
 
     frame.bottomPanel:ClearAllPoints()
@@ -887,7 +884,6 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 	frame.bottomPanelString:SetTextColor(1, 1, 1, 1)
 	frame.bottomPanelString:Show()
 
-
 	frame.bottomPanel:EnableMouse(true)
 	frame.bottomPanel:RegisterForDrag("LeftButton")
 	frame.bottomPanel:SetScript("OnDragStart", function(self,button)
@@ -902,7 +898,6 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		db.anchorTo = to
 		db.xoffset,db.yoffset = x,y
     end)
-
 end
 
 function MethodDungeonTools:MakeSidePanel(frame)
@@ -916,7 +911,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		frame.sidePanelTex:Show()
 	end
     frame.sidePanel:EnableMouse(true)
-
 
 	frame.sidePanel:ClearAllPoints()
 	frame.sidePanel:SetWidth(251)
@@ -934,8 +928,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelString:ClearAllPoints()
 	frame.sidePanelString:SetPoint("TOPLEFT", frame.sidePanel, "TOPLEFT", 33, -120-30-25)
 	frame.sidePanelString:Hide()
-
-
 
 	frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
 	frame.sidePanel.WidgetGroup:SetWidth(245)
@@ -992,7 +984,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	end)
 	MethodDungeonTools:UpdatePresetDropDown()
 	frame.sidePanel.WidgetGroup:AddChild(dropdown)
-
 
 	---new profile,rename,export,delete
 	local buttonWidth = 80
@@ -1116,7 +1107,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools.main_frame.LinkToChatButton.text:SetTextColor(0.5,0.5,0.5)
     end
 
-
     frame.ClearPresetButton = AceGUI:Create("Button")
     frame.ClearPresetButton:SetText("Clear")
     frame.ClearPresetButton:SetWidth(buttonWidth)
@@ -1134,11 +1124,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.LiveSessionButton.frame:SetHighlightFontObject(fontInstance)
     frame.LiveSessionButton.frame:SetDisabledFontObject(fontInstance)
     local c1,c2,c3 = frame.LiveSessionButton.text:GetTextColor()
-    frame.LiveSessionButton.normalTextColor = {
-        r = c1,
-        g = c2,
-        b = c3,
-    }
+    frame.LiveSessionButton.normalTextColor = {r = c1,g = c2,b = c3,}
     frame.LiveSessionButton:SetCallback("OnClick",function(widget,callbackName,value)
         if MethodDungeonTools.liveSessionActive then
             MethodDungeonTools:LiveSession_Disable()
@@ -1222,7 +1208,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
     local affixDropdown = frame.sidePanel.affixDropdown
     affixDropdown.text:SetJustifyH("LEFT")
     affixDropdown:SetLabel("Affixes")
-
 
     function affixDropdown:UpdateAffixList()
         local affixWeekMarkups = {}
@@ -1316,14 +1301,11 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixWeekWarning.image:Hide()
     affixWeekWarning:SetDisabled(true)
 
-
-
 	--Difficulty Selection
 	frame.sidePanel.DifficultySliderLabel = AceGUI:Create("Label")
 	frame.sidePanel.DifficultySliderLabel:SetText("Level")
 	frame.sidePanel.DifficultySliderLabel:SetWidth(35)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySliderLabel)
-
 
 	frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
 	frame.sidePanel.DifficultySlider:SetSliderValues(1,35,1)
@@ -1336,7 +1318,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:DungeonEnemies_UpdateReaping()
 	end)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
-
 
 	frame.sidePanel.middleLine = AceGUI:Create("Heading")
 	frame.sidePanel.middleLine:SetWidth(240)
@@ -1446,7 +1427,6 @@ function MethodDungeonTools:DisplayMDISelector()
         end)
         MethodDungeonTools.MDISelector:AddChild(MethodDungeonTools.MDISelector.FreeholdCheck)
 
-
     end
     if show then
         local preset = MethodDungeonTools:GetCurrentPreset()
@@ -1503,7 +1483,6 @@ function MethodDungeonTools:UpdatePresetDropdownTextColor(forceReset)
         dropdown.text:SetTextColor(1,1,1,1)
     end
 end
-
 
 ---FormatEnemyForces
 function MethodDungeonTools:FormatEnemyForces(forces,forcesmax,progressbar)
@@ -1563,7 +1542,6 @@ function MethodDungeonTools:UpdateProgressbar()
 	MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,grandTotal,teeming==true and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
 end
 
-
 function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	local scrollFrame = MethodDungeonToolsScrollFrame
     if not scrollFrame:GetLeft() then return end
@@ -1591,7 +1569,6 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	local cursorX,cursorY = GetCursorPosition()
 	local frameX = (cursorX / UIParent:GetScale()) - scrollFrame:GetLeft()
 	local frameY = scrollFrame:GetTop() - (cursorY / UIParent:GetScale())
-
 	local scaleChange = newScale / oldScale
 	local newScrollH =  (scaleChange * frameX - frameX) / newScale + oldScrollH
 	local newScrollV =  (scaleChange * frameY - frameY) / newScale + oldScrollV
@@ -1605,9 +1582,7 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 	scrollFrame:SetVerticalScroll(newScrollV)
 
     MethodDungeonTools:SetPingOffsets(newScale)
-
 end
-
 
 ---ActivatePullTooltip
 ---
