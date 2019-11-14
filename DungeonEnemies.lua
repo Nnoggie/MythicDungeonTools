@@ -170,6 +170,10 @@ end
 local patrolPoints =  {}
 local patrolLines = {}
 
+function MethodDungeonTools:GetPatrolBlips()
+    return patrolPoints
+end
+
 function MDTDungeonEnemyMixin:DisplayPatrol(shown)
     local scale = MethodDungeonTools:GetScale()
 

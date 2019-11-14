@@ -87,6 +87,39 @@ local function tshow(t, name, indent)
     return cart .. autoref
 end
 
+function MethodDungeonTools:AddNPCFromUnit(unit)
+    db = MethodDungeonTools:GetDB()
+    local npcId
+    local guid = UnitGUID(unit)
+    if guid then
+        npcId = select(6,strsplit("-", guid))
+        npcId = tonumber(npcId)
+    end
+    local added
+    for _,npcData in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+        if npcData.id == npcId then added = true; break end
+    end
+    if npcId and not added then
+        local npcName = UnitName(unit)
+        local npcHealth = UnitHealthMax(unit)
+        local npcLevel = UnitLevel(unit)
+        local npcCreatureType = UnitCreatureType(unit)
+        local npcScale = 1
+        local npcCount = 0
+        tinsert(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx], {
+            name = npcName,
+            health = npcHealth,
+            level = npcLevel,
+            creatureType = npcCreatureType,
+            id = npcId,
+            scale = npcScale,
+            count = npcCount,
+            clones = {},
+        })
+        return npcId
+    end
+end
+
 local currentEnemyIdx
 local currentCloneGroup
 local currentTeeming
@@ -352,33 +385,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
         local button1 = AceGUI:Create("Button")
         button1:SetText("Create from Target")
         button1:SetCallback("OnClick",function()
-            local npcId
-            local guid = UnitGUID("target")
-            if guid then
-                npcId = select(6,strsplit("-", guid))
-            end
-            if npcId then
-                local npcName = UnitName("target")
-                local npcHealth = UnitHealthMax("target")
-                local npcLevel = UnitLevel("target")
-                local npcCreatureType = UnitCreatureType("target")
-                local npcScale = 1
-                local npcCount = 0
-                tinsert(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx], {
-                    name = npcName,
-                    health = npcHealth,
-                    level = npcLevel,
-                    creatureType = npcCreatureType,
-                    id = tonumber(npcId),
-                    scale = npcScale,
-                    count = npcCount,
-                    clones = {},
-                })
-                --updateFields(npcHealth,npcLevel,npcCreatureType,npcId,npcScale,npcCount)
-
-                updateDropdown(tonumber(npcId))
-            end
-
+            local npcId = MethodDungeonTools:AddNPCFromUnit("target")
+            updateDropdown(npcId)
         end)
         container:AddChild(button1)
 
@@ -795,16 +803,17 @@ function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
         cursorx = cursorx*(1/scale)
         cursory = cursory*(1/scale)
         --snap onto other waypoints
-        local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
-        for blipIdx,blip in pairs(dungeonEnemyBlips) do
-            if blip.patrol then
-                for idx,waypoint in pairs(blip.patrol) do
-                    if MouseIsOver(waypoint) then
-                        cursorx = waypoint.x
-                        cursory = waypoint.y
-                    end
-                end
+        local patrolBlips = MethodDungeonTools:GetPatrolBlips()
+        for idx,waypoint in pairs(patrolBlips) do
+            if MouseIsOver(waypoint) then
+                cursorx = waypoint.x
+                cursory = waypoint.y
             end
+        end
+        --snap onto blip
+        if MouseIsOver(currentBlip) then
+            cursorx = currentBlip.clone.x
+            cursory = currentBlip.clone.y
         end
         tinsert(cloneData.patrol,{x=cursorx,y=cursory})
         print(string.format("MDT: Created Waypoint %d of %s %d at %d,%d",1,data.name,#cloneData.patrol,cursorx,cursory))
