@@ -2,7 +2,7 @@ local dungeonIndex = 25
 MethodDungeonTools.mapInfo[dungeonIndex] = {
     tileFormat= 15,
 }
-MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.7
+MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.5
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=1,teeming=1,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
@@ -107,41 +107,41 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [1] = {
                 ["y"] = -318.98442314658;
                 ["x"] = 468.51035407717;
+                ["sublevel"] = 1;
                 ["week"] = {
                     [1] = true;
                 };
-                ["sublevel"] = 1;
             };
         };
         ["scale"] = 1.4;
         ["spells"] = {
-            [314477] = {};
-            [314531] = {};
-            [314397] = {};
             [314483] = {};
+            [314477] = {};
+            [314397] = {};
+            [314531] = {};
         };
-        ["id"] = 161243;
-        ["health"] = 1409996;
-        ["level"] = 122;
-        ["name"] = "Samh'rek, Beckoner of Chaos";
         ["stealthDetect"] = true;
-        ["displayId"] = 90742;
-        ["creatureType"] = "Aberration";
-        ["corrupted"] = true;
-        ["count"] = 4;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
+        ["count"] = 4;
+        ["corrupted"] = true;
+        ["health"] = 1409996;
+        ["displayId"] = 90742;
+        ["creatureType"] = "Aberration";
+        ["level"] = 122;
+        ["name"] = "Samh'rek, Beckoner of Chaos";
+        ["id"] = 161243;
     };
     [2] = {
         ["clones"] = {
             [1] = {
                 ["y"] = -171.17902897276;
                 ["x"] = 545.00804819759;
+                ["sublevel"] = 1;
                 ["week"] = {
                     [1] = true;
                 };
-                ["sublevel"] = 1;
             };
         };
         ["id"] = 161124;
@@ -152,79 +152,207 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [314309] = {};
         };
         ["stealthDetect"] = true;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["scale"] = 1.4;
-        ["corrupted"] = true;
+        ["health"] = 1510710;
+        ["count"] = 4;
+        ["level"] = 122;
         ["name"] = "Urg'roth, Breaker of Heroes";
         ["displayId"] = 89415;
         ["creatureType"] = "Aberration";
-        ["level"] = 122;
-        ["count"] = 4;
-        ["health"] = 1510710;
-    };
-    [4] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -269.70057276641;
-                ["x"] = 568.72046482734;
-                ["week"] = {
-                    [1] = true;
-                };
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 161244;
-        ["spells"] = {
-            [314566] = {};
-            [314565] = {};
-            [314592] = {};
-            [314397] = {};
-        };
-        ["stealthDetect"] = true;
+        ["corrupted"] = true;
+        ["scale"] = 1.4;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["scale"] = 1.4;
-        ["level"] = 122;
-        ["health"] = 1409996;
-        ["displayId"] = 92229;
-        ["creatureType"] = "Aberration";
-        ["corrupted"] = true;
-        ["name"] = "Blood of the Corruptor";
-        ["count"] = 4;
     };
     [3] = {
         ["clones"] = {
             [1] = {
                 ["y"] = -332.24452839227;
                 ["x"] = 498.70264705052;
+                ["sublevel"] = 1;
                 ["week"] = {
                     [1] = true;
                 };
-                ["sublevel"] = 1;
             };
         };
         ["scale"] = 1.4;
         ["spells"] = {
             [314463] = {};
-            [314467] = {};
-            [314397] = {};
-            [314406] = {};
             [314411] = {};
+            [314467] = {};
+            [314406] = {};
+            [314397] = {};
         };
-        ["count"] = 4;
-        ["health"] = 1309282;
-        ["corrupted"] = true;
-        ["name"] = "Voidweaver Mal'thir";
         ["stealthDetect"] = true;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["id"] = 161241;
+        ["level"] = 122;
+        ["count"] = 4;
         ["displayId"] = 91910;
         ["creatureType"] = "Beast";
+        ["corrupted"] = true;
+        ["name"] = "Voidweaver Mal'thir";
+        ["health"] = 1309282;
+    };
+    [4] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -269.70057276641;
+                ["x"] = 568.72046482734;
+                ["sublevel"] = 1;
+                ["week"] = {
+                    [1] = true;
+                };
+            };
+        };
+        ["id"] = 161244;
+        ["spells"] = {
+            [314566] = {};
+            [314397] = {};
+            [314565] = {};
+            [314592] = {};
+        };
+        ["stealthDetect"] = true;
+        ["count"] = 4;
+        ["name"] = "Blood of the Corruptor";
+        ["corrupted"] = true;
+        ["health"] = 1409996;
+        ["displayId"] = 92229;
+        ["creatureType"] = "Aberration";
         ["level"] = 122;
-        ["id"] = 161241;
+        ["scale"] = 1.4;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
     };
+    [5] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Scrapbone Trashtosser";
+        ["scale"] = 1;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 150142;
+        ["health"] = 963270;
+    };
+    [6] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -205.79982217975;
+                ["x"] = 560.03006584011;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 150250;
+        ["spells"] = {
+            [299497] = {};
+            [299525] = {};
+            [299496] = {};
+            [299460] = {};
+        };
+        ["health"] = 963270;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Pistonhead Blaster";
+        ["scale"] = 1;
+    };
+    [7] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -201.91110946404;
+                ["x"] = 565.31673323594;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -200.26427177988;
+                ["x"] = 557.21972533765;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 150249;
+        ["spells"] = {
+            [299438] = {};
+            [299450] = {};
+        };
+        ["health"] = 963270;
+        ["count"] = 0;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["name"] = "Pistonhead Scrapper";
+        ["scale"] = 1;
+    };
+    [8] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Scrapbone Grinder";
+        ["scale"] = 1;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 150143;
+        ["health"] = 963270;
+    };
+    [9] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Scrapbone Grunter";
+        ["scale"] = 1;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 150547;
+        ["health"] = 481635;
+    };
+    [10] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Scrapbone Shaman";
+        ["scale"] = 1;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 150146;
+        ["health"] = 770615;
+    };
+    [11] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Malfunctioning Scrapbot";
+        ["scale"] = 1;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["id"] = 152009;
+        ["health"] = 1541232;
+    };
+    [12] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Weaponized Crawler";
+        ["scale"] = 1;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["id"] = 150253;
+        ["health"] = 1926540;
+    };
+    [13] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Scraphound";
+        ["scale"] = 1;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 120;
+        ["id"] = 150254;
+        ["health"] = 963270;
+    };
+    [14] = {
+        ["clones"] = {};
+        ["count"] = 0;
+        ["name"] = "Pistonhead Mechanic";
+        ["scale"] = 1;
+        ["creatureType"] = "Humanoid";
+        ["level"] = 120;
+        ["id"] = 150251;
+        ["health"] = 1155924;
+    };
 };
+
