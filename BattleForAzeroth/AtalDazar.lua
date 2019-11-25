@@ -102,6 +102,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["type"] = "nyalothaRift";
             ["index"] = 2;
+            ["npcId"] = 161241;
         };
         [11] = {
             ["y"] = -352.50045140489;
