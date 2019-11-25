@@ -47,14 +47,7 @@ local function POI_SetDevOptions(frame,poi)
     frame:SetScript("OnClick",nil)
 end
 
-local riftIndexToServantId = {
-    [1] = 161243,
-    [2] = 161241,
-    [3] = 161124,
-    [4] = 161244,
-}
-
-local function POI_SetOptions(frame,type,poi)
+local function POI_SetOptions(frame,type,poi,homeSublevel)
     frame.teeming = nil
     frame.isSpire = nil
     frame.riftIndex = nil
@@ -65,6 +58,7 @@ local function POI_SetOptions(frame,type,poi)
     frame:SetScript("OnMouseUp",nil)
     frame.weeks = poi.weeks
     frame:SetFrameLevel(4)
+    frame.defaultSublevel = nil
     if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
@@ -73,6 +67,7 @@ local function POI_SetOptions(frame,type,poi)
         frame.HighlightTexture:SetSize(22,22)
         frame.HighlightTexture:SetDrawLayer("ARTWORK")
         frame.HighlightTexture:Hide()
+        frame.target = poi.target
         local directionToAtlas = {
             [-1] = "poi-door-down",
             [1] = "poi-door-up",
@@ -137,6 +132,11 @@ local function POI_SetOptions(frame,type,poi)
                     end
                 end
                 frame.ShowAnim:Play()
+                --store expanded status
+                MethodDungeonTools:GetCurrentPreset().value.riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets or {}
+                local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+                riftOffsets[frame.spireIndex] = riftOffsets[frame.spireIndex] or {}
+                riftOffsets[frame.spireIndex].expanded = true
             else
                 frame.Texture:SetSize(16*poiScale,22*poiScale)
                 frame.Texture:SetAtlas("poi-nzothpylon")
@@ -153,6 +153,8 @@ local function POI_SetOptions(frame,type,poi)
                     end
                 end
                 frame.ShowAnim:Play()
+                --store collapsed status
+                MethodDungeonTools:GetCurrentPreset().value.riftOffsets[frame.spireIndex].expanded = nil
             end
         end)
         frame:SetScript("OnEnter",function()
@@ -172,7 +174,7 @@ local function POI_SetOptions(frame,type,poi)
             --highlight associated npc
             local blips = MethodDungeonTools:GetDungeonEnemyBlips()
             for _,blip in pairs(blips) do
-                if blip.data.id == riftIndexToServantId[frame.spireIndex] then
+                if blip.data.id == poi.npcId then
                     blipFrame = blip
                     blipFrame.fontstring_Text1:Show()
                     break
@@ -182,9 +184,26 @@ local function POI_SetOptions(frame,type,poi)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
             frame.HighlightTexture:Hide()
-            riftFrame.HighlightTexture:Hide()
-            blipFrame.fontstring_Text1:Hide()
+            if riftFrame then riftFrame.HighlightTexture:Hide() end
+            if blipFrame then blipFrame.fontstring_Text1:Hide() end
         end)
+        --check expanded status
+        local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+        if riftOffsets and riftOffsets[frame.spireIndex] and riftOffsets[frame.spireIndex].expanded then
+            frame.Texture:SetSize(16*poiScale,16*poiScale)
+            frame.Texture:SetAtlas("poi-rift1")
+            frame.HighlightTexture:SetSize(16*poiScale,16*poiScale)
+            frame.HighlightTexture:SetAtlas("poi-rift1")
+            frame.isSpire = false
+            frame.textString:Show()
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.riftIndex and poiFrame.riftIndex == frame.spireIndex then
+                    poiFrame:Show()
+                    break
+                end
+            end
+        end
     end
     if type == "nyalothaRift" then
         frame:SetFrameLevel(100)
@@ -197,6 +216,7 @@ local function POI_SetOptions(frame,type,poi)
         frame.HighlightTexture:SetAtlas("poi-rift1")
         frame.HighlightTexture:SetDrawLayer("ARTWORK")
         frame.HighlightTexture:Hide()
+        frame.defaultSublevel = homeSublevel or MethodDungeonTools:GetCurrentSubLevel()
         if not frame.textString then
             frame.textString = frame:CreateFontString()
             frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
@@ -226,7 +246,7 @@ local function POI_SetOptions(frame,type,poi)
             --highlight associated npc
             local blips = MethodDungeonTools:GetDungeonEnemyBlips()
             for _,blip in pairs(blips) do
-                if blip.data.id == riftIndexToServantId[frame.riftIndex] then
+                if blip.data.id == poi.npcId then
                     blipFrame = blip
                     blipFrame.fontstring_Text1:Show()
                     break
@@ -236,8 +256,8 @@ local function POI_SetOptions(frame,type,poi)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
             frame.HighlightTexture:Hide()
-            spireFrame.HighlightTexture:Hide()
-            blipFrame.fontstring_Text1:Hide()
+            if spireFrame then spireFrame.HighlightTexture:Hide() end
+            if blipFrame then blipFrame.fontstring_Text1:Hide() end
         end)
         frame.defaultHidden = true
         frame:SetMovable(true)
@@ -252,6 +272,7 @@ local function POI_SetOptions(frame,type,poi)
                 x = x*(1/scale)
                 y = y*(1/scale)
                 local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+                ViragDevTool_AddData(riftOffsets[frame.riftIndex])
                 local nx = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].x or poi.x
                 local ny = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].y or poi.y
                 xOffset = x-nx
@@ -290,8 +311,15 @@ local function POI_SetOptions(frame,type,poi)
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
                     if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
+                        riftOffsets[frame.riftIndex].sublevel = poiFrame.target
+                        riftOffsets[frame.riftIndex].homeSublevel = frame.defaultSublevel
+                        if riftOffsets[frame.riftIndex].sublevel == frame.defaultSublevel then
+                            riftOffsets[frame.riftIndex].sublevel = nil
+                            riftOffsets[frame.riftIndex].homeSublevel = nil
+                        end
+                        --zoom out
+                        --move frame
                         poiFrame:Click()
-
                         break
                     end
                 end
@@ -313,6 +341,17 @@ local function POI_SetOptions(frame,type,poi)
                 frame:Hide()
             end
         end)
+        --check for expanded status
+        local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+        if riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].expanded then
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.spireIndex and poiFrame.spireIndex == frame.riftIndex then
+                    frame:Show()
+                    break
+                end
+            end
+        end
     end
     if type == "door" then
         frame:SetSize(22,22)
@@ -603,7 +642,8 @@ function MethodDungeonTools:POI_UpdateAll()
     local framePools = MethodDungeonTools.poi_framePools
     framePools:ReleaseAll()
     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then return end
-    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+    local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
+    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][currentSublevel]
     if not pois then return end
     local preset = MethodDungeonTools:GetCurrentPreset()
     local teeming = MethodDungeonTools:IsPresetTeeming(preset)
@@ -612,20 +652,50 @@ function MethodDungeonTools:POI_UpdateAll()
     for poiIdx,poi in pairs(pois) do
         local week = MethodDungeonTools:GetEffectivePresetWeek(preset)
         if (not poi.weeks) or poi.weeks[week] then
-            local poiFrame = framePools:Acquire(poi.template)
-            poiFrame.poiIdx = poiIdx
-            POI_SetOptions(poiFrame,poi.type,poi)
-            poiFrame.x = poi.x
-            poiFrame.y = poi.y
-            local x = db.devMode and poi.x or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].x or poi.x
-            local y = db.devMode and poi.y or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].y or poi.y
-            poiFrame:ClearAllPoints()
-            poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
-            if not poiFrame.defaultHidden or db.devMode then poiFrame:Show() end
-            if not teeming and poiFrame.teeming then
-                poiFrame:Hide()
+            --skip rifts that were dragged to another sublevel
+            if not (poi.type == "nyalothaRift" and riftOffsets and riftOffsets[poi.index] and riftOffsets[poi.index].sublevel) then
+                local poiFrame = framePools:Acquire(poi.template)
+                poiFrame.poiIdx = poiIdx
+                POI_SetOptions(poiFrame,poi.type,poi)
+                poiFrame.x = poi.x
+                poiFrame.y = poi.y
+                local x = db.devMode and poi.x or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].x or poi.x
+                local y = db.devMode and poi.y or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].y or poi.y
+                poiFrame:ClearAllPoints()
+                poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
+                if not poiFrame.defaultHidden or db.devMode then poiFrame:Show() end
+                if not teeming and poiFrame.teeming then
+                    poiFrame:Hide()
+                end
+                tinsert(points,poiFrame)
             end
-            tinsert(points,poiFrame)
         end
     end
+    --add rifts that were dragged to another sublevel
+    if riftOffsets then
+        for riftIndex,data in pairs(riftOffsets) do
+            if data.sublevel and data.homeSublevel and data.sublevel ==  currentSublevel then
+                pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][data.homeSublevel]
+                for poiIdx,poi in pairs(pois) do
+                    if poi.type == "nyalothaRift" and poi.index == riftIndex then
+                        local poiFrame = framePools:Acquire(poi.template)
+                        poiFrame.poiIdx = poiIdx
+                        POI_SetOptions(poiFrame,poi.type,poi,data.homeSublevel)
+                        poiFrame.x = poi.x
+                        poiFrame.y = poi.y
+                        local x = db.devMode and poi.x or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].x or poi.x
+                        local y = db.devMode and poi.y or riftOffsets and riftOffsets[poiFrame.riftIndex] and riftOffsets[poiFrame.riftIndex].y or poi.y
+                        poiFrame:ClearAllPoints()
+                        poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
+                        if data.expanded then
+                            poiFrame:Show()
+                        end
+                        tinsert(points,poiFrame)
+                        break
+                    end
+                end
+            end
+        end
+    end
+
 end
