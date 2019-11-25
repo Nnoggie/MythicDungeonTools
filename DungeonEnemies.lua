@@ -40,7 +40,7 @@ MethodDungeonTools.reapingStatic = {
 }
 
 --From http://wow.gamepedia.com/UI_coordinates
-local function framesOverlap(frameA, frameB,offset)
+function MethodDungeonTools:DoFramesOverlap(frameA, frameB,offset)
     if not frameA or not frameB then return	end
     offset = offset or 0
     --frameA = frameA.texture_Background
@@ -367,7 +367,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.texture_Portrait:SetDesaturated(false)
     local raise = 4
     for k,v in pairs(blips) do
-        if framesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+        if MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")

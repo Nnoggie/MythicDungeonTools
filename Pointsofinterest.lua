@@ -47,6 +47,13 @@ local function POI_SetDevOptions(frame,poi)
     frame:SetScript("OnClick",nil)
 end
 
+local riftIndexToServantId = {
+    [1] = 161243,
+    [2] = 161241,
+    [3] = 161124,
+    [4] = 161244,
+}
+
 local function POI_SetOptions(frame,type,poi)
     frame.teeming = nil
     frame.isSpire = nil
@@ -57,11 +64,15 @@ local function POI_SetOptions(frame,type,poi)
     frame:SetScript("OnMouseDown",nil)
     frame:SetScript("OnMouseUp",nil)
     frame.weeks = poi.weeks
+    frame:SetFrameLevel(4)
+    if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
         frame:SetSize(22,22)
         frame.Texture:SetSize(22,22)
         frame.HighlightTexture:SetSize(22,22)
+        frame.HighlightTexture:SetDrawLayer("ARTWORK")
+        frame.HighlightTexture:Hide()
         local directionToAtlas = {
             [-1] = "poi-door-down",
             [1] = "poi-door-up",
@@ -78,9 +89,11 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine(MethodDungeonTools:GetDungeonSublevels()[db.currentDungeonIdx][poi.target], 1, 1, 1, 1)
             GameTooltip:Show()
+            frame.HighlightTexture:Show()
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
+            frame.HighlightTexture:Hide()
         end)
     end
     if type == "nyalothaSpire" then
@@ -90,6 +103,8 @@ local function POI_SetOptions(frame,type,poi)
         frame.Texture:SetAtlas("poi-nzothpylon")
         frame.HighlightTexture:SetSize(16*poiScale,22*poiScale)
         frame.HighlightTexture:SetAtlas("poi-nzothpylon")
+        frame.HighlightTexture:SetDrawLayer("ARTWORK")
+        frame.HighlightTexture:Hide()
         frame.isSpire = true
         frame.spireIndex = poi.index
         if not frame.textString then
@@ -101,6 +116,8 @@ local function POI_SetOptions(frame,type,poi)
         end
         frame.textString:SetText((frame.spireIndex*2)-1)
         frame:SetScript("OnClick",nil)
+        local riftFrame
+        local blipFrame
         frame:SetScript("OnMouseUp",function()
             if frame.isSpire then
                 frame.Texture:SetSize(16*poiScale,16*poiScale)
@@ -113,8 +130,9 @@ local function POI_SetOptions(frame,type,poi)
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
                     if poiFrame.riftIndex and poiFrame.riftIndex == frame.spireIndex then
-                        poiFrame:Show()
-                        poiFrame.ShowAnim:Play()
+                        riftFrame = poiFrame
+                        riftFrame:Show()
+                        riftFrame.ShowAnim:Play()
                         break
                     end
                 end
@@ -139,14 +157,37 @@ local function POI_SetOptions(frame,type,poi)
         end)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:AddLine(poi.tooltipText)
+            GameTooltip:AddLine(poi.tooltipText.."\n[Click to show rift]")
             GameTooltip:Show()
+            frame.HighlightTexture:Show()
+            --highlight brother rift
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.riftIndex and poiFrame.riftIndex == frame.spireIndex then
+                    riftFrame = poiFrame
+                    riftFrame.HighlightTexture:Show()
+                    break
+                end
+            end
+            --highlight associated npc
+            local blips = MethodDungeonTools:GetDungeonEnemyBlips()
+            for _,blip in pairs(blips) do
+                if blip.data.id == riftIndexToServantId[frame.spireIndex] then
+                    blipFrame = blip
+                    blipFrame.fontstring_Text1:Show()
+                    break
+                end
+            end
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
+            frame.HighlightTexture:Hide()
+            riftFrame.HighlightTexture:Hide()
+            blipFrame.fontstring_Text1:Hide()
         end)
     end
     if type == "nyalothaRift" then
+        frame:SetFrameLevel(100)
         local poiScale = poi.scale or 1
         frame.riftIndex = poi.index
         frame:SetSize(12*poiScale,12*poiScale)
@@ -154,6 +195,8 @@ local function POI_SetOptions(frame,type,poi)
         frame.Texture:SetAtlas("poi-rift1")
         frame.HighlightTexture:SetSize(12*poiScale,12*poiScale)
         frame.HighlightTexture:SetAtlas("poi-rift1")
+        frame.HighlightTexture:SetDrawLayer("ARTWORK")
+        frame.HighlightTexture:Hide()
         if not frame.textString then
             frame.textString = frame:CreateFontString()
             frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
@@ -164,22 +207,37 @@ local function POI_SetOptions(frame,type,poi)
         frame.textString:SetText(frame.riftIndex*2)
         frame.textString:Show()
         frame:SetScript("OnClick",nil)
+        local spireFrame
+        local blipFrame
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine("Ny'alothan Rift")
             GameTooltip:AddLine("[Drag to move]")
             GameTooltip:Show()
+            frame.HighlightTexture:Show()
             local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
             for poiFrame,_ in pairs(active) do
                 if poiFrame.spireIndex and poiFrame.spireIndex == frame.riftIndex then
-                    --ViragDevTool_AddData(poiFrame.HighlightTexture)
-                    --TODO Show Highlight and animate line between rift and spire
+                    spireFrame = poiFrame
+                    spireFrame.HighlightTexture:Show()
+                    break
+                end
+            end
+            --highlight associated npc
+            local blips = MethodDungeonTools:GetDungeonEnemyBlips()
+            for _,blip in pairs(blips) do
+                if blip.data.id == riftIndexToServantId[frame.riftIndex] then
+                    blipFrame = blip
+                    blipFrame.fontstring_Text1:Show()
                     break
                 end
             end
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
+            frame.HighlightTexture:Hide()
+            spireFrame.HighlightTexture:Hide()
+            blipFrame.fontstring_Text1:Hide()
         end)
         frame.defaultHidden = true
         frame:SetMovable(true)
@@ -198,6 +256,16 @@ local function POI_SetOptions(frame,type,poi)
                 local ny = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].y or poi.y
                 xOffset = x-nx
                 yOffset = y-ny
+                local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+                frame:SetScript("OnUpdate",function()
+                    for poiFrame,_ in pairs(activeDoors) do
+                        if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
+                            poiFrame.HighlightTexture:Show()
+                        else
+                            poiFrame.HighlightTexture:Hide()
+                        end
+                    end
+                end)
             end
         end)
         frame:SetScript("OnMouseUp", function(self, button)
@@ -217,6 +285,17 @@ local function POI_SetOptions(frame,type,poi)
                 riftOffsets[frame.riftIndex] = riftOffsets[frame.riftIndex] or {}
                 riftOffsets[frame.riftIndex].x = x
                 riftOffsets[frame.riftIndex].y = y
+                --dragged ontop of door
+                --find doors,check overlap,break,swap sublevel,change poi sublevel???
+                local _,active = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+                for poiFrame,_ in pairs(active) do
+                    if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
+                        poiFrame:Click()
+
+                        break
+                    end
+                end
+                frame:SetScript("OnUpdate",nil)
             elseif button == "RightButton" then
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
