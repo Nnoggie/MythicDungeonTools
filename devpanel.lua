@@ -710,7 +710,13 @@ function MethodDungeonTools:CreateDevPanel(frame)
             container:AddChild(weekCheckbox)
         end
         local createSpireButton = AceGUI:Create("Button")
-        createSpireButton:SetText("Create")
+        createSpireButton:SetText("Create Spire+Rift+NPC")
+        local tooltipIdxToNpcId = {
+            [1] = 161243,
+            [2] = 161241,
+            [3] = 161124,
+            [4] = 161244,
+        }
         createSpireButton:SetCallback("OnClick",function()
             if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
             if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
@@ -719,10 +725,12 @@ function MethodDungeonTools:CreateDevPanel(frame)
             local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
             local posx,posy = 300,-200
             local newWeek = MethodDungeonTools:DeepCopy(week)
-            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,tooltipText=spireNames[tooltipIndex],template="VignettePinTemplate",type="nyalothaSpire",scale=scale})
+            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,tooltipText=spireNames[tooltipIndex],template="VignettePinTemplate",type="nyalothaSpire",scale=scale,npcId=tooltipIdxToNpcId[tooltipIndex]})
             newWeek = MethodDungeonTools:DeepCopy(week)
-            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,template="VignettePinTemplate",type="nyalothaRift",scale=scale})
+            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,template="VignettePinTemplate",type="nyalothaRift",scale=scale,npcId=tooltipIdxToNpcId[tooltipIndex]})
             MethodDungeonTools:POI_UpdateAll()
+            --add associated NPC to the map
+            MethodDungeonTools:AddCloneFromData(tooltipIdxToNpcId[tooltipIndex],newWeek)
         end)
         container:AddChild(createSpireButton)
 
@@ -769,6 +777,25 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
     end
 
+end
+
+function MethodDungeonTools:AddCloneFromData(npcId,weeks)
+    local sublevel=MethodDungeonTools:GetCurrentSubLevel()
+    local x,y = 320,-200
+    local data
+    for _,enemyData in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+        if enemyData.id == npcId then
+            data = enemyData
+            break
+        end
+    end
+    if not data then
+        print("Could not find enemy with id "..npcId)
+        return
+    end
+    tinsert(data.clones,{x=x,y=y,sublevel=sublevel,week=weeks})
+    print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,x,y))
+    MethodDungeonTools:UpdateMap()
 end
 
 ---AddCloneAtCursorPosition

@@ -175,9 +175,15 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             local blips = MethodDungeonTools:GetDungeonEnemyBlips()
             for _,blip in pairs(blips) do
                 if blip.data.id == poi.npcId then
-                    blipFrame = blip
-                    blipFrame.fontstring_Text1:Show()
-                    break
+                    local isBlipSameWeek
+                    for weekIdx,_ in pairs(poi.weeks) do
+                        isBlipSameWeek = isBlipSameWeek or blip.clone.week[weekIdx]
+                    end
+                    if isBlipSameWeek then
+                        blipFrame = blip
+                        blipFrame.fontstring_Text1:Show()
+                        break
+                    end
                 end
             end
         end)
@@ -247,9 +253,15 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             local blips = MethodDungeonTools:GetDungeonEnemyBlips()
             for _,blip in pairs(blips) do
                 if blip.data.id == poi.npcId then
-                    blipFrame = blip
-                    blipFrame.fontstring_Text1:Show()
-                    break
+                    local isBlipSameWeek
+                    for weekIdx,_ in pairs(poi.weeks) do
+                        isBlipSameWeek = isBlipSameWeek or blip.clone.week[weekIdx]
+                    end
+                    if isBlipSameWeek then
+                        blipFrame = blip
+                        blipFrame.fontstring_Text1:Show()
+                        break
+                    end
                 end
             end
         end)
@@ -272,7 +284,6 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                 x = x*(1/scale)
                 y = y*(1/scale)
                 local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-                ViragDevTool_AddData(riftOffsets[frame.riftIndex])
                 local nx = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].x or poi.x
                 local ny = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].y or poi.y
                 xOffset = x-nx
