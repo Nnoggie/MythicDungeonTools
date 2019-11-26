@@ -93,32 +93,34 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     end
     if type == "nyalothaSpire" then
         local poiScale = poi.scale or 1
-        frame:SetSize(10*poiScale,10*poiScale)
-        frame.Texture:SetSize(16*poiScale,22*poiScale)
-        frame.Texture:SetAtlas("poi-nzothpylon")
-        frame.HighlightTexture:SetSize(16*poiScale,22*poiScale)
-        frame.HighlightTexture:SetAtlas("poi-nzothpylon")
+        frame:SetSize(12*poiScale,12*poiScale)
+        frame.Texture:SetSize(12*poiScale,12*poiScale)
+        frame.Texture:SetAtlas("poi-rift1")
+        frame.HighlightTexture:SetSize(12*poiScale,12*poiScale)
+        frame.HighlightTexture:SetAtlas("poi-rift1")
         frame.HighlightTexture:SetDrawLayer("ARTWORK")
         frame.HighlightTexture:Hide()
         frame.isSpire = true
         frame.spireIndex = poi.index
         if not frame.textString then
             frame.textString = frame:CreateFontString()
-            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
-            frame.textString:SetFontObject("GameFontNormal")
-            frame.textString:SetFont(frame.textString:GetFont(),7*poiScale,"OUTLINE")
+            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 4)
+            frame.textString:SetJustifyH("CENTER")
             frame.textString:SetTextColor(0.5, 1, 0, 1)
         end
+        local scale = MethodDungeonTools:GetScale()
+        frame.textString:SetFontObject("GameFontNormal")
+        frame.textString:SetFont(frame.textString:GetFont(),5*poiScale*scale,"OUTLINE")
         frame.textString:SetText((frame.spireIndex*2)-1)
         frame:SetScript("OnClick",nil)
         local riftFrame
         local blipFrame
         frame:SetScript("OnMouseUp",function()
             if frame.isSpire then
-                frame.Texture:SetSize(16*poiScale,16*poiScale)
                 frame.Texture:SetAtlas("poi-rift1")
-                frame.HighlightTexture:SetSize(16*poiScale,16*poiScale)
+                frame.Texture:SetSize(17*poiScale,17*poiScale)
                 frame.HighlightTexture:SetAtlas("poi-rift1")
+                frame.HighlightTexture:SetSize(17*poiScale,17*poiScale)
                 frame.isSpire = false
                 frame.textString:Show()
                 --show brother rift
@@ -196,9 +198,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         --check expanded status
         local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
         if riftOffsets and riftOffsets[frame.spireIndex] and riftOffsets[frame.spireIndex].expanded then
-            frame.Texture:SetSize(16*poiScale,16*poiScale)
+            frame.Texture:SetSize(12*poiScale,12*poiScale)
             frame.Texture:SetAtlas("poi-rift1")
-            frame.HighlightTexture:SetSize(16*poiScale,16*poiScale)
+            frame.HighlightTexture:SetSize(12*poiScale,12*poiScale)
             frame.HighlightTexture:SetAtlas("poi-rift1")
             frame.isSpire = false
             frame.textString:Show()
@@ -209,6 +211,13 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                     break
                 end
             end
+        else
+            frame.Texture:SetSize(16*poiScale,22*poiScale)
+            frame.Texture:SetAtlas("poi-nzothpylon")
+            frame.HighlightTexture:SetSize(16*poiScale,22*poiScale)
+            frame.HighlightTexture:SetAtlas("poi-nzothpylon")
+            frame.isSpire = true
+            frame.textString:Hide()
         end
     end
     if type == "nyalothaRift" then
@@ -225,11 +234,13 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame.defaultSublevel = homeSublevel or MethodDungeonTools:GetCurrentSubLevel()
         if not frame.textString then
             frame.textString = frame:CreateFontString()
-            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 2)
-            frame.textString:SetFontObject("GameFontNormal")
-            frame.textString:SetFont(frame.textString:GetFont(),7*poiScale,"OUTLINE")
+            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 4)
+            frame.textString:SetJustifyH("CENTER")
             frame.textString:SetTextColor(0.5, 1, 0, 1)
         end
+        local scale = MethodDungeonTools:GetScale()
+        frame.textString:SetFontObject("GameFontNormal")
+        frame.textString:SetFont(frame.textString:GetFont(),5*poiScale*scale,"OUTLINE")
         frame.textString:SetText(frame.riftIndex*2)
         frame.textString:Show()
         frame:SetScript("OnClick",nil)
@@ -239,6 +250,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine("Ny'alothan Rift")
             GameTooltip:AddLine("[Drag to move]")
+            GameTooltip:AddLine("[Shift-Click to reset]")
             GameTooltip:Show()
             frame.HighlightTexture:Show()
             local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
@@ -276,65 +288,80 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:EnableMouse(true)
         local xOffset,yOffset
         frame:SetScript("OnMouseDown", function(self, button)
-            if button == "LeftButton" and not self.isMoving then
-                self:StartMoving()
-                self.isMoving = true
-                local x,y = MethodDungeonTools:GetCursorPosition()
-                local scale = MethodDungeonTools:GetScale()
-                x = x*(1/scale)
-                y = y*(1/scale)
-                local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-                local nx = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].x or poi.x
-                local ny = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].y or poi.y
-                xOffset = x-nx
-                yOffset = y-ny
-                local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
-                frame:SetScript("OnUpdate",function()
-                    for poiFrame,_ in pairs(activeDoors) do
-                        if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
-                            poiFrame.HighlightTexture:Show()
-                        else
-                            poiFrame.HighlightTexture:Hide()
+            if button == "LeftButton" then
+                if IsShiftKeyDown() then
+                    self.shiftKeyDown = true
+                else
+                    self:StartMoving()
+                    self.isMoving = true
+                    local x,y = MethodDungeonTools:GetCursorPosition()
+                    local scale = MethodDungeonTools:GetScale()
+                    x = x*(1/scale)
+                    y = y*(1/scale)
+                    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+                    local nx = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].x or poi.x
+                    local ny = riftOffsets and riftOffsets[frame.riftIndex] and riftOffsets[frame.riftIndex].y or poi.y
+                    xOffset = x-nx
+                    yOffset = y-ny
+                    local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+                    frame:SetScript("OnUpdate",function()
+                        for poiFrame,_ in pairs(activeDoors) do
+                            if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
+                                poiFrame.HighlightTexture:Show()
+                            else
+                                poiFrame.HighlightTexture:Hide()
+                            end
                         end
-                    end
-                end)
+                    end)
+                end
             end
         end)
         frame:SetScript("OnMouseUp", function(self, button)
-            if button == "LeftButton" and self.isMoving then
-                self.isMoving = false
-                local x,y = MethodDungeonTools:GetCursorPosition()
-                local scale = MethodDungeonTools:GetScale()
-                x = x*(1/scale)
-                y = y*(1/scale)
-                x = x-xOffset
-                y = y-yOffset
-                frame:StopMovingOrSizing()
-                frame:ClearAllPoints()
-                frame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
-                MethodDungeonTools:GetCurrentPreset().value.riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets or {}
-                local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-                riftOffsets[frame.riftIndex] = riftOffsets[frame.riftIndex] or {}
-                riftOffsets[frame.riftIndex].x = x
-                riftOffsets[frame.riftIndex].y = y
-                --dragged ontop of door
-                --find doors,check overlap,break,swap sublevel,change poi sublevel???
-                local _,active = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
-                for poiFrame,_ in pairs(active) do
-                    if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
-                        riftOffsets[frame.riftIndex].sublevel = poiFrame.target
-                        riftOffsets[frame.riftIndex].homeSublevel = frame.defaultSublevel
-                        if riftOffsets[frame.riftIndex].sublevel == frame.defaultSublevel then
-                            riftOffsets[frame.riftIndex].sublevel = nil
-                            riftOffsets[frame.riftIndex].homeSublevel = nil
+            if button == "LeftButton" then
+                if IsShiftKeyDown() and self.shiftKeyDown then
+                    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+                    riftOffsets[frame.riftIndex] = riftOffsets[frame.riftIndex] or {}
+                    riftOffsets[frame.riftIndex].x = nil
+                    riftOffsets[frame.riftIndex].y = nil
+                    riftOffsets[frame.riftIndex].sublevel = nil
+                    riftOffsets[frame.riftIndex].homeSublevel = nil
+                    MethodDungeonTools:POI_UpdateAll()
+                elseif self.isMoving then
+                    self.isMoving = false
+                    local x,y = MethodDungeonTools:GetCursorPosition()
+                    local scale = MethodDungeonTools:GetScale()
+                    x = x*(1/scale)
+                    y = y*(1/scale)
+                    x = x-xOffset
+                    y = y-yOffset
+                    frame:StopMovingOrSizing()
+                    frame:ClearAllPoints()
+                    frame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
+                    MethodDungeonTools:GetCurrentPreset().value.riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets or {}
+                    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+                    riftOffsets[frame.riftIndex] = riftOffsets[frame.riftIndex] or {}
+                    riftOffsets[frame.riftIndex].x = x
+                    riftOffsets[frame.riftIndex].y = y
+                    --dragged ontop of door
+                    --find doors,check overlap,break,swap sublevel,change poi sublevel???
+                    local _,active = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+                    for poiFrame,_ in pairs(active) do
+                        if MethodDungeonTools:DoFramesOverlap(frame,poiFrame,-10) then
+                            riftOffsets[frame.riftIndex].sublevel = poiFrame.target
+                            riftOffsets[frame.riftIndex].homeSublevel = frame.defaultSublevel
+                            if riftOffsets[frame.riftIndex].sublevel == frame.defaultSublevel then
+                                riftOffsets[frame.riftIndex].sublevel = nil
+                                riftOffsets[frame.riftIndex].homeSublevel = nil
+                            end
+                            --zoom out
+                            --move frame
+                            poiFrame:Click()
+                            break
                         end
-                        --zoom out
-                        --move frame
-                        poiFrame:Click()
-                        break
                     end
+                    frame:SetScript("OnUpdate",nil)
                 end
-                frame:SetScript("OnUpdate",nil)
+                self.shiftKeyDown = nil
             elseif button == "RightButton" then
                 local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
                 for poiFrame,_ in pairs(active) do
