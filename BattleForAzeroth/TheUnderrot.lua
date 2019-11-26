@@ -60,6 +60,7 @@ Only one of them will be present at a time.";
          ["type"] = "nyalothaSpire";
          ["template"] = "VignettePinTemplate";
          ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["npcId"] = 161244;
       };
       [7] = {
          ["y"] = -419.17211198146;
@@ -70,6 +71,7 @@ Only one of them will be present at a time.";
          };
          ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
+         ["npcId"] = 161244;
       };
       [8] = {
          ["y"] = -258.59750762232;
@@ -81,6 +83,7 @@ Only one of them will be present at a time.";
          ["type"] = "nyalothaSpire";
          ["template"] = "VignettePinTemplate";
          ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["npcId"] = 161124;
       };
       [9] = {
          ["y"] = -266.14563040982;
@@ -91,6 +94,7 @@ Only one of them will be present at a time.";
          };
          ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
+         ["npcId"] = 161124;
       };
       [10] = {
          ["y"] = -87.076968755083;
@@ -102,6 +106,7 @@ Only one of them will be present at a time.";
          ["type"] = "nyalothaSpire";
          ["template"] = "VignettePinTemplate";
          ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["npcId"] = 161241;
       };
       [11] = {
          ["y"] = -83.302940657196;
@@ -112,6 +117,7 @@ Only one of them will be present at a time.";
          };
          ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
+         ["npcId"] = 161241;
       };
       [12] = {
          ["y"] = -222.38138064733;
@@ -123,6 +129,7 @@ Only one of them will be present at a time.";
          ["type"] = "nyalothaSpire";
          ["template"] = "VignettePinTemplate";
          ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["npcId"] = 161243;
       };
       [13] = {
          ["y"] = -224.10103675327;
@@ -133,6 +140,7 @@ Only one of them will be present at a time.";
          };
          ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
+         ["npcId"] = 161243;
       };
    };
    [2] = {

@@ -12,6 +12,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["type"] = "nyalothaSpire";
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["npcId"] = 161244;
         };
         [2] = {
             ["y"] = -398.72092416879;
@@ -22,6 +23,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161244;
         };
     };
     [4] = {
@@ -34,6 +36,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaRift";
+            ["npcId"] = 161124;
         };
         [2] = {
             ["y"] = -310.53006922738;
@@ -44,6 +47,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaRift";
+            ["npcId"] = 161243;
         };
         [3] = {
             ["y"] = -197.65723365378;
@@ -55,6 +59,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["type"] = "nyalothaSpire";
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["npcId"] = 161241;
         };
         [1] = {
             ["y"] = -318.61727794098;
@@ -66,6 +71,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
+            ["npcId"] = 161243;
         };
         [4] = {
             ["y"] = -188.91733346328;
@@ -76,6 +82,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161241;
         };
         [5] = {
             ["y"] = -485.10332866813;
@@ -87,6 +94,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
+            ["npcId"] = 161124;
         };
     };
 };

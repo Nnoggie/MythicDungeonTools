@@ -46,6 +46,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
+            ["npcId"] = 161124;
         };
         [6] = {
             ["y"] = -325.14626963378;
@@ -56,6 +57,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaRift";
+            ["npcId"] = 161124;
         };
         [7] = {
             ["y"] = -444.7658843595;
@@ -68,6 +70,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
+            ["npcId"] = 161243;
         };
         [8] = {
             ["y"] = -437.5987376099;
@@ -79,6 +82,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaRift";
+            ["npcId"] = 161243;
         };
         [9] = {
             ["y"] = -161.70968139747;
@@ -90,6 +94,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["type"] = "nyalothaSpire";
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["npcId"] = 161241;
         };
         [10] = {
             ["y"] = -173.36139423733;
@@ -100,6 +105,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161241;
         };
         [11] = {
             ["y"] = -161.10585376045;
@@ -111,6 +117,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["type"] = "nyalothaSpire";
             ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["npcId"] = 161244;
         };
         [12] = {
             ["y"] = -173.18274338576;
@@ -121,6 +128,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161244;
         };
     };
 };
