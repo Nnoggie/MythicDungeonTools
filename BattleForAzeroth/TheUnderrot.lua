@@ -443,6 +443,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 85816;
       ["creatureType"] = "Humanoid";
       ["level"] = 121;
+      ["stealthDetect"] = true;
       ["name"] = "Chosen Blood Matron";
       ["id"] = 131436;
    };
