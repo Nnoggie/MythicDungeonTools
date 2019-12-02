@@ -7,7 +7,7 @@
         <Layers>
 
             <Layer level="BACKGROUND">
-                <Texture name="$parent_Dragon" hidden="true" parentKey="texture_Dragon"  atlas="worldquest-questmarker-dragon">
+                <Texture name="$parent_Dragon" hidden="true" parentKey="texture_Dragon"  file="Interface\DialogFrame\UI-DialogBox-Gold-Dragon">
                     <Anchors>
                         <Anchor point="CENTER"/>
                     </Anchors>
