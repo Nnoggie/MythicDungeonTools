@@ -3,6 +3,18 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=246,teeming=286,tee
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
+        [7] = {
+            ["y"] = -161.70968139747;
+            ["x"] = 391.30861840741;
+            ["index"] = 3;
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["npcId"] = 161241;
+            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
+        };
         [1] = {
             ["y"] = -264.6777671764;
             ["x"] = 727.18161266836;
@@ -17,12 +29,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["graveyardDescription"] = "Unlocks after defeating The Council of Tribes";
             ["type"] = "graveyard";
         };
-        [3] = {
-            ["y"] = -306.78957025286;
-            ["x"] = 552.83936308858;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "krSpiritGuide";
-        };
         [4] = {
             ["y"] = -198.38138258562;
             ["x"] = 375.6062297457;
@@ -30,11 +36,23 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["weeks"] = {
                 [5] = true;
                 [2] = true;
-                [8] = true;
                 [11] = true;
+                [8] = true;
             };
             ["text"] = "Week 2/5/8/11: This Brute will stop patrolling, when he reaches Emissary of the Tides 7 (G13).";
             ["type"] = "generalNote";
+        };
+        [8] = {
+            ["y"] = -161.10585376045;
+            ["x"] = 346.02022400548;
+            ["index"] = 4;
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["npcId"] = 161244;
+            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
         };
         [5] = {
             ["y"] = -314.73120900398;
@@ -43,23 +61,18 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["weeks"] = {
                 [1] = true;
             };
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
             ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["template"] = "VignettePinTemplate";
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+        };
+        [3] = {
+            ["y"] = -306.78957025286;
+            ["x"] = 552.83936308858;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "krSpiritGuide";
         };
         [6] = {
-            ["y"] = -325.14626963378;
-            ["x"] = 562.75598685997;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaRift";
-            ["npcId"] = 161124;
-        };
-        [7] = {
             ["y"] = -444.7658843595;
             ["x"] = 458.86739924883;
             ["index"] = 2;
@@ -67,74 +80,13 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
                 [1] = true;
                 [12] = true;
             };
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
-            ["npcId"] = 161243;
-        };
-        [8] = {
-            ["y"] = -437.5987376099;
-            ["x"] = 447.96947827615;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-                [12] = true;
-            };
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaRift";
-            ["npcId"] = 161243;
-        };
-        [9] = {
-            ["y"] = -161.70968139747;
-            ["x"] = 391.30861840741;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [10] = {
-            ["y"] = -173.36139423733;
-            ["x"] = 392.57494178068;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
-        };
-        [11] = {
-            ["y"] = -161.10585376045;
-            ["x"] = 346.02022400548;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [12] = {
-            ["y"] = -173.18274338576;
-            ["x"] = 344.20868926597;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
         };
     };
 };
-
-
-
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [27] = {

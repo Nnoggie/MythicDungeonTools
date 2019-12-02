@@ -2291,6 +2291,8 @@ function MethodDungeonTools:EnsureDBTables()
     preset.mdi.freehold = preset.mdi.freehold or 1
     preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
     preset.mdi.beguiling = preset.mdi.beguiling or 1
+
+    preset.value.riftOffsets = preset.value.riftOffsets or {}
 end
 
 function MethodDungeonTools:GetTileFormat(dungeonIdx)

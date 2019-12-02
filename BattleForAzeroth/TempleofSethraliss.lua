@@ -3,26 +3,32 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,tee
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
    [1] = {
+      [7] = {
+         ["npcId"] = 161243;
+         ["type"] = "nyalothaSpire";
+         ["index"] = 3;
+         ["scale"] = 0.7;
+         ["y"] = -177.05287568637;
+         ["x"] = 428.29383591083;
+         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["weeks"] = {
+            [1] = true;
+         };
+         ["template"] = "VignettePinTemplate";
+      };
       [1] = {
          ["y"] = -73.998246995732;
          ["x"] = 335.00001778454;
          ["template"] = "MapLinkPinTemplate";
          ["target"] = 2;
-         ["type"] = "mapLink";
          ["direction"] = -2;
+         ["type"] = "mapLink";
       };
       [2] = {
          ["y"] = -541.41229396957;
          ["x"] = 571.10587581764;
          ["template"] = "DeathReleasePinTemplate";
          ["graveyardDescription"] = "";
-         ["type"] = "graveyard";
-      };
-      [3] = {
-         ["y"] = -267.29618127731;
-         ["x"] = 370.20027720976;
-         ["template"] = "DeathReleasePinTemplate";
-         ["graveyardDescription"] = "Unlocks after killing Merektha";
          ["type"] = "graveyard";
       };
       [4] = {
@@ -33,90 +39,40 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["type"] = "graveyard";
       };
       [5] = {
+         ["npcId"] = 161244;
+         ["type"] = "nyalothaSpire";
+         ["index"] = 1;
+         ["scale"] = 0.7;
          ["y"] = -516.5087331118;
          ["x"] = 571.02654483511;
-         ["index"] = 1;
+         ["tooltipText"] = "Defiled Spire of Ny'alotha";
          ["weeks"] = {
             [1] = true;
          };
-         ["scale"] = 0.7;
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
          ["template"] = "VignettePinTemplate";
-         ["type"] = "nyalothaSpire";
-         ["npcId"] = 161244;
+      };
+      [3] = {
+         ["y"] = -267.29618127731;
+         ["x"] = 370.20027720976;
+         ["template"] = "DeathReleasePinTemplate";
+         ["graveyardDescription"] = "Unlocks after killing Merektha";
+         ["type"] = "graveyard";
       };
       [6] = {
-         ["y"] = -516.85980321455;
-         ["x"] = 577.17031306577;
-         ["index"] = 1;
-         ["weeks"] = {
-            [1] = true;
-         };
+         ["npcId"] = 161124;
+         ["type"] = "nyalothaSpire";
+         ["index"] = 2;
          ["scale"] = 0.7;
-         ["template"] = "VignettePinTemplate";
-         ["type"] = "nyalothaRift";
-         ["npcId"] = 161244;
-      };
-      [7] = {
          ["y"] = -403.8630225136;
          ["x"] = 440.67550389062;
-         ["index"] = 2;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["scale"] = 0.7;
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
          ["tooltipText"] = "Brutal Spire of Ny'alotha";
-         ["npcId"] = 161124;
-      };
-      [8] = {
-         ["y"] = -405.50302070452;
-         ["x"] = 433.03547005497;
-         ["index"] = 2;
          ["weeks"] = {
             [1] = true;
          };
-         ["scale"] = 0.7;
-         ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161124;
-      };
-      [9] = {
-         ["y"] = -177.05287568637;
-         ["x"] = 428.29383591083;
-         ["index"] = 3;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["scale"] = 0.7;
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
-         ["npcId"] = 161243;
-      };
-      [10] = {
-         ["y"] = -171.97245257471;
-         ["x"] = 433.95487489106;
-         ["index"] = 3;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["scale"] = 0.7;
-         ["type"] = "nyalothaRift";
-         ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161243;
       };
    };
    [2] = {
-      [1] = {
-         ["y"] = -493.99826543592;
-         ["x"] = 559.00008483976;
-         ["template"] = "MapLinkPinTemplate";
-         ["target"] = 1;
-         ["type"] = "mapLink";
-         ["direction"] = 2;
-      };
       [2] = {
          ["y"] = -363.81684221232;
          ["x"] = 531.32107890343;
@@ -129,6 +85,14 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["template"] = "MapLinkPinTemplate";
          ["type"] = "templeEye";
       };
+      [1] = {
+         ["y"] = -493.99826543592;
+         ["x"] = 559.00008483976;
+         ["template"] = "MapLinkPinTemplate";
+         ["target"] = 1;
+         ["direction"] = 2;
+         ["type"] = "mapLink";
+      };
       [4] = {
          ["y"] = -410.84906632203;
          ["x"] = 500.18849903557;
@@ -136,21 +100,10 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["weeks"] = {
             [1] = true;
          };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
+         ["npcId"] = 161241;
          ["tooltipText"] = "Cursed Spire of Ny'alotha";
-         ["npcId"] = 161241;
-      };
-      [5] = {
-         ["y"] = -400.64896852764;
-         ["x"] = 509.57258725545;
-         ["index"] = 4;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161241;
+         ["type"] = "nyalothaSpire";
       };
    };
 };

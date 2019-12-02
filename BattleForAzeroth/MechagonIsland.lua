@@ -6,105 +6,57 @@ MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.5
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=1,teeming=1,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
-        [1] = {
-            ["y"] = -171.08871963681;
-            ["x"] = 534.16284039491;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["npcId"] = 161124;
-        };
         [2] = {
-            ["y"] = -179.39160039295;
-            ["x"] = 535.1063453386;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
+            ["npcId"] = 161244;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 2;
             ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161124;
-        };
-        [3] = {
             ["y"] = -268.62227619884;
             ["x"] = 576.11449654476;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [4] = {
-            ["y"] = -277.24864873942;
-            ["x"] = 577.03873563519;
-            ["index"] = 2;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
         };
-        [5] = {
+        [3] = {
+            ["npcId"] = 161241;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 3;
+            ["scale"] = 0.7;
             ["y"] = -331.72106675023;
             ["x"] = 511.63147296771;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [6] = {
-            ["y"] = -341.62791724812;
-            ["x"] = 511.63147296771;
-            ["index"] = 3;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
         };
-        [7] = {
+        [1] = {
+            ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 1;
+            ["scale"] = 0.7;
+            ["y"] = -171.08871963681;
+            ["x"] = 534.16284039491;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["template"] = "VignettePinTemplate";
+        };
+        [4] = {
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 4;
+            ["scale"] = 0.7;
             ["y"] = -319.9773227567;
             ["x"] = 460.36406709732;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["npcId"] = 161243;
-        };
-        [8] = {
-            ["y"] = -312.02126661313;
-            ["x"] = 457.91602961897;
-            ["index"] = 4;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161243;
         };
     };
 };

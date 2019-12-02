@@ -8,128 +8,116 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 238.99949948117;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
         [2] = {
             ["y"] = -325.99821539596;
             ["x"] = 438.99950417504;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
         [4] = {
             ["y"] = -165.998228807;
             ["x"] = 301.99956662021;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
         [3] = {
             ["y"] = -325.99821539596;
             ["x"] = 763.9993723277;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
     };
     [3] = {
-        [1] = {
-            ["y"] = -331.99823886529;
-            ["x"] = 142.99959280156;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 1;
-            ["direction"] = 1;
-            ["type"] = "mapLink";
-        };
         [2] = {
             ["y"] = -74.998246995732;
             ["x"] = 634.99954083376;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [3] = {
             ["y"] = -479.99823718891;
             ["x"] = 265.99968709797;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
+        };
+        [1] = {
+            ["y"] = -331.99823886529;
+            ["x"] = 142.99959280156;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 1;
+            ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [4] = {
+            ["npcId"] = 161241;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 4;
+            ["scale"] = 1.5;
             ["y"] = -238.34331059316;
             ["x"] = 280.57934511612;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 1.5;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [5] = {
-            ["y"] = -260.59027346367;
-            ["x"] = 277.79844065962;
-            ["index"] = 4;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 1.5;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
         };
     };
     [1] = {
         [13] = {
-            ["y"] = -225.77935107532;
-            ["x"] = 418.19062629672;
-            ["index"] = 2;
+            ["y"] = -149.88478569378;
+            ["x"] = 524.42562055599;
+            ["index"] = 3;
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaRift";
+            ["npcId"] = 161243;
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161124;
+            ["type"] = "nyalothaRift";
         };
         [7] = {
             ["y"] = -171.156124714;
             ["x"] = 507.71746400247;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
         [1] = {
             ["y"] = -353.99828789942;
             ["x"] = 431.99974958785;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [2] = {
             ["y"] = -323.99827432074;
             ["x"] = 658.99968496338;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [4] = {
             ["y"] = -351.99821832962;
             ["x"] = 286.99996290728;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [8] = {
             ["y"] = -488.39259517722;
@@ -138,16 +126,17 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["graveyardDescription"] = "";
             ["type"] = "graveyard";
         };
-        [15] = {
-            ["y"] = -149.88478569378;
-            ["x"] = 524.42562055599;
-            ["index"] = 3;
+        [11] = {
+            ["y"] = -226.22336104694;
+            ["x"] = 430.84475805135;
+            ["index"] = 2;
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaRift";
+            ["npcId"] = 161124;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
         };
         [9] = {
             ["y"] = -244.84595605421;
@@ -160,8 +149,8 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 333.16700017336;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [10] = {
             ["y"] = -374.19207858865;
@@ -170,61 +159,38 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
             ["npcId"] = 161244;
-        };
-        [14] = {
-            ["y"] = -164.31491922575;
-            ["x"] = 522.87160470989;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaSpire";
+            ["tooltipText"] = "Defiled Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
         };
         [3] = {
             ["y"] = -423.99831958301;
             ["x"] = 287.99980457313;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [6] = {
             ["y"] = -234.95708134019;
             ["x"] = 331.91687615145;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
         [12] = {
-            ["y"] = -226.22336104694;
-            ["x"] = 430.84475805135;
-            ["index"] = 2;
+            ["y"] = -164.31491922575;
+            ["x"] = 522.87160470989;
+            ["index"] = 3;
             ["weeks"] = {
                 [1] = true;
             };
+            ["npcId"] = 161243;
+            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["npcId"] = 161124;
-        };
-        [11] = {
-            ["y"] = -385.81012813391;
-            ["x"] = 439.8445618461;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
         };
     };
     [4] = {
@@ -233,16 +199,16 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 283.99958366528;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [2] = {
             ["y"] = -180.99828639068;
             ["x"] = 567.99959204719;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 5;
-            ["direction"] = -1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
         [3] = {
             ["y"] = -338.999309754;
@@ -259,8 +225,8 @@ G52 will not be present while the Worldquest to defeat Matron Christiane is acti
             ["x"] = 395.9996705018;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
-            ["direction"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
     };
 };

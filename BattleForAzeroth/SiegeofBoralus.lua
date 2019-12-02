@@ -110,38 +110,12 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["graveyardDescription"] = "";
             ["type"] = "graveyard";
         };
-        [3] = {
-            ["y"] = -334.61016080079;
-            ["x"] = 432.0393310099;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Dread Captain Lockwood";
-            ["type"] = "graveyard";
-        };
         [4] = {
             ["y"] = -462.91658652644;
             ["x"] = 405.60201958621;
             ["template"] = "DeathReleasePinTemplate";
             ["graveyardDescription"] = "Unlocks after defeating Hadal Darkfathom";
             ["type"] = "graveyard";
-        };
-        [5] = {
-            ["y"] = -99.22379149751;
-            ["x"] = 510.75103230284;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "sobGutters";
-        };
-        [6] = {
-            ["y"] = -279.04184468091;
-            ["x"] = 540.43646488041;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "sobGutters";
-        };
-        [7] = {
-            ["y"] = -229.95502100789;
-            ["x"] = 471.82728422311;
-            ["template"] = "MapLinkPinTemplate";
-            ["text"] = "G72 Gutters can be used for Enemy forces by tagging them with damage and triggering the instant-kill from the footmen next to them.";
-            ["type"] = "generalNote";
         };
         [8] = {
             ["y"] = -430.03927979814;
@@ -155,108 +129,86 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 572.9478796215;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["type"] = "mapLink";
             ["direction"] = 1;
+            ["type"] = "mapLink";
+        };
+        [5] = {
+            ["y"] = -99.22379149751;
+            ["x"] = 510.75103230284;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "sobGutters";
         };
         [10] = {
+            ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 1;
+            ["scale"] = 0.7;
             ["y"] = -120.19106457796;
             ["x"] = 550.93820856564;
-            ["index"] = 1;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["npcId"] = 161124;
         };
         [11] = {
-            ["y"] = -123.03526542646;
-            ["x"] = 558.01584385105;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
+            ["npcId"] = 161241;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 2;
             ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161124;
-        };
-        [12] = {
             ["y"] = -218.52529996678;
             ["x"] = 492.7051319943;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [13] = {
-            ["y"] = -224.65050627792;
-            ["x"] = 496.68773122516;
-            ["index"] = 2;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
         };
-        [14] = {
+        [3] = {
+            ["y"] = -334.61016080079;
+            ["x"] = 432.0393310099;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after killing Dread Captain Lockwood";
+            ["type"] = "graveyard";
+        };
+        [6] = {
+            ["y"] = -279.04184468091;
+            ["x"] = 540.43646488041;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "sobGutters";
+        };
+        [12] = {
+            ["npcId"] = 161244;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 3;
+            ["scale"] = 0.7;
             ["y"] = -330.8710471262;
             ["x"] = 531.39777387083;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [15] = {
-            ["y"] = -331.57318733168;
-            ["x"] = 523.67417134479;
-            ["index"] = 3;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
         };
-        [16] = {
+        [13] = {
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 4;
+            ["scale"] = 0.7;
             ["y"] = -393.00157968669;
             ["x"] = 424.49336859004;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["npcId"] = 161243;
-        };
-        [17] = {
-            ["y"] = -384.54299509684;
-            ["x"] = 424.09950955758;
-            ["index"] = 4;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161243;
+        };
+        [7] = {
+            ["y"] = -229.95502100789;
+            ["x"] = 471.82728422311;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "G72 Gutters can be used for Enemy forces by tagging them with damage and triggering the instant-kill from the footmen next to them.";
+            ["type"] = "generalNote";
         };
     };
     [2] = {
@@ -265,8 +217,8 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 552.76424026611;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["type"] = "mapLink";
             ["direction"] = -1;
+            ["type"] = "mapLink";
         };
     };
 };

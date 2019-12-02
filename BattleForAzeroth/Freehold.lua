@@ -81,6 +81,19 @@ end
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
+        [7] = {
+            ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 3;
+            ["scale"] = 0.7;
+            ["y"] = -322.70563864341;
+            ["x"] = 265.80852163042;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["template"] = "VignettePinTemplate";
+        };
         [1] = {
             ["y"] = -200.49488376925;
             ["x"] = 591.8001100269;
@@ -95,13 +108,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["graveyardDescription"] = "Unlocks after defeating Council o' Captains.";
             ["type"] = "graveyard";
         };
-        [3] = {
-            ["y"] = -343.53532845441;
-            ["x"] = 576.72706599388;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeating Skycap'n Kragg.";
-            ["type"] = "graveyard";
-        };
         [4] = {
             ["y"] = -360.14964210345;
             ["x"] = 292.04610954455;
@@ -109,116 +115,60 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["weeks"] = {
                 [5] = true;
                 [2] = true;
-                [11] = true;
                 [8] = true;
+                [11] = true;
             };
             ["text"] = "Week 2/5/8/11: G53 is not patrolling. It is stationary at Emissray of the Tides 14 (G53).";
             ["type"] = "generalNote";
         };
-        [5] = {
-            ["y"] = -228.16363518332;
-            ["x"] = 543.79358393173;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [6] = {
-            ["y"] = -236.2383078121;
-            ["x"] = 538.00089333702;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
-        };
-        [7] = {
-            ["y"] = -401.01013953048;
-            ["x"] = 426.36991769521;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["npcId"] = 161243;
-        };
         [8] = {
-            ["y"] = -398.67709886433;
-            ["x"] = 432.27114201463;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161243;
-        };
-        [9] = {
-            ["y"] = -322.70563864341;
-            ["x"] = 265.80852163042;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
+            ["npcId"] = 161241;
             ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["npcId"] = 161124;
-        };
-        [10] = {
-            ["y"] = -313.77120403475;
-            ["x"] = 265.50044634079;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
+            ["index"] = 4;
             ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161124;
-        };
-        [11] = {
             ["y"] = -190.88329235283;
             ["x"] = 365.04932134943;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [12] = {
-            ["y"] = -199.94098207007;
-            ["x"] = 362.85352599135;
-            ["index"] = 4;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.7;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
+        };
+        [5] = {
+            ["npcId"] = 161244;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 1;
+            ["scale"] = 0.7;
+            ["y"] = -228.16363518332;
+            ["x"] = 543.79358393173;
+            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["template"] = "VignettePinTemplate";
+        };
+        [3] = {
+            ["y"] = -343.53532845441;
+            ["x"] = 576.72706599388;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after defeating Skycap'n Kragg.";
+            ["type"] = "graveyard";
+        };
+        [6] = {
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 2;
+            ["scale"] = 0.7;
+            ["y"] = -401.01013953048;
+            ["x"] = 426.36991769521;
+            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["template"] = "VignettePinTemplate";
         };
     };
 };
-
-
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [27] = {

@@ -15,19 +15,8 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 519.99998390675;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 7;
-            ["type"] = "mapLink";
             ["direction"] = 1;
-        };
-        [8] = {
-            ["y"] = -374.3923847057;
-            ["x"] = 223.97732845399;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
-            ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161124;
+            ["type"] = "mapLink";
         };
         [3] = {
             ["y"] = -98.627695689899;
@@ -40,8 +29,8 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 452.00002179295;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 5;
-            ["type"] = "mapLink";
             ["direction"] = -1;
+            ["type"] = "mapLink";
         };
         [4] = {
             ["y"] = -346.99535709868;
@@ -62,10 +51,10 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["npcId"] = 161124;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
         };
     };
     [2] = {
@@ -80,16 +69,16 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 592.87359409387;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["type"] = "mapLink";
             ["direction"] = 2;
+            ["type"] = "mapLink";
         };
         [2] = {
             ["y"] = -120.99821179174;
             ["x"] = 454.00006758794;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
-            ["type"] = "mapLink";
             ["direction"] = -2;
+            ["type"] = "mapLink";
         };
         [4] = {
             ["y"] = -259.49817884669;
@@ -137,16 +126,16 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 476.41240071571;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["type"] = "mapLink";
             ["direction"] = -1;
+            ["type"] = "mapLink";
         };
         [2] = {
             ["y"] = -460.41462426303;
             ["x"] = 311.79902903432;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
-            ["type"] = "mapLink";
             ["direction"] = 1;
+            ["type"] = "mapLink";
         };
         [4] = {
             ["y"] = -294.67309052738;
@@ -234,21 +223,10 @@ Blood Elf/Gnome: 10% Intellect";
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161244;
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [21] = {
-            ["y"] = -210.08013147122;
-            ["x"] = 376.23968851009;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
+            ["type"] = "nyalothaSpire";
         };
         [11] = {
             ["y"] = -392.9440473463;
@@ -323,28 +301,20 @@ Blood Elf/Gnome: 10% Intellect";
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "tdprisonkey";
         };
-        [19] = {
-            ["y"] = -178.47965873006;
-            ["x"] = 384.77433124093;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "tdprisonkey";
-        };
         [15] = {
             ["y"] = -170.64246587206;
             ["x"] = 414.72803284209;
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "tdprisonkey";
         };
+        [19] = {
+            ["y"] = -178.47965873006;
+            ["x"] = 384.77433124093;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "tdprisonkey";
+        };
     };
     [1] = {
-        [1] = {
-            ["y"] = -262.48238754636;
-            ["x"] = 429.14575221168;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 2;
-            ["type"] = "mapLink";
-            ["direction"] = -2;
-        };
         [2] = {
             ["y"] = -323.24173620103;
             ["x"] = 647.46008933814;
@@ -359,6 +329,14 @@ Blood Elf/Gnome: 10% Intellect";
             ["graveyardDescription"] = "Unlocks after killing The Sand Queen";
             ["type"] = "graveyard";
         };
+        [1] = {
+            ["y"] = -262.48238754636;
+            ["x"] = 429.14575221168;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 2;
+            ["direction"] = -2;
+            ["type"] = "mapLink";
+        };
         [4] = {
             ["y"] = -252.58510488;
             ["x"] = 459.73979527495;
@@ -366,21 +344,10 @@ Blood Elf/Gnome: 10% Intellect";
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161241;
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [5] = {
-            ["y"] = -251.98125132875;
-            ["x"] = 472.4205384515;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
+            ["type"] = "nyalothaSpire";
         };
     };
     [4] = {
@@ -398,16 +365,16 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 313.00005758367;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
-            ["type"] = "mapLink";
             ["direction"] = -1;
+            ["type"] = "mapLink";
         };
         [2] = {
             ["y"] = -371.99834172614;
             ["x"] = 219.00000645407;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 5;
-            ["type"] = "mapLink";
             ["direction"] = 1;
+            ["type"] = "mapLink";
         };
         [4] = {
             ["y"] = -234.18683041859;
@@ -470,21 +437,13 @@ Blood Elf/Gnome: 10% Intellect";
         };
     };
     [5] = {
-        [1] = {
-            ["y"] = -384.99838623404;
-            ["x"] = 212.99992649071;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 4;
-            ["type"] = "mapLink";
-            ["direction"] = -1;
-        };
         [2] = {
             ["y"] = -92.998271234334;
             ["x"] = 487.99998658896;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 6;
-            ["type"] = "mapLink";
             ["direction"] = 1;
+            ["type"] = "mapLink";
         };
         [3] = {
             ["y"] = -404.49679019861;
@@ -494,6 +453,14 @@ Blood Elf/Gnome: 10% Intellect";
             ["lockpick"] = true;
             ["doorName"] = "Prison Gate";
             ["type"] = "door";
+        };
+        [1] = {
+            ["y"] = -384.99838623404;
+            ["x"] = 212.99992649071;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 4;
+            ["direction"] = -1;
+            ["type"] = "mapLink";
         };
         [4] = {
             ["y"] = -270.18747899972;
@@ -511,21 +478,10 @@ Blood Elf/Gnome: 10% Intellect";
             ["weeks"] = {
                 [1] = true;
             };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
+            ["npcId"] = 161243;
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["npcId"] = 161243;
-        };
-        [6] = {
-            ["y"] = -302.61050077879;
-            ["x"] = 470.85940394854;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
         };
     };
     [7] = {
@@ -534,14 +490,11 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 569.99996362254;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 6;
-            ["type"] = "mapLink";
             ["direction"] = -1;
+            ["type"] = "mapLink";
         };
     };
 };
-
-
-
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [1] = {

@@ -2,25 +2,31 @@ local dungeonIndex = 22
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=252,teeming=286,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
    [1] = {
+      [7] = {
+         ["y"] = -258.59750762232;
+         ["x"] = 635.55432331181;
+         ["index"] = 2;
+         ["weeks"] = {
+            [1] = true;
+         };
+         ["npcId"] = 161124;
+         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
+      };
       [1] = {
          ["y"] = -106.99817181006;
          ["x"] = 313.99999540486;
          ["template"] = "MapLinkPinTemplate";
          ["target"] = 2;
-         ["direction"] = -2;
          ["type"] = "mapLink";
+         ["direction"] = -2;
       };
       [2] = {
          ["y"] = -289.02272233371;
          ["x"] = 467.89305691257;
          ["template"] = "MapLinkPinTemplate";
          ["type"] = "tuSkip";
-      };
-      [3] = {
-         ["y"] = -342.93441674103;
-         ["x"] = 388.07413459747;
-         ["template"] = "MapLinkPinTemplate";
-         ["type"] = "tuMatronNote";
       };
       [4] = {
          ["y"] = -394.39160333787;
@@ -36,6 +42,30 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
 Only one of them will be present at a time.";
          ["type"] = "generalNote";
       };
+      [8] = {
+         ["y"] = -87.076968755083;
+         ["x"] = 475.43547308634;
+         ["index"] = 3;
+         ["weeks"] = {
+            [1] = true;
+         };
+         ["npcId"] = 161241;
+         ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
+      };
+      [9] = {
+         ["y"] = -222.38138064733;
+         ["x"] = 386.34987541915;
+         ["index"] = 4;
+         ["weeks"] = {
+            [1] = true;
+         };
+         ["npcId"] = 161243;
+         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
+      };
       [5] = {
          ["y"] = -403.4998312742;
          ["x"] = 397.59771146364;
@@ -50,6 +80,12 @@ Only one of them will be present at a time.";
 Only one of them will be present at a time.";
          ["type"] = "generalNote";
       };
+      [3] = {
+         ["y"] = -342.93441674103;
+         ["x"] = 388.07413459747;
+         ["template"] = "MapLinkPinTemplate";
+         ["type"] = "tuMatronNote";
+      };
       [6] = {
          ["y"] = -419.37611656379;
          ["x"] = 421.24036459341;
@@ -57,90 +93,10 @@ Only one of them will be present at a time.";
          ["weeks"] = {
             [1] = true;
          };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
+         ["npcId"] = 161244;
          ["tooltipText"] = "Defiled Spire of Ny'alotha";
-         ["npcId"] = 161244;
-      };
-      [7] = {
-         ["y"] = -419.17211198146;
-         ["x"] = 430.01242155669;
-         ["index"] = 1;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaRift";
          ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161244;
-      };
-      [8] = {
-         ["y"] = -258.59750762232;
-         ["x"] = 635.55432331181;
-         ["index"] = 2;
-         ["weeks"] = {
-            [1] = true;
-         };
          ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
-         ["npcId"] = 161124;
-      };
-      [9] = {
-         ["y"] = -266.14563040982;
-         ["x"] = 644.98937067302;
-         ["index"] = 2;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaRift";
-         ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161124;
-      };
-      [10] = {
-         ["y"] = -87.076968755083;
-         ["x"] = 475.43547308634;
-         ["index"] = 3;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Cursed Spire of Ny'alotha";
-         ["npcId"] = 161241;
-      };
-      [11] = {
-         ["y"] = -83.302940657196;
-         ["x"] = 465.24557373726;
-         ["index"] = 3;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaRift";
-         ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161241;
-      };
-      [12] = {
-         ["y"] = -222.38138064733;
-         ["x"] = 386.34987541915;
-         ["index"] = 4;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
-         ["npcId"] = 161243;
-      };
-      [13] = {
-         ["y"] = -224.10103675327;
-         ["x"] = 376.97940483715;
-         ["index"] = 4;
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["type"] = "nyalothaRift";
-         ["template"] = "VignettePinTemplate";
-         ["npcId"] = 161243;
       };
    };
    [2] = {
@@ -149,8 +105,8 @@ Only one of them will be present at a time.";
          ["x"] = 612.99994620309;
          ["template"] = "MapLinkPinTemplate";
          ["target"] = 1;
-         ["direction"] = 2;
          ["type"] = "mapLink";
+         ["direction"] = 2;
       };
    };
 };

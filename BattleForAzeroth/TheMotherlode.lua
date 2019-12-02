@@ -17,38 +17,11 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "mlFrackingTotem";
         };
-        [3] = {
-            ["y"] = -159.0643543431;
-            ["x"] = 229.53433707512;
-            ["template"] = "MapLinkPinTemplate";
-            ["type"] = "mlFrackingTotem";
-        };
         [4] = {
             ["y"] = -116.94137664378;
             ["x"] = 286.53431587181;
             ["template"] = "MapLinkPinTemplate";
             ["type"] = "mlMineCart";
-        };
-        [5] = {
-            ["y"] = -262.08125072401;
-            ["x"] = 367.76549732401;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Coin-Operated Crowd Pummeler";
-            ["type"] = "graveyard";
-        };
-        [6] = {
-            ["y"] = -121.09600689235;
-            ["x"] = 275.70035521298;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after reaching the end of the Mine Cart Ride";
-            ["type"] = "graveyard";
-        };
-        [7] = {
-            ["y"] = -112.60568055995;
-            ["x"] = 479.54906443908;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Rixxa Fluxflame";
-            ["type"] = "graveyard";
         };
         [8] = {
             ["y"] = -273.73565889455;
@@ -64,111 +37,87 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed.";
             ["type"] = "generalNote";
         };
+        [5] = {
+            ["y"] = -262.08125072401;
+            ["x"] = 367.76549732401;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after killing Coin-Operated Crowd Pummeler";
+            ["type"] = "graveyard";
+        };
         [10] = {
+            ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 1;
+            ["scale"] = 0.5;
             ["y"] = -404.20422659864;
             ["x"] = 451.26968700086;
-            ["index"] = 1;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.5;
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
-            ["npcId"] = 161124;
         };
         [11] = {
-            ["y"] = -406.337799888;
-            ["x"] = 455.48114879577;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
+            ["npcId"] = 161241;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 2;
             ["scale"] = 0.5;
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaRift";
-            ["npcId"] = 161124;
-        };
-        [12] = {
             ["y"] = -274.17502525657;
             ["x"] = 296.83927499697;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.5;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [13] = {
-            ["y"] = -267.44738702375;
-            ["x"] = 297.00335153983;
-            ["index"] = 2;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.5;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161241;
         };
-        [14] = {
+        [3] = {
+            ["y"] = -159.0643543431;
+            ["x"] = 229.53433707512;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "mlFrackingTotem";
+        };
+        [6] = {
+            ["y"] = -121.09600689235;
+            ["x"] = 275.70035521298;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after reaching the end of the Mine Cart Ride";
+            ["type"] = "graveyard";
+        };
+        [12] = {
+            ["npcId"] = 161244;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 3;
+            ["scale"] = 0.5;
             ["y"] = -106.28696273365;
             ["x"] = 341.60422579411;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.5;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [15] = {
-            ["y"] = -108.08195629064;
-            ["x"] = 335.55818242689;
-            ["index"] = 3;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.5;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161244;
         };
-        [16] = {
+        [13] = {
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 4;
+            ["scale"] = 0.5;
             ["y"] = -114.00395101576;
             ["x"] = 532.27559062401;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["scale"] = 0.5;
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
             ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["npcId"] = 161243;
-        };
-        [17] = {
-            ["y"] = -120.90504446685;
-            ["x"] = 533.03040733683;
-            ["index"] = 4;
             ["weeks"] = {
                 [1] = true;
             };
-            ["scale"] = 0.5;
-            ["type"] = "nyalothaRift";
             ["template"] = "VignettePinTemplate";
-            ["npcId"] = 161243;
+        };
+        [7] = {
+            ["y"] = -112.60568055995;
+            ["x"] = 479.54906443908;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after killing Rixxa Fluxflame";
+            ["type"] = "graveyard";
         };
     };
 };
-
-
-
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [27] = {
