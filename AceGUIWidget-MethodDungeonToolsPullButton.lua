@@ -1248,7 +1248,7 @@ local function Constructor()
 
     --pull percentage
     local percentageFontString = button:CreateFontString(nil,"BACKGROUND",nil)
-    percentageFontString:SetFont("Fonts\\FRIZQT__.TTF", 12,"OUTLINE")
+    percentageFontString:SetFont(MethodDungeonTools.tooltip.String:GetFont(),12)
     percentageFontString:SetTextColor(1, 1, 1, 1);
     percentageFontString:SetWidth(50)
     percentageFontString:SetHeight(10)

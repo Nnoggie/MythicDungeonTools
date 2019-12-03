@@ -803,7 +803,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
     for _,blip in pairs(blips) do
         if (db.currentSeason == 4 and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
             local weekData =  blip.clone.week
-            if weekData and not weekData[week] then
+            if weekData and (not weekData[week] or db.currentDifficulty < 10) then
                 blip:Hide()
             elseif weekData and weekData[week] then
                 blip:Show()
