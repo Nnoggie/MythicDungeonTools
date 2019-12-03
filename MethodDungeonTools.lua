@@ -2095,12 +2095,6 @@ function MethodDungeonTools:FormatEnemyHealth(amount)
     end
 end
 
-
-
-
-
-
-
 function MethodDungeonTools:UpdateDungeonEnemies()
     MethodDungeonTools:DungeonEnemies_UpdateEnemies()
 end

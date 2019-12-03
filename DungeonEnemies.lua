@@ -536,7 +536,10 @@ end
 ---DungeonEnemies_PositionBlip
 ---Used to position during scaling changes to the map
 function MethodDungeonTools:DungeonEnemies_PositionBlip(blip, scale)
-    blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",blip.clone.x*scale,blip.clone.y*scale)
+    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+    local clonex = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].x or blip.clone.x
+    local cloney = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].y or blip.clone.y
+    blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",clonex*scale,cloney*scale)
 end
 
 function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
