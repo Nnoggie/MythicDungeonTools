@@ -90,7 +90,7 @@ end
 function MethodDungeonTools:UpdateBoralusSelector()
     selectorGroup.check1:SetValue(MethodDungeonTools:GetCurrentPreset().faction==1)
     selectorGroup.check2:SetValue(MethodDungeonTools:GetCurrentPreset().faction==2)
-    MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
     MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
 end
 

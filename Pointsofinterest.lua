@@ -461,7 +461,7 @@ function MethodDungeonTools:POI_UpdateAll()
     local scale = MethodDungeonTools:GetScale()
     for poiIdx,poi in pairs(pois) do
         local week = MethodDungeonTools:GetEffectivePresetWeek(preset)
-        if (not poi.weeks) or poi.weeks[week] then
+        if (not (poi.type == "nyalothaSpire" and db.currentSeason ~= 4)) and ((not poi.weeks) or poi.weeks[week]) then
             local poiFrame = framePools:Acquire(poi.template)
             poiFrame.poiIdx = poiIdx
             POI_SetOptions(poiFrame,poi.type,poi)

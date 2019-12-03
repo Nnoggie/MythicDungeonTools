@@ -411,6 +411,8 @@ local function blipDevModeSetup(blip)
     end)
 end
 
+local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
+
 function MDTDungeonEnemyMixin:SetUp(data,clone)
     local scale = MethodDungeonTools:GetScale()
     self:ClearAllPoints()
@@ -435,6 +437,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
     self.data = data
     self.clone = clone
+    self:Show()
     --awakened/corrupted adjustments: movable and color and stored position
     if data.corrupted then
         self.texture_Background:SetVertexColor(unpack(corruptedColor))
@@ -508,7 +511,9 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             end
             self:SetScript("OnUpdate",nil)
         end)
+        self:Hide() --hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
     end
+    if emissaryIds[self.data.id] then self:Hide() end --hide beguiling emissaries by default
     tinsert(blips,self)
     if db.enemyStyle == 2 then
         self.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
@@ -519,9 +524,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
         end
     end
-    self:Show()
     self.texture_Indicator:Hide()
-
     if db.devMode then blipDevModeSetup(self) end
 end
 
@@ -788,21 +791,23 @@ function MethodDungeonTools:DungeonEnemies_UpdateTeeming()
     MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
 end
 
----DungeonEnemies_UpdateBeguiling
----Updates visibility state of Beguiling NPCs
-function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
-    local week
-    if db.MDI.enabled then
-        week = preset.mdi.beguiling or 1
-    else
-        week = preset.week
-    end
+---DungeonEnemies_UpdateSeasonalAffix
+---Updates visibility state and appearance of enemies related to the current seasonal affix
+function MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+    --hide all beguiling and corrupted blips first
     for _,blip in pairs(blips) do
-        local weekData =  blip.clone.week
-        if weekData and not weekData[week] then
-            blip:Hide()
-        elseif weekData and weekData[week] then
-            blip:Show()
+        if blip.data.corrupted then blip:Hide() end
+        if emissaryIds[blip.data.id] then blip:Hide() end
+    end
+    local week = self:GetEffectivePresetWeek()
+    for _,blip in pairs(blips) do
+        if (db.currentSeason == 4 and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
+            local weekData =  blip.clone.week
+            if weekData and not weekData[week] then
+                blip:Hide()
+            elseif weekData and weekData[week] then
+                blip:Show()
+            end
         end
     end
 end
@@ -831,7 +836,6 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
     end
 end
 
-local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
 function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
     preset = MethodDungeonTools:GetCurrentPreset()
     local teeming = MethodDungeonTools:IsPresetTeeming(preset)

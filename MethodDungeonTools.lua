@@ -67,6 +67,7 @@ local initFrames
 -------------------------
 local defaultSavedVars = {
 	global = {
+        currentSeason = 4,
 		currentExpansion = 2,
         scale = 1,
         enemyForcesFormat = 2,
@@ -1313,7 +1314,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:DungeonEnemies_UpdateReaping()
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:POI_UpdateAll()
         if not ignoreUpdateProgressBar then
@@ -1442,12 +1443,13 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Beguiling / Reaping:")
-        local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping"}
+        local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping",[14]="5. Awakened"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
             local preset = MethodDungeonTools:GetCurrentPreset()
             preset.mdi.beguiling = key
-            MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+            db.currentSeason = (key == 1 or key == 2 or key == 3) and 3 or (key == 13 and 2) or (key == 14 and 4)
+            MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
             MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
@@ -1500,7 +1502,8 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         preset.mdi.beguiling = preset.mdi.beguiling or 1
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        db.currentSeason = (preset.mdi.beguiling == 1 or preset.mdi.beguiling == 2 or preset.mdi.beguiling == 3) and 3 or (preset.mdi.beguiling == 13 and 2) or (preset.mdi.beguiling == 14 and 4)
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         --freehold
         preset.mdi.freehold = preset.mdi.freehold or 1
@@ -1514,7 +1517,8 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame:Show()
         MethodDungeonTools:ToggleFreeholdSelector(false)
     else
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        db.currentSeason = 4
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
@@ -1765,18 +1769,20 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
     return pullCurrent
 end
 
+local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
+
 ---Checks if the specified clone is part of the current map configuration
 function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     local preset = MethodDungeonTools:GetCurrentPreset()
     local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
     local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
-    --MDI override
-    local week
-    if db.MDI.enabled then
-        week = preset.mdi.beguiling or 1
-    else
-        week = preset.week
+    local week = self:GetEffectivePresetWeek()
+
+    if db.currentSeason ~= 3 then
+        if emissaryIds[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id] then return false end
+    elseif db.currentSeason ~= 4 then
+        if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].corrupted then return false end
     end
 
     --beguiling weekly configuration
@@ -1918,10 +1924,14 @@ function MethodDungeonTools:GetCurrentLivePreset()
 end
 
 ---GetEffectivePresetWeek
-function MethodDungeonTools:GetEffectivePresetWeek(preset,beguiling,corrupted)
-    local week = preset.week
+function MethodDungeonTools:GetEffectivePresetWeek(preset)
+    preset = preset or self:GetCurrentPreset()
+    local week
     if db.MDI.enabled then
         week = preset.mdi.beguiling or 1
+        if week == 14 then week = 1 end
+    else
+        week = preset.week
     end
     return week
 end
