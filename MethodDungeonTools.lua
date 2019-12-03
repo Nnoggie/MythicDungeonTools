@@ -67,6 +67,7 @@ local initFrames
 -------------------------
 local defaultSavedVars = {
 	global = {
+        currentSeason = 4,
 		currentExpansion = 2,
         scale = 1,
         enemyForcesFormat = 2,
@@ -92,7 +93,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,24 do
+    for i=1,26 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={}},
             [2] = {text="<New Preset>",value=0},
@@ -187,23 +188,23 @@ do
 end
 
 
-
+MethodDungeonTools.mapInfo = {}
 MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.scaleMultiplier = {}
 
 local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
-    [1] = {[1]=5,[2]=3,[3]=9,[4]=119},
-    [2] = {[1]=7,[2]=2,[3]=10,[4]=119},
-    [3] = {[1]=11,[2]=4,[3]=9,[4]=119},
-    [4] = {[1]=8,[2]=14,[3]=10,[4]=119},
-    [5] = {[1]=7,[2]=13,[3]=9,[4]=119},
-    [6] = {[1]=11,[2]=3,[3]=10,[4]=119},
-    [7] = {[1]=6,[2]=4,[3]=9,[4]=119},
-    [8] = {[1]=5,[2]=14,[3]=10,[4]=119},
-    [9] = {[1]=11,[2]=2,[3]=9,[4]=119},
-    [10] = {[1]=7,[2]=12,[3]=10,[4]=119},
-    [11] = {[1]=6,[2]=13,[3]=9,[4]=119},
-    [12] = {[1]=8,[2]=12,[3]=10,[4]=119},
+    [1] = {[1]=5,[2]=3,[3]=9,[4]=120},
+    [2] = {[1]=7,[2]=2,[3]=10,[4]=120},
+    [3] = {[1]=11,[2]=4,[3]=9,[4]=120},
+    [4] = {[1]=8,[2]=14,[3]=10,[4]=120},
+    [5] = {[1]=7,[2]=13,[3]=9,[4]=120},
+    [6] = {[1]=11,[2]=3,[3]=10,[4]=120},
+    [7] = {[1]=6,[2]=4,[3]=9,[4]=120},
+    [8] = {[1]=5,[2]=14,[3]=10,[4]=120},
+    [9] = {[1]=11,[2]=2,[3]=9,[4]=120},
+    [10] = {[1]=7,[2]=12,[3]=10,[4]=120},
+    [11] = {[1]=6,[2]=13,[3]=9,[4]=120},
+    [12] = {[1]=8,[2]=12,[3]=10,[4]=120},
 }
 
 local dungeonList = {
@@ -231,7 +232,9 @@ local dungeonList = {
     [22] = "The Underrot",
     [23] = "Tol Dagor",
     [24] = "Waycrest Manor",
-    [25] = " >Legion",
+    [25] = "Mechagon - Junkyard",
+    [26] = "Mechagon - Workshop",
+    [27] = " >Legion",
 }
 function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
 
@@ -348,6 +351,15 @@ local dungeonSubLevels = {
         [3] = "The Cellar",
         [4] = "Catacombs",
         [5] = "The Rupture",
+    },
+    [25] = {
+        [1] = "Mechagon Island",
+    },
+    [26] = {
+        [1] = "The Robodrome",
+        [2] = "Waste Pipes",
+        [3] = "The Under Junk",
+        [4] = "Mechagon City",
     },
 }
 function MethodDungeonTools:GetDungeonSublevels()
@@ -491,6 +503,17 @@ MethodDungeonTools.dungeonMaps = {
         [3] = "Waycrest3_",
         [4] = "Waycrest4_",
         [5] = "Waycrest5_",
+    },
+    [25] = {
+        [0] = "MechagonDungeon",
+        [1] = "MechagonDungeonExterior",
+    },
+    [26] = {
+        [0] = "MechagonDungeon",
+        [1] = "MechagonDungeon1_",
+        [2] = "MechagonDungeon2_",
+        [3] = "MechagonDungeon3_",
+        [4] = "MechagonDungeon4_",
     },
 
 }
@@ -674,6 +697,11 @@ function MethodDungeonTools:SetScale(scale)
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize((newSizex/4+5*scale),(newSizex/4+5*scale))
     end
+    for i=1,10 do
+        for j=1,15 do
+            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
+        end
+    end
     f.scrollFrame:SetVerticalScroll(oldScrollValues.oldScrollV * (newSizey / oldScrollValues.oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollValues.oldScrollH * (newSizex / oldScrollValues.oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldScrollValues.oldSizeY)
@@ -723,6 +751,11 @@ function MethodDungeonTools:Maximize()
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize((newSizex/4+5*db.scale),(newSizex/4+5*db.scale))
     end
+    for i=1,10 do
+        for j=1,15 do
+            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
+        end
+    end
     f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
@@ -762,6 +795,11 @@ function MethodDungeonTools:Minimize()
     f.mapPanelFrame:SetSize(newSizex, newSizey)
     for i=1,12 do
         f["mapPanelTile"..i]:SetSize(newSizex/4+(5*db.scale),newSizex/4+(5*db.scale))
+    end
+    for i=1,10 do
+        for j=1,15 do
+            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
+        end
     end
     f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
@@ -1069,6 +1107,14 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelDeleteButton = AceGUI:Create("Button")
 	frame.sidePanelDeleteButton:SetText("Delete")
 	frame.sidePanelDeleteButton:SetWidth(buttonWidth)
+	frame.sidePanelDeleteButton.frame:SetScript("OnEnter",function()
+        GameTooltip:SetOwner(frame.sidePanelDeleteButton.frame, "ANCHOR_BOTTOMLEFT",frame.sidePanelDeleteButton.frame:GetWidth()*(-2),frame.sidePanelDeleteButton.frame:GetHeight())
+        GameTooltip:AddLine("[Shift-Click to delete all presets]")
+        GameTooltip:Show()
+    end)
+	frame.sidePanelDeleteButton.frame:SetScript("OnLeave",function()
+        GameTooltip:Hide()
+    end)
 	frame.sidePanelDeleteButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
@@ -1210,6 +1256,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             end
         end
         --beguiling configuration
+        --[[
         local w = week%3
         if w == 0 then w = 3 end
         if longText then
@@ -1217,6 +1264,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         else
             ret = ret..beguilingInfo[w].icon
         end
+        ]]
         return ret
     end
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
@@ -1266,7 +1314,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         --MethodDungeonTools:DungeonEnemies_UpdateReaping()
         MethodDungeonTools:UpdateFreeholdSelector(key)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:POI_UpdateAll()
         if not ignoreUpdateProgressBar then
@@ -1302,7 +1350,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixWeekWarning:SetWidth(35)
     affixWeekWarning:SetCallback("OnEnter",function(...)
         GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_CURSOR")
-        GameTooltip:SetText("The selected affixes are not the ones of the current week")
+        GameTooltip:SetText("The selected affixes are not the ones of the current week\n[Click to switch to current week]")
         GameTooltip:Show()
     end)
     affixWeekWarning:SetCallback("OnLeave",function(...)
@@ -1395,12 +1443,13 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Beguiling / Reaping:")
-        local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping"}
+        local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping",[14]="5. Awakened"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
             local preset = MethodDungeonTools:GetCurrentPreset()
             preset.mdi.beguiling = key
-            MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+            db.currentSeason = (key == 1 or key == 2 or key == 3) and 3 or (key == 13 and 2) or (key == 14 and 4)
+            MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
             MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
@@ -1452,7 +1501,8 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         preset.mdi.beguiling = preset.mdi.beguiling or 1
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        db.currentSeason = (preset.mdi.beguiling == 1 or preset.mdi.beguiling == 2 or preset.mdi.beguiling == 3) and 3 or (preset.mdi.beguiling == 13 and 2) or (preset.mdi.beguiling == 14 and 4)
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         --freehold
         preset.mdi.freehold = preset.mdi.freehold or 1
@@ -1466,7 +1516,8 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame:Show()
         MethodDungeonTools:ToggleFreeholdSelector(false)
     else
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        db.currentSeason = 4
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
         MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
@@ -1712,18 +1763,20 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
     return pullCurrent
 end
 
+local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
+
 ---Checks if the specified clone is part of the current map configuration
 function MethodDungeonTools:IsCloneIncluded(enemyIdx,cloneIdx)
     local preset = MethodDungeonTools:GetCurrentPreset()
     local isCloneBlacktoothEvent = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
     local cloneFaction = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
 
-    --MDI override
-    local week
-    if db.MDI.enabled then
-        week = preset.mdi.beguiling or 1
-    else
-        week = preset.week
+    local week = self:GetEffectivePresetWeek()
+
+    if db.currentSeason ~= 3 then
+        if emissaryIds[MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id] then return false end
+    elseif db.currentSeason ~= 4 then
+        if MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].corrupted then return false end
     end
 
     --beguiling weekly configuration
@@ -1864,6 +1917,19 @@ function MethodDungeonTools:GetCurrentLivePreset()
     end
 end
 
+---GetEffectivePresetWeek
+function MethodDungeonTools:GetEffectivePresetWeek(preset)
+    preset = preset or self:GetCurrentPreset()
+    local week
+    if db.MDI.enabled then
+        week = preset.mdi.beguiling or 1
+        if week == 14 then week = 1 end
+    else
+        week = preset.week
+    end
+    return week
+end
+
 ---ReturnToLivePreset
 function MethodDungeonTools:ReturnToLivePreset()
     local preset,presetIdx = self:GetCurrentLivePreset()
@@ -1961,6 +2027,30 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.mapPanelTile10:SetPoint("TOPLEFT",frame.mapPanelTile9,"TOPRIGHT")
 		frame.mapPanelTile11:SetPoint("TOPLEFT",frame.mapPanelTile10,"TOPRIGHT")
 		frame.mapPanelTile12:SetPoint("TOPLEFT",frame.mapPanelTile11,"TOPRIGHT")
+
+        --create the 150 large map tiles
+        for i=1,10 do
+            for j=1,15 do
+                frame["largeMapPanelTile"..i..j] = frame.mapPanelFrame:CreateTexture("MethodDungeonToolsLargeMapPanelTile"..i..j, "BACKGROUND")
+                local tile = frame["largeMapPanelTile"..i..j]
+                tile:SetDrawLayer(canvasDrawLayer, 5)
+                tile:SetSize(frame:GetWidth()/15,frame:GetWidth()/15)
+                if i==1 and j==1 then
+                    --to mapPanel
+                    tile:SetPoint("TOPLEFT",frame.mapPanelFrame,"TOPLEFT",0,0)
+                elseif j==1 then
+                    --to tile above
+                    tile:SetPoint("TOPLEFT",frame["largeMapPanelTile"..(i-1)..j],"BOTTOMLEFT",0,0)
+                else
+                    --to tile to the left
+                    tile:SetPoint("TOPLEFT",frame["largeMapPanelTile"..i..(j-1)],"TOPRIGHT",0,0)
+                end
+                tile:SetColorTexture(i/10,j/10,0,1)
+                tile:Hide()
+            end
+        end
+
+
 		frame.scrollFrame:SetScrollChild(frame.mapPanelFrame)
 
         frame.scrollFrame.cursorX = 0
@@ -2010,12 +2100,6 @@ function MethodDungeonTools:FormatEnemyHealth(amount)
         return string.format("%.1fk", amount/1e3)
     end
 end
-
-
-
-
-
-
 
 function MethodDungeonTools:UpdateDungeonEnemies()
     MethodDungeonTools:DungeonEnemies_UpdateEnemies()
@@ -2084,7 +2168,7 @@ function MethodDungeonTools:UpdateDungeonDropDown()
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     elseif db.currentExpansion == 2 then
-        for i=15,25 do
+        for i=15,27 do
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     end
@@ -2114,7 +2198,7 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	group.DungeonDropdown = AceGUI:Create("Dropdown")
 	group.DungeonDropdown.text:SetJustifyH("LEFT")
 	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-		if key==14 or key == 25 then
+		if key==14 or key == 27 then
             db.currentExpansion = (db.currentExpansion%2)+1
             db.currentDungeonIdx = key==14 and 15 or 1
             MethodDungeonTools:UpdateDungeonDropDown()
@@ -2210,7 +2294,7 @@ function MethodDungeonTools:EnsureDBTables()
     preset.mdi.freehold = preset.mdi.freehold or 1
     preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
     preset.mdi.beguiling = preset.mdi.beguiling or 1
-
+  
     --make sure sublevel actually exists for the dungeon
     --this might have been caused by bugged dropdowns in the past
     local maxSublevel = -1
@@ -2218,9 +2302,13 @@ function MethodDungeonTools:EnsureDBTables()
         maxSublevel = maxSublevel + 1
     end
     if preset.value.currentSublevel > maxSublevel then preset.value.currentSublevel = maxSublevel end
+    preset.value.riftOffsets = preset.value.riftOffsets or {}
 end
 
-
+function MethodDungeonTools:GetTileFormat(dungeonIdx)
+    local mapInfo = MethodDungeonTools.mapInfo[dungeonIdx]
+    return mapInfo and mapInfo.tileFormat or 4
+end
 
 function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons,ignoreUpdateProgressBar)
 	local mapName
@@ -2230,12 +2318,31 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
     local preset = MethodDungeonTools:GetCurrentPreset()
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
+    local tileFormat = MethodDungeonTools:GetTileFormat(db.currentDungeonIdx)
 	for i=1,12 do
-		local texName = path..fileName..i
-		if frame["mapPanelTile"..i] then
-			frame["mapPanelTile"..i]:SetTexture(texName)
-		end
+        if tileFormat == 4 then
+            local texName = path..fileName..i
+            if frame["mapPanelTile"..i] then
+                frame["mapPanelTile"..i]:SetTexture(texName)
+                frame["mapPanelTile"..i]:Show()
+            end
+        else
+            if frame["mapPanelTile"..i] then
+                frame["mapPanelTile"..i]:Hide()
+            end
+        end
 	end
+    for i=1,10 do
+        for j=1,15 do
+            if tileFormat == 15 then
+                local texName= path..fileName..((i - 1) * 15 + j)
+                frame["largeMapPanelTile"..i..j]:SetTexture(texName)
+                frame["largeMapPanelTile"..i..j]:Show()
+            else
+                frame["largeMapPanelTile"..i..j]:Hide()
+            end
+        end
+    end
 	MethodDungeonTools:UpdateDungeonEnemies()
 	if not ignoreReloadPullButtons then
 		MethodDungeonTools:ReloadPullButtons()
@@ -3660,6 +3767,7 @@ function MethodDungeonTools:PrintCurrentAffixes()
         [16] ="Infested",
         [117] ="Reaping",
         [119] ="Beguiling",
+        [120] ="Awakened",
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
@@ -3833,7 +3941,6 @@ function initFrames()
 	-- Set frame position
 	main_frame:ClearAllPoints()
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
-
     main_frame.contextDropdown = L_Create_UIDropDownMenu("MethodDungeonToolsContextDropDown", nil)
 
     MethodDungeonTools:EnsureDBTables()
@@ -3887,7 +3994,6 @@ function initFrames()
         tooltip:SetClampedToScreen(true)
         tooltip:SetFrameStrata("TOOLTIP")
         tooltip.mySizes ={x=290,y=120}
-
         tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
         tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
         tooltip.Model:SetFrameLevel(1)
@@ -3925,10 +4031,8 @@ function initFrames()
 		MethodDungeonTools.pullTooltip:SetFrameStrata("TOOLTIP")
         MethodDungeonTools.pullTooltip.myHeight = 160
 		MethodDungeonTools.pullTooltip:SetSize(250, MethodDungeonTools.pullTooltip.myHeight)
-
         MethodDungeonTools.pullTooltip.Model = CreateFrame("PlayerModel", nil, MethodDungeonTools.pullTooltip)
         MethodDungeonTools.pullTooltip.Model:SetFrameLevel(1)
-
         MethodDungeonTools.pullTooltip.Model.fac = 0
         if true then
             MethodDungeonTools.pullTooltip.Model:SetScript("OnUpdate",function (self,elapsed)
@@ -3938,7 +4042,6 @@ function initFrames()
                 end
                 self:SetFacing(PI*2 / 360 * self.fac)
             end)
-
         else
             MethodDungeonTools.pullTooltip.Model:SetPortraitZoom(1)
             MethodDungeonTools.pullTooltip.Model:SetFacing(PI*2 / 360 * 2)
@@ -3981,7 +4084,6 @@ function initFrames()
         skinTooltip(pullTT)
 	end
 
-
 	MethodDungeonTools:initToolbar(main_frame)
 
     --ping
@@ -3996,11 +4098,6 @@ function initFrames()
     ping.mySize = 45
     ping:SetSize(ping.mySize,ping.mySize)
     ping:Hide()
-
-    --temporary background
-    --ping.background = ping:CreateTexture(nil,"BACKGROUND")
-    --ping.background:SetAllPoints()
-    --ping.background:SetColorTexture(0,0,0,1)
 
     --Set affix dropdown to preset week
     --gotta set the list here, as affixes are not ready to be retrieved yet on login

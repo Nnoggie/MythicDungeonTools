@@ -10,6 +10,7 @@ function MethodDungeonTools:POI_CreateFramePools()
     MethodDungeonTools.poi_framePools = MethodDungeonTools.poi_framePools or CreatePoolCollection()
     MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate");
     MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "DeathReleasePinTemplate");
+    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "VignettePinTemplate");
 end
 
 
@@ -46,13 +47,26 @@ local function POI_SetDevOptions(frame,poi)
     frame:SetScript("OnClick",nil)
 end
 
-local function POI_SetOptions(frame,type,poi)
+local function POI_SetOptions(frame,type,poi,homeSublevel)
     frame.teeming = nil
+    frame.isSpire = nil
+    frame.spireIndex = nil
+    frame.defaultHidden = nil
+    frame:SetMovable(false)
+    frame:SetScript("OnMouseDown",nil)
+    frame:SetScript("OnMouseUp",nil)
     frame.weeks = poi.weeks
+    frame:SetFrameLevel(4)
+    frame.defaultSublevel = nil
+    if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
+    if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
         frame:SetSize(22,22)
         frame.Texture:SetSize(22,22)
         frame.HighlightTexture:SetSize(22,22)
+        frame.HighlightTexture:SetDrawLayer("ARTWORK")
+        frame.HighlightTexture:Hide()
+        frame.target = poi.target
         local directionToAtlas = {
             [-1] = "poi-door-down",
             [1] = "poi-door-up",
@@ -69,10 +83,87 @@ local function POI_SetOptions(frame,type,poi)
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine(MethodDungeonTools:GetDungeonSublevels()[db.currentDungeonIdx][poi.target], 1, 1, 1, 1)
             GameTooltip:Show()
+            frame.HighlightTexture:Show()
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
+            frame.HighlightTexture:Hide()
         end)
+    end
+    if type == "nyalothaSpire" then
+        local poiScale = poi.scale or 1
+        frame.poiScale = poiScale
+        frame:SetSize(12*poiScale,12*poiScale)
+        frame.Texture:SetSize(12*poiScale,12*poiScale)
+        frame.Texture:SetAtlas("poi-rift1")
+        frame.HighlightTexture:SetSize(12*poiScale,12*poiScale)
+        frame.HighlightTexture:SetAtlas("poi-rift1")
+        frame.HighlightTexture:SetDrawLayer("ARTWORK")
+        frame.HighlightTexture:Hide()
+        frame.isSpire = true
+        frame.spireIndex = poi.index
+        frame.npcId = poi.npcId
+        if not frame.textString then
+            frame.textString = frame:CreateFontString()
+            frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 4)
+            frame.textString:SetJustifyH("CENTER")
+            frame.textString:SetTextColor(0.5, 1, 0, 1)
+        end
+        local scale = MethodDungeonTools:GetScale()
+        frame.textString:SetFontObject("GameFontNormal")
+        frame.textString:SetFont(frame.textString:GetFont(),5*poiScale*scale,"OUTLINE")
+        frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 4*scale)
+        frame.textString:SetText("")
+        frame:SetScript("OnClick",nil)
+        local blipFrame
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:AddLine(poi.tooltipText)
+            GameTooltip:Show()
+            frame.HighlightTexture:Show()
+            --highlight associated npc
+            local blips = MethodDungeonTools:GetDungeonEnemyBlips()
+            for _,blip in pairs(blips) do
+                if blip.data.id == poi.npcId then
+                    local isBlipSameWeek
+                    for weekIdx,_ in pairs(poi.weeks) do
+                        isBlipSameWeek = isBlipSameWeek or blip.clone.week[weekIdx]
+                    end
+                    if isBlipSameWeek then
+                        blipFrame = blip
+                        blipFrame.fontstring_Text1:Show()
+                        break
+                    end
+                end
+            end
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+            frame.HighlightTexture:Hide()
+            if blipFrame then blipFrame.fontstring_Text1:Hide() end
+        end)
+        --check expanded status
+        local blips = MethodDungeonTools:GetDungeonEnemyBlips()
+        for _,blip in pairs(blips) do
+            if blip.data.id == frame.npcId then
+                if blip.selected then
+                    frame.Texture:SetSize(10*poiScale,10*poiScale)
+                    frame.Texture:SetAtlas("poi-rift1")
+                    frame.HighlightTexture:SetSize(10*poiScale,10*poiScale)
+                    frame.HighlightTexture:SetAtlas("poi-rift1")
+                    frame.isSpire = false
+                    frame.textString:Show()
+                else
+                    frame.Texture:SetSize(12*poiScale,16*poiScale)
+                    frame.Texture:SetAtlas("poi-nzothpylon")
+                    frame.HighlightTexture:SetSize(12*poiScale,16*poiScale)
+                    frame.HighlightTexture:SetAtlas("poi-nzothpylon")
+                    frame.isSpire = true
+                    frame.textString:Hide()
+                end
+                break
+            end
+        end
     end
     if type == "door" then
         frame:SetSize(22,22)
@@ -355,7 +446,6 @@ function MethodDungeonTools:POI_PositionAllPoints(scale)
     end
 end
 
-
 ---POI_UpdateAll
 function MethodDungeonTools:POI_UpdateAll()
     twipe(points)
@@ -363,30 +453,27 @@ function MethodDungeonTools:POI_UpdateAll()
     local framePools = MethodDungeonTools.poi_framePools
     framePools:ReleaseAll()
     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then return end
-    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+    local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
+    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][currentSublevel]
     if not pois then return end
     local preset = MethodDungeonTools:GetCurrentPreset()
     local teeming = MethodDungeonTools:IsPresetTeeming(preset)
     local scale = MethodDungeonTools:GetScale()
     for poiIdx,poi in pairs(pois) do
-        local poiFrame = framePools:Acquire(poi.template)
-        poiFrame.poiIdx = poiIdx
-        POI_SetOptions(poiFrame,poi.type,poi)
-        poiFrame.x = poi.x
-        poiFrame.y = poi.y
-        poiFrame:ClearAllPoints()
-        poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x*scale,poi.y*scale)
-        poiFrame:Show()
-        if not teeming and poiFrame.teeming then
-            poiFrame:Hide()
+        local week = MethodDungeonTools:GetEffectivePresetWeek(preset)
+        if (not (poi.type == "nyalothaSpire" and db.currentSeason ~= 4)) and ((not poi.weeks) or poi.weeks[week]) then
+            local poiFrame = framePools:Acquire(poi.template)
+            poiFrame.poiIdx = poiIdx
+            POI_SetOptions(poiFrame,poi.type,poi)
+            poiFrame.x = poi.x
+            poiFrame.y = poi.y
+            poiFrame:ClearAllPoints()
+            poiFrame:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",poi.x*scale,poi.y*scale)
+            if not poiFrame.defaultHidden or db.devMode then poiFrame:Show() end
+            if not teeming and poiFrame.teeming then
+                poiFrame:Hide()
+            end
+            tinsert(points,poiFrame)
         end
-        local week = preset.week
-        if db.MDI.enabled then
-            week = preset.mdi.beguiling or 1
-        end
-        if poiFrame.weeks and not poiFrame.weeks[week] then
-            poiFrame:Hide()
-        end
-        tinsert(points,poiFrame)
     end
 end

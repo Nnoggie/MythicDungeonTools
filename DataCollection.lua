@@ -179,7 +179,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         local unitType,_,serverId,instanceId,zoneId,id,spawnUid = strsplit("-", sourceGUID)
         id = tonumber(id)
         --dungeon
-        for i=15,24 do
+        for i=15,26 do
             local enemies = MethodDungeonTools.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
@@ -199,7 +199,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         local unitType,_,serverId,instanceId,zoneId,id,spawnUid = strsplit("-", destGUID)
         id = tonumber(id)
         --dungeon
-        for i=15,24 do
+        for i=15,26 do
             local enemies = MethodDungeonTools.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
