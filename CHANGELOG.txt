@@ -1,5 +1,7 @@
 v2.9.6
--
+- fixed an error that could cause the AddOn to stop loading properly in certain presets
+- fixed a few visual bugs in the difficulty slider and count display
+- Hide and don't count beguiling mobs for keys < 10
 - Users can no longer drag the AddOn window unrecoverably off screen
 v2.9.5
 - Siege G39 Updates
