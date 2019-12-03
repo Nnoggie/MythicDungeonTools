@@ -192,18 +192,18 @@ MethodDungeonTools.dungeonTotalCount = {}
 MethodDungeonTools.scaleMultiplier = {}
 
 local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
-    [1] = {[1]=5,[2]=3,[3]=9,[4]=119},
-    [2] = {[1]=7,[2]=2,[3]=10,[4]=119},
-    [3] = {[1]=11,[2]=4,[3]=9,[4]=119},
-    [4] = {[1]=8,[2]=14,[3]=10,[4]=119},
-    [5] = {[1]=7,[2]=13,[3]=9,[4]=119},
-    [6] = {[1]=11,[2]=3,[3]=10,[4]=119},
-    [7] = {[1]=6,[2]=4,[3]=9,[4]=119},
-    [8] = {[1]=5,[2]=14,[3]=10,[4]=119},
-    [9] = {[1]=11,[2]=2,[3]=9,[4]=119},
-    [10] = {[1]=7,[2]=12,[3]=10,[4]=119},
-    [11] = {[1]=6,[2]=13,[3]=9,[4]=119},
-    [12] = {[1]=8,[2]=12,[3]=10,[4]=119},
+    [1] = {[1]=5,[2]=3,[3]=9,[4]=120},
+    [2] = {[1]=7,[2]=2,[3]=10,[4]=120},
+    [3] = {[1]=11,[2]=4,[3]=9,[4]=120},
+    [4] = {[1]=8,[2]=14,[3]=10,[4]=120},
+    [5] = {[1]=7,[2]=13,[3]=9,[4]=120},
+    [6] = {[1]=11,[2]=3,[3]=10,[4]=120},
+    [7] = {[1]=6,[2]=4,[3]=9,[4]=120},
+    [8] = {[1]=5,[2]=14,[3]=10,[4]=120},
+    [9] = {[1]=11,[2]=2,[3]=9,[4]=120},
+    [10] = {[1]=7,[2]=12,[3]=10,[4]=120},
+    [11] = {[1]=6,[2]=13,[3]=9,[4]=120},
+    [12] = {[1]=8,[2]=12,[3]=10,[4]=120},
 }
 
 local dungeonList = {
@@ -1254,6 +1254,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             end
         end
         --beguiling configuration
+        --[[
         local w = week%3
         if w == 0 then w = 3 end
         if longText then
@@ -1261,6 +1262,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         else
             ret = ret..beguilingInfo[w].icon
         end
+        ]]
         return ret
     end
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
@@ -3798,6 +3800,7 @@ function MethodDungeonTools:PrintCurrentAffixes()
         [16] ="Infested",
         [117] ="Reaping",
         [119] ="Beguiling",
+        [120] ="Awakened",
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
