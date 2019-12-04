@@ -742,9 +742,19 @@ function MethodDungeonTools:Maximize()
     f.bottomPanel:RegisterForDrag(nil)
     local newSizey = GetScreenHeight()-60 --top and bottom panel 30 each
     local newSizex = newSizey*(sizex/sizey)
+    local isNarrow
+    if newSizex+251>GetScreenWidth() then --251 sidebar
+        newSizex = GetScreenWidth()-251
+        newSizey = newSizex*(sizey/sizex)
+        isNarrow = true
+    end
     db.scale = newSizey/sizey --use this for adjusting NPC / POI positions later
     f:ClearAllPoints()
-    f:SetPoint("TOP", UIParent,"TOP", -(f.sidePanel:GetWidth()/2), -30)
+    if not isNarrow then
+        f:SetPoint("TOP", UIParent,"TOP", -(f.sidePanel:GetWidth()/2), -30)
+    else
+        f:SetPoint("LEFT", UIParent,"LEFT")
+    end
     f:SetSize(newSizex,newSizey)
     f.scrollFrame:SetSize(newSizex, newSizey)
     f.mapPanelFrame:SetSize(newSizex, newSizey)
