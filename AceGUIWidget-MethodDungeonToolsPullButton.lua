@@ -432,7 +432,7 @@ local methods = {
             end
         })
         tinsert(self.menu, {
-            text = "Clear Preset",
+            text = "Reset Preset",
             notCheckable = 1,
             func = function() MethodDungeonTools:OpenClearPresetDialog() end
         })
@@ -657,7 +657,7 @@ local methods = {
             end
         })
         tinsert(self.multiselectMenu, {
-            text = "Clear Preset",
+            text = "Reset Preset",
             notCheckable = 1,
             func = function() MethodDungeonTools:OpenClearPresetDialog() end
         })
