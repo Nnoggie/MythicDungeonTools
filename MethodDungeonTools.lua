@@ -1,4 +1,4 @@
--- Made by: Nnogga - Tarren Mill <Method>, 2017-2019
+-- Made by: Nnoggie - Tarren Mill <Method>, 2017-2019
 local AddonName, MethodDungeonTools = ...
 
 local mainFrameStrata = "HIGH"
@@ -1379,7 +1379,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		local difficulty = tonumber(value)
         db.currentDifficulty = difficulty or db.currentDifficulty
         --MethodDungeonTools:DungeonEnemies_UpdateReaping()
-        MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
 	end)
@@ -1442,7 +1442,7 @@ function MethodDungeonTools:DisplayMDISelector()
 
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
-        MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Beguiling / Reaping:")
+        MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Seasonal Affix:")
         local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping",[14]="5. Awakened"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
