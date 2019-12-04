@@ -114,11 +114,19 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame.textString:SetFont(frame.textString:GetFont(),5*poiScale*scale,"OUTLINE")
         frame.textString:SetPoint("BOTTOM",frame,"BOTTOM", 0, 4*scale)
         frame.textString:SetText("")
-        frame:SetScript("OnClick",nil)
+        frame:SetScript("OnMouseUp",function(self,button)
+            if button == "RightButton" then
+                --reset npc location
+                ViragDevTool_AddData(MethodDungeonTools:GetCurrentPreset().value.riftOffsets)
+                MethodDungeonTools:GetCurrentPreset().value.riftOffsets[self.npcId]=nil
+                MethodDungeonTools:UpdateMap()
+            end
+        end)
         local blipFrame
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:AddLine(poi.tooltipText)
+            GameTooltip:AddLine(poi.tooltipText,1,1,1)
+            GameTooltip:AddLine("Right-Click to reset NPC position.",1,1,1)
             GameTooltip:Show()
             frame.HighlightTexture:Show()
             --highlight associated npc
