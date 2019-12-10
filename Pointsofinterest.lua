@@ -8,9 +8,9 @@ local points = {}
 
 function MethodDungeonTools:POI_CreateFramePools()
     MethodDungeonTools.poi_framePools = MethodDungeonTools.poi_framePools or CreatePoolCollection()
-    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate");
-    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "DeathReleasePinTemplate");
-    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "VignettePinTemplate");
+    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate")
+    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "DeathReleasePinTemplate")
+    MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "VignettePinTemplate")
 end
 
 
@@ -20,8 +20,8 @@ local function POI_SetDevOptions(frame,poi)
     frame:EnableMouse(true)
     frame:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" and not self.isMoving then
-            self:StartMoving();
-            self.isMoving = true;
+            self:StartMoving()
+            self.isMoving = true
         end
         if button == "RightButton" then
             local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
@@ -31,8 +31,8 @@ local function POI_SetDevOptions(frame,poi)
     end)
     frame:SetScript("OnMouseUp", function(self, button)
         if button == "LeftButton" and self.isMoving then
-            self.isMoving = false;
-            self:StopMovingOrSizing();
+            self.isMoving = false
+            self:StopMovingOrSizing()
             local newx,newy = MethodDungeonTools:GetCursorPosition()
             local scale = MethodDungeonTools:GetScale()
             newx = newx*(1/scale)
@@ -117,7 +117,6 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnMouseUp",function(self,button)
             if button == "RightButton" then
                 --reset npc location
-                ViragDevTool_AddData(MethodDungeonTools:GetCurrentPreset().value.riftOffsets)
                 MethodDungeonTools:GetCurrentPreset().value.riftOffsets[self.npcId]=nil
                 MethodDungeonTools:UpdateMap()
             end
@@ -140,6 +139,8 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                     if isBlipSameWeek then
                         blipFrame = blip
                         blipFrame.fontstring_Text1:Show()
+                        --display animated line between poi and npc frame
+                        frame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,frame,blipFrame,nil,nil,nil,nil,nil,not frame.isSpire)
                         break
                     end
                 end
@@ -148,7 +149,10 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
             frame.HighlightTexture:Hide()
-            if blipFrame then blipFrame.fontstring_Text1:Hide() end
+            if blipFrame then
+                blipFrame.fontstring_Text1:Hide()
+                MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
+            end
         end)
         --check expanded status
         local blips = MethodDungeonTools:GetDungeonEnemyBlips()
@@ -484,4 +488,126 @@ function MethodDungeonTools:POI_UpdateAll()
             tinsert(points,poiFrame)
         end
     end
+end
+
+---Animated Lines
+---Credit to Grimonja for this part
+
+local texturePool
+local animatedLine
+
+local function getPointAlongALine(parent,p1x,p1y,p2x,p2y,d)
+    local tX = (((1 - d) * p1x) + (d*p2x)) - ((parent:GetWidth() / 2 ))
+    local tY = (((1 - d) * p1y) + (d*p2y)) - ((parent:GetHeight() / 2))
+    return tX,tY
+end
+
+local function createLineSegment(parent, color)
+    local tex = texturePool:Acquire()
+    tex:SetParent(parent)
+    tex:SetTexture([[Interface\BUTTONS\WHITE8X8]])
+    tex:SetTexCoord(0,1,0,1)
+    tex:SetDrawLayer("OVERLAY",7)
+    tex:SetVertexColor(color[1],color[2],color[3],color[4])
+    tex:Show()
+    return tex
+end
+
+local function animateLine(self, elapsed)
+
+    local totalDistance = math.sqrt(math.pow(self.frameTwoX - self.frameOneX,2) + math.pow(self.frameTwoY - self.frameOneY,2))
+    local rotation = math.atan2(self.frameTwoY - self.frameOneY,self.frameTwoX - self.frameOneX)
+    local numLines = math.max(1,math.floor(totalDistance / (self.sizeX + self.gap)))
+    local lineLength = (totalDistance / (numLines * 2))
+    local tX,tY,t,tex
+    for i=1,numLines + 1 do
+        tex = self.frames[i]
+        if(not tex)then
+            tex = createLineSegment(self:GetParent(),self.color)
+            table.insert(self.frames,tex)
+        end
+        t = self.phase + (((lineLength * 2) * (i - 1)) / totalDistance)
+        if(t > 1)then
+            t = t - 1
+        end
+        tX, tY = getPointAlongALine(self:GetParent(),self.frameOneX,self.frameOneY,self.frameTwoX,self.frameTwoY,t)
+        tex:SetPoint("TOPLEFT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX - (self.sizeX / 2),tY - (self.sizeY / 2))
+        tex:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX + (self.sizeX / 2),tY + (self.sizeY / 2))
+        tex:SetPoint("CENTER",tX, tY)
+        tex:SetRotation(rotation)
+        tex:Show()
+    end
+
+    if(#self.frames > numLines + 1)then
+        for i=numLines + 1,#self.frames do
+            self.frames[i]:Hide()
+        end
+    end
+
+    self.phase = self.phase + (self.speed * elapsed)
+    if(self.phase > 1)then
+        self.phase = self.phase - 1
+    end
+end
+
+local function createAnimatedLine(parent)
+    texturePool = texturePool or CreateTexturePool(MethodDungeonTools.main_frame.mapPanelFrame ,"OVERLAY",7,nil)
+    animatedLine = CreateFrame("Frame",nil,parent) --only 1 line supported atm, use frame pool for multiple lines
+    animatedLine.phase = 0
+    animatedLine.frames = {}
+    return animatedLine
+end
+
+function MethodDungeonTools:ShowAnimatedLine(parent, frame1, frame2, sizeX, sizeY, gap, color, speed,selected)
+    if not (frame1 and frame2 and (not frame1:IsForbidden()) and (not frame1:IsForbidden())) then
+        return nil
+    end
+    animatedLine = animatedLine or createAnimatedLine(parent)
+    animatedLine.frame1 = frame1
+    animatedLine.frame2 = frame2
+    animatedLine.speed = speed and speed or 15
+    animatedLine.sizeX = sizeX and sizeX or 7
+    animatedLine.sizeY = sizeY and sizeY or 2
+    animatedLine.gap = gap and gap or 5
+    animatedLine.color = color and color or {1,0,1,0.8,0.2} --corrupted color
+    if selected then animatedLine.color = {0.5,1,0.1,1} end
+
+    local scale = MethodDungeonTools:GetScale()
+    local mapSizex,mapSizey = MethodDungeonTools:GetDefaultMapPanelSize()
+    animatedLine.frameOneX = ((mapSizex/2)+frame1.x)*scale
+    animatedLine.frameOneY = ((mapSizey/2)+frame1.y)*scale
+    animatedLine.frameTwoX = ((mapSizex/2)+frame2.adjustedX)*scale
+    animatedLine.frameTwoY = ((mapSizey/2)+frame2.adjustedY)*scale
+
+    local totalDistance = math.sqrt(math.pow(animatedLine.frameTwoX - animatedLine.frameOneX,2) + math.pow(animatedLine.frameTwoY - animatedLine.frameOneY,2))
+    local rotation = math.atan2(animatedLine.frameTwoY - animatedLine.frameOneY,animatedLine.frameTwoX - animatedLine.frameOneX)
+    local numLines = math.max(1,math.floor(totalDistance / (animatedLine.sizeX + animatedLine.gap)))
+    local lineLength = (totalDistance / (numLines * 2))
+    animatedLine.speed = animatedLine.speed / (totalDistance)
+
+    local tX,tY,t,tex
+    for i=1,numLines + 1 do
+        tex = createLineSegment(parent,animatedLine.color)
+        table.insert(animatedLine.frames,tex)
+        t = ((lineLength * 2) * (i - 1)) / totalDistance
+        tX, tY = getPointAlongALine(parent,animatedLine.frameOneX,animatedLine.frameOneY,animatedLine.frameTwoX,animatedLine.frameTwoY,t)
+        tex:SetPoint("TOPLEFT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX - (animatedLine.sizeX / 2),tY - (animatedLine.sizeY / 2))
+        tex:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX + (animatedLine.sizeX / 2),tY + (animatedLine.sizeY / 2))
+        tex:SetPoint("CENTER",tX, tY)
+        tex:SetRotation(rotation)
+    end
+
+    animatedLine:SetScript("onUpdate", animateLine)
+
+    return animatedLine
+end
+
+function MethodDungeonTools:KillAnimatedLine(animatedLine)
+    animatedLine:SetScript("onUpdate",nil)
+    for i=1,#animatedLine.frames do
+        animatedLine.frames[i]:ClearAllPoints()
+        animatedLine.frames[i]:Hide()
+    end
+    texturePool:ReleaseAll()
+    table.wipe(animatedLine.frames)
 end

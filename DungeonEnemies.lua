@@ -106,6 +106,8 @@ function MDTDungeonEnemyMixin:OnEnter()
         for poiFrame,_ in pairs(active) do
             if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
                 poiFrame.HighlightTexture:Show()
+                self.spireFrame = poiFrame
+                self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,poiFrame,self,nil,nil,nil,nil,nil,self.selected)
                 break
             end
         end
@@ -139,6 +141,7 @@ function MDTDungeonEnemyMixin:OnLeave()
         for poiFrame,_ in pairs(active) do
             if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
                 poiFrame.HighlightTexture:Hide()
+                MethodDungeonTools:KillAnimatedLine(self.animatedLine)
                 break
             end
         end
@@ -192,6 +195,8 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
                         poiFrame.ShowAnim:Play()
                         poiFrame.textString:Hide()
                     end
+                    MethodDungeonTools:KillAnimatedLine(self.animatedLine)
+                    MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,poiFrame,self,nil,nil,nil,nil,nil,self.selected)
                     break
                 end
             end
@@ -447,6 +452,8 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
         local clonex = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
         local cloney = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
+        self.adjustedX = clonex
+        self.adjustedY = cloney
         self:ClearAllPoints()
         self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clonex*scale,cloney*scale)
         self:SetMovable(true)
@@ -474,6 +481,19 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                         poiFrame.HighlightTexture:Hide()
                     end
                 end
+                --reposition animated line
+                local x,y = MethodDungeonTools:GetCursorPosition()
+                local scale = MethodDungeonTools:GetScale()
+                x = x*(1/scale)
+                y = y*(1/scale)
+                x = x-xOffset
+                y = y-yOffset
+                if x ~= self.adjustedX or y~= self.adjustedY then
+                    self.adjustedX = x
+                    self.adjustedY = y
+                    if self.animatedLine then MethodDungeonTools:KillAnimatedLine(self.animatedLine) end
+                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,self.spireFrame,self,nil,nil,nil,nil,nil,self.selected)
+                end
             end)
         end)
         self:SetScript("OnDragStop", function()
@@ -489,6 +509,8 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             riftOffsets[self.data.id].y = y
             clonex = x
             cloney = y
+            self.adjustedX = x
+            self.adjustedY = y
             self:StopMovingOrSizing()
             self:ClearAllPoints()
             self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
