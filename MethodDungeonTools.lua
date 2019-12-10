@@ -665,6 +665,11 @@ function MethodDungeonTools:SkinMenuButtons()
     end
 end
 
+---GetDefaultMapPanelSize
+function MethodDungeonTools:GetDefaultMapPanelSize()
+    return sizex,sizey
+end
+
 ---GetScale
 ---Returns scale factor stored in db
 function MethodDungeonTools:GetScale()
