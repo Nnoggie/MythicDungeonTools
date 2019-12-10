@@ -3,6 +3,19 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,tee
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
    [1] = {
+      [6] = {
+         ["npcId"] = 161124;
+         ["type"] = "nyalothaSpire";
+         ["index"] = 2;
+         ["scale"] = 0.7;
+         ["y"] = -403.8630225136;
+         ["x"] = 440.67550389062;
+         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["weeks"] = {
+            [1] = true;
+         };
+         ["template"] = "VignettePinTemplate";
+      };
       [7] = {
          ["npcId"] = 161243;
          ["type"] = "nyalothaSpire";
@@ -16,20 +29,21 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          };
          ["template"] = "VignettePinTemplate";
       };
+      [3] = {
+         ["y"] = -267.29618127731;
+         ["x"] = 370.20027720976;
+         ["template"] = "DeathReleasePinTemplate";
+         ["graveyardDescription"] = "Unlocks after killing Merektha";
+         ["type"] = "graveyard";
+      };
       [1] = {
          ["y"] = -73.998246995732;
          ["x"] = 335.00001778454;
          ["template"] = "MapLinkPinTemplate";
          ["target"] = 2;
-         ["direction"] = -2;
+         ["connectionIndex"] = 1;
          ["type"] = "mapLink";
-      };
-      [2] = {
-         ["y"] = -541.41229396957;
-         ["x"] = 571.10587581764;
-         ["template"] = "DeathReleasePinTemplate";
-         ["graveyardDescription"] = "";
-         ["type"] = "graveyard";
+         ["direction"] = -2;
       };
       [4] = {
          ["y"] = -165.06919033154;
@@ -51,47 +65,26 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          };
          ["template"] = "VignettePinTemplate";
       };
-      [3] = {
-         ["y"] = -267.29618127731;
-         ["x"] = 370.20027720976;
+      [2] = {
+         ["y"] = -541.41229396957;
+         ["x"] = 571.10587581764;
          ["template"] = "DeathReleasePinTemplate";
-         ["graveyardDescription"] = "Unlocks after killing Merektha";
+         ["graveyardDescription"] = "";
          ["type"] = "graveyard";
-      };
-      [6] = {
-         ["npcId"] = 161124;
-         ["type"] = "nyalothaSpire";
-         ["index"] = 2;
-         ["scale"] = 0.7;
-         ["y"] = -403.8630225136;
-         ["x"] = 440.67550389062;
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
-         ["weeks"] = {
-            [1] = true;
-         };
-         ["template"] = "VignettePinTemplate";
       };
    };
    [2] = {
-      [2] = {
-         ["y"] = -363.81684221232;
-         ["x"] = 531.32107890343;
-         ["template"] = "MapLinkPinTemplate";
-         ["type"] = "templeEye";
-      };
       [3] = {
          ["y"] = -420.50072225326;
          ["x"] = 429.98898521393;
          ["template"] = "MapLinkPinTemplate";
          ["type"] = "templeEye";
       };
-      [1] = {
-         ["y"] = -493.99826543592;
-         ["x"] = 559.00008483976;
+      [2] = {
+         ["y"] = -363.81684221232;
+         ["x"] = 531.32107890343;
          ["template"] = "MapLinkPinTemplate";
-         ["target"] = 1;
-         ["direction"] = 2;
-         ["type"] = "mapLink";
+         ["type"] = "templeEye";
       };
       [4] = {
          ["y"] = -410.84906632203;
@@ -100,10 +93,19 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["weeks"] = {
             [1] = true;
          };
-         ["npcId"] = 161241;
-         ["tooltipText"] = "Cursed Spire of Ny'alotha";
-         ["template"] = "VignettePinTemplate";
          ["type"] = "nyalothaSpire";
+         ["template"] = "VignettePinTemplate";
+         ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["npcId"] = 161241;
+      };
+      [1] = {
+         ["y"] = -493.99826543592;
+         ["x"] = 559.00008483976;
+         ["template"] = "MapLinkPinTemplate";
+         ["target"] = 1;
+         ["connectionIndex"] = 1;
+         ["type"] = "mapLink";
+         ["direction"] = 2;
       };
    };
 };

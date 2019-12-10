@@ -96,6 +96,26 @@ end
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
+        [13] = {
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 4;
+            ["scale"] = 0.7;
+            ["y"] = -393.00157968669;
+            ["x"] = 424.49336859004;
+            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["template"] = "VignettePinTemplate";
+        };
+        [7] = {
+            ["y"] = -229.95502100789;
+            ["x"] = 471.82728422311;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "G72 Gutters can be used for Enemy forces by tagging them with damage and triggering the instant-kill from the footmen next to them.";
+            ["type"] = "generalNote";
+        };
         [1] = {
             ["y"] = -112.09388221952;
             ["x"] = 526.6887930726;
@@ -129,8 +149,9 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 572.9478796215;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
-            ["direction"] = 1;
+            ["connectionIndex"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = 1;
         };
         [5] = {
             ["y"] = -99.22379149751;
@@ -164,13 +185,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
         };
-        [3] = {
-            ["y"] = -334.61016080079;
-            ["x"] = 432.0393310099;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Dread Captain Lockwood";
-            ["type"] = "graveyard";
-        };
         [6] = {
             ["y"] = -279.04184468091;
             ["x"] = 540.43646488041;
@@ -190,25 +204,12 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
         };
-        [13] = {
-            ["npcId"] = 161243;
-            ["type"] = "nyalothaSpire";
-            ["index"] = 4;
-            ["scale"] = 0.7;
-            ["y"] = -393.00157968669;
-            ["x"] = 424.49336859004;
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["template"] = "VignettePinTemplate";
-        };
-        [7] = {
-            ["y"] = -229.95502100789;
-            ["x"] = 471.82728422311;
-            ["template"] = "MapLinkPinTemplate";
-            ["text"] = "G72 Gutters can be used for Enemy forces by tagging them with damage and triggering the instant-kill from the footmen next to them.";
-            ["type"] = "generalNote";
+        [3] = {
+            ["y"] = -334.61016080079;
+            ["x"] = 432.0393310099;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after killing Dread Captain Lockwood";
+            ["type"] = "graveyard";
         };
     };
     [2] = {
@@ -217,12 +218,12 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 552.76424026611;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["direction"] = -1;
+            ["connectionIndex"] = 1;
             ["type"] = "mapLink";
+            ["direction"] = -1;
         };
     };
 };
-
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [27] = {

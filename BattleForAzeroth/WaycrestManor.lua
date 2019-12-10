@@ -3,27 +3,12 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=363,tee
 
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [2] = {
-        [1] = {
-            ["y"] = -371.99827054888;
-            ["x"] = 238.99949948117;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 1;
-            ["type"] = "mapLink";
-            ["direction"] = -1;
-        };
         [2] = {
             ["y"] = -325.99821539596;
             ["x"] = 438.99950417504;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
-            ["type"] = "mapLink";
-            ["direction"] = -1;
-        };
-        [4] = {
-            ["y"] = -165.998228807;
-            ["x"] = 301.99956662021;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 1;
+            ["connectionIndex"] = 1;
             ["type"] = "mapLink";
             ["direction"] = -1;
         };
@@ -32,32 +17,54 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 763.9993723277;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
+            ["connectionIndex"] = 4;
             ["type"] = "mapLink";
             ["direction"] = -1;
         };
-    };
-    [3] = {
-        [2] = {
-            ["y"] = -74.998246995732;
-            ["x"] = 634.99954083376;
+        [1] = {
+            ["y"] = -401.73084814143;
+            ["x"] = 240.7668304707;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
+            ["connectionIndex"] = 2;
             ["type"] = "mapLink";
-            ["direction"] = 1;
+            ["direction"] = -1;
         };
+        [4] = {
+            ["y"] = -165.998228807;
+            ["x"] = 301.99956662021;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 1;
+            ["connectionIndex"] = 5;
+            ["type"] = "mapLink";
+            ["direction"] = -1;
+        };
+        [5] = {
+            ["y"] = -338.70982365718;
+            ["x"] = 240.7668304707;
+            ["connectionIndex"] = 3;
+            ["target"] = 1;
+            ["direction"] = -1;
+            ["template"] = "MapLinkPinTemplate";
+            ["type"] = "mapLink";
+        };
+    };
+    [3] = {
         [3] = {
             ["y"] = -479.99823718891;
             ["x"] = 265.99968709797;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
+            ["connectionIndex"] = 8;
             ["type"] = "mapLink";
             ["direction"] = -1;
         };
-        [1] = {
-            ["y"] = -331.99823886529;
-            ["x"] = 142.99959280156;
+        [2] = {
+            ["y"] = -74.998246995732;
+            ["x"] = 634.99954083376;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 1;
+            ["connectionIndex"] = 7;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };
@@ -74,24 +81,23 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
         };
+        [1] = {
+            ["y"] = -331.99823886529;
+            ["x"] = 142.99959280156;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 1;
+            ["connectionIndex"] = 6;
+            ["type"] = "mapLink";
+            ["direction"] = 1;
+        };
     };
     [1] = {
-        [13] = {
-            ["y"] = -149.88478569378;
-            ["x"] = 524.42562055599;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["npcId"] = 161243;
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaRift";
-        };
         [7] = {
             ["y"] = -171.156124714;
             ["x"] = 507.71746400247;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
+            ["connectionIndex"] = 7;
             ["type"] = "mapLink";
             ["direction"] = -1;
         };
@@ -100,6 +106,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 431.99974958785;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
+            ["connectionIndex"] = 1;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };
@@ -108,6 +115,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 658.99968496338;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
+            ["connectionIndex"] = 4;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };
@@ -116,6 +124,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 286.99996290728;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
+            ["connectionIndex"] = 3;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };
@@ -125,18 +134,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "DeathReleasePinTemplate";
             ["graveyardDescription"] = "";
             ["type"] = "graveyard";
-        };
-        [11] = {
-            ["y"] = -226.22336104694;
-            ["x"] = 430.84475805135;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["npcId"] = 161124;
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
         };
         [9] = {
             ["y"] = -244.84595605421;
@@ -149,6 +146,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 333.16700017336;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
+            ["connectionIndex"] = 5;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };
@@ -164,19 +162,24 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
         };
-        [3] = {
-            ["y"] = -423.99831958301;
-            ["x"] = 287.99980457313;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 2;
-            ["type"] = "mapLink";
-            ["direction"] = 1;
+        [11] = {
+            ["y"] = -226.22336104694;
+            ["x"] = 430.84475805135;
+            ["index"] = 2;
+            ["weeks"] = {
+                [1] = true;
+            };
+            ["npcId"] = 161124;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
         };
         [6] = {
             ["y"] = -234.95708134019;
             ["x"] = 331.91687615145;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
+            ["connectionIndex"] = 6;
             ["type"] = "mapLink";
             ["direction"] = -1;
         };
@@ -192,6 +195,15 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
         };
+        [3] = {
+            ["y"] = -423.99831958301;
+            ["x"] = 287.99980457313;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 2;
+            ["connectionIndex"] = 2;
+            ["type"] = "mapLink";
+            ["direction"] = 1;
+        };
     };
     [4] = {
         [1] = {
@@ -199,6 +211,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 283.99958366528;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
+            ["connectionIndex"] = 8;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };
@@ -207,6 +220,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 567.99959204719;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 5;
+            ["connectionIndex"] = 9;
             ["type"] = "mapLink";
             ["direction"] = -1;
         };
@@ -225,6 +239,7 @@ G52 will not be present while the Worldquest to defeat Matron Christiane is acti
             ["x"] = 395.9996705018;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
+            ["connectionIndex"] = 9;
             ["type"] = "mapLink";
             ["direction"] = 1;
         };

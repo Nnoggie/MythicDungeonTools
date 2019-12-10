@@ -15,6 +15,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 519.99998390675;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 7;
+            ["connectionIndex"] = 6;
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
@@ -29,6 +30,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 452.00002179295;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 5;
+            ["connectionIndex"] = 5;
             ["direction"] = -1;
             ["type"] = "mapLink";
         };
@@ -71,12 +73,14 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["target"] = 1;
             ["direction"] = 2;
             ["type"] = "mapLink";
+            ["connectionIndex"] = 1;
         };
         [2] = {
             ["y"] = -120.99821179174;
             ["x"] = 454.00006758794;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
+            ["connectionIndex"] = 2;
             ["direction"] = -2;
             ["type"] = "mapLink";
         };
@@ -126,6 +130,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 476.41240071571;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 2;
+            ["connectionIndex"] = 2;
             ["direction"] = -1;
             ["type"] = "mapLink";
         };
@@ -134,6 +139,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["x"] = 311.79902903432;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
+            ["connectionIndex"] = 3;
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
@@ -315,13 +321,6 @@ Blood Elf/Gnome: 10% Intellect";
         };
     };
     [1] = {
-        [2] = {
-            ["y"] = -323.24173620103;
-            ["x"] = 647.46008933814;
-            ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "";
-            ["type"] = "graveyard";
-        };
         [3] = {
             ["y"] = -281.83580607976;
             ["x"] = 462.50964014617;
@@ -329,13 +328,12 @@ Blood Elf/Gnome: 10% Intellect";
             ["graveyardDescription"] = "Unlocks after killing The Sand Queen";
             ["type"] = "graveyard";
         };
-        [1] = {
-            ["y"] = -262.48238754636;
-            ["x"] = 429.14575221168;
-            ["template"] = "MapLinkPinTemplate";
-            ["target"] = 2;
-            ["direction"] = -2;
-            ["type"] = "mapLink";
+        [2] = {
+            ["y"] = -323.24173620103;
+            ["x"] = 647.46008933814;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "";
+            ["type"] = "graveyard";
         };
         [4] = {
             ["y"] = -252.58510488;
@@ -348,6 +346,15 @@ Blood Elf/Gnome: 10% Intellect";
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
             ["type"] = "nyalothaSpire";
+        };
+        [1] = {
+            ["y"] = -262.48238754636;
+            ["x"] = 429.14575221168;
+            ["template"] = "MapLinkPinTemplate";
+            ["target"] = 2;
+            ["direction"] = -2;
+            ["type"] = "mapLink";
+            ["connectionIndex"] = 1;
         };
     };
     [4] = {
@@ -365,6 +372,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 313.00005758367;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 3;
+            ["connectionIndex"] = 3;
             ["direction"] = -1;
             ["type"] = "mapLink";
         };
@@ -373,6 +381,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 219.00000645407;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 5;
+            ["connectionIndex"] = 4;
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
@@ -442,6 +451,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 487.99998658896;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 6;
+            ["connectionIndex"] = 5;
             ["direction"] = 1;
             ["type"] = "mapLink";
         };
@@ -459,6 +469,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 212.99992649071;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 4;
+            ["connectionIndex"] = 4;
             ["direction"] = -1;
             ["type"] = "mapLink";
         };
@@ -490,6 +501,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["x"] = 569.99996362254;
             ["template"] = "MapLinkPinTemplate";
             ["target"] = 6;
+            ["connectionIndex"] = 6;
             ["direction"] = -1;
             ["type"] = "mapLink";
         };

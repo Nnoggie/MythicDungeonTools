@@ -165,7 +165,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
         --door options
         local option3 = AceGUI:Create("EditBox")
-        option3:SetLabel("Door Name")
+        option3:SetLabel("Door Name / Connected Index")
         option3:SetText("")
         local option4 = AceGUI:Create("EditBox")
         option4:SetLabel("Door Descripting")
@@ -197,8 +197,9 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     local posx,posy = 300,-200
                     local t = tonumber(option1:GetText())
                     local d = tonumber(option2:GetText())
+                    local c = tonumber(option3:GetText())
                     if t and d then
-                        tinsert(links,{x=posx,y=posy,target=t,direction=d,template="MapLinkPinTemplate",type="mapLink"})
+                        tinsert(links,{x=posx,y=posy,target=t,direction=d,connectionIndex=c,template="MapLinkPinTemplate",type="mapLink"})
                         MethodDungeonTools:POI_UpdateAll()
                     end
                 end,
