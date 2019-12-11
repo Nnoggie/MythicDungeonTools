@@ -13,7 +13,6 @@ function MethodDungeonTools:POI_CreateFramePools()
     MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "VignettePinTemplate")
 end
 
-
 --devMode
 local function POI_SetDevOptions(frame,poi)
     frame:SetMovable(true)
@@ -50,6 +49,7 @@ end
 local function POI_SetOptions(frame,type,poi,homeSublevel)
     frame.teeming = nil
     frame.isSpire = nil
+    frame.poi = nil
     frame.spireIndex = nil
     frame.defaultHidden = nil
     frame:SetMovable(false)
@@ -67,6 +67,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame.HighlightTexture:SetDrawLayer("ARTWORK")
         frame.HighlightTexture:Hide()
         frame.target = poi.target
+        frame.poi = poi
         local directionToAtlas = {
             [-1] = "poi-door-down",
             [1] = "poi-door-up",
@@ -82,6 +83,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine(MethodDungeonTools:GetDungeonSublevels()[db.currentDungeonIdx][poi.target], 1, 1, 1, 1)
+            if db.devMode then GameTooltip:AddLine(frame.poi.connectionIndex, 1, 1, 1, 1) end
             GameTooltip:Show()
             frame.HighlightTexture:Show()
         end)
@@ -145,36 +147,34 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                     end
                 end
             end
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(frame.npcId,1)
+            if connectedDoor then
+                frame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,frame,connectedDoor,nil,nil,nil,nil,nil,not frame.isSpire)
+            end
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
             frame.HighlightTexture:Hide()
             if blipFrame then
                 blipFrame.fontstring_Text1:Hide()
-                MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
             end
+            MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
         end)
         --check expanded status
-        local blips = MethodDungeonTools:GetDungeonEnemyBlips()
-        for _,blip in pairs(blips) do
-            if blip.data.id == frame.npcId then
-                if blip.selected then
-                    frame.Texture:SetSize(10*poiScale,10*poiScale)
-                    frame.Texture:SetAtlas("poi-rift1")
-                    frame.HighlightTexture:SetSize(10*poiScale,10*poiScale)
-                    frame.HighlightTexture:SetAtlas("poi-rift1")
-                    frame.isSpire = false
-                    frame.textString:Show()
-                else
-                    frame.Texture:SetSize(12*poiScale,16*poiScale)
-                    frame.Texture:SetAtlas("poi-nzothpylon")
-                    frame.HighlightTexture:SetSize(12*poiScale,16*poiScale)
-                    frame.HighlightTexture:SetAtlas("poi-nzothpylon")
-                    frame.isSpire = true
-                    frame.textString:Hide()
-                end
-                break
-            end
+        if MethodDungeonTools:IsNPCInPulls(frame.npcId) then
+            frame.Texture:SetSize(10*poiScale,10*poiScale)
+            frame.Texture:SetAtlas("poi-rift1")
+            frame.HighlightTexture:SetSize(10*poiScale,10*poiScale)
+            frame.HighlightTexture:SetAtlas("poi-rift1")
+            frame.isSpire = false
+            frame.textString:Show()
+        else
+            frame.Texture:SetSize(12*poiScale,16*poiScale)
+            frame.Texture:SetAtlas("poi-nzothpylon")
+            frame.HighlightTexture:SetSize(12*poiScale,16*poiScale)
+            frame.HighlightTexture:SetAtlas("poi-nzothpylon")
+            frame.isSpire = true
+            frame.textString:Hide()
         end
     end
     if type == "door" then
@@ -492,7 +492,6 @@ end
 
 ---Animated Lines
 ---Credit to Grimonja for this part
-
 local texturePool
 local animatedLine
 
@@ -551,6 +550,7 @@ local function animateLine(self, elapsed)
 end
 
 local function createAnimatedLine(parent)
+    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
     texturePool = texturePool or CreateTexturePool(MethodDungeonTools.main_frame.mapPanelFrame ,"OVERLAY",7,nil)
     animatedLine = CreateFrame("Frame",nil,parent) --only 1 line supported atm, use frame pool for multiple lines
     animatedLine.phase = 0
@@ -576,33 +576,18 @@ function MethodDungeonTools:ShowAnimatedLine(parent, frame1, frame2, sizeX, size
     local mapSizex,mapSizey = MethodDungeonTools:GetDefaultMapPanelSize()
     animatedLine.frameOneX = ((mapSizex/2)+frame1.x)*scale
     animatedLine.frameOneY = ((mapSizey/2)+frame1.y)*scale
-    animatedLine.frameTwoX = ((mapSizex/2)+frame2.adjustedX)*scale
-    animatedLine.frameTwoY = ((mapSizey/2)+frame2.adjustedY)*scale
+    animatedLine.frameTwoX = ((mapSizex/2)+(frame2.adjustedX or frame2.x))*scale
+    animatedLine.frameTwoY = ((mapSizey/2)+(frame2.adjustedY or frame2.y))*scale
 
     local totalDistance = math.sqrt(math.pow(animatedLine.frameTwoX - animatedLine.frameOneX,2) + math.pow(animatedLine.frameTwoY - animatedLine.frameOneY,2))
-    local rotation = math.atan2(animatedLine.frameTwoY - animatedLine.frameOneY,animatedLine.frameTwoX - animatedLine.frameOneX)
-    local numLines = math.max(1,math.floor(totalDistance / (animatedLine.sizeX + animatedLine.gap)))
-    local lineLength = (totalDistance / (numLines * 2))
     animatedLine.speed = animatedLine.speed / (totalDistance)
-
-    local tX,tY,t,tex
-    for i=1,numLines + 1 do
-        tex = createLineSegment(parent,animatedLine.color)
-        table.insert(animatedLine.frames,tex)
-        t = ((lineLength * 2) * (i - 1)) / totalDistance
-        tX, tY = getPointAlongALine(parent,animatedLine.frameOneX,animatedLine.frameOneY,animatedLine.frameTwoX,animatedLine.frameTwoY,t)
-        tex:SetPoint("TOPLEFT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX - (animatedLine.sizeX / 2),tY - (animatedLine.sizeY / 2))
-        tex:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX + (animatedLine.sizeX / 2),tY + (animatedLine.sizeY / 2))
-        tex:SetPoint("CENTER",tX, tY)
-        tex:SetRotation(rotation)
-    end
-
     animatedLine:SetScript("onUpdate", animateLine)
 
     return animatedLine
 end
 
 function MethodDungeonTools:KillAnimatedLine(animatedLine)
+    if not animatedLine then return end
     animatedLine:SetScript("onUpdate",nil)
     for i=1,#animatedLine.frames do
         animatedLine.frames[i]:ClearAllPoints()
@@ -610,4 +595,17 @@ function MethodDungeonTools:KillAnimatedLine(animatedLine)
     end
     texturePool:ReleaseAll()
     table.wipe(animatedLine.frames)
+end
+
+function MethodDungeonTools:FindConnectedDoor(npcId,numConnection)
+    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+    local connection = riftOffsets and riftOffsets[npcId] and riftOffsets[npcId].connections and riftOffsets[npcId].connections[numConnection or #riftOffsets[npcId].connections] or nil
+    if connection then
+        local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+        for poiFrame,_ in pairs(activeDoors) do
+            if poiFrame.poi and poiFrame.poi.connectionIndex == connection.connectionIndex then
+                return poiFrame
+            end
+        end
+    end
 end

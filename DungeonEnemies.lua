@@ -107,10 +107,12 @@ function MDTDungeonEnemyMixin:OnEnter()
             if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
                 poiFrame.HighlightTexture:Show()
                 self.spireFrame = poiFrame
-                self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,poiFrame,self,nil,nil,nil,nil,nil,self.selected)
+                self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,self.spireFrame,self,nil,nil,nil,nil,nil,self.selected)
                 break
             end
         end
+        local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+        if connectedDoor then self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor,self,nil,nil,nil,nil,nil,self.selected) end
     end
     if not self.clone.g then
         self.fontstring_Text1:Show()
@@ -141,10 +143,10 @@ function MDTDungeonEnemyMixin:OnLeave()
         for poiFrame,_ in pairs(active) do
             if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
                 poiFrame.HighlightTexture:Hide()
-                MethodDungeonTools:KillAnimatedLine(self.animatedLine)
                 break
             end
         end
+        MethodDungeonTools:KillAnimatedLine(self.animatedLine)
     end
     if not self.clone.g then
         self.fontstring_Text1:Hide()
@@ -175,6 +177,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
         end
         if self.data.corrupted then
+            local connectedFrame
             local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
             for poiFrame,_ in pairs(active) do
                 if poiFrame.spireIndex and poiFrame.npcId and poiFrame.npcId == self.data.id then
@@ -195,11 +198,13 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
                         poiFrame.ShowAnim:Play()
                         poiFrame.textString:Hide()
                     end
-                    MethodDungeonTools:KillAnimatedLine(self.animatedLine)
-                    MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,poiFrame,self,nil,nil,nil,nil,nil,self.selected)
+                    connectedFrame = poiFrame
                     break
                 end
             end
+            MethodDungeonTools:KillAnimatedLine(self.animatedLine)
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+            self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor or connectedFrame,self,nil,nil,nil,nil,nil,self.selected)
         end
     elseif button == "RightButton" then
         if db.devMode then
@@ -491,8 +496,9 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                 if x ~= self.adjustedX or y~= self.adjustedY then
                     self.adjustedX = x
                     self.adjustedY = y
-                    if self.animatedLine then MethodDungeonTools:KillAnimatedLine(self.animatedLine) end
-                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,self.spireFrame,self,nil,nil,nil,nil,nil,self.selected)
+                    --if self.animatedLine then MethodDungeonTools:KillAnimatedLine(self.animatedLine) end
+                    local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor or self.spireFrame ,self,nil,nil,nil,nil,nil,self.selected)
                 end
             end)
         end)
@@ -521,6 +527,17 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                 if MethodDungeonTools:DoFramesOverlap(self,poiFrame,-10) then
                     riftOffsets[self.data.id].sublevel = poiFrame.target
                     riftOffsets[self.data.id].homeSublevel = self.clone.sublevel or 1
+                    riftOffsets[self.data.id].connections = riftOffsets[self.data.id].connections or {}
+                    local c = riftOffsets[self.data.id].connections
+                    local shouldAdd = true
+                    for idx,value in ipairs(c) do
+                        if value.source == poiFrame.poi.target then
+                            tremove(c,idx)
+                            shouldAdd = false
+                            break
+                        end
+                    end
+                    if shouldAdd then tinsert(c,{connectionIndex=poiFrame.poi.connectionIndex,source=MethodDungeonTools:GetCurrentSubLevel()+0,target=poiFrame.poi.target}) end
                     if riftOffsets[self.data.id].sublevel == (self.clone.sublevel or 1)then
                         riftOffsets[self.data.id].sublevel = nil
                         riftOffsets[self.data.id].homeSublevel = nil
@@ -533,7 +550,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             end
             self:SetScript("OnUpdate",nil)
         end)
-        self:Hide() --hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
+        self:Hide()--hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
     end
     if emissaryIds[self.data.id] then self:Hide() end --hide beguiling emissaries by default
     tinsert(blips,self)
@@ -973,10 +990,35 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
     end
 end
 
+function MethodDungeonTools:IsNPCInPulls(npcId)
+    local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
+    for enemyIdx,enemy in pairs(data) do
+        if enemy.id == npcId then
+            return MethodDungeonTools:IsCloneInPulls(enemyIdx,nil)
+        end
+    end
+end
+
+function MethodDungeonTools:IsCloneInPulls(enemyIdx,cloneIdx)
+    local pulls = MethodDungeonTools:GetCurrentPreset().value.pulls
+    local numClones = 0
+    for _,pull in pairs(pulls) do
+        if pull[enemyIdx] then
+            if cloneIdx then
+                if pull[enemyIdx][cloneIdx] then return true end
+            else
+                for cloneIdx,_ in pairs(pull[enemyIdx]) do
+                    numClones = numClones+1
+                end
+            end
+        end
+    end
+    return numClones>0
+end
 
 ---returns count, maxCountNormal, maxCountTeeming
 function MethodDungeonTools:GetEnemyForces(npcId)
-    for i = 1,24 do
+    for i = 1,MethodDungeonTools:GetNumDungeons() do
         local data = MethodDungeonTools.dungeonEnemies[i]
         if data then
             for enemyIdx,enemy in pairs(data) do

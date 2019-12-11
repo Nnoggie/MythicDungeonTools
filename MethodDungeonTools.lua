@@ -236,6 +236,7 @@ local dungeonList = {
     [26] = "Mechagon - Workshop",
     [27] = " >Legion",
 }
+function MethodDungeonTools:GetNumDungeons() return #dungeonList-1 end
 function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
 
 local dungeonSubLevels = {
@@ -2461,7 +2462,6 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(preset.value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
     frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
-    MethodDungeonTools:POI_UpdateAll()
     MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     MethodDungeonTools:ToggleBoralusSelector(db.currentDungeonIdx == 19)
     MethodDungeonTools:DisplayMDISelector()
