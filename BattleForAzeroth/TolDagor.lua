@@ -1066,6 +1066,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -195.25363318729;
                 ["x"] = 379.20496043006;
                 ["sublevel"] = 3;
+                ["week"] = {
+                    [1] = true;
+                };
             };
         };
         ["id"] = 161244;
