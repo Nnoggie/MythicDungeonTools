@@ -43,11 +43,13 @@ function MethodDungeonTools:initToolbar(frame)
             frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame,"TOP")
             frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.65,1)
+            db.toolbarExpanded = false
         else
             frame.toolbar:Show()
             frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame.toolbar,"BOTTOM")
             frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0,0.35)
+            db.toolbarExpanded = true
         end
     end)
 

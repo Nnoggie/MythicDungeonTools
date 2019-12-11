@@ -67,6 +67,7 @@ local initFrames
 -------------------------
 local defaultSavedVars = {
 	global = {
+        toolbarExpanded = true,
         currentSeason = 4,
 		currentExpansion = 2,
         scale = 1,
@@ -4178,6 +4179,9 @@ function initFrames()
 	end
 
 	MethodDungeonTools:initToolbar(main_frame)
+    if db.toolbarExpanded then
+        main_frame.toolbar.toggleButton:Click()
+    end
 
     --ping
     MethodDungeonTools.ping = CreateFrame("PlayerModel", nil, MethodDungeonTools.main_frame.mapPanelFrame)
