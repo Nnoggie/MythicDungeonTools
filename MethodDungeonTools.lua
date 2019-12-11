@@ -624,6 +624,7 @@ function MethodDungeonTools:CreateMenu()
         self.main_frame:StopMovingOrSizing()
         self:UpdateEnemyInfoFrame()
         self:UpdateMap()
+        self:CreateTutorialButton(self.main_frame)
         self.main_frame:SetScript("OnSizeChanged", function() end)
     end)
     local normal = resizer:CreateTexture(nil, "OVERLAY")
@@ -688,6 +689,7 @@ function MethodDungeonTools:StartScaling()
     oldScrollValues.oldScrollV = f.scrollFrame:GetVerticalScroll()
     oldScrollValues.oldSizeX = f.scrollFrame:GetWidth()
     oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
+    HelpPlate_Hide(true)
 end
 
 
@@ -720,7 +722,6 @@ function MethodDungeonTools:SetScale(scale)
     --position stuff temporarily with fast functions, ignoring size - avoid UpdateMap map here as that would be way too expensive
     self:DungeonEnemies_PositionAllBlips(scale)
     self:POI_PositionAllPoints(scale)
-
 end
 
 
@@ -785,7 +786,7 @@ function MethodDungeonTools:Maximize()
         f.devPanel:SetPoint("TOPLEFT",f,"TOPLEFT",0,-45)
     end
     f.resizer:Hide()
-
+    MethodDungeonTools:CreateTutorialButton(MethodDungeonTools.main_frame)
     db.maximized = true
 end
 
@@ -830,6 +831,7 @@ function MethodDungeonTools:Minimize()
         f.devPanel:SetPoint("TOPRIGHT",f.topPanel,"TOPLEFT",0,0)
     end
     f.resizer:Show()
+    MethodDungeonTools:CreateTutorialButton(MethodDungeonTools.main_frame)
 
     db.maximized = false
 end
@@ -3452,45 +3454,47 @@ function MethodDungeonTools:OpenConfirmationFrame(width,height,title,buttonText,
     f:Show()
 end
 
-
 ---CreateTutorialButton
 ---Creates the tutorial button and sets up the help plate frames
 function MethodDungeonTools:CreateTutorialButton(parent)
-    local button = CreateFrame("Button","MDTMainHelpPlateButton",parent,"MainHelpPlateButton")
-    button:ClearAllPoints()
-    button:SetPoint("TOPLEFT",parent,"TOPLEFT",0,48)
-	button:SetScale(0.8)
-	button:SetFrameStrata(mainFrameStrata)
-	button:SetFrameLevel(6)
-	button:Hide()
-	--hook to make button hide
-	local originalHide = parent.Hide
-	function parent:Hide(...)
-		button:Hide()
-		return originalHide(self, ...)
-	end
-	local helpPlate = {
-		FramePos = { x = 0,	y = 0 },
-		FrameSize = { width = sizex, height = sizey	},
-		[1] = { ButtonPos = { x = 190,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 197, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = "Select a dungeon" },
-		[2] = { ButtonPos = { x = 190,	y = -210 }, HighLightBox = { x = 0, y = -58, width = sizex-6, height = sizey-58 },	ToolTipDir = "RIGHT",	ToolTipText = "Select enemies for your pulls\nCTRL+Click to single select enemies" },
-		[3] = { ButtonPos = { x = 828,	y = 0 }, HighLightBox = { x = 838, y = 30, width = 251, height = 87 },	ToolTipDir = "LEFT",	ToolTipText = "Manage presets" },
-		[4] = { ButtonPos = { x = 828,	y = -87 }, HighLightBox = { x = 838, y = 30-87, width = 251, height = 83 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon Options" },
-		[5] = { ButtonPos = { x = 828,	y = -(87+83) }, HighLightBox = { x = 838, y = 30-(87+83), width = 251, height = 415 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
-	}
-	local function TutorialButtonOnClick(self)
-		if not HelpPlate_IsShowing(helpPlate) then
-			HelpPlate_Show(helpPlate, MethodDungeonTools.main_frame, self)
-		else
-			HelpPlate_Hide(true)
-		end
-	end
-	local function TutorialButtonOnHide(self)
-		HelpPlate_Hide(true)
-	end
-	parent.HelpButton = button
-    button:SetScript("OnClick",TutorialButtonOnClick)
-    button:SetScript("OnHide",TutorialButtonOnHide)
+    local scale = self:GetScale()
+    local sidePanelHeight = MethodDungeonTools.main_frame.sidePanel.PullButtonScrollGroup.frame:GetHeight()
+    local helpPlate = {
+        FramePos = { x = 0,	y = 0 },
+        FrameSize = { width = sizex, height = sizey	},
+        [1] = { ButtonPos = { x = 205,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 200, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = "Select a dungeon and navigate to different sublevels" },
+        [2] = { ButtonPos = { x = 205,	y = -210*scale }, HighLightBox = { x = 0, y = -58, width = (sizex-6)*scale, height = (sizey*scale)-58 },	ToolTipDir = "RIGHT",	ToolTipText = "Click to select enemies\nCTRL-Click to single-select enemies\nSHIFT-Click to select enemies and create a new pull" },
+        [3] = { ButtonPos = { x = 900*scale,	y = 0*scale }, HighLightBox = { x = 838*scale, y = 30, width = 251, height = 115 },	ToolTipDir = "LEFT",	ToolTipText = "Manage, share and collaborate on presets" },
+        [4] = { ButtonPos = { x = 900*scale,	y = -87*scale }, HighLightBox = { x = 838*scale, y = 30-115, width = 251, height = 102 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon options" },
+        [5] = { ButtonPos = { x = 900*scale,	y = -(115+102*scale) }, HighLightBox = { x = 838*scale, y = (30-(115+102)), width = 251, height = (sidePanelHeight)+43 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
+    }
+    if not parent.HelpButton then
+        parent.HelpButton = CreateFrame("Button","MDTMainHelpPlateButton",parent,"MainHelpPlateButton")
+        parent.HelpButton:ClearAllPoints()
+        parent.HelpButton:SetPoint("TOPLEFT",parent,"TOPLEFT",0,48)
+        parent.HelpButton:SetScale(0.8)
+        parent.HelpButton:SetFrameStrata(mainFrameStrata)
+        parent.HelpButton:SetFrameLevel(6)
+        parent.HelpButton:Hide()
+        --hook to make button hide
+        local originalHide = parent.Hide
+        function parent:Hide(...)
+            parent.HelpButton:Hide()
+            return originalHide(self, ...)
+        end
+        local function TutorialButtonOnHide(self)
+            HelpPlate_Hide(true)
+        end
+        parent.HelpButton:SetScript("OnHide",TutorialButtonOnHide)
+    end
+    local function TutorialButtonOnClick(self)
+        if not HelpPlate_IsShowing(helpPlate) then
+            HelpPlate_Show(helpPlate, MethodDungeonTools.main_frame, self)
+        else
+            HelpPlate_Hide(true)
+        end
+    end
+    parent.HelpButton:SetScript("OnClick",TutorialButtonOnClick)
 end
 
 ---RegisterOptions
