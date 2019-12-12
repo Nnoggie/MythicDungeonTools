@@ -27,14 +27,14 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["y"] = -273.73565889455;
             ["x"] = 409.95526615971;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed.";
+            ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed";
             ["type"] = "generalNote";
         };
         [9] = {
             ["y"] = -348.49370305917;
             ["x"] = 415.73284153458;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed.";
+            ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed";
             ["type"] = "generalNote";
         };
         [5] = {
