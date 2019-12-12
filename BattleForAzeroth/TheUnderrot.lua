@@ -39,6 +39,8 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             [4] = true;
             [7] = true;
          };
+         ["season"] = 3;
+         ["difficulty"] = 10;
          ["text"] = "Spawns of Void-Touched Emissary 2 and 3 are random.\
 Only one of them will be present at a time.";
          ["type"] = "generalNote";
@@ -77,6 +79,8 @@ Only one of them will be present at a time.";
             [4] = true;
             [7] = true;
          };
+         ["season"] = 3;
+         ["difficulty"] = 10;
          ["text"] = "Spawns of Void-Touched Emissary 2 and 3 are random.\
 Only one of them will be present at a time.";
          ["type"] = "generalNote";

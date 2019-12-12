@@ -39,7 +39,9 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
                 [11] = true;
                 [8] = true;
             };
-            ["text"] = "Week 2/5/8/11: This Brute will stop patrolling, when he reaches Emissary of the Tides 7 (G13).";
+            ["season"] = 3;
+            ["difficulty"] = 10;
+            ["text"] = "This Brute will stop patrolling when he reaches Emissary of the Tides 7 (G13)";
             ["type"] = "generalNote";
         };
         [8] = {
