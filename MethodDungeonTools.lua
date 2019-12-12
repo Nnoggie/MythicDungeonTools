@@ -1471,12 +1471,17 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		local difficulty = tonumber(value)
-        db.currentDifficulty = difficulty or db.currentDifficulty
-        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+        if (difficulty>=10 and db.currentDifficulty<10) or (difficulty<10 and db.currentDifficulty>=10) then
+            db.currentDifficulty = difficulty or db.currentDifficulty
+            MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+            frame.sidePanel.difficultyWarning:Toggle(difficulty)
+            MethodDungeonTools:POI_UpdateAll()
+        else
+            db.currentDifficulty = difficulty or db.currentDifficulty
+        end
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-        frame.sidePanel.difficultyWarning:Toggle(difficulty)
-        MethodDungeonTools:POI_UpdateAll()
+
 	end)
 	frame.sidePanel.DifficultySlider:SetCallback("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_BOTTOMLEFT",0,40)
