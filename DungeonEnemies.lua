@@ -464,16 +464,17 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self:SetMovable(true)
         self:RegisterForDrag("LeftButton")
         local xOffset,yOffset
+        local oldX,oldY
         self:SetScript("OnMouseDown",function()
             local x,y = MethodDungeonTools:GetCursorPosition()
             local scale = MethodDungeonTools:GetScale()
             x = x*(1/scale)
             y = y*(1/scale)
             riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-            local nx = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clonex
-            local ny = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or cloney
-            xOffset = x-nx
-            yOffset = y-ny
+            oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clonex
+            oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or cloney
+            xOffset = x-oldX
+            yOffset = y-oldY
         end)
         self:SetScript("OnDragStart", function()
             self:StartMoving()
@@ -509,6 +510,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             y = y*(1/scale)
             x = x-xOffset
             y = y-yOffset
+            local sizex,sizey = MethodDungeonTools:GetDefaultMapPanelSize()
+            if x<0 or x>sizex or y>0 or y<(-1)*sizey then
+                x = oldX
+                y = oldY
+            end
             riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
             riftOffsets[self.data.id] = riftOffsets[self.data.id] or {}
             riftOffsets[self.data.id].x = x
