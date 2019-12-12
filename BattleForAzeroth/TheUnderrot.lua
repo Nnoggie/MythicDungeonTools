@@ -9,19 +9,19 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["weeks"] = {
             [1] = true;
          };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
          ["npcId"] = 161124;
+         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
       };
       [1] = {
          ["y"] = -106.99817181006;
          ["x"] = 313.99999540486;
          ["template"] = "MapLinkPinTemplate";
          ["target"] = 2;
-         ["connectionIndex"] = 1;
-         ["direction"] = -2;
          ["type"] = "mapLink";
+         ["direction"] = -2;
+         ["connectionIndex"] = 1;
       };
       [2] = {
          ["y"] = -289.02272233371;
@@ -39,11 +39,11 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             [4] = true;
             [7] = true;
          };
-         ["season"] = 3;
-         ["difficulty"] = 10;
+         ["type"] = "generalNote";
          ["text"] = "Spawns of Void-Touched Emissary 2 and 3 are random.\
 Only one of them will be present at a time.";
-         ["type"] = "generalNote";
+         ["season"] = 3;
+         ["difficulty"] = 10;
       };
       [8] = {
          ["y"] = -87.076968755083;
@@ -52,10 +52,10 @@ Only one of them will be present at a time.";
          ["weeks"] = {
             [1] = true;
          };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Cursed Spire of Ny'alotha";
          ["npcId"] = 161241;
+         ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
       };
       [9] = {
          ["y"] = -222.38138064733;
@@ -64,10 +64,10 @@ Only one of them will be present at a time.";
          ["weeks"] = {
             [1] = true;
          };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
          ["npcId"] = 161243;
+         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
       };
       [5] = {
          ["y"] = -403.4998312742;
@@ -79,17 +79,19 @@ Only one of them will be present at a time.";
             [4] = true;
             [7] = true;
          };
-         ["season"] = 3;
-         ["difficulty"] = 10;
+         ["type"] = "generalNote";
          ["text"] = "Spawns of Void-Touched Emissary 2 and 3 are random.\
 Only one of them will be present at a time.";
-         ["type"] = "generalNote";
+         ["season"] = 3;
+         ["difficulty"] = 10;
       };
       [3] = {
-         ["y"] = -342.93441674103;
-         ["x"] = 388.07413459747;
+         ["y"] = -345.39869283311;
+         ["x"] = 392.23609464769;
          ["template"] = "MapLinkPinTemplate";
-         ["type"] = "tuMatronNote";
+         ["scale"] = 2;
+         ["text"] = "Matron 4+5 can spawn on either left or right platform";
+         ["type"] = "generalNote";
       };
       [6] = {
          ["y"] = -419.37611656379;
@@ -98,10 +100,10 @@ Only one of them will be present at a time.";
          ["weeks"] = {
             [1] = true;
          };
-         ["type"] = "nyalothaSpire";
-         ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
          ["npcId"] = 161244;
+         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["template"] = "VignettePinTemplate";
+         ["type"] = "nyalothaSpire";
       };
    };
    [2] = {
@@ -110,9 +112,9 @@ Only one of them will be present at a time.";
          ["x"] = 612.99994620309;
          ["template"] = "MapLinkPinTemplate";
          ["target"] = 1;
-         ["connectionIndex"] = 1;
-         ["direction"] = 2;
          ["type"] = "mapLink";
+         ["direction"] = 2;
+         ["connectionIndex"] = 1;
       };
    };
 };

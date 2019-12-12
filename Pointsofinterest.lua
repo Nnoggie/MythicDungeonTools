@@ -313,24 +313,6 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             GameTooltip:Hide()
         end)
     end
-    if type == "tuMatronNote" then
-        frame:SetSize(10,10)
-        frame.Texture:SetSize(10,10)
-        frame.HighlightTexture:SetSize(10,10)
-        frame.HighlightTexture:SetAtlas("QuestNormal")
-        frame.Texture:SetAtlas("QuestNormal")
-        frame:SetScript("OnClick",function()
-
-        end)
-        frame:SetScript("OnEnter",function()
-            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:AddLine("Matron 4+5 can spawn on either left or right platform", 1, 1, 1, 1)
-            GameTooltip:Show()
-        end)
-        frame:SetScript("OnLeave",function()
-            GameTooltip:Hide()
-        end)
-    end
     if type == "shrineSkip" then
         frame:SetSize(12,12)
         frame.Texture:SetSize(12,12)
@@ -423,9 +405,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         end)
     end
     if type =="generalNote" then
-        frame:SetSize(10,10)
-        frame.Texture:SetSize(10,10)
-        frame.HighlightTexture:SetSize(10,10)
+        frame:SetSize(10*(poi.scale or 1),10*(poi.scale or 1))
+        frame.Texture:SetSize(10*(poi.scale or 1),10*(poi.scale or 1))
+        frame.HighlightTexture:SetSize(10*(poi.scale or 1),10*(poi.scale or 1))
         frame.HighlightTexture:SetAtlas("QuestNormal")
         frame.Texture:SetAtlas("QuestNormal")
         frame:SetScript("OnClick",function()
