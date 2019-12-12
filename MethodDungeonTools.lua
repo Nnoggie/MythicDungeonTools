@@ -535,6 +535,7 @@ function MethodDungeonTools:ShowInterface(force)
 	else
 		self.main_frame:Show()
 		self.main_frame.HelpButton:Show()
+        self:CheckCurrentZone()
 	end
 end
 
@@ -2543,6 +2544,47 @@ function MethodDungeonTools:DeletePreset(index)
 	db.currentPreset[db.currentDungeonIdx] = index-1
 	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
+end
+
+local zoneIdToDungeonIdx = {
+    [934] = 15,--atal
+    [935] = 15,--atal
+    [936] = 16,--fh
+    [1004] = 17,--kr
+    [1039] = 18,--shrine
+    [1040] = 18,--shrine
+    [1162] = 19,--siege
+    [1038] = 20,--temple
+    [1043] = 20,--temple
+    [1010] = 21,--motherlode
+    [1041] = 22,--underrot
+    [1042] = 22,--underrot
+    [974] = 23,--toldagor
+    [975] = 23,--toldagor
+    [976] = 23,--toldagor
+    [977] = 23,--toldagor
+    [978] = 23,--toldagor
+    [979] = 23,--toldagor
+    [980] = 23,--toldagor
+    [1015] = 24,--wcm
+    [1016] = 24,--wcm
+    [1017] = 24,--wcm
+    [1018] = 24,--wcm
+    [1029] = 24,--wcm
+    [1490] = 25,--lower mecha
+    [1491] = 26,--upper mecha
+    [1493] = 26,--upper mecha
+    [1494] = 26,--upper mecha
+    [1497] = 26,--upper mecha
+}
+local lastUpdatedDungeonIdx
+function MethodDungeonTools:CheckCurrentZone()
+    local zoneId = C_Map.GetBestMapForUnit("player")
+    local dungeonIdx = zoneIdToDungeonIdx[zoneId]
+    if dungeonIdx and (not lastUpdatedDungeonIdx or  dungeonIdx ~= lastUpdatedDungeonIdx) then
+        lastUpdatedDungeonIdx = dungeonIdx
+        MethodDungeonTools:UpdateToDungeon(dungeonIdx)
+    end
 end
 
 ---CountPresets
