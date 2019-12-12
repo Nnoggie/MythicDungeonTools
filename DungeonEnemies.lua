@@ -567,21 +567,12 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if db.devMode then blipDevModeSetup(self) end
 end
 
----DungeonEnemies_PositionAllBlips
----Used to position during scaling changes to the map
-function MethodDungeonTools:DungeonEnemies_PositionAllBlips(scale)
+---DungeonEnemies_HideAllBlips
+---Used to hide blips during scaling changes to the map
+function MethodDungeonTools:DungeonEnemies_HideAllBlips()
     for _,blip in pairs(blips) do
-        self:DungeonEnemies_PositionBlip(blip,scale)
+        blip:Hide()
     end
-end
-
----DungeonEnemies_PositionBlip
----Used to position during scaling changes to the map
-function MethodDungeonTools:DungeonEnemies_PositionBlip(blip, scale)
-    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-    local clonex = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].x or blip.clone.x
-    local cloney = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].y or blip.clone.y
-    blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",clonex*scale,cloney*scale)
 end
 
 function MethodDungeonTools:DungeonEnemies_UpdateEnemies()

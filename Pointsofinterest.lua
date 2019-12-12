@@ -449,12 +449,11 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     if db.devMode then POI_SetDevOptions(frame,poi) end
 end
 
----POI_PositionAllPoints
----Used to position during scaling changes to the map
-function MethodDungeonTools:POI_PositionAllPoints(scale)
+---POI_HideAllPoints
+---Used to hide all POIs during scaling changes to the map
+function MethodDungeonTools:POI_HideAllPoints()
     for _,poiFrame in pairs(points) do
-        poiFrame:ClearAllPoints()
-        poiFrame:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",poiFrame.x*scale,poiFrame.y*scale)
+        poiFrame:Hide()
     end
 end
 

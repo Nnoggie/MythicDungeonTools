@@ -691,6 +691,8 @@ function MethodDungeonTools:StartScaling()
     oldScrollValues.oldSizeX = f.scrollFrame:GetWidth()
     oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
     HelpPlate_Hide(true)
+    self:DungeonEnemies_HideAllBlips()
+    self:POI_HideAllPoints()
 end
 
 
@@ -717,14 +719,22 @@ function MethodDungeonTools:SetScale(scale)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldScrollValues.oldSizeX)
     self:ZoomMap(0,false)
     self:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
-
     db.scale = scale
     db.nonFullscreenScale = scale
-    --position stuff temporarily with fast functions, ignoring size - avoid UpdateMap map here as that would be way too expensive
-    self:DungeonEnemies_PositionAllBlips(scale)
-    self:POI_PositionAllPoints(scale)
 end
 
+function MethodDungeonTools:GetFullScreenSizes()
+    local newSizey = GetScreenHeight()-60 --top and bottom panel 30 each
+    local newSizex = newSizey*(sizex/sizey)
+    local isNarrow
+    if newSizex+251>GetScreenWidth() then --251 sidebar
+        newSizex = GetScreenWidth()-251
+        newSizey = newSizex*(sizey/sizex)
+        isNarrow = true
+    end
+    local scale = newSizey/sizey --use this for adjusting NPC / POI positions later
+    return newSizex, newSizey, scale, isNarrow
+end
 
 ---Maximize
 ---FULLSCREEN the UI
@@ -748,15 +758,8 @@ function MethodDungeonTools:Maximize()
     f.blackoutFrame:Show()
     f.topPanel:RegisterForDrag(nil)
     f.bottomPanel:RegisterForDrag(nil)
-    local newSizey = GetScreenHeight()-60 --top and bottom panel 30 each
-    local newSizex = newSizey*(sizex/sizey)
-    local isNarrow
-    if newSizex+251>GetScreenWidth() then --251 sidebar
-        newSizex = GetScreenWidth()-251
-        newSizey = newSizex*(sizey/sizex)
-        isNarrow = true
-    end
-    db.scale = newSizey/sizey --use this for adjusting NPC / POI positions later
+    local newSizex, newSizey, scale, isNarrow = MethodDungeonTools:GetFullScreenSizes()
+    db.scale = scale
     f:ClearAllPoints()
     if not isNarrow then
         f:SetPoint("TOP", UIParent,"TOP", -(f.sidePanel:GetWidth()/2), -30)
@@ -4023,6 +4026,8 @@ function initFrames()
 	main_frame:SetSize(sizex*db.scale, sizey*db.scale)
 	main_frame:SetResizable(true)
     main_frame:SetMinResize(sizex*0.75,sizey*0.75)
+    local _,_,fullscreenScale = MethodDungeonTools:GetFullScreenSizes()
+    main_frame:SetMaxResize(sizex*fullscreenScale,sizey*fullscreenScale)
 	MethodDungeonTools.main_frame = main_frame
 
     main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND")
