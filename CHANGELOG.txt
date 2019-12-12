@@ -2,6 +2,7 @@ v3.0.0
 - New Awakened features including special draggable npc frames.
 - Fullscreen mode now also properly supports more narrow aspect ratios
 - Users can no longer resize the AddOn-window in such a way that the draggable areas become unreachable.
+- Added a new warning label to indicate if the dungeon difficulty is currently set to a level below 10
 v2.9.6
 - fixed an error that could cause the AddOn to stop loading properly in certain presets
 - fixed a few visual bugs in the difficulty slider and count display
