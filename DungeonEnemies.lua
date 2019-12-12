@@ -576,9 +576,7 @@ end
 ---DungeonEnemies_HideAllBlips
 ---Used to hide blips during scaling changes to the map
 function MethodDungeonTools:DungeonEnemies_HideAllBlips()
-    for _,blip in pairs(blips) do
-        blip:Hide()
-    end
+    MethodDungeonTools.dungeonEnemies_framePools:ReleaseAll()
 end
 
 function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
