@@ -2527,7 +2527,7 @@ end
 
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
-function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap)
+function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap,init)
     if db.currentExpansion == 1 then
         if dungeonIdx>=15 then
             db.currentExpansion = 2
@@ -2539,6 +2539,7 @@ function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap)
     end
     db.currentDungeonIdx = dungeonIdx
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
+    if init then return end
 	MethodDungeonTools:UpdatePresetDropDown()
 	if not ignoreUpdateMap then MethodDungeonTools:UpdateMap() end
     MethodDungeonTools:ZoomMap(1,true)
@@ -2583,12 +2584,12 @@ local zoneIdToDungeonIdx = {
     [1497] = 26,--upper mecha
 }
 local lastUpdatedDungeonIdx
-function MethodDungeonTools:CheckCurrentZone()
+function MethodDungeonTools:CheckCurrentZone(init)
     local zoneId = C_Map.GetBestMapForUnit("player")
     local dungeonIdx = zoneIdToDungeonIdx[zoneId]
     if dungeonIdx and (not lastUpdatedDungeonIdx or  dungeonIdx ~= lastUpdatedDungeonIdx) then
         lastUpdatedDungeonIdx = dungeonIdx
-        MethodDungeonTools:UpdateToDungeon(dungeonIdx)
+        MethodDungeonTools:UpdateToDungeon(dungeonIdx,nil,init)
     end
 end
 
@@ -4134,6 +4135,7 @@ function initFrames()
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
     main_frame.contextDropdown = L_Create_UIDropDownMenu("MethodDungeonToolsContextDropDown", nil)
 
+    MethodDungeonTools:CheckCurrentZone(true)
     MethodDungeonTools:EnsureDBTables()
 	MethodDungeonTools:MakeTopBottomTextures(main_frame)
 	MethodDungeonTools:MakeMapTexture(main_frame)
@@ -4142,7 +4144,7 @@ function initFrames()
 	MethodDungeonTools:MakePresetCreationFrame(main_frame)
 	MethodDungeonTools:MakePresetImportFrame(main_frame)
     MethodDungeonTools:DungeonEnemies_CreateFramePools()
-	MethodDungeonTools:UpdateDungeonEnemies(main_frame)
+	--MethodDungeonTools:UpdateDungeonEnemies(main_frame)
 	MethodDungeonTools:CreateDungeonSelectDropdown(main_frame)
 	MethodDungeonTools:MakePullSelectionButtons(main_frame.sidePanel)
 	MethodDungeonTools:MakeExportFrame(main_frame)

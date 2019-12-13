@@ -625,6 +625,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
 end
 
 function MethodDungeonTools:DungeonEnemies_CreateFramePools()
+    db = self:GetDB()
     MethodDungeonTools.dungeonEnemies_framePools = MethodDungeonTools.dungeonEnemies_framePools or CreatePoolCollection()
     MethodDungeonTools.dungeonEnemies_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MDTDungeonEnemyTemplate");
 end
