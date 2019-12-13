@@ -434,7 +434,9 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.texture_Portrait:SetDesaturated(false)
     local raise = 4
     for k,v in pairs(blips) do
-        if MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+        --only check neighboring blips, saves performance on big maps
+        local distance = math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)
+        if distance<7 and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
@@ -621,7 +623,6 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
             end
         end
     end
-
 end
 
 function MethodDungeonTools:DungeonEnemies_CreateFramePools()
