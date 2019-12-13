@@ -78,6 +78,15 @@ U.isInRange = function(value, min, max)
     return (value >= min and value <= max)
 end
 
+--[[
+Performance measurement
+Usage:
+MethodDungeonTools.U:TMStart("DungeonEnemies_UpdateEnemies")
+MethodDungeonTools.U:TMStep("ReleaseAll")
+MethodDungeonTools.U:TMStep("AddBlips")
+MethodDungeonTools.U:TMEnd()
+]]
+
 local debugTimes
 U.TMStart = function(self,segmentName)
     debugTimes = {}
