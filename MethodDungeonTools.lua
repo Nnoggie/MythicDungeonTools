@@ -1420,6 +1420,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
             MethodDungeonTools:LiveSession_SendAffixWeek(key)
         end
+        if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -1481,7 +1482,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         end
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
-
+        if MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
 	end)
 	frame.sidePanel.DifficultySlider:SetCallback("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_BOTTOMLEFT",0,40)
