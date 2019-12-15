@@ -119,8 +119,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnMouseUp",function(self,button)
             if button == "RightButton" then
                 --reset npc location
+                MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
                 MethodDungeonTools:GetCurrentPreset().value.riftOffsets[self.npcId]=nil
-                MethodDungeonTools:UpdateMap()
+                MethodDungeonTools:DungeonEnemies_PositionCorrupted()
             end
         end)
         local blipFrame

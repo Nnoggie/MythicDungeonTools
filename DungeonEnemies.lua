@@ -434,9 +434,8 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.texture_Portrait:SetDesaturated(false)
     local raise = 4
     for k,v in pairs(blips) do
-        --only check neighboring blips, saves performance on big maps
-        local distance = math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)
-        if distance<7 and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+        --only check neighboring blips, or all if blip is corrupted - saves performance on big maps
+        if (data.corrupted or math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)<7) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
@@ -457,12 +456,10 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self.texture_DragRight:SetRotation(1.5708)
         self.texture_DragUp:SetRotation(3.14159)
         local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-        local clonex = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
-        local cloney = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
-        self.adjustedX = clonex
-        self.adjustedY = cloney
+        self.adjustedX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
+        self.adjustedY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
         self:ClearAllPoints()
-        self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",clonex*scale,cloney*scale)
+        self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",self.adjustedX*scale,self.adjustedY*scale)
         self:SetMovable(true)
         self:RegisterForDrag("LeftButton")
         local xOffset,yOffset
@@ -473,8 +470,8 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             x = x*(1/scale)
             y = y*(1/scale)
             riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-            oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clonex
-            oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or cloney
+            oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
+            oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
             xOffset = x-oldX
             yOffset = y-oldY
         end)
@@ -521,8 +518,6 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             riftOffsets[self.data.id] = riftOffsets[self.data.id] or {}
             riftOffsets[self.data.id].x = x
             riftOffsets[self.data.id].y = y
-            clonex = x
-            cloney = y
             self.adjustedX = x
             self.adjustedY = y
             self:StopMovingOrSizing()
@@ -844,6 +839,21 @@ function MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
             elseif weekData and weekData[week] then
                 blip:Show()
             end
+        end
+    end
+end
+
+---DungeonEnemies_PositionCorrupted
+---Position all corrupted/awakened npcs based on their current offsets stored in the preset
+function MethodDungeonTools:DungeonEnemies_PositionCorrupted()
+    local riftOffsets = self:GetCurrentPreset().value.riftOffsets
+    local scale = self:GetScale()
+    for _,blip in pairs(blips) do
+        if blip.data.corrupted then
+            blip.adjustedX = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].x or blip.clone.x
+            blip.adjustedY = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].y or blip.clone.y
+            blip:ClearAllPoints()
+            blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",blip.adjustedX*scale,blip.adjustedY*scale)
         end
     end
 end
