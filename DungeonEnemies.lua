@@ -464,16 +464,18 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self:RegisterForDrag("LeftButton")
         local xOffset,yOffset
         local oldX,oldY
-        self:SetScript("OnMouseDown",function()
-            local x,y = MethodDungeonTools:GetCursorPosition()
-            local scale = MethodDungeonTools:GetScale()
-            x = x*(1/scale)
-            y = y*(1/scale)
-            riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-            oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
-            oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
-            xOffset = x-oldX
-            yOffset = y-oldY
+        self:SetScript("OnMouseDown",function(self, button)
+            if button == "LeftButton" then
+                local x,y = MethodDungeonTools:GetCursorPosition()
+                local scale = MethodDungeonTools:GetScale()
+                x = x*(1/scale)
+                y = y*(1/scale)
+                riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+                oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
+                oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
+                xOffset = x-oldX
+                yOffset = y-oldY
+            end
         end)
         self:SetScript("OnDragStart", function()
             self:StartMoving()
