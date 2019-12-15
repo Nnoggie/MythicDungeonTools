@@ -435,7 +435,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     local raise = 4
     for k,v in pairs(blips) do
         --only check neighboring blips, or all if blip is corrupted - saves performance on big maps
-        if (data.corrupted or math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)<7) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+        if (data.corrupted or math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)<9) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
