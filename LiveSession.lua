@@ -289,3 +289,13 @@ function MethodDungeonTools:LiveSession_SendCorruptedPositions(offsets)
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.corrupted, export, distribution, nil, "ALERT")
     end
 end
+
+---LiveSession_SendDifficulty
+---Sends current difficulty
+function MethodDungeonTools:LiveSession_SendDifficulty()
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local export = self:GetDB().currentDifficulty
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.difficulty, export.."", distribution, nil, "ALERT")
+    end
+end

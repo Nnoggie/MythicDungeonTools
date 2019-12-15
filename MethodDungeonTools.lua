@@ -1470,6 +1470,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.sidePanel.DifficultySlider.label:SetFontObject("GameFontNormalSmall")
 	frame.sidePanel.DifficultySlider:SetWidth(200)
 	frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
+    local timer
 	frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		local difficulty = tonumber(value)
         if (difficulty>=10 and db.currentDifficulty<10) or (difficulty<10 and db.currentDifficulty>=10) then
@@ -1481,9 +1482,18 @@ function MethodDungeonTools:MakeSidePanel(frame)
             db.currentDifficulty = difficulty or db.currentDifficulty
         end
         MethodDungeonTools:UpdateProgressbar()
-        MethodDungeonTools:ReloadPullButtons()
-        if MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
+        if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
+        if timer then timer:Cancel() end
+        timer = C_Timer.NewTimer(2, function()
+            MethodDungeonTools:ReloadPullButtons()
+            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendDifficulty() end
+        end)
 	end)
+    frame.sidePanel.DifficultySlider:SetCallback("OnMouseUp",function()
+        if timer then timer:Cancel() end
+        MethodDungeonTools:ReloadPullButtons()
+        if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendDifficulty() end
+    end)
 	frame.sidePanel.DifficultySlider:SetCallback("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_BOTTOMLEFT",0,40)
         GameTooltip:AddLine("Select the dungeon level",1,1,1)
@@ -1519,6 +1529,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
         difficultyWarning:Toggle(db.currentDifficulty)
+        if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendDifficulty() end
     end)
     function difficultyWarning:Toggle(difficulty)
         if difficulty<10 then

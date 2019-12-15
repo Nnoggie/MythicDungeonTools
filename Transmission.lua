@@ -174,6 +174,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["mdi"] = "MDTLiveMDI",
     ["reqPre"] = "MDTLiveReqPre",
     ["corrupted"] = "MDTLiveCor",
+    ["difficulty"] = "MDTLiveLvl",
 }
 
 function MDTcommsObject:OnEnable()
@@ -291,7 +292,27 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         end
     end
 
-    --live session messages from here on, we ignore our own messages
+    --difficulty
+    if prefix == MethodDungeonTools.liveSessionPrefixes.difficulty then
+        if MethodDungeonTools.liveSessionActive then
+            local db = MethodDungeonTools:GetDB()
+            local difficulty = tonumber(message)
+            if difficulty and ((difficulty>=10 and db.currentDifficulty<10) or (difficulty<10 and db.currentDifficulty>=10)) then
+                db.currentDifficulty = difficulty or db.currentDifficulty
+                MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+                MethodDungeonTools.main_frame.sidePanel.difficultyWarning:Toggle(difficulty)
+                MethodDungeonTools:POI_UpdateAll()
+            else
+                db.currentDifficulty = difficulty or db.currentDifficulty
+            end
+            MethodDungeonTools:UpdateProgressbar()
+            if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
+            MethodDungeonTools:ReloadPullButtons()
+            MethodDungeonTools.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
+        end
+    end
+
+    --live session messages that ignore concurrency from here on, we ignore our own messages
     if sender == UnitFullName("player") then return end
 
 
