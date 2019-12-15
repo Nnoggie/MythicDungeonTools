@@ -1141,6 +1141,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanelExportButton:SetCallback("OnClick",function(widget,callbackName,value)
         local preset = MethodDungeonTools:GetCurrentPreset()
         MethodDungeonTools:SetUniqueID(preset)
+        preset.mdiEnabled = db.MDI.enabled
+        preset.difficulty = db.currentDifficulty
 		local export = MethodDungeonTools:TableToString(preset,true,5)
 		MethodDungeonTools:HideAllDialogs()
 		MethodDungeonTools.main_frame.ExportFrame:Show()
@@ -1180,7 +1182,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if IsShiftKeyDown() then
             --delete all profiles
             local numPresets = self:CountPresets()
-            local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of this dungeon?\nYou are about to delete "..numPresets.." preset(s).\nThis cannot be undone\n"
+            local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of this dungeon?\nYou are about to delete "..numPresets.." preset(s)\nThis cannot be undone\n"
             MethodDungeonTools:OpenConfirmationFrame(450,150,"Delete ALL presets","Delete",prompt, MethodDungeonTools.DeleteAllPresets)
         else
             MethodDungeonTools:HideAllDialogs()
@@ -1481,18 +1483,27 @@ function MethodDungeonTools:MakeSidePanel(frame)
         else
             db.currentDifficulty = difficulty or db.currentDifficulty
         end
+        MethodDungeonTools:GetCurrentPreset().difficulty = db.currentDifficulty
         MethodDungeonTools:UpdateProgressbar()
         if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
         if timer then timer:Cancel() end
         timer = C_Timer.NewTimer(2, function()
             MethodDungeonTools:ReloadPullButtons()
-            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendDifficulty() end
+            if MethodDungeonTools.liveSessionActive then
+                local livePreset = MethodDungeonTools:GetCurrentLivePreset()
+                local shouldUpdate = livePreset == MethodDungeonTools:GetCurrentPreset()
+                if shouldUpdate then MethodDungeonTools:LiveSession_SendDifficulty() end
+            end
         end)
 	end)
     frame.sidePanel.DifficultySlider:SetCallback("OnMouseUp",function()
         if timer then timer:Cancel() end
         MethodDungeonTools:ReloadPullButtons()
-        if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendDifficulty() end
+        if MethodDungeonTools.liveSessionActive then
+            local livePreset = MethodDungeonTools:GetCurrentLivePreset()
+            local shouldUpdate = livePreset == MethodDungeonTools:GetCurrentPreset()
+            if shouldUpdate then MethodDungeonTools:LiveSession_SendDifficulty() end
+        end
     end)
 	frame.sidePanel.DifficultySlider:SetCallback("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_BOTTOMLEFT",0,40)
@@ -1529,7 +1540,11 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
         difficultyWarning:Toggle(db.currentDifficulty)
-        if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendDifficulty() end
+        if MethodDungeonTools.liveSessionActive then
+            local livePreset = MethodDungeonTools:GetCurrentLivePreset()
+            local shouldUpdate = livePreset == MethodDungeonTools:GetCurrentPreset()
+            if shouldUpdate then MethodDungeonTools:LiveSession_SendDifficulty() end
+        end
     end)
     function difficultyWarning:Toggle(difficulty)
         if difficulty<10 then
@@ -2452,6 +2467,8 @@ function MethodDungeonTools:EnsureDBTables()
     preset.mdi.freehold = preset.mdi.freehold or 1
     preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
     preset.mdi.beguiling = preset.mdi.beguiling or 1
+    preset.difficulty = preset.difficulty or db.currentDifficulty
+    preset.mdiEnabled = preset.mdiEnabled or db.MDI.enabled
   
     --make sure sublevel actually exists for the dungeon
     --this might have been caused by bugged dropdowns in the past
@@ -2474,6 +2491,10 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 	mapName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][0]
 	MethodDungeonTools:EnsureDBTables()
     local preset = MethodDungeonTools:GetCurrentPreset()
+    if preset.difficulty then
+        db.currentDifficulty = preset.difficulty
+        frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
+    end
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
     local tileFormat = MethodDungeonTools:GetTileFormat(db.currentDungeonIdx)

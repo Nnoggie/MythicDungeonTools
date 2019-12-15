@@ -211,7 +211,9 @@ end
 function MethodDungeonTools:LiveSession_SendPreset(preset)
     local distribution = self:IsPlayerInGroup()
     if distribution then
-        preset.mdiEnabled = self:GetDB().MDI.enabled
+        local db = self:GetDB()
+        preset.mdiEnabled = db.MDI.enabled
+        preset.difficulty = db.currentDifficulty
         local export = MethodDungeonTools:TableToString(preset,false,5)
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "ALERT")
     end

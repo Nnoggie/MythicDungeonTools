@@ -630,8 +630,10 @@ function MethodDungeonTools:SendToGroup(distribution,silent,preset)
     preset = preset or MethodDungeonTools:GetCurrentPreset()
     --set unique id
     MethodDungeonTools:SetUniqueID(preset)
-    --gotta encode mdi mode into preset
-    preset.mdiEnabled = MethodDungeonTools:GetDB().MDI.enabled
+    --gotta encode mdi mode / difficulty into preset
+    local db = MethodDungeonTools:GetDB()
+    preset.mdiEnabled = db.MDI.enabled
+    preset.difficulty = db.currentDifficulty
     local export = MethodDungeonTools:TableToString(preset,false,5)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,silent})
 end
