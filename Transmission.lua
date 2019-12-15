@@ -173,6 +173,7 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["bora"] = "MDTLiveBora",
     ["mdi"] = "MDTLiveMDI",
     ["reqPre"] = "MDTLiveReqPre",
+    ["corrupted"] = "MDTLiveCor",
 }
 
 function MDTcommsObject:OnEnable()
@@ -272,6 +273,20 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             if preset == MethodDungeonTools:GetCurrentPreset() then
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
+                MethodDungeonTools:POI_UpdateAll() --for corrupted spires
+            end
+        end
+    end
+
+    --corrupted
+    if prefix == MethodDungeonTools.liveSessionPrefixes.corrupted then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local offsets = MethodDungeonTools:StringToTable(message,false)
+            preset.value.riftOffsets = offsets
+            --only reposition if no blip is currently moving
+            if not MethodDungeonTools:DungeonEnemies_IsAnyBlipMoving() then
+                MethodDungeonTools:DungeonEnemies_PositionCorrupted()
             end
         end
     end

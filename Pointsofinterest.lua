@@ -122,6 +122,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                 MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
                 MethodDungeonTools:GetCurrentPreset().value.riftOffsets[self.npcId]=nil
                 MethodDungeonTools:DungeonEnemies_PositionCorrupted()
+                if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
             end
         end)
         local blipFrame

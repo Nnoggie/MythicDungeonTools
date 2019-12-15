@@ -279,3 +279,13 @@ do
         end)
     end
 end
+
+---LiveSession_SendCorruptedPositions
+---Sends Corrupted NPC Offset Positions
+function MethodDungeonTools:LiveSession_SendCorruptedPositions(offsets)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local export = MethodDungeonTools:TableToString(offsets,false,5)
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.corrupted, export, distribution, nil, "ALERT")
+    end
+end

@@ -515,6 +515,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                 y = oldY
             end
             riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+            riftOffsets = riftOffsets or {}
             riftOffsets[self.data.id] = riftOffsets[self.data.id] or {}
             riftOffsets[self.data.id].x = x
             riftOffsets[self.data.id].y = y
@@ -552,6 +553,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                 end
             end
             self:SetScript("OnUpdate",nil)
+            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
         end)
         self:Hide()--hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
     end
@@ -568,6 +570,18 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     end
     self.texture_Indicator:Hide()
     if db.devMode then blipDevModeSetup(self) end
+end
+
+---DungeonEnemies_IsAnyBlipMoving
+function MethodDungeonTools:DungeonEnemies_IsAnyBlipMoving()
+    local isAnyMoving
+    for blipIdx,blip in pairs(blips) do
+        if blip:IsDragging() then
+            isAnyMoving = true
+            break
+        end
+    end
+    return isAnyMoving
 end
 
 ---DungeonEnemies_HideAllBlips
