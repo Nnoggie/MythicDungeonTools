@@ -31,8 +31,8 @@ def find_forces(row):
                 None)
 
 
-def findDisplayId(npcId):
-    url = 'https://www.wowhead.com/npc=' + npcId
+def find_display_id(npc_id):
+    url = 'https://www.wowhead.com/npc=' + npc_id
     with urllib.request.urlopen(url) as response:
         response = response.read()
         result = re.search('displayId&quot;:(.*)}(.*)">View', str(response))
@@ -57,27 +57,27 @@ known_dungeons = [
 ]
 
 
-def append_to_lua_table(dungeon, normal, teeming, count, teeming_count, output):
-    output += f"[{dungeon.idx}]={{[0]={{count={normal},teeming_count={teeming}}},"
+def append_to_lua_table(dung, normal, teeming, count, teeming_count, output):
+    output += f"[{dung.idx}]={{[0]={{count={normal},teeming_count={teeming}}},"
     for enemy in count:
-        enemyCount = enemy['Amount']
-        npcId = next((x['Asset'] for x in criteria if x['ID'] == enemy['CriteriaID']), None)
-        enemyTeemingCount = 999
+        enemy_count = enemy['Amount']
+        npc_id = next((x['Asset'] for x in criteria if x['ID'] == enemy['CriteriaID']), None)
+        enemy_teeming_count = 999
         for teemingEnemy in teeming_count:
-            enemyTeemingCount = teemingEnemy['Amount']
-            npcIdTeeming = next((x['Asset'] for x in criteria if x['ID'] == teemingEnemy['CriteriaID']), None)
-            if npcId == npcIdTeeming:
+            enemy_teeming_count = teemingEnemy['Amount']
+            npc_id_teeming = next((x['Asset'] for x in criteria if x['ID'] == teemingEnemy['CriteriaID']), None)
+            if npc_id == npc_id_teeming:
                 break
 
-        displayId = findDisplayId(npcId)
+        display_id = find_display_id(npc_id)
         time.sleep(2)
 
-        output += f"[{npcId}]={{count={enemyCount},teeming_count={enemyTeemingCount},displayId={displayId}}},"
+        output += f"[{npc_id}]={{count={enemy_count},teeming_count={enemy_teeming_count},displayId={display_id}}},"
     output += f"}},"
     return output
 
 
-tableOutput = "local dungeonData ={"
+table_output = "local dungeonData ={"
 for dungeon in known_dungeons:
     row = find_dungeon(dungeon.internal)
     teeming_row = find_dungeon(dungeon.internal, teeming=True)
@@ -86,13 +86,13 @@ for dungeon in known_dungeons:
     teeming_forces = find_forces(teeming_row)
 
     print(f"{dungeon.name} enemy forces normal = {forces['Amount']}, teeming = {teeming_forces['Amount']}")
-    count = [x for x in criteria_tree if x['Parent'] == forces['ID']]
-    teeming_count = [x for x in criteria_tree if x['Parent'] == teeming_forces['ID']]
-    tableOutput = append_to_lua_table(dungeon, forces['Amount'], teeming_forces['Amount'], count, teeming_count,
-                                      tableOutput)
+    count_data = [x for x in criteria_tree if x['Parent'] == forces['ID']]
+    teeming_count_data = [x for x in criteria_tree if x['Parent'] == teeming_forces['ID']]
+    table_output = append_to_lua_table(dungeon, forces['Amount'], teeming_forces['Amount'], count_data,
+                                       teeming_count_data, table_output)
 
-tableOutput += "}"
-r.clipboard_append(tableOutput)
+table_output += "}"
+r.clipboard_append(table_output)
 r.update()
 r.destroy()
 input("\nLua table copied to clipboard. Press Enter to exit after pasting.")
