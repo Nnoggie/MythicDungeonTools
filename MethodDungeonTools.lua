@@ -1872,7 +1872,8 @@ function MethodDungeonTools:UpdatePullTooltip(tooltip)
                         text = text..MethodDungeonTools:FormatEnemyHealth(health).." HP"..newLine
 
                         local totalForcesMax = MethodDungeonTools:IsCurrentPresetTeeming() and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal
-                        text = text.."Forces: "..MethodDungeonTools:FormatEnemyForces(v.enemyData.count,totalForcesMax,false)
+                        local count = MethodDungeonTools:IsCurrentPresetTeeming() and v.enemyData.teemingCount or v.enemyData.count
+                        text = text.."Forces: "..MethodDungeonTools:FormatEnemyForces(count,totalForcesMax,false)
 
                         tooltip.topString:SetText(text)
                         showData = true
@@ -1914,7 +1915,8 @@ end
 function MethodDungeonTools:CountForces(currentPull,currentOnly)
     --count up to and including the currently selected pull
     currentPull = currentPull or 1000
-    local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+    local preset = self:GetCurrentPreset()
+    local teeming = self:IsCurrentPresetTeeming()
     local pullCurrent = 0
     for pullIdx,pull in pairs(preset.value.pulls) do
         if not currentOnly or (currentOnly and pullIdx == currentPull) then
@@ -1923,7 +1925,10 @@ function MethodDungeonTools:CountForces(currentPull,currentOnly)
                     if tonumber(enemyIdx) then
                         for k,v in pairs(clones) do
                             if MethodDungeonTools:IsCloneIncluded(enemyIdx,v) then
-                                pullCurrent = pullCurrent + MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                local count = teeming
+                                        and self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].teemingCount
+                                        or self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                                pullCurrent = pullCurrent + count
                             end
                         end
                     end
@@ -3205,6 +3210,7 @@ function MethodDungeonTools:UpdatePullButtonNPCData(idx)
                                 enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
                                 enemyTable[enemyTableIdx].npcId = npcId
                                 enemyTable[enemyTableIdx].count = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
+                                enemyTable[enemyTableIdx].teemingCount = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["teemingCount"]
                                 enemyTable[enemyTableIdx].displayId = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
                                 enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
                                 enemyTable[enemyTableIdx].name = name

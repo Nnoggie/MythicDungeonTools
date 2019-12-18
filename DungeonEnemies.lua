@@ -114,12 +114,14 @@ function MDTDungeonEnemyMixin:OnEnter()
         local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
         if connectedDoor then self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor,self,nil,nil,nil,nil,nil,self.selected) end
     end
+    self.fontstring_Text1:SetText(MethodDungeonTools:IsCurrentPresetTeeming() and self.data.teemingCount or self.data.count)
     if not self.clone.g then
         self.fontstring_Text1:Show()
         return
     end
     for _,blip in pairs(blips) do
         if blip.clone.g == self.clone.g then
+            blip.fontstring_Text1:SetText(MethodDungeonTools:IsCurrentPresetTeeming() and blip.data.teemingCount or blip.data.count)
             blip.fontstring_Text1:Show()
         end
     end
@@ -336,7 +338,8 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     local occurence = (blip.data.isBoss and "") or blip.cloneIdx
 
     local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
-    text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
+    local count = MethodDungeonTools:IsCurrentPresetTeeming() and data.teemingCount or data.count
+    text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(count)
     local reapingText
     if blip.data.reaping and db.MDI.enabled and preset.mdi.beguiling == 13 then
         local reapingIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""

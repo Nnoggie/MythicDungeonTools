@@ -215,6 +215,14 @@ local function MakeEnemeyInfoFrame()
         end)
         f.enemyDataContainer:AddChild(f.enemyDataContainer.countEditBox)
 
+        f.enemyDataContainer.teemingCountEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.teemingCountEditBox:SetLabel("Enemy Forces (Teeming)")
+        f.enemyDataContainer.teemingCountEditBox:DisableButton(true)
+        f.enemyDataContainer.teemingCountEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.teemingCountEditBox)
+
         f.enemyDataContainer.stealthCheckBox = AceGUI:Create("CheckBox")
         f.enemyDataContainer.stealthCheckBox:SetLabel("Stealth")
         f.enemyDataContainer.stealthCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth()/2)-40)
@@ -486,6 +494,13 @@ function MDT:UpdateEnemyInfoData(enemyIdx)
     f.enemyDataContainer.levelEditBox.defaultText = data.level
     f.enemyDataContainer.countEditBox:SetText(data.count)
     f.enemyDataContainer.countEditBox.defaultText = data.count
+    if not data.teemingCount then
+        f.enemyDataContainer.teemingCountEditBox.frame:Hide()
+    else
+        f.enemyDataContainer.teemingCountEditBox.frame:Show()
+        f.enemyDataContainer.teemingCountEditBox:SetText(data.teemingCount)
+        f.enemyDataContainer.teemingCountEditBox.defaultText = data.teemingCount
+    end
     f.enemyDataContainer.stealthCheckBox:SetValue(data.stealth)
     f.enemyDataContainer.stealthCheckBox.defaultValue = data.stealth
     f.enemyDataContainer.stealthDetectCheckBox:SetValue(data.stealthDetect)
