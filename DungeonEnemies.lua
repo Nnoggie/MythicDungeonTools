@@ -1052,3 +1052,101 @@ function MethodDungeonTools:GetEnemyForces(npcId)
         end
     end
 end
+
+---updates the enemie tables with new count and teemingCount or displayId values
+---data is retrieved with the the get_count.py or get_displayids python script
+---data needs to afterwards be exported manually for every dungeon
+function MethodDungeonTools:UpdateDungeonData(dungeonData)
+
+    local function printDungeonName(shouldPrint,dungeonIdx)
+        if shouldPrint then
+            print("-----",MethodDungeonTools:GetDungeonName(dungeonIdx))
+        end
+        return false
+    end
+
+    for dungeonIdx,newData in pairs(dungeonData) do
+
+        --dungeon total count changes
+        local totalCount = MethodDungeonTools.dungeonTotalCount[dungeonIdx]
+        if newData[0] and (newData[0].count~=totalCount.normal or newData[0].teeming_count~=totalCount.teeming) then
+            print("TOTAL ",totalCount.normal,totalCount.teeming,">>>",newData[0].count,newData[0].teeming_count)
+            totalCount.normal = newData[0].count
+            totalCount.teeming = newData[0].teeming_count
+        end
+
+        --enemy changes
+        local shouldPrintDungeonName = true
+        local enemyData = MethodDungeonTools.dungeonEnemies[dungeonIdx]
+        if enemyData then
+            for _,enemy in pairs(enemyData) do
+                --ignore enchanted emissary (gives count but can almost never pull it off, keep 0 to keep it simple)
+                --ignore spark channeler, always gives 11 count but data says 6
+                if newData[enemy.id] and (enemy.id ~= 155432 and enemy.id ~= 139110) then
+
+                    if newData[enemy.id].count then
+                        --normal count changes
+                        if newData[enemy.id].count~=enemy.count then
+                            shouldPrintDungeonName= printDungeonName(shouldPrintDungeonName,dungeonIdx)
+                            print(enemy.name,enemy.id, enemy.count, ">>>", newData[enemy.id].count)
+                            enemy.count = newData[enemy.id].count
+                        end
+
+                        --teeming count changes
+                        if newData[enemy.id].count~= newData[enemy.id].teeming_count
+                                and (newData[enemy.id].count~=enemy.count or newData[enemy.id].teeming_count~=enemy.teemingCount)
+                        then
+                            shouldPrintDungeonName= printDungeonName(shouldPrintDungeonName,dungeonIdx)
+                            print("TEEMING ",enemy.name,enemy.id, newData[enemy.id].count,"||", newData[enemy.id].teeming_count)
+                            enemy.count = newData[enemy.id].count
+                            enemy.teemingCount = newData[enemy.id].teeming_count
+                        end
+                    end
+
+                    --displayId changes
+                    if newData[enemy.id].displayId and newData[enemy.id].displayId~=enemy.displayId then
+                        shouldPrintDungeonName= printDungeonName(shouldPrintDungeonName,dungeonIdx)
+                        print("DISPLAYID ",enemy.name,enemy.id,enemy.displayId, ">>>",newData[enemy.id].displayId)
+                        enemy.displayId = newData[enemy.id].displayId
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+end
+
+---exports all ids of npcs that do not have a displayId associated to them
+--dungeons = [
+--Dungeon(name='AtalDazar', idx=15, npcIds=[134739, 161241, 136347]),
+--    Dungeon(name='RandomDungeon', idx=14, npcIds=[161241, 134739, 136347]),
+--]
+function MethodDungeonTools:ExportNPCIdsWithoutDisplayIds()
+    local output = "dungeons = [\n"
+    for idx = 15,MethodDungeonTools:GetNumDungeons() do
+        local shouldAddDungeonText = true
+        local enemyData = MethodDungeonTools.dungeonEnemies[idx]
+        for _,enemy in pairs(enemyData) do
+            if not enemy.displayId then
+                if shouldAddDungeonText then
+                    output = output.."Dungeon(name='"..MethodDungeonTools:GetDungeonName(idx).."', idx=".. idx..", npcIds=["
+                    shouldAddDungeonText = false
+                end
+                output = output..enemy.id..", "
+            end
+        end
+        if not shouldAddDungeonText then output = output.."]),\n" end
+    end
+    output = output.."]"
+    MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.ExportFrame:Show()
+    MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
+    MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(output)
+    MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(output))
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetLabel("NPC ids without displayId")
+end

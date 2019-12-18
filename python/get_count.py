@@ -1,14 +1,10 @@
 # Original draft by Blazeton, adjusted and enhanced by Nnoggie
 # Scans criteria.csv and criteriatree.csv for enemy count
-# Scrapes wowhead for displayIds
 # Download criteria.csv and criteriatree.csv here:
 # https://wow.tools/dbc/?dbc=criteriatree&build=8.3.0.32805#search=&page=1
 # search in criteriatree for "(More Trash)" to find dungeon names
 import csv
 import collections
-import urllib.request
-import re
-import time
 from tkinter import Tk
 
 criteria = list(csv.DictReader(open('criteria.csv')))
@@ -31,28 +27,20 @@ def find_forces(row):
                 None)
 
 
-def find_display_id(npc_id):
-    url = 'https://www.wowhead.com/npc=' + npc_id
-    with urllib.request.urlopen(url) as response:
-        response = response.read()
-        result = re.search('displayId&quot;:(.*)}(.*)">View', str(response))
-        return result.group(1)
-
-
 Dungeon = collections.namedtuple('Dungeon', 'name idx internal')
 known_dungeons = [
-    # Dungeon(name='AtalDazar', idx=15, internal='8.0 Dungeon - City of Gold Exterior - Challenge'),
-    # Dungeon(name='Freehold', idx=16, internal='8.0 Dungeon - Outlaw Town - Challenge'),
-    # Dungeon(name='KingsRest', idx=17, internal='8.0 Dungeon - Kings\' Rest - Challenge'),
-    # Dungeon(name='ShrineoftheStorm', idx=18, internal='8.0 Dungeon - Shrine of the Storm - Challenge'),
-    # Dungeon(name='SiegeofBoralus_Alliance', idx=19, internal='Boralus Dungeon - Dungeon Scenario - Challenge'),
-    # Dungeon(name='SiegeofBoralus_Horde', idx=19, internal='Boralus Dungeon - Dungeon Scenario - Challenge (Horde)'),
-    # Dungeon(name='TempleofSethraliss', idx=20, internal='8.0 Dungeon - Temple of Sethraliss - Challenge'),
-    # Dungeon(name='TheMotherlode', idx=21, internal='8.0 Dungeon - Kezan - Challenge'),
-    # Dungeon(name='TheUnderrot', idx=22, internal='8.0 Dungeon - The Underrot - Challenge'),
-    # Dungeon(name='TolDagor', idx=23, internal='8.0 Prison Dungeon - Kul Tiras Prison - Challenge'),
-    # Dungeon(name='WaycrestManor', idx=24, internal='8.0 Dungeon - Drustvar Dungeon - Challenge'),
-    # Dungeon(name='MechagonIsland', idx=25, internal='8.2 Dungeon - Operation: Mechagon, Junkyard - Challenge'),
+    Dungeon(name='AtalDazar', idx=15, internal='8.0 Dungeon - City of Gold Exterior - Challenge'),
+    Dungeon(name='Freehold', idx=16, internal='8.0 Dungeon - Outlaw Town - Challenge'),
+    Dungeon(name='KingsRest', idx=17, internal='8.0 Dungeon - Kings\' Rest - Challenge'),
+    Dungeon(name='ShrineoftheStorm', idx=18, internal='8.0 Dungeon - Shrine of the Storm - Challenge'),
+    Dungeon(name='SiegeofBoralus_Alliance', idx=19, internal='Boralus Dungeon - Dungeon Scenario - Challenge'),
+    Dungeon(name='SiegeofBoralus_Horde', idx=19, internal='Boralus Dungeon - Dungeon Scenario - Challenge (Horde)'),
+    Dungeon(name='TempleofSethraliss', idx=20, internal='8.0 Dungeon - Temple of Sethraliss - Challenge'),
+    Dungeon(name='TheMotherlode', idx=21, internal='8.0 Dungeon - Kezan - Challenge'),
+    Dungeon(name='TheUnderrot', idx=22, internal='8.0 Dungeon - The Underrot - Challenge'),
+    Dungeon(name='TolDagor', idx=23, internal='8.0 Prison Dungeon - Kul Tiras Prison - Challenge'),
+    Dungeon(name='WaycrestManor', idx=24, internal='8.0 Dungeon - Drustvar Dungeon - Challenge'),
+    Dungeon(name='MechagonIsland', idx=25, internal='8.2 Dungeon - Operation: Mechagon, Junkyard - Challenge'),
     Dungeon(name='MechagonCity', idx=26, internal='8.2 Dungeon - Operation: Mechagon, City - Challenge'),
 ]
 
@@ -69,10 +57,7 @@ def append_to_lua_table(dung, normal, teeming, count, teeming_count, output):
             if npc_id == npc_id_teeming:
                 break
 
-        display_id = find_display_id(npc_id)
-        time.sleep(2)
-
-        output += f"[{npc_id}]={{count={enemy_count},teeming_count={enemy_teeming_count},displayId={display_id}}},"
+        output += f"[{npc_id}]={{count={enemy_count},teeming_count={enemy_teeming_count}}},"
     output += f"}},"
     return output
 
