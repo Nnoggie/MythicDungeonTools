@@ -444,9 +444,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self:updateSizes(1)
     self.texture_Portrait:SetDesaturated(false)
     local raise = 4
-    for k,v in pairs(blips) do
-        --only check neighboring blips, or all if blip is corrupted - saves performance on big maps
-        if (data.corrupted or math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)<9) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+    if not data.corrupted then
+        for k,v in pairs(blips) do
+            --only check neighboring blips - saves performance on big maps
+            if (math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)<9) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+        end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
@@ -463,6 +465,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self:SetScript("OnUpdate",nil)
     --awakened/corrupted adjustments: movable and color and stored position
     if data.corrupted then
+        self:SetFrameLevel(15)
         self.texture_Background:SetVertexColor(unpack(corruptedColor))
         self.texture_DragLeft:SetRotation(-1.5708)
         self.texture_DragRight:SetRotation(1.5708)
