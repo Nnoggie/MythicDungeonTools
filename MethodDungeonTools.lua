@@ -368,6 +368,11 @@ function MethodDungeonTools:GetDungeonSublevels()
     return dungeonSubLevels
 end
 
+function MethodDungeonTools:GetSublevelName(dungeonIdx,sublevelIdx)
+    if not dungeonIdx then dungeonIdx = db.currentDungeonIdx end
+    return dungeonSubLevels[dungeonIdx][sublevelIdx]
+end
+
 MethodDungeonTools.dungeonMaps = {
 	[1] = {
 		[0]= "BlackRookHoldDungeon",
@@ -536,6 +541,10 @@ function MethodDungeonTools:ShowInterface(force)
 		self.main_frame:Show()
 		self.main_frame.HelpButton:Show()
         self:CheckCurrentZone()
+        if self.draggedBlip then
+            self:UpdateMap()
+            self.draggedBlip = nil
+        end
 	end
 end
 
@@ -694,6 +703,7 @@ function MethodDungeonTools:StartScaling()
     HelpPlate_Hide(true)
     self:DungeonEnemies_HideAllBlips()
     self:POI_HideAllPoints()
+    self:KillAllAnimatedLines()
 end
 
 
@@ -1423,6 +1433,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
             MethodDungeonTools:LiveSession_SendAffixWeek(key)
         end
         if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
+        MethodDungeonTools:KillAllAnimatedLines()
+        MethodDungeonTools:DrawAllAnimatedLines()
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -1480,6 +1492,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
             frame.sidePanel.difficultyWarning:Toggle(difficulty)
             MethodDungeonTools:POI_UpdateAll()
+            MethodDungeonTools:DrawAllAnimatedLines()
         else
             db.currentDifficulty = difficulty or db.currentDifficulty
         end
@@ -1536,7 +1549,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
     difficultyWarning:SetCallback("OnClick",function(...)
         frame.sidePanel.DifficultySlider:SetValue(10)
         db.currentDifficulty = 10
+        MethodDungeonTools:GetCurrentPreset().difficulty = db.currentDifficulty
         MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+        MethodDungeonTools:POI_UpdateAll()
         MethodDungeonTools:UpdateProgressbar()
         MethodDungeonTools:ReloadPullButtons()
         difficultyWarning:Toggle(db.currentDifficulty)
@@ -1545,6 +1560,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             local shouldUpdate = livePreset == MethodDungeonTools:GetCurrentPreset()
             if shouldUpdate then MethodDungeonTools:LiveSession_SendDifficulty() end
         end
+        MethodDungeonTools:DrawAllAnimatedLines()
     end)
     function difficultyWarning:Toggle(difficulty)
         if difficulty<10 then
@@ -2499,6 +2515,7 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
     if preset.difficulty then
         db.currentDifficulty = preset.difficulty
         frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
+        frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
     end
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
@@ -2561,6 +2578,8 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
     MethodDungeonTools:ToggleBoralusSelector(db.currentDungeonIdx == 19)
     MethodDungeonTools:DisplayMDISelector()
     MethodDungeonTools:DrawAllPresetObjects()
+    MethodDungeonTools:KillAllAnimatedLines()
+    MethodDungeonTools:DrawAllAnimatedLines()
 end
 
 ---UpdateToDungeon

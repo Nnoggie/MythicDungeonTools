@@ -136,4 +136,5 @@
             <OnClick method="OnClick"/>
         </Scripts>
     </Button>
+    <Frame name="MDTAnimatedLineTemplate" virtual="true"/>
 </Ui>

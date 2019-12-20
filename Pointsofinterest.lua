@@ -11,6 +11,7 @@ function MethodDungeonTools:POI_CreateFramePools()
     MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MapLinkPinTemplate")
     MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "DeathReleasePinTemplate")
     MethodDungeonTools.poi_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "VignettePinTemplate")
+    MethodDungeonTools.poi_framePools:CreatePool("Frame", MethodDungeonTools.main_frame.mapPanelFrame, "MDTAnimatedLineTemplate")
 end
 
 --devMode
@@ -58,6 +59,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     frame.weeks = poi.weeks
     frame:SetFrameLevel(4)
     frame.defaultSublevel = nil
+    frame.animatedLine = nil
     if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
@@ -119,10 +121,16 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnMouseUp",function(self,button)
             if button == "RightButton" then
                 --reset npc location
-                MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
                 MethodDungeonTools:GetCurrentPreset().value.riftOffsets[self.npcId]=nil
-                MethodDungeonTools:DungeonEnemies_PositionCorrupted()
+                MethodDungeonTools:UpdateMap()
                 if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
+            end
+            if button == "LeftButton" then
+                local _, connections = MethodDungeonTools:FindConnectedDoor(frame.npcId,1)
+                if connections then
+                    MethodDungeonTools:SetCurrentSubLevel(connections[#connections].target)
+                    MethodDungeonTools:UpdateMap()
+                end
             end
         end)
         local blipFrame
@@ -130,29 +138,39 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine(poi.tooltipText,1,1,1)
             GameTooltip:AddLine("Right-Click to reset NPC position",1,1,1)
-            GameTooltip:Show()
             frame.HighlightTexture:Show()
             --highlight associated npc
             local blips = MethodDungeonTools:GetDungeonEnemyBlips()
-            for _,blip in pairs(blips) do
-                if blip.data.id == poi.npcId then
-                    local isBlipSameWeek
-                    for weekIdx,_ in pairs(poi.weeks) do
-                        isBlipSameWeek = isBlipSameWeek or blip.clone.week[weekIdx]
-                    end
-                    if isBlipSameWeek then
-                        blipFrame = blip
-                        blipFrame.fontstring_Text1:Show()
-                        --display animated line between poi and npc frame
-                        frame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,frame,blipFrame,nil,nil,nil,nil,nil,not frame.isSpire)
-                        break
+            if frame.isSpire then
+                for _,blip in pairs(blips) do
+                    if blip.data.id == poi.npcId then
+                        local isBlipSameWeek
+                        for weekIdx,_ in pairs(poi.weeks) do
+                            isBlipSameWeek = isBlipSameWeek or blip.clone.week[weekIdx]
+                        end
+                        if isBlipSameWeek then
+                            blipFrame = blip
+                            blipFrame.fontstring_Text1:Show()
+                            --display animated line between poi and npc frame
+                            frame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,frame,blipFrame,nil,nil,nil,nil,nil,not frame.isSpire,frame.animatedLine)
+                            blipFrame.animatedLine = frame.animatedLine
+                            break
+                        end
                     end
                 end
             end
-            local connectedDoor = MethodDungeonTools:FindConnectedDoor(frame.npcId,1)
+
+            local connectedDoor, connections = MethodDungeonTools:FindConnectedDoor(frame.npcId,1)
             if connectedDoor then
-                frame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,frame,connectedDoor,nil,nil,nil,nil,nil,not frame.isSpire)
+                if frame.isSpire then
+                    frame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,frame,connectedDoor,nil,nil,nil,nil,nil,not frame.isSpire,frame.animatedLine)
+                end
+                local sublevelName = MethodDungeonTools:GetSublevelName(nil,connections[#connections].target)
+                local npcName = MethodDungeonTools:GetNPCNameById(frame.npcId)
+                GameTooltip:AddLine("\n"..npcName.." is in sublevel: "..sublevelName,1,1,1)
+                GameTooltip:AddLine("Click to go to "..sublevelName,1,1,1)
             end
+            GameTooltip:Show()
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
@@ -160,7 +178,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             if blipFrame then
                 blipFrame.fontstring_Text1:Hide()
             end
-            MethodDungeonTools:KillAnimatedLine(frame.animatedLine)
+            if frame.isSpire then
+                MethodDungeonTools:HideAnimatedLine(frame.animatedLine)
+            end
         end)
         --check expanded status
         if MethodDungeonTools:IsNPCInPulls(frame.npcId) then
@@ -446,7 +466,9 @@ function MethodDungeonTools:POI_UpdateAll()
     twipe(points)
     db = MethodDungeonTools:GetDB()
     local framePools = MethodDungeonTools.poi_framePools
-    framePools:ReleaseAll()
+    framePools:GetPool("MapLinkPinTemplate"):ReleaseAll()
+    framePools:GetPool("DeathReleasePinTemplate"):ReleaseAll()
+    framePools:GetPool("VignettePinTemplate"):ReleaseAll()
     if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then return end
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
     local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][currentSublevel]
@@ -480,7 +502,6 @@ end
 ---Animated Lines
 ---Credit to Grimonja for this part
 local texturePool
-local animatedLine
 
 local function getPointAlongALine(parent,p1x,p1y,p2x,p2y,d)
     local tX = (((1 - d) * p1x) + (d*p2x)) - ((parent:GetWidth() / 2 ))
@@ -488,13 +509,12 @@ local function getPointAlongALine(parent,p1x,p1y,p2x,p2y,d)
     return tX,tY
 end
 
-local function createLineSegment(parent, color)
+local function createLineSegment(parent)
     local tex = texturePool:Acquire()
     tex:SetParent(parent)
     tex:SetTexture([[Interface\BUTTONS\WHITE8X8]])
     tex:SetTexCoord(0,1,0,1)
     tex:SetDrawLayer("OVERLAY",7)
-    tex:SetVertexColor(color[1],color[2],color[3],color[4])
     tex:Show()
     return tex
 end
@@ -509,7 +529,7 @@ local function animateLine(self, elapsed)
     for i=1,numLines + 1 do
         tex = self.frames[i]
         if(not tex)then
-            tex = createLineSegment(self:GetParent(),self.color)
+            tex = createLineSegment(self:GetParent())
             table.insert(self.frames,tex)
         end
         t = self.phase + (((lineLength * 2) * (i - 1)) / totalDistance)
@@ -521,6 +541,7 @@ local function animateLine(self, elapsed)
         tex:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",tX + (self.sizeX / 2),tY + (self.sizeY / 2))
         tex:SetPoint("CENTER",tX, tY)
         tex:SetRotation(rotation)
+        tex:SetVertexColor(self.color[1],self.color[2],self.color[3],self.color[4])
         tex:Show()
     end
 
@@ -537,18 +558,19 @@ local function animateLine(self, elapsed)
 end
 
 local function createAnimatedLine(parent)
-    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-    texturePool = texturePool or CreateTexturePool(MethodDungeonTools.main_frame.mapPanelFrame ,"OVERLAY",7,nil)
-    animatedLine = CreateFrame("Frame",nil,parent) --only 1 line supported atm, use frame pool for multiple lines
+    --MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix() --why do i need this?
+    local animatedLine = MethodDungeonTools.poi_framePools:Acquire("MDTAnimatedLineTemplate")
+    animatedLine:Show()
     animatedLine.phase = 0
     animatedLine.frames = {}
     return animatedLine
 end
 
-function MethodDungeonTools:ShowAnimatedLine(parent, frame1, frame2, sizeX, sizeY, gap, color, speed,selected)
+function MethodDungeonTools:ShowAnimatedLine(parent, frame1, frame2, sizeX, sizeY, gap, color, speed,selected,animatedLine)
     if not (frame1 and frame2 and (not frame1:IsForbidden()) and (not frame1:IsForbidden())) then
         return nil
     end
+    texturePool = texturePool or CreateTexturePool(MethodDungeonTools.main_frame.mapPanelFrame ,"OVERLAY",7,nil)
     animatedLine = animatedLine or createAnimatedLine(parent)
     animatedLine.frame1 = frame1
     animatedLine.frame2 = frame2
@@ -567,21 +589,73 @@ function MethodDungeonTools:ShowAnimatedLine(parent, frame1, frame2, sizeX, size
     animatedLine.frameTwoY = ((mapSizey/2)+(frame2.adjustedY or frame2.y))*scale
 
     local totalDistance = math.sqrt(math.pow(animatedLine.frameTwoX - animatedLine.frameOneX,2) + math.pow(animatedLine.frameTwoY - animatedLine.frameOneY,2))
-    animatedLine.speed = animatedLine.speed / (totalDistance)
+    animatedLine.speed = animatedLine.speed / totalDistance
     animatedLine:SetScript("onUpdate", animateLine)
-
+    animatedLine:Show()
     return animatedLine
 end
 
-function MethodDungeonTools:KillAnimatedLine(animatedLine)
+function MethodDungeonTools:KillAllAnimatedLines()
+    local linePool = self.poi_framePools:GetPool("MDTAnimatedLineTemplate")
+    local _,activeLines = linePool:EnumerateActive()
+    for animatedLine,_ in pairs(activeLines) do
+        animatedLine:SetScript("onUpdate",nil)
+        for i=1,#animatedLine.frames do
+            animatedLine.frames[i]:ClearAllPoints()
+            animatedLine.frames[i]:Hide()
+        end
+        table.wipe(animatedLine.frames)
+        if animatedLine.frame1 then animatedLine.frame1.animatedLine = nil end
+        if animatedLine.frame2 then
+            animatedLine.frame1.animatedLine = nil
+            animatedLine.frame1.spireFrame = nil
+        end
+        animatedLine:Hide()
+    end
+    if texturePool then texturePool:ReleaseAll() end
+    linePool:ReleaseAll()
+end
+
+---draws all lines from active npcs to spires/doors
+function MethodDungeonTools:DrawAllAnimatedLines()
+    for _,blip in pairs(MethodDungeonTools:GetDungeonEnemyBlips()) do
+        if not blip:IsShown() and blip.data.corrupted then
+            MethodDungeonTools:HideAnimatedLine(blip.animatedLine)
+        elseif blip.data.corrupted and blip.selected then
+            local connectedFrame
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.spireIndex and poiFrame.npcId and poiFrame.npcId == blip.data.id then
+                    connectedFrame = poiFrame
+                    break
+                end
+            end
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(blip.data.id)
+            connectedFrame = connectedDoor or connectedFrame
+            blip.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedFrame,blip,nil,nil,nil,nil,nil,blip.selected)
+            blip.spireFrame = connectedFrame
+            connectedFrame.animatedLine = blip.animatedLine
+        end
+    end
+    --draw lines from active spires to doors when their associated npc is dragged into other sublevel
+    local _,activeSpires = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+    for poiFrame,_ in pairs(activeSpires) do
+        if poiFrame.spireIndex and poiFrame.npcId and not poiFrame.isSpire and not poiFrame.animatedLine then
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(poiFrame.npcId,1)
+            if connectedDoor then
+                poiFrame.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,poiFrame,connectedDoor,nil,nil,nil,nil,nil,not poiFrame.isSpire)
+            end
+        end
+    end
+end
+
+function MethodDungeonTools:HideAnimatedLine(animatedLine)
     if not animatedLine then return end
-    animatedLine:SetScript("onUpdate",nil)
     for i=1,#animatedLine.frames do
         animatedLine.frames[i]:ClearAllPoints()
         animatedLine.frames[i]:Hide()
     end
-    texturePool:ReleaseAll()
-    table.wipe(animatedLine.frames)
+    animatedLine:Hide()
 end
 
 function MethodDungeonTools:FindConnectedDoor(npcId,numConnection)
@@ -591,7 +665,7 @@ function MethodDungeonTools:FindConnectedDoor(npcId,numConnection)
         local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
         for poiFrame,_ in pairs(activeDoors) do
             if poiFrame.poi and poiFrame.poi.connectionIndex == connection.connectionIndex then
-                return poiFrame
+                return poiFrame,riftOffsets[npcId].connections
             end
         end
     end

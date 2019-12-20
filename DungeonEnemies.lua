@@ -102,17 +102,22 @@ function MDTDungeonEnemyMixin:OnEnter()
         self.texture_DragLeft:Show()
         self.texture_DragRight:Show()
         self.texture_DragUp:Show()
-        local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
-        for poiFrame,_ in pairs(active) do
-            if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
-                poiFrame.HighlightTexture:Show()
-                self.spireFrame = poiFrame
-                self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,self.spireFrame,self,nil,nil,nil,nil,nil,self.selected)
-                break
+        if not self.selected then
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
+                    poiFrame.HighlightTexture:Show()
+                    self.spireFrame = poiFrame
+                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,self.spireFrame,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+                    self.spireFrame.animatedLine = self.animatedLine
+                    break
+                end
+            end
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+            if connectedDoor then
+                self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
             end
         end
-        local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
-        if connectedDoor then self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor,self,nil,nil,nil,nil,nil,self.selected) end
     end
     self.fontstring_Text1:SetText(MethodDungeonTools:IsCurrentPresetTeeming() and self.data.teemingCount or self.data.count)
     if not self.clone.g then
@@ -148,7 +153,9 @@ function MDTDungeonEnemyMixin:OnLeave()
                 break
             end
         end
-        MethodDungeonTools:KillAnimatedLine(self.animatedLine)
+        if not self.selected then
+            MethodDungeonTools:HideAnimatedLine(self.animatedLine)
+        end
     end
     if not self.clone.g then
         self.fontstring_Text1:Hide()
@@ -204,9 +211,10 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
                     break
                 end
             end
-            MethodDungeonTools:KillAnimatedLine(self.animatedLine)
             local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
-            self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor or connectedFrame,self,nil,nil,nil,nil,nil,self.selected)
+            connectedFrame = connectedDoor or connectedFrame
+            self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedFrame,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+            connectedFrame.animatedLine = self.animatedLine
         end
     elseif button == "RightButton" then
         if db.devMode then
@@ -452,6 +460,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.data = data
     self.clone = clone
     self:Show()
+    self:SetScript("OnUpdate",nil)
     --awakened/corrupted adjustments: movable and color and stored position
     if data.corrupted then
         self.texture_Background:SetVertexColor(unpack(corruptedColor))
@@ -467,6 +476,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self:RegisterForDrag("LeftButton")
         local xOffset,yOffset
         local oldX,oldY
+        self.animatedLine = nil
         self:SetScript("OnMouseDown",function(self, button)
             if button == "LeftButton" then
                 local x,y = MethodDungeonTools:GetCursorPosition()
@@ -482,7 +492,10 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         end)
         self:SetScript("OnDragStart", function()
             self:StartMoving()
+            MethodDungeonTools.draggedBlip = self
             local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+            riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+            riftOffsets = riftOffsets or {}
             self:SetScript("OnUpdate",function()
                 for poiFrame,_ in pairs(activeDoors) do
                     if MethodDungeonTools:DoFramesOverlap(self,poiFrame,-10) then
@@ -499,36 +512,26 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                 x = x-xOffset
                 y = y-yOffset
                 if x ~= self.adjustedX or y~= self.adjustedY then
+                    local sizex,sizey = MethodDungeonTools:GetDefaultMapPanelSize()
+                    x = x<=0 and 0 or x>=sizex and sizex or x
+                    y = y>=0 and 0 or y<=(-1)*sizey and (-1)*sizey or y
                     self.adjustedX = x
                     self.adjustedY = y
-                    --if self.animatedLine then MethodDungeonTools:KillAnimatedLine(self.animatedLine) end
                     local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
-                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor or self.spireFrame ,self,nil,nil,nil,nil,nil,self.selected)
+                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor or self.spireFrame ,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+                    riftOffsets[self.data.id] = riftOffsets[self.data.id] or {}
+                    riftOffsets[self.data.id].x = x
+                    riftOffsets[self.data.id].y = y
+                    self:ClearAllPoints()
+                    self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
                 end
             end)
         end)
         self:SetScript("OnDragStop", function()
-            local x,y = MethodDungeonTools:GetCursorPosition()
-            local scale = MethodDungeonTools:GetScale()
-            x = x*(1/scale)
-            y = y*(1/scale)
-            x = x-xOffset
-            y = y-yOffset
-            local sizex,sizey = MethodDungeonTools:GetDefaultMapPanelSize()
-            if x<0 or x>sizex or y>0 or y<(-1)*sizey then
-                x = oldX
-                y = oldY
-            end
-            riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-            riftOffsets = riftOffsets or {}
-            riftOffsets[self.data.id] = riftOffsets[self.data.id] or {}
-            riftOffsets[self.data.id].x = x
-            riftOffsets[self.data.id].y = y
-            self.adjustedX = x
-            self.adjustedY = y
+            MethodDungeonTools.draggedBlip = nil
             self:StopMovingOrSizing()
             self:ClearAllPoints()
-            self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
+            self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",self.adjustedX*scale,self.adjustedY*scale)
             --dragged ontop of door
             --find doors,check overlap,break,swap sublevel,change poi sublevel
             local _,active = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
@@ -1051,6 +1054,19 @@ function MethodDungeonTools:GetEnemyForces(npcId)
                 if enemy.id == npcId then
                     return enemy.count,MethodDungeonTools.dungeonTotalCount[i].normal,MethodDungeonTools.dungeonTotalCount[i].teeming
                 end
+            end
+        end
+    end
+end
+
+---tries to retrieve npc name by npcId
+---only looks for npcs in the current dungeon
+function MethodDungeonTools:GetNPCNameById(npcId)
+    local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
+    if data then
+        for _,enemy in pairs(data) do
+            if enemy.id == npcId then
+                return enemy.name
             end
         end
     end
