@@ -47,20 +47,23 @@ known_dungeons = [
 
 def append_to_lua_table(dung, normal, teeming, count, teeming_count, output):
     output += f"[{dung.idx}]={{[0]={{count={normal},teeming_count={teeming}}},"
-    for enemy in count:
-        enemy_count = enemy['Amount']
-        npc_id = next((x['Asset'] for x in criteria if x['ID'] == enemy['CriteriaID']), None)
-        enemy_teeming_count = 999
-        for teemingEnemy in teeming_count:
-            enemy_teeming_count = teemingEnemy['Amount']
-            npc_id_teeming = next((x['Asset'] for x in criteria if x['ID'] == teemingEnemy['CriteriaID']), None)
-            if npc_id == npc_id_teeming:
-                break
-
-        output += f"[{npc_id}]={{count={enemy_count},teeming_count={enemy_teeming_count}}},"
+    for npc_id in count.keys():
+        output += f"[{npc_id}]={{count={count[npc_id]},teeming_count={teeming_count[npc_id]}}},"
     output += f"}},"
     return output
 
+def get_npc_count_map(table):
+    npcs = {}
+    for enemy in table:
+        enemy_count = int(enemy['Amount'])
+        npc_id = next((x['Asset'] for x in criteria if x['ID'] == enemy['CriteriaID']), None)
+        # there can be multiple CriteriaTree rows giving count for one NPC (e.g. spark channeler in ToS)
+        # the count awarded is the sum of all of them
+        if npc_id in npcs:
+            npcs[npc_id] = npcs[npc_id] + enemy_count
+        else:
+            npcs[npc_id] = enemy_count
+    return npcs
 
 table_output = "local dungeonData ={"
 for dungeon in known_dungeons:
@@ -71,8 +74,8 @@ for dungeon in known_dungeons:
     teeming_forces = find_forces(teeming_row)
 
     print(f"{dungeon.name} enemy forces normal = {forces['Amount']}, teeming = {teeming_forces['Amount']}")
-    count_data = [x for x in criteria_tree if x['Parent'] == forces['ID']]
-    teeming_count_data = [x for x in criteria_tree if x['Parent'] == teeming_forces['ID']]
+    count_data = get_npc_count_map([x for x in criteria_tree if x['Parent'] == forces['ID']])
+    teeming_count_data = get_npc_count_map([x for x in criteria_tree if x['Parent'] == teeming_forces['ID']])
     table_output = append_to_lua_table(dungeon, forces['Amount'], teeming_forces['Amount'], count_data,
                                        teeming_count_data, table_output)
 
