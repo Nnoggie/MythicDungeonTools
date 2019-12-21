@@ -253,7 +253,7 @@ function DC:InitHealthTrack()
                 for enemyIdx,enemy in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
                     if enemy.id == tonumber(npcId) then
                         if enemy.health ~= npcHealth then
-                            --print(npcHealth/enemy.health)
+                            print(npcHealth/enemy.health)
                             enemy.health = npcHealth
                             enemyCount = enemyCount + 1
                             changedEnemies[enemyIdx] = true
