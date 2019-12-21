@@ -239,10 +239,10 @@ function DC:InitHealthTrack()
         totalEnemies = totalEnemies + 1
     end
     f = CreateFrame("Frame")
-    f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    f:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
     f:SetScript("OnEvent", function(self, event, ...)
-        if event == "NAME_PLATE_UNIT_ADDED" then
-            local unit = ...
+        if event == "UPDATE_MOUSEOVER_UNIT" then
+            local unit = "mouseover"
             local npcId
             local guid = UnitGUID(unit)
             if guid then
@@ -253,6 +253,7 @@ function DC:InitHealthTrack()
                 for enemyIdx,enemy in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
                     if enemy.id == tonumber(npcId) then
                         if enemy.health ~= npcHealth then
+                            --print(npcHealth/enemy.health)
                             enemy.health = npcHealth
                             enemyCount = enemyCount + 1
                             changedEnemies[enemyIdx] = true
