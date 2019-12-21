@@ -3,7 +3,7 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
     tileFormat= 15,
 }
 MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.5
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=1,teeming=1,teemingEnabled=true}
+MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=398,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
         [2] = {
