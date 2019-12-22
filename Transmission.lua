@@ -522,6 +522,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                     MethodDungeonTools:UpdateProgressbar()
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:POI_UpdateAll()
+                    MethodDungeonTools:KillAllAnimatedLines()
+                    MethodDungeonTools:DrawAllAnimatedLines()
                 end
             elseif action == "freehold" then
                 preset.mdi.freehold = data

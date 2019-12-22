@@ -1652,6 +1652,8 @@ function MethodDungeonTools:DisplayMDISelector()
             MethodDungeonTools:UpdateProgressbar()
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:POI_UpdateAll()
+            MethodDungeonTools:KillAllAnimatedLines()
+            MethodDungeonTools:DrawAllAnimatedLines()
             if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
                 self:LiveSession_SendMDI("beguiling",key)
             end
