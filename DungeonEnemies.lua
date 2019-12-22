@@ -533,6 +533,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self:SetScript("OnDragStop", function()
             MethodDungeonTools.draggedBlip = nil
             self:StopMovingOrSizing()
+            self:SetScript("OnUpdate",nil)
             self:ClearAllPoints()
             self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",self.adjustedX*scale,self.adjustedY*scale)
             --dragged ontop of door
@@ -563,7 +564,6 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                     break
                 end
             end
-            self:SetScript("OnUpdate",nil)
             if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
         end)
         self:Hide()--hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
@@ -868,20 +868,6 @@ function MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
     end
 end
 
----DungeonEnemies_PositionCorrupted
----Position all corrupted/awakened npcs based on their current offsets stored in the preset
-function MethodDungeonTools:DungeonEnemies_PositionCorrupted()
-    local riftOffsets = self:GetCurrentPreset().value.riftOffsets
-    local scale = self:GetScale()
-    for _,blip in pairs(blips) do
-        if blip.data.corrupted then
-            blip.adjustedX = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].x or blip.clone.x
-            blip.adjustedY = riftOffsets and riftOffsets[blip.data.id] and riftOffsets[blip.data.id].y or blip.clone.y
-            blip:ClearAllPoints()
-            blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",blip.adjustedX*scale,blip.adjustedY*scale)
-        end
-    end
-end
 
 ---DungeonEnemies_UpdateBlacktoothEvent
 ---Updates visibility state of blacktooth event blips

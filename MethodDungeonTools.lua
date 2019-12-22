@@ -541,7 +541,11 @@ function MethodDungeonTools:ShowInterface(force)
 		self.main_frame:Show()
 		self.main_frame.HelpButton:Show()
         self:CheckCurrentZone()
+        --edge case if user closed MDT window while in the process of dragging a corrupted blip
         if self.draggedBlip then
+            if MethodDungeonTools.liveSessionActive then
+                MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets)
+            end
             self:UpdateMap()
             self.draggedBlip = nil
         end
@@ -1429,15 +1433,15 @@ function MethodDungeonTools:MakeSidePanel(frame)
             MethodDungeonTools:UpdateProgressbar()
         end
         if not ignoreReloadPullButtons then MethodDungeonTools:ReloadPullButtons() end
-        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-            MethodDungeonTools:LiveSession_SendAffixWeek(key)
-        end
         if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
         MethodDungeonTools:KillAllAnimatedLines()
         MethodDungeonTools:DrawAllAnimatedLines()
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
+        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+            MethodDungeonTools:LiveSession_SendAffixWeek(key)
+        end
     end)
     affixDropdown:SetCallback("OnEnter",function(...)
         local selectedWeek = affixDropdown:GetValue()
@@ -1471,6 +1475,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
     affixWeekWarning:SetCallback("OnClick",function(...)
         if not MethodDungeonTools:GetCurrentAffixWeek() then return end
         affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentAffixWeek())
+        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+            MethodDungeonTools:LiveSession_SendAffixWeek(MethodDungeonTools:GetCurrentAffixWeek())
+        end
     end)
     affixWeekWarning.image:Hide()
     affixWeekWarning:SetDisabled(true)
@@ -1492,6 +1499,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
             frame.sidePanel.difficultyWarning:Toggle(difficulty)
             MethodDungeonTools:POI_UpdateAll()
+            MethodDungeonTools:KillAllAnimatedLines()
             MethodDungeonTools:DrawAllAnimatedLines()
         else
             db.currentDifficulty = difficulty or db.currentDifficulty
@@ -1560,6 +1568,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
             local shouldUpdate = livePreset == MethodDungeonTools:GetCurrentPreset()
             if shouldUpdate then MethodDungeonTools:LiveSession_SendDifficulty() end
         end
+        MethodDungeonTools:KillAllAnimatedLines()
         MethodDungeonTools:DrawAllAnimatedLines()
     end)
     function difficultyWarning:Toggle(difficulty)
