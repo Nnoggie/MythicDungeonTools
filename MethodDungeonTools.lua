@@ -1727,6 +1727,8 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     end
     MethodDungeonTools:POI_UpdateAll()
+    MethodDungeonTools:KillAllAnimatedLines()
+    MethodDungeonTools:DrawAllAnimatedLines()
 end
 
 
