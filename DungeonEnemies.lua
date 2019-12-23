@@ -736,7 +736,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pull,r,g,b)
                         if not db.devMode then
                             if db.enemyStyle == 2 then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                            else
+                            elseif not blip.data.corrupted then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
                                 blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
                             end
@@ -764,6 +764,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
             else
                 if blip.data.corrupted then
                     blip.texture_Background:SetVertexColor(unpack(corruptedColor))
+                    blip.texture_Portrait:SetVertexColor(1,1,1,1)
                     SetPortraitTextureFromCreatureDisplayID(blip.texture_Portrait,blip.data.displayId or 39490)
                 else
                     blip.texture_Portrait:SetVertexColor(1,1,1,1)
@@ -788,6 +789,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
                                     if blip.data.corrupted then
                                         blip.texture_Portrait:SetAtlas("poi-rift1")
                                         blip.texture_Background:SetVertexColor(0.5,1,0.1,1)
+                                        blip.texture_SelectedHighlight:Hide()
                                     else
                                         blip.texture_Portrait:SetVertexColor(r,g,b,1)
                                         blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
