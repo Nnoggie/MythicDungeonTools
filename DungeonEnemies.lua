@@ -447,7 +447,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if not data.corrupted then
         for k,v in pairs(blips) do
             --only check neighboring blips - saves performance on big maps
-            if (math.sqrt((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2)<9) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+            if ((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2<81) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
         end
     end
     self:SetFrameLevel(raise)
