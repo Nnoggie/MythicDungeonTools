@@ -1072,9 +1072,11 @@ local methods = {
     end,
     ["Pick"] = function(self)
         self.frame:LockHighlight();
+        self.frame.pickedGlow:Show()
     end,
     ["ClearPick"] = function(self)
         self.frame:UnlockHighlight();
+        self.frame.pickedGlow:Hide()
     end,
     ["SetIndex"] = function(self, index)
         self.index = index
@@ -1151,8 +1153,10 @@ local methods = {
         local db = MethodDungeonTools:GetDB()
         if colorHex == db.defaultColor then
             self.background:SetVertexColor(0.5,0.5,0.5,0.25)
+            self.frame.pickedGlow:SetVertexColor(1,0.85,0,1)
         else
             self.background:SetVertexColor(self.color.r,self.color.g,self.color.b, 0.75)
+            self.frame.pickedGlow:SetVertexColor(self.color.r,self.color.g,self.color.b, 0.75)
         end
     end,
     ["BackupColor"] = function(self)
@@ -1190,6 +1194,16 @@ local function Constructor()
     background:SetPoint("BOTTOM", button, "BOTTOM");
     background:SetPoint("LEFT", button, "LEFT");
     background:SetPoint("RIGHT", button, "RIGHT");
+
+    local pickedGlow = button:CreateTexture(nil, "OVERLAY")
+    button.pickedGlow = pickedGlow
+    --["heartofazeroth-list-item-selected"] = {356, 82, 0.779297, 0.953125, 0.653809, 0.693848, false, false},
+    pickedGlow:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\HeartOfAzerothSelection")
+    pickedGlow:SetTexCoord(0, 0.697265625, 0, 0.625)
+    pickedGlow:SetAllPoints(button)
+    pickedGlow:Hide()
+
+    button.highlight:SetVertexColor(1,1,1,0.5)
 
     local pullNumber = button:CreateFontString(nil,"OVERLAY", "GameFontNormal")
     pullNumber:SetHeight(14)
