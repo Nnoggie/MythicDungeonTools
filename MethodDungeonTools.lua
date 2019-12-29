@@ -88,7 +88,9 @@ local defaultSavedVars = {
         },
 		presets = {},
 		currentPreset = {},
-        dataCollectionActive = false,
+		dataCollectionActive = false,
+		automaticColorsNum = 12,
+		automaticColors = true,
 	},
 }
 do
@@ -1165,6 +1167,19 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:ToggleMDIMode()
     end)
 
+	--AutomaticColors
+	frame.AutomaticColorsButton = AceGUI:Create("Button")
+	frame.AutomaticColorsButton:SetText("Colors")
+	frame.AutomaticColorsButton:SetWidth(buttonWidth)
+	frame.AutomaticColorsButton.frame:SetNormalFontObject(fontInstance)
+	frame.AutomaticColorsButton.frame:SetHighlightFontObject(fontInstance)
+	frame.AutomaticColorsButton.frame:SetDisabledFontObject(fontInstance)
+	local c1,c2,c3 = frame.AutomaticColorsButton.text:GetTextColor()
+	frame.AutomaticColorsButton.normalTextColor = {r = c1,g = c2,b = c3,}
+	frame.AutomaticColorsButton:SetCallback("OnClick",function(widget,callbackName,value)
+		MethodDungeonTools:OpenAutomaticColorsDialog()
+	end)
+
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
@@ -1174,6 +1189,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
+	frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsButton)
 
     --Week Dropdown (Infested / Affixes)
     local beguilingInfo = {
@@ -2075,6 +2091,13 @@ function MethodDungeonTools:OpenClearPresetDialog()
     MethodDungeonTools.main_frame.ClearConfirmationFrame:Show()
 end
 
+function MethodDungeonTools:OpenAutomaticColorsDialog()
+	MethodDungeonTools:HideAllDialogs()
+	MethodDungeonTools.main_frame.automaticColorsFrame:ClearAllPoints()
+	MethodDungeonTools.main_frame.automaticColorsFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+	MethodDungeonTools.main_frame.automaticColorsFrame:SetStatusText("")
+	MethodDungeonTools.main_frame.automaticColorsFrame:Show()
+end
 
 function MethodDungeonTools:UpdateDungeonDropDown()
 	local group = MethodDungeonTools.main_frame.DungeonSelectionGroup
@@ -2660,6 +2683,56 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
     end
 end
 
+function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
+	frame.automaticColorsFrame = AceGUI:Create("Frame")
+	frame.automaticColorsFrame:SetTitle("Automatic Coloring")
+	frame.automaticColorsFrame:SetWidth(300)
+	frame.automaticColorsFrame:SetHeight(200)
+	frame.automaticColorsFrame:EnableResize(false)
+	frame.automaticColorsFrame:SetLayout("Flow")
+
+	frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
+	frame.AutomaticColorsCheck:SetLabel("Automatically color pulls")
+	frame.AutomaticColorsCheck:SetValue(db.automaticColors)
+    frame.AutomaticColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
+		db.automaticColors = value
+		if value == true then
+			MethodDungeonTools:UpdateAutomaticColors()
+		end
+	end)
+	frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
+
+	frame.AlternatingColorsCheck = AceGUI:Create("CheckBox")
+	frame.AlternatingColorsCheck:SetLabel("Use alternating colors")
+	frame.AlternatingColorsCheck:SetValue(db.alternatingColors)
+    frame.AlternatingColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
+		db.alternatingColors = value
+		MethodDungeonTools:UpdateAutomaticColors()
+	end)
+	frame.automaticColorsFrame:AddChild(frame.AlternatingColorsCheck)
+
+	frame.BrightColorsCheck = AceGUI:Create("CheckBox")
+	frame.BrightColorsCheck:SetLabel("Use bright colors")
+	frame.BrightColorsCheck:SetValue(db.brightColors)
+    frame.BrightColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
+		db.brightColors = value
+		MethodDungeonTools:UpdateAutomaticColors()
+	end)
+	frame.automaticColorsFrame:AddChild(frame.BrightColorsCheck)
+
+	frame.AutomaticColorsNumEditbox = AceGUI:Create("EditBox")
+	frame.AutomaticColorsNumEditbox:SetLabel("Number of colors:")
+	frame.AutomaticColorsNumEditbox:SetWidth(175)
+	frame.AutomaticColorsNumEditbox:SetText(db.automaticColorsNum)
+	frame.AutomaticColorsNumEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
+		db.automaticColorsNum = text
+		frame.AutomaticColorsNumEditbox:SetText(text)
+		MethodDungeonTools:UpdateAutomaticColors()
+	end)
+	frame.automaticColorsFrame:AddChild(frame.AutomaticColorsNumEditbox)
+	frame.automaticColorsFrame:Hide()
+end
+
 function MethodDungeonTools:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
     frame.PullButtonScrollGroup:SetWidth(248)
@@ -2776,6 +2849,11 @@ end
 function MethodDungeonTools:GetPulls(preset)
     preset = preset or self:GetCurrentPreset()
     return preset.value.pulls
+end
+
+function MethodDungeonTools:GetPullsNum(preset)
+    preset = preset or self:GetCurrentPreset()
+    return table.getn(preset.value.pulls)
 end
 
 function MethodDungeonTools:CopyObject(obj,seen)
@@ -2980,6 +3058,40 @@ function MethodDungeonTools:AddPull(index)
 	MethodDungeonTools:PresetsAddPull(index)
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index)
+	
+	if db.automaticColors then
+		if not index then index = self:GetCurrentPull() end
+		self:SetAutomaticColor(index)
+
+		if self:GetPullsNum() == 2 then self:SetAutomaticColor(1) end
+	end
+end
+
+function MethodDungeonTools:SetAutomaticColor(index)
+	if not db.automaticColors then return end
+
+	local H = (index - 1) * 360 / db.automaticColorsNum + 120
+	if db.alternatingColors and index % 2 == 0 then
+		H = H + 180
+	end
+
+	local V = 0.5451
+	if db.brightColors then V = 1 end
+
+	local r, g, b = self:HSVtoRGB(H, 0.7554, V)
+	self:DungeonEnemies_SetPullColor(index, r, g, b)
+	self:UpdatePullButtonColor(index, r, g, b)
+	self:DungeonEnemies_UpdateBlipColors(index, r, g, b)
+	if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+		self:LiveSession_QueueColorUpdate()
+	end
+end
+
+function MethodDungeonTools:UpdateAutomaticColors(index)
+	if not db.automaticColors then return end
+	for i = index or 1, self:GetPullsNum() do
+		self:SetAutomaticColor(i)
+	end
 end
 
 ---ClearPull
@@ -2989,6 +3101,8 @@ function MethodDungeonTools:ClearPull(index)
     MethodDungeonTools:EnsureDBTables()
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index)
+
+	MethodDungeonTools:SetAutomaticColor(index)
 end
 
 ---MovePullUp
@@ -2997,6 +3111,8 @@ function MethodDungeonTools:MovePullUp(index)
 	MethodDungeonTools:PresetsSwapPulls(index,index-1)
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index-1)
+
+	MethodDungeonTools:UpdateAutomaticColors(index - 1)
 end
 
 ---MovePullDown
@@ -3005,6 +3121,7 @@ function MethodDungeonTools:MovePullDown(index)
 	MethodDungeonTools:PresetsSwapPulls(index,index+1)
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index+1)
+	MethodDungeonTools:UpdateAutomaticColors(index)
 end
 
 ---DeletePull
@@ -3018,6 +3135,7 @@ function MethodDungeonTools:DeletePull(index)
 	end
 	if index>pullCount then index = pullCount end
 	MethodDungeonTools:SetSelectionToPull(index)
+	MethodDungeonTools:UpdateAutomaticColors(index)
 end
 
 ---RenamePreset
@@ -3387,6 +3505,18 @@ function MethodDungeonTools:HexToRGB(rgb)
 	else
 		return
 	end
+end
+---HSVToRGB
+---https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB_alternative
+function MethodDungeonTools:HSVtoRGB(H, S, V)
+	H = H % 361
+
+	local function f(n)
+		k = (n + H/60) % 6
+		return V - V * S * math.max(math.min(k, 4 - k, 1), 0)
+	end
+
+	return f(5), f(3), f(1)
 end
 
 ---DeepCopy
@@ -3854,7 +3984,8 @@ function initFrames()
 	MethodDungeonTools:CreateTutorialButton(main_frame)
     MethodDungeonTools:POI_CreateFramePools()
     MethodDungeonTools:MakeChatPresetImportFrame(main_frame)
-    MethodDungeonTools:MakeSendingStatusBar(main_frame)
+	MethodDungeonTools:MakeSendingStatusBar(main_frame)
+	MethodDungeonTools:MakeAutomaticColorsFrame(main_frame)
 
     --devMode
     if db.devMode and MethodDungeonTools.CreateDevPanel then

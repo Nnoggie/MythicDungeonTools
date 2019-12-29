@@ -302,6 +302,7 @@ local methods = {
                 MethodDungeonTools:PresetsAddPull(self.index)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(self.index)
+                MethodDungeonTools:UpdateAutomaticColors(self.index)
                 if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                     MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                 end
@@ -311,10 +312,11 @@ local methods = {
         tinsert(self.menu, {
             text = "Insert after",
             notCheckable = 1,
-            func = function()
+			func = function()
                 MethodDungeonTools:PresetsAddPull(self.index + 1)
                 MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:SetSelectionToPull(self.index + 1)
+				MethodDungeonTools:SetSelectionToPull(self.index + 1)
+                MethodDungeonTools:UpdateAutomaticColors(self.index + 1)
                 if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                     MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                 end
@@ -328,6 +330,7 @@ local methods = {
                     local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:SetSelectionToPull(newIndex)
+                    MethodDungeonTools:UpdateAutomaticColors(newIndex)
                     if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                         MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                     end
@@ -342,6 +345,7 @@ local methods = {
                     local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:SetSelectionToPull(newIndex)
+                    MethodDungeonTools:UpdateAutomaticColors(newIndex)
                     if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                         MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                     end
@@ -425,7 +429,7 @@ local methods = {
             text = "Clear",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools:ClearPull(self.index)
+				MethodDungeonTools:ClearPull(self.index)
                 if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                     MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                 end
@@ -442,6 +446,7 @@ local methods = {
                 notCheckable = 1,
                 func = function()
                     MethodDungeonTools:DeletePull(self.index)
+                    MethodDungeonTools:UpdateAutomaticColors(self.index)
                     if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                         MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                     end
@@ -480,6 +485,7 @@ local methods = {
                 MethodDungeonTools:PresetsAddPull(self.index)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(self.index)
+                MethodDungeonTools:UpdateAutomaticColors(self.index)
                 if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                     MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                 end
@@ -500,7 +506,8 @@ local methods = {
                 })
                 MethodDungeonTools:PresetsAddPull(self.index + 1)
                 MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:SetSelectionToPull(self.index + 1)
+				MethodDungeonTools:SetSelectionToPull(self.index + 1)
+                MethodDungeonTools:UpdateAutomaticColors(self.index + 1)
                 if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
                     MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
                 end
@@ -1048,9 +1055,10 @@ local methods = {
             local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:SetSelectionToPull(newIndex)
-        end
-
-        MethodDungeonTools:Hide_DropIndicator()
+		end
+		
+		MethodDungeonTools:Hide_DropIndicator()
+		MethodDungeonTools:UpdateAutomaticColors(math.min(self.index, insertID))
         MethodDungeonTools.pullTooltip:Show()
         if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
             MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
