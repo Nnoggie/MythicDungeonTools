@@ -4186,6 +4186,14 @@ function initFrames()
     local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
+    if db.devMode then
+        if db.dungeonEnemies then
+            MethodDungeonTools.dungeonEnemies = db.dungeonEnemies
+        else
+            db.dungeonEnemies = MethodDungeonTools.dungeonEnemies
+        end
+    end
+
     db.nonFullscreenScale = db.nonFullscreenScale or 1
     if not db.maximized then db.scale = db.nonFullscreenScale end
 	main_frame:SetFrameStrata(mainFrameStrata)
