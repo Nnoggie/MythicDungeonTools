@@ -1629,7 +1629,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame.bg = MethodDungeonTools.MDISelector.frame:CreateTexture(nil, "BACKGROUND")
         MethodDungeonTools.MDISelector.frame.bg:SetAllPoints(MethodDungeonTools.MDISelector.frame)
         MethodDungeonTools.MDISelector.frame.bg:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
-        MethodDungeonTools.MDISelector:SetWidth(120)
+        MethodDungeonTools.MDISelector:SetWidth(145)
         MethodDungeonTools.MDISelector:SetHeight(90)
         MethodDungeonTools.MDISelector.frame:ClearAllPoints()
         MethodDungeonTools.MDISelector.frame:SetPoint("BOTTOMRIGHT",MethodDungeonTools.main_frame,"BOTTOMRIGHT",0,0)
@@ -1641,7 +1641,7 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Seasonal Affix:")
-        local beguilingList = {[1]="1. Void",[2]="2. Tides",[3]="3. Enchanted",[13]="4. Reaping",[14]="5. Awakened"}
+        local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened 1",[15]="Awakened 2",[16]="Awakened 3"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
             local preset = MethodDungeonTools:GetCurrentPreset()
@@ -2131,6 +2131,8 @@ function MethodDungeonTools:GetEffectivePresetWeek(preset)
     if db.MDI.enabled then
         week = preset.mdi.beguiling or 1
         if week == 14 then week = 1 end
+        if week == 15 then week = 2 end
+        if week == 16 then week = 3 end
     else
         week = preset.week
     end
@@ -2168,6 +2170,12 @@ end
 ---Returns if the preset is set to a week which contains the teeming affix
 function MethodDungeonTools:IsPresetTeeming(preset)
     return MethodDungeonTools:IsWeekTeeming(preset.week)
+end
+
+function MethodDungeonTools:GetRiftOffsets()
+    local week = MethodDungeonTools:GetEffectivePresetWeek()
+    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+    return riftOffsets
 end
 
 
