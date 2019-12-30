@@ -1,4 +1,14 @@
 local dungeonIndex = 19
+MethodDungeonTools.mapInfo[dungeonIndex] = {
+    viewportPositionOverrides =
+    {
+        [2] = {
+            zoomScale = 4.2999997138977;
+            horizontalPan = 499.11205542634;
+            verticalPan = 38.703272826513;
+        };
+    };
+};
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 
 

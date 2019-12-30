@@ -1,4 +1,14 @@
 local dungeonIndex = 16
+MethodDungeonTools.mapInfo[dungeonIndex] = {
+    viewportPositionOverrides =
+    {
+        [1] = {
+            zoomScale = 1.5999999046326;
+            horizontalPan = 159.53385728911;
+            verticalPan = 112.92774143478;
+        };
+    };
+};
 
 MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.6
 
