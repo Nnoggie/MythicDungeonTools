@@ -1160,3 +1160,32 @@ function MethodDungeonTools:ExportNPCIdsWithoutDisplayIds()
     MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
     MethodDungeonTools.main_frame.ExportFrameEditbox:SetLabel("NPC ids without displayId")
 end
+
+
+local function ArrayRemove(t, fnKeep)
+    local j, n = 1, #t;
+
+    for i=1,n do
+        if (fnKeep(t, i, j)) then
+            -- Move i's kept value to j's position, if it's not already there.
+            if (i ~= j) then
+                t[j] = t[i];
+                t[i] = nil;
+            end
+            j = j + 1; -- Increment position of where we'll place the next kept value.
+        else
+            t[i] = nil;
+        end
+    end
+
+    return t;
+end
+
+---removes enemies of the current dungeon without any clones
+function MethodDungeonTools:CleanEnemyData(dungeonIdx)
+    local enemies = MethodDungeonTools.dungeonEnemies[dungeonIdx]
+    ArrayRemove(enemies,function (t, i , j)
+        return #t[i].clones>0
+    end)
+
+end
