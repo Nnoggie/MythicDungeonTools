@@ -1820,8 +1820,8 @@ function MethodDungeonTools:ExportCurrentZoomPanSettings()
     local scrollFrame = MethodDungeonToolsScrollFrame
 
     local zoom = MethodDungeonToolsMapPanelFrame:GetScale()
-    local panH = MethodDungeonToolsScrollFrame:GetHorizontalScroll()
-    local panV = MethodDungeonToolsScrollFrame:GetVerticalScroll()
+    local panH = MethodDungeonToolsScrollFrame:GetHorizontalScroll() / MethodDungeonTools:GetScale()
+    local panV = MethodDungeonToolsScrollFrame:GetVerticalScroll() / MethodDungeonTools:GetScale()
 
     local output = "        ["..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel.."] = {\n"
     output = output.."            zoomScale = "..zoom..";\n"
@@ -1859,8 +1859,8 @@ function MethodDungeonTools:ZoomMapToDefault()
 
         mainFrame:SetScale(data.zoomScale)
 
-        scrollFrame:SetHorizontalScroll(data.horizontalPan)
-        scrollFrame:SetVerticalScroll(data.verticalPan)
+        scrollFrame:SetHorizontalScroll(data.horizontalPan * MethodDungeonTools:GetScale())
+        scrollFrame:SetVerticalScroll(data.verticalPan * MethodDungeonTools:GetScale())
 
     else
         scrollFrame.maxX = 1
