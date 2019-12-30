@@ -1812,8 +1812,6 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
 		scrollFrame:SetVerticalScroll(newVerticalPosition)
 		scrollFrame.cursorX = cursorX
 		scrollFrame.cursorY = cursorY
-
-        print(newHorizontalPosition,newVerticalPosition)
 	end
 end
 
@@ -1847,8 +1845,6 @@ function MethodDungeonTools:ZoomMapToDefault()
     local currentSublevel = currentMap[db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
     local mainFrame = MethodDungeonToolsMapPanelFrame
     local scrollFrame = MethodDungeonToolsScrollFrame
-
-    print(db.scale)
 
     local currentMapInfo = MethodDungeonTools.mapInfo[db.currentDungeonIdx]
     if(currentMapInfo and currentMapInfo.viewportPositionOverrides and currentMapInfo.viewportPositionOverrides[currentSublevel])then
