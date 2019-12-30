@@ -4186,11 +4186,17 @@ function initFrames()
     local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
+    --cache dungeon data to not lose data during reloads
     if db.devMode then
         if db.dungeonEnemies then
             MethodDungeonTools.dungeonEnemies = db.dungeonEnemies
         else
             db.dungeonEnemies = MethodDungeonTools.dungeonEnemies
+        end
+        if db.mapPOIs then
+            MethodDungeonTools.mapPOIs = db.mapPOIs
+        else
+            db.mapPOIs = MethodDungeonTools.mapPOIs
         end
     end
 
