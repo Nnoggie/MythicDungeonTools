@@ -356,6 +356,7 @@ local dungeonSubLevels = {
     },
     [25] = {
         [1] = "Mechagon Island",
+        [2] = "Mechagon Island (Tunnels)",
     },
     [26] = {
         [1] = "The Robodrome",
@@ -514,6 +515,7 @@ MethodDungeonTools.dungeonMaps = {
     [25] = {
         [0] = "MechagonDungeon",
         [1] = "MechagonDungeonExterior",
+        [2] = "MechagonDungeonExterior",
     },
     [26] = {
         [0] = "MechagonDungeon",
