@@ -63,9 +63,10 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
+        local poiScale = poi.scale or 1
         frame:SetSize(22,22)
-        frame.Texture:SetSize(22,22)
-        frame.HighlightTexture:SetSize(22,22)
+        frame.Texture:SetSize(22*poiScale,22*poiScale)
+        frame.HighlightTexture:SetSize(22*poiScale,22*poiScale)
         frame.HighlightTexture:SetDrawLayer("ARTWORK")
         frame.HighlightTexture:Hide()
         frame.target = poi.target
