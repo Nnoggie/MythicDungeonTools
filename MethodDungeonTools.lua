@@ -734,7 +734,7 @@ function MethodDungeonTools:SetScale(scale)
     f.scrollFrame:SetHorizontalScroll(oldScrollValues.oldScrollH * (newSizex / oldScrollValues.oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldScrollValues.oldSizeY)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldScrollValues.oldSizeX)
-    self:ZoomMap(0,false)
+    self:ZoomMap(0)
     self:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     db.scale = scale
     db.nonFullscreenScale = scale
@@ -798,7 +798,7 @@ function MethodDungeonTools:Maximize()
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
-    MethodDungeonTools:ZoomMap(0,false)
+    MethodDungeonTools:ZoomMap(0)
     MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
     MethodDungeonTools:UpdateMap()
@@ -843,7 +843,7 @@ function MethodDungeonTools:Minimize()
     f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
-    MethodDungeonTools:ZoomMap(0,false)
+    MethodDungeonTools:ZoomMap(0)
     MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
     MethodDungeonTools:UpdateMap()
@@ -1789,6 +1789,15 @@ function MethodDungeonTools:Progressbar_SetValue(self,totalCurrent,totalMax)
 	self.AnimValue = percent
 end
 
+---UpdateProgressbar
+---Update the progressbar on the sidepanel with the correct values
+function MethodDungeonTools:UpdateProgressbar()
+	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
+    MethodDungeonTools:EnsureDBTables()
+    local grandTotal = MethodDungeonTools:CountForces()
+	MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,grandTotal,teeming==true and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
+end
+
 function MethodDungeonTools:OnPan(cursorX, cursorY)
 	local scrollFrame = MethodDungeonToolsScrollFrame
     local scale = MethodDungeonToolsMapPanelFrame:GetScale()/1.5
@@ -1806,16 +1815,67 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
 	end
 end
 
----UpdateProgressbar
----Update the progressbar on the sidepanel with the correct values
-function MethodDungeonTools:UpdateProgressbar()
-	local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
-    MethodDungeonTools:EnsureDBTables()
-    local grandTotal = MethodDungeonTools:CountForces()
-	MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,grandTotal,teeming==true and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
+function MethodDungeonTools:ExportCurrentZoomPanSettings()
+    local mainFrame = MethodDungeonToolsMapPanelFrame
+    local scrollFrame = MethodDungeonToolsScrollFrame
+
+    local zoom = MethodDungeonToolsMapPanelFrame:GetScale()
+    local panH = MethodDungeonToolsScrollFrame:GetHorizontalScroll()
+    local panV = MethodDungeonToolsScrollFrame:GetVerticalScroll()
+
+    local output = "        ["..db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel.."] = {\n"
+    output = output.."            zoomScale = "..zoom..";\n"
+    output = output.."            horizontalPan = "..panH..";\n"
+    output = output.."            verticalPan = "..panV..";\n"
+    output = output.."        };\n"
+
+    MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.ExportFrame:Show()
+    MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
+    MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(output)
+    MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(output))
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetLabel("Current pan/zoom settings");
 end
 
-function MethodDungeonTools:ZoomMap(delta,resetZoom)
+
+function MethodDungeonTools:ZoomMapToDefault()
+    local currentMap = db.presets[db.currentDungeonIdx]
+    local currentSublevel = currentMap[db.currentPreset[db.currentDungeonIdx]].value.currentSublevel
+    local mainFrame = MethodDungeonToolsMapPanelFrame
+    local scrollFrame = MethodDungeonToolsScrollFrame
+
+    local currentMapInfo = MethodDungeonTools.mapInfo[db.currentDungeonIdx]
+    if(currentMapInfo and currentMapInfo.viewportPositionOverrides and currentMapInfo.viewportPositionOverrides[currentSublevel])then
+        local data = currentMapInfo.viewportPositionOverrides[currentSublevel];
+
+        local scaledSizeX = mainFrame:GetWidth() * data.zoomScale
+        local scaledSizeY = mainFrame:GetHeight() * data.zoomScale
+
+        scrollFrame.maxX = (scaledSizeX - mainFrame:GetWidth()) / data.zoomScale
+        scrollFrame.maxY = (scaledSizeY - mainFrame:GetHeight()) / data.zoomScale
+        scrollFrame.zoomedIn = abs(data.zoomScale - 1) > 0.02
+
+        mainFrame:SetScale(data.zoomScale)
+
+        scrollFrame:SetHorizontalScroll(data.horizontalPan)
+        scrollFrame:SetVerticalScroll(data.verticalPan)
+
+    else
+        scrollFrame.maxX = 1
+        scrollFrame.maxY = 1
+        scrollFrame.zoomedIn = false
+
+        mainFrame:SetScale(1);
+
+        scrollFrame:SetHorizontalScroll(0)
+        scrollFrame:SetVerticalScroll(0)
+    end
+
+end
+
+function MethodDungeonTools:ZoomMap(delta)
 	local scrollFrame = MethodDungeonToolsScrollFrame
     if not scrollFrame:GetLeft() then return end
 	local oldScrollH = scrollFrame:GetHorizontalScroll()
@@ -1828,7 +1888,6 @@ function MethodDungeonTools:ZoomMap(delta,resetZoom)
 
 	newScale = max(1, newScale)
 	newScale = min(15, newScale)
-	if resetZoom then newScale = 1 end
 
 	mainFrame:SetScale(newScale)
 
@@ -2432,7 +2491,7 @@ function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
 	group.SublevelDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
 		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
 		MethodDungeonTools:UpdateMap()
-        MethodDungeonTools:ZoomMap(1,true)
+        MethodDungeonTools:ZoomMapToDefault()
 	end)
 	group:AddChild(group.SublevelDropdown)
 
@@ -2622,7 +2681,7 @@ function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap,init)
     if init then return end
 	MethodDungeonTools:UpdatePresetDropDown()
 	if not ignoreUpdateMap then MethodDungeonTools:UpdateMap() end
-    MethodDungeonTools:ZoomMap(1,true)
+    MethodDungeonTools:ZoomMapToDefault()
 end
 
 function MethodDungeonTools:DeletePreset(index)
@@ -2630,6 +2689,7 @@ function MethodDungeonTools:DeletePreset(index)
 	db.currentPreset[db.currentDungeonIdx] = index-1
 	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
+    MethodDungeonTools:ZoomMapToDefault()
 end
 
 local zoneIdToDungeonIdx = {
@@ -2734,6 +2794,7 @@ function MethodDungeonTools:CreateNewPreset(name)
 		MethodDungeonTools.main_frame.presetCreationFrame:Hide()
 		MethodDungeonTools:UpdatePresetDropDown()
 		MethodDungeonTools:UpdateMap()
+        MethodDungeonTools:ZoomMapToDefault()
 	else
 		MethodDungeonTools.main_frame.presetCreationLabel:SetText("'"..name.."' already exists")
 		MethodDungeonTools.main_frame.presetCreationCreateButton:SetDisabled(true)
@@ -3192,7 +3253,7 @@ function MethodDungeonTools:SetMapSublevel(pull)
 	end
 
 	MethodDungeonTools:UpdateDungeonDropDown()
-    if shouldResetZoom then MethodDungeonTools:ZoomMap(1,true) end
+    if shouldResetZoom then MethodDungeonTools:ZoomMapToDefault() end
 end
 
 function MethodDungeonTools:SetSelectionToPull(pull)
