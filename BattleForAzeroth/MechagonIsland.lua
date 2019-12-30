@@ -5,13 +5,13 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
     {
         [1] = {
             zoomScale = 1.8999998569489;
-            horizontalPan = 567.34655761719;
-            verticalPan = 122.00135803223;
+            horizontalPan = 365.04961491789;
+            verticalPan = 71.59288058862;
         };
         [2] = {
-            zoomScale = 6.4000010490417;
-            horizontalPan = 813.69799804688;
-            verticalPan = 406.58538818359;
+            zoomScale = 5.8616151809692;
+            horizontalPan = 512.38247539203;
+            verticalPan = 253.02009657875;
         };
     };
 };
