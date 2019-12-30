@@ -1,5 +1,6 @@
 # Created by Nnoggie
 # Scrapes wowhead for displayIds based on npcIds
+# Use MethodDungeonTools:ExportNPCIdsWithoutDisplayIds() to export npcIds to query
 import urllib.request
 import re
 import time
@@ -22,8 +23,8 @@ def find_display_id(npc_id):
 
 Dungeon = collections.namedtuple('Dungeon', 'name idx npcIds')
 dungeons = [
-    Dungeon(name='Mechagon - Junkyard', idx=25, npcIds=[150143, 150160, 150276, 150547, 153755, 150142, 150146, 152703, 152009, 150250, 150253, 150254, 150249, 150251, 150712, 150154, ]),
-    Dungeon(name='Mechagon - Workshop', idx=26, npcIds=[144294, 144293, 144301, 144299, 144249, 151476, 144295, 151659, 151658, 144248, 144244, 144300, 144296, 144246, 151325, 144298, 144303, 151649, 150396, 151773, 151657, 145185, ]),
+    Dungeon(name='Siege of Boralus', idx=19, npcIds=[137614, 137405, ]),
+    Dungeon(name='Mechagon - Junkyard', idx=25, npcIds=[155090, 150297, 150292, 154744, 153377, 150159, 155094, 150293, 150195, 150165, 150168, 150169, 154758, ]),
 ]
 
 table_output = "local dungeonData ={"
