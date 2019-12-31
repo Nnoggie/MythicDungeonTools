@@ -9,6 +9,24 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["index"] = 3;
             ["weeks"] = {
                 [1] = true;
+                [4] = true;
+                [7] = true;
+                [10] = true;
+            };
+            ["npcId"] = 161241;
+            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
+        };
+        [9] = {
+            ["y"] = -314.73120900398;
+            ["x"] = 569.74091753468;
+            ["index"] = 3;
+            ["weeks"] = {
+                [2] = true;
+                [5] = true;
+                [8] = true;
+                [11] = true;
             };
             ["npcId"] = 161241;
             ["tooltipText"] = "Cursed Spire of Ny'alotha";
@@ -50,6 +68,13 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["index"] = 4;
             ["weeks"] = {
                 [1] = true;
+                [2] = true;
+                [4] = true;
+                [5] = true;
+                [7] = true;
+                [8] = true;
+                [10] = true;
+                [11] = true;
             };
             ["npcId"] = 161244;
             ["tooltipText"] = "Defiled Spire of Ny'alotha";
@@ -62,6 +87,24 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["index"] = 1;
             ["weeks"] = {
                 [1] = true;
+                [4] = true;
+                [7] = true;
+                [10] = true;
+            };
+            ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["template"] = "VignettePinTemplate";
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+        };
+        [10] = {
+            ["y"] = -161.70968139747;
+            ["x"] = 391.30861840741;
+            ["index"] = 1;
+            ["weeks"] = {
+                [2] = true;
+                [5] = true;
+                [8] = true;
+                [11] = true;
             };
             ["npcId"] = 161124;
             ["type"] = "nyalothaSpire";
@@ -80,7 +123,13 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["index"] = 2;
             ["weeks"] = {
                 [1] = true;
-                [12] = true;
+                [2] = true;
+                [4] = true;
+                [5] = true;
+                [7] = true;
+                [8] = true;
+                [10] = true;
+                [11] = true;
             };
             ["npcId"] = 161243;
             ["type"] = "nyalothaSpire";
@@ -225,10 +274,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 4;
                 ["y"] = -382.14772138125;
             };
-            [11] = {
-                ["y"] = -373.49389241899;
-                ["x"] = 660.44908432399;
-                ["g"] = 4;
+            [3] = {
+                ["y"] = -286.37755813248;
+                ["x"] = 583.44740315553;
+                ["g"] = 1;
                 ["sublevel"] = 1;
             };
             [6] = {
@@ -243,10 +292,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 4;
                 ["sublevel"] = 1;
             };
-            [3] = {
-                ["y"] = -286.37755813248;
-                ["x"] = 583.44740315553;
-                ["g"] = 1;
+            [11] = {
+                ["y"] = -373.49389241899;
+                ["x"] = 660.44908432399;
+                ["g"] = 4;
                 ["sublevel"] = 1;
             };
         };
@@ -274,6 +323,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 355.25192753116;
                 ["week"] = {
                     [1] = true;
+                    [2] = true;
+                    [4] = true;
+                    [5] = true;
+                    [7] = true;
+                    [8] = true;
+                    [10] = true;
+                    [11] = true;
                 };
                 ["sublevel"] = 1;
             };
@@ -1617,12 +1673,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                         ["y"] = -308.9882529027;
                         ["x"] = 368.59110920942;
                     };
-                    [15] = {
-                        ["y"] = -294.79470872956;
-                        ["x"] = 368.59110920942;
-                    };
                     [19] = {
                         ["y"] = -233.34826586652;
+                        ["x"] = 368.59110920942;
+                    };
+                    [15] = {
+                        ["y"] = -294.79470872956;
                         ["x"] = 368.59110920942;
                     };
                 };
@@ -1721,8 +1777,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 580.50022875902;
                 ["week"] = {
                     [1] = true;
+                    [10] = true;
+                    [7] = true;
+                    [4] = true;
                 };
                 ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -160.81941967987;
+                ["x"] = 378.81365320707;
+                ["sublevel"] = 1;
+                ["week"] = {
+                    [5] = true;
+                    [2] = true;
+                    [11] = true;
+                    [8] = true;
+                };
             };
         };
         ["characteristics"] = {
@@ -1753,8 +1823,22 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 378.65097786114;
                 ["week"] = {
                     [1] = true;
+                    [10] = true;
+                    [7] = true;
+                    [4] = true;
                 };
                 ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -311.71985765696;
+                ["x"] = 580.84056838261;
+                ["sublevel"] = 1;
+                ["week"] = {
+                    [5] = true;
+                    [2] = true;
+                    [11] = true;
+                    [8] = true;
+                };
             };
         };
         ["health"] = 2151786;
@@ -1786,6 +1870,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["x"] = 459.84349270362;
                 ["week"] = {
                     [1] = true;
+                    [2] = true;
+                    [4] = true;
+                    [5] = true;
+                    [7] = true;
+                    [8] = true;
+                    [10] = true;
+                    [11] = true;
                 };
                 ["sublevel"] = 1;
             };
@@ -1813,10 +1904,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     };
     [1] = {
         ["clones"] = {
-            [3] = {
-                ["y"] = -333.84661956258;
-                ["x"] = 586.42175363663;
-                ["g"] = 2;
+            [1] = {
+                ["y"] = -254.08941352266;
+                ["x"] = 572.75039865962;
                 ["sublevel"] = 1;
             };
             [2] = {
@@ -1833,9 +1923,10 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 2;
                 ["sublevel"] = 1;
             };
-            [1] = {
-                ["y"] = -254.08941352266;
-                ["x"] = 572.75039865962;
+            [3] = {
+                ["y"] = -333.84661956258;
+                ["x"] = 586.42175363663;
+                ["g"] = 2;
                 ["sublevel"] = 1;
             };
         };

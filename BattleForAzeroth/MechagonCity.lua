@@ -14,7 +14,7 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
         };
     };
 };
-
+--TODO: check week 1 as week 2 was completely different from week 1 (not the usual 1 swap)
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
@@ -74,6 +74,51 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = 2;
         };
+        [5] = {
+            ["y"] = -318.61727794098;
+            ["x"] = 515.84029246469;
+            ["index"] = 4;
+            ["weeks"] = {
+                [2] = true;
+                [5] = true;
+                [8] = true;
+                [11] = true;
+            };
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
+            ["npcId"] = 161124;
+        };
+        [6] = {
+            ["y"] = -485.10332866813;
+            ["x"] = 251.29468785124;
+            ["index"] = 3;
+            ["weeks"] = {
+                [2] = true;
+                [5] = true;
+                [8] = true;
+                [11] = true;
+            };
+            ["type"] = "nyalothaSpire";
+            ["template"] = "VignettePinTemplate";
+            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["npcId"] = 161241;
+        };
+        [7] = {
+            ["y"] = -197.65723365378;
+            ["x"] = 582.26737834875;
+            ["index"] = 1;
+            ["weeks"] = {
+                [2] = true;
+                [5] = true;
+                [8] = true;
+                [11] = true;
+            };
+            ["type"] = "nyalothaSpire";
+            ["template"] = "VignettePinTemplate";
+            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["npcId"] = 161244;
+        };
     };
     [3] = {
         [1] = {
@@ -106,6 +151,21 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = -2;
         };
+        [4] = {
+            ["y"] = -383.04415723324;
+            ["x"] = 405.94354943625;
+            ["index"] = 2;
+            ["weeks"] = {
+                [2] = true;
+                [5] = true;
+                [8] = true;
+                [11] = true;
+            };
+            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["template"] = "VignettePinTemplate";
+            ["type"] = "nyalothaSpire";
+            ["npcId"] = 161243;
+        };
     };
 };
 
@@ -115,13 +175,24 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [1] = {
                 ["y"] = -333.22926098296;
                 ["x"] = 511.95865277707;
+                ["sublevel"] = 4;
                 ["week"] = {
                     [1] = true;
                 };
-                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -387.38917479404;
+                ["x"] = 417.63359348378;
+                ["week"] = {
+                    [5] = true;
+                    [2] = true;
+                    [11] = true;
+                    [8] = true;
+                };
+                ["sublevel"] = 3;
             };
         };
-        ["corrupted"] = true;
+        ["id"] = 161243;
         ["scale"] = 1.4;
         ["spells"] = {
             [314478] = {};
@@ -131,30 +202,43 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [314483] = {};
         };
         ["stealthDetect"] = true;
+        ["name"] = "Samh'rek, Beckoner of Chaos";
+        ["level"] = 122;
+        ["teemingCount"] = 6;
+        ["count"] = 4;
+        ["displayId"] = 90742;
+        ["creatureType"] = "Aberration";
+        ["corrupted"] = true;
+        ["health"] = 1409996;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["count"] = 4;
-        ["teemingCount"] = 6;
-        ["health"] = 1409996;
-        ["displayId"] = 90742;
-        ["creatureType"] = "Aberration";
-        ["level"] = 122;
-        ["name"] = "Samh'rek, Beckoner of Chaos";
-        ["id"] = 161243;
     };
     [2] = {
         ["clones"] = {
             [1] = {
                 ["y"] = -481.039736978;
                 ["x"] = 264.39534204253;
+                ["sublevel"] = 4;
                 ["week"] = {
                     [1] = true;
+                };
+            };
+            [2] = {
+                ["y"] = -334.26094884991;
+                ["x"] = 512.53392271851;
+                ["week"] = {
+                    [5] = true;
+                    [2] = true;
+                    [11] = true;
+                    [8] = true;
                 };
                 ["sublevel"] = 4;
             };
         };
-        ["level"] = 122;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
         ["id"] = 161124;
         ["spells"] = {
             [314308] = {};
@@ -163,49 +247,58 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [314309] = {};
         };
         ["stealthDetect"] = true;
-        ["health"] = 1510710;
-        ["count"] = 4;
+        ["scale"] = 1.4;
+        ["corrupted"] = true;
         ["teemingCount"] = 6;
-        ["name"] = "Urg'roth, Breaker of Heroes";
+        ["health"] = 1510710;
         ["displayId"] = 89415;
         ["creatureType"] = "Aberration";
-        ["corrupted"] = true;
-        ["scale"] = 1.4;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["level"] = 122;
+        ["name"] = "Urg'roth, Breaker of Heroes";
+        ["count"] = 4;
     };
     [4] = {
         ["clones"] = {
             [1] = {
                 ["y"] = -387.50323117231;
                 ["x"] = 416.78179277533;
-                ["sublevel"] = 3;
                 ["week"] = {
                     [1] = true;
                 };
+                ["sublevel"] = 3;
+            };
+            [2] = {
+                ["y"] = -184.66860815663;
+                ["x"] = 590.81364063224;
+                ["week"] = {
+                    [5] = true;
+                    [2] = true;
+                    [11] = true;
+                    [8] = true;
+                };
+                ["sublevel"] = 4;
             };
         };
-        ["corrupted"] = true;
-        ["id"] = 161244;
-        ["spells"] = {
-            [314566] = {};
-            [314397] = {};
-            [314565] = {};
-            [314592] = {};
-        };
-        ["stealthDetect"] = true;
-        ["count"] = 4;
-        ["name"] = "Blood of the Corruptor";
-        ["teemingCount"] = 6;
-        ["health"] = 1409996;
-        ["displayId"] = 92229;
-        ["creatureType"] = "Aberration";
-        ["level"] = 122;
-        ["scale"] = 1.4;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
+        ["id"] = 161244;
+        ["spells"] = {
+            [314566] = {};
+            [314592] = {};
+            [314397] = {};
+            [314565] = {};
+        };
+        ["stealthDetect"] = true;
+        ["scale"] = 1.4;
+        ["level"] = 122;
+        ["teemingCount"] = 6;
+        ["count"] = 4;
+        ["displayId"] = 92229;
+        ["creatureType"] = "Aberration";
+        ["corrupted"] = true;
+        ["health"] = 1409996;
+        ["name"] = "Blood of the Corruptor";
     };
     [8] = {
         ["clones"] = {
@@ -240,13 +333,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [293827] = {};
             [293854] = {};
         };
+        ["id"] = 144294;
         ["health"] = 503570;
-        ["name"] = "Mechagon Tinkerer";
         ["displayId"] = 91170;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
-        ["id"] = 144294;
+        ["name"] = "Mechagon Tinkerer";
     };
     [16] = {
         ["clones"] = {
@@ -270,13 +363,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [294290] = {};
         };
+        ["scale"] = 1;
         ["count"] = 6;
-        ["health"] = 805712;
         ["displayId"] = 92177;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["name"] = "Waste Processing Unit";
-        ["scale"] = 1;
+        ["health"] = 805712;
     };
     [17] = {
         ["clones"] = {
@@ -350,13 +443,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [294349] = {};
         };
+        ["scale"] = 1;
         ["count"] = 1;
-        ["health"] = 50357;
         ["displayId"] = 92217;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
         ["name"] = "Living Waste";
-        ["scale"] = 1;
+        ["health"] = 50357;
     };
     [9] = {
         ["clones"] = {
@@ -385,13 +478,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [293670] = {};
         };
+        ["id"] = 144299;
         ["health"] = 503570;
-        ["name"] = "Workshop Defender";
         ["displayId"] = 91183;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
-        ["id"] = 144299;
+        ["name"] = "Workshop Defender";
     };
     [18] = {
         ["clones"] = {
@@ -404,20 +497,20 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["id"] = 144249;
         ["spells"] = {
             [292264] = {};
+            [292267] = {};
             [292290] = {};
             [283551] = {};
-            [292267] = {};
         };
         ["isBoss"] = true;
         ["encounterID"] = 2331;
         ["instanceID"] = 1178;
+        ["scale"] = 1;
         ["count"] = 0;
-        ["health"] = 3021420;
         ["displayId"] = 90998;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Omega Buster";
-        ["scale"] = 1;
+        ["health"] = 3021420;
     };
     [5] = {
         ["clones"] = {
@@ -431,18 +524,18 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [296348] = {};
             [295169] = {};
-            [295183] = {};
-            [295170] = {};
-            [294015] = {};
             [293986] = {};
+            [294015] = {};
+            [295170] = {};
+            [295183] = {};
         };
+        ["health"] = 1258925;
         ["name"] = "Blastatron X-80";
-        ["count"] = 8;
         ["displayId"] = 90712;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["id"] = 151476;
-        ["health"] = 1258925;
+        ["count"] = 8;
     };
     [10] = {
         ["clones"] = {
@@ -467,13 +560,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [293930] = {};
             [293729] = {};
         };
+        ["id"] = 144295;
         ["health"] = 503570;
-        ["name"] = "Mechagon Mechanic";
         ["displayId"] = 91171;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["count"] = 4;
-        ["id"] = 144295;
+        ["name"] = "Mechagon Mechanic";
     };
     [20] = {
         ["clones"] = {
@@ -493,13 +586,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [294103] = {};
             [294128] = {};
         };
+        ["scale"] = 1.5;
         ["count"] = 4;
-        ["health"] = 503570;
         ["displayId"] = 91228;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["name"] = "Rocket Tonk";
-        ["scale"] = 1.5;
+        ["health"] = 503570;
     };
     [21] = {
         ["clones"] = {
@@ -517,16 +610,16 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["id"] = 151658;
         ["spells"] = {
             [294061] = {};
-            [294073] = {};
             [294064] = {};
+            [294073] = {};
         };
+        ["scale"] = 1.5;
         ["count"] = 4;
-        ["health"] = 503570;
         ["displayId"] = 91229;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["name"] = "Strider Tonk";
-        ["scale"] = 1.5;
+        ["health"] = 503570;
     };
     [11] = {
         ["clones"] = {
@@ -544,13 +637,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2348;
         ["instanceID"] = 1178;
+        ["scale"] = 1;
         ["count"] = 0;
-        ["health"] = 3524990;
         ["displayId"] = 23397;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Head Machinist Sparkflux";
-        ["scale"] = 1;
+        ["health"] = 3524990;
     };
     [22] = {
         ["clones"] = {
@@ -564,53 +657,64 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [285344] = {};
             [305393] = {};
+            [282801] = {};
             [285020] = {};
             [285377] = {};
-            [282801] = {};
         };
         ["isBoss"] = true;
         ["encounterID"] = 2336;
         ["instanceID"] = 1178;
+        ["scale"] = 1.5;
         ["count"] = 0;
-        ["health"] = 2014280;
         ["displayId"] = 91216;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "The Platinum Pummeler";
-        ["scale"] = 1.5;
+        ["health"] = 2014280;
     };
     [3] = {
         ["clones"] = {
             [1] = {
                 ["y"] = -184.37266990175;
                 ["x"] = 590.01275028241;
-                ["sublevel"] = 4;
                 ["week"] = {
                     [1] = true;
                 };
+                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -480.89389827979;
+                ["x"] = 264.35598537293;
+                ["week"] = {
+                    [5] = true;
+                    [2] = true;
+                    [11] = true;
+                    [8] = true;
+                };
+                ["sublevel"] = 4;
             };
         };
-        ["level"] = 122;
+        ["health"] = 1309282;
         ["scale"] = 1.4;
         ["spells"] = {
             [314463] = {};
-            [314411] = {};
-            [314467] = {};
-            [314406] = {};
             [314397] = {};
+            [314411] = {};
+            [314406] = {};
+            [314467] = {};
         };
         ["stealthDetect"] = true;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-        ["id"] = 161241;
+        ["name"] = "Voidweaver Mal'thir";
+        ["corrupted"] = true;
         ["teemingCount"] = 6;
         ["count"] = 4;
         ["displayId"] = 91910;
         ["creatureType"] = "Beast";
-        ["corrupted"] = true;
-        ["name"] = "Voidweaver Mal'thir";
-        ["health"] = 1309282;
+        ["level"] = 122;
+        ["id"] = 161241;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
     };
     [6] = {
         ["clones"] = {
@@ -701,13 +805,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["id"] = 144300;
+        ["scale"] = 0.7;
         ["count"] = 0;
-        ["health"] = 125893;
         ["displayId"] = 91167;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["name"] = "Mechagon Citizen";
-        ["scale"] = 0.7;
+        ["health"] = 125893;
     };
     [12] = {
         ["clones"] = {
@@ -728,13 +832,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [296348] = {};
             [294015] = {};
         };
+        ["scale"] = 1;
         ["count"] = 5;
-        ["health"] = 805712;
         ["displayId"] = 90710;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["name"] = "Spider Tank";
-        ["scale"] = 1;
+        ["health"] = 805712;
     };
     [24] = {
         ["clones"] = {
@@ -756,13 +860,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2339;
         ["instanceID"] = 1178;
+        ["scale"] = 1;
         ["count"] = 0;
-        ["health"] = 3524990;
         ["displayId"] = 90775;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "K.U.-J.0.";
-        ["scale"] = 1;
+        ["health"] = 3524990;
     };
     [25] = {
         ["clones"] = {
@@ -773,13 +877,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             };
         };
         ["scale"] = 1;
+        ["id"] = 151325;
         ["name"] = "Alarm-o-Bot";
-        ["count"] = 0;
         ["displayId"] = 90874;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["health"] = 25179;
-        ["id"] = 151325;
+        ["count"] = 0;
     };
     [13] = {
         ["clones"] = {
@@ -885,13 +989,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [297127] = {};
         };
         ["stealthDetect"] = true;
+        ["id"] = 144298;
         ["name"] = "Defense Bot Mk III";
-        ["count"] = 6;
         ["displayId"] = 90855;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["health"] = 805712;
-        ["id"] = 144298;
+        ["count"] = 6;
     };
     [26] = {
         ["clones"] = {
@@ -910,13 +1014,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [294107] = {};
         };
+        ["scale"] = 1;
         ["count"] = 4;
-        ["health"] = 503570;
         ["displayId"] = 68856;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["name"] = "G.U.A.R.D.";
-        ["scale"] = 1;
+        ["health"] = 503570;
     };
     [7] = {
         ["clones"] = {
@@ -945,13 +1049,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [294195] = {};
         };
+        ["id"] = 151649;
         ["health"] = 528749;
-        ["name"] = "Defense Bot Mk I";
         ["displayId"] = 91349;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["count"] = 4;
-        ["id"] = 151649;
+        ["name"] = "Defense Bot Mk I";
     };
     [14] = {
         ["clones"] = {
@@ -964,21 +1068,75 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["id"] = 150396;
         ["spells"] = {
             [291928] = {};
-            [291878] = {};
-            [291626] = {};
-            [291865] = {};
             [291613] = {};
+            [291878] = {};
+            [291865] = {};
+            [291626] = {};
         };
         ["isBoss"] = true;
         ["encounterID"] = 2331;
         ["instanceID"] = 1178;
+        ["scale"] = 1;
         ["count"] = 0;
-        ["health"] = 2417136;
         ["displayId"] = 90547;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["name"] = "Aerial Unit R-21/X";
-        ["scale"] = 1;
+        ["health"] = 2417136;
+    };
+    [23] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -368.75253591347;
+                ["x"] = 195.09111527009;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 145185;
+        ["spells"] = {
+            [283421] = {};
+            [283640] = {};
+            [283565] = {};
+            [285152] = {};
+            [283422] = {};
+            [285468] = {};
+            [285388] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2336;
+        ["instanceID"] = 1178;
+        ["scale"] = 1.5;
+        ["count"] = 0;
+        ["displayId"] = 91879;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 122;
+        ["name"] = "Gnomercy 4.U.";
+        ["health"] = 2014280;
+    };
+    [19] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -374.2151489309;
+                ["x"] = 269.53200910371;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -354.32391026756;
+                ["x"] = 259.27553305712;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 151657;
+        ["spells"] = {
+            [301088] = {};
+        };
+        ["scale"] = 1.5;
+        ["count"] = 4;
+        ["displayId"] = 21209;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 120;
+        ["name"] = "Bomb Tonk";
+        ["health"] = 302142;
     };
     [15] = {
         ["clones"] = {
@@ -998,66 +1156,12 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [294107] = {};
             [294180] = {};
         };
+        ["scale"] = 1;
         ["count"] = 4;
-        ["health"] = 503570;
         ["displayId"] = 90511;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
         ["name"] = "Junkyard D.0.G.";
-        ["scale"] = 1;
-    };
-    [19] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -374.2151489309;
-                ["x"] = 269.53200910371;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -354.32391026756;
-                ["x"] = 259.27553305712;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 151657;
-        ["spells"] = {
-            [301088] = {};
-        };
-        ["count"] = 4;
-        ["health"] = 302142;
-        ["displayId"] = 21209;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 120;
-        ["name"] = "Bomb Tonk";
-        ["scale"] = 1.5;
-    };
-    [23] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -368.75253591347;
-                ["x"] = 195.09111527009;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 145185;
-        ["spells"] = {
-            [283421] = {};
-            [283640] = {};
-            [283565] = {};
-            [285388] = {};
-            [283422] = {};
-            [285468] = {};
-            [285152] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2336;
-        ["instanceID"] = 1178;
-        ["count"] = 0;
-        ["health"] = 2014280;
-        ["displayId"] = 91879;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 122;
-        ["name"] = "Gnomercy 4.U.";
-        ["scale"] = 1.5;
+        ["health"] = 503570;
     };
 };
