@@ -865,6 +865,8 @@ function MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
                 blip:Hide()
             elseif weekData and weekData[week] then
                 blip:Show()
+            elseif not weekData and blip.data.corrupted then
+                blip:Show()
             end
         end
     end
