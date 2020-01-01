@@ -546,7 +546,7 @@ function MethodDungeonTools:ShowInterface(force)
         --edge case if user closed MDT window while in the process of dragging a corrupted blip
         if self.draggedBlip then
             if MethodDungeonTools.liveSessionActive then
-                MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets)
+                MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetRiftOffsets())
             end
             self:UpdateMap()
             self.draggedBlip = nil
@@ -1421,23 +1421,9 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:GetCurrentPreset().week = key
         local teeming = MethodDungeonTools:IsPresetTeeming(MethodDungeonTools:GetCurrentPreset())
         MethodDungeonTools:GetCurrentPreset().value.teeming = teeming
-        --dont need this here as we just change teeming and infested
-        --MethodDungeonTools:UpdateMap()
-        MethodDungeonTools:DungeonEnemies_UpdateTeeming()
-        --MethodDungeonTools:DungeonEnemies_UpdateInfested(key)
-        --MethodDungeonTools:DungeonEnemies_UpdateReaping()
-        MethodDungeonTools:UpdateFreeholdSelector(key)
-        MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(key)
-        MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-        MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
-        MethodDungeonTools:POI_UpdateAll()
-        if not ignoreUpdateProgressBar then
-            MethodDungeonTools:UpdateProgressbar()
-        end
-        if not ignoreReloadPullButtons then MethodDungeonTools:ReloadPullButtons() end
+
         if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
-        MethodDungeonTools:KillAllAnimatedLines()
-        MethodDungeonTools:DrawAllAnimatedLines()
+        MethodDungeonTools:UpdateMap(nil,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     end
     affixDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
         affixDropdown:SetAffixWeek(key)
@@ -2234,9 +2220,12 @@ function MethodDungeonTools:IsPresetTeeming(preset)
 end
 
 function MethodDungeonTools:GetRiftOffsets()
-    local week = MethodDungeonTools:GetEffectivePresetWeek()
-    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-    return riftOffsets
+    local week = self:GetEffectivePresetWeek()
+    local preset = self:GetCurrentPreset()
+    preset.value.riftOffsets = preset.value.riftOffsets or {}
+    local riftOffsets = preset.value.riftOffsets
+    riftOffsets[week] = riftOffsets[week] or {}
+    return riftOffsets[week]
 end
 
 
@@ -2580,7 +2569,6 @@ function MethodDungeonTools:EnsureDBTables()
         maxSublevel = maxSublevel + 1
     end
     if preset.value.currentSublevel > maxSublevel then preset.value.currentSublevel = maxSublevel end
-    preset.value.riftOffsets = preset.value.riftOffsets or {}
 end
 
 function MethodDungeonTools:GetTileFormat(dungeonIdx)
@@ -2655,7 +2643,8 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
 
 	if not ignoreSetSelection then MethodDungeonTools:SetSelectionToPull(preset.value.currentPull) end
 	MethodDungeonTools:UpdateDungeonDropDown()
-    frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
+    --frame.sidePanel.affixDropdown:SetAffixWeek(MethodDungeonTools:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
+    frame.sidePanel.affixDropdown:SetValue(MethodDungeonTools:GetCurrentPreset().week)
     MethodDungeonTools:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
     MethodDungeonTools:ToggleBoralusSelector(db.currentDungeonIdx == 19)
     MethodDungeonTools:DisplayMDISelector()
@@ -2757,10 +2746,10 @@ function MethodDungeonTools:ClearPreset(preset,silent)
 	preset.value.currentPull = 1
     table.wipe(preset.value.riftOffsets)
 	--MethodDungeonTools:DeleteAllPresetObjects()
-    MethodDungeonTools:EnsureDBTables()
+    self:EnsureDBTables()
     if not silent then
-        MethodDungeonTools:UpdateMap()
-        MethodDungeonTools:ReloadPullButtons()
+        self:UpdateMap()
+        self:ReloadPullButtons()
     end
 end
 

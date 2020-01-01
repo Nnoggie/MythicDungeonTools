@@ -60,6 +60,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     frame:SetFrameLevel(4)
     frame.defaultSublevel = nil
     frame.animatedLine = nil
+    frame.npcId = nil
     if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
@@ -123,7 +124,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnMouseUp",function(self,button)
             if button == "RightButton" then
                 --reset npc location
-                MethodDungeonTools:GetCurrentPreset().value.riftOffsets[self.npcId]=nil
+                MethodDungeonTools:GetRiftOffsets()[self.npcId]=nil
                 MethodDungeonTools:UpdateMap()
                 if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
             end
@@ -185,7 +186,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             end
         end)
         --check expanded status
-        if MethodDungeonTools:IsNPCInPulls(frame.npcId) then
+        if MethodDungeonTools:IsNPCInPulls(poi) then
             frame.Texture:SetSize(10*poiScale,10*poiScale)
             frame.Texture:SetAtlas("poi-rift1")
             frame.HighlightTexture:SetSize(10*poiScale,10*poiScale)
@@ -620,6 +621,7 @@ end
 
 ---draws all lines from active npcs to spires/doors
 function MethodDungeonTools:DrawAllAnimatedLines()
+    local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(MethodDungeonTools:GetDungeonEnemyBlips()) do
         if not blip:IsShown() and blip.data.corrupted then
             MethodDungeonTools:HideAnimatedLine(blip.animatedLine)
@@ -661,7 +663,7 @@ function MethodDungeonTools:HideAnimatedLine(animatedLine)
 end
 
 function MethodDungeonTools:FindConnectedDoor(npcId,numConnection)
-    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+    local riftOffsets = self:GetRiftOffsets()
     local connection = riftOffsets and riftOffsets[npcId] and riftOffsets[npcId].connections and riftOffsets[npcId].connections[numConnection or #riftOffsets[npcId].connections] or nil
     if connection then
         local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()

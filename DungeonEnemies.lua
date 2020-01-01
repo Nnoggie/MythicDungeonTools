@@ -470,7 +470,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self.texture_DragLeft:SetRotation(-1.5708)
         self.texture_DragRight:SetRotation(1.5708)
         self.texture_DragUp:SetRotation(3.14159)
-        local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+        local riftOffsets = MethodDungeonTools:GetRiftOffsets()
         self.adjustedX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
         self.adjustedY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
         self:ClearAllPoints()
@@ -482,11 +482,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         self.animatedLine = nil
         self:SetScript("OnMouseDown",function(self, button)
             if button == "LeftButton" then
+                riftOffsets = MethodDungeonTools:GetRiftOffsets()
                 local x,y = MethodDungeonTools:GetCursorPosition()
                 local scale = MethodDungeonTools:GetScale()
                 x = x*(1/scale)
                 y = y*(1/scale)
-                riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
                 oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
                 oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
                 xOffset = x-oldX
@@ -497,8 +497,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             self:StartMoving()
             MethodDungeonTools.draggedBlip = self
             local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
-            riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
-            riftOffsets = riftOffsets or {}
+            riftOffsets = MethodDungeonTools:GetRiftOffsets()
             self:SetScript("OnUpdate",function()
                 for poiFrame,_ in pairs(activeDoors) do
                     if MethodDungeonTools:DoFramesOverlap(self,poiFrame,-10) then
@@ -532,6 +531,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
         end)
         self:SetScript("OnDragStop", function()
             MethodDungeonTools.draggedBlip = nil
+            riftOffsets = MethodDungeonTools:GetRiftOffsets()
             self:StopMovingOrSizing()
             self:SetScript("OnUpdate",nil)
             self:ClearAllPoints()
@@ -564,7 +564,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                     break
                 end
             end
-            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
+            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(preset.value.riftOffsets) end
         end)
         self:Hide()--hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
     end
@@ -609,7 +609,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
     if not enemies then return end
     preset = MethodDungeonTools:GetCurrentPreset()
 
-    local riftOffsets = MethodDungeonTools:GetCurrentPreset().value.riftOffsets
+    local riftOffsets = MethodDungeonTools:GetRiftOffsets()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
 
     for enemyIdx,data in pairs(enemies) do
@@ -1012,11 +1012,17 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
     end
 end
 
-function MethodDungeonTools:IsNPCInPulls(npcId)
-    local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
+function MethodDungeonTools:IsNPCInPulls(poi)
+    local week = self:GetEffectivePresetWeek()
+    local data = self.dungeonEnemies[db.currentDungeonIdx]
     for enemyIdx,enemy in pairs(data) do
-        if enemy.id == npcId then
-            return MethodDungeonTools:IsCloneInPulls(enemyIdx,nil)
+        if enemy.id == poi.npcId then
+            local included = false
+            for cloneIdx,clone in pairs(enemy.clones) do
+                if clone.week[week] then
+                    return MethodDungeonTools:IsCloneInPulls(enemyIdx,cloneIdx)
+                end
+            end
         end
     end
 end
@@ -1027,9 +1033,11 @@ function MethodDungeonTools:IsCloneInPulls(enemyIdx,cloneIdx)
     for _,pull in pairs(pulls) do
         if pull[enemyIdx] then
             if cloneIdx then
-                if pull[enemyIdx][cloneIdx] then return true end
+                for _,pullCloneIndex in pairs(pull[enemyIdx]) do
+                    if pullCloneIndex == cloneIdx then return true end
+                end
             else
-                for cloneIdx,_ in pairs(pull[enemyIdx]) do
+                for _,pullCloneIndex in pairs(pull[enemyIdx]) do
                     numClones = numClones+1
                 end
             end
