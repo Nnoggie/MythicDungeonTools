@@ -61,7 +61,12 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     frame.defaultSublevel = nil
     frame.animatedLine = nil
     frame.npcId = nil
-    if frame.HighlightTexture then frame.HighlightTexture:SetDrawLayer("HIGHLIGHT") end
+    if frame.HighlightTexture then
+        frame.HighlightTexture:SetDrawLayer("HIGHLIGHT")
+        frame.HighlightTexture:Show()
+        frame.Texture:SetVertexColor(1,1,1,1)
+        frame.HighlightTexture:SetVertexColor(1,1,1,1)
+    end
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
         local poiScale = poi.scale or 1
@@ -441,6 +446,31 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
             GameTooltip:AddLine(poi.text, 1, 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        frame:SetScript("OnLeave",function()
+            GameTooltip:Hide()
+        end)
+    end
+    if type =="mechagonBot" then
+        frame:SetSize(6,6)
+        frame.Texture:SetSize(6,6)
+        frame.HighlightTexture:SetSize(6,6)
+        frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
+        frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
+        local botOptions = {
+            [1] = {text="Welding Bot",color={r=1, g=1, b=0, a=1}}, --yellow
+            [2] = {text="Grease Bot",color={r=0, g=1, b=0, a=1}}, --green
+            [3] = {text="Shock Bot",color={r=0, g=1, b=1, a=1}}, --blue
+        }
+        frame.Texture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b)
+        frame.HighlightTexture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b)
+        frame:SetScript("OnClick",function()
+
+        end)
+        frame:SetScript("OnEnter",function()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+            GameTooltip:AddLine(botOptions[poi.botIndex].text, 1, 1, 1, 1)
             GameTooltip:Show()
         end)
         frame:SetScript("OnLeave",function()

@@ -155,7 +155,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
     local function DrawGroup1(container)
         --mapLink Options
         local option1 = AceGUI:Create("EditBox")
-        option1:SetLabel("Target Floor")
+        option1:SetLabel("Target Floor / Bot Index")
         option1:SetText(1)
         local option2 = AceGUI:Create("EditBox")
         option2:SetLabel("Direction 1up -1d 2r -2l")
@@ -262,6 +262,20 @@ function MethodDungeonTools:CreateDevPanel(frame)
                 end,
             },
             [6] = {
+                text="Mechagon Bot",
+                func=function()
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    end
+                    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local botIndex = tonumber(option1:GetText())
+                    local posx,posy = 400+(30*botIndex),-250
+                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="mechagonBot",botIndex=botIndex})
+                    MethodDungeonTools:POI_UpdateAll()
+                end,
+            },
+            [7] = {
                 text="Export to LUA",
                 func=function()
                     local export = tshow(MethodDungeonTools.mapPOIs[db.currentDungeonIdx],"MethodDungeonTools.mapPOIs[dungeonIndex]")

@@ -4239,7 +4239,7 @@ function initFrames()
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
     --cache dungeon data to not lose data during reloads
-    if db.devMode then
+    if db.devMode and false then
         if db.dungeonEnemies then
             MethodDungeonTools.dungeonEnemies = db.dungeonEnemies
         else
