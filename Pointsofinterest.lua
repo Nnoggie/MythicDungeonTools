@@ -459,9 +459,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
         frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
         local botOptions = {
-            [1] = {text="Welding Bot",color={r=1, g=1, b=0, a=1}}, --yellow
-            [2] = {text="Grease Bot",color={r=0, g=1, b=0, a=1}}, --green
-            [3] = {text="Shock Bot",color={r=0, g=1, b=1, a=1}}, --blue
+            [1] = {text="Welding Bot",color={r=1, g=1, b=0, a=1}, spellId=303952, textureId=134952}, --yellow
+            [2] = {text="Grease Bot",color={r=0, g=1, b=0, a=1}, spellId=303924, textureId=252178}, --green
+            [3] = {text="Shock Bot",color={r=0, g=1, b=1, a=1}, spellId=304063, textureId=136099}, --blue
         }
         frame.Texture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b)
         frame.HighlightTexture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b)
@@ -470,7 +470,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         end)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip:AddLine(botOptions[poi.botIndex].text, 1, 1, 1, 1)
+            GameTooltip_SetTitle(GameTooltip, botOptions[poi.botIndex].text)
+            GameTooltip:AddTexture(botOptions[poi.botIndex].textureId)
+            GameTooltip:AddSpellByID(botOptions[poi.botIndex].spellId)
             GameTooltip:Show()
         end)
         frame:SetScript("OnLeave",function()
