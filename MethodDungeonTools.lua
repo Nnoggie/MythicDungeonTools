@@ -2615,6 +2615,9 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
         end
     end
 	MethodDungeonTools:UpdateDungeonEnemies()
+    MethodDungeonTools:DungeonEnemies_UpdateTeeming()
+    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+
 	if not ignoreReloadPullButtons then
 		MethodDungeonTools:ReloadPullButtons()
 	end
@@ -4239,7 +4242,7 @@ function initFrames()
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
 
     --cache dungeon data to not lose data during reloads
-    if db.devMode and false then
+    if db.devMode then
         if db.dungeonEnemies then
             MethodDungeonTools.dungeonEnemies = db.dungeonEnemies
         else
