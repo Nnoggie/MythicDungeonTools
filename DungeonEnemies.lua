@@ -634,7 +634,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
     --add blips that were dragged to a different sublevel
     if riftOffsets then
         for npcId,offsetData in pairs(riftOffsets) do
-            if offsetData.sublevel and offsetData.homeSublevel and offsetData.sublevel ==  currentSublevel then
+            if offsetData and offsetData.sublevel and offsetData.homeSublevel and offsetData.sublevel ==  currentSublevel then
                 for enemyIdx,data in pairs(enemies) do
                     if data.id == npcId then
                         for cloneIdx,clone in pairs(data["clones"]) do
