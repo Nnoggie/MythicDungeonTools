@@ -70,7 +70,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
     if frame.textString then frame.textString:Hide() end
     if type == "mapLink" then
         local poiScale = poi.scale or 1
-        frame:SetSize(22,22)
+        frame:SetSize(22*poiScale,22*poiScale)
         frame.Texture:SetSize(22*poiScale,22*poiScale)
         frame.HighlightTexture:SetSize(22*poiScale,22*poiScale)
         frame.HighlightTexture:SetDrawLayer("ARTWORK")
@@ -224,7 +224,8 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         end)
     end
     if type == "graveyard" then
-        frame:SetSize(12,12)
+        local scale = poi.scale or 1
+        frame:SetSize(12*scale,12*scale)
         frame:SetScript("OnClick",nil)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
@@ -453,18 +454,18 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
         end)
     end
     if type =="mechagonBot" then
-        frame:SetSize(6,6)
+        frame:SetSize(3,3)
         frame.Texture:SetSize(6,6)
         frame.HighlightTexture:SetSize(6,6)
         frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
         frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
         local botOptions = {
-            [1] = {text="Welding Bot",color={r=1, g=1, b=0, a=1}, spellId=303952, textureId=134952}, --yellow
-            [2] = {text="Grease Bot",color={r=0, g=1, b=0, a=1}, spellId=303924, textureId=252178}, --green
-            [3] = {text="Shock Bot",color={r=0, g=1, b=1, a=1}, spellId=304063, textureId=136099}, --blue
+            [1] = {text="Welding Bot",color={r=0, g=1, b=0, a=0.8}, spellId=303952, textureId=134952}, --green
+            [2] = {text="Grease Bot",color={r=1, g=0, b=0, a=0.8}, spellId=303924, textureId=252178}, --red
+            [3] = {text="Shock Bot",color={r=0, g=.8, b=1, a=0.8}, spellId=304063, textureId=136099}, --blue
         }
-        frame.Texture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b)
-        frame.HighlightTexture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b)
+        frame.Texture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b,botOptions[poi.botIndex].color.a)
+        frame.HighlightTexture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b,botOptions[poi.botIndex].color.a)
         frame:SetScript("OnClick",function()
 
         end)
