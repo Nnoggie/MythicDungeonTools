@@ -215,6 +215,9 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             connectedFrame = connectedDoor or connectedFrame
             self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedFrame,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
             connectedFrame.animatedLine = self.animatedLine
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_SendCorruptedPositions(preset.value.riftOffsets)
+            end
         end
     elseif button == "RightButton" then
         if db.devMode then
@@ -564,7 +567,9 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
                     break
                 end
             end
-            if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(preset.value.riftOffsets) end
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_SendCorruptedPositions(preset.value.riftOffsets)
+            end
         end)
         self:Hide()--hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
     end

@@ -131,7 +131,9 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                 --reset npc location
                 MethodDungeonTools:GetRiftOffsets()[self.npcId]=nil
                 MethodDungeonTools:UpdateMap()
-                if MethodDungeonTools.liveSessionActive then MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets) end
+                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                    MethodDungeonTools:LiveSession_SendCorruptedPositions(MethodDungeonTools:GetCurrentPreset().value.riftOffsets)
+                end
             end
             if button == "LeftButton" then
                 local _, connections = MethodDungeonTools:FindConnectedDoor(frame.npcId,1)
