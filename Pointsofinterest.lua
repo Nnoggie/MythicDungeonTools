@@ -477,9 +477,11 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             GameTooltip:AddTexture(botOptions[poi.botIndex].textureId)
             GameTooltip:AddSpellByID(botOptions[poi.botIndex].spellId)
             GameTooltip:Show()
+            frame.HighlightTexture:Show()
         end)
         frame:SetScript("OnLeave",function()
             GameTooltip:Hide()
+            frame.HighlightTexture:Hide()
         end)
     end
     --fullscreen sizes
