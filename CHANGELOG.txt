@@ -1,9 +1,16 @@
 v3.0.0
-- New Awakened features including special draggable npc frames.
+- New Dungeons: Mechagon - Junkyard and Mechagon - Workshop
+- New Awakened features including special draggable npc frames, animated lines, weekly rotations and more!
+- Added many new helpful tooltips to buttons in the User Interface including the Live Mode Button
+- Added pre-zoomed and pre-panned default views for sublevels where only a certain part of the map is relevant
+- Added smooth panning for the map frame
+- The toolbar will now be expanded by default and will remember if the user collapsed or expanded it
+- The enemy info frame will now update the health values if the dungeon difficulty is changed
 - Fullscreen mode now also properly supports more narrow aspect ratios
 - Users can no longer resize the AddOn-window in such a way that the draggable areas become unreachable.
 - Added a new warning label to indicate if the dungeon difficulty is currently set to a level below 10
 - Improved loading times of very large maps like motherlode
+
 v2.9.6
 - fixed an error that could cause the AddOn to stop loading properly in certain presets
 - fixed a few visual bugs in the difficulty slider and count display
