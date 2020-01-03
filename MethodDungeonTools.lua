@@ -735,7 +735,6 @@ function MethodDungeonTools:SetScale(scale)
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldScrollValues.oldSizeY)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldScrollValues.oldSizeX)
     self:ZoomMap(0)
-    self:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     db.scale = scale
     db.nonFullscreenScale = scale
 end
@@ -799,7 +798,6 @@ function MethodDungeonTools:Maximize()
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
     MethodDungeonTools:ZoomMap(0)
-    MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
     MethodDungeonTools:UpdateMap()
     if db.devMode then
@@ -844,7 +842,6 @@ function MethodDungeonTools:Minimize()
     f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
     f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
     MethodDungeonTools:ZoomMap(0)
-    MethodDungeonTools:OnPan(f.scrollFrame.cursorX,f.scrollFrame.cursorY)
     MethodDungeonTools:UpdateEnemyInfoFrame()
     MethodDungeonTools:UpdateMap()
     if db.devMode then
@@ -1785,11 +1782,12 @@ function MethodDungeonTools:UpdateProgressbar()
 end
 
 function MethodDungeonTools:OnPan(cursorX, cursorY)
-	local scrollFrame = MethodDungeonToolsScrollFrame
+    local scrollFrame = MethodDungeonToolsScrollFrame
     local scale = MethodDungeonToolsMapPanelFrame:GetScale()/1.5
-	local deltaX = (scrollFrame.cursorX - cursorX)/scale
-	local deltaY = (cursorY - scrollFrame.cursorY)/scale
-	if(abs(deltaX) >= 1 or abs(deltaY) >= 1)then
+    local deltaX = (scrollFrame.cursorX - cursorX)/scale
+    local deltaY = (cursorY - scrollFrame.cursorY)/scale
+    	
+    if(scrollFrame.panning)then
 		local newHorizontalPosition = max(0, deltaX + scrollFrame:GetHorizontalScroll())
 		newHorizontalPosition = min(newHorizontalPosition, scrollFrame.maxX)
 		local newVerticalPosition = max(0, deltaY + scrollFrame:GetVerticalScroll())
@@ -1798,7 +1796,47 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
 		scrollFrame:SetVerticalScroll(newVerticalPosition)
 		scrollFrame.cursorX = cursorX
 		scrollFrame.cursorY = cursorY
-	end
+
+        scrollFrame.wasPanningLastFrame = true;
+        scrollFrame.lastDeltaX = deltaX;
+        scrollFrame.lastDeltaY = deltaY;
+        
+    else
+        if(scrollFrame.wasPanningLastFrame)then
+
+            scrollFrame.isFadeOutPanning = true
+            scrollFrame.fadeOutXStart = scrollFrame.lastDeltaX
+            scrollFrame.fadeOutYStart = scrollFrame.lastDeltaY
+            scrollFrame.panDuration = 0
+
+            scrollFrame.wasPanningLastFrame = false;
+        end
+    end
+end
+
+function MethodDungeonTools:OnPanFadeOut(deltaTime)
+    local scrollFrame = MethodDungeonToolsScrollFrame
+    local panDuration = 0.5
+    local panAtenuation = 7
+    if(scrollFrame.isFadeOutPanning)then
+        scrollFrame.panDuration = scrollFrame.panDuration + deltaTime
+
+        local phase = scrollFrame.panDuration / panDuration
+        local phaseLog = -math.log(phase)
+        local stepX = (scrollFrame.fadeOutXStart * phaseLog) / panAtenuation
+        local stepY = (scrollFrame.fadeOutYStart * phaseLog) / panAtenuation
+
+        local newHorizontalPosition = max(0, stepX + scrollFrame:GetHorizontalScroll())
+        newHorizontalPosition = min(newHorizontalPosition, scrollFrame.maxX)
+        local newVerticalPosition = max(0, stepY + scrollFrame:GetVerticalScroll())
+        newVerticalPosition = min(newVerticalPosition, scrollFrame.maxY)
+        scrollFrame:SetHorizontalScroll(newHorizontalPosition)
+        scrollFrame:SetVerticalScroll(newVerticalPosition)
+
+        if(scrollFrame.panDuration > panDuration)then
+            scrollFrame.isFadeOutPanning = false
+        end
+    end
 end
 
 function MethodDungeonTools:ExportCurrentZoomPanSettings()
@@ -2258,11 +2296,10 @@ function MethodDungeonTools:MakeMapTexture(frame)
 		frame.scrollFrame:SetScript("OnMouseUp", MethodDungeonTools.OnMouseUp)
 
 
-		frame.scrollFrame:SetScript("OnUpdate", function(self)
-			if (MethodDungeonTools.main_frame.scrollFrame.panning) then
-				local x, y = GetCursorPosition()
-				MethodDungeonTools:OnPan(x, y)
-			end
+		frame.scrollFrame:SetScript("OnUpdate", function(self,elapsed)
+			local x, y = GetCursorPosition()
+			MethodDungeonTools:OnPan(x, y)
+            MethodDungeonTools:OnPanFadeOut(elapsed)
         end)
 
 		if frame.mapPanelFrame == nil then
@@ -2320,7 +2357,9 @@ function MethodDungeonTools:MakeMapTexture(frame)
 
         frame.scrollFrame.cursorX = 0
         frame.scrollFrame.cursorY = 0
-        MethodDungeonTools:OnPan(frame.scrollFrame.cursorX,frame.scrollFrame.cursorY)
+
+        frame.scrollFrame.queuedDeltaX = 0;
+        frame.scrollFrame.queuedDeltaY = 0;
 	end
 
 end
