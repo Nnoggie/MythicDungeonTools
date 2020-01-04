@@ -701,7 +701,7 @@ local methods = {
                         end)
                         MethodDungeonTools:SetSelectionToPull(button - offset)
                     else
-                        MethodDungeonTools:AddPull(1)
+                        --MethodDungeonTools:AddPull(1) --we handle not deleting all pulls in MethodDungeonTools:DeletePull() instead
                         MethodDungeonTools:SetSelectionToPull(1)
                     end
                     if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then

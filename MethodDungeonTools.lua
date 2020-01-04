@@ -3595,15 +3595,17 @@ end
 ---DeletePull
 ---Deletes the selected pull and makes sure that a pull will be selected afterwards
 function MethodDungeonTools:DeletePull(index)
-	MethodDungeonTools:PresetsDeletePull(index)
-	MethodDungeonTools:ReloadPullButtons()
+    local pulls = self:GetPulls()
+    if #pulls == 1 then return end
+	self:PresetsDeletePull(index)
+	self:ReloadPullButtons()
 	local pullCount = 0
-	for k,v in pairs(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls) do
+	for k,v in pairs(pulls) do
 		pullCount = pullCount + 1
 	end
 	if index>pullCount then index = pullCount end
-	MethodDungeonTools:SetSelectionToPull(index)
-	MethodDungeonTools:UpdateAutomaticColors(index)
+	self:SetSelectionToPull(index)
+	self:UpdateAutomaticColors(index)
 end
 
 ---RenamePreset
