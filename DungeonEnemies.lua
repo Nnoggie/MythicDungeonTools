@@ -469,6 +469,7 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self.clone = clone
     self:Show()
     self:SetScript("OnUpdate",nil)
+    self:RegisterForDrag(nil)
     --awakened/corrupted adjustments: movable and color and stored position
     if data.corrupted then
         self:SetFrameLevel(15)
