@@ -342,8 +342,7 @@ function MethodDungeonTools:EnableBrushPreview(tool)
             else
                 frame.brushPreview.tex:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
             end
-            local mapScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
-            frame.brushPreview:SetSize(max(2,0.475*db.toolbar.brushSize*mapScale), max(2,0.475*db.toolbar.brushSize*mapScale))
+            frame.brushPreview:SetSize(30,30)
             frame.brushPreview.tex:ClearAllPoints()
             frame.brushPreview.tex:SetAllPoints()
             frame.brushPreview.tex:Show()
