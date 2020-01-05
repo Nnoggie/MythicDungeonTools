@@ -15,6 +15,7 @@ local sizey = 555
 local methodColor = "|cFFF49D38"
 MethodDungeonTools.BackdropColor = {0.058823399245739,0.058823399245739,0.058823399245739,0.9}
 
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local Dialog = LibStub("LibDialog-1.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local db
@@ -211,7 +212,7 @@ local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 }
 
 local dungeonList = {
-    [1] = "Black Rook Hold",
+	[1] = "Black Rook Hold",
     [2] = "Cathedral of Eternal Night",
     [3] = "Court of Stars",
     [4] = "Darkheart Thicket",
@@ -225,19 +226,19 @@ local dungeonList = {
     [12] = "The Arcway",
     [13] = "Vault of the Wardens",
     [14] = " >Battle for Azeroth",
-    [15] = "Atal'Dazar",
-    [16] = "Freehold",
-    [17] = "Kings' Rest",
-    [18] = "Shrine of the Storm",
-    [19] = "Siege of Boralus",
-    [20] = "Temple of Sethraliss",
-    [21] = "The MOTHERLODE!!",
-    [22] = "The Underrot",
-    [23] = "Tol Dagor",
-    [24] = "Waycrest Manor",
-    [25] = "Mechagon - Junkyard",
-    [26] = "Mechagon - Workshop",
-    [27] = " >Legion",
+	[15] = 934, -- Atal'Dazar
+	[16] = 936, -- Freehold
+	[17] = 1004, -- Kings' Rest
+	[18] = 1039, -- Shrine of the Storm
+	[19] = 1162, -- Siege of Boralus
+	[20] = 1038, -- Temple of Sethraliss
+	[21] = 1010, -- The MOTHERLODE!!
+	[22] = 1041, -- The Underrot
+	[23] = 974, -- Tol Dagor
+	[24] = 1015, -- Waycrest Manor
+	[25] = L["Mechagon - Junkyard"],
+	[26] = L["Mechagon - Workshop"],
+	[27] = " >Legion",
 }
 function MethodDungeonTools:GetNumDungeons() return #dungeonList-1 end
 function MethodDungeonTools:GetDungeonName(idx) return dungeonList[idx] end
@@ -312,8 +313,8 @@ local dungeonSubLevels = {
         [3] = "Vault of the Betrayer",
     },
     [15] = {
-        [1] = "Atal'Dazar",
-        [2] = "Sacrificial Pits",
+        [1] = 934, -- Atal'Dazar
+        [2] = {uiMapGroupID = 275, idx = 2}, -- Sacrificial Pits
     },
     [16] = {
         [1] = "Freehold",
@@ -322,49 +323,49 @@ local dungeonSubLevels = {
         [1] = "Kings' Rest",
     },
     [18] = {
-        [1] = "Shrine of the Storm",
-        [2] = "Storm's End",
+        [1] = 1039, -- Shrine of the Storm
+        [2] = {uiMapGroupID = 281, idx = 2}, -- Storm's End
     },
     [19] = {
-        [1] = "Siege of Boralus",
-        [2] = "Siege of Boralus (Upstairs)",
+        [1] = 1162, -- Siege of Boralus
+        [2] = L["Siege of Boralus (Upstairs)"],
     },
     [20] = {
-        [1] = "Temple of Sethraliss",
-        [2] = "Atrium of Sethraliss",
+        [1] = 1038, -- Temple of Sethraliss
+        [2] = {uiMapGroupID = 283, idx = 2}, -- Atrium of Sethraliss
     },
     [21] = {
         [1] = "The MOTHERLODE!!",
     },
     [22] = {
-        [1] = "The Underrot",
-        [2] = "Ruin's Descent",
+        [1] = 1041, -- The Underrot
+        [2] = {uiMapGroupID = 282, idx = 2}, -- Ruin's Descent
     },
     [23] = {
-        [1] = "Tol Dagor",
-        [2] = "The Drain",
-        [3] = "The Brig",
-        [4] = "Detention Block",
-        [5] = "Officer Quarters",
-        [6] = "Overseer's Redoubt",
-        [7] = "Overseer's Summit",
+        [1] = 974, -- Tol Dagor
+        [2] = {uiMapGroupID = 277, idx = 2}, -- The Drain
+        [3] = {uiMapGroupID = 277, idx = 3}, -- The Brig
+        [4] = {uiMapGroupID = 277, idx = 4}, -- Detention Block
+        [5] = {uiMapGroupID = 277, idx = 5}, -- Officer Quarters
+        [6] = {uiMapGroupID = 277, idx = 6}, -- Overseer's Redoubt
+        [7] = {uiMapGroupID = 277, idx = 7}, -- Overseer's Summit
     },
     [24] = {
-        [1] = "The Grand Foyer",
-        [2] = "Upstairs",
-        [3] = "The Cellar",
-        [4] = "Catacombs",
-        [5] = "The Rupture",
+        [1] = {uiMapGroupID = 279, idx = 2}, -- The Grand Foyer
+        [2] = {uiMapGroupID = 279, idx = 1}, -- Upstairs
+        [3] = {uiMapGroupID = 279, idx = 3}, -- The Cellar
+        [4] = {uiMapGroupID = 279, idx = 4}, -- Catacombs
+        [5] = {uiMapGroupID = 279, idx = 5}, -- The Rupture
     },
     [25] = {
-        [1] = "Mechagon Island",
-        [2] = "Mechagon Island (Tunnels)",
+        [1] = L["Mechagon Island"],
+        [2] = L["Mechagon Island (Tunnels)"],
     },
     [26] = {
-        [1] = "The Robodrome",
-        [2] = "Waste Pipes",
-        [3] = "The Under Junk",
-        [4] = "Mechagon City",
+        [1] = {uiMapGroupID = 399, idx = 2}, -- The Robodrome
+        [2] = {uiMapGroupID = 399, idx = 3}, -- Waste Pipes
+        [3] = {uiMapGroupID = 399, idx = 4}, -- The Under Junk
+        [4] = L["Mechagon City"],
     },
 }
 function MethodDungeonTools:GetDungeonSublevels()
@@ -374,6 +375,34 @@ end
 function MethodDungeonTools:GetSublevelName(dungeonIdx,sublevelIdx)
     if not dungeonIdx then dungeonIdx = db.currentDungeonIdx end
     return dungeonSubLevels[dungeonIdx][sublevelIdx]
+end
+
+function MethodDungeonTools:LocalizeDungeonList()
+    local GetMapInfo = C_Map.GetMapInfo
+	for i = 1, #dungeonList do
+		if type(dungeonList[i]) == "number" then
+			dungeonList[i] = GetMapInfo(dungeonList[i]).name
+		end
+	end
+end
+
+function MethodDungeonTools:LocalizeDungeonSubLevels()
+    local GetMapInfo, GetMapGroupMembersInfo = C_Map.GetMapInfo, C_Map.GetMapGroupMembersInfo
+	local n
+	for i,_ in pairs(dungeonSubLevels) do
+		for j = 1, #dungeonSubLevels[i] do
+            if type(dungeonSubLevels[i][j]) == "table" then
+				dungeonSubLevels[i][j] = GetMapGroupMembersInfo(dungeonSubLevels[i][j].uiMapGroupID)[dungeonSubLevels[i][j].idx].name
+			elseif type(dungeonSubLevels[i][j]) == "number" then
+				dungeonSubLevels[i][j] = GetMapInfo(dungeonSubLevels[i][j]).name
+			end
+		end
+	end
+end
+
+function MethodDungeonTools:UpdateDungeonList()
+	self:LocalizeDungeonList()
+	self:LocalizeDungeonSubLevels()
 end
 
 MethodDungeonTools.dungeonMaps = {
@@ -542,7 +571,10 @@ function MethodDungeonTools:ShowInterface(force)
 	if self.main_frame:IsShown() and not force then
 		MethodDungeonTools:HideInterface()
 	else
-		self.main_frame:Show()
+        self.main_frame:Show()
+        if #dungeonSubLevels[db.currentDungeonIdx] == 1 then
+            self.main_frame.DungeonSelectionGroup.SublevelDropdown.frame:Hide()
+        end
 		self.main_frame.HelpButton:Show()
         self:CheckCurrentZone()
         --edge case if user closed MDT window while in the process of dragging a corrupted blip
@@ -2503,12 +2535,18 @@ function MethodDungeonTools:UpdateDungeonDropDown()
 	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
 	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
     group.DungeonDropdown:ClearFocus()
-    group.SublevelDropdown:ClearFocus()
+	group.SublevelDropdown:ClearFocus()
+	if #dungeonSubLevels[db.currentDungeonIdx] > 1 then
+		group.SublevelDropdown.frame:Show()
+	else
+		group.SublevelDropdown.frame:Hide()
+	end
 end
 
 ---CreateDungeonSelectDropdown
 ---Creates both dungeon and sublevel dropdowns
 function MethodDungeonTools:CreateDungeonSelectDropdown(frame)
+    self:UpdateDungeonList()
 	--Simple Group to hold both dropdowns
 	frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
 	local group = frame.DungeonSelectionGroup
