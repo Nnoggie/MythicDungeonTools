@@ -1337,6 +1337,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.AutomaticColorsButton:SetCallback("OnClick",function(widget,callbackName,value)
 		MethodDungeonTools:OpenAutomaticColorsDialog()
 	end)
+    frame.AutomaticColorsButton:SetDisabled(true)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
