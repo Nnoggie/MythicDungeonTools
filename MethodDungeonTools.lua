@@ -2143,6 +2143,11 @@ MethodDungeonTools.OnMouseDown = function(self,button)
 	end
     scrollFrame.oldX = scrollFrame.cursorX
     scrollFrame.oldY = scrollFrame.cursorY
+    MethodDungeonTools:MouseDownHook()
+end
+
+function MethodDungeonTools:MouseDownHook()
+
 end
 
 ---MethodDungeonTools.OnMouseUp

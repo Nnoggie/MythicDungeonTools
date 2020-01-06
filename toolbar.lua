@@ -1023,7 +1023,7 @@ local function makeNoteEditbox()
     editbox:AddChild(editbox.multiBox)
     MethodDungeonTools:FixAceGUIShowHide(editbox,nil,nil,true)
     editbox.frame:SetScript("OnShow",function()
-        hooksecurefunc(MethodDungeonTools, "OnPan", function() editbox.frame:Hide() end)
+        hooksecurefunc(MethodDungeonTools, "MouseDownHook", function() editbox.frame:Hide() end)
         hooksecurefunc(MethodDungeonTools, "ZoomMap", function() editbox.frame:Hide() end)
     end)
 
