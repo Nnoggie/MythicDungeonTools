@@ -3550,9 +3550,6 @@ function MethodDungeonTools:SetAutomaticColor(index)
 	self:DungeonEnemies_SetPullColor(index, r, g, b)
 	self:UpdatePullButtonColor(index, r, g, b)
 	self:DungeonEnemies_UpdateBlipColors(index, r, g, b)
-	if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
-		self:LiveSession_QueueColorUpdate()
-	end
 end
 
 function MethodDungeonTools:UpdateAutomaticColors(index)
