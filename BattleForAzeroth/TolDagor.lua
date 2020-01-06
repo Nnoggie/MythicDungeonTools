@@ -1688,7 +1688,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                     [11] = true;
                     [5] = true;
                 };
-                ["g"] = 6;
                 ["sublevel"] = 1;
             };
         };
