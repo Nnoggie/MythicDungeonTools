@@ -56,6 +56,8 @@ function SlashCmdList.METHODDUNGEONTOOLS(cmd, editbox)
         MethodDungeonTools:ToggleDataCollection()
     elseif rqst == "hptrack" then
         MethodDungeonTools:ToggleHealthTrack()
+    elseif rqst == "ac" then
+        MethodDungeonTools:ColorAllPulls()
     else
 		MethodDungeonTools:ShowInterface()
 	end
@@ -93,7 +95,6 @@ local defaultSavedVars = {
 		dataCollectionActive = false,
 		automaticColorsNum = 12,
 		automaticColors = true,
-        brightColors = true,
 	},
 }
 do
@@ -1337,7 +1338,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.AutomaticColorsButton:SetCallback("OnClick",function(widget,callbackName,value)
 		MethodDungeonTools:OpenAutomaticColorsDialog()
 	end)
-    frame.AutomaticColorsButton:SetDisabled(true)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
@@ -1804,7 +1804,7 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
     local scale = MethodDungeonToolsMapPanelFrame:GetScale()/1.5
     local deltaX = (scrollFrame.cursorX - cursorX)/scale
     local deltaY = (cursorY - scrollFrame.cursorY)/scale
-    	
+
     if(scrollFrame.panning)then
 		local newHorizontalPosition = max(0, deltaX + scrollFrame:GetHorizontalScroll())
 		newHorizontalPosition = min(newHorizontalPosition, scrollFrame.maxX)
@@ -1818,7 +1818,7 @@ function MethodDungeonTools:OnPan(cursorX, cursorY)
         scrollFrame.wasPanningLastFrame = true;
         scrollFrame.lastDeltaX = deltaX;
         scrollFrame.lastDeltaY = deltaY;
-        
+
     else
         if(scrollFrame.wasPanningLastFrame)then
 
@@ -2143,11 +2143,6 @@ MethodDungeonTools.OnMouseDown = function(self,button)
 	end
     scrollFrame.oldX = scrollFrame.cursorX
     scrollFrame.oldY = scrollFrame.cursorY
-    MethodDungeonTools:MouseDownHook()
-end
-
-function MethodDungeonTools:MouseDownHook()
-
 end
 
 ---MethodDungeonTools.OnMouseUp
@@ -2439,6 +2434,8 @@ function MethodDungeonTools:HideAllDialogs()
 	MethodDungeonTools.main_frame.RenameFrame:Hide()
 	MethodDungeonTools.main_frame.ClearConfirmationFrame:Hide()
 	MethodDungeonTools.main_frame.DeleteConfirmationFrame:Hide()
+    MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+    MethodDungeonTools.main_frame.automaticColorsFrame:Hide()
     if MethodDungeonTools.main_frame.ConfirmationFrame then MethodDungeonTools.main_frame.ConfirmationFrame:Hide() end
 end
 
@@ -2492,6 +2489,21 @@ function MethodDungeonTools:OpenAutomaticColorsDialog()
 	MethodDungeonTools.main_frame.automaticColorsFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
 	MethodDungeonTools.main_frame.automaticColorsFrame:SetStatusText("")
 	MethodDungeonTools.main_frame.automaticColorsFrame:Show()
+    MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+    if db.dropdown == 5 then
+        print("Ok")
+        MethodDungeonTools:OpenCustomColorsDialog()
+    end
+
+end
+
+function MethodDungeonTools:OpenCustomColorsDialog(frame)
+	MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.automaticColorsFrame:Show() --Not the prettiest way to handle this, but it works.
+	MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:ClearAllPoints()
+    MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:SetPoint("CENTER",300,-7)
+	MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:SetStatusText("")
+	MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:Show()
 end
 
 function MethodDungeonTools:UpdateDungeonDropDown()
@@ -2630,7 +2642,7 @@ function MethodDungeonTools:EnsureDBTables()
     preset.mdi.beguiling = preset.mdi.beguiling or 1
     preset.difficulty = preset.difficulty or db.currentDifficulty
     preset.mdiEnabled = preset.mdiEnabled or db.MDI.enabled
-  
+
     --make sure sublevel actually exists for the dungeon
     --this might have been caused by bugged dropdowns in the past
     local maxSublevel = -1
@@ -2823,6 +2835,7 @@ function MethodDungeonTools:ClearPreset(preset,silent)
         self:UpdateMap()
         self:ReloadPullButtons()
     end
+    MethodDungeonTools:ColorPull()
 end
 
 function MethodDungeonTools:CreateNewPreset(name)
@@ -2856,6 +2869,7 @@ function MethodDungeonTools:CreateNewPreset(name)
 		MethodDungeonTools:UpdatePresetDropDown()
 		MethodDungeonTools:UpdateMap()
         MethodDungeonTools:ZoomMapToDefault()
+        MethodDungeonTools:ColorAllPulls() -- This causes it to color on import hmm
 	else
 		MethodDungeonTools.main_frame.presetCreationLabel:SetText("'"..name.."' already exists")
 		MethodDungeonTools.main_frame.presetCreationCreateButton:SetDisabled(true)
@@ -2978,6 +2992,7 @@ function MethodDungeonTools:MakePresetImportFrame(frame)
 		if MethodDungeonTools:ValidateImportPreset(newPreset) then
 			MethodDungeonTools.main_frame.presetImportFrame:Hide()
 			MethodDungeonTools:ImportPreset(newPreset)
+            --if db.ColorOnImport then MethodDungeonTools:ColorAllPulls() end
 		else
 			frame.presetImportLabel:SetText("Invalid import string")
 		end
@@ -3156,12 +3171,148 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         copyCallback()
     end
 end
+--stores r g b values for coloring pulls with MethodDungeonTools:ColorPull()
+local colorPaletteValues = {
+    ["Rainbow"] = {
+        [1] = {[1]=0.2446, [2]=1, [3]=0.2446},
+        [2] = {[1]=0.2446, [2]=1, [3]=0.471212},
+        [3] = {[1]=0.2446, [2]=1, [3]=0.69784},
+        [4] = {[1]=0.2446, [2]=1, [3]=0.92446},
+        [5] = {[1]=0.2446, [2]=0.848912, [3]=1},
+        [6] = {[1]=0.2446, [2]=0.6223, [3]=1},
+        [7] = {[1]=0.2446, [2]=0.39568, [3]=1},
+        [8] = {[1]=0.32014, [2]=0.2446, [3]=1},
+        [9] = {[1]=0.54676, [2]=0.2446, [3]=1},
+        [10] = {[1]=0.77338, [2]=0.2446, [3]=1},
+        [11] = {[1]=1, [2]=0.2446, [3]=1},
+        [12] = {[1]=1, [2]=0.2446, [3]=0.77338},
+        [13] = {[1]=1, [2]=0.2446, [3]=0.54676},
+        [14] = {[1]=1, [2]=0.2446, [3]=0.32014},
+        [15] = {[1]=1, [2]=0.38309, [3]=0.2446},
+        [16] = {[1]=1, [2]=0.60971, [3]=0.2446},
+        [17] = {[1]=1, [2]=0.83633, [3]=0.2446},
+        [18] = {[1]=0.93705, [2]=1, [3]=0.2446},
+        [19] = {[1]=0.71043, [2]=1, [3]=0.2446},
+        [20] = {[1]=0.48381, [2]=1, [3]=0.2446},
+    },
+    ["Black and White"] = {
+        [1] = {[1]=0.0, [2]=0.0, [3]=0.0},
+        [2] = {[1]=1.0, [2]=1.0, [3]=1},
+    },
+    ["Red Green Blue"] = {
+        [1] = {[1]=1.0, [2]=0.0, [3]=0.0},
+        [2] = {[1]=0.0, [2]=1.0, [3]=0.0},
+        [3] = {[1]=0.0, [2]=0.0, [3]=1.0},
+    },
+    ["Warm and Cold"] = {
+        [1] = {[1]=1.0, [2]=0.0, [3]=0.0},
+        [2] = {[1]=0.0, [2]=1.0, [3]=0.0},
+        [3] = {[1]=0.0, [2]=0.0, [3]=1.0},
+    },
+    ["Blank"] = {
+        [1] = {[1]=1.0, [2]=1.0, [3]=1.0},
+        },
+}
+
+local colorPaletteNames = {
+        [1] = "Rainbow",
+        [2] = "Black and White",
+        [3] = "Red Green Blue",
+        [4] = "Warm and Cold",
+        [5] = "Custom",
+}
+----Function executes full coloring of a pull and it's blips
+function MethodDungeonTools:ColorPull(colorValues, pullIdx, bypass) -- bypass can be passed as true to color even when automatic coloring is toggled off
+    if db.automaticColors or bypass == true then
+        local colorValues = colorValues or db.chosenColorPalette == "Custom" and db.customPaletteValues or colorPaletteValues[db.chosenColorPalette] -- Test how this works with no saved vars
+        local numberColors = db.chosenColorPalette == "Custom" and db.numberCustomColors or #colorValues  -- Arrays must start from 1 and have no blank rows
+        local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
+        local colorIdx = (pullIdx-1)%numberColors+1
+        local r, g, b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
+        MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+        MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
+        MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+    end
+end
+
+function MethodDungeonTools:ColorAllPulls(colorValues, startFrom, bypass) -- currently called by /mdt colorpreset (for testing)
+    local preset = self:GetCurrentPreset()
+    local startFrom = startFrom or 0
+    for pullIdx,_ in pairs(preset.value.pulls) do
+        if pullIdx >= startFrom then
+            --print(pullIdx)
+            MethodDungeonTools:ColorPull(colorValues, pullIdx, bypass)
+        end
+    end
+end
+--ViragDevTools_AddData(db.customPaletteValues)
+function MethodDungeonTools:MakeCustomColorFrame(frame)
+    --Base frame for custom palette setup
+    frame.CustomColorFrame = AceGUI:Create("Frame")
+    frame.CustomColorFrame:SetTitle("Custom Color Palette")
+	frame.CustomColorFrame:SetWidth(300)
+	frame.CustomColorFrame:SetHeight(230)
+	frame.CustomColorFrame:EnableResize(false)
+	frame.CustomColorFrame:SetLayout("Flow")
+    frame:AddChild(frame.CustomColorFrame)
+
+    --Slider to adjust number of different colors and remake the frame OnMouseUp
+    frame.CustomColorFrame.ColorSlider = AceGUI:Create("Slider")
+    frame.CustomColorFrame.ColorSlider:SetSliderValues(2,20,1)
+    frame.CustomColorFrame.ColorSlider:SetValue(db.numberCustomColors)
+    frame.CustomColorFrame.ColorSlider:SetLabel("Choose number of colors")
+    frame.CustomColorFrame.ColorSlider:SetRelativeWidth(0.7)
+    frame.CustomColorFrame.ColorSlider:SetCallback("OnMouseUp", function(event, callbackName, value)
+        if value>20 then
+            db.numberCustomColors = 20
+        elseif value<2 then
+            db.numberCustomColors = 2
+        else
+            db.numberCustomColors = value
+        end
+        frame.CustomColorFrame:ReleaseChildren()
+        frame.CustomColorFrame:Release()
+        MethodDungeonTools:MakeCustomColorFrame(frame)
+        MethodDungeonTools:OpenCustomColorsDialog()
+    end)
+    frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
+
+    --Button to execute function MethodDungeonTools:ColorAllPulls()
+    frame.CustomColorFrame.ConfirmationButton = AceGUI:Create("Button")
+    frame.CustomColorFrame.ConfirmationButton:SetText("Confirm")
+    frame.CustomColorFrame.ConfirmationButton:SetRelativeWidth(0.3)
+    frame.CustomColorFrame.ConfirmationButton:SetCallback("OnClick", function(event)
+        MethodDungeonTools:ColorAllPulls()
+    end)
+    frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ConfirmationButton)
+
+    --Loop to create as many colorpickers as requested limited by db.numberCustomColors
+    ColorPicker = {}
+    for i= 1,db.numberCustomColors do
+        ColorPicker[i] = AceGUI:Create("ColorPicker")
+        if db.customPaletteValues[i] then
+            ColorPicker[i]:SetColor(db.customPaletteValues[i][1], db.customPaletteValues[i][2], db.customPaletteValues[i][3])
+        else
+            db.customPaletteValues[i] = colorPaletteValues["Blank"][1]
+            ColorPicker[i]:SetColor(db.customPaletteValues[i][1], db.customPaletteValues[i][2], db.customPaletteValues[i][3])
+        end
+        ColorPicker[i]:SetLabel(" "..i)
+        ColorPicker[i]:SetRelativeWidth(0.25)
+        ColorPicker[i]:SetHeight(15)
+        ColorPicker[i]:SetCallback("OnValueConfirmed", function(widget, event, r, g, b)
+                colorPaletteValues["Custom"][i] = {r,g,b}
+                db.customPaletteValues[i] = colorPaletteValues["Custom"][i]
+            end)
+        frame.CustomColorFrame:AddChild(ColorPicker[i])
+    end
+    frame.CustomColorFrame:Hide()
+end
 
 function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
 	frame.automaticColorsFrame = AceGUI:Create("Frame")
 	frame.automaticColorsFrame:SetTitle("Automatic Coloring")
 	frame.automaticColorsFrame:SetWidth(300)
-	frame.automaticColorsFrame:SetHeight(200)
+	frame.automaticColorsFrame:SetHeight(230)
 	frame.automaticColorsFrame:EnableResize(false)
 	frame.automaticColorsFrame:SetLayout("Flow")
 
@@ -3171,39 +3322,76 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     frame.AutomaticColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.automaticColors = value
 		if value == true then
-			MethodDungeonTools:UpdateAutomaticColors()
+			--MethodDungeonTools:UpdateAutomaticColors()
+            MethodDungeonTools:ColorAllPulls()
 		end
 	end)
-	frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
+    frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
 
-	frame.AlternatingColorsCheck = AceGUI:Create("CheckBox")
-	frame.AlternatingColorsCheck:SetLabel("Use alternating colors")
-	frame.AlternatingColorsCheck:SetValue(db.alternatingColors)
-    frame.AlternatingColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
-		db.alternatingColors = value
-		MethodDungeonTools:UpdateAutomaticColors()
-	end)
-	frame.automaticColorsFrame:AddChild(frame.AlternatingColorsCheck)
+    --Toggle automatic coloring of presets on import
+    frame.ToggleColorImport = AceGUI:Create("CheckBox")
+    frame.ToggleColorImport:SetLabel("Colorize pulls on import")
+    frame.ToggleColorImport:SetValue(db.ColorOnImport)
+    frame.ToggleColorImport:SetCallback("OnValueChanges", function(widget,callbackName,value)
+        db.ColorOnImport = value
+    end)
+    frame.automaticColorsFrame:AddChild(frame.ToggleColorImport)
 
-	frame.BrightColorsCheck = AceGUI:Create("CheckBox")
-	frame.BrightColorsCheck:SetLabel("Use bright colors")
-	frame.BrightColorsCheck:SetValue(db.brightColors)
-    frame.BrightColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
-		db.brightColors = value
-		MethodDungeonTools:UpdateAutomaticColors()
-	end)
-	frame.automaticColorsFrame:AddChild(frame.BrightColorsCheck)
+    frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
+    frame.PaletteSelectDropdown:SetList(colorPaletteNames)
+    frame.PaletteSelectDropdown:SetLabel("Choose preferred color palette")
+    frame.PaletteSelectDropdown:SetValue(db.dropdown)
+    frame.PaletteSelectDropdown:SetCallback("OnValueChanged", function(widget,callbackName,value)
+        if value == 5 then
+            db.chosenColorPalette = colorPaletteNames[value]
+            db.dropdown = value
+            MethodDungeonTools:OpenCustomColorsDialog()
+        else
+            MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+            db.chosenColorPalette = colorPaletteNames[value]
+            db.dropdown = value
+            MethodDungeonTools:ColorAllPulls()
+        end
+    end)
+    frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
 
-	frame.AutomaticColorsNumEditbox = AceGUI:Create("EditBox")
-	frame.AutomaticColorsNumEditbox:SetLabel("Number of colors:")
-	frame.AutomaticColorsNumEditbox:SetWidth(175)
-	frame.AutomaticColorsNumEditbox:SetText(db.automaticColorsNum)
-	frame.AutomaticColorsNumEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
-		db.automaticColorsNum = text
-		frame.AutomaticColorsNumEditbox:SetText(text)
-		MethodDungeonTools:UpdateAutomaticColors()
-	end)
-	frame.automaticColorsFrame:AddChild(frame.AutomaticColorsNumEditbox)
+    frame.button = AceGUI:Create("Button")
+    frame.button:SetText("Test")
+    frame.button:SetCallback("OnClick", function(widget, callbackName)
+        MethodDungeonTools:ColorAllPulls()
+    end)
+    frame.automaticColorsFrame:AddChild(frame.button)
+
+
+    --
+	--frame.AlternatingColorsCheck = AceGUI:Create("CheckBox")
+	--frame.AlternatingColorsCheck:SetLabel("Use alternating colors")
+	--frame.AlternatingColorsCheck:SetValue(db.alternatingColors)
+    --frame.AlternatingColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
+	--	db.alternatingColors = value
+	--	MethodDungeonTools:UpdateAutomaticColors()
+	--end)
+	--frame.automaticColorsFrame:AddChild(frame.AlternatingColorsCheck)
+    --
+	--frame.BrightColorsCheck = AceGUI:Create("CheckBox")
+	--frame.BrightColorsCheck:SetLabel("Use bright colors")
+	--frame.BrightColorsCheck:SetValue(db.brightColors)
+    --frame.BrightColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
+	--	db.brightColors = value
+	--	MethodDungeonTools:UpdateAutomaticColors()
+	--end)
+	--frame.automaticColorsFrame:AddChild(frame.BrightColorsCheck)
+    --
+	--frame.AutomaticColorsNumEditbox = AceGUI:Create("EditBox")
+	--frame.AutomaticColorsNumEditbox:SetLabel("Number of colors:")
+	--frame.AutomaticColorsNumEditbox:SetWidth(175)
+	--frame.AutomaticColorsNumEditbox:SetText(db.automaticColorsNum)
+	--frame.AutomaticColorsNumEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
+	--	db.automaticColorsNum = text
+	--	frame.AutomaticColorsNumEditbox:SetText(text)
+	--	MethodDungeonTools:UpdateAutomaticColors()
+	--end)
+	--frame.automaticColorsFrame:AddChild(frame.AutomaticColorsNumEditbox)
 	frame.automaticColorsFrame:Hide()
 end
 
@@ -3533,30 +3721,33 @@ function MethodDungeonTools:AddPull(index)
 	MethodDungeonTools:PresetsAddPull(index)
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index)
-	
-	if db.automaticColors then
-		if not index then index = self:GetCurrentPull() end
-		self:SetAutomaticColor(index)
-
-		if self:GetPullsNum() == 2 then self:SetAutomaticColor(1) end
-	end
+    MethodDungeonTools:ColorPull()
+	--if db.automaticColors then
+	--	if not index then index = self:GetCurrentPull() end
+	--	self:SetAutomaticColor(index)
+    --
+	--	if self:GetPullsNum() == 2 then self:SetAutomaticColor(1) end
+	--end
 end
 
-function MethodDungeonTools:SetAutomaticColor(index)
-	if not db.automaticColors then return end
+function MethodDungeonTools:SetAutomaticColor(index, ok)
+	--if not db.automaticColors then return end
 
-	local H = (index - 1) * 360 / db.automaticColorsNum + 120
-	if db.alternatingColors and index % 2 == 0 then
-		H = H + 180
-	end
+	local H = (index - 1) * 360 / ok + 120 --db.automaticColorsNum
+	--if db.alternatingColors and index % 2 == 0 then
+	--	H = H + 180
+	--end
 
-	local V = 0.5451
-	if db.brightColors then V = 1 end
+	local V = 1--0.5451
+	--if db.brightColors then V = 1 end
 
 	local r, g, b = self:HSVtoRGB(H, 0.7554, V)
 	self:DungeonEnemies_SetPullColor(index, r, g, b)
 	self:UpdatePullButtonColor(index, r, g, b)
 	self:DungeonEnemies_UpdateBlipColors(index, r, g, b)
+	if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+		self:LiveSession_QueueColorUpdate()
+	end
 end
 
 function MethodDungeonTools:UpdateAutomaticColors(index)
@@ -3573,8 +3764,8 @@ function MethodDungeonTools:ClearPull(index)
     MethodDungeonTools:EnsureDBTables()
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index)
-
-	MethodDungeonTools:SetAutomaticColor(index)
+    MethodDungeonTools:ColorPull()
+	--MethodDungeonTools:SetAutomaticColor(index)
 end
 
 ---MovePullUp
@@ -3583,8 +3774,8 @@ function MethodDungeonTools:MovePullUp(index)
 	MethodDungeonTools:PresetsSwapPulls(index,index-1)
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index-1)
-
-	MethodDungeonTools:UpdateAutomaticColors(index - 1)
+    MethodDungeonTools:ColorAllPulls(_, index-1)
+	--MethodDungeonTools:UpdateAutomaticColors(index - 1)
 end
 
 ---MovePullDown
@@ -3593,7 +3784,8 @@ function MethodDungeonTools:MovePullDown(index)
 	MethodDungeonTools:PresetsSwapPulls(index,index+1)
 	MethodDungeonTools:ReloadPullButtons()
 	MethodDungeonTools:SetSelectionToPull(index+1)
-	MethodDungeonTools:UpdateAutomaticColors(index)
+    MethodDungeonTools:ColorAllPulls(_, index)
+	--MethodDungeonTools:UpdateAutomaticColors(index)
 end
 
 ---DeletePull
@@ -3609,7 +3801,8 @@ function MethodDungeonTools:DeletePull(index)
 	end
 	if index>pullCount then index = pullCount end
 	self:SetSelectionToPull(index)
-	self:UpdateAutomaticColors(index)
+    --self:UpdateAutomaticColors(index)
+    self:ColorAllPulls(_, index-1)
 end
 
 ---RenamePreset
@@ -4479,6 +4672,7 @@ function initFrames()
     MethodDungeonTools:MakeChatPresetImportFrame(main_frame)
 	MethodDungeonTools:MakeSendingStatusBar(main_frame)
 	MethodDungeonTools:MakeAutomaticColorsFrame(main_frame)
+    MethodDungeonTools:MakeCustomColorFrame(main_frame.automaticColorsFrame)
 
     --devMode
     if db.devMode and MethodDungeonTools.CreateDevPanel then
