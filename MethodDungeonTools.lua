@@ -93,6 +93,7 @@ local defaultSavedVars = {
 		dataCollectionActive = false,
 		automaticColorsNum = 12,
 		automaticColors = true,
+        brightColors = true,
 	},
 }
 do
