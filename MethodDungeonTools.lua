@@ -3212,6 +3212,9 @@ local colorPaletteValues = {
     ["Blank"] = {
         [1] = {[1]=1.0, [2]=1.0, [3]=1.0},
         },
+    ["Custom"] = {
+        [1] = {[1]=1.0, [2]=1.0, [3]=1.0},
+        },
 }
 
 local colorPaletteNames = {
