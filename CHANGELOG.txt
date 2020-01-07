@@ -1,3 +1,5 @@
+2.9.7
+- toc update 80300
 v2.9.6
 - fixed an error that could cause the AddOn to stop loading properly in certain presets
 - fixed a few visual bugs in the difficulty slider and count display
