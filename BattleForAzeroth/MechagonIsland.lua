@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 25
 MethodDungeonTools.mapInfo[dungeonIndex] = {
     tileFormat= 15,
@@ -579,7 +580,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["health"] = 1409996;
         ["corrupted"] = true;
         ["teemingCount"] = 6;
-        ["name"] = "Samh'rek, Beckoner of Chaos";
+        ["name"] = L["Samh'rek, Beckoner of Chaos"];
         ["displayId"] = 90742;
         ["creatureType"] = "Aberration";
         ["level"] = 122;
@@ -615,7 +616,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [314309] = {};
         };
         ["stealthDetect"] = true;
-        ["name"] = "Urg'roth, Breaker of Heroes";
+        ["name"] = L["Urg'roth, Breaker of Heroes"];
         ["level"] = 122;
         ["teemingCount"] = 6;
         ["health"] = 1510710;
@@ -665,7 +666,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Beast";
         ["corrupted"] = true;
         ["count"] = 4;
-        ["name"] = "Voidweaver Mal'thir";
+        ["name"] = L["Voidweaver Mal'thir"];
     };
     [4] = {
         ["clones"] = {
@@ -692,7 +693,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["name"] = "Blood of the Corruptor";
+        ["name"] = L["Blood of the Corruptor"];
         ["id"] = 161244;
         ["spells"] = {
             [314566] = {};
@@ -819,7 +820,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 765;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Scrapbone Trashtosser";
+        ["name"] = L["Scrapbone Trashtosser"];
         ["id"] = 150142;
     };
     [6] = {
@@ -908,7 +909,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Sap"] = true;
             ["Stun"] = true;
         };
-        ["name"] = "Pistonhead Blaster";
+        ["name"] = L["Pistonhead Blaster"];
         ["count"] = 4;
         ["displayId"] = 92012;
         ["creatureType"] = "Humanoid";
@@ -984,7 +985,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Incapacitate"] = true;
             ["Disorient"] = true;
         };
-        ["name"] = "Pistonhead Scrapper";
+        ["name"] = L["Pistonhead Scrapper"];
         ["count"] = 4;
         ["displayId"] = 92006;
         ["creatureType"] = "Humanoid";
@@ -1084,7 +1085,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 160;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Scrapbone Grinder";
+        ["name"] = L["Scrapbone Grinder"];
         ["id"] = 150143;
     };
     [9] = {
@@ -1373,7 +1374,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 92699;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Scrapbone Grunter";
+        ["name"] = L["Scrapbone Grunter"];
         ["id"] = 150547;
     };
     [10] = {
@@ -1469,7 +1470,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 4905;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Scrapbone Shaman";
+        ["name"] = L["Scrapbone Shaman"];
         ["id"] = 150146;
     };
     [11] = {
@@ -1533,7 +1534,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [294894] = {};
         };
         ["health"] = 1229592;
-        ["name"] = "Malfunctioning Scrapbot";
+        ["name"] = L["Malfunctioning Scrapbot"];
         ["count"] = 5;
         ["displayId"] = 91017;
         ["creatureType"] = "Mechanical";
@@ -1682,7 +1683,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [300207] = {};
         };
         ["health"] = 1536990;
-        ["name"] = "Weaponized Crawler";
+        ["name"] = L["Weaponized Crawler"];
         ["count"] = 6;
         ["displayId"] = 90711;
         ["creatureType"] = "Mechanical";
@@ -1776,7 +1777,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 90510;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
-        ["name"] = "Scraphound";
+        ["name"] = L["Scraphound"];
         ["id"] = 150254;
     };
     [14] = {
@@ -1856,7 +1857,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["scale"] = 1;
-        ["name"] = "Pistonhead Mechanic";
+        ["name"] = L["Pistonhead Mechanic"];
         ["displayId"] = 92025;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1952,7 +1953,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [299474] = {};
         };
         ["health"] = 768495;
-        ["name"] = "Saurolisk Bonenipper";
+        ["name"] = L["Saurolisk Bonenipper"];
         ["displayId"] = 77484;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -2061,7 +2062,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["instanceID"] = 1178;
         ["scale"] = 1.4;
-        ["name"] = "Scrapbone Bully";
+        ["name"] = L["Scrapbone Bully"];
         ["displayId"] = 11611;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
@@ -2106,7 +2107,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["scale"] = 1.4;
-        ["name"] = "Heavy Scrapbot";
+        ["name"] = L["Heavy Scrapbot"];
         ["displayId"] = 90773;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
@@ -2134,7 +2135,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2360;
         ["instanceID"] = 1178;
-        ["name"] = "Naeno Megacrash";
+        ["name"] = L["Naeno Megacrash"];
         ["count"] = 0;
         ["displayId"] = 92000;
         ["creatureType"] = "Humanoid";
@@ -2173,7 +2174,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 92001;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
-        ["name"] = "Trixie Tazer";
+        ["name"] = L["Trixie Tazer"];
         ["scale"] = 1;
     };
     [20] = {
@@ -2197,7 +2198,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["encounterID"] = 2357;
         ["instanceID"] = 1178;
         ["count"] = 0;
-        ["name"] = "King Gobbamak";
+        ["name"] = L["King Gobbamak"];
         ["displayId"] = 90502;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
@@ -2308,7 +2309,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Gnome-Eating Slime";
+        ["name"] = L["Gnome-Eating Slime"];
         ["displayId"] = 91656;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
@@ -2431,7 +2432,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Toxic Lurker";
+        ["name"] = L["Toxic Lurker"];
         ["displayId"] = 40976;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
@@ -2488,7 +2489,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Root"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Mechagon Renormalizer";
+        ["name"] = L["Mechagon Renormalizer"];
         ["displayId"] = 92207;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2612,7 +2613,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Mechagon Trooper";
+        ["name"] = L["Mechagon Trooper"];
         ["displayId"] = 90851;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2725,7 +2726,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Incapacitate"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Slime Elemental";
+        ["name"] = L["Slime Elemental"];
         ["displayId"] = 4907;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
@@ -2828,7 +2829,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [301692] = {};
             [301689] = {};
         };
-        ["name"] = "Anodized Coilbearer";
+        ["name"] = L["Anodized Coilbearer"];
         ["health"] = 768495;
         ["displayId"] = 91123;
         ["creatureType"] = "Mechanical";
@@ -2991,7 +2992,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Mechagon Cavalry";
+        ["name"] = L["Mechagon Cavalry"];
         ["displayId"] = 90851;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
@@ -3119,7 +3120,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [301712] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mechagon Prowler";
+        ["name"] = L["Mechagon Prowler"];
         ["health"] = 768495;
         ["displayId"] = 74812;
         ["creatureType"] = "Mechanical";
@@ -3202,7 +3203,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [300659] = {};
             [300687] = {};
         };
-        ["name"] = "Toxic Monstrosity";
+        ["name"] = L["Toxic Monstrosity"];
         ["health"] = 1383291;
         ["count"] = 6;
         ["displayId"] = 91906;
@@ -3241,7 +3242,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 91907;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
-        ["name"] = "Gunker";
+        ["name"] = L["Gunker"];
         ["health"] = 3228015;
     };
     [31] = {
@@ -3263,7 +3264,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2355;
         ["instanceID"] = 1178;
-        ["name"] = "Tank Buster MK1";
+        ["name"] = L["Tank Buster MK1"];
         ["health"] = 3073980;
         ["displayId"] = 90854;
         ["creatureType"] = "Mechanical";
@@ -3291,7 +3292,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 92099;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
-        ["name"] = "HK-8 Aerial Oppression Unit";
+        ["name"] = L["HK-8 Aerial Oppression Unit"];
         ["count"] = 0;
     };
 };

@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 1
 local nerfMultiplier = 0.834
 local pi = math.pi
@@ -5,7 +6,7 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=300,teeming=360,tee
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	[1] = {
 		[1] = {
-            ["name"] = "Amalgam of Souls",
+            ["name"] = L["Amalgam of Souls"],
             ["health"] = 111016239,
             ["encounterID"] = 1518,
             ["level"] = 112,
@@ -18,7 +19,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	},
 	[2] = {
 		[1] = {
-            ["name"] = "Illysanna Ravencrest",
+            ["name"] = L["Illysanna Ravencrest"],
             ["health"] = 98328668,
             ["encounterID"] = 1653,
             ["level"] = 112,
@@ -31,7 +32,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	},
 	[4] = {
 		[1] = {
-            ["name"] = "Smashspite the Hateful",
+            ["name"] = L["Smashspite the Hateful"],
             ["health"] = 98816653,
             ["encounterID"] = 1664,
             ["level"] = 112,
@@ -44,7 +45,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	},
 	[6] = {
 		[1] = {
-            ["name"] = "Kur'talos Ravencrest",
+            ["name"] = L["Kur'talos Ravencrest"],
             ["health"] = 38062709,
             ["encounterID"] = 1672,
             ["level"] = 112,
@@ -58,7 +59,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 }
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
 	[1] = {
-        ["name"] = "Ghostly Retainer",
+        ["name"] = L["Ghostly Retainer"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -85,7 +86,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },	
 	[2] = {
-        ["name"] = "Ghostly Protector",
+        ["name"] = L["Ghostly Protector"],
         ["health"] = 24528930*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -105,7 +106,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[3] = {
-        ["name"] = "Ghostly Councilor",
+        ["name"] = L["Ghostly Councilor"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -130,7 +131,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[4] = {
-        ["name"] = "Troubled Soul",
+        ["name"] = L["Troubled Soul"],
         ["health"] = 2963859*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -145,7 +146,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[5] = {
-        ["name"] = "Lord Etheldrin Ravencrest",
+        ["name"] = L["Lord Etheldrin Ravencrest"],
         ["health"] = 36793397*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -159,7 +160,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[6] = {
-        ["name"] = "Lady Velandras Ravencrest",
+        ["name"] = L["Lady Velandras Ravencrest"],
         ["health"] = 26712006*nerfMultiplier, --TODO fix from m0
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -173,7 +174,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[7] = {
-        ["name"] = "Rook Spiderling",
+        ["name"] = L["Rook Spiderling"],
         ["health"] = 1778316*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -205,7 +206,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[8] = {
-        ["name"] = "Rook Spinner",
+        ["name"] = L["Rook Spinner"],
         ["health"] = 24528930*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Beast",
@@ -219,7 +220,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[9] = {
-        ["name"] = "Soul-Torn Champion",
+        ["name"] = L["Soul-Torn Champion"],
         ["health"] = 20747017*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -243,7 +244,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[10] = {
-        ["name"] = "Risen Scout",
+        ["name"] = L["Risen Scout"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -263,7 +264,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[11] = {
-        ["name"] = "Risen Archer",
+        ["name"] = L["Risen Archer"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -286,7 +287,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[12] = {
-        ["name"] = "Risen Arcanist",
+        ["name"] = L["Risen Arcanist"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -301,7 +302,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[13] = {
-        ["name"] = "Arcane Minion",
+        ["name"] = L["Arcane Minion"],
         ["health"] = 2963859*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Aberration",
@@ -316,7 +317,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[14] = {
-        ["name"] = "Risen Companion",
+        ["name"] = L["Risen Companion"],
         ["health"] = 11855438*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -333,7 +334,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[15] = {
-        ["name"] = "Commander Shemdah'sohn",
+        ["name"] = L["Commander Shemdah'sohn"],
         ["health"] = 24528930*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -347,7 +348,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[16] = {
-        ["name"] = "Wyrmtongue Trickster",
+        ["name"] = L["Wyrmtongue Trickster"],
         ["health"] = 5927719*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -373,7 +374,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[17] = {
-        ["name"] = "Wrathguard Bladelord",
+        ["name"] = L["Wrathguard Bladelord"],
         ["health"] = 23710875*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -398,7 +399,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[18] = {
-        ["name"] = "Bloodscent Felhound",
+        ["name"] = L["Bloodscent Felhound"],
         ["health"] = 11855438*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -413,7 +414,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[19] = {
-        ["name"] = "Wyrmtongue Scavenger",
+        ["name"] = L["Wyrmtongue Scavenger"],
         ["health"] = 16301227*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -444,7 +445,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[20] = {
-        ["name"] = "Felspite Dominator",
+        ["name"] = L["Felspite Dominator"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -464,7 +465,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[21] = {
-        ["name"] = "Risen Lancer",
+        ["name"] = L["Risen Lancer"],
         ["health"] = 15959244*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -485,7 +486,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Black Rook Hold
         },
     },
 	[22] = {
-        ["name"] = "Risen Swordsman",
+        ["name"] = L["Risen Swordsman"],
         ["health"] = 13679352*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Undead",

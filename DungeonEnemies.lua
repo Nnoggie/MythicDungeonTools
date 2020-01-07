@@ -5,6 +5,7 @@ local MethodDungeonTools = MethodDungeonTools
 local db
 local tonumber,tinsert,slen,pairs,ipairs,tostring,next,type,sformat,twipe,max,tremove,DrawLine = tonumber,table.insert,string.len,pairs,ipairs,tostring,next,type,string.format,table.wipe,math.max,table.remove,DrawLine
 
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local blips = {}
 local preset
 local selectedGreen = {34/255,139/255,34/255,0.7}
@@ -17,21 +18,21 @@ end
 
 MethodDungeonTools.reapingStatic = {
     ["148716"] = {
-        ["name"] = "Risen Soul",
+        ["name"] = L["Risen Soul"],
         ["iconTexture"] = "Interface\\Icons\\Ability_warlock_soulsiphon",
         ["abilities"] = {},
         ["npcId"] = 148716,
         ["outline"] = { 1.02, 0, 2.04, 1 }
     },
     ["148893"] = {
-        ["name"] = "Tormented Soul",
+        ["name"] = L["Tormented Soul"],
         ["iconTexture"] = "Interface\\Icons\\spell_shadow_soulleech_1",
         ["abilities"] = {},
         ["npcId"] = 148893,
             ["outline"] = { 0, 2.04, 1.02, 1 }
     },
     ["148894"] = {
-        ["name"] = "Lost Soul",
+        ["name"] = L["Lost Soul"],
         ["iconTexture"] = "Interface\\Icons\\ability_warlock_improvedsoulleech",
         ["abilities"] = {},
         ["npcId"] = 148894,

@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 21
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=384,teeming=460,teemingEnabled=true}
 MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.7
@@ -341,7 +342,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Imprison"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Venture Co. Alchemist";
+        ["name"] = L["Venture Co. Alchemist"];
         ["displayId"] = 82915;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -379,7 +380,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["reaping"] = 148716;
         ["scale"] = 0.7;
         ["count"] = 0;
-        ["name"] = "Bottom Feeder";
+        ["name"] = L["Bottom Feeder"];
         ["displayId"] = 32023;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -403,7 +404,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
         ["id"] = 135975;
-        ["name"] = "Off-Duty Laborer";
+        ["name"] = L["Off-Duty Laborer"];
     };
     [3] = {
         ["clones"] = {
@@ -495,7 +496,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Root"] = true;
         };
         ["scale"] = 0.7;
-        ["name"] = "Venture Co. Longshoreman";
+        ["name"] = L["Venture Co. Longshoreman"];
         ["health"] = 307398;
         ["displayId"] = 81226;
         ["creatureType"] = "Humanoid";
@@ -559,7 +560,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 85704;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Posh Vacationer";
+        ["name"] = L["Posh Vacationer"];
         ["neutral"] = true;
     };
     [5] = {
@@ -770,7 +771,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 1;
-        ["name"] = "Off-Duty Laborer";
+        ["name"] = L["Off-Duty Laborer"];
         ["displayId"] = 81226;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -922,7 +923,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Refreshment Vendor";
+        ["name"] = L["Refreshment Vendor"];
         ["displayId"] = 84784;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1110,7 +1111,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Mech Jockey";
+        ["name"] = L["Mech Jockey"];
         ["displayId"] = 81265;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1246,7 +1247,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Addled Thug";
+        ["name"] = L["Addled Thug"];
         ["displayId"] = 30262;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -1519,7 +1520,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["scale"] = 0.7;
-        ["name"] = "Rowdy Reveler";
+        ["name"] = L["Rowdy Reveler"];
         ["health"] = 153699;
         ["displayId"] = 85710;
         ["creatureType"] = "Humanoid";
@@ -1557,7 +1558,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
         ["count"] = 0;
-        ["name"] = "Coin-Operated Crowd Pummeler";
+        ["name"] = L["Coin-Operated Crowd Pummeler"];
     };
     [14] = {
         ["clones"] = {
@@ -1660,7 +1661,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Mine Rat";
+        ["name"] = L["Mine Rat"];
         ["health"] = 461097;
         ["displayId"] = 65436;
         ["creatureType"] = "Humanoid";
@@ -1712,7 +1713,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Azerite Extractor";
+        ["name"] = L["Azerite Extractor"];
         ["health"] = 1229592;
         ["displayId"] = 84881;
         ["creatureType"] = "Mechanical";
@@ -1747,7 +1748,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83286;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
-        ["name"] = "Taskmaster Askari";
+        ["name"] = L["Taskmaster Askari"];
         ["id"] = 134012;
     };
     [24] = {
@@ -1915,7 +1916,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["stealthDetect"] = true;
         ["scale"] = 1.2;
         ["count"] = 8;
-        ["name"] = "Venture Co. Mastermind";
+        ["name"] = L["Venture Co. Mastermind"];
         ["displayId"] = 83136;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
@@ -2130,7 +2131,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 1;
-        ["name"] = "Test Subject";
+        ["name"] = L["Test Subject"];
         ["displayId"] = 1141;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2202,7 +2203,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Incapacitate"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Ordnance Specialist";
+        ["name"] = L["Ordnance Specialist"];
         ["displayId"] = 85024;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2474,7 +2475,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 155434;
-        ["name"] = "Emissary of the Tides";
+        ["name"] = L["Emissary of the Tides"];
         ["ignoreFortified"] = true;
         ["health"] = 614795;
         ["displayId"] = 39391;
@@ -2556,7 +2557,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 133436;
         ["count"] = 5;
-        ["name"] = "Venture Co. Skyscorcher";
+        ["name"] = L["Venture Co. Skyscorcher"];
         ["displayId"] = 82922;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -2818,7 +2819,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["id"] = 155432;
-        ["name"] = "Enchanted Emissary";
+        ["name"] = L["Enchanted Emissary"];
         ["ignoreFortified"] = true;
         ["health"] = 15369884;
         ["displayId"] = 39391;
@@ -2878,7 +2879,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Beast";
         ["level"] = 120;
         ["id"] = 137940;
-        ["name"] = "Safety Shark";
+        ["name"] = L["Safety Shark"];
     };
     [21] = {
         ["clones"] = {
@@ -2902,7 +2903,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["encounterID"] = 2114;
         ["instanceID"] = 1012;
         ["health"] = 4733929;
-        ["name"] = "Azerokk";
+        ["name"] = L["Azerokk"];
         ["displayId"] = 83891;
         ["creatureType"] = "Elemental";
         ["level"] = 122;
@@ -3010,7 +3011,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Feckless Assistant";
+        ["name"] = L["Feckless Assistant"];
         ["displayId"] = 82866;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3037,7 +3038,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["encounterID"] = 2115;
         ["instanceID"] = 1012;
         ["health"] = 5379465;
-        ["name"] = "Rixxa Fluxflame";
+        ["name"] = L["Rixxa Fluxflame"];
         ["displayId"] = 81489;
         ["creatureType"] = "Humanoid";
         ["level"] = 122;
@@ -3074,7 +3075,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["encounterID"] = 2116;
         ["instanceID"] = 1012;
         ["health"] = 5994261;
-        ["name"] = "Mogul Razdunk";
+        ["name"] = L["Mogul Razdunk"];
         ["displayId"] = 81816;
         ["creatureType"] = "Mechanical";
         ["level"] = 122;
@@ -3119,7 +3120,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 90742;
         ["creatureType"] = "Aberration";
         ["corrupted"] = true;
-        ["name"] = "Samh'rek, Beckoner of Chaos";
+        ["name"] = L["Samh'rek, Beckoner of Chaos"];
         ["id"] = 161243;
     };
     [9] = {
@@ -3221,7 +3222,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
         };
         ["count"] = 4;
-        ["name"] = "Hired Assassin";
+        ["name"] = L["Hired Assassin"];
         ["displayId"] = 83395;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3276,7 +3277,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["count"] = 12;
-        ["name"] = "Mechanized Peacekeeper";
+        ["name"] = L["Mechanized Peacekeeper"];
         ["displayId"] = 82943;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
@@ -3418,7 +3419,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Venture Co. Earthshaper";
+        ["name"] = L["Venture Co. Earthshaper"];
         ["health"] = 768495;
         ["displayId"] = 81333;
         ["creatureType"] = "Humanoid";
@@ -3536,7 +3537,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Wanton Sapper";
+        ["name"] = L["Wanton Sapper"];
         ["health"] = 768495;
         ["displayId"] = 81316;
         ["creatureType"] = "Humanoid";
@@ -3607,7 +3608,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 88196;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
-        ["name"] = "Shalebiter";
+        ["name"] = L["Shalebiter"];
         ["id"] = 134005;
     };
     [22] = {
@@ -3660,7 +3661,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83052;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
-        ["name"] = "Earthrager";
+        ["name"] = L["Earthrager"];
         ["id"] = 129802;
     };
     [26] = {
@@ -3737,7 +3738,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["count"] = 4;
         ["teemingCount"] = 5;
-        ["name"] = "Weapons Tester";
+        ["name"] = L["Weapons Tester"];
         ["displayId"] = 84962;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3807,7 +3808,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Imprison"] = true;
         };
         ["count"] = 5;
-        ["name"] = "Expert Technician";
+        ["name"] = L["Expert Technician"];
         ["displayId"] = 83034;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -3891,7 +3892,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["count"] = 12;
-        ["name"] = "Mechanized Peacekeeper";
+        ["name"] = L["Mechanized Peacekeeper"];
         ["displayId"] = 82943;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
@@ -3923,7 +3924,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["name"] = "Voidweaver Mal'thir";
+        ["name"] = L["Voidweaver Mal'thir"];
         ["characteristics"] = {
             ["Taunt"] = true;
         };
@@ -4187,7 +4188,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["stealthDetect"] = true;
         ["id"] = 155433;
-        ["name"] = "Void-Touched Emissary";
+        ["name"] = L["Void-Touched Emissary"];
         ["ignoreFortified"] = true;
         ["health"] = 999042;
         ["displayId"] = 39391;
@@ -4233,7 +4234,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Aberration";
         ["level"] = 122;
         ["health"] = 2151786;
-        ["name"] = "Urg'roth, Breaker of Heroes";
+        ["name"] = L["Urg'roth, Breaker of Heroes"];
     };
     [37] = {
         ["clones"] = {
@@ -4271,7 +4272,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["reaping"] = 148716;
         ["scale"] = 1;
         ["count"] = 0;
-        ["name"] = "Asset Manager";
+        ["name"] = L["Asset Manager"];
         ["displayId"] = 85704;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -4317,7 +4318,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["level"] = 122;
         ["teemingCount"] = 6;
-        ["name"] = "Blood of the Corruptor";
+        ["name"] = L["Blood of the Corruptor"];
         ["displayId"] = 92229;
         ["creatureType"] = "Aberration";
         ["corrupted"] = true;
@@ -4432,7 +4433,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["stealthDetect"] = true;
         ["health"] = 1229592;
         ["count"] = 12;
-        ["name"] = "Venture Co. War Machine";
+        ["name"] = L["Venture Co. War Machine"];
         ["displayId"] = 83391;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
@@ -4496,7 +4497,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["Root"] = true;
         };
         ["count"] = 1;
-        ["name"] = "Big Money Crab";
+        ["name"] = L["Big Money Crab"];
         ["displayId"] = 32024;
         ["creatureType"] = "Beast";
         ["level"] = 120;
@@ -4573,7 +4574,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83052;
         ["creatureType"] = "Elemental";
         ["level"] = 120;
-        ["name"] = "Stonefury";
+        ["name"] = L["Stonefury"];
         ["id"] = 130635;
     };
     [23] = {
@@ -4687,7 +4688,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [271784] = {};
         };
         ["count"] = 0;
-        ["name"] = "Footbomb Hooligan";
+        ["name"] = L["Footbomb Hooligan"];
         ["displayId"] = 85829;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
@@ -4806,7 +4807,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["id"] = 133482;
         ["count"] = 1;
-        ["name"] = "Crawler Mine";
+        ["name"] = L["Crawler Mine"];
         ["displayId"] = 49134;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;

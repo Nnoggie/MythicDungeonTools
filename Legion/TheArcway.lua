@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 12
 local nerfMultiplier = 1
 local pi = math.pi
@@ -5,7 +6,7 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=392,teeming=466,tee
 MethodDungeonTools.dungeonBosses[dungeonIndex] ={ --The Arcway
     [1] = {
         [1] = {
-            ["name"] = "Ivanyr",
+            ["name"] = L["Ivanyr"],
             ["health"] = 99914542,
             ["encounterID"] = 1497,
             ["level"] = 112,
@@ -16,7 +17,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] ={ --The Arcway
             ["y"] = -420.40893610614,
         },
         [2] = {
-            ["name"] = "Corstilax",
+            ["name"] = L["Corstilax"],
             ["health"] = 109796277,
             ["encounterID"] = 1498,
             ["level"] = 112,
@@ -27,7 +28,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] ={ --The Arcway
             ["y"] = -433.29667076262,
         },
         [3] = {
-            ["name"] = "Nal'tira",
+            ["name"] = L["Nal'tira"],
             ["health"] = 88812990,
             ["encounterID"] = 1500,
             ["level"] = 112,
@@ -38,7 +39,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] ={ --The Arcway
             ["y"] = -416.63829089113,
         },
         [4] = {
-            ["name"] = "General Xakal",
+            ["name"] = L["General Xakal"],
             ["health"] = 99914610,
             ["encounterID"] = 1499,
             ["level"] = 112,
@@ -52,7 +53,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] ={ --The Arcway
 }
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
     [1] = {
-        ["name"] = "Unstable Amalgamation",
+        ["name"] = L["Unstable Amalgamation"],
         ["health"] = 11114474*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Aberration",
@@ -73,7 +74,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [2] = {
-        ["name"] = "Acidic Bile",
+        ["name"] = L["Acidic Bile"],
         ["health"] = 23585511*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Aberration",
@@ -97,7 +98,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [3] = {
-        ["name"] = "Plagued Rat",
+        ["name"] = L["Plagued Rat"],
         ["health"] = 4445789*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -131,7 +132,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [4] = {
-        ["name"] = "Withered Manawraith",
+        ["name"] = L["Withered Manawraith"],
         ["health"] = 18868408*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -171,7 +172,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [5] = {
-        ["name"] = "Withered Fiend",
+        ["name"] = L["Withered Fiend"],
         ["health"] = 11855438*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -230,7 +231,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [6] = {
-        ["name"] = "Forgotten Spirit",
+        ["name"] = L["Forgotten Spirit"],
         ["health"] = 24528930*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -351,7 +352,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [7] = {
-        ["name"] = "Warp Shade",
+        ["name"] = L["Warp Shade"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -376,7 +377,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [8] = {
-        ["name"] = "Arcane Anomaly",
+        ["name"] = L["Arcane Anomaly"],
         ["health"] = 15330582*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Elemental",
@@ -401,7 +402,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [9] = {
-        ["name"] = "Mana Wyrm",
+        ["name"] = L["Mana Wyrm"],
         ["health"] = 2963859*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -442,7 +443,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [10] = {
-        ["name"] = "Nightborne Spellsword",
+        ["name"] = L["Nightborne Spellsword"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -459,7 +460,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [11] = {
-        ["name"] = "Nightborne Reclaimer",
+        ["name"] = L["Nightborne Reclaimer"],
         ["health"] = 11855444*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -477,7 +478,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [12] = {
-        ["name"] = "Enchanted Broodling",
+        ["name"] = L["Enchanted Broodling"],
         ["health"] = 3112046*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -513,7 +514,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [13] = {
-        ["name"] = "Vicious Manafang",
+        ["name"] = L["Vicious Manafang"],
         ["health"] = 10373509*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -540,7 +541,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [14] = {
-        ["name"] = "Wrathguard Felblade",
+        ["name"] = L["Wrathguard Felblade"],
         ["health"] = 14819297*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -571,7 +572,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [15] = {
-        ["name"] = "Eredar Chaosbringer",
+        ["name"] = L["Eredar Chaosbringer"],
         ["health"] = 11855444*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -607,7 +608,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [16] = {
-        ["name"] = "Dreadborne Seer",
+        ["name"] = L["Dreadborne Seer"],
         ["health"] = 18868422*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Demon",
@@ -634,7 +635,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [17] = {
-        ["name"] = "Wyrmtongue Scavenger",
+        ["name"] = L["Wyrmtongue Scavenger"],
         ["health"] = 4445789*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -658,7 +659,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [18] = {
-        ["name"] = "Felguard Destroyer",
+        ["name"] = L["Felguard Destroyer"],
         ["health"] = 24528930*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Demon",
@@ -674,7 +675,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --The Arcway
         },
     },
     [19] = {
-        ["name"] = "Priestess of Misery",
+        ["name"] = L["Priestess of Misery"],
         ["health"] = 29434718*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Demon",

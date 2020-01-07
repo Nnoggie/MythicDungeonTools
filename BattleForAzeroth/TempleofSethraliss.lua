@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 20
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
 
@@ -299,7 +300,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["health"] = 999042;
       ["count"] = 4;
       ["ignoreFortified"] = true;
-      ["name"] = "Void-Touched Emissary";
+      ["name"] = L["Void-Touched Emissary"];
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 122;
@@ -411,7 +412,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["count"] = 2;
-      ["name"] = "Krolusk Pup";
+      ["name"] = L["Krolusk Pup"];
       ["displayId"] = 83787;
       ["creatureType"] = "Beast";
       ["level"] = 120;
@@ -475,7 +476,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["count"] = 4;
-      ["name"] = "Charged Dust Devil";
+      ["name"] = L["Charged Dust Devil"];
       ["displayId"] = 84024;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -560,7 +561,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 134991;
       ["count"] = 6;
-      ["name"] = "Sandfury Stonefist";
+      ["name"] = L["Sandfury Stonefist"];
       ["displayId"] = 84207;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -818,7 +819,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 0.7;
       ["stealth"] = true;
-      ["name"] = "Shrouded Fang";
+      ["name"] = L["Shrouded Fang"];
       ["displayId"] = 83782;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -905,7 +906,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83790;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Krolusk Hatchling";
+      ["name"] = L["Krolusk Hatchling"];
       ["neutral"] = true;
    };
    [7] = {
@@ -935,7 +936,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2142;
       ["instanceID"] = 1030;
       ["id"] = 133944;
-      ["name"] = "Aspix";
+      ["name"] = L["Aspix"];
       ["displayId"] = 83552;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -969,7 +970,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2142;
       ["instanceID"] = 1030;
       ["id"] = 133379;
-      ["name"] = "Adderis";
+      ["name"] = L["Adderis"];
       ["displayId"] = 83550;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -1012,7 +1013,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 78250;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Venomous Ophidian";
+      ["name"] = L["Venomous Ophidian"];
       ["id"] = 135562;
    };
    [12] = {
@@ -1043,7 +1044,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 84761;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Scaled Krolusk Tamer";
+      ["name"] = L["Scaled Krolusk Tamer"];
       ["id"] = 139422;
    };
    [14] = {
@@ -1120,7 +1121,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 86510;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Faithless Tender";
+      ["name"] = L["Faithless Tender"];
       ["id"] = 134364;
    };
    [16] = {
@@ -1144,7 +1145,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2143;
       ["instanceID"] = 1030;
-      ["name"] = "Merektha";
+      ["name"] = L["Merektha"];
       ["count"] = 0;
       ["displayId"] = 88585;
       ["creatureType"] = "Beast";
@@ -1173,7 +1174,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2144;
       ["instanceID"] = 1030;
-      ["name"] = "Galvazzt";
+      ["name"] = L["Galvazzt"];
       ["health"] = 5379459;
       ["displayId"] = 81654;
       ["creatureType"] = "Elemental";
@@ -1204,7 +1205,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83203;
       ["creatureType"] = "Undead";
       ["level"] = 120;
-      ["name"] = "Avatar of Sethraliss";
+      ["name"] = L["Avatar of Sethraliss"];
       ["scale"] = 1;
    };
    [28] = {
@@ -1389,7 +1390,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["health"] = 15369884;
       ["count"] = 0;
       ["ignoreFortified"] = true;
-      ["name"] = "Enchanted Emissary";
+      ["name"] = L["Enchanted Emissary"];
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 121;
@@ -1414,7 +1415,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 2;
          };
       };
-      ["name"] = "Voidweaver Mal'thir";
+      ["name"] = L["Voidweaver Mal'thir"];
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -1468,7 +1469,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["scale"] = 1.4;
       ["level"] = 122;
       ["teemingCount"] = 6;
-      ["name"] = "Blood of the Corruptor";
+      ["name"] = L["Blood of the Corruptor"];
       ["displayId"] = 92229;
       ["creatureType"] = "Aberration";
       ["corrupted"] = true;
@@ -1518,7 +1519,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Agitated Nimbus";
+      ["name"] = L["Agitated Nimbus"];
       ["health"] = 1229592;
       ["displayId"] = 65631;
       ["creatureType"] = "Elemental";
@@ -1543,7 +1544,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 2;
       ["count"] = 12;
-      ["name"] = "Eye of Sethraliss";
+      ["name"] = L["Eye of Sethraliss"];
       ["displayId"] = 46941;
       ["creatureType"] = "";
       ["level"] = 0;
@@ -1574,7 +1575,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83553;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Spark Channeler";
+      ["name"] = L["Spark Channeler"];
       ["id"] = 139110;
    };
    [29] = {
@@ -1602,7 +1603,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["neutral"] = true;
-      ["name"] = "Heart Guardian";
+      ["name"] = L["Heart Guardian"];
       ["teemingCount"] = 4;
       ["health"] = 1229592;
       ["displayId"] = 84761;
@@ -1870,7 +1871,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 84761;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Scaled Krolusk Rider";
+      ["name"] = L["Scaled Krolusk Rider"];
       ["id"] = 134629;
    };
    [11] = {
@@ -1908,7 +1909,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 78247;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Sand-Crusted Striker";
+      ["name"] = L["Sand-Crusted Striker"];
       ["id"] = 135846;
    };
    [13] = {
@@ -1945,7 +1946,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 75595;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Mature Krolusk";
+      ["name"] = L["Mature Krolusk"];
       ["id"] = 134686;
    };
    [15] = {
@@ -2006,7 +2007,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83444;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Crazed Incubator";
+      ["name"] = L["Crazed Incubator"];
       ["id"] = 139425;
    };
    [18] = {
@@ -2057,7 +2058,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
-      ["name"] = "Imbued Stormcaller";
+      ["name"] = L["Imbued Stormcaller"];
       ["health"] = 768495;
       ["displayId"] = 83779;
       ["creatureType"] = "Humanoid";
@@ -2113,7 +2114,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Hoodoo Hexer";
+      ["name"] = L["Hoodoo Hexer"];
       ["health"] = 768495;
       ["displayId"] = 84676;
       ["creatureType"] = "Humanoid";
@@ -2334,7 +2335,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["health"] = 614795;
       ["count"] = 4;
       ["ignoreFortified"] = true;
-      ["name"] = "Emissary of the Tides";
+      ["name"] = L["Emissary of the Tides"];
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -2384,7 +2385,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 90742;
       ["creatureType"] = "Aberration";
       ["corrupted"] = true;
-      ["name"] = "Samh'rek, Beckoner of Chaos";
+      ["name"] = L["Samh'rek, Beckoner of Chaos"];
       ["id"] = 161243;
    };
    [1] = {
@@ -2533,7 +2534,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["count"] = 4;
-      ["name"] = "Sandswept Marksman";
+      ["name"] = L["Sandswept Marksman"];
       ["displayId"] = 83780;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -2619,7 +2620,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Static-charged Dervish";
+      ["name"] = L["Static-charged Dervish"];
       ["health"] = 768495;
       ["displayId"] = 81655;
       ["creatureType"] = "Elemental";
@@ -2657,7 +2658,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
-      ["name"] = "Plague Doctor";
+      ["name"] = L["Plague Doctor"];
       ["health"] = 768495;
       ["displayId"] = 86210;
       ["creatureType"] = "Humanoid";
@@ -2709,6 +2710,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["creatureType"] = "Aberration";
       ["level"] = 122;
       ["health"] = 2151786;
-      ["name"] = "Urg'roth, Breaker of Heroes";
+      ["name"] = L["Urg'roth, Breaker of Heroes"];
    };
 };

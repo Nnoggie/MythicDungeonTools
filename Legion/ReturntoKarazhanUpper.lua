@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 10
 local pi = math.pi
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=169,teeming=202,teemingEnabled=true}
@@ -5,7 +6,7 @@ local nerfMultiplier = 0.74 --npcs got nerfed by 26% compared against m0 values,
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 	[3] = {
 		[1] = {
-            ["name"] = "The Curator",
+            ["name"] = L["The Curator"],
             ["health"] = 129540841,
             ["encounterID"] = 1557,
             ["level"] = 112,
@@ -18,7 +19,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 	},
 	[4] = {
 		[1] = {
-            ["name"] = "Shade of Medivh",
+            ["name"] = L["Shade of Medivh"],
             ["health"] = 93092225,
             ["encounterID"] = 1817,
             ["level"] = 112,
@@ -31,7 +32,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 	},
 	[5] = {
 		[1] = {
-            ["name"] = "Mana Devourer",
+            ["name"] = L["Mana Devourer"],
             ["health"] = 93092225,
             ["encounterID"] = 1818,
             ["level"] = 112,
@@ -44,7 +45,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 	},
 	[8] = {
 		[1] = {
-            ["name"] = "Viz'aduum the Watcher",
+            ["name"] = L["Viz'aduum the Watcher"],
             ["health"] = 112311272,
             ["encounterID"] = 1838,
             ["level"] = 112,
@@ -59,7 +60,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 	[1] = {
-        ["name"] = "Forlorn Spirit",
+        ["name"] = L["Forlorn Spirit"],
         ["health"] = 21771241*nerfMultiplier, --HP IS TOO HIGH
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -74,7 +75,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[2] = {
-        ["name"] = "Shrieking Terror",
+        ["name"] = L["Shrieking Terror"],
         ["health"] = 21045157*nerfMultiplier, --HP IS TOO HIGH
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -91,7 +92,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[3] = {
-        ["name"] = "Damaged Golem",
+        ["name"] = L["Damaged Golem"],
         ["health"] = 17417005*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Mechanical",
@@ -108,7 +109,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },	
 	[4] = {
-        ["name"] = "Abstract Nullifier",
+        ["name"] = L["Abstract Nullifier"],
         ["health"] = 43542482*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Mechanical",
@@ -122,7 +123,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[5] = {
-        ["name"] = "Mana Confluence",
+        ["name"] = L["Mana Confluence"],
         ["health"] = 9289069*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Elemental",
@@ -139,7 +140,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[6] = {
-        ["name"] = "Mana-Gorged Wyrm",
+        ["name"] = L["Mana-Gorged Wyrm"],
         ["health"] = 3367227*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -164,7 +165,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[7] = {
-        ["name"] = "Infused Pyromancer",
+        ["name"] = L["Infused Pyromancer"],
         ["health"] = 17416993*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Demon",
@@ -190,7 +191,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[8] = {
-        ["name"] = "Fel Bat",
+        ["name"] = L["Fel Bat"],
         ["health"] = 11224084*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -217,7 +218,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[9] = {
-        ["name"] = "Wrathguard Flamebringer",
+        ["name"] = L["Wrathguard Flamebringer"],
         ["health"] = 24674074*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Demon",
@@ -231,7 +232,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[10] = {
-        ["name"] = "Rat",
+        ["name"] = L["Rat"],
         ["health"] = 23222657*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Beast",
@@ -247,7 +248,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[11] = {
-        ["name"] = "Ancient Tome",
+        ["name"] = L["Ancient Tome"],
         ["health"] = 21771241*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Beast",
@@ -262,7 +263,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[12] = {
-        ["name"] = "Spider",
+        ["name"] = L["Spider"],
         ["health"] = 24528930*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Beast",
@@ -278,7 +279,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[13] = {
-        ["name"] = "Mana Devourer",
+        ["name"] = L["Mana Devourer"],
         ["health"] = 12162050*nerfMultiplier,
         ["level"] = 112,
         ["creatureType"] = "Elemental",
@@ -312,7 +313,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[14] = {
-        ["name"] = "Erudite Slayer",
+        ["name"] = L["Erudite Slayer"],
         ["health"] = 23585511*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Demon",
@@ -326,7 +327,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[15] = {
-        ["name"] = "King",
+        ["name"] = L["King"],
         ["health"] = 60959475*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
