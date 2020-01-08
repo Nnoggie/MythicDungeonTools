@@ -1622,19 +1622,13 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Seasonal Affix:")
-        local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened 1",[15]="Awakened 2",[16]="Awakened 3"}
+        local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened A",[15]="Awakened B"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
             local preset = MethodDungeonTools:GetCurrentPreset()
             preset.mdi.beguiling = key
-            db.currentSeason = (key == 1 or key == 2 or key == 3) and 3 or (key == 13 and 2) or (key == 14 and 4)
-            MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-            MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
-            MethodDungeonTools:UpdateProgressbar()
-            MethodDungeonTools:ReloadPullButtons()
-            MethodDungeonTools:POI_UpdateAll()
-            MethodDungeonTools:KillAllAnimatedLines()
-            MethodDungeonTools:DrawAllAnimatedLines()
+            db.currentSeason = (key == 1 or key == 2 or key == 3) and 3 or (key == 13 and 2) or (key == 14 and 4) or (key == 15 and 4)
+            MethodDungeonTools:UpdateMap()
             if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
                 self:LiveSession_SendMDI("beguiling",key)
             end
@@ -2217,8 +2211,7 @@ function MethodDungeonTools:GetEffectivePresetWeek(preset)
     if db.MDI.enabled then
         week = preset.mdi.beguiling or 1
         if week == 14 then week = 1 end
-        if week == 15 then week = 2 end
-        if week == 16 then week = 3 end
+        if week == 15 then week = 3 end
     else
         week = preset.week
     end
