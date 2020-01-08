@@ -1351,20 +1351,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsButton)
 
     --Week Dropdown (Infested / Affixes)
-    local beguilingInfo = {
-        [1] = {
-            ["text"]="Void",
-            ["icon"]= CreateTextureMarkup(132886, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
-        },
-        [2] = {
-            ["text"]="Tides",
-            ["icon"]= CreateTextureMarkup(132315, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
-        },
-        [3] = {
-            ["text"]="Enchanted",
-            ["icon"]= CreateTextureMarkup(135735, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
-        },
-    }
     local function makeAffixString(week,affixes,longText)
         local ret
         local sep = ""
@@ -1384,16 +1370,8 @@ function MethodDungeonTools:MakeSidePanel(frame)
                 ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0).."  "
             end
         end
-        --beguiling configuration
-        --[[
-        local w = week%3
-        if w == 0 then w = 3 end
-        if longText then
-            ret = ret.." ("..beguilingInfo[w].text..")"
-        else
-            ret = ret..beguilingInfo[w].icon
-        end
-        ]]
+        local rotation = (week%4)%3>0 and "A" or "B"
+        ret = ret..rotation
         return ret
     end
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
