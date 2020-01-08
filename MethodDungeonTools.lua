@@ -1370,7 +1370,10 @@ function MethodDungeonTools:MakeSidePanel(frame)
                 ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0).."  "
             end
         end
-        local rotation = (week%4)%3>0 and "A" or "B"
+        local rotation = ""
+        if longText then rotation = rotation.." (Rotation " end
+        rotation = rotation..((week-1)%4>=2 and "B" or "A")
+        if longText then rotation = rotation..")" end
         ret = ret..rotation
         return ret
     end
