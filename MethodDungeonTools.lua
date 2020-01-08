@@ -95,6 +95,10 @@ local defaultSavedVars = {
 		dataCollectionActive = false,
 		automaticColorsNum = 12,
 		automaticColors = true,
+        numberCustomColors = 5,
+        chosenColorPalette = "Rainbow",
+        chosenColorPaletteNum = 1,
+        customPaletteValues = {},
 	},
 }
 do
@@ -2474,7 +2478,7 @@ function MethodDungeonTools:OpenAutomaticColorsDialog()
 	MethodDungeonTools.main_frame.automaticColorsFrame:SetStatusText("")
 	MethodDungeonTools.main_frame.automaticColorsFrame:Show()
     MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
-    if db.dropdown == 5 then
+    if db.chosenColorPaletteNum == 5 then
         print("Ok")
         MethodDungeonTools:OpenCustomColorsDialog()
     end
@@ -3266,7 +3270,7 @@ function MethodDungeonTools:MakeCustomColorFrame(frame)
 
     --Button to execute function MethodDungeonTools:ColorAllPulls()
     frame.CustomColorFrame.ConfirmationButton = AceGUI:Create("Button")
-    frame.CustomColorFrame.ConfirmationButton:SetText("Confirm")
+    frame.CustomColorFrame.ConfirmationButton:SetText("Okay")
     frame.CustomColorFrame.ConfirmationButton:SetRelativeWidth(0.3)
     frame.CustomColorFrame.ConfirmationButton:SetCallback("OnClick", function(event)
         MethodDungeonTools:ColorAllPulls()
@@ -3327,16 +3331,16 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
     frame.PaletteSelectDropdown:SetList(colorPaletteNames)
     frame.PaletteSelectDropdown:SetLabel("Choose preferred color palette")
-    frame.PaletteSelectDropdown:SetValue(db.dropdown)
+    frame.PaletteSelectDropdown:SetValue(db.chosenColorPaletteNum)
     frame.PaletteSelectDropdown:SetCallback("OnValueChanged", function(widget,callbackName,value)
         if value == 5 then
             db.chosenColorPalette = colorPaletteNames[value]
-            db.dropdown = value
+            db.chosenColorPaletteNum = value
             MethodDungeonTools:OpenCustomColorsDialog()
         else
             MethodDungeonTools.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
             db.chosenColorPalette = colorPaletteNames[value]
-            db.dropdown = value
+            db.chosenColorPaletteNum = value
             MethodDungeonTools:ColorAllPulls()
         end
     end)
