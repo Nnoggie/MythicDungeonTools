@@ -19,8 +19,8 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,tee
 MethodDungeonTools.mapPOIs[dungeonIndex] = {
     [1] = {
         [1] = {
-            ["y"] = -343.87594051662;
-            ["x"] = 309.70877539996;
+            ["y"] = -344.0717104272;
+            ["x"] = 309.61613296983;
             ["connectionIndex"] = 1;
             ["target"] = 3;
             ["type"] = "mapLink";
@@ -30,42 +30,6 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
     };
     [4] = {
         [1] = {
-            ["y"] = -318.61727794098;
-            ["x"] = 515.84029246469;
-            ["index"] = 2;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
-            ["npcId"] = 161243;
-        };
-        [2] = {
-            ["y"] = -197.65723365378;
-            ["x"] = 582.26737834875;
-            ["index"] = 3;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
-        };
-        [3] = {
-            ["y"] = -485.10332866813;
-            ["x"] = 251.29468785124;
-            ["index"] = 4;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
-            ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
-            ["npcId"] = 161124;
-        };
-        [4] = {
             ["y"] = -434.64189702298;
             ["x"] = 518.05941971039;
             ["connectionIndex"] = 2;
@@ -74,66 +38,111 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = 2;
         };
-        [5] = {
-            ["y"] = -318.61727794098;
-            ["x"] = 515.84029246469;
-            ["index"] = 4;
+        [2] = {
+            ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 2;
+            ["y"] = -318.53764249152;
+            ["x"] = 517.83813697592;
+            ["tooltipText"] = "Entropic Spire of Ny'alotha";
             ["weeks"] = {
+                [1] = true;
                 [2] = true;
                 [5] = true;
-                [8] = true;
-                [11] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
             };
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
+        };
+        [3] = {
+            ["npcId"] = 161241;
             ["type"] = "nyalothaSpire";
+            ["index"] = 3;
+            ["y"] = -196.02296722173;
+            ["x"] = 585.1446990204;
+            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+                [2] = true;
+                [5] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
+            };
+            ["template"] = "VignettePinTemplate";
+        };
+        [4] = {
             ["npcId"] = 161124;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 4;
+            ["y"] = -486.72130160772;
+            ["x"] = 254.67149715941;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["weeks"] = {
+                [1] = true;
+                [2] = true;
+                [5] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
+            };
+            ["template"] = "VignettePinTemplate";
+        };
+        [5] = {
+            ["npcId"] = 161241;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 8;
+            ["y"] = -486.16039311204;
+            ["x"] = 258.33350715938;
+            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["weeks"] = {
+                [11] = true;
+                [7] = true;
+                [8] = true;
+                [3] = true;
+                [12] = true;
+                [4] = true;
+            };
+            ["template"] = "VignettePinTemplate";
         };
         [6] = {
-            ["y"] = -485.10332866813;
-            ["x"] = 251.29468785124;
-            ["index"] = 3;
-            ["weeks"] = {
-                [2] = true;
-                [5] = true;
-                [8] = true;
-                [11] = true;
-            };
+            ["npcId"] = 161244;
             ["type"] = "nyalothaSpire";
+            ["index"] = 7;
+            ["y"] = -200.04093764601;
+            ["x"] = 584.28141056143;
+            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["weeks"] = {
+                [11] = true;
+                [7] = true;
+                [8] = true;
+                [3] = true;
+                [12] = true;
+                [4] = true;
+            };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Cursed Spire of Ny'alotha";
-            ["npcId"] = 161241;
         };
         [7] = {
-            ["y"] = -197.65723365378;
-            ["x"] = 582.26737834875;
-            ["index"] = 1;
-            ["weeks"] = {
-                [2] = true;
-                [5] = true;
-                [8] = true;
-                [11] = true;
-            };
+            ["npcId"] = 161124;
             ["type"] = "nyalothaSpire";
+            ["index"] = 6;
+            ["y"] = -317.10724429783;
+            ["x"] = 519.2301050015;
+            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["weeks"] = {
+                [11] = true;
+                [7] = true;
+                [8] = true;
+                [3] = true;
+                [12] = true;
+                [4] = true;
+            };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
         };
     };
     [3] = {
         [1] = {
-            ["y"] = -383.04415723324;
-            ["x"] = 405.94354943625;
-            ["index"] = 1;
-            ["weeks"] = {
-                [1] = true;
-            };
-            ["type"] = "nyalothaSpire";
-            ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
-            ["npcId"] = 161244;
-        };
-        [2] = {
             ["y"] = -444.44517818302;
             ["x"] = 466.94234514817;
             ["connectionIndex"] = 1;
@@ -142,7 +151,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = 1;
         };
-        [3] = {
+        [2] = {
             ["y"] = -153.56451426492;
             ["x"] = 400.22732136754;
             ["connectionIndex"] = 2;
@@ -151,20 +160,39 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = -2;
         };
-        [4] = {
-            ["y"] = -383.04415723324;
-            ["x"] = 405.94354943625;
-            ["index"] = 2;
+        [3] = {
+            ["npcId"] = 161244;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 1;
+            ["y"] = -386.78482539846;
+            ["x"] = 409.00337447551;
+            ["tooltipText"] = "Defiled Spire of Ny'alotha";
             ["weeks"] = {
+                [1] = true;
                 [2] = true;
                 [5] = true;
-                [8] = true;
-                [11] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
             };
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
             ["template"] = "VignettePinTemplate";
-            ["type"] = "nyalothaSpire";
+        };
+        [4] = {
             ["npcId"] = 161243;
+            ["type"] = "nyalothaSpire";
+            ["index"] = 5;
+            ["y"] = -386.68586852753;
+            ["x"] = 408.78144026279;
+            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["weeks"] = {
+                [11] = true;
+                [7] = true;
+                [8] = true;
+                [3] = true;
+                [12] = true;
+                [4] = true;
+            };
+            ["template"] = "VignettePinTemplate";
         };
     };
 };
@@ -173,27 +201,36 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -333.22926098296;
-                ["x"] = 511.95865277707;
-                ["sublevel"] = 4;
+                ["y"] = -387.37255060091;
+                ["x"] = 428.9973140346;
                 ["week"] = {
-                    [1] = true;
-                };
-            };
-            [2] = {
-                ["y"] = -387.38917479404;
-                ["x"] = 417.63359348378;
-                ["week"] = {
-                    [5] = true;
-                    [2] = true;
                     [11] = true;
+                    [7] = true;
                     [8] = true;
+                    [3] = true;
+                    [12] = true;
+                    [4] = true;
                 };
                 ["sublevel"] = 3;
             };
+            [2] = {
+                ["y"] = -331.5770385789;
+                ["x"] = 511.7556532521;
+                ["week"] = {
+                    [1] = true;
+                    [2] = true;
+                    [5] = true;
+                    [6] = true;
+                    [9] = true;
+                    [10] = true;
+                };
+                ["sublevel"] = 4;
+            };
         };
-        ["id"] = 161243;
         ["scale"] = 1.4;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
         ["spells"] = {
             [314478] = {};
             [314531] = {};
@@ -202,36 +239,41 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [314483] = {};
         };
         ["stealthDetect"] = true;
-        ["name"] = "Samh'rek, Beckoner of Chaos";
+        ["count"] = 4;
         ["level"] = 122;
         ["teemingCount"] = 6;
-        ["count"] = 4;
+        ["health"] = 2151786;
         ["displayId"] = 90742;
         ["creatureType"] = "Aberration";
         ["corrupted"] = true;
-        ["health"] = 2151786;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["name"] = "Samh'rek, Beckoner of Chaos";
+        ["id"] = 161243;
     };
     [2] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -481.039736978;
-                ["x"] = 264.39534204253;
-                ["sublevel"] = 4;
+                ["y"] = -479.87766381989;
+                ["x"] = 266.45320887976;
                 ["week"] = {
                     [1] = true;
+                    [2] = true;
+                    [5] = true;
+                    [6] = true;
+                    [9] = true;
+                    [10] = true;
                 };
+                ["sublevel"] = 4;
             };
             [2] = {
-                ["y"] = -334.26094884991;
-                ["x"] = 512.53392271851;
+                ["y"] = -329.41202847077;
+                ["x"] = 510.76318810768;
                 ["week"] = {
-                    [5] = true;
-                    [2] = true;
                     [11] = true;
+                    [7] = true;
                     [8] = true;
+                    [3] = true;
+                    [12] = true;
+                    [4] = true;
                 };
                 ["sublevel"] = 4;
             };
@@ -250,31 +292,89 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["corrupted"] = true;
         ["teemingCount"] = 6;
-        ["health"] = 2305485;
+        ["count"] = 4;
         ["displayId"] = 89415;
         ["creatureType"] = "Aberration";
         ["level"] = 122;
+        ["health"] = 2305485;
         ["name"] = "Urg'roth, Breaker of Heroes";
+    };
+    [3] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -185.04035743147;
+                ["x"] = 590.84864335923;
+                ["week"] = {
+                    [1] = true;
+                    [2] = true;
+                    [5] = true;
+                    [6] = true;
+                    [9] = true;
+                    [10] = true;
+                };
+                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -477.92332909725;
+                ["x"] = 267.94040499605;
+                ["week"] = {
+                    [11] = true;
+                    [7] = true;
+                    [8] = true;
+                    [3] = true;
+                    [12] = true;
+                    [4] = true;
+                };
+                ["sublevel"] = 4;
+            };
+        };
+        ["name"] = "Voidweaver Mal'thir";
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [314463] = {};
+            [314411] = {};
+            [314467] = {};
+            [314406] = {};
+            [314397] = {};
+        };
+        ["stealthDetect"] = true;
         ["count"] = 4;
+        ["corrupted"] = true;
+        ["teemingCount"] = 6;
+        ["health"] = 1998087;
+        ["displayId"] = 91910;
+        ["creatureType"] = "Beast";
+        ["level"] = 122;
+        ["id"] = 161241;
+        ["scale"] = 1.4;
     };
     [4] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -386.68158575705;
-                ["x"] = 423.76569065319;
+                ["y"] = -385.8737350755;
+                ["x"] = 427.17530652382;
                 ["week"] = {
                     [1] = true;
+                    [2] = true;
+                    [5] = true;
+                    [6] = true;
+                    [9] = true;
+                    [10] = true;
                 };
                 ["sublevel"] = 3;
             };
             [2] = {
-                ["y"] = -184.66860815663;
-                ["x"] = 590.81364063224;
+                ["y"] = -185.82768481046;
+                ["x"] = 591.63598763293;
                 ["week"] = {
-                    [5] = true;
-                    [2] = true;
                     [11] = true;
+                    [7] = true;
                     [8] = true;
+                    [3] = true;
+                    [12] = true;
+                    [4] = true;
                 };
                 ["sublevel"] = 4;
             };
@@ -285,29 +385,215 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         };
         ["spells"] = {
             [314566] = {};
-            [314592] = {};
             [314397] = {};
             [314565] = {};
+            [314592] = {};
         };
         ["stealthDetect"] = true;
         ["scale"] = 1.4;
         ["level"] = 122;
         ["teemingCount"] = 6;
-        ["count"] = 4;
+        ["name"] = "Blood of the Corruptor";
         ["displayId"] = 92229;
         ["creatureType"] = "Aberration";
         ["corrupted"] = true;
+        ["count"] = 4;
         ["health"] = 2151786;
-        ["name"] = "Blood of the Corruptor";
+    };
+    [5] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -406.34323129692;
+                ["x"] = 435.06247431919;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1.4;
+        ["spells"] = {
+            [296348] = {};
+            [295169] = {};
+            [293986] = {};
+            [294015] = {};
+            [295170] = {};
+            [295183] = {};
+        };
+        ["id"] = 151476;
+        ["name"] = "Blastatron X-80";
+        ["count"] = 8;
+        ["displayId"] = 90712;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["health"] = 1921238;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [6] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -421.66419640937;
+                ["x"] = 499.70337825139;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -430.63364694467;
+                ["x"] = 496.86060747485;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -436.90737631667;
+                ["x"] = 492.84152392959;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [4] = {
+                ["y"] = -435.51047744238;
+                ["x"] = 484.6561799684;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [5] = {
+                ["y"] = -443.69571816028;
+                ["x"] = 487.30300371032;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [6] = {
+                ["y"] = -428.52550114086;
+                ["x"] = 484.67447267549;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [7] = {
+                ["y"] = -419.85584273725;
+                ["x"] = 493.51113606412;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [8] = {
+                ["y"] = -427.34976261929;
+                ["x"] = 490.17023050112;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [9] = {
+                ["y"] = -440.55886808142;
+                ["x"] = 478.16193916255;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [10] = {
+                ["y"] = -420.92899835806;
+                ["x"] = 487.54800405373;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [11] = {
+                ["y"] = -413.68897609184;
+                ["x"] = 486.03961528088;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [12] = {
+                ["y"] = -432.47763924175;
+                ["x"] = 477.97117706412;
+                ["g"] = 8;
+                ["sublevel"] = 4;
+            };
+            [13] = {
+                ["y"] = -345.60610751627;
+                ["x"] = 500.60243944338;
+                ["g"] = 11;
+                ["sublevel"] = 4;
+            };
+            [14] = {
+                ["y"] = -344.09650599496;
+                ["x"] = 510.79229020326;
+                ["g"] = 11;
+                ["sublevel"] = 4;
+            };
+            [15] = {
+                ["y"] = -352.96549186558;
+                ["x"] = 499.84760628993;
+                ["g"] = 11;
+                ["sublevel"] = 4;
+            };
+            [16] = {
+                ["y"] = -350.51236104974;
+                ["x"] = 508.90528020342;
+                ["g"] = 11;
+                ["sublevel"] = 4;
+            };
+            [17] = {
+                ["y"] = -356.92822420273;
+                ["x"] = 514.00022987796;
+                ["g"] = 11;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 144300;
+        ["scale"] = 0.7;
+        ["name"] = "Mechagon Citizen";
+        ["health"] = 192124;
+        ["displayId"] = 91167;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 120;
+        ["count"] = 0;
+        ["characteristics"] = {
+            ["Stun"] = true;
+        };
+    };
+    [7] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -447.10383393789;
+                ["x"] = 438.24199819465;
+                ["g"] = 10;
+                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -431.77408026805;
+                ["x"] = 432.89392785131;
+                ["g"] = 10;
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -209.62623239455;
+                ["x"] = 604.72424938609;
+                ["g"] = 12;
+                ["sublevel"] = 4;
+            };
+            [4] = {
+                ["y"] = -193.33828230687;
+                ["x"] = 611.47784039704;
+                ["g"] = 12;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [294195] = {};
+        };
+        ["id"] = 151649;
+        ["count"] = 4;
+        ["name"] = "Defense Bot Mk I";
+        ["displayId"] = 91349;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 120;
+        ["health"] = 806920;
+        ["characteristics"] = {
+            ["Stun"] = true;
+        };
     };
     [8] = {
         ["clones"] = {
-            [6] = {
+            [1] = {
+                ["y"] = -417.70447330755;
+                ["x"] = 452.54473391855;
+                ["g"] = 9;
                 ["sublevel"] = 4;
-                ["x"] = 606.89150891813;
-                ["teeming"] = true;
-                ["g"] = 12;
-                ["y"] = -185.02700485576;
             };
             [2] = {
                 ["y"] = -408.05752691365;
@@ -319,12 +605,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -203.897120688;
                 ["x"] = 596.16623437765;
                 ["g"] = 12;
-                ["sublevel"] = 4;
-            };
-            [1] = {
-                ["y"] = -417.70447330755;
-                ["x"] = 452.54473391855;
-                ["g"] = 9;
                 ["sublevel"] = 4;
             };
             [4] = {
@@ -339,6 +619,13 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["g"] = 14;
                 ["sublevel"] = 4;
             };
+            [6] = {
+                ["sublevel"] = 4;
+                ["x"] = 606.89150891813;
+                ["teeming"] = true;
+                ["g"] = 12;
+                ["y"] = -185.02700485576;
+            };
         };
         ["scale"] = 1;
         ["spells"] = {
@@ -346,162 +633,25 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [293854] = {};
         };
         ["id"] = 144294;
-        ["health"] = 768495;
         ["count"] = 4;
+        ["name"] = "Mechagon Tinkerer";
         ["displayId"] = 91170;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Mechagon Tinkerer";
+        ["health"] = 768495;
         ["characteristics"] = {
             ["Stun"] = true;
             ["Polymorph"] = true;
         };
     };
-    [16] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -386.30433113779;
-                ["x"] = 362.18281730758;
-                ["sublevel"] = 3;
-            };
-            [2] = {
-                ["y"] = -381.92194523713;
-                ["x"] = 457.90817655344;
-                ["sublevel"] = 3;
-            };
-            [4] = {
-                ["sublevel"] = 3;
-                ["x"] = 564.88785899073;
-                ["teeming"] = true;
-                ["g"] = 5;
-                ["y"] = -330.35849621681;
-            };
-            [3] = {
-                ["y"] = -327.43196399115;
-                ["x"] = 545.88667894292;
-                ["g"] = 5;
-                ["sublevel"] = 3;
-            };
-        };
-        ["id"] = 144293;
-        ["spells"] = {
-            [294290] = {};
-            [294291] = {};
-            [294324] = {};
-        };
-        ["scale"] = 1;
-        ["count"] = 6;
-        ["name"] = "Waste Processing Unit";
-        ["displayId"] = 92177;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 121;
-        ["health"] = 1229592;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-            ["Stun"] = true;
-        };
-    };
-    [17] = {
-        ["clones"] = {
-            [13] = {
-                ["y"] = -304.98565488565;
-                ["x"] = 544.44718769335;
-                ["g"] = 6;
-                ["sublevel"] = 3;
-            };
-            [7] = {
-                ["y"] = -366.8408980967;
-                ["x"] = 523.00546261047;
-                ["g"] = 4;
-                ["sublevel"] = 3;
-            };
-            [1] = {
-                ["y"] = -373.14504241806;
-                ["x"] = 476.58863517454;
-                ["g"] = 3;
-                ["sublevel"] = 3;
-            };
-            [2] = {
-                ["y"] = -379.9856887912;
-                ["x"] = 480.97216346021;
-                ["g"] = 3;
-                ["sublevel"] = 3;
-            };
-            [4] = {
-                ["y"] = -374.01261308778;
-                ["x"] = 486.18292792546;
-                ["g"] = 3;
-                ["sublevel"] = 3;
-            };
-            [8] = {
-                ["y"] = -356.11194358718;
-                ["x"] = 530.64769619118;
-                ["g"] = 4;
-                ["sublevel"] = 3;
-            };
-            [9] = {
-                ["y"] = -364.20479692043;
-                ["x"] = 531.25302333858;
-                ["g"] = 4;
-                ["sublevel"] = 3;
-            };
-            [5] = {
-                ["y"] = -379.5492887157;
-                ["x"] = 489.23554166131;
-                ["g"] = 3;
-                ["sublevel"] = 3;
-            };
-            [10] = {
-                ["y"] = -316.68566636406;
-                ["x"] = 540.59579527792;
-                ["g"] = 6;
-                ["sublevel"] = 3;
-            };
-            [11] = {
-                ["y"] = -314.14084231796;
-                ["x"] = 548.88831485568;
-                ["g"] = 6;
-                ["sublevel"] = 3;
-            };
-            [3] = {
-                ["y"] = -366.64991773679;
-                ["x"] = 483.44108508101;
-                ["g"] = 3;
-                ["sublevel"] = 3;
-            };
-            [6] = {
-                ["y"] = -360.81253713167;
-                ["x"] = 517.90296147965;
-                ["g"] = 4;
-                ["sublevel"] = 3;
-            };
-            [12] = {
-                ["y"] = -309.0844802683;
-                ["x"] = 537.65021591515;
-                ["g"] = 6;
-                ["sublevel"] = 3;
-            };
-            [14] = {
-                ["y"] = -306.48814632018;
-                ["x"] = 553.0311229253;
-                ["g"] = 6;
-                ["sublevel"] = 3;
-            };
-        };
-        ["id"] = 144301;
-        ["spells"] = {
-            [294349] = {};
-        };
-        ["scale"] = 1;
-        ["health"] = 76850;
-        ["displayId"] = 92217;
-        ["creatureType"] = "Elemental";
-        ["level"] = 120;
-        ["name"] = "Living Waste";
-        ["count"] = 1;
-    };
     [9] = {
         ["clones"] = {
+            [1] = {
+                ["y"] = -196.75146056589;
+                ["x"] = 596.35310107265;
+                ["g"] = 12;
+                ["sublevel"] = 4;
+            };
             [2] = {
                 ["y"] = -450.49903723392;
                 ["x"] = 275.4461942786;
@@ -512,12 +662,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
                 ["y"] = -455.61225024665;
                 ["x"] = 287.37702464163;
                 ["g"] = 13;
-                ["sublevel"] = 4;
-            };
-            [1] = {
-                ["y"] = -196.75146056589;
-                ["x"] = 596.35310107265;
-                ["g"] = 12;
                 ["sublevel"] = 4;
             };
             [4] = {
@@ -539,73 +683,15 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [293670] = {};
         };
         ["id"] = 144299;
-        ["health"] = 768495;
         ["count"] = 4;
+        ["name"] = "Workshop Defender";
         ["displayId"] = 91183;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Workshop Defender";
+        ["health"] = 768495;
         ["characteristics"] = {
             ["Stun"] = true;
             ["Polymorph"] = true;
-        };
-    };
-    [18] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -383.11225682513;
-                ["x"] = 151.30590992095;
-                ["g"] = 15;
-                ["sublevel"] = 4;
-            };
-        };
-        ["id"] = 144249;
-        ["scale"] = 1;
-        ["spells"] = {
-            [292264] = {};
-            [292267] = {};
-            [283551] = {};
-            [292290] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2331;
-        ["instanceID"] = 1178;
-        ["count"] = 0;
-        ["name"] = "Omega Buster";
-        ["displayId"] = 90998;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 122;
-        ["health"] = 4610970;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-    };
-    [5] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -406.34323129692;
-                ["x"] = 435.06247431919;
-                ["sublevel"] = 4;
-            };
-        };
-        ["scale"] = 1.4;
-        ["spells"] = {
-            [296348] = {};
-            [295169] = {};
-            [293986] = {};
-            [294015] = {};
-            [295170] = {};
-            [295183] = {};
-        };
-        ["id"] = 151476;
-        ["health"] = 1921238;
-        ["name"] = "Blastatron X-80";
-        ["displayId"] = 90712;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 121;
-        ["count"] = 8;
-        ["characteristics"] = {
-            ["Taunt"] = true;
         };
     };
     [10] = {
@@ -635,16 +721,457 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [293729] = {};
         };
         ["id"] = 144295;
-        ["health"] = 768495;
         ["count"] = 4;
+        ["name"] = "Mechagon Mechanic";
         ["displayId"] = 91171;
         ["creatureType"] = "Humanoid";
         ["level"] = 120;
-        ["name"] = "Mechagon Mechanic";
+        ["health"] = 768495;
         ["characteristics"] = {
             ["Stun"] = true;
             ["Polymorph"] = true;
         };
+    };
+    [11] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -270.03016453617;
+                ["x"] = 549.93643742759;
+                ["sublevel"] = 4;
+            };
+        };
+        ["id"] = 144248;
+        ["spells"] = {
+            [285454] = {};
+            [285440] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2348;
+        ["instanceID"] = 1178;
+        ["scale"] = 1;
+        ["health"] = 5379465;
+        ["displayId"] = 23397;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 122;
+        ["name"] = "Head Machinist Sparkflux";
+        ["count"] = 0;
+    };
+    [12] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -236.41429530968;
+                ["x"] = 501.59536419878;
+                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -187.966455098;
+                ["x"] = 440.44634915076;
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -214.30605838935;
+                ["x"] = 471.93328013387;
+                ["sublevel"] = 4;
+                ["teeming"] = true;
+            };
+        };
+        ["id"] = 144296;
+        ["spells"] = {
+            [293986] = {};
+            [296348] = {};
+            [294015] = {};
+        };
+        ["scale"] = 1;
+        ["health"] = 1229592;
+        ["displayId"] = 90710;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["name"] = "Spider Tank";
+        ["count"] = 5;
+    };
+    [13] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -441.33086427245;
+                ["x"] = 429.94298772705;
+                ["g"] = 10;
+                ["sublevel"] = 4;
+            };
+            [2] = {
+                ["y"] = -406.72989326751;
+                ["x"] = 297.90466440177;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -406.72989326751;
+                        ["x"] = 297.90466440177;
+                    };
+                    [2] = {
+                        ["y"] = -431.93310938028;
+                        ["x"] = 286.26100243489;
+                    };
+                    [3] = {
+                        ["y"] = -406.72989326751;
+                        ["x"] = 297.90466440177;
+                    };
+                    [4] = {
+                        ["y"] = -378.90164926768;
+                        ["x"] = 300.04098072629;
+                    };
+                    [5] = {
+                        ["y"] = -357.04902805453;
+                        ["x"] = 300.90360986371;
+                    };
+                    [6] = {
+                        ["y"] = -327.18854897621;
+                        ["x"] = 297.50283730687;
+                    };
+                    [7] = {
+                        ["y"] = -357.04902805453;
+                        ["x"] = 300.90360986371;
+                    };
+                    [8] = {
+                        ["y"] = -378.90164926768;
+                        ["x"] = 300.04098072629;
+                    };
+                };
+                ["sublevel"] = 4;
+            };
+            [3] = {
+                ["y"] = -364.25047627049;
+                ["x"] = 313.27374351498;
+                ["patrol"] = {
+                    [1] = {
+                        ["y"] = -364.25047627049;
+                        ["x"] = 313.27374351498;
+                    };
+                    [2] = {
+                        ["y"] = -347.28133549391;
+                        ["x"] = 313.40512735786;
+                    };
+                    [3] = {
+                        ["y"] = -325.60759964757;
+                        ["x"] = 311.03286477058;
+                    };
+                    [4] = {
+                        ["y"] = -347.28133549391;
+                        ["x"] = 313.40512735786;
+                    };
+                    [5] = {
+                        ["y"] = -364.25047627049;
+                        ["x"] = 313.27374351498;
+                    };
+                    [6] = {
+                        ["y"] = -394.79246970652;
+                        ["x"] = 310.17584582341;
+                    };
+                    [7] = {
+                        ["y"] = -440.70032748029;
+                        ["x"] = 296.44056787358;
+                    };
+                    [8] = {
+                        ["y"] = -394.79246970652;
+                        ["x"] = 310.17584582341;
+                    };
+                };
+                ["sublevel"] = 4;
+            };
+            [4] = {
+                ["y"] = -291.74184239816;
+                ["x"] = 281.84583501642;
+                ["g"] = 14;
+                ["sublevel"] = 4;
+            };
+            [5] = {
+                ["y"] = -288.03820044584;
+                ["x"] = 302.07848946789;
+                ["g"] = 14;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1;
+        ["spells"] = {
+            [297133] = {};
+            [297128] = {};
+            [294195] = {};
+            [297127] = {};
+        };
+        ["stealthDetect"] = true;
+        ["id"] = 144298;
+        ["count"] = 6;
+        ["displayId"] = 90855;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["health"] = 1229592;
+        ["name"] = "Defense Bot Mk III";
+    };
+    [14] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -362.16512816792;
+                ["x"] = 179.1418279613;
+                ["g"] = 15;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [291928] = {};
+            [291613] = {};
+            [291626] = {};
+            [291865] = {};
+            [291878] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2331;
+        ["instanceID"] = 1178;
+        ["name"] = "Aerial Unit R-21/X";
+        ["health"] = 3688776;
+        ["displayId"] = 90547;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 122;
+        ["count"] = 0;
+        ["id"] = 150396;
+    };
+    [15] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -353.06278997051;
+                ["x"] = 522.29246790592;
+                ["g"] = 4;
+                ["sublevel"] = 3;
+            };
+            [2] = {
+                ["y"] = -282.52821719069;
+                ["x"] = 538.95927907908;
+                ["g"] = 7;
+                ["sublevel"] = 3;
+            };
+            [3] = {
+                ["sublevel"] = 3;
+                ["x"] = 527.58760397305;
+                ["teeming"] = true;
+                ["g"] = 7;
+                ["y"] = -289.16189808614;
+            };
+        };
+        ["id"] = 151773;
+        ["spells"] = {
+            [294107] = {};
+            [294180] = {};
+        };
+        ["scale"] = 1;
+        ["name"] = "Junkyard D.0.G.";
+        ["health"] = 768495;
+        ["displayId"] = 90511;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 120;
+        ["count"] = 4;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+    };
+    [16] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -386.30433113779;
+                ["x"] = 362.18281730758;
+                ["sublevel"] = 3;
+            };
+            [2] = {
+                ["y"] = -381.92194523713;
+                ["x"] = 457.90817655344;
+                ["sublevel"] = 3;
+            };
+            [3] = {
+                ["y"] = -327.43196399115;
+                ["x"] = 545.88667894292;
+                ["g"] = 5;
+                ["sublevel"] = 3;
+            };
+            [4] = {
+                ["sublevel"] = 3;
+                ["x"] = 564.88785899073;
+                ["teeming"] = true;
+                ["g"] = 5;
+                ["y"] = -330.35849621681;
+            };
+        };
+        ["id"] = 144293;
+        ["spells"] = {
+            [294290] = {};
+            [294291] = {};
+            [294324] = {};
+        };
+        ["scale"] = 1;
+        ["name"] = "Waste Processing Unit";
+        ["health"] = 1229592;
+        ["displayId"] = 92177;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 121;
+        ["count"] = 6;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+            ["Stun"] = true;
+        };
+    };
+    [17] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -373.14504241806;
+                ["x"] = 476.58863517454;
+                ["g"] = 3;
+                ["sublevel"] = 3;
+            };
+            [2] = {
+                ["y"] = -379.9856887912;
+                ["x"] = 480.97216346021;
+                ["g"] = 3;
+                ["sublevel"] = 3;
+            };
+            [3] = {
+                ["y"] = -366.64991773679;
+                ["x"] = 483.44108508101;
+                ["g"] = 3;
+                ["sublevel"] = 3;
+            };
+            [4] = {
+                ["y"] = -374.01261308778;
+                ["x"] = 486.18292792546;
+                ["g"] = 3;
+                ["sublevel"] = 3;
+            };
+            [5] = {
+                ["y"] = -379.5492887157;
+                ["x"] = 489.23554166131;
+                ["g"] = 3;
+                ["sublevel"] = 3;
+            };
+            [6] = {
+                ["y"] = -360.81253713167;
+                ["x"] = 517.90296147965;
+                ["g"] = 4;
+                ["sublevel"] = 3;
+            };
+            [7] = {
+                ["y"] = -366.8408980967;
+                ["x"] = 523.00546261047;
+                ["g"] = 4;
+                ["sublevel"] = 3;
+            };
+            [8] = {
+                ["y"] = -356.11194358718;
+                ["x"] = 530.64769619118;
+                ["g"] = 4;
+                ["sublevel"] = 3;
+            };
+            [9] = {
+                ["y"] = -364.20479692043;
+                ["x"] = 531.25302333858;
+                ["g"] = 4;
+                ["sublevel"] = 3;
+            };
+            [10] = {
+                ["y"] = -316.68566636406;
+                ["x"] = 540.59579527792;
+                ["g"] = 6;
+                ["sublevel"] = 3;
+            };
+            [11] = {
+                ["y"] = -314.14084231796;
+                ["x"] = 548.88831485568;
+                ["g"] = 6;
+                ["sublevel"] = 3;
+            };
+            [12] = {
+                ["y"] = -309.0844802683;
+                ["x"] = 537.65021591515;
+                ["g"] = 6;
+                ["sublevel"] = 3;
+            };
+            [13] = {
+                ["y"] = -304.98565488565;
+                ["x"] = 544.44718769335;
+                ["g"] = 6;
+                ["sublevel"] = 3;
+            };
+            [14] = {
+                ["y"] = -306.48814632018;
+                ["x"] = 553.0311229253;
+                ["g"] = 6;
+                ["sublevel"] = 3;
+            };
+        };
+        ["id"] = 144301;
+        ["spells"] = {
+            [294349] = {};
+        };
+        ["scale"] = 1;
+        ["health"] = 76850;
+        ["displayId"] = 92217;
+        ["creatureType"] = "Elemental";
+        ["level"] = 120;
+        ["name"] = "Living Waste";
+        ["count"] = 1;
+    };
+    [18] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -383.11225682513;
+                ["x"] = 151.30590992095;
+                ["g"] = 15;
+                ["sublevel"] = 4;
+            };
+        };
+        ["scale"] = 1;
+        ["characteristics"] = {
+            ["Taunt"] = true;
+        };
+        ["spells"] = {
+            [292264] = {};
+            [292267] = {};
+            [283551] = {};
+            [292290] = {};
+        };
+        ["isBoss"] = true;
+        ["encounterID"] = 2331;
+        ["instanceID"] = 1178;
+        ["name"] = "Omega Buster";
+        ["health"] = 4610970;
+        ["displayId"] = 90998;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 122;
+        ["count"] = 0;
+        ["id"] = 144249;
+    };
+    [19] = {
+        ["clones"] = {
+            [1] = {
+                ["y"] = -374.2151489309;
+                ["x"] = 269.53200910371;
+                ["g"] = 1;
+                ["sublevel"] = 1;
+            };
+            [2] = {
+                ["y"] = -354.32391026756;
+                ["x"] = 259.27553305712;
+                ["g"] = 1;
+                ["sublevel"] = 1;
+            };
+        };
+        ["id"] = 151657;
+        ["spells"] = {
+            [301088] = {};
+        };
+        ["scale"] = 1.5;
+        ["health"] = 302142;
+        ["displayId"] = 21209;
+        ["creatureType"] = "Mechanical";
+        ["level"] = 120;
+        ["name"] = "Bomb Tonk";
+        ["count"] = 4;
     };
     [20] = {
         ["clones"] = {
@@ -703,30 +1230,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["name"] = "Strider Tonk";
         ["count"] = 4;
     };
-    [11] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -270.03016453617;
-                ["x"] = 549.93643742759;
-                ["sublevel"] = 4;
-            };
-        };
-        ["id"] = 144248;
-        ["spells"] = {
-            [285454] = {};
-            [285440] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2348;
-        ["instanceID"] = 1178;
-        ["scale"] = 1;
-        ["health"] = 5379465;
-        ["displayId"] = 23397;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 122;
-        ["name"] = "Head Machinist Sparkflux";
-        ["count"] = 0;
-    };
     [22] = {
         ["clones"] = {
             [1] = {
@@ -740,9 +1243,9 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["spells"] = {
             [285344] = {};
             [305393] = {};
-            [282801] = {};
             [285020] = {};
             [285377] = {};
+            [282801] = {};
         };
         ["isBoss"] = true;
         ["encounterID"] = 2336;
@@ -755,199 +1258,35 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["name"] = "The Platinum Pummeler";
         ["count"] = 0;
     };
-    [3] = {
+    [23] = {
         ["clones"] = {
             [1] = {
-                ["y"] = -184.37266990175;
-                ["x"] = 590.01275028241;
-                ["week"] = {
-                    [1] = true;
-                };
-                ["sublevel"] = 4;
-            };
-            [2] = {
-                ["y"] = -480.89389827979;
-                ["x"] = 264.35598537293;
-                ["week"] = {
-                    [5] = true;
-                    [2] = true;
-                    [11] = true;
-                    [8] = true;
-                };
-                ["sublevel"] = 4;
+                ["y"] = -368.75253591347;
+                ["x"] = 195.09111527009;
+                ["g"] = 2;
+                ["sublevel"] = 1;
             };
         };
-        ["health"] = 1998087;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
+        ["id"] = 145185;
         ["spells"] = {
-            [314463] = {};
-            [314397] = {};
-            [314411] = {};
-            [314406] = {};
-            [314467] = {};
+            [283421] = {};
+            [283640] = {};
+            [283565] = {};
+            [285152] = {};
+            [283422] = {};
+            [285468] = {};
+            [285388] = {};
         };
-        ["stealthDetect"] = true;
-        ["name"] = "Voidweaver Mal'thir";
-        ["corrupted"] = true;
-        ["teemingCount"] = 6;
-        ["count"] = 4;
-        ["displayId"] = 91910;
-        ["creatureType"] = "Beast";
+        ["isBoss"] = true;
+        ["encounterID"] = 2336;
+        ["instanceID"] = 1178;
+        ["scale"] = 1.5;
+        ["health"] = 2014280;
+        ["displayId"] = 91879;
+        ["creatureType"] = "Mechanical";
         ["level"] = 122;
-        ["id"] = 161241;
-        ["scale"] = 1.4;
-    };
-    [6] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -421.66419640937;
-                ["x"] = 499.70337825139;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [2] = {
-                ["y"] = -430.63364694467;
-                ["x"] = 496.86060747485;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [4] = {
-                ["y"] = -435.51047744238;
-                ["x"] = 484.6561799684;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [8] = {
-                ["y"] = -427.34976261929;
-                ["x"] = 490.17023050112;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [16] = {
-                ["y"] = -350.51236104974;
-                ["x"] = 508.90528020342;
-                ["g"] = 11;
-                ["sublevel"] = 4;
-            };
-            [17] = {
-                ["y"] = -356.92822420273;
-                ["x"] = 514.00022987796;
-                ["g"] = 11;
-                ["sublevel"] = 4;
-            };
-            [9] = {
-                ["y"] = -440.55886808142;
-                ["x"] = 478.16193916255;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [5] = {
-                ["y"] = -443.69571816028;
-                ["x"] = 487.30300371032;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [10] = {
-                ["y"] = -420.92899835806;
-                ["x"] = 487.54800405373;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [11] = {
-                ["y"] = -413.68897609184;
-                ["x"] = 486.03961528088;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [3] = {
-                ["y"] = -436.90737631667;
-                ["x"] = 492.84152392959;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [6] = {
-                ["y"] = -428.52550114086;
-                ["x"] = 484.67447267549;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [12] = {
-                ["y"] = -432.47763924175;
-                ["x"] = 477.97117706412;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [13] = {
-                ["y"] = -345.60610751627;
-                ["x"] = 500.60243944338;
-                ["g"] = 11;
-                ["sublevel"] = 4;
-            };
-            [7] = {
-                ["y"] = -419.85584273725;
-                ["x"] = 493.51113606412;
-                ["g"] = 8;
-                ["sublevel"] = 4;
-            };
-            [14] = {
-                ["y"] = -344.09650599496;
-                ["x"] = 510.79229020326;
-                ["g"] = 11;
-                ["sublevel"] = 4;
-            };
-            [15] = {
-                ["y"] = -352.96549186558;
-                ["x"] = 499.84760628993;
-                ["g"] = 11;
-                ["sublevel"] = 4;
-            };
-        };
-        ["id"] = 144300;
-        ["scale"] = 0.7;
+        ["name"] = "Gnomercy 4.U.";
         ["count"] = 0;
-        ["name"] = "Mechagon Citizen";
-        ["displayId"] = 91167;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 120;
-        ["health"] = 192124;
-        ["characteristics"] = {
-            ["Stun"] = true;
-        };
-    };
-    [12] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -236.41429530968;
-                ["x"] = 501.59536419878;
-                ["sublevel"] = 4;
-            };
-            [2] = {
-                ["y"] = -187.966455098;
-                ["x"] = 440.44634915076;
-                ["sublevel"] = 4;
-            };
-            [3] = {
-                ["y"] = -214.30605838935;
-                ["x"] = 471.93328013387;
-                ["sublevel"] = 4;
-                ["teeming"] = true;
-            };
-        };
-        ["id"] = 144296;
-        ["spells"] = {
-            [293986] = {};
-            [296348] = {};
-            [294015] = {};
-        };
-        ["scale"] = 1;
-        ["health"] = 1229592;
-        ["displayId"] = 90710;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 121;
-        ["name"] = "Spider Tank";
-        ["count"] = 5;
     };
     [24] = {
         ["clones"] = {
@@ -996,121 +1335,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["health"] = 38425;
         ["name"] = "Alarm-o-Bot";
     };
-    [13] = {
-        ["clones"] = {
-            [2] = {
-                ["y"] = -406.72989326751;
-                ["x"] = 297.90466440177;
-                ["patrol"] = {
-                    [6] = {
-                        ["y"] = -327.18854897621;
-                        ["x"] = 297.50283730687;
-                    };
-                    [2] = {
-                        ["y"] = -431.93310938028;
-                        ["x"] = 286.26100243489;
-                    };
-                    [8] = {
-                        ["y"] = -378.90164926768;
-                        ["x"] = 300.04098072629;
-                    };
-                    [3] = {
-                        ["y"] = -406.72989326751;
-                        ["x"] = 297.90466440177;
-                    };
-                    [1] = {
-                        ["y"] = -406.72989326751;
-                        ["x"] = 297.90466440177;
-                    };
-                    [4] = {
-                        ["y"] = -378.90164926768;
-                        ["x"] = 300.04098072629;
-                    };
-                    [5] = {
-                        ["y"] = -357.04902805453;
-                        ["x"] = 300.90360986371;
-                    };
-                    [7] = {
-                        ["y"] = -357.04902805453;
-                        ["x"] = 300.90360986371;
-                    };
-                };
-                ["sublevel"] = 4;
-            };
-            [3] = {
-                ["y"] = -364.25047627049;
-                ["x"] = 313.27374351498;
-                ["patrol"] = {
-                    [6] = {
-                        ["y"] = -394.79246970652;
-                        ["x"] = 310.17584582341;
-                    };
-                    [2] = {
-                        ["y"] = -347.28133549391;
-                        ["x"] = 313.40512735786;
-                    };
-                    [8] = {
-                        ["y"] = -394.79246970652;
-                        ["x"] = 310.17584582341;
-                    };
-                    [3] = {
-                        ["y"] = -325.60759964757;
-                        ["x"] = 311.03286477058;
-                    };
-                    [1] = {
-                        ["y"] = -364.25047627049;
-                        ["x"] = 313.27374351498;
-                    };
-                    [4] = {
-                        ["y"] = -347.28133549391;
-                        ["x"] = 313.40512735786;
-                    };
-                    [5] = {
-                        ["y"] = -364.25047627049;
-                        ["x"] = 313.27374351498;
-                    };
-                    [7] = {
-                        ["y"] = -440.70032748029;
-                        ["x"] = 296.44056787358;
-                    };
-                };
-                ["sublevel"] = 4;
-            };
-            [1] = {
-                ["y"] = -441.33086427245;
-                ["x"] = 429.94298772705;
-                ["g"] = 10;
-                ["sublevel"] = 4;
-            };
-            [4] = {
-                ["y"] = -291.74184239816;
-                ["x"] = 281.84583501642;
-                ["g"] = 14;
-                ["sublevel"] = 4;
-            };
-            [5] = {
-                ["y"] = -288.03820044584;
-                ["x"] = 302.07848946789;
-                ["g"] = 14;
-                ["sublevel"] = 4;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [297133] = {};
-            [297128] = {};
-            [294195] = {};
-            [297127] = {};
-        };
-        ["stealthDetect"] = true;
-        ["id"] = 144298;
-        ["count"] = 6;
-        ["displayId"] = 90855;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 121;
-        ["health"] = 1229592;
-        ["name"] = "Defense Bot Mk III";
-    };
     [26] = {
         ["clones"] = {
             [1] = {
@@ -1131,182 +1355,14 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             [294107] = {};
         };
         ["scale"] = 1;
-        ["count"] = 4;
         ["name"] = "G.U.A.R.D.";
+        ["health"] = 768495;
         ["displayId"] = 68856;
         ["creatureType"] = "Mechanical";
         ["level"] = 120;
-        ["health"] = 768495;
+        ["count"] = 4;
         ["characteristics"] = {
             ["Stun"] = true;
         };
-    };
-    [7] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -447.10383393789;
-                ["x"] = 438.24199819465;
-                ["g"] = 10;
-                ["sublevel"] = 4;
-            };
-            [2] = {
-                ["y"] = -431.77408026805;
-                ["x"] = 432.89392785131;
-                ["g"] = 10;
-                ["sublevel"] = 4;
-            };
-            [4] = {
-                ["y"] = -193.33828230687;
-                ["x"] = 611.47784039704;
-                ["g"] = 12;
-                ["sublevel"] = 4;
-            };
-            [3] = {
-                ["y"] = -209.62623239455;
-                ["x"] = 604.72424938609;
-                ["g"] = 12;
-                ["sublevel"] = 4;
-            };
-        };
-        ["scale"] = 1;
-        ["spells"] = {
-            [294195] = {};
-        };
-        ["id"] = 151649;
-        ["health"] = 806920;
-        ["count"] = 4;
-        ["displayId"] = 91349;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 120;
-        ["name"] = "Defense Bot Mk I";
-        ["characteristics"] = {
-            ["Stun"] = true;
-        };
-    };
-    [14] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -362.16512816792;
-                ["x"] = 179.1418279613;
-                ["sublevel"] = 4;
-                ["g"] = 15,
-            };
-        };
-        ["id"] = 150396;
-        ["scale"] = 1;
-        ["spells"] = {
-            [291928] = {};
-            [291613] = {};
-            [291626] = {};
-            [291865] = {};
-            [291878] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2331;
-        ["instanceID"] = 1178;
-        ["count"] = 0;
-        ["name"] = "Aerial Unit R-21/X";
-        ["displayId"] = 90547;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 122;
-        ["health"] = 3688776;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-    };
-    [15] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -353.06278997051;
-                ["x"] = 522.29246790592;
-                ["g"] = 4;
-                ["sublevel"] = 3;
-            };
-            [2] = {
-                ["y"] = -282.52821719069;
-                ["x"] = 538.95927907908;
-                ["g"] = 7;
-                ["sublevel"] = 3;
-            };
-            [3] = {
-                ["sublevel"] = 3;
-                ["x"] = 527.58760397305;
-                ["teeming"] = true;
-                ["g"] = 7;
-                ["y"] = -289.16189808614;
-            };
-        };
-        ["id"] = 151773;
-        ["spells"] = {
-            [294107] = {};
-            [294180] = {};
-        };
-        ["scale"] = 1;
-        ["count"] = 4;
-        ["name"] = "Junkyard D.0.G.";
-        ["displayId"] = 90511;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 120;
-        ["health"] = 768495;
-        ["characteristics"] = {
-            ["Taunt"] = true;
-        };
-    };
-    [19] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -374.2151489309;
-                ["x"] = 269.53200910371;
-                ["g"] = 1;
-                ["sublevel"] = 1;
-            };
-            [2] = {
-                ["y"] = -354.32391026756;
-                ["x"] = 259.27553305712;
-                ["g"] = 1;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 151657;
-        ["spells"] = {
-            [301088] = {};
-        };
-        ["scale"] = 1.5;
-        ["health"] = 302142;
-        ["displayId"] = 21209;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 120;
-        ["name"] = "Bomb Tonk";
-        ["count"] = 4;
-    };
-    [23] = {
-        ["clones"] = {
-            [1] = {
-                ["y"] = -368.75253591347;
-                ["x"] = 195.09111527009;
-                ["g"] = 2;
-                ["sublevel"] = 1;
-            };
-        };
-        ["id"] = 145185;
-        ["spells"] = {
-            [283421] = {};
-            [283640] = {};
-            [283565] = {};
-            [285152] = {};
-            [283422] = {};
-            [285468] = {};
-            [285388] = {};
-        };
-        ["isBoss"] = true;
-        ["encounterID"] = 2336;
-        ["instanceID"] = 1178;
-        ["scale"] = 1.5;
-        ["health"] = 2014280;
-        ["displayId"] = 91879;
-        ["creatureType"] = "Mechanical";
-        ["level"] = 122;
-        ["name"] = "Gnomercy 4.U.";
-        ["count"] = 0;
     };
 };
