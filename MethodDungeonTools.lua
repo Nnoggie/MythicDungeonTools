@@ -1625,11 +1625,11 @@ function MethodDungeonTools:DisplayMDISelector()
         local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened A",[15]="Awakened B"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-            local preset = MethodDungeonTools:GetCurrentPreset()
+            local preset = self:GetCurrentPreset()
             preset.mdi.beguiling = key
-            db.currentSeason = (key == 1 or key == 2 or key == 3) and 3 or (key == 13 and 2) or (key == 14 and 4) or (key == 15 and 4)
-            MethodDungeonTools:UpdateMap()
-            if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+            db.currentSeason = self:GetEffectivePresetSeason(preset)
+            self:UpdateMap()
+            if self.liveSessionActive and preset.uid == self.livePresetUID then
                 self:LiveSession_SendMDI("beguiling",key)
             end
         end)
@@ -1676,7 +1676,7 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         preset.mdi.beguiling = preset.mdi.beguiling or 1
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-        db.currentSeason = (preset.mdi.beguiling == 1 or preset.mdi.beguiling == 2 or preset.mdi.beguiling == 3) and 3 or (preset.mdi.beguiling == 13 and 2) or (preset.mdi.beguiling == 14 and 4)
+        db.currentSeason = MethodDungeonTools:GetEffectivePresetSeason(preset)
         MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         --freehold
@@ -1691,7 +1691,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame:Show()
         MethodDungeonTools:ToggleFreeholdSelector(false)
     else
-        db.currentSeason = 4
+        db.currentSeason = defaultSavedVars.global.currentSeason
         MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
@@ -2216,6 +2216,16 @@ function MethodDungeonTools:GetEffectivePresetWeek(preset)
         week = preset.week
     end
     return week
+end
+
+---GetEffectivePresetSeason
+function MethodDungeonTools:GetEffectivePresetSeason(preset)
+    local season = db.currentSeason
+    if db.MDI.enabled then
+        local mdiWeek = preset.mdi.beguiling
+        season = (mdiWeek == 1 or mdiWeek == 2 or mdiWeek == 3) and 3 or mdiWeek == 13 and 2 or (mdiWeek == 14 or mdiWeek == 15) and 4
+    end
+    return season
 end
 
 ---ReturnToLivePreset
