@@ -91,9 +91,7 @@ local defaultSavedVars = {
 		presets = {},
 		currentPreset = {},
 		dataCollectionActive = false,
-		automaticColorsNum = 12,
-		automaticColors = true,
-        colorPaletteInfo = {
+		colorPaletteInfo = {
             autoColoring = true,
             forceColorBlindMode = false,
             colorPaletteIdx = 1,
@@ -3782,7 +3780,7 @@ function MethodDungeonTools:SetAutomaticColor(index, ok)
 	--if db.brightColors then V = 1 end
 
 	local r, g, b = self:HSVtoRGB(H, 0.7554, V)
-    print(r,g,b)
+
 	--self:DungeonEnemies_SetPullColor(index, r, g, b)
 	--self:UpdatePullButtonColor(index, r, g, b)
 	--self:DungeonEnemies_UpdateBlipColors(index, r, g, b)
