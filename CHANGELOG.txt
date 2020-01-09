@@ -6,10 +6,11 @@ v3.0.0
 - Added smooth panning for the map frame
 - The toolbar will now be expanded by default and will remember if the user collapsed or expanded it
 - The enemy info frame will now update the health values if the dungeon difficulty is changed
+- MDT will set the map to the current dungeon after entering a new dungeon for the first time and opening the AddOn
 - Fullscreen mode now also properly supports more narrow aspect ratios
 - Users can no longer resize the AddOn-window in such a way that the draggable areas become unreachable.
 - Added a new warning label to indicate if the dungeon difficulty is currently set to a level below 10
-- Improved loading times of very large maps like motherlode
+- Improved loading times for maps that include a very large number of enemies
 
 v2.9.6
 - fixed an error that could cause the AddOn to stop loading properly in certain presets

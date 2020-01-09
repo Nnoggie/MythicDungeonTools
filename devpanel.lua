@@ -726,7 +726,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             container:AddChild(weekCheckbox)
         end
         local createSpireButton = AceGUI:Create("Button")
-        createSpireButton:SetText("Create Spire+Rift+NPC")
+        createSpireButton:SetText("Create Spire+NPC")
         local tooltipIdxToNpcId = {
             [1] = 161243,
             [2] = 161241,
@@ -743,7 +743,6 @@ function MethodDungeonTools:CreateDevPanel(frame)
             local newWeek = MethodDungeonTools:DeepCopy(week)
             tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,tooltipText=spireNames[tooltipIndex],template="VignettePinTemplate",type="nyalothaSpire",scale=scale,npcId=tooltipIdxToNpcId[tooltipIndex]})
             newWeek = MethodDungeonTools:DeepCopy(week)
-            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,template="VignettePinTemplate",type="nyalothaRift",scale=scale,npcId=tooltipIdxToNpcId[tooltipIndex]})
             MethodDungeonTools:POI_UpdateAll()
             --add associated NPC to the map
             MethodDungeonTools:AddCloneFromData(tooltipIdxToNpcId[tooltipIndex],newWeek)
