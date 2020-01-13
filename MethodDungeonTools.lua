@@ -1164,16 +1164,14 @@ function MethodDungeonTools:MakeSidePanel(frame)
         MethodDungeonTools:SetUniqueID(preset)
         preset.mdiEnabled = db.MDI.enabled
         preset.difficulty = db.currentDifficulty
-
-
-        local export = MethodDungeonTools:TableToString(preset,true,5)
-        MethodDungeonTools:HideAllDialogs()
-        MethodDungeonTools.main_frame.ExportFrame:Show()
+		local export = MethodDungeonTools:TableToString(preset,true,5)
+		MethodDungeonTools:HideAllDialogs()
+		MethodDungeonTools.main_frame.ExportFrame:Show()
         MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
-        MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
-        MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
-        MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
-        MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+		MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+		MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(export)
+		MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
+		MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
         MethodDungeonTools.main_frame.ExportFrameEditbox:SetLabel(preset.text.." "..string.len(export))
         if db.colorPaletteInfo.forceColorBlindMode then MethodDungeonTools:ColorAllPulls() end
     end)
@@ -1358,20 +1356,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsButton)
 
     --Week Dropdown (Infested / Affixes)
-    local beguilingInfo = {
-        [1] = {
-            ["text"]="Void",
-            ["icon"]= CreateTextureMarkup(132886, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
-        },
-        [2] = {
-            ["text"]="Tides",
-            ["icon"]= CreateTextureMarkup(132315, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
-        },
-        [3] = {
-            ["text"]="Enchanted",
-            ["icon"]= CreateTextureMarkup(135735, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0),
-        },
-    }
     local function makeAffixString(week,affixes,longText)
         local ret
         local sep = ""
@@ -1391,16 +1375,11 @@ function MethodDungeonTools:MakeSidePanel(frame)
                 ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0).."  "
             end
         end
-        --beguiling configuration
-        --[[
-        local w = week%3
-        if w == 0 then w = 3 end
-        if longText then
-            ret = ret.." ("..beguilingInfo[w].text..")"
-        else
-            ret = ret..beguilingInfo[w].icon
-        end
-        ]]
+        local rotation = ""
+        if longText then rotation = rotation.." (Rotation " end
+        rotation = rotation..((week-1)%4>=2 and "B" or "A")
+        if longText then rotation = rotation..")" end
+        ret = ret..rotation
         return ret
     end
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
@@ -1651,20 +1630,14 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         MethodDungeonTools.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetLabel("Seasonal Affix:")
-        local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened 1",[15]="Awakened 2",[16]="Awakened 3"}
+        local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened A",[15]="Awakened B"}
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-            local preset = MethodDungeonTools:GetCurrentPreset()
+            local preset = self:GetCurrentPreset()
             preset.mdi.beguiling = key
-            db.currentSeason = (key == 1 or key == 2 or key == 3) and 3 or (key == 13 and 2) or (key == 14 and 4)
-            MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-            MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
-            MethodDungeonTools:UpdateProgressbar()
-            MethodDungeonTools:ReloadPullButtons()
-            MethodDungeonTools:POI_UpdateAll()
-            MethodDungeonTools:KillAllAnimatedLines()
-            MethodDungeonTools:DrawAllAnimatedLines()
-            if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
+            db.currentSeason = self:GetEffectivePresetSeason(preset)
+            self:UpdateMap()
+            if self.liveSessionActive and preset.uid == self.livePresetUID then
                 self:LiveSession_SendMDI("beguiling",key)
             end
         end)
@@ -1711,7 +1684,7 @@ function MethodDungeonTools:DisplayMDISelector()
         --beguiling
         preset.mdi.beguiling = preset.mdi.beguiling or 1
         MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-        db.currentSeason = (preset.mdi.beguiling == 1 or preset.mdi.beguiling == 2 or preset.mdi.beguiling == 3) and 3 or (preset.mdi.beguiling == 13 and 2) or (preset.mdi.beguiling == 14 and 4)
+        db.currentSeason = MethodDungeonTools:GetEffectivePresetSeason(preset)
         MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         --freehold
@@ -1726,7 +1699,7 @@ function MethodDungeonTools:DisplayMDISelector()
         MethodDungeonTools.MDISelector.frame:Show()
         MethodDungeonTools:ToggleFreeholdSelector(false)
     else
-        db.currentSeason = 4
+        db.currentSeason = defaultSavedVars.global.currentSeason
         MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
         MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
         MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
@@ -2241,12 +2214,21 @@ function MethodDungeonTools:GetEffectivePresetWeek(preset)
     if db.MDI.enabled then
         week = preset.mdi.beguiling or 1
         if week == 14 then week = 1 end
-        if week == 15 then week = 2 end
-        if week == 16 then week = 3 end
+        if week == 15 then week = 3 end
     else
         week = preset.week
     end
     return week
+end
+
+---GetEffectivePresetSeason
+function MethodDungeonTools:GetEffectivePresetSeason(preset)
+    local season = db.currentSeason
+    if db.MDI.enabled then
+        local mdiWeek = preset.mdi.beguiling
+        season = (mdiWeek == 1 or mdiWeek == 2 or mdiWeek == 3) and 3 or mdiWeek == 13 and 2 or (mdiWeek == 14 or mdiWeek == 15) and 4
+    end
+    return season
 end
 
 ---ReturnToLivePreset
@@ -2761,6 +2743,8 @@ function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap,init)
 	MethodDungeonTools:UpdatePresetDropDown()
 	if not ignoreUpdateMap then MethodDungeonTools:UpdateMap() end
     MethodDungeonTools:ZoomMapToDefault()
+     --Colors the first pull in "Default" presets
+    if db.currentPreset[db.currentDungeonIdx] == 1 then MethodDungeonTools:ColorPull() end
 end
 
 function MethodDungeonTools:DeletePreset(index)
@@ -3211,9 +3195,9 @@ local colorPaletteValues = {
         [2] = {[1]=1, [2]=1, [3]=0.0},
     },
     [3] = { --Red, Green and Blue values
-        [1] = {[1]=1.0, [2]=0.0, [3]=0.0},
-        [2] = {[1]=0.0, [2]=1.0, [3]=0.0},
-        [3] = {[1]=0.0, [2]=0.0, [3]=1.0},
+        [1] = {[1]=0.85882, [2]=0.058824, [3]=0.15294},
+        [2] = {[1]=0.49804, [2]=1.0, [3]=0.0},
+        [3] = {[1]=0.0, [2]=0.50196, [3]=1.0},
     },
     [4] = { --High Contrast values
         [1] = {[1]=1, [2]=0.2446, [3]=1},
@@ -3263,6 +3247,7 @@ function MethodDungeonTools:SetPresetColorPaletteInfo()
             preset.colorPaletteInfo.numberCustomColors = db.colorPaletteInfo.numberCustomColors
         end
     end
+    --Code below works, but in most cases it saves more data to the preset and thereby significantly increases the export string length
     --MethodDungeonTools:GetCurrentPreset().colorPaletteInfo = db.colorPaletteInfo
 end
 
@@ -3313,6 +3298,7 @@ function MethodDungeonTools:ColorAllPulls(colorValues, startFrom, bypass, export
         end
     end
 end
+
 ---MakeCustomColorFrame
 ---creates frame housing settings for user customized color palette
 function MethodDungeonTools:MakeCustomColorFrame(frame)
@@ -3339,23 +3325,14 @@ function MethodDungeonTools:MakeCustomColorFrame(frame)
         else
             db.colorPaletteInfo.numberCustomColors = value
         end
+        MethodDungeonTools:SetPresetColorPaletteInfo()
+        MethodDungeonTools:ColorAllPulls()
         frame.CustomColorFrame:ReleaseChildren()
         frame.CustomColorFrame:Release()
         MethodDungeonTools:MakeCustomColorFrame(frame)
         MethodDungeonTools:OpenCustomColorsDialog()
     end)
     frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
-
-    -- Might use this button for a different feature, so keeping it here for the time being.
-    --Button to execute function MethodDungeonTools:ColorAllPulls()
-    --frame.CustomColorFrame.ConfirmationButton = AceGUI:Create("Button")
-    --frame.CustomColorFrame.ConfirmationButton:SetText("Apply")
-    --frame.CustomColorFrame.ConfirmationButton:SetRelativeWidth(0.3)
-    --frame.CustomColorFrame.ConfirmationButton:SetCallback("OnClick", function(event)
-    --    MethodDungeonTools:SetPresetColorPaletteInfo()
-    --    MethodDungeonTools:ColorAllPulls()
-    --end)
-    --frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ConfirmationButton)
 
     --Loop to create as many colorpickers as requested limited by db.colorPaletteInfo.numberCustomColors
     ColorPicker = {}
@@ -3372,6 +3349,8 @@ function MethodDungeonTools:MakeCustomColorFrame(frame)
         ColorPicker[i]:SetHeight(15)
         ColorPicker[i]:SetCallback("OnValueConfirmed", function(widget, event, r, g, b)
                 db.colorPaletteInfo.customPaletteValues[i] = {r,g,b}
+                MethodDungeonTools:SetPresetColorPaletteInfo()
+                MethodDungeonTools:ColorAllPulls()
             end)
         frame.CustomColorFrame:AddChild(ColorPicker[i])
     end
@@ -3432,7 +3411,6 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     frame.button:SetCallback("OnClick", function(widget, callbackName)
         MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
-
     end)
     frame.automaticColorsFrame:AddChild(frame.button)
 
@@ -3768,10 +3746,10 @@ function MethodDungeonTools:AddPull(index)
     MethodDungeonTools:ColorPull()
 end
 
-function MethodDungeonTools:SetAutomaticColor(index, ok)
+function MethodDungeonTools:SetAutomaticColor(index)
 	--if not db.colorPaletteInfo.autoColoring then return end
 
-	local H = (index - 1) * 360 / ok + 120 --db.automaticColorsNum
+	local H = (index - 1) * 360 / 12 + 120 --db.automaticColorsNum
 	--if db.alternatingColors and index % 2 == 0 then
 	--	H = H + 180
 	--end
