@@ -1,7 +1,7 @@
 ## Interface: 80300
 ## Title: Method Dungeon Tools
 ## Author: Nnogga
-## Version: 2.9.8
+## Version: 3.0.0
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MethodDungeonToolsDB
@@ -16,7 +16,7 @@ AceGUIWidget-MethodDungeonToolsSpellButton.lua
 Utility.lua
 MethodDungeonTools.lua
 DungeonEnemies.xml
-EnemyInfo.xml
+EnemyInfo.lua
 Pointsofinterest.lua
 Transmission.lua
 toolbar.lua

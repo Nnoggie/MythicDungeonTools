@@ -87,6 +87,39 @@ local function tshow(t, name, indent)
     return cart .. autoref
 end
 
+function MethodDungeonTools:AddNPCFromUnit(unit)
+    db = MethodDungeonTools:GetDB()
+    local npcId
+    local guid = UnitGUID(unit)
+    if guid then
+        npcId = select(6,strsplit("-", guid))
+        npcId = tonumber(npcId)
+    end
+    local added
+    for _,npcData in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+        if npcData.id == npcId then added = true; break end
+    end
+    if npcId and not added then
+        local npcName = UnitName(unit)
+        local npcHealth = UnitHealthMax(unit)
+        local npcLevel = UnitLevel(unit)
+        local npcCreatureType = UnitCreatureType(unit)
+        local npcScale = 1
+        local npcCount = 0
+        tinsert(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx], {
+            name = npcName,
+            health = npcHealth,
+            level = npcLevel,
+            creatureType = npcCreatureType,
+            id = npcId,
+            scale = npcScale,
+            count = npcCount,
+            clones = {},
+        })
+        return npcId
+    end
+end
+
 local currentEnemyIdx
 local currentCloneGroup
 local currentTeeming
@@ -107,6 +140,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
             {text="Enemy", value="tab2"},
             {text="Infested", value="tab3"},
             {text="Week", value="tab4"},
+            {text="Corrupted", value="tab5"},
         }
     )
     devPanel:SetWidth(250)
@@ -121,7 +155,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
     local function DrawGroup1(container)
         --mapLink Options
         local option1 = AceGUI:Create("EditBox")
-        option1:SetLabel("Target Floor")
+        option1:SetLabel("Target Floor / Bot Index")
         option1:SetText(1)
         local option2 = AceGUI:Create("EditBox")
         option2:SetLabel("Direction 1up -1d 2r -2l")
@@ -131,7 +165,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
         --door options
         local option3 = AceGUI:Create("EditBox")
-        option3:SetLabel("Door Name")
+        option3:SetLabel("Door Name / Connected Index")
         option3:SetText("")
         local option4 = AceGUI:Create("EditBox")
         option4:SetLabel("Door Descripting")
@@ -163,8 +197,9 @@ function MethodDungeonTools:CreateDevPanel(frame)
                     local posx,posy = 300,-200
                     local t = tonumber(option1:GetText())
                     local d = tonumber(option2:GetText())
+                    local c = tonumber(option3:GetText())
                     if t and d then
-                        tinsert(links,{x=posx,y=posy,target=t,direction=d,template="MapLinkPinTemplate",type="mapLink"})
+                        tinsert(links,{x=posx,y=posy,target=t,direction=d,connectionIndex=c,template="MapLinkPinTemplate",type="mapLink"})
                         MethodDungeonTools:POI_UpdateAll()
                     end
                 end,
@@ -227,6 +262,20 @@ function MethodDungeonTools:CreateDevPanel(frame)
                 end,
             },
             [6] = {
+                text="Mechagon Bot",
+                func=function()
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+                    if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                        MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+                    end
+                    local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+                    local botIndex = tonumber(option1:GetText())
+                    local posx,posy = 400+(30*botIndex),-250
+                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="mechagonBot",botIndex=botIndex})
+                    MethodDungeonTools:POI_UpdateAll()
+                end,
+            },
+            [7] = {
                 text="Export to LUA",
                 func=function()
                     local export = tshow(MethodDungeonTools.mapPOIs[db.currentDungeonIdx],"MethodDungeonTools.mapPOIs[dungeonIndex]")
@@ -351,33 +400,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
         local button1 = AceGUI:Create("Button")
         button1:SetText("Create from Target")
         button1:SetCallback("OnClick",function()
-            local npcId
-            local guid = UnitGUID("target")
-            if guid then
-                npcId = select(6,strsplit("-", guid))
-            end
-            if npcId then
-                local npcName = UnitName("target")
-                local npcHealth = UnitHealthMax("target")
-                local npcLevel = UnitLevel("target")
-                local npcCreatureType = UnitCreatureType("target")
-                local npcScale = 1
-                local npcCount = 0
-                tinsert(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx], {
-                    name = npcName,
-                    health = npcHealth,
-                    level = npcLevel,
-                    creatureType = npcCreatureType,
-                    id = tonumber(npcId),
-                    scale = npcScale,
-                    count = npcCount,
-                    clones = {},
-                })
-                --updateFields(npcHealth,npcLevel,npcCreatureType,npcId,npcScale,npcCount)
-
-                updateDropdown(tonumber(npcId))
-            end
-
+            local npcId = MethodDungeonTools:AddNPCFromUnit("target")
+            updateDropdown(npcId)
         end)
         container:AddChild(button1)
 
@@ -596,6 +620,7 @@ function MethodDungeonTools:CreateDevPanel(frame)
         local button3 = AceGUI:Create("Button")
         button3:SetText("Export to LUA")
         button3:SetCallback("OnClick",function()
+            MethodDungeonTools:CleanEnemyData(db.currentDungeonIdx)
             local export = tshow(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx],"MethodDungeonTools.dungeonEnemies[dungeonIndex]")
             MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
             MethodDungeonTools.main_frame.ExportFrame:Show()
@@ -655,6 +680,78 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
     end
 
+    local spireNames = {
+        [1] = "Entropic Spire of Ny'alotha",
+        [2] = "Cursed Spire of Ny'alotha",
+        [3] = "Brutal Spire of Ny'alotha",
+        [4] = "Defiled Spire of Ny'alotha",
+    }
+
+    local function DrawGroup5(container)
+        local index,tooltipIndex,scale
+        local week = {}
+
+        local indexEditbox = AceGUI:Create("EditBox")
+        indexEditbox:SetLabel("Index")
+        indexEditbox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            index = tonumber(text)
+        end)
+        container:AddChild(indexEditbox)
+
+
+        local tooltipIndexEditbox = AceGUI:Create("EditBox")
+        tooltipIndexEditbox:SetLabel("Tooltip Index")
+        tooltipIndexEditbox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            tooltipIndex = tonumber(text)
+        end)
+        container:AddChild(tooltipIndexEditbox)
+
+        local tooltipIndexLabel = AceGUI:Create("Label")
+        tooltipIndexLabel:SetText("1 = Entropic Spire of Ny'alotha (Sam'rek)\n2 = Cursed Spire of Ny'alotha (Voidweaver)\n3 = Brutal Spire of Ny'alotha (Urg'roth)\n4 = Defiled Spire of Ny'alotha (Blood)\n")
+        container:AddChild(tooltipIndexLabel)
+
+        local scaleEditbox = AceGUI:Create("EditBox")
+        scaleEditbox:SetLabel("Scale")
+        scaleEditbox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
+            scale = tonumber(text)
+        end)
+        container:AddChild(scaleEditbox)
+
+        for i=1,12 do
+            local weekCheckbox = AceGUI:Create("CheckBox")
+            weekCheckbox:SetLabel("Week "..i)
+            weekCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+                if value then week[i] = true else week[i] = nil end
+            end)
+            container:AddChild(weekCheckbox)
+        end
+        local createSpireButton = AceGUI:Create("Button")
+        createSpireButton:SetText("Create Spire+NPC")
+        local tooltipIdxToNpcId = {
+            [1] = 161243,
+            [2] = 161241,
+            [3] = 161124,
+            [4] = 161244,
+        }
+        createSpireButton:SetCallback("OnClick",function()
+            if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx] then MethodDungeonTools.mapPOIs[db.currentDungeonIdx] = {} end
+            if not MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] then
+                MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()] = {}
+            end
+            local pois = MethodDungeonTools.mapPOIs[db.currentDungeonIdx][MethodDungeonTools:GetCurrentSubLevel()]
+            local posx,posy = 300,-200
+            local newWeek = MethodDungeonTools:DeepCopy(week)
+            tinsert(pois,{x=posx,y=posy,index=index,weeks=newWeek,tooltipText=spireNames[tooltipIndex],template="VignettePinTemplate",type="nyalothaSpire",scale=scale,npcId=tooltipIdxToNpcId[tooltipIndex]})
+            newWeek = MethodDungeonTools:DeepCopy(week)
+            MethodDungeonTools:POI_UpdateAll()
+            --add associated NPC to the map
+            MethodDungeonTools:AddCloneFromData(tooltipIdxToNpcId[tooltipIndex],newWeek)
+        end)
+        container:AddChild(createSpireButton)
+
+
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -666,6 +763,8 @@ function MethodDungeonTools:CreateDevPanel(frame)
             DrawGroup3(container)
         elseif group == "tab4" then
             DrawGroup4(container)
+        elseif group == "tab5" then
+            DrawGroup5(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)
@@ -693,6 +792,25 @@ function MethodDungeonTools:CreateDevPanel(frame)
 
     end
 
+end
+
+function MethodDungeonTools:AddCloneFromData(npcId,weeks)
+    local sublevel=MethodDungeonTools:GetCurrentSubLevel()
+    local x,y = 320,-200
+    local data
+    for _,enemyData in pairs(MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]) do
+        if enemyData.id == npcId then
+            data = enemyData
+            break
+        end
+    end
+    if not data then
+        print("Could not find enemy with id "..npcId)
+        return
+    end
+    tinsert(data.clones,{x=x,y=y,sublevel=sublevel,week=weeks})
+    print(string.format("MDT: Created clone %s %d at %d,%d",data.name,#data.clones,x,y))
+    MethodDungeonTools:UpdateMap()
 end
 
 ---AddCloneAtCursorPosition
@@ -723,17 +841,21 @@ function MethodDungeonTools:AddPatrolWaypointAtCursorPosition()
         cloneData.patrol = cloneData.patrol or {}
         cloneData.patrol[1] = {x=cloneData.x,y=cloneData.y}
         local cursorx,cursory = MethodDungeonTools:GetCursorPosition()
+        local scale = MethodDungeonTools:GetScale()
+        cursorx = cursorx*(1/scale)
+        cursory = cursory*(1/scale)
         --snap onto other waypoints
-        local dungeonEnemyBlips = MethodDungeonTools:GetDungeonEnemyBlips()
-        for blipIdx,blip in pairs(dungeonEnemyBlips) do
-            if blip.patrol then
-                for idx,waypoint in pairs(blip.patrol) do
-                    if MouseIsOver(waypoint) then
-                        cursorx = waypoint.x
-                        cursory = waypoint.y
-                    end
-                end
+        local patrolBlips = MethodDungeonTools:GetPatrolBlips()
+        for idx,waypoint in pairs(patrolBlips) do
+            if MouseIsOver(waypoint) then
+                cursorx = waypoint.x
+                cursory = waypoint.y
             end
+        end
+        --snap onto blip
+        if MouseIsOver(currentBlip) then
+            cursorx = currentBlip.clone.x
+            cursory = currentBlip.clone.y
         end
         tinsert(cloneData.patrol,{x=cursorx,y=cursory})
         print(string.format("MDT: Created Waypoint %d of %s %d at %d,%d",1,data.name,#cloneData.patrol,cursorx,cursory))

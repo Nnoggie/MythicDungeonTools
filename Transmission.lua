@@ -173,6 +173,8 @@ MethodDungeonTools.liveSessionPrefixes = {
     ["bora"] = "MDTLiveBora",
     ["mdi"] = "MDTLiveMDI",
     ["reqPre"] = "MDTLiveReqPre",
+    ["corrupted"] = "MDTLiveCor",
+    ["difficulty"] = "MDTLiveLvl",
 }
 
 function MDTcommsObject:OnEnable()
@@ -222,7 +224,6 @@ end)
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --[[
-        this is weird
         Sender has no realm name attached when sender is from the same realm as the player
         UnitFullName("Nnogga") returns no realm while UnitFullName("player") does
         UnitFullName("Nnogga-TarrenMill") returns realm even if you are not on the same realm as Nnogga
@@ -272,11 +273,88 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             if preset == MethodDungeonTools:GetCurrentPreset() then
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
+                MethodDungeonTools:POI_UpdateAll() --for corrupted spires
             end
         end
     end
 
-    --live session messages from here on, we ignore our own messages
+    --corrupted
+    if prefix == MethodDungeonTools.liveSessionPrefixes.corrupted then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local offsets = MethodDungeonTools:StringToTable(message,false)
+            --only reposition if no blip is currently moving
+            if not MethodDungeonTools.draggedBlip then
+                preset.value.riftOffsets = offsets
+                MethodDungeonTools:UpdateMap()
+            end
+        end
+    end
+
+    --difficulty
+    if prefix == MethodDungeonTools.liveSessionPrefixes.difficulty then
+        if MethodDungeonTools.liveSessionActive then
+            local db = MethodDungeonTools:GetDB()
+            local difficulty = tonumber(message)
+            if difficulty and difficulty~= db.currentDifficulty then
+                local updateSeasonal
+                if ((difficulty>=10 and db.currentDifficulty<10) or (difficulty<10 and db.currentDifficulty>=10)) then
+                    updateSeasonal = true
+                end
+                db.currentDifficulty = difficulty
+                MethodDungeonTools.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
+                MethodDungeonTools:UpdateProgressbar()
+                if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
+                MethodDungeonTools:ReloadPullButtons()
+                if updateSeasonal then
+                    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+                    MethodDungeonTools.main_frame.sidePanel.difficultyWarning:Toggle(difficulty)
+                    MethodDungeonTools:POI_UpdateAll()
+                    MethodDungeonTools:KillAllAnimatedLines()
+                    MethodDungeonTools:DrawAllAnimatedLines()
+                end
+            end
+        end
+    end
+
+    --week
+    if prefix == MethodDungeonTools.liveSessionPrefixes.week then
+        if MethodDungeonTools.liveSessionActive then
+            local preset = MethodDungeonTools:GetCurrentLivePreset()
+            local week = tonumber(message)
+            if preset.week ~= week then
+                preset.week = week
+                local teeming = MethodDungeonTools:IsPresetTeeming(preset)
+                preset.value.teeming = teeming
+                if preset == MethodDungeonTools:GetCurrentPreset() then
+                    local affixDropdown = MethodDungeonTools.main_frame.sidePanel.affixDropdown
+                    affixDropdown:SetValue(week)
+                    if not MethodDungeonTools:GetCurrentAffixWeek() then
+                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
+                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
+                    elseif MethodDungeonTools:GetCurrentAffixWeek() == week then
+                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
+                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
+                    else
+                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Show()
+                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
+                    end
+                    MethodDungeonTools:DungeonEnemies_UpdateTeeming()
+                    MethodDungeonTools:UpdateFreeholdSelector(week)
+                    MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(week)
+                    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+                    MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
+                    MethodDungeonTools:POI_UpdateAll()
+                    MethodDungeonTools:UpdateProgressbar()
+                    MethodDungeonTools:ReloadPullButtons()
+                    MethodDungeonTools:KillAllAnimatedLines()
+                    MethodDungeonTools:DrawAllAnimatedLines()
+                end
+            end
+        end
+    end
+
+    --live session messages that ignore concurrency from here on, we ignore our own messages
     if sender == UnitFullName("player") then return end
 
 
@@ -394,39 +472,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         end
     end
 
-    --week
-    if prefix == MethodDungeonTools.liveSessionPrefixes.week then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local week = tonumber(message)
-            preset.week = week
-            local teeming = MethodDungeonTools:IsPresetTeeming(preset)
-            preset.value.teeming = teeming
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                local affixDropdown = MethodDungeonTools.main_frame.sidePanel.affixDropdown
-                affixDropdown:SetValue(week)
-                if not MethodDungeonTools:GetCurrentAffixWeek() then
-                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
-                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
-                elseif MethodDungeonTools:GetCurrentAffixWeek() == week then
-                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
-                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
-                else
-                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Show()
-                    MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
-                end
-                MethodDungeonTools:DungeonEnemies_UpdateTeeming()
-                MethodDungeonTools:UpdateFreeholdSelector(week)
-                MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(week)
-                MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
-                MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
-                MethodDungeonTools:POI_UpdateAll()
-                MethodDungeonTools:UpdateProgressbar()
-                MethodDungeonTools:ReloadPullButtons()
-            end
-        end
-    end
-
     --freehold
     if prefix == MethodDungeonTools.liveSessionPrefixes.free then
         if MethodDungeonTools.liveSessionActive then
@@ -472,11 +517,13 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 preset.mdi.beguiling = data
                 if updateUI then
                     MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-                    MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
+                    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
                     MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
                     MethodDungeonTools:UpdateProgressbar()
                     MethodDungeonTools:ReloadPullButtons()
                     MethodDungeonTools:POI_UpdateAll()
+                    MethodDungeonTools:KillAllAnimatedLines()
+                    MethodDungeonTools:DrawAllAnimatedLines()
                 end
             elseif action == "freehold" then
                 preset.mdi.freehold = data
@@ -594,8 +641,10 @@ function MethodDungeonTools:SendToGroup(distribution,silent,preset)
     preset = preset or MethodDungeonTools:GetCurrentPreset()
     --set unique id
     MethodDungeonTools:SetUniqueID(preset)
-    --gotta encode mdi mode into preset
-    preset.mdiEnabled = MethodDungeonTools:GetDB().MDI.enabled
+    --gotta encode mdi mode / difficulty into preset
+    local db = MethodDungeonTools:GetDB()
+    preset.mdiEnabled = db.MDI.enabled
+    preset.difficulty = db.currentDifficulty
     local export = MethodDungeonTools:TableToString(preset,false,5)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,silent})
 end

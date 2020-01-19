@@ -9,6 +9,7 @@ local blips = {}
 local preset
 local selectedGreen = {34/255,139/255,34/255,0.7}
 local patrolColor = {0,0.5,1,0.8}
+local corruptedColor = {1,0,1,0.8}
 
 function MethodDungeonTools:GetDungeonEnemyBlips()
     return blips
@@ -39,7 +40,7 @@ MethodDungeonTools.reapingStatic = {
 }
 
 --From http://wow.gamepedia.com/UI_coordinates
-local function framesOverlap(frameA, frameB,offset)
+function MethodDungeonTools:DoFramesOverlap(frameA, frameB,offset)
     if not frameA or not frameB then return	end
     offset = offset or 0
     --frameA = frameA.texture_Background
@@ -76,9 +77,13 @@ local defaultSizes = {
     ["texture_MouseHighlight"] = 20,
     ["texture_SelectedHighlight"] = 20,
     ["texture_Reaping"] = 8,
-    ["texture_Dragon"] = 23,
+    ["texture_Dragon"] = 26,
     ["texture_Indicator"] = 20,
     ["texture_PullIndicator"] = 23,
+    ["texture_DragDown"] = 8,
+    ["texture_DragLeft"] = 8,
+    ["texture_DragRight"] = 8,
+    ["texture_DragUp"] = 8,
 }
 
 function MDTDungeonEnemyMixin:updateSizes(scale)
@@ -92,12 +97,36 @@ function MDTDungeonEnemyMixin:OnEnter()
     self:SetFrameLevel(self:GetFrameLevel()+5)
     self:DisplayPatrol(true)
     MethodDungeonTools:DisplayBlipTooltip(self,true)
+    if self.data.corrupted then
+        self.texture_DragDown:Show()
+        self.texture_DragLeft:Show()
+        self.texture_DragRight:Show()
+        self.texture_DragUp:Show()
+        if not self.selected then
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
+                    poiFrame.HighlightTexture:Show()
+                    self.spireFrame = poiFrame
+                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,self.spireFrame,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+                    self.spireFrame.animatedLine = self.animatedLine
+                    break
+                end
+            end
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+            if connectedDoor then
+                self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+            end
+        end
+    end
+    self.fontstring_Text1:SetText(MethodDungeonTools:IsCurrentPresetTeeming() and self.data.teemingCount or self.data.count)
     if not self.clone.g then
         self.fontstring_Text1:Show()
         return
     end
     for _,blip in pairs(blips) do
         if blip.clone.g == self.clone.g then
+            blip.fontstring_Text1:SetText(MethodDungeonTools:IsCurrentPresetTeeming() and blip.data.teemingCount or blip.data.count)
             blip.fontstring_Text1:Show()
         end
     end
@@ -112,6 +141,22 @@ function MDTDungeonEnemyMixin:OnLeave()
         self:DisplayPatrol(false)
     end
     MethodDungeonTools:DisplayBlipTooltip(self,false)
+    if self.data.corrupted then
+        self.texture_DragDown:Hide()
+        self.texture_DragLeft:Hide()
+        self.texture_DragRight:Hide()
+        self.texture_DragUp:Hide()
+        local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+        for poiFrame,_ in pairs(active) do
+            if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
+                poiFrame.HighlightTexture:Hide()
+                break
+            end
+        end
+        if not self.selected then
+            MethodDungeonTools:HideAnimatedLine(self.animatedLine)
+        end
+    end
     if not self.clone.g then
         self.fontstring_Text1:Hide()
         return
@@ -132,6 +177,9 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             MethodDungeonTools:GetCurrentPreset().value.selection = {newPullIdx}
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:SetSelectionToPull(newPullIdx)
+
+            MethodDungeonTools:ColorPull(_,newPullIdx)
+            --if MethodDungeonTools:GetPullsNum() == 2 then MethodDungeonTools:SetAutomaticColor(1) end
         end
         MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,IsControlKeyDown())
         MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
@@ -139,6 +187,40 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
         MethodDungeonTools:ReloadPullButtons()
         if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
             MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+        end
+        if self.data.corrupted then
+            local connectedFrame
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if poiFrame.spireIndex and poiFrame.npcId and poiFrame.npcId == self.data.id then
+                    if self.selected then
+                        poiFrame.Texture:SetAtlas("poi-rift1")
+                        poiFrame.Texture:SetSize(17*poiFrame.poiScale,17*poiFrame.poiScale)
+                        poiFrame.HighlightTexture:SetAtlas("poi-rift1")
+                        poiFrame.HighlightTexture:SetSize(17*poiFrame.poiScale,17*poiFrame.poiScale)
+                        poiFrame.isSpire = false
+                        poiFrame.ShowAnim:Play()
+                        poiFrame.textString:Show()
+                    else
+                        poiFrame.Texture:SetSize(16*poiFrame.poiScale,22*poiFrame.poiScale)
+                        poiFrame.Texture:SetAtlas("poi-nzothpylon")
+                        poiFrame.HighlightTexture:SetSize(16,22*poiFrame.poiScale,22,22*poiFrame.poiScale)
+                        poiFrame.HighlightTexture:SetAtlas("poi-nzothpylon")
+                        poiFrame.isSpire = true
+                        poiFrame.ShowAnim:Play()
+                        poiFrame.textString:Hide()
+                    end
+                    connectedFrame = poiFrame
+                    break
+                end
+            end
+            local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+            connectedFrame = connectedDoor or connectedFrame
+            self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedFrame,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+            connectedFrame.animatedLine = self.animatedLine
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_SendCorruptedPositions(preset.value.riftOffsets)
+            end
         end
     elseif button == "RightButton" then
         if db.devMode then
@@ -168,6 +250,10 @@ end
 
 local patrolPoints =  {}
 local patrolLines = {}
+
+function MethodDungeonTools:GetPatrolBlips()
+    return patrolPoints
+end
 
 function MDTDungeonEnemyMixin:DisplayPatrol(shown)
     local scale = MethodDungeonTools:GetScale()
@@ -266,7 +352,8 @@ function MethodDungeonTools:DisplayBlipTooltip(blip,shown)
     local occurence = (blip.data.isBoss and "") or blip.cloneIdx
 
     local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n"..MethodDungeonTools:FormatEnemyHealth(health).." HP\n"
-    text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(data.count)
+    local count = MethodDungeonTools:IsCurrentPresetTeeming() and data.teemingCount or data.count
+    text = text .."Forces: "..MethodDungeonTools:FormatEnemyForces(count)
     local reapingText
     if blip.data.reaping and db.MDI.enabled and preset.mdi.beguiling == 13 then
         local reapingIcon = CreateTextureMarkup(MethodDungeonTools.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
@@ -351,6 +438,8 @@ local function blipDevModeSetup(blip)
     end)
 end
 
+local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
+
 function MDTDungeonEnemyMixin:SetUp(data,clone)
     local scale = MethodDungeonTools:GetScale()
     self:ClearAllPoints()
@@ -361,8 +450,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     self:updateSizes(1)
     self.texture_Portrait:SetDesaturated(false)
     local raise = 4
-    for k,v in pairs(blips) do
-        if framesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+    if not data.corrupted then
+        for k,v in pairs(blips) do
+            --only check neighboring blips - saves performance on big maps
+            if ((clone.x-v.clone.x)^2+(clone.y-v.clone.y)^2<81) and MethodDungeonTools:DoFramesOverlap(self, v,5) then raise = max(raise,v:GetFrameLevel()+1) end
+        end
     end
     self:SetFrameLevel(raise)
     self.fontstring_Text1:SetFontObject("GameFontNormal")
@@ -375,6 +467,117 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
     self.data = data
     self.clone = clone
+    self:Show()
+    self:SetScript("OnUpdate",nil)
+    self:RegisterForDrag(nil)
+    --awakened/corrupted adjustments: movable and color and stored position
+    if data.corrupted then
+        self:SetFrameLevel(15)
+        self.texture_Background:SetVertexColor(unpack(corruptedColor))
+        self.texture_DragLeft:SetRotation(-1.5708)
+        self.texture_DragRight:SetRotation(1.5708)
+        self.texture_DragUp:SetRotation(3.14159)
+        local riftOffsets = MethodDungeonTools:GetRiftOffsets()
+        self.adjustedX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
+        self.adjustedY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
+        self:ClearAllPoints()
+        self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",self.adjustedX*scale,self.adjustedY*scale)
+        self:SetMovable(true)
+        self:RegisterForDrag("LeftButton")
+        local xOffset,yOffset
+        local oldX,oldY
+        self.animatedLine = nil
+        self:SetScript("OnMouseDown",function(self, button)
+            if button == "LeftButton" then
+                riftOffsets = MethodDungeonTools:GetRiftOffsets()
+                local x,y = MethodDungeonTools:GetCursorPosition()
+                local scale = MethodDungeonTools:GetScale()
+                x = x*(1/scale)
+                y = y*(1/scale)
+                oldX = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].x or clone.x
+                oldY = riftOffsets and riftOffsets[self.data.id] and riftOffsets[self.data.id].y or clone.y
+                xOffset = x-oldX
+                yOffset = y-oldY
+            end
+        end)
+        self:SetScript("OnDragStart", function()
+            self:StartMoving()
+            MethodDungeonTools.draggedBlip = self
+            local _,activeDoors = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+            riftOffsets = MethodDungeonTools:GetRiftOffsets()
+            self:SetScript("OnUpdate",function()
+                for poiFrame,_ in pairs(activeDoors) do
+                    if MethodDungeonTools:DoFramesOverlap(self,poiFrame,-10) then
+                        poiFrame.HighlightTexture:Show()
+                    else
+                        poiFrame.HighlightTexture:Hide()
+                    end
+                end
+                --reposition animated line
+                local x,y = MethodDungeonTools:GetCursorPosition()
+                local scale = MethodDungeonTools:GetScale()
+                x = x*(1/scale)
+                y = y*(1/scale)
+                x = x-xOffset
+                y = y-yOffset
+                if x ~= self.adjustedX or y~= self.adjustedY then
+                    local sizex,sizey = MethodDungeonTools:GetDefaultMapPanelSize()
+                    x = x<=0 and 0 or x>=sizex and sizex or x
+                    y = y>=0 and 0 or y<=(-1)*sizey and (-1)*sizey or y
+                    self.adjustedX = x
+                    self.adjustedY = y
+                    local connectedDoor = MethodDungeonTools:FindConnectedDoor(self.data.id)
+                    self.animatedLine = MethodDungeonTools:ShowAnimatedLine(MethodDungeonTools.main_frame.mapPanelFrame,connectedDoor or self.spireFrame ,self,nil,nil,nil,nil,nil,self.selected,self.animatedLine)
+                    riftOffsets[self.data.id] = riftOffsets[self.data.id] or {}
+                    riftOffsets[self.data.id].x = x
+                    riftOffsets[self.data.id].y = y
+                    self:ClearAllPoints()
+                    self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",x*scale,y*scale)
+                end
+            end)
+        end)
+        self:SetScript("OnDragStop", function()
+            MethodDungeonTools.draggedBlip = nil
+            riftOffsets = MethodDungeonTools:GetRiftOffsets()
+            self:StopMovingOrSizing()
+            self:SetScript("OnUpdate",nil)
+            self:ClearAllPoints()
+            self:SetPoint("CENTER",MethodDungeonTools.main_frame.mapPanelTile1,"TOPLEFT",self.adjustedX*scale,self.adjustedY*scale)
+            --dragged ontop of door
+            --find doors,check overlap,break,swap sublevel,change poi sublevel
+            local _,active = MethodDungeonTools.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+            for poiFrame,_ in pairs(active) do
+                if MethodDungeonTools:DoFramesOverlap(self,poiFrame,-10) then
+                    riftOffsets[self.data.id].sublevel = poiFrame.target
+                    riftOffsets[self.data.id].homeSublevel = self.clone.sublevel or 1
+                    riftOffsets[self.data.id].connections = riftOffsets[self.data.id].connections or {}
+                    local c = riftOffsets[self.data.id].connections
+                    local shouldAdd = true
+                    for idx,value in ipairs(c) do
+                        if value.source == poiFrame.poi.target then
+                            tremove(c,idx)
+                            shouldAdd = false
+                            break
+                        end
+                    end
+                    if shouldAdd then tinsert(c,{connectionIndex=poiFrame.poi.connectionIndex,source=MethodDungeonTools:GetCurrentSubLevel()+0,target=poiFrame.poi.target}) end
+                    if riftOffsets[self.data.id].sublevel == (self.clone.sublevel or 1)then
+                        riftOffsets[self.data.id].sublevel = nil
+                        riftOffsets[self.data.id].homeSublevel = nil
+                    end
+                    --zoom out
+                    --move frame
+                    poiFrame:Click()
+                    break
+                end
+            end
+            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
+                MethodDungeonTools:LiveSession_SendCorruptedPositions(preset.value.riftOffsets)
+            end
+        end)
+        self:Hide()--hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
+    end
+    if emissaryIds[self.data.id] then self:Hide() end --hide beguiling emissaries by default
     tinsert(blips,self)
     if db.enemyStyle == 2 then
         self.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
@@ -385,24 +588,26 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
             SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait,data.displayId or 39490)
         end
     end
-    self:Show()
     self.texture_Indicator:Hide()
-
     if db.devMode then blipDevModeSetup(self) end
 end
 
----DungeonEnemies_PositionAllBlips
----Used to position during scaling changes to the map
-function MethodDungeonTools:DungeonEnemies_PositionAllBlips(scale)
-    for _,blip in pairs(blips) do
-        self:DungeonEnemies_PositionBlip(blip,scale)
+---DungeonEnemies_IsAnyBlipMoving
+function MethodDungeonTools:DungeonEnemies_IsAnyBlipMoving()
+    local isAnyMoving
+    for blipIdx,blip in pairs(blips) do
+        if blip:IsDragging() then
+            isAnyMoving = true
+            break
+        end
     end
+    return isAnyMoving
 end
 
----DungeonEnemies_PositionBlip
----Used to position during scaling changes to the map
-function MethodDungeonTools:DungeonEnemies_PositionBlip(blip, scale)
-    blip:SetPoint("CENTER",self.main_frame.mapPanelTile1,"TOPLEFT",blip.clone.x*scale,blip.clone.y*scale)
+---DungeonEnemies_HideAllBlips
+---Used to hide blips during scaling changes to the map
+function MethodDungeonTools:DungeonEnemies_HideAllBlips()
+    MethodDungeonTools.dungeonEnemies_framePools:ReleaseAll()
 end
 
 function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
@@ -412,22 +617,45 @@ function MethodDungeonTools:DungeonEnemies_UpdateEnemies()
     local enemies = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
     if not enemies then return end
     preset = MethodDungeonTools:GetCurrentPreset()
+
+    local riftOffsets = MethodDungeonTools:GetRiftOffsets()
     local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
 
     for enemyIdx,data in pairs(enemies) do
         for cloneIdx,clone in pairs(data["clones"]) do
             --check sublevel
             if clone.sublevel == currentSublevel or (not clone.sublevel) then
-                local blip = MethodDungeonTools.dungeonEnemies_framePools:Acquire("MDTDungeonEnemyTemplate")
-                blip:SetUp(data,clone)
-                blip.enemyIdx = enemyIdx
-                blip.cloneIdx = cloneIdx
+                --skip rifts that were dragged to another sublevel
+                if not (data.corrupted and riftOffsets and riftOffsets[data.id] and riftOffsets[data.id].sublevel) then
+                    local blip = MethodDungeonTools.dungeonEnemies_framePools:Acquire("MDTDungeonEnemyTemplate")
+                    blip:SetUp(data,clone)
+                    blip.enemyIdx = enemyIdx
+                    blip.cloneIdx = cloneIdx
+                end
+            end
+        end
+    end
+    --add blips that were dragged to a different sublevel
+    if riftOffsets then
+        for npcId,offsetData in pairs(riftOffsets) do
+            if offsetData and offsetData.sublevel and offsetData.homeSublevel and offsetData.sublevel ==  currentSublevel then
+                for enemyIdx,data in pairs(enemies) do
+                    if data.id == npcId then
+                        for cloneIdx,clone in pairs(data["clones"]) do
+                            local blip = MethodDungeonTools.dungeonEnemies_framePools:Acquire("MDTDungeonEnemyTemplate")
+                            blip:SetUp(data,clone)
+                            blip.enemyIdx = enemyIdx
+                            blip.cloneIdx = cloneIdx
+                        end
+                    end
+                end
             end
         end
     end
 end
 
 function MethodDungeonTools:DungeonEnemies_CreateFramePools()
+    db = self:GetDB()
     MethodDungeonTools.dungeonEnemies_framePools = MethodDungeonTools.dungeonEnemies_framePools or CreatePoolCollection()
     MethodDungeonTools.dungeonEnemies_framePools:CreatePool("Button", MethodDungeonTools.main_frame.mapPanelFrame, "MDTDungeonEnemyTemplate");
 end
@@ -517,7 +745,7 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pull,r,g,b)
                         if not db.devMode then
                             if db.enemyStyle == 2 then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                            else
+                            elseif not blip.data.corrupted then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
                                 blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
                             end
@@ -543,7 +771,13 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
             if db.enemyStyle == 2 then
                 blip.texture_Portrait:SetVertexColor(1,1,1,1)
             else
-                blip.texture_Portrait:SetVertexColor(1,1,1,1)
+                if blip.data.corrupted then
+                    blip.texture_Background:SetVertexColor(unpack(corruptedColor))
+                    blip.texture_Portrait:SetVertexColor(1,1,1,1)
+                    SetPortraitTextureFromCreatureDisplayID(blip.texture_Portrait,blip.data.displayId or 39490)
+                else
+                    blip.texture_Portrait:SetVertexColor(1,1,1,1)
+                end
             end
         end
     end
@@ -561,8 +795,14 @@ function MethodDungeonTools:DungeonEnemies_UpdateSelected(pull)
                                 if db.enemyStyle == 2 then
                                     blip.texture_Portrait:SetVertexColor(0,1,0,1)
                                 else
-                                    blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                                    blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
+                                    if blip.data.corrupted then
+                                        blip.texture_Portrait:SetAtlas("poi-rift1")
+                                        blip.texture_Background:SetVertexColor(0.5,1,0.1,1)
+                                        blip.texture_SelectedHighlight:Hide()
+                                    else
+                                        blip.texture_Portrait:SetVertexColor(r,g,b,1)
+                                        blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
+                                    end
                                 end
                             end
                             if pullIdx == pull then
@@ -618,24 +858,29 @@ function MethodDungeonTools:DungeonEnemies_UpdateTeeming()
     MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
 end
 
----DungeonEnemies_UpdateBeguiling
----Updates visibility state of Beguiling NPCs
-function MethodDungeonTools:DungeonEnemies_UpdateBeguiling()
-    local week
-    if db.MDI.enabled then
-        week = preset.mdi.beguiling or 1
-    else
-        week = preset.week
-    end
+---DungeonEnemies_UpdateSeasonalAffix
+---Updates visibility state and appearance of enemies related to the current seasonal affix
+function MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
+    --hide all beguiling and corrupted blips first
     for _,blip in pairs(blips) do
-        local weekData =  blip.clone.week
-        if weekData and (not weekData[week] or db.currentDifficulty < 10) then
-            blip:Hide()
-        elseif weekData and weekData[week] then
-            blip:Show()
+        if blip.data.corrupted then blip:Hide() end
+        if emissaryIds[blip.data.id] then blip:Hide() end
+    end
+    local week = self:GetEffectivePresetWeek()
+    for _,blip in pairs(blips) do
+        if (db.currentSeason == 4 and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
+            local weekData =  blip.clone.week
+            if weekData and (not weekData[week] or db.currentDifficulty < 10) then
+                blip:Hide()
+            elseif weekData and weekData[week] then
+                blip:Show()
+            elseif not weekData and blip.data.corrupted then
+                blip:Show()
+            end
         end
     end
 end
+
 
 ---DungeonEnemies_UpdateBlacktoothEvent
 ---Updates visibility state of blacktooth event blips
@@ -661,7 +906,6 @@ function MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
     end
 end
 
-local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
 function MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(faction)
     preset = MethodDungeonTools:GetCurrentPreset()
     local teeming = MethodDungeonTools:IsPresetTeeming(preset)
@@ -777,10 +1021,43 @@ function MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
     end
 end
 
+function MethodDungeonTools:IsNPCInPulls(poi)
+    local week = self:GetEffectivePresetWeek()
+    local data = self.dungeonEnemies[db.currentDungeonIdx]
+    for enemyIdx,enemy in pairs(data) do
+        if enemy.id == poi.npcId then
+            local included = false
+            for cloneIdx,clone in pairs(enemy.clones) do
+                if clone.week[week] then
+                    return MethodDungeonTools:IsCloneInPulls(enemyIdx,cloneIdx)
+                end
+            end
+        end
+    end
+end
+
+function MethodDungeonTools:IsCloneInPulls(enemyIdx,cloneIdx)
+    local pulls = MethodDungeonTools:GetCurrentPreset().value.pulls
+    local numClones = 0
+    for _,pull in pairs(pulls) do
+        if pull[enemyIdx] then
+            if cloneIdx then
+                for _,pullCloneIndex in pairs(pull[enemyIdx]) do
+                    if pullCloneIndex == cloneIdx then return true end
+                end
+            else
+                for _,pullCloneIndex in pairs(pull[enemyIdx]) do
+                    numClones = numClones+1
+                end
+            end
+        end
+    end
+    return numClones>0
+end
 
 ---returns count, maxCountNormal, maxCountTeeming
 function MethodDungeonTools:GetEnemyForces(npcId)
-    for i = 1,24 do
+    for i = 1,MethodDungeonTools:GetNumDungeons() do
         local data = MethodDungeonTools.dungeonEnemies[i]
         if data then
             for enemyIdx,enemy in pairs(data) do
@@ -790,4 +1067,144 @@ function MethodDungeonTools:GetEnemyForces(npcId)
             end
         end
     end
+end
+
+---tries to retrieve npc name by npcId
+---only looks for npcs in the current dungeon
+function MethodDungeonTools:GetNPCNameById(npcId)
+    local data = MethodDungeonTools.dungeonEnemies[db.currentDungeonIdx]
+    if data then
+        for _,enemy in pairs(data) do
+            if enemy.id == npcId then
+                return enemy.name
+            end
+        end
+    end
+end
+
+---updates the enemie tables with new count and teemingCount or displayId values
+---data is retrieved with the the get_count.py or get_displayids python script
+---data needs to afterwards be exported manually for every dungeon
+function MethodDungeonTools:UpdateDungeonData(dungeonData)
+
+    local function printDungeonName(shouldPrint,dungeonIdx)
+        if shouldPrint then
+            print("-----",MethodDungeonTools:GetDungeonName(dungeonIdx))
+        end
+        return false
+    end
+
+    for dungeonIdx,newData in pairs(dungeonData) do
+
+        --dungeon total count changes
+        local totalCount = MethodDungeonTools.dungeonTotalCount[dungeonIdx]
+        if newData[0] and (newData[0].count~=totalCount.normal or newData[0].teeming_count~=totalCount.teeming) then
+            print("TOTAL ",totalCount.normal,totalCount.teeming,">>>",newData[0].count,newData[0].teeming_count)
+            totalCount.normal = newData[0].count
+            totalCount.teeming = newData[0].teeming_count
+        end
+
+        --enemy changes
+        local shouldPrintDungeonName = true
+        local enemyData = MethodDungeonTools.dungeonEnemies[dungeonIdx]
+        if enemyData then
+            for _,enemy in pairs(enemyData) do
+                --ignore enchanted emissary (gives count but can almost never pull it off, keep 0 to keep it simple)
+                --ignore spark channeler, always gives 11 count but data says 6
+                if newData[enemy.id] and (enemy.id ~= 155432 and enemy.id ~= 139110) then
+
+                    if newData[enemy.id].count then
+                        --normal count changes
+                        if newData[enemy.id].count~=enemy.count then
+                            shouldPrintDungeonName= printDungeonName(shouldPrintDungeonName,dungeonIdx)
+                            print(enemy.name,enemy.id, enemy.count, ">>>", newData[enemy.id].count)
+                            enemy.count = newData[enemy.id].count
+                        end
+
+                        --teeming count changes
+                        if newData[enemy.id].count~= newData[enemy.id].teeming_count
+                                and (newData[enemy.id].count~=enemy.count or newData[enemy.id].teeming_count~=enemy.teemingCount)
+                        then
+                            shouldPrintDungeonName= printDungeonName(shouldPrintDungeonName,dungeonIdx)
+                            print("TEEMING ",enemy.name,enemy.id, newData[enemy.id].count,"||", newData[enemy.id].teeming_count)
+                            enemy.count = newData[enemy.id].count
+                            enemy.teemingCount = newData[enemy.id].teeming_count
+                        end
+                    end
+
+                    --displayId changes
+                    if newData[enemy.id].displayId and newData[enemy.id].displayId~=enemy.displayId then
+                        shouldPrintDungeonName= printDungeonName(shouldPrintDungeonName,dungeonIdx)
+                        print("DISPLAYID ",enemy.name,enemy.id,enemy.displayId, ">>>",newData[enemy.id].displayId)
+                        enemy.displayId = newData[enemy.id].displayId
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+end
+
+---exports all ids of npcs that do not have a displayId associated to them
+--dungeons = [
+--Dungeon(name='AtalDazar', idx=15, npcIds=[134739, 161241, 136347]),
+--    Dungeon(name='RandomDungeon', idx=14, npcIds=[161241, 134739, 136347]),
+--]
+function MethodDungeonTools:ExportNPCIdsWithoutDisplayIds()
+    local output = "dungeons = [\n"
+    for idx = 15,MethodDungeonTools:GetNumDungeons() do
+        local shouldAddDungeonText = true
+        local enemyData = MethodDungeonTools.dungeonEnemies[idx]
+        for _,enemy in pairs(enemyData) do
+            if not enemy.displayId then
+                if shouldAddDungeonText then
+                    output = output.."Dungeon(name='"..MethodDungeonTools:GetDungeonName(idx).."', idx=".. idx..", npcIds=["
+                    shouldAddDungeonText = false
+                end
+                output = output..enemy.id..", "
+            end
+        end
+        if not shouldAddDungeonText then output = output.."]),\n" end
+    end
+    output = output.."]"
+    MethodDungeonTools:HideAllDialogs()
+    MethodDungeonTools.main_frame.ExportFrame:Show()
+    MethodDungeonTools.main_frame.ExportFrame:ClearAllPoints()
+    MethodDungeonTools.main_frame.ExportFrame:SetPoint("CENTER",MethodDungeonTools.main_frame,"CENTER",0,50)
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetText(output)
+    MethodDungeonTools.main_frame.ExportFrameEditbox:HighlightText(0, string.len(output))
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetFocus()
+    MethodDungeonTools.main_frame.ExportFrameEditbox:SetLabel("NPC ids without displayId")
+end
+
+
+local function ArrayRemove(t, fnKeep)
+    local j, n = 1, #t;
+
+    for i=1,n do
+        if (fnKeep(t, i, j)) then
+            -- Move i's kept value to j's position, if it's not already there.
+            if (i ~= j) then
+                t[j] = t[i];
+                t[i] = nil;
+            end
+            j = j + 1; -- Increment position of where we'll place the next kept value.
+        else
+            t[i] = nil;
+        end
+    end
+
+    return t;
+end
+
+---removes enemies of the current dungeon without any clones
+function MethodDungeonTools:CleanEnemyData(dungeonIdx)
+    local enemies = MethodDungeonTools.dungeonEnemies[dungeonIdx]
+    ArrayRemove(enemies,function (t, i , j)
+        return #t[i].clones>0
+    end)
+
 end

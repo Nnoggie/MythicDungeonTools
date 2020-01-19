@@ -43,11 +43,13 @@ function MethodDungeonTools:initToolbar(frame)
             frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame,"TOP")
             frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.65,1)
+            db.toolbarExpanded = false
         else
             frame.toolbar:Show()
             frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame.toolbar,"BOTTOM")
             frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0,0.35)
+            db.toolbarExpanded = true
         end
     end)
 
@@ -340,8 +342,7 @@ function MethodDungeonTools:EnableBrushPreview(tool)
             else
                 frame.brushPreview.tex:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
             end
-            local mapScale = MethodDungeonTools.main_frame.mapPanelFrame:GetScale()
-            frame.brushPreview:SetSize(max(2,0.475*db.toolbar.brushSize*mapScale), max(2,0.475*db.toolbar.brushSize*mapScale))
+            frame.brushPreview:SetSize(30,30)
             frame.brushPreview.tex:ClearAllPoints()
             frame.brushPreview.tex:SetAllPoints()
             frame.brushPreview.tex:Show()
@@ -1022,7 +1023,7 @@ local function makeNoteEditbox()
     editbox:AddChild(editbox.multiBox)
     MethodDungeonTools:FixAceGUIShowHide(editbox,nil,nil,true)
     editbox.frame:SetScript("OnShow",function()
-        hooksecurefunc(MethodDungeonTools, "OnPan", function() editbox.frame:Hide() end)
+        hooksecurefunc(MethodDungeonTools, "MouseDownHook", function() editbox.frame:Hide() end)
         hooksecurefunc(MethodDungeonTools, "ZoomMap", function() editbox.frame:Hide() end)
     end)
 

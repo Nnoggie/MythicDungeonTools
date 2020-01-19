@@ -7,9 +7,57 @@
         <Layers>
 
             <Layer level="BACKGROUND">
-                <Texture name="$parent_Dragon" hidden="true" parentKey="texture_Dragon"  atlas="worldquest-questmarker-dragon">
+                <Texture name="$parent_Dragon" hidden="true" parentKey="texture_Dragon"  file="Interface\DialogFrame\UI-DialogBox-Gold-Dragon">
                     <Anchors>
                         <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parent_DragDown" hidden="true" parentKey="texture_DragDown"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
+                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <Anchors>
+                        <Anchor point="TOP" relativepoint="BOTTOM">
+                            <Offset>
+                                <AbsDimension x="0" y="1"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parent_DragLeft" hidden="true" parentKey="texture_DragLeft"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
+                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <Anchors>
+                        <Anchor point="RIGHT" relativepoint="LEFT">
+                            <Offset>
+                                <AbsDimension x="2" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parent_DragRight" hidden="true" parentKey="texture_DragRight"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
+                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativepoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-2" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parent_DragUp" hidden="true" parentKey="texture_DragUp"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
+                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <Anchors>
+                        <Anchor point="BOTTOM" relativepoint="TOP">
+                            <Offset>
+                                <AbsDimension x="0" y="-1"/>
+                            </Offset>
+                        </Anchor>
                     </Anchors>
                 </Texture>
             </Layer>
@@ -22,12 +70,6 @@
             </Layer>
 
             <Layer level="ARTWORK">
-                <Texture name="$parent_Background" hidden="false" parentKey="texture_Background" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
-                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
 
                 <Texture name="$parent_SelectedHighlight" textureSubLevel="6" hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
@@ -37,6 +79,12 @@
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
+                <Texture name="$parent_Background" hidden="false" parentKey="texture_Background" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
                 <Texture name="$parent_Reaping" textureSubLevel="7" hidden="true" parentKey="texture_Reaping" file = "Interface\Icons\ability_warlock_improvedsoulleech" >
                     <Color r="0" g="0" b="0" a="0"/>
                     <Anchors>
@@ -88,4 +136,5 @@
             <OnClick method="OnClick"/>
         </Scripts>
     </Button>
+    <Frame name="MDTAnimatedLineTemplate" virtual="true"/>
 </Ui>

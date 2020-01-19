@@ -211,7 +211,9 @@ end
 function MethodDungeonTools:LiveSession_SendPreset(preset)
     local distribution = self:IsPlayerInGroup()
     if distribution then
-        preset.mdiEnabled = self:GetDB().MDI.enabled
+        local db = self:GetDB()
+        preset.mdiEnabled = db.MDI.enabled
+        preset.difficulty = db.currentDifficulty
         local export = MethodDungeonTools:TableToString(preset,false,5)
         MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "ALERT")
     end
@@ -277,5 +279,25 @@ do
         timer = C_Timer.NewTimer(0.2, function()
             self:LiveSession_SendPulls(self:GetPulls())
         end)
+    end
+end
+
+---LiveSession_SendCorruptedPositions
+---Sends Corrupted NPC Offset Positions
+function MethodDungeonTools:LiveSession_SendCorruptedPositions(offsets)
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local export = MethodDungeonTools:TableToString(offsets,false,5)
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.corrupted, export, distribution, nil, "ALERT")
+    end
+end
+
+---LiveSession_SendDifficulty
+---Sends current difficulty
+function MethodDungeonTools:LiveSession_SendDifficulty()
+    local distribution = self:IsPlayerInGroup()
+    if distribution then
+        local export = self:GetDB().currentDifficulty
+        MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.difficulty, export.."", distribution, nil, "ALERT")
     end
 end

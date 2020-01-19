@@ -1,1 +1,4 @@
 manual-changelog: CHANGELOG.txt
+ignore:
+  - README.md
+  - python
