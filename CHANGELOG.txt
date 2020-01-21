@@ -1,4 +1,4 @@
-v3.0.1
+v3.0.2
 - fixed lua error on note click
 - Some Freehold Deckhands have returned from their short island vacation
 v3.0.0
