@@ -2114,6 +2114,11 @@ function MethodDungeonTools:IsCurrentPresetTyrannical()
     return self:GetCurrentPreset().week%2 == 1
 end
 
+---MouseDownHook
+function MethodDungeonTools:MouseDownHook()
+    return
+end
+
 ---MethodDungeonTools.OnMouseDown
 ---Handles mouse-down events on the map scrollframe
 MethodDungeonTools.OnMouseDown = function(self,button)
@@ -2124,6 +2129,7 @@ MethodDungeonTools.OnMouseDown = function(self,button)
 	end
     scrollFrame.oldX = scrollFrame.cursorX
     scrollFrame.oldY = scrollFrame.cursorY
+    MethodDungeonTools:MouseDownHook()
 end
 
 ---MethodDungeonTools.OnMouseUp
