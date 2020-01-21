@@ -1,3 +1,6 @@
+v3.0.1
+- fixed lua error on note click
+- Some Freehold Deckhands have returned from their short island vacation
 v3.0.0
 - New Dungeons: Mechagon - Junkyard and Mechagon - Workshop
 - New Awakened features including special draggable npc frames, animated lines, weekly rotations and more!
