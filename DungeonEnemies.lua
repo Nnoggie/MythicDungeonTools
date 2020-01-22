@@ -179,8 +179,8 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
             MethodDungeonTools:ReloadPullButtons()
             MethodDungeonTools:SetSelectionToPull(newPullIdx)
 
-            MethodDungeonTools:UpdateAutomaticColors(newPullIdx)
-            if MethodDungeonTools:GetPullsNum() == 2 then MethodDungeonTools:SetAutomaticColor(1) end
+            MethodDungeonTools:ColorPull(_,newPullIdx)
+            --if MethodDungeonTools:GetPullsNum() == 2 then MethodDungeonTools:SetAutomaticColor(1) end
         end
         MethodDungeonTools:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self,not self.selected,IsControlKeyDown())
         MethodDungeonTools:DungeonEnemies_UpdateSelected(MethodDungeonTools:GetCurrentPull())
