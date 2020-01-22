@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 22
 MethodDungeonTools.mapInfo[dungeonIndex] = {
    viewportPositionOverrides =
@@ -18,7 +19,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["index"] = 3;
          ["y"] = -224.08700914697;
          ["x"] = 388.05381306055;
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -66,7 +67,7 @@ Only one of them will be present at a time.";
          ["index"] = 3;
          ["y"] = -259.17035648262;
          ["x"] = 633.47460185582;
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -89,7 +90,7 @@ Only one of them will be present at a time.";
          ["index"] = 4;
          ["y"] = -86.857596613134;
          ["x"] = 476.43070789296;
-         ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -128,7 +129,7 @@ Only one of them will be present at a time.";
          ["index"] = 5;
          ["y"] = -424.66002059941;
          ["x"] = 420.66398356862;
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
          ["weeks"] = {
             [11] = true;
             [7] = true;
@@ -145,7 +146,7 @@ Only one of them will be present at a time.";
          ["index"] = 6;
          ["y"] = -224.46022867992;
          ["x"] = 387.98452582283;
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
          ["weeks"] = {
             [11] = true;
             [7] = true;
@@ -162,7 +163,7 @@ Only one of them will be present at a time.";
          ["index"] = 1;
          ["y"] = -424.36083618939;
          ["x"] = 420.96318081863;
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -329,7 +330,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Polymorph"] = true;
          ["Silence"] = true;
       };
-      ["name"] = "Underrot Tick";
+      ["name"] = L["Underrot Tick"];
       ["health"] = 153699;
       ["displayId"] = 81808;
       ["creatureType"] = "Beast";
@@ -479,7 +480,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Chosen Blood Matron";
+      ["name"] = L["Chosen Blood Matron"];
       ["health"] = 1229592;
       ["displayId"] = 85816;
       ["creatureType"] = "Humanoid";
@@ -575,7 +576,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
       };
       ["count"] = 4;
-      ["name"] = "Fanatical Headhunter";
+      ["name"] = L["Fanatical Headhunter"];
       ["displayId"] = 79499;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -709,7 +710,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83311;
       ["creatureType"] = "Aberration";
       ["level"] = 120;
-      ["name"] = "Living Rot";
+      ["name"] = L["Living Rot"];
       ["scale"] = 1;
    };
    [16] = {
@@ -735,7 +736,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2131;
       ["instanceID"] = 1022;
       ["count"] = 0;
-      ["name"] = "Cragmaw the Infested";
+      ["name"] = L["Cragmaw the Infested"];
       ["displayId"] = 78855;
       ["creatureType"] = "Beast";
       ["level"] = 122;
@@ -766,7 +767,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2130;
       ["instanceID"] = 1022;
-      ["name"] = "Sporecaller Zancha";
+      ["name"] = L["Sporecaller Zancha"];
       ["health"] = 5379465;
       ["displayId"] = 81977;
       ["creatureType"] = "Undead";
@@ -885,7 +886,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 80467;
       ["creatureType"] = "Elemental";
       ["level"] = 120;
-      ["name"] = "Diseased Lasher";
+      ["name"] = L["Diseased Lasher"];
       ["scale"] = 1;
    };
    [18] = {
@@ -909,7 +910,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2158;
       ["instanceID"] = 1022;
       ["scale"] = 1;
-      ["name"] = "Unbound Abomination";
+      ["name"] = L["Unbound Abomination"];
       ["displayId"] = 86632;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -971,7 +972,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["count"] = 4;
-      ["name"] = "Devout Blood Priest";
+      ["name"] = L["Devout Blood Priest"];
       ["displayId"] = 75861;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -1070,7 +1071,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["name"] = "Reanimated Guardian";
+      ["name"] = L["Reanimated Guardian"];
       ["health"] = 768495;
       ["displayId"] = 88121;
       ["creatureType"] = "Undead";
@@ -1296,7 +1297,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["id"] = 155432;
-      ["name"] = "Enchanted Emissary";
+      ["name"] = L["Enchanted Emissary"];
       ["ignoreFortified"] = true;
       ["health"] = 15369884;
       ["displayId"] = 39391;
@@ -1352,7 +1353,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 90742;
       ["creatureType"] = "Aberration";
       ["corrupted"] = true;
-      ["name"] = "Samh'rek, Beckoner of Chaos";
+      ["name"] = L["Samh'rek, Beckoner of Chaos"];
       ["id"] = 161243;
    };
    [11] = {
@@ -1452,7 +1453,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["name"] = "Fallen Deathspeaker";
+      ["name"] = L["Fallen Deathspeaker"];
       ["health"] = 768495;
       ["displayId"] = 85815;
       ["creatureType"] = "Undead";
@@ -1501,7 +1502,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["creatureType"] = "Aberration";
       ["level"] = 122;
       ["health"] = 2151786;
-      ["name"] = "Urg'roth, Breaker of Heroes";
+      ["name"] = L["Urg'roth, Breaker of Heroes"];
    };
    [3] = {
       ["clones"] = {
@@ -1615,7 +1616,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Imprison"] = true;
       };
-      ["name"] = "Fetid Maggot";
+      ["name"] = L["Fetid Maggot"];
       ["health"] = 768495;
       ["displayId"] = 88361;
       ["creatureType"] = "Beast";
@@ -1654,7 +1655,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
-      ["name"] = "Befouled Spirit";
+      ["name"] = L["Befouled Spirit"];
       ["health"] = 768495;
       ["displayId"] = 80852;
       ["creatureType"] = "Aberration";
@@ -1765,7 +1766,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Bloodsworn Defiler";
+      ["name"] = L["Bloodsworn Defiler"];
       ["health"] = 768495;
       ["displayId"] = 79182;
       ["creatureType"] = "Undead";
@@ -1816,7 +1817,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["scale"] = 1.4;
       ["level"] = 122;
       ["teemingCount"] = 6;
-      ["name"] = "Blood of the Corruptor";
+      ["name"] = L["Blood of the Corruptor"];
       ["displayId"] = 92229;
       ["creatureType"] = "Aberration";
       ["corrupted"] = true;
@@ -1945,7 +1946,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 84808;
       ["creatureType"] = "Aberration";
       ["level"] = 120;
-      ["name"] = "Grotesque Horror";
+      ["name"] = L["Grotesque Horror"];
       ["scale"] = 1;
    };
    [7] = {
@@ -2081,7 +2082,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 76653;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Feral Bloodswarmer";
+      ["name"] = L["Feral Bloodswarmer"];
       ["scale"] = 1;
    };
    [14] = {
@@ -2198,7 +2199,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["count"] = 6;
-      ["name"] = "Faceless Corruptor";
+      ["name"] = L["Faceless Corruptor"];
       ["displayId"] = 84376;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -2227,7 +2228,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["name"] = "Voidweaver Mal'thir";
+      ["name"] = L["Voidweaver Mal'thir"];
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -2449,7 +2450,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["id"] = 155434;
-      ["name"] = "Emissary of the Tides";
+      ["name"] = L["Emissary of the Tides"];
       ["ignoreFortified"] = true;
       ["health"] = 614795;
       ["displayId"] = 39391;
@@ -2480,7 +2481,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2157;
       ["instanceID"] = 1022;
-      ["name"] = "Elder Leaxa";
+      ["name"] = L["Elder Leaxa"];
       ["health"] = 3688770;
       ["displayId"] = 82394;
       ["creatureType"] = "Humanoid";

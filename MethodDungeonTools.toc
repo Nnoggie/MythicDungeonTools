@@ -10,6 +10,7 @@
 libs\load_libs.xml
 #@end-no-lib-strip@
 
+Locales.lua
 AceGUIWidget-MethodDungeonToolsPullButton.lua
 AceGUIWidget-MethodDungeonToolsNewPullButton.lua
 AceGUIWidget-MethodDungeonToolsSpellButton.lua

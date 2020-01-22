@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 3
 local nerfMultiplier = 1
 local pi = math.pi
@@ -5,7 +6,7 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,tee
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Court of Stars
 	[1] = {
 		[1] = {
-			["name"] = "Patrol Captain Gerdo",
+			["name"] = L["Patrol Captain Gerdo"],
 			["encounterID"] = 1718,
 			["health"] = 88812990,
 			["id"] = 104215,
@@ -14,7 +15,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Court of Stars
 			["y"] = -144.78902382652,
 		},	
 		[2] = {
-			["name"] = "Talixae Flamewreath",
+			["name"] = L["Talixae Flamewreath"],
 			["encounterID"] = 1719, 
 			["health"] = 84927465,
 			["id"] = 104217,
@@ -25,7 +26,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Court of Stars
 	},
 	[3] = {
 		[1] = {
-			["name"] = "Advisor Melandrus",
+			["name"] = L["Advisor Melandrus"],
 			["encounterID"] = 1720,
 			["health"] = 116725639,
 			["id"] = 104218,
@@ -37,7 +38,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Court of Stars
 }
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 	[1] = {
-		["name"] = "Duskwatch Guard",
+		["name"] = L["Duskwatch Guard"],
 		["health"] = 16301227,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -76,7 +77,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[2] = {
-		["name"] = "Duskwatch Sentry",
+		["name"] = L["Duskwatch Sentry"],
 		["health"] = 4445789,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -123,7 +124,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[3] = {
-		["name"] = "Mana Wyrm",
+		["name"] = L["Mana Wyrm"],
 		["health"] = 2963859,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -187,7 +188,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[4] = {
-		["name"] = "Guardian Construct",
+		["name"] = L["Guardian Construct"],
 		["health"] = 30661163,
 		["level"] = 111,
 		["creatureType"] = "Mechanical",
@@ -222,7 +223,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[5] = {
-		["name"] = "Mana Saber",
+		["name"] = L["Mana Saber"],
 		["health"] = 8891579,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -247,7 +248,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[6] = {
-		["name"] = "Duskwatch Arcanist",
+		["name"] = L["Duskwatch Arcanist"],
 		["health"] = 13337369,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -289,7 +290,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[7] = {
-		["name"] = "Bound Energy",
+		["name"] = L["Bound Energy"],
 		["health"] = 11855438,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -308,7 +309,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[8] = {
-		["name"] = "Arcane Manifestation",
+		["name"] = L["Arcane Manifestation"],
 		["health"] = 20747017,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -324,7 +325,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[9] = {
-		["name"] = "Legion Hound",
+		["name"] = L["Legion Hound"],
 		["health"] = 11855438,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -344,7 +345,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[10] = {
-		["name"] = "Shadow Mistress",
+		["name"] = L["Shadow Mistress"],
 		["health"] = 13337369,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -363,7 +364,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[11] = {
-		["name"] = "Watchful Inquisitor",
+		["name"] = L["Watchful Inquisitor"],
 		["health"] = 16301227,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -415,7 +416,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[12] = {
-		["name"] = "Blazing Imp",
+		["name"] = L["Blazing Imp"],
 		["health"] = 5927719,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -470,7 +471,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[13] = {
-		["name"] = "Felbound Enforcer",
+		["name"] = L["Felbound Enforcer"],
 		["health"] = 30661163,
 		["level"] = 111,
 		["creatureType"] = "Demon",
@@ -521,7 +522,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[14] = {
-		["name"] = "Baalgar the Watchful",
+		["name"] = L["Baalgar the Watchful"],
 		["health"] = 45991747,
 		["level"] = 111,
 		["creatureType"] = "Demon",
@@ -535,7 +536,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[15] = {
-		["name"] = "Jazshariu",
+		["name"] = L["Jazshariu"],
 		["health"] = 45991747,
 		["level"] = 111,
 		["creatureType"] = "Demon",
@@ -549,7 +550,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[16] = {
-		["name"] = "Imacu'tya",
+		["name"] = L["Imacu'tya"],
 		["health"] = 45991747,
 		["level"] = 111,
 		["creatureType"] = "Demon",
@@ -563,7 +564,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		},
 	},
 	[17] = {
-		["name"] = "Gerenth the Vile",
+		["name"] = L["Gerenth the Vile"],
 		["health"] = 50157624,
 		["level"] = 110,
 		["creatureType"] = "Demon",

@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 2
 local pi = math.pi
 local nerfMultiplier = 1
@@ -5,7 +6,7 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=305,teeming=335,tee
 MethodDungeonTools.dungeonBosses[dungeonIndex] = { --Cathedral of Eternal Night
 	[2] = {
 		[1] = {
-			["name"] = "Agronox",
+			["name"] = L["Agronox"],
 			["encounterID"] = 1905,
 			["health"] = 93092225,
 			["id"] = 117193,
@@ -16,7 +17,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = { --Cathedral of Eternal Night
 	},
 	[3] = {
 		[1] = {
-			["name"] = "Thrashbite the Scornful",
+			["name"] = L["Thrashbite the Scornful"],
 			["health"] = 68957206,
 			["encounterID"] = 1906,
 			["level"] = 112,
@@ -29,7 +30,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = { --Cathedral of Eternal Night
 	},
 	[5] = {
 		[1] = {
-			["name"] = "Domatrax",
+			["name"] = L["Domatrax"],
 			["health"] = 97596691,
 			["encounterID"] = 1904,
 			["level"] = 112,
@@ -40,7 +41,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = { --Cathedral of Eternal Night
 			["y"] = -261.49971996993,
 		},
 		[2] = {
-			["name"] = "Mephistroth",
+			["name"] = L["Mephistroth"],
 			["health"] = 108107100,
 			["encounterID"] = 1878,
 			["level"] = 112,
@@ -54,7 +55,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = { --Cathedral of Eternal Night
 }
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 	[1] = {
-		["name"] = "Felguard Destroyer",
+		["name"] = L["Felguard Destroyer"],
 		["health"] = 14731610,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -72,7 +73,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[2] = {
-		["name"] = "Wrathguard Invader",
+		["name"] = L["Wrathguard Invader"],
 		["health"] = 14731610,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -99,7 +100,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[3] = {
-		["name"] = "Helblaze Soulmender",
+		["name"] = L["Helblaze Soulmender"],
 		["health"] = 13153223,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -119,7 +120,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[4] = {
-		["name"] = "Felguard Destroyer (No Count)",
+		["name"] = L["Felguard Destroyer"] .. L["(No Count)"],
 		["health"] = 14906986,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -137,7 +138,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[5] = {
-		["name"] = "Helblaze Felbringer (No Count)",
+		["name"] = L["Helblaze Felbringer"] .. L["(No Count)"],
 		["health"] = 13153223,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -157,7 +158,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[6] = {
-		["name"] = "Wrathguard Invader (No Count)",
+		["name"] = L["Wrathguard Invader"] .. L["(No Count)"],
 		["health"] = 14906986,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -173,7 +174,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[7] = {
-		["name"] = "Dul'zak",
+		["name"] = L["Dul'zak"],
 		["health"] = 34833987,
 		["level"] = 111,
 		["creatureType"] = "Demon",
@@ -195,7 +196,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[8] = {
-		["name"] = "Felblight Stalker",
+		["name"] = L["Felblight Stalker"],
 		["health"] = 9821073,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -219,7 +220,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[9] = {
-		["name"] = "Helblaze Felbringer",
+		["name"] = L["Helblaze Felbringer"],
 		["health"] = 13153223,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -254,7 +255,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[10] = {
-		["name"] = "Dreadhunter",
+		["name"] = L["Dreadhunter"],
 		["health"] = 18239135,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -276,7 +277,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[11] = {
-		["name"] = "Dreadwing",
+		["name"] = L["Dreadwing"],
 		["health"] = 9821073,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -300,7 +301,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[12] = {
-		["name"] = "Hellblaze Temptress",
+		["name"] = L["Hellblaze Temptress"],
 		["health"] = 13153223,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -334,7 +335,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[13] = {
-		["name"] = "Fulminating Lasher",
+		["name"] = L["Fulminating Lasher"],
 		["health"] = 1227634,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -357,7 +358,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[14] = {
-		["name"] = "Vilebark Walker",
+		["name"] = L["Vilebark Walker"],
 		["health"] = 18868408,
 		["level"] = 111,
 		["creatureType"] = "Elemental",
@@ -389,7 +390,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[15] = {
-		["name"] = "Felborne Botanist",
+		["name"] = L["Felborne Botanist"],
 		["health"] = 13153223,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -420,7 +421,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[16] = {
-		["name"] = "Bilespray Lasher",
+		["name"] = L["Bilespray Lasher"],
 		["health"] = 9821073,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -440,7 +441,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[17] = {
-		["name"] = "Stranglevine Lasher",
+		["name"] = L["Stranglevine Lasher"],
 		["health"] = 9821073,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -458,7 +459,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[18] = {
-		["name"] = "Helblaze Imp",
+		["name"] = L["Helblaze Imp"],
 		["health"] = 6874751,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -533,7 +534,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[19] = {
-		["name"] = "Wyrmtongue Scavenger",
+		["name"] = L["Wyrmtongue Scavenger"],
 		["health"] = 9821073,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -574,7 +575,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[20] = {
-		["name"] = "Gazerax",
+		["name"] = L["Gazerax"],
 		["health"] = 34108278,
 		["level"] = 111,
 		["creatureType"] = "Demon",
@@ -602,7 +603,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[21] = {
-		["name"] = "Necrotic Spiderling",
+		["name"] = L["Necrotic Spiderling"],
 		["health"] = 9821073,
 		["level"] = 110,
 		["creatureType"] = "Demon",
@@ -622,7 +623,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[22] = {
-		["name"] = "Felstrider Orbcaster",
+		["name"] = L["Felstrider Orbcaster"],
 		["health"] = 14906986,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -642,7 +643,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[23] = {
-		["name"] = "Felstrider Enforcer",
+		["name"] = L["Felstrider Enforcer"],
 		["health"] = 14906986,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -658,7 +659,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Cathedral of Eternal Night
 		},
 	},
 	[24] = {
-		["name"] = "Nal'asha",
+		["name"] = L["Nal'asha"],
 		["health"] = 34108278,
 		["level"] = 111,
 		["creatureType"] = "Demon",

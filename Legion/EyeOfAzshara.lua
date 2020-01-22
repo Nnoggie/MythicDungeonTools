@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 5
 local nerfMultiplier = 1
 local pi = math.pi
@@ -5,7 +6,7 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=206,teeming=242,tee
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 	[1] = {
 		[1] = {
-			["name"] = "Warlord Parjesh",				
+			["name"] = L["Warlord Parjesh"],				
 			["encounterID"] = 1480,
 			["health"] = 85397104,
 			["id"] = 91784,
@@ -14,7 +15,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 			["y"] = -382.87459202355,
 		},
 		[2] = {
-			["name"] = "Lady Hatecoil",
+			["name"] = L["Lady Hatecoil"],
 			["encounterID"] = 1490,
 			["health"] = 111016239,
 			["id"] = 91789,
@@ -23,7 +24,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 			["y"] = -278.78369116731,
 		}, 
 		[3] = {
-			["name"] = "King Deepbeard",
+			["name"] = L["King Deepbeard"],
 			["encounterID"] = 1491,
 			["health"] = 117360016,
 			["id"] = 91797,
@@ -32,7 +33,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 			["y"] = -285.38768900338,
 		},  
 		[4] = {
-			["name"] = "Serpentrix",
+			["name"] = L["Serpentrix"],
 			["encounterID"] = 1479,
 			["health"] = 109796277,
 			["id"] = 91808,
@@ -41,7 +42,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 			["y"] = -195.38769118268,
 		},   
 		[5] = {
-			["name"] = "Wrath of Azshara",
+			["name"] = L["Wrath of Azshara"],
 			["encounterID"] = 1492,
 			["health"] = 570940668, --starts at 20% tho
 			["id"] = 96028,
@@ -53,7 +54,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 }
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 	[1] = {
-		["name"] = "Wandering Shellback",
+		["name"] = L["Wandering Shellback"],
 		["health"] = 11855438,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -85,7 +86,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[2] = {
-		["name"] = "Hatecoil Crusher",
+		["name"] = L["Hatecoil Crusher"],
 		["health"] = 24528930,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -120,7 +121,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[3] = {
-		["name"] = "Hatecoil Warrior",
+		["name"] = L["Hatecoil Warrior"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -152,7 +153,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[4] = {
-		["name"] = "Hatecoil Oracle",
+		["name"] = L["Hatecoil Oracle"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -173,7 +174,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[5] = {
-		["name"] = "Hatecoil Stormweaver",
+		["name"] = L["Hatecoil Stormweaver"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -202,7 +203,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[6] = {
-		["name"] = "Hatecoil Wrangler",
+		["name"] = L["Hatecoil Wrangler"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -226,7 +227,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[7] = {
-		["name"] = "Gritslime Snail",
+		["name"] = L["Gritslime Snail"],
 		["health"] = 17783157,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -257,7 +258,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[8] = {
-		["name"] = "Hatecoil Arcanist",
+		["name"] = L["Hatecoil Arcanist"],
 		["health"] = 30661163,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -291,7 +292,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[9] = {
-		["name"] = "Cove Seagull",
+		["name"] = L["Cove Seagull"],
 		["health"] = 8891579,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -324,7 +325,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[10] = {
-		["name"] = "Restless Tides",
+		["name"] = L["Restless Tides"],
 		["health"] = 17783157,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -346,7 +347,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[11] = {
-		["name"] = "Saltsea Droplet",
+		["name"] = L["Saltsea Droplet"],
 		["health"] = 5243751,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -407,7 +408,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},			
 	},
 	[12] = {
-		["name"] = "Hatecoil Wavebinder",
+		["name"] = L["Hatecoil Wavebinder"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -424,7 +425,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[13] = {
-		["name"] = "Animated Storm",
+		["name"] = L["Animated Storm"],
 		["health"] = 8891579,
 		["level"] = 110,
 		["creatureType"] = "Elemental",
@@ -441,7 +442,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[14] = {
-		["name"] = "Bitterbrine Scavenger",
+		["name"] = L["Bitterbrine Scavenger"],
 		["health"] = 5334947,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -502,7 +503,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[15] = {
-		["name"] = "Seaspray Crab",
+		["name"] = L["Seaspray Crab"],
 		["health"] = 5334947,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -587,7 +588,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		},
 	},
 	[16] = {
-		["name"] = "Mak'rana Hardshell",
+		["name"] = L["Mak'rana Hardshell"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -603,7 +604,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[17] = {
-		["name"] = "Stormwake Hydra",
+		["name"] = L["Stormwake Hydra"],
 		["health"] = 30661163,
 		["level"] = 111,
 		["creatureType"] = "Beast",
@@ -660,7 +661,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[18] = {
-		["name"] = "Mak'rana Siltwalker",
+		["name"] = L["Mak'rana Siltwalker"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -675,7 +676,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[19] = {
-		["name"] = "Mystic Ssa'veh",
+		["name"] = L["Mystic Ssa'veh"],
 		["health"] = 18396698,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -689,7 +690,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[20] = {
-		["name"] = "Binder Ashioi",
+		["name"] = L["Binder Ashioi"],
 		["health"] = 18396698,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -703,7 +704,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[21] = {
-		["name"] = "Channeler Varisz",
+		["name"] = L["Channeler Varisz"],
 		["health"] = 18396698,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -717,7 +718,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[22] = {
-		["name"] = "Ritualist Lesha",
+		["name"] = L["Ritualist Lesha"],
 		["health"] = 18396698,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -731,7 +732,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[23] = {
-		["name"] = "Skrog Wavecrasher",
+		["name"] = L["Skrog Wavecrasher"],
 		["health"] = 25755377,
 		["level"] = 111,
 		["creatureType"] = "Giant",
@@ -752,7 +753,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[24] = {
-		["name"] = "Skrog Tidestomper",
+		["name"] = L["Skrog Tidestomper"],
 		["health"] = 25755377,
 		["level"] = 111,
 		["creatureType"] = "Giant",
@@ -772,7 +773,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[25] = {
-		["name"] = "Bitterbrine Slave",
+		["name"] = L["Bitterbrine Slave"],
 		["health"] = 5334947,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -835,7 +836,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[26] = {
-		["name"] = "Saltscale Skulker",
+		["name"] = L["Saltscale Skulker"],
 		["health"] = 10373509,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -883,7 +884,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Eye of Azshara
 		}
 	},	
 	[27] = {
-		["name"] = "Saltscale Lurker",
+		["name"] = L["Saltscale Lurker"],
 		["health"] = 4445789,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",

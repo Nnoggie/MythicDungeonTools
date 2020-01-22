@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 8
 local nerfMultiplier = 1
 local pi = math.pi
@@ -5,7 +6,7 @@ MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,tee
 MethodDungeonTools.dungeonBosses[dungeonIndex] = {
 	[1] = {
 		[1] = {
-            ["name"] = "Rokmora",
+            ["name"] = L["Rokmora"],
             ["health"] = 111016239,
             ["encounterID"] = 1662,
             ["level"] = 112,
@@ -16,7 +17,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {
             ["y"] = -264.71098828197,
         },
 		[2] = {
-            ["name"] = "Ularogg Cragshaper",
+            ["name"] = L["Ularogg Cragshaper"],
             ["health"] = 111016239,
             ["encounterID"] = 1665,
             ["level"] = 112,
@@ -27,7 +28,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {
             ["y"] = -273.4195650778,
         },
 		[4] = {
-            ["name"] = "Dargrul",
+            ["name"] = L["Dargrul"],
             ["health"] = 117360016,
             ["encounterID"] = 1687,
             ["level"] = 112,
@@ -41,7 +42,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {
 }
 MethodDungeonTools.dungeonEnemies[dungeonIndex] = { 
 	[1] = {
-		["name"] = "Vileshard Crawler",
+		["name"] = L["Vileshard Crawler"],
 		["health"] = 5129757,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -80,7 +81,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 		},
 	},
 	[2] = {
-		["name"] = "Embershard Scorpion",
+		["name"] = L["Embershard Scorpion"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -95,7 +96,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 		},
 	},
 	[3] = {
-		["name"] = "Rockback Gnasher",
+		["name"] = L["Rockback Gnasher"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -119,7 +120,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 		},
 	},
 	[4] = {
-		["name"] = "Tarspitter Lurker",
+		["name"] = L["Tarspitter Lurker"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -136,7 +137,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
 		},
 	},
 	[5] = {
-        ["name"] = "Understone Drudge",
+        ["name"] = L["Understone Drudge"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -152,7 +153,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[6] = {
-        ["name"] = "Vileshard Chunk",
+        ["name"] = L["Vileshard Chunk"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -166,7 +167,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[7] = {
-        ["name"] = "Vileshard Hulk",
+        ["name"] = L["Vileshard Hulk"],
         ["health"] = 24528930,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -191,7 +192,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[8] = {
-        ["name"] = "Understone Drummer",
+        ["name"] = L["Understone Drummer"],
         ["health"] = 8891579,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -206,7 +207,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[9] = {
-        ["name"] = "Mightstone Breaker",
+        ["name"] = L["Mightstone Breaker"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -243,7 +244,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[10] = {
-        ["name"] = "Rockbound Pelter",
+        ["name"] = L["Rockbound Pelter"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -268,7 +269,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[11] = {
-        ["name"] = "Stoneclaw Hunter",
+        ["name"] = L["Stoneclaw Hunter"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -301,7 +302,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[12] = {
-        ["name"] = "Rockback Gnasher",
+        ["name"] = L["Rockback Gnasher"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -317,7 +318,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[13] = {
-        ["name"] = "Drums of War",
+        ["name"] = L["Drums of War"],
         ["health"] = 2963859,
         ["level"] = 110,
         ["creatureType"] = "Mechanical",
@@ -332,7 +333,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[14] = {
-        ["name"] = "Blightshard Shaper",
+        ["name"] = L["Blightshard Shaper"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -353,7 +354,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[15] = {
-        ["name"] = "Burning Geode",
+        ["name"] = L["Burning Geode"],
         ["health"] = 1185544,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -368,7 +369,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[16] = {
-        ["name"] = "Rockback Snapper",
+        ["name"] = L["Rockback Snapper"],
         ["health"] = 2963859,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -398,7 +399,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[17] = {
-        ["name"] = "Stoneclaw Grubmaster",
+        ["name"] = L["Stoneclaw Grubmaster"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -415,7 +416,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[18] = {
-        ["name"] = "Tarspitter Slug",
+        ["name"] = L["Tarspitter Slug"],
         ["health"] = 2279892,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -438,7 +439,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[19] = {
-        ["name"] = "Understone Demolisher",
+        ["name"] = L["Understone Demolisher"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -454,7 +455,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[20] = {
-        ["name"] = "Rockbound Trapper",
+        ["name"] = L["Rockbound Trapper"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -472,7 +473,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[21] = {
-        ["name"] = "Emberhusk Dominator",
+        ["name"] = L["Emberhusk Dominator"],
         ["health"] = 24528930,
         ["level"] = 111,
         ["creatureType"] = "Beast",

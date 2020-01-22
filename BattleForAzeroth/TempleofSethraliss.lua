@@ -1,3 +1,4 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("MethodDungeonTools")
 local dungeonIndex = 20
 MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
 
@@ -39,7 +40,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["index"] = 1;
          ["weeks"] = {};
          ["template"] = "VignettePinTemplate";
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
          ["x"] = 300;
          ["y"] = -200;
       };
@@ -50,7 +51,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["scale"] = 0.7;
          ["y"] = -403.01166505144;
          ["x"] = 439.11747637335;
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -68,7 +69,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["scale"] = 0.7;
          ["y"] = -176.57890633549;
          ["x"] = 428.50334041028;
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -86,7 +87,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["scale"] = 0.7;
          ["y"] = -405.98277277096;
          ["x"] = 437.55768863205;
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
          ["weeks"] = {
             [11] = true;
             [7] = true;
@@ -104,7 +105,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["scale"] = 0.7;
          ["y"] = -517.94951775516;
          ["x"] = 569.75769252457;
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -128,7 +129,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["scale"] = 0.7;
          ["y"] = -177.95106677132;
          ["x"] = 428.45847734519;
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
          ["weeks"] = {
             [11] = true;
             [7] = true;
@@ -169,7 +170,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
          ["scale"] = 1.2;
          ["y"] = -404.37457372909;
          ["x"] = 496.16008727721;
-         ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -323,7 +324,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          [277242] = {};
       };
       ["id"] = 134600;
-      ["name"] = "Sandswept Marksman";
+      ["name"] = L["Sandswept Marksman"];
       ["health"] = 768495;
       ["displayId"] = 83780;
       ["creatureType"] = "Humanoid";
@@ -439,7 +440,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          [264587] = {};
       };
       ["id"] = 134616;
-      ["name"] = "Krolusk Pup";
+      ["name"] = L["Krolusk Pup"];
       ["health"] = 461097;
       ["displayId"] = 83787;
       ["creatureType"] = "Beast";
@@ -500,7 +501,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          [209859] = {};
       };
       ["id"] = 134990;
-      ["name"] = "Charged Dust Devil";
+      ["name"] = L["Charged Dust Devil"];
       ["health"] = 768495;
       ["displayId"] = 84024;
       ["creatureType"] = "Humanoid";
@@ -598,7 +599,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Sandfury Stonefist";
+      ["name"] = L["Sandfury Stonefist"];
       ["health"] = 1229592;
       ["displayId"] = 84207;
       ["creatureType"] = "Humanoid";
@@ -844,7 +845,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          [271055] = {};
          [268993] = {};
       };
-      ["name"] = "Shrouded Fang";
+      ["name"] = L["Shrouded Fang"];
       ["count"] = 4;
       ["level"] = 120;
       ["health"] = 614796;
@@ -931,7 +932,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          [209859] = {};
       };
       ["neutral"] = true;
-      ["name"] = "Krolusk Hatchling";
+      ["name"] = L["Krolusk Hatchling"];
       ["health"] = 5631;
       ["count"] = 1;
       ["displayId"] = 83790;
@@ -954,7 +955,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["name"] = "Aspix";
+      ["name"] = L["Aspix"];
       ["scale"] = 1;
       ["spells"] = {
          [263371] = {};
@@ -988,7 +989,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["name"] = "Adderis";
+      ["name"] = L["Adderis"];
       ["scale"] = 1;
       ["spells"] = {
          [263573] = {};
@@ -1260,7 +1261,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 134629;
       ["count"] = 6;
-      ["name"] = "Scaled Krolusk Rider";
+      ["name"] = L["Scaled Krolusk Rider"];
       ["displayId"] = 84761;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -1299,7 +1300,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 135562;
       ["count"] = 2;
-      ["name"] = "Venomous Ophidian";
+      ["name"] = L["Venomous Ophidian"];
       ["displayId"] = 78250;
       ["creatureType"] = "Beast";
       ["level"] = 120;
@@ -1339,7 +1340,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 135846;
       ["count"] = 2;
-      ["name"] = "Sand-Crusted Striker";
+      ["name"] = L["Sand-Crusted Striker"];
       ["displayId"] = 78247;
       ["creatureType"] = "Beast";
       ["level"] = 120;
@@ -1374,7 +1375,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 139422;
       ["count"] = 6;
-      ["name"] = "Scaled Krolusk Tamer";
+      ["name"] = L["Scaled Krolusk Tamer"];
       ["displayId"] = 84761;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -1409,7 +1410,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 134686;
       ["count"] = 4;
-      ["name"] = "Mature Krolusk";
+      ["name"] = L["Mature Krolusk"];
       ["displayId"] = 75595;
       ["creatureType"] = "Beast";
       ["level"] = 120;
@@ -1478,7 +1479,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 134364;
       ["count"] = 4;
-      ["name"] = "Faithless Tender";
+      ["name"] = L["Faithless Tender"];
       ["displayId"] = 86510;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -1542,7 +1543,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 139425;
       ["count"] = 4;
-      ["name"] = "Crazed Incubator";
+      ["name"] = L["Crazed Incubator"];
       ["displayId"] = 83444;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -1584,7 +1585,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 88585;
       ["creatureType"] = "Beast";
       ["level"] = 120;
-      ["name"] = "Merektha";
+      ["name"] = L["Merektha"];
       ["scale"] = 1;
    };
    [17] = {
@@ -1633,7 +1634,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 65631;
       ["creatureType"] = "Elemental";
       ["level"] = 120;
-      ["name"] = "Agitated Nimbus";
+      ["name"] = L["Agitated Nimbus"];
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -1681,7 +1682,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83779;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Imbued Stormcaller";
+      ["name"] = L["Imbued Stormcaller"];
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Root"] = true;
@@ -1776,7 +1777,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 81655;
       ["creatureType"] = "Elemental";
       ["level"] = 120;
-      ["name"] = "Static-charged Dervish";
+      ["name"] = L["Static-charged Dervish"];
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -1807,7 +1808,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 81654;
       ["creatureType"] = "Elemental";
       ["level"] = 120;
-      ["name"] = "Galvazzt";
+      ["name"] = L["Galvazzt"];
       ["scale"] = 1;
    };
    [21] = {
@@ -1826,7 +1827,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["scale"] = 2;
-      ["name"] = "Eye of Sethraliss";
+      ["name"] = L["Eye of Sethraliss"];
       ["health"] = 0;
       ["displayId"] = 46941;
       ["creatureType"] = "";
@@ -1885,7 +1886,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 84676;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Hoodoo Hexer";
+      ["name"] = L["Hoodoo Hexer"];
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -1915,7 +1916,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 86210;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
-      ["name"] = "Plague Doctor";
+      ["name"] = L["Plague Doctor"];
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -1951,7 +1952,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83203;
       ["creatureType"] = "Undead";
       ["level"] = 120;
-      ["name"] = "Avatar of Sethraliss";
+      ["name"] = L["Avatar of Sethraliss"];
       ["count"] = 0;
    };
    [25] = {
@@ -1972,7 +1973,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["id"] = 139110;
       ["count"] = 11;
-      ["name"] = "Spark Channeler";
+      ["name"] = L["Spark Channeler"];
       ["displayId"] = 83553;
       ["creatureType"] = "Humanoid";
       ["level"] = 120;
@@ -2192,7 +2193,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["id"] = 155434;
-      ["name"] = "Emissary of the Tides";
+      ["name"] = L["Emissary of the Tides"];
       ["ignoreFortified"] = true;
       ["health"] = 614795;
       ["displayId"] = 39391;
@@ -2335,7 +2336,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       };
       ["stealthDetect"] = true;
       ["id"] = 155433;
-      ["name"] = "Void-Touched Emissary";
+      ["name"] = L["Void-Touched Emissary"];
       ["ignoreFortified"] = true;
       ["health"] = 999042;
       ["displayId"] = 39391;
@@ -2524,7 +2525,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["id"] = 155432;
-      ["name"] = "Enchanted Emissary";
+      ["name"] = L["Enchanted Emissary"];
       ["ignoreFortified"] = true;
       ["health"] = 15369884;
       ["displayId"] = 39391;
@@ -2558,7 +2559,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["count"] = 6;
       ["health"] = 1229592;
       ["teemingCount"] = 4;
-      ["name"] = "Heart Guardian";
+      ["name"] = L["Heart Guardian"];
       ["displayId"] = 84761;
       ["creatureType"] = "Elemental";
       ["level"] = 120;
@@ -2610,7 +2611,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["health"] = 2151786;
       ["corrupted"] = true;
       ["teemingCount"] = 6;
-      ["name"] = "Samh'rek, Beckoner of Chaos";
+      ["name"] = L["Samh'rek, Beckoner of Chaos"];
       ["displayId"] = 90742;
       ["creatureType"] = "Aberration";
       ["level"] = 122;
@@ -2655,7 +2656,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
          [314309] = {};
       };
       ["stealthDetect"] = true;
-      ["name"] = "Urg'roth, Breaker of Heroes";
+      ["name"] = L["Urg'roth, Breaker of Heroes"];
       ["level"] = 122;
       ["teemingCount"] = 6;
       ["health"] = 2151786;
@@ -2709,7 +2710,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
       ["creatureType"] = "Beast";
       ["corrupted"] = true;
       ["count"] = 4;
-      ["name"] = "Voidweaver Mal'thir";
+      ["name"] = L["Voidweaver Mal'thir"];
    };
    [33] = {
       ["clones"] = {
@@ -2739,7 +2740,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["name"] = "Blood of the Corruptor";
+      ["name"] = L["Blood of the Corruptor"];
       ["id"] = 161244;
       ["spells"] = {
          [314566] = {};
