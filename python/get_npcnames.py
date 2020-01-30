@@ -8,6 +8,7 @@ from socket import error as SocketError
 import threading
 import math
 import time
+from collections import OrderedDict 
 
 def get_npc_name(npc_id, language, ptr=False):
 	try:
@@ -45,6 +46,7 @@ def get_npc_names_localized(npc_id):
 	name = get_npc_name(npc_id, 'en')
 	if not name:
 		print(npc_id)
+		return
 	if name in npc_list:
 		return
 	npc_list[name] = {}
@@ -117,6 +119,7 @@ for i in range(100):
 for _, t in enumerate(threads):
 	t.join()
 
+npc_list = OrderedDict(sorted(npc_list.items(), key=lambda t: t[0] or ''))
 write_to_locales()
 os.remove('Locales.lua')
 os.rename('tmp', 'Locales.lua')
