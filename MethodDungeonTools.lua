@@ -2748,6 +2748,7 @@ function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap,init)
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
     if init then return end
 	MethodDungeonTools:UpdatePresetDropDown()
+    MethodDungeonTools:ShowHideAffixWarning()
 	if not ignoreUpdateMap then MethodDungeonTools:UpdateMap() end
     MethodDungeonTools:ZoomMapToDefault()
      --Colors the first pull in "Default" presets
@@ -2760,6 +2761,7 @@ function MethodDungeonTools:DeletePreset(index)
 	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
     MethodDungeonTools:ZoomMapToDefault()
+    MethodDungeonTools:ShowHideAffixWarning()
 end
 
 local zoneIdToDungeonIdx = {
@@ -2819,6 +2821,7 @@ function MethodDungeonTools:DeleteAllPresets()
     end
     MethodDungeonTools:UpdatePresetDropDown()
     MethodDungeonTools:UpdateMap()
+    MethodDungeonTools:ShowHideAffixWarning()
 end
 
 function MethodDungeonTools:ClearPreset(preset,silent)
@@ -2866,6 +2869,7 @@ function MethodDungeonTools:CreateNewPreset(name)
 		MethodDungeonTools:UpdatePresetDropDown()
 		MethodDungeonTools:UpdateMap()
         MethodDungeonTools:ZoomMapToDefault()
+        MethodDungeonTools:ShowHideAffixWarning()
         MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
 	else
@@ -2924,6 +2928,7 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
         if MethodDungeonTools:ValidateImportPreset(newPreset) then
             chatImport:Hide()
             MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset))
+            MethodDungeonTools:ShowHideAffixWarning()
         else
             print("MDT: Error importing preset report to author")
         end
@@ -3102,6 +3107,7 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         self.liveUpdateFrameOpen = nil
         self:UpdatePresetDropDown()
         self:UpdateMap()
+        self:ShowHideAffixWarning()
         if fromLiveSession then
             self.main_frame.SendingStatusBar:Hide()
             if self.main_frame.LoadingSpinner then
@@ -3139,6 +3145,7 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         self.liveUpdateFrameOpen = nil
         self:UpdatePresetDropDown()
         self:UpdateMap()
+        self:ShowHideAffixWarning()
         if fromLiveSession then
             self.main_frame.SendingStatusBar:Hide()
             if self.main_frame.LoadingSpinner then
@@ -3170,6 +3177,21 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         end
     else
         copyCallback()
+    end
+end
+
+function MethodDungeonTools:ShowHideAffixWarning()
+    local frame = MethodDungeonTools.main_frame
+    local key = (MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek() or 1)
+    if not MethodDungeonTools:GetCurrentAffixWeek() then
+        frame.sidePanel.affixWeekWarning.image:Hide()
+        frame.sidePanel.affixWeekWarning:SetDisabled(true)
+    elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
+        frame.sidePanel.affixWeekWarning.image:Hide()
+        frame.sidePanel.affixWeekWarning:SetDisabled(true)
+    else
+        frame.sidePanel.affixWeekWarning.image:Show()
+        frame.sidePanel.affixWeekWarning:SetDisabled(false)
     end
 end
 
