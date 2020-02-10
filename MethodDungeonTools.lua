@@ -1410,16 +1410,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     end
     function affixDropdown:SetAffixWeek(key,ignoreReloadPullButtons,ignoreUpdateProgressBar)
         affixDropdown:SetValue(key)
-        if not MethodDungeonTools:GetCurrentAffixWeek() then
-            frame.sidePanel.affixWeekWarning.image:Hide()
-            frame.sidePanel.affixWeekWarning:SetDisabled(true)
-        elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
-            frame.sidePanel.affixWeekWarning.image:Hide()
-            frame.sidePanel.affixWeekWarning:SetDisabled(true)
-        else
-            frame.sidePanel.affixWeekWarning.image:Show()
-            frame.sidePanel.affixWeekWarning:SetDisabled(false)
-        end
+        frame.sidePanel.affixWeekWarning:Toggle(key)
         MethodDungeonTools:GetCurrentPreset().week = key
         local teeming = MethodDungeonTools:IsPresetTeeming(MethodDungeonTools:GetCurrentPreset())
         MethodDungeonTools:GetCurrentPreset().value.teeming = teeming
@@ -1459,6 +1450,19 @@ function MethodDungeonTools:MakeSidePanel(frame)
         GameTooltip:AddLine("Click to switch to current week",1,1,1)
         GameTooltip:Show()
     end)
+    function affixWeekWarning:Toggle(key)
+        if not MethodDungeonTools:GetCurrentAffixWeek() then
+            frame.sidePanel.affixWeekWarning.image:Hide()
+            frame.sidePanel.affixWeekWarning:SetDisabled(true)
+        elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
+            frame.sidePanel.affixWeekWarning.image:Hide()
+            frame.sidePanel.affixWeekWarning:SetDisabled(true)
+        else
+            frame.sidePanel.affixWeekWarning.image:Show()
+            frame.sidePanel.affixWeekWarning:SetDisabled(false)
+        end
+        if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
+    end
     affixWeekWarning:SetCallback("OnLeave",function(...)
         GameTooltip:Hide()
     end)
@@ -2663,6 +2667,10 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
         frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
         frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
     end
+    if preset.week then
+        frame.sidePanel.affixDropdown:SetValue(MethodDungeonTools:GetCurrentPreset().week)
+        frame.sidePanel.affixWeekWarning:Toggle(MethodDungeonTools:GetCurrentPreset().week)
+    end
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
     local tileFormat = MethodDungeonTools:GetTileFormat(db.currentDungeonIdx)
@@ -2748,7 +2756,6 @@ function MethodDungeonTools:UpdateToDungeon(dungeonIdx,ignoreUpdateMap,init)
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 end
     if init then return end
 	MethodDungeonTools:UpdatePresetDropDown()
-    MethodDungeonTools:ShowHideAffixWarning()
 	if not ignoreUpdateMap then MethodDungeonTools:UpdateMap() end
     MethodDungeonTools:ZoomMapToDefault()
      --Colors the first pull in "Default" presets
@@ -2761,7 +2768,6 @@ function MethodDungeonTools:DeletePreset(index)
 	MethodDungeonTools:UpdatePresetDropDown()
 	MethodDungeonTools:UpdateMap()
     MethodDungeonTools:ZoomMapToDefault()
-    MethodDungeonTools:ShowHideAffixWarning()
 end
 
 local zoneIdToDungeonIdx = {
@@ -2821,7 +2827,6 @@ function MethodDungeonTools:DeleteAllPresets()
     end
     MethodDungeonTools:UpdatePresetDropDown()
     MethodDungeonTools:UpdateMap()
-    MethodDungeonTools:ShowHideAffixWarning()
 end
 
 function MethodDungeonTools:ClearPreset(preset,silent)
@@ -2869,7 +2874,6 @@ function MethodDungeonTools:CreateNewPreset(name)
 		MethodDungeonTools:UpdatePresetDropDown()
 		MethodDungeonTools:UpdateMap()
         MethodDungeonTools:ZoomMapToDefault()
-        MethodDungeonTools:ShowHideAffixWarning()
         MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
 	else
@@ -2928,7 +2932,6 @@ function MethodDungeonTools:MakeChatPresetImportFrame(frame)
         if MethodDungeonTools:ValidateImportPreset(newPreset) then
             chatImport:Hide()
             MethodDungeonTools:ImportPreset(MethodDungeonTools:DeepCopy(newPreset))
-            MethodDungeonTools:ShowHideAffixWarning()
         else
             print("MDT: Error importing preset report to author")
         end
@@ -3107,7 +3110,6 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         self.liveUpdateFrameOpen = nil
         self:UpdatePresetDropDown()
         self:UpdateMap()
-        self:ShowHideAffixWarning()
         if fromLiveSession then
             self.main_frame.SendingStatusBar:Hide()
             if self.main_frame.LoadingSpinner then
@@ -3145,7 +3147,6 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         self.liveUpdateFrameOpen = nil
         self:UpdatePresetDropDown()
         self:UpdateMap()
-        self:ShowHideAffixWarning()
         if fromLiveSession then
             self.main_frame.SendingStatusBar:Hide()
             if self.main_frame.LoadingSpinner then
@@ -3177,21 +3178,6 @@ function MethodDungeonTools:ImportPreset(preset,fromLiveSession)
         end
     else
         copyCallback()
-    end
-end
-
-function MethodDungeonTools:ShowHideAffixWarning()
-    local frame = MethodDungeonTools.main_frame
-    local key = (MethodDungeonTools:GetCurrentPreset().week or MethodDungeonTools:GetCurrentAffixWeek() or 1)
-    if not MethodDungeonTools:GetCurrentAffixWeek() then
-        frame.sidePanel.affixWeekWarning.image:Hide()
-        frame.sidePanel.affixWeekWarning:SetDisabled(true)
-    elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
-        frame.sidePanel.affixWeekWarning.image:Hide()
-        frame.sidePanel.affixWeekWarning:SetDisabled(true)
-    else
-        frame.sidePanel.affixWeekWarning.image:Show()
-        frame.sidePanel.affixWeekWarning:SetDisabled(false)
     end
 end
 
