@@ -2645,6 +2645,8 @@ function MethodDungeonTools:EnsureDBTables()
         maxSublevel = maxSublevel + 1
     end
     if preset.value.currentSublevel > maxSublevel then preset.value.currentSublevel = maxSublevel end
+    --make sure teeeming flag is set
+    preset.value.teeming = MethodDungeonTools:IsWeekTeeming(preset.week)
 end
 
 function MethodDungeonTools:GetTileFormat(dungeonIdx)
