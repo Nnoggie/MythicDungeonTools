@@ -124,6 +124,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["text"] = "Week 2/5/8/11: G53 is not patrolling. It is stationary at Emissray of the Tides 14 (G53).";
             ["type"] = "generalNote";
+            ["season"] = 3;
         };
         [5] = {
             ["npcId"] = 161244;

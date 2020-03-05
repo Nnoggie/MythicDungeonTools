@@ -2649,6 +2649,8 @@ function MethodDungeonTools:EnsureDBTables()
         maxSublevel = maxSublevel + 1
     end
     if preset.value.currentSublevel > maxSublevel then preset.value.currentSublevel = maxSublevel end
+    --make sure teeeming flag is set
+    preset.value.teeming = MethodDungeonTools:IsWeekTeeming(preset.week)
 end
 
 function MethodDungeonTools:GetTileFormat(dungeonIdx)
@@ -4637,6 +4639,12 @@ function MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
     updateSwatch(button.menu)
     updateSwatch(button.multiselectMenu)
     button:UpdateColor()
+end
+
+--/run MethodDungeonTools:ResetDataCache();
+function MethodDungeonTools:ResetDataCache()
+    db.dungeonEnemies = nil
+    db.mapPOIs = nil
 end
 
 function initFrames()

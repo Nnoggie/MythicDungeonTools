@@ -493,6 +493,13 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
             };
             ["template"] = "VignettePinTemplate";
         };
+        [56] = {
+            ["y"] = -237.97058570656;
+            ["x"] = 534.41673960398;
+            ["template"] = "MapLinkPinTemplate";
+            ["botIndex"] = 1;
+            ["type"] = "mechagonBot";
+        };
     };
     [2] = {
         [1] = {
@@ -1810,6 +1817,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["level"] = 120;
         ["health"] = 768495;
         ["id"] = 150254;
+        ["stealthDetect"] = true;
     };
     [14] = {
         ["clones"] = {

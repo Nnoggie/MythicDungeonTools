@@ -4987,5 +4987,6 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["level"] = 122;
         ["count"] = 0;
         ["health"] = 1383291;
+        ["isBoss"] = true;
     };
 };

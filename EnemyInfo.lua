@@ -175,6 +175,14 @@ local function MakeEnemeyInfoFrame()
         f.enemyDataContainer:SetHeight(235)
         f.enemyDataContainer:SetLayout("Flow")
 
+        f.enemyDataContainer.nameEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.nameEditBox:SetLabel("Name")
+        f.enemyDataContainer.nameEditBox:DisableButton(true)
+        f.enemyDataContainer.nameEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.nameEditBox)
+
         f.enemyDataContainer.idEditBox = AceGUI:Create("EditBox")
         f.enemyDataContainer.idEditBox:SetLabel("NPC Id")
         f.enemyDataContainer.idEditBox:DisableButton(true)
@@ -478,6 +486,8 @@ function MDT:UpdateEnemyInfoData(enemyIdx)
     if not enemyIdx then return end
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
     --data
+    f.enemyDataContainer.nameEditBox:SetText(data.name)
+    f.enemyDataContainer.nameEditBox.defaultText = data.name
     f.enemyDataContainer.idEditBox:SetText(data.id)
     f.enemyDataContainer.idEditBox.defaultText = data.id
 
