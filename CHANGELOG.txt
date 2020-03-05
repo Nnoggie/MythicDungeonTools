@@ -1,3 +1,9 @@
+v3.0.3
+- fixed an issue where teeming enemies would not be shown and counted in pulls
+- fixed Voidweaver showing in tol dagor in the wrong location/week
+- gripping tentacle's health now properly scales with tyrannical
+- scraphounds in Mechagon Junkyard now properly show as having stealth detection
+- added a welding bot to Mechagon Junkyard around Weaponized Crawler 2
 v3.0.2
 - fixed lua error on note click
 - Some Freehold Deckhands have returned from their short island vacation
