@@ -4631,6 +4631,12 @@ function MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
     button:UpdateColor()
 end
 
+--/run MethodDungeonTools:ResetDataCache();
+function MethodDungeonTools:ResetDataCache()
+    db.dungeonEnemies = nil
+    db.mapPOIs = nil
+end
+
 function initFrames()
     local main_frame = CreateFrame("frame", "MethodDungeonToolsFrame", UIParent)
     tinsert(UISpecialFrames,"MethodDungeonToolsFrame")
