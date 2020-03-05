@@ -1810,6 +1810,7 @@ MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
         ["level"] = 120;
         ["health"] = 768495;
         ["id"] = 150254;
+        ["stealthDetect"] = true;
     };
     [14] = {
         ["clones"] = {
