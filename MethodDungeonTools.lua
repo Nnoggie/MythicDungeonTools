@@ -3246,7 +3246,7 @@ local colorPaletteNames = {
 ---Saves currently selected automatic coloring settings to the current
 ---This can be achieved easier, but it will increase the export text length significantly for non custom palettes.
 function MethodDungeonTools:SetPresetColorPaletteInfo()
-    preset = MethodDungeonTools:GetCurrentPreset()
+    local preset = MethodDungeonTools:GetCurrentPreset()
     preset.colorPaletteInfo = {}
     preset.colorPaletteInfo.autoColoring = db.colorPaletteInfo.autoColoring
     if preset.colorPaletteInfo.autoColoring then
