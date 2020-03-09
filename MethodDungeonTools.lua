@@ -1330,7 +1330,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.MDIButton.frame:SetScript("OnLeave",function()
         GameTooltip:Hide()
     end)
-    
+
     --AutomaticColorsCheckbox
     frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
 	frame.AutomaticColorsCheckSidePanel:SetLabel("Automatically color pulls")
@@ -1413,7 +1413,16 @@ function MethodDungeonTools:MakeSidePanel(frame)
     end
     function affixDropdown:SetAffixWeek(key,ignoreReloadPullButtons,ignoreUpdateProgressBar)
         affixDropdown:SetValue(key)
-        frame.sidePanel.affixWeekWarning:Toggle(key)
+        if not MethodDungeonTools:GetCurrentAffixWeek() then
+            frame.sidePanel.affixWeekWarning.image:Hide()
+            frame.sidePanel.affixWeekWarning:SetDisabled(true)
+        elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
+            frame.sidePanel.affixWeekWarning.image:Hide()
+            frame.sidePanel.affixWeekWarning:SetDisabled(true)
+        else
+            frame.sidePanel.affixWeekWarning.image:Show()
+            frame.sidePanel.affixWeekWarning:SetDisabled(false)
+        end
         MethodDungeonTools:GetCurrentPreset().week = key
         local teeming = MethodDungeonTools:IsPresetTeeming(MethodDungeonTools:GetCurrentPreset())
         MethodDungeonTools:GetCurrentPreset().value.teeming = teeming
@@ -1453,19 +1462,6 @@ function MethodDungeonTools:MakeSidePanel(frame)
         GameTooltip:AddLine("Click to switch to current week",1,1,1)
         GameTooltip:Show()
     end)
-    function affixWeekWarning:Toggle(key)
-        if not MethodDungeonTools:GetCurrentAffixWeek() then
-            frame.sidePanel.affixWeekWarning.image:Hide()
-            frame.sidePanel.affixWeekWarning:SetDisabled(true)
-        elseif MethodDungeonTools:GetCurrentAffixWeek() == key then
-            frame.sidePanel.affixWeekWarning.image:Hide()
-            frame.sidePanel.affixWeekWarning:SetDisabled(true)
-        else
-            frame.sidePanel.affixWeekWarning.image:Show()
-            frame.sidePanel.affixWeekWarning:SetDisabled(false)
-        end
-        if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
-    end
     affixWeekWarning:SetCallback("OnLeave",function(...)
         GameTooltip:Hide()
     end)
@@ -2671,10 +2667,6 @@ function MethodDungeonTools:UpdateMap(ignoreSetSelection,ignoreReloadPullButtons
         db.currentDifficulty = preset.difficulty
         frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
         frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
-    end
-    if preset.week then
-        frame.sidePanel.affixDropdown:SetValue(MethodDungeonTools:GetCurrentPreset().week)
-        frame.sidePanel.affixWeekWarning:Toggle(MethodDungeonTools:GetCurrentPreset().week)
     end
 	local fileName = MethodDungeonTools.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
