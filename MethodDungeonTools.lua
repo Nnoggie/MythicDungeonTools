@@ -1330,20 +1330,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.MDIButton.frame:SetScript("OnLeave",function()
         GameTooltip:Hide()
     end)
-
-	--AutomaticColors
-	frame.AutomaticColorsButton = AceGUI:Create("Button")
-	frame.AutomaticColorsButton:SetText("Colors")
-	frame.AutomaticColorsButton:SetWidth(buttonWidth)
-	frame.AutomaticColorsButton.frame:SetNormalFontObject(fontInstance)
-	frame.AutomaticColorsButton.frame:SetHighlightFontObject(fontInstance)
-	frame.AutomaticColorsButton.frame:SetDisabledFontObject(fontInstance)
-	local c1,c2,c3 = frame.AutomaticColorsButton.text:GetTextColor()
-	frame.AutomaticColorsButton.normalTextColor = {r = c1,g = c2,b = c3,}
-	frame.AutomaticColorsButton:SetCallback("OnClick",function(widget,callbackName,value)
-		MethodDungeonTools:OpenAutomaticColorsDialog()
-	end)
-
+    
     --AutomaticColorsCheckbox
     frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
 	frame.AutomaticColorsCheckSidePanel:SetLabel("Automatically color pulls")
