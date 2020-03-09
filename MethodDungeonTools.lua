@@ -3387,18 +3387,23 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
 	frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
     frame.AutomaticColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.autoColoring = value
-		if value == true then
+        MethodDungeonTools:SetPresetColorPaletteInfo()
+        if value == true then
+            frame.toggleForceColorBlindMode:SetDisabled(false)
             MethodDungeonTools:ColorAllPulls()
-		end
+        else
+            frame.toggleForceColorBlindMode:SetDisabled(true)
+        end
 	end)
     frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
 
-    --Toggle forcing color blind locally
+    --Toggle local color blind mode
     frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
     frame.toggleForceColorBlindMode:SetLabel("Local color blind mode")
     frame.toggleForceColorBlindMode:SetValue(db.colorPaletteInfo.forceColorBlindMode)
     frame.toggleForceColorBlindMode:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.forceColorBlindMode = value
+        MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
 
 	end)
@@ -3423,6 +3428,8 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     end)
     frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
 
+    -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
+    -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
     frame.button = AceGUI:Create("Button")
     frame.button:SetText("Apply to preset")
     frame.button:SetCallback("OnClick", function(widget, callbackName)
