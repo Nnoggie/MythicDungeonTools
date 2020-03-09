@@ -3352,7 +3352,7 @@ function MethodDungeonTools:MakeCustomColorFrame(frame)
     frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
 
     --Loop to create as many colorpickers as requested limited by db.colorPaletteInfo.numberCustomColors
-    ColorPicker = {}
+    local ColorPicker = {}
     for i= 1,db.colorPaletteInfo.numberCustomColors do
         ColorPicker[i] = AceGUI:Create("ColorPicker")
         if db.colorPaletteInfo.customPaletteValues[i] then
