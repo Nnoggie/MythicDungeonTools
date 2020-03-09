@@ -1344,6 +1344,22 @@ function MethodDungeonTools:MakeSidePanel(frame)
 		MethodDungeonTools:OpenAutomaticColorsDialog()
 	end)
 
+    --AutomaticColorsCheckbox
+    frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
+	frame.AutomaticColorsCheckSidePanel:SetLabel("Automatically color pulls")
+	frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+    frame.AutomaticColorsCheckSidePanel:SetCallback("OnValueChanged",function(widget,callbackName,value)
+		db.colorPaletteInfo.autoColoring = value
+        MethodDungeonTools:SetPresetColorPaletteInfo()
+        frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+        if value == true then
+            frame.toggleForceColorBlindMode:SetDisabled(false)
+            MethodDungeonTools:ColorAllPulls()
+        else
+            frame.toggleForceColorBlindMode:SetDisabled(true)
+        end
+	end)
+
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
@@ -1354,7 +1370,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
     --TODO: Un-comment when enabling automatic coloring
-	--frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsButton)
+    --frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
 
     --Week Dropdown (Infested / Affixes)
     local function makeAffixString(week,affixes,longText)
@@ -3388,6 +3404,7 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     frame.AutomaticColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.autoColoring = value
         MethodDungeonTools:SetPresetColorPaletteInfo()
+        frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
         if value == true then
             frame.toggleForceColorBlindMode:SetDisabled(false)
             MethodDungeonTools:ColorAllPulls()
