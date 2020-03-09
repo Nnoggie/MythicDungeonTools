@@ -3280,29 +3280,27 @@ function MethodDungeonTools:ColorPull(colorValues, pullIdx, preset, bypass, expo
     --TODO: Remove when enabling automatic coloring
     if true then return end
     local colorPaletteInfo = MethodDungeonTools:GetPresetColorPaletteInfo(preset)
+    local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
+    local colorValues
+    local numberColors
+    local r,g,b
     if colorPaletteInfo.autoColoring or bypass == true then
         --Force color blind mode locally, will not alter the color values saved to a preset
         if db.colorPaletteInfo.forceColorBlindMode == true and not exportColorBlind then
-            local colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteValues[5]
-            local numberColors = #colorValues
-            local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
-            local colorIdx = (pullIdx-1)%numberColors+1
-            local r, g, b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
-            MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-            MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+            --Local color blind mode, will not alter the colorPaletteInfo saved to a preset
+            colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteValues[5]
+            numberColors = #colorValues
         else
-        --Regular coloring
-            local colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.customPaletteValues or colorPaletteValues[colorPaletteInfo.colorPaletteIdx]
-            local numberColors = colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.numberCustomColors or #colorValues  -- tables must start from 1 and have no blank rows
-            local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
-            local colorIdx = (pullIdx-1)%numberColors+1
-            local r, g, b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
-            MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-            MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+            --Regular coloring
+            colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.customPaletteValues or colorPaletteValues[colorPaletteInfo.colorPaletteIdx]
+            numberColors = colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.numberCustomColors or #colorValues  -- tables must start from 1 and have no blank rows
         end
+        local colorIdx = (pullIdx-1)%numberColors+1
+        r,g,b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
 
+        MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+        MethodDungeonTools:UpdatePullButtonColor(pullIdx,r,g,b)
+        MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
     end
 end
 
