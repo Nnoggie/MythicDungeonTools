@@ -371,6 +371,14 @@ local methods = {
                 MethodDungeonTools:OpenAutomaticColorsDialog()
             end
         })
+        tinsert(self.menu, {
+            text = "Colorize Preset",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:SetPresetColorPaletteInfo()
+                MethodDungeonTools:ColorAllPulls()
+            end
+        })
         local function swatchFunc()
             local r,g,b = ColorPickerFrame:GetColorRGB()
             local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
@@ -562,6 +570,14 @@ local methods = {
             notCheckable = 1,
             func = function()
                 MethodDungeonTools:OpenAutomaticColorsDialog()
+            end
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Colorize Preset",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:SetPresetColorPaletteInfo()
+                MethodDungeonTools:ColorAllPulls()
             end
         })
         local function swatchMultiFunc()
