@@ -103,7 +103,7 @@ local defaultSavedVars = {
 do
     for i=1,26 do
         defaultSavedVars.global.presets[i] = {
-            [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=1}},
+            [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
         }
         defaultSavedVars.global.currentPreset[i] = 1
