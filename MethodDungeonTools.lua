@@ -1356,8 +1356,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
-    --TODO: Un-comment when enabling automatic coloring
-    --frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
+    frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
 
     --Week Dropdown (Infested / Affixes)
     local function makeAffixString(week,affixes,longText)
@@ -3272,8 +3271,6 @@ end
 ---ColorPull
 ---Function executes full coloring of a pull and it's blips
 function MethodDungeonTools:ColorPull(colorValues, pullIdx, preset, bypass, exportColorBlind) -- bypass can be passed as true to color even when automatic coloring is toggled off
-    --TODO: Remove when enabling automatic coloring
-    if true then return end
     local colorPaletteInfo = MethodDungeonTools:GetPresetColorPaletteInfo(preset)
     local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
     local colorValues
