@@ -94,7 +94,7 @@ local defaultSavedVars = {
 		colorPaletteInfo = {
             autoColoring = true,
             forceColorBlindMode = false,
-            colorPaletteIdx = 1,
+            colorPaletteIdx = 4,
             customPaletteValues = {},
             numberCustomColors = 12,
         },
