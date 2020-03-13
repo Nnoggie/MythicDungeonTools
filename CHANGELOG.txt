@@ -1,3 +1,6 @@
+v3.0.4
+- New Feature: Automatically color pulls
+- Increased size of the "Note on teeming" in Atal'Dazar to better clarify the behavior of teeming in this dungeon.
 v3.0.3
 - fixed an issue where teeming enemies would not be shown and counted in pulls
 - fixed Voidweaver showing in tol dagor in the wrong location/week
