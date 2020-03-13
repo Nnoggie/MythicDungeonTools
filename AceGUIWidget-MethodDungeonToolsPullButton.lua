@@ -375,6 +375,13 @@ local methods = {
             text = "Colorize Preset",
             notCheckable = 1,
             func = function()
+                local db = MethodDungeonTools:GetDB()
+                if not db.colorPaletteInfo.autoColoring then
+                    db.colorPaletteInfo.autoColoring = true
+                    MethodDungeonTools.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.toggleForceColorBlindMode:SetDisabled(false)
+                end
                 MethodDungeonTools:SetPresetColorPaletteInfo()
                 MethodDungeonTools:ColorAllPulls()
             end
@@ -576,6 +583,13 @@ local methods = {
             text = "Colorize Preset",
             notCheckable = 1,
             func = function()
+                local db = MethodDungeonTools:GetDB()
+                if not db.colorPaletteInfo.autoColoring then
+                    db.colorPaletteInfo.autoColoring = true
+                    MethodDungeonTools.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.toggleForceColorBlindMode:SetDisabled(false)
+                end
                 MethodDungeonTools:SetPresetColorPaletteInfo()
                 MethodDungeonTools:ColorAllPulls()
             end
