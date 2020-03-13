@@ -3425,6 +3425,12 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     frame.button = AceGUI:Create("Button")
     frame.button:SetText("Apply to preset")
     frame.button:SetCallback("OnClick", function(widget, callbackName)
+        if not db.colorPaletteInfo.autoColoring then
+            db.colorPaletteInfo.autoColoring = true
+            frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+            frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+            frame.toggleForceColorBlindMode:SetDisabled(false)
+        end
         MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
     end)
