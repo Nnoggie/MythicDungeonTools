@@ -364,6 +364,28 @@ local methods = {
                 func = nil
             })
         end
+        tinsert(self.menu, {
+            text = "Color Settings",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:OpenAutomaticColorsDialog()
+            end
+        })
+        tinsert(self.menu, {
+            text = "Colorize Preset",
+            notCheckable = 1,
+            func = function()
+                local db = MethodDungeonTools:GetDB()
+                if not db.colorPaletteInfo.autoColoring then
+                    db.colorPaletteInfo.autoColoring = true
+                    MethodDungeonTools.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.toggleForceColorBlindMode:SetDisabled(false)
+                end
+                MethodDungeonTools:SetPresetColorPaletteInfo()
+                MethodDungeonTools:ColorAllPulls()
+            end
+        })
         local function swatchFunc()
             local r,g,b = ColorPickerFrame:GetColorRGB()
             local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
@@ -549,6 +571,28 @@ local methods = {
             notClickable = 1,
             notCheckable = 1,
             func = nil
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Color Settings",
+            notCheckable = 1,
+            func = function()
+                MethodDungeonTools:OpenAutomaticColorsDialog()
+            end
+        })
+        tinsert(self.multiselectMenu, {
+            text = "Colorize Preset",
+            notCheckable = 1,
+            func = function()
+                local db = MethodDungeonTools:GetDB()
+                if not db.colorPaletteInfo.autoColoring then
+                    db.colorPaletteInfo.autoColoring = true
+                    MethodDungeonTools.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+                    MethodDungeonTools.main_frame.toggleForceColorBlindMode:SetDisabled(false)
+                end
+                MethodDungeonTools:SetPresetColorPaletteInfo()
+                MethodDungeonTools:ColorAllPulls()
+            end
         })
         local function swatchMultiFunc()
             local r,g,b = ColorPickerFrame:GetColorRGB()

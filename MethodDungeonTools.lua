@@ -94,7 +94,7 @@ local defaultSavedVars = {
 		colorPaletteInfo = {
             autoColoring = true,
             forceColorBlindMode = false,
-            colorPaletteIdx = 1,
+            colorPaletteIdx = 4,
             customPaletteValues = {},
             numberCustomColors = 12,
         },
@@ -103,7 +103,7 @@ local defaultSavedVars = {
 do
     for i=1,26 do
         defaultSavedVars.global.presets[i] = {
-            [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=1}},
+            [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
         }
         defaultSavedVars.global.currentPreset[i] = 1
@@ -1331,17 +1331,20 @@ function MethodDungeonTools:MakeSidePanel(frame)
         GameTooltip:Hide()
     end)
 
-	--AutomaticColors
-	frame.AutomaticColorsButton = AceGUI:Create("Button")
-	frame.AutomaticColorsButton:SetText("Colors")
-	frame.AutomaticColorsButton:SetWidth(buttonWidth)
-	frame.AutomaticColorsButton.frame:SetNormalFontObject(fontInstance)
-	frame.AutomaticColorsButton.frame:SetHighlightFontObject(fontInstance)
-	frame.AutomaticColorsButton.frame:SetDisabledFontObject(fontInstance)
-	local c1,c2,c3 = frame.AutomaticColorsButton.text:GetTextColor()
-	frame.AutomaticColorsButton.normalTextColor = {r = c1,g = c2,b = c3,}
-	frame.AutomaticColorsButton:SetCallback("OnClick",function(widget,callbackName,value)
-		MethodDungeonTools:OpenAutomaticColorsDialog()
+    --AutomaticColorsCheckbox
+    frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
+	frame.AutomaticColorsCheckSidePanel:SetLabel("Automatically color pulls")
+	frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+    frame.AutomaticColorsCheckSidePanel:SetCallback("OnValueChanged",function(widget,callbackName,value)
+		db.colorPaletteInfo.autoColoring = value
+        MethodDungeonTools:SetPresetColorPaletteInfo()
+        frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+        if value == true then
+            frame.toggleForceColorBlindMode:SetDisabled(false)
+            MethodDungeonTools:ColorAllPulls()
+        else
+            frame.toggleForceColorBlindMode:SetDisabled(true)
+        end
 	end)
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
@@ -1353,8 +1356,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
-    --TODO: Un-comment when enabling automatic coloring
-	--frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsButton)
+    frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
 
     --Week Dropdown (Infested / Affixes)
     local function makeAffixString(week,affixes,longText)
@@ -3214,13 +3216,12 @@ local colorPaletteValues = {
         [3] = {[1]=1, [2]=0.2446, [3]=0.2446},
         [4] = {[1]=0.2446, [2]=0.6223, [3]=1},
         [5] = {[1]=1, [2]=0.98741, [3]=0.2446},
-        [6] = {[1]=0.6223, [2]=0.6223, [3]=1},
-        [7] = {[1]=0.2446, [2]=1, [3]=0.2446},
-        [8] = {[1]=1, [2]=0.2446, [3]=0.6223},
-        [9] = {[1]=0.2446, [2]=1, [3]=1},
-        [10] = {[1]=1, [2]=0.60971, [3]=0.2446},
-        [11] = {[1]=0.2446, [2]=0.2446, [3]=1},
-        [12] = {[1]=0.63489, [2]=1, [3]=0.2446},
+        [6] = {[1]=0.2446, [2]=1, [3]=0.2446},
+        [7] = {[1]=1, [2]=0.2446, [3]=0.6223},
+        [8] = {[1]=0.2446, [2]=1, [3]=1},
+        [9] = {[1]=1, [2]=0.60971, [3]=0.2446},
+        [10] = {[1]=0.2446, [2]=0.2446, [3]=1},
+        [11] = {[1]=0.63489, [2]=1, [3]=0.2446},
     },
     [5] = { --Color Blind Friendly values (Based on IBM's color library "Color blind safe"
         [1] = {[1]=0.39215686274509803, [2]=0.5607843137254902, [3]=1.0},
@@ -3269,32 +3270,28 @@ end
 ---ColorPull
 ---Function executes full coloring of a pull and it's blips
 function MethodDungeonTools:ColorPull(colorValues, pullIdx, preset, bypass, exportColorBlind) -- bypass can be passed as true to color even when automatic coloring is toggled off
-    --TODO: Remove when enabling automatic coloring
-    if true then return end
     local colorPaletteInfo = MethodDungeonTools:GetPresetColorPaletteInfo(preset)
+    local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
+    local colorValues
+    local numberColors
+    local r,g,b
     if colorPaletteInfo.autoColoring or bypass == true then
         --Force color blind mode locally, will not alter the color values saved to a preset
         if db.colorPaletteInfo.forceColorBlindMode == true and not exportColorBlind then
-            local colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteValues[5]
-            local numberColors = #colorValues
-            local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
-            local colorIdx = (pullIdx-1)%numberColors+1
-            local r, g, b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
-            MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-            MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+            --Local color blind mode, will not alter the colorPaletteInfo saved to a preset
+            colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteValues[5]
+            numberColors = #colorValues
         else
-        --Regular coloring
-            local colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.customPaletteValues or colorPaletteValues[colorPaletteInfo.colorPaletteIdx]
-            local numberColors = colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.numberCustomColors or #colorValues  -- tables must start from 1 and have no blank rows
-            local pullIdx = pullIdx or MethodDungeonTools:GetCurrentPull()
-            local colorIdx = (pullIdx-1)%numberColors+1
-            local r, g, b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
-            MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-            MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+            --Regular coloring
+            colorValues = colorValues or colorPaletteValues[colorValues] or colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.customPaletteValues or colorPaletteValues[colorPaletteInfo.colorPaletteIdx]
+            numberColors = colorPaletteInfo.colorPaletteIdx == 6 and colorPaletteInfo.numberCustomColors or #colorValues  -- tables must start from 1 and have no blank rows
         end
+        local colorIdx = (pullIdx-1)%numberColors+1
+        r,g,b = colorValues[colorIdx][1],colorValues[colorIdx][2],colorValues[colorIdx][3]
 
+        MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+        MethodDungeonTools:UpdatePullButtonColor(pullIdx,r,g,b)
+        MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
     end
 end
 
@@ -3346,7 +3343,7 @@ function MethodDungeonTools:MakeCustomColorFrame(frame)
     frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
 
     --Loop to create as many colorpickers as requested limited by db.colorPaletteInfo.numberCustomColors
-    ColorPicker = {}
+    local ColorPicker = {}
     for i= 1,db.colorPaletteInfo.numberCustomColors do
         ColorPicker[i] = AceGUI:Create("ColorPicker")
         if db.colorPaletteInfo.customPaletteValues[i] then
@@ -3381,18 +3378,24 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
 	frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
     frame.AutomaticColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.autoColoring = value
-		if value == true then
+        MethodDungeonTools:SetPresetColorPaletteInfo()
+        frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+        if value == true then
+            frame.toggleForceColorBlindMode:SetDisabled(false)
             MethodDungeonTools:ColorAllPulls()
-		end
+        else
+            frame.toggleForceColorBlindMode:SetDisabled(true)
+        end
 	end)
     frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
 
-    --Toggle forcing color blind locally
+    --Toggle local color blind mode
     frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
     frame.toggleForceColorBlindMode:SetLabel("Local color blind mode")
     frame.toggleForceColorBlindMode:SetValue(db.colorPaletteInfo.forceColorBlindMode)
     frame.toggleForceColorBlindMode:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.forceColorBlindMode = value
+        MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
 
 	end)
@@ -3417,9 +3420,17 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
     end)
     frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
 
+    -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
+    -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
     frame.button = AceGUI:Create("Button")
     frame.button:SetText("Apply to preset")
     frame.button:SetCallback("OnClick", function(widget, callbackName)
+        if not db.colorPaletteInfo.autoColoring then
+            db.colorPaletteInfo.autoColoring = true
+            frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+            frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+            frame.toggleForceColorBlindMode:SetDisabled(false)
+        end
         MethodDungeonTools:SetPresetColorPaletteInfo()
         MethodDungeonTools:ColorAllPulls()
     end)
