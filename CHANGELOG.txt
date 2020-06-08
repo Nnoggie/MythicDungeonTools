@@ -1,5 +1,6 @@
 v3.0.5
 - Added missing Grease Bot to Mechagon Junkyard around the Gunker Area
+- reverted unintented change to MethodDungeonTools:GetEnemyForces(npcId)
 v3.0.4
 - New Feature: Automatically color pulls
 - Increased size of the "Note on teeming" in Atal'Dazar to better clarify the behavior of teeming in this dungeon.
