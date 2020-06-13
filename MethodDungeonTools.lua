@@ -2766,7 +2766,7 @@ function MethodDungeonTools:DeletePreset(index)
     MethodDungeonTools:ZoomMapToDefault()
 end
 
-local zoneIdToDungeonIdx = {
+MethodDungeonTools.zoneIdToDungeonIdx = {
     [934] = 15,--atal
     [935] = 15,--atal
     [936] = 16,--fh
@@ -2800,7 +2800,7 @@ local zoneIdToDungeonIdx = {
 local lastUpdatedDungeonIdx
 function MethodDungeonTools:CheckCurrentZone(init)
     local zoneId = C_Map.GetBestMapForUnit("player")
-    local dungeonIdx = zoneIdToDungeonIdx[zoneId]
+    local dungeonIdx = MethodDungeonTools.zoneIdToDungeonIdx[zoneId]
     if dungeonIdx and (not lastUpdatedDungeonIdx or  dungeonIdx ~= lastUpdatedDungeonIdx) then
         lastUpdatedDungeonIdx = dungeonIdx
         MethodDungeonTools:UpdateToDungeon(dungeonIdx,nil,init)
