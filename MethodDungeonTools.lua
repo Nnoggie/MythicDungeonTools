@@ -558,6 +558,7 @@ function MethodDungeonTools:ShowInterface(force)
             self:UpdateMap()
             self.draggedBlip = nil
         end
+        MethodDungeonTools:UpdateBottomText()
 	end
 end
 
@@ -900,6 +901,25 @@ function MethodDungeonTools:IsFrameOffScreen()
     return left>width or right<0 or bottom<0 or top>height
 end
 
+local bottomTips = {
+    [1] = "Please report any bugs on https://github.com/Nnoggie/MethodDungeonTools/issues",
+    [2] = "Hold CTRL to single-select enemies.",
+    [3] = "Hold SHIFT to create a new pull while selecting enemies.",
+    [4] = "Hold SHIFT to delete all presets with the delete preset button.",
+    [5] = "Right click a pull for more options including custom color settings.",
+    [6] = "Right click an enemy to open the enemy info window.",
+    [7] = "Drag the bottom right edge to resize MDT.",
+    [8] = "Click the fullscreen button for a maximized view of MDT.",
+    [9] = "Use /mdt reset to restore the default position and scale of MDT.",
+    [10] = "Mouseover the Live button while in a group to learn more about Live mode.",
+    [11] = "You are using MDT. You rock!",
+}
+
+function MethodDungeonTools:UpdateBottomText()
+    local f = self.main_frame.bottomPanelString
+    f:SetText(bottomTips[math.random(#bottomTips)])
+end
+
 function MethodDungeonTools:MakeTopBottomTextures(frame)
     frame:SetMovable(true)
 	if frame.topPanel == nil then
@@ -919,7 +939,7 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
 		frame.topPanelString:SetHeight(20)
 		frame.topPanelString:SetText("Method Dungeon Tools")
 		frame.topPanelString:ClearAllPoints()
-		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 0, 0)
+		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 10, 0)
 		frame.topPanelString:Show()
         --frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
 		frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "HIGH", nil, 7)
@@ -967,14 +987,22 @@ function MethodDungeonTools:MakeTopBottomTextures(frame)
     frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT")
     frame.bottomPanel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT")
 
-    frame.bottomPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Version")
+    frame.bottomPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Mid")
     frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
     frame.bottomPanelString:SetJustifyH("CENTER")
     frame.bottomPanelString:SetJustifyV("CENTER")
-	frame.bottomPanelString:SetText("v"..GetAddOnMetadata(AddonName, "Version"))--.." - Please report missing/wrongly positioned NPCs in discord.gg/nnogga or on github.com/nnogga/MethodDungeonTools"
 	frame.bottomPanelString:SetPoint("CENTER", frame.bottomPanel, "CENTER", 0, 0)
 	frame.bottomPanelString:SetTextColor(1, 1, 1, 1)
 	frame.bottomPanelString:Show()
+
+    frame.bottomLeftPanelString = frame.bottomPanel:CreateFontString("MethodDungeonTools Version")
+    frame.bottomLeftPanelString:SetFontObject("GameFontNormalSmall")
+    frame.bottomLeftPanelString:SetJustifyH("LEFT")
+    frame.bottomLeftPanelString:SetJustifyV("CENTER")
+	frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
+	frame.bottomLeftPanelString:SetTextColor(1, 1, 1, 1)
+	frame.bottomLeftPanelString:SetText(" v"..GetAddOnMetadata(AddonName, "Version"))
+	frame.bottomLeftPanelString:Show()
 
 	frame.bottomPanel:EnableMouse(true)
 	frame.bottomPanel:RegisterForDrag("LeftButton")
