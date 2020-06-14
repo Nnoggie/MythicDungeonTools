@@ -1,3 +1,7 @@
+v3.0.7
+- Holding CTRL or ALT while using the mousewheel will cycle through dungeon floors or dungeons respectively.
+- Added a new button to open automatic color settings.
+- More fixes for GetEnemyForces and Awakened NPCs
 v3.0.6
 - Added new tips on MDT usage to the bottom of the AddOn Window.
 - GetEnemyForces now returns correct values for Awakened NPCs in all dungeons.
