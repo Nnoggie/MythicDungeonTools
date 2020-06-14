@@ -2353,8 +2353,32 @@ function MethodDungeonTools:MakeMapTexture(frame)
 
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
+        local lastModifiedScroll
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
-            MethodDungeonTools:ZoomMap(delta)
+            if IsControlKeyDown() then
+                if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.1 then
+                    lastModifiedScroll = GetTime()
+                    delta = delta*-1
+                    local target = MethodDungeonTools:GetCurrentSubLevel()+delta
+                    if dungeonSubLevels[db.currentDungeonIdx][target] then
+                        MethodDungeonTools:SetCurrentSubLevel(target)
+                        MethodDungeonTools:UpdateMap()
+                        MethodDungeonTools:ZoomMapToDefault()
+                    end
+                end
+            elseif IsAltKeyDown() then
+                if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.3 then
+                    lastModifiedScroll = GetTime()
+                    delta = delta*-1
+                    local target = db.currentDungeonIdx+delta
+                    if dungeonList[target] then
+                        local group = MethodDungeonTools.main_frame.DungeonSelectionGroup
+                        group.DungeonDropdown:Fire("OnValueChanged", target)
+                    end
+                end
+            else
+                MethodDungeonTools:ZoomMap(delta)
+            end
 		end)
 
 		--PAN
