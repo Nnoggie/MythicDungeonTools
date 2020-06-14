@@ -1061,28 +1061,26 @@ function MethodDungeonTools:GetEnemyForces(npcId)
     if countCache[npcId] then
         return countCache[npcId].count,countCache[npcId].maxCountNormal,countCache[npcId].maxCountTeeming,countCache[npcId].teemingCount
     else
-        for i = 1,MethodDungeonTools:GetNumDungeons() do
-            local data = MethodDungeonTools.dungeonEnemies[i]
+        for i = 1,self:GetNumDungeons() do
+            local data = self.dungeonEnemies[i]
             if data then
                 for enemyIdx,enemy in pairs(data) do
                     if enemy.id == npcId then
                         --awakened fix
                         if enemy.corrupted then
                             local zoneId = C_Map.GetBestMapForUnit("player")
-                            local dungeonIdx = MethodDungeonTools.zoneIdToDungeonIdx[zoneId]
-                            if dungeonIdx then
-                                data = MethodDungeonTools.dungeonEnemies[dungeonIdx]
-                                for enemyIdx,enemy in pairs(data) do
-                                    if enemy.id == npcId then
-                                        return enemy.count,enemy.maxCountNormal,enemy.maxCountTeeming,enemy.teemingCount
-                                    end
+                            local dungeonIdx = self.zoneIdToDungeonIdx[zoneId] or i
+                            data = self.dungeonEnemies[dungeonIdx]
+                            for enemyIdx,enemy in pairs(data) do
+                                if enemy.id == npcId then
+                                    return enemy.count,self.dungeonTotalCount[dungeonIdx].normal,self.dungeonTotalCount[dungeonIdx].teeming,enemy.teemingCount
                                 end
                             end
                         else
                             countCache[npcId] = {
                                 ["count"] = enemy.count,
-                                ["maxCountNormal"] = MethodDungeonTools.dungeonTotalCount[i].normal,
-                                ["maxCountTeeming"] = MethodDungeonTools.dungeonTotalCount[i].teeming,
+                                ["maxCountNormal"] = self.dungeonTotalCount[i].normal,
+                                ["maxCountTeeming"] = self.dungeonTotalCount[i].teeming,
                                 ["teemingCount"] = enemy.teemingCount or enemy.count,
                             }
                             return countCache[npcId].count,countCache[npcId].maxCountNormal,countCache[npcId].maxCountTeeming,countCache[npcId].teemingCount
