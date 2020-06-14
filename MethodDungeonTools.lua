@@ -906,13 +906,14 @@ local bottomTips = {
     [2] = "Hold CTRL to single-select enemies.",
     [3] = "Hold SHIFT to create a new pull while selecting enemies.",
     [4] = "Hold SHIFT to delete all presets with the delete preset button.",
-    [5] = "Right click a pull for more options including custom color settings.",
+    [5] = "Right click a pull for more options.",
     [6] = "Right click an enemy to open the enemy info window.",
     [7] = "Drag the bottom right edge to resize MDT.",
     [8] = "Click the fullscreen button for a maximized view of MDT.",
     [9] = "Use /mdt reset to restore the default position and scale of MDT.",
     [10] = "Mouseover the Live button while in a group to learn more about Live mode.",
     [11] = "You are using MDT. You rock!",
+    [12] = "You can choose from different color schemes in the coloring settings menu.",
 }
 
 function MethodDungeonTools:UpdateBottomText()
@@ -1370,10 +1371,31 @@ function MethodDungeonTools:MakeSidePanel(frame)
         if value == true then
             frame.toggleForceColorBlindMode:SetDisabled(false)
             MethodDungeonTools:ColorAllPulls()
+            MethodDungeonTools.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\helpIconRnbw")
         else
             frame.toggleForceColorBlindMode:SetDisabled(true)
+            MethodDungeonTools.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\helpIconGrey")
         end
 	end)
+    --AutomaticColorsCogwheel
+    frame.AutomaticColorsCogwheel = AceGUI:Create("Icon")
+    local colorCogwheel = frame.AutomaticColorsCogwheel
+    colorCogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\helpIconRnbw")
+    colorCogwheel:SetImageSize(25,25)
+    colorCogwheel:SetWidth(35)
+    colorCogwheel:SetCallback("OnEnter",function(...)
+        GameTooltip:SetOwner(colorCogwheel.frame, "ANCHOR_CURSOR")
+        GameTooltip:AddLine("Click to adjust color settings.",1,1,1)
+        GameTooltip:Show()
+    end)
+    colorCogwheel:SetCallback("OnLeave",function(...)
+        GameTooltip:Hide()
+    end)
+    colorCogwheel:SetCallback("OnClick",function(...)
+        self:OpenAutomaticColorsDialog()
+    end)
+
+
 
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
@@ -1385,6 +1407,7 @@ function MethodDungeonTools:MakeSidePanel(frame)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
+    frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCogwheel)
 
     --Week Dropdown (Infested / Affixes)
     local function makeAffixString(week,affixes,longText)
@@ -3411,8 +3434,10 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
         if value == true then
             frame.toggleForceColorBlindMode:SetDisabled(false)
             MethodDungeonTools:ColorAllPulls()
+            MethodDungeonTools.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\helpIconRnbw")
         else
             frame.toggleForceColorBlindMode:SetDisabled(true)
+            MethodDungeonTools.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\helpIconGrey")
         end
 	end)
     frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
@@ -3457,6 +3482,7 @@ function MethodDungeonTools:MakeAutomaticColorsFrame(frame)
             db.colorPaletteInfo.autoColoring = true
             frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
             frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+            MethodDungeonTools.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MethodDungeonTools\\Textures\\helpIconRnbw")
             frame.toggleForceColorBlindMode:SetDisabled(false)
         end
         MethodDungeonTools:SetPresetColorPaletteInfo()
