@@ -914,6 +914,8 @@ local bottomTips = {
     [10] = "Mouseover the Live button while in a group to learn more about Live mode.",
     [11] = "You are using MDT. You rock!",
     [12] = "You can choose from different color schemes in the coloring settings menu.",
+    [13] = "You can cycle through different floors by holding CTRL and using the mousewheel.",
+    [14] = "You can cycle through dungeons by holding ALT and using the mousewheel.",
 }
 
 function MethodDungeonTools:UpdateBottomText()
