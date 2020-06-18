@@ -278,6 +278,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
                 MethodDungeonTools:POI_UpdateAll() --for corrupted spires
+                MethodDungeonTools:UpdateProgressbar()
             end
         end
     end
