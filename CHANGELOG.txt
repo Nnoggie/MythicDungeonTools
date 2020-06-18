@@ -1,3 +1,6 @@
+v3.0.8
+- Fixed an issue which could corrupt user presets and prevent the AddOn from loading correctly
+- The enemy forces progressbar will now properly update during live mode
 v3.0.7
 - Holding CTRL or ALT while using the mousewheel will cycle through dungeon floors or dungeons respectively.
 - Added a new button to open automatic color settings.
