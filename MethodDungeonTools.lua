@@ -180,7 +180,13 @@ do
             MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(not inGroup)
             if inGroup then
                 MethodDungeonTools.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
-                MethodDungeonTools.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
+                if MethodDungeonTools.liveSessionActive then
+                    MethodDungeonTools.main_frame.LiveSessionButton:SetText("*Live*")
+                    MethodDungeonTools.main_frame.LiveSessionButton.text:SetTextColor(0,1,0)
+                else
+                    MethodDungeonTools.main_frame.LiveSessionButton:SetText("Live")
+                    MethodDungeonTools.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
+                end
             else
                 MethodDungeonTools.main_frame.LinkToChatButton.text:SetTextColor(0.5,0.5,0.5)
                 MethodDungeonTools.main_frame.LiveSessionButton.text:SetTextColor(0.5,0.5,0.5)
