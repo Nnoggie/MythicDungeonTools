@@ -270,6 +270,10 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             local preset = MethodDungeonTools:GetCurrentLivePreset()
             local pulls = MethodDungeonTools:StringToTable(message,false)
             preset.value.pulls = pulls
+            if not preset.value.pulls[preset.value.currentPull] then
+                preset.value.currentPull = #preset.value.pulls
+                preset.value.selection = {#preset.value.pulls}
+            end
             if preset == MethodDungeonTools:GetCurrentPreset() then
                 MethodDungeonTools:ReloadPullButtons()
                 MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
