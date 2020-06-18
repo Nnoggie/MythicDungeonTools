@@ -913,9 +913,11 @@ local bottomTips = {
     [9] = "Use /mdt reset to restore the default position and scale of MDT.",
     [10] = "Mouseover the Live button while in a group to learn more about Live mode.",
     [11] = "You are using MDT. You rock!",
-    [12] = "You can choose from different color schemes in the coloring settings menu.",
+    [12] = "You can choose from different color palettes in the automatic pull coloring settings menu.",
     [13] = "You can cycle through different floors by holding CTRL and using the mousewheel.",
     [14] = "You can cycle through dungeons by holding ALT and using the mousewheel.",
+    [15] = "Mouseover a patrolling enemy with a blue border to view the patrol path.",
+    [16] = "Expand the top toolbar to gain access to drawing and note features.",
 }
 
 function MethodDungeonTools:UpdateBottomText()
