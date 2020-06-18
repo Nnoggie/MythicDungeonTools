@@ -2661,6 +2661,13 @@ function MethodDungeonTools:EnsureDBTables()
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[1] = {}
     end
 
+    --detect gaps in pull list and delete invalid pulls
+    for k,v in pairs(preset.value.pulls) do
+        if k == 0 or k>#preset.value.pulls then
+            preset.value.pulls[k] = nil
+        end
+    end
+
     -- Set current pull to last pull, if the actual current pull does not exists anymore
     if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull] then
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentPull = #db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls
