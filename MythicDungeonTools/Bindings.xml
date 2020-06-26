@@ -1,0 +1,11 @@
+<Bindings>
+    <Binding name="Toggle Window" runOnUp="false" category="Mythic Dungeon Tools">
+      MDT:ShowInterface()
+    </Binding>
+    <Binding name="New NPC at Cursor Position" runOnUp="false" category="Mythic Dungeon Tools">
+        MDT:AddCloneAtCursorPosition()
+    </Binding>
+    <Binding name="New Patrol Waypoint at Cursor Position" runOnUp="false" category="Mythic Dungeon Tools">
+        MDT:AddPatrolWaypointAtCursorPosition()
+    </Binding>
+</Bindings>

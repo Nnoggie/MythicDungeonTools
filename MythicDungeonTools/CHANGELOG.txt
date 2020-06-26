@@ -1,0 +1,65 @@
+v3.0.9
+- MDT will from now on be known as "Mythic Dungeon Tools"
+v3.0.8
+- Fixed an issue which could corrupt user presets and prevent the AddOn from loading correctly
+- The enemy forces progressbar will now properly update during live mode
+v3.0.7
+- Holding CTRL or ALT while using the mousewheel will cycle through dungeon floors or dungeons respectively.
+- Added a new button to open automatic color settings.
+- More fixes for GetEnemyForces and Awakened NPCs
+v3.0.6
+- Added new tips on MDT usage to the bottom of the AddOn Window.
+- GetEnemyForces now returns correct values for Awakened NPCs in all dungeons.
+v3.0.5
+- Added missing Grease Bot to Mechagon Junkyard around the Gunker Area
+- reverted unintented change to MDT:GetEnemyForces(npcId)
+v3.0.4
+- New Feature: Automatically color pulls
+- Increased size of the "Note on teeming" in Atal'Dazar to better clarify the behavior of teeming in this dungeon.
+v3.0.3
+- fixed an issue where teeming enemies would not be shown and counted in pulls
+- fixed Voidweaver showing in tol dagor in the wrong location/week
+- gripping tentacle's health now properly scales with tyrannical
+- scraphounds in Mechagon Junkyard now properly show as having stealth detection
+- added a welding bot to Mechagon Junkyard around Weaponized Crawler 2
+v3.0.2
+- fixed lua error on note click
+- Some Freehold Deckhands have returned from their short island vacation
+v3.0.0
+- New Dungeons: Mechagon - Junkyard and Mechagon - Workshop
+- New Awakened features including special draggable npc frames, animated lines, weekly rotations and more!
+- Added many new helpful tooltips to buttons in the User Interface including the Live Mode Button
+- Added pre-zoomed and pre-panned default views for sublevels where only a certain part of the map is relevant
+- Added smooth panning for the map frame
+- The toolbar will now be expanded by default and will remember if the user collapsed or expanded it
+- The enemy info frame will now update the health values if the dungeon difficulty is changed
+- MDT will set the map to the current dungeon after entering a new dungeon for the first time and opening the AddOn
+- Fullscreen mode now also properly supports more narrow aspect ratios
+- Users can no longer resize the AddOn-window in such a way that the draggable areas become unreachable.
+- Added a new warning label to indicate if the dungeon difficulty is currently set to a level below 10
+- Improved loading times for maps that include a very large number of enemies
+2.9.8
+- toc update 80300
+v2.9.6
+- fixed an error that could cause the AddOn to stop loading properly in certain presets
+- fixed a few visual bugs in the difficulty slider and count display
+- Hide and don't count beguiling mobs for keys < 10
+- Users can no longer drag the AddOn window unrecoverably off screen
+v2.9.5
+- Siege G39 Updates
+v2.9.4
+- MDI mode reaping updates
+- Clarified notes on random spawn void emissaries in Underrot Void week
+v2.9.3
+- fixed an error when switching affix weeks during live mode
+- adjusted chat link handling to not break community invite links
+- Underrot Hotfixes: Removed Void-Touched Emissary 1. Added notes for spawning behavior changes for Void-Touched Emissary 2+3.
+v2.9.2
+- TOC update 8.2.5
+v2.9.1
+- Fixed a issue with live mode in cross realm groups
+v2.9.0
+- New Feature: Live mode - connect with your party members to work on presets simultaneously.
+- MDT now uses a better compression algorithm when sharing your presets ingame and via export strings. Clients below v2.9.0 cannot accept presets that have been shared with the new compression algorithm.
+- Greatly Increased the speed at which presets are shared to party members.
+- Deleting all presets of a dungeon just got easier! Shift click the delete button is enough.

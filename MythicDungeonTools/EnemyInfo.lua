@@ -1,0 +1,524 @@
+local MDT = MDT
+local AceGUI = LibStub("AceGUI-3.0")
+local db
+local tconcat, tremove, tinsert = table.concat, table.remove, table.insert
+
+local function CreateDispatcher(argCount)
+    local code = [[
+        local xpcall, eh = ...
+        local method, ARGS
+        local function call() return method(ARGS) end
+
+        local function dispatch(func, ...)
+            method = func
+            if not method then return end
+            ARGS = ...
+            return xpcall(call, eh)
+        end
+
+        return dispatch
+    ]]
+
+    local ARGS = {}
+    for i = 1, argCount do ARGS[i] = "arg"..i end
+    code = code:gsub("ARGS", tconcat(ARGS, ", "))
+    return assert(loadstring(code, "safecall Dispatcher["..argCount.."]"))(xpcall, errorhandler)
+end
+
+local Dispatchers = setmetatable({}, {__index=function(self, argCount)
+    local dispatcher = CreateDispatcher(argCount)
+    rawset(self, argCount, dispatcher)
+    return dispatcher
+end})
+Dispatchers[0] = function(func)
+    return xpcall(func, errorhandler)
+end
+
+local function safecall(func, ...)
+    return Dispatchers[select("#", ...)](func, ...)
+end
+
+
+AceGUI:RegisterLayout("ThreeColums", function(content, children)
+    if children[1] then
+        children[1]:SetWidth(content:GetWidth()/3-10)
+        children[1].frame:ClearAllPoints()
+        children[1].frame:SetPoint("TOPLEFT", content, "TOPLEFT", 0, 0)
+        children[1].frame:SetPoint("BOTTOMLEFT", content, "BOTTOMLEFT", 0, 0)
+        children[1].frame:Show()
+    end
+    if children[2] then
+        children[2]:SetWidth(content:GetWidth()/3-10)
+        children[2].frame:ClearAllPoints()
+        children[2].frame:SetPoint("TOPLEFT", children[1].frame, "TOPRIGHT", 0, 0)
+        children[2].frame:SetPoint("BOTTOMLEFT", children[1].frame, "BOTTOMRIGHT", 0, 0)
+        children[2].frame:Show()
+    end
+    if children[3] then
+        children[3]:SetWidth(content:GetWidth()/3-10)
+        children[3].frame:ClearAllPoints()
+        children[3].frame:SetPoint("TOPLEFT", children[2].frame, "TOPRIGHT", 0, 0)
+        children[3].frame:SetPoint("BOTTOMLEFT", children[2].frame, "BOTTOMRIGHT", 0, 0)
+        children[3].frame:Show()
+    end
+    safecall(content.obj.LayoutFinished, content.obj, nil, nil)
+end)
+
+
+local currentTab = "tab1"
+local function MakeEnemeyInfoFrame()
+    --frame
+    local f = AceGUI:Create("Frame")
+    f:SetTitle("Enemy Info")
+    f:EnableResize(false)
+    f.frame:SetMovable(false)
+    function f.frame:StartMoving() end
+    f:SetLayout("Fill")
+    f:SetCallback("OnClose", function(widget)
+
+    end)
+    f.frame:ClearAllPoints()
+    f.frame:SetAllPoints(MDTScrollFrame)
+
+    local originalHide = MDT.main_frame.Hide
+    function MDT.main_frame:Hide(...)
+        f.frame:Hide()
+        return originalHide(self, ...);
+    end
+
+    --tabGroup
+    f.tabGroup = AceGUI:Create("TabGroup")
+    local tabGroup = f.tabGroup
+    tabGroup:SetTabs(
+            {
+                {text="Enemy Info", value="tab1"},
+                --{text="Damage Calc", value="tab2"},
+            }
+    )
+    tabGroup:SetLayout("ThreeColums")
+    f:AddChild(tabGroup)
+
+    --EnemyInfo
+    local function DrawGroup1(container)
+
+        ---LEFT
+        local leftContainer = AceGUI:Create("SimpleGroup")
+        f.leftContainer = leftContainer
+        leftContainer.frame:SetBackdropColor(1,1,1,0)
+        leftContainer:SetLayout("List")
+        leftContainer:SetWidth(container.frame:GetWidth()/3)
+        leftContainer:SetHeight(container.frame:GetHeight())
+
+        --enemyDropDown
+        f.enemyDropDown = AceGUI:Create("Dropdown")
+        local enemyDropDown = f.enemyDropDown
+        enemyDropDown:SetCallback("OnValueChanged", function(widget,callbackName,key)
+            MDT:UpdateEnemyInfoFrame(key)
+        end)
+
+        --model
+        f.model = f.model or CreateFrame("PlayerModel", nil, f.frame,"ModelWithControlsTemplate")
+        local model = f.model
+        model:SetFrameLevel(1)
+        model:SetSize(leftContainer.frame:GetWidth()-30,269)
+        model:SetScript("OnEnter",nil)
+        model:SetFrameLevel(15)
+        model:Show()
+        f.modelContainer = f.modelContainer or AceGUI:Create("InlineGroup")
+        local modelContainer = f.modelContainer
+        modelContainer.frame:SetBackdropColor(1,1,1,0)
+        modelContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        modelContainer:SetHeight(249)
+        modelContainer:SetLayout("Flow")
+        f.modelDummyIcon = f.modelDummyIcon or AceGUI:Create("Icon")
+        local modelDummyIcon = f.modelDummyIcon
+        modelDummyIcon:SetImageSize(leftContainer.frame:GetWidth()-20, 249)
+        modelDummyIcon:SetDisabled(true)
+        modelContainer:AddChild(modelDummyIcon)
+        model:ClearAllPoints()
+        model:SetPoint("BOTTOM",modelContainer.frame,"BOTTOM",0,10)
+        MDT:FixAceGUIShowHide(model,modelContainer.frame,true)
+
+        f.characteristicsContainer = AceGUI:Create("InlineGroup")
+        f.characteristicsContainer.frame:SetBackdropColor(1,1,1,0)
+        f.characteristicsContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        f.characteristicsContainer:SetHeight(80)
+        f.characteristicsContainer:SetLayout("Flow")
+
+        leftContainer:AddChild(enemyDropDown)
+        leftContainer:AddChild(modelContainer)
+        leftContainer:AddChild(f.characteristicsContainer)
+
+        ---MIDDLE
+        f.midContainer = f.midContainer or AceGUI:Create("SimpleGroup")
+        local midContainer = f.midContainer
+        midContainer.frame:SetBackdropColor(1,1,1,0)
+        midContainer:SetLayout("List")
+        midContainer:SetWidth(container.frame:GetWidth()/3)
+        midContainer:SetHeight(container.frame:GetHeight())
+
+        --spacing
+        local midDummyIcon = AceGUI:Create("Icon")
+        midDummyIcon:SetImageSize(20, 20)
+        midDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
+        midDummyIcon:SetDisabled(true)
+        midContainer:AddChild(midDummyIcon)
+
+        f.enemyDataContainer = AceGUI:Create("InlineGroup")
+        f.enemyDataContainer.frame:SetBackdropColor(1,1,1,0)
+        f.enemyDataContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        f.enemyDataContainer:SetHeight(235)
+        f.enemyDataContainer:SetLayout("Flow")
+
+        f.enemyDataContainer.nameEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.nameEditBox:SetLabel("Name")
+        f.enemyDataContainer.nameEditBox:DisableButton(true)
+        f.enemyDataContainer.nameEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.nameEditBox)
+
+        f.enemyDataContainer.idEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.idEditBox:SetLabel("NPC Id")
+        f.enemyDataContainer.idEditBox:DisableButton(true)
+        f.enemyDataContainer.idEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.idEditBox)
+
+        f.enemyDataContainer.healthEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.healthEditBox:SetLabel("Health")
+        f.enemyDataContainer.healthEditBox:DisableButton(true)
+        f.enemyDataContainer.healthEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.healthEditBox)
+
+        f.enemyDataContainer.creatureTypeEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.creatureTypeEditBox:SetLabel("Creature Type")
+        f.enemyDataContainer.creatureTypeEditBox:DisableButton(true)
+        f.enemyDataContainer.creatureTypeEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.creatureTypeEditBox)
+
+        f.enemyDataContainer.levelEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.levelEditBox:SetLabel("Level")
+        f.enemyDataContainer.levelEditBox:DisableButton(true)
+        f.enemyDataContainer.levelEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.levelEditBox)
+
+        f.enemyDataContainer.countEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.countEditBox:SetLabel("Enemy Forces")
+        f.enemyDataContainer.countEditBox:DisableButton(true)
+        f.enemyDataContainer.countEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.countEditBox)
+
+        f.enemyDataContainer.teemingCountEditBox = AceGUI:Create("EditBox")
+        f.enemyDataContainer.teemingCountEditBox:SetLabel("Enemy Forces (Teeming)")
+        f.enemyDataContainer.teemingCountEditBox:DisableButton(true)
+        f.enemyDataContainer.teemingCountEditBox:SetCallback("OnTextChanged", function(self)
+            self:SetText(self.defaultText)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.teemingCountEditBox)
+
+        f.enemyDataContainer.stealthCheckBox = AceGUI:Create("CheckBox")
+        f.enemyDataContainer.stealthCheckBox:SetLabel("Stealth")
+        f.enemyDataContainer.stealthCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth()/2)-40)
+        f.enemyDataContainer.stealthCheckBox:SetCallback("OnValueChanged", function(self)
+            self:SetValue(self.defaultValue)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.stealthCheckBox)
+
+        f.enemyDataContainer.stealthDetectCheckBox = AceGUI:Create("CheckBox")
+        f.enemyDataContainer.stealthDetectCheckBox:SetLabel("Stealth Detect")
+        f.enemyDataContainer.stealthDetectCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth()/2))
+        f.enemyDataContainer.stealthDetectCheckBox:SetCallback("OnValueChanged", function(self)
+            self:SetValue(self.defaultValue)
+        end)
+        f.enemyDataContainer:AddChild(f.enemyDataContainer.stealthDetectCheckBox)
+
+
+        midContainer:AddChild(f.enemyDataContainer)
+
+        ---RIGHT
+        f.rightContainer = f.rightContainer or AceGUI:Create("SimpleGroup")
+        local rightContainer = f.rightContainer
+        rightContainer.frame:SetBackdropColor(1,1,1,0)
+        rightContainer:SetLayout("List")
+        rightContainer:SetWidth(container.frame:GetWidth()/3)
+        rightContainer:SetHeight(container.frame:GetHeight())
+
+        --spacing
+        local rightDummyIcon = AceGUI:Create("Icon")
+        rightDummyIcon:SetImageSize(20, 20)
+        rightDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
+        rightDummyIcon:SetDisabled(true)
+        rightContainer:AddChild(rightDummyIcon)
+
+        --spells
+        f.spellScrollContainer = f.spellScrollContainer or AceGUI:Create("InlineGroup")
+        local spellScrollContainer = f.spellScrollContainer
+        spellScrollContainer.frame:SetBackdropColor(1,1,1,0)
+        spellScrollContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        spellScrollContainer:SetHeight(282)
+        spellScrollContainer:SetLayout("Fill")
+
+        f.spellScroll = AceGUI:Create("ScrollFrame")
+        f.spellScroll:SetLayout("List")
+        spellScrollContainer:AddChild(f.spellScroll)
+
+        --spellButtons
+        f.spellButtonsContainer = f.spellButtonsContainer or AceGUI:Create("InlineGroup")
+        local spellButtonsContainer = f.spellButtonsContainer
+        spellButtonsContainer.frame:SetBackdropColor(1,1,1,0)
+        spellButtonsContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        spellScrollContainer:SetLayout("Flow")
+
+        local buttonWidth = 110
+        local sendSpellsButton = AceGUI:Create("Button")
+        sendSpellsButton:SetText("Link Spells")
+        sendSpellsButton:SetWidth(buttonWidth)
+        sendSpellsButton:SetCallback("OnClick",function()
+            if#f.spellScroll.children<1 then return end
+            local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+            if not distribution then return end
+            local enemyName = f.enemyDropDown.text:GetText()
+            SendChatMessage("MDT: Spells for "..enemyName..":" ,distribution)
+            for i,child in pairs(f.spellScroll.children) do
+                local link = GetSpellLink(child.spellId)
+                SendChatMessage(i..". "..link ,distribution)
+            end
+        end)
+        spellButtonsContainer:AddChild(sendSpellsButton)
+
+        rightContainer:AddChild(spellScrollContainer)
+        rightContainer:AddChild(spellButtonsContainer)
+
+
+        container:AddChild(leftContainer)
+        container:AddChild(midContainer)
+        container:AddChild(rightContainer)
+    end
+
+    --Damage Calc
+    local function DrawGroup2(container)
+
+    end
+
+
+    -- Callback function for OnGroupSelected
+    local function SelectGroup(container, event, group)
+        container:ReleaseChildren()
+        if group == "tab1" then
+            DrawGroup1(container)
+        elseif group == "tab2" then
+            DrawGroup2(container)
+        end
+        currentTab = group
+    end
+    tabGroup:SetCallback("OnGroupSelected", SelectGroup)
+    tabGroup:SelectTab(currentTab)
+
+    return f
+end
+
+local characteristics = {
+    ["Stun"] = "Interface\\ICONS\\spell_frost_stun",
+    ["Sap"] = "Interface\\ICONS\\ability_sap",
+    ["Incapacitate"] = "Interface\\ICONS\\ability_monk_paralysis",
+    ["Repentance"] = "Interface\\ICONS\\spell_holy_prayerofhealing",
+    ["Disorient"] = "Interface\\ICONS\\spell_shadow_mindsteal",
+    ["Banish"] = "Interface\\ICONS\\spell_shadow_cripple",
+    ["Fear"] = "Interface\\ICONS\\spell_shadow_possession",
+    ["Root"] = "Interface\\ICONS\\spell_frost_frostnova",
+    ["Polymorph"] = "Interface\\ICONS\\spell_nature_polymorph",
+    ["Shackle Undead"] = "Interface\\ICONS\\spell_nature_slow",
+    ["Mind Control"] = "Interface\\ICONS\\spell_shadow_shadowworddominate",
+    ["Grip"] = "Interface\\ICONS\\spell_deathknight_strangulate",
+    ["Knock"] = "Interface\\ICONS\\ability_druid_typhoon",
+    ["Silence"] = "Interface\\ICONS\\ability_priest_silence",
+    ["Taunt"] = "Interface\\ICONS\\spell_nature_reincarnation",
+    ["Control Undead"] = "Interface\\ICONS\\inv_misc_bone_skull_01",
+    ["Enslave Demon"] = "Interface\\ICONS\\spell_shadow_enslavedemon",
+    ["Slow"] = "Interface\\ICONS\\ability_rogue_trip",
+    ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
+}
+local spellBlacklist = {
+    [277564] = true, --Regenerative Blood
+    [277247] = true, --Regenerative Blood
+    [277242] = true, --Infested
+    [209859] = true, --Bolster
+    [233490] = true, --UA
+    [91021]  = true, --Find Weakness
+    [2094]   = true, --Blind
+    [273836] = true, --Filthy Transfusion
+    [205708] = true, --Chilled
+    [212792] = true, --Cone of Cold
+    [48181]  = true, --Haunt
+    [191380] = true, --Mark of the Distant Army
+    [236299] = true, --Chrono Shift
+    [1490]   = true, --Chaos Brand
+    [205276] = true, --Phantom Singularity
+    [132951] = true, --Flare
+    [255228] = true, --Polymorphed
+    [122]    = true, --Frost Nova
+    [12654]  = true, --Ignite
+    [2818]   = true, --Deadly Poison
+    [55095]  = true, --Frost Fever
+    [408]    = true, --Kidney Shot
+    [34914]  = true, --Vampiric Touch
+    [205369] = true, --Mind Bomb
+    [154953] = true, --Internal Bleeding
+    [51490]  = true, --Thunderstorm
+    [3409]   = true, --Crippling Poison
+    [272970] = true, --Packed Ice
+    [262115] = true, --Deep Wounds
+    [226943] = true, --Mind Bomb
+    [198813] = true, --Vengeful Retreat
+    [121308] = true, --Disguise
+    [224729] = true, --Bursting Shot
+    [186439] = true, --Shadow Mend
+    [113746] = true, --Mystic Touch
+    [280404] = true, --Tidal Surge
+    [589]    = true, --Shadow Word: Pain
+    [5116]   = true, --Concussive Shot
+    --[X]  = true,
+}
+local lastEnemyIdx
+function MDT:UpdateEnemyInfoFrame(enemyIdx)
+    if not enemyIdx then enemyIdx = lastEnemyIdx end
+    lastEnemyIdx = enemyIdx
+    if not enemyIdx then return end
+    local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+    local f = MDT.EnemyInfoFrame
+    f:SetTitle(data.name)
+    f.model:SetDisplayInfo(data.displayId or 39490)
+    f.model:ResetModel()
+
+    local container = f.tabGroup
+    ---rescaling
+    ---LEFT
+    f.leftContainer:SetWidth(container.frame:GetWidth()/3)
+    f.leftContainer:SetHeight(container.frame:GetHeight())
+    f.model:SetSize(f.leftContainer.frame:GetWidth()-30,1.127*(f.leftContainer.frame:GetWidth()-30))
+    f.modelContainer:SetWidth(f.leftContainer.frame:GetWidth()-20)
+    f.modelDummyIcon:SetImageSize(f.leftContainer.frame:GetWidth()-20, f.leftContainer.frame:GetWidth()-20)
+    f.characteristicsContainer:SetWidth(f.leftContainer.frame:GetWidth()-20)
+    ---MIDDLE
+    f.midContainer:SetWidth(container.frame:GetWidth()/3)
+    f.midContainer:SetHeight(container.frame:GetHeight())
+    f.enemyDataContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
+    ---RIGHT
+    f.rightContainer:SetWidth(container.frame:GetWidth()/3)
+    f.rightContainer:SetHeight(container.frame:GetHeight())
+    f.spellScrollContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
+    f.spellButtonsContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
+
+    local enemies = {}
+    for mobIdx,edata in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+        tinsert(enemies,mobIdx,edata.name)
+    end
+    f.enemyDropDown:SetList(enemies)
+    f.enemyDropDown:SetValue(enemyIdx)
+
+    --characteristics
+    f.characteristicsContainer:ReleaseChildren()
+    local characteristicsText = AceGUI:Create("Label")
+    characteristicsText:SetWidth(f.characteristicsContainer.frame:GetWidth())
+    characteristicsText:SetText("Affected by:")
+    f.characteristicsContainer:AddChild(characteristicsText)
+    for text,iconPath in pairs(characteristics) do
+        if data.characteristics and data.characteristics[text] then
+            local icon = AceGUI:Create("Icon")
+            icon:SetImage(iconPath)
+            icon:SetImageSize(25,25)
+            icon:SetWidth(25)
+            icon:SetHeight(27)
+            icon:SetCallback("OnEnter",function()
+                GameTooltip:SetOwner(icon.frame, "ANCHOR_BOTTOM",0,-5)
+                GameTooltip:SetText(text,1,1,1,1)
+                GameTooltip:Show()
+            end)
+            icon:SetCallback("OnLeave",function()
+                GameTooltip:Hide()
+            end)
+            f.characteristicsContainer:AddChild(icon)
+            if IsAddOnLoaded("AddOnSkins") then
+                if AddOnSkins then
+                    local AS = unpack(AddOnSkins)
+                    AS:SkinTexture(icon.image)
+                end
+            end
+        end
+    end
+
+    MDT:UpdateEnemyInfoData(enemyIdx)
+
+    --spells
+    f.spellScroll:ReleaseChildren()
+    if data.spells then
+        for spellId,spellData in pairs(data.spells) do
+            if not spellBlacklist[spellId] then
+                local spellButton = AceGUI:Create("MDTSpellButton")
+                spellButton:SetSpell(spellId,spellData)
+                spellButton:Initialize()
+                spellButton:Enable()
+                f.spellScroll:AddChild(spellButton)
+            end
+        end
+    end
+
+end
+
+function MDT:UpdateEnemyInfoData(enemyIdx)
+    local f = MDT.EnemyInfoFrame
+    if not enemyIdx then enemyIdx = lastEnemyIdx end
+    if not enemyIdx then return end
+    local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+    --data
+    f.enemyDataContainer.nameEditBox:SetText(data.name)
+    f.enemyDataContainer.nameEditBox.defaultText = data.name
+    f.enemyDataContainer.idEditBox:SetText(data.id)
+    f.enemyDataContainer.idEditBox.defaultText = data.id
+
+    local boss = data.isBoss or false
+    local health = MDT:CalculateEnemyHealth(boss,data.health,db.currentDifficulty,data.ignoreFortified)
+    local healthText = MDT:FormatEnemyHealth(health)
+
+    f.enemyDataContainer.healthEditBox:SetText(healthText)
+    f.enemyDataContainer.healthEditBox.defaultText = healthText
+
+    f.enemyDataContainer.creatureTypeEditBox:SetText(data.creatureType)
+    f.enemyDataContainer.creatureTypeEditBox.defaultText = data.creatureType
+    f.enemyDataContainer.levelEditBox:SetText(data.level)
+    f.enemyDataContainer.levelEditBox.defaultText = data.level
+    f.enemyDataContainer.countEditBox:SetText(data.count)
+    f.enemyDataContainer.countEditBox.defaultText = data.count
+    if not data.teemingCount then
+        f.enemyDataContainer.teemingCountEditBox.frame:Hide()
+    else
+        f.enemyDataContainer.teemingCountEditBox.frame:Show()
+        f.enemyDataContainer.teemingCountEditBox:SetText(data.teemingCount)
+        f.enemyDataContainer.teemingCountEditBox.defaultText = data.teemingCount
+    end
+    f.enemyDataContainer.stealthCheckBox:SetValue(data.stealth)
+    f.enemyDataContainer.stealthCheckBox.defaultValue = data.stealth
+    f.enemyDataContainer.stealthDetectCheckBox:SetValue(data.stealthDetect)
+    f.enemyDataContainer.stealthDetectCheckBox.defaultValue = data.stealthDetect
+
+    local level = db.currentDifficulty
+    local fortifiedTyrannical = MDT:IsCurrentPresetFortified() and "Fortified" or "Tyrannical"
+    f.enemyDataContainer.healthEditBox:SetLabel("Health (+"..level.." "..fortifiedTyrannical..")")
+end
+
+function MDT:ShowEnemyInfoFrame(blip)
+    db = MDT:GetDB()
+    MDT.EnemyInfoFrame = MDT.EnemyInfoFrame or MakeEnemeyInfoFrame()
+    MDT:UpdateEnemyInfoFrame(blip.enemyIdx)
+    MDT.EnemyInfoFrame:Show()
+end
