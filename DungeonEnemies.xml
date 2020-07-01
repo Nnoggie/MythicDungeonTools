@@ -71,7 +71,7 @@
 
             <Layer level="ARTWORK">
 
-                <Texture name="$parent_SelectedHighlight" textureSubLevel="6" hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_SelectedHighlight" textureSubLevel="6" hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
@@ -79,7 +79,7 @@
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
-                <Texture name="$parent_Background" hidden="false" parentKey="texture_Background" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_Background" hidden="false" parentKey="texture_Background" file = "Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
@@ -93,14 +93,14 @@
                         </Anchor>
                     </Anchors>
                 </Texture>
-                <Texture name="$parent_Indicator" hidden="false" parentKey="texture_Indicator" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_Indicator" hidden="false" parentKey="texture_Indicator" file = "Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
                     <Color r="2.04" g="0" b="0" a="0"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
-                <Texture name="$parent_Indicator" hidden="true" parentKey="texture_PullIndicator" file = "Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_Indicator" hidden="true" parentKey="texture_PullIndicator" file = "Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
                     <Color r="1.0" g="1" b="1" a="1"/>
                     <Anchors>
@@ -119,7 +119,7 @@
                 </FontString>
             </Layer>
             <Layer level="HIGHLIGHT">
-                <Texture name="$parent_MouseHighlight" parentKey="texture_MouseHighlight" file="Interface\AddOns\MethodDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_MouseHighlight" parentKey="texture_MouseHighlight" file="Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
                     <Anchors>
                         <Anchor point="CENTER"/>

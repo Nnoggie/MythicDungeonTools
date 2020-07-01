@@ -1,5 +1,5 @@
 local dungeonIndex = 25
-MethodDungeonTools.mapInfo[dungeonIndex] = {
+MDT.mapInfo[dungeonIndex] = {
     tileFormat= 15,
     viewportPositionOverrides = 
     {
@@ -16,9 +16,9 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.5
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=398,teemingEnabled=true}
-MethodDungeonTools.mapPOIs[dungeonIndex] = {
+MDT.scaleMultiplier[dungeonIndex] = 0.5
+MDT.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=398,teemingEnabled=true}
+MDT.mapPOIs[dungeonIndex] = {
     [1] = {
         [27] = {
             ["y"] = -148.83642133179;
@@ -570,7 +570,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
             [1] = {

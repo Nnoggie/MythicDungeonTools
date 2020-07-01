@@ -1,3 +1,5 @@
+v3.0.9
+- MDT will from now on be known as "Mythic Dungeon Tools"
 v3.0.8
 - Fixed an issue which could corrupt user presets and prevent the AddOn from loading correctly
 - The enemy forces progressbar will now properly update during live mode
@@ -10,7 +12,7 @@ v3.0.6
 - GetEnemyForces now returns correct values for Awakened NPCs in all dungeons.
 v3.0.5
 - Added missing Grease Bot to Mechagon Junkyard around the Gunker Area
-- reverted unintented change to MethodDungeonTools:GetEnemyForces(npcId)
+- reverted unintented change to MDT:GetEnemyForces(npcId)
 v3.0.4
 - New Feature: Automatically color pulls
 - Increased size of the "Note on teeming" in Atal'Dazar to better clarify the behavior of teeming in this dungeon.

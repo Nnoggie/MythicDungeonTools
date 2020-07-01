@@ -1,4 +1,4 @@
-local Type, Version = "MethodDungeonToolsNewPullButton", 1
+local Type, Version = "MDTNewPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
@@ -13,7 +13,7 @@ local methods = {
         self.callbacks = {};
 
         function self.callbacks.OnClickNormal(_, mouseButton)
-            if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+            if not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
             if(IsControlKeyDown())then
 
             elseif(IsShiftKeyDown()) then
@@ -23,9 +23,9 @@ local methods = {
                     --L_EasyMenu
                 else
                     --normal click?
-                    MethodDungeonTools:AddPull()
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    MDT:AddPull()
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             end
@@ -93,7 +93,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-    local name = "MethodDungeonToolsNewPullButton"..AceGUI:GetNextWidgetNum(Type);
+    local name = "MDTNewPullButton"..AceGUI:GetNextWidgetNum(Type);
     local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
     button:SetHeight(height);
     button:SetWidth(width);

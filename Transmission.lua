@@ -13,7 +13,7 @@ local configForDeflate = {
     [8]= {level = 8},
     [9]= {level = 9},
 }
-
+local MDT = MDT
 MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
 -- Lua APIs
@@ -74,7 +74,7 @@ function decodeB64(str)
     return table.concat(bit8, "", 1, decoded_size)
 end
 
-function MethodDungeonTools:TableToString(inTable, forChat,level)
+function MDT:TableToString(inTable, forChat,level)
     local serialized = Serializer:Serialize(inTable)
     local compressed = LibDeflate:CompressDeflate(serialized, configForDeflate[level])
     -- prepend with "!" so that we know that it is not a legacy compression
@@ -88,7 +88,7 @@ function MethodDungeonTools:TableToString(inTable, forChat,level)
     return encoded
 end
 
-function MethodDungeonTools:StringToTable(inString, fromChat)
+function MDT:StringToTable(inString, fromChat)
     -- if gsub strips off a ! at the beginning then we know that this is not a legacy encoding
     local encoded, usesDeflate = inString:gsub("^%!", "")
     local decoded
@@ -131,13 +131,12 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
     local remaining = msg
     local done
     repeat
-        local start, finish, characterName, displayName = remaining:find("%[MethodDungeonTools: ([^%s]+) %- ([^%]]+)%]")
+        local start, finish, characterName, displayName = remaining:find("%[MythicDungeonTools: ([^%s]+) %- ([^%]]+)%]")
         local startLive, finishLive, characterNameLive, displayNameLive = remaining:find("%[MDTLive: ([^%s]+) %- ([^%]]+)%]")
         if(characterName and displayName) then
             characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
             newMsg = newMsg..remaining:sub(1, start-1)
-            --newMsg = newMsg.."|HMethodDungeonTools-"..characterName.."|h|cFFF49D38[".."|r|cFFF49D38"..displayName.."]|h|r"
             newMsg = "|cfff49d38|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
             remaining = remaining:sub(finish + 1)
         elseif (characterNameLive and displayNameLive) then
@@ -157,7 +156,7 @@ end
 
 local presetCommPrefix = "MDTPreset"
 
-MethodDungeonTools.liveSessionPrefixes = {
+MDT.liveSessionPrefixes = {
     ["enabled"] = "MDTLiveEnabled",
     ["request"] = "MDTLiveReq",
     ["ping"] = "MDTLivePing",
@@ -179,10 +178,10 @@ MethodDungeonTools.liveSessionPrefixes = {
 
 function MDTcommsObject:OnEnable()
     self:RegisterComm(presetCommPrefix)
-    for _,prefix in pairs(MethodDungeonTools.liveSessionPrefixes) do
+    for _,prefix in pairs(MDT.liveSessionPrefixes) do
         self:RegisterComm(prefix)
     end
-    MethodDungeonTools.transmissionCache = {}
+    MDT.transmissionCache = {}
     ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterFunc)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterFunc)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filterFunc)
@@ -199,10 +198,10 @@ hooksecurefunc("SetItemRef", function(link, text)
         local playerName,playerRealm = UnitFullName("player")
         playerName = playerName.."-"..playerRealm
         if sender==playerName then
-            MethodDungeonTools:ShowInterface(true)
+            MDT:ShowInterface(true)
         else
-            MethodDungeonTools:ShowInterface(true)
-            MethodDungeonTools:LiveSession_Enable()
+            MDT:ShowInterface(true)
+            MDT:LiveSession_Enable()
         end
         return
     elseif (link and link:sub(0, 15) == "garrmission:mdt") then
@@ -213,10 +212,10 @@ hooksecurefunc("SetItemRef", function(link, text)
             return
         end
         sender = name.."-"..realm
-        local preset = MethodDungeonTools.transmissionCache[sender]
+        local preset = MDT.transmissionCache[sender]
         if preset then
-            MethodDungeonTools:ShowInterface(true)
-            MethodDungeonTools:OpenChatImportPresetDialog(sender,preset)
+            MDT:ShowInterface(true)
+            MDT:OpenChatImportPresetDialog(sender,preset)
         end
         return
     end
@@ -225,8 +224,8 @@ end)
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --[[
         Sender has no realm name attached when sender is from the same realm as the player
-        UnitFullName("Nnogga") returns no realm while UnitFullName("player") does
-        UnitFullName("Nnogga-TarrenMill") returns realm even if you are not on the same realm as Nnogga
+        UnitFullName("Nnoggie") returns no realm while UnitFullName("player") does
+        UnitFullName("Nnoggie-TarrenMill") returns realm even if you are not on the same realm as Nnoggie
         We append our realm if there is no realm
     ]]
     local name, realm = UnitFullName(sender)
@@ -241,65 +240,65 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     --we cache the preset here already
     --the user still decides if he wants to click the chat link and add the preset to his db
     if prefix == presetCommPrefix then
-        local preset = MethodDungeonTools:StringToTable(message,false)
-        MethodDungeonTools.transmissionCache[fullName] = preset
+        local preset = MDT:StringToTable(message,false)
+        MDT.transmissionCache[fullName] = preset
         --live session preset
-        if MethodDungeonTools.liveSessionActive and MethodDungeonTools.liveSessionAcceptingPreset and preset.uid == MethodDungeonTools.livePresetUID then
-            if MethodDungeonTools:ValidateImportPreset(preset) then
-                MethodDungeonTools:ImportPreset(preset,true)
-                MethodDungeonTools.liveSessionAcceptingPreset = false
-                MethodDungeonTools.main_frame.SendingStatusBar:Hide()
-                if MethodDungeonTools.main_frame.LoadingSpinner then
-                    MethodDungeonTools.main_frame.LoadingSpinner:Hide()
-                    MethodDungeonTools.main_frame.LoadingSpinner.Anim:Stop()
+        if MDT.liveSessionActive and MDT.liveSessionAcceptingPreset and preset.uid == MDT.livePresetUID then
+            if MDT:ValidateImportPreset(preset) then
+                MDT:ImportPreset(preset,true)
+                MDT.liveSessionAcceptingPreset = false
+                MDT.main_frame.SendingStatusBar:Hide()
+                if MDT.main_frame.LoadingSpinner then
+                    MDT.main_frame.LoadingSpinner:Hide()
+                    MDT.main_frame.LoadingSpinner.Anim:Stop()
                 end
-                MethodDungeonTools.liveSessionRequested = false
+                MDT.liveSessionRequested = false
             end
         end
     end
 
-    if prefix == MethodDungeonTools.liveSessionPrefixes.enabled then
-        if MethodDungeonTools.liveSessionRequested == true then
-            MethodDungeonTools:LiveSession_SessionFound(fullName,message)
+    if prefix == MDT.liveSessionPrefixes.enabled then
+        if MDT.liveSessionRequested == true then
+            MDT:LiveSession_SessionFound(fullName,message)
         end
     end
 
     --pulls
-    if prefix == MethodDungeonTools.liveSessionPrefixes.pull then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local pulls = MethodDungeonTools:StringToTable(message,false)
+    if prefix == MDT.liveSessionPrefixes.pull then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            local pulls = MDT:StringToTable(message,false)
             preset.value.pulls = pulls
             if not preset.value.pulls[preset.value.currentPull] then
                 preset.value.currentPull = #preset.value.pulls
                 preset.value.selection = {#preset.value.pulls}
             end
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetCurrentPull())
-                MethodDungeonTools:POI_UpdateAll() --for corrupted spires
-                MethodDungeonTools:UpdateProgressbar()
+            if preset == MDT:GetCurrentPreset() then
+                MDT:ReloadPullButtons()
+                MDT:SetSelectionToPull(MDT:GetCurrentPull())
+                MDT:POI_UpdateAll() --for corrupted spires
+                MDT:UpdateProgressbar()
             end
         end
     end
 
     --corrupted
-    if prefix == MethodDungeonTools.liveSessionPrefixes.corrupted then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local offsets = MethodDungeonTools:StringToTable(message,false)
+    if prefix == MDT.liveSessionPrefixes.corrupted then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            local offsets = MDT:StringToTable(message,false)
             --only reposition if no blip is currently moving
-            if not MethodDungeonTools.draggedBlip then
+            if not MDT.draggedBlip then
                 preset.value.riftOffsets = offsets
-                MethodDungeonTools:UpdateMap()
+                MDT:UpdateMap()
             end
         end
     end
 
     --difficulty
-    if prefix == MethodDungeonTools.liveSessionPrefixes.difficulty then
-        if MethodDungeonTools.liveSessionActive then
-            local db = MethodDungeonTools:GetDB()
+    if prefix == MDT.liveSessionPrefixes.difficulty then
+        if MDT.liveSessionActive then
+            local db = MDT:GetDB()
             local difficulty = tonumber(message)
             if difficulty and difficulty~= db.currentDifficulty then
                 local updateSeasonal
@@ -307,53 +306,53 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                     updateSeasonal = true
                 end
                 db.currentDifficulty = difficulty
-                MethodDungeonTools.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
-                MethodDungeonTools:UpdateProgressbar()
-                if MethodDungeonTools.EnemyInfoFrame and MethodDungeonTools.EnemyInfoFrame.frame:IsShown() then MethodDungeonTools:UpdateEnemyInfoData() end
-                MethodDungeonTools:ReloadPullButtons()
+                MDT.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
+                MDT:UpdateProgressbar()
+                if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
+                MDT:ReloadPullButtons()
                 if updateSeasonal then
-                    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-                    MethodDungeonTools.main_frame.sidePanel.difficultyWarning:Toggle(difficulty)
-                    MethodDungeonTools:POI_UpdateAll()
-                    MethodDungeonTools:KillAllAnimatedLines()
-                    MethodDungeonTools:DrawAllAnimatedLines()
+                    MDT:DungeonEnemies_UpdateSeasonalAffix()
+                    MDT.main_frame.sidePanel.difficultyWarning:Toggle(difficulty)
+                    MDT:POI_UpdateAll()
+                    MDT:KillAllAnimatedLines()
+                    MDT:DrawAllAnimatedLines()
                 end
             end
         end
     end
 
     --week
-    if prefix == MethodDungeonTools.liveSessionPrefixes.week then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
+    if prefix == MDT.liveSessionPrefixes.week then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
             local week = tonumber(message)
             if preset.week ~= week then
                 preset.week = week
-                local teeming = MethodDungeonTools:IsPresetTeeming(preset)
+                local teeming = MDT:IsPresetTeeming(preset)
                 preset.value.teeming = teeming
-                if preset == MethodDungeonTools:GetCurrentPreset() then
-                    local affixDropdown = MethodDungeonTools.main_frame.sidePanel.affixDropdown
+                if preset == MDT:GetCurrentPreset() then
+                    local affixDropdown = MDT.main_frame.sidePanel.affixDropdown
                     affixDropdown:SetValue(week)
-                    if not MethodDungeonTools:GetCurrentAffixWeek() then
-                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
-                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
-                    elseif MethodDungeonTools:GetCurrentAffixWeek() == week then
-                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Hide()
-                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
+                    if not MDT:GetCurrentAffixWeek() then
+                        MDT.main_frame.sidePanel.affixWeekWarning.image:Hide()
+                        MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
+                    elseif MDT:GetCurrentAffixWeek() == week then
+                        MDT.main_frame.sidePanel.affixWeekWarning.image:Hide()
+                        MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
                     else
-                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning.image:Show()
-                        MethodDungeonTools.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
+                        MDT.main_frame.sidePanel.affixWeekWarning.image:Show()
+                        MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
                     end
-                    MethodDungeonTools:DungeonEnemies_UpdateTeeming()
-                    MethodDungeonTools:UpdateFreeholdSelector(week)
-                    MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent(week)
-                    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-                    MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
-                    MethodDungeonTools:POI_UpdateAll()
-                    MethodDungeonTools:UpdateProgressbar()
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:KillAllAnimatedLines()
-                    MethodDungeonTools:DrawAllAnimatedLines()
+                    MDT:DungeonEnemies_UpdateTeeming()
+                    MDT:UpdateFreeholdSelector(week)
+                    MDT:DungeonEnemies_UpdateBlacktoothEvent(week)
+                    MDT:DungeonEnemies_UpdateSeasonalAffix()
+                    MDT:DungeonEnemies_UpdateBoralusFaction(preset.faction)
+                    MDT:POI_UpdateAll()
+                    MDT:UpdateProgressbar()
+                    MDT:ReloadPullButtons()
+                    MDT:KillAllAnimatedLines()
+                    MDT:DrawAllAnimatedLines()
                 end
             end
         end
@@ -363,92 +362,92 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if sender == UnitFullName("player") then return end
 
 
-    if prefix == MethodDungeonTools.liveSessionPrefixes.request then
-        if MethodDungeonTools.liveSessionActive then
-            MethodDungeonTools:LiveSession_NotifyEnabled()
+    if prefix == MDT.liveSessionPrefixes.request then
+        if MDT.liveSessionActive then
+            MDT:LiveSession_NotifyEnabled()
         end
     end
 
     --request preset
-    if prefix == MethodDungeonTools.liveSessionPrefixes.reqPre then
+    if prefix == MDT.liveSessionPrefixes.reqPre then
         local playerName,playerRealm = UnitFullName("player")
         playerName = playerName.."-"..playerRealm
         if playerName == message then
-            MethodDungeonTools:SendToGroup(MethodDungeonTools:IsPlayerInGroup(),true,MethodDungeonTools:GetCurrentLivePreset())
+            MDT:SendToGroup(MDT:IsPlayerInGroup(),true,MDT:GetCurrentLivePreset())
         end
     end
 
 
     --ping
-    if prefix == MethodDungeonTools.liveSessionPrefixes.ping then
-        local currentUID = MethodDungeonTools:GetCurrentPreset().uid
-        if MethodDungeonTools.liveSessionActive and (currentUID and currentUID==MethodDungeonTools.livePresetUID) then
+    if prefix == MDT.liveSessionPrefixes.ping then
+        local currentUID = MDT:GetCurrentPreset().uid
+        if MDT.liveSessionActive and (currentUID and currentUID==MDT.livePresetUID) then
             local x,y,sublevel = string.match(message,"(.*):(.*):(.*)")
             x = tonumber(x)
             y = tonumber(y)
             sublevel = tonumber(sublevel)
-            local scale = MethodDungeonTools:GetScale()
-            if sublevel == MethodDungeonTools:GetCurrentSubLevel() then
-                MethodDungeonTools:PingMap(x*scale,y*scale)
+            local scale = MDT:GetScale()
+            if sublevel == MDT:GetCurrentSubLevel() then
+                MDT:PingMap(x*scale,y*scale)
             end
         end
     end
 
     --preset objects
-    if prefix == MethodDungeonTools.liveSessionPrefixes.obj then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local obj = MethodDungeonTools:StringToTable(message,false)
-            MethodDungeonTools:StorePresetObject(obj,true,preset)
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                local scale = MethodDungeonTools:GetScale()
-                local currentPreset = MethodDungeonTools:GetCurrentPreset()
-                local currentSublevel = MethodDungeonTools:GetCurrentSubLevel()
-                MethodDungeonTools:DrawPresetObject(obj,nil,scale,currentPreset,currentSublevel)
+    if prefix == MDT.liveSessionPrefixes.obj then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            local obj = MDT:StringToTable(message,false)
+            MDT:StorePresetObject(obj,true,preset)
+            if preset == MDT:GetCurrentPreset() then
+                local scale = MDT:GetScale()
+                local currentPreset = MDT:GetCurrentPreset()
+                local currentSublevel = MDT:GetCurrentSubLevel()
+                MDT:DrawPresetObject(obj,nil,scale,currentPreset,currentSublevel)
             end
         end
     end
 
     --preset object offsets
-    if prefix == MethodDungeonTools.liveSessionPrefixes.objOff then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
+    if prefix == MDT.liveSessionPrefixes.objOff then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
             local objIdx,x,y = string.match(message,"(.*):(.*):(.*)")
             objIdx = tonumber(objIdx)
             x = tonumber(x)
             y = tonumber(y)
-            MethodDungeonTools:UpdatePresetObjectOffsets(objIdx,x,y,preset,true)
-            if preset == MethodDungeonTools:GetCurrentPreset() then MethodDungeonTools:DrawAllPresetObjects() end
+            MDT:UpdatePresetObjectOffsets(objIdx,x,y,preset,true)
+            if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
         end
     end
 
     --preset object changed (deletions, partial deletions)
-    if prefix == MethodDungeonTools.liveSessionPrefixes.objChg then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local changedObjects = MethodDungeonTools:StringToTable(message,false)
+    if prefix == MDT.liveSessionPrefixes.objChg then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            local changedObjects = MDT:StringToTable(message,false)
             for objIdx,obj in pairs(changedObjects) do
                 preset.objects[objIdx] = obj
             end
-            if preset == MethodDungeonTools:GetCurrentPreset() then MethodDungeonTools:DrawAllPresetObjects() end
+            if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
         end
     end
 
     --various commands
-    if prefix == MethodDungeonTools.liveSessionPrefixes.cmd then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            if message == "deletePresetObjects" then MethodDungeonTools:DeletePresetObjects(preset, true) end
-            if message == "undo" then MethodDungeonTools:PresetObjectStepBack(preset, true) end
-            if message == "redo" then MethodDungeonTools:PresetObjectStepForward(preset, true) end
-            if message == "clear" then MethodDungeonTools:ClearPreset(preset,true) end
+    if prefix == MDT.liveSessionPrefixes.cmd then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            if message == "deletePresetObjects" then MDT:DeletePresetObjects(preset, true) end
+            if message == "undo" then MDT:PresetObjectStepBack(preset, true) end
+            if message == "redo" then MDT:PresetObjectStepForward(preset, true) end
+            if message == "clear" then MDT:ClearPreset(preset,true) end
         end
     end
 
     --note text update, delete, move
-    if prefix == MethodDungeonTools.liveSessionPrefixes.note then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
+    if prefix == MDT.liveSessionPrefixes.note then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
             local action,noteIdx,text,y = string.match(message,"(.*):(.*):(.*):(.*)")
             noteIdx = tonumber(noteIdx)
             if action == "text" then
@@ -461,92 +460,92 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 preset.objects[noteIdx].d[1]=x
                 preset.objects[noteIdx].d[2]=y
             end
-            if preset == MethodDungeonTools:GetCurrentPreset() then MethodDungeonTools:DrawAllPresetObjects() end
+            if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
         end
     end
 
     --preset
-    if prefix == MethodDungeonTools.liveSessionPrefixes.preset then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:StringToTable(message,false)
-            MethodDungeonTools.transmissionCache[fullName] = preset
-            if MethodDungeonTools:ValidateImportPreset(preset) then
-                MethodDungeonTools.livePresetUID = preset.uid
-                MethodDungeonTools:ImportPreset(preset,true)
+    if prefix == MDT.liveSessionPrefixes.preset then
+        if MDT.liveSessionActive then
+            local preset = MDT:StringToTable(message,false)
+            MDT.transmissionCache[fullName] = preset
+            if MDT:ValidateImportPreset(preset) then
+                MDT.livePresetUID = preset.uid
+                MDT:ImportPreset(preset,true)
             end
         end
     end
 
     --freehold
-    if prefix == MethodDungeonTools.liveSessionPrefixes.free then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
+    if prefix == MDT.liveSessionPrefixes.free then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
             local value,week = string.match(message,"(.*):(.*)")
             value = value == "T" and true or false
             week = tonumber(week)
             preset.freeholdCrew = (value and week) or nil
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.freeholdCrew)
-                MethodDungeonTools:UpdateFreeholdSelector(week)
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:UpdateProgressbar()
+            if preset == MDT:GetCurrentPreset() then
+                MDT:DungeonEnemies_UpdateFreeholdCrew(preset.freeholdCrew)
+                MDT:UpdateFreeholdSelector(week)
+                MDT:ReloadPullButtons()
+                MDT:UpdateProgressbar()
             end
         end
     end
 
     --Siege of Boralus
-    if prefix == MethodDungeonTools.liveSessionPrefixes.bora then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
+    if prefix == MDT.liveSessionPrefixes.bora then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
             local faction = tonumber(message)
             preset.faction = faction
-            if preset == MethodDungeonTools:GetCurrentPreset() then
-                MethodDungeonTools:UpdateBoralusSelector()
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:UpdateProgressbar()
+            if preset == MDT:GetCurrentPreset() then
+                MDT:UpdateBoralusSelector()
+                MDT:ReloadPullButtons()
+                MDT:UpdateProgressbar()
             end
         end
     end
 
     --MDI
-    if prefix == MethodDungeonTools.liveSessionPrefixes.mdi then
-        if MethodDungeonTools.liveSessionActive then
-            local preset = MethodDungeonTools:GetCurrentLivePreset()
-            local updateUI = preset == MethodDungeonTools:GetCurrentPreset()
+    if prefix == MDT.liveSessionPrefixes.mdi then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            local updateUI = preset == MDT:GetCurrentPreset()
             local action,data = string.match(message,"(.*):(.*)")
             data = tonumber(data)
             if action == "toggle" then
-                MethodDungeonTools:GetDB().MDI.enabled = data == 1 or false
-                MethodDungeonTools:DisplayMDISelector()
+                MDT:GetDB().MDI.enabled = data == 1 or false
+                MDT:DisplayMDISelector()
             elseif action == "beguiling" then
                 preset.mdi.beguiling = data
                 if updateUI then
-                    MethodDungeonTools.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-                    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-                    MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(preset.faction)
-                    MethodDungeonTools:UpdateProgressbar()
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:POI_UpdateAll()
-                    MethodDungeonTools:KillAllAnimatedLines()
-                    MethodDungeonTools:DrawAllAnimatedLines()
+                    MDT.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
+                    MDT:DungeonEnemies_UpdateSeasonalAffix()
+                    MDT:DungeonEnemies_UpdateBoralusFaction(preset.faction)
+                    MDT:UpdateProgressbar()
+                    MDT:ReloadPullButtons()
+                    MDT:POI_UpdateAll()
+                    MDT:KillAllAnimatedLines()
+                    MDT:DrawAllAnimatedLines()
                 end
             elseif action == "freehold" then
                 preset.mdi.freehold = data
                 if updateUI then
-                    MethodDungeonTools.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
+                    MDT.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
                     if preset.mdi.freeholdJoined then
-                        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
+                        MDT:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
                     end
-                    MethodDungeonTools:DungeonEnemies_UpdateBlacktoothEvent()
-                    MethodDungeonTools:UpdateProgressbar()
-                    MethodDungeonTools:ReloadPullButtons()
+                    MDT:DungeonEnemies_UpdateBlacktoothEvent()
+                    MDT:UpdateProgressbar()
+                    MDT:ReloadPullButtons()
                 end
             elseif action == "join" then
                 preset.mdi.freeholdJoined = data == 1 or false
                 if updateUI then
-                    MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:UpdateProgressbar()
+                    MDT:DungeonEnemies_UpdateFreeholdCrew()
+                    MDT:ReloadPullButtons()
+                    MDT:UpdateProgressbar()
                 end
             end
 
@@ -559,7 +558,7 @@ end
 ---MakeSendingStatusBar
 ---Creates a bar that indicates sending progress when sharing presets with your group
 ---Called once from initFrames()
-function MethodDungeonTools:MakeSendingStatusBar(f)
+function MDT:MakeSendingStatusBar(f)
     f.SendingStatusBar = CreateFrame("StatusBar", nil, f)
     local statusbar = f.SendingStatusBar
     statusbar:SetMinMaxValues(0, 1)
@@ -593,43 +592,42 @@ end
 
 --callback for SendCommMessage
 local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
-    MethodDungeonTools.main_frame.SendingStatusBar:Show()
-    MethodDungeonTools.main_frame.SendingStatusBar:SetValue(bytesSent/bytesToSend)
-    MethodDungeonTools.main_frame.SendingStatusBar.value:SetText(string.format("Sending: %.1f",bytesSent/bytesToSend*100).."%")
+    MDT.main_frame.SendingStatusBar:Show()
+    MDT.main_frame.SendingStatusBar:SetValue(bytesSent/bytesToSend)
+    MDT.main_frame.SendingStatusBar.value:SetText(string.format("Sending: %.1f",bytesSent/bytesToSend*100).."%")
     --done sending
     if bytesSent == bytesToSend then
         local distribution = userArgs[1]
         local preset = userArgs[2]
         local silent = userArgs[3]
         --restore "Send" and "Live" button
-        if MethodDungeonTools.liveSessionActive then
-            MethodDungeonTools.main_frame.LiveSessionButton:SetText("*Live*")
+        if MDT.liveSessionActive then
+            MDT.main_frame.LiveSessionButton:SetText("*Live*")
         else
-            MethodDungeonTools.main_frame.LiveSessionButton:SetText("Live")
-            MethodDungeonTools.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
-            MethodDungeonTools.main_frame.LinkToChatButton:SetDisabled(false)
-            MethodDungeonTools.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
+            MDT.main_frame.LiveSessionButton:SetText("Live")
+            MDT.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
+            MDT.main_frame.LinkToChatButton:SetDisabled(false)
+            MDT.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
         end
-        MethodDungeonTools.main_frame.LinkToChatButton:SetText("Share")
-        MethodDungeonTools.main_frame.LiveSessionButton:SetDisabled(false)
-        MethodDungeonTools.main_frame.SendingStatusBar:Hide()
+        MDT.main_frame.LinkToChatButton:SetText("Share")
+        MDT.main_frame.LiveSessionButton:SetDisabled(false)
+        MDT.main_frame.SendingStatusBar:Hide()
         --output chat link
         if not silent then
-            local prefix = "[MethodDungeonTools: "
-            local dungeon = MethodDungeonTools:GetDungeonName(preset.value.currentDungeonIdx)
+            local prefix = "[MythicDungeonTools: "
+            local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
             local presetName = preset.text
             local name, realm = UnitFullName("player")
             local fullName = name.."+"..realm
             SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
-            MethodDungeonTools:SetThrottleValues(true)
+            MDT:SetThrottleValues(true)
         end
     end
 end
 
----SetUniqueID
 ---generates a unique random 11 digit number in base64 and assigns it to a preset if it does not have one yet
 ---credit to WeakAuras2
-function MethodDungeonTools:SetUniqueID(preset)
+function MDT:SetUniqueID(preset)
     if not preset.uid then
         local s = {}
         for i=1,11 do
@@ -641,30 +639,30 @@ end
 
 ---SendToGroup
 ---Send current preset to group/raid
-function MethodDungeonTools:SendToGroup(distribution,silent,preset)
-    MethodDungeonTools:SetThrottleValues()
-    preset = preset or MethodDungeonTools:GetCurrentPreset()
+function MDT:SendToGroup(distribution,silent,preset)
+    MDT:SetThrottleValues()
+    preset = preset or MDT:GetCurrentPreset()
     --set unique id
-    MethodDungeonTools:SetUniqueID(preset)
+    MDT:SetUniqueID(preset)
     --gotta encode mdi mode / difficulty into preset
-    local db = MethodDungeonTools:GetDB()
+    local db = MDT:GetDB()
     preset.mdiEnabled = db.MDI.enabled
     preset.difficulty = db.currentDifficulty
-    local export = MethodDungeonTools:TableToString(preset,false,5)
+    local export = MDT:TableToString(preset,false,5)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK",displaySendingProgress,{distribution,preset,silent})
 end
 
 ---GetPresetSize
 ---Returns the number of characters the string version of the preset contains
-function MethodDungeonTools:GetPresetSize(forChat,level)
-    local preset = MethodDungeonTools:GetCurrentPreset()
-    local export = MethodDungeonTools:TableToString(preset,forChat,level)
+function MDT:GetPresetSize(forChat,level)
+    local preset = MDT:GetCurrentPreset()
+    local export = MDT:TableToString(preset,forChat,level)
     return string.len(export)
 end
 
 local defaultCPS = tonumber(_G.ChatThrottleLib.MAX_CPS)
 local defaultBURST = tonumber(_G.ChatThrottleLib.BURST)
-function MethodDungeonTools:SetThrottleValues(default)
+function MDT:SetThrottleValues(default)
     if not _G.ChatThrottleLib then return end
     if default then
         _G.ChatThrottleLib.MAX_CPS = defaultCPS

@@ -1,20 +1,20 @@
 ## Interface: 80300
-## Title: Method Dungeon Tools
-## Author: Nnogga
-## Version: 3.0.8
+## Title: Mythic Dungeon Tools
+## Author: Nnoggie
+## Version: 3.0.9
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
-## SavedVariables: MethodDungeonToolsDB
+## SavedVariables: MythicDungeonToolsDB
 
 #@no-lib-strip@
 libs\load_libs.xml
 #@end-no-lib-strip@
 
-AceGUIWidget-MethodDungeonToolsPullButton.lua
-AceGUIWidget-MethodDungeonToolsNewPullButton.lua
-AceGUIWidget-MethodDungeonToolsSpellButton.lua
+AceGUIWidget-MythicDungeonToolsPullButton.lua
+AceGUIWidget-MythicDungeonToolsNewPullButton.lua
+AceGUIWidget-MythicDungeonToolsSpellButton.lua
 Utility.lua
-MethodDungeonTools.lua
+MythicDungeonTools.lua
 DungeonEnemies.xml
 EnemyInfo.lua
 Pointsofinterest.lua
@@ -25,5 +25,3 @@ DataCollection.lua
 LiveSession.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
-
-

@@ -1,5 +1,5 @@
 local dungeonIndex = 23
-MethodDungeonTools.mapInfo[dungeonIndex] = {
+MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
         [1] = {
@@ -39,9 +39,9 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
         };
     };
 };
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=400,teeming=479,teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal=400,teeming=479,teemingEnabled=true}
 
-MethodDungeonTools.mapPOIs[dungeonIndex] = {
+MDT.mapPOIs[dungeonIndex] = {
     [1] = {
         [1] = {
             ["y"] = -262.48238754636;
@@ -608,7 +608,7 @@ Blood Elf/Gnome: 10% Intellect";
     };
 };
 
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
             [1] = {

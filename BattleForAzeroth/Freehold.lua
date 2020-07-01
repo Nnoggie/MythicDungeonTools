@@ -1,5 +1,6 @@
 local dungeonIndex = 16
-MethodDungeonTools.mapInfo[dungeonIndex] = {
+local MDT = MDT
+MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
         [1] = {
@@ -10,15 +11,15 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.scaleMultiplier[dungeonIndex] = 0.6
+MDT.scaleMultiplier[dungeonIndex] = 0.6
 
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=261,teeming=313,teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal=261,teeming=313,teemingEnabled=true}
 
 local selectorGroup
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local function fixFreeholdShowHide(widget,frame,isFrame)
-    frame = frame or MethodDungeonTools.main_frame
+    frame = frame or MDT.main_frame
     local originalShow,originalHide = frame.Show,frame.Hide
     if not isFrame then
         widget = widget.frame
@@ -35,41 +36,41 @@ local function fixFreeholdShowHide(widget,frame,isFrame)
     end
 end
 
-function MethodDungeonTools:ToggleFreeholdSelector(show)
-    db = MethodDungeonTools:GetDB()
+function MDT:ToggleFreeholdSelector(show)
+    db = MDT:GetDB()
     if not selectorGroup then
         selectorGroup = AceGUI:Create("SimpleGroup")
         selectorGroup.frame:SetFrameStrata("HIGH")
         selectorGroup.frame:SetFrameLevel(50)
-        selectorGroup.frame:SetBackdropColor(unpack(MethodDungeonTools.BackdropColor))
+        selectorGroup.frame:SetBackdropColor(unpack(MDT.BackdropColor))
         fixFreeholdShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")
         selectorGroup.frame.bg = selectorGroup.frame:CreateTexture(nil, "BACKGROUND")
         selectorGroup.frame.bg:SetAllPoints(selectorGroup.frame)
-        selectorGroup.frame.bg:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
+        selectorGroup.frame.bg:SetColorTexture(unpack(MDT.BackdropColor))
         selectorGroup:SetWidth(120)
         selectorGroup:SetHeight(90)
-        selectorGroup.frame:SetPoint("TOPRIGHT",MethodDungeonTools.main_frame,"TOPRIGHT",0,0)
+        selectorGroup.frame:SetPoint("TOPRIGHT", MDT.main_frame,"TOPRIGHT",0,0)
 
     end
-    MethodDungeonTools:UpdateFreeholdSelector(MethodDungeonTools:GetCurrentPreset().week)
+    MDT:UpdateFreeholdSelector(MDT:GetCurrentPreset().week)
     if show then
         selectorGroup.frame:Show()
-        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
-        MethodDungeonTools:ReloadPullButtons()
-        MethodDungeonTools:UpdateProgressbar()
+        MDT:DungeonEnemies_UpdateFreeholdCrew(MDT:GetCurrentPreset().freeholdCrew)
+        MDT:ReloadPullButtons()
+        MDT:UpdateProgressbar()
     else
         selectorGroup.frame:Hide()
-        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew()
+        MDT:DungeonEnemies_UpdateFreeholdCrew()
     end
 end
 
-function MethodDungeonTools:UpdateFreeholdSelector(week)
+function MDT:UpdateFreeholdSelector(week)
     if not selectorGroup then return end
     week = week%3
     if week == 0 then week = 3 end
     selectorGroup:ReleaseChildren()
-    MethodDungeonTools:GetCurrentPreset().freeholdCrew = (MethodDungeonTools:GetCurrentPreset().freeholdCrew and week) or nil
+    MDT:GetCurrentPreset().freeholdCrew = (MDT:GetCurrentPreset().freeholdCrew and week) or nil
     local label = AceGUI:Create("Label")
     label:SetText("  Join Crew:")
     selectorGroup:AddChild(label)
@@ -77,19 +78,19 @@ function MethodDungeonTools:UpdateFreeholdSelector(week)
     check:SetLabel((week==2 and "Blacktooth") or (week==1 and "Cutwater") or (week==3 and "Bilge Rats"))
     selectorGroup:AddChild(check)
     check:SetCallback("OnValueChanged",function(widget,callbackName,value)
-        MethodDungeonTools:GetCurrentPreset().freeholdCrew = (value and week) or nil
-        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-            MethodDungeonTools:LiveSession_SendFreeholdSelector(value,week)
+        MDT:GetCurrentPreset().freeholdCrew = (value and week) or nil
+        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendFreeholdSelector(value,week)
         end
-        MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
-        MethodDungeonTools:ReloadPullButtons()
-        MethodDungeonTools:UpdateProgressbar()
+        MDT:DungeonEnemies_UpdateFreeholdCrew(MDT:GetCurrentPreset().freeholdCrew)
+        MDT:ReloadPullButtons()
+        MDT:UpdateProgressbar()
     end)
-    check:SetValue(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
-    MethodDungeonTools:DungeonEnemies_UpdateFreeholdCrew(MethodDungeonTools:GetCurrentPreset().freeholdCrew)
+    check:SetValue(MDT:GetCurrentPreset().freeholdCrew)
+    MDT:DungeonEnemies_UpdateFreeholdCrew(MDT:GetCurrentPreset().freeholdCrew)
 end
 
-MethodDungeonTools.mapPOIs[dungeonIndex] = {
+MDT.mapPOIs[dungeonIndex] = {
     [1] = {
         [1] = {
             ["y"] = -200.49488376925;
@@ -249,7 +250,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
             [1] = {

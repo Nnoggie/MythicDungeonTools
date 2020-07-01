@@ -1,8 +1,8 @@
 local dungeonIndex = 3
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
-MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Court of Stars
+MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
+MDT.dungeonBosses[dungeonIndex] = {--Court of Stars
 	[1] = {
 		[1] = {
 			["name"] = "Patrol Captain Gerdo",
@@ -35,7 +35,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Court of Stars
 		},
 	},
 }
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Court of Stars
+MDT.dungeonEnemies[dungeonIndex] = { --Court of Stars
 	[1] = {
 		["name"] = "Duskwatch Guard",
 		["health"] = 16301227,

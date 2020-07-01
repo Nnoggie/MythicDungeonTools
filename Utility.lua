@@ -1,6 +1,6 @@
-local AddonName, MethodDungeonTools = ...
-MethodDungeonTools.U = {}
-local U = MethodDungeonTools.U
+local AddonName, MDT = ...
+MDT.U = {}
+local U = MDT.U
 local twipe,tinsert = table.wipe,table.insert
 
 
@@ -81,10 +81,10 @@ end
 --[[
 Performance measurement
 Usage:
-MethodDungeonTools.U:TMStart("DungeonEnemies_UpdateEnemies")
-MethodDungeonTools.U:TMStep("ReleaseAll")
-MethodDungeonTools.U:TMStep("AddBlips")
-MethodDungeonTools.U:TMEnd()
+MDT.U:TMStart("DungeonEnemies_UpdateEnemies")
+MDT.U:TMStep("ReleaseAll")
+MDT.U:TMStep("AddBlips")
+MDT.U:TMEnd()
 ]]
 
 local debugTimes

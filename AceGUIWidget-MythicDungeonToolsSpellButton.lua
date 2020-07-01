@@ -1,10 +1,9 @@
-local Type, Version = "MethodDungeonToolsSpellButton", 1
+local Type, Version = "MDTSpellButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
 local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
 
---Methods
 local methods = {
     ["OnAcquire"] = function(self)
         self:SetWidth(width);
@@ -110,7 +109,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-    local name = "MethodDungeonToolsSpellButton"..AceGUI:GetNextWidgetNum(Type);
+    local name = "MDTSpellButton"..AceGUI:GetNextWidgetNum(Type);
     local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
     button:SetHeight(height);
     button:SetWidth(width);

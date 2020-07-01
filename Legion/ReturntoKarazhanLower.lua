@@ -1,8 +1,8 @@
 local dungeonIndex = 9
 local pi = math.pi
 local nerfMultiplier = 0.74 --npcs got nerfed by 26% compared against m0 values, bosses unchanged
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=420,teeming=504,teemingEnabled=true}
-MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Lower Karazhan
+MDT.dungeonTotalCount[dungeonIndex] = {normal=420,teeming=504,teemingEnabled=true}
+MDT.dungeonBosses[dungeonIndex] = {--Lower Karazhan
 	[3] = {
 		[1] = {
             ["name"] = "Opera Hall: Wikket",
@@ -55,7 +55,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Lower Karazhan
 		
 	},
 }
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {
         ["name"] = "Forlorn Spirit",
         ["health"] = 21771241*nerfMultiplier,

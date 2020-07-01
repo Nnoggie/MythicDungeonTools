@@ -1,5 +1,6 @@
-local Type, Version = "MethodDungeonToolsPullButton", 1
+local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+
 
 local width,height = 248,32
 local maxPortraitCount = 8
@@ -9,8 +10,8 @@ local next = next
 local dragdrop_overlap = 2000
 
 local function GetDropTarget()
-    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
-    local buttonList = MethodDungeonTools.main_frame.sidePanel.newPullButtons
+    local scrollFrame = MDT.main_frame.sidePanel.pullButtonsScrollFrame
+    local buttonList = MDT.main_frame.sidePanel.newPullButtons
     local id, button, pos, offset
 
 
@@ -30,9 +31,9 @@ local function GetDropTarget()
 
         -- Is add new pull hovered?
         if not id then
-            local addNewPullButton = MethodDungeonTools.main_frame.sidePanel.newPullButton
+            local addNewPullButton = MDT.main_frame.sidePanel.newPullButton
             if addNewPullButton.frame:IsMouseOver(2) then
-                local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                local maxPulls = #MDT:GetCurrentPreset().value.pulls
                 id = maxPulls
                 button = buttonList[id]
                 pos = "BOTTOM"
@@ -51,7 +52,7 @@ local function GetDropTarget()
         local viewheight = scrollFrame.frame.obj.content:GetHeight()
         if not id and viewheight < scrollFrame.frame:GetHeight() then
             if scrollFrame.frame:IsMouseOver(-viewheight, -1, -dragdrop_overlap, dragdrop_overlap) then
-                local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                local maxPulls = #MDT:GetCurrentPreset().value.pulls
                 id = maxPulls
                 button = buttonList[id]
                 pos = "BOTTOM"
@@ -82,7 +83,7 @@ local function GetDropTarget()
 
     -- Bottom Graceful Area
     if scrollFrame.frame:IsMouseOver(-(scroll_frame_height+1), -100, -dragdrop_overlap, dragdrop_overlap) and scroll_value > scroll_value_max then
-        local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+        local maxPulls = #MDT:GetCurrentPreset().value.pulls
         id = maxPulls
         button = buttonList[id]
         pos = "BOTTOM"
@@ -126,29 +127,27 @@ local methods = {
         self.callbacks = {}
 
         function self.callbacks.OnClickNormal(_, mouseButton)
-            if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+            if not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
 
             if(IsControlKeyDown())then
                 if (mouseButton == "LeftButton") then
                     --print("CTRL+MouseButton:Left")
 
-                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                        tinsert(MethodDungeonTools:GetSelection(), self.index)
-                        MethodDungeonTools:SetMapSublevel(self.index)
-                        MethodDungeonTools:SetSelectionToPull(MethodDungeonTools:GetSelection())
-                        --print(#MethodDungeonTools:GetSelection())
+                    if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                        tinsert(MDT:GetSelection(), self.index)
+                        MDT:SetMapSublevel(self.index)
+                        MDT:SetSelectionToPull(MDT:GetSelection())
                     else
-                        MethodDungeonTools.U.iremove_if(MethodDungeonTools:GetSelection(), function(entry)
+                        MDT.U.iremove_if(MDT:GetSelection(), function(entry)
                             return entry == self.index
                         end)
                         self:ClearPick()
-                        --print(#MethodDungeonTools:GetSelection())
                     end
                 end
             elseif(IsShiftKeyDown()) then
                 if (mouseButton == "LeftButton") then
                     --print("SHIFT+MouseButton:Left")
-                    local selection = MethodDungeonTools:GetSelection()
+                    local selection = MDT:GetSelection()
                     local lastPull = selection[#selection]
                     local step = 1
 
@@ -158,89 +157,88 @@ local methods = {
                     end
 
                     for i=lastPull, self.index, step do
-                        if not MethodDungeonTools.U.contains(selection, i) then
+                        if not MDT.U.contains(selection, i) then
                             tinsert(selection, i)
                         end
                     end
 
-                    MethodDungeonTools:SetMapSublevel(self.index)
-                    MethodDungeonTools:SetSelectionToPull(selection)
+                    MDT:SetMapSublevel(self.index)
+                    MDT:SetSelectionToPull(selection)
                     --print(#selection)
                 elseif (mouseButton == "RightButton") then
-                    local maxPulls = #MethodDungeonTools:GetCurrentPreset().value.pulls
+                    local maxPulls = #MDT:GetCurrentPreset().value.pulls
                     if maxPulls>1 then
-                        MethodDungeonTools:DeletePull(self.index)
+                        MDT:DeletePull(self.index)
                     end
                 end
             else
-                MethodDungeonTools:EnsureDBTables()
+                MDT:EnsureDBTables()
                 if(mouseButton == "RightButton") then
                     -- Add current pull to selection, if not already selected
-                    if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                        if #MethodDungeonTools:GetSelection() == 1 then
-                            MethodDungeonTools:SetSelectionToPull(self.index)
+                    if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                        if #MDT:GetSelection() == 1 then
+                            MDT:SetSelectionToPull(self.index)
                         else
-                            tinsert(MethodDungeonTools:GetSelection(), self.index)
+                            tinsert(MDT:GetSelection(), self.index)
                             self:Pick()
                         end
                     end
 
                     -- Backup color for every selected pull
-                    for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                        local button = MethodDungeonTools:GetPullButton(pullIdx)
+                    for _, pullIdx in ipairs(MDT:GetSelection()) do
+                        local button = MDT:GetPullButton(pullIdx)
                         if button then
                             button:BackupColor()
                         end
                     end
 
-                    if #MethodDungeonTools:GetSelection() > 1 then
-                        L_EasyMenu(self.multiselectMenu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                    if #MDT:GetSelection() > 1 then
+                        L_EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     else
-                        MethodDungeonTools:SetMapSublevel(self.index)
-                        MethodDungeonTools:SetSelectionToPull(self.index)
+                        MDT:SetMapSublevel(self.index)
+                        MDT:SetSelectionToPull(self.index)
 
-                        L_EasyMenu(self.menu,MethodDungeonTools.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                        L_EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     end
 
                 else
                     --normal click
-                    MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
-                    --print(#MethodDungeonTools:GetCurrentPreset().value.selection)
-                    MethodDungeonTools:SetMapSublevel(self.index)
-                    MethodDungeonTools:SetSelectionToPull(self.index)
+                    MDT:GetCurrentPreset().value.selection = { self.index }
+                    MDT:SetMapSublevel(self.index)
+                    MDT:SetSelectionToPull(self.index)
                 end
             end
         end
 
         function self.callbacks.OnEnter()
-            MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,0)
-            MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"TOPLEFT",-250,-(4+MethodDungeonTools.pullTooltip.myHeight))
-            local tooltipBottom = MethodDungeonTools.pullTooltip:GetBottom()
-            local mainFrameBottom = MethodDungeonTools.main_frame:GetBottom()
+            MDT.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,0)
+            MDT.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"TOPLEFT",-250,-(4+ MDT.pullTooltip.myHeight))
+            local tooltipBottom = MDT.pullTooltip:GetBottom()
+            local mainFrameBottom = MDT.main_frame:GetBottom()
             if tooltipBottom<mainFrameBottom then
-                MethodDungeonTools.pullTooltip:SetPoint("TOPRIGHT",self.frame,"BOTTOMLEFT",0,(4+MethodDungeonTools.pullTooltip.myHeight))
-                MethodDungeonTools.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",-250,-4)
+                MDT.pullTooltip:SetPoint("TOPRIGHT",self.frame,"BOTTOMLEFT",0,(4+ MDT.pullTooltip.myHeight))
+                MDT.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",-250,-4)
             end
             self.entered = true
-            MethodDungeonTools:ActivatePullTooltip(self.index)
+            MDT:ActivatePullTooltip(self.index)
             self.frame:SetScript("OnUpdate", self:CreateUpdateFunction())
             --progressbar
-            if MethodDungeonTools.ProgressBarResetTimer then MethodDungeonTools.ProgressBarResetTimer:Cancel() end
-            local currentForces = MethodDungeonTools:CountForces(self.index)
-            local db = MethodDungeonTools:GetDB()
-            local teeming = MethodDungeonTools:IsCurrentPresetTeeming()
-            MethodDungeonTools:Progressbar_SetValue(MethodDungeonTools.main_frame.sidePanel.ProgressBar,currentForces,teeming and MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].teeming or MethodDungeonTools.dungeonTotalCount[db.currentDungeonIdx].normal)
+            if MDT.ProgressBarResetTimer then MDT.ProgressBarResetTimer:Cancel() end
+            local currentForces = MDT:CountForces(self.index)
+            local db = MDT:GetDB()
+            local teeming = MDT:IsCurrentPresetTeeming()
+            MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar,currentForces,teeming and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
         end
 
         function self.callbacks.OnLeave()
-            MethodDungeonTools.pullTooltip.Model:Hide()
-            MethodDungeonTools.pullTooltip.topString:Hide()
+            MDT.pullTooltip.Model:Hide()
+            MDT.pullTooltip.topString:Hide()
             self.entered = false
             self.frame:SetScript("OnUpdate", nil)
-            MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
-            MethodDungeonTools.pullTooltip:Hide()
-            MethodDungeonTools.ProgressBarResetTimer = C_Timer.NewTimer(0.35, function()
-                MethodDungeonTools:UpdateProgressbar()
+            MDT:UpdatePullTooltip(MDT.pullTooltip)
+            MDT.pullTooltip:Hide()
+            MDT.ProgressBarResetTimer = C_Timer.NewTimer(0.35, function()
+                MDT:UpdateProgressbar()
             end)
         end
 
@@ -266,9 +264,9 @@ local methods = {
                 text = "Move up",
                 notCheckable = 1,
                 func = function()
-                    MethodDungeonTools:MovePullUp(self.index)
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    MDT:MovePullUp(self.index)
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             })
@@ -278,9 +276,9 @@ local methods = {
                 text = "Move down",
                 notCheckable = 1,
                 func = function()
-                    MethodDungeonTools:MovePullDown(self.index)
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    MDT:MovePullDown(self.index)
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             })
@@ -299,13 +297,12 @@ local methods = {
             text = "Insert before",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools:PresetsAddPull(self.index)
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:SetSelectionToPull(self.index)
-                --MethodDungeonTools:UpdateAutomaticColors(self.index)
-                MethodDungeonTools:ColorAllPulls(_, self.index)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                MDT:PresetsAddPull(self.index)
+                MDT:ReloadPullButtons()
+                MDT:SetSelectionToPull(self.index)
+                MDT:ColorAllPulls(_, self.index)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -314,13 +311,12 @@ local methods = {
             text = "Insert after",
             notCheckable = 1,
 			func = function()
-                MethodDungeonTools:PresetsAddPull(self.index + 1)
-                MethodDungeonTools:ReloadPullButtons()
-				MethodDungeonTools:SetSelectionToPull(self.index + 1)
-                --MethodDungeonTools:UpdateAutomaticColors(self.index + 1)
-                MethodDungeonTools:ColorAllPulls(_, self.index+1)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                MDT:PresetsAddPull(self.index + 1)
+                MDT:ReloadPullButtons()
+				MDT:SetSelectionToPull(self.index + 1)
+                MDT:ColorAllPulls(_, self.index+1)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -329,13 +325,12 @@ local methods = {
                 text = "Merge up",
                 notCheckable = 1,
                 func = function()
-                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index - 1)
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:SetSelectionToPull(newIndex)
-                    --MethodDungeonTools:UpdateAutomaticColors(newIndex)
-                    MethodDungeonTools:ColorAllPulls(_, newIndex)
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    local newIndex = MDT:PresetsMergePulls(self.index, self.index - 1)
+                    MDT:ReloadPullButtons()
+                    MDT:SetSelectionToPull(newIndex)
+                    MDT:ColorAllPulls(_, newIndex)
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             })
@@ -345,13 +340,12 @@ local methods = {
                 text = "Merge down",
                 notCheckable = 1,
                 func = function()
-                    local newIndex = MethodDungeonTools:PresetsMergePulls(self.index, self.index + 1)
-                    MethodDungeonTools:ReloadPullButtons()
-                    MethodDungeonTools:SetSelectionToPull(newIndex)
-                    --MethodDungeonTools:UpdateAutomaticColors(newIndex)
-                    MethodDungeonTools:ColorAllPulls(_, newIndex)
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    local newIndex = MDT:PresetsMergePulls(self.index, self.index + 1)
+                    MDT:ReloadPullButtons()
+                    MDT:SetSelectionToPull(newIndex)
+                    MDT:ColorAllPulls(_, newIndex)
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             })
@@ -368,47 +362,47 @@ local methods = {
             text = "Color Settings",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools:OpenAutomaticColorsDialog()
+                MDT:OpenAutomaticColorsDialog()
             end
         })
         tinsert(self.menu, {
             text = "Colorize Preset",
             notCheckable = 1,
             func = function()
-                local db = MethodDungeonTools:GetDB()
+                local db = MDT:GetDB()
                 if not db.colorPaletteInfo.autoColoring then
                     db.colorPaletteInfo.autoColoring = true
-                    MethodDungeonTools.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-                    MethodDungeonTools.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-                    MethodDungeonTools.main_frame.toggleForceColorBlindMode:SetDisabled(false)
+                    MDT.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+                    MDT.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+                    MDT.main_frame.toggleForceColorBlindMode:SetDisabled(false)
                 end
-                MethodDungeonTools:SetPresetColorPaletteInfo()
-                MethodDungeonTools:ColorAllPulls()
+                MDT:SetPresetColorPaletteInfo()
+                MDT:ColorAllPulls()
             end
         })
         local function swatchFunc()
             local r,g,b = ColorPickerFrame:GetColorRGB()
-            local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
+            local colorHex = MDT:RGBToHex(r,g,b)
             if colorHex == "228b22" then
                 r,g,b = 2*r,2*g,2*b
                 ColorPickerFrame:SetColorRGB(r,g,b)
             end
 
-            MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
-            MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+            MDT:DungeonEnemies_SetPullColor(self.index,r,g,b)
+            MDT:UpdatePullButtonColor(self.index, r, g, b)
+            MDT:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
             L_CloseDropDownMenus()
-            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                MDT:LiveSession_QueueColorUpdate()
             end
         end
         local function cancelFunc()
             self:RevertColor()
-            MethodDungeonTools:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
-            MethodDungeonTools:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
-            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
+            MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
+            MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                MDT:LiveSession_QueueColorUpdate()
             end
         end
         tinsert(self.menu, {
@@ -437,11 +431,11 @@ local methods = {
             notCheckable = 1,
             func = function()
                 local r,g,b = 34/255,139/255,34/255
-                MethodDungeonTools:DungeonEnemies_SetPullColor(self.index,r,g,b)
-                MethodDungeonTools:UpdatePullButtonColor(self.index, r, g, b)
-                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                MDT:DungeonEnemies_SetPullColor(self.index,r,g,b)
+                MDT:UpdatePullButtonColor(self.index, r, g, b)
+                MDT:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -455,27 +449,26 @@ local methods = {
             text = "Clear",
             notCheckable = 1,
             func = function()
-				MethodDungeonTools:ClearPull(self.index)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+				MDT:ClearPull(self.index)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
         tinsert(self.menu, {
             text = "Reset Preset",
             notCheckable = 1,
-            func = function() MethodDungeonTools:OpenClearPresetDialog() end
+            func = function() MDT:OpenClearPresetDialog() end
         })
         if self.maxPulls > 1 then
             tinsert(self.menu, {
                 text = "Delete",
                 notCheckable = 1,
                 func = function()
-                    MethodDungeonTools:DeletePull(self.index)
-                    --MethodDungeonTools:UpdateAutomaticColors(self.index)
-                    MethodDungeonTools:ColorAllPulls(_, self.index)
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    MDT:DeletePull(self.index)
+                    MDT:ColorAllPulls(_, self.index)
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             })
@@ -490,7 +483,7 @@ local methods = {
         tinsert(self.menu, {
             text = "Close",
             notCheckable = 1,
-            --func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
+            --func = MDT.main_frame.sidePanel.optionsDropDown:Hide()
             func = nil
         })
 
@@ -501,7 +494,7 @@ local methods = {
             text = "Insert before",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools.U.do_if(MethodDungeonTools:GetSelection(), {
+                MDT.U.do_if(MDT:GetSelection(), {
                     condition = function(entry)
                         return entry >= self.index
                     end,
@@ -509,13 +502,13 @@ local methods = {
                         t[key] = t[key] + 1
                     end
                 })
-                MethodDungeonTools:PresetsAddPull(self.index)
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:SetSelectionToPull(self.index)
-                --MethodDungeonTools:UpdateAutomaticColors(self.index)
-                MethodDungeonTools:ColorAllPulls(_, self.index)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                MDT:PresetsAddPull(self.index)
+                MDT:ReloadPullButtons()
+                MDT:SetSelectionToPull(self.index)
+                --MDT:UpdateAutomaticColors(self.index)
+                MDT:ColorAllPulls(_, self.index)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -524,7 +517,7 @@ local methods = {
             text = "Insert after",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools.U.do_if(MethodDungeonTools:GetSelection(), {
+                MDT.U.do_if(MDT:GetSelection(), {
                     condition = function(entry)
                         return entry > self.index
                     end,
@@ -532,13 +525,13 @@ local methods = {
                         t[key] = t[key] + 1
                     end
                 })
-                MethodDungeonTools:PresetsAddPull(self.index + 1)
-                MethodDungeonTools:ReloadPullButtons()
-				MethodDungeonTools:SetSelectionToPull(self.index + 1)
-                --MethodDungeonTools:UpdateAutomaticColors(self.index + 1)
-                MethodDungeonTools:ColorAllPulls(_, self.index+1)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                MDT:PresetsAddPull(self.index + 1)
+                MDT:ReloadPullButtons()
+				MDT:SetSelectionToPull(self.index + 1)
+                --MDT:UpdateAutomaticColors(self.index + 1)
+                MDT:ColorAllPulls(_, self.index+1)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -546,23 +539,23 @@ local methods = {
             text = "Merge",
             notCheckable = 1,
             func = function()
-                local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+                local selected_pulls = MDT.U.copy(MDT:GetSelection())
                 -- Assure, that the destination is always the last selected_pull, to copy it's options at last
-                MethodDungeonTools.U.iremove_if(selected_pulls, function(pullIdx)
+                MDT.U.iremove_if(selected_pulls, function(pullIdx)
                     return pullIdx == self.index
                 end)
 
-                if not MethodDungeonTools.U.contains(selected_pulls, self.index) then
+                if not MDT.U.contains(selected_pulls, self.index) then
                     tinsert(selected_pulls, self.index)
                 end
 
-                local newIndex = MethodDungeonTools:PresetsMergePulls(selected_pulls, self.index)
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:GetCurrentPreset().value.selection = { newIndex }
-                MethodDungeonTools:SetSelectionToPull(newIndex)
-                MethodDungeonTools:ColorAllPulls(_, newIndex)
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                local newIndex = MDT:PresetsMergePulls(selected_pulls, self.index)
+                MDT:ReloadPullButtons()
+                MDT:GetCurrentPreset().value.selection = { newIndex }
+                MDT:SetSelectionToPull(newIndex)
+                MDT:ColorAllPulls(_, newIndex)
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -576,56 +569,56 @@ local methods = {
             text = "Color Settings",
             notCheckable = 1,
             func = function()
-                MethodDungeonTools:OpenAutomaticColorsDialog()
+                MDT:OpenAutomaticColorsDialog()
             end
         })
         tinsert(self.multiselectMenu, {
             text = "Colorize Preset",
             notCheckable = 1,
             func = function()
-                local db = MethodDungeonTools:GetDB()
+                local db = MDT:GetDB()
                 if not db.colorPaletteInfo.autoColoring then
                     db.colorPaletteInfo.autoColoring = true
-                    MethodDungeonTools.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-                    MethodDungeonTools.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-                    MethodDungeonTools.main_frame.toggleForceColorBlindMode:SetDisabled(false)
+                    MDT.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
+                    MDT.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
+                    MDT.main_frame.toggleForceColorBlindMode:SetDisabled(false)
                 end
-                MethodDungeonTools:SetPresetColorPaletteInfo()
-                MethodDungeonTools:ColorAllPulls()
+                MDT:SetPresetColorPaletteInfo()
+                MDT:ColorAllPulls()
             end
         })
         local function swatchMultiFunc()
             local r,g,b = ColorPickerFrame:GetColorRGB()
-            local colorHex = MethodDungeonTools:RGBToHex(r,g,b)
+            local colorHex = MDT:RGBToHex(r,g,b)
             if colorHex == "228b22" then
                 r,g,b = 2*r,2*g,2*b
                 ColorPickerFrame:SetColorRGB(r,g,b)
             end
 
-            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                tinsert(MethodDungeonTools:GetSelection(), self.index)
+            if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                tinsert(MDT:GetSelection(), self.index)
                 self:Pick()
             end
 
-            for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-                MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-                MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+            for _, pullIdx in ipairs(MDT:GetSelection()) do
+                MDT:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+                MDT:UpdatePullButtonColor(pullIdx, r, g, b)
+                MDT:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
             end
 
             L_CloseDropDownMenus()
-            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                MDT:LiveSession_QueueColorUpdate()
             end
         end
         local function cancelMultiFunc()
-            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                tinsert(MethodDungeonTools:GetSelection(), self.index)
+            if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                tinsert(MDT:GetSelection(), self.index)
                 self:Pick()
             end
 
-            for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                local button = MethodDungeonTools:GetPullButton(pullIdx)
+            for _, pullIdx in ipairs(MDT:GetSelection()) do
+                local button = MDT:GetPullButton(pullIdx)
                 if button then
                     button:RevertColor()
                     local color = {
@@ -633,18 +626,18 @@ local methods = {
                         g = button.color.g,
                         b = button.color.b
                     }
-                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx, color.r, color.g, color.b)
-                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, color.r, color.g, color.b)
-                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx, color.r, color.g, color.b)
+                    MDT:DungeonEnemies_SetPullColor(pullIdx, color.r, color.g, color.b)
+                    MDT:UpdatePullButtonColor(pullIdx, color.r, color.g, color.b)
+                    MDT:DungeonEnemies_UpdateBlipColors(pullIdx, color.r, color.g, color.b)
                 end
             end
 
             self:RevertColor()
-            MethodDungeonTools:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
-            MethodDungeonTools:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
-            MethodDungeonTools:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
-            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                MethodDungeonTools:LiveSession_QueueColorUpdate()
+            MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
+            MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
+            MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                MDT:LiveSession_QueueColorUpdate()
             end
         end
         tinsert(self.multiselectMenu, {
@@ -674,19 +667,19 @@ local methods = {
             func = function()
                 local r,g,b = 34/255,139/255,34/255
 
-                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                    tinsert(MethodDungeonTools:GetSelection(), self.index)
+                if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                    tinsert(MDT:GetSelection(), self.index)
                     self:Pick()
                 end
 
-                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                    MethodDungeonTools:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
-                    MethodDungeonTools:UpdatePullButtonColor(pullIdx, r, g, b)
-                    MethodDungeonTools:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
+                for _, pullIdx in ipairs(MDT:GetSelection()) do
+                    MDT:DungeonEnemies_SetPullColor(pullIdx,r,g,b)
+                    MDT:UpdatePullButtonColor(pullIdx, r, g, b)
+                    MDT:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
                     L_CloseDropDownMenus()
                 end
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
@@ -702,23 +695,23 @@ local methods = {
             text = "Clear",
             notCheckable = 1,
             func = function()
-                if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                    tinsert(MethodDungeonTools:GetSelection(), self.index)
+                if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                    tinsert(MDT:GetSelection(), self.index)
                     self:Pick()
                 end
 
-                for _, pullIdx in ipairs(MethodDungeonTools:GetSelection()) do
-                    MethodDungeonTools:ClearPull(pullIdx)
+                for _, pullIdx in ipairs(MDT:GetSelection()) do
+                    MDT:ClearPull(pullIdx)
                 end
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
             end
         })
         tinsert(self.multiselectMenu, {
             text = "Reset Preset",
             notCheckable = 1,
-            func = function() MethodDungeonTools:OpenClearPresetDialog() end
+            func = function() MDT:OpenClearPresetDialog() end
         })
         if self.maxPulls > 1 then
             tinsert(self.multiselectMenu, {
@@ -726,9 +719,9 @@ local methods = {
                 notCheckable = 1,
                 func = function()
                     local addPull = false
-                    local button = MethodDungeonTools:GetFirstNotSelectedPullButton(self.index, "UP")
+                    local button = MDT:GetFirstNotSelectedPullButton(self.index, "UP")
                     if not button then
-                        button = MethodDungeonTools:GetFirstNotSelectedPullButton(self.index, "DOWN")
+                        button = MDT:GetFirstNotSelectedPullButton(self.index, "DOWN")
                         if not button then
                             addPull = true
                             button = 1
@@ -736,28 +729,28 @@ local methods = {
                     end
 
                     local removed_pulls = {}
-                    for _, pullIdx in pairs(MethodDungeonTools.GetSelection()) do
-                        local offset = MethodDungeonTools.U.count_if(removed_pulls, function(entry)
+                    for _, pullIdx in pairs(MDT.GetSelection()) do
+                        local offset = MDT.U.count_if(removed_pulls, function(entry)
                             return entry < pullIdx
                         end)
 
-                        MethodDungeonTools:DeletePull(pullIdx - offset)
+                        MDT:DeletePull(pullIdx - offset)
                         tinsert(removed_pulls, pullIdx)
                     end
 
-                    MethodDungeonTools.GetCurrentPreset().value.selection = {}
+                    MDT.GetCurrentPreset().value.selection = {}
 
                     if not addPull then
-                        local offset = MethodDungeonTools.U.count_if(removed_pulls, function(entry)
+                        local offset = MDT.U.count_if(removed_pulls, function(entry)
                             return entry < button
                         end)
-                        MethodDungeonTools:SetSelectionToPull(button - offset)
+                        MDT:SetSelectionToPull(button - offset)
                     else
-                        --MethodDungeonTools:AddPull(1) --we handle not deleting all pulls in MethodDungeonTools:DeletePull() instead
-                        MethodDungeonTools:SetSelectionToPull(1)
+                        --MDT:AddPull(1) --we handle not deleting all pulls in MDT:DeletePull() instead
+                        MDT:SetSelectionToPull(1)
                     end
-                    if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                        MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+                    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                        MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
                 end
             })
@@ -772,7 +765,7 @@ local methods = {
         tinsert(self.multiselectMenu, {
             text = "Close",
             notCheckable = 1,
-            func = MethodDungeonTools.main_frame.sidePanel.optionsDropDown:Hide()
+            func = MDT.main_frame.sidePanel.optionsDropDown:Hide()
         })
 
 
@@ -795,7 +788,7 @@ local methods = {
         self:InitializeScrollHover()
     end,
     ["InitializeScrollHover"] = function(self)
-        local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+        local scrollFrame = MDT.main_frame.sidePanel.pullButtonsScrollFrame
         local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
 
         self.scroll_hover = {
@@ -900,16 +893,16 @@ local methods = {
         if not self.updateFunction then
             self.updateFunction = function(frame, elapsed)
                 if self.entered and not self.dragging then
-                    MethodDungeonTools:UpdatePullTooltip(MethodDungeonTools.pullTooltip)
+                    MDT:UpdatePullTooltip(MDT.pullTooltip)
                 end
 
                 if self.dragging then
-                    if MethodDungeonTools.pullTooltip:IsShown() then
-                        MethodDungeonTools.pullTooltip:Hide()
+                    if MDT.pullTooltip:IsShown() then
+                        MDT.pullTooltip:Hide()
                     end
 
                     local scroll_hover = self.scroll_hover
-                    local scrollFrame = MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame
+                    local scrollFrame = MDT.main_frame.sidePanel.pullButtonsScrollFrame
                     local height = (scrollFrame.frame.height or scrollFrame.frame:GetHeight())
 
 
@@ -919,9 +912,9 @@ local methods = {
 
                         if self.top_hover > scroll_hover.timeout then
                             local scroll_speed = self:GetScrollSpeed(scrollFrame.frame, scroll_hover.top)
-                            local scroll_pulls = MethodDungeonTools.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
+                            local scroll_pulls = MDT.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
                             local scroll_pixel = scroll_pulls * self.frame:GetHeight()
-                            local scroll_amount = MethodDungeonTools:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
+                            local scroll_amount = MDT:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
 
                             local oldvalue = scrollFrame.localstatus.scrollvalue
                             local newvalue = oldvalue - scroll_amount
@@ -938,9 +931,9 @@ local methods = {
 
                         if self.bottom_hover > scroll_hover.timeout then
                             local scroll_speed = self:GetScrollSpeed(scrollFrame.frame, scroll_hover.bottom)
-                            local scroll_pulls = MethodDungeonTools.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
+                            local scroll_pulls = MDT.U.lerp(scroll_hover.pulls_per_second.min, scroll_hover.pulls_per_second.max, scroll_speed)
                             local scroll_pixel = scroll_pulls * self.frame:GetHeight()
-                            local scroll_amount = MethodDungeonTools:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
+                            local scroll_amount = MDT:GetScrollingAmount(scrollFrame, scroll_pixel) * scroll_hover.timeout
 
                             local oldvalue = scrollFrame.localstatus.scrollvalue
                             local newvalue = oldvalue + scroll_amount
@@ -967,7 +960,7 @@ local methods = {
                     if self.elapsed > 0.1 then
                         local button, pos = select(2, GetDropTarget())
                         --print("Updating", self.index)
-                        MethodDungeonTools:Show_DropIndicator(button, pos)
+                        MDT:Show_DropIndicator(button, pos)
                         self.elapsed = 0
                     end
                 end
@@ -977,25 +970,25 @@ local methods = {
         return self.updateFunction
     end,
     ["Drag"] = function(self)
-        local sidePanel = MethodDungeonTools.main_frame.sidePanel
+        local sidePanel = MDT.main_frame.sidePanel
         local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
         local x, w = self.frame:GetLeft(), self.frame:GetWidth()
         local _, y = GetCursorPosition()
 
-        MethodDungeonTools.pullTooltip:Hide()
+        MDT.pullTooltip:Hide()
 
-        if #MethodDungeonTools:GetSelection() > 1 then
-            if not MethodDungeonTools.U.contains(MethodDungeonTools:GetSelection(), self.index) then
-                for _, pullIdx in pairs(MethodDungeonTools:GetSelection()) do
+        if #MDT:GetSelection() > 1 then
+            if not MDT.U.contains(MDT:GetSelection(), self.index) then
+                for _, pullIdx in pairs(MDT:GetSelection()) do
                     sidePanel.newPullButtons[pullIdx]:ClearPick()
                 end
 
-                MethodDungeonTools:GetCurrentPreset().value.currentPull = self.index
-                MethodDungeonTools:GetCurrentPreset().value.selection = { self.index }
+                MDT:GetCurrentPreset().value.currentPull = self.index
+                MDT:GetCurrentPreset().value.selection = { self.index }
                 self:Pick()
             end
 
-            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+            local selected_pulls = MDT.U.copy(MDT:GetSelection())
             table.sort(selected_pulls)
 
             for _, pullIdx in ipairs(selected_pulls) do
@@ -1043,9 +1036,9 @@ local methods = {
             insertID = insertID + 1
         end
 
-        if #MethodDungeonTools:GetSelection() > 1 then
-            local sidePanel = MethodDungeonTools.main_frame.sidePanel
-            local selected_pulls = MethodDungeonTools.U.copy(MethodDungeonTools:GetSelection())
+        if #MDT:GetSelection() > 1 then
+            local sidePanel = MDT.main_frame.sidePanel
+            local selected_pulls = MDT.U.copy(MDT:GetSelection())
             local new_pulls = {}
             local progressed_pulls = {}
             table.sort(selected_pulls)
@@ -1062,7 +1055,7 @@ local methods = {
                 local pos = insertID + (offset - 1)
                 --print("pos", pos)
 
-                local progressed_above = MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
+                local progressed_above = MDT.U.count_if(progressed_pulls, function(entry)
                     return entry < pos
                 end)
                 --print("progressed above", progressed_above)
@@ -1073,7 +1066,7 @@ local methods = {
                 local correctPullIndex = pullIdx
                 --print("correctPullIndex", correctPullIndex)
                 if pos > correctPullIndex then
-                    correctPullIndex = correctPullIndex - MethodDungeonTools.U.count_if(progressed_pulls, function(entry)
+                    correctPullIndex = correctPullIndex - MDT.U.count_if(progressed_pulls, function(entry)
                         return entry < correctPullIndex
                     end)
                     --print("correctPullIndex", correctPullIndex)
@@ -1084,37 +1077,37 @@ local methods = {
                 end
                 --print("correctPullIndex", correctPullIndex)
 
-                MethodDungeonTools:PresetsAddPull(pos)
-                MethodDungeonTools:CopyPullOptions(correctPullIndex, pos)
-                local newID =  MethodDungeonTools:PresetsMergePulls(correctPullIndex, pos)
+                MDT:PresetsAddPull(pos)
+                MDT:CopyPullOptions(correctPullIndex, pos)
+                local newID =  MDT:PresetsMergePulls(correctPullIndex, pos)
                 --print("newID", newID)
 
                 tinsert(progressed_pulls, pullIdx)
                 tinsert(new_pulls, newID)
             end
 
-            MethodDungeonTools:GetCurrentPreset().value.selection = new_pulls
-            MethodDungeonTools:ReloadPullButtons()
-            MethodDungeonTools:SetSelectionToPull(1)
+            MDT:GetCurrentPreset().value.selection = new_pulls
+            MDT:ReloadPullButtons()
+            MDT:SetSelectionToPull(1)
         else
             local index = self.index
             if index > insertID then
                 index = index + 1
             end
 
-            MethodDungeonTools:PresetsAddPull(insertID)
-            MethodDungeonTools:CopyPullOptions(index, insertID)
-            local newIndex = MethodDungeonTools:PresetsMergePulls(index, insertID)
-            MethodDungeonTools:ReloadPullButtons()
-            MethodDungeonTools:SetSelectionToPull(newIndex)
+            MDT:PresetsAddPull(insertID)
+            MDT:CopyPullOptions(index, insertID)
+            local newIndex = MDT:PresetsMergePulls(index, insertID)
+            MDT:ReloadPullButtons()
+            MDT:SetSelectionToPull(newIndex)
 		end
 		
-		MethodDungeonTools:Hide_DropIndicator()
-		--MethodDungeonTools:UpdateAutomaticColors(math.min(self.index, insertID))
-        MethodDungeonTools:ColorAllPulls(_, math.min(self.index, insertID))
-        MethodDungeonTools.pullTooltip:Show()
-        if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-            MethodDungeonTools:LiveSession_SendPulls(MethodDungeonTools:GetPulls())
+		MDT:Hide_DropIndicator()
+		--MDT:UpdateAutomaticColors(math.min(self.index, insertID))
+        MDT:ColorAllPulls(_, math.min(self.index, insertID))
+        MDT.pullTooltip:Show()
+        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
     end,
     ["Disable"] = function(self)
@@ -1142,7 +1135,7 @@ local methods = {
     ["SetIndex"] = function(self, index)
         self.index = index
         --set custom pull color
-        self.color.r,self.color.g,self.color.b = MethodDungeonTools:DungeonEnemies_GetPullColor(self.index)
+        self.color.r,self.color.g,self.color.b = MDT:DungeonEnemies_GetPullColor(self.index)
         self:UpdateColor()
     end,
     ["SetMaxPulls"] = function(self, maxPulls)
@@ -1201,7 +1194,7 @@ local methods = {
             self.multiReapingFontString:Hide()
             perc = "|cFFFFFFFF"..perc
         end
-        local pullForces = MethodDungeonTools:CountForces(self.index,true)
+        local pullForces = MDT:CountForces(self.index,true)
         if pullForces>0 then
             self.percentageFontString:SetText(perc)
             self.percentageFontString:Show()
@@ -1210,8 +1203,8 @@ local methods = {
         end
     end,
     ["UpdateColor"] = function(self)
-        local colorHex = MethodDungeonTools:RGBToHex(self.color.r,self.color.g,self.color.b)
-        local db = MethodDungeonTools:GetDB()
+        local colorHex = MDT:RGBToHex(self.color.r,self.color.g,self.color.b)
+        local db = MDT:GetDB()
         if colorHex == db.defaultColor then
             self.background:SetVertexColor(0.5,0.5,0.5,0.25)
             self.frame.pickedGlow:SetVertexColor(1,0.85,0,1)
@@ -1239,7 +1232,7 @@ local methods = {
 }
 --Constructor
 local function Constructor()
-    local name = "MethodDungeonToolsPullButton"..AceGUI:GetNextWidgetNum(Type);
+    local name = "MDTPullButton"..AceGUI:GetNextWidgetNum(Type);
     local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
     button:SetHeight(height);
     button:SetWidth(width);
@@ -1259,7 +1252,7 @@ local function Constructor()
     local pickedGlow = button:CreateTexture(nil, "OVERLAY")
     button.pickedGlow = pickedGlow
     --["heartofazeroth-list-item-selected"] = {356, 82, 0.779297, 0.953125, 0.653809, 0.693848, false, false},
-    pickedGlow:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\HeartOfAzerothSelection")
+    pickedGlow:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\HeartOfAzerothSelection")
     pickedGlow:SetTexCoord(0, 0.697265625, 0, 0.625)
     pickedGlow:SetAllPoints(button)
     pickedGlow:Hide()
@@ -1291,7 +1284,7 @@ local function Constructor()
         end
         enemyPortraits[i]:Hide()
         enemyPortraits[i].overlay = button:CreateTexture(nil, "BACKGROUND", nil, 1)
-        enemyPortraits[i].overlay:SetTexture("Interface\\Addons\\MethodDungeonTools\\Textures\\Circle_White")
+        enemyPortraits[i].overlay:SetTexture("Interface\\Addons\\MythicDungeonTools\\Textures\\Circle_White")
         enemyPortraits[i].overlay:SetVertexColor(0.7,0.7,0.7)
         enemyPortraits[i].overlay:SetPoint("CENTER",enemyPortraits[i],"CENTER")
         enemyPortraits[i].overlay:SetSize(portraitSize+3,portraitSize+3)
@@ -1315,7 +1308,7 @@ local function Constructor()
     SetPortraitToTexture(reapingIcon,"Interface\\Icons\\ability_racial_embraceoftheloa_bwonsomdi")
     reapingIcon:Hide()
     reapingIcon.overlay = button:CreateTexture(nil, "BACKGROUND", nil, 1)
-    reapingIcon.overlay:SetTexture("Interface\\Addons\\MethodDungeonTools\\Textures\\Circle_White")
+    reapingIcon.overlay:SetTexture("Interface\\Addons\\MythicDungeonTools\\Textures\\Circle_White")
     reapingIcon.overlay:SetVertexColor(0.7,0.7,0.7)
     reapingIcon.overlay:SetPoint("CENTER",reapingIcon,"CENTER")
     reapingIcon.overlay:SetSize(height+1,height+1)
@@ -1323,7 +1316,7 @@ local function Constructor()
 
     --pull percentage
     local percentageFontString = button:CreateFontString(nil,"BACKGROUND",nil)
-    percentageFontString:SetFont(MethodDungeonTools.tooltip.String:GetFont(),12)
+    percentageFontString:SetFont(MDT.tooltip.String:GetFont(),12)
     percentageFontString:SetTextColor(1, 1, 1, 1);
     percentageFontString:SetWidth(50)
     percentageFontString:SetHeight(10)

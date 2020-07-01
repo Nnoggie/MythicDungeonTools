@@ -1,5 +1,6 @@
+local MDT = MDT
 local dungeonIndex = 19
-MethodDungeonTools.mapInfo[dungeonIndex] = {
+MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
         [2] = {
@@ -9,14 +10,14 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
         };
     };
 };
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 
 
 local selectorGroup
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local function fixBoralusShowHide(widget, frame, isFrame)
-    frame = frame or MethodDungeonTools.main_frame
+    frame = frame or MDT.main_frame
     local originalShow,originalHide = frame.Show,frame.Hide
     if not isFrame then
         widget = widget.frame
@@ -33,21 +34,21 @@ local function fixBoralusShowHide(widget, frame, isFrame)
     end
 end
 
-function MethodDungeonTools:ToggleBoralusSelector(show)
-    db = MethodDungeonTools:GetDB()
+function MDT:ToggleBoralusSelector(show)
+    db = MDT:GetDB()
     if not selectorGroup then
         selectorGroup = AceGUI:Create("SimpleGroup")
         selectorGroup.frame:SetFrameStrata("HIGH")
         selectorGroup.frame:SetFrameLevel(50)
-        selectorGroup.frame:SetBackdropColor(unpack(MethodDungeonTools.BackdropColor))
+        selectorGroup.frame:SetBackdropColor(unpack(MDT.BackdropColor))
         fixBoralusShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")
         selectorGroup.frame.bg = selectorGroup.frame:CreateTexture(nil, "BACKGROUND")
         selectorGroup.frame.bg:SetAllPoints(selectorGroup.frame)
-        selectorGroup.frame.bg:SetColorTexture(unpack(MethodDungeonTools.BackdropColor))
+        selectorGroup.frame.bg:SetColorTexture(unpack(MDT.BackdropColor))
         selectorGroup:SetWidth(120)
         selectorGroup:SetHeight(120)
-        selectorGroup.frame:SetPoint("TOPRIGHT",MethodDungeonTools.main_frame,"TOPRIGHT",0,0)
+        selectorGroup.frame:SetPoint("TOPRIGHT", MDT.main_frame,"TOPRIGHT",0,0)
 
         local label = AceGUI:Create("Label")
         label:SetText("  Faction:")
@@ -62,13 +63,13 @@ function MethodDungeonTools:ToggleBoralusSelector(show)
         selectorGroup:AddChild(check1)
         check1:SetCallback("OnValueChanged",function(widget,callbackName,value)
             if value then
-                MethodDungeonTools:GetCurrentPreset().faction = 1
-                MethodDungeonTools:UpdateBoralusSelector()
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:UpdateProgressbar()
+                MDT:GetCurrentPreset().faction = 1
+                MDT:UpdateBoralusSelector()
+                MDT:ReloadPullButtons()
+                MDT:UpdateProgressbar()
             end
-            if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                MethodDungeonTools:LiveSession_SendBoralusSelector(1)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                MDT:LiveSession_SendBoralusSelector(1)
             end
             check1:SetValue(true)
         end)
@@ -77,12 +78,12 @@ function MethodDungeonTools:ToggleBoralusSelector(show)
         selectorGroup:AddChild(check2)
         check2:SetCallback("OnValueChanged",function(widget,callbackName,value)
             if value then
-                MethodDungeonTools:GetCurrentPreset().faction = 2
-                MethodDungeonTools:UpdateBoralusSelector()
-                MethodDungeonTools:ReloadPullButtons()
-                MethodDungeonTools:UpdateProgressbar()
-                if MethodDungeonTools.liveSessionActive and MethodDungeonTools:GetCurrentPreset().uid == MethodDungeonTools.livePresetUID then
-                    MethodDungeonTools:LiveSession_SendBoralusSelector(2)
+                MDT:GetCurrentPreset().faction = 2
+                MDT:UpdateBoralusSelector()
+                MDT:ReloadPullButtons()
+                MDT:UpdateProgressbar()
+                if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+                    MDT:LiveSession_SendBoralusSelector(2)
                 end
             end
             check2:SetValue(true)
@@ -91,20 +92,20 @@ function MethodDungeonTools:ToggleBoralusSelector(show)
     end
     if show then
         selectorGroup.frame:Show()
-        MethodDungeonTools:UpdateBoralusSelector()
+        MDT:UpdateBoralusSelector()
     else
         selectorGroup.frame:Hide()
     end
 end
 
-function MethodDungeonTools:UpdateBoralusSelector()
-    selectorGroup.check1:SetValue(MethodDungeonTools:GetCurrentPreset().faction==1)
-    selectorGroup.check2:SetValue(MethodDungeonTools:GetCurrentPreset().faction==2)
-    MethodDungeonTools:DungeonEnemies_UpdateSeasonalAffix()
-    MethodDungeonTools:DungeonEnemies_UpdateBoralusFaction(MethodDungeonTools:GetCurrentPreset().faction)
+function MDT:UpdateBoralusSelector()
+    selectorGroup.check1:SetValue(MDT:GetCurrentPreset().faction==1)
+    selectorGroup.check2:SetValue(MDT:GetCurrentPreset().faction==2)
+    MDT:DungeonEnemies_UpdateSeasonalAffix()
+    MDT:DungeonEnemies_UpdateBoralusFaction(MDT:GetCurrentPreset().faction)
 end
 
-MethodDungeonTools.mapPOIs[dungeonIndex] = {
+MDT.mapPOIs[dungeonIndex] = {
     [1] = {
         [1] = {
             ["y"] = -112.09388221952;
@@ -303,7 +304,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
             [1] = {

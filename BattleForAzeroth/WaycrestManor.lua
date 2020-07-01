@@ -1,5 +1,5 @@
 local dungeonIndex = 24
-MethodDungeonTools.mapInfo[dungeonIndex] = {
+MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
         [4] = {
@@ -9,9 +9,9 @@ MethodDungeonTools.mapInfo[dungeonIndex] = {
         };
     };
 };
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=363,teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=363,teemingEnabled=true}
 
-MethodDungeonTools.mapPOIs[dungeonIndex] = {
+MDT.mapPOIs[dungeonIndex] = {
     [2] = {
         [2] = {
             ["y"] = -325.99821539596;
@@ -342,7 +342,7 @@ G52 will not be present while the Worldquest to defeat Matron Christiane is acti
     };
 };
 
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
     [27] = {
         ["clones"] = {
             [6] = {

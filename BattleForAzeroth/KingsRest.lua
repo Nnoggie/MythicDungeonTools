@@ -1,7 +1,7 @@
 local dungeonIndex = 17
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=246,teeming=286,teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal=246,teeming=286,teemingEnabled=true}
 
-MethodDungeonTools.mapPOIs[dungeonIndex] = {
+MDT.mapPOIs[dungeonIndex] = {
     [1] = {
         [1] = {
             ["y"] = -264.6777671764;
@@ -155,7 +155,7 @@ MethodDungeonTools.mapPOIs[dungeonIndex] = {
     };
 };
 
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
             [1] = {
