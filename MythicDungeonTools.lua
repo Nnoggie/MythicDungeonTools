@@ -1,6 +1,6 @@
 -- Made by Nnoggie, 2017-2020
 local AddonName, MDT = ...
-
+local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 
@@ -37,8 +37,8 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 	OnTooltipShow = function(tooltip)
 		if not tooltip or not tooltip.AddLine then return end
 		tooltip:AddLine(mythicColor .."Mythic Dungeon Tools|r")
-		tooltip:AddLine("Click to toggle AddOn Window")
-		tooltip:AddLine("Right-click to lock Minimap Button")
+		tooltip:AddLine(L["Click to toggle AddOn Window"])
+		tooltip:AddLine(L["Right-click to lock Minimap Button"])
 	end,
 })
 
@@ -196,10 +196,10 @@ do
             if inGroup then
                 MDT.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
                 if MDT.liveSessionActive then
-                    MDT.main_frame.LiveSessionButton:SetText("*Live*")
+                    MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
                     MDT.main_frame.LiveSessionButton.text:SetTextColor(0,1,0)
                 else
-                    MDT.main_frame.LiveSessionButton:SetText("Live")
+                    MDT.main_frame.LiveSessionButton:SetText(L["Live"])
                     MDT.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
                 end
             else
@@ -237,7 +237,7 @@ local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 }
 
 local dungeonList = {
-    [1] = "Black Rook Hold",
+    [1] = L["Black Rook Hold"],
     [2] = "Cathedral of Eternal Night",
     [3] = "Court of Stars",
     [4] = "Darkheart Thicket",
