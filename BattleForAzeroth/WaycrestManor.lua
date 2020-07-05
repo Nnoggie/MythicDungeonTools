@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 24
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
@@ -93,7 +95,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["index"] = 4;
             ["y"] = -238.65172222572;
             ["x"] = 281.12578125066;
-            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
             ["weeks"] = {
                 [1] = true;
                 [2] = true;
@@ -139,7 +141,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [4] = true;
             };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
             ["x"] = 525.49012491489;
             ["y"] = -163.8578300295;
         };
@@ -205,7 +207,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [9] = true;
             };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
             ["x"] = 438.40085840363;
             ["y"] = -373.90230398764;
         };
@@ -237,7 +239,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [11] = true;
             };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
             ["x"] = 430.07379283969;
             ["y"] = -229.57913406072;
         };
@@ -279,7 +281,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [4] = true;
             };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
             ["x"] = 437.87264110669;
             ["y"] = -375.26126277334;
         };
@@ -296,7 +298,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [9] = true;
             };
             ["template"] = "VignettePinTemplate";
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
             ["x"] = 522.35372080092;
             ["y"] = -163.12285571347;
         };

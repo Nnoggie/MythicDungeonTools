@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 22
 MDT.mapInfo[dungeonIndex] = {
    viewportPositionOverrides =
@@ -18,7 +20,7 @@ MDT.mapPOIs[dungeonIndex] = {
          ["index"] = 3;
          ["y"] = -224.08700914697;
          ["x"] = 388.05381306055;
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -66,7 +68,7 @@ Only one of them will be present at a time.";
          ["index"] = 3;
          ["y"] = -259.17035648262;
          ["x"] = 633.47460185582;
-         ["tooltipText"] = "Brutal Spire of Ny'alotha";
+         ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -89,7 +91,7 @@ Only one of them will be present at a time.";
          ["index"] = 4;
          ["y"] = -86.857596613134;
          ["x"] = 476.43070789296;
-         ["tooltipText"] = "Cursed Spire of Ny'alotha";
+         ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
@@ -128,7 +130,7 @@ Only one of them will be present at a time.";
          ["index"] = 5;
          ["y"] = -424.66002059941;
          ["x"] = 420.66398356862;
-         ["tooltipText"] = "Entropic Spire of Ny'alotha";
+         ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
          ["weeks"] = {
             [11] = true;
             [7] = true;
@@ -145,7 +147,7 @@ Only one of them will be present at a time.";
          ["index"] = 6;
          ["y"] = -224.46022867992;
          ["x"] = 387.98452582283;
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
          ["weeks"] = {
             [11] = true;
             [7] = true;
@@ -162,7 +164,7 @@ Only one of them will be present at a time.";
          ["index"] = 1;
          ["y"] = -424.36083618939;
          ["x"] = 420.96318081863;
-         ["tooltipText"] = "Defiled Spire of Ny'alotha";
+         ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
          ["weeks"] = {
             [1] = true;
             [2] = true;
