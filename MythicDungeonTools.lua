@@ -4,7 +4,6 @@ local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 
-_G["MDT"] = MDT
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
 local SetPortraitTextureFromCreatureDisplayID,MouseIsOver = SetPortraitTextureFromCreatureDisplayID,MouseIsOver
@@ -45,6 +44,10 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
 SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
 SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
+
+BINDING_NAME_MDTTOGGLE = L["Toggle Window"]
+BINDING_NAME_MDTNPC = L["New NPC at Cursor Position"]
+BINDING_NAME_MDTWAYPOINT = L["New Patrol Waypoint at Cursor Position"]
 
 function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
 	local rqst, arg = strsplit(' ', cmd)
@@ -238,159 +241,159 @@ local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 
 local dungeonList = {
     [1] = L["Black Rook Hold"],
-    [2] = "Cathedral of Eternal Night",
-    [3] = "Court of Stars",
-    [4] = "Darkheart Thicket",
-    [5] = "Eye of Azshara",
-    [6] = "Halls of Valor",
-    [7] = "Maw of Souls",
-    [8] = "Neltharion's Lair",
-    [9] = "Return to Karazhan Lower",
-    [10] = "Return to Karazhan Upper",
-    [11] = "Seat of the Triumvirate",
-    [12] = "The Arcway",
-    [13] = "Vault of the Wardens",
-    [14] = " >Battle for Azeroth",
-    [15] = "Atal'Dazar",
-    [16] = "Freehold",
-    [17] = "Kings' Rest",
-    [18] = "Shrine of the Storm",
-    [19] = "Siege of Boralus",
-    [20] = "Temple of Sethraliss",
-    [21] = "The MOTHERLODE!!",
-    [22] = "The Underrot",
-    [23] = "Tol Dagor",
-    [24] = "Waycrest Manor",
-    [25] = "Mechagon - Junkyard",
-    [26] = "Mechagon - Workshop",
-    [27] = " >Legion",
+    [2] = L["Cathedral of Eternal Night"],
+    [3] = L["Court of Stars"],
+    [4] = L["Darkheart Thicket"],
+    [5] = L["Eye of Azshara"],
+    [6] = L["Halls of Valor"],
+    [7] = L["Maw of Souls"],
+    [8] = L["Neltharion's Lair"],
+    [9] = L["Return to Karazhan Lower"],
+    [10] = L["Return to Karazhan Upper"],
+    [11] = L["Seat of the Triumvirate"],
+    [12] = L["The Arcway"],
+    [13] = L["Vault of the Wardens"],
+    [14] = L[" >Battle for Azeroth"],
+    [15] = L["Atal'Dazar"],
+    [16] = L["Freehold"],
+    [17] = L["Kings' Rest"],
+    [18] = L["Shrine of the Storm"],
+    [19] = L["Siege of Boralus"],
+    [20] = L["Temple of Sethraliss"],
+    [21] = L["The MOTHERLODE!!"],
+    [22] = L["The Underrot"],
+    [23] = L["Tol Dagor"],
+    [24] = L["Waycrest Manor"],
+    [25] = L["Mechagon - Junkyard"],
+    [26] = L["Mechagon - Workshop"],
+    [27] = L[" >Legion"],
 }
 function MDT:GetNumDungeons() return #dungeonList-1 end
 function MDT:GetDungeonName(idx) return dungeonList[idx] end
 
 local dungeonSubLevels = {
     [1] = {
-        [1] = "The Ravenscrypt",
-        [2] = "The Grand Hall",
-        [3] = "Ravenshold",
-        [4] = "The Rook's Host",
-        [5] = "Lord Ravencrest's Chamber",
-        [6] = "The Raven's Crown",
+        [1] = L["The Ravenscrypt"],
+        [2] = L["The Grand Hall"],
+        [3] = L["Ravenshold"],
+        [4] = L["The Rook's Host"],
+        [5] = L["Lord Ravencrest's Chamber"],
+        [6] = L["The Raven's Crown"],
     },
     [2] = {
-        [1] = "Hall of the Moon",
-        [2] = "Twilight Grove",
-        [3] = "The Emerald Archives",
-        [4] = "Path of Illumination",
-        [5] = "Sacristy of Elune",
+        [1] = L["Hall of the Moon"],
+        [2] = L["Twilight Grove"],
+        [3] = L["The Emerald Archives"],
+        [4] = L["Path of Illumination"],
+        [5] = L["Sacristy of Elune"],
     },
     [3] = {
-        [1] = "Court of Stars",
-        [2] = "The Jeweled Estate",
-        [3] = "The Balconies",
+        [1] = L["Court of Stars Sublevel"],
+        [2] = L["The Jeweled Estate"],
+        [3] = L["The Balconies"],
     },
     [4] = {
-        [1] = "Darkheart Thicket",
+        [1] = L["Darkheart Thicket Sublevel"],
     },
     [5] = {
-        [1] = "Eye of Azshara",
+        [1] = L["Eye of Azshara Sublevel"],
     },
     [6] = {
-        [1] = "The High Gate",
-        [2] = "Field of the Eternal Hunt",
-        [3] = "Halls of Valor",
+        [1] = L["The High Gate"],
+        [2] = L["Field of the Eternal Hunt"],
+        [3] = L["Halls of Valor Sublevel"],
     },
     [7] = {
-        [1] = "Helmouth Cliffs",
-        [2] = "The Hold",
-        [3] = "The Naglfar",
+        [1] = L["Helmouth Cliffs"],
+        [2] = L["The Hold"],
+        [3] = L["The Naglfar"],
     },
     [8] = {
-        [1] = "Neltharion's Lair",
+        [1] = L["Neltharion's Lair Sublevel"],
     },
     [9] = {
-        [1] = "Master's Terrace",
-        [2] = "Opera Hall Balcony",
-        [3] = "The Guest Chambers",
-        [4] = "The Banquet Hall",
-        [5] = "Upper Livery Stables",
-        [6] = "The Servant's Quarters",
+        [1] = L["Master's Terrace"],
+        [2] = L["Opera Hall Balcony"],
+        [3] = L["The Guest Chambers"],
+        [4] = L["The Banquet Hall"],
+        [5] = L["Upper Livery Stables"],
+        [6] = L["The Servant's Quarters"],
     },
     [10] = {
-        [1] = "Lower Broken Stair",
-        [2] = "Upper Broken Stair",
-        [3] = "The Menagerie",
-        [4] = "Guardian's Library",
-        [5] = "Library Floor",
-        [6] = "Upper Library",
-        [7] = "Gamesman's Hall",
-        [8] = "Netherspace",
+        [1] = L["Lower Broken Stair"],
+        [2] = L["Upper Broken Stair"],
+        [3] = L["The Menagerie"],
+        [4] = L["Guardian's Library"],
+        [5] = L["Library Floor"],
+        [6] = L["Upper Library"],
+        [7] = L["Gamesman's Hall"],
+        [8] = L["Netherspace"],
     },
     [11] = {
-        [1] = "Seat of the Triumvirate",
+        [1] = L["Seat of the Triumvirate Sublevel"],
     },
     [12] = {
-        [1] = "The Arcway",
+        [1] = L["The Arcway Sublevel"],
     },
     [13] = {
-        [1] = "The Warden's Court",
-        [2] = "Vault of the Wardens",
-        [3] = "Vault of the Betrayer",
+        [1] = L["The Warden's Court"],
+        [2] = L["Vault of the Wardens Sublevel"],
+        [3] = L["Vault of the Betrayer"],
     },
     [15] = {
-        [1] = "Atal'Dazar",
-        [2] = "Sacrificial Pits",
+        [1] = L["Atal'Dazar Sublevel"],
+        [2] = L["Sacrificial Pits"],
     },
     [16] = {
-        [1] = "Freehold",
+        [1] = L["Freehold Sublevel"],
     },
     [17] = {
-        [1] = "Kings' Rest",
+        [1] = L["Kings' Rest Sublevel"],
     },
     [18] = {
-        [1] = "Shrine of the Storm",
-        [2] = "Storm's End",
+        [1] = L["Shrine of the Storm Sublevel"],
+        [2] = L["Storm's End"],
     },
     [19] = {
-        [1] = "Siege of Boralus",
-        [2] = "Siege of Boralus (Upstairs)",
+        [1] = L["Siege of Boralus Sublevel"],
+        [2] = L["Siege of Boralus (Upstairs)"],
     },
     [20] = {
-        [1] = "Temple of Sethraliss",
-        [2] = "Atrium of Sethraliss",
+        [1] = L["Temple of Sethraliss Sublevel"],
+        [2] = L["Atrium of Sethraliss"],
     },
     [21] = {
-        [1] = "The MOTHERLODE!!",
+        [1] = L["The MOTHERLODE!! Sublevel"],
     },
     [22] = {
-        [1] = "The Underrot",
-        [2] = "Ruin's Descent",
+        [1] = L["The Underrot Sublevel"],
+        [2] = L["Ruin's Descent"],
     },
     [23] = {
-        [1] = "Tol Dagor",
-        [2] = "The Drain",
-        [3] = "The Brig",
-        [4] = "Detention Block",
-        [5] = "Officer Quarters",
-        [6] = "Overseer's Redoubt",
-        [7] = "Overseer's Summit",
+        [1] = L["Tol Dagor Sublevel5"],
+        [2] = L["The Drain"],
+        [3] = L["The Brig"],
+        [4] = L["Detention Block"],
+        [5] = L["Officer Quarters"],
+        [6] = L["Overseer's Redoubt"],
+        [7] = L["Overseer's Summit"],
     },
     [24] = {
-        [1] = "The Grand Foyer",
-        [2] = "Upstairs",
-        [3] = "The Cellar",
-        [4] = "Catacombs",
-        [5] = "The Rupture",
+        [1] = L["The Grand Foyer"],
+        [2] = L["Upstairs"],
+        [3] = L["The Cellar"],
+        [4] = L["Catacombs"],
+        [5] = L["The Rupture"],
     },
     [25] = {
-        [1] = "Mechagon Island",
-        [2] = "Mechagon Island (Tunnels)",
+        [1] = L["Mechagon Island"],
+        [2] = L["Mechagon Island (Tunnels)"],
     },
     [26] = {
-        [1] = "The Robodrome",
-        [2] = "Waste Pipes",
-        [3] = "The Under Junk",
-        [4] = "Mechagon City",
+        [1] = L["The Robodrome"],
+        [2] = L["Waste Pipes"],
+        [3] = L["The Under Junk"],
+        [4] = L["Mechagon City"],
     },
 }
 function MDT:GetDungeonSublevels()
@@ -634,7 +637,7 @@ function MDT:CreateMenu()
     liveReturnButton.Icon:SetPoint("CENTER",liveReturnButton,"CENTER")
     liveReturnButton:SetScript("OnClick", function() self:ReturnToLivePreset() end)
     liveReturnButton:SetFrameLevel(4)
-    liveReturnButton.tooltip = "Return to the live preset"
+    liveReturnButton.tooltip = L["Return to the live preset"]
 
     --set preset as new live preset
     self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "BrowserButtonTemplate")
@@ -647,7 +650,7 @@ function MDT:CreateMenu()
     setLivePresetButton.Icon:SetPoint("CENTER",setLivePresetButton,"CENTER")
     setLivePresetButton:SetScript("OnClick", function() self:SetLivePreset() end)
     setLivePresetButton:SetFrameLevel(4)
-    setLivePresetButton.tooltip = "Make this preset the live preset"
+    setLivePresetButton.tooltip = L["Make this preset the live preset"]
 
     self:SkinMenuButtons()
 
@@ -923,22 +926,22 @@ function MDT:IsFrameOffScreen()
 end
 
 local bottomTips = {
-    [1] = "Please report any bugs on https://github.com/Nnoggie/MythicDungeonTools/issues",
-    [2] = "Hold CTRL to single-select enemies.",
-    [3] = "Hold SHIFT to create a new pull while selecting enemies.",
-    [4] = "Hold SHIFT to delete all presets with the delete preset button.",
-    [5] = "Right click a pull for more options.",
-    [6] = "Right click an enemy to open the enemy info window.",
-    [7] = "Drag the bottom right edge to resize MDT.",
-    [8] = "Click the fullscreen button for a maximized view of MDT.",
-    [9] = "Use /mdt reset to restore the default position and scale of MDT.",
-    [10] = "Mouseover the Live button while in a group to learn more about Live mode.",
-    [11] = "You are using MDT. You rock!",
-    [12] = "You can choose from different color palettes in the automatic pull coloring settings menu.",
-    [13] = "You can cycle through different floors by holding CTRL and using the mousewheel.",
-    [14] = "You can cycle through dungeons by holding ALT and using the mousewheel.",
-    [15] = "Mouseover a patrolling enemy with a blue border to view the patrol path.",
-    [16] = "Expand the top toolbar to gain access to drawing and note features.",
+    [1] = L["Please report any bugs on https://github.com/Nnoggie/MythicDungeonTools/issues"],
+    [2] = L["Hold CTRL to single-select enemies."],
+    [3] = L["Hold SHIFT to create a new pull while selecting enemies."],
+    [4] = L["Hold SHIFT to delete all presets with the delete preset button."],
+    [5] = L["Right click a pull for more options."],
+    [6] = L["Right click an enemy to open the enemy info window."],
+    [7] = L["Drag the bottom right edge to resize MDT."],
+    [8] = L["Click the fullscreen button for a maximized view of MDT."],
+    [9] = L["Use /mdt reset to restore the default position and scale of MDT."],
+    [10] = L["Mouseover the Live button while in a group to learn more about Live mode."],
+    [11] = L["You are using MDT. You rock!"],
+    [12] = L["You can choose from different color palettes in the automatic pull coloring settings menu."],
+    [13] = L["You can cycle through different floors by holding CTRL and using the mousewheel."],
+    [14] = L["You can cycle through dungeons by holding ALT and using the mousewheel."],
+    [15] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
+    [16] = L["Expand the top toolbar to gain access to drawing and note features."],
 }
 
 function MDT:UpdateBottomText()
@@ -1132,7 +1135,7 @@ function MDT:MakeSidePanel(frame)
 	---new profile,rename,export,delete
 	local buttonWidth = 80
 	frame.sidePanelNewButton = AceGUI:Create("Button")
-	frame.sidePanelNewButton:SetText("New")
+	frame.sidePanelNewButton:SetText(L["New"])
 	frame.sidePanelNewButton:SetWidth(buttonWidth)
 	--button fontInstance
 	local fontInstance = CreateFont("MDTButtonFont")
@@ -1147,7 +1150,7 @@ function MDT:MakeSidePanel(frame)
 	end)
     frame.sidePanelNewButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanelNewButton.frame, "ANCHOR_BOTTOMLEFT",frame.sidePanelNewButton.frame:GetWidth()*(-0),frame.sidePanelNewButton.frame:GetHeight())
-        GameTooltip:AddLine("Create a new preset",1,1,1)
+        GameTooltip:AddLine(L["Create a new preset"],1,1,1)
         GameTooltip:Show()
     end)
     frame.sidePanelNewButton.frame:SetScript("OnLeave",function()
@@ -1156,7 +1159,7 @@ function MDT:MakeSidePanel(frame)
 
 	frame.sidePanelRenameButton = AceGUI:Create("Button")
 	frame.sidePanelRenameButton:SetWidth(buttonWidth)
-	frame.sidePanelRenameButton:SetText("Rename")
+	frame.sidePanelRenameButton:SetText(L["Rename"])
 	frame.sidePanelRenameButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelRenameButton.frame:SetHighlightFontObject(fontInstance)
 	frame.sidePanelRenameButton.frame:SetDisabledFontObject(fontInstance)
@@ -1174,7 +1177,7 @@ function MDT:MakeSidePanel(frame)
 	end)
     frame.sidePanelRenameButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanelRenameButton.frame, "ANCHOR_BOTTOMLEFT",frame.sidePanelRenameButton.frame:GetWidth()*(-1),frame.sidePanelRenameButton.frame:GetHeight())
-        GameTooltip:AddLine("Rename the preset",1,1,1)
+        GameTooltip:AddLine(L["Rename the preset"],1,1,1)
         GameTooltip:Show()
     end)
     frame.sidePanelRenameButton.frame:SetScript("OnLeave",function()
@@ -1182,7 +1185,7 @@ function MDT:MakeSidePanel(frame)
     end)
 
 	frame.sidePanelImportButton = AceGUI:Create("Button")
-	frame.sidePanelImportButton:SetText("Import")
+	frame.sidePanelImportButton:SetText(L["Import"])
 	frame.sidePanelImportButton:SetWidth(buttonWidth)
 	frame.sidePanelImportButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelImportButton.frame:SetHighlightFontObject(fontInstance)
@@ -1192,8 +1195,8 @@ function MDT:MakeSidePanel(frame)
 	end)
     frame.sidePanelImportButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanelImportButton.frame, "ANCHOR_BOTTOMLEFT",frame.sidePanelImportButton.frame:GetWidth()*(-1),frame.sidePanelImportButton.frame:GetHeight())
-        GameTooltip:AddLine("Import a preset from a text string",1,1,1)
-        GameTooltip:AddLine("You can find MDT exports from other users on the wago.io website",1,1,1,1)
+        GameTooltip:AddLine(L["Import a preset from a text string"],1,1,1)
+        GameTooltip:AddLine(L["You can find MDT exports from other users on the wago.io website"],1,1,1,1)
         GameTooltip:Show()
     end)
     frame.sidePanelImportButton.frame:SetScript("OnLeave",function()
@@ -1201,7 +1204,7 @@ function MDT:MakeSidePanel(frame)
     end)
 
 	frame.sidePanelExportButton = AceGUI:Create("Button")
-	frame.sidePanelExportButton:SetText("Export")
+	frame.sidePanelExportButton:SetText(L["Export"])
 	frame.sidePanelExportButton:SetWidth(buttonWidth)
 	frame.sidePanelExportButton.frame:SetNormalFontObject(fontInstance)
 	frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
@@ -1225,8 +1228,8 @@ function MDT:MakeSidePanel(frame)
     end)
     frame.sidePanelExportButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanelExportButton.frame, "ANCHOR_BOTTOMLEFT",frame.sidePanelExportButton.frame:GetWidth()*(-2),frame.sidePanelExportButton.frame:GetHeight())
-        GameTooltip:AddLine("Export the preset as a text string",1,1,1)
-        GameTooltip:AddLine("You can share MDT exports on the wago.io website",1,1,1,1)
+        GameTooltip:AddLine(L["Export the preset as a text string"],1,1,1)
+        GameTooltip:AddLine(L["You can share MDT exports on the wago.io website"],1,1,1,1)
         GameTooltip:Show()
     end)
     frame.sidePanelExportButton.frame:SetScript("OnLeave",function()
@@ -1234,12 +1237,12 @@ function MDT:MakeSidePanel(frame)
     end)
 
 	frame.sidePanelDeleteButton = AceGUI:Create("Button")
-	frame.sidePanelDeleteButton:SetText("Delete")
+	frame.sidePanelDeleteButton:SetText(L["Delete"])
 	frame.sidePanelDeleteButton:SetWidth(buttonWidth)
 	frame.sidePanelDeleteButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanelDeleteButton.frame, "ANCHOR_BOTTOMLEFT",frame.sidePanelDeleteButton.frame:GetWidth()*(-2),frame.sidePanelDeleteButton.frame:GetHeight())
-        GameTooltip:AddLine("Delete this preset",1,1,1)
-        GameTooltip:AddLine("Shift-Click to delete all presets for this dungeon",1,1,1)
+        GameTooltip:AddLine(L["Delete this preset"],1,1,1)
+        GameTooltip:AddLine(L["Shift-Click to delete all presets for this dungeon"],1,1,1)
         GameTooltip:Show()
     end)
 	frame.sidePanelDeleteButton.frame:SetScript("OnLeave",function()
@@ -1252,20 +1255,20 @@ function MDT:MakeSidePanel(frame)
         if IsShiftKeyDown() then
             --delete all profiles
             local numPresets = self:CountPresets()
-            local prompt = "!!WARNING!!\nDo you wish to delete ALL presets of this dungeon?\nYou are about to delete "..numPresets.." preset(s)\nThis cannot be undone\n"
-            MDT:OpenConfirmationFrame(450,150,"Delete ALL presets","Delete",prompt, MDT.DeleteAllPresets)
+            local prompt = string.format(L["deleteAllWarning"],numPresets)
+            MDT:OpenConfirmationFrame(450,150,L["Delete ALL presets"],L["Delete"],prompt, MDT.DeleteAllPresets)
         else
             MDT:HideAllDialogs()
             frame.DeleteConfirmationFrame:ClearAllPoints()
             frame.DeleteConfirmationFrame:SetPoint("CENTER", MDT.main_frame,"CENTER",0,50)
             local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-            frame.DeleteConfirmationFrame.label:SetText("Delete "..currentPresetName.."?")
+            frame.DeleteConfirmationFrame.label:SetText(string.format(L["Delete %s?"],currentPresetName))
             frame.DeleteConfirmationFrame:Show()
         end
 	end)
 
 	frame.LinkToChatButton = AceGUI:Create("Button")
-	frame.LinkToChatButton:SetText("Share")
+	frame.LinkToChatButton:SetText(L["Share"])
 	frame.LinkToChatButton:SetWidth(buttonWidth)
 	frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
 	frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
@@ -1284,15 +1287,15 @@ function MDT:MakeSidePanel(frame)
         end
         local presetSize = self:GetPresetSize(false,5)
         if presetSize>25000 then
-            local prompt = "You are trying to share a very large preset ("..presetSize.." characters)\nIt is recommended to use the export function and share large presets through wago.io instead.\nAre you sure you want to share this preset?\n"
-            MDT:OpenConfirmationFrame(450,150,"Sharing large preset","Share",prompt, callback)
+            local prompt = string.format(L["LargePresetWarning"],presetSize,"\n","\n","\n")
+            MDT:OpenConfirmationFrame(450,150,L["Sharing large preset"],"Share",prompt, callback)
         else
             callback()
         end
 	end)
     frame.LinkToChatButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanelDeleteButton.frame, "ANCHOR_BOTTOMLEFT",frame.LinkToChatButton.frame:GetWidth()*(-2),-frame.LinkToChatButton.frame:GetHeight())
-        GameTooltip:AddLine("Share the preset with your party members",1,1,1)
+        GameTooltip:AddLine(L["Share the preset with your party members"],1,1,1)
         GameTooltip:Show()
     end)
     frame.LinkToChatButton.frame:SetScript("OnLeave",function()
@@ -1307,7 +1310,7 @@ function MDT:MakeSidePanel(frame)
     end
 
     frame.ClearPresetButton = AceGUI:Create("Button")
-    frame.ClearPresetButton:SetText("Reset")
+    frame.ClearPresetButton:SetText(L["Reset"])
     frame.ClearPresetButton:SetWidth(buttonWidth)
     frame.ClearPresetButton.frame:SetNormalFontObject(fontInstance)
     frame.ClearPresetButton.frame:SetHighlightFontObject(fontInstance)
@@ -1317,8 +1320,8 @@ function MDT:MakeSidePanel(frame)
     end)
     frame.ClearPresetButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.ClearPresetButton.frame, "ANCHOR_BOTTOMLEFT",frame.ClearPresetButton.frame:GetWidth()*(-0),frame.ClearPresetButton.frame:GetHeight())
-        GameTooltip:AddLine("Reset the preset to the default state",1,1,1)
-        GameTooltip:AddLine("Does not delete your drawings",1,1,1)
+        GameTooltip:AddLine(L["Reset the preset to the default state"],1,1,1)
+        GameTooltip:AddLine(L["Does not delete your drawings"],1,1,1)
         GameTooltip:Show()
     end)
     frame.ClearPresetButton.frame:SetScript("OnLeave",function()
@@ -1326,7 +1329,7 @@ function MDT:MakeSidePanel(frame)
     end)
 
     frame.LiveSessionButton = AceGUI:Create("Button")
-    frame.LiveSessionButton:SetText("Live")
+    frame.LiveSessionButton:SetText(L["Live"])
     frame.LiveSessionButton:SetWidth(buttonWidth)
     frame.LiveSessionButton.frame:SetNormalFontObject(fontInstance)
     frame.LiveSessionButton.frame:SetHighlightFontObject(fontInstance)
@@ -1342,12 +1345,12 @@ function MDT:MakeSidePanel(frame)
     end)
     frame.LiveSessionButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.LiveSessionButton.frame, "ANCHOR_BOTTOMLEFT",frame.LiveSessionButton.frame:GetWidth()*(-1),frame.LiveSessionButton.frame:GetHeight())
-        GameTooltip:AddLine("Start or join the current |cFF00FF00Live Session|r",1,1,1)
-        GameTooltip:AddLine("Clicking this button will attempt to join the ongoing Live Session of your group or create a new one if none is found",1,1,1,1)
-        GameTooltip:AddLine("The preset will continuously synchronize between all party members participating in the Live Session",1,1,1,1)
-        GameTooltip:AddLine("Players can join the live session by either clicking this button or the Live Session chat link",1,1,1,1)
-        GameTooltip:AddLine("To share a different preset while the live session is active simply navigate to the preferred preset and click the new 'Set to Live' Button next to the preset-dropdown",1,1,1,1)
-        GameTooltip:AddLine("You can always return to the current Live Session preset by clicking the 'Return to Live' button next to the preset-dropdown",1,1,1,1)
+        GameTooltip:AddLine(L["Start or join the current |cFF00FF00Live Session|r"],1,1,1)
+        GameTooltip:AddLine(L["Clicking this button will attempt to join the ongoing Live Session of your group or create a new one if none is found"],1,1,1,1)
+        GameTooltip:AddLine(L["The preset will continuously synchronize between all party members participating in the Live Session"],1,1,1,1)
+        GameTooltip:AddLine(L["Players can join the live session by either clicking this button or the Live Session chat link"],1,1,1,1)
+        GameTooltip:AddLine(L["To share a different preset while the live session is active simply navigate to the preferred preset and click the new 'Set to Live' Button next to the preset-dropdown"],1,1,1,1)
+        GameTooltip:AddLine(L["You can always return to the current Live Session preset by clicking the 'Return to Live' button next to the preset-dropdown"],1,1,1,1)
         GameTooltip:Show()
     end)
     frame.LiveSessionButton.frame:SetScript("OnLeave",function()
@@ -1372,7 +1375,7 @@ function MDT:MakeSidePanel(frame)
     end)
     frame.MDIButton.frame:SetScript("OnEnter",function()
         GameTooltip:SetOwner(frame.MDIButton.frame, "ANCHOR_BOTTOMLEFT",frame.MDIButton.frame:GetWidth()*(-2),frame.MDIButton.frame:GetHeight())
-        GameTooltip:AddLine("Open MDI override options",1,1,1)
+        GameTooltip:AddLine(L["Open MDI override options"],1,1,1)
         GameTooltip:Show()
     end)
     frame.MDIButton.frame:SetScript("OnLeave",function()
@@ -1381,7 +1384,7 @@ function MDT:MakeSidePanel(frame)
 
     --AutomaticColorsCheckbox
     frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
-	frame.AutomaticColorsCheckSidePanel:SetLabel("Automatically color pulls")
+	frame.AutomaticColorsCheckSidePanel:SetLabel(L["Automatically color pulls"])
 	frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
     frame.AutomaticColorsCheckSidePanel:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.autoColoring = value
@@ -1404,7 +1407,7 @@ function MDT:MakeSidePanel(frame)
     colorCogwheel:SetWidth(35)
     colorCogwheel:SetCallback("OnEnter",function(...)
         GameTooltip:SetOwner(colorCogwheel.frame, "ANCHOR_CURSOR")
-        GameTooltip:AddLine("Click to adjust color settings.",1,1,1)
+        GameTooltip:AddLine(L["Click to adjust color settings"],1,1,1)
         GameTooltip:Show()
     end)
     colorCogwheel:SetCallback("OnLeave",function(...)
@@ -1449,8 +1452,8 @@ function MDT:MakeSidePanel(frame)
             end
         end
         local rotation = ""
-        if longText then rotation = rotation.." (Rotation " end
-        rotation = rotation..((week-1)%4>=2 and "B" or "A")
+        if longText then rotation = rotation.." ("..L["Rotation"] end
+        rotation = rotation..((week-1)%4>=2 and " B" or " A")
         if longText then rotation = rotation..")" end
         ret = ret..rotation
         return ret
@@ -1458,7 +1461,7 @@ function MDT:MakeSidePanel(frame)
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
     local affixDropdown = frame.sidePanel.affixDropdown
     affixDropdown.text:SetJustifyH("LEFT")
-    affixDropdown:SetLabel("Affixes")
+    affixDropdown:SetLabel(L["Affixes"])
 
     function affixDropdown:UpdateAffixList()
         local affixWeekMarkups = {}
@@ -1527,8 +1530,8 @@ function MDT:MakeSidePanel(frame)
     affixWeekWarning:SetWidth(35)
     affixWeekWarning:SetCallback("OnEnter",function(...)
         GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_CURSOR")
-        GameTooltip:AddLine("The selected affixes are not the ones of the current week",1,1,1)
-        GameTooltip:AddLine("Click to switch to current week",1,1,1)
+        GameTooltip:AddLine(L["The selected affixes are not the ones of the current week"],1,1,1)
+        GameTooltip:AddLine(L["Click to switch to current week"],1,1,1)
         GameTooltip:Show()
     end)
     affixWeekWarning:SetCallback("OnLeave",function(...)
@@ -1548,7 +1551,7 @@ function MDT:MakeSidePanel(frame)
     --difficulty slider
 	frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
 	frame.sidePanel.DifficultySlider:SetSliderValues(1,35,1)
-    frame.sidePanel.DifficultySlider:SetLabel("Dungeon Level")
+    frame.sidePanel.DifficultySlider:SetLabel(L["Dungeon Level"])
     frame.sidePanel.DifficultySlider.label:SetJustifyH("LEFT")
     frame.sidePanel.DifficultySlider.label:SetFontObject("GameFontNormalSmall")
 	frame.sidePanel.DifficultySlider:SetWidth(200)
@@ -1590,9 +1593,9 @@ function MDT:MakeSidePanel(frame)
     end)
 	frame.sidePanel.DifficultySlider:SetCallback("OnEnter",function()
         GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_BOTTOMLEFT",0,40)
-        GameTooltip:AddLine("Select the dungeon level",1,1,1)
-        GameTooltip:AddLine("The selected level will affect displayed npc health",1,1,1)
-        GameTooltip:AddLine("Levels below 10 will hide enemies related to seasonal affixes",1,1,1)
+        GameTooltip:AddLine(L["Select the dungeon level"],1,1,1)
+        GameTooltip:AddLine(L["The selected level will affect displayed npc health"],1,1,1)
+        GameTooltip:AddLine(L["Levels below 10 will hide enemies related to seasonal affixes"],1,1,1)
         GameTooltip:Show()
 	end)
 	frame.sidePanel.DifficultySlider:SetCallback("OnLeave",function()
@@ -1608,9 +1611,9 @@ function MDT:MakeSidePanel(frame)
     difficultyWarning:SetWidth(35)
     difficultyWarning:SetCallback("OnEnter",function(...)
         GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_CURSOR")
-        GameTooltip:AddLine("The selected dungeon level is below 10",1,1,1)
-        GameTooltip:AddLine("Enemies related to seasonal affixes are currently hidden",1,1,1)
-        GameTooltip:AddLine("Click to set dungeon level to 10",1,1,1)
+        GameTooltip:AddLine(L["The selected dungeon level is below 10"],1,1,1)
+        GameTooltip:AddLine(L["Enemies related to seasonal affixes are currently hidden"],1,1,1)
+        GameTooltip:AddLine(L["Click to set dungeon level to 10"],1,1,1)
         GameTooltip:Show()
     end)
     difficultyWarning:SetCallback("OnLeave",function(...)
@@ -1697,13 +1700,13 @@ function MDT:DisplayMDISelector()
         MDT.MDISelector.frame:SetPoint("BOTTOMRIGHT", MDT.main_frame,"BOTTOMRIGHT",0,0)
 
         local label = AceGUI:Create("Label")
-        label:SetText("MDI Mode")
+        label:SetText(L["MDI Mode"])
         MDT.MDISelector:AddChild(label)
 
         --beguiling
         MDT.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
-        MDT.MDISelector.BeguilingDropDown:SetLabel("Seasonal Affix:")
-        local beguilingList = {[1]="Beguiling 1 Void",[2]="Beguiling 2 Tides",[3]="Beguiling 3 Ench.",[13]="Reaping",[14]="Awakened A",[15]="Awakened B"}
+        MDT.MDISelector.BeguilingDropDown:SetLabel(L["Seasonal Affix:"])
+        local beguilingList = {[1]=L["Beguiling 1 Void"],[2]=L["Beguiling 2 Tides"],[3]=L["Beguiling 3 Ench."],[13]=L["Reaping"],[14]=L["Awakened A"],[15]=L["Awakened B"]}
         MDT.MDISelector.BeguilingDropDown:SetList(beguilingList)
         MDT.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged",function(widget, callbackName, key)
             local preset = self:GetCurrentPreset()
@@ -1718,8 +1721,8 @@ function MDT:DisplayMDISelector()
 
         --freehold
         MDT.MDISelector.FreeholdDropDown = AceGUI:Create("Dropdown")
-        MDT.MDISelector.FreeholdDropDown:SetLabel("Freehold:")
-        local freeholdList = {"1. Cutwater","2. Blacktooth","3. Bilge Rats"}
+        MDT.MDISelector.FreeholdDropDown:SetLabel(L["Freehold:"])
+        local freeholdList = {string.format("1. %s",L["Cutwater"]),string.format("2. %s",L["Blacktooth"]),string.format("3. %s",L["Bilge Rats"])}
         MDT.MDISelector.FreeholdDropDown:SetList(freeholdList)
         MDT.MDISelector.FreeholdDropDown:SetCallback("OnValueChanged",function(widget, callbackName, key)
             local preset = MDT:GetCurrentPreset()
@@ -1737,7 +1740,7 @@ function MDT:DisplayMDISelector()
         MDT.MDISelector:AddChild(MDT.MDISelector.FreeholdDropDown)
 
         MDT.MDISelector.FreeholdCheck = AceGUI:Create("CheckBox")
-        MDT.MDISelector.FreeholdCheck:SetLabel("Join Crew")
+        MDT.MDISelector.FreeholdCheck:SetLabel(L["Join Crew"])
         MDT.MDISelector.FreeholdCheck:SetCallback("OnValueChanged",function(widget, callbackName, value)
             local preset = MDT:GetCurrentPreset()
             preset.mdi.freeholdJoined = value
@@ -2051,14 +2054,14 @@ function MDT:UpdatePullTooltip(tooltip)
                         --topString
                         local newLine = "\n"
                         local text = newLine..newLine..newLine..v.enemyData.name.." x"..v.enemyData.quantity..newLine
-                        text = text.."Level "..v.enemyData.level.." "..v.enemyData.creatureType..newLine
+                        text = text..string.format(L["Level %d %s"],v.enemyData.level,v.enemyData.creatureType)..newLine
                         local boss = v.enemyData.isBoss or false
                         local health = MDT:CalculateEnemyHealth(boss,v.enemyData.baseHealth,db.currentDifficulty,v.enemyData.ignoreFortified)
-                        text = text.. MDT:FormatEnemyHealth(health).." HP"..newLine
+                        text = text.. string.format(L["%s HP"],MDT:FormatEnemyHealth(health))..newLine
 
                         local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or MDT.dungeonTotalCount[db.currentDungeonIdx].normal
                         local count = MDT:IsCurrentPresetTeeming() and v.enemyData.teemingCount or v.enemyData.count
-                        text = text.."Forces: ".. MDT:FormatEnemyForces(count,totalForcesMax,false)
+                        text = text..L["Forces"]..": ".. MDT:FormatEnemyForces(count,totalForcesMax,false)
 
                         tooltip.topString:SetText(text)
                         showData = true
@@ -2086,8 +2089,8 @@ function MDT:UpdatePullTooltip(tooltip)
             local totalForces = MDT:CountForces(tooltip.currentPull,false)
             local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or MDT.dungeonTotalCount[db.currentDungeonIdx].normal
 
-            local text = "Forces: ".. MDT:FormatEnemyForces(pullForces,totalForcesMax,false)
-            text = text.. "\nTotal :".. MDT:FormatEnemyForces(totalForces,totalForcesMax,true)
+            local text = L["Forces"]..": ".. MDT:FormatEnemyForces(pullForces,totalForcesMax,false)
+            text = text.. "\n"..L["Total"].." :".. MDT:FormatEnemyForces(totalForces,totalForcesMax,true)
 
             tooltip.botString:SetText(text)
             tooltip.botString:Show()
@@ -2328,7 +2331,7 @@ function MDT:SetLivePreset()
 end
 
 ---IsWeekTeeming
----Returns if the current week has an affix week set that inlcludes the teeming affix
+---Returns if the current week has an affix week set that includes the teeming affix
 function MDT:IsWeekTeeming(week)
     if not week then week = MDT:GetCurrentAffixWeek() or 1 end
     return affixWeeks[week][1] == 5
@@ -2568,7 +2571,7 @@ function MDT:OpenClearPresetDialog()
     MDT.main_frame.ClearConfirmationFrame:ClearAllPoints()
     MDT.main_frame.ClearConfirmationFrame:SetPoint("CENTER", MDT.main_frame,"CENTER",0,50)
     local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-    MDT.main_frame.ClearConfirmationFrame.label:SetText("Reset "..currentPresetName.."?")
+    MDT.main_frame.ClearConfirmationFrame.label:SetText(string.format(L["Reset %s?"],currentPresetName))
     MDT.main_frame.ClearConfirmationFrame:Show()
 end
 
@@ -2582,7 +2585,6 @@ function MDT:OpenAutomaticColorsDialog()
     if db.colorPaletteInfo.colorPaletteIdx == 6 then
         MDT:OpenCustomColorsDialog()
     end
-
 end
 
 function MDT:OpenCustomColorsDialog(frame)
@@ -2941,7 +2943,7 @@ end
 
 function MDT:CreateNewPreset(name)
 	if name == "<New Preset>" then
-		MDT.main_frame.presetCreationLabel:SetText("Cannot create preset '"..name.."'")
+		MDT.main_frame.presetCreationLabel:SetText(string.format(L["Cannot create preset '%s'"],name))
 		MDT.main_frame.presetCreationCreateButton:SetDisabled(true)
 		MDT.main_frame.presetCreationCreateButton.text:SetTextColor(0.5,0.5,0.5)
 		MDT.main_frame.presetCreationFrame:DoLayout()
@@ -2973,7 +2975,7 @@ function MDT:CreateNewPreset(name)
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
 	else
-		MDT.main_frame.presetCreationLabel:SetText("'"..name.."' already exists")
+		MDT.main_frame.presetCreationLabel:SetText(string.format(L["Preset '%s' already exists"],name))
 		MDT.main_frame.presetCreationCreateButton:SetDisabled(true)
 		MDT.main_frame.presetCreationCreateButton.text:SetTextColor(0.5,0.5,0.5)
 		MDT.main_frame.presetCreationFrame:DoLayout()
@@ -3001,7 +3003,7 @@ end
 function MDT:MakeChatPresetImportFrame(frame)
     frame.chatPresetImportFrame = AceGUI:Create("Frame")
     local chatImport = frame.chatPresetImportFrame
-    chatImport:SetTitle("Import Preset")
+    chatImport:SetTitle(L["Import Preset"])
     chatImport:SetWidth(400)
     chatImport:SetHeight(100)
     chatImport:EnableResize(false)
@@ -3013,7 +3015,7 @@ function MDT:MakeChatPresetImportFrame(frame)
             MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1,0.8196,0)
         end
     end)
-    chatImport.defaultText = "Import Preset:\n"
+    chatImport.defaultText = L["Import Preset"]..":\n"
     chatImport.importLabel = AceGUI:Create("Label")
     chatImport.importLabel:SetText(chatImport.defaultText)
     chatImport.importLabel:SetWidth(250)
@@ -3021,7 +3023,7 @@ function MDT:MakeChatPresetImportFrame(frame)
 
     chatImport.importButton = AceGUI:Create("Button")
     local importButton = chatImport.importButton
-    importButton:SetText("Import")
+    importButton:SetText(L["Import"])
     importButton:SetWidth(100)
     importButton:SetCallback("OnClick", function()
         local newPreset = chatImport.currentPreset
@@ -3029,7 +3031,7 @@ function MDT:MakeChatPresetImportFrame(frame)
             chatImport:Hide()
             MDT:ImportPreset(MDT:DeepCopy(newPreset))
         else
-            print("MDT: Error importing preset report to author")
+            print(L["MDT: Error importing preset"])
         end
     end)
     chatImport:AddChild(chatImport.importLabel)
@@ -3048,20 +3050,20 @@ function MDT:OpenChatImportPresetDialog(sender, preset, live)
     local name = preset.text
     chatImport:Show()
     chatImport.importLabel:SetText(chatImport.defaultText..sender.. ": "..dungeon.." - "..name)
-    chatImport:SetTitle("Import Preset")
-    chatImport.importButton:SetText("Import")
+    chatImport:SetTitle(L["Import Preset"])
+    chatImport.importButton:SetText(L["Import"])
     chatImport.live = nil
     if live then
-        chatImport.importLabel:SetText("Join Live Session:\n"..sender.. ": "..dungeon.." - "..name)
-        chatImport:SetTitle("Live Session")
-        chatImport.importButton:SetText("Join")
+        chatImport.importLabel:SetText(string.format(L["Join Live Session"],"\n",sender,dungeon,name))
+        chatImport:SetTitle(L["Live Session"])
+        chatImport.importButton:SetText(L["Join"])
         chatImport.live = true
     end
 end
 
 function MDT:MakePresetImportFrame(frame)
 	frame.presetImportFrame = AceGUI:Create("Frame")
-	frame.presetImportFrame:SetTitle("Import Preset")
+	frame.presetImportFrame:SetTitle(L["Import Preset"])
 	frame.presetImportFrame:SetWidth(400)
 	frame.presetImportFrame:SetHeight(200)
 	frame.presetImportFrame:EnableResize(false)
@@ -3081,13 +3083,13 @@ function MDT:MakePresetImportFrame(frame)
 
 	local importString	= ""
 	frame.presetImportBox = AceGUI:Create("EditBox")
-	frame.presetImportBox:SetLabel("Import Preset:")
+	frame.presetImportBox:SetLabel(L["Import Preset"]..":")
 	frame.presetImportBox:SetWidth(255)
 	frame.presetImportBox:SetCallback("OnEnterPressed", function(widget, event, text) importString = text end)
 	frame.presetImportFrame:AddChild(frame.presetImportBox)
 
 	local importButton = AceGUI:Create("Button")
-	importButton:SetText("Import")
+	importButton:SetText(L["Import"])
 	importButton:SetWidth(100)
 	importButton:SetCallback("OnClick", function()
 		local newPreset = MDT:StringToTable(importString, true)
@@ -3099,7 +3101,7 @@ function MDT:MakePresetImportFrame(frame)
             end
 
 		else
-			frame.presetImportLabel:SetText("Invalid import string")
+			frame.presetImportLabel:SetText(L["Invalid import string"])
 		end
 	end)
 	frame.presetImportFrame:AddChild(importButton)
@@ -3110,7 +3112,7 @@ end
 
 function MDT:MakePresetCreationFrame(frame)
 	frame.presetCreationFrame = AceGUI:Create("Frame")
-	frame.presetCreationFrame:SetTitle("New Preset")
+	frame.presetCreationFrame:SetTitle(L["New Preset"])
 	frame.presetCreationFrame:SetWidth(400)
 	frame.presetCreationFrame:SetHeight(200)
 	frame.presetCreationFrame:EnableResize(false)
@@ -3126,7 +3128,7 @@ function MDT:MakePresetCreationFrame(frame)
 
 
 	frame.PresetCreationEditbox = AceGUI:Create("EditBox")
-	frame.PresetCreationEditbox:SetLabel("Preset name:")
+	frame.PresetCreationEditbox:SetLabel(L["Preset Name"]..":")
 	frame.PresetCreationEditbox:SetWidth(255)
 	frame.PresetCreationEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
 		--check if name is valid, block button if so, unblock if valid
@@ -3135,7 +3137,7 @@ function MDT:MakePresetCreationFrame(frame)
 			frame.presetCreationCreateButton:SetDisabled(false)
 			frame.presetCreationCreateButton.text:SetTextColor(1,0.8196,0)
 		else
-			frame.presetCreationLabel:SetText("Cannot create preset '"..text.."'")
+			frame.presetCreationLabel:SetText(string.format(L["Cannot create preset '%s'"],text))
 			frame.presetCreationCreateButton:SetDisabled(true)
 			frame.presetCreationCreateButton.text:SetTextColor(0.5,0.5,0.5)
 		end
@@ -3144,7 +3146,7 @@ function MDT:MakePresetCreationFrame(frame)
 	frame.presetCreationFrame:AddChild(frame.PresetCreationEditbox)
 
 	frame.presetCreationCreateButton = AceGUI:Create("Button")
-	frame.presetCreationCreateButton:SetText("Create")
+	frame.presetCreationCreateButton:SetText(L["Create"])
 	frame.presetCreationCreateButton:SetWidth(100)
 	frame.presetCreationCreateButton:SetCallback("OnClick", function()
 		local name = frame.PresetCreationEditbox:GetText()
@@ -3160,7 +3162,7 @@ function MDT:MakePresetCreationFrame(frame)
 
 
 	frame.PresetCreationDropDown = AceGUI:Create("Dropdown")
-	frame.PresetCreationDropDown:SetLabel("Use as a starting point:")
+	frame.PresetCreationDropDown:SetLabel(L["Use as a starting point:"])
 	frame.PresetCreationDropDown.text:SetJustifyH("LEFT")
 	frame.presetCreationFrame:AddChild(frame.PresetCreationDropDown)
 
@@ -3266,8 +3268,8 @@ function MDT:ImportPreset(preset, fromLiveSession)
 
     --open dialog to ask for replacing
     if updateIndex then
-        local prompt = "You have an earlier version of this preset with the name '"..duplicatePreset.text.."'\nDo you wish to update or create a new copy?\n\n\n"
-        self:OpenConfirmationFrame(450,150,"Import Preset","Update",prompt, updateCallback,"Copy",copyCallback)
+        local prompt = string.format(L["Earlier Version"],duplicatePreset.text,"\n","\n","\n","\n")
+        self:OpenConfirmationFrame(450,150,L["Import Preset"],L["Update"],prompt, updateCallback,L["Copy"],copyCallback)
         if fromLiveSession then
             self.liveUpdateFrameOpen = true
             self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()closeCallback() end)
@@ -3329,18 +3331,18 @@ local colorPaletteValues = {
         [2] = {[1]=0.8627450980392157, [2]=0.14901960784313725, [3]=0.4980392156862745},
         [3] = {[1]=0.996078431372549, [2]=0.3803921568627451, [3]=0.0},
         [4] = {[1]=1.0, [2]=0.6901960784313725, [3]=0.0},
-        },
+    },
 
 }
 
 ---Dropdown menu items for color settings frame
 local colorPaletteNames = {
-        [1] = "Rainbow",
-        [2] = "Black and Yellow",
-        [3] = "Red, Green and Blue",
-        [4] = "High Contrast",
-        [5] = "Color Blind Friendly",
-        [6] = "Custom",
+    [1] = L["Rainbow"],
+    [2] = L["Black and Yellow"],
+    [3] = L["Red, Green and Blue"],
+    [4] = L["High Contrast"],
+    [5] = L["Color Blind Friendly"],
+    [6] = L["Custom"],
 }
 
 ---SetPresetColorPaletteInfo
@@ -3414,7 +3416,7 @@ end
 function MDT:MakeCustomColorFrame(frame)
     --Base frame for custom palette setup
     frame.CustomColorFrame = AceGUI:Create("Frame")
-    frame.CustomColorFrame:SetTitle("Custom Color Palette")
+    frame.CustomColorFrame:SetTitle(L["Custom Color Palette"])
 	frame.CustomColorFrame:SetWidth(290)
 	frame.CustomColorFrame:SetHeight(220)
 	frame.CustomColorFrame:EnableResize(false)
@@ -3425,7 +3427,7 @@ function MDT:MakeCustomColorFrame(frame)
     frame.CustomColorFrame.ColorSlider = AceGUI:Create("Slider")
     frame.CustomColorFrame.ColorSlider:SetSliderValues(2,20,1)
     frame.CustomColorFrame.ColorSlider:SetValue(db.colorPaletteInfo.numberCustomColors)
-    frame.CustomColorFrame.ColorSlider:SetLabel("Choose number of colors")
+    frame.CustomColorFrame.ColorSlider:SetLabel(L["Choose number of colors"])
     frame.CustomColorFrame.ColorSlider:SetRelativeWidth(1)
     frame.CustomColorFrame.ColorSlider:SetCallback("OnMouseUp", function(event, callbackName, value)
         if value>20 then
@@ -3469,14 +3471,14 @@ end
 
 function MDT:MakeAutomaticColorsFrame(frame)
 	frame.automaticColorsFrame = AceGUI:Create("Frame")
-	frame.automaticColorsFrame:SetTitle("Automatic Coloring")
+	frame.automaticColorsFrame:SetTitle(L["Automatic Coloring"])
 	frame.automaticColorsFrame:SetWidth(240)
 	frame.automaticColorsFrame:SetHeight(220)
 	frame.automaticColorsFrame:EnableResize(false)
 	frame.automaticColorsFrame:SetLayout("Flow")
 
 	frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
-	frame.AutomaticColorsCheck:SetLabel("Automatically color pulls")
+	frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
 	frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
     frame.AutomaticColorsCheck:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.autoColoring = value
@@ -3495,7 +3497,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
 
     --Toggle local color blind mode
     frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
-    frame.toggleForceColorBlindMode:SetLabel("Local color blind mode")
+    frame.toggleForceColorBlindMode:SetLabel(L["Local color blind mode"])
     frame.toggleForceColorBlindMode:SetValue(db.colorPaletteInfo.forceColorBlindMode)
     frame.toggleForceColorBlindMode:SetCallback("OnValueChanged",function(widget,callbackName,value)
 		db.colorPaletteInfo.forceColorBlindMode = value
@@ -3507,7 +3509,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
 
     frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
     frame.PaletteSelectDropdown:SetList(colorPaletteNames)
-    frame.PaletteSelectDropdown:SetLabel("Choose preferred color palette")
+    frame.PaletteSelectDropdown:SetLabel(L["Choose preferred color palette"])
     frame.PaletteSelectDropdown:SetValue(db.colorPaletteInfo.colorPaletteIdx)
     frame.PaletteSelectDropdown:SetCallback("OnValueChanged", function(widget,callbackName,value)
         if value == 6 then
@@ -3527,7 +3529,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
     -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
     -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
     frame.button = AceGUI:Create("Button")
-    frame.button:SetText("Apply to preset")
+    frame.button:SetText(L["Apply to preset"])
     frame.button:SetCallback("OnClick", function(widget, callbackName)
         if not db.colorPaletteInfo.autoColoring then
             db.colorPaletteInfo.autoColoring = true
@@ -3977,7 +3979,7 @@ end
 
 function MDT:MakeRenameFrame(frame)
 	frame.RenameFrame = AceGUI:Create("Frame")
-	frame.RenameFrame:SetTitle("Rename Preset")
+	frame.RenameFrame:SetTitle(L["Rename Preset"])
 	frame.RenameFrame:SetWidth(350)
 	frame.RenameFrame:SetHeight(150)
 	frame.RenameFrame:EnableResize(false)
@@ -3989,7 +3991,7 @@ function MDT:MakeRenameFrame(frame)
 
 	local renameText
 	frame.RenameFrame.Editbox = AceGUI:Create("EditBox")
-	frame.RenameFrame.Editbox:SetLabel("Insert new Preset Name:")
+	frame.RenameFrame.Editbox:SetLabel(L["Preset Name"]..":")
 	frame.RenameFrame.Editbox:SetWidth(200)
 	frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(...)
         local widget, event, text = ...
@@ -4000,7 +4002,7 @@ function MDT:MakeRenameFrame(frame)
 			frame.RenameFrame.RenameButton.text:SetTextColor(1,0.8196,0)
 			renameText = text
 		else
-			frame.RenameFrame.PresetRenameLabel:SetText("Cannot rename preset to '"..text.."'")
+			frame.RenameFrame.PresetRenameLabel:SetText(string.format(L["Cannot rename preset to '%s'"],text))
 			frame.RenameFrame.RenameButton:SetDisabled(true)
 			frame.RenameFrame.RenameButton.text:SetTextColor(0.5,0.5,0.5)
 			renameText = nil
@@ -4011,7 +4013,7 @@ function MDT:MakeRenameFrame(frame)
 	frame.RenameFrame:AddChild(frame.RenameFrame.Editbox)
 
 	frame.RenameFrame.RenameButton = AceGUI:Create("Button")
-	frame.RenameFrame.RenameButton:SetText("Rename")
+	frame.RenameFrame.RenameButton:SetText(L["Rename"])
 	frame.RenameFrame.RenameButton:SetWidth(100)
 	frame.RenameFrame.RenameButton:SetCallback("OnClick",function() MDT:RenamePreset(renameText) end)
 	frame.RenameFrame:AddChild(frame.RenameFrame.RenameButton)
@@ -4029,7 +4031,7 @@ end
 ---Creates the frame used to export presets to a string which can be uploaded to text sharing websites like pastebin
 function MDT:MakeExportFrame(frame)
 	frame.ExportFrame = AceGUI:Create("Frame")
-	frame.ExportFrame:SetTitle("Preset Export")
+	frame.ExportFrame:SetTitle(L["Preset Export"])
 	frame.ExportFrame:SetWidth(600)
 	frame.ExportFrame:SetHeight(400)
 	frame.ExportFrame:EnableResize(false)
@@ -4039,7 +4041,6 @@ function MDT:MakeExportFrame(frame)
 	end)
 
 	frame.ExportFrameEditbox = AceGUI:Create("MultiLineEditBox")
-	frame.ExportFrameEditbox:SetLabel("Preset Export:")
 	frame.ExportFrameEditbox:SetWidth(600)
 	frame.ExportFrameEditbox:DisableButton(true)
 	frame.ExportFrameEditbox:SetNumLines(20)
@@ -4056,7 +4057,7 @@ end
 ---Creates the delete confirmation dialog that pops up when a user wants to delete a preset
 function MDT:MakeDeleteConfirmationFrame(frame)
 	frame.DeleteConfirmationFrame = AceGUI:Create("Frame")
-	frame.DeleteConfirmationFrame:SetTitle("Delete Preset")
+	frame.DeleteConfirmationFrame:SetTitle(L["Delete Preset"])
 	frame.DeleteConfirmationFrame:SetWidth(250)
 	frame.DeleteConfirmationFrame:SetHeight(120)
 	frame.DeleteConfirmationFrame:EnableResize(false)
@@ -4072,14 +4073,14 @@ function MDT:MakeDeleteConfirmationFrame(frame)
 	frame.DeleteConfirmationFrame:AddChild(frame.DeleteConfirmationFrame.label)
 
 	frame.DeleteConfirmationFrame.OkayButton = AceGUI:Create("Button")
-	frame.DeleteConfirmationFrame.OkayButton:SetText("Delete")
+	frame.DeleteConfirmationFrame.OkayButton:SetText(L["Delete"])
 	frame.DeleteConfirmationFrame.OkayButton:SetWidth(100)
 	frame.DeleteConfirmationFrame.OkayButton:SetCallback("OnClick",function()
 		MDT:DeletePreset(db.currentPreset[db.currentDungeonIdx])
 		frame.DeleteConfirmationFrame:Hide()
 	end)
 	frame.DeleteConfirmationFrame.CancelButton = AceGUI:Create("Button")
-	frame.DeleteConfirmationFrame.CancelButton:SetText("Cancel")
+	frame.DeleteConfirmationFrame.CancelButton:SetText(L["Cancel"])
 	frame.DeleteConfirmationFrame.CancelButton:SetWidth(100)
 	frame.DeleteConfirmationFrame.CancelButton:SetCallback("OnClick",function()
 		frame.DeleteConfirmationFrame:Hide()
@@ -4096,7 +4097,7 @@ end
 ---Creates the clear confirmation dialog that pops up when a user wants to clear a preset
 function MDT:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame = AceGUI:Create("Frame")
-	frame.ClearConfirmationFrame:SetTitle("Reset Preset")
+	frame.ClearConfirmationFrame:SetTitle(L["Reset Preset"])
 	frame.ClearConfirmationFrame:SetWidth(250)
 	frame.ClearConfirmationFrame:SetHeight(120)
 	frame.ClearConfirmationFrame:EnableResize(false)
@@ -4112,7 +4113,7 @@ function MDT:MakeClearConfirmationFrame(frame)
 	frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.label)
 
 	frame.ClearConfirmationFrame.OkayButton = AceGUI:Create("Button")
-	frame.ClearConfirmationFrame.OkayButton:SetText("Clear")
+	frame.ClearConfirmationFrame.OkayButton:SetText(L["Reset"])
 	frame.ClearConfirmationFrame.OkayButton:SetWidth(100)
 	frame.ClearConfirmationFrame.OkayButton:SetCallback("OnClick",function()
 		self:ClearPreset(self:GetCurrentPreset())
@@ -4120,7 +4121,7 @@ function MDT:MakeClearConfirmationFrame(frame)
 		frame.ClearConfirmationFrame:Hide()
 	end)
 	frame.ClearConfirmationFrame.CancelButton = AceGUI:Create("Button")
-	frame.ClearConfirmationFrame.CancelButton:SetText("Cancel")
+	frame.ClearConfirmationFrame.CancelButton:SetText(L["Cancel"])
 	frame.ClearConfirmationFrame.CancelButton:SetWidth(100)
 	frame.ClearConfirmationFrame.CancelButton:SetCallback("OnClick",function()
 		frame.ClearConfirmationFrame:Hide()
@@ -4153,7 +4154,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
         f:AddChild(f.OkayButton)
 
         f.CancelButton = AceGUI:Create("Button")
-        f.CancelButton:SetText("Cancel")
+        f.CancelButton:SetText(L["Cancel"])
         f.CancelButton:SetWidth(100)
         f.CancelButton:SetCallback("OnClick",function()
             MDT:HideAllDialogs()
@@ -4168,7 +4169,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
         MDT:HideAllDialogs() end)
     if buttonText2 then
         f.CancelButton:SetText(buttonText2) else
-        f.CancelButton:SetText("Cancel")
+        f.CancelButton:SetText(L["Cancel"])
     end
     if callback2 then
         f.CancelButton:SetCallback("OnClick",function()callback2()
@@ -4192,11 +4193,11 @@ function MDT:CreateTutorialButton(parent)
     local helpPlate = {
         FramePos = { x = 0,	y = 0 },
         FrameSize = { width = sizex, height = sizey	},
-        [1] = { ButtonPos = { x = 205,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 200, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = "Select a dungeon and navigate to different sublevels" },
-        [2] = { ButtonPos = { x = 205,	y = -210*scale }, HighLightBox = { x = 0, y = -58, width = (sizex-6)*scale, height = (sizey*scale)-58 },	ToolTipDir = "RIGHT",	ToolTipText = "Click to select enemies\nCTRL-Click to single-select enemies\nSHIFT-Click to select enemies and create a new pull" },
-        [3] = { ButtonPos = { x = 900*scale,	y = 0*scale }, HighLightBox = { x = 838*scale, y = 30, width = 251, height = 115 },	ToolTipDir = "LEFT",	ToolTipText = "Manage, share and collaborate on presets" },
-        [4] = { ButtonPos = { x = 900*scale,	y = -87*scale }, HighLightBox = { x = 838*scale, y = 30-115, width = 251, height = 102 },	ToolTipDir = "LEFT",	ToolTipText = "Customize dungeon options" },
-        [5] = { ButtonPos = { x = 900*scale,	y = -(115+102*scale) }, HighLightBox = { x = 838*scale, y = (30-(115+102)), width = 251, height = (sidePanelHeight)+43 },	ToolTipDir = "LEFT",	ToolTipText = "Create and manage your pulls\nRight click for more options" },
+        [1] = { ButtonPos = { x = 205,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 200, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = L["helpPlateDungeonSelect"] },
+        [2] = { ButtonPos = { x = 205,	y = -210*scale }, HighLightBox = { x = 0, y = -58, width = (sizex-6)*scale, height = (sizey*scale)-58 },	ToolTipDir = "RIGHT",	ToolTipText = L["helpPlateNPC"] },
+        [3] = { ButtonPos = { x = 900*scale,	y = 0*scale }, HighLightBox = { x = 838*scale, y = 30, width = 251, height = 115 },	ToolTipDir = "LEFT",	ToolTipText = L["helpPlatePresets"] },
+        [4] = { ButtonPos = { x = 900*scale,	y = -87*scale }, HighLightBox = { x = 838*scale, y = 30-115, width = 251, height = 102 },	ToolTipDir = "LEFT",	ToolTipText = L["helpPlateDungeon"] },
+        [5] = { ButtonPos = { x = 900*scale,	y = -(115+102*scale) }, HighLightBox = { x = 838*scale, y = (30-(115+102)), width = 251, height = (sidePanelHeight)+43 },	ToolTipDir = "LEFT",	ToolTipText = L["helpPlatePulls"] },
     }
     if not parent.HelpButton then
         parent.HelpButton = CreateFrame("Button","MDTMainHelpPlateButton",parent,"MainHelpPlateButton")
@@ -4236,8 +4237,8 @@ function MDT:RegisterOptions()
         args = {
             enable = {
                 type = 'toggle',
-                name = "Enable Minimap Button",
-                desc = "If the Minimap Button is enabled",
+                name = L["Enable Minimap Button"],
+                desc = L["If the Minimap Button is enabled"],
                 get = function() return not db.minimap.hide end,
                 set = function(_, newValue)
                     db.minimap.hide = not newValue
@@ -4252,10 +4253,10 @@ function MDT:RegisterOptions()
             },
             tooltipSelect ={
                 type = 'select',
-                name = "Choose NPC tooltip position",
+                name = L["Choose NPC tooltip position"],
                 values = {
-                    [1] = "Next to the NPC",
-                    [2] = "In the bottom right corner",
+                    [1] = L["Next to the NPC"],
+                    [2] = L["In the bottom right corner"],
                 },
                 get = function() return db.tooltipInCorner and 2 or 1 end,
                 set = function(_,newValue)
@@ -4266,10 +4267,10 @@ function MDT:RegisterOptions()
             },
             enemyForcesFormat = {
                 type = "select",
-                name = "Choose Enemy Forces Format",
+                name = L["Choose Enemy Forces Format"],
                 values = {
-                    [1] = "Forces only: 5/200",
-                    [2] = "Forces+%: 5/200 (2.5%)",
+                    [1] = L["Forces only: 5/200"],
+                    [2] = L["Forces+%: 5/200 (2.5%)"],
                 },
                 get = function() return db.enemyForcesFormat end,
                 set = function(_,newValue) db.enemyForcesFormat = newValue end,
@@ -4277,10 +4278,10 @@ function MDT:RegisterOptions()
             },
             enemyStyle = {
                 type = "select",
-                name = "Choose Enemy Style. Requires Reload",
+                name = L["Choose Enemy Style. Requires Reload"],
                 values = {
-                    [1] = "Portrait",
-                    [2] = "Plain Texture",
+                    [1] = L["Portrait"],
+                    [2] = L["Plain Texture"],
                 },
                 get = function() return db.enemyStyle end,
                 set = function(_,newValue) db.enemyStyle = newValue end,
@@ -4577,25 +4578,25 @@ function MDT:PrintCurrentAffixes()
     MDT:GetCurrentAffixWeek()
     --https://www.wowhead.com/affixes
     local affixNames = {
-        [1] ="Overflowing",
-        [2] ="Skittish",
-        [3] ="Volcanic",
-        [4] ="Necrotic",
-        [5] ="Teeming",
-        [6] ="Raging",
-        [7] ="Bolstering",
-        [8] ="Sanguine",
-        [9] ="Tyrannical",
-        [10] ="Fortified",
-        [11] ="Bursting",
-        [12] ="Grievous",
-        [13] ="Explosive",
-        [14] ="Quaking",
-        [15] ="Relentless",
-        [16] ="Infested",
-        [117] ="Reaping",
-        [119] ="Beguiling",
-        [120] ="Awakened",
+        [1] =L["Overflowing"],
+        [2] =L["Skittish"],
+        [3] =L["Volcanic"],
+        [4] =L["Necrotic"],
+        [5] =L["Teeming"],
+        [6] =L["Raging"],
+        [7] =L["Bolstering"],
+        [8] =L["Sanguine"],
+        [9] =L["Tyrannical"],
+        [10] =L["Fortified"],
+        [11] =L["Bursting"],
+        [12] =L["Grievous"],
+        [13] =L["Explosive"],
+        [14] =L["Quaking"],
+        [15] =L["Relentless"],
+        [16] =L["Infested"],
+        [117] =L["Reaping"],
+        [119] =L["Beguiling"],
+        [120] =L["Awakened"],
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
@@ -4931,7 +4932,6 @@ function initFrames()
         botString:SetJustifyV("TOP")
         botString:SetHeight(23)
         botString:SetWidth(250)
-        botString.defaultText = "Forces: %d\nTotal: %d/%d"
         botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
         botString:Hide()
         skinTooltip(pullTT)

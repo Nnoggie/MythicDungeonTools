@@ -1,6 +1,6 @@
 local Type, Version = "MDTNewPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
-
+local L = MDT.L
 local width,height = 248,32
 
 --Methods
@@ -49,7 +49,7 @@ local methods = {
 
 
         --Set pullNumber
-        self.pullNumber:SetText("+ Add pull")
+        self.pullNumber:SetText(L["+ Add pull"])
         self.pullNumber:Show()
 
 
@@ -63,7 +63,6 @@ local methods = {
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
 
         self:Enable();
-        --self:SetRenameAction(self.callbacks.OnRenameAction);
     end,
     ["SetTitle"] = function(self, title)
         self.titletext = title;
@@ -110,20 +109,6 @@ local function Constructor()
     background:SetPoint("LEFT", button, "LEFT");
     background:SetPoint("RIGHT", button, "RIGHT");
 
-    local icon = button:CreateTexture(nil, "OVERLAY");
-    button.icon = icon;
-    icon:SetWidth(height);
-    icon:SetHeight(height);
-    icon:SetPoint("LEFT", button, "LEFT");
-
-    local title = button:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    button.title = title;
-    title:SetHeight(14);
-    title:SetJustifyH("LEFT");
-    title:SetPoint("TOP", button, "TOP", 0, -2);
-    title:SetPoint("LEFT", icon, "RIGHT", 2, 0);
-    title:SetPoint("RIGHT", button, "RIGHT");
-
     button.description = {};
 
     button:SetScript("OnEnter", function()
@@ -138,43 +123,9 @@ local function Constructor()
     pullNumber:SetJustifyH("CENTER");
     pullNumber:SetPoint("LEFT", button, "LEFT",5,0);
 
-
-
-    local renamebox = CreateFrame("EDITBOX", nil, button, "InputBoxTemplate");
-    renamebox:SetHeight(height/2);
-    renamebox:SetPoint("TOP", button, "TOP");
-    renamebox:SetPoint("LEFT", icon, "RIGHT", 6, 0);
-    renamebox:SetPoint("RIGHT", button, "RIGHT", -4, 0);
-    renamebox:SetFont("Fonts\\FRIZQT__.TTF", 10);
-    renamebox:Hide();
-
-    renamebox.func = function() --[[By default, do nothing!]] end;
-    renamebox:SetScript("OnEnterPressed", function()
-        local oldid = button.title:GetText();
-        local newid = renamebox:GetText();
-        if(newid == "" or (newid ~= oldid --[[and WeakAuras.GetData(newid)]] )) then
-            --if name exists
-            renamebox:SetText(button.title:GetText());
-        else
-            renamebox.func();
-            title:SetText(renamebox:GetText());
-            title:Show();
-            renamebox:Hide();
-        end
-    end);
-
-    renamebox:SetScript("OnEscapePressed", function()
-        title:Show();
-        renamebox:Hide();
-    end);
-
-
     local widget = {
         frame = button,
-        title = title,
-        icon = icon,
         pullNumber = pullNumber,
-        renamebox = renamebox,
         background = background,
         type = Type
     }

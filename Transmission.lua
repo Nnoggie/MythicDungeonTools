@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local Compresser = LibStub:GetLibrary("LibCompress")
 local Encoder = Compresser:GetAddonEncodeTable()
 local Serializer = LibStub:GetLibrary("AceSerializer-3.0")
@@ -13,7 +15,6 @@ local configForDeflate = {
     [8]= {level = 8},
     [9]= {level = 9},
 }
-local MDT = MDT
 MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject","AceComm-3.0","AceSerializer-3.0")
 
 -- Lua APIs
@@ -208,7 +209,7 @@ hooksecurefunc("SetItemRef", function(link, text)
         local sender = link:sub(17, string.len(link))
         local name,realm = string.match(sender,"(.*)+(.*)")
         if (not name) or (not realm) then
-            print("MDT could not properly receive a preset, please make sure sender "..sender.." has the latest version of MDT installed!")
+            print(string.format(L["receiveErrorUpdate"],sender))
             return
         end
         sender = name.."-"..realm
@@ -594,7 +595,7 @@ end
 local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
     MDT.main_frame.SendingStatusBar:Show()
     MDT.main_frame.SendingStatusBar:SetValue(bytesSent/bytesToSend)
-    MDT.main_frame.SendingStatusBar.value:SetText(string.format("Sending: %.1f",bytesSent/bytesToSend*100).."%")
+    MDT.main_frame.SendingStatusBar.value:SetText(string.format(L["Sending: %.1f"],bytesSent/bytesToSend*100).."%")
     --done sending
     if bytesSent == bytesToSend then
         local distribution = userArgs[1]
@@ -602,14 +603,14 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
         local silent = userArgs[3]
         --restore "Send" and "Live" button
         if MDT.liveSessionActive then
-            MDT.main_frame.LiveSessionButton:SetText("*Live*")
+            MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
         else
-            MDT.main_frame.LiveSessionButton:SetText("Live")
+            MDT.main_frame.LiveSessionButton:SetText(L["Live"])
             MDT.main_frame.LiveSessionButton.text:SetTextColor(1,0.8196,0)
             MDT.main_frame.LinkToChatButton:SetDisabled(false)
             MDT.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
         end
-        MDT.main_frame.LinkToChatButton:SetText("Share")
+        MDT.main_frame.LinkToChatButton:SetText(L["Share"])
         MDT.main_frame.LiveSessionButton:SetDisabled(false)
         MDT.main_frame.SendingStatusBar:Hide()
         --output chat link

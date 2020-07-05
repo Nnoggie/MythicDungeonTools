@@ -1,7 +1,7 @@
 local MDT = MDT
 local db
 local tonumber,tinsert,slen,pairs,ipairs,tostring,next,type,sformat,twipe,max,tremove,DrawLine = tonumber,table.insert,string.len,pairs,ipairs,tostring,next,type,string.format,table.wipe,math.max,table.remove,DrawLine
-
+local L = MDT.L
 local blips = {}
 local preset
 local selectedGreen = {34/255,139/255,34/255,0.7}
@@ -14,21 +14,21 @@ end
 
 MDT.reapingStatic = {
     ["148716"] = {
-        ["name"] = "Risen Soul",
+        ["name"] = L["Risen Soul"],
         ["iconTexture"] = "Interface\\Icons\\Ability_warlock_soulsiphon",
         ["abilities"] = {},
         ["npcId"] = 148716,
         ["outline"] = { 1.02, 0, 2.04, 1 }
     },
     ["148893"] = {
-        ["name"] = "Tormented Soul",
+        ["name"] = L["Tormented Soul"],
         ["iconTexture"] = "Interface\\Icons\\spell_shadow_soulleech_1",
         ["abilities"] = {},
         ["npcId"] = 148893,
             ["outline"] = { 0, 2.04, 1.02, 1 }
     },
     ["148894"] = {
-        ["name"] = "Lost Soul",
+        ["name"] = L["Lost Soul"],
         ["iconTexture"] = "Interface\\Icons\\ability_warlock_improvedsoulleech",
         ["abilities"] = {},
         ["npcId"] = 148894,
@@ -341,23 +341,23 @@ function MDT:DisplayBlipTooltip(blip, shown)
 
     local boss = blip.data.isBoss or false
     local health = MDT:CalculateEnemyHealth(boss,data.health,db.currentDifficulty,data.ignoreFortified)
-    local group = blip.clone.g and " (G "..blip.clone.g..")" or ""
-    local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
+    local group = blip.clone.g and " "..string.format(L["(G %d)"],blip.clone.g) or ""
+    --local upstairs = blip.clone.upstairs and CreateTextureMarkup("Interface\\MINIMAP\\MiniMap-PositionArrows", 16, 32, 16, 16, 0, 1, 0, 0.5,0,-50) or ""
     --[[
         function CreateAtlasMarkup(atlasName, height, width, offsetX, offsetY) return ("|A:%s:%d:%d:%d:%d|a"):format( atlasName , height or 0 , width or 0 , offsetX or 0 , offsetY or 0 );end
     ]]
     local occurence = (blip.data.isBoss and "") or blip.cloneIdx
 
-    local text = upstairs..data.name.." "..occurence..group.."\nLevel "..data.level.." "..data.creatureType.."\n".. MDT:FormatEnemyHealth(health).." HP\n"
+    local text = data.name.." "..occurence..group.."\n"..string.format(L["Level %d %s"],data.level,data.creatureType).."\n".. string.format(L["%s HP"],MDT:FormatEnemyHealth(health)).."\n"
     local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
-    text = text .."Forces: ".. MDT:FormatEnemyForces(count)
+    text = text ..L["Forces"]..": ".. MDT:FormatEnemyForces(count)
     local reapingText
     if blip.data.reaping and db.MDI.enabled and preset.mdi.beguiling == 13 then
         local reapingIcon = CreateTextureMarkup(MDT.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0, 1, 0, 1,0,0) or ""
-        reapingText = "Reaping: "..reapingIcon.." ".. MDT.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
+        reapingText = L["Reaping"]..": "..reapingIcon.." ".. MDT.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
     end
     if reapingText then text = text .. "\n" .. reapingText end
-    text = text .."\n\n[Right click for more info]"
+    text = text .."\n\n["..L["Right click for more info"].."]"
     tooltip.String:SetText(text)
 
     tooltip:ClearAllPoints()
@@ -1103,7 +1103,7 @@ function MDT:GetNPCNameById(npcId)
     end
 end
 
----updates the enemie tables with new count and teemingCount or displayId values
+---updates the enemy tables with new count and teemingCount or displayId values
 ---data is retrieved with the the get_count.py or get_displayids python script
 ---data needs to afterwards be exported manually for every dungeon
 function MDT:UpdateDungeonData(dungeonData)

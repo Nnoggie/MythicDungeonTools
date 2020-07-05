@@ -10,6 +10,7 @@
 libs\load_libs.xml
 #@end-no-lib-strip@
 
+init.lua
 locales.xml
 AceGUIWidget-MythicDungeonToolsPullButton.lua
 AceGUIWidget-MythicDungeonToolsNewPullButton.lua

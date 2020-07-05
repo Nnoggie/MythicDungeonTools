@@ -1,4 +1,5 @@
 local MDT = MDT
+local L = MDT.L
 local MDTcommsObject = MDTcommsObject
 local twipe,tinsert = table.wipe,table.insert
 
@@ -7,7 +8,7 @@ local requestTimer
 ---LiveSession_Enable
 function MDT:LiveSession_Enable()
     if self.liveSessionActive then return end
-    self.main_frame.LiveSessionButton:SetText("*Live*")
+    self.main_frame.LiveSessionButton:SetText(L["*Live*"])
     self.main_frame.LiveSessionButton.text:SetTextColor(0,1,0)
     self.main_frame.LinkToChatButton:SetDisabled(true)
     self.main_frame.LinkToChatButton.text:SetTextColor(0.5,0.5,0.5)
@@ -38,7 +39,7 @@ end
 function MDT:LiveSession_Disable()
     local widget = MDT.main_frame.LiveSessionButton
     widget.text:SetTextColor(widget.normalTextColor.r,widget.normalTextColor.g,widget.normalTextColor.b)
-    widget.text:SetText("Live")
+    widget.text:SetText(L["Live"])
     MDT.main_frame.LinkToChatButton:SetDisabled(false)
     self.main_frame.LinkToChatButton.text:SetTextColor(1,0.8196,0)
     local db = MDT:GetDB()
@@ -102,7 +103,7 @@ function MDT:LiveSession_SessionFound(fullName, uid)
             if self.liveSessionActiveSessions[1][1] ~= fullNamePlayer then
                 self.main_frame.SendingStatusBar:Show()
                 self.main_frame.SendingStatusBar:SetValue(0/1)
-                self.main_frame.SendingStatusBar.value:SetText("Receiving: ...")
+                self.main_frame.SendingStatusBar.value:SetText(L["Receiving: ..."])
                 if not self.main_frame.LoadingSpinner then
                     self.main_frame.LoadingSpinner = CreateFrame("Button", "MDTLoadingSpinner", self.main_frame, "LoadingSpinnerTemplate")
                     self.main_frame.LoadingSpinner:SetPoint("CENTER",self.main_frame,"CENTER")
@@ -217,7 +218,7 @@ function MDT:LiveSession_SendPulls(pulls)
     end
 end
 
----Sends all pulls
+---Sends Affix Week Change
 function MDT:LiveSession_SendAffixWeek(week)
     local distribution = self:IsPlayerInGroup()
     if distribution then

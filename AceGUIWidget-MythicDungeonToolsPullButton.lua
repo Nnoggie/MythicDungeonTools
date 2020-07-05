@@ -1,5 +1,7 @@
 local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local MDT = MDT
+local L = MDT.L
 
 
 local width,height = 248,32
@@ -261,7 +263,7 @@ local methods = {
         self.menu = {}
         if self.index ~= 1 then
             tinsert(self.menu, {
-                text = "Move up",
+                text = L["Pull Drop Move up"],
                 notCheckable = 1,
                 func = function()
                     MDT:MovePullUp(self.index)
@@ -273,7 +275,7 @@ local methods = {
         end
         if self.index<self.maxPulls then
             tinsert(self.menu, {
-                text = "Move down",
+                text = L["Pull Drop Move down"],
                 notCheckable = 1,
                 func = function()
                     MDT:MovePullDown(self.index)
@@ -294,7 +296,7 @@ local methods = {
         end
         ]]--
         tinsert(self.menu, {
-            text = "Insert before",
+            text = L["Pull Drop Insert before"],
             notCheckable = 1,
             func = function()
                 MDT:PresetsAddPull(self.index)
@@ -308,7 +310,7 @@ local methods = {
         })
 
         tinsert(self.menu, {
-            text = "Insert after",
+            text = L["Pull Drop Insert after"],
             notCheckable = 1,
 			func = function()
                 MDT:PresetsAddPull(self.index + 1)
@@ -322,7 +324,7 @@ local methods = {
         })
         if self.index ~= 1 then
             tinsert(self.menu, {
-                text = "Merge up",
+                text = L["Pull Drop Merge up"],
                 notCheckable = 1,
                 func = function()
                     local newIndex = MDT:PresetsMergePulls(self.index, self.index - 1)
@@ -337,7 +339,7 @@ local methods = {
         end
         if self.index < self.maxPulls then
             tinsert(self.menu, {
-                text = "Merge down",
+                text = L["Pull Drop Merge down"],
                 notCheckable = 1,
                 func = function()
                     local newIndex = MDT:PresetsMergePulls(self.index, self.index + 1)
@@ -359,14 +361,14 @@ local methods = {
             })
         end
         tinsert(self.menu, {
-            text = "Color Settings",
+            text = L["Pull Drop Color Settings"],
             notCheckable = 1,
             func = function()
                 MDT:OpenAutomaticColorsDialog()
             end
         })
         tinsert(self.menu, {
-            text = "Colorize Preset",
+            text = L["Pull Drop Colorize Preset"],
             notCheckable = 1,
             func = function()
                 local db = MDT:GetDB()
@@ -406,7 +408,7 @@ local methods = {
             end
         end
         tinsert(self.menu, {
-            text = "Color: ",
+            text = L["Pull Drop Color"]..": ",
             notCheckable = 1,
             hasColorSwatch = true,
             r = self.color.r,
@@ -427,7 +429,7 @@ local methods = {
             cancelFunc = cancelFunc,
         })
         tinsert(self.menu, {
-            text = "Reset Color",
+            text = L["Pull Drop Reset Color"],
             notCheckable = 1,
             func = function()
                 local r,g,b = 34/255,139/255,34/255
@@ -446,7 +448,7 @@ local methods = {
             func = nil
         })
         tinsert(self.menu, {
-            text = "Clear",
+            text = L["Pull Drop Clear Pull"],
             notCheckable = 1,
             func = function()
 				MDT:ClearPull(self.index)
@@ -456,13 +458,13 @@ local methods = {
             end
         })
         tinsert(self.menu, {
-            text = "Reset Preset",
+            text = L["Pull Drop Reset Preset"],
             notCheckable = 1,
             func = function() MDT:OpenClearPresetDialog() end
         })
         if self.maxPulls > 1 then
             tinsert(self.menu, {
-                text = "Delete",
+                text = L["Pull Drop Delete"],
                 notCheckable = 1,
                 func = function()
                     MDT:DeletePull(self.index)
@@ -481,7 +483,7 @@ local methods = {
         end
 
         tinsert(self.menu, {
-            text = "Close",
+            text = L["Pull Drop Close"],
             notCheckable = 1,
             --func = MDT.main_frame.sidePanel.optionsDropDown:Hide()
             func = nil
@@ -491,7 +493,7 @@ local methods = {
         -- Multiselect drop down menu
         self.multiselectMenu = {}
         tinsert(self.multiselectMenu, {
-            text = "Insert before",
+            text = L["Pull Drop Insert before"],
             notCheckable = 1,
             func = function()
                 MDT.U.do_if(MDT:GetSelection(), {
@@ -514,7 +516,7 @@ local methods = {
         })
 
         tinsert(self.multiselectMenu, {
-            text = "Insert after",
+            text = L["Pull Drop Insert after"],
             notCheckable = 1,
             func = function()
                 MDT.U.do_if(MDT:GetSelection(), {
@@ -536,7 +538,7 @@ local methods = {
             end
         })
         tinsert(self.multiselectMenu, {
-            text = "Merge",
+            text = L["Pull Drop Merge"],
             notCheckable = 1,
             func = function()
                 local selected_pulls = MDT.U.copy(MDT:GetSelection())
@@ -566,14 +568,14 @@ local methods = {
             func = nil
         })
         tinsert(self.multiselectMenu, {
-            text = "Color Settings",
+            text = L["Pull Drop Color Settings"],
             notCheckable = 1,
             func = function()
                 MDT:OpenAutomaticColorsDialog()
             end
         })
         tinsert(self.multiselectMenu, {
-            text = "Colorize Preset",
+            text = L["Pull Drop Colorize Preset"],
             notCheckable = 1,
             func = function()
                 local db = MDT:GetDB()
@@ -641,7 +643,7 @@ local methods = {
             end
         end
         tinsert(self.multiselectMenu, {
-            text = "Color: ",
+            text = L["Pull Drop Color"]..": ",
             notCheckable = 1,
             hasColorSwatch = true,
             r = self.color.r,
@@ -662,7 +664,7 @@ local methods = {
             cancelFunc = cancelMultiFunc
         })
         tinsert(self.multiselectMenu, {
-            text = "Reset Color",
+            text = L["Pull Drop Reset Color"],
             notCheckable = 1,
             func = function()
                 local r,g,b = 34/255,139/255,34/255
@@ -692,7 +694,7 @@ local methods = {
             })
         end
         tinsert(self.multiselectMenu, {
-            text = "Clear",
+            text = L["Pull Drop Clear"],
             notCheckable = 1,
             func = function()
                 if not MDT.U.contains(MDT:GetSelection(), self.index) then
@@ -709,13 +711,13 @@ local methods = {
             end
         })
         tinsert(self.multiselectMenu, {
-            text = "Reset Preset",
+            text = L["Pull Drop Reset Preset"],
             notCheckable = 1,
             func = function() MDT:OpenClearPresetDialog() end
         })
         if self.maxPulls > 1 then
             tinsert(self.multiselectMenu, {
-                text = "Delete",
+                text = L["Pull Drop Delete"],
                 notCheckable = 1,
                 func = function()
                     local addPull = false
@@ -763,7 +765,7 @@ local methods = {
         })
 
         tinsert(self.multiselectMenu, {
-            text = "Close",
+            text = L["Pull Drop Close"],
             notCheckable = 1,
             func = MDT.main_frame.sidePanel.optionsDropDown:Hide()
         })

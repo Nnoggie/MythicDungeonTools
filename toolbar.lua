@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local sizex,sizey = 350,33
 local AceGUI = LibStub("AceGUI-3.0")
 local db
@@ -7,7 +9,6 @@ local currentTool
 local objectDrawLayer = "ARTWORK"
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
-local MDT = MDT
 
 ---sets up the toolbar frame and the widgets in it
 function MDT:initToolbar(frame)
@@ -92,7 +93,7 @@ function MDT:initToolbar(frame)
         self:PresetObjectStepBack()
         if self.liveSessionActive then self:LiveSession_SendCommand("undo") end
     end)
-    back.tooltipText = "Undo"
+    back.tooltipText = L["Undo"]
     local t = back.frame:CreateTexture(nil,"ARTWORK")
     back.frame:SetHighlightTexture(t)
     tinsert(widgets,back)
@@ -104,7 +105,7 @@ function MDT:initToolbar(frame)
         self:PresetObjectStepForward()
         if self.liveSessionActive then self:LiveSession_SendCommand("redo") end
     end)
-    forward.tooltipText = "Redo"
+    forward.tooltipText = L["Redo"]
     tinsert(widgets,forward)
 
     ---colorPicker
@@ -115,7 +116,7 @@ function MDT:initToolbar(frame)
         db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b, db.toolbar.color.a  = r, g, b, a
         colorPicker:SetColor(r, g, b, a)
     end)
-    colorPicker.tooltipText = "Colorpicker"
+    colorPicker.tooltipText = L["Colorpicker"]
     tinsert(widgets,colorPicker)
 
     local sizeIndicator
@@ -127,7 +128,7 @@ function MDT:initToolbar(frame)
         if db.toolbar.brushSize < 1 then db.toolbar.brushSize = 1 end
         sizeIndicator:SetText(db.toolbar.brushSize)
     end)
-    minus.tooltipText = "Decrease Brush Size"
+    minus.tooltipText = L["Decrease Brush Size"]
     tinsert(widgets,minus)
 
     ---sizeIndicator
@@ -157,7 +158,7 @@ function MDT:initToolbar(frame)
         db.toolbar.brushSize = newSize
         sizeIndicator:SetText(db.toolbar.brushSize)
     end)
-    sizeIndicator.tooltipText = "Brush Size"
+    sizeIndicator.tooltipText = L["Brush Size"]
     tinsert(widgets,sizeIndicator)
 
     ---plus
@@ -167,7 +168,7 @@ function MDT:initToolbar(frame)
         db.toolbar.brushSize = db.toolbar.brushSize + 1
         sizeIndicator:SetText(db.toolbar.brushSize)
     end)
-    plus.tooltipText = "Increase Brush Size"
+    plus.tooltipText = L["Increase Brush Size"]
     tinsert(widgets,plus)
 
     ---pencil
@@ -177,7 +178,7 @@ function MDT:initToolbar(frame)
     pencil:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "pencil" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("pencil") end
     end)
-    pencil.tooltipText = "Drawing: Freehand"
+    pencil.tooltipText = L["Drawing: Freehand"]
     tinsert(widgets,pencil)
 
     ---line
@@ -187,7 +188,7 @@ function MDT:initToolbar(frame)
     line:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "line" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("line") end
     end)
-    line.tooltipText = "Drawing: Line"
+    line.tooltipText = L["Drawing: Line"]
     tinsert(widgets,line)
 
     ---arrow
@@ -197,7 +198,7 @@ function MDT:initToolbar(frame)
     arrow:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "arrow" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("arrow") end
     end)
-    arrow.tooltipText = "Drawing: Arrow"
+    arrow.tooltipText = L["Drawing: Arrow"]
     tinsert(widgets,arrow)
 
     ---note
@@ -207,7 +208,7 @@ function MDT:initToolbar(frame)
     note:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "note" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("note") end
     end)
-    note.tooltipText = "Insert Note"
+    note.tooltipText = L["Insert Note"]
     tinsert(widgets,note)
 
     ---mover
@@ -217,7 +218,7 @@ function MDT:initToolbar(frame)
     mover:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "mover" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("mover") end
     end)
-    mover.tooltipText = "Move Object"
+    mover.tooltipText = L["Move Object"]
     tinsert(widgets,mover)
 
     ---cogwheel
@@ -228,7 +229,7 @@ function MDT:initToolbar(frame)
         InterfaceOptionsFrame_OpenToCategory("MythicDungeonTools")
         MDT:HideInterface()
     end)
-    cogwheel.tooltipText = "Settings"
+    cogwheel.tooltipText = L["Settings"]
     --tinsert(widgets,cogwheel)
 
     ---eraser
@@ -238,20 +239,20 @@ function MDT:initToolbar(frame)
     eraser:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "eraser" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("eraser") end
     end)
-    eraser.tooltipText = "Drawing: Eraser"
+    eraser.tooltipText = L["Drawing: Eraser"]
     tinsert(widgets,eraser)
 
     ---delete
     local delete = AceGUI:Create("Icon")
     delete:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
     delete:SetCallback("OnClick",function (widget,callbackName)
-        local prompt = "Do you wish to delete ALL drawings from the current preset?\nThis cannot be undone\n\n"
-        self:OpenConfirmationFrame(450,150,"Delete ALL drawings","Delete",prompt, function()
+        local prompt = string.format(L["deleteAllDrawingsPrompt"],"\n","\n","\n")
+        self:OpenConfirmationFrame(450,150,L["Delete ALL drawings"],L["Delete"],prompt, function()
             self:DeletePresetObjects()
             if self.liveSessionActive then self:LiveSession_SendCommand("deletePresetObjects") end
         end)
     end)
-    delete.tooltipText = "Delete all drawings"
+    delete.tooltipText = L["Delete ALL drawings"]
     tinsert(widgets,delete)
 
     for k,widget in ipairs(widgets) do
@@ -265,7 +266,6 @@ function MDT:initToolbar(frame)
             MDT:ToggleToolbarTooltip(false)
         end)
         frame.toolbar.widgetGroup:AddChild(widget)
-
     end
 
     frame.toolbar:SetSize(sizex, sizey)
@@ -636,8 +636,6 @@ function MDT:StartLineDrawing()
             line:Show()
             MDT:DrawCircle(startx,starty,(db.toolbar.brushSize*0.3)*scale,db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle1,true)
             MDT:DrawCircle(endx,endy,(db.toolbar.brushSize*0.3)*scale,db.toolbar.color,objectDrawLayer,drawLayer,true,nil,circle2,true)
-
-
             nobj.d[6] = drawLayer
         end
     end)
@@ -993,7 +991,7 @@ local function makeNoteEditbox()
     editbox.frame:SetBackdropColor(1,1,1,0)
     editbox:SetLayout("Flow")
     editbox.multiBox = AceGUI:Create("MultiLineEditBox")
-    editbox.multiBox:SetLabel("Note Text:")
+    editbox.multiBox:SetLabel(L["Note Text:"])
 
     editbox.multiBox:SetCallback("OnEnterPressed",function(widget,callbackName,text)
         for note,_ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
@@ -1031,7 +1029,7 @@ local currentNote
 local noteMenu = {}
 do
     tinsert(noteMenu, {
-        text = "Edit",
+        text = L["Edit"],
         notCheckable = 1,
         func = function()
             currentNote:OpenEditBox()
@@ -1044,7 +1042,7 @@ do
         func = nil
     })
     tinsert(noteMenu, {
-        text = "Delete",
+        text = L["Delete"],
         notCheckable = 1,
         func = function()
             deleteNoteObj(currentNote)
@@ -1057,7 +1055,7 @@ do
         func = nil
     })
     tinsert(noteMenu, {
-        text = "Close",
+        text = L["Close"],
         notCheckable = 1,
         func = function()
             noteDropDown:Hide()
