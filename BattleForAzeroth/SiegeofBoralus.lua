@@ -112,7 +112,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -112.09388221952;
             ["x"] = 526.6887930726;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeat Seargeant Bainbridge / Chopper Redhook";
+            ["graveyardDescription"] = L["siegeGraveyardNote1"];
             ["type"] = "graveyard";
         };
         [2] = {
@@ -126,14 +126,14 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -334.61016080079;
             ["x"] = 432.0393310099;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Dread Captain Lockwood";
+            ["graveyardDescription"] = L["siegeGraveyardNote2"];
             ["type"] = "graveyard";
         };
         [4] = {
             ["y"] = -462.91658652644;
             ["x"] = 405.60201958621;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeating Hadal Darkfathom";
+            ["graveyardDescription"] = L["siegeGraveyardNote3"];
             ["type"] = "graveyard";
         };
         [5] = {
@@ -152,14 +152,14 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -229.95502100789;
             ["x"] = 471.82728422311;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "G72 Gutters can be used for Enemy forces by tagging them with damage and triggering the instant-kill from the footmen next to them.";
+            ["text"] = L["siegeGutterNote2"];
             ["type"] = "generalNote";
         };
         [8] = {
             ["y"] = -430.03927979814;
             ["x"] = 465.16418914774;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "G39 can be duplicated if a World Quest is present in the area.";
+            ["text"] = L["siegeDuplicateNote"];
             ["type"] = "generalNote";
         };
         [9] = {

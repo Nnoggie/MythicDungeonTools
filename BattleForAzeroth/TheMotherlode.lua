@@ -35,35 +35,35 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -262.08125072401;
             ["x"] = 367.76549732401;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Coin-Operated Crowd Pummeler";
+            ["graveyardDescription"] = L["mlGraveyardNote1"];
             ["type"] = "graveyard";
         };
         [6] = {
             ["y"] = -121.09600689235;
             ["x"] = 275.70035521298;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after reaching the end of the Mine Cart Ride";
+            ["graveyardDescription"] = L["mlGraveyardNote2"];
             ["type"] = "graveyard";
         };
         [7] = {
             ["y"] = -112.60568055995;
             ["x"] = 479.54906443908;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Rixxa Fluxflame";
+            ["graveyardDescription"] = L["mlGraveyardNote3"];
             ["type"] = "graveyard";
         };
         [8] = {
             ["y"] = -273.73565889455;
             ["x"] = 409.95526615971;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed";
+            ["text"] = L["mlJockeyNote"];
             ["type"] = "generalNote";
         };
         [9] = {
             ["y"] = -348.49370305917;
             ["x"] = 415.73284153458;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "Mech Jockey 21 and 22 have to be tagged in the moment their Peacekeepers are destroyed";
+            ["text"] = L["mlJockeyNote"];
             ["type"] = "generalNote";
         };
         [10] = {

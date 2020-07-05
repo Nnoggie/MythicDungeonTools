@@ -326,8 +326,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -338.999309754;
             ["x"] = 442.00078849681;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "Note on G52:\
-G52 will not be present while the Worldquest to defeat Matron Christiane is active.";
+            ["text"] = string.format(L["wcmWorldquestNote"],"\n");
             ["type"] = "generalNote";
         };
     };

@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 15
 MDT.dungeonTotalCount[dungeonIndex] = {normal=198,teeming=237,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
@@ -28,7 +30,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [1] = true;
                 [8] = true;
             };
-            ["text"] = "Note on Teeming:\n\nG29 is not always present.\nTeeming enemies of G2 are not always present.\nG27 is not always present";
+            ["text"] = string.format(L["atalTeemingNote"],"\n","\n","\n","\n");
             ["type"] = "generalNote";
             ["scale"] = 2;
         };
@@ -40,7 +42,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [1] = true;
                 [8] = true;
             };
-            ["text"] = "Note on Teeming:\n\nG29 is not always present.\nTeeming enemies of G2 are not always present.\nG27 is not always present";
+            ["text"] = string.format(L["atalTeemingNote"],"\n","\n","\n","\n");
             ["type"] = "generalNote";
             ["scale"] = 2;
         };
@@ -64,7 +66,7 @@ MDT.mapPOIs[dungeonIndex] = {
             };
             ["y"] = -207.84478938144;
             ["x"] = 587.56733659681;
-            ["tooltipText"] = "Entropic Spire of Ny'alotha";
+            ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
             ["template"] = "VignettePinTemplate";
         };
         [6] = {
@@ -87,7 +89,7 @@ MDT.mapPOIs[dungeonIndex] = {
             };
             ["y"] = -257.18926210658;
             ["x"] = 462.89828402862;
-            ["tooltipText"] = "Brutal Spire of Ny'alotha";
+            ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
             ["template"] = "VignettePinTemplate";
         };
         [7] = {
@@ -104,7 +106,7 @@ MDT.mapPOIs[dungeonIndex] = {
             };
             ["y"] = -349.89286786923;
             ["x"] = 581.14504888138;
-            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
             ["template"] = "VignettePinTemplate";
         };
         [8] = {
@@ -121,7 +123,7 @@ MDT.mapPOIs[dungeonIndex] = {
             };
             ["y"] = -139.59233583327;
             ["x"] = 417.6415060524;
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
             ["template"] = "VignettePinTemplate";
         };
         [9] = {
@@ -138,7 +140,7 @@ MDT.mapPOIs[dungeonIndex] = {
             };
             ["y"] = -137.50463674291;
             ["x"] = 418.19472278238;
-            ["tooltipText"] = "Cursed Spire of Ny'alotha";
+            ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
             ["template"] = "VignettePinTemplate";
         };
         [10] = {
@@ -155,7 +157,7 @@ MDT.mapPOIs[dungeonIndex] = {
             };
             ["y"] = -349.61787819522;
             ["x"] = 580.99671668925;
-            ["tooltipText"] = "Defiled Spire of Ny'alotha";
+            ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
             ["template"] = "VignettePinTemplate";
         };
     };

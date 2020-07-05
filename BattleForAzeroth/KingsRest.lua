@@ -1,5 +1,5 @@
 local MDT = MDT
-local L = MDT
+local L = MDT.L
 local dungeonIndex = 17
 MDT.dungeonTotalCount[dungeonIndex] = {normal=246,teeming=286,teemingEnabled=true}
 
@@ -16,7 +16,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -422.22745110791;
             ["x"] = 369.133435873;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeating The Council of Tribes";
+            ["graveyardDescription"] = L["krGraveyardNote1"];
             ["type"] = "graveyard";
         };
         [3] = {
@@ -36,7 +36,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [8] = true;
             };
             ["difficulty"] = 10;
-            ["text"] = "This Brute will stop patrolling when he reaches Emissary of the Tides 7 (G13)";
+            ["text"] = L["krBrutePatrolNote"];
             ["season"] = 3;
             ["type"] = "generalNote";
         };

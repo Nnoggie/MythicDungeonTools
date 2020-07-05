@@ -1,6 +1,6 @@
-local dungeonIndex = 16
 local MDT = MDT
 local L = MDT.L
+local dungeonIndex = 16
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -104,14 +104,14 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -348.54647419431;
             ["x"] = 372.07463735;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeating Council o' Captains.";
+            ["graveyardDescription"] = L["freeholdGraveyardDescription2"];
             ["type"] = "graveyard";
         };
         [3] = {
             ["y"] = -343.53532845441;
             ["x"] = 576.72706599388;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after defeating Skycap'n Kragg.";
+            ["graveyardDescription"] = L["freeholdGraveyardDescription1"];
             ["type"] = "graveyard";
         };
         [4] = {
@@ -124,7 +124,7 @@ MDT.mapPOIs[dungeonIndex] = {
                 [8] = true;
                 [11] = true;
             };
-            ["text"] = "Week 2/5/8/11: G53 is not patrolling. It is stationary at Emissray of the Tides 14 (G53).";
+            ["text"] = L["freeholdBeguilingPatrolNote"];
             ["type"] = "generalNote";
             ["season"] = 3;
         };

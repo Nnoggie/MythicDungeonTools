@@ -25,14 +25,14 @@ MDT.mapPOIs[dungeonIndex] = {
          ["y"] = -267.29618127731;
          ["x"] = 370.20027720976;
          ["template"] = "DeathReleasePinTemplate";
-         ["graveyardDescription"] = "Unlocks after killing Merektha";
+         ["graveyardDescription"] = L["templeGraveyardNote1"];
          ["type"] = "graveyard";
       };
       [4] = {
          ["y"] = -165.06919033154;
          ["x"] = 382.02713945136;
          ["template"] = "DeathReleasePinTemplate";
-         ["graveyardDescription"] = "Unlocks after completing Skull of Sethraliss Event";
+         ["graveyardDescription"] = L["templeGraveyardNote2"];
          ["type"] = "graveyard";
       };
       [5] = {

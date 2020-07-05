@@ -57,8 +57,7 @@ MDT.mapPOIs[dungeonIndex] = {
             [7] = true;
          };
          ["difficulty"] = 10;
-         ["text"] = "Spawns of Void-Touched Emissary 2 and 3 are random.\
-Only one of them will be present at a time.";
+         ["text"] = string.format(L["underrotVoidNote"],"\n");
          ["season"] = 3;
          ["type"] = "generalNote";
       };
@@ -119,8 +118,7 @@ Only one of them will be present at a time.";
             [7] = true;
          };
          ["difficulty"] = 10;
-         ["text"] = "Spawns of Void-Touched Emissary 2 and 3 are random.\
-Only one of them will be present at a time.";
+         ["text"] = string.format(L["underrotVoidNote"],"\n");
          ["season"] = 3;
          ["type"] = "generalNote";
       };
@@ -180,7 +178,7 @@ Only one of them will be present at a time.";
          ["x"] = 392.23609464769;
          ["template"] = "MapLinkPinTemplate";
          ["scale"] = 2;
-         ["text"] = "Matron 4+5 can spawn on either left or right platform";
+         ["text"] = L["underrotMatronNote"];
          ["type"] = "generalNote";
       };
    };

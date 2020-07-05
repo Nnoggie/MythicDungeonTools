@@ -65,7 +65,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -281.83580607976;
             ["x"] = 462.50964014617;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing The Sand Queen";
+            ["graveyardDescription"] = L["tdGraveyardNote1"];
             ["type"] = "graveyard";
         };
         [4] = {
@@ -128,7 +128,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "";
             ["lockpick"] = true;
-            ["doorName"] = "Sewer Gate";
+            ["doorName"] = L["Sewer Gate"];
             ["type"] = "door";
         };
         [4] = {
@@ -193,7 +193,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "";
             ["lockpick"] = true;
-            ["doorName"] = "Prison Gate";
+            ["doorName"] = L["Prison Gate"];
             ["type"] = "door";
         };
         [4] = {
@@ -202,111 +202,79 @@ MDT.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "";
             ["lockpick"] = true;
-            ["doorName"] = "Prison Gate";
+            ["doorName"] = L["Prison Gate"];
             ["type"] = "door";
         };
         [5] = {
             ["y"] = -326.6835033043;
             ["x"] = 298.43826548799;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [6] = {
             ["y"] = -236.06541579087;
             ["x"] = 358.09242143672;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [7] = {
             ["y"] = -418.6335527449;
             ["x"] = 429.49956431235;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [8] = {
             ["y"] = -303.0449876628;
             ["x"] = 317.04689195555;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [9] = {
             ["y"] = -254.86541064356;
             ["x"] = 347.29237946953;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [10] = {
             ["y"] = -369.72975641613;
             ["x"] = 461.57195383542;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [11] = {
             ["y"] = -392.9440473463;
             ["x"] = 445.50049335717;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [12] = {
             ["y"] = -322.22977757645;
             ["x"] = 491.92910587132;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Chance to contain an ally which can give you a buff dependant on their race:\
-Orc/Dwarf: 10% Str/Agi\
-Undead/Human: 10% Stamina\
-Tauren/Draenei: 1% HP+Mana per 10s\
-Blood Elf/Gnome: 10% Intellect";
+            ["doorDescription"] = string.format(L["tdBuffGateNote"],"\n","\n","\n","\n");
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [13] = {
@@ -398,68 +366,68 @@ Blood Elf/Gnome: 10% Intellect";
             ["y"] = -358.690180572;
             ["x"] = 336.15677336968;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Jes Howlis";
+            ["graveyardDescription"] = L["tdGraveyardNote2"];
             ["type"] = "graveyard";
         };
         [4] = {
             ["y"] = -234.18683041859;
             ["x"] = 322.38299113063;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["doorDescription"] = L["tdHowlisNote"];
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [5] = {
             ["y"] = -183.15399599877;
             ["x"] = 359.05915201413;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["doorDescription"] = L["tdHowlisNote"];
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [6] = {
             ["y"] = -208.98680115971;
             ["x"] = 341.18300314946;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["doorDescription"] = L["tdHowlisNote"];
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [7] = {
             ["y"] = -278.27853729051;
             ["x"] = 491.23264157131;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["doorDescription"] = L["tdHowlisNote"];
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [8] = {
             ["y"] = -305.64700893053;
             ["x"] = 475.44313696461;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["doorDescription"] = L["tdHowlisNote"];
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [9] = {
             ["y"] = -330.91014402277;
             ["x"] = 460.17995520134;
             ["template"] = "MapLinkPinTemplate";
-            ["doorDescription"] = "Jes Howlis will open this cell and aggro enemies inside of it";
+            ["doorDescription"] = L["tdHowlisNote"];
             ["lockpick"] = true;
-            ["doorName"] = "Prison Bars";
+            ["doorName"] = L["Prison Bars"];
             ["type"] = "door";
         };
         [10] = {
             ["y"] = -210.61333863941;
             ["x"] = 359.14450923037;
             ["template"] = "MapLinkPinTemplate";
-            ["text"] = "G23 is fighting and will eventually kill Block Warden 1.";
+            ["text"] = L["tdWardenFightingNote"];
             ["type"] = "generalNote";
         };
     };
@@ -488,7 +456,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "";
             ["lockpick"] = true;
-            ["doorName"] = "Prison Gate";
+            ["doorName"] = L["Prison Gate"];
             ["type"] = "door";
         };
         [4] = {
@@ -497,7 +465,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["template"] = "MapLinkPinTemplate";
             ["doorDescription"] = "";
             ["lockpick"] = true;
-            ["doorName"] = "Prison Gate";
+            ["doorName"] = L["Prison Gate"];
             ["type"] = "door";
         };
         [5] = {
@@ -559,7 +527,7 @@ Blood Elf/Gnome: 10% Intellect";
             ["y"] = -482.48947620288;
             ["x"] = 427.66171594679;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Knight Captain Valyri";
+            ["graveyardDescription"] = L["tdGraveyardNote3"];
             ["type"] = "graveyard";
         };
         [6] = {

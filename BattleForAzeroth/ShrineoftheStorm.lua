@@ -171,7 +171,7 @@ MDT.mapPOIs[dungeonIndex] = {
             ["y"] = -252.33727223727;
             ["x"] = 246.66820971448;
             ["template"] = "DeathReleasePinTemplate";
-            ["graveyardDescription"] = "Unlocks after killing Lord Stormsong";
+            ["graveyardDescription"] = L["shrineGraveyardNote1"];
             ["type"] = "graveyard";
         };
     };

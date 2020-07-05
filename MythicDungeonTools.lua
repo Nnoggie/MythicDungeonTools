@@ -370,7 +370,7 @@ local dungeonSubLevels = {
         [2] = L["Ruin's Descent"],
     },
     [23] = {
-        [1] = L["Tol Dagor Sublevel5"],
+        [1] = L["Tol Dagor Sublevel1"],
         [2] = L["The Drain"],
         [3] = L["The Brig"],
         [4] = L["Detention Block"],
