@@ -64,6 +64,23 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
 	end
 end
 
+function MDT:GetLocaleIndex()
+    local localeToIndex = {
+        ["enUS"] = 1,
+        ["deDE"] = 2,
+        ["esES"] = 3,
+        ["esMX"] = 4,
+        ["frFR"] = 5,
+        ["itIT"] = 6,
+        ["ptBR"] = 7,
+        ["ruRU"] = 8,
+        ["koKR"] = 9,
+        ["zhCN"] = 10,
+        ["zhTW"] = 11,
+    }
+    return localeToIndex[GetLocale()] or 1
+end
+
 local initFrames
 -------------------------
 --- Saved Variables  ----
@@ -101,6 +118,7 @@ local defaultSavedVars = {
             customPaletteValues = {},
             numberCustomColors = 12,
         },
+        language = MDT:GetLocaleIndex(),
 	},
 }
 do
@@ -4235,6 +4253,31 @@ function MDT:RegisterOptions()
         name = "Mythic Dungeon Tools",
         type = 'group',
         args = {
+            --[[
+            language = {
+                type = 'select',
+                style = 'dropdown',
+                name = "Language",
+                desc = "Sets the Language of the AddOn. Requires Reload to take effect",
+                values = {
+                    [1] = "English",
+                    [2] = "Deutsch",
+                    [3] = "Español (esES)",
+                    [4] = "Español (esMX)",
+                    [5] = "Français",
+                    [6] = "Italiano",
+                    [7] = "Português Brasileiro",
+                    [8] = "Русский",
+                    [9] = "한국어",
+                    [10] = "简体中文 (zhCN)",
+                    [11] = "國語 (zhTW)",
+                },
+                get = function() return db.language end,
+                set = function(_, newValue)
+                    db.language = newValue
+                end,
+            },
+            ]]
             enable = {
                 type = 'toggle',
                 name = L["Enable Minimap Button"],
@@ -4287,7 +4330,6 @@ function MDT:RegisterOptions()
                 set = function(_,newValue) db.enemyStyle = newValue end,
                 style = "dropdown",
             },
-
         }
     }
 	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MythicDungeonTools", MDT.blizzardOptionsMenuTable)
