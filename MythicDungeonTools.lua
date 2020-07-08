@@ -2108,7 +2108,7 @@ function MDT:UpdatePullTooltip(tooltip)
             local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or MDT.dungeonTotalCount[db.currentDungeonIdx].normal
 
             local text = L["Forces"]..": ".. MDT:FormatEnemyForces(pullForces,totalForcesMax,false)
-            text = text.. "\n"..L["Total"].." :".. MDT:FormatEnemyForces(totalForces,totalForcesMax,true)
+            text = text.. "\n"..L["Total"]..": ".. MDT:FormatEnemyForces(totalForces,totalForcesMax,true)
 
             tooltip.botString:SetText(text)
             tooltip.botString:Show()
