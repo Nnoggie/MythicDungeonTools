@@ -329,7 +329,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Polymorph"] = true;
          ["Silence"] = true;
       };
-      ["name"] = "Underrot Tick";
+      ["name"] = L["Underrot Tick"];
       ["health"] = 153699;
       ["displayId"] = 81808;
       ["creatureType"] = L["Beast"];
@@ -479,7 +479,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Chosen Blood Matron";
+      ["name"] = L["Chosen Blood Matron"];
       ["health"] = 1229592;
       ["displayId"] = 85816;
       ["creatureType"] = L["Humanoid"];
@@ -575,7 +575,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
       };
       ["count"] = 4;
-      ["name"] = "Fanatical Headhunter";
+      ["name"] = L["Fanatical Headhunter"];
       ["displayId"] = 79499;
       ["creatureType"] = L["Humanoid"];
       ["level"] = 120;
@@ -709,7 +709,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 83311;
       ["creatureType"] = L["Aberration"];
       ["level"] = 120;
-      ["name"] = "Living Rot";
+      ["name"] = L["Living Rot"];
       ["scale"] = 1;
    };
    [16] = {
@@ -735,7 +735,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2131;
       ["instanceID"] = 1022;
       ["count"] = 0;
-      ["name"] = "Cragmaw the Infested";
+      ["name"] = L["Cragmaw the Infested"];
       ["displayId"] = 78855;
       ["creatureType"] = L["Beast"];
       ["level"] = 122;
@@ -766,7 +766,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2130;
       ["instanceID"] = 1022;
-      ["name"] = "Sporecaller Zancha";
+      ["name"] = L["Sporecaller Zancha"];
       ["health"] = 5379465;
       ["displayId"] = 81977;
       ["creatureType"] = L["Undead"];
@@ -885,7 +885,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 80467;
       ["creatureType"] = L["Elemental"];
       ["level"] = 120;
-      ["name"] = "Diseased Lasher";
+      ["name"] = L["Diseased Lasher"];
       ["scale"] = 1;
    };
    [18] = {
@@ -909,7 +909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2158;
       ["instanceID"] = 1022;
       ["scale"] = 1;
-      ["name"] = "Unbound Abomination";
+      ["name"] = L["Unbound Abomination"];
       ["displayId"] = 86632;
       ["creatureType"] = L["Humanoid"];
       ["level"] = 120;
@@ -971,7 +971,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["count"] = 4;
-      ["name"] = "Devout Blood Priest";
+      ["name"] = L["Devout Blood Priest"];
       ["displayId"] = 75861;
       ["creatureType"] = L["Humanoid"];
       ["level"] = 120;
@@ -1070,7 +1070,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["name"] = "Reanimated Guardian";
+      ["name"] = L["Reanimated Guardian"];
       ["health"] = 768495;
       ["displayId"] = 88121;
       ["creatureType"] = L["Undead"];
@@ -1296,7 +1296,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["id"] = 155432;
-      ["name"] = "Enchanted Emissary";
+      ["name"] = L["Enchanted Emissary"];
       ["ignoreFortified"] = true;
       ["health"] = 15369884;
       ["displayId"] = 39391;
@@ -1352,7 +1352,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 90742;
       ["creatureType"] = L["Aberration"];
       ["corrupted"] = true;
-      ["name"] = "Samh'rek, Beckoner of Chaos";
+      ["name"] = L["Samh'rek, Beckoner of Chaos"];
       ["id"] = 161243;
    };
    [11] = {
@@ -1452,7 +1452,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["name"] = "Fallen Deathspeaker";
+      ["name"] = L["Fallen Deathspeaker"];
       ["health"] = 768495;
       ["displayId"] = 85815;
       ["creatureType"] = L["Undead"];
@@ -1501,7 +1501,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["creatureType"] = L["Aberration"];
       ["level"] = 122;
       ["health"] = 2151786;
-      ["name"] = "Urg'roth, Breaker of Heroes";
+      ["name"] = L["Urg'roth, Breaker of Heroes"];
    };
    [3] = {
       ["clones"] = {
@@ -1615,7 +1615,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Imprison"] = true;
       };
-      ["name"] = "Fetid Maggot";
+      ["name"] = L["Fetid Maggot"];
       ["health"] = 768495;
       ["displayId"] = 88361;
       ["creatureType"] = L["Beast"];
@@ -1654,7 +1654,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
-      ["name"] = "Befouled Spirit";
+      ["name"] = L["Befouled Spirit"];
       ["health"] = 768495;
       ["displayId"] = 80852;
       ["creatureType"] = L["Aberration"];
@@ -1765,7 +1765,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["name"] = "Bloodsworn Defiler";
+      ["name"] = L["Bloodsworn Defiler"];
       ["health"] = 768495;
       ["displayId"] = 79182;
       ["creatureType"] = L["Undead"];
@@ -1816,7 +1816,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["scale"] = 1.4;
       ["level"] = 122;
       ["teemingCount"] = 6;
-      ["name"] = "Blood of the Corruptor";
+      ["name"] = L["Blood of the Corruptor"];
       ["displayId"] = 92229;
       ["creatureType"] = L["Aberration"];
       ["corrupted"] = true;
@@ -1945,7 +1945,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 84808;
       ["creatureType"] = L["Aberration"];
       ["level"] = 120;
-      ["name"] = "Grotesque Horror";
+      ["name"] = L["Grotesque Horror"];
       ["scale"] = 1;
    };
    [7] = {
@@ -2081,7 +2081,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 76653;
       ["creatureType"] = L["Beast"];
       ["level"] = 120;
-      ["name"] = "Feral Bloodswarmer";
+      ["name"] = L["Feral Bloodswarmer"];
       ["scale"] = 1;
    };
    [14] = {
@@ -2198,7 +2198,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["count"] = 6;
-      ["name"] = "Faceless Corruptor";
+      ["name"] = L["Faceless Corruptor"];
       ["displayId"] = 84376;
       ["creatureType"] = L["Humanoid"];
       ["level"] = 120;
@@ -2227,7 +2227,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["name"] = "Voidweaver Mal'thir";
+      ["name"] = L["Voidweaver Mal'thir"];
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -2449,7 +2449,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["id"] = 155434;
-      ["name"] = "Emissary of the Tides";
+      ["name"] = L["Emissary of the Tides"];
       ["ignoreFortified"] = true;
       ["health"] = 614795;
       ["displayId"] = 39391;
@@ -2480,7 +2480,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2157;
       ["instanceID"] = 1022;
-      ["name"] = "Elder Leaxa";
+      ["name"] = L["Elder Leaxa"];
       ["health"] = 3688770;
       ["displayId"] = 82394;
       ["creatureType"] = L["Humanoid"];
