@@ -1,3 +1,5 @@
+v3.1.0
+- Localization for many Languages and Regions
 v3.0.9
 - MDT will from now on be known as "Mythic Dungeon Tools"
 v3.0.8

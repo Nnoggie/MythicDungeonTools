@@ -1,18 +1,18 @@
 ## Interface: 80300
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 3.0.9
+## Version: 3.1.0
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-deDE: Tool für das Planen und Optimieren von Mythic+ Dungeons
-## Notes-esES: Tool for planning and optimizing Mythic+ dungeon runs
-## Notes-esMX: Tool for planning and optimizing Mythic+ dungeon runs
-## Notes-frFR: Tool for planning and optimizing Mythic+ dungeon runs
-## Notes-itIT: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-esES: Herramienta para planificar y optimizar las rutas de mazmorras de Piedras Angulares
+## Notes-esMX: Herramienta para planificar y optimizar las rutas de mazmorras de Piedras Angulares
+## Notes-frFR: Outil pour planifier et optimiser vos parcours de donjons Mythique+
+## Notes-itIT: Strumento che permette di pianificare e ottimizzare le spedizioni Mitica+
 ## Notes-ptBR: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-ruRU: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-koKR: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-zhCN: Tool for planning and optimizing Mythic+ dungeon runs
-## Notes-zhTW: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MythicDungeonToolsDB
 
