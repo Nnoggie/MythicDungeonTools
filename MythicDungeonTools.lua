@@ -1273,7 +1273,7 @@ function MDT:MakeSidePanel(frame)
         if IsShiftKeyDown() then
             --delete all profiles
             local numPresets = self:CountPresets()
-            local prompt = string.format(L["deleteAllWarning"],numPresets)
+            local prompt = string.format(L["deleteAllWarning"],"\n","\n",numPresets,"\n")
             MDT:OpenConfirmationFrame(450,150,L["Delete ALL presets"],L["Delete"],prompt, MDT.DeleteAllPresets)
         else
             MDT:HideAllDialogs()
@@ -2572,7 +2572,7 @@ function MDT:OpenNewPresetDialog()
 	table.insert(presetList,1,"Empty")
 	MDT.main_frame.PresetCreationDropDown:SetList(presetList)
 	MDT.main_frame.PresetCreationDropDown:SetValue(1)
-	MDT.main_frame.PresetCreationEditbox:SetText("Preset "..countPresets+1)
+	MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"].." "..countPresets+1)
     MDT.main_frame.presetCreationFrame:ClearAllPoints()
 	MDT.main_frame.presetCreationFrame:SetPoint("CENTER", MDT.main_frame,"CENTER",0,50)
 	MDT.main_frame.presetCreationFrame:SetStatusText("")
@@ -4212,10 +4212,10 @@ function MDT:CreateTutorialButton(parent)
         FramePos = { x = 0,	y = 0 },
         FrameSize = { width = sizex, height = sizey	},
         [1] = { ButtonPos = { x = 205,	y = 0 }, HighLightBox = { x = 0, y = 0, width = 200, height = 56 },		ToolTipDir = "RIGHT",		ToolTipText = L["helpPlateDungeonSelect"] },
-        [2] = { ButtonPos = { x = 205,	y = -210*scale }, HighLightBox = { x = 0, y = -58, width = (sizex-6)*scale, height = (sizey*scale)-58 },	ToolTipDir = "RIGHT",	ToolTipText = L["helpPlateNPC"] },
+        [2] = { ButtonPos = { x = 205,	y = -210*scale }, HighLightBox = { x = 0, y = -58, width = (sizex-6)*scale, height = (sizey*scale)-58 },	ToolTipDir = "RIGHT",	ToolTipText = string.format(L["helpPlateNPC"],"\n","\n") },
         [3] = { ButtonPos = { x = 900*scale,	y = 0*scale }, HighLightBox = { x = 838*scale, y = 30, width = 251, height = 115 },	ToolTipDir = "LEFT",	ToolTipText = L["helpPlatePresets"] },
         [4] = { ButtonPos = { x = 900*scale,	y = -87*scale }, HighLightBox = { x = 838*scale, y = 30-115, width = 251, height = 102 },	ToolTipDir = "LEFT",	ToolTipText = L["helpPlateDungeon"] },
-        [5] = { ButtonPos = { x = 900*scale,	y = -(115+102*scale) }, HighLightBox = { x = 838*scale, y = (30-(115+102)), width = 251, height = (sidePanelHeight)+43 },	ToolTipDir = "LEFT",	ToolTipText = L["helpPlatePulls"] },
+        [5] = { ButtonPos = { x = 900*scale,	y = -(115+102*scale) }, HighLightBox = { x = 838*scale, y = (30-(115+102)), width = 251, height = (sidePanelHeight)+43 },	ToolTipDir = "LEFT",	ToolTipText = string.format(L["helpPlatePulls"],"\n") },
     }
     if not parent.HelpButton then
         parent.HelpButton = CreateFrame("Button","MDTMainHelpPlateButton",parent,"MainHelpPlateButton")

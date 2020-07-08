@@ -3,6 +3,16 @@
 ## Author: Nnoggie
 ## Version: 3.0.9
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-deDE: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-esES: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-esMX: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-frFR: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-itIT: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-ptBR: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-ruRU: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-koKR: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-zhCN: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-zhTW: Tool for planning and optimizing Mythic+ dungeon runs
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MythicDungeonToolsDB
 
