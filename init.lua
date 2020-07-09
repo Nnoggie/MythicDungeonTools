@@ -1,0 +1,3 @@
+local AddonName, MDT = ...
+_G["MDT"] = MDT
+MDT.L = {}

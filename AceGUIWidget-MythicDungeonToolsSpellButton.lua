@@ -1,35 +1,50 @@
-local Type, Version = "MethodDungeonToolsNewPullButton", 1
+local Type, Version = "MDTSpellButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width,height = 248,32
+local tinsert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver = table.insert,SetPortraitToTexture,SetPortraitTextureFromCreatureDisplayID,GetItemQualityColor,MouseIsOver
 
---Methods
 local methods = {
     ["OnAcquire"] = function(self)
         self:SetWidth(width);
         self:SetHeight(height);
     end,
     ["Initialize"] = function(self)
-        self.callbacks = {};
+        self.callbacks = {}
 
         function self.callbacks.OnClickNormal(_, mouseButton)
-            if not MouseIsOver(MethodDungeonTools.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
             if(IsControlKeyDown())then
 
             elseif(IsShiftKeyDown()) then
-
-            else
-                if(mouseButton == "RightButton") then
-                    --L_EasyMenu
-                else
-                    --normal click?
-                    MethodDungeonTools:AddPull()
+                if DEFAULT_CHAT_FRAME.editBox and DEFAULT_CHAT_FRAME.editBox:IsVisible() then
+                    local old = DEFAULT_CHAT_FRAME.editBox:GetText()
+                    local link = GetSpellLink(self.spellId) or ""
+                    DEFAULT_CHAT_FRAME.editBox:SetText(old .. link)
                 end
+            else
+
             end
         end
 
+        function self.callbacks.OnEnter()
+            GameTooltip:SetOwner(self.frame, "ANCHOR_BOTTOMLEFT",0,self.frame:GetHeight())
+            GameTooltip:SetSpellByID(self.spellId)
+            if self.interruptible then
+                local interruptible = CreateTextureMarkup("Interface\\EncounterJournal\\UI-EJ-Icons", 64, 64, 32, 32, 0.75, 0.88, 0, 0.5,0,0).. "Interruptible"
+                GameTooltip:AddLine(interruptible)
+            end
+            GameTooltip:Show()
+        end
 
+        function self.callbacks.OnLeave()
+            GameTooltip:Hide()
+        end
 
+        function self.callbacks.OnKeyDown(self, key)
+            if (key == "ESCAPE") then
+                --
+            end
+        end
         function self.callbacks.OnDragStart()
             --
         end
@@ -38,33 +53,35 @@ local methods = {
             --
         end
 
-        function self.callbacks.OnKeyDown(self, key)
-            if (key == "ESCAPE") then
-                --
-            end
-        end
-
-
-        --Set pullNumber
-        self.pullNumber:SetText("+ Add pull")
-        self.pullNumber:Show()
-
-
-
         self.frame:SetScript("OnClick", self.callbacks.OnClickNormal);
         self.frame:SetScript("OnKeyDown", self.callbacks.OnKeyDown);
+        self.frame:SetScript("OnEnter", self.callbacks.OnEnter);
+        self.frame:SetScript("OnLeave", self.callbacks.OnLeave);
         self.frame:EnableKeyboard(false);
         self.frame:SetMovable(true);
         self.frame:RegisterForDrag("LeftButton");
         self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
         self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
-
         self:Enable();
-        --self:SetRenameAction(self.callbacks.OnRenameAction);
     end,
-    ["SetTitle"] = function(self, title)
-        self.titletext = title;
-        self.title:SetText(title);
+    ["SetSpell"] = function(self, spellId,spellData)
+        self.spellId = spellId
+        local name,_,icon = GetSpellInfo(spellId)
+        self.icon:SetTexture(icon)
+        if IsAddOnLoaded("AddOnSkins") then
+            if AddOnSkins then
+                local AS = unpack(AddOnSkins)
+                AS:SkinTexture(self.icon)
+            end
+        end
+        self.title:SetText(name);
+        if spellData.interruptible then
+            self.interruptible = true
+            self.interruptibleIcon:Show()
+        else
+            self.interruptible = false
+            self.interruptibleIcon:Hide()
+        end
     end,
     ["Disable"] = function(self)
         self.background:Hide();
@@ -83,14 +100,16 @@ local methods = {
     ["SetIndex"] = function(self, index)
         self.index = index
     end,
-    ["GetIndex"] = function(self)
-        return self.index;
+    ["SetTitle"] = function(self, title)
+        self.titletext = title;
+        self.title:SetText(title);
     end,
+
 }
 
 --Constructor
 local function Constructor()
-    local name = "MethodDungeonToolsNewPullButton"..AceGUI:GetNextWidgetNum(Type);
+    local name = "MDTSpellButton"..AceGUI:GetNextWidgetNum(Type);
     local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
     button:SetHeight(height);
     button:SetWidth(width);
@@ -113,6 +132,15 @@ local function Constructor()
     icon:SetHeight(height);
     icon:SetPoint("LEFT", button, "LEFT");
 
+    local interruptibleIcon = button:CreateTexture(nil, "OVERLAY");
+    interruptibleIcon:SetWidth(height*0.8);
+    interruptibleIcon:SetHeight(height*0.8);
+    interruptibleIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
+    interruptibleIcon:SetTexCoord(0.75,0,0.75,0.5,0.88,0,0.88,0.5)
+    interruptibleIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT",0,-5);
+    interruptibleIcon:Hide()
+
+
     local title = button:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     button.title = title;
     title:SetHeight(14);
@@ -130,48 +158,11 @@ local function Constructor()
 
     end);
 
-    local pullNumber = button:CreateFontString(nil,"OVERLAY", "GameFontNormal")
-    pullNumber:SetHeight(18)
-    pullNumber:SetJustifyH("CENTER");
-    pullNumber:SetPoint("LEFT", button, "LEFT",5,0);
-
-
-
-    local renamebox = CreateFrame("EDITBOX", nil, button, "InputBoxTemplate");
-    renamebox:SetHeight(height/2);
-    renamebox:SetPoint("TOP", button, "TOP");
-    renamebox:SetPoint("LEFT", icon, "RIGHT", 6, 0);
-    renamebox:SetPoint("RIGHT", button, "RIGHT", -4, 0);
-    renamebox:SetFont("Fonts\\FRIZQT__.TTF", 10);
-    renamebox:Hide();
-
-    renamebox.func = function() --[[By default, do nothing!]] end;
-    renamebox:SetScript("OnEnterPressed", function()
-        local oldid = button.title:GetText();
-        local newid = renamebox:GetText();
-        if(newid == "" or (newid ~= oldid --[[and WeakAuras.GetData(newid)]] )) then
-            --if name exists
-            renamebox:SetText(button.title:GetText());
-        else
-            renamebox.func();
-            title:SetText(renamebox:GetText());
-            title:Show();
-            renamebox:Hide();
-        end
-    end);
-
-    renamebox:SetScript("OnEscapePressed", function()
-        title:Show();
-        renamebox:Hide();
-    end);
-
-
     local widget = {
         frame = button,
         title = title,
         icon = icon,
-        pullNumber = pullNumber,
-        renamebox = renamebox,
+        interruptibleIcon = interruptibleIcon,
         background = background,
         type = Type
     }

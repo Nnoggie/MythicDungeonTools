@@ -1,6 +1,7 @@
-local AddonName, MethodDungeonTools = ...
-MethodDungeonTools.U = {}
-local U = MethodDungeonTools.U
+local AddonName, MDT = ...
+MDT.U = {}
+local U = MDT.U
+local twipe,tinsert = table.wipe,table.insert
 
 
 U.count_if = function(t, func)
@@ -75,4 +76,35 @@ end
 
 U.isInRange = function(value, min, max)
     return (value >= min and value <= max)
+end
+
+--[[
+Performance measurement
+Usage:
+MDT.U:TMStart("DungeonEnemies_UpdateEnemies")
+MDT.U:TMStep("ReleaseAll")
+MDT.U:TMStep("AddBlips")
+MDT.U:TMEnd()
+]]
+
+local debugTimes
+U.TMStart = function(self,segmentName)
+    debugTimes = {}
+    tinsert(debugTimes,{name=segmentName,time=debugprofilestop()})
+end
+
+U.TMStep = function(self,segmentName)
+    tinsert(debugTimes,{name=segmentName,time=debugprofilestop()})
+end
+
+
+U.TMEnd = function()
+    local stepTimes = {}
+    for segmentIdx,data in ipairs(debugTimes) do
+        if segmentIdx>1 then
+            local time = data.time-debugTimes[segmentIdx-1].time
+            stepTimes[data.name] = time
+        end
+    end
+    ViragDevTool_AddData(stepTimes)
 end

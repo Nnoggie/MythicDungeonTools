@@ -1,8 +1,8 @@
 local dungeonIndex = 4
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=280,teeming=336,teemingEnabled=true}
-MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
+MDT.dungeonTotalCount[dungeonIndex] = {normal=280,teeming=336,teemingEnabled=true}
+MDT.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
 	[1] = {
 		[1] = {
             ["name"] = "Archdruid Glaidalis",
@@ -50,7 +50,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
         },
 	},
 }
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
+MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
 	[1] = {
         ["name"] = "Frenzied Nightclaw",
         ["health"] = 11855438,

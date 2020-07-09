@@ -1,8 +1,8 @@
 local dungeonIndex = 13
 local pi = math.pi
 local nerfMultiplier = 1
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=210,teeming=252,teemingEnabled=true}
-MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
+MDT.dungeonTotalCount[dungeonIndex] = {normal=210,teeming=252,teemingEnabled=true}
+MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 	[1] = {
 		[1] = {
             ["name"] = "Tirathon Saltheril",
@@ -66,7 +66,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
         },
 	},
 }
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = {
+MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {
         ["name"] = "Shadow Hunter",
         ["health"] = 14819297,

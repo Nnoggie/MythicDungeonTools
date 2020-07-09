@@ -1,0 +1,8 @@
+## Interface: 80300
+## Title: Method Dungeon Tools - DB STUB
+## Author: Nnoggie
+## Version: 3.0.9
+## Notes: Stubbed out MDT jsut for sake of getting original DB back. Will be deprecated soon
+## SavedVariables: MethodDungeonToolsDB
+
+MethodDungeonTools.lua

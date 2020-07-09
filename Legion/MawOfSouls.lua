@@ -1,8 +1,8 @@
 local dungeonIndex = 7
 local nerfMultiplier = 1
 local pi = math.pi
-MethodDungeonTools.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180,teemingEnabled=true}
-MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Maw of Souls
+MDT.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180,teemingEnabled=true}
+MDT.dungeonBosses[dungeonIndex] = {--Maw of Souls
 	[1] = {
 		[1] = {
 			["name"] = "Ymiron, the Fallen King",				
@@ -35,7 +35,7 @@ MethodDungeonTools.dungeonBosses[dungeonIndex] = {--Maw of Souls
 		},
 	},
 }
-MethodDungeonTools.dungeonEnemies[dungeonIndex] = { --Maw of Souls
+MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 	[1] = {
 		["name"] = "Enslaved Shieldmaiden",
 		["health"] = 14819297,
