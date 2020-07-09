@@ -11,7 +11,7 @@
 ## Notes-ptBR: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-ruRU: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-koKR: Tool for planning and optimizing Mythic+ dungeon runs
-## Notes-zhCN: Tool for planning and optimizing Mythic+ dungeon runs
+## Notes-zhCN: 规划和优化大秘境地下城运行的工具
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MythicDungeonToolsDB
