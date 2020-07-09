@@ -820,7 +820,7 @@ function wrap_index(index, len)
 end
 
 function smooth_contour(points, steps)
-    local steps = steps or 5
+    steps = steps or 20
     local res = {}
 
     for i = 1, #points do
@@ -941,7 +941,7 @@ function MDT:DungeonEnemies_UpdateSelected(pull)
         end
     end
 
-    local scale = MethodDungeonTools:GetScale()
+    local scale = MDT:GetScale()
     for _,line in pairs(hullLines) do line:Hide() end
     local hull = convex_hull(vertices)
     local smoothed = smooth_contour(hull)
@@ -950,11 +950,11 @@ function MDT:DungeonEnemies_UpdateSelected(pull)
         local b = smoothed[1]
         if i ~= #smoothed then b = smoothed[i+1] end
 
-        hullLines[i] = hullLines[i] or MethodDungeonTools.main_frame.mapPanelFrame:CreateTexture("MethodDungeonToolsHullLine"..i,"BACKGROUND")
+        hullLines[i] = hullLines[i] or MDT.main_frame.mapPanelFrame:CreateTexture("MythicDungeonToolsHullLine"..i,"BACKGROUND")
         hullLines[i]:SetDrawLayer("OVERLAY", 1)
-        hullLines[i]:SetTexture("Interface\\AddOns\\MethodDungeonTools\\Textures\\Square_White")
+        hullLines[i]:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
         hullLines[i]:SetVertexColor(unpack(pullColor))
-        DrawLine(hullLines[i], MethodDungeonTools.main_frame.mapPanelTile1, a[1], a[2], b[1], b[2], 1*scale, 1,"TOPLEFT")
+        DrawLine(hullLines[i], MDT.main_frame.mapPanelTile1, a[1], a[2], b[1], b[2], 1*scale, 1,"TOPLEFT")
         hullLines[i]:Show()
     end
 end
