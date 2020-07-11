@@ -945,6 +945,11 @@ function MDT:DungeonEnemies_UpdateSelected(pull)
     for _,line in pairs(hullLines) do line:Hide() end
     local hull = convex_hull(vertices)
     local smoothed = smooth_contour(hull)
+    if hull and hull[#hull] then
+        local center = centroid(hull)
+        MDT:PingMap(center[1],center[2])
+    end
+
     for i = 1, #smoothed do
         local a = smoothed[i]
         local b = smoothed[1]
