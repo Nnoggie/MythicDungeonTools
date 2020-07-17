@@ -306,6 +306,7 @@ local methods = {
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
+                MDT:DrawAllHulls()
             end
         })
 
@@ -320,6 +321,7 @@ local methods = {
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
+                MDT:DrawAllHulls()
             end
         })
         if self.index ~= 1 then
@@ -334,6 +336,7 @@ local methods = {
                     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                         MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
+                    MDT:DrawAllHulls()
                 end
             })
         end
@@ -349,6 +352,7 @@ local methods = {
                     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                         MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
+                    MDT:DrawAllHulls()
                 end
             })
         end
@@ -380,6 +384,7 @@ local methods = {
                 end
                 MDT:SetPresetColorPaletteInfo()
                 MDT:ColorAllPulls()
+                MDT:DrawAllHulls()
             end
         })
         local function swatchFunc()
@@ -393,6 +398,7 @@ local methods = {
             MDT:DungeonEnemies_SetPullColor(self.index,r,g,b)
             MDT:UpdatePullButtonColor(self.index, r, g, b)
             MDT:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+            MDT:DrawAllHulls()
             L_CloseDropDownMenus()
             if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                 MDT:LiveSession_QueueColorUpdate()
@@ -403,6 +409,7 @@ local methods = {
             MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
             MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
             MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+            MDT:DrawAllHulls()
             if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                 MDT:LiveSession_QueueColorUpdate()
             end
@@ -436,6 +443,7 @@ local methods = {
                 MDT:DungeonEnemies_SetPullColor(self.index,r,g,b)
                 MDT:UpdatePullButtonColor(self.index, r, g, b)
                 MDT:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
+                MDT:DrawAllHulls()
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
@@ -472,6 +480,7 @@ local methods = {
                     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                         MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
+                    MDT:DrawAllHulls()
                 end
             })
             tinsert(self.menu, {
@@ -512,6 +521,7 @@ local methods = {
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
+                MDT:DrawAllHulls()
             end
         })
 
@@ -535,6 +545,7 @@ local methods = {
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
+                MDT:DrawAllHulls()
             end
         })
         tinsert(self.multiselectMenu, {
@@ -559,6 +570,7 @@ local methods = {
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
+                MDT:DrawAllHulls()
             end
         })
         tinsert(self.multiselectMenu, {
@@ -587,6 +599,7 @@ local methods = {
                 end
                 MDT:SetPresetColorPaletteInfo()
                 MDT:ColorAllPulls()
+                MDT:DrawAllHulls()
             end
         })
         local function swatchMultiFunc()
@@ -607,6 +620,7 @@ local methods = {
                 MDT:UpdatePullButtonColor(pullIdx, r, g, b)
                 MDT:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
             end
+            MDT:DrawAllHulls()
 
             L_CloseDropDownMenus()
             if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
@@ -638,6 +652,7 @@ local methods = {
             MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
             MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
             MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
+            MDT:DrawAllHulls()
             if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                 MDT:LiveSession_QueueColorUpdate()
             end
@@ -680,6 +695,7 @@ local methods = {
                     MDT:DungeonEnemies_UpdateBlipColors(pullIdx,r,g,b)
                     L_CloseDropDownMenus()
                 end
+                MDT:DrawAllHulls()
                 if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                     MDT:LiveSession_SendPulls(MDT:GetPulls())
                 end
@@ -751,6 +767,7 @@ local methods = {
                         --MDT:AddPull(1) --we handle not deleting all pulls in MDT:DeletePull() instead
                         MDT:SetSelectionToPull(1)
                     end
+                    MDT:DrawAllHulls()
                     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                         MDT:LiveSession_SendPulls(MDT:GetPulls())
                     end
@@ -1107,6 +1124,7 @@ local methods = {
 		MDT:Hide_DropIndicator()
 		--MDT:UpdateAutomaticColors(math.min(self.index, insertID))
         MDT:ColorAllPulls(_, math.min(self.index, insertID))
+        MDT:DrawAllHulls()
         MDT.pullTooltip:Show()
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())

@@ -3891,6 +3891,7 @@ function MDT:AddPull(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index)
     MDT:ColorPull()
+    MDT:DrawAllHulls()
 end
 
 function MDT:SetAutomaticColor(index)
@@ -3928,6 +3929,7 @@ function MDT:ClearPull(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index)
     MDT:ColorPull()
+    MDT:DrawAllHulls()
 	--MDT:SetAutomaticColor(index)
 end
 
@@ -3937,6 +3939,7 @@ function MDT:MovePullUp(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index-1)
     MDT:ColorAllPulls(_, index-1)
+    MDT:DrawAllHulls()
 	--MDT:UpdateAutomaticColors(index - 1)
 end
 
@@ -3946,6 +3949,7 @@ function MDT:MovePullDown(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index+1)
     MDT:ColorAllPulls(_, index)
+    MDT:DrawAllHulls()
 	--MDT:UpdateAutomaticColors(index)
 end
 
@@ -3963,6 +3967,7 @@ function MDT:DeletePull(index)
 	self:SetSelectionToPull(index)
     --self:UpdateAutomaticColors(index)
     self:ColorAllPulls(_, index-1)
+    MDT:DrawAllHulls()
 end
 
 ---RenamePreset

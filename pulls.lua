@@ -125,23 +125,6 @@ local function expand_polygon(poly, offset)
     return res
 end
 
-local function scaleHull(hull,factor)
-    local c = centroid(hull)
-    local res = {}
-    for i = 1, #hull do
-        local x = hull[i][1]
-        local y = hull[i][2]
-        local blipFactor = math.max(hull[i][3],1)
-        --local isClose = (x-c[1])^2+(y-c[2])^2<200
-        --print(isClose)
-        factor = math.max(blipFactor^2.5,factor)
-        local nx = factor*x+(1-factor)*c[1]
-        local ny = factor*y+(1-factor)*c[2]
-        res[i] = {nx, ny}
-    end
-    return res
-end
-
 ---TexturePool
 local activeTextures = {}
 local texturePool = {}
@@ -205,9 +188,6 @@ function MDT:DrawHull(vertices,pullColor)
     local hull = convex_hull(vertices)
     if hull and hull[#hull] and #hull>2 then
 
-        local center = centroid(hull)
-        MDT:PingMap(center[1],center[2])
-
         hull = expand_polygon(hull,8)
         --hull = smooth_contour(hull,2)
         --hull = scaleHull(smoothed,1.35)
@@ -221,27 +201,76 @@ function MDT:DrawHull(vertices,pullColor)
     end
 end
 
-function MDT:DrawAllHulls()
-    MDT:ReleaseHullTextures()
-    local preset = MDT:GetCurrentPreset()
-    local blips = MDT:GetDungeonEnemyBlips()
+local function getPullVertices(p,blips)
     local vertices = {}
-    for pullIdx,p in pairs(preset.value.pulls) do
-        local r,g,b = MDT:DungeonEnemies_GetPullColor(pullIdx)
-        twipe(vertices)
-        for enemyIdx,clones in pairs(p) do
-            if tonumber(enemyIdx) then
-                for _,cloneIdx in pairs(clones) do
-                    for _,blip in pairs(blips) do
-                        if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
-                            local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
-                            table.insert(vertices, {endX, endY, blip.data.scale})
-                            break
-                        end
+    for enemyIdx,clones in pairs(p) do
+        if tonumber(enemyIdx) then
+            for _,cloneIdx in pairs(clones) do
+                for _,blip in pairs(blips) do
+                    if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
+                        local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
+                        table.insert(vertices, {endX, endY, blip.data.scale})
+                        break
                     end
                 end
             end
         end
+    end
+    return vertices
+end
+
+function MDT:DrawAllHulls(pulls)
+    MDT:ReleaseHullTextures()
+    local preset = MDT:GetCurrentPreset()
+    local blips = MDT:GetDungeonEnemyBlips()
+    local vertices
+    pulls = pulls or preset.value.pulls
+    for pullIdx,p in pairs(pulls) do
+        local r,g,b = MDT:DungeonEnemies_GetPullColor(pullIdx,pulls)
+        vertices = getPullVertices(p,blips)
         MDT:DrawHull(vertices,{r=r, g=g, b=b, a=1})
     end
+end
+
+function MDT:FindClosestPull(x,y)
+    local preset = MDT:GetCurrentPreset()
+    local blips = MDT:GetDungeonEnemyBlips()
+    local vertices,hull,center
+    local centers = {}
+    --1. construct all hulls of pulls in this sublevel
+    for pullIdx,p in pairs(preset.value.pulls) do
+        vertices = getPullVertices(p,blips)
+        hull = convex_hull(vertices)
+        --2. get centroid of each pull
+        if hull and hull[#hull] then
+            if #hull>2 then
+                center = centroid(hull)
+                centers[pullIdx]=center
+            elseif #hull==2 then
+                local x1 = hull[1][1]
+                local y1 = hull[1][2]
+                local x2 = hull[2][1]
+                local y2 = hull[2][2]
+                centers[pullIdx] = {(x1+x2)/2,(y1+y2)/2}
+            elseif #hull==1 then
+                local x1 = hull[1][1]
+                local y1 = hull[1][2]
+                centers[pullIdx] = {x1,y1}
+            end
+        end
+    end
+    --3. find closest centroid
+    local centerDist = math.huge
+    local centerIndex
+    for k,center in pairs(centers) do
+        local squaredDist = (x-center[1])^2+(y-center[2])^2
+        if squaredDist<centerDist then
+            centerDist = squaredDist
+            centerIndex = k
+        end
+    end
+    if centerIndex then
+        return centerIndex,centers[centerIndex][1],centers[centerIndex][2]
+    end
+
 end
