@@ -201,6 +201,9 @@ local function setUpMouseHandlers(self)
         self:SetScript("OnUpdate",nil)
         preset.value.pulls = tempPulls
         MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull(),tempPulls)
+        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+        end
     end)
 end
 
