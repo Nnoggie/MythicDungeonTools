@@ -184,7 +184,7 @@ local function setUpMouseHandlers(self)
                 local pullIdx,centerX,centerY = MDT:FindClosestPull(x,y)
                 local distBlip = (centerX-blipX)^2+(centerY-blipY)^2
                 local distCursor = (centerX-x)^2+(centerY-y)^2
-                local isClose = distCursor<1/3*distBlip
+                local isClose = distCursor<1/3*distBlip or distBlip < 150
                 if not isClose then
                     targetPull = nil
                     MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, false, IsControlKeyDown(),tempPulls,nil,true)
