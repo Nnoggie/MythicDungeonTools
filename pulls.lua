@@ -206,11 +206,13 @@ local function getPullVertices(p,blips)
     for enemyIdx,clones in pairs(p) do
         if tonumber(enemyIdx) then
             for _,cloneIdx in pairs(clones) do
-                for _,blip in pairs(blips) do
-                    if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
-                        local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
-                        table.insert(vertices, {endX, endY, blip.data.scale})
-                        break
+                if MDT:IsCloneIncluded(enemyIdx, cloneIdx) then
+                    for _,blip in pairs(blips) do
+                        if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
+                            local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
+                            table.insert(vertices, {endX, endY, blip.data.scale})
+                            break
+                        end
                     end
                 end
             end
