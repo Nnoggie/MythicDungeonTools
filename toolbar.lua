@@ -53,6 +53,9 @@ function MDT:initToolbar(frame)
     frame.toolbar.widgetGroup = AceGUI:Create("SimpleGroup")
     frame.toolbar.widgetGroup.frame:ClearAllPoints()
     frame.toolbar.widgetGroup.frame:SetAllPoints(frame.toolbar)
+    if not frame.toolbar.widgetGroup.frame.SetBackdrop then
+        Mixin(frame.toolbar.widgetGroup.frame, BackdropTemplateMixin)
+    end
     frame.toolbar.widgetGroup.frame:SetBackdropColor(0,0,0,0)
     --frame.toolbar.widgetGroup:SetWidth(350)
     --frame.toolbar.widgetGroup:SetHeight(15)

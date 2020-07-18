@@ -1101,6 +1101,9 @@ function MDT:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:SetLayout("Flow")
 
 	frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
+    if not frame.sidePanel.WidgetGroup.frame.SetBackdrop then
+        Mixin(frame.sidePanel.WidgetGroup.frame, BackdropTemplateMixin)
+    end
 	frame.sidePanel.WidgetGroup.frame:SetBackdropColor(1,1,1,0)
 	frame.sidePanel.WidgetGroup.frame:Hide()
 
@@ -1694,6 +1697,9 @@ function MDT:DisplayMDISelector()
         MDT.MDISelector = AceGUI:Create("SimpleGroup")
         MDT.MDISelector.frame:SetFrameStrata("HIGH")
         MDT.MDISelector.frame:SetFrameLevel(50)
+        if not MDT.MDISelector.frame.SetBackdrop then
+            Mixin(MDT.MDISelector.frame, BackdropTemplateMixin)
+        end
         MDT.MDISelector.frame:SetBackdropColor(unpack(MDT.BackdropColor))
         --fix show hide
         local frame = MDT.main_frame
@@ -3572,6 +3578,9 @@ function MDT:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup:SetPoint("BOTTOMLEFT",frame,"BOTTOMLEFT",0,30)
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
+    if not frame.PullButtonScrollGroup.frame.SetBackdrop then
+        Mixin(frame.PullButtonScrollGroup.frame, BackdropTemplateMixin)
+    end
     frame.PullButtonScrollGroup.frame:SetBackdropColor(1,1,1,0)
     frame.PullButtonScrollGroup.frame:Show()
 
