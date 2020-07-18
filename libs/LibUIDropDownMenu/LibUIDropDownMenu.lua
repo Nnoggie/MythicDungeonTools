@@ -220,6 +220,9 @@ local function creatre_UIDropDownList(name, parent)
 
 	f.Backdrop = _G[name.."Backdrop"] or CreateFrame("Frame", name.."Backdrop", f)
 	f.Backdrop:SetAllPoints()
+	if not f.Backdrop.SetBackdrop then
+		Mixin(f.Backdrop, BackdropTemplateMixin);
+	end
 	f.Backdrop:SetBackdrop({
 		bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background-Dark",
 		edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
@@ -231,6 +234,12 @@ local function creatre_UIDropDownList(name, parent)
 
 	f.MenuBackdrop= _G[name.."MenuBackdrop"] or CreateFrame("Frame", name.."MenuBackdrop", f)
 	f.MenuBackdrop:SetAllPoints()
+
+	if not f.MenuBackdrop.SetBackdrop then
+		Mixin(f.MenuBackdrop, BackdropTemplateMixin);
+	end
+
+
 	f.MenuBackdrop:SetBackdrop({
 		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
 		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
