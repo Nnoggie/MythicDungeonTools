@@ -122,7 +122,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,26 do
+    for i=1,37 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
@@ -271,7 +271,7 @@ local dungeonList = {
     [11] = L["Seat of the Triumvirate"],
     [12] = L["The Arcway"],
     [13] = L["Vault of the Wardens"],
-    [14] = L[" >Battle for Azeroth"],
+    [14] = " >"..L["Battle for Azeroth"],
     [15] = L["Atal'Dazar"],
     [16] = L["Freehold"],
     [17] = L["Kings' Rest"],
@@ -284,7 +284,17 @@ local dungeonList = {
     [24] = L["Waycrest Manor"],
     [25] = L["Mechagon - Junkyard"],
     [26] = L["Mechagon - Workshop"],
-    [27] = L[" >Legion"],
+    [27] = " <"..L["Legion"],
+    [28] = " >"..L["Shadowlands"],
+    [29] = L["De Other Side"],
+    [30] = L["Halls of Atonement"],
+    [31] = L["Mists of Tirna Scithe"],
+    [32] = L["Plaguefall"],
+    [33] = L["Sanguine Depths"],
+    [34] = L["Spires of Ascension"],
+    [35] = L["The Necrotic Wake"],
+    [36] = L["Theater of Pain"],
+    [37] = " <"..L["Battle for Azeroth"],
 }
 function MDT:GetNumDungeons() return #dungeonList-1 end
 function MDT:GetDungeonName(idx) return dungeonList[idx] end
@@ -412,6 +422,46 @@ local dungeonSubLevels = {
         [2] = L["Waste Pipes"],
         [3] = L["The Under Junk"],
         [4] = L["Mechagon City"],
+    },
+    [29] = {
+        [1] = L["De Other Side"],
+        [2] = L["Mechagon"],
+        [3] = L["Zul'Gurub"],
+        [4] = L["Ardenweald"],
+    },
+    [30] = {
+        [1] = L["HallsOfAtonementFloor1"],
+        [2] = L["HallsOfAtonementFloor2"],
+        [3] = L["HallsOfAtonementFloor3"],
+    },
+    [31] = {
+        [1] = L["Mists of Tirna Scithe"],
+    },
+    [32] = {
+        [1] = L["Plaguefall"],
+        [2] = L["The Festering Sanctum"],
+    },
+    [33] = {
+        [1] = L["Sanguine DepthsFloor1"],
+        [2] = L["Sanguine DepthsFloor2"],
+    },
+    [34] = {
+        [1] = L["Honor's Ascent"],
+        [2] = L["Gardens of Repose"],
+        [3] = L["Spire of the Firstborne"],
+        [4] = L["Seat of the Archon"],
+    },
+    [35] = {
+        [1] = L["TheNecroticWakeFloor1"],
+        [2] = L["TheNecroticWakeFloor2"],
+        [3] = L["TheNecroticWakeFloor3"],
+    },
+    [36] = {
+        [1] = L["TheaterOfPainFloor1"],
+        [2] = L["TheaterOfPainFloor2"],
+        [3] = L["TheaterOfPainFloor3"],
+        [4] = L["TheaterOfPainFloor4"],
+        [5] = L["TheaterOfPainFloor5"],
     },
 }
 function MDT:GetDungeonSublevels()
@@ -572,6 +622,54 @@ MDT.dungeonMaps = {
         [2] = "MechagonDungeon2_",
         [3] = "MechagonDungeon3_",
         [4] = "MechagonDungeon4_",
+    },
+    [29] = {
+        [0] = "DeOtherSide_Ardenweald",
+        [1] = "DeOtherSide_Main",
+        [2] = "DeOtherSide_Gnome",
+        [3] = "DeOtherSide_Hakkar",
+        [4] = "DeOtherSide_Ardenweald",
+    },
+    [30] = {
+        [0] = "HallsOfAtonement_A",
+        [1] = "HallsOfAttonementExterior",
+        [2] = "HallsOfAtonement_A",
+        [3] = "HallsOfAtonement_B",
+    },
+    [31] = {
+        [0] = "MistsOfTirneScithe",
+        [1] = "MistsOfTirneScithe",
+    },
+    [32] = {
+        [0] = "Plaguefall_B",
+        [1] = "Plaguefall",
+        [2] = "Plaguefall_B",
+    },
+    [33] = {
+        [0] = "SanguineDepths_A",
+        [1] = "SanguineDepths_A",
+        [2] = "SanguineDepths_B",
+    },
+    [34] = {
+        [0] = "SpiresOfAscension_A",
+        [1] = "SpiresOfAscension_A",
+        [2] = "SpiresOfAscension_B",
+        [3] = "SpiresOfAscension_C",
+        [4] = "SpiresOfAscension_D",
+    },
+    [35] = {
+        [0] = "NecroticWake_A",
+        [1] = "NecroticWake_Exterior",
+        [2] = "NecroticWake_A",
+        [3] = "NecroticWake_B",
+    },
+    [36] = {
+        [0] = "TheaterOfPain",
+        [1] = "TheaterOfPain",
+        [2] = "TheaterOfPain_Warlord",
+        [3] = "TheaterOfPain_Lich",
+        [4] = "TheaterOfPain_AbomTop",
+        [5] = "TheaterOfPain_AbomBot",
     },
 
 }
@@ -2629,7 +2727,11 @@ function MDT:UpdateDungeonDropDown()
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     elseif db.currentExpansion == 2 then
-        for i=15,27 do
+        for i=15,28 do
+            group.DungeonDropdown:AddItem(i,dungeonList[i])
+        end
+    elseif db.currentExpansion == 3 then
+        for i = 29,37 do
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     end
@@ -2659,14 +2761,29 @@ function MDT:CreateDungeonSelectDropdown(frame)
 	group.DungeonDropdown = AceGUI:Create("Dropdown")
 	group.DungeonDropdown.text:SetJustifyH("LEFT")
 	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-		if key==14 or key == 27 then
-            db.currentExpansion = (db.currentExpansion%2)+1
-            db.currentDungeonIdx = key==14 and 15 or 1
+        if key == 14 then
+            db.currentExpansion = 2
+            db.currentDungeonIdx = 15
             MDT:UpdateDungeonDropDown()
             MDT:UpdateToDungeon(db.currentDungeonIdx)
-		else
+        elseif key == 27 then
+            db.currentExpansion = 1
+            db.currentDungeonIdx = 1
+            MDT:UpdateDungeonDropDown()
+            MDT:UpdateToDungeon(db.currentDungeonIdx)
+        elseif key == 28 then
+            db.currentExpansion = 3
+            db.currentDungeonIdx = 29
+            MDT:UpdateDungeonDropDown()
+            MDT:UpdateToDungeon(db.currentDungeonIdx)
+        elseif key == 37 then
+            db.currentExpansion = 2
+            db.currentDungeonIdx = 15
+            MDT:UpdateDungeonDropDown()
+            MDT:UpdateToDungeon(db.currentDungeonIdx)
+        else
             MDT:UpdateToDungeon(key)
-		end
+        end
 	end)
 	group:AddChild(group.DungeonDropdown)
 
@@ -2864,15 +2981,9 @@ end
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
 function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
-    if db.currentExpansion == 1 then
-        if dungeonIdx>=15 then
-            db.currentExpansion = 2
-        end
-    elseif db.currentExpansion == 2 then
-        if dungeonIdx<=14 then
-            db.currentExpansion = 1
-        end
-    end
+    db.currentExpansion = 1
+    if dungeonIdx>=15 then db.currentExpansion = 2 end
+    if dungeonIdx>=29 then db.currentExpansion = 3 end
     db.currentDungeonIdx = dungeonIdx
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then 
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 
