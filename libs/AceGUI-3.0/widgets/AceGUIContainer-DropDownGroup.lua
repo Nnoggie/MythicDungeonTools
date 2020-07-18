@@ -125,10 +125,16 @@ local function Constructor()
 	dropdown.frame:Show()
 	dropdown:SetLabel("")
 
-	local border = CreateFrame("Frame", nil, frame)
+	local border = CreateFrame("Frame", nil, frame, "BackdropTemplate")
 	border:SetPoint("TOPLEFT", 0, -26)
 	border:SetPoint("BOTTOMRIGHT", 0, 3)
-	border:SetBackdrop(PaneBackdrop)
+	border.backdropInfo  = {
+		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+		tile = true, tileSize = 16, edgeSize = 16,
+		insets = { left = 3, right = 3, top = 5, bottom = 3 }
+	}
+	border:ApplyBackdrop()
 	border:SetBackdropColor(0.1,0.1,0.1,0.5)
 	border:SetBackdropBorderColor(0.4,0.4,0.4)
 

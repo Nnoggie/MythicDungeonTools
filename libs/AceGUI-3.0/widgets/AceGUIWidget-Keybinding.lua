@@ -214,9 +214,15 @@ local function Constructor()
 	label:SetJustifyH("CENTER")
 	label:SetHeight(18)
 
-	local msgframe = CreateFrame("Frame", nil, UIParent)
+	local msgframe = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
 	msgframe:SetHeight(30)
-	msgframe:SetBackdrop(ControlBackdrop)
+	msgframe.backdropInfo  = {
+		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+		tile = true, tileSize = 16, edgeSize = 16,
+		insets = { left = 3, right = 3, top = 3, bottom = 3 }
+	}
+	msgframe:ApplyBackdrop()
 	msgframe:SetBackdropColor(0,0,0)
 	msgframe:SetFrameStrata("FULLSCREEN_DIALOG")
 	msgframe:SetFrameLevel(1000)

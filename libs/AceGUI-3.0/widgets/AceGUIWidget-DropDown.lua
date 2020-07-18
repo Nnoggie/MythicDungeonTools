@@ -258,7 +258,7 @@ do
 
 	local function Constructor()
 		local count = AceGUI:GetNextWidgetNum(widgetType)
-		local frame = CreateFrame("Frame", "AceGUI30Pullout"..count, UIParent)
+		local frame = CreateFrame("Frame", "AceGUI30Pullout"..count, UIParent, "BackdropTemplate")
 		local self = {}
 		self.count = count
 		self.type = widgetType
@@ -290,8 +290,15 @@ do
 		}
 
 		self.maxHeight = defaultMaxHeight
-
-		frame:SetBackdrop(backdrop)
+		frame.backdropInfo  = {
+			bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+			edgeSize = 32,
+			tileSize = 32,
+			tile = true,
+			insets = { left = 11, right = 12, top = 12, bottom = 11 },
+		}
+		frame:ApplyBackdrop()
 		frame:SetBackdropColor(0, 0, 0)
 		frame:SetFrameStrata("FULLSCREEN_DIALOG")
 		frame:SetClampedToScreen(true)
@@ -309,10 +316,17 @@ do
 		scrollFrame.obj = self
 		itemFrame.obj = self
 
-		local slider = CreateFrame("Slider", "AceGUI30PulloutScrollbar"..count, scrollFrame)
+		local slider = CreateFrame("Slider", "AceGUI30PulloutScrollbar"..count, scrollFrame, "BackdropTemplate")
 		slider:SetOrientation("VERTICAL")
 		slider:SetHitRectInsets(0, 0, -10, 0)
-		slider:SetBackdrop(sliderBackdrop)
+
+		slider.backdropInfo  = {
+			bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+			edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+			tile = true, tileSize = 8, edgeSize = 8,
+			insets = { left = 3, right = 3, top = 3, bottom = 3 }
+		}
+		slider:ApplyBackdrop()
 		slider:SetWidth(8)
 		slider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Vertical")
 		slider:SetFrameStrata("FULLSCREEN_DIALOG")

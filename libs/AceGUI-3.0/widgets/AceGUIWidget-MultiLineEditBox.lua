@@ -297,8 +297,13 @@ local function Constructor()
 	text:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -5, 1)
 	text:SetJustifyV("MIDDLE")
 
-	local scrollBG = CreateFrame("Frame", nil, frame)
-	scrollBG:SetBackdrop(backdrop)
+	local scrollBG = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+	scrollBG.backdropInfo  = {
+		bgFile = [[Interface\Tooltips\UI-Tooltip-Background]],
+		edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]], edgeSize = 16,
+		insets = { left = 4, right = 3, top = 4, bottom = 3 }
+	}
+	scrollBG:ApplyBackdrop()
 	scrollBG:SetBackdropColor(0, 0, 0)
 	scrollBG:SetBackdropBorderColor(0.4, 0.4, 0.4)
 

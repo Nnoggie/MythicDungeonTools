@@ -640,12 +640,18 @@ local function Constructor()
 	local num = AceGUI:GetNextWidgetNum(Type)
 	local frame = CreateFrame("Frame", nil, UIParent)
 
-	local treeframe = CreateFrame("Frame", nil, frame)
+	local treeframe = CreateFrame("Frame", nil, frame, "BackdropTemplate")
 	treeframe:SetPoint("TOPLEFT")
 	treeframe:SetPoint("BOTTOMLEFT")
 	treeframe:SetWidth(DEFAULT_TREE_WIDTH)
 	treeframe:EnableMouseWheel(true)
-	treeframe:SetBackdrop(PaneBackdrop)
+	treeframe.backdropInfo  = {
+		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+		tile = true, tileSize = 16, edgeSize = 16,
+		insets = { left = 3, right = 3, top = 5, bottom = 3 }
+	}
+	treeframe:ApplyBackdrop()
 	treeframe:SetBackdropColor(0.1, 0.1, 0.1, 0.5)
 	treeframe:SetBackdropBorderColor(0.4, 0.4, 0.4)
 	treeframe:SetResizable(true)
@@ -655,11 +661,17 @@ local function Constructor()
 	treeframe:SetScript("OnSizeChanged", Tree_OnSizeChanged)
 	treeframe:SetScript("OnMouseWheel", Tree_OnMouseWheel)
 
-	local dragger = CreateFrame("Frame", nil, treeframe)
+	local dragger = CreateFrame("Frame", nil, treeframe, "BackdropTemplate")
 	dragger:SetWidth(8)
 	dragger:SetPoint("TOP", treeframe, "TOPRIGHT")
 	dragger:SetPoint("BOTTOM", treeframe, "BOTTOMRIGHT")
-	dragger:SetBackdrop(DraggerBackdrop)
+	dragger.backdropInfo  = {
+		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+		edgeFile = nil,
+		tile = true, tileSize = 16, edgeSize = 1,
+		insets = { left = 3, right = 3, top = 7, bottom = 7 }
+	}
+	dragger:ApplyBackdrop()
 	dragger:SetBackdropColor(1, 1, 1, 0)
 	dragger:SetScript("OnEnter", Dragger_OnEnter)
 	dragger:SetScript("OnLeave", Dragger_OnLeave)
@@ -680,10 +692,16 @@ local function Constructor()
 	scrollbg:SetAllPoints(scrollbar)
 	scrollbg:SetColorTexture(0,0,0,0.4)
 
-	local border = CreateFrame("Frame",nil,frame)
+	local border = CreateFrame("Frame",nil,frame, "BackdropTemplate")
 	border:SetPoint("TOPLEFT", treeframe, "TOPRIGHT")
 	border:SetPoint("BOTTOMRIGHT")
-	border:SetBackdrop(PaneBackdrop)
+	border.backdropInfo  = {
+		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+		tile = true, tileSize = 16, edgeSize = 16,
+		insets = { left = 3, right = 3, top = 5, bottom = 3 }
+	}
+	border:ApplyBackdrop()
 	border:SetBackdropColor(0.1, 0.1, 0.1, 0.5)
 	border:SetBackdropBorderColor(0.4, 0.4, 0.4)
 
