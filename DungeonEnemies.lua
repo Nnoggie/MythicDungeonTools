@@ -182,6 +182,7 @@ local function setUpMouseHandlers(self)
                 x,y = nx,ny
                 --find closest pull and measure distance
                 local pullIdx,centerX,centerY = MDT:FindClosestPull(x,y)
+                if not centerX then return end
                 local distBlip = (centerX-blipX)^2+(centerY-blipY)^2
                 local distCursor = (centerX-x)^2+(centerY-y)^2
                 local isClose = distCursor<1/3*distBlip or distBlip < 150
