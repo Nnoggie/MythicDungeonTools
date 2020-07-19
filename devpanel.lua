@@ -4,6 +4,14 @@ local db
 local tonumber,tinsert,slen,pairs,ipairs,tostring,next,type,sformat = tonumber,table.insert,string.len,pairs,ipairs,tostring,next,type,string.format
 local UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel = UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel
 
+--[[
+How to map:
+1. /mdt devmode
+2. Install Plater Mod that adds NPCs on Nameplate Added event
+    Tov0UTniu0)f)KJuIvstI7sL2dBnQtTsnlsK8uvzMaxNGggqaol7f(231XwZUR9XjKGZ1W5Cpx4A6m6okzgL886DXINzwRuFebgbLe(TfOKtgZpPK5ucLCdDZS5lMphp(seUC1Yz53KViNswGcict(UtEW4PKBXDPKCCgxw1KHnSkWQybiw8fHaq1lR18G0OJfPEqvoowuRLHhfDGhCided6Z7yhunWkJ4kCu8Pyr7aD9DOEB2E)dot1EKxARkdot8jqlWqC8gFS3kW1)xozYeP2dUqSGBeO6Nahm0d9N7Lx6JugotflowlfXIppiFzACABJrBkQVT)X1VJuhf0YapKMp2hCERcVbsMKmUrXrdS3vPCzei83BG7nkJdR5H1yYrha6KyXOpY7Dj2Bz)sJgAq2V9TzVTIgM)Huxd8RCdgDD1bWLMm9sswwNSVNuaUe(NBNtatfo9vMltjlHTGJd6qpXgg3H16oCnTx3xF9J7kcuYNAAsdmfkdIWpC0zQTTqUI59TWkM9hsrxGZOGwK9SDixhJ3TbRSuEPfcAUPwJpc9c4Ta)kcXbd)m48yBiDZQPtNI)4WecmI0(0rjgBttQVJa9p)
+3. Call MDT:AddNPCFromUnit("mouseover") with macro to add untargetable units
+4. Use Keybinds to add NPCs and patrolpaths to the map
+]]
 
 local function tshow(t, name, indent)
     local cart     -- a container
