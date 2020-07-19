@@ -12,10 +12,13 @@ r = Tk()
 r.withdraw()
 r.clipboard_clear()
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
+}
 
 def find_display_id(npc_id):
     url = 'https://shadowlands.wowhead.com/npc=' + str(npc_id)
-    req = urllib.request.Request(url, headers={'User-Agent' : 'Legit Browser'}) 
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req) as response:
         response = response.read()
         result = re.search('data-mv-display-id="(.*)">View', str(response))
