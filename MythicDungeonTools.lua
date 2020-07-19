@@ -4913,6 +4913,12 @@ end
 function MDT:ResetDataCache()
     db.dungeonEnemies = nil
     db.mapPOIs = nil
+    ReloadUI()
+end
+
+function MDT:HardReset()
+    MythicDungeonToolsDB = nil
+    ReloadUI()
 end
 
 function initFrames()

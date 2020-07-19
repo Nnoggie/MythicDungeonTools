@@ -136,6 +136,7 @@ function MDT:CreateDevPanel(frame)
             {text="Infested", value="tab3"},
             {text="Week", value="tab4"},
             {text="Corrupted", value="tab5"},
+            {text="Manage DB", value="tab6"},
         }
     )
     devPanel:SetWidth(250)
@@ -747,6 +748,31 @@ function MDT:CreateDevPanel(frame)
 
     end
 
+    local function DrawGroup6(container)
+        local clearCacheButton = AceGUI:Create("Button")
+        clearCacheButton:SetText("Clear Cache")
+        clearCacheButton:SetCallback("OnClick",function()
+            MDT:ResetDataCache()
+        end)
+        container:AddChild(clearCacheButton)
+
+        local resetDbButton = AceGUI:Create("Button")
+        resetDbButton:SetText("Hard Reset DB")
+        resetDbButton:SetCallback("OnClick",function()
+            MDT:OpenConfirmationFrame(300, 150, "Reset MDT DB", "Confirm", "Do you want to reset MDT DB?", function()
+                MDT:HardReset()
+            end, "Cancel", nil)
+        end)
+        container:AddChild(resetDbButton)
+
+        local vdtDbButton = AceGUI:Create("Button")
+        vdtDbButton:SetText("VDT DB")
+        vdtDbButton:SetCallback("OnClick",function()
+            ViragDevTool_AddData(db)
+        end)
+        container:AddChild(vdtDbButton)
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -760,6 +786,8 @@ function MDT:CreateDevPanel(frame)
             DrawGroup4(container)
         elseif group == "tab5" then
             DrawGroup5(container)
+        elseif group == "tab6" then
+            DrawGroup6(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)
