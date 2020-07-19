@@ -42,6 +42,7 @@ known_dungeons = [
     Dungeon(name='WaycrestManor', idx=24, internal='8.0 Dungeon - Drustvar Dungeon - Challenge'),
     Dungeon(name='MechagonIsland', idx=25, internal='8.2 Dungeon - Operation: Mechagon, Junkyard - Challenge'),
     Dungeon(name='MechagonCity', idx=26, internal='8.2 Dungeon - Operation: Mechagon, City - Challenge'),
+    Dungeon(name='Plaguefall', idx=32, internal='9.0 Dungeon - Plaguefall - Challenge'),
 ]
 
 

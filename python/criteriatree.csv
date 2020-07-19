@@ -2079,8 +2079,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 2510,Complete 86 quests in Blade's Edge Mountains.,0,0,4,0,0,0
 2511,86 Blade's Edge Mountains quests,2510,86,0,3587,1,1
 2513,Total kills that grant experience or honor,0,0,5,0,0,0
-2514,Honroable Kills,2513,0,0,13253,2,0
-2515,Kill an NPC that yields XP,2513,0,0,4946,1,0
+2514,Honorable Kills,2513,0,0,13253,1,0
+2515,Kill an NPC that yields XP,2513,0,0,4946,0,0
 2517,Complete 90 quests in Shadowmoon Valley.,0,0,4,0,0,0
 2518,90 Shadowmoon Valley quests,2517,90,0,3589,1,1
 2520,"Loot 10,000 gold.",0,0,4,0,0,0
@@ -7419,11 +7419,11 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 9960,Hide a Brightly Colored Egg in Stormwind City.,0,0,4,0,0,0
 9961,,9960,1,0,9123,1,2
 9963,Use Spring Robes to plant a flower in each of the deserts listed below.,0,0,4,0,0,0
-9964,Desolace,9963,1,0,9139,2,0
-9965,Silithus,9963,1,0,9142,3,0
-9966,Thousand Needles,9963,1,0,9141,5,0
-9967,Tanaris,9963,1,0,9140,4,0
-9968,The Badlands,9963,1,0,9138,1,0
+9964,Desolace,9963,1,0,9139,1,0
+9965,Silithus,9963,1,0,9142,2,0
+9966,Thousand Needles,9963,1,0,9141,4,0
+9967,Tanaris,9963,1,0,9140,3,0
+9968,The Badlands,9963,1,0,9138,0,0
 9970,Destroy each of the vehicles listed below.,0,0,4,0,0,0
 9971,Wintergrasp Catapult,9970,1,0,9178,1,0
 9972,Wintergrasp Demolisher,9970,1,0,9179,2,0
@@ -8199,11 +8199,11 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 11186,Truesilver Shafted Arrow,11185,1,0,6323,2,2
 11187,Peddlefeet,11185,0,0,6322,1,2
 11189,Pity the Love Fool in the locations specified below.,0,0,4,0,0,0
-11190,The Culling of Stratholme,11189,1,0,6346,4,0
-11191,Wintergrasp,11189,1,0,6343,1,0
-11192,Naxxramas,11189,1,0,6347,5,0
-11193,Arathi Basin Blacksmith,11189,1,0,6345,3,0
-11194,Battle Ring of Gurubashi Arena,11189,1,0,6344,2,0
+11190,The Culling of Stratholme,11189,1,0,6346,3,0
+11191,Wintergrasp,11189,1,0,6343,0,0
+11192,Naxxramas,11189,1,0,6347,4,0
+11193,Arathi Basin Blacksmith,11189,1,0,6345,2,0
+11194,Battle Ring of Gurubashi Arena,11189,1,0,6344,1,0
 11196,Completed the paladin quest to obtain a Charger.,0,1,8,0,0,0
 11197,Judgment and Redemption,11196,1,0,8906,1,2
 11198,True Masters of the Light,11196,1,0,8907,2,2
@@ -10529,7 +10529,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 14730,Claim victory in the Gunship Battle,14729,1,0,13353,1,0
 14732,Defeat Sapphiron in Naxxramas without any member of the raid having a frost resist value over 100 in 25-player mode.,0,0,4,0,0,0
 14733,Sapphiron,14732,1,0,7568,1,2
-14735,Use Spring Flowers to place rabbit ears upon players of at least 18th level.,0,0,4,0,0,0
+14735,Use Spring Flowers to place rabbit ears upon players of at least 10th level.,0,0,4,0,0,0
 14736,Blood Elf,14735,1,0,9124,0,0
 14737,Draenei,14735,1,0,9143,1,0
 14738,Human,14735,1,0,9144,5,0
@@ -20173,9 +20173,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 27506,,23773,1,0,21142,14,2
 27507,,23773,1,0,21119,15,2
 27508,Complete the Pandaria raid achievements listed below while in a guild group.,0,0,4,0,0,0
-27509,,27508,0,0,21144,2,0
-27510,,27508,0,0,21145,0,0
-27511,,27508,0,0,21146,1,0
+27509,,27508,0,0,21144,2,32
+27510,,27508,0,0,21145,0,32
+27511,,27508,0,0,21146,1,32
 27512,Complete every Challenge Mode while in a guild group.,0,0,4,0,0,0
 27513,Temple of the Jade Serpent,27512,1,0,21147,0,0
 27514,Stormstout Brewery,27512,1,0,21148,1,0
@@ -21774,7 +21774,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 29400,Bordin Steadyfist,29398,1,0,21859,1,0
 29401,Goz Banefury,29398,1,0,21860,2,0
 29402,Obalis,29398,1,0,21861,3,0
-29403,Taming Cataclsym,21517,1,0,21862,2,0
+29403,Taming Cataclysm,21517,1,0,21862,2,0
 29404,,28273,1,0,21415,17,2
 29405,,28273,1,0,21598,18,2
 29406,,28273,1,0,21599,19,2
@@ -23659,8 +23659,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 31849,Flaming,31848,1,0,22744,0,0
 31850,Frozen,31848,1,0,22746,1,0
 31851,Venomous,31848,1,0,22747,2,0
-31854,Reach level 20 - Riding Trainer Quest,0,0,4,0,0,0
-31855,Reach level 20,31854,20,0,22940,0,2
+31854,Reach level 10 - Riding Trainer Quest,0,0,4,0,0,0
+31855,Reach level 10,31854,10,0,22940,0,2
 31856,5.2 Legendary Scenario - Wrathion Talked To,0,0,4,0,0,0
 31857,Speak with Wrathion,31856,0,0,22755,0,0
 31858,Defeat Kanrethad,0,0,4,0,0,0
@@ -23901,8 +23901,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 32135,Dark Animus,32134,1,0,22920,0,2
 32136,Heroic: Iron Qon,0,0,4,0,0,0
 32137,Iron Qon,32136,1,0,22921,0,2
-32138,Reach level 60 - Riding Trainer Quest.,0,0,4,0,0,0
-32139,Reach level 60,32138,60,0,22924,0,2
+32138,Reach level 30 - Riding Trainer Quest.,0,0,4,0,0,0
+32139,Reach level 30,32138,30,0,22924,0,2
 32140,Valor Points,31629,300000,0,22645,1,1
 32141,Valor Points,31631,300000,0,22644,1,1
 32142,5.2 Legendary Scenario - Thunder Forge Started,0,0,4,0,0,0
@@ -28088,7 +28088,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 38188,Statistic - The Butcher (Mythic),0,0,4,0,0,0
 38189,,38188,1,0,24638,0,2
 38190,Statistic - Tectus (LFR),0,0,4,0,0,0
-38191,,38190,1,0,25442,0,2
+38191,,38190,1,0,47947,0,2
 38192,Statistic - Tectus (Normal),0,0,4,0,0,0
 38193,,38192,1,0,25443,0,2
 38194,Statistic - Tectus (Heroic),0,0,4,0,0,0
@@ -29607,12 +29607,11 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 39902,Defeat Chani Malflame,39897,1,0,26293,3,0
 39903,Defeat Hildie Hackerguard,39897,1,0,26294,4,0
 39904,Defeat Jackson Bajheera,39897,1,0,26295,5,0
-39905,Defeat John Swifty,39897,1,0,26296,6,0
-39906,Defeat Malda Brewbelly,39897,1,0,26297,7,0
-39907,Defeat Mathias Zunn,39897,1,0,26298,8,0
-39908,Defeat Shani Freezewind,39897,1,0,26299,9,0
-39909,Defeat Taylor Dewland,39897,1,0,26300,10,0
-39910,Defeat Tosan Galaxyfist,39897,1,0,26301,11,0
+39906,Defeat Malda Brewbelly,39897,1,0,26297,6,0
+39907,Defeat Mathias Zunn,39897,1,0,26298,7,0
+39908,Defeat Shani Freezewind,39897,1,0,26299,8,0
+39909,Defeat Taylor Dewland,39897,1,0,26300,9,0
+39910,Defeat Tosan Galaxyfist,39897,1,0,26301,10,0
 39911,Coliseum Step 02 - Preparation,0,0,4,0,0,0
 39912,Prepare for battle,39911,1,0,26302,0,0
 39913,Defeat all the Horde Captains listed below within the Road of Glory,0,0,4,0,0,0
@@ -35924,14 +35923,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 47438,,47437,1,0,29809,0,2
 47439,Boost 2.0 [Warlock|Aff] - Summon Voidwalker,0,1,8,0,0,0
 47440,Cast Summon Voidwalker,47439,1,0,29810,0,0
-47441,Boost 2.0 [Warlock|Aff] - Basic Combat A - Agony,0,0,4,0,0,0
+47441,Boost 2.0 [Warlock|Aff] - Basic Combat C - Agony + Corruption,0,0,4,0,0,0
 47442,Cast Agony on the target dummy,47441,1,0,29811,0,0
-47443,Boost 2.0 [Warlock|Aff] - Basic Combat C - Corruption,0,0,4,0,0,0
+47443,Boost 2.0 [Warlock|Aff] - Basic Combat X - Corruption,0,0,4,0,0,0
 47444,Cast Corruption on the target dummy,47443,0,0,29812,0,0
 47445,Boost 2.0 [Warlock|Aff] - Special A - Drain Life,0,0,4,0,0,0
 47446,Cast Drain Life on the target dummy,47445,2,0,40242,0,0
-47447,Boost 2.0 [Warlock|Aff] - Basic Combat E - Unstable Affliction,0,0,4,0,0,0
-47448,Cast Unstable Affliction on the target dummy,47447,3,0,29814,0,0
+47447,Boost 2.0 [Warlock|Aff] - Basic Combat B - Unstable Affliction,0,0,4,0,0,0
+47448,Cast Unstable Affliction on the target dummy,47447,1,0,29814,0,0
 47449,Boost 2.0 [Warlock|Aff] - Practice,0,0,4,0,0,0
 47450,Cast Unstable Affliciton,47449,2,0,29814,2,0
 47451,Cast Shadow Bolt,47449,3,0,40241,3,0
@@ -40421,8 +40420,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 52559,Cast Moonfire on the target dummy,52557,0,0,32841,0,0
 52560,Boost 2.0 [Druid|Moonkin] - Moonkin Form,0,0,4,0,0,0
 52561,Cast Moonkin Form,52560,0,0,32840,0,0
-52562,Boost 2.0 [Druid|Moonkin] - Solar Wrath,0,0,4,0,0,0
-52563,Cast Solar Wrath on the target dummy,52562,3,0,32843,0,0
+52562,Boost 2.0 [Druid|Moonkin] - Wrath,0,0,4,0,0,0
+52563,Cast Wrath on the target dummy,52562,3,0,32843,0,0
 52564,Boost 2.0 [Druid|Moonkin] - Starsurge,0,0,4,0,0,0
 52565,Cast Starsurge on the target dummy,52564,2,0,32844,0,0
 52566,Boost 2.0 [Druid|Moonkin] - Lunar Strike,0,0,4,0,0,0
@@ -43201,8 +43200,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 55635,SDFADFSADF,55629,2,0,34730,1,0
 55637,Use Divine Shield,47322,1,0,29771,0,0
 55638,Cast Power Word: Shield,48727,1,0,34732,0,0
-55639,Boost 2.0 [Druid|Moonkin] - Lunar Strike,0,0,4,0,0,0
-55640,Cast Lunar Strike on the target dummy,55639,3,0,32845,0,0
+55639,Boost 2.0 [Druid|Moonkin] - Starfire,0,0,4,0,0,0
+55640,Cast Starfire on the target dummy,55639,3,0,32845,0,0
 55641,7.2 Artifacts - Challenges - Stealth - Stage 2 Complete - GJC,0,0,4,0,0,0
 55642,Speak with High Tinker Gelbin Mekkatorque.,55641,1,0,34733,0,0
 55643,Destroy Arcane Constructs,55639,1,0,29840,1,0
@@ -49958,7 +49957,6 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 65248,Altar of Storms constructed,65247,0,0,39104,0,0
 65249,Highmountain Tauren Unlockable,0,0,4,0,0,0
 65250,Earn the Achievement:|nAin't No Mountain High Enough,65249,0,0,32065,0,0
-65251,Reach Exalted with:|nHighmountain Tribe,65249,0,0,39744,1,0
 65252,,65198,0,0,39725,7,32
 65253,,62296,0,0,39653,1,2
 65254,,62300,0,0,39655,1,2
@@ -49967,13 +49965,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 65257,,65256,1,0,39726,0,0
 65258,Nightborne Unlockable,0,0,4,0,0,0
 65259,Earn the Achievement:|nInsurrection,65258,0,0,39746,0,0
-65260,Reach Exalted with:|nThe Nightfallen,65258,0,0,39745,1,0
 65261,Void Elf Unlockable,0,0,4,0,0,0
 65262,Earn the Achievement:|nYou Are Now Prepared!,65261,0,0,37690,0,0
-65263,Reach Exalted with:|nArgussian Reach,65261,0,0,37693,1,0
 65264,Lightforged Draenei Unlockable,0,0,4,0,0,0
 65265,Earn the Achievement:|nYou Are Now Prepared!,65264,0,0,37690,0,0
-65266,Reach Exalted with:|nArmy of the Light,65264,0,0,37692,1,0
 65267,Allied Races: Void Elf Unlocked (Character),0,1,8,0,0,0
 65268,Allied Races: Void Elf Unlocked,65267,0,0,38174,0,0
 65269,Allied Races: Lightforged Draenei Unlocked (Character),0,1,8,0,0,0
@@ -52899,7 +52894,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 68677,Legends of the Tidesages - Part 8,68669,1,0,41432,7,16
 68678,8.0 Class Trial - Trial End via Quest,0,1,8,0,0,0
 68679,,68678,0,0,39983,0,0
-68680,,68678,0,0,40481,1,0
+68680,,68678,0,0,36881,1,0
 68681,Dark Iron Ingot,0,1,8,0,0,4098
 68682,Dark Iron Ingot,68681,0,0,41433,0,2
 68683,Dark Iron Ingot,68681,0,0,41434,1,2
@@ -53161,8 +53156,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 68959,Rosco Fryer's Mostly-Meat Brat,68954,1,0,41652,4,0
 68960,Timmy Gene Sunrise Pork,68954,1,0,41653,5,0
 68961,Dark Iron Dwarf Unlockable,0,0,4,0,0,0
-68962,Earn the Achievement:|nReady for War,68961,0,0,41491,1,0
-68963,Reach Exalted with:|n7th Legion,68961,0,0,41656,0,0
+68962,Earn the Achievement:|nReady for War,68961,0,0,41491,0,0
 68964,Achievement - 7th Legion,0,1,4,0,0,2
 68965,7th Legion,68964,42000,0,41654,0,18
 68966,Achievement - The Honorbound,0,1,4,0,0,2
@@ -53173,8 +53167,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 68972,"Slay all of the invaders in the Nazmir world quest ""Don't Stalk Me, Troll"" in 60 seconds while not in a group.",0,0,4,0,0,0
 68973,,68972,1,0,41658,0,2
 68974,Mag'har Orc Unlockable,0,0,4,0,0,0
-68975,Reach Exalted with:|nThe Honorbound,68974,0,0,41659,0,0
-68976,Earn the Achievement:|nReady for War,68974,0,0,41493,1,0
+68976,Earn the Achievement:|nReady for War,68974,0,0,41493,0,0
 68977,Blackrock Depths scenario completed,0,0,4,0,0,4096
 68978,Blackrock Depths scenario completed,68977,0,0,41660,0,0
 68979,Fragment of the Molten Core charged,0,0,4,0,0,4096
@@ -55444,8 +55437,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 71611,Head towards the central chamber.,71610,1,0,43533,0,0
 71612,Shine the lantern,0,0,4,0,0,32
 71613,Shine the Lantern on Kael'thas' Decision,71612,1,0,43534,0,0
-71614,Reach Exalted with:|nZandalari Empire,70795,0,0,43538,0,0
-71615,Earn the Achievement:|nZandalar Forever!,70795,0,0,41309,1,0
+71615,Earn the Achievement:|nZandalar Forever!,70795,0,0,41309,0,0
 71616,Player has entered Boss Room,0,0,4,0,0,0
 71617,,71616,1,0,43539,0,0
 71620,Take the Master Key,0,0,4,0,0,0
@@ -59086,6 +59078,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 75398,,72224,1,0,44161,8,32
 75399,8.1.5 Professions - Blacksmithing - Quest - Deep in the Core - Deepholm Portal (H) - SCS,0,0,4,0,0,4096
 75400,In Deepholm,75399,1,0,44870,0,0
+75401,Complete the dungeon,0,0,4,0,0,2
+75402,Reach the top of the Jailer's Tower,75401,1,0,44166,0,2
 75403,"Charg ""The Boisterous""",69415,1,0,44167,18,0
 75404,Nagtar Wolfsbane,69415,1,0,44168,19,0
 75405,Ranah Saberclaw,69415,1,0,44169,20,0
@@ -62065,10 +62059,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 78401,,78400,2400,0,43159,0,2
 78402,,78400,2400,0,41301,1,2
 78403,,78400,2400,0,41300,2,2
-78404,Reach Exalted with:|nProudmoore Admiralty,70796,0,0,44251,0,0
-78405,Earn the Achievement:|nA Nation United,70796,0,0,44252,1,0
-78406,Earn the Achievement:|nTides of Vengeance,70796,0,0,44284,2,0
-78407,Earn the Achievement:|nTides of Vengeance,70795,0,0,44694,2,0
+78405,Earn the Achievement:|nA Nation United,70796,0,0,44252,0,0
+78406,Earn the Achievement:|nTides of Vengeance,70796,0,0,44284,1,0
+78407,Earn the Achievement:|nTides of Vengeance,70795,0,0,44694,1,0
 78408,fire trap disabled - make door active,0,0,4,0,0,0
 78409,,78408,1,0,44253,0,0
 78410,Sentry ward trap disabled - open door 2,0,0,4,0,0,0
@@ -62203,11 +62196,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 78594,Blue Spraybot,78570,1,0,44336,28,16
 78595,Utility Mechanoclaw,78570,1,0,44337,29,16
 78596,Microbot XD,78570,1,0,44338,30,16
-78597,Perfectly Timed Differential,78570,1,0,44339,31,16
-78598,Anti-Gravity Pack,78570,1,0,44340,32,16
-78599,Rustbolt Pocket Turret,78570,1,0,44341,33,16
-78600,Annoy-o-Tron Gang,78570,1,0,44342,34,16
-78601,Encrypted Black Market Radio,78570,1,0,44343,35,16
+78598,Anti-Gravity Pack,78570,1,0,44340,31,16
+78599,Rustbolt Pocket Turret,78570,1,0,44341,32,16
+78600,Annoy-o-Tron Gang,78570,1,0,44342,33,16
+78601,Encrypted Black Market Radio,78570,1,0,44343,34,16
 78602,8.2 Mechagon - Public Event - Inactive Reclamation Device,0,0,4,0,0,0
 78603,Reclamation Rig Rebuilt,78602,1,0,44344,0,0
 78604,8.2 Mechagon - Achievement - Head Financier of Mechagon (JDA),0,10000,4,0,0,0
@@ -62312,6 +62304,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79056,Unstabled Irradiated Elemental,79055,12,0,44682,0,0
 79057,8.2 Mechagon - Public Event - Defeat Unstable Irradiated Golem,0,0,4,0,0,0
 79058,Defeat Unstable Irradiated Golem,79057,3,0,44683,0,0
+79059,Bind Hearthstone,0,1,8,0,0,4096
+79060,text,79059,1,0,44684,0,0
 79061,Defend the Rig,78619,2,0,44685,1,1
 79062,Mr. Crabs,12941,0,0,44686,20,2
 79063,Beakbert,12941,0,0,44687,21,2
@@ -62591,6 +62585,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79439,Harpoons fired at Vexiona,79438,3,0,44896,0,0
 79440,8.2 Red Dragon Scenario - Bombing Run,0,100,4,0,0,0
 79441,,79539,3,0,44901,0,0
+79442,8.3.5 NPE - Alliance - Use Hearthstone - (STM),0,0,4,0,0,4096
+79443,8.3.5 NPE - Alliance - Use Hearthstone - (STM),79442,0,0,44900,0,2048
 79445,8.0 BfA - Bonus Event Weekend - Complete 4 Mythic Dungeons,0,4,5,0,0,4096
 79446,,79445,4,0,44917,1,2
 79447,,79445,4,0,44921,5,2
@@ -62607,8 +62603,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79461,,79460,1,0,46604,0,0
 79462,,79445,4,0,44926,2,2
 79463,,67549,50,0,44927,2,2
+79471,Save the Prisoner,0,0,4,0,0,0
+79472,Save the Prisoner,79471,1,0,44928,0,0
 79477,Duel Lenara,0,0,4,0,0,0
 79478,Duel Lenara,79477,1,0,44931,0,0
+79479,Help Gallath find her bell,0,0,4,0,0,0
+79480,Gallath's Bell,79479,1,0,44932,0,0
 79481,8.2 Coup Campaign - Baine Scenario - Horde - Step 6 Completed - KRB,0,0,4,0,0,0
 79482,Continue deeper into the underhold,79481,1,0,44933,0,0
 79483,Shrine Raid - LFR,0,0,4,0,0,0
@@ -62629,6 +62629,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79498,Complete a Vision of Stormwind,0,0,4,0,0,4128
 79499,Vision of Stormwind Complete,79498,1,0,44942,0,32
 79500,Hunter,14607,120,0,44943,7,0
+79502,Armored Tremorbeast,0,0,4,0,0,0
+79503,Defeat the Armored Tremorbeast,79502,1,0,44945,0,0
+79504,Deadsoul Amalgam,0,0,4,0,0,0
+79505,Defeat the Deadsoul Amalgam,79504,0,0,44946,0,0
 79506,,66690,0,0,44947,18,0
 79507,,66690,0,0,44948,19,0
 79508,,66690,0,0,44949,20,0
@@ -62823,6 +62827,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79717,Speak with Lenara about the Traitors,0,0,4,0,0,0
 79718,Speak with Lenara about the Traitors,79717,1,0,45091,1,0
 79719,Follow Lenara,79717,1,0,45092,0,0
+79720,Eternal Subjugator,0,0,4,0,0,0
+79721,Defeat the Eternal Subjugator,79720,0,0,45093,0,0
+79722,Deadsoul Lifetaker,0,0,4,0,0,0
+79723,Defeat the Deadsoul Lifetaker,79722,0,0,45094,0,0
 79724,Booking on a Favor - Kill Last Boss,0,0,4,0,0,4096
 79725,Restore the Avatar of Sethraliss on Heroic or Mythic difficulty.,79724,1,0,45095,0,0
 79726,8.2 Heart - Blue Scenario - Box Interact (JRC),0,0,4,0,0,0
@@ -62912,6 +62920,24 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79820,Exit the platfom,79819,1,0,44883,0,0
 79823,8.2 Nazjatar - A - Week 2 - Q: Scouting Undercover - Find the naga stronghold (JAP),0,0,4,0,0,4096
 79824,Find the naga stronghold,79823,0,0,45161,0,2048
+79825,8.3.5 NPE - Salute Bjorn - (STM),0,0,4,0,0,4096
+79826,,79825,1,0,45162,0,0
+79827,8.3.5 NPE - Salute Kee-La - (STM),0,0,4,0,0,4096
+79828,,79827,1,0,45163,0,0
+79829,8.3.5 NPE - Salute Alarian - (STM),0,0,4,0,0,4096
+79830,,79829,1,0,45164,0,0
+79831,8.3.5 NPE - Salute Bjorn - (STM),0,0,4,0,0,4096
+79832,,79831,1,0,45165,0,0
+79833,8.3.5 NPE - Salute Kee-La - (STM),0,0,4,0,0,4096
+79834,,79833,1,0,45166,0,0
+79835,8.3.5 NPE - Salute Alarian - (STM),0,0,4,0,0,4096
+79836,,79835,1,0,45167,0,0
+79837,8.3.5 NPE - Salute Bjorn - (STM),0,0,4,0,0,4096
+79838,,79837,1,0,45168,0,0
+79839,8.3.5 NPE - Salute Kee-La - (STM),0,0,4,0,0,4096
+79840,,79839,1,0,45169,0,0
+79841,8.3.5 NPE - Salute Alarian - (STM),0,0,4,0,0,4096
+79842,,79841,1,0,45170,0,0
 79843,8.2 Coup Campiagn - Baine Scenario - Allaince - Step 2 Completed - KRB,0,0,4,0,0,0
 79844,Reach the lower level,79843,1,0,44886,0,0
 79845,8.2 Coup Campiagn - Baine Scenario - Alliance - Step 3 Completed - KRB,0,0,4,0,0,0
@@ -63084,6 +63110,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 80035,,80034,0,0,45143,0,0
 80040,8.2 BfA - Patch Quest Launch,0,0,4,0,0,0
 80041,,80040,0,0,45228,0,0
+80048,8.3.5 NPE - Alliance - Point to Lindie or Cork - (STM),0,0,4,0,0,4096
+80049,,80048,0,0,45236,0,0
+80050,8.3.5 NPE - Alliance - Wave to Grunk - (STM),0,0,4,0,0,4096
+80051,,80050,0,0,45237,0,0
+80052,9.0 NPE - Alliance - Dance in Cooking Area - (STM),0,0,4,0,0,4096
+80053,,80052,0,0,45238,0,0
 80054,Naga Forces Slain,0,0,4,0,0,0
 80055,Naga Forces Slain,80054,12,0,45239,0,1
 80056,Monstrosity Slain,0,0,4,0,0,0
@@ -63221,7 +63253,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 80195,,80194,10,0,45305,0,0
 80196,8.2 Red Dragon Scenario - Stop the Corruption,0,100,4,0,0,0
 80197,Vermillion Sentinels rescued,80196,5,0,45306,0,0
-80198,,79445,4,0,46505,21,2
+80198,,79445,4,0,47850,21,2
 80199,8.2 Coup Campaign - All Crystals destroyed - KRB,0,0,4,0,0,0
 80200,,80199,4,0,44964,0,0
 80201,Scrapmaster's Blowtorch,78529,1,0,45308,20,0
@@ -63229,7 +63261,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 80203,Collect a Tier 24 Set on at least 1 class.,0,1,4,0,0,0
 80204,,80203,1,0,45309,0,2
 80205,Re-Procedurally Generated Punchcard,78529,1,0,44326,36,0
-80206,Re-Procedurally Generated Punchcard,78570,1,0,44326,36,16
+80206,Re-Procedurally Generated Punchcard,78570,1,0,44326,35,16
 80207,Advanced Adventurer Augment,78529,1,0,45324,22,0
 80208,Extraordinary Adventurer Augment,78529,1,0,45325,23,0
 80209,Experimental Adventurer Augment,78529,1,0,45326,21,0
@@ -63239,7 +63271,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 80213,Advanced Adventurer Augment,78570,1,0,45324,22,16
 80214,Experimental Adventurer Augment,78570,1,0,45326,21,16
 80228,S.P.A.R.E. Crate,78529,1,0,45323,37,0
-80242,S.P.A.R.E. Crate,78570,1,0,45323,37,16
+80242,S.P.A.R.E. Crate,78570,1,0,45323,36,16
 80243,8.3 Visions of N'Zoth - Orgrimmar - Cauldrons 1,0,0,4,0,0,0
 80244,Geya'rah located,80243,1,0,45328,0,0
 80245,8.3 Visions of N'Zoth - Orgrimmar - Cauldrons 2,0,0,4,0,0,0
@@ -63684,6 +63716,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 80714,My Chicken are Not For Eating!,80067,1,0,45609,23,0
 80715,Mechagon - Kill Enemy Players,0,5,5,0,0,4096
 80716,,80715,5,0,45610,0,0
+80717,8.3.5 NPE - Alliance - Warrior - New Weapon Equipped - (STM),0,0,4,0,0,0
+80718,,80717,1,0,45611,0,0
+80719,8.3.5 NPE - Alliance - Warrior - Equip Weapon - (STM),0,0,4,0,0,4096
+80720,,80719,0,0,45612,0,0
+80721,8.3.5 NPE - Alliance - Warrior - Equip Chest - (STM),0,0,4,0,0,4096
+80722,,80721,0,0,45613,0,0
+80723,8.3.5 NPE - Alliance - Warrior - Equip Pants - (STM),0,0,4,0,0,4096
+80724,,80723,0,0,45614,0,0
 80725,Catch Nazjatar Pets,0,0,4,0,0,0
 80726,Spireshell Snail,80725,0,0,45591,0,0
 80727,Muck Slug,80725,0,0,45592,1,0
@@ -63714,6 +63754,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 80756,Off-the-Books Brawlin',80067,1,8,0,24,8224
 80757,Off-the-Books Brawlin' (Horde),80756,1,0,45620,0,0
 80759,Off-the-Books Brawlin' (Alliance),80756,1,0,45621,1,0
+80760,Faeleaf Shimmerwing,0,0,4,0,0,0
+80761,Defeat the Faeleaf Shimmerwing,80760,0,0,45627,0,0
 80762,8.2 Mechagon - Achievement - Scrappy's Best Friend (JDA),0,0,4,0,0,0
 80763,Revive Scrappy,80762,1,0,45628,0,0
 80764,Feed Scrappy,80762,1,0,45629,1,0
@@ -64295,7 +64337,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 81382,Making the Mount,80063,1,0,46016,8,0
 81383,Armed for Action,80063,1,0,46017,9,0
 81384,Earn Conquest in Battle for Azeroth Season 3 (A) - Saddle (11),0,0,4,0,0,1
-81385,Win Rated PvP matches during Season 3 while at Combatant or higher,81384,2400,0,46018,0,1
+81385,Win Rated PvP matches during Season 4 while at Combatant or higher,81384,2400,0,46018,0,1
 81386,Earn Conquest in Battle for Azeroth Season 3 (A) - Saddle (12),0,0,4,0,0,1
 81387,Win Rated PvP matches during Season 4 while at Combatant or higher,81386,2400,0,46019,0,1
 81388,Earn Conquest in Battle for Azeroth Season 3 (A) - Saddle (13),0,0,4,0,0,1
@@ -64341,8 +64383,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 81428,Valley of Spirits - Shamans Freed,81427,1,0,46064,0,0
 81429,,66414,4,0,46065,31,0
 81431,,66377,4,0,46065,31,0
+81432,Investigate the Town Hall,0,0,4,0,0,0
+81433,Cautiously approach the building. It's probably a trap.,81432,0,0,46066,0,0
+81434,Defeat the Smoldering Monstrosity,0,0,4,0,0,0
+81435,Smoldering Monstrosity Defeated,81434,0,0,46067,0,0
 81436,Portal to Dalaran Crater,0,0,4,0,0,4096
 81437,,81436,1,0,46068,0,0
+81438,Powerful Foe,0,0,4,0,0,0
+81439,Defeat the powerful foe,81438,1,0,46069,0,0
 81440,Underlight Sealamp,80654,0,0,46070,19,0
 81441,Encrusted Coin,80654,0,0,46071,20,0
 81442,Flopping Fish,82371,0,0,46072,0,0
@@ -64495,6 +64543,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 81721,Rescue Vendors,0,0,4,0,0,4096
 81722,Rescue Vendors,81721,1,0,46254,0,0
 81738,Successfully complete your first Darkmoon Race,42488,0,0,46269,1,2
+81747,Defeat the Obsidian Deprivator,0,0,4,0,0,0
+81748,Obsidian Deprivator defeated,81747,0,0,46067,0,0
 81749,Ally quests complete,0,3,5,0,0,4096
 81750,,81749,3,0,46239,0,2
 81751,,81749,3,0,46241,1,2
@@ -64591,6 +64641,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 81842,Terga Earthbreaker Freed,81841,1,0,46281,0,0
 81843,Zor Lonetree Freed,0,0,4,0,0,4096
 81844,Zor Lonetree Freed,81843,1,0,46282,0,0
+81845,Take the Anima Stream,0,0,4,0,0,0
+81846,Take the anima stream to the next island,81845,0,0,46283,0,0
+81847,Find the Fragment of Jaina,0,0,4,0,0,0
+81848,Fragment of Jaina Proudmoore found,81847,0,0,46284,0,0
+81849,Free the Fragment of Jaina,0,0,4,0,0,0
+81850,Jaina's sould fragment freed,81849,0,0,46285,0,0
 81851,Reach level 100,0,0,4,0,0,0
 81852,Reach level 100,81851,100,0,46286,0,2
 81853,Fun Run,0,0,4,0,0,0
@@ -64660,6 +64716,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 81917,,81916,1,0,46331,0,0
 81918,Acquire Item - Rank 4 - Worldvein Resonance,0,0,4,0,0,2
 81919,,81918,1,0,46332,0,0
+81920,9.0 Revendreth - Questline,0,0,4,0,0,0
+81921,Welcome to Revendreth,81920,0,0,46333,0,16
+81922,Meet the Master,81920,0,0,46334,1,16
+81923,The Accuser's Secret,81920,0,0,46335,2,16
+81924,The Rebellion,81920,0,0,46336,3,16
+81925,Menagerie of the Master,81920,0,0,46337,6,16
 81926,8.3 Visions - Stormwind - Old Town - Vanessa - Intro,0,0,4,0,0,4096
 81927,Find Vanessa VanCleef.,81926,1,0,46338,0,0
 81933,,67549,50,0,46342,3,2
@@ -64894,6 +64956,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82358,,67316,4,0,46659,35,0
 82359,,82342,0,0,46589,0,0
 82360,,82342,0,0,46590,1,0
+82361,"Proud owner of the 2019 Vintage Winter Veil gift, the Crashin' Thrashin' Battleship or Juggernaught.",0,1,8,0,0,0
+82362,,82361,1,0,46596,2,2
+82363,,82361,1,0,46594,4,2
+82364,,82361,1,0,46593,1,2
+82365,,82361,1,0,46592,0,2
+82366,,82361,1,0,46595,3,2
 82367,7.3.5 Ulduar Timewalking - Yogg Kill Credit,0,0,4,0,0,4096
 82368,Player defeats Yogg in timewalking,82367,1,0,46591,0,0
 82369,Winter Veil Gift,4672,1,0,46592,11,2
@@ -64919,8 +64987,20 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82396,Baleroc,9105,1,0,46612,2,2
 82397,Majordomo Fandral Staghelm,4875,1,0,46613,2,2
 82398,Ragnaros,18366,1,0,46614,2,2
+82399,[TEMP] 9.0 Bastion - World Quest - Temple of Purity - E - Zone WQ - Kill - GJC,0,12,5,0,0,4096
+82400,,82399,1,0,46615,0,0
+82401,,82399,1,0,46616,1,0
+82402,,82399,1,0,46617,2,0
+82403,,82399,1,0,46618,3,0
+82404,,82399,1,0,46619,4,0
 82405,8.3 Visions - Stormwind - Trade District - Rescue Wyrmbane,0,0,4,0,0,4096
 82406,Rescue Wyrmbane,82405,1,0,46621,0,0
+82407,[TEMP] 9.0 Bastion - World Quest - Temple of Purity - E - Zone WQ - Kill - GJC,0,12,5,0,0,4096
+82408,,82407,1,0,46622,0,0
+82409,,82407,1,0,46623,1,0
+82410,,82407,1,0,46624,2,0
+82411,,82407,1,0,46625,3,0
+82412,,82407,1,0,46626,4,0
 82413,Earn Conquest in Battle for Azeroth Season 4 (A) - Saddle (30),0,0,4,0,0,1
 82414,Win Rated PvP matches during Season 4 while at Combatant or higher,82413,2400,0,46647,0,1
 82415,Earn Conquest in Battle for Azeroth Season 4 (A) - Saddle (29),0,0,4,0,0,1
@@ -64967,8 +65047,17 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82456,Win Rated PvP matches during Season 4 while at Combatant or higher,82455,2400,0,46627,0,1
 82457,8.3 Visions - Stormwind - Trade District - Defeat the Slavemaster,0,0,4,0,0,4096
 82458,Defeat the Slavemaster,82457,1,0,46628,0,0
+82459,Securing Sinfall,81920,0,0,46649,4,16
+82460,The Prince and the Tower,81920,0,0,46650,5,16
 82461,8.3 Visions - Stormwind - Old Town - Bypass Shaw's Security,0,0,4,0,0,4096
 82462,Bypass Shaw's Security,82461,1,0,46651,0,0
+82463,9.0 Covenant Halls - Emissary - World Quests - GJC,0,4,5,0,0,4096
+82464,,82463,1,0,46652,0,0
+82465,,82463,1,0,46653,1,0
+82466,,82463,1,0,46654,2,0
+82467,,82463,1,0,46655,3,0
+82468,Rare Elites killed in the Shadowlands,0,3,5,0,0,4096
+82469,,82468,1,0,46656,0,0
 82470,,65729,7,0,46658,23,0
 82471,,65729,7,0,46659,24,0
 82472,,65750,7,0,46658,23,0
@@ -65021,10 +65110,22 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82519,Locate the power console,82518,1,0,46662,0,0
 82520,Quests Completed,0,30,5,0,0,10240
 82521,Quests completed,82520,30,0,46663,0,0
+82522,Wage battle in the Court of Harvesters,0,0,4,0,0,0
+82523,Awaken Darkwing Stoneborn,82522,5,0,46664,0,0
+82524,Dominance Gate reached,0,0,4,0,0,0
+82525,,82524,0,0,46665,0,0
 82526,Dungeons Completed,0,0,4,0,0,32
 82527,LFG Dungeons completed,82526,2,0,46666,0,2048
 82528,Battlegrounds Completed,0,0,4,0,0,32
 82529,Battlegrounds completed,82528,2,0,46667,0,2048
+82530,Menagerie of the Master reached,0,0,4,0,0,0
+82531,Menagerie of the Master reached,82530,0,0,46668,0,0
+82532,9.0 Revendreth Scenario: Stage 4,0,0,4,0,0,0
+82533,Renathal empowered,82532,1,0,46669,2,0
+82534,Sire Denathrius confronted,0,0,4,0,0,0
+82535,Sire Denathrius confronted,82534,0,0,46670,0,0
+82536,9.0 Revendreth Scenario: General Kaal,0,0,4,0,0,0
+82537,Defeat General Kaal,82536,0,0,46671,0,0
 82541,"8.2 Dungeon - Operation: Mechagon, City - Challenge",0,0,4,0,0,0
 82542,King Mechagon defeated,82541,1,0,45298,3,0
 82543,Tussle Tonks defeated,82541,1,0,45301,0,0
@@ -65075,22 +65176,30 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82589,8.3 Lesser Visions - Hidden Objective Complete,0,0,4,0,0,2
 82590,Bonus Objective Complete,82589,0,0,46687,0,2
 82591,,82575,4,0,46688,1,0
+82594,Has Aura Gatamatos is Near 1,0,0,4,0,0,4096
+82595,Has Aura Gatamatos is Near,82594,1,0,46689,0,0
+82596,Has Aura Gatamatos is Near 2,0,0,4,0,0,4096
+82597,Has Aura Gatamatos is Near,82596,1,0,46690,0,0
+82598,Has Aura Gatamatos is Near 3,0,0,4,0,0,4096
+82599,Has Aura Gatamatos is Near,82598,1,0,46691,0,0
+82600,Has Aura Gatamatos is Near 4,0,0,4,0,0,4096
+82601,Has Aura Gatamatos is Near,82600,1,0,46692,0,0
 82602,8.3 N'Zoth Raid - LFR Wing 1,0,0,4,0,0,0
-82603,"Defeat Wrathion, the Black Emperor.",82602,1,0,46693,0,0
-82604,Defeat Maut.,82602,1,0,46694,1,0
-82605,Defeat the Prophet Skitra.,82602,0,0,46695,2,0
+82603,"Defeat Wrathion, the Black Emperor.",82602,1,0,47981,0,0
+82604,Defeat Maut.,82602,1,0,47982,1,0
+82605,Defeat the Prophet Skitra.,82602,0,0,47983,2,0
 82606,8.3 N'Zoth Raid - LFR Wing 2,0,0,4,0,0,0
-82607,Defeat Dark Inquisitor Xanesh.,82606,1,0,46696,0,0
-82608,Defeat Vexiona.,82606,1,0,46697,1,0
-82609,Defeat The Hivemind.,82606,1,0,46698,2,0
-82610,Defeat Ra-Den the Despoiled.,82606,1,0,46699,3,0
+82607,Defeat Dark Inquisitor Xanesh.,82606,1,0,47984,0,0
+82608,Defeat Vexiona.,82606,1,0,47985,1,0
+82609,Defeat The Hivemind.,82606,1,0,47986,2,0
+82610,Defeat Ra-Den the Despoiled.,82606,1,0,47987,3,0
 82611,8.3 N'Zoth Raid - LFR Wing 3,0,0,4,0,0,0
-82612,Defeat Shad'har the Insatiable.,82611,1,0,46700,0,0
-82613,Defeat Drest'agath.,82611,1,0,46701,1,0
-82614,"Defeat Il'gynoth, Corruption Reborn.",82611,1,0,46702,2,0
+82612,Defeat Shad'har the Insatiable.,82611,1,0,47988,0,0
+82613,Defeat Drest'agath.,82611,1,0,47989,1,0
+82614,"Defeat Il'gynoth, Corruption Reborn.",82611,1,0,47990,2,0
 82615,8.3 N'Zoth Raid - LFR Wing 4,0,0,4,0,0,0
-82616,Defeat the Carapace of N'Zoth.,82615,1,0,46703,0,0
-82617,Defeat N'Zoth the Corruptor.,82615,1,0,46704,1,0
+82616,Defeat the Carapace of N'Zoth.,82615,1,0,47991,0,0
+82617,Defeat N'Zoth the Corruptor.,82615,1,0,47992,1,0
 82622,8.3 Allied - Mechagnome - Clear the Trash (msc),0,0,4,0,0,4096
 82623,Clear the trash in Mechagon city,82622,0,0,46707,0,0
 82624,Obtain the Corrupted Gladiator's Proto-Drake from Battle for Azeroth Season 4.,0,1,8,0,0,0
@@ -65162,15 +65271,23 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82694,3000 rating,82693,3000,0,46711,0,2
 82695,Complete the Battle for Darkshore (A),0,1,4,0,0,4096
 82696,,82695,1,0,46714,0,0
-82697,,82695,1,0,46715,1,0
-82698,Complete the Battle for Darkshore (H),0,1,8,0,0,4096
+82698,Complete the Battle for Darkshore (H),0,1,4,0,0,4096
 82699,,82698,1,0,46716,0,0
-82700,,82698,1,0,46717,1,0
+82701,9.0 Level Squish - Legion - Shortcuts - Arrived at Peak of Serenity - (STM),0,0,4,0,0,4096
+82702,,82701,0,0,46718,0,0
 82703,Feats,23032,0,4,0,1,0
 82704,,82703,0,0,38183,0,0
 82705,Feats,23030,0,4,0,1,0
 82706,,82705,0,0,38184,0,0
 82707,,59821,1,0,46719,2,2
+82708,Has Aura Andira is Near 1,0,0,4,0,0,4096
+82709,Has Aura Andira is Near,82708,1,0,46720,0,0
+82710,Has Aura Andira is Near 2,0,0,4,0,0,4096
+82711,Has Aura Andira is Near,82710,1,0,46721,0,0
+82712,Has Aura Andira is Near 3,0,0,4,0,0,4096
+82713,Has Aura Andira is Near,82712,1,0,46722,0,0
+82714,"Complete quest ""Speaker of the Horde""",0,0,4,0,0,0
+82715,,82714,0,0,36881,0,0
 82716,Warchief's Command Board found,0,0,4,0,0,4096
 82717,Warchief's Command Board found,82716,0,0,46723,0,0
 82718,Graveyards Assaulted,5560,1,8,0,0,8192
@@ -65212,6 +65329,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82758,Darkwatcher Il'esh defeated,82757,0,0,46747,0,0
 82759,Pet Shad'har the Insatiable,0,0,4,0,0,2
 82760,Pet Shad'har the Insatiable,82759,0,0,46748,0,2
+82761,Has Aura Gatamatos is Near 5,0,0,4,0,0,4096
+82762,Has Aura Gatamatos is Near,82761,1,0,46749,0,0
 82763,Enemy Forces,82551,332,9,0,4,0
 82764,,82763,4,0,46750,0,0
 82765,,82763,4,0,46751,1,0
@@ -65256,13 +65375,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82804,,82788,4,0,46789,2,0
 82805,,82788,4,0,46790,4,0
 82806,Mechagnome Unlockable,0,0,4,0,0,0
-82807,Earn the Achievement:|n Rustbolt Rebellion,82806,0,0,45268,0,0
 82808,Vulpera Unlockable,0,0,4,0,0,0
-82809,Earn the Achievement:|n The Voldunai,82808,0,0,46791,0,0
 82810,Horrific Visions of N'zoth Meta Achievement,0,0,4,0,0,0
 82811,,82810,1,0,47016,0,32
 82812,,82810,1,0,47025,1,32
-82813,Earn the Achievement:|n Secrets in the Sands,82808,0,0,40032,1,0
+82813,Earn the Achievement:|n Secrets in the Sands,82808,0,0,40032,0,0
+82814,Covenant Campaign: Sinfall,0,0,4,0,0,0
+82815,Envy,82814,0,0,46794,6,16
+82816,Desire,82814,0,0,46795,2,16
 82818,Learn all Visions of N'zoth Essences for any role,0,0,4,0,0,0
 82819,all role specific essences,82818,1,8,0,0,0
 82820,,82819,0,0,46797,0,0
@@ -65309,7 +65429,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82861,Deaths in Deepwind Gorge,33963,0,0,46822,1,0
 82862,8.3 N'Zoth Raid - Wrathion - Achievement,0,0,4,0,0,0
 82863,Defeat Wrathion after defeating 10 Crackling Shards within 3 seconds,82862,0,0,46823,0,2
-82864,Rare N'Zoth minions slain,0,4,8,0,0,4096
+82864,Rare N'Zoth minions slain,0,3,8,0,0,4096
 82865,,82864,1,0,46824,0,0
 82866,,82864,1,0,46825,1,0
 82867,,82864,1,0,46826,2,0
@@ -65332,7 +65452,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82884,,82879,0,0,46841,4,32
 82885,8.3 N'Zoth Raid - Bug Duo - Achievement,0,0,4,0,0,0
 82886,8.3 N'Zoth Raid - Cultist Boss - Achievement,0,0,4,0,0,0
-82887,Rare Amathet enemies defeated,0,4,8,0,0,4096
+82887,Rare Amathet enemies defeated,0,3,8,0,0,4096
 82888,,82887,1,0,46842,0,0
 82889,,82887,1,0,46843,1,0
 82890,,82887,1,0,46844,2,0
@@ -65375,7 +65495,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82927,,82912,1,0,46880,14,0
 82928,,82912,1,0,46881,15,0
 82929,,82912,1,0,46882,16,0
-82930,Rare mogu enemies defeated,0,4,8,0,0,4096
+82930,Rare mogu enemies defeated,0,3,8,0,0,4096
 82931,,82930,1,0,46883,0,0
 82932,,82930,1,0,46884,1,0
 82933,,82930,1,0,46885,2,0
@@ -65391,7 +65511,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82943,,82930,1,0,46895,12,0
 82944,,82930,1,0,46896,13,0
 82945,,82930,1,0,46897,14,0
-82946,Rare minions of N'Zoth defeated,0,4,8,0,0,4096
+82946,Rare minions of N'Zoth defeated,0,3,8,0,0,4096
 82947,,82946,1,0,46898,0,0
 82948,,82946,1,0,46899,1,0
 82949,,82946,1,0,46900,2,0
@@ -65430,6 +65550,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82982,,82980,1,0,46932,1,2
 82983,,82980,1,0,46933,2,2
 82984,,82980,1,0,46934,3,2
+82985,9.0 NPE Dungeon - Darkmaul Citadel,0,0,4,0,0,0
+82986,Tunk defeated,82985,1,0,46935,0,0
+82987,Gor'groth's ritual thwarted,82985,1,0,46936,1,0
 82988,New Criteria Tree,0,0,4,0,0,0
 82989,Approach the center of the arena.,82988,1,0,46937,0,0
 82990,Defeat Horu Cloudwatcher,0,0,4,0,0,0
@@ -65470,9 +65593,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83025,,66653,12,0,46951,26,0
 83026,,66653,12,0,46952,27,0
 83027,Xanesh Defeated,82886,1,0,46953,0,0
-83028,Mechagonian Threat,82806,1,8,0,1,0
+83028,Mechagonian Threat,82806,1,8,0,0,0
 83029,Earn the Achievement:|n The Mechagonian Threat,83028,0,0,45245,0,0
 83030,Earn the Achievement:|n The Mechagonian Threat,83028,0,0,45731,1,0
+83039,Avarice,82814,0,0,46959,3,16
+83048,Confronting Sin,82814,0,0,46962,5,16
+83050,Dominion,82814,0,0,46963,7,16
 83058,8.3 N'Zoth Raid - Obsidian Destroyer - Achievement,0,0,4,0,0,0
 83059,,83058,1,0,46964,0,2
 83060,The Hivemind Defeated,82885,1,0,46965,0,0
@@ -65508,6 +65634,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83090,,83078,1,0,46987,11,32
 83091,Achievement - N'Zoth (Guild Run),0,0,4,0,0,0
 83092,,83091,1,0,46988,0,2
+83093,9.0 Ardenweald - Ysera Scenario - Step 1 (RMV),0,0,4,0,0,0
+83094,Attack the Temple of Elune,83093,0,0,46989,0,0
 83095,,66460,4,0,46949,27,0
 83096,,66460,4,0,46950,28,0
 83097,,66460,4,0,46951,29,0
@@ -65612,6 +65740,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83198,,83197,1,0,47002,0,2
 83199,"Achievement - Mythic N'Zoth, the Corruptor",0,0,4,0,0,0
 83200,,83199,1,0,47003,0,2
+83205,9.0 Ardenweald - Ysera Scenario - Step 2 (RMV),0,1,8,0,0,1
+83206,Destroy the Temple of Elune,83205,500,9,0,0,0
+83207,Destroy the Temple of Elune,83206,1,0,47007,0,0
+83208,Ysera slain (Hidden),83256,1,0,47008,0,8194
 83212,PvP Season 29 - Set Collection,0,0,4,0,0,2
 83213,Collect any armor set from PvP Season 29.,83212,1,0,47010,0,2
 83214,Statistic - King Mechagon (Heroic),0,0,4,0,0,0
@@ -65650,9 +65782,11 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83248,Hall of Fame: N'Zoth (Personal),0,0,4,0,0,0
 83249,,83248,1,0,47032,0,2
 83250,Achievement - Hall of Fame: N'Zoth (Alliance),0,0,4,0,0,0
-83251,,83250,1,0,47033,0,2
+83251,,83250,1,0,48341,0,2
 83252,Achievement - Hall of Fame: N'Zoth (Horde),0,0,4,0,0,0
 83253,,83252,1,0,47034,0,2
+83254,Destroy the Temple of Elune,83206,1,0,47035,1,0
+83256,Ysera's Death (Hidden),83205,0,4,0,1,2
 83257,Obtain Faceless Mask of the Pained,0,0,4,0,0,0
 83258,The Faceless Mask of the Pained is hidden somewhere in N'Zoths Horrific visions.,83257,1,0,47036,0,0
 83259,Obtain Faceless Mask of the Dark Imagination,0,0,4,0,0,0
@@ -65776,7 +65910,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83377,Statistic - Ra-den (Mythic),0,0,4,0,0,0
 83378,,83377,0,0,47000,0,2
 83379,"Statistic - Il'gynoth, Corruption Reborn (LFG)",0,0,4,0,0,0
-83380,,83379,0,0,47093,0,2
+83380,,83379,0,0,47849,0,2
 83381,"Statistic - Il'gynoth, Corruption Reborn (Normal)",0,0,4,0,0,0
 83382,,83381,0,0,47094,0,2
 83383,"Statistic - Il'gynoth, Corruption Reborn (Heroic)",0,0,4,0,0,0
@@ -65812,7 +65946,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83413,Mad World - Meta Achievement,0,0,4,0,0,0
 83414,,83413,1,0,47105,0,0
 83415,,83413,1,0,47106,1,0
-83416,Rare mantid enemies defeated,0,4,8,0,0,4096
+83416,Rare mantid enemies defeated,0,3,8,0,0,4096
 83417,,83416,1,0,47107,0,0
 83418,,83416,1,0,47108,1,0
 83419,,83416,1,0,47109,2,0
@@ -65827,10 +65961,17 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83428,,83416,1,0,47118,11,0
 83429,,83416,1,0,47119,12,0
 83430,,83416,1,0,47120,13,0
+83431,9.0 NPE - A - Use Charge on Target - (STM),0,1,8,0,0,6144
+83432,,83431,0,0,47123,0,0
+83435,,83431,0,0,47128,1,0
+83436,,83431,0,0,47126,2,0
+83437,,83431,0,0,47127,3,0
+83438,,83431,0,0,47129,4,0
+83440,,83431,0,0,47130,5,0
 83441,Complete both Horrific Visions of N'zoth,0,0,4,0,0,0
 83442,,83441,1,0,47024,0,32
 83443,,83441,1,0,47015,1,32
-83445,Rare aqir enemies defeated,0,4,8,0,0,4096
+83445,Rare aqir enemies defeated,0,3,8,0,0,4096
 83446,,83445,1,0,47131,0,0
 83447,,83445,1,0,47132,1,0
 83448,,83445,1,0,47133,2,0
@@ -65851,6 +65992,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83463,,83459,3,0,47147,3,0
 83464,,83459,3,0,47148,4,0
 83465,,83459,3,0,47149,5,0
+83466,Evade the Tarragrue,0,0,4,0,0,2
+83467,Evade the Tarragrue,83466,1,0,44166,0,2
 83468,Achievement - Keystone 10: BfA Dungeons Season 4,0,0,4,0,0,0
 83469,Atal'Dazar,83468,1,0,47150,0,0
 83470,Freehold,83468,1,0,47151,1,0
@@ -65878,6 +66021,15 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83492,Mechagon Junkyard,83481,1,0,47172,10,0
 83493,Mechagon Workshop,83481,1,0,47173,11,0
 83503,,82810,1,0,47175,3,32
+83504,9.0 Maldraxxus - Finale Scenario -  Free the captured beasts of war - SJC,0,0,4,0,0,32
+83505,Free the beasts of war,83504,5,0,47176,0,0
+83506,9.0 Maldraxxus - Finale Scenario - Save Bonesmith Heirmir - SJC,0,0,4,0,0,32
+83507,Assist Bonesmith Heirmir,83506,1,0,47178,0,0
+83508,9.0 Maldraxxus - Finale Scenario - Regroup with Alexandros & Vashj - SJC,0,0,4,0,0,32
+83509,Assist Alexandros,83508,1,0,47179,0,0
+83510,Assist Vashj,83508,1,0,47180,1,0
+83511,9.0 Maldraxxus - Finale Scenario - Malifis Defeated - SJC,0,0,4,0,0,32
+83512,Defeat Malifis,83511,1,0,47181,0,0
 83513,8.3 N'Zoth Raid - N'Zoth Physical - Achievement Criteria,0,0,4,0,0,0
 83514,Defeat the Carapace of N'Zoth after defeating all Synthesis Growths within 10 seconds,83513,0,0,47182,0,0
 83515,Achievement - Glory of the Ny'alotha Raider,0,0,4,0,0,0
@@ -65948,20 +66100,35 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83581,,83571,0,0,47238,9,0
 83582,,83571,0,0,47239,10,0
 83583,,83571,0,0,47240,11,0
-83584,8.3 Complete All Consuming Maws,0,0,4,0,0,0
-83585,,83584,1,0,47242,0,0
-83586,,83584,1,0,47243,1,0
-83587,,83584,1,0,47244,2,0
-83588,,83584,1,0,47245,3,0
-83589,,83584,1,0,47246,4,0
-83590,,83584,1,0,47247,5,0
-83591,,83584,1,0,47248,6,0
+83584,8.3 Complete All Consuming Maws,0,7,4,0,0,0
+83585,Consuming Maw,84681,1,0,47242,3,0
+83586,Consuming Maw,84681,1,0,47243,4,0
+83587,Consuming Maw,84681,1,0,47244,5,0
+83588,Consuming Maw,84681,1,0,47245,6,0
+83589,Consuming Maw,84681,1,0,47246,1,0
+83590,Consuming Maw,84681,1,0,47247,0,0
+83591,Consuming Maw,84681,1,0,47248,2,0
+83592,Apprentice Riding,0,0,4,0,0,4096
+83593,Apprentice Riding achievement,83592,1,0,47249,0,0
+83594,9.0 NPE - A-  Class Quest - Paladin - Use Divine Shield - (STM),0,0,4,0,0,4096
+83595,,83594,0,0,47250,0,0
 83596,Obtain all the Faceless Masks - Meta,0,0,4,0,0,0
 83597,Faceless Mask of the Pained.,83596,1,0,47036,0,0
 83598,Faceless Mask of the Dark Imagination.,83596,1,0,47037,1,0
 83599,Faceless Mask of the Burned Bridge.,83596,1,0,47038,2,0
 83600,Faceless Mask of the Daredevil.,83596,1,0,47039,3,0
 83601,Faceless Mask of the Long Night.,83596,1,0,47040,4,0
+83602,9.0 Ardenweald - Main / Level up Questline,0,0,4,0,0,0
+83603,Welcome to Ardenweald,83602,0,0,47251,0,16
+83604,Tranquil Pools,83602,0,0,47252,1,16
+83605,Spirit Glen,83602,0,0,47253,2,16
+83606,When a Gorm Eats a God,83602,0,0,47254,3,16
+83607,The Fallen Tree,83602,0,0,47255,4,16
+83608,Awaken the Dreamer,83602,0,0,47256,5,16
+83609,9.0 Ardenweald - Main - Finale Scenario - Step 1 (RMV),0,0,4,0,0,0
+83610,Invaders driven from Tirna Glayn,83609,12,0,47257,0,0
+83611,9.0 Ardenweald - Main - Finale Scenario - Step 2 (RMV),0,0,4,0,0,0
+83612,Set Traps at the North Gate,83611,6,0,47258,0,0
 83613,"Horrific Visions Full Run, 1 Mask",0,0,4,0,0,0
 83614,,83613,1,0,47259,0,0
 83615,"Horrific Visions Full Run, 2 Mask",0,0,4,0,0,0
@@ -65972,12 +66139,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83620,,83619,1,0,47262,0,0
 83621,"Horrific Visions Full Run, 5 Mask",0,0,4,0,0,0
 83622,,83621,1,0,47263,0,0
-83623,Obtain 1000 Corrupted Momentos,0,0,4,0,0,0
-83624,Obtain 1000 Corrupted Momentos.,83623,1000,0,47264,0,1
-83625,Obtain 10000 Corrupted Momentos,0,0,4,0,0,1
+83623,Obtain 1000 Corrupted Mementos,0,0,4,0,0,0
+83624,Obtain 1000 Corrupted Mementos.,83623,1000,0,47264,0,1
+83625,Obtain 10000 Corrupted Mementos,0,0,4,0,0,1
 83626,Obtain 10000 Corrupted Mementos.,83625,10000,0,47264,0,1
-83627,Obtain 50000 Corrupted Momentos,0,0,4,0,0,0
-83628,Obtain 50000 Corrupted Momentos,83627,50000,0,47264,0,1
+83627,Obtain 50000 Corrupted Mementos,0,0,4,0,0,0
+83628,Obtain 50000 Corrupted Mementos,83627,50000,0,47264,0,1
 83629,,77946,42000,0,47207,107,2
 83630,,77946,42000,0,47208,108,2
 83631,,77774,42000,0,47208,107,2
@@ -66010,11 +66177,18 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83658,,75534,42000,0,47207,108,2
 83659,,72237,42000,0,47208,107,2
 83660,,72237,42000,0,47207,108,2
-83666,Obtain 100000 Corrupted Momentos,0,0,4,0,0,0
-83667,Obtain 100000 Corrupted Momentos,83666,100000,0,47264,0,1
+83661,9.0 Ardenweald - Main - Finale Scenario - Step 3 (RMV),0,0,4,0,0,0
+83662,Heal Fae at the East Gate,83661,8,0,47265,0,0
+83663,Survive the Onslaught,83611,1,0,47266,1,0
+83664,9.0 Ardenweald - Main - Finale Scenario - Step 2 - Part I (RMV),0,0,4,0,0,0
+83665,Set Traps at the North Gate,83664,6,0,47258,0,0
+83666,Obtain 100000 Corrupted Mementos,0,0,4,0,0,0
+83667,Obtain 100000 Corrupted Mementos,83666,100000,0,47264,0,1
 83668,Unnamed Branch,82378,0,4,0,0,0
 83669,Unnamed Branch,82378,0,4,0,1,2
 83670,,83669,1,0,47267,0,0
+83671,9.0 Ardenweald - Main - Finale Scenario - Step 4 (RMV),0,0,4,0,0,0
+83672,Waves defeated at the West Gate,83671,4,0,47268,0,0
 83673,Maw of Nashal: - Alliance - Spawns Exist,0,0,4,0,0,0
 83674,,83673,1,0,47269,0,0
 83675,Master of Deepwind Gorge,0,0,4,0,0,0
@@ -66046,6 +66220,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83701,,83700,1,0,47279,0,0
 83702,Acquire Item - Rank 4 - Touch of the Everlasting,0,0,4,0,0,2
 83703,,83702,1,0,47280,0,0
+83704,9.0 Ardenweald - Main - Finale Scenario - Step 5 (RMV),0,0,4,0,0,0
+83705,Ingra Saor defeated,83704,1,0,47281,0,0
 83706,Slay Level 120 Alliance Players in Uldum,0,25,5,0,0,4096
 83707,,83706,25,0,47282,0,0
 83708,Slay Level 120 Alliance Players in Vale of Eternal Blossoms,0,25,5,0,0,4096
@@ -66059,7 +66235,28 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83716,,83445,1,0,47288,15,0
 83717,,58604,1,0,47289,51,0
 83718,,58604,1,0,47290,52,0
+83719,9.0 NPE - A - Class Quest - Rogue - Instant Poison - (STM),0,0,4,0,0,4096
+83720,,83719,0,0,47291,0,0
+83721,9.0 Maldraxxus - Finale Scenario - First Step - Bar Fill - SJC,0,1000,9,0,0,0
+83722,,83721,20,0,47292,0,2
+83723,,83721,70,0,47293,1,2
+83724,,83721,60,0,47294,2,2
+83725,,83721,90,0,47295,3,2
+83726,9.0 Maldraxxus - Finale Scenario - Finish Scenario Event - SJC,0,0,4,0,0,0
+83727,,83726,1,0,47296,0,0
+83728,9.0 Maldraxxus - Finale Scenario - Step 6 - Shooting Gallery - SJC,0,0,4,0,0,32
+83729,Invaders killed,83728,50,0,47297,0,0
 83730,,59821,1,0,47298,3,2
+83731,9.0 Ardenweald - COV - Sisters - Ch5 - Scenario - Step 01 Complete - AJB,0,0,4,0,0,0
+83732,Witness the first memory,83731,1,0,47299,0,0
+83733,9.0 Ardenweald - COV - Sisters - Ch5 - Scenario - Step 02 Complete - AJB,0,0,4,0,0,0
+83734,Witness the second memory,83733,1,0,47300,0,0
+83735,9.0 Ardenweald - COV - Sisters - Ch5 - Scenario - Step 03 Complete - AJB,0,0,4,0,0,0
+83736,Witness the third memory,83735,1,0,47301,0,0
+83737,9.0 Ardenweald - COV - Sisters - Ch5 - Scenario - Step 04 Complete - AJB,0,0,4,0,0,0
+83738,Witness the fourth memory,83737,1,0,47302,0,0
+83739,9.0 Ardenweald - COV - Sisters - Ch5 - Scenario - Step 05 Complete - AJB,0,0,4,0,0,0
+83740,Witness the fifth memory,83739,1,0,47303,0,0
 83741,Obtain a Mighty Caravan Brutosaur,0,1,4,0,0,0
 83742,,83741,0,0,47304,0,2
 83743,Enemy Forces,82546,192,9,0,4,0
@@ -66113,6 +66310,17 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83791,,83765,6,0,46950,25,0
 83792,,83765,6,0,46951,26,0
 83793,,83765,6,0,46952,27,0
+83794,9.0 Ardenweald - COV - Sisters - Ch5 - Scenario - Step 06 Complete - AJB,0,0,4,0,0,0
+83795,Witness the final memory,83794,1,0,47305,0,0
+83801,9.0 NPE - A - Dungeon - Entered Dungeon - (STM),0,0,4,0,0,4096
+83802,,83801,1,0,47308,0,2048
+83803,9.0 Maldraxxus - Finale Scenario - Step 7 - SJC,0,0,4,0,0,0
+83804,Eastern breach defended,83803,100,9,0,0,0
+83805,,83804,10,0,47309,0,0
+83806,Northern breach defended,83803,100,9,0,1,0
+83807,,83806,10,0,47310,0,0
+83808,Western breach defended,83803,100,9,0,2,0
+83809,,83808,10,0,47311,0,0
 83810,8.3 Patch Quest Launch,0,0,4,0,0,0
 83811,,83810,0,0,47312,0,0
 83812,Complete 100 victories in Deepwind Gorge while controlling the Market base.,0,100,5,0,0,1
@@ -66133,11 +66341,27 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 83827,Defeat Vil'thik Hatchling with Shadowbarb Hatchling,0,0,4,0,0,4096
 83828,,83827,0,0,47322,0,0
 83829,"N'Zoth, the Corruptor defeated",0,0,4,0,0,4096
-83830,N'Zoth the Corruptor defeated,83829,0,0,47323,0,0
+83830,N'Zoth the Corruptor defeated,83829,1,0,47323,0,0
 83831,Defeat Baruk Stone Defender with Shadowbarb Hatchling,0,0,4,0,0,4096
 83832,,83831,0,0,47324,0,0
 84545,8.3 N'zoth Raid - N'zoth Mental - Achievement,0,0,4,0,0,0
 84546,Defeat N'Zoth the Corruptor after all players have accepted the Gift of N'Zoth.,84545,0,0,47753,0,0
+84547,9.0 NPE - Left Dungeon - (STM),0,0,4,0,0,6144
+84548,,84547,1,0,47754,0,0
+84549,9.0 Ardenweald - Main - [NOT USED] Finale Scenario - Step 6 (RMV),0,0,4,0,0,0
+84550,Ysera's Wagon Mustered,84549,1,0,47755,0,0
+84551,9.0 Ardenweald - Main - Finale Scenario - Step 6 (RMV),0,0,4,0,0,0
+84552,Ysera loaded into Wagon.,84551,1,0,47756,0,0
+84553,,83806,4,0,47757,1,0
+84554,,83804,4,0,47758,1,0
+84555,,83808,4,0,47759,1,0
+84556,9.0 Ardenweald - Main - Finale Scenario - Step 7 (RMV),0,0,4,0,0,0
+84557,Pod Cart mounted,84556,1,0,47760,0,0
+84558,9.0 Ardenweald - Main - Finale Scenario - Step 8 (RMV),0,0,4,0,0,0
+84559,Krator defeated,84558,1,0,47761,0,0
+84560,Heart of the Forest reached,84558,0,0,47762,1,0
+84561,9.0 Maldraxxus - Finish Finale Scenario - SJC,0,0,4,0,0,4096
+84562,,84561,1,0,47763,0,0
 84563,,82930,1,0,47764,15,0
 84564,Complete the quest 'Servant of N'Zoth',0,1,8,0,0,0
 84565,,84568,1,0,47765,0,0
@@ -66145,6 +66369,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 84567,,84566,0,0,47766,0,0
 84568,Unnamed Branch,84564,1,8,0,0,0
 84569,,84568,1,0,47766,1,0
+84570,The Accuser empowered,82532,1,0,47767,0,0
+84571,The Curator empowered,82532,1,0,47768,1,0
 84572,Dummy Credit 01,0,0,4,0,0,4096
 84573,,84572,1,0,47770,0,0
 84574,Dummy Credit 02,0,0,4,0,0,4096
@@ -66157,6 +66383,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 84581,,84580,1,0,47779,0,0
 84582,Dummy Credit 06,0,0,4,0,0,4096
 84583,,84582,1,0,47780,0,0
+84584,"9.0 Revendreth - Quest ""The Humble Hunt"" - Cast Door of Shadows",0,0,4,0,0,0
+84586,"9.0 Revendreth - Quest ""The Humble Hunt"" - Cast Door of Shadows",0,0,4,0,0,4098
+84587,,84586,0,0,47781,0,2
 84588,Achievement - N'Zoth Raid - Wing 1,0,0,4,0,0,0
 84589,"Wrathion, the Black Emperor",84588,1,0,46693,0,0
 84590,Maut,84588,1,0,46694,1,0
@@ -66233,5 +66462,2183 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 84661,,84660,1,0,47810,0,0
 84662,[DNT] Uldum N'Zoth Treasure 06 (Dummy),0,0,4,0,0,4096
 84663,,84662,1,0,47811,0,0
-84664,Sacrifices for N'zoth,0,0,4,0,0,4096
-84665,Get 10 honorable kills while aura 316587 is on player,84664,10,0,47813,0,0
+84664,Sacrifices for N'zoth,0,10,5,0,0,4096
+84665,Get 10 honorable kills while aura 316577 is on player,84664,1,0,47813,0,2048
+84666,9.0 Ardenweald - COV - Ch 2 - Lead Shandris to the Maw - (STM),0,1,8,0,0,4096
+84667,,84666,1,0,47814,0,2048
+84668,9.0 Ardenweald - COV - Ch 2 - Lead Shandris to the Maw - (STM),0,0,4,0,0,4096
+84669,,84668,1,0,47815,0,2048
+84670,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 1 - (STM),0,0,4,0,0,0
+84671,Tyrande Whisperwind found,84670,1,0,47816,0,0
+84672,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 2 - (STM),0,0,4,0,0,0
+84673,Maw ambushers slain,84672,10,0,47817,0,2080
+84674,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 3 - (STM),0,0,4,0,0,0
+84675,Tyrande Whisperwind followed,84674,1,0,47818,0,2080
+84676,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 4 - (STM),0,0,4,0,0,0
+84677,Maw ambushers slain,84676,12,0,47817,0,2080
+84678,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 5 - (STM),0,1,8,0,0,0
+84679,Tyrande found,84678,1,0,47819,0,2080
+84681,Consuming Maws cleansed,83584,7,5,0,0,10240
+84682,9.0 Dungeon - Sanguine Depths - Catacomb Dungeon (Normal),0,0,4,0,0,0
+84683,Kryxis the Voracious Defeated,84682,1,0,47820,0,0
+84684,Executor Tarvold Defeated,84682,1,0,47821,1,0
+84685,Grand Proctor Beryllia Defeated,84682,1,0,47822,2,0
+84686,General Kaal Defeated,84682,1,0,47823,3,0
+84687,9.0 Dungeon - Sanguine Depths - Catacomb Dungeon (Heroic),0,0,4,0,0,0
+84688,Kryxis the Voracious Defeated,84687,1,0,47820,0,0
+84689,Executor Tarvold Defeated,84687,1,0,47821,1,0
+84690,Grand Proctor Beryllia Defeated,84687,1,0,47822,2,0
+84691,General Kaal Defeated,84687,1,0,47823,3,0
+84692,9.0 Dungeon - Sanguine Depths - Catacomb Dungeon (Mythic),0,0,4,0,0,0
+84693,Kryxis the Voracious Defeated,84692,1,0,47820,0,0
+84694,Executor Tarvold Defeated,84692,1,0,47821,1,0
+84695,Grand Proctor Beryllia Defeated,84692,1,0,47822,2,0
+84696,General Kaal Defeated,84692,1,0,47823,3,0
+84697,,6308,100,0,47825,15,2
+84698,,3839,100,0,47825,15,2
+84699,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 6 - (STM),0,0,4,0,0,0
+84700,Tyrande found,84699,1,0,47826,0,2080
+84701,Defeat General Kaal,0,0,4,0,0,0
+84702,,84701,1,0,47827,0,2
+84703,Defeat General Kaal (Heroic+),0,0,4,0,0,0
+84704,,84703,1,0,47828,0,2
+84705,Defeat General Kaal (Mythic+),0,0,4,0,0,0
+84706,,84705,1,0,47829,0,2
+84707,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 7 - (STM),0,0,4,0,0,0
+84708,Souls freed,84707,3,0,47830,0,2080
+84710,Skuld slain,84707,1,0,47831,1,0
+84711,Sanguine Depths - Mythic Defeat General Kaal (Guild),0,0,4,0,0,0
+84712,,84711,1,0,47832,0,2
+84713,Statistic - General Kaal,0,0,4,0,0,0
+84714,,84713,0,0,47833,0,2
+84715,Statistic - General Kaal (Heroic),0,0,4,0,0,0
+84716,,84715,0,0,47834,0,2
+84717,Statistic - General Kaal (Mythic),0,0,4,0,0,0
+84718,,84717,0,0,47829,0,2
+84719,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 8 - (STM),0,0,4,0,0,0
+84720,Tyrande found,84719,1,0,47835,0,2080
+84721,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 9 - (STM),0,0,4,0,0,0
+84722,Tortured Amalgamation slain,84721,1,0,47836,0,2080
+84723,9.0 Ardenweald - COV - Ch 2 - Stage 1 - Shandris Moves Forward - (STM),0,0,4,0,0,0
+84724,,84723,1,0,47837,0,0
+84725,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 1 - Complete - GJC,0,0,4,0,0,0
+84726,Enter the Citadel of Loyalty,84725,1,0,47838,0,0
+84727,9.0 Ardenweald - COV - Ch 2 - Stage 8 - Trigger Tyrande RP - (STM),0,0,4,0,0,0
+84728,,84727,1,0,47839,0,0
+84729,9.0 Ardenweald - COV - Ch 2 - Stage 8 - Spawn Shade  - (STM),0,0,4,0,0,0
+84730,,84729,1,0,47840,0,0
+84731,9.0 Maldraxxus - Main / Level Up Questline,0,0,4,0,0,0
+84732,House of the Chosen,84731,0,0,48495,1,16
+84733,House of Constructs,84731,0,0,48496,3,16
+84734,Champion of Pain,84731,0,0,48494,0,16
+84735,House of Plagues,84731,0,0,47844,4,16
+84736,Ritual for the Damned,84731,0,0,48498,5,16
+84737,The Empty Throne,84731,0,0,48499,6,16
+84738,Matron of Spies,84731,0,0,47847,2,16
+84739,9.0 Ardenweald - COV - Ch 2 - Entered Oribos - (STM),0,0,4,0,0,4096
+84740,,84739,1,0,47848,0,2048
+84743,,80499,1,0,47851,3,2
+84744,,80551,1,0,47852,3,2
+84745,,80515,1,0,47853,3,2
+84746,,80511,1,0,47854,3,2
+84747,,80499,1,0,47855,4,2
+84748,,80499,1,0,47856,5,2
+84749,,80551,1,0,47857,4,2
+84750,,80551,1,0,47858,5,2
+84751,,80515,1,0,47859,4,2
+84752,,80515,1,0,47860,5,2
+84753,,80511,1,0,47861,4,2
+84754,,80511,1,0,47862,5,2
+84755,Completed Legendary Cloak Quest,0,0,4,0,0,2
+84756,,84755,0,0,47863,0,0
+84757,9.0 NPE - A - Q7B - Hunter - Tame a Pet - (STM),0,0,4,0,0,0
+84758,,84757,0,0,47864,0,0
+84759,9.0 NPE - A - Hunter - Tame Beast - (STM),0,1,4,0,0,6144
+84760,This can also be completed by script 59276,84759,1,0,47865,0,2048
+84761,9.0 NPE - A - Learn Tame Beast - (STM),0,0,4,0,0,6144
+84762,,84761,1,0,47866,0,2048
+84764,9.0 Covenant - Night Fae - Soulshape Selected,0,0,4,0,0,2
+84765,Night Fae - Soulshape CreatureDisplayInfo Selected,84764,0,0,47868,0,2
+84766,9.0 Revendreth - Ember Court - Scenario - Step 1 (JDA),0,0,4,0,0,0
+84767,Guests will arrive shortly,84766,0,0,47869,0,0
+84770,,82887,1,0,47871,22,0
+84771,Enter Oribos,0,0,4,0,0,4096
+84772,Enter Oribos,84771,1,0,47872,0,0
+84784,9.0 Bastion Campaign - Ch 05 - 02C - Kill Collect + Groundspawn Clothes (JLW),0,5,5,0,0,4112
+84785,,84784,1,0,47881,0,16
+84786,,84784,1,0,47883,1,16
+84787,,84784,1,0,47884,2,16
+84788,,84784,1,0,47885,3,16
+84789,,84784,1,0,47886,4,16
+84790,Leave the Maw,0,0,4,0,0,4096
+84791,Leave the Maw,84790,1,0,47888,0,0
+84792,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 1 - KAS,0,0,4,0,0,0
+84793,Clear the way into the fortress.,84792,1,0,47890,0,0
+84794,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 2 - KAS,0,0,4,0,0,0
+84796,Defeat Baroness Ninadar,84794,1,0,47917,0,0
+84797,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 4 - KAS,0,0,4,0,0,0
+84798,Stop the Ritual at the Prime Arcanum.,84797,1,0,47898,0,0
+84800,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 6 - KAS,0,0,4,0,0,0
+84801,End Kel'Thuzad's manipulations in Maldraxxus.,84800,1,0,47893,0,0
+84802,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 7 - KAS,0,0,4,0,0,32
+84803,Reach the Necropolis,84802,1,0,47896,0,0
+84804,Confront Kel'Thuzad,84802,1,0,47894,1,2
+84806,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 8 - KAS,0,0,4,0,0,0
+84807,Speak with Margrave Sin'dane,84806,1,0,47897,0,0
+84808,Highmountain tauren player is eligible for Heritage Armor,65113,0,0,47899,2,0
+84809,Void elf player is eligible for Heritage Armor,65115,0,0,47900,2,0
+84810,Dark Iron Dwarf player is eligible for Heritage Armor,66188,0,0,47901,2,0
+84811,Lightforged draenei player is eligible for Heritage Armor,65109,0,0,47902,2,0
+84812,Mechagnome player is eligible for Heritage Armor,82838,0,0,47903,2,0
+84813,Vulpera player is eligible for Heritage Armor,82841,0,0,47904,2,0
+84814,Nightborne player is eligible for Heritage Armor,65107,0,0,47905,2,0
+84815,Mag'har Orc player is eligible for Heritage Armor,66185,0,0,47906,2,0
+84816,Zandalari Troll player is eligible for Heritage Armor,70801,0,0,47907,2,0
+84817,Kul Tiran player is eligible for Heritage Armor,70808,0,0,47908,2,0
+84818,Defeat the Forsworn,0,1000,9,0,0,32
+84819,Defeat the Forsworn,84818,40,0,47909,0,2
+84820,Defeat the Forsworn,84818,25,0,47910,1,2
+84821,Defeat the Forsworn,84818,10,0,47911,2,2
+84822,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 3 - Complete - GJC,0,0,4,0,0,0
+84823,Defeat Adonias and Phaedra,84822,1,0,47912,0,0
+84824,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 3 - Boss Fight Over - GJC,0,0,4,0,0,0
+84825,,84824,1,0,47913,0,0
+84826,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 4 - Complete - GJC,0,0,4,0,0,0
+84827,Push forward to the Truthbringer,84826,1,0,47914,0,0
+84828,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 3 - KAS,0,0,4,0,0,0
+84829,Use the Maldracite Reservoir to destroy Sin'dane's forces.,84828,1,0,47892,0,0
+84830,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 5 - Complete - GJC,0,0,4,0,0,0
+84831,Prevent the Truthbringer from activating,84830,1,0,47918,0,0
+84832,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 4 - Summon Bone Guard - KAS,0,0,4,0,0,0
+84833,Spawn Ossium Horror,84832,1,0,47919,0,0
+84834,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 4b - KAS,0,0,4,0,0,0
+84835,Defeat the Maw Infernous.,84834,1,0,47891,0,0
+84836,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 1 - Sin'dane Despawn - KAS,0,0,4,0,0,0
+84837,,84836,0,0,47920,0,0
+84838,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 3 - Crystal Complete - KAS,0,0,4,0,0,0
+84839,,84838,1,0,47921,0,0
+84846,9.0 Revendreth - Ember Court - Scenario - Step 2 (JDA),0,0,4,0,0,0
+84847,Participate in court events that match your guests' preferences,84846,0,0,47948,0,0
+84848,9.0 Revendreth - Ember Court - Scenario - Step 3A (1 Guest) (JDA),0,0,4,0,0,0
+84849,Tribute claimed,84848,1,0,47926,0,0
+84850,9.0 Maldraxxus - Covenant Campaign - Scenario - Sin'dane Moment - KAS,0,0,4,0,0,0
+84851,,84850,1,0,47927,0,0
+84852,,82946,1,0,47928,33,0
+84853,9.0 NPE - Sold Item to Vendor - (STM),0,0,4,0,0,0
+84854,,84853,1,0,47940,0,0
+84855,9.0 NPE - Completed Sold Anything Achievement - (STM),0,0,4,0,0,4096
+84856,,84855,0,0,47930,0,0
+84857,9.0 NPE - Bought Item from Vendor - (STM),0,1,8,0,0,0
+84859,,84857,0,0,48159,0,0
+84860,9.0 NPE - Earned Achievement Bought Item - (STM),0,0,4,0,0,4096
+84861,,84860,0,0,47933,0,2048
+84862,9.0 NPE - A - Kill Collect Wildlife - Collect 6 Raw Meats - (STM),0,6,5,0,0,6144
+84863,,84862,1,0,47936,0,2064
+84864,9.0 Revendreth - Ember Court - Step 4 - Defeat Surprise Crashers (JAP),0,0,4,0,0,0
+84865,Inquisitor Petar slain,84864,0,0,47942,0,0
+84868,9.0 Revendreth - Ember Court - Scenario - Step 1 (Tutorial) (JDA),0,0,4,0,0,0
+84869,Speak with Prince Renathal to open court,84868,0,0,47869,0,0
+84874,The Court,82814,0,0,47966,1,16
+84887,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 4 - Swap Colossi - GJC,0,0,4,0,0,0
+84888,,84887,1,0,47967,0,0
+84889,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 6 - Complete - GJC,0,0,4,0,0,0
+84890,Take the gateway to the Temple,84889,1,0,47968,0,0
+84891,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 7 - Complete - GJC,0,0,4,0,0,0
+84892,Confront Lysonia,84891,1,0,47969,0,0
+84893,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 8 - Complete - GJC,0,0,4,0,0,0
+84894,Rally to Elysian Hold,84893,1,0,47970,0,0
+84895,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 9 - Complete - GJC,0,0,4,0,0,0
+84896,Defeat Lysonia,84895,1,0,47971,0,0
+84897,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 9 - Spawn Real Boss - GJC,0,0,4,0,0,0
+84898,,84897,1,0,47972,0,0
+84900,,82946,1,0,47973,34,0
+84901,Completed NPE On This Character,0,1,8,0,0,0
+84902,"Alliance NPE - ""The Nation of Kul Tiras""",84901,0,0,47974,0,0
+84907,9.0 Ardenweald - MHZ - COV - Ch 2 - Entered the Maw - (STM),0,0,4,0,0,4096
+84908,,84907,0,0,47977,0,0
+84915,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 3 - Summon Purity - GJC,0,0,4,0,0,0
+84916,,84915,1,0,47980,0,0
+84917,Complete all 4 WQs,0,0,4,0,0,0
+84918,Tea Tales: Theotar,84917,1,0,47993,0,0
+84919,Tea Tales: Vulca,84917,1,0,47994,1,0
+84920,Tea Tales: Gubbins and Tubbins,84917,1,0,47995,2,0
+84921,Tea Tales: Lost Sybille,84917,1,0,47996,3,0
+84926,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 9 - Flight Path Anima Gates - GJC,0,0,4,0,0,0
+84927,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 9 - Flight Path Anima Collectors - GJC,84926,1,0,47998,0,0
+84928,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 7 - Flight Path Anima Gates - GJC,0,0,4,0,0,0
+84929,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 7 - Flight Path Anima Gates - Lower - GJC,84928,1,0,47999,0,0
+84930,9.0 Dungeon - Necrotic Wake - TJS (Normal),0,0,4,0,0,0
+84931,Blightbone defeated,84930,1,0,48000,0,0
+84932,Amarth defeated,84930,1,0,48001,1,0
+84933,Surgeon Stitchflesh defeated,84930,1,0,48002,2,0
+84934,Nalthor the Rimebinder defeated,84930,1,0,48003,3,0
+84935,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 7 - Flight Path Boss Powers Up - GJC,0,0,4,0,0,0
+84936,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 7 - Flight Path Boss Powers Up - GJC,84935,1,0,48004,0,0
+84937,Complete the Kyrian Covenant campaign.,0,0,4,0,0,0
+84938,Among the Kyrian,84937,0,0,48500,0,16
+84943,9.0 NPE - Earned Achievement Bought Item - (STM),0,0,4,0,0,4096
+84944,,84943,0,0,48008,0,2048
+84945,9.0 NPE - Completed Sold Anything Achievement - (STM),0,0,4,0,0,4096
+84946,,84945,0,0,48009,0,0
+84947,9.0 NPE - A - Class Quest - Rogue - Instant Poison - (STM),0,0,4,0,0,4096
+84948,,84947,0,0,48010,0,0
+84957,Enter the Beastwarrens,0,0,4,0,0,4096
+84958,Enter the Beastwarrens,84957,0,0,48017,0,0
+84963,,66926,14,0,48019,7,1
+84964,,66926,14,0,48020,8,1
+84965,,66936,14,0,48020,7,1
+84966,,66936,14,0,48019,8,1
+84967,,66931,14,0,48019,7,1
+84968,,66931,14,0,48020,8,1
+84969,,66941,14,0,48019,7,1
+84970,,66941,14,0,48020,8,1
+84971,,67014,14,0,48019,7,1
+84972,,67022,14,0,48019,7,1
+84973,,67030,14,0,48019,7,1
+84974,,67038,14,0,48019,7,1
+84975,,66990,14,0,48019,7,1
+84976,,66982,14,0,48019,7,1
+84977,,66974,14,0,48019,7,1
+84978,,66966,14,0,48019,7,1
+84979,,66958,14,0,48019,7,1
+84980,,67006,14,0,48019,7,1
+84981,,66998,14,0,48019,7,1
+84982,,67038,14,0,48020,8,1
+84983,,67030,14,0,48020,8,1
+84984,,67022,14,0,48020,8,1
+84985,,67014,14,0,48020,8,1
+84986,,67006,14,0,48020,8,1
+84987,,66998,14,0,48020,8,1
+84988,,66990,14,0,48020,8,1
+84989,,66982,14,0,48020,8,1
+84990,,66974,14,0,48020,8,1
+84991,,66966,14,0,48020,8,1
+84992,,66958,14,0,48020,8,1
+84993,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 1 -  KRB,0,0,4,0,0,0
+84994,Ride with Ysera,84993,1,0,48021,0,0
+84995,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 2 -  KRB,0,0,4,0,0,0
+84997,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 4 -  KRB,0,0,4,0,0,0
+84998,Reach the Grove of Awakening,84997,1,0,48023,2,0
+84999,Slay Drust Forces,84997,75,0,48024,1,1
+85000,Sound the Horn of the Wild Hunt,84997,1,0,48025,0,0
+85001,Report to the Queen,84995,1,0,48026,0,0
+85002,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 5 -  KRB,0,0,4,0,0,0
+85003,Speak with Winter Queen,85002,1,0,48027,0,0
+85004,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 6 -  KRB,0,0,4,0,0,0
+85005,Assist Moonberry,85004,1,0,48028,0,0
+85006,Assist Herne,85004,1,0,48029,1,0
+85007,Assist Aliothe,85004,1,0,48030,2,0
+85008,Assist Zayhad,85004,1,0,48031,3,0
+85009,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 7 -  KRB,0,0,4,0,0,0
+85010,Defeat Gorak Varr,85009,1,0,48032,1,0
+85011,9.0 Bastion - Level Up - Memory Extraction - Quest 01 - Criteria (JAK),0,0,4,0,0,4096
+85012,,85011,1,0,48033,0,0
+85013,,85011,1,0,48034,1,0
+85014,,85011,1,0,48035,2,0
+85015,,85011,1,0,48036,3,0
+85016,,85011,1,0,48037,4,0
+85017,,85011,1,0,48038,5,0
+85018,,85011,1,0,48039,6,0
+85020,,85011,1,0,48040,7,0
+85021,9.0 NPE - H - Learn Tame Beast - (STM),0,0,4,0,0,6144
+85022,,85021,1,0,48041,0,2048
+85023,9.0 NPE - H - Hunter - Tame Beast - (STM),0,1,4,0,0,6144
+85024,This can also be completed by script 59276,85023,1,0,48042,0,2048
+85025,Southshore vs Tarren Mill,3855,20,0,48043,16,3
+85026,9.0 Dungeons - Spires of Ascension - Bastion City Dungeon,0,0,4,0,0,0
+85027,Kin-Tara defeated,85026,1,0,48045,0,0
+85028,Ventunax defeated,85026,1,0,48046,1,0
+85029,Oryphrion defeated,85026,1,0,48047,2,0
+85030,Devos defeated,85026,1,0,48048,3,0
+85031,9.0 Dungeons - Spires of Ascension - Challenge,0,0,4,0,0,0
+85032,Kin-Tara defeated,85031,1,0,48045,0,0
+85033,Ventunax defeated,85031,1,0,48046,1,0
+85034,Oryphrion defeated,85031,1,0,48047,2,0
+85035,Devos defeated,85031,1,0,48048,3,0
+85037,9.0 Dungeons - Spires of Ascension - (Challenge) (More Trash) - Bastion City Dungeon,0,0,4,0,0,0
+85038,Kin-Tara defeated,85037,1,0,48045,0,0
+85039,Ventunax defeated,85037,1,0,48046,1,0
+85040,Oryphrion defeated,85037,1,0,48047,2,0
+85041,Devos defeated,85037,1,0,48048,3,0
+85047,Go to Northrend (A),0,1,8,0,0,4096
+85048,,85047,1,0,48052,0,0
+85049,,85047,1,0,48053,1,0
+85050,,85047,1,0,48054,2,0
+85051,Go to Northrend (H),0,1,8,0,0,4096
+85052,,85051,1,0,48055,0,0
+85053,,85051,1,0,48056,1,0
+85054,,85051,1,0,48057,2,0
+85055,,85051,1,0,48058,3,0
+85056,,85051,1,0,48059,4,0
+85057,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 3 -  KRB,0,0,4,0,0,0
+85058,Recieve the Queen's Blessing,85057,1,0,48022,0,0
+85059,9.0 Shadowlands - Expansion Quest Launch - Prologue,0,0,4,0,0,0
+85060,,85059,0,0,48060,0,0
+85064,Go to Hellfire Peninsula (A),0,1,8,0,0,4096
+85065,,85064,1,0,48063,0,0
+85066,,85064,1,0,48064,1,0
+85067,Go to Hellfire Peninsula (H),0,1,8,0,0,4096
+85068,,85067,1,0,48065,0,0
+85069,,85067,1,0,48066,1,0
+85070,9.0 NPE - H - Dismiss Pet- (STM),0,0,4,0,0,4096
+85071,,85070,0,0,48067,0,0
+85072,9.0 NPE - H - Tamed Beast - (STM),0,0,4,0,0,4096
+85073,,85072,0,0,48068,0,0
+85074,9.0 Revendreth - Travel Network - Pridefall Hamlet Mirror Used (JAP),0,0,4,0,0,4096
+85075,,85074,0,0,48069,0,0
+85076,9.0 NPE - H - Dismiss Pet- (STM),0,0,4,0,0,4096
+85077,,85076,0,0,48070,0,0
+85078,9.0 NPE - H - Tamed Beast - (STM),0,0,4,0,0,4096
+85079,,85078,0,0,48071,0,0
+85080,9.0 NPE - A - Dismiss Pet- (STM),0,0,4,0,0,4096
+85081,,85080,0,0,48072,0,0
+85082,9.0 NPE - A-  Class Quest - Paladin - Use Divine Shield - (STM),0,0,4,0,0,4096
+85083,,85082,0,0,48073,0,0
+85084,Essence - Azeroth's Undying Gift - Rank 3 Known,0,0,4,0,0,0
+85085,,85084,1,0,48074,0,0
+85086,Essence - Sphere of Suppression - Rank 3 Known,0,0,4,0,0,0
+85087,,85086,1,0,48075,0,0
+85088,Essence - Worldvein Resonance - Rank 3 Known,0,0,4,0,0,0
+85089,,85088,1,0,48076,0,0
+85090,Essence - Focusing Iris - Rank 3 Known,0,0,4,0,0,0
+85091,,85090,1,0,48077,0,0
+85092,Essence - Purification Protocol - Rank 3 Known,0,0,4,0,0,0
+85093,,85092,1,0,48078,0,0
+85094,Essence - Anima of Life and Death - Rank 3 Known,0,0,4,0,0,0
+85095,,85094,1,0,48079,0,0
+85096,Essence - Crucible of Flame - Rank 3 Known,0,0,4,0,0,0
+85097,,85096,1,0,48080,0,0
+85098,Essence - Nullification Dynamo - Rank 3 Known,0,0,4,0,0,0
+85099,,85098,1,0,48081,0,0
+85100,Essence - Condensed Life-Force - Rank 3 Known,0,0,4,0,0,0
+85101,,85100,1,0,48082,0,0
+85102,Essence - Ripple in Space - Rank 3 Known,0,0,4,0,0,0
+85103,,85102,1,0,48083,0,0
+85104,Essence - Unwavering Ward - Rank 3 Known,0,0,4,0,0,0
+85105,,85104,1,0,48084,0,0
+85106,Essence - Ever-Rising Tide - Rank 3 Known,0,0,4,0,0,0
+85107,,85106,1,0,48085,0,0
+85108,Essence - Artifice of Time - Rank 3 Known,0,0,4,0,0,0
+85109,,85108,1,0,48086,0,0
+85110,Essence - Well of Existence - Rank 3 Known,0,0,4,0,0,0
+85111,,85110,1,0,48087,0,0
+85112,Essence - Lifebinder's Invocation - Rank 3 Known,0,0,4,0,0,0
+85113,,85112,1,0,48088,0,0
+85114,Essence - Vitality Conduit - Rank 3 Known,0,0,4,0,0,0
+85115,,85114,1,0,48089,0,0
+85116,Essence - Vision of Perfection - Rank 3 Known,0,0,4,0,0,0
+85117,,85116,1,0,48090,0,0
+85118,Essence - Blood of the Enemy - Rank 3 Known,0,0,4,0,0,0
+85119,,85118,1,0,48091,0,0
+85120,Essence - Spirit of Preservation - Rank 3 Known,0,0,4,0,0,0
+85121,,85120,1,0,48092,0,0
+85122,Essence - Aegis of the Deep - Rank 3 Known,0,0,4,0,0,0
+85123,,85122,1,0,48093,0,0
+85124,Essence - Memory of Lucid Dreams - Rank 3 Known,0,0,4,0,0,0
+85125,,85124,1,0,48094,0,0
+85126,Essence - Unbound Force - Rank 3 Known,0,0,4,0,0,0
+85127,,85126,1,0,48095,0,0
+85128,Essence - Conflict and Strife - Rank 3 Known,0,0,4,0,0,0
+85129,,85128,1,0,48096,0,0
+85130,Essence - Touch of the Everlasting - Rank 3 Known,0,0,4,0,0,0
+85131,,85130,1,0,48097,0,0
+85132,Essence - Strength of the Warden - Rank 3 Known,0,0,4,0,0,0
+85133,,85132,1,0,48098,0,0
+85134,Essence - Breath of the Dying - Rank 3 Known,0,0,4,0,0,0
+85135,,85134,1,0,48099,0,0
+85136,Essence - Spark of Inspiration - Rank 3 Known,0,0,4,0,0,0
+85137,,85136,1,0,48100,0,0
+85138,Essence - Formless Void - Rank 3 Known,0,0,4,0,0,0
+85139,,85138,1,0,48101,0,0
+85140,Focus selected,0,1,5,0,0,4096
+85141,Reputation,85140,1,0,48102,0,0
+85142,Souls,85140,1,0,48103,1,0
+85143,Stygia,85140,1,0,48104,2,0
+85144,9.0 NPE - H - Class Quest - Rogue - Instant Poison - (STM),0,0,4,0,0,4096
+85145,,85144,0,0,48105,0,0
+85146,9.0 NPE - Horde - Wave to Gor'groth - (STM),0,0,4,0,0,4096
+85147,,85146,0,0,48106,0,0
+85148,9.0 NPE - Horde - Dance in Cooking Area - (STM),0,0,4,0,0,4096
+85149,,85148,0,0,48107,0,0
+85150,9.0 Ardenweald - COV - Drust Ch2  Scenario -Step 4 - Horn sounded - KRB,0,0,4,0,0,0
+85151,,85150,1,0,48025,0,0
+85152,9.0 NPE - H - Dungeon - Entered Dungeon - (STM),0,0,4,0,0,4096
+85153,,85152,1,0,48108,0,2048
+85154,Boost 2.0 [Warlock|Aff] - Basic Combat F - Maelefic Rapture,0,0,4,0,0,0
+85155,Cast Malefic Rapture,85154,3,0,48109,0,0
+85156,9.0 Dungeon - Halls of Atonement,0,0,4,0,0,0
+85157,Halkias defeated,85156,1,0,48110,0,0
+85158,Echelon defeated,85156,1,0,48111,1,0
+85159,High Priestess defeated,85156,1,0,48112,2,0
+85160,Lord Chamberlain defeated,85156,1,0,48113,3,0
+85161,9.0 Dungeon - Halls of Atonement (Heroic),0,0,4,0,0,0
+85162,Halkias defeated,85161,1,0,48110,0,0
+85163,Echelon defeated,85161,1,0,48111,1,0
+85164,High Priestess defeated,85161,1,0,48112,2,0
+85165,Lord Chamberlain defeated,85161,1,0,48113,3,0
+85166,9.0 Dungeon - Halls of Atonement (Mythic),0,0,4,0,0,0
+85167,Halkias defeated,85166,1,0,48110,0,0
+85168,Echelon defeated,85166,1,0,48111,1,0
+85169,High Priestess defeated,85166,1,0,48112,2,0
+85170,Lord Chamberlain defeated,85166,1,0,48113,3,0
+85171,Logged in during WoW's 16th Anniversary.,0,0,4,0,0,0
+85172,Logged in during WoW's 16th Anniversary.,85171,1,0,48114,0,2
+85173,Use your gift against Athanos,0,1,8,0,0,12288
+85187,,85173,0,0,48115,0,2
+85188,,85173,0,0,48116,1,2
+85189,,85173,0,0,48117,2,2
+85191,,85173,0,0,48119,3,2
+85192,,85173,0,0,48120,4,2
+85193,,85173,0,0,48121,5,2
+85194,,85173,0,0,48122,6,2
+85195,,85173,0,0,48123,7,2
+85196,,85173,0,0,48124,8,2
+85197,,85173,0,0,48125,9,2
+85198,,85173,0,0,48126,10,0
+85199,"9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 4, kill done, horn sounded -  KRB",0,0,4,0,0,0
+85200,Slay Drust Forces,85199,75,0,48024,0,0
+85201,,85199,1,0,48025,1,0
+85202,9.0 Maldraxxus - Covenant Campaign - Scenario - Call in the Jailer - KAS,0,0,4,0,0,0
+85203,,85202,1,0,48127,0,0
+85204,9.0 Revendreth - Achievement - Best Bud With Benefits (JDA),0,0,4,0,0,0
+85205,,85204,0,0,48128,0,0
+85206,Enter Torghast from within the Maw,0,0,4,0,0,4096
+85207,Enter Torghast from within the Maw,85206,0,0,48129,0,0
+85208,9.0 Revendreth - Achievement - Crypt Kicker (JDA),0,0,4,0,0,0
+85209,,85208,50,0,48130,0,1
+85210,9.0 Revendreth - Achievement - Absolution for All (JDA),0,0,4,0,0,0
+85211,,85210,100,0,48131,0,1
+85212,9.0 Revendreth - Achievement - It's Always Sinny in Revendreth (JDA),0,0,4,0,0,0
+85213,9.0 Maldraxxus - Covenant Campaign - Lich Assault - Stage 7 - Teleport Home - KAS,0,0,4,0,0,0
+85214,,85213,1,0,48132,0,0
+85215,Inquisitor Otilia,85212,0,0,48135,0,16
+85216,Inquisitor Petre,85212,0,0,48134,1,16
+85217,Inquisitor Sorin,85212,0,0,48133,2,16
+85218,Inquisitor Traian,85212,0,0,48136,3,16
+85219,High Inquisitor Dacian,85212,0,0,48140,4,16
+85220,High Inquisitor Gabi,85212,0,0,48137,5,16
+85221,High Inquisitor Magda,85212,0,0,48139,6,16
+85222,High Inquisitor Radu,85212,0,0,48138,7,16
+85223,Grand Inquisitor Aurica,85212,0,0,48142,8,16
+85224,Grand Inquisitor Nicu,85212,0,0,48141,9,16
+85225,9.0 Revendreth - Achievement - Avowed (JDA),0,0,4,0,0,0
+85226,Crypt Kicker,85225,0,0,48143,0,0
+85227,Absolution for All,85225,0,0,48144,1,0
+85228,It's Always Sinny in Revendreth,85225,0,0,48145,2,0
+85229,Covenant Campaign: Maldraxxus,0,0,4,0,0,0
+85230,,85229,0,0,48146,0,0
+85231,9.0 Bastion - Questline,0,0,4,0,0,0
+85232,Eternity's Call,85231,0,0,48148,0,16
+85233,Chasing a Memory,85231,0,0,48151,3,16
+85234,By the Archon's Will,85231,0,0,48152,4,16
+85235,The Temple of Courage,85231,0,0,48153,5,16
+85236,The Temple of Purity,85231,0,0,48150,2,16
+85238,The Aspirant's Crucible,85231,0,0,48149,1,16
+85246,9.0 Bastion - Level Up - 06 - Courage - 07b - Defeat Amarth - GJC,0,0,4,0,0,4096
+85247,Amarth the Harvester defeated,85246,1,0,48156,0,0
+85248,9.0 Bastion - Level Up - 06 - Courage - 07b - Defeat Xanzor - GJC,0,0,4,0,0,4096
+85249,Nalthor the Rimebinder slain,85248,1,0,48157,0,0
+85250,New Criteria Tree,0,0,4,0,0,0
+85254,Apprentice Riding,0,0,4,0,0,4096
+85255,Apprentice Riding achievement,85254,1,0,48170,0,0
+85294,Achievement - Loremaster of Shadowlands,0,0,4,0,0,0
+85295,,85294,0,0,48208,3,32
+85296,,85294,0,0,48209,0,32
+85297,,85294,0,0,48147,1,32
+85298,,85294,0,0,48210,2,32
+85299,9.0 Dungeon - Necrotic Wake - TJS (Heroic),0,0,4,0,0,0
+85300,Blightbone defeated,85299,1,0,48000,0,0
+85301,Amarth defeated,85299,1,0,48001,1,0
+85302,Surgeon Stitchflesh defeated,85299,1,0,48002,2,0
+85303,Nalthor the Rimebinder defeated,85299,1,0,48003,3,0
+85304,9.0 Dungeon - Necrotic Wake - TJS (Mythic),0,0,4,0,0,0
+85305,Blightbone defeated,85304,1,0,48000,0,0
+85306,Amarth defeated,85304,1,0,48001,1,0
+85307,Surgeon Stitchflesh defeated,85304,1,0,48002,2,0
+85308,Nalthor the Rimebinder defeated,85304,1,0,48003,3,0
+85312,Has Aura Summon Steward,0,1,5,0,0,4096
+85313,Has Aura Summon Steward,85312,1,0,48212,0,0
+85314,Owner of the Shadowlands Heroic Edition Ensorcelled Everwyrm mount.,0,1,8,0,0,0
+85315,,85314,1,0,48213,0,2
+85316,Kindred Spirits,85173,1,8,0,11,2
+85317,,85316,0,0,48214,0,2
+85318,,85316,0,0,48216,1,2
+85319,,85316,0,0,48215,2,2
+85320,Breaking Bad,0,0,4,0,0,16
+85321,,85320,1,0,48217,0,0
+85322,Speak with Bolvar to peer into Torghast,0,0,4,0,0,4096
+85323,Speak with Bolvar to peer into Torghast,85322,0,0,48218,0,0
+85324,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85325,,85324,4,0,48219,0,0
+85326,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85327,,85326,4,0,48221,0,0
+85328,New Criteria Tree,0,0,4,0,0,0
+85329,,85328,0,0,48222,0,0
+85330,Crithto,0,0,4,0,0,4096
+85331,Crithto,85330,0,0,48223,0,0
+85332,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85333,,85332,4,0,48224,0,0
+85334,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85335,,85334,4,0,48225,0,0
+85338,9.0 Bastion - Path of Ascension - Scenario - Step 1 - Preparation (JLW),0,0,4,0,0,0
+85339,Choose an enemy and difficulty to fight,85338,1,0,48227,0,0
+85340,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85341,,85340,4,0,48228,0,0
+85342,Complete 4 World Quests (Alliance War Campaign) on Zandalar,0,4,5,0,0,4096
+85343,,85342,0,0,48229,0,0
+85344,,85342,0,0,48230,1,0
+85345,,85342,0,0,48231,2,0
+85346,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85347,,85346,4,0,48232,0,0
+85348,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85349,,85348,4,0,48233,0,0
+85350,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85351,,85350,4,0,48234,0,0
+85352,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85353,,85352,4,0,48235,0,0
+85354,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85355,,85354,4,0,48236,0,0
+85356,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85357,,85356,4,0,48237,0,0
+85358,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85359,,85358,4,0,48238,0,0
+85360,Choose a soulbind,85338,1,0,48239,1,0
+85361,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85362,,85361,4,0,48240,0,0
+85363,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85364,,85363,4,0,48241,0,0
+85365,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85366,,85365,4,0,48242,0,0
+85367,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85368,,85367,4,0,48243,0,0
+85369,(Optional) Equip your soulbind,85338,1,0,48244,2,0
+85370,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85371,,85370,4,0,48245,0,0
+85372,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85373,,85372,4,0,48246,0,0
+85374,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85375,,85374,4,0,48247,0,0
+85376,Complete 4 World Quests in Ardenweald,0,0,4,0,0,4096
+85377,,85376,4,0,48248,0,0
+85378,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85379,,85378,4,0,48249,0,0
+85380,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85381,,85380,4,0,48250,0,0
+85382,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85383,,85382,4,0,48251,0,0
+85384,Complete 4 World Quests in Bastion,0,0,4,0,0,4096
+85385,,85384,4,0,48252,0,0
+85386,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85387,,85386,4,0,48253,0,0
+85388,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85389,,85388,4,0,48254,0,0
+85390,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85391,,85390,4,0,48255,0,0
+85392,Complete 4 World Quests in Maldraxxus,0,0,4,0,0,4096
+85393,,85392,4,0,48256,0,0
+85394,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85395,,85394,4,0,48257,0,0
+85396,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85397,,85396,4,0,48258,0,0
+85398,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85399,,85398,4,0,48259,0,0
+85400,Complete 4 World Quests in Revendreth,0,0,4,0,0,4096
+85401,,85400,4,0,48260,0,0
+85402,9.0 Bastion - Path of Ascension - Tutorial - 02 - Gather Materials - Depleted Goliath Core (JLW),0,2,5,0,0,4096
+85403,Depleted Goliath Core,85402,1,0,48261,0,0
+85406,General Kaal defeated,0,1,5,0,0,4096
+85407,General Kaal defeated,85406,0,0,48264,0,0
+85408,9.0 Bastion - Path of Ascension - Tutorial - 02 - Gather Materials - Soul Mirror Shard (JLW),0,5,5,0,0,4096
+85409,Soul Mirror Shard,85408,1,0,48263,0,0
+85410,9.0 Bastion - Path of Ascension - Tutorial - 02 - Gather Materials - Tampered Anima Charger (JLW),0,6,5,0,0,4096
+85411,Tampered Anima Charger,85410,1,0,48262,0,0
+85414,9.0 Bastion - Path of Ascension - Tutorial - 03 - Intro to Crafting - Overcharged Goliath Core (JLW),0,2,5,0,0,4096
+85415,Overcharged Goliath Core,85414,1,0,48267,0,0
+85416,Complete the Terrors in Tirna Scithe World Quest or the Mists of Tirna Scithe Dungeon.,0,1,8,0,0,4096
+85417,,85416,0,0,48270,0,0
+85418,,85416,0,0,48271,1,0
+85419,Complete the Terrors in Tirna Scithe World Quest or the Mists of Tirna Scithe Dungeon.,0,1,8,0,0,4096
+85420,,85419,0,0,48272,0,0
+85421,,85419,0,0,48273,1,0
+85422,Complete the Terrors in Tirna Scithe World Quest or the Mists of Tirna Scithe Dungeon.,0,1,8,0,0,4096
+85423,,85422,0,0,48274,0,0
+85424,,85422,0,0,48275,1,0
+85425,Complete the Terrors in Tirna Scithe World Quest or the Mists of Tirna Scithe Dungeon.,0,1,8,0,0,4096
+85426,,85425,0,0,48276,0,0
+85427,,85425,0,0,48277,1,0
+85428,Complete the Disloyal Denizens World Quest or the Spires of Ascension Dungeon.,0,1,8,0,0,4096
+85429,,85428,0,0,48278,0,0
+85430,,85428,0,0,48279,1,0
+85431,Complete the Disloyal Denizens World Quest or the Spires of Ascension Dungeon.,0,1,8,0,0,4096
+85432,,85431,0,0,48280,0,0
+85433,,85431,0,0,48281,1,0
+85434,Complete the Disloyal Denizens World Quest or the Spires of Ascension Dungeon.,0,1,8,0,0,4096
+85435,,85434,0,0,48282,0,0
+85436,,85434,0,0,48283,1,0
+85437,Complete the Disloyal Denizens World Quest or the Spires of Ascension Dungeon.,0,1,8,0,0,4096
+85438,,85437,0,0,48284,0,0
+85439,,85437,0,0,48285,1,0
+85440,Complete the Chosen Champions World Quest or the Theater of Pain Dungeon.,0,1,8,0,0,4096
+85441,,85440,0,0,48288,0,0
+85442,,85440,0,0,48289,1,0
+85443,Complete the Chosen Champions World Quest or the Theater of Pain Dungeon.,0,1,8,0,0,4096
+85444,,85443,0,0,48290,0,0
+85445,,85443,0,0,48291,1,0
+85446,Complete the Chosen Champions World Quest or the Theater of Pain Dungeon.,0,1,8,0,0,4096
+85447,,85446,0,0,48292,0,0
+85448,,85446,0,0,48293,1,0
+85449,Complete the Chosen Champions World Quest or the Theater of Pain Dungeon.,0,1,8,0,0,4096
+85450,,85449,0,0,48294,0,0
+85451,,85449,0,0,48295,1,0
+85452,Complete the Destroy the Dominant World Quest or the Sanguine Depths Dungeon.,0,1,8,0,0,4096
+85453,,85452,0,0,48296,0,0
+85454,,85452,0,0,48297,1,0
+85455,Complete the Destroy the Dominant World Quest or the Sanguine Depths Dungeon.,0,1,8,0,0,4096
+85456,,85455,0,0,48298,0,0
+85457,,85455,0,0,48299,1,0
+85458,Complete the Destroy the Dominant World Quest or the Sanguine Depths Dungeon.,0,1,8,0,0,4096
+85459,,85458,0,0,48300,0,0
+85460,,85458,0,0,48301,1,0
+85461,Complete the Destroy the Dominant World Quest or the Sanguine Depths Dungeon.,0,1,8,0,0,4096
+85462,,85461,0,0,48302,0,0
+85463,,85461,0,0,48303,1,0
+85464,9.0 Bastion - Path of Ascension - Tutorial - 03 - Intro to Crafting - Soul Mirror (JLW),0,1,5,0,0,4096
+85465,Soul Mirror,85464,1,0,48304,0,0
+85466,Ready for Raiding VII,0,0,4,0,0,0
+85467,,85466,1,0,48305,0,2
+85468,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 7b - KAS,0,0,4,0,0,0
+85469,Escape the Necropolis,85468,1,0,47895,0,0
+85470,Residue Evil,0,0,4,0,0,0
+85471,Defeat 8 Forlorn Captives.,85470,1,0,48306,0,0
+85472,"Horde NPE - ""Mission Statement""",84901,0,0,48307,1,0
+85479,9.0 Revendreth - Ember Court - Perk 2 - Guest of Honor - Bonus Objective (JDA),0,0,4,0,0,4096
+85480,,85479,1,0,48313,0,0
+85495,9.0 Revendreth - Ember Court - Staff 1 - Bonus Objective (JDA),0,0,4,0,0,4096
+85496,,85495,1,0,48322,0,0
+85497,9.0 Revendreth - Ember Court - Staff 2 - Bonus Objective (JDA),0,0,4,0,0,4096
+85498,,85497,1,0,48323,0,0
+85499,9.0 Revendreth - Ember Court - Staff 3 - Bonus Objective (JDA),0,0,4,0,0,4096
+85500,,85499,1,0,48324,0,0
+85501,9.0 Revendreth - Ember Court - Staff 4 - Bonus Objective (JDA),0,0,4,0,0,4096
+85502,,85501,1,0,48325,0,0
+85503,9.0 Revendreth - Ember Court - Staff 5 - Bonus Objective (JDA),0,0,4,0,0,4096
+85504,,85503,1,0,48326,0,0
+85505,Rally to Prince Renathal,0,0,4,0,0,0
+85506,Rally to Prince Renathal,85505,0,0,48327,0,0
+85507,Kill Agitated Etherwyrm with Gatamatos,0,8,5,0,0,4096
+85508,Kill Agitated Etherwyrm with Gatamatos,85507,1,0,48328,0,0
+85509,"Earned ""New Player Experienced""",0,0,4,0,0,0
+85510,,85509,0,0,48329,0,0
+85515,9.0 Dungeon - Plaguefall - CAV (Normal),0,0,4,0,0,0
+85516,Globgrog defeated,85515,1,0,48980,0,0
+85517,Doctor Ickus defeated,85515,1,0,48333,1,0
+85518,Domina Venomblade defeated,85515,1,0,48334,2,0
+85519,Margrave Stradama defeated,85515,1,0,48335,3,0
+85520,9.0 Dungeon - Plaguefall - CAV (Heroic),0,0,4,0,0,0
+85521,Globgrog defeated,85520,1,0,48980,0,0
+85522,Doctor Ickus defeated,85520,1,0,48333,1,0
+85523,Domina Venomblade defeated,85520,1,0,48334,2,0
+85524,Margrave Stradama defeated,85520,1,0,48335,3,0
+85525,9.0 Dungeon - Plaguefall - CAV (Mythic),0,0,4,0,0,0
+85526,Globgrog defeated,85525,1,0,48980,0,0
+85527,Doctor Ickus defeated,85525,1,0,48333,1,0
+85528,Domina Venomblade defeated,85525,1,0,48334,2,0
+85529,Margrave Stradama defeated,85525,1,0,48335,3,0
+85532,9.0 Revendreth - Complete Narrative Finale (ZtO),0,0,4,0,0,0
+85533,,85532,0,0,48339,0,0
+85534,9.0 Maldraxxus - Bigglesworth - Test - KAS,0,0,4,0,0,0
+85535,,85534,10,0,48340,0,0
+85555,Defeat General Kaal while affected by Slammed! on Mythic difficulty.,0,0,4,0,0,0
+85556,Defeat General Kaal while affected by Slammed! on Mythic difficulty.,85555,1,0,48363,0,2
+85557,Defeat Duraka the Unbreakable in the Sanguine Depths on Mythic Difficulty.,0,0,4,0,0,2
+85558,Defeat Duraka the Unbreakable in the Sanguine Depths on Mythic Difficulty.,85557,1,0,48364,0,2
+85565,Enter the Maw,0,0,4,0,0,4096
+85566,Enter the Maw,85565,0,0,48369,0,0
+85567,Cast Corruption on the target dummy,47441,1,0,29812,1,0
+85568,9.0 Ardenweald - Garden,0,0,4,0,0,4096
+85569,,85568,1,0,48370,0,0
+85570,9.0 Ardenweald - Garden - Rank 3 Garden,0,0,4,0,0,4096
+85571,,85570,1,0,48371,0,0
+85572,9.0 Ardenweald - Garden - Is Rank 4,0,0,4,0,0,4096
+85573,,85572,1,0,48372,0,0
+85574,9.0 Ardenweald - Garden - Is Rank 5,0,0,4,0,0,4096
+85575,,85574,1,0,48373,0,0
+85576,9.0 Revendreth - Ember Court - Scenario - Step 4 (After Party) (JDA),0,0,4,0,0,0
+85577,Speak with Prince Renathal to leave,85576,0,0,48374,0,0
+85578,Cast Death Lotus Powder,0,0,4,0,0,0
+85579,,85578,1,0,48375,0,0
+85580,Cast Spell 314163,0,0,4,0,0,4096
+85581,,85580,1,0,48376,0,0
+85582,New Criteria Tree,0,0,4,0,0,4096
+85583,,85582,0,0,48377,0,0
+85584,9.0 Maldraxxus - Covenant Campaign - Lich Assault - Flyover Complete - KAS,0,0,4,0,0,0
+85585,,85584,1,0,48378,0,0
+85586,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 6 - Xandria in Arena - GJC,0,0,4,0,0,0
+85587,,85586,1,0,48379,0,0
+85590,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 7 - Arrive at Boss - GJC,0,0,4,0,0,0
+85591,,85590,1,0,48380,0,0
+85592,Mists of Tirna Scith - Collection,0,0,4,0,0,0
+85593,First Toy Found,85592,1,0,48381,0,0
+85594,Second Toy Found,85592,1,0,48382,1,0
+85595,Third Toy Found,85592,1,0,48383,2,0
+85596,Fourth Toy Found,85592,1,0,48384,3,0
+85597,Fifth Toy Found,85592,1,0,48385,4,0
+85598,Sixth Toy Found,85592,1,0,48386,5,0
+85599,Sinstone Framents collected,0,20,5,0,0,4096
+85600,Base Sinstone Fragment,85599,0,0,48387,0,0
+85601,Tier Sinstone Fragment,85599,0,0,48388,1,0
+85602,Time Sinstone Fragment,85599,0,0,48389,2,0
+85603,Rare Sinstone Fragment,85599,0,0,48390,3,0
+85604,Pet Sinstone Fragment,85599,0,0,48391,4,0
+85611,9.0 Revendreth - Covenant Finale - Step 1 Complete (JAP),0,0,4,0,0,0
+85612,Information obtained,85611,1,0,48394,0,0
+85613,9.0 Revendreth - Covenant Finale - Step 2 Complete (JAP),0,0,4,0,0,0
+85614,Clear the sky of enemies,85613,30,0,48395,0,0
+85615,9.0 Revendreth - Covenant Finale - Step 3 Complete (JAP),0,0,4,0,0,0
+85616,Speak with your allies on the ground about how to proceed.,85615,1,0,48396,0,0
+85617,9.0 Revendreth - Covenant Finale - Step 4 Complete (JAP),0,0,4,0,0,0
+85619,9.0 Revendreth - Covenant Finale - Step 5 Complete (JAP),0,0,4,0,0,0
+85620,Maw Infernous slain,85619,1,0,47891,0,0
+85621,9.0 Revendreth - Covenant Finale - Step 6 Complete (JAP),0,0,4,0,0,0
+85622,Recover the Medallion of Dominion from Kel'Thuzad.,85621,1,0,48399,0,0
+85623,9.0 Revendreth - Covenant Finale - Interrogation Complete (JAP),0,0,4,0,0,0
+85624,Interrogation complete,85623,1,0,48394,0,0
+85625,Sinfall,82814,0,0,48401,0,16
+85626,The Crowned Prince,82814,0,0,48402,4,16
+85629,Warchief's Command Board found,0,0,4,0,0,4096
+85630,Warchief's Command Board found,85629,0,0,48404,0,0
+85631,Hero's Call Board found,0,0,4,0,0,4096
+85632,Hero's Call Board found,85631,0,4,0,0,4096
+85633,Hero's Call Board found,85632,0,0,48405,0,0
+85638,9.0 Bastion - Path of Ascension - Scenario - Step 2 - Fight (JLW),0,0,4,0,0,0
+85639,Fight your opponent,85638,1,0,48408,0,0
+85642,Defeat all bosses in Plaguefall while affected by Plaguefallen on Mythic difficulty.,0,0,4,0,0,0
+85643,Defeat all bosses in Plaguefall while affected by Plaguefallen on Mythic difficulty.,85642,1,0,48410,0,2
+85647,9.0 Revendreth Raid - Gargoyle Bat - Achievement,0,0,4,0,0,16
+85648,Meet Condition,85647,1,0,48411,0,16
+85649,Toast,85647,1,0,48412,1,16
+85650,9.0 Bastion - Path of Ascension - Scenario - Step 3 - Reward (JLW),0,0,4,0,0,0
+85651,Collect your reward,85650,1,0,48413,0,0
+85652,Allies reanimated,85617,12,0,48414,0,0
+85653,Going Viral,0,0,4,0,0,0
+85654,Defeat 2 Volatile Plague Bombs,85653,1,0,48415,0,0
+85659,9.0 Level Squish - Player has traveled to Outland (MPK),0,1,8,0,0,4096
+85667,,85659,1,0,48419,0,0
+85668,,85659,1,0,48420,1,0
+85669,,85659,1,0,48421,2,0
+85670,,85659,1,0,48422,3,0
+85671,,85659,1,0,48423,4,0
+85672,,85659,1,0,48424,5,0
+85673,,85659,1,0,48425,6,0
+85674,,85659,1,0,48426,7,0
+85677,9.0 Level Squish - Player has traveled to Outland (MPK),0,1,8,0,0,4096
+85678,,85677,1,0,48427,0,0
+85679,,85677,1,0,48428,1,0
+85680,,85677,1,0,48429,2,0
+85681,,85677,1,0,48430,3,0
+85682,,85677,1,0,48431,4,0
+85683,,85677,1,0,48432,5,0
+85684,,85677,1,0,48433,6,0
+85685,,85677,1,0,48434,7,0
+85686,9.0 Bastion - Path of Ascension - Tutorial - 06 - Craft Equipment - Dash Boots Learned (JLW),0,0,4,0,0,4096
+85687,Learn Blueprint: Herald's Footpads,85686,1,0,48435,0,0
+85688,9.0 Bastion - Path of Ascension - Tutorial - 06 - Craft Equipment - Dash Boots Crafted (JLW),0,0,4,0,0,4096
+85689,Herald's Footpads Crafted,85688,1,0,48436,0,0
+85690,9.0 Dungeon - Theater of Pain - ADS (Heroic),0,0,4,0,0,0
+85691,Affront of Challengers defeated,85690,1,0,48437,0,0
+85692,Gorechop defeated,85690,1,0,48438,1,0
+85693,Xav the Unfallen defeated,85690,1,0,48447,2,0
+85694,Kul'tharok defeated,85690,1,0,48439,3,0
+85695,Mordretha defeated,85690,1,0,48440,4,0
+85696,9.0 Dungeon - Theater of Pain - ADS (Normal),0,0,4,0,0,0
+85697,Affront of Challengers defeated,85696,1,0,48437,0,0
+85698,Gorechop defeated,85696,1,0,48438,1,0
+85699,Xav the Unfallen defeated,85696,1,0,48447,2,0
+85700,Kul'tharok defeated,85696,1,0,48439,3,0
+85701,Mordretha defeated,85696,1,0,48440,4,0
+85702,9.0 Dungeon - Theater of Pain - ADS (Mythic),0,0,4,0,0,0
+85703,Affront of Challengers defeated,85702,1,0,48437,0,0
+85704,Gorechop defeated,85702,1,0,48438,1,0
+85705,Xav the Unfallen defeated,85702,1,0,48447,2,0
+85706,Kul'tharok defeated,85702,1,0,48439,3,0
+85707,Mordretha defeated,85702,1,0,48440,4,0
+85708,New Criteria Tree,0,0,4,0,0,4096
+85709,Find an entrance to Torghast,85708,0,0,48441,0,0
+85710,"Complete the scenario ""The Medallion of Dominion""",0,0,4,0,0,4096
+85711,"Complete the scenario ""The Medallion of Dominion""",85710,1,0,48442,0,0
+85712,Defeat each of the Affront of Challengers' combatants last.,0,0,4,0,0,8192
+85713,,85712,0,0,48444,0,0
+85714,,85712,0,0,48445,1,0
+85715,,85712,0,0,48446,2,0
+85716,Various Bastion Activities,0,0,4,0,0,16
+85717,Various Ardenweald Activities,0,0,4,0,0,16
+85718,Various Maldraxxus Activities,0,0,4,0,0,16
+85719,Various Revendreth Activities,0,0,4,0,0,16
+85720,Explore Bastion,0,0,4,0,0,16
+85721,Explore Ardenweald,0,0,4,0,0,16
+85723,Explore Revendreth,0,0,4,0,0,16
+85724,Vignettes: Bastion,0,15,8,0,0,0
+85725,Vignettes: Maldraxxus,0,15,8,0,0,0
+85726,Vignettes: Ardenweald,0,15,8,0,0,0
+85727,Vignettes: Revendreth,0,15,8,0,0,0
+85732,Shadowlands Diplomat,0,0,4,0,0,0
+85733,9.0 Revendreth - Ember Court - UI - Events - Refreshment 2 - Event 1: Food Fight (JDA),0,0,4,0,0,4112
+85734,Food Fight,85733,1,0,48448,0,0
+85735,9.0 Dungeon - Necrotic Wake - Boss 2 - Achievement,0,0,4,0,0,16
+85736,Harvest Reaped,85735,1,0,48449,0,0
+85737,"9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 7, Freed Souls - (STM)",0,0,4,0,0,0
+85738,Souls freed,85737,3,0,47830,0,2080
+85739,9.0 Bastion - Path of Ascension - Tutorial - 06 - Craft Equipment - Dash Boots Added to Armory (JLW),0,0,4,0,0,4096
+85740,Herald's Footpads Added to Armory,85739,1,0,48450,0,0
+85741,9.0 Bastion - Path of Ascension - Scenario - Step 4 - Reward (JLW),0,0,4,0,0,0
+85742,Collect your reward,85741,1,0,48413,0,0
+85743,Return to Sinfall,0,0,4,0,0,4096
+85744,,85743,0,0,48451,0,0
+85745,,12725,1,0,48452,21,2
+85746,,12737,1,0,48453,20,2
+85747,,14311,1,0,48454,20,2
+85748,,10561,1,0,48455,21,2
+85749,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 10  - (STM),0,0,4,0,0,0
+85750,Beseech Tyrande to return,85749,1,0,48456,0,2080
+85751,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 11  - (STM),0,0,4,0,0,0
+85752,Night elf souls rescued,85751,80,0,48457,1,2080
+85755,Ring the Vesper of Tradition when ready,85338,1,0,48459,3,0
+85756,Soulkeeper Crystal placed,85751,0,0,48460,0,2080
+85757,(Optional) Disable traps,84678,1,0,47819,1,2080
+85758,"9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 7, Freed 1 Soul - (STM)",0,0,4,0,0,0
+85759,Souls freed,85758,1,0,47830,0,2080
+85760,Speak with Bolvar to Peer into Torghast,0,0,4,0,0,4096
+85761,Speak with Bolvar to Peer into Torghast,85760,0,0,48461,0,0
+85762,Enter Torghast from Within the Maw,0,0,4,0,0,4096
+85763,Enter Torghast from Within the Maw,85762,0,0,48462,0,0
+85764,9.0 Dungeon - Mists of Tirna Scithe - Challenge,0,0,4,0,0,0
+85765,Ingra Maloch defeated,85764,1,0,48463,0,0
+85766,Mistcaller defeated,85764,1,0,48464,1,0
+85767,Tred'ova defeated,85764,1,0,48268,2,0
+85768,Enemy Forces,85764,260,9,0,3,0
+85769,,85768,2,0,48465,1,0
+85770,,85768,7,0,48466,2,0
+85771,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 8 -  KRB,0,0,4,0,0,0
+85772,(Optional) Speak with the Winter Queen,85771,1,0,48467,0,0
+85773,9.0 Dungeon - The Necrotic Wake - Challenge,0,0,4,0,0,0
+85774,Blightbone defeated,85773,1,0,48000,0,0
+85775,Amarth defeated,85773,1,0,48001,1,0
+85776,Surgeon Stitchflesh defeated,85773,1,0,48002,2,0
+85777,Nalthor the Rimebinder defeated,85773,1,0,48003,3,0
+85778,Enemy Forces,85773,262,9,0,4,0
+85779,,85768,9999,0,48468,0,0
+85780,,85778,9999,0,48468,0,0
+85781,9.0 Dungeon - De Other Side - Challenge,0,0,4,0,0,0
+85782,Hakkar the Soulflayer defeated,85781,1,0,48469,0,0
+85783,The Manastorms defeated,85781,1,0,48471,1,0
+85784,Dealer Xy'exa defeated,85781,1,0,48470,2,0
+85785,Mueh'zala defeated,85781,1,0,48472,3,0
+85786,Enemy Forces,85781,100,9,0,4,0
+85787,,85786,9999,0,48468,0,0
+85788,9.0 Dungeon - Halls of Atonement - Challenge,0,0,4,0,0,0
+85789,Halkias defeated,85788,1,0,48110,0,0
+85790,Echelon defeated,85788,1,0,48111,1,0
+85791,High Adjudicator Aleez defeated,85788,1,0,48112,2,0
+85792,Lord Chamberlain defeated,85788,1,0,48113,3,0
+85793,Enemy Forces,85788,289,9,0,4,0
+85794,,85793,9999,0,48468,0,0
+85795,9.0 Dungeon - Plaguefall - Challenge,0,0,4,0,0,0
+85796,Globgrog defeated,85795,1,0,48980,0,0
+85797,Doctor Ickus defeated,85795,1,0,48333,1,0
+85798,Domina Venomblade defeated,85795,1,0,48334,2,0
+85799,Margrave Stradama defeated,85795,1,0,48335,3,0
+85800,Enemy Forces,85795,600,9,0,4,0
+85801,,85800,9999,0,48468,0,0
+85802,9.0 Dungeon - Sanguine Depths - Challenge,0,0,4,0,0,0
+85803,Kryxis the Voracious defeated,85802,1,0,48473,0,0
+85804,Executor Tarvold defeated,85802,1,0,48474,1,0
+85805,Grand Proctor Beryllia defeated,85802,1,0,48475,2,0
+85806,General Kaal defeated,85802,1,0,47827,3,0
+85807,Enemy Forces,85802,385,9,0,4,0
+85808,,85807,9999,0,48468,0,0
+85809,9.0 Dungeon - Challenge - Theater of Pain,0,0,4,0,0,0
+85810,Affront of Challengers defeated,85809,1,0,48437,0,0
+85811,,85809,1,0,48438,1,0
+85812,Xav the Unfallen defeated,85809,1,0,48447,2,0
+85813,Kul'tharok defeated,85809,1,0,48439,3,0
+85814,Mordretha defeated,85809,1,0,48440,4,0
+85815,Enemy Forces,85809,100,9,0,5,0
+85816,,85815,9999,0,48468,0,0
+85846,9.0 Dungeon - Necrotic Wake - Boss 3 - Achievement,0,0,4,0,0,16
+85847,First Barrel Destroyed,85846,1,0,48478,0,0
+85848,Second Barrel Destroyed,85846,1,0,48479,1,0
+85849,Complete Shadowlands Dungeon Achievements,0,0,4,0,0,32
+85850,,85849,1,0,48480,0,32
+85851,,85849,1,0,48481,1,32
+85852,,85849,1,0,48482,2,32
+85853,,85849,1,0,48483,11,32
+85854,,85849,1,0,48484,12,32
+85855,,85849,1,0,48485,15,32
+85856,,85849,1,0,48486,5,32
+85857,,85849,1,0,48487,4,32
+85858,,85849,1,0,48490,6,32
+85859,,85849,1,0,48488,7,32
+85860,,85849,1,0,48489,13,32
+85861,New Criteria Tree,0,0,4,0,0,2
+85862,,85861,0,0,48491,0,0
+85863,"Defeat Devos, Paragon of Doubt (Heroic+)",0,0,4,0,0,0
+85864,,85863,1,0,48492,0,2
+85865,"Defeat Devos, Paragon of Doubt on Mythic difficulty.",0,0,4,0,0,0
+85866,,85865,1,0,48493,0,2
+85867,"Defeat Devos, Paragon of Doubt",0,0,4,0,0,0
+85868,,85867,1,0,48048,0,2
+85869,Necrolords Maldraxxus Covenant Campaign,0,0,4,0,0,0
+85870,Machinations of War,85869,0,0,49206,3,16
+85871,Grand Theft Necropolis,85869,0,0,49205,2,16
+85872,Champion of Pain,85869,0,0,49203,0,16
+85873,The Scent of Death,85869,0,0,49208,5,16
+85874,Justice is Blind,85869,0,0,49207,4,16
+85875,The Impossible Plan,85869,0,0,49204,1,16
+85876,Redistribute Asmorde,85869,0,0,49209,6,16
+85877,Trial of Ascension,84937,0,0,48501,1,16
+85878,"Phaestus, Genesis of Aeons",84937,0,0,48502,2,16
+85879,The Seal of Contrition,84937,0,0,48503,3,16
+85880,A Vessel of Ardenweald,84937,0,0,48504,4,16
+85881,Closing In,84937,0,0,48505,5,16
+85882,Before the Dawn,84937,0,0,48506,6,16
+85883,The Bell Tolls,84937,0,0,48005,7,16
+85884,New Criteria Tree,0,0,4,0,0,2
+85885,,85884,0,0,48507,0,0
+85886,"Obtain the maximum skill points in a ""Shadowlands"" category of a profession.",0,1,8,0,0,0
+85887,Alchemy,85886,175,0,48508,0,2
+85888,Alchemy,85886,100,0,48509,1,2
+85889,Alchemy,85886,115,0,48510,2,2
+85890,Alchemy,85886,100,0,48511,3,2
+85891,Alchemy,85886,175,0,48512,4,2
+85892,Alchemy,85886,100,0,48513,5,2
+85893,Alchemy,85886,100,0,48514,6,2
+85894,Alchemy,85886,100,0,48515,7,2
+85895,Alchemy,85886,175,0,48516,8,2
+85896,Alchemy,85886,300,0,48517,9,2
+85897,Alchemy,85886,100,0,48518,10,2
+85898,"Obtain the maximum skill points in a ""Shadowlands"" category of two primary professions.",0,2,8,0,0,0
+85899,Alchemy,85898,175,0,48508,0,2
+85900,Alchemy,85898,100,0,48509,1,2
+85901,Alchemy,85898,115,0,48510,2,2
+85902,Alchemy,85898,100,0,48511,3,2
+85903,Alchemy,85898,175,0,48512,4,2
+85904,Alchemy,85898,100,0,48513,5,2
+85905,Alchemy,85898,100,0,48514,6,2
+85906,Alchemy,85898,100,0,48515,7,2
+85907,Alchemy,85898,175,0,48516,8,2
+85908,Alchemy,85898,300,0,48517,9,2
+85909,Alchemy,85898,100,0,48518,10,2
+85910,"Raise all primary professions to maximum skill points in the ""Shadowlands"" category.",0,2,4,0,0,0
+85911,Shadowlands Alchemy,85910,175,0,48508,0,0
+85912,Shadowlands Blacksmithing,85910,100,0,48509,1,0
+85913,Shadowlands Enchanting,85910,115,0,48510,2,0
+85914,Shadowlands Engineering,85910,100,0,48511,3,0
+85915,Shadowlands Herbalism,85910,175,0,48512,4,0
+85916,Shadowlands Inscription,85910,100,0,48513,5,0
+85917,Shadowlands Jewelcrafting,85910,100,0,48514,6,0
+85918,Shadowlands Leatherworking,85910,100,0,48515,7,0
+85919,Shadowlands Mining,85910,175,0,48516,8,0
+85920,Shadowlands Skinning,85910,300,0,48517,9,0
+85921,Shadowlands Tailoring,85910,100,0,48518,10,0
+85922,All Shattered Devastators Destroyed,0,0,4,0,0,0
+85923,,85922,0,0,48519,0,0
+85924,"9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 6, 2/4 Anchors - KRB",0,0,4,0,0,0
+85925,2/4 anchors,85924,1,0,48520,0,2
+85926,"Obtain 100 skill points in the ""Shadowlands"" category of cooking.",0,0,4,0,0,0
+85927,"Obtain 100 skill points in the ""Shadowlands"" category of cooking.",85926,100,0,48521,0,2
+85928,"Obtain 200 skill points in the ""Shadowlands"" category of fishing.",0,0,4,0,0,0
+85929,"Obtain 200 skill points in the ""Shadowlands"" category of fishing.",85928,200,0,48522,0,2
+85930,Night Fae Covenant Campaign,0,0,4,0,0,0
+85931,For Queen and Grove!,85930,0,0,48523,0,16
+85932,Daughter of the Night Warrior,85930,0,0,48524,1,16
+85933,De Boss,85930,0,0,48525,2,16
+85934,Night Warrior's Curse,85930,0,0,48526,3,16
+85935,Drust to Drust,85930,0,0,48527,4,16
+85936,The Horned Hunter,85930,0,0,48528,5,16
+85937,Deal for a Loa,85930,0,0,48529,6,16
+85938,Drust and Ashes,85930,0,0,48530,7,16
+85939,Shadowlands Introduction,0,0,4,0,0,0
+85940,,85939,0,0,48531,0,0
+85942,Vestribule of Eternity,85720,1,0,48532,0,0
+85943,Temple of Humility,85720,1,0,48533,1,0
+85944,Purity's Pinnacle,85720,1,0,48534,2,0
+85945,Firstborne's Bounty,85720,1,0,48535,3,0
+85946,The Mnemonic Locus,85720,1,0,48536,4,0
+85947,The Eternal Forge,85720,1,0,48537,5,0
+85948,Elysian Hold,85720,1,0,48538,6,0
+85949,Citadel of Loyalty,85720,1,0,48539,7,0
+85950,Temple of Courage,85720,1,0,48540,8,0
+85951,Aspirant's Crucible,85720,1,0,48541,9,0
+85952,Agthia's Repose,85720,1,0,48542,10,0
+85953,Dusty Burrows,85721,1,0,48543,0,0
+85954,The Stalks,85721,1,0,48544,1,0
+85955,Starlit Overlook,85721,1,0,48545,2,0
+85956,Shimmerbough,85721,1,0,48546,3,0
+85957,Tirna Scithe,85721,1,0,48547,4,0
+85958,Hibernal Hollow,85721,1,0,48548,5,0
+85959,Heart of the Forest,85721,1,0,48549,6,0
+85960,Gormhive,85721,1,0,48550,7,0
+85961,Glitterfall Basin,85721,1,0,48551,8,0
+85962,Tirna Noch,85721,1,0,48552,9,0
+85963,Darkreach,85721,1,0,48553,10,0
+85964,Crumbled Ridge,85721,1,0,48554,11,0
+85965,Gossamer Cliffs,85721,1,0,48555,12,0
+85966,Caretaker's Manor,85723,1,0,48556,0,0
+85967,Archivam,85723,1,0,48557,1,0
+85968,Witherfall Ruin,85723,1,0,48558,2,0
+85969,The Endmire,85723,1,0,48559,3,0
+85970,Catacombs of Regret,85723,1,0,48560,4,0
+85971,Old Gate,85723,1,0,48561,5,0
+85972,The Night Market,85723,1,0,48562,6,0
+85973,The Banewood,85723,1,0,48563,7,0
+85974,Stalker's Lodge,85723,1,0,48564,8,0
+85975,Chalice District,85723,1,0,48565,9,0
+85976,Redelav District,85723,1,0,48566,10,0
+85977,Dredhollow,85723,1,0,48567,11,0
+85978,Ember Ward,85723,1,0,48568,12,0
+85979,Darkwall Tower,85723,1,0,48569,13,0
+85980,Court of the Harvesters,85723,1,0,48570,14,0
+85981,Dominance Gate,85723,1,0,48571,15,0
+85982,The Shrouded Asylum,85723,1,0,48572,16,0
+85983,Dominance Keep,85723,1,0,48573,17,0
+85984,The Ascended,85732,21000,0,48574,0,0
+85985,The Undying Army,85732,21000,0,48575,1,0
+85986,The Undying Army,85732,21000,0,48576,2,0
+85987,The Undying Army,85732,21000,0,48577,3,0
+85988,Exalted Ascended,0,0,4,0,0,0
+85989,,85988,42000,0,48574,0,2
+85990,Exalted Undying Army,0,0,4,0,0,0
+85991,,85990,42000,0,48575,0,2
+85992,Exalted Wild Hunt,0,0,4,0,0,0
+85993,,85992,42000,0,48577,0,2
+85994,Exalted Court of Harvesters,0,0,4,0,0,0
+85995,,85994,42000,0,48576,0,2
+85996,The Ascended,85716,1,0,48578,0,0
+85997,Treasures of Bastion,85716,1,0,48579,1,0
+85998,Adventurer of Bastion,85716,1,0,48580,2,0
+85999,Explore Bastion,85716,1,0,48581,3,0
+86000,The Path to Ascension,85716,1,0,48209,4,0
+86001,The Path to Ascension,85716,1,0,48209,5,0
+86002,Undying Army,85718,1,0,48582,0,0
+86003,Treasures of Maldraxxus,85718,1,0,48583,1,0
+86004,Adventurer of Maldraxxus,85718,1,0,48584,2,0
+86005,Explore Maldraxxus,85718,1,0,48585,3,0
+86006,Blade of the Primus,85718,1,0,48147,4,0
+86007,Treasures of Ardenweald,85717,1,0,48586,0,0
+86008,Adventurer of Ardenweald,85717,1,0,48587,1,0
+86009,Explore Ardenweald,85717,1,0,48588,2,0
+86010,Explore Ardenweald,85717,1,0,48210,3,0
+86011,Treasures of Revendreth,85719,1,0,48589,0,0
+86012,Adventurer of Revendreth,85719,1,0,48590,1,0
+86013,Explore Revendreth,85719,1,0,48591,2,0
+86014,The Master of Revendreth,85719,1,0,48208,3,0
+86015,It's Always Sinny in Revendreth,85719,1,0,48145,4,0
+86016,Absolution for All,85719,1,0,48144,5,0
+86017,Crypt Kicker,85719,1,0,48143,6,0
+86018,Best Bud With Benefits,85719,1,0,48592,7,0
+86019,,84666,1,0,48593,1,2048
+86020,Bastion: 50 Lost Anima Shards,0,50,5,0,0,0
+86021,Defeat at least 1 Boss in Path of Ascension,0,1,8,0,0,1
+86022,,86021,1,0,48612,0,0
+86023,,86021,1,0,48613,1,0
+86024,,86021,1,0,48614,2,0
+86025,,86021,1,0,48615,3,0
+86026,,86021,1,0,48616,4,0
+86027,,86021,1,0,48617,5,0
+86028,,86021,1,0,48618,6,0
+86029,,86021,1,0,48619,7,0
+86030,,86021,1,0,48620,8,0
+86031,,86021,1,0,48621,9,0
+86032,,86021,1,0,48622,10,0
+86033,,86021,1,0,48623,11,0
+86034,,86021,1,0,48624,12,0
+86035,,86021,1,0,48625,13,0
+86036,,86021,1,0,48626,14,0
+86037,,86021,1,0,48627,15,0
+86038,,86021,1,0,48628,16,0
+86039,,86021,1,0,48629,17,0
+86040,,86021,1,0,48630,18,0
+86041,,86021,1,0,48631,19,0
+86042,,86021,1,0,48632,20,0
+86043,,86021,1,0,48633,21,0
+86044,,86021,1,0,48634,22,0
+86045,,86021,1,0,48635,23,0
+86046,,86021,1,0,48636,24,0
+86047,,86021,1,0,48637,25,0
+86048,,86021,1,0,48638,26,0
+86049,,86021,1,0,48639,27,0
+86050,,86021,1,0,48640,28,0
+86051,,86021,1,0,48641,29,0
+86052,,86021,1,0,48642,30,0
+86053,,86021,1,0,48643,31,0
+86054,,86021,1,0,48644,32,0
+86055,,86021,1,0,48645,33,0
+86056,,86021,1,0,48646,34,0
+86057,,86021,1,0,48647,35,0
+86058,,86021,1,0,48648,36,0
+86059,,86021,1,0,48649,37,0
+86060,,86021,1,0,48650,38,0
+86061,,86021,1,0,48651,39,0
+86062,Defeat at least 3 Bosses in Path of Ascension,0,3,8,0,0,0
+86063,,86062,0,0,48612,0,0
+86064,,86062,0,0,48613,1,0
+86065,,86062,0,0,48614,2,0
+86066,,86062,0,0,48615,3,0
+86067,,86062,0,0,48616,4,0
+86068,,86062,0,0,48617,5,0
+86069,,86062,0,0,48618,6,0
+86070,,86062,0,0,48619,7,0
+86071,,86062,0,0,48620,8,0
+86072,,86062,0,0,48621,9,0
+86073,,86062,0,0,48622,10,0
+86074,,86062,0,0,48623,11,0
+86075,,86062,0,0,48624,12,0
+86076,,86062,0,0,48625,13,0
+86077,,86062,0,0,48626,14,0
+86078,,86062,0,0,48627,15,0
+86079,,86062,0,0,48628,16,0
+86080,,86062,0,0,48629,17,0
+86081,,86062,0,0,48630,18,0
+86082,,86062,0,0,48631,19,0
+86083,,86062,0,0,48632,20,0
+86084,,86062,0,0,48633,21,0
+86085,,86062,0,0,48634,22,0
+86086,,86062,0,0,48635,23,0
+86087,,86062,0,0,48636,24,0
+86088,,86062,0,0,48637,25,0
+86089,,86062,0,0,48638,26,0
+86090,,86062,0,0,48639,27,0
+86091,,86062,0,0,48640,28,0
+86092,,86062,0,0,48641,29,0
+86093,,86062,0,0,48642,30,0
+86094,,86062,0,0,48643,31,0
+86095,,86062,0,0,48644,32,0
+86096,,86062,0,0,48645,33,0
+86097,,86062,0,0,48646,34,0
+86098,,86062,0,0,48647,35,0
+86099,,86062,0,0,48648,36,0
+86100,,86062,0,0,48649,37,0
+86101,,86062,0,0,48650,38,0
+86102,,86062,0,0,48651,39,0
+86103,Defeat at least 5 Bosses in Path of Ascension,0,5,8,0,0,1
+86104,,86103,0,0,48612,0,0
+86105,,86103,0,0,48613,1,0
+86106,,86103,0,0,48614,2,0
+86107,,86103,0,0,48615,3,0
+86108,,86103,0,0,48616,4,0
+86109,,86103,0,0,48617,5,0
+86110,,86103,0,0,48618,6,0
+86111,,86103,0,0,48619,7,0
+86112,,86103,0,0,48620,8,0
+86113,,86103,0,0,48621,9,0
+86114,,86103,0,0,48622,10,0
+86115,,86103,0,0,48623,11,0
+86116,,86103,0,0,48624,12,0
+86117,,86103,0,0,48625,13,0
+86118,,86103,0,0,48626,14,0
+86119,,86103,0,0,48627,15,0
+86120,,86103,0,0,48628,16,0
+86121,,86103,0,0,48629,17,0
+86122,,86103,0,0,48630,18,0
+86123,,86103,0,0,48631,19,0
+86124,,86103,0,0,48632,20,0
+86125,,86103,0,0,48633,21,0
+86126,,86103,0,0,48634,22,0
+86127,,86103,0,0,48635,23,0
+86128,,86103,0,0,48636,24,0
+86129,,86103,0,0,48637,25,0
+86130,,86103,0,0,48638,26,0
+86131,,86103,0,0,48639,27,0
+86132,,86103,0,0,48640,28,0
+86133,,86103,0,0,48641,29,0
+86134,,86103,0,0,48642,30,0
+86135,,86103,0,0,48643,31,0
+86136,,86103,0,0,48644,32,0
+86137,,86103,0,0,48645,33,0
+86138,,86103,0,0,48646,34,0
+86139,,86103,0,0,48647,35,0
+86140,,86103,0,0,48648,36,0
+86141,,86103,0,0,48649,37,0
+86142,,86103,0,0,48650,38,0
+86143,,86103,0,0,48651,39,0
+86144,Defeat at least 7 Bosses in Path of Ascension,0,7,8,0,0,0
+86145,,86144,0,0,48612,0,0
+86146,,86144,0,0,48613,1,0
+86147,,86144,0,0,48614,2,0
+86148,,86144,0,0,48615,3,0
+86149,,86144,0,0,48616,4,0
+86150,,86144,0,0,48617,5,0
+86151,,86144,0,0,48618,6,0
+86152,,86144,0,0,48619,7,0
+86153,,86144,0,0,48620,8,0
+86154,,86144,0,0,48621,9,0
+86155,,86144,0,0,48622,10,0
+86156,,86144,0,0,48623,11,0
+86157,,86144,0,0,48624,12,0
+86158,,86144,0,0,48625,13,0
+86159,,86144,0,0,48626,14,0
+86160,,86144,0,0,48627,15,0
+86161,,86144,0,0,48628,16,0
+86162,,86144,0,0,48629,17,0
+86163,,86144,0,0,48630,18,0
+86164,,86144,0,0,48631,19,0
+86165,,86144,0,0,48632,20,0
+86166,,86144,0,0,48633,21,0
+86167,,86144,0,0,48634,22,0
+86168,,86144,0,0,48635,23,0
+86169,,86144,0,0,48636,24,0
+86170,,86144,0,0,48637,25,0
+86171,,86144,0,0,48638,26,0
+86172,,86144,0,0,48639,27,0
+86173,,86144,0,0,48640,28,0
+86174,,86144,0,0,48641,29,0
+86175,,86144,0,0,48642,30,0
+86176,,86144,0,0,48643,31,0
+86177,,86144,0,0,48644,32,0
+86178,,86144,0,0,48645,33,0
+86179,,86144,0,0,48646,34,0
+86180,,86144,0,0,48647,35,0
+86181,,86144,0,0,48648,36,0
+86182,,86144,0,0,48649,37,0
+86183,,86144,0,0,48650,38,0
+86184,,86144,0,0,48651,39,0
+86185,Defeat at least 12 Bosses in Path of Ascension,0,12,8,0,0,0
+86186,,86185,0,0,48612,0,0
+86187,,86185,0,0,48613,1,0
+86188,,86185,0,0,48614,2,0
+86189,,86185,0,0,48615,3,0
+86190,,86185,0,0,48616,4,0
+86191,,86185,0,0,48617,5,0
+86192,,86185,0,0,48618,6,0
+86193,,86185,0,0,48619,7,0
+86194,,86185,0,0,48620,8,0
+86195,,86185,0,0,48621,9,0
+86196,,86185,0,0,48622,10,0
+86197,,86185,0,0,48623,11,0
+86198,,86185,0,0,48624,12,0
+86199,,86185,0,0,48625,13,0
+86200,,86185,0,0,48626,14,0
+86201,,86185,0,0,48627,15,0
+86202,,86185,0,0,48628,16,0
+86203,,86185,0,0,48629,17,0
+86204,,86185,0,0,48630,18,0
+86205,,86185,0,0,48631,19,0
+86206,,86185,0,0,48632,20,0
+86207,,86185,0,0,48633,21,0
+86208,,86185,0,0,48634,22,0
+86209,,86185,0,0,48635,23,0
+86210,,86185,0,0,48636,24,0
+86211,,86185,0,0,48637,25,0
+86212,,86185,0,0,48638,26,0
+86213,,86185,0,0,48639,27,0
+86214,,86185,0,0,48640,28,0
+86215,,86185,0,0,48641,29,0
+86216,,86185,0,0,48642,30,0
+86217,,86185,0,0,48643,31,0
+86218,,86185,0,0,48644,32,0
+86219,,86185,0,0,48645,33,0
+86220,,86185,0,0,48646,34,0
+86221,,86185,0,0,48647,35,0
+86222,,86185,0,0,48648,36,0
+86223,,86185,0,0,48649,37,0
+86224,,86185,0,0,48650,38,0
+86225,,86185,0,0,48651,39,0
+86226,Defeat at least 16 Bosses in Path of Ascension,0,16,8,0,0,0
+86227,,86226,0,0,48612,0,0
+86228,,86226,0,0,48613,1,0
+86229,,86226,0,0,48614,2,0
+86230,,86226,0,0,48615,3,0
+86231,,86226,0,0,48616,4,0
+86232,,86226,0,0,48617,5,0
+86233,,86226,0,0,48618,6,0
+86234,,86226,0,0,48619,7,0
+86235,,86226,0,0,48620,8,0
+86236,,86226,0,0,48621,9,0
+86237,,86226,0,0,48622,10,0
+86238,,86226,0,0,48623,11,0
+86239,,86226,0,0,48624,12,0
+86240,,86226,0,0,48625,13,0
+86241,,86226,0,0,48626,14,0
+86242,,86226,0,0,48627,15,0
+86243,,86226,0,0,48628,16,0
+86244,,86226,0,0,48629,17,0
+86245,,86226,0,0,48630,18,0
+86246,,86226,0,0,48631,19,0
+86247,,86226,0,0,48632,20,0
+86248,,86226,0,0,48633,21,0
+86249,,86226,0,0,48634,22,0
+86250,,86226,0,0,48635,23,0
+86251,,86226,0,0,48636,24,0
+86252,,86226,0,0,48637,25,0
+86253,,86226,0,0,48638,26,0
+86254,,86226,0,0,48639,27,0
+86255,,86226,0,0,48640,28,0
+86256,,86226,0,0,48641,29,0
+86257,,86226,0,0,48642,30,0
+86258,,86226,0,0,48643,31,0
+86259,,86226,0,0,48644,32,0
+86260,,86226,0,0,48645,33,0
+86261,,86226,0,0,48646,34,0
+86262,,86226,0,0,48647,35,0
+86263,,86226,0,0,48648,36,0
+86264,,86226,0,0,48649,37,0
+86265,,86226,0,0,48650,38,0
+86266,,86226,0,0,48651,39,0
+86267,,86020,1,0,48652,0,2
+86268,9.0 Dungeon - Plaguefall - Boss 01 - Achievement,0,0,4,0,0,16
+86269,Appetizer Served.,86268,1,0,48653,0,0
+86270,Entree Served.,86268,1,0,48332,1,0
+86271,Dessert Served.,86268,1,0,48717,2,0
+86272,,86020,1,0,48654,1,2
+86273,,86020,1,0,48655,2,2
+86274,,86020,1,0,48656,3,2
+86275,,86020,1,0,48657,4,2
+86276,Defeat at least 20 Boss in Path of Ascension,0,20,8,0,0,1
+86277,,86276,1,0,48612,0,0
+86278,,86276,1,0,48613,1,0
+86279,,86276,1,0,48614,2,0
+86280,,86276,1,0,48615,3,0
+86281,,86276,1,0,48616,4,0
+86282,,86276,1,0,48617,5,0
+86283,,86276,1,0,48618,6,0
+86284,,86276,1,0,48619,7,0
+86285,,86276,1,0,48620,8,0
+86286,,86276,1,0,48621,9,0
+86287,,86276,1,0,48622,10,0
+86288,,86276,1,0,48623,11,0
+86289,,86276,1,0,48624,12,0
+86290,,86276,1,0,48625,13,0
+86291,,86276,1,0,48626,14,0
+86292,,86276,1,0,48627,15,0
+86293,,86276,1,0,48628,16,0
+86294,,86276,1,0,48629,17,0
+86295,,86276,1,0,48630,18,0
+86296,,86276,1,0,48631,19,0
+86297,,86276,1,0,48632,20,0
+86298,,86276,1,0,48633,21,0
+86299,,86276,1,0,48634,22,0
+86300,,86276,1,0,48635,23,0
+86301,,86276,1,0,48636,24,0
+86302,,86276,1,0,48637,25,0
+86303,,86276,1,0,48638,26,0
+86304,,86276,1,0,48639,27,0
+86305,,86276,1,0,48640,28,0
+86306,,86276,1,0,48641,29,0
+86307,,86276,1,0,48642,30,0
+86308,,86276,1,0,48643,31,0
+86309,,86276,1,0,48644,32,0
+86310,,86276,1,0,48645,33,0
+86311,,86276,1,0,48646,34,0
+86312,,86276,1,0,48647,35,0
+86313,,86276,1,0,48648,36,0
+86314,,86276,1,0,48649,37,0
+86315,,86276,1,0,48650,38,0
+86316,,86276,1,0,48651,39,0
+86317,,86020,1,0,48658,5,2
+86318,Defeat at least 24 Boss in Path of Ascension,0,24,8,0,0,1
+86319,,86318,1,0,48612,0,0
+86320,,86318,1,0,48613,1,0
+86321,,86318,1,0,48614,2,0
+86322,,86318,1,0,48615,3,0
+86323,,86318,1,0,48616,4,0
+86324,,86318,1,0,48617,5,0
+86325,,86318,1,0,48618,6,0
+86326,,86318,1,0,48619,7,0
+86327,,86318,1,0,48620,8,0
+86328,,86318,1,0,48621,9,0
+86329,,86318,1,0,48622,10,0
+86330,,86318,1,0,48623,11,0
+86331,,86318,1,0,48624,12,0
+86332,,86318,1,0,48625,13,0
+86333,,86318,1,0,48626,14,0
+86334,,86318,1,0,48627,15,0
+86335,,86318,1,0,48628,16,0
+86336,,86318,1,0,48629,17,0
+86337,,86318,1,0,48630,18,0
+86338,,86318,1,0,48631,19,0
+86339,,86318,1,0,48632,20,0
+86340,,86318,1,0,48633,21,0
+86341,,86318,1,0,48634,22,0
+86342,,86318,1,0,48635,23,0
+86343,,86318,1,0,48636,24,0
+86344,,86318,1,0,48637,25,0
+86345,,86318,1,0,48638,26,0
+86346,,86318,1,0,48639,27,0
+86347,,86318,1,0,48640,28,0
+86348,,86318,1,0,48641,29,0
+86349,,86318,1,0,48642,30,0
+86350,,86318,1,0,48643,31,0
+86351,,86318,1,0,48644,32,0
+86352,,86318,1,0,48645,33,0
+86353,,86318,1,0,48646,34,0
+86354,,86318,1,0,48647,35,0
+86355,,86318,1,0,48648,36,0
+86356,,86318,1,0,48649,37,0
+86357,,86318,1,0,48650,38,0
+86358,,86318,1,0,48651,39,0
+86359,,86020,1,0,48659,6,2
+86360,Defeat at least 39 Boss in Path of Ascension,0,39,8,0,0,1
+86361,,86360,1,0,48612,0,0
+86362,,86360,1,0,48613,1,0
+86363,,86360,1,0,48614,2,0
+86364,,86360,1,0,48615,3,0
+86365,,86360,1,0,48616,4,0
+86366,,86360,1,0,48617,5,0
+86367,,86360,1,0,48618,6,0
+86368,,86360,1,0,48619,7,0
+86369,,86360,1,0,48620,8,0
+86370,,86360,1,0,48621,9,0
+86371,,86360,1,0,48622,10,0
+86372,,86360,1,0,48623,11,0
+86373,,86360,1,0,48624,12,0
+86374,,86360,1,0,48625,13,0
+86375,,86360,1,0,48626,14,0
+86376,,86360,1,0,48627,15,0
+86377,,86360,1,0,48628,16,0
+86378,,86360,1,0,48629,17,0
+86379,,86360,1,0,48630,18,0
+86380,,86360,1,0,48631,19,0
+86381,,86360,1,0,48632,20,0
+86382,,86360,1,0,48633,21,0
+86383,,86360,1,0,48634,22,0
+86384,,86360,1,0,48635,23,0
+86385,,86360,1,0,48636,24,0
+86386,,86360,1,0,48637,25,0
+86387,,86360,1,0,48638,26,0
+86388,,86360,1,0,48639,27,0
+86389,,86360,1,0,48640,28,0
+86390,,86360,1,0,48641,29,0
+86391,,86360,1,0,48642,30,0
+86392,,86360,1,0,48643,31,0
+86393,,86360,1,0,48644,32,0
+86394,,86360,1,0,48645,33,0
+86395,,86360,1,0,48646,34,0
+86396,,86360,1,0,48647,35,0
+86397,,86360,1,0,48648,36,0
+86398,,86360,1,0,48649,37,0
+86399,,86360,1,0,48650,38,0
+86400,,86360,1,0,48651,39,0
+86401,,86020,1,0,48660,7,2
+86402,,86020,1,0,48661,8,2
+86403,,86020,1,0,48662,9,2
+86404,,86020,1,0,48663,10,2
+86405,,86020,1,0,48664,11,2
+86406,,86020,1,0,48665,12,2
+86407,,86020,1,0,48666,13,2
+86408,,86020,1,0,48667,14,2
+86409,,86020,1,0,48668,15,2
+86410,,86020,1,0,48669,16,2
+86411,,86020,1,0,48670,17,2
+86412,,86020,1,0,48671,18,2
+86413,Nobody Puts Denathrius in a Corner,0,0,4,0,0,0
+86414,Statues in the corners,86413,1,0,48672,0,0
+86415,,86020,1,0,48673,19,2
+86416,,86020,1,0,48674,20,2
+86417,,86020,1,0,48675,21,2
+86418,,86020,1,0,48676,22,2
+86419,,86020,1,0,48677,23,2
+86420,,86020,1,0,48678,24,2
+86421,,86020,1,0,48679,25,2
+86422,,86020,1,0,48680,26,2
+86423,,86020,1,0,48681,27,2
+86424,,86020,1,0,48682,28,2
+86425,,86020,1,0,48683,29,2
+86426,,86020,1,0,48684,30,2
+86427,,86020,1,0,48685,31,2
+86428,,86020,1,0,48686,32,2
+86429,,86020,1,0,48687,33,2
+86430,,86020,1,0,48688,34,2
+86431,,86020,1,0,48689,35,2
+86432,,86020,1,0,48690,36,2
+86433,,86020,1,0,48691,37,2
+86434,,86020,1,0,48692,38,2
+86435,,86020,1,0,48693,39,2
+86436,,86020,1,0,48694,40,2
+86437,,86020,1,0,48695,41,2
+86438,,86020,1,0,48696,42,2
+86439,,86020,1,0,48697,43,2
+86440,,86020,1,0,48698,44,2
+86441,,86020,1,0,48699,45,2
+86442,,86020,1,0,48700,46,2
+86443,,86020,1,0,48701,47,2
+86444,,86020,1,0,48702,48,2
+86445,,86020,1,0,48703,49,2
+86446,9.0 Archievement - Ardenweald's a Stage,0,0,4,0,0,0
+86447,Xavius,86446,1,0,48705,0,0
+86448,Gul'dan,86446,1,0,48706,1,0
+86449,Kil'jaeden,86446,1,0,48707,2,0
+86450,"Argus, The Unmaker",86446,1,0,48708,3,0
+86451,Jaina,86446,1,0,48704,4,0
+86452,Azshara,86446,1,0,48709,5,0
+86453,N'Zoth,86446,1,0,48710,6,0
+86454,Starbright,85726,1,0,48711,1,0
+86455,Angry Egg-Tender,85726,1,0,48712,2,0
+86456,Deathbinder Hroth,85726,1,0,48714,0,0
+86457,Mystic Rainbowhorn,85726,1,0,48715,3,0
+86458,Highly Communicable criteria,0,0,4,0,0,0
+86459,Defeat De Other Side Bosses while afflicted with Corrupted Blood.,86458,0,0,48716,0,0
+86460,,85849,1,0,48718,8,32
+86461,,85849,1,0,48719,3,32
+86462,,85849,1,0,48720,9,32
+86463,,85849,1,0,48721,14,32
+86464,,85849,1,0,48722,10,32
+86465,Achievement - Glory of the Nathria Raider,0,0,4,0,0,0
+86466,,86465,1,0,48723,0,32
+86467,,86465,1,0,48724,1,32
+86468,9.0 Bastion - Path of Ascension - Capture - Boss 5 - 01 - Turn In (JLW),0,0,4,0,0,4096
+86469,Has Boss 5 Lure,86468,1,0,48725,0,0
+86470,Achievement - Mythic: Shriekwing,0,0,4,0,0,0
+86471,,86470,1,0,48726,0,2
+86472,Achievement - Mythic: Huntsman Altimor,0,0,4,0,0,0
+86473,,86472,1,0,48727,0,2
+86474,Achievement - Mythic: Hungering Destroyer,0,0,4,0,0,0
+86475,,86474,1,0,48728,0,2
+86476,Achievement - Mythic: Artificer Xy'Mox,0,0,4,0,0,0
+86477,,86476,1,0,48729,0,2
+86478,Achievement - Mythic: Sun King's Salvation,0,0,4,0,0,0
+86479,,86478,1,0,48730,0,2
+86480,Achievement - Mythic: Lady Inerva Darkvein,0,0,4,0,0,0
+86481,,86480,1,0,48731,0,2
+86482,Achievement - Mythic: The Council of Blood,0,0,4,0,0,0
+86483,,86482,1,0,48732,0,2
+86484,Achievement - Mythic: Sludgefist,0,0,4,0,0,0
+86485,,86484,1,0,48733,0,2
+86486,Achievement - Mythic: Stoneborn Generals,0,0,4,0,0,0
+86487,,86486,1,0,48734,0,2
+86488,Achievement - Mythic: Sire Denathrius,0,0,4,0,0,0
+86489,,86488,1,0,48735,0,2
+86490,Defeat Nalthor the Rimebinder,0,0,4,0,0,0
+86491,,86490,1,0,48003,0,2
+86492,Defeat Nalthor the Rimebinder (Heroic+),0,0,4,0,0,0
+86493,,86492,1,0,48736,0,2
+86494,Defeat Nalthor the Rimebinder (Mythic+),0,0,4,0,0,0
+86495,,86494,1,0,48737,0,2
+86496,Defeat Margrave Stradama,0,0,4,0,0,0
+86497,,86496,1,0,48335,0,2
+86498,Defeat Lord Chamberlain,0,0,4,0,0,0
+86500,,86498,1,0,48113,0,2
+86501,Defeat Tred'ova,0,0,4,0,0,0
+86502,,86501,1,0,48268,0,2
+86503,"Defeat Mordretha, the Endless Empress",0,0,4,0,0,0
+86504,,86503,1,0,48440,0,2
+86505,Defeat Mueh'zala,0,0,4,0,0,0
+86506,,86505,1,0,48472,0,2
+86507,Couples Therapy criteria,0,0,4,0,0,0
+86508,Defeat the Manastroms while striking them with every Shadowfury and Echo Finger Laser X-treme.,86507,0,0,48738,0,0
+86511,Return to Winter Queen,85009,1,0,48740,0,0
+86512,,85452,0,0,48741,2,0
+86513,,85461,0,0,48742,2,0
+86514,,85458,0,0,48743,2,0
+86515,,85455,0,0,48744,2,0
+86516,,85440,0,0,48745,2,0
+86517,,85446,0,0,48746,2,0
+86518,,85449,0,0,48747,2,0
+86519,,85443,0,0,48748,2,0
+86520,,85428,0,0,48749,2,0
+86521,,85437,0,0,48750,2,0
+86522,,85434,0,0,48751,2,0
+86523,,85431,0,0,48752,2,0
+86524,,85425,0,0,48753,2,0
+86525,,85422,0,0,48754,2,0
+86526,,85419,0,0,48755,2,0
+86527,,85416,0,0,48756,2,0
+86528,Hunger for Knowledge,0,0,4,0,0,0
+86529,,86528,1,0,48757,0,0
+86530,Feed the Beast,0,0,4,0,0,0
+86531,All anima canisters drained.,86530,0,0,48758,0,0
+86532,9.0 Bastion - Path of Ascension - Scenario - Tutorial - Step 1 - Preparation (JLW),0,0,4,0,0,0
+86533,Choose an enemy and difficulty to fight,86532,1,0,48227,0,0
+86534,Choose a soulbind,86532,1,0,48239,1,0
+86535,Ring the Vesper of Tradition when ready,86532,1,0,48459,2,0
+86536,9.0 Bastion - Path of Ascension - Scenario - Tutorial - Step 2 - Fight (JLW),0,0,4,0,0,0
+86537,Fight your opponent,86536,1,0,48408,0,0
+86538,9.0 Bastion - Path of Ascension - Scenario - Tutorial - Step 3 - Reward (JLW),0,0,4,0,0,0
+86539,Collect your reward,86538,1,0,48413,0,0
+86540,9.0 Bastion - Path of Ascension - Scenario - Tutorial - Step 4 - Reward (JLW),0,0,4,0,0,0
+86541,Collect your reward,86540,1,0,48413,0,0
+86542,9.0 Revendreth - Ember Court - Tutorial - Step 1 (JDA),0,0,4,0,0,0
+86543,Walk with Temel to refreshments area,86542,0,0,48759,0,0
+86544,9.0 Revendreth - Ember Court - Tutorial - Step 2 (JDA),0,0,4,0,0,0
+86545,Improve Temel's mood by cleaning rubble piles,86544,4,0,48779,0,0
+86546,9.0 Revendreth - Ember Court - Tutorial - Step 3 (JDA),0,0,4,0,0,0
+86547,Greet the Ember Court's first guest,86546,0,0,48761,0,0
+86548,9.0 Revendreth - Ember Court - Tutorial - Step 4 (JDA),0,0,4,0,0,0
+86549,Pick up the formal teapot,86548,0,0,48762,0,0
+86550,Improve Theotar's mood by pouring him a cup of tea,86548,0,0,48763,1,0
+86551,9.0 Revendreth - Ember Court - Tutorial - Step 5 (JDA),0,0,4,0,0,0
+86552,Offer Watchmaster Boromod a cup of tea,86551,0,0,48764,0,0
+86553,9.0 Revendreth - Ember Court - Tutorial - Step 7 (JDA),0,0,4,0,0,0
+86554,Improve your guests' mood during the rehearsal,86553,0,0,48768,0,0
+86555,(Optional) Do Formal activities to improve Theotar's mood,86553,0,0,48769,1,0
+86556,(Optional) Do Casual activities to improve Watchmaster Boromod's mood,86553,0,0,48770,2,0
+86557,(Optional) Do Clean activities to improve Temel's mood,86553,0,0,48771,3,0
+86558,9.0 Revendreth - Ember Court - Tutorial - Step 8 (JDA),0,0,4,0,0,0
+86559,Join Prince Renathal on the tribute stage,86558,0,0,48772,0,0
+86560,Collect guests' tribute from your chest,86558,0,0,48773,1,0
+86561,9.0 Revendreth - Ember Court - Tutorial - Step 6 (JDA),0,0,4,0,0,0
+86562,Improve Watchmaster Boromod's mood by dueling,86561,0,0,48774,0,0
+86569,Use Alchemist's Crate of the Anonymous Buyer - A,0,0,4,0,0,4096
+86570,,86569,1,0,48778,0,0
+86571,Await the rehearsal's special guest,86544,1,0,48760,1,0
+86572,Macabre,85726,1,0,48780,4,0
+86573,Gormtamer Tizo,85726,1,0,48781,5,0
+86574,Humon'gozz,85726,1,0,48782,6,0
+86575,Wrigglemortis,85726,1,0,48783,7,0
+86576,Deifir the Untamed,85726,1,0,48784,8,0
+86577,Old Ardeite,85726,1,0,48785,9,0
+86578,Old Ardeite,85726,1,0,48786,10,0
+86579,Hunter Vivanna,85726,1,0,48787,11,0
+86580,Mymaen,85726,1,0,48788,12,0
+86581,"Astra, As Azshara",85726,1,0,48709,13,0
+86582,"Mi'kai, as Argus",85726,1,0,48708,14,0
+86583,"Glimmerdust, As Kil'jaeden",85726,1,0,48707,15,0
+86584,"Senthii, As Gul'dan",85726,1,0,48706,16,0
+86585,"Glimmerdust, As Jaina",85726,1,0,48704,17,0
+86586,"Dreamweaver, As N'Zoth",85726,1,0,48710,18,0
+86587,"Niya, As Xavius",85726,1,0,48705,19,0
+86588,Rotbriar Changeling,85726,1,0,48789,20,0
+86589,Egg-Tender Leh'go,85726,1,0,48790,21,0
+86590,Rootwrithe,85726,1,0,48791,22,0
+86591,The Slumbering Emperor,85726,1,0,48792,23,0
+86592,Night Mare,85726,1,0,48793,24,0
+86593,Dustbrawl,85726,1,0,48794,25,0
+86594,Dustbrawl,85726,1,0,48795,26,0
+86595,Valfir the Unrelenting,85726,1,0,48796,27,0
+86596,Soultwister Cero,85726,1,0,48797,28,0
+86597,Soultwister Cero,85726,1,0,48798,29,0
+86598,Soulstalker Doina,85727,1,0,48799,0,0
+86599,Scrivener Lenua,85727,1,0,48800,1,0
+86600,Innervus,85727,1,0,48801,2,0
+86601,Tomb Burster,85727,1,0,48802,3,0
+86602,Stonefist,85727,1,0,48803,4,0
+86603,Forgemaster Madalav,85727,1,0,48804,5,0
+86604,Worldedge Gorger,85727,1,0,48805,6,0
+86605,Worldedge Gorger,85727,1,0,48806,7,0
+86606,Executioner Adrastia,85727,1,0,48807,8,0
+86607,Lord Mortegore,85727,1,0,48808,9,0
+86608,Leeched Soul,85727,1,0,48809,10,0
+86609,Endlurker,85727,1,0,48810,11,0
+86610,Amalgamation of Light,85727,1,0,48811,12,0
+86611,Harika the Horrid,85727,1,0,48813,13,0
+86612,Amalgamation of Filth,85727,1,0,48814,14,0
+86613,Famu the Infinite,85727,1,0,48815,15,0
+86614,Azgar,85727,1,0,48816,16,0
+86615,Tollkeeper Varaboss,85727,1,0,48812,17,0
+86616,Hopecrusher,85727,1,0,48817,18,0
+86617,Bog Beast,85727,1,0,48818,19,0
+86618,Executioner Aatron,85727,1,0,48819,20,0
+86619,Huntmaster Petrus,85727,1,0,48820,21,0
+86620,Grand Arcanist Dimitri,85727,1,0,48821,22,0
+86621,Manifestation of Wrath,85727,1,0,48822,23,0
+86622,Herculon,85724,1,0,48823,0,0
+86623,Fallen Acolyte Erisne,85724,1,0,48824,1,0
+86624,Sigilback,85724,1,0,48825,2,0
+86625,Sigilback,85724,1,0,48826,3,0
+86626,Nemaeus,85724,1,0,48827,4,0
+86627,Baedos,85724,1,0,48828,5,0
+86628,Wingflayer the Cruel,85724,1,0,48829,6,0
+86629,Nikara Blackheart,85724,1,0,48830,7,0
+86630,Dionae,85724,1,0,48831,8,0
+86631,Sundancer,85724,1,0,48832,9,0
+86632,"Basilofos, King of the Hill",85724,1,0,48833,10,0
+86633,Dark Watcher,85724,1,0,48834,11,0
+86634,Cloudfeather Patriarch,85724,1,0,48835,12,0
+86635,Enforcer Aegeon,85724,1,0,48836,13,0
+86636,Unstable Memory,85724,1,0,48837,14,0
+86637,Embodied Hunger,85724,1,0,48838,15,0
+86638,Xixin the Ravening,85724,1,0,48839,16,0
+86639,Worldfeaster Chronn,85724,1,0,48840,17,0
+86640,Collector Astorestes,85724,1,0,48841,18,0
+86641,Demi the Relic Hoarder,85724,1,0,48842,19,0
+86642,Bookkeeper Mnemis,85724,1,0,48843,20,0
+86643,Aspirant Eolis,85724,1,0,48844,21,0
+86644,Echo of Aella,85724,1,0,48845,22,0
+86645,Corrupted Clawguard,85724,1,0,48846,23,0
+86646,Corrupted Clawguard,85724,1,0,48847,24,0
+86647,Indomitable Schmitd,85725,1,0,48848,0,0
+86648,Pesticide,85725,1,0,48849,1,0
+86649,Tahonta,85725,1,0,48850,2,0
+86650,Deadly Dapperling,85725,1,0,48851,3,0
+86651,Deepscar,85725,1,0,48852,4,0
+86652,Gristlebeak,85725,1,0,48853,5,0
+86653,Pulsing Leech,85725,1,0,48854,6,0
+86654,Devour'us,85725,1,0,48855,7,0
+86655,Moregorger,85725,1,0,48856,8,0
+86656,Scunner,85725,1,0,48857,9,0
+86657,Gelloh,85725,1,0,48858,10,0
+86658,Oily Invertebrate,85725,1,0,48859,11,0
+86659,Boneslurp,85725,1,0,48860,12,0
+86660,Violet Mistake,85725,1,0,48861,13,0
+86661,Burnblister,85725,1,0,48862,14,0
+86662,Corrupted Sediment,85725,1,0,48863,15,0
+86663,Zargox the Reborn,85725,1,0,48864,16,0
+86664,Ravenomous,85725,1,0,48865,17,0
+86665,Collector Kash,85725,1,0,48866,18,0
+86666,Taskmaster Xox,85725,1,0,48867,19,0
+86667,Nirvaska the Summoner,85725,1,0,48868,20,0
+86668,Smorgas The Feaster,85725,1,0,48869,21,0
+86669,Thread Mistress Leeda,85725,1,0,48870,22,0
+86670,Gieger,85725,1,0,48871,23,0
+86671,Bonebreaker Moroc,85725,1,0,48872,24,0
+86672,Sister Chelicerae,85725,1,0,48873,25,0
+86673,Sabreil the Bonecleaver,85725,1,0,48874,26,0
+86674,Warbringer Mal'Korak,85725,1,0,48875,27,0
+86675,Bubbleblood,85725,1,0,48876,28,0
+86676,9.0 Prologue Dailies Unlocked,0,0,4,0,0,2
+86677,,86676,0,0,48878,0,0
+86678,,86676,0,0,48877,1,0
+86679,9.0 Revendreth - Ember Court - Tutorial - Step 9 (JDA),0,0,4,0,0,0
+86680,Speak with Prince Renathal to leave,86679,0,0,48879,0,0
+86681,9.0 Level Squish - Player has traveled to Pandaria (MPK),0,1,8,0,0,4096
+86682,,86681,1,0,48880,0,0
+86683,,86681,1,0,48881,1,0
+86684,,86681,1,0,48882,2,0
+86685,,86681,1,0,48883,3,0
+86686,,86681,1,0,48884,4,0
+86687,,86681,1,0,48885,5,0
+86688,,86681,1,0,48886,6,0
+86689,Progression Tracking - Torghast,0,0,4,0,0,0
+86690,Wing 1. Skoldus Progress,86689,0,0,48160,0,2
+86691,9.0 Level Squish - Player has traveled to Pandaria (MPK),0,1,8,0,0,4096
+86692,,86691,1,0,48887,0,0
+86693,,86691,1,0,48888,1,0
+86694,,86691,1,0,48889,2,0
+86695,,86691,1,0,48890,3,0
+86696,,86691,1,0,48891,4,0
+86697,,86691,1,0,48892,5,0
+86698,,86691,1,0,48893,6,0
+86701,9.0 Level Squish - Player traveled to Northrend (MPK),0,1,8,0,0,4096
+86702,,86701,1,0,48895,0,0
+86703,,86701,1,0,48896,1,0
+86704,,86701,1,0,48897,2,0
+86705,,86701,1,0,48898,3,0
+86706,,86701,1,0,48899,4,0
+86707,,86701,1,0,48900,5,0
+86708,,86701,1,0,48901,6,0
+86709,,86701,1,0,48902,7,0
+86710,,86701,1,0,48903,8,0
+86711,,86701,1,0,48904,9,0
+86712,,86701,1,0,48905,10,0
+86713,9.0 Level Squish - Player traveled to Northrend (MPK),0,1,8,0,0,4096
+86714,,86713,1,0,48906,0,0
+86715,,86713,1,0,48907,1,0
+86716,,86713,1,0,48908,2,0
+86717,,86713,1,0,48909,3,0
+86718,,86713,1,0,48910,4,0
+86719,,86713,1,0,48911,5,0
+86720,,86713,1,0,48912,6,0
+86721,,86713,1,0,48913,7,0
+86722,,86713,1,0,48914,8,0
+86723,,86713,1,0,48915,9,0
+86724,,86713,1,0,48916,10,0
+86725,9.0 Level Squish - Player has traveled to the Broken Isles (MPK),0,1,8,0,0,4096
+86726,,86725,1,0,48917,0,0
+86727,,86725,1,0,48918,1,0
+86728,,86725,1,0,48919,2,0
+86729,,86725,1,0,48920,3,0
+86730,,86725,1,0,48921,4,0
+86731,,86725,1,0,48922,5,0
+86732,,86725,1,0,48923,6,0
+86733,9.0 Level Squish - Player has traveled to the Broken Isles (MPK),0,1,8,0,0,4096
+86734,,86733,1,0,48924,0,0
+86735,,86733,1,0,48925,1,0
+86736,,86733,1,0,48926,2,0
+86737,,86733,1,0,48927,3,0
+86738,,86733,1,0,48928,4,0
+86739,,86733,1,0,48929,5,0
+86740,,86733,1,0,48930,6,0
+86741,9.0 Level Squish - Player traveled to Draenor (MPK),0,1,8,0,0,4096
+86742,,86741,1,0,48931,0,0
+86743,,86741,1,0,48932,1,0
+86744,,86741,1,0,48933,2,0
+86745,,86741,1,0,48934,3,0
+86746,,86741,1,0,48935,4,0
+86747,,86741,1,0,48936,5,0
+86748,,86741,1,0,48937,6,0
+86749,,86741,1,0,48938,7,0
+86750,,86741,1,0,48939,8,0
+86751,9.0 Level Squish - Player traveled to Draenor (MPK),0,1,8,0,0,4096
+86752,,86751,1,0,48940,0,0
+86753,,86751,1,0,48941,1,0
+86754,,86751,1,0,48942,2,0
+86755,,86751,1,0,48943,3,0
+86756,,86751,1,0,48944,4,0
+86757,,86751,1,0,48945,5,0
+86758,,86751,1,0,48946,6,0
+86759,,86751,1,0,48947,7,0
+86760,,86751,1,0,48948,8,0
+86761,9.0 Dungeon - The Other Side (Normal),0,0,4,0,0,0
+86762,Hakkar defeated,86761,1,0,48469,0,0
+86763,the Manastorms defeated,86761,1,0,48471,1,0
+86764,Dealer Xy'exa defeated,86761,1,0,48470,2,0
+86765,Mueh'zala defeated,86761,1,0,48472,3,0
+86766,,86751,1,0,49002,9,0
+86767,,86741,1,0,49003,9,0
+86768,9.0 Dungeon - The Other Side (Heroic),0,0,4,0,0,0
+86769,Hakkar defeated,86768,1,0,48469,0,0
+86770,the Manastorms defeated,86768,1,0,48471,1,0
+86771,Dealer Xy'exa defeated,86768,1,0,48470,2,0
+86772,Mueh'zala defeated,86768,1,0,48472,3,0
+86773,9.0 Dungeon - The Other Side (Mythic),0,0,4,0,0,0
+86774,Hakkar defeated,86773,1,0,48469,0,0
+86775,the Manastorms defeated,86773,1,0,48471,1,0
+86776,Dealer Xy'exa defeated,86773,1,0,48470,2,0
+86777,Mueh'zala defeated,86773,1,0,48472,3,0
+86778,Mists of Tirna Scithe,0,0,4,0,0,0
+86779,Ingra Maloch defeat,86778,1,0,49008,0,0
+86780,Mistcaller defeated,86778,1,0,49009,1,0
+86781,Tred'ova defeat,86778,1,0,49010,2,0
+86782,Mists of Tirna Scithe (Heroic),0,0,4,0,0,0
+86783,Ingra Maloch defeat,86782,1,0,49008,0,0
+86784,Mistcaller defeated,86782,1,0,49009,1,0
+86785,Tred'ova defeat,86782,1,0,49010,2,0
+86786,Mists of Tirna Scithe (Mythic),0,0,4,0,0,0
+86787,Ingra Maloch defeat,86786,1,0,49008,0,0
+86788,Mistcaller defeated,86786,1,0,49009,1,0
+86789,Tred'ova defeat,86786,1,0,49010,2,0
+86790,De Other Side - Mythic Defeat Muah'zala (Guild),0,0,4,0,0,0
+86791,,86790,1,0,49011,0,2
+86792,Halls of Atonement - Mythic Defeat Lord Chamberlain (Guild),0,0,4,0,0,0
+86793,,86792,1,0,49012,0,2
+86794,Mists of Tirna Scithe - Mythic Defeat Tred'ova (Guild),0,0,4,0,0,0
+86795,Mists of Tirna Scithe - Defeat Tred'ova (Guild),86794,1,0,49013,0,2
+86796,Plaguefall - Mythic Defeat Margrave Stradama (Guild),0,0,4,0,0,0
+86797,,86796,1,0,49014,0,2
+86798,Spires of Ascension - Mythic Defeat Devos (Guild),0,0,4,0,0,0
+86799,,86798,1,0,49015,0,2
+86800,Necrotic Wake - Mythic Defeat Nalthor the Rimebinder (Guild),0,0,4,0,0,0
+86801,,86800,1,0,49016,0,2
+86802,Theater of Pain - Mythic Defeat Mordretha (Guild),0,0,4,0,0,0
+86803,,86802,1,0,49017,0,2
+86804,,85778,1,0,49018,1,0
+86805,,85778,4,0,49019,2,0
+86806,,85778,4,0,49020,3,0
+86807,,85778,5,0,49021,4,0
+86808,,85778,6,0,49022,5,0
+86809,,85778,4,0,49023,6,0
+86810,,85778,4,0,49024,7,0
+86811,,85778,8,0,49025,8,0
+86812,,85778,4,0,49026,9,0
+86813,,85778,6,0,49027,10,0
+86814,,85778,10,0,49028,11,0
+86815,,85778,10,0,49029,12,0
+86816,,85778,1,0,49030,13,0
+86817,,85778,1,0,49031,14,0
+86818,,85778,1,0,49032,15,0
+86819,,85778,5,0,49033,16,0
+86820,,85778,5,0,49034,17,0
+86821,,85778,4,0,49035,18,0
+86822,,85778,5,0,49036,19,0
+86823,,85778,8,0,49037,20,0
+86824,,85778,3,0,49038,21,0
+86825,,85778,8,0,49039,22,0
+86826,,85778,3,0,49040,23,0
+86827,Statistic - Muah'zala (Normal),0,0,4,0,0,0
+86828,,86827,0,0,48994,0,2
+86829,Statistic - Muah'zala (Heroic),0,0,4,0,0,0
+86830,,86829,0,0,48991,0,2
+86831,Statistic - Muah'zala (Mythic),0,0,4,0,0,0
+86832,,86831,0,0,49042,0,2
+86833,Statistic - Lord Chamberlain (Normal),0,0,4,0,0,0
+86834,,86833,0,0,49043,0,2
+86835,Statistic - Lord Chamberlain (Heroic),0,0,4,0,0,0
+86836,,86835,0,0,49044,0,2
+86837,Statistic - Lord Chamberlain (Mythic),0,0,4,0,0,0
+86838,,86837,0,0,49045,0,2
+86839,Statistic - Tred'ova (Normal),0,0,4,0,0,0
+86840,,86839,0,0,49046,0,2
+86841,Statistic - Tred'ova (Heroic),0,0,4,0,0,0
+86842,,86841,0,0,49047,0,2
+86843,Statistic - Tred'ova (Mythic),0,0,4,0,0,0
+86844,,86843,0,0,49048,0,2
+86845,Statistic - Margrave Stradama (Normal),0,0,4,0,0,0
+86846,,86845,0,0,49050,0,2
+86847,Statistic - Margrave Stradama (Heroic),0,0,4,0,0,0
+86848,,86847,0,0,49049,0,2
+86849,Statistic - Margrave Stradama (Mythic),0,0,4,0,0,0
+86850,,86849,0,0,49051,0,2
+86851,Statistic - Devos (Normal),0,0,4,0,0,0
+86852,,86851,0,0,49053,0,2
+86853,Statistic - Devos (Heroic),0,0,4,0,0,0
+86854,,86853,0,0,49052,0,2
+86855,Statistic - Devos (Mythic),0,0,4,0,0,0
+86856,,86855,0,0,49054,0,2
+86857,Statistic - Nalthor (Normal),0,0,4,0,0,0
+86858,,86857,0,0,49055,0,2
+86859,Statistic - Nalthor (Heroic),0,0,4,0,0,0
+86860,,86859,0,0,49056,0,2
+86861,Statistic - Nalthor (Mythic),0,0,4,0,0,0
+86862,,86861,0,0,49057,0,2
+86863,Statistic - Mordretha (Normal),0,0,4,0,0,0
+86864,,86863,0,0,49058,0,2
+86865,Statistic - Mordretha (Heroic),0,0,4,0,0,0
+86866,,86865,0,0,49059,0,2
+86867,Statistic - Mordretha (Mythic),0,0,4,0,0,0
+86868,,86867,0,0,49060,0,2
+86869,Defeat Muah'zala (Heroic+),0,0,4,0,0,0
+86870,,86869,1,0,49061,0,2
+86871,Defeat Muah'zala (Mythic+),0,0,4,0,0,0
+86872,,86871,0,0,49062,0,0
+86873,Defeat Lord Chamberlain (Heroic+),0,0,4,0,0,0
+86874,,86873,1,0,49063,0,2
+86875,Defeat Lord Chaberlian (Mythic+),0,0,4,0,0,0
+86876,,86875,1,0,49064,0,2
+86877,Defeat Tred'ova (Heroic+),0,0,4,0,0,0
+86878,,86877,1,0,49065,0,2
+86879,Defeat Tred'ova (Mythic+),0,0,4,0,0,0
+86880,,86879,1,0,49066,0,2
+86881,Defeat Margrave Stradama (Heroic+),0,0,4,0,0,0
+86882,,86881,1,0,49067,0,0
+86883,Defeat Margrave Stradama (Mythic+),0,0,4,0,0,0
+86884,,86883,1,0,49068,0,2
+86885,"Defeat Mordretha, the Endless Empress (Heroic+)",0,0,4,0,0,0
+86886,,86885,1,0,49069,0,2
+86887,"Defeat Mordretha, the Endless Empress (Mythic+)",0,0,4,0,0,0
+86888,,86887,1,0,49070,0,0
+86889,Statistic - Revendreth Raid - Anima Caster - Normal,0,0,4,0,0,0
+86890,,86889,0,0,48965,0,2
+86891,Statistic - Revendreth Raid - Anima Caster - Mythic,0,0,4,0,0,0
+86892,,86891,0,0,48731,0,2
+86893,Statistic - Revendreth Raid - Anima Caster - Heroic,0,0,4,0,0,0
+86894,,86893,0,0,48975,0,2
+86895,Statistic - Revendreth Raid - Anima Caster - Raid Finder,0,0,4,0,0,0
+86896,,86895,0,0,48981,0,2
+86897,Statistic - Revendreth Raid - Council - Raid Finder,0,0,4,0,0,0
+86898,,86897,0,0,48983,0,2
+86899,Statistic - Revendreth Raid - Council - Normal,0,0,4,0,0,0
+86900,,86899,0,0,48966,0,2
+86901,Statistic - Revendreth Raid - Council - Mythic,0,0,4,0,0,0
+86902,,86901,0,0,48732,0,2
+86903,Statistic - Revendreth Raid - Council - Heroic,0,0,4,0,0,0
+86904,,86903,0,0,48976,0,2
+86905,Statistic - Revendreth Raid - Broker Curator - Raid Finder,0,0,4,0,0,0
+86906,,86905,0,0,48982,0,2
+86907,Statistic - Revendreth Raid - Broker Curator - Normal,0,0,4,0,0,0
+86908,,86907,0,0,48963,0,2
+86909,Statistic - Revendreth Raid - Broker Curator - Mythic,0,0,4,0,0,0
+86910,,86909,0,0,48729,0,2
+86911,Statistic - Revendreth Raid - Broker Curator - Heroic,0,0,4,0,0,0
+86912,,86911,0,0,48973,0,2
+86913,Statistic - Revendreth Raid - Denathrius - Raid Finder,0,0,4,0,0,0
+86914,,86913,0,0,48984,0,2
+86915,Shadowlands Dungeon Hero,0,0,4,0,0,0
+86916,,86915,1,0,49071,0,32
+86917,,86915,1,0,49075,1,32
+86918,,86915,1,0,49074,2,32
+86919,,86915,1,0,49073,3,32
+86920,,86915,1,0,49078,4,32
+86921,,86915,1,0,49077,5,32
+86922,,86915,1,0,49076,6,32
+86923,,86915,1,0,49072,7,32
+86924,Statistic - Revendreth Raid - Denathrius - Normal,0,0,4,0,0,0
+86925,,86924,0,0,48969,0,2
+86926,Statistic - Revendreth Raid - Denathrius - Mythic,0,0,4,0,0,0
+86927,,86926,0,0,48735,0,2
+86928,Statistic - Revendreth Raid - Denathrius - Heroic,0,0,4,0,0,0
+86929,,86928,0,0,48979,0,2
+86930,Statistic - Revendreth Raid - Dredger Brute - Raid Finder,0,0,4,0,0,0
+86931,,86930,0,0,48985,0,2
+86932,Statistic - Revendreth Raid - Dredger Brute - Normal,0,0,4,0,0,0
+86933,,86932,0,0,48967,0,2
+86934,Statistic - Revendreth Raid - Dredger Brute - Mythic,0,0,4,0,0,0
+86935,,86934,0,0,48733,0,2
+86936,Statistic - Revendreth Raid - Dredger Brute - Heroic,0,0,4,0,0,0
+86937,,86936,0,0,48977,0,2
+86938,Statistic - Revendreth Raid - Gargoyle Bat - Raid Finder,0,0,4,0,0,0
+86939,,86938,0,0,48986,0,2
+86940,Statistic - Revendreth Raid - Gargoyle Bat - Normal,0,0,4,0,0,0
+86941,,86940,0,0,48960,0,2
+86942,Statistic - Revendreth Raid - Gargoyle Bat - Mythic,0,0,4,0,0,0
+86943,,86942,0,0,48726,0,2
+86944,Statistic - Revendreth Raid - Gargoyle Bat - Heroic,0,0,4,0,0,0
+86945,,86944,0,0,48970,0,2
+86946,Statistic - Revendreth Raid - Gargoyle Duo - Raid Finder,0,0,4,0,0,0
+86947,,86946,0,0,48987,0,2
+86948,Statistic - Revendreth Raid - Gargoyle Duo - Normal,0,0,4,0,0,0
+86949,,86948,0,0,48968,0,2
+86950,Statistic - Revendreth Raid - Gargoyle Duo - Mythic,0,0,4,0,0,0
+86951,,86950,0,0,48734,0,2
+86952,Statistic - Revendreth Raid - Gargoyle Duo - Heroic,0,0,4,0,0,0
+86953,,86952,0,0,48978,0,2
+86954,Statistic - Revendreth Raid - Houndmaster - Raid Finder,0,0,4,0,0,0
+86955,,86954,0,0,48988,0,2
+86956,Statistic - Revendreth Raid - Houndmaster - Normal,0,0,4,0,0,0
+86957,,86956,0,0,48961,0,2
+86958,Statistic - Revendreth Raid - Houndmaster - Mythic,0,0,4,0,0,0
+86959,,86958,0,0,48727,0,2
+86960,Statistic - Revendreth Raid - Houndmaster - Heroic,0,0,4,0,0,0
+86961,,86960,0,0,48971,0,2
+86962,Statistic - Revendreth Raid - Kael'thas - Raid Finder,0,0,4,0,0,0
+86963,,86962,0,0,48989,0,2
+86964,Statistic - Revendreth Raid - Kael'thas - Normal,0,0,4,0,0,0
+86965,,86964,0,0,48964,0,2
+86966,Statistic - Revendreth Raid - Kael'thas - Mythic,0,0,4,0,0,0
+86967,,86966,0,0,48730,0,2
+86968,Statistic - Revendreth Raid - Kael'thas - Heroic,0,0,4,0,0,0
+86969,,86968,0,0,48974,0,2
+86970,Statistic - Revendreth Raid - Worldeater - Raid Finder,0,0,4,0,0,0
+86971,,86970,0,0,48990,0,2
+86972,Statistic - Revendreth Raid - Worldeater - Normal,0,0,4,0,0,0
+86973,,86972,0,0,48962,0,2
+86974,Statistic - Revendreth Raid - Worldeater - Mythic,0,0,4,0,0,0
+86975,,86974,0,0,48728,0,2
+86976,Statistic - Revendreth Raid - Worldeater - Heroic,0,0,4,0,0,0
+86977,,86976,0,0,48972,0,2
+86978,Drust put to sleep,84993,125,0,49079,1,0
+86979,Revendreth Raid - Denathrius - Mythic (Guild),0,0,4,0,0,0
+86980,,86979,1,0,49080,0,2
+86981,,85800,12,0,49090,1,0
+86982,,85800,8,0,49091,2,0
+86983,,85800,8,0,49092,3,0
+86984,,85800,10,0,49093,4,0
+86985,,85800,14,0,49094,5,0
+86986,,85800,8,0,49095,6,0
+86987,,85800,8,0,49096,7,0
+86988,,85800,8,0,49097,8,0
+86989,,85800,8,0,49098,9,0
+86990,,85800,1,0,49099,10,0
+86991,,85800,12,0,49102,11,0
+86992,,85800,12,0,49103,12,0
+86993,,85800,6,0,49104,13,0
+86994,,85800,12,0,49105,14,0
+86995,,85800,8,0,49106,15,0
+86996,,85800,8,0,49107,16,0
+86997,,85800,6,0,49108,17,0
+86998,,85800,6,0,49109,18,0
+86999,,85800,6,0,49110,19,0
+87000,,85800,10,0,49111,20,0
+87001,,85800,25,0,49112,21,0
+87002,,85800,8,0,49113,22,0
+87003,,85800,8,0,49114,23,0
+87004,,85800,12,0,49115,24,0
+87005,,85800,12,0,49116,25,0
+87006,,85800,4,0,49117,26,0
+87007,,85800,25,0,49118,27,0
+87008,Achievement - Ahead of the Curve: Denathrius,0,0,4,0,0,0
+87009,,87008,1,0,49100,0,2
+87010,Achievement - Cutting Edge: Sire Denathrius,0,0,4,0,0,0
+87011,,87010,1,0,49101,0,2
+87012,,85793,2,0,49119,1,0
+87013,,85793,4,0,49120,2,0
+87014,,85793,4,0,49121,3,0
+87015,,85793,4,0,49122,4,0
+87016,,85793,4,0,49123,5,0
+87017,,85793,4,0,49124,6,0
+87018,,85793,10,0,49125,7,0
+87019,,85793,1,0,49126,8,0
+87020,,85793,4,0,49127,9,0
+87021,,85793,6,0,49128,10,0
+87022,,85793,7,0,49129,11,0
+87023,,85793,4,0,49130,12,0
+87024,,85793,1,0,49131,13,0
+87025,,85793,12,0,49132,14,0
+87026,Loot Broken Kyrian Shield,0,0,4,0,0,4096
+87027,,87026,5,0,49133,0,0
+87028,,85807,1,0,49134,1,0
+87029,,85807,4,0,49135,2,0
+87030,,85807,4,0,49136,3,0
+87031,,85807,7,0,49137,4,0
+87032,,85807,4,0,49138,5,0
+87033,,85807,7,0,49139,6,0
+87034,,85807,1,0,49140,7,0
+87035,,85807,4,0,49141,8,0
+87036,,85807,7,0,49142,9,0
+87037,,85807,2,0,49143,10,0
+87038,,85807,4,0,49144,11,0
+87039,,85807,1,0,49145,12,0
+87040,,85807,7,0,49146,13,0
+87041,,85807,1,0,49147,14,0
+87042,,85807,10,0,49148,15,0
+87043,,85807,7,0,49149,16,0
+87044,,85807,4,0,49150,17,0
+87045,,85807,4,0,49151,18,0
+87046,,85807,1,0,49152,19,0
+87047,,85807,4,0,49153,20,0
+87048,,85807,4,0,49154,21,0
+87049,,85807,1,0,49155,22,0
+87050,,85807,1,0,49156,23,0
+87051,,85807,2,0,49157,24,0
+87052,9.0 Ardenweald - COV - Drust Ch2 - Finale Scenario - Step 7 - Return to the Queen - (STM),0,0,4,0,0,0
+87053,Return to Winter Queen,87052,1,0,48740,0,0
+87054,Wing 2. Fracture Chambers Progression,86689,0,0,48161,1,2
+87055,Wing 3. Soulforges Progression,86689,0,0,48162,2,2
+87056,Wing 4. Coldheart Progression,86689,0,0,48164,3,2
+87057,Wing 5. Mort'regar Progression,86689,0,0,48163,4,2
+87058,Wing 6. Upper Reaches Progression,86689,0,0,48165,5,2
+87059,Shared. Standard Wing Progression,86689,0,0,48443,6,2
+87060,Twisting Corridors Progression,86689,0,0,48169,7,2
+87061,Bosses: Torghast,0,0,4,0,0,0
+87062,Dark Aspirant Corrus,87061,0,0,49158,0,0
+87063,Arch-Suppressor Laguas,87061,0,0,49159,1,0
+87064,Goxul the Devourer,87061,0,0,49160,2,0
+87065,Observer Zelgar,87061,0,0,49161,3,0
+87066,Custodian Thonar,87061,0,0,49162,4,0
+87067,Warden Skoldus,87061,0,0,49163,5,0
+87068,Writhing Soulmass,87061,0,0,49164,6,0
+87069,Kosarus the Fallen,87061,0,0,49165,7,0
+87070,The Grand Malleare,87061,0,0,49166,8,0
+87071,Gherus the Chained,87061,0,0,49167,9,0
+87072,Cellblock Sentinel,87061,0,0,49168,10,0
+87073,Warden of Souls,87061,0,0,49169,11,0
+87074,Binder Baritas,87061,0,0,49170,12,0
+87075,Maw of the Maw,87061,0,0,49171,13,0
+87076,Synod,87061,0,0,49172,14,0
+87077,Patrician Cromwell,87061,0,0,49173,15,0
+87078,Collect 2500 Phantasma,0,0,4,0,0,0
+87079,Collect 2500 Phantasma.,87078,2500,0,49174,0,1
+87080,Collect 25000 Phantasma,0,0,4,0,0,0
+87081,Collect 25000 Phantasma.,87080,25000,0,49174,0,1
+87082,Collect 250000 Phantasma,0,0,4,0,0,0
+87083,Collect 250000 Phantasma.,87082,250000,0,49174,0,1
+87084,Trials of Loyalty,0,0,4,0,0,0
+87085,,87084,1,0,48622,0,0
+87086,,87084,1,0,48623,1,0
+87087,,87084,1,0,48624,2,0
+87088,,87084,1,0,48625,3,0
+87089,,87084,1,0,48626,4,0
+87090,,87084,1,0,48627,5,0
+87091,,87084,1,0,48628,6,0
+87092,,87084,1,0,48629,7,0
+87093,,85768,7,0,49175,3,0
+87094,,85768,4,0,49176,4,0
+87095,,85768,4,0,49177,5,0
+87096,,85768,6,0,49178,6,0
+87097,,85768,4,0,49179,8,0
+87098,,85768,4,0,49180,9,0
+87099,,85768,4,0,49181,10,0
+87100,,85768,4,0,49182,11,0
+87101,,85768,4,0,49183,12,0
+87102,,85768,4,0,49184,13,0
+87103,,85768,5,0,49185,14,0
+87104,,85768,4,0,49186,15,0
+87105,,85768,4,0,49187,16,0
+87106,,85768,4,0,49188,17,0
+87107,,85768,1,0,49189,18,0
+87108,Hooked On Hydroponics,0,0,4,0,0,0
+87109,Hooked On Hydroponics,87108,0,0,49190,0,2
+87110,9.0 Revendreth - Ember Court - Scenario - Step 3B (2 Guests) (JDA),0,0,4,0,0,0
+87111,Tribute claimed,87110,2,0,47926,0,0
+87112,9.0 Revendreth - Ember Court - Scenario - Step 3C (3 Guests) (JDA),0,0,4,0,0,0
+87113,Tribute claimed,87112,3,0,47926,0,0
+87114,9.0 Revendreth - Ember Court - Scenario - Step 3D (4 Guests) (JDA),0,0,4,0,0,0
+87115,Tribute claimed,87114,4,0,47926,0,0
+87116,Complete the dungeon,0,0,4,0,0,2
+87117,Visiti the Runecarver,87116,1,0,49191,0,0
+87118,9.0 Offline Progression - Start Tutorial Mission - GJC,0,0,4,0,0,4096
+87119,,87118,1,0,49192,0,0
+87120,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 12  - (STM),0,0,4,0,0,0
+87121,Speak with Shandris to leave,87120,0,0,48460,0,2080
+87122,,85768,4,0,49193,7,0
+87123,,85778,5,0,49194,24,0
+87124,,85778,8,0,49195,25,0
+87127,9.0 Revendreth - Ember Court - Tutorial - Q03a - Guest (JDA),0,0,4,0,0,4096
+87129,,87127,0,0,49196,0,0
+87134,9.0 Revendreth - Ember Court - Tutorial - Q03a - Entertainment (JDA),0,0,4,0,0,4096
+87135,,87134,0,0,49199,0,0
+87136,9.0 Revendreth - Ember Court - Tutorial - Q03c - Refreshment (JDA),0,0,4,0,0,4096
+87137,,87136,0,0,49200,0,0
+87138,9.0 Revendreth - Ember Court - Tutorial - Q04 (JDA),0,0,4,0,0,4096
+87139,,87138,0,0,49201,0,0
+87140,9.0 Revendreth - Ember Court - Tutorial - Q04 (JDA),0,0,4,0,0,4096
+87141,,87140,0,0,49202,0,0
+87142,The Third Fall of Kel'thuzad,85869,0,0,48146,7,16
