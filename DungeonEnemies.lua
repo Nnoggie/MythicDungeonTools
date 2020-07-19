@@ -1230,16 +1230,18 @@ function MDT:ExportNPCIdsWithoutDisplayIds()
     for idx = 15, MDT:GetNumDungeons() do
         local shouldAddDungeonText = true
         local enemyData = MDT.dungeonEnemies[idx]
-        for _,enemy in pairs(enemyData) do
-            if not enemy.displayId then
-                if shouldAddDungeonText then
-                    output = output.."Dungeon(name='".. MDT:GetDungeonName(idx).."', idx=".. idx..", npcIds=["
-                    shouldAddDungeonText = false
+        if enemyData then
+            for _,enemy in pairs(enemyData) do
+                if not enemy.displayId then
+                    if shouldAddDungeonText then
+                        output = output.."Dungeon(name='".. MDT:GetDungeonName(idx).."', idx=".. idx..", npcIds=["
+                        shouldAddDungeonText = false
+                    end
+                    output = output..enemy.id..", "
                 end
-                output = output..enemy.id..", "
             end
+            if not shouldAddDungeonText then output = output.."]),\n" end
         end
-        if not shouldAddDungeonText then output = output.."]),\n" end
     end
     output = output.."]"
     MDT:HideAllDialogs()
