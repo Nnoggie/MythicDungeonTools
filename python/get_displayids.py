@@ -14,10 +14,11 @@ r.clipboard_clear()
 
 
 def find_display_id(npc_id):
-    url = 'https://www.wowhead.com/npc=' + str(npc_id)
-    with urllib.request.urlopen(url) as response:
+    url = 'https://shadowlands.wowhead.com/npc=' + str(npc_id)
+    req = urllib.request.Request(url, headers={'User-Agent' : 'Legit Browser'}) 
+    with urllib.request.urlopen(req) as response:
         response = response.read()
-        result = re.search('displayId&quot;:(.*)}(.*)">View', str(response))
+        result = re.search('data-mv-display-id="(.*)">View', str(response))
         return result.group(1)
 
 
