@@ -3958,18 +3958,16 @@ function MDT:ReloadPullButtons()
 		maxPulls = maxPulls + 1
 	end
 	--add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
-    if not db.devMode then
-        local idx = 0
-        for k,pull in ipairs(preset.value.pulls) do
-            idx = idx+1
-            frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
-            frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
-            frame.newPullButtons[idx]:SetIndex(idx)
-            MDT:UpdatePullButtonNPCData(idx)
-            frame.newPullButtons[idx]:Initialize()
-            frame.newPullButtons[idx]:Enable()
-            frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
-        end
+    local idx = 0
+    for k,pull in ipairs(preset.value.pulls) do
+        idx = idx+1
+        frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
+        frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
+        frame.newPullButtons[idx]:SetIndex(idx)
+        MDT:UpdatePullButtonNPCData(idx)
+        frame.newPullButtons[idx]:Initialize()
+        frame.newPullButtons[idx]:Enable()
+        frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
     end
 	--add the "new pull" button
 	frame.newPullButton = AceGUI:Create("MDTNewPullButton")
