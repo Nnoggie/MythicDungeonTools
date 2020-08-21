@@ -2496,6 +2496,12 @@ function MDT:MakeMapTexture(frame)
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
         local lastModifiedScroll
+        local ignoredTargets = {--ignore alt scroll if expansion would be changed
+            [14] = true,
+            [27] = true,
+            [28] = true,
+            [37] = true,
+        }
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
             if IsControlKeyDown() then
                 if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.1 then
@@ -2513,7 +2519,7 @@ function MDT:MakeMapTexture(frame)
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
                     local target = db.currentDungeonIdx+delta
-                    if dungeonList[target] then
+                    if dungeonList[target] and not ignoredTargets[target] then
                         local group = MDT.main_frame.DungeonSelectionGroup
                         group.DungeonDropdown:Fire("OnValueChanged", target)
                     end
