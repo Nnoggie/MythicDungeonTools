@@ -2,11 +2,9 @@
 TreeGroup Container
 Container that uses a tree control to switch between groups.
 -------------------------------------------------------------------------------]]
-local Type, Version = "TreeGroup", 44
+local Type, Version = "TreeGroup", 45
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
-
-local WoW80 = select(4, GetBuildInfo()) >= 80000
 
 -- Lua APIs
 local next, pairs, ipairs, assert, type = next, pairs, ipairs, assert, type
@@ -422,8 +420,7 @@ local methods = {
 		local maxlines = (floor(((self.treeframe:GetHeight()or 0) - 20 ) / 18))
 		if maxlines <= 0 then return end
 
-		-- workaround for lag spikes on WoW 8.0
-		if WoW80 and self.frame:GetParent() == UIParent and not fromOnUpdate then
+		if self.frame:GetParent() == UIParent and not fromOnUpdate then
 			self.frame:SetScript("OnUpdate", FirstFrameUpdate)
 			return
 		end
@@ -632,7 +629,7 @@ local PaneBackdrop  = {
 local DraggerBackdrop  = {
 	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
 	edgeFile = nil,
-	tile = true, tileSize = 16, edgeSize = 0,
+	tile = true, tileSize = 16, edgeSize = 1,
 	insets = { left = 3, right = 3, top = 7, bottom = 7 }
 }
 
@@ -640,18 +637,12 @@ local function Constructor()
 	local num = AceGUI:GetNextWidgetNum(Type)
 	local frame = CreateFrame("Frame", nil, UIParent)
 
-	local treeframe = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+	local treeframe = CreateFrame("Frame", nil, frame, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	treeframe:SetPoint("TOPLEFT")
 	treeframe:SetPoint("BOTTOMLEFT")
 	treeframe:SetWidth(DEFAULT_TREE_WIDTH)
 	treeframe:EnableMouseWheel(true)
-	treeframe.backdropInfo  = {
-		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
-		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-		tile = true, tileSize = 16, edgeSize = 16,
-		insets = { left = 3, right = 3, top = 5, bottom = 3 }
-	}
-	treeframe:ApplyBackdrop()
+	treeframe:SetBackdrop(PaneBackdrop)
 	treeframe:SetBackdropColor(0.1, 0.1, 0.1, 0.5)
 	treeframe:SetBackdropBorderColor(0.4, 0.4, 0.4)
 	treeframe:SetResizable(true)
@@ -661,17 +652,11 @@ local function Constructor()
 	treeframe:SetScript("OnSizeChanged", Tree_OnSizeChanged)
 	treeframe:SetScript("OnMouseWheel", Tree_OnMouseWheel)
 
-	local dragger = CreateFrame("Frame", nil, treeframe, "BackdropTemplate")
+	local dragger = CreateFrame("Frame", nil, treeframe, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	dragger:SetWidth(8)
 	dragger:SetPoint("TOP", treeframe, "TOPRIGHT")
 	dragger:SetPoint("BOTTOM", treeframe, "BOTTOMRIGHT")
-	dragger.backdropInfo  = {
-		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-		edgeFile = nil,
-		tile = true, tileSize = 16, edgeSize = 1,
-		insets = { left = 3, right = 3, top = 7, bottom = 7 }
-	}
-	dragger:ApplyBackdrop()
+	dragger:SetBackdrop(DraggerBackdrop)
 	dragger:SetBackdropColor(1, 1, 1, 0)
 	dragger:SetScript("OnEnter", Dragger_OnEnter)
 	dragger:SetScript("OnLeave", Dragger_OnLeave)
@@ -692,16 +677,10 @@ local function Constructor()
 	scrollbg:SetAllPoints(scrollbar)
 	scrollbg:SetColorTexture(0,0,0,0.4)
 
-	local border = CreateFrame("Frame",nil,frame, "BackdropTemplate")
+	local border = CreateFrame("Frame", nil, frame, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	border:SetPoint("TOPLEFT", treeframe, "TOPRIGHT")
 	border:SetPoint("BOTTOMRIGHT")
-	border.backdropInfo  = {
-		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
-		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-		tile = true, tileSize = 16, edgeSize = 16,
-		insets = { left = 3, right = 3, top = 5, bottom = 3 }
-	}
-	border:ApplyBackdrop()
+	border:SetBackdrop(PaneBackdrop)
 	border:SetBackdropColor(0.1, 0.1, 0.1, 0.5)
 	border:SetBackdropBorderColor(0.4, 0.4, 0.4)
 

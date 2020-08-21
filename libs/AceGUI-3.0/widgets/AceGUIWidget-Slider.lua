@@ -2,7 +2,7 @@
 Slider Widget
 Graphical Slider, like, for Range values.
 -------------------------------------------------------------------------------]]
-local Type, Version = "Slider", 22
+local Type, Version = "Slider", 23
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -225,17 +225,11 @@ local function Constructor()
 	label:SetJustifyH("CENTER")
 	label:SetHeight(15)
 
-	local slider = CreateFrame("Slider", nil, frame, "BackdropTemplate")
+	local slider = CreateFrame("Slider", nil, frame, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	slider:SetOrientation("HORIZONTAL")
 	slider:SetHeight(15)
 	slider:SetHitRectInsets(0, 0, -10, 0)
-	slider.backdropInfo  = {
-		bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
-		edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
-		tile = true, tileSize = 8, edgeSize = 8,
-		insets = { left = 3, right = 3, top = 6, bottom = 6 }
-	}
-	slider:ApplyBackdrop()
+	slider:SetBackdrop(SliderBackdrop)
 	slider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
 	slider:SetPoint("TOP", label, "BOTTOM")
 	slider:SetPoint("LEFT", 3, 0)
@@ -253,7 +247,7 @@ local function Constructor()
 	local hightext = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	hightext:SetPoint("TOPRIGHT", slider, "BOTTOMRIGHT", -2, 3)
 
-	local editbox = CreateFrame("EditBox", nil, frame, "BackdropTemplate")
+	local editbox = CreateFrame("EditBox", nil, frame, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	editbox:SetAutoFocus(false)
 	editbox:SetFontObject(GameFontHighlightSmall)
 	editbox:SetPoint("TOP", slider, "BOTTOM")
@@ -261,12 +255,7 @@ local function Constructor()
 	editbox:SetWidth(70)
 	editbox:SetJustifyH("CENTER")
 	editbox:EnableMouse(true)
-	editbox.backdropInfo  = {
-		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
-		edgeFile = "Interface\\ChatFrame\\ChatFrameBackground",
-		tile = true, edgeSize = 1, tileSize = 5,
-	}
-	editbox:ApplyBackdrop()
+	editbox:SetBackdrop(ManualBackdrop)
 	editbox:SetBackdropColor(0, 0, 0, 0.5)
 	editbox:SetBackdropBorderColor(0.3, 0.3, 0.30, 0.80)
 	editbox:SetScript("OnEnter", EditBox_OnEnter)

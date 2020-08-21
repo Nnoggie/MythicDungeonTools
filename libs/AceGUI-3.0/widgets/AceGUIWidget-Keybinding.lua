@@ -2,7 +2,7 @@
 Keybinding Widget
 Set Keybindings in the Config UI.
 -------------------------------------------------------------------------------]]
-local Type, Version = "Keybinding", 25
+local Type, Version = "Keybinding", 26
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -214,15 +214,9 @@ local function Constructor()
 	label:SetJustifyH("CENTER")
 	label:SetHeight(18)
 
-	local msgframe = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+	local msgframe = CreateFrame("Frame", nil, UIParent, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	msgframe:SetHeight(30)
-	msgframe.backdropInfo  = {
-		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-		tile = true, tileSize = 16, edgeSize = 16,
-		insets = { left = 3, right = 3, top = 3, bottom = 3 }
-	}
-	msgframe:ApplyBackdrop()
+	msgframe:SetBackdrop(ControlBackdrop)
 	msgframe:SetBackdropColor(0,0,0)
 	msgframe:SetFrameStrata("FULLSCREEN_DIALOG")
 	msgframe:SetFrameLevel(1000)
