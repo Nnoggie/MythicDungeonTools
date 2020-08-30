@@ -1069,7 +1069,7 @@ end
 ---DrawNote
 function MDT:DrawNote(x, y, text, objectIndex)
     if not notePoolCollection then
-        notePoolCollection = CreatePoolCollection()
+        notePoolCollection = CreateFramePoolCollection()
         notePoolCollection:CreatePool("Button", MDT.main_frame.mapPanelFrame, "QuestPinTemplate")
     end
     local scale = MDT:GetScale()
