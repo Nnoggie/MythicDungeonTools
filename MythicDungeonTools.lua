@@ -144,20 +144,6 @@ do
 
     function MDT.ADDON_LOADED(self, addon)
         if addon == "MythicDungeonTools" then
-
-            do
-                --Mdt migration 
-                if MethodDungeonToolsDB and not MethodDungeonToolsDB.dbMigrated then
-                    MythicDungeonToolsDB = CopyTable(MethodDungeonToolsDB)
-                    MethodDungeonToolsDB.dbMigrated = true
-                end
-
-                MethodDungeonTools = {};
-                MethodDungeonTools.GetEnemyForces = function(uselessSelf,npcID)
-                    return MDT:GetEnemyForces(npcID);
-                end
-            end
-
 			db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
 			icon:Register("MythicDungeonTools", LDB, db.minimap)
 			if not db.minimap.hide then

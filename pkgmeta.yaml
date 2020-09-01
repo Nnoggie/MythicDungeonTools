@@ -2,6 +2,3 @@ manual-changelog: CHANGELOG.txt
 ignore:
   - README.md
   - python
-
-move-folders:
-  MythicDungeonTools/MDTStub: MethodDungeonTools
