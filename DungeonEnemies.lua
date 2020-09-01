@@ -701,7 +701,7 @@ end
 
 function MDT:DungeonEnemies_CreateFramePools()
     db = self:GetDB()
-    MDT.dungeonEnemies_framePools = MDT.dungeonEnemies_framePools or CreatePoolCollection()
+    MDT.dungeonEnemies_framePools = MDT.dungeonEnemies_framePools or CreateFramePoolCollection()
     MDT.dungeonEnemies_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "MDTDungeonEnemyTemplate");
 end
 

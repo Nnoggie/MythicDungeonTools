@@ -7,7 +7,7 @@ local UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel = UnitName,Unit
 local points = {}
 
 function MDT:POI_CreateFramePools()
-    MDT.poi_framePools = MDT.poi_framePools or CreatePoolCollection()
+    MDT.poi_framePools = MDT.poi_framePools or CreateFramePoolCollection()
     MDT.poi_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "MapLinkPinTemplate")
     MDT.poi_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "DeathReleasePinTemplate")
     MDT.poi_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "VignettePinTemplate")
