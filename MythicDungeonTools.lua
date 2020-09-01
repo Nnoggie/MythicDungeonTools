@@ -14,7 +14,6 @@ local sizey = 555
 local mythicColor = "|cFFFFFFFF"
 MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0.9}
 
-local Dialog = LibStub("LibDialog-1.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local icon = LibStub("LibDBIcon-1.0")
@@ -149,25 +148,6 @@ do
 			if not db.minimap.hide then
 				icon:Show("MythicDungeonTools")
 			end
-			Dialog:Register("MDTPosCopyDialog", {
-				text = "Pos Copy",
-				width = 500,
-				editboxes = {
-					{ width = 484,
-					  on_escape_pressed = function(self, data) self:GetParent():Hide() end,
-					},
-				},
-				on_show = function(self, data)
-					self.editboxes[1]:SetText(data.pos)
-					self.editboxes[1]:HighlightText()
-					self.editboxes[1]:SetFocus()
-				end,
-				buttons = {
-					{ text = CLOSE, },
-				},
-				show_while_dead = true,
-				hide_on_escape = true,
-			})
 
             if db.dataCollectionActive then MDT.DataCollection:Init() end
             --fix db corruption
