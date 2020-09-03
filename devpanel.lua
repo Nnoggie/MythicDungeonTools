@@ -145,6 +145,7 @@ function MDT:CreateDevPanel(frame)
             {text="Week", value="tab4"},
             {text="Corrupted", value="tab5"},
             {text="Manage DB", value="tab6"},
+            {text="Inspiring", value="tab7"},
         }
     )
     devPanel:SetWidth(250)
@@ -781,6 +782,25 @@ function MDT:CreateDevPanel(frame)
         container:AddChild(vdtDbButton)
     end
 
+    local function DrawGroup7(container)
+        for i=1,12 do
+            local weekCheckbox = AceGUI:Create("CheckBox")
+            weekCheckbox:SetLabel("Week "..i)
+            weekCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+                local currentBlip = MDT:GetCurrentDevmodeBlip()
+                local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].inspiring = data.clones[currentBlip.cloneIdx].inspiring or {}
+                data.clones[currentBlip.cloneIdx].inspiring[i] = value or nil
+                MDT:UpdateMap()
+            end)
+            local currentBlip = MDT:GetCurrentDevmodeBlip()
+            if currentBlip then
+                weekCheckbox:SetValue(currentBlip.clone.week and currentBlip.clone.week[i])
+            end
+            container:AddChild(weekCheckbox)
+        end
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -796,6 +816,8 @@ function MDT:CreateDevPanel(frame)
             DrawGroup5(container)
         elseif group == "tab6" then
             DrawGroup6(container)
+        elseif group == "tab7" then
+            DrawGroup7(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)
