@@ -221,7 +221,6 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
         displayID, creatureType = get_displayid_and_creaturetype(npcID)
         table_output += f'\t\t["displayId"] = {displayID};\n'
         table_output += f'\t\t["creatureType"] = L["{creatureType}"];\n'
-    # Could consider strong CreatureFamily as category number and use conversion
     table_output += f'\t\t["scale"] = 1;\n'
 
     table_output += '\t};\n'
@@ -233,7 +232,7 @@ pyperclip.copy(table_output)
 print("-------------------------Mapping Table-----------------------------")
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
 input("-> Press enter when table has been pasted to collect MDT.dungeonTotalCount table.")
-print("\n---------------------------------Total Count Table---------------------------------")
+print("\n---------------------------------Total Count Table----------------------------------")
 pyperclip.copy(total_count_string)
 print("MDT.dungeonTotalCount table copied to clipboard. Paste into the correct dungeon file.")
 input("-> Press enter when table has been pasted to collect locale translation for enUS. (Only added for enUS)")
