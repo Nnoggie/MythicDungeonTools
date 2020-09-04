@@ -41,6 +41,8 @@ mobHits["xcoord"] = - mobHits.xcoord.astype(float)
 mobHits["ycoord"] = mobHits.ycoord.astype(float)
 mobHits = mobHits.astype({"UiMapID": int, "maxHP": int, "level": int})
 
+unique_UiMapIDs = mobHits.UiMapID.unique().tolist()
+
 # Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
 #   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
 #       Which means it contains minimap coordinate points for the borders of the in-game map
@@ -119,12 +121,16 @@ def get_boss_info(name):    # Takes as input a boss name and returns the corresp
     return encounterID, instanceID
 
 
+def UiMapID_to_sublevel(UiMapID):
+    return unique_UiMapIDs.index(UiMapID) + 1
+
+
 # Converts combat log coordinates to MDT coordinates
 mobHits[["MDTx", "MDTy"]] = mobHits.apply(convert_to_MDT_coord, axis=1)
 # Transforms UiMapID into MDT sublevel
-# IMPORTANT NOTE: it gives the value bases on a sorted list of UiMapIDs in the dataframe
-# If blizzard UiMapIDs numerically does not follow same order as MDT sublevels this will be erroneous
-mobHits["sublevel"] = 1
+# Assigns 1 to the first UiMapID seen in the log, 2 to the second and so on
+# Move through the dungeon sublevels in the same order as the sublevel-dropdown to avoid errors
+mobHits["sublevel"] = [UiMapID_to_sublevel(UiMapID) for UiMapID in mobHits.UiMapID]
 
 
 def get_count_table(ID):    # Extracts the count table for a given dungeons enemy forces criteria ID
