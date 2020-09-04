@@ -4,6 +4,12 @@ import pyperclip
 from get_wowtools_data import *
 
 request_wowtools = True
+# How to use:
+# 1. Delete or rename your current WoWCombatLog.txt file to start from fresh
+# 2. Run the dungeon tagging all mobs where they spawn.
+# 3. Copy the resulting WoWCombatLog.txt file to the directory of this file
+# 4. Run this script
+# 5. Open the .lua file for the given dungeon and paste what has been added to your clipboard
 
 combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags", "sourceRaidFlags", "destGUID",
                     "destName", "destFlags", "destRaidFlags", "spellId", "spellName", "spellSchool", "unitGUID",
