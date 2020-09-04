@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 import numpy as np
 import pyperclip
@@ -237,11 +238,15 @@ total_count_string = f"MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_cou
 pyperclip.copy(table_output)
 print("-------------------------Mapping Table-----------------------------")
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
+time.sleep(1)
 input("-> Press enter when table has been pasted to collect MDT.dungeonTotalCount table.")
+time.sleep(0.5)
 print("\n---------------------------------Total Count Table----------------------------------")
 pyperclip.copy(total_count_string)
 print("MDT.dungeonTotalCount table copied to clipboard. Paste into the correct dungeon file.")
+time.sleep(1)
 input("-> Press enter when table has been pasted to collect locale translation for enUS. (Only added for enUS)")
+time.sleep(0.5)
 print("\n-----------------------------Locale enUS-----------------------------")
 pyperclip.copy(npc_locale_en)
 print("Locale translation copied to clipboard. Paste into the enUS.lua file.")
