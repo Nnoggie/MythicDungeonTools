@@ -31,7 +31,8 @@ boss_names = CL.loc[(CL.event == "ENCOUNTER_START")].sourceName.to_list()
 
 # Dataframe that contains every initial SPELL_DAMAGE event against each npc
 mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
-                 (~CL.destGUID.str.startswith("Player", na=True)),  # This filters out damage events against the player
+                 (~CL.destGUID.str.startswith("Player", na=True)) &     # Filters out damage events against the player
+                 (~CL.ownerGUID.str.startswith("Player", na=True)),      # Filters out damage events against player pets
                  ["destGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
 mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
 mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
