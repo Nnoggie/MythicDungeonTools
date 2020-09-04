@@ -136,6 +136,12 @@ def get_count_table(ID):    # Extracts the count table for a given dungeons enem
     return count_table
 
 
+def get_total_count(ID):
+    dungeon_forces = f["criteriatree"][((f["criteriatree"].Parent == ID) &
+                                        (f["criteriatree"].Description_lang == "Enemy Forces"))].Amount
+    return int(dungeon_forces)
+
+
 def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns count and teeming_count for dungeon
     # The function uses the first boss name in boss_names to figure out which dungeon it is
     if not boss_names:
@@ -147,8 +153,8 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
             (f["criteriatree"].ID.isin(parent_dungeons)))]
 
     regular_count = get_count_table(int(mythic_regular.ID))
-
-    return regular_count
+    total_count = get_total_count(int(mythic_regular.ID))
+    return regular_count, total_count
 
 
 def get_npc_count(npcID, regular_count):       # Returns the count of an NPC
@@ -178,7 +184,7 @@ def make_aura_check_GUID_list(CL, aura):
 
 # # Inspiring Presence Mapping
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
-regular_count = get_dungeon_count(boss_names)
+regular_count, total_count = get_dungeon_count(boss_names)
 
 npc_locale_en = ""
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
@@ -221,9 +227,16 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
     table_output += '\t};\n'
 table_output += '};'
 
+total_count_string = f"MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}"
+
 pyperclip.copy(table_output)
+print("-------------------------Mapping Table-----------------------------")
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
-print("-------------------------------------------------------------------")
-input("Press enter when table has been pasted to collect locale translation for enUS. (Only added for enUS)")
+input("-> Press enter when table has been pasted to collect MDT.dungeonTotalCount table.")
+print("\n---------------------------------Total Count Table---------------------------------")
+pyperclip.copy(total_count_string)
+print("MDT.dungeonTotalCount table copied to clipboard. Paste into the correct dungeon file.")
+input("-> Press enter when table has been pasted to collect locale translation for enUS. (Only added for enUS)")
+print("\n-----------------------------Locale enUS-----------------------------")
 pyperclip.copy(npc_locale_en)
 print("Locale translation copied to clipboard. Paste into the enUS.lua file.")
