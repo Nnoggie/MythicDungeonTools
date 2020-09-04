@@ -165,6 +165,19 @@ def get_npc_count(npcID, regular_count):       # Returns the count of an NPC
     return npc_count
 
 
+def make_aura_check_GUID_list(CL, aura):
+    # How to use
+    # 1. Input the combatlog and the aura you want to check for
+    # 2. Make 2 lines of code in the table_output generator below like this
+    # if npc.destGUID in inspiring_GUID_list:
+    #    table_output += f'\t\t\t\t["inspiring"] = true;\n'
+    GUID_list = CL.loc[((CL.event == "SPELL_AURA_APPLIED") &
+                             (CL.spellName == aura))].destGUID.values
+    return GUID_list
+
+
+# # Inspiring Presence Mapping
+inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count = get_dungeon_count(boss_names)
 
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
@@ -178,6 +191,8 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
         table_output += f'\t\t\t\t["x"] = {npc.MDTx};\n'
         table_output += f'\t\t\t\t["y"] = {npc.MDTy};\n'
         table_output += f'\t\t\t\t["sublevel"] = {npc.sublevel};\n'
+        if npc.destGUID in inspiring_GUID_list:
+            table_output += f'\t\t\t\t["inspiring"] = true;\n'
         table_output += f'\t\t\t}};\n'
 
     table_output += '\t\t};\n'
