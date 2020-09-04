@@ -180,6 +180,7 @@ def make_aura_check_GUID_list(CL, aura):
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count = get_dungeon_count(boss_names)
 
+npc_locale_en = ""
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
 for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
@@ -201,7 +202,9 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
         table_output += f'\t\t["isBoss"] = true;\n'
         table_output += f'\t\t["encounterID"] = {encounterID};\n'
         table_output += f'\t\t["instanceID"] = {instanceID};\n'
-    table_output += f'\t\t["name"] = "{npc.destName}";\n'
+    table_output += f'\t\t["name"] = L["{npc.destName}"];\n'
+    # Adding npc name to string for easy locale enUS
+    npc_locale_en += f'L["{npc.destName}"] = "{npc.destName}"\n'
     npcID = get_npc_id(npc.destGUID)
     table_output += f'\t\t["id"] = {npcID};\n'
     table_output += f'\t\t["health"] = {npc.maxHP};\n'
@@ -220,3 +223,7 @@ table_output += '};'
 
 pyperclip.copy(table_output)
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
+print("-------------------------------------------------------------------")
+input("Press enter when table has been pasted to collect locale translation for enUS. (Only added for enUS)")
+pyperclip.copy(npc_locale_en)
+print("Locale translation copied to clipboard. Paste into the enUS.lua file.")
