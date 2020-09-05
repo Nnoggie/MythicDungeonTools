@@ -116,15 +116,17 @@ function MDTDungeonEnemyMixin:OnEnter()
             end
         end
     end
-    self.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and self.data.teemingCount or self.data.count)
-    if not self.clone.g then
-        self.fontstring_Text1:Show()
-        return
-    end
-    for _,blip in pairs(blips) do
-        if blip.clone.g == self.clone.g then
-            blip.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and blip.data.teemingCount or blip.data.count)
-            blip.fontstring_Text1:Show()
+    if not db.devMode then
+        self.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and self.data.teemingCount or self.data.count)
+        if not self.clone.g then
+            self.fontstring_Text1:Show()
+            return
+        end
+        for _,blip in pairs(blips) do
+            if blip.clone.g == self.clone.g then
+                blip.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and blip.data.teemingCount or blip.data.count)
+                blip.fontstring_Text1:Show()
+            end
         end
     end
 end
@@ -154,13 +156,15 @@ function MDTDungeonEnemyMixin:OnLeave()
             MDT:HideAnimatedLine(self.animatedLine)
         end
     end
-    if not self.clone.g then
-        self.fontstring_Text1:Hide()
-        return
-    end
-    for _,blip in pairs(blips) do
-        if blip.clone.g == self.clone.g then
-            blip.fontstring_Text1:Hide()
+    if not db.devMode then
+        if not self.clone.g then
+            self.fontstring_Text1:Hide()
+            return
+        end
+        for _,blip in pairs(blips) do
+            if blip.clone.g == self.clone.g then
+                blip.fontstring_Text1:Hide()
+            end
         end
     end
 end
@@ -569,6 +573,25 @@ local function blipDevModeSetup(blip)
         MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x = x
         MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y = y
     end)
+    blip:SetScript("OnMouseWheel", function(self, delta)
+        if not blip.clone.g then
+            local maxGroup = 0
+            for _,data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+                for _,clone in pairs(data.clones) do
+                    maxGroup = (clone.g and (clone.g>maxGroup)) and clone.g or maxGroup
+                end
+            end
+            if IsControlKeyDown() then
+                maxGroup = maxGroup + 1
+            end
+            blip.clone.g = maxGroup
+        else
+            blip.clone.g = blip.clone.g + delta
+        end
+        blip.fontstring_Text1:SetText(blip.clone.g)
+    end)
+    blip.fontstring_Text1:Show()
+    blip.fontstring_Text1:SetText(blip.clone.g)
 end
 
 local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
