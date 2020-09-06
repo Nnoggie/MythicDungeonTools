@@ -4936,9 +4936,6 @@ function initFrames()
     main_frame.mainFrametex:SetDrawLayer(canvasDrawLayer, -5)
     main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
 
-    if not db.MDI.enabled then
-        db.currentSeason = defaultSavedVars.global.currentSeason
-    end
 
     local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.","")
     db.version = tonumber(version)
@@ -4973,6 +4970,10 @@ function initFrames()
     --devMode
     if db.devMode and MDT.CreateDevPanel then
         MDT:CreateDevPanel(MDT.main_frame)
+    end
+
+    if not db.MDI.enabled then
+        db.currentSeason = defaultSavedVars.global.currentSeason
     end
 
     --ElvUI skinning
