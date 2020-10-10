@@ -713,7 +713,7 @@ function MDT:CreateMenu()
     self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
 
     --return to live preset
-    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "BrowserButtonTemplate")
+    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "UIPanelCloseButton")
     local liveReturnButton = self.main_frame.liveReturnButton
     liveReturnButton:ClearAllPoints()
     liveReturnButton:SetPoint("RIGHT", self.main_frame.topPanel, "RIGHT", 0, 0)
@@ -727,7 +727,7 @@ function MDT:CreateMenu()
     liveReturnButton.tooltip = L["Return to the live preset"]
 
     --set preset as new live preset
-    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "BrowserButtonTemplate")
+    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "UIPanelCloseButton")
     local setLivePresetButton = self.main_frame.setLivePresetButton
     setLivePresetButton:ClearAllPoints()
     setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
