@@ -16,10 +16,6 @@
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MythicDungeonToolsDB
 
-#@no-lib-strip@
-libs\load_libs.xml
-#@end-no-lib-strip@
-
 init.lua
 locales.xml
 AceGUIWidget-MythicDungeonToolsPullButton.lua

@@ -2,7 +2,7 @@ manual-changelog: CHANGELOG.txt
 ignore:
   - README.md
   - python
-
+enable-nolib-creation: no
 externals:
   libs/AceComm-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceComm-3.0
   libs/AceConfig-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceConfig-3.0
