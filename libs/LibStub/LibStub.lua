@@ -1,3 +1,4 @@
+-- hello
 -- $Id: LibStub.lua 103 2014-10-16 03:02:50Z mikk $
 -- LibStub is a simple versioning stub meant for use in Libraries.  http://www.wowace.com/addons/libstub/ for more info
 -- LibStub is hereby placed in the Public Domain
