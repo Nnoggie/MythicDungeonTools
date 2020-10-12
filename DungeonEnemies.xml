@@ -130,6 +130,7 @@
         <Scripts>
             <OnLoad>
                 self:RegisterForClicks("AnyUp")
+                self:RegisterForDrag("LeftButton")
             </OnLoad>
             <OnEnter method="OnEnter"/>
             <OnLeave method="OnLeave"/>

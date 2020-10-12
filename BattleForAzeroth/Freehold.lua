@@ -43,6 +43,9 @@ function MDT:ToggleFreeholdSelector(show)
         selectorGroup = AceGUI:Create("SimpleGroup")
         selectorGroup.frame:SetFrameStrata("HIGH")
         selectorGroup.frame:SetFrameLevel(50)
+        if not selectorGroup.frame.SetBackdrop then
+            Mixin(selectorGroup.frame, BackdropTemplateMixin)
+        end
         selectorGroup.frame:SetBackdropColor(unpack(MDT.BackdropColor))
         fixFreeholdShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")

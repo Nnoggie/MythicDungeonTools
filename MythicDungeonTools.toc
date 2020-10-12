@@ -1,7 +1,7 @@
-## Interface: 80300
+## Interface: 90001
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 3.1.0
+## Version: 3.2.0
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-deDE: Tool für das Planen und Optimieren von Mythic+ Dungeons
 ## Notes-esES: Herramienta para planificar y optimizar las rutas de mazmorras de Piedras Angulares
@@ -16,10 +16,6 @@
 ## OptionalDeps: ElvUI, LibStub, LibUIDropDownMenu, Ace3
 ## SavedVariables: MythicDungeonToolsDB
 
-#@no-lib-strip@
-libs\load_libs.xml
-#@end-no-lib-strip@
-
 init.lua
 locales.xml
 AceGUIWidget-MythicDungeonToolsPullButton.lua
@@ -28,6 +24,7 @@ AceGUIWidget-MythicDungeonToolsSpellButton.lua
 Utility.lua
 MythicDungeonTools.lua
 DungeonEnemies.xml
+pulls.lua
 EnemyInfo.lua
 Pointsofinterest.lua
 Transmission.lua
@@ -37,3 +34,4 @@ DataCollection.lua
 LiveSession.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
+Shadowlands\load_shadowlands.xml

@@ -4,6 +4,14 @@ local db
 local tonumber,tinsert,slen,pairs,ipairs,tostring,next,type,sformat = tonumber,table.insert,string.len,pairs,ipairs,tostring,next,type,string.format
 local UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel = UnitName,UnitGUID,UnitCreatureType,UnitHealthMax,UnitLevel
 
+--[[
+How to map:
+1. /mdt devmode
+2. Install Plater Mod that adds NPCs on Nameplate Added event
+    Tov0UTniu0)f)KJuIvstI7sL2dBnQtTsnlsK8uvzMaxNGggqaol7f(231XwZUR9XjKGZ1W5Cpx4A6m6okzgL886DXINzwRuFebgbLe(TfOKtgZpPK5ucLCdDZS5lMphp(seUC1Yz53KViNswGcict(UtEW4PKBXDPKCCgxw1KHnSkWQybiw8fHaq1lR18G0OJfPEqvoowuRLHhfDGhCided6Z7yhunWkJ4kCu8Pyr7aD9DOEB2E)dot1EKxARkdot8jqlWqC8gFS3kW1)xozYeP2dUqSGBeO6Nahm0d9N7Lx6JugotflowlfXIppiFzACABJrBkQVT)X1VJuhf0YapKMp2hCERcVbsMKmUrXrdS3vPCzei83BG7nkJdR5H1yYrha6KyXOpY7Dj2Bz)sJgAq2V9TzVTIgM)Huxd8RCdgDD1bWLMm9sswwNSVNuaUe(NBNtatfo9vMltjlHTGJd6qpXgg3H16oCnTx3xF9J7kcuYNAAsdmfkdIWpC0zQTTqUI59TWkM9hsrxGZOGwK9SDixhJ3TbRSuEPfcAUPwJpc9c4Ta)kcXbd)m48yBiDZQPtNI)4WecmI0(0rjgBttQVJa9p)
+3. Call MDT:AddNPCFromUnit("mouseover") with macro to add untargetable units
+4. Use Keybinds to add NPCs and patrolpaths to the map
+]]
 
 local function tshow(t, name, indent)
     local cart     -- a container
@@ -118,6 +126,7 @@ end
 local currentEnemyIdx
 local currentCloneGroup
 local currentTeeming
+local currentInspiring
 local currentPatrol
 local currentBossEnemyIdx = 1
 ---CreateDevPanel
@@ -136,6 +145,7 @@ function MDT:CreateDevPanel(frame)
             {text="Infested", value="tab3"},
             {text="Week", value="tab4"},
             {text="Corrupted", value="tab5"},
+            {text="Manage DB", value="tab6"},
         }
     )
     devPanel:SetWidth(250)
@@ -563,6 +573,20 @@ function MDT:CreateDevPanel(frame)
         end)
         container:AddChild(negativeteemingCheckbox)
 
+        local inspiringCheckbox = AceGUI:Create("CheckBox")
+        inspiringCheckbox:SetLabel("Inspiring")
+        inspiringCheckbox:SetCallback("OnValueChanged",function(widget,callbackName,value)
+            currentInspiring = value and true or nil
+            local currentBlip = MDT:GetCurrentDevmodeBlip()
+            if currentBlip then
+                local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+                data.clones[currentBlip.cloneIdx].inspiring = currentInspiring
+                MDT:UpdateMap()
+            end
+        end)
+        inspiringCheckbox:SetValue(currentInspiring)
+        container:AddChild(inspiringCheckbox)
+
         --faction
         local faction = AceGUI:Create("EditBox")
         faction:SetLabel("Faction:")
@@ -597,6 +621,7 @@ function MDT:CreateDevPanel(frame)
             cloneGroup:SetText(currentBlip.clone.g)
             currentCloneGroup = currentBlip.clone.g
             teemingCheckbox:SetValue(currentBlip.clone.teeming)
+            inspiringCheckbox:SetValue(currentBlip.clone.inspiring)
             currentTeeming = currentBlip.clone.teeming
             currentPatrol = currentBlip.patrol and true or nil
             patrolCheckbox:SetValue(currentPatrol and currentBlip.patrolActive)
@@ -747,6 +772,31 @@ function MDT:CreateDevPanel(frame)
 
     end
 
+    local function DrawGroup6(container)
+        local clearCacheButton = AceGUI:Create("Button")
+        clearCacheButton:SetText("Clear Cache")
+        clearCacheButton:SetCallback("OnClick",function()
+            MDT:ResetDataCache()
+        end)
+        container:AddChild(clearCacheButton)
+
+        local resetDbButton = AceGUI:Create("Button")
+        resetDbButton:SetText("Hard Reset DB")
+        resetDbButton:SetCallback("OnClick",function()
+            MDT:OpenConfirmationFrame(300, 150, "Reset MDT DB", "Confirm", "Do you want to reset MDT DB?", function()
+                MDT:HardReset()
+            end, "Cancel", nil)
+        end)
+        container:AddChild(resetDbButton)
+
+        local vdtDbButton = AceGUI:Create("Button")
+        vdtDbButton:SetText("VDT DB")
+        vdtDbButton:SetCallback("OnClick",function()
+            ViragDevTool_AddData(db)
+        end)
+        container:AddChild(vdtDbButton)
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -760,6 +810,8 @@ function MDT:CreateDevPanel(frame)
             DrawGroup4(container)
         elseif group == "tab5" then
             DrawGroup5(container)
+        elseif group == "tab6" then
+            DrawGroup6(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)

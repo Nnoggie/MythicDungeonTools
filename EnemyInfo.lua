@@ -105,6 +105,11 @@ local function MakeEnemeyInfoFrame()
         ---LEFT
         local leftContainer = AceGUI:Create("SimpleGroup")
         f.leftContainer = leftContainer
+        if not leftContainer.frame.SetBackdrop then
+            Mixin(leftContainer.frame, BackdropTemplateMixin)
+        end
+        --Temporary Fix: backdrop frame level is set to 10000 normally
+        leftContainer.frame.backdrop:SetFrameLevel(1)
         leftContainer.frame:SetBackdropColor(1,1,1,0)
         leftContainer:SetLayout("List")
         leftContainer:SetWidth(container.frame:GetWidth()/3)
@@ -127,6 +132,9 @@ local function MakeEnemeyInfoFrame()
         model:Show()
         f.modelContainer = f.modelContainer or AceGUI:Create("InlineGroup")
         local modelContainer = f.modelContainer
+        if not modelContainer.frame.SetBackdrop then
+            Mixin(modelContainer.frame, BackdropTemplateMixin)
+        end
         modelContainer.frame:SetBackdropColor(1,1,1,0)
         modelContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         modelContainer:SetHeight(249)
@@ -141,6 +149,9 @@ local function MakeEnemeyInfoFrame()
         MDT:FixAceGUIShowHide(model,modelContainer.frame,true)
 
         f.characteristicsContainer = AceGUI:Create("InlineGroup")
+        if not f.characteristicsContainer.frame.SetBackdrop then
+            Mixin(f.characteristicsContainer.frame, BackdropTemplateMixin)
+        end
         f.characteristicsContainer.frame:SetBackdropColor(1,1,1,0)
         f.characteristicsContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         f.characteristicsContainer:SetHeight(80)
@@ -153,6 +164,11 @@ local function MakeEnemeyInfoFrame()
         ---MIDDLE
         f.midContainer = f.midContainer or AceGUI:Create("SimpleGroup")
         local midContainer = f.midContainer
+        if not midContainer.frame.SetBackdrop then
+            Mixin(midContainer.frame, BackdropTemplateMixin)
+        end
+        --Temporary Fix: backdrop frame level is set to 10000 normally
+        midContainer.frame.backdrop:SetFrameLevel(1)
         midContainer.frame:SetBackdropColor(1,1,1,0)
         midContainer:SetLayout("List")
         midContainer:SetWidth(container.frame:GetWidth()/3)
@@ -166,6 +182,9 @@ local function MakeEnemeyInfoFrame()
         midContainer:AddChild(midDummyIcon)
 
         f.enemyDataContainer = AceGUI:Create("InlineGroup")
+        if not f.enemyDataContainer.frame.SetBackdrop then
+            Mixin(f.enemyDataContainer.frame, BackdropTemplateMixin)
+        end
         f.enemyDataContainer.frame:SetBackdropColor(1,1,1,0)
         f.enemyDataContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         f.enemyDataContainer:SetHeight(235)
@@ -249,6 +268,11 @@ local function MakeEnemeyInfoFrame()
         ---RIGHT
         f.rightContainer = f.rightContainer or AceGUI:Create("SimpleGroup")
         local rightContainer = f.rightContainer
+        if not rightContainer.frame.SetBackdrop then
+            Mixin(rightContainer.frame, BackdropTemplateMixin)
+        end
+        --Temporary Fix: backdrop frame level is set to 10000 normally
+        rightContainer.frame.backdrop:SetFrameLevel(1)
         rightContainer.frame:SetBackdropColor(1,1,1,0)
         rightContainer:SetLayout("List")
         rightContainer:SetWidth(container.frame:GetWidth()/3)
@@ -264,6 +288,9 @@ local function MakeEnemeyInfoFrame()
         --spells
         f.spellScrollContainer = f.spellScrollContainer or AceGUI:Create("InlineGroup")
         local spellScrollContainer = f.spellScrollContainer
+        if not spellScrollContainer.frame.SetBackdrop then
+            Mixin(spellScrollContainer.frame, BackdropTemplateMixin)
+        end
         spellScrollContainer.frame:SetBackdropColor(1,1,1,0)
         spellScrollContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         spellScrollContainer:SetHeight(282)
@@ -276,6 +303,9 @@ local function MakeEnemeyInfoFrame()
         --spellButtons
         f.spellButtonsContainer = f.spellButtonsContainer or AceGUI:Create("InlineGroup")
         local spellButtonsContainer = f.spellButtonsContainer
+        if not spellButtonsContainer.frame.SetBackdrop then
+            Mixin(spellButtonsContainer.frame, BackdropTemplateMixin)
+        end
         spellButtonsContainer.frame:SetBackdropColor(1,1,1,0)
         spellButtonsContainer:SetWidth(leftContainer.frame:GetWidth()-20)
         spellScrollContainer:SetLayout("Flow")

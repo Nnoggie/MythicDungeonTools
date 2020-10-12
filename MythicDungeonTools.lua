@@ -14,7 +14,6 @@ local sizey = 555
 local mythicColor = "|cFFFFFFFF"
 MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0.9}
 
-local Dialog = LibStub("LibDialog-1.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local icon = LibStub("LibDBIcon-1.0")
@@ -88,8 +87,8 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 4,
-		currentExpansion = 2,
+        currentSeason = 5,
+		currentExpansion = 3,
         scale = 1,
         enemyForcesFormat = 2,
         enemyStyle = 1,
@@ -122,7 +121,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,26 do
+    for i=1,37 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
@@ -144,44 +143,11 @@ do
 
     function MDT.ADDON_LOADED(self, addon)
         if addon == "MythicDungeonTools" then
-
-            do
-                --Mdt migration 
-                if MethodDungeonToolsDB and not MethodDungeonToolsDB.dbMigrated then
-                    MythicDungeonToolsDB = CopyTable(MethodDungeonToolsDB)
-                    MethodDungeonToolsDB.dbMigrated = true
-                end
-
-                MethodDungeonTools = {};
-                MethodDungeonTools.GetEnemyForces = function(uselessSelf,npcID)
-                    return MDT:GetEnemyForces(npcID);
-                end
-            end
-
 			db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
 			icon:Register("MythicDungeonTools", LDB, db.minimap)
 			if not db.minimap.hide then
 				icon:Show("MythicDungeonTools")
 			end
-			Dialog:Register("MDTPosCopyDialog", {
-				text = "Pos Copy",
-				width = 500,
-				editboxes = {
-					{ width = 484,
-					  on_escape_pressed = function(self, data) self:GetParent():Hide() end,
-					},
-				},
-				on_show = function(self, data)
-					self.editboxes[1]:SetText(data.pos)
-					self.editboxes[1]:HighlightText()
-					self.editboxes[1]:SetFocus()
-				end,
-				buttons = {
-					{ text = CLOSE, },
-				},
-				show_while_dead = true,
-				hide_on_escape = true,
-			})
 
             if db.dataCollectionActive then MDT.DataCollection:Init() end
             --fix db corruption
@@ -231,7 +197,12 @@ do
         end
     end
     function MDT.PLAYER_ENTERING_WORLD(self, addon)
-        MDT:GetCurrentAffixWeek()
+        --dirty hack to initialize Blizzard_ChallengesUI properly
+        C_Timer.After(1,function()
+            PVEFrame_ToggleFrame("ChallengesFrame")
+            PVEFrame_ToggleFrame("GroupFinderFrame")
+            PVEFrame_ToggleFrame()
+        end)
         self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     end
 
@@ -243,18 +214,18 @@ MDT.dungeonTotalCount = {}
 MDT.scaleMultiplier = {}
 
 local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
-    [1] = {[1]=5,[2]=3,[3]=9,[4]=120},
-    [2] = {[1]=7,[2]=2,[3]=10,[4]=120},
-    [3] = {[1]=11,[2]=4,[3]=9,[4]=120},
-    [4] = {[1]=8,[2]=14,[3]=10,[4]=120},
-    [5] = {[1]=7,[2]=13,[3]=9,[4]=120},
-    [6] = {[1]=11,[2]=3,[3]=10,[4]=120},
-    [7] = {[1]=6,[2]=4,[3]=9,[4]=120},
-    [8] = {[1]=5,[2]=14,[3]=10,[4]=120},
-    [9] = {[1]=11,[2]=2,[3]=9,[4]=120},
-    [10] = {[1]=7,[2]=12,[3]=10,[4]=120},
-    [11] = {[1]=6,[2]=13,[3]=9,[4]=120},
-    [12] = {[1]=8,[2]=12,[3]=10,[4]=120},
+    [1] = {[1]=11,[2]=124,[3]=10,[4]=121},
+    [2] = {[1]=8,[2]=12,[3]=9,[4]=121},
+    [3] = {[1]=122,[2]=13,[3]=10,[4]=121},
+    [4] = {[1]=8,[2]=14,[3]=9,[4]=121},
+    [5] = {[1]=7,[2]=13,[3]=10,[4]=121},
+    [6] = {[1]=11,[2]=3,[3]=9,[4]=121},
+    [7] = {[1]=6,[2]=4,[3]=10,[4]=121},
+    [8] = {[1]=5,[2]=14,[3]=9,[4]=121},
+    [9] = {[1]=11,[2]=2,[3]=10,[4]=121},
+    [10] = {[1]=7,[2]=12,[3]=9,[4]=121},
+    [11] = {[1]=6,[2]=13,[3]=10,[4]=121},
+    [12] = {[1]=8,[2]=12,[3]=9,[4]=121},
 }
 
 local dungeonList = {
@@ -271,7 +242,7 @@ local dungeonList = {
     [11] = L["Seat of the Triumvirate"],
     [12] = L["The Arcway"],
     [13] = L["Vault of the Wardens"],
-    [14] = L[" >Battle for Azeroth"],
+    [14] = " >"..L["Battle for Azeroth"],
     [15] = L["Atal'Dazar"],
     [16] = L["Freehold"],
     [17] = L["Kings' Rest"],
@@ -284,7 +255,17 @@ local dungeonList = {
     [24] = L["Waycrest Manor"],
     [25] = L["Mechagon - Junkyard"],
     [26] = L["Mechagon - Workshop"],
-    [27] = L[" >Legion"],
+    [27] = " <"..L["Legion"],
+    [28] = " >"..L["Shadowlands"],
+    [29] = L["De Other Side"],
+    [30] = L["Halls of Atonement"],
+    [31] = L["Mists of Tirna Scithe"],
+    [32] = L["Plaguefall"],
+    [33] = L["Sanguine Depths"],
+    [34] = L["Spires of Ascension"],
+    [35] = L["The Necrotic Wake"],
+    [36] = L["Theater of Pain"],
+    [37] = " <"..L["Battle for Azeroth"],
 }
 function MDT:GetNumDungeons() return #dungeonList-1 end
 function MDT:GetDungeonName(idx) return dungeonList[idx] end
@@ -412,6 +393,46 @@ local dungeonSubLevels = {
         [2] = L["Waste Pipes"],
         [3] = L["The Under Junk"],
         [4] = L["Mechagon City"],
+    },
+    [29] = {
+        [1] = L["De Other Side"],
+        [2] = L["Mechagon"],
+        [3] = L["Zul'Gurub"],
+        [4] = L["Ardenweald"],
+    },
+    [30] = {
+        [1] = L["HallsOfAtonementFloor1"],
+        [2] = L["HallsOfAtonementFloor2"],
+        [3] = L["HallsOfAtonementFloor3"],
+    },
+    [31] = {
+        [1] = L["Mists of Tirna Scithe"],
+    },
+    [32] = {
+        [1] = L["Plaguefall"],
+        [2] = L["The Festering Sanctum"],
+    },
+    [33] = {
+        [1] = L["Sanguine DepthsFloor1"],
+        [2] = L["Sanguine DepthsFloor2"],
+    },
+    [34] = {
+        [1] = L["Honor's Ascent"],
+        [2] = L["Gardens of Repose"],
+        [3] = L["Spire of the Firstborne"],
+        [4] = L["Seat of the Archon"],
+    },
+    [35] = {
+        [1] = L["TheNecroticWakeFloor1"],
+        [2] = L["TheNecroticWakeFloor2"],
+        [3] = L["TheNecroticWakeFloor3"],
+    },
+    [36] = {
+        [1] = L["TheaterOfPainFloor1"],
+        [2] = L["TheaterOfPainFloor2"],
+        [3] = L["TheaterOfPainFloor3"],
+        [4] = L["TheaterOfPainFloor4"],
+        [5] = L["TheaterOfPainFloor5"],
     },
 }
 function MDT:GetDungeonSublevels()
@@ -573,6 +594,54 @@ MDT.dungeonMaps = {
         [3] = "MechagonDungeon3_",
         [4] = "MechagonDungeon4_",
     },
+    [29] = {
+        [0] = "DeOtherSide_Ardenweald",
+        [1] = "DeOtherSide_Main",
+        [2] = "DeOtherSide_Gnome",
+        [3] = "DeOtherSide_Hakkar",
+        [4] = "DeOtherSide_Ardenweald",
+    },
+    [30] = {
+        [0] = "HallsOfAtonement_A",
+        [1] = "HallsOfAttonementExterior",
+        [2] = "HallsOfAtonement_A",
+        [3] = "HallsOfAtonement_B",
+    },
+    [31] = {
+        [0] = "MistsOfTirneScithe",
+        [1] = "MistsOfTirneScithe",
+    },
+    [32] = {
+        [0] = "Plaguefall_B",
+        [1] = "Plaguefall",
+        [2] = "Plaguefall_B",
+    },
+    [33] = {
+        [0] = "SanguineDepths_A",
+        [1] = "SanguineDepths_A",
+        [2] = "SanguineDepths_B",
+    },
+    [34] = {
+        [0] = "SpiresOfAscension_A",
+        [1] = "SpiresOfAscension_A",
+        [2] = "SpiresOfAscension_B",
+        [3] = "SpiresOfAscension_C",
+        [4] = "SpiresOfAscension_D",
+    },
+    [35] = {
+        [0] = "NecroticWake_A",
+        [1] = "NecroticWake_Exterior",
+        [2] = "NecroticWake_A",
+        [3] = "NecroticWake_B",
+    },
+    [36] = {
+        [0] = "TheaterOfPain",
+        [1] = "TheaterOfPain",
+        [2] = "TheaterOfPain_Warlord",
+        [3] = "TheaterOfPain_Lich",
+        [4] = "TheaterOfPain_AbomTop",
+        [5] = "TheaterOfPain_AbomBot",
+    },
 
 }
 MDT.dungeonBosses = {}
@@ -644,7 +713,7 @@ function MDT:CreateMenu()
     self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
 
     --return to live preset
-    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "BrowserButtonTemplate")
+    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "UIPanelCloseButton")
     local liveReturnButton = self.main_frame.liveReturnButton
     liveReturnButton:ClearAllPoints()
     liveReturnButton:SetPoint("RIGHT", self.main_frame.topPanel, "RIGHT", 0, 0)
@@ -658,7 +727,7 @@ function MDT:CreateMenu()
     liveReturnButton.tooltip = L["Return to the live preset"]
 
     --set preset as new live preset
-    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "BrowserButtonTemplate")
+    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "UIPanelCloseButton")
     local setLivePresetButton = self.main_frame.setLivePresetButton
     setLivePresetButton:ClearAllPoints()
     setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
@@ -682,6 +751,7 @@ function MDT:CreateMenu()
         self.main_frame:StartSizing("BOTTOMRIGHT")
         self:StartScaling()
         self:HideAllPresetObjects()
+        self:ReleaseHullTextures()
         self.main_frame:SetScript("OnSizeChanged", function()
             local height = self.main_frame:GetHeight()
             self:SetScale(height/sizey)
@@ -1101,6 +1171,9 @@ function MDT:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:SetLayout("Flow")
 
 	frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
+    if not frame.sidePanel.WidgetGroup.frame.SetBackdrop then
+        Mixin(frame.sidePanel.WidgetGroup.frame, BackdropTemplateMixin)
+    end
 	frame.sidePanel.WidgetGroup.frame:SetBackdropColor(1,1,1,0)
 	frame.sidePanel.WidgetGroup.frame:Hide()
 
@@ -1469,11 +1542,6 @@ function MDT:MakeSidePanel(frame)
                 ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9,0,0).."  "
             end
         end
-        local rotation = ""
-        if longText then rotation = rotation.." ("..L["Rotation"] end
-        rotation = rotation..((week-1)%4>=2 and " B" or " A")
-        if longText then rotation = rotation..")" end
-        ret = ret..rotation
         return ret
     end
     frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
@@ -1694,6 +1762,9 @@ function MDT:DisplayMDISelector()
         MDT.MDISelector = AceGUI:Create("SimpleGroup")
         MDT.MDISelector.frame:SetFrameStrata("HIGH")
         MDT.MDISelector.frame:SetFrameLevel(50)
+        if not MDT.MDISelector.frame.SetBackdrop then
+            Mixin(MDT.MDISelector.frame, BackdropTemplateMixin)
+        end
         MDT.MDISelector.frame:SetBackdropColor(unpack(MDT.BackdropColor))
         --fix show hide
         local frame = MDT.main_frame
@@ -2391,6 +2462,12 @@ function MDT:MakeMapTexture(frame)
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
         local lastModifiedScroll
+        local ignoredTargets = {--ignore alt scroll if expansion would be changed
+            [14] = true,
+            [27] = true,
+            [28] = true,
+            [37] = true,
+        }
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
             if IsControlKeyDown() then
                 if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.1 then
@@ -2408,7 +2485,7 @@ function MDT:MakeMapTexture(frame)
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
                     local target = db.currentDungeonIdx+delta
-                    if dungeonList[target] then
+                    if dungeonList[target] and not ignoredTargets[target] then
                         local group = MDT.main_frame.DungeonSelectionGroup
                         group.DungeonDropdown:Fire("OnValueChanged", target)
                     end
@@ -2622,7 +2699,11 @@ function MDT:UpdateDungeonDropDown()
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     elseif db.currentExpansion == 2 then
-        for i=15,27 do
+        for i=15,28 do
+            group.DungeonDropdown:AddItem(i,dungeonList[i])
+        end
+    elseif db.currentExpansion == 3 then
+        for i = 29,37 do
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     end
@@ -2652,14 +2733,29 @@ function MDT:CreateDungeonSelectDropdown(frame)
 	group.DungeonDropdown = AceGUI:Create("Dropdown")
 	group.DungeonDropdown.text:SetJustifyH("LEFT")
 	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-		if key==14 or key == 27 then
-            db.currentExpansion = (db.currentExpansion%2)+1
-            db.currentDungeonIdx = key==14 and 15 or 1
+        if key == 14 then
+            db.currentExpansion = 2
+            db.currentDungeonIdx = 15
             MDT:UpdateDungeonDropDown()
             MDT:UpdateToDungeon(db.currentDungeonIdx)
-		else
+        elseif key == 27 then
+            db.currentExpansion = 1
+            db.currentDungeonIdx = 1
+            MDT:UpdateDungeonDropDown()
+            MDT:UpdateToDungeon(db.currentDungeonIdx)
+        elseif key == 28 then
+            db.currentExpansion = 3
+            db.currentDungeonIdx = 29
+            MDT:UpdateDungeonDropDown()
+            MDT:UpdateToDungeon(db.currentDungeonIdx)
+        elseif key == 37 then
+            db.currentExpansion = 2
+            db.currentDungeonIdx = 15
+            MDT:UpdateDungeonDropDown()
+            MDT:UpdateToDungeon(db.currentDungeonIdx)
+        else
             MDT:UpdateToDungeon(key)
-		end
+        end
 	end)
 	group:AddChild(group.DungeonDropdown)
 
@@ -2857,15 +2953,9 @@ end
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
 function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
-    if db.currentExpansion == 1 then
-        if dungeonIdx>=15 then
-            db.currentExpansion = 2
-        end
-    elseif db.currentExpansion == 2 then
-        if dungeonIdx<=14 then
-            db.currentExpansion = 1
-        end
-    end
+    db.currentExpansion = 1
+    if dungeonIdx>=15 then db.currentExpansion = 2 end
+    if dungeonIdx>=29 then db.currentExpansion = 3 end
     db.currentDungeonIdx = dungeonIdx
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then 
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 
@@ -3572,6 +3662,9 @@ function MDT:MakePullSelectionButtons(frame)
     frame.PullButtonScrollGroup:SetPoint("BOTTOMLEFT",frame,"BOTTOMLEFT",0,30)
     frame.PullButtonScrollGroup:SetLayout("Fill")
     frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
+    if not frame.PullButtonScrollGroup.frame.SetBackdrop then
+        Mixin(frame.PullButtonScrollGroup.frame, BackdropTemplateMixin)
+    end
     frame.PullButtonScrollGroup.frame:SetBackdropColor(1,1,1,0)
     frame.PullButtonScrollGroup.frame:Show()
 
@@ -3837,18 +3930,16 @@ function MDT:ReloadPullButtons()
 		maxPulls = maxPulls + 1
 	end
 	--add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
-    if not db.devMode then
-        local idx = 0
-        for k,pull in ipairs(preset.value.pulls) do
-            idx = idx+1
-            frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
-            frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
-            frame.newPullButtons[idx]:SetIndex(idx)
-            MDT:UpdatePullButtonNPCData(idx)
-            frame.newPullButtons[idx]:Initialize()
-            frame.newPullButtons[idx]:Enable()
-            frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
-        end
+    local idx = 0
+    for k,pull in ipairs(preset.value.pulls) do
+        idx = idx+1
+        frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
+        frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
+        frame.newPullButtons[idx]:SetIndex(idx)
+        MDT:UpdatePullButtonNPCData(idx)
+        frame.newPullButtons[idx]:Initialize()
+        frame.newPullButtons[idx]:Enable()
+        frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
     end
 	--add the "new pull" button
 	frame.newPullButton = AceGUI:Create("MDTNewPullButton")
@@ -3891,6 +3982,7 @@ function MDT:AddPull(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index)
     MDT:ColorPull()
+    MDT:DrawAllHulls()
 end
 
 function MDT:SetAutomaticColor(index)
@@ -3928,6 +4020,7 @@ function MDT:ClearPull(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index)
     MDT:ColorPull()
+    MDT:DrawAllHulls()
 	--MDT:SetAutomaticColor(index)
 end
 
@@ -3937,6 +4030,7 @@ function MDT:MovePullUp(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index-1)
     MDT:ColorAllPulls(_, index-1)
+    MDT:DrawAllHulls()
 	--MDT:UpdateAutomaticColors(index - 1)
 end
 
@@ -3946,6 +4040,7 @@ function MDT:MovePullDown(index)
 	MDT:ReloadPullButtons()
 	MDT:SetSelectionToPull(index+1)
     MDT:ColorAllPulls(_, index)
+    MDT:DrawAllHulls()
 	--MDT:UpdateAutomaticColors(index)
 end
 
@@ -3963,6 +4058,7 @@ function MDT:DeletePull(index)
 	self:SetSelectionToPull(index)
     --self:UpdateAutomaticColors(index)
     self:ColorAllPulls(_, index-1)
+    MDT:DrawAllHulls()
 end
 
 ---RenamePreset
@@ -4605,6 +4701,7 @@ function MDT:GetCurrentAffixWeek()
     C_MythicPlus.RequestRewards()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
+    if not affixIds[1] then return 1 end
     for week,affixes in ipairs(affixWeeks) do
         if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
             return week
@@ -4639,6 +4736,10 @@ function MDT:PrintCurrentAffixes()
         [117] =L["Reaping"],
         [119] =L["Beguiling"],
         [120] =L["Awakened"],
+        [121] =L["Prideful"],
+        [122] =L["Inspiring"],
+        [123] =L["Spiteful"],
+        [124] =L["Storming"],
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
@@ -4788,6 +4889,12 @@ end
 function MDT:ResetDataCache()
     db.dungeonEnemies = nil
     db.mapPOIs = nil
+    ReloadUI()
+end
+
+function MDT:HardReset()
+    MythicDungeonToolsDB = nil
+    ReloadUI()
 end
 
 function initFrames()
@@ -4829,6 +4936,7 @@ function initFrames()
     main_frame.mainFrametex:SetDrawLayer(canvasDrawLayer, -5)
     main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
 
+
     local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.","")
     db.version = tonumber(version)
 	-- Set frame position
@@ -4864,6 +4972,10 @@ function initFrames()
         MDT:CreateDevPanel(MDT.main_frame)
     end
 
+    if not db.MDI.enabled then
+        db.currentSeason = defaultSavedVars.global.currentSeason
+    end
+
     --ElvUI skinning
     local skinTooltip = function(tooltip)
         if IsAddOnLoaded("ElvUI") and ElvUI[1].Tooltip then
@@ -4872,6 +4984,9 @@ function initFrames()
                 tooltip[v]:Kill()
             end
             tooltip.Background:Kill()
+            if not tooltip.SetBackdrop then
+                Mixin(tooltip, BackdropTemplateMixin)
+            end
             tooltip:HookScript("OnShow",function(self)
                 if self:IsForbidden() then return end
                 self:SetTemplate("Transparent", nil, true) --ignore updates

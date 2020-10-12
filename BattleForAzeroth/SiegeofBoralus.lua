@@ -41,6 +41,9 @@ function MDT:ToggleBoralusSelector(show)
         selectorGroup = AceGUI:Create("SimpleGroup")
         selectorGroup.frame:SetFrameStrata("HIGH")
         selectorGroup.frame:SetFrameLevel(50)
+        if not selectorGroup.frame.SetBackdrop then
+            Mixin(selectorGroup.frame, BackdropTemplateMixin)
+        end
         selectorGroup.frame:SetBackdropColor(unpack(MDT.BackdropColor))
         fixBoralusShowHide(selectorGroup)
         selectorGroup:SetLayout("Flow")

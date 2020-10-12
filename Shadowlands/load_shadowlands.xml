@@ -1,0 +1,10 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file='DeOtherSide.lua'/>
+    <Script file='HallsOfAtonement.lua'/>
+    <Script file='MistsOfTirnaScithe.lua'/>
+    <Script file='Plaguefall.lua'/>
+    <Script file='SanguineDepths.lua'/>
+    <Script file='SpiresOfAscension.lua'/>
+    <Script file='TheNecroticWake.lua'/>
+    <Script file='TheaterOfPain.lua'/>
+</Ui>
