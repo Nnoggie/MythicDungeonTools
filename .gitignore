@@ -1,3 +1,4 @@
 .idea/
 libs/*
 !libs/load_libs.xml
+!libs/LibDeflate
