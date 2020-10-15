@@ -199,9 +199,11 @@ do
     function MDT.PLAYER_ENTERING_WORLD(self, addon)
         --dirty hack to initialize Blizzard_ChallengesUI properly
         C_Timer.After(1,function()
-            PVEFrame_ToggleFrame("ChallengesFrame")
-            PVEFrame_ToggleFrame("GroupFinderFrame")
-            PVEFrame_ToggleFrame()
+        --    PVEFrame_ToggleFrame("ChallengesFrame")
+        --    PVEFrame_ToggleFrame("GroupFinderFrame")
+        --    PVEFrame_ToggleFrame()
+            --TODO: fix the green number
+            --LoadAddOn("Blizzard_ChallengesUI")
         end)
         self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     end
