@@ -1,3 +1,5 @@
+v3.2.1
+- lib bug fix
 v3.2.0
 - 9.0 Update
 - Added maps for Shadowlands Dungeons (Mapping still unfinished)
