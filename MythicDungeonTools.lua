@@ -3596,6 +3596,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
         if value == true then
             frame.toggleForceColorBlindMode:SetDisabled(false)
             MDT:ColorAllPulls()
+            MDT:DrawAllHulls()
             MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
         else
             frame.toggleForceColorBlindMode:SetDisabled(true)
@@ -3612,7 +3613,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
 		db.colorPaletteInfo.forceColorBlindMode = value
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
-
+        MDT:DrawAllHulls()
 	end)
     frame.automaticColorsFrame:AddChild(frame.toggleForceColorBlindMode)
 
@@ -3624,14 +3625,13 @@ function MDT:MakeAutomaticColorsFrame(frame)
         if value == 6 then
             db.colorPaletteInfo.colorPaletteIdx = value
             MDT:OpenCustomColorsDialog()
-            MDT:SetPresetColorPaletteInfo()
-            MDT:ColorAllPulls()
         else
             MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
             db.colorPaletteInfo.colorPaletteIdx = value
-            MDT:SetPresetColorPaletteInfo()
-            MDT:ColorAllPulls()
         end
+        MDT:SetPresetColorPaletteInfo()
+        MDT:ColorAllPulls()
+        MDT:DrawAllHulls()
     end)
     frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
 
