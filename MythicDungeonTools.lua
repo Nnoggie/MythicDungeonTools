@@ -3548,6 +3548,7 @@ function MDT:MakeCustomColorFrame(frame)
         end
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
+        MDT:DrawAllHulls()
         frame.CustomColorFrame:ReleaseChildren()
         frame.CustomColorFrame:Release()
         MDT:MakeCustomColorFrame(frame)
@@ -3572,6 +3573,7 @@ function MDT:MakeCustomColorFrame(frame)
                 db.colorPaletteInfo.customPaletteValues[i] = {r,g,b}
                 MDT:SetPresetColorPaletteInfo()
                 MDT:ColorAllPulls()
+                MDT:DrawAllHulls()
             end)
         frame.CustomColorFrame:AddChild(ColorPicker[i])
     end
@@ -3649,6 +3651,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
         end
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
+        MDT:DrawAllHulls()
     end)
     frame.automaticColorsFrame:AddChild(frame.button)
 
