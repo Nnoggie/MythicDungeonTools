@@ -1,3 +1,5 @@
+v3.2.2
+- fix color of hulls not updating in custom color dialog window
 v3.2.1
 - lib bug fix
 v3.2.0
