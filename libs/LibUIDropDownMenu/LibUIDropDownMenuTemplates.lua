@@ -1,11 +1,11 @@
--- $Id: LibUIDropDownMenuTemplates.lua 40 2018-12-23 16:14:03Z arith $
+-- $Id: LibUIDropDownMenuTemplates.lua 49 2020-08-18 17:17:08Z arithmandar $
 -- ----------------------------------------------------------------------------
 -- Localized Lua globals.
 -- ----------------------------------------------------------------------------
 local _G = getfenv(0)
 -- ----------------------------------------------------------------------------
-local MAJOR_VERSION = "LibUIDropDownMenuTemplates-2.0"
-local MINOR_VERSION = 90000 + tonumber(("$Rev: 40 $"):match("%d+"))
+local MAJOR_VERSION = "LibUIDropDownMenuTemplates-3.0"
+local MINOR_VERSION = 90000 + tonumber(("$Rev: 49 $"):match("%d+"))
 
 local LibStub = _G.LibStub
 if not LibStub then error(MAJOR_VERSION .. " requires LibStub.") end
@@ -18,6 +18,53 @@ if not Lib then return end
 -- to that button and assumes responsibility for all relevant dropdown menu operations.
 -- The hidden button will request a size that it should become from the custom frame.
 
+L_DropDownMenuButtonMixin = {}
+
+function L_DropDownMenuButtonMixin:OnEnter(...)
+	ExecuteFrameScript(self:GetParent(), "OnEnter", ...);
+end
+
+function L_DropDownMenuButtonMixin:OnLeave(...)
+	ExecuteFrameScript(self:GetParent(), "OnLeave", ...);
+end
+
+function L_DropDownMenuButtonMixin:OnMouseDown(button)
+	if self:IsEnabled() then
+		L_ToggleDropDownMenu(nil, nil, self:GetParent());
+		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
+	end
+end
+
+L_LargeDropDownMenuButtonMixin = CreateFromMixins(L_DropDownMenuButtonMixin);
+
+function L_LargeDropDownMenuButtonMixin:OnMouseDown(button)
+	if self:IsEnabled() then
+		local parent = self:GetParent();
+		L_ToggleDropDownMenu(nil, nil, parent, parent, -8, 8);
+		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
+	end
+end
+
+L_DropDownExpandArrowMixin = {};
+
+function L_DropDownExpandArrowMixin:OnEnter()
+	local level =  self:GetParent():GetParent():GetID() + 1;
+
+	L_CloseDropDownMenus(level);
+
+	if self:IsEnabled() then
+		local listFrame = _G["L_DropDownList"..level];
+		if ( not listFrame or not listFrame:IsShown() or select(2, listFrame:GetPoint()) ~= self ) then
+			L_ToggleDropDownMenu(level, self:GetParent().value, nil, nil, nil, nil, self:GetParent().menuList, self);
+		end
+	end
+end
+
+function L_DropDownExpandArrowMixin:OnMouseDown(button)
+	if self:IsEnabled() then
+		L_ToggleDropDownMenu(self:GetParent():GetParent():GetID() + 1, self:GetParent().value, nil, nil, nil, nil, self:GetParent().menuList, self);
+	end
+end
 
 L_UIDropDownCustomMenuEntryMixin = {};
 
@@ -48,28 +95,13 @@ function L_UIDropDownCustomMenuEntryMixin:GetContextData()
 	return self.contextData;
 end
 
-function L_UIDropDownCustomMenuEntryMixin:OnEnter()
-	L_UIDropDownMenu_StopCounting(self:GetOwningDropdown());
-end
-
-function L_UIDropDownCustomMenuEntryMixin:OnLeave()
-	L_UIDropDownMenu_StartCounting(self:GetOwningDropdown());
-end
-
 -- //////////////////////////////////////////////////////////////
 -- L_UIDropDownCustomMenuEntryTemplate
 function L_Create_UIDropDownCustomMenuEntry(name, parent)
 	local f = _G[name] or CreateFrame("Frame", name, parent or nil)
 	f:EnableMouse(true)
 	f:Hide()
-
-	f:SetScript("OnEnter", function(self)
-		L_UIDropDownMenu_StopCounting(self:GetOwningDropdown())
-	end)
-	f:SetScript("OnLeave", function(self)
-		L_UIDropDownMenu_StartCounting(self:GetOwningDropdown())
-	end)
-
+	
 	-- I am not 100% sure if below works for replacing the mixins
 	f:SetScript("GetPreferredEntryWidth", function(self)
 		return self:GetWidth()
@@ -88,6 +120,6 @@ function L_Create_UIDropDownCustomMenuEntry(name, parent)
 	f:SetScript("GetContextData", function(self)
 		return self.contextData
 	end)
-
+	
 	return f
 end

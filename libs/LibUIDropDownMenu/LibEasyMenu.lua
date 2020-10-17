@@ -1,4 +1,4 @@
---$Id: LibEasyMenu.lua 30 2018-04-24 06:44:39Z arith $
+--$Id: LibEasyMenu.lua 49 2020-08-18 17:17:08Z arithmandar $
 -- Simplified Menu Display System
 --	This is a basic system for displaying a menu from a structure table.
 --
@@ -19,8 +19,8 @@
 -- ----------------------------------------------------------------------------
 local _G = getfenv(0)
 -- ----------------------------------------------------------------------------
-local MAJOR_VERSION = "LibEasyMenu"
-local MINOR_VERSION = 90000 + tonumber(("$Rev: 30 $"):match("%d+"))
+local MAJOR_VERSION = "LibEasyMenu-1.0"
+local MINOR_VERSION = 90000 + tonumber(("$Rev: 49 $"):match("%d+"))
 
 local LibStub = _G.LibStub
 if not LibStub then error(MAJOR_VERSION .. " requires LibStub.") end

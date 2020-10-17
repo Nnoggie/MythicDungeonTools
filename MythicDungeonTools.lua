@@ -197,11 +197,12 @@ do
         end
     end
     function MDT.PLAYER_ENTERING_WORLD(self, addon)
-        --dirty hack to initialize Blizzard_ChallengesUI properly
+        --initialize Blizzard_ChallengesUI
         C_Timer.After(1,function()
-            PVEFrame_ToggleFrame("ChallengesFrame")
-            PVEFrame_ToggleFrame("GroupFinderFrame")
-            PVEFrame_ToggleFrame()
+            LoadAddOn("Blizzard_ChallengesUI")
+            C_MythicPlus.RequestCurrentAffixes()
+            C_MythicPlus.RequestMapInfo()
+            C_MythicPlus.RequestRewards()
         end)
         self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     end
@@ -214,18 +215,18 @@ MDT.dungeonTotalCount = {}
 MDT.scaleMultiplier = {}
 
 local affixWeeks = { --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
-    [1] = {[1]=11,[2]=124,[3]=10,[4]=121},
-    [2] = {[1]=8,[2]=12,[3]=9,[4]=121},
-    [3] = {[1]=122,[2]=13,[3]=10,[4]=121},
-    [4] = {[1]=8,[2]=14,[3]=9,[4]=121},
-    [5] = {[1]=7,[2]=13,[3]=10,[4]=121},
-    [6] = {[1]=11,[2]=3,[3]=9,[4]=121},
-    [7] = {[1]=6,[2]=4,[3]=10,[4]=121},
-    [8] = {[1]=5,[2]=14,[3]=9,[4]=121},
-    [9] = {[1]=11,[2]=2,[3]=10,[4]=121},
-    [10] = {[1]=7,[2]=12,[3]=9,[4]=121},
-    [11] = {[1]=6,[2]=13,[3]=10,[4]=121},
-    [12] = {[1]=8,[2]=12,[3]=9,[4]=121},
+    [1] = {[1]=5,[2]=3,[3]=9,[4]=120},
+    [2] = {[1]=7,[2]=2,[3]=10,[4]=120},
+    [3] = {[1]=11,[2]=4,[3]=9,[4]=120},
+    [4] = {[1]=8,[2]=14,[3]=10,[4]=120},
+    [5] = {[1]=7,[2]=13,[3]=9,[4]=120},
+    [6] = {[1]=11,[2]=3,[3]=10,[4]=120},
+    [7] = {[1]=6,[2]=4,[3]=9,[4]=120},
+    [8] = {[1]=5,[2]=14,[3]=10,[4]=120},
+    [9] = {[1]=11,[2]=2,[3]=9,[4]=120},
+    [10] = {[1]=7,[2]=12,[3]=10,[4]=120},
+    [11] = {[1]=6,[2]=13,[3]=9,[4]=120},
+    [12] = {[1]=8,[2]=12,[3]=10,[4]=120},
 }
 
 local dungeonList = {
@@ -713,7 +714,7 @@ function MDT:CreateMenu()
     self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
 
     --return to live preset
-    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "BrowserButtonTemplate")
+    self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "UIPanelCloseButton")
     local liveReturnButton = self.main_frame.liveReturnButton
     liveReturnButton:ClearAllPoints()
     liveReturnButton:SetPoint("RIGHT", self.main_frame.topPanel, "RIGHT", 0, 0)
@@ -727,7 +728,7 @@ function MDT:CreateMenu()
     liveReturnButton.tooltip = L["Return to the live preset"]
 
     --set preset as new live preset
-    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "BrowserButtonTemplate")
+    self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame, "UIPanelCloseButton")
     local setLivePresetButton = self.main_frame.setLivePresetButton
     setLivePresetButton:ClearAllPoints()
     setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
@@ -3547,6 +3548,7 @@ function MDT:MakeCustomColorFrame(frame)
         end
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
+        MDT:DrawAllHulls()
         frame.CustomColorFrame:ReleaseChildren()
         frame.CustomColorFrame:Release()
         MDT:MakeCustomColorFrame(frame)
@@ -3571,6 +3573,7 @@ function MDT:MakeCustomColorFrame(frame)
                 db.colorPaletteInfo.customPaletteValues[i] = {r,g,b}
                 MDT:SetPresetColorPaletteInfo()
                 MDT:ColorAllPulls()
+                MDT:DrawAllHulls()
             end)
         frame.CustomColorFrame:AddChild(ColorPicker[i])
     end
@@ -3595,6 +3598,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
         if value == true then
             frame.toggleForceColorBlindMode:SetDisabled(false)
             MDT:ColorAllPulls()
+            MDT:DrawAllHulls()
             MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
         else
             frame.toggleForceColorBlindMode:SetDisabled(true)
@@ -3611,7 +3615,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
 		db.colorPaletteInfo.forceColorBlindMode = value
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
-
+        MDT:DrawAllHulls()
 	end)
     frame.automaticColorsFrame:AddChild(frame.toggleForceColorBlindMode)
 
@@ -3623,14 +3627,13 @@ function MDT:MakeAutomaticColorsFrame(frame)
         if value == 6 then
             db.colorPaletteInfo.colorPaletteIdx = value
             MDT:OpenCustomColorsDialog()
-            MDT:SetPresetColorPaletteInfo()
-            MDT:ColorAllPulls()
         else
             MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
             db.colorPaletteInfo.colorPaletteIdx = value
-            MDT:SetPresetColorPaletteInfo()
-            MDT:ColorAllPulls()
         end
+        MDT:SetPresetColorPaletteInfo()
+        MDT:ColorAllPulls()
+        MDT:DrawAllHulls()
     end)
     frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
 
@@ -3648,6 +3651,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
         end
         MDT:SetPresetColorPaletteInfo()
         MDT:ColorAllPulls()
+        MDT:DrawAllHulls()
     end)
     frame.automaticColorsFrame:AddChild(frame.button)
 
