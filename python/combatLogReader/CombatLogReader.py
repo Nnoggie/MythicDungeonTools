@@ -193,6 +193,8 @@ def make_aura_check_GUID_list(CL, aura):
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count, total_count = get_dungeon_count(boss_names)
 
+print("Mapping Initiated [-", end="")
+
 npc_locale_en = ""
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
@@ -229,10 +231,11 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
         table_output += f'\t\t["displayId"] = {displayID};\n'
         table_output += f'\t\t["creatureType"] = L["{creatureType}"];\n'
     table_output += f'\t\t["scale"] = 1;\n'
+    print("-", end="")
 
     table_output += '\t};\n'
 table_output += '};'
-
+print("] Mapping Completed")
 table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n\n"
 
 # Checking locale_dump.txt and adding new npcs names to output
@@ -260,5 +263,5 @@ locale_en_output = output = f"\n".join(new_npc_locale_en)
 table_output += locale_en_output
 
 pyperclip.copy(table_output)
-print("-------------------------Mapping Table-----------------------------")
+
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
