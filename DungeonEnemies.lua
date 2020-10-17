@@ -939,7 +939,7 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
     end
     local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(blips) do
-        if (db.currentSeason == 4 and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
+        if ((db.currentSeason == 4 or db.currentSeason == 5) and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
             local weekData =  blip.clone.week
             if weekData and (not weekData[week] or db.currentDifficulty < 10) then
                 blip:Hide()

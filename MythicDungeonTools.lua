@@ -2231,7 +2231,7 @@ function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
 
     if db.currentSeason ~= 3 then
         if emissaryIds[MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id] then return false end
-    elseif db.currentSeason ~= 4 then
+    elseif db.currentSeason ~= 4 and db.currentSeason ~= 5 then
         if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].corrupted then return false end
     end
 

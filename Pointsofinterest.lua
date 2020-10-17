@@ -499,7 +499,7 @@ function MDT:POI_UpdateAll()
     local scale = MDT:GetScale()
     local week = MDT:GetEffectivePresetWeek(preset)
     for poiIdx,poi in pairs(pois) do
-        if (not (poi.type == "nyalothaSpire" and (db.currentSeason ~= 4 or db.currentDifficulty<10)))
+        if (not (poi.type == "nyalothaSpire" and ((db.currentSeason ~= 4 and db.currentSeason ~=5) or db.currentDifficulty<10)))
             and ((not poi.weeks) or poi.weeks[week])
             and (not poi.season or poi.season == db.currentSeason)
             and (not poi.difficulty or poi.difficulty<=db.currentDifficulty)
