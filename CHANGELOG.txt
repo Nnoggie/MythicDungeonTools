@@ -1,5 +1,6 @@
 v3.2.3
 - Awakened features now once again work properly
+- fixed pull bar not updating when draggin enemies into existing pulls
 v3.2.2
 - fix color of hulls not updating in custom color dialog window
 v3.2.1
