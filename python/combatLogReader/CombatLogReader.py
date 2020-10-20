@@ -193,6 +193,8 @@ def make_aura_check_GUID_list(CL, aura):
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count, total_count = get_dungeon_count(boss_names)
 
+print("Mapping Initiated [-", end="")
+
 npc_locale_en = ""
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
@@ -229,15 +231,37 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
         table_output += f'\t\t["displayId"] = {displayID};\n'
         table_output += f'\t\t["creatureType"] = L["{creatureType}"];\n'
     table_output += f'\t\t["scale"] = 1;\n'
+    print("-", end="")
 
     table_output += '\t};\n'
 table_output += '};'
-
+print("] Mapping Completed")
 table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n\n"
 
-# Comment this line out if you don't want locale
-table_output += npc_locale_en
+# Checking locale_dump.txt and adding new npcs names to output
+# Read file locale_dump if it exists otherwise set locale_file to []
+try:
+    locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None)
+                     .text.unique()
+                     .tolist())
+except FileNotFoundError:
+    locale_file = []
+
+# Find new npc names from combat log that have never been seen before
+new_npc_locale_en = [text for text in npc_locale_en.split("\n") if text not in locale_file]
+
+# Update locale_dump
+for item in new_npc_locale_en:
+    locale_file.append(item)
+
+with open("locale_dump.txt", "w") as f:
+    for item in locale_file:
+        f.write(f"{item}\n")
+
+# Add new npc names to output
+locale_en_output = output = f"\n".join(new_npc_locale_en)
+table_output += locale_en_output
 
 pyperclip.copy(table_output)
-print("-------------------------Mapping Table-----------------------------")
+
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
