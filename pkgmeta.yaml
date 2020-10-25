@@ -14,4 +14,4 @@ externals:
   libs/LibDataBroker-1.1: https://github.com/tekkub/libdatabroker-1-1
   libs/LibDBIcon-1.0: https://repos.curseforge.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
   libs/LibStub: https://repos.curseforge.com/wow/libstub/trunk
-  #libs/LibUIDropDownMenu: https://repos.curseforge.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+  libs/LibUIDropDownMenu: https://repos.curseforge.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
