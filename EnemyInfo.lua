@@ -109,7 +109,7 @@ local function MakeEnemeyInfoFrame()
             Mixin(leftContainer.frame, BackdropTemplateMixin)
         end
         --Temporary Fix: backdrop frame level is set to 10000 normally
-        leftContainer.frame.backdrop:SetFrameLevel(1)
+        --leftContainer.frame:GetBackdrop():SetFrameLevel(1)
         leftContainer.frame:SetBackdropColor(1,1,1,0)
         leftContainer:SetLayout("List")
         leftContainer:SetWidth(container.frame:GetWidth()/3)
@@ -168,7 +168,7 @@ local function MakeEnemeyInfoFrame()
             Mixin(midContainer.frame, BackdropTemplateMixin)
         end
         --Temporary Fix: backdrop frame level is set to 10000 normally
-        midContainer.frame.backdrop:SetFrameLevel(1)
+        --midContainer.frame.backdrop:SetFrameLevel(1)
         midContainer.frame:SetBackdropColor(1,1,1,0)
         midContainer:SetLayout("List")
         midContainer:SetWidth(container.frame:GetWidth()/3)
@@ -272,7 +272,7 @@ local function MakeEnemeyInfoFrame()
             Mixin(rightContainer.frame, BackdropTemplateMixin)
         end
         --Temporary Fix: backdrop frame level is set to 10000 normally
-        rightContainer.frame.backdrop:SetFrameLevel(1)
+        --rightContainer.frame.backdrop:SetFrameLevel(1)
         rightContainer.frame:SetBackdropColor(1,1,1,0)
         rightContainer:SetLayout("List")
         rightContainer:SetWidth(container.frame:GetWidth()/3)
