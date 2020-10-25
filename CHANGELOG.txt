@@ -1,3 +1,5 @@
+v3.2.5
+- Fixed a library loading order issue and a backdrop nil error in the enemy info panel
 v3.2.4
 - Fixed an issue where LibUIDropDownMenu would fail to make the AddOn load properly
 v3.2.3
