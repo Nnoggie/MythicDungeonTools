@@ -116,11 +116,12 @@ local function expand_polygon(poly, offset)
     local c = centroid(poly)
     local res = {}
     for i = 1, #poly do
-        local nx = poly[i][1]
-        if poly[i][1] > c[1] then nx = nx + offset else nx = nx - offset end
-        local ny = poly[i][2]
-        if poly[i][2] > c[2] then ny = ny + offset else ny = ny - offset end
-        res[i] = {nx, ny}
+        local dx = poly[i][1]-c[1]
+        local dy = poly[i][2]-c[2]
+        local len = math.sqrt(dx^2+dy^2)
+        local offsetx = (dx/len)*offset
+        local offsety = (dy/len)*offset
+        res[i] = {poly[i][1]+offsetx, poly[i][2]+offsety}
     end
     return res
 end
@@ -188,15 +189,14 @@ function MDT:DrawHull(vertices,pullColor)
     local hull = convex_hull(vertices)
     if hull and hull[#hull] and #hull>2 then
 
-        hull = expand_polygon(hull,8)
+        hull = expand_polygon(hull,7*(MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1))
         --hull = smooth_contour(hull,2)
-        --hull = scaleHull(smoothed,1.35)
 
         for i = 1, #hull do
             local a = hull[i]
             local b = hull[1]
             if i ~= #hull then b = hull[i+1] end
-            MDT:DrawHullLine(a[1], a[2], b[1], b[2], 3, pullColor, true, "ARTWORK", -8, 1)
+            MDT:DrawHullLine(a[1], a[2], b[1], b[2], 3*(MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, true, "ARTWORK", -8, 1)
         end
     end
 end
@@ -222,6 +222,7 @@ local function getPullVertices(p,blips)
 end
 
 function MDT:DrawAllHulls(pulls)
+    --if true then return end
     MDT:ReleaseHullTextures()
     local preset = MDT:GetCurrentPreset()
     local blips = MDT:GetDungeonEnemyBlips()
