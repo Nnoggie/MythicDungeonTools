@@ -1,3 +1,5 @@
+v3.2.6
+- updated the look of pull outlines and adjusted the scale for larger maps
 v3.2.5
 - Fixed a library loading order issue and a backdrop nil error in the enemy info panel
 v3.2.4
