@@ -222,7 +222,6 @@ local function getPullVertices(p,blips)
 end
 
 function MDT:DrawAllHulls(pulls)
-    --if true then return end
     MDT:ReleaseHullTextures()
     local preset = MDT:GetCurrentPreset()
     local blips = MDT:GetDungeonEnemyBlips()
