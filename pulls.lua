@@ -67,6 +67,10 @@ local function wrap_index(index, len)
     else return index end
 end
 
+local function isCloseMatch(num1,num2)
+    return math.abs(num1 - num2) < 0.001;
+end
+
 local function smooth_contour(points, steps)
     steps = steps or 5
     local res = {}
@@ -78,7 +82,16 @@ local function smooth_contour(points, steps)
         local p3 = points[wrap_index(i + 2, #points)]
 
         for t = 0, 1, 1/steps do
-            table.insert(res, catmull_rom(t, p0, p1, p2, p3,points[i][3]))
+            local oldx = res[#res] and res[#res][1]
+            local oldy = res[#res] and res[#res][2]
+            local point = catmull_rom(t, p0, p1, p2, p3,points[i][3])
+            --don't add point if previous point is the same
+            if not oldx or not isCloseMatch(point[1],oldx) or not isCloseMatch(point[2],oldy) then
+                --don't add point if first point is the same
+                if not oldx or not isCloseMatch(point[1],res[1][1]) or not isCloseMatch(point[2],res[1][2]) then
+                    table.insert(res, point)
+                end
+            end
         end
     end
     return res
@@ -190,8 +203,7 @@ function MDT:DrawHull(vertices,pullColor)
     if hull and hull[#hull] and #hull>2 then
 
         hull = expand_polygon(hull,7*(MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1))
-        --hull = smooth_contour(hull,2)
-
+        --hull = smooth_contour(hull,10)
         for i = 1, #hull do
             local a = hull[i]
             local b = hull[1]
