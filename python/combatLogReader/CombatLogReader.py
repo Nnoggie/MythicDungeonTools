@@ -153,8 +153,17 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
     # The function uses the first boss name in boss_names to figure out which dungeon it is
     if not boss_names:
         return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
-    parent_dungeons = f["criteriatree"][
-        f["criteriatree"].Description_lang.str.startswith(boss_names[0], na=False)].Parent
+
+    #Fixing Blizzard brain not naming bosses the same everywhere
+    for i in range(len(boss_names)):
+        parent_dungeons = f["criteriatree"][
+            f["criteriatree"].Description_lang.str.startswith(boss_names[i], na=False)].Parent
+        if len(parent_dungeons) == 0:
+            print("Fixing Blizzard Brain.")
+        else:
+            print("Correct boss name found.")
+            break
+
     mythic_regular = f["criteriatree"][(
             (f["criteriatree"].Description_lang.str.match('.* Dungeon.*Challenge$', na=False)) &
             (f["criteriatree"].ID.isin(parent_dungeons)))]
@@ -193,7 +202,7 @@ def make_aura_check_GUID_list(CL, aura):
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count, total_count = get_dungeon_count(boss_names)
 
-print("Mapping Initiated [-", end="")
+print("Mapping Initiated [", end="")
 
 npc_locale_en = ""
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
