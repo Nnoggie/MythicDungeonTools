@@ -250,7 +250,7 @@ table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count}
 # Checking locale_dump.txt and adding new npcs names to output
 # Read file locale_dump if it exists otherwise set locale_file to []
 try:
-    locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None)
+    locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None, sep="*")
                      .text.unique()
                      .tolist())
 except FileNotFoundError:
