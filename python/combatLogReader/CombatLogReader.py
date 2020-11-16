@@ -165,7 +165,7 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
             break
 
     mythic_regular = f["criteriatree"][(
-            (f["criteriatree"].Description_lang.str.match('.* Dungeon.*Challenge$', na=False)) &
+            (f["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
             (f["criteriatree"].ID.isin(parent_dungeons)))]
 
     regular_count = get_count_table(int(mythic_regular.ID))
