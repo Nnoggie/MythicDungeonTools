@@ -574,6 +574,13 @@ local function blipDevModeSetup(blip)
         MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x = x
         MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y = y
     end)
+    local groupColors = {
+        [1] = {1,0,0,1},
+        [2] = {0,1,0,1},
+        [3] = {0,0,1,1},
+        [4] = {1,0,1,1},
+        [5] = {0,1,1,1},
+    }
     blip:SetScript("OnMouseWheel", function(self, delta)
         if not blip.clone.g then
             local maxGroup = 0
@@ -590,9 +597,11 @@ local function blipDevModeSetup(blip)
             blip.clone.g = blip.clone.g + delta
         end
         blip.fontstring_Text1:SetText(blip.clone.g)
+        if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g%5+1])) end
     end)
     blip.fontstring_Text1:Show()
     blip.fontstring_Text1:SetText(blip.clone.g)
+    if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g%5+1])) end
 end
 
 local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
