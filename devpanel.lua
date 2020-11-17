@@ -618,7 +618,6 @@ function MDT:CreateDevPanel(frame)
         --enter clone options into the GUI (red)
         local currentBlip = MDT:GetCurrentDevmodeBlip()
         if currentBlip then
-            ViragDevTool_AddData(currentBlip)
             cloneGroup:SetText(currentBlip.clone.g)
             currentCloneGroup = currentBlip.clone.g
             teemingCheckbox:SetValue(currentBlip.clone.teeming)
