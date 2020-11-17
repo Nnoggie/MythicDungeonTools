@@ -508,7 +508,7 @@ function MDT:CreateDevPanel(frame)
                 if not data.clones[currentBlip.cloneIdx].patrol then
                     currentBlip.patrolActive = false
                 end
-                MDT:ShowBlipPatrol(currentBlip,false)
+                currentBlip:ShowBlipPatrol(false)
                 MDT:UpdateMap()
             end
         end)
@@ -618,13 +618,14 @@ function MDT:CreateDevPanel(frame)
         --enter clone options into the GUI (red)
         local currentBlip = MDT:GetCurrentDevmodeBlip()
         if currentBlip then
+            ViragDevTool_AddData(currentBlip)
             cloneGroup:SetText(currentBlip.clone.g)
             currentCloneGroup = currentBlip.clone.g
             teemingCheckbox:SetValue(currentBlip.clone.teeming)
             inspiringCheckbox:SetValue(currentBlip.clone.inspiring)
             currentTeeming = currentBlip.clone.teeming
             currentPatrol = currentBlip.patrol and true or nil
-            patrolCheckbox:SetValue(currentPatrol and currentBlip.patrolActive)
+            patrolCheckbox:SetValue(currentBlip.clone.patrol)
             stealthDetectCheckbox:SetValue(currentBlip.data.stealthDetect)
             stealthCheckbox:SetValue(currentBlip.data.stealth)
             neutralCheckbox:SetValue(currentBlip.data.neutral)
