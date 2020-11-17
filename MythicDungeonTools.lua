@@ -420,7 +420,7 @@ local dungeonSubLevels = {
     [34] = {
         [1] = L["Honor's Ascent"],
         [2] = L["Gardens of Repose"],
-        [3] = L["Spire of the Firstborne"],
+        [3] = L["Font of Fealty"],
         [4] = L["Seat of the Archon"],
     },
     [35] = {
