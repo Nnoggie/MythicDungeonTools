@@ -694,8 +694,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 803,Leatherworking skill,802,525,0,5718,1,1
 805,Quests abandoned,0,0,4,0,0,0
 806,Quests abandoned,805,0,0,5289,1,0
-808,Circle of Blood matches,0,0,4,0,0,0
-809,Circle of Blood matches,808,0,0,5729,1,0
+808,Blade's Edge Arena matches,0,0,5,0,0,0
+809,Blade's Edge Arena matches,808,0,0,5729,0,0
 811,Defeat Charlga Razorflank.,0,1,8,0,0,0
 812,Charlga Razorflank,811,1,0,18528,1,2
 813,An Unholy Alliance,811,1,0,4409,4,2
@@ -714,8 +714,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 832,Princess Theradras,831,1,0,18532,1,2
 833,Corruption of Earth and Seed,831,1,0,4259,2,2
 834,Corruption of Earth and Seed,831,1,0,4260,3,2
-836,Ring of Trials victories,0,0,4,0,0,0
-837,Ring of Trials victories,836,0,0,5735,1,0
+836,Ring of Trials victories,0,0,5,0,0,0
+837,Ring of Trials victories,836,0,0,5735,0,0
 839,Cyanigosa kills (Heroic Violet Hold),0,0,4,0,0,0
 840,Cyanigosa,839,1,0,5613,1,0
 842,"Obtain a Brewfest mount, or transform yours into one using Brewfest Hops.",0,1,8,0,0,0
@@ -801,8 +801,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 940,Imprisoned in the Citadel,936,1,0,4488,3,2
 942,Reach level 40.,0,0,4,0,0,0
 943,Reach level 40,942,40,0,5212,1,2
-945,Ring of Trials matches,0,0,4,0,0,0
-946,Ring of Trials matches,945,0,0,5730,1,0
+945,Ring of Trials matches,0,0,5,0,0,0
+946,Ring of Trials matches,945,0,0,5730,0,0
 948,Receive 50 Coins of Ancestry.,0,0,4,0,0,0
 949,Receive 50 Coins of Ancestry,948,50,0,472,1,1
 951,Defeat Sapphiron in Naxxramas in 25-player mode.,0,0,4,0,0,0
@@ -822,20 +822,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 970,The Prophet Tharon'ja,968,1,0,9258,2,0
 971,The Prophet Tharon'ja,968,1,0,9259,3,0
 973,Battleground Honorable Kills,0,0,5,0,0,0
-974,Isle of Conquest,973,0,0,13260,5,0
-975,Arathi Basin,973,0,0,5499,0,0
-976,Alterac Valley,973,0,0,5500,1,0
-977,Warsong Gulch,973,0,0,5501,2,0
-978,Eye of the Storm,973,0,0,5502,3,0
-979,Strand of the Ancients,973,0,0,5503,4,0
-980,Twin Peaks,973,0,0,17412,6,0
-981,The Battle for Gilneas,973,0,0,24125,7,0
 983,Arena Honorable Kills,0,0,5,0,0,0
-984,Nagrand Arena Kills,983,0,0,9162,2,0
-985,Ruins of Lordaeron Arena Kills,983,0,0,9163,3,0
-986,Blade's Edge Arena Kills,983,0,0,8839,0,0
-987,The Ring of Valor Arena Kills,983,0,0,9164,4,0
-988,Dalaran Sewers Arena Kills,983,0,0,9161,1,0
+986,,983,0,0,50456,0,2
 990,"Do 300,000 damage or healing in a single battle in any battleground. The damage or healing must be done to a player.",0,1,8,0,0,0
 991,"Do 300,000 Damage in Eye of the Storm",990,300000,0,2403,4,3
 992,"Do more than 300,000 Damage in Alterac Valley",990,300000,0,2400,0,3
@@ -951,7 +939,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 1133,Learn the expert riding skill.,0,0,4,0,0,0
 1134,Expert Riding,1133,3,0,1872,1,2
 1136,Learn the artisan riding skill.,0,0,4,0,0,0
-1137,Artisan Riding,1136,4,0,1872,1,2
+1137,Artisan Riding,1136,1,0,50905,0,2
 1139,Earn exalted status with the Shattered Sun Offensive.,0,0,4,0,0,0
 1140,Exalted with Shattered Sun Offensive,1139,42000,0,4761,1,2
 1142,Earn exalted status with The Mag'har.,0,0,4,0,0,0
@@ -1723,8 +1711,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 2072,Last man standing,2071,1,0,3822,0,2
 2074,Complete 1000 daily quests.,0,0,4,0,0,0
 2075,,2074,1000,0,4984,0,1
-2077,"In a single Warsong Gulch battle, kill 2 flag carriers before they leave the Silverwing Flag Room.",0,1,8,0,0,0
-2078,Kill 2 flag carriers before they leave the Silverwing Flag Room,2077,2,0,7020,0,3
+2077,"In a single Warsong Gulch battle, kill 2 flag carriers before they leave the Silverwing Flag Room.",0,1,8,0,0,2
+2078,Kill 2 flag carriers before they leave the Silverwing Flag Room,2077,2,0,7020,0,2
 2080,Earn a 1550 personal rating in the 3v3 bracket of the arena.,0,0,4,0,0,0
 2081,1550 rating,2080,1550,0,447,1,2
 2083,Auction purchases,0,0,4,0,0,0
@@ -2453,9 +2441,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 2958,Win Eye of the Storm 10 times while holding 4 bases.,0,10,5,0,0,8193
 2959,Win Eye of the Storm 10 times while holding 4 bases,2958,10,0,1239,0,1
 2961,Slay the leaders of the Alliance.,0,0,4,0,0,0
-2962,Storming Stormwind,2961,0,0,492,0,0
-2964,Overthrow the Council,2961,0,0,493,1,0
-2965,Putting Out the Light,2961,0,0,495,2,0
+2962,Storming Stormwind,89026,0,0,492,0,8194
+2964,Overthrow the Council,2961,0,0,493,0,0
+2965,Putting Out the Light,2961,0,0,495,1,0
 2967,Equip a tabard.,0,1,8,0,0,0
 2968,Tabard of the Protector,2967,1,0,2338,3,2
 2969,Aldor Tabard,2967,1,0,2893,6,2
@@ -3655,7 +3643,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 4366,Blackrock Spire,4348,0,0,3954,16,0
 4367,Sunken Temple,4348,0,0,3952,14,0
 4369,Kill King Anduin Wrynn.,0,1,4,0,0,0
-4370,King Anduin Wrynn,4369,1,0,30610,0,2
+4370,King Anduin Wrynn,4369,0,0,30610,0,2
 4372,Kill 50 enemy players in any of your home cities.,0,50,5,0,0,0
 4373,Stormwind Harbor,4372,50,0,5030,11,3
 4374,Cenarion Enclave,4372,50,0,5023,4,3
@@ -4387,8 +4375,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 5241,Betrayal,5239,1,0,5805,1,0
 5243,Come to the defense of a base in Arathi Basin 50 times by recapping the flag.,0,50,5,0,0,8193
 5244,Defend 50 bases,5243,50,0,414,0,0
-5246,"In a single Warsong Gulch battle, kill 2 flag carriers before they leave the Warsong Flag Room.",0,1,8,0,0,0
-5247,Kill 2 flag carriers before they leave the Warsong Flag Room,5246,2,0,7021,1,3
+5246,"In a single Warsong Gulch battle, kill 2 flag carriers before they leave the Warsong Flag Room.",0,1,8,0,0,2
+5247,Kill 2 flag carriers before they leave the Warsong Flag Room,5246,2,0,7021,1,2
 5249,Cooking daily quests completed,0,1,5,0,0,0
 5250,Infused Mushroom Meatloaf - Alliance,5249,1,0,11960,5,0
 5251,Infused Mushroom Meatloaf - Horde,5249,1,0,11961,14,0
@@ -4658,10 +4646,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 5726,Dalaran Sewers matches,0,0,4,0,0,0
 5727,Dalaran Sewers matches,5726,0,0,8591,1,0
 5729,"Cumulative for Azeroth, Northrend etc.",0,0,5,0,0,0
-5730,Northrend,5729,0,0,5532,4,0
-5731,Kalimdor,5729,0,0,5530,2,0
-5732,Burning Crusade Areas,5729,0,0,5531,3,0
-5733,Eastern Kingdoms,5729,0,0,5512,1,0
+5730,Northrend,5729,0,0,5532,3,0
+5731,Kalimdor,5729,0,0,5530,1,0
+5732,Burning Crusade Areas,5729,0,0,5531,2,0
+5733,Eastern Kingdoms,5729,0,0,5512,0,0
 5735,Ruin Hallow's End for the Horde and foil their attempts to wreck the Alliance celebration by completing the following quests.,0,0,4,0,0,0
 5736,Clean Up In Stormwind,5735,1,0,3217,2,0
 5737,Stink Bombs Away!,5735,1,0,3216,1,0
@@ -4691,8 +4679,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 5766,Daily quests completed,0,0,4,0,0,0
 5767,Daily quests complete,5766,0,0,4984,1,0
 5769,Slay the leaders of the Horde.,0,0,4,0,0,0
-5771,Killed in Quel'Thalas,5769,0,0,487,1,0
-5773,Bleeding Bloodhoof,5769,0,0,485,0,0
+5771,Killed in Quel'Thalas,5769,0,0,487,0,0
 5775,Deaths in 5v5,0,0,4,0,0,0
 5776,5v5 Deaths,5775,0,0,4964,1,0
 5778,Kill 5 flag carriers in a single Eye of the Storm battle.,0,5,5,0,0,2
@@ -4773,8 +4760,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 5871,Skill to 450,5870,450,0,5566,1,2
 5873,2v2 Arena Honorable Kills,0,0,4,0,0,0
 5874,2v2 Arena Kills,5873,0,0,4959,1,0
-5876,Eye of the Storm Honorable Kills,0,0,4,0,0,0
-5877,Eye of the Storm Honorable Kills,5876,0,0,5502,1,0
+5876,Eye of the Storm Honorable Kills,0,0,5,0,0,0
+5877,Eye of the Storm Honorable Kills,5876,0,0,5502,0,0
 5879,Alterac Valley Honorable Kills,0,0,4,0,0,0
 5880,Alterac Valley Honorable Kills,5879,0,0,5500,1,0
 5882,Statistic: Health potions consumed,0,1,5,0,0,0
@@ -5786,16 +5773,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 7273,Complete 100 victories in Isle of Conquest.,0,0,4,0,0,0
 7274,Complete 100 victories in Isle of Conquest,7273,100,0,17904,1,1
 7276,Earn the Commander title on all of the classes below.,0,0,4,0,0,0
-7277,Death Knight,7276,1,0,15524,1,0
-7278,Rogue,7276,1,0,15530,7,0
-7279,Shaman,7276,1,0,15531,8,0
-7280,Warlock,7276,1,0,15532,9,0
-7281,Druid,7276,1,0,15525,2,0
-7282,Hunter,7276,1,0,15526,3,0
-7283,Mage,7276,1,0,15527,4,0
-7284,Paladin,7276,1,0,15528,5,0
-7285,Priest,7276,1,0,15529,6,0
-7286,Warrior,7276,1,0,15533,10,0
+7277,Death Knight,7276,1,0,15524,0,0
+7278,Rogue,7276,1,0,15530,6,0
+7279,Shaman,7276,1,0,15531,7,0
+7280,Warlock,7276,1,0,15532,8,0
+7281,Druid,7276,1,0,15525,1,0
+7282,Hunter,7276,1,0,15526,2,0
+7283,Mage,7276,1,0,15527,3,0
+7284,Paladin,7276,1,0,15528,4,0
+7285,Priest,7276,1,0,15529,5,0
+7286,Warrior,7276,1,0,15533,9,0
 7297,Defeat Yogg-Saron with the assistance of three or fewer Keepers in 25-player mode.,0,0,4,0,0,0
 7298,Yogg-Saron,7297,1,0,10414,1,2
 7300,Obtain an epic Brewfest mount.,0,1,8,0,0,0
@@ -6088,12 +6075,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 7712,Strand of the Ancients Honorable Kills,0,0,4,0,0,0
 7713,Strand of the Ancients Honorable Kills,7712,0,0,5503,1,0
 7715,Battleground Killing Blows,0,0,5,0,0,0
-7716,Warsong Gulch,7715,0,0,5538,3,0
-7717,Alterac Valley,7715,0,0,5536,1,0
-7718,Arathi Basin,7715,0,0,5537,2,0
-7719,Eye of the Storm,7715,0,0,5539,4,0
-7720,Strand of the Ancients,7715,0,0,5540,5,0
-7721,Isle of Conquest,7715,0,0,13254,6,0
+7717,,7715,0,0,50458,0,2
 7723,2v2 Arena Killing Blows,0,0,4,0,0,0
 7724,2v2 Arena Killing Blows,7723,0,0,5541,1,0
 7726,3v3 Arena Killing Blows,0,0,4,0,0,0
@@ -6134,7 +6116,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 7767,First Aid,7766,700,0,5592,0,0
 7768,Cooking,7766,700,0,5701,1,0
 7769,Fishing,7766,700,0,5696,2,0
-7771,Win Alterac Valley in 6 minutes.,0,0,4,0,0,0
+7771,Win Alterac Valley in 6 minutes.,0,0,4,0,0,8192
 7772,Win in 6 minutes,82728,1,0,1241,0,2
 7774,Battlegrounds played,0,0,5,0,0,0
 7775,Arathi Basin,7774,0,0,106,1,0
@@ -6347,8 +6329,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 8080,Keepers of Time,8077,42000,0,4765,4,0
 8081,Thrallmar,8077,42000,0,5322,1,0
 8082,The Sha'tar,8077,42000,0,4764,5,0
-8084,Eye of the Storm Killing Blows,0,0,4,0,0,0
-8085,Eye of the Storm Killing Blows,8084,0,0,5539,1,0
+8084,Eye of the Storm Killing Blows,0,0,5,0,0,0
+8085,Eye of the Storm Killing Blows,8084,0,0,5539,0,0
 8087,"First player on the realm to gain exalted reputation with the Argent Crusade, Wyrmrest Accord, Kirin Tor and Knights of the Ebon Blade.",0,0,4,0,0,0
 8088,Knights of the Ebon Blade,8087,0,0,2421,4,0
 8089,The Wyrmrest Accord,8087,0,0,2419,2,0
@@ -7197,15 +7179,15 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 9693,Strand of the Ancients,9687,0,0,5503,4,0
 9694,Twin Peaks,9687,0,0,17412,6,0
 9695,The Battle for Gilneas,9687,0,0,24125,7,0
-9697,Get an honorable kill on each of the level 85 Goblin classes listed below.,0,0,4,0,0,0
-9698,Shaman,9697,1,0,14698,6,0
-9699,Warrior,9697,1,0,14699,7,0
-9700,Warlock,9697,1,0,14700,8,0
-9701,Rogue,9697,1,0,14696,4,0
-9702,Death Knight,9697,1,0,14693,1,0
-9703,Hunter,9697,1,0,14694,2,0
-9704,Priest,9697,1,0,14697,5,0
-9705,Mage,9697,1,0,14695,3,0
+9697,Get an honorable kill on each of the level 35 Goblin classes listed below.,0,0,4,0,0,0
+9698,Shaman,9697,1,0,14698,5,0
+9699,Warrior,9697,1,0,14699,6,0
+9700,Warlock,9697,1,0,14700,7,0
+9701,Rogue,9697,1,0,14696,3,0
+9702,Death Knight,9697,1,0,14693,0,0
+9703,Hunter,9697,1,0,14694,1,0
+9704,Priest,9697,1,0,14697,4,0
+9705,Mage,9697,1,0,14695,2,0
 9707,Defeat Flame Leviathan without causing a System Shutdown in 25-player mode.,0,0,4,0,0,0
 9708,Flame Leviathan,9707,1,0,10055,1,2
 9710,Defeat 25 Dark Rune Guardian Dwarves with Razorscale's Flame Breath in 25-player mode.,0,0,4,0,0,0
@@ -9130,16 +9112,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 13024,Stormwind Harbor,13014,2500,0,5030,11,3
 13025,The Temple Gardens,13014,2500,0,5025,6,3
 13027,Earn the Field Marshal title on all of the classes below.,0,0,4,0,0,0
-13028,Mage,13027,1,0,15567,4,0
-13029,Rogue,13027,1,0,15570,7,0
-13030,Shaman,13027,1,0,15571,8,0
-13031,Druid,13027,1,0,15565,2,0
-13032,Hunter,13027,1,0,15566,3,0
-13033,Paladin,13027,1,0,15568,5,0
-13034,Priest,13027,1,0,15569,6,0
-13035,Warlock,13027,1,0,15572,9,0
-13036,Death Knight,13027,1,0,15564,1,0
-13037,Warrior,13027,1,0,15573,10,0
+13028,Mage,13027,1,0,15567,3,0
+13029,Rogue,13027,1,0,15570,6,0
+13030,Shaman,13027,1,0,15571,7,0
+13031,Druid,13027,1,0,15565,1,0
+13032,Hunter,13027,1,0,15566,2,0
+13033,Paladin,13027,1,0,15568,4,0
+13034,Priest,13027,1,0,15569,5,0
+13035,Warlock,13027,1,0,15572,8,0
+13036,Death Knight,13027,1,0,15564,0,0
+13037,Warrior,13027,1,0,15573,9,0
 13039,Complete 40 quests in Stonetalon Mountains.,0,0,4,0,0,0
 13040,Stonetalon Mountains,13039,40,0,13845,1,1
 13042,Complete 41 quests in Un'Goro Crater.,0,0,4,0,0,0
@@ -9910,14 +9892,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 13888,Cracked Crystal Vial,13883,1,0,15057,5,0
 13889,Silver Scroll Case,13883,1,0,15099,6,0
 13891,Reach level 85 on each of the Worgen classes listed below.,0,0,4,0,0,0
-13892,Death Knight,13891,120,0,14568,0,0
-13893,Druid,13891,120,0,14569,1,0
-13894,Hunter,13891,120,0,14570,2,0
-13895,Mage,13891,120,0,14571,3,0
-13896,Priest,13891,120,0,14572,4,0
-13897,Rogue,13891,120,0,22255,5,0
-13898,Warrior,13891,120,0,14575,7,0
-13899,Warlock,13891,120,0,14574,6,0
+13892,Death Knight,13891,60,0,14568,0,0
+13893,Druid,13891,60,0,14569,1,0
+13894,Hunter,13891,60,0,14570,2,0
+13895,Mage,13891,60,0,14571,3,0
+13896,Priest,13891,60,0,14572,4,0
+13897,Rogue,13891,60,0,22255,5,0
+13898,Warrior,13891,60,0,14575,7,0
+13899,Warlock,13891,60,0,14574,6,0
 13901,Obtain 450 skill points in archaeology.,0,0,4,0,0,0
 13902,Obtain 450 skill points in archaeology.,13901,450,0,13812,1,2
 13907,Defeat the first four bosses in Icecrown Citadel in 25-player mode.,0,0,4,0,0,0
@@ -10119,11 +10101,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 14185,Alysrazor 10-Heroic,14184,1,0,18062,1,2
 14186,Alysrazor 25-Heroic,14184,1,0,18063,2,2
 14188,Arena Killing Blows,0,0,5,0,0,0
-14189,Ring of Valor,14188,0,0,9166,4,0
-14190,Ruins of Lordaeron,14188,0,0,5535,2,0
-14191,Dalaran Sewers,14188,0,0,9165,3,0
-14192,Nagrand Arena,14188,0,0,5533,0,0
-14193,Blade's Edge Arena,14188,0,0,5534,1,0
+14192,,14188,0,0,50457,0,2
 14195,Defend the beach without losing any walls.,0,0,4,0,0,0
 14196,Defend the beach without losing any walls,14195,1,0,7740,1,2
 14198,Toravon the Ice Watcher kills (Wintergrasp 10 player),0,0,4,0,0,0
@@ -10244,13 +10222,13 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 14366,Yogg-Saron kills (Ulduar 25 player),0,0,4,0,0,0
 14367,Yogg-Saron,14366,1,0,9995,1,0
 14371,Reach level 85 on each of the Orc classes listed below.,0,0,4,0,0,0
-14372,Hunter,14371,120,0,14602,0,0
-14373,Rogue,14371,120,0,14603,1,0
-14374,Shaman,14371,120,0,14604,2,0
-14375,Warlock,14371,120,0,14605,3,0
-14376,Warrior,14371,120,0,14606,4,0
-14377,Death Knight,14371,120,0,14607,5,0
-14378,Mage,14371,120,0,14641,6,0
+14372,Hunter,14371,60,0,14602,0,0
+14373,Rogue,14371,60,0,14603,1,0
+14374,Shaman,14371,60,0,14604,2,0
+14375,Warlock,14371,60,0,14605,3,0
+14376,Warrior,14371,60,0,14606,4,0
+14377,Death Knight,14371,60,0,14607,5,0
+14378,Mage,14371,60,0,14641,6,0
 14380,Win 100 rated Arathi Basin matches while controlling all 5 flags in a guild group.,0,100,5,0,0,8193
 14381,,14380,100,0,14654,0,0
 14387,Eliminate the remaining Sha imprisoned in the Sealed Chambers and then defeat the Sha of Violence in Shado-pan Monastery on Heroic Difficulty.,0,0,4,0,0,0
@@ -10438,12 +10416,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 14604,Classy Draenei,14599,0,0,14580,4,0
 14605,Classy Dwarves,14599,0,0,14579,3,0
 14607,Reach level 85 on each of the Gnome classes listed below.,0,0,4,0,0,0
-14608,Warrior,14607,120,0,14553,3,0
-14609,Death Knight,14607,120,0,14554,4,0
-14610,Mage,14607,120,0,14550,0,0
-14611,Rogue,14607,120,0,14551,1,0
-14612,Warlock,14607,120,0,14552,2,0
-14613,Priest,14607,120,0,14650,5,0
+14608,Warrior,14607,60,0,14553,3,0
+14609,Death Knight,14607,60,0,14554,4,0
+14610,Mage,14607,60,0,14550,0,0
+14611,Rogue,14607,60,0,14551,1,0
+14612,Warlock,14607,60,0,14552,2,0
+14613,Priest,14607,60,0,14650,5,0
 14615,Complete the 25-player raid achievements listed below.,0,0,4,0,0,0
 14616,Boned,14615,0,0,13016,5,0
 14617,Full House,14615,0,0,13017,6,0
@@ -10478,7 +10456,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 14652,Deliver a killing blow to a Scion of Eternity while riding on a hover disk,14651,1,0,7574,1,2
 14654,Defeat King Ymiron in Utgarde Pinnacle on Heroic Difficulty without anyone in the party triggering Bane.,0,0,4,0,0,0
 14655,King Ymiron,14654,1,0,7598,1,2
-14657,Get an honorable kill on each of the level 85 Human classes listed below.,0,0,4,0,0,0
+14657,Get an honorable kill on each of the level 35 Human classes listed below.,0,0,4,0,0,0
 14658,Priest,14657,1,0,14714,8,0
 14659,Death Knight,14657,1,0,14707,1,0
 14660,Hunter,14657,1,0,14708,2,0
@@ -10783,15 +10761,15 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 15075,Rotface,15074,1,0,12966,1,2
 15076,Rotface,15074,1,0,12983,2,2
 15078,Reach level 85 on each of the Blood Elf classes listed below.,0,0,4,0,0,0
-15079,Warlock,15078,120,0,14624,4,0
-15080,Priest,15078,120,0,14622,2,0
-15081,Hunter,15078,120,0,14620,0,0
-15082,Mage,15078,120,0,14621,1,0
-15083,Rogue,15078,120,0,14623,3,0
-15084,Paladin,15078,120,0,14625,5,0
-15085,Death Knight,15078,120,0,14626,6,0
-15086,Warrior,15078,120,0,14646,7,0
-15088,Get an honorable kill on each of the level 85 Tauren classes listed below.,0,0,4,0,0,0
+15079,Warlock,15078,60,0,14624,4,0
+15080,Priest,15078,60,0,14622,2,0
+15081,Hunter,15078,60,0,14620,0,0
+15082,Mage,15078,60,0,14621,1,0
+15083,Rogue,15078,60,0,14623,3,0
+15084,Paladin,15078,60,0,14625,5,0
+15085,Death Knight,15078,60,0,14626,6,0
+15086,Warrior,15078,60,0,14646,7,0
+15088,Get an honorable kill on each of the level 35 Tauren classes listed below.,0,0,4,0,0,0
 15089,Druid,15088,1,0,14664,3,0
 15090,Warrior,15088,1,0,14668,7,0
 15091,Hunter,15088,1,0,14663,2,0
@@ -10799,7 +10777,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 15093,Priest,15088,1,0,14666,5,0
 15094,Shaman,15088,1,0,14667,6,0
 15095,Death Knight,15088,1,0,14662,1,0
-15097,Get an honorable kill on each of the level 85 Undead classes listed below.,0,0,4,0,0,0
+15097,Get an honorable kill on each of the level 35 Undead classes listed below.,0,0,4,0,0,0
 15098,Hunter,15097,1,0,14670,2,0
 15099,Mage,15097,1,0,14671,3,0
 15100,Rogue,15097,1,0,14672,4,0
@@ -11066,16 +11044,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 15475,Earn exalted status with the Ashen Verdict.,0,0,4,0,0,0
 15476,Ashen Verdict Exalted,15475,42000,0,12911,1,2
 15478,Earn the Marshal title on all of the classes below.,0,0,4,0,0,0
-15479,Druid,15478,1,0,15545,2,0
-15480,Death Knight,15478,1,0,15544,1,0
-15481,Hunter,15478,1,0,15546,3,0
-15482,Mage,15478,1,0,15547,4,0
-15483,Warlock,15478,1,0,15552,9,0
-15484,Warrior,15478,1,0,15553,10,0
-15485,Paladin,15478,1,0,15548,5,0
-15486,Shaman,15478,1,0,15551,8,0
-15487,Rogue,15478,1,0,15550,7,0
-15488,Priest,15478,1,0,15549,6,0
+15479,Druid,15478,1,0,15545,1,0
+15480,Death Knight,15478,1,0,15544,0,0
+15481,Hunter,15478,1,0,15546,2,0
+15482,Mage,15478,1,0,15547,3,0
+15483,Warlock,15478,1,0,15552,8,0
+15484,Warrior,15478,1,0,15553,9,0
+15485,Paladin,15478,1,0,15548,4,0
+15486,Shaman,15478,1,0,15551,7,0
+15487,Rogue,15478,1,0,15550,6,0
+15488,Priest,15478,1,0,15549,5,0
 15490,Complete each of the Stormwind fishing daily quests.,0,0,4,0,0,0
 15491,Big Gulp,15490,1,0,15815,4,0
 15492,Rock Lobster,15490,1,0,15814,3,0
@@ -11122,16 +11100,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 15543,Cho'gall,15542,1,0,16285,2,2
 15544,Cho'gall,15542,1,0,16284,1,2
 15546,Earn the Champion title on all of the classes below.,0,0,4,0,0,0
-15547,Warlock,15546,1,0,15542,9,0
-15548,Rogue,15546,1,0,15540,7,0
-15549,Hunter,15546,1,0,15536,3,0
-15550,Mage,15546,1,0,15537,4,0
-15551,Paladin,15546,1,0,15538,5,0
-15552,Priest,15546,1,0,15539,6,0
-15553,Shaman,15546,1,0,15541,8,0
-15554,Warrior,15546,1,0,15543,10,0
-15555,Death Knight,15546,1,0,15534,1,0
-15556,Druid,15546,1,0,15535,2,0
+15547,Warlock,15546,1,0,15542,8,0
+15548,Rogue,15546,1,0,15540,6,0
+15549,Hunter,15546,1,0,15536,2,0
+15550,Mage,15546,1,0,15537,3,0
+15551,Paladin,15546,1,0,15538,4,0
+15552,Priest,15546,1,0,15539,5,0
+15553,Shaman,15546,1,0,15541,7,0
+15554,Warrior,15546,1,0,15543,9,0
+15555,Death Knight,15546,1,0,15534,0,0
+15556,Druid,15546,1,0,15535,1,0
 15558,First person on the realm to achieve 450 skill in archaeology.,0,0,4,0,0,0
 15559,,15558,450,0,13812,1,2
 15561,Perform a /gasp emote under the double rainbow in the Battle For Gilneas.,0,0,4,0,0,0
@@ -11291,13 +11269,13 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 15767,Defeat Kil'jaeden in Sunwell Plateau while in a guild group.,0,1,8,0,0,0
 15768,Kil'jaeden,15767,1,0,14381,1,2
 15770,Reach level 85 on each of the Tauren classes listed below.,0,0,4,0,0,0
-15771,Hunter,15770,120,0,14609,1,0
-15772,Priest,15770,120,0,14643,6,0
-15773,Druid,15770,120,0,14608,0,0
-15774,Shaman,15770,120,0,14610,2,0
-15775,Warrior,15770,120,0,14611,3,0
-15776,Death Knight,15770,120,0,14612,4,0
-15777,Paladin,15770,120,0,14642,5,0
+15771,Hunter,15770,60,0,14609,1,0
+15772,Priest,15770,60,0,14643,6,0
+15773,Druid,15770,60,0,14608,0,0
+15774,Shaman,15770,60,0,14610,2,0
+15775,Warrior,15770,60,0,14611,3,0
+15776,Death Knight,15770,60,0,14612,4,0
+15777,Paladin,15770,60,0,14642,5,0
 15779,"Get 1,000,000 honorable kills.",0,0,4,0,0,0
 15780,,15779,1000000,0,14596,0,1
 15782,"Obtain 75 skill points in the ""Cataclysm"" category of cooking.",0,0,4,0,0,0
@@ -11369,8 +11347,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 15887,Win 10 rated battlegrounds,15886,10,0,15289,1,1
 15889,Alterac Valley victories,0,0,4,0,0,0
 15890,Alterac Valley victories,15889,0,0,17411,0,0
-15892,Circle of Blood victories,0,0,4,0,0,0
-15893,Circle of Blood victories,15892,0,0,5739,1,0
+15892,Circle of Blood victories,0,0,5,0,0,0
+15893,Circle of Blood victories,15892,0,0,5739,0,0
 15895,Auctions posted,0,0,4,0,0,0
 15896,Auctions Posted,15895,0,0,4220,1,0
 15898,Ruins of Lordaeron matches,0,0,4,0,0,0
@@ -11912,16 +11890,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 16447,Earn 5000 Valor Points,0,0,4,0,0,0
 16448,,16447,500000,0,16305,0,1
 16450,Earn the High Warlord title on all of the classes below.,0,0,4,0,0,0
-16451,Hunter,16450,1,0,15596,3,0
-16452,Mage,16450,1,0,15597,4,0
-16453,Paladin,16450,1,0,15598,5,0
-16454,Priest,16450,1,0,15599,6,0
-16455,Rogue,16450,1,0,15600,7,0
-16456,Shaman,16450,1,0,15601,8,0
-16457,Warlock,16450,1,0,15602,9,0
-16458,Warrior,16450,1,0,15603,10,0
-16459,Death Knight,16450,1,0,15594,1,0
-16460,Druid,16450,1,0,15595,2,0
+16451,Hunter,16450,1,0,15596,2,0
+16452,Mage,16450,1,0,15597,3,0
+16453,Paladin,16450,1,0,15598,4,0
+16454,Priest,16450,1,0,15599,5,0
+16455,Rogue,16450,1,0,15600,6,0
+16456,Shaman,16450,1,0,15601,7,0
+16457,Warlock,16450,1,0,15602,8,0
+16458,Warrior,16450,1,0,15603,9,0
+16459,Death Knight,16450,1,0,15594,0,0
+16460,Druid,16450,1,0,15595,1,0
 16462,Explore all the nooks and crannies of the Thundermar Ruins in Twilight Highlands and impress your Wildhammer allies by killing the following.,0,0,4,0,0,0
 16463,The Black Recluse spider,16462,0,0,15950,3,0
 16464,Warlord Halthar,16462,0,0,15948,1,0
@@ -11951,21 +11929,21 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 16495,Halfus 10-Heroic,16494,1,0,16248,1,2
 16496,Halfus 25-Heroic,16494,1,0,16249,2,2
 16501,Reach level 85 on each of the Night Elf classes listed below.,0,0,4,0,0,0
-16502,Druid,16501,120,0,14544,0,0
-16503,Hunter,16501,120,0,14545,1,0
-16504,Priest,16501,120,0,14546,2,0
-16505,Rogue,16501,120,0,14547,3,0
-16506,Death Knight,16501,120,0,14549,5,0
-16507,Warrior,16501,120,0,14548,4,0
-16508,Mage,16501,120,0,14649,6,0
+16502,Druid,16501,60,0,14544,0,0
+16503,Hunter,16501,60,0,14545,1,0
+16504,Priest,16501,60,0,14546,2,0
+16505,Rogue,16501,60,0,14547,3,0
+16506,Death Knight,16501,60,0,14549,5,0
+16507,Warrior,16501,60,0,14548,4,0
+16508,Mage,16501,60,0,14649,6,0
 16510,Reach level 85 on each of the Undead classes listed below.,0,0,4,0,0,0
-16511,Warlock,16510,120,0,14630,3,0
-16512,Death Knight,16510,120,0,14631,4,0
-16513,Mage,16510,120,0,14627,0,0
-16514,Priest,16510,120,0,14628,1,0
-16515,Rogue,16510,120,0,14629,2,0
-16516,Warrior,16510,120,0,14632,5,0
-16517,Hunter,16510,120,0,14647,6,0
+16511,Warlock,16510,60,0,14630,3,0
+16512,Death Knight,16510,60,0,14631,4,0
+16513,Mage,16510,60,0,14627,0,0
+16514,Priest,16510,60,0,14628,1,0
+16515,Rogue,16510,60,0,14629,2,0
+16516,Warrior,16510,60,0,14632,5,0
+16517,Hunter,16510,60,0,14647,6,0
 16519,Heroic Sindragosa 25 (TRACKING ONLY) <DND>,0,0,4,0,0,0
 16520,Sindragosa,16519,1,0,13135,1,2
 16522,Cook each of the Outland cooking recipes listed below.,0,0,4,0,0,0
@@ -12393,7 +12371,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 17045,Broiled Dragon Feast,17015,1,0,15740,29,0
 17046,Lavascale Minestrone,17015,1,0,15736,25,0
 17047,Fortune Cookie,17015,1,0,15741,30,0
-17049,Get an honorable kill on each of the level 85 Draenei classes listed below.,0,0,4,0,0,0
+17049,Get an honorable kill on each of the level 35 Draenei classes listed below.,0,0,4,0,0,0
 17050,Death Knight,17049,1,0,14737,1,0
 17051,Mage,17049,1,0,14738,2,0
 17052,Paladin,17049,1,0,14739,3,0
@@ -12751,7 +12729,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 17552,Rogue,17546,1,0,15490,7,0
 17553,Shaman,17546,1,0,15491,8,0
 17554,Warlock,17546,1,0,15492,9,0
-17555,Warrior,17546,1,0,15493,10,0
+17555,Demon Hunter,17546,1,0,51190,10,0
 17556,Druid,17546,1,0,15485,1,0
 17558,Complete 5 dungeon quests.,0,5,5,0,0,0
 17559,,17558,5,0,16552,2,2
@@ -12828,16 +12806,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 17633,Omnitron Defense System ,17632,1,0,16258,1,2
 17634,Omnitron Defense System ,17632,1,0,16259,2,2
 17636,Earn the Warlord title on all of the classes below.,0,0,4,0,0,0
-17637,Death Knight,17636,1,0,15574,1,0
-17638,Druid,17636,1,0,15575,2,0
-17639,Hunter,17636,1,0,15576,3,0
-17640,Mage,17636,1,0,15577,4,0
-17641,Paladin,17636,1,0,15578,5,0
-17642,Priest,17636,1,0,15579,6,0
-17643,Rogue,17636,1,0,15580,7,0
-17644,Shaman,17636,1,0,15581,8,0
-17645,Warlock,17636,1,0,15582,9,0
-17646,Warrior,17636,1,0,15583,10,0
+17637,Death Knight,17636,1,0,15574,0,0
+17638,Druid,17636,1,0,15575,1,0
+17639,Hunter,17636,1,0,15576,2,0
+17640,Mage,17636,1,0,15577,3,0
+17641,Paladin,17636,1,0,15578,4,0
+17642,Priest,17636,1,0,15579,5,0
+17643,Rogue,17636,1,0,15580,6,0
+17644,Shaman,17636,1,0,15581,7,0
+17645,Warlock,17636,1,0,15582,8,0
+17646,Warrior,17636,1,0,15583,9,0
 17648,Rated Eye of the Storm battles,0,0,4,0,0,0
 17649,Eye of the Storm battles,17648,0,0,16515,1,0
 17651,Rated Eye of the Storm victories,0,0,4,0,0,0
@@ -12880,16 +12858,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 17706,Earn a battleground rating of 1800.,0,0,4,0,0,0
 17707,,17706,1800,0,15300,1,2
 17709,Earn the Grand Marshal title on all of the classes below.,0,0,4,0,0,0
-17710,Paladin,17709,1,0,15588,5,0
-17711,Mage,17709,1,0,15587,4,0
-17712,Druid,17709,1,0,15585,2,0
-17713,Rogue,17709,1,0,15590,7,0
-17714,Shaman,17709,1,0,15591,8,0
-17715,Warlock,17709,1,0,15592,9,0
-17716,Warrior,17709,1,0,15593,10,0
-17717,Hunter,17709,1,0,15586,3,0
-17718,Priest,17709,1,0,15589,6,0
-17719,Death Knight,17709,1,0,15584,1,0
+17710,Paladin,17709,1,0,15588,4,0
+17711,Mage,17709,1,0,15587,3,0
+17712,Druid,17709,1,0,15585,1,0
+17713,Rogue,17709,1,0,15590,6,0
+17714,Shaman,17709,1,0,15591,7,0
+17715,Warlock,17709,1,0,15592,8,0
+17716,Warrior,17709,1,0,15593,9,0
+17717,Hunter,17709,1,0,15586,2,0
+17718,Priest,17709,1,0,15589,5,0
+17719,Death Knight,17709,1,0,15584,0,0
 17721,Earn the Battlemaster title on all of the classes below.,0,0,4,0,0,0
 17722,Druid,17721,1,0,15605,1,0
 17723,Hunter,17721,1,0,15606,2,0
@@ -12994,7 +12972,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 17854,Two-Timer,17844,0,0,14834,1,0
 17855,Drag a Maw,29098,0,0,14840,0,0
 17856,Soaring Spirits,29094,0,0,14836,0,0
-17858,Get an honorable kill on each of the level 85 Troll classes listed below.,0,0,4,0,0,0
+17858,Get an honorable kill on each of the level 35 Troll classes listed below.,0,0,4,0,0,0
 17859,Druid,17858,1,0,14681,6,0
 17860,Death Knight,17858,1,0,14685,1,0
 17861,Hunter,17858,1,0,14677,2,0
@@ -13004,15 +12982,15 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 17865,Warlock,17858,1,0,14683,8,0
 17866,Mage,17858,1,0,14678,3,0
 17867,Shaman,17858,1,0,14684,9,0
-17869,Get an honorable kill on each of the level 85 Worgen classes listed below.,0,0,4,0,0,0
-17870,Death Knight,17869,1,0,14744,1,0
-17871,Mage,17869,1,0,14745,2,0
-17872,Warlock,17869,1,0,14746,3,0
-17873,Priest,17869,1,0,14747,4,0
-17874,Warrior,17869,1,0,14748,5,0
-17875,Hunter,17869,1,0,14749,6,0
-17876,Rogue,17869,1,0,14750,7,0
-17877,Druid,17869,1,0,14751,8,0
+17869,Get an honorable kill on each of the level 35 Worgen classes listed below.,0,0,4,0,0,0
+17870,Death Knight,17869,1,0,14744,0,0
+17871,Mage,17869,1,0,14745,1,0
+17872,Warlock,17869,1,0,14746,2,0
+17873,Priest,17869,1,0,14747,3,0
+17874,Warrior,17869,1,0,14748,4,0
+17875,Hunter,17869,1,0,14749,5,0
+17876,Rogue,17869,1,0,14750,6,0
+17877,Druid,17869,1,0,14751,7,0
 17879,"Owner of Val'anyr, Hammer of Ancient Kings",0,1,8,0,0,0
 17880,"Val'anyr, Hammer of Ancient Kings",17879,1,0,14769,1,2
 17882,Badges of Justice acquired,0,0,4,0,0,0
@@ -13144,16 +13122,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 18076,Complete 62 quests in Ashenvale.,0,0,4,0,0,0
 18077,Ashenvale,18076,62,0,13836,1,1
 18079,Reach max level on each of the classes listed below.,0,0,4,0,0,0
-18080,Death Knight,18079,120,0,14022,0,0
-18081,Druid,18079,120,0,14023,2,0
-18082,Hunter,18079,120,0,14024,3,0
-18083,Mage,18079,120,0,14025,4,0
-18084,Paladin,18079,120,0,14026,6,0
-18085,Priest,18079,120,0,14027,7,0
-18086,Rogue,18079,120,0,14028,8,0
-18087,Warlock,18079,120,0,14030,10,0
-18088,Warrior,18079,120,0,14031,11,0
-18089,Shaman,18079,120,0,14029,9,0
+18080,Death Knight,18079,60,0,14022,0,0
+18081,Druid,18079,60,0,14023,2,0
+18082,Hunter,18079,60,0,14024,3,0
+18083,Mage,18079,60,0,14025,4,0
+18084,Paladin,18079,60,0,14026,6,0
+18085,Priest,18079,60,0,14027,7,0
+18086,Rogue,18079,60,0,14028,8,0
+18087,Warlock,18079,60,0,14030,10,0
+18088,Warrior,18079,60,0,14031,11,0
+18089,Shaman,18079,60,0,14029,9,0
 18091,Defeat Ascendant Lord Obsidius without any party member reaching 4 stacks of Crepuscular Veil in Blackrock Caverns on Heroic Difficulty.,0,0,4,0,0,0
 18092,Ascendant Lord Obsidius,18091,1,0,15961,1,2
 18094,Earn a battleground rating of 2000.,0,0,4,0,0,0
@@ -13217,16 +13195,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 18181,First person on the realm to achieve 525 skill in enchanting.,0,0,4,0,0,0
 18182,,18181,525,0,5567,1,2
 18184,Reach level 85 on each of the Dwarven classes listed below.,0,0,4,0,0,0
-18185,Hunter,18184,120,0,14555,0,0
-18186,Paladin,18184,120,0,14556,1,0
-18187,Priest,18184,120,0,14557,2,0
-18188,Rogue,18184,120,0,14558,3,0
-18189,Warrior,18184,120,0,14559,4,0
-18190,Death Knight,18184,120,0,14560,5,0
-18191,Shaman,18184,120,0,14651,6,0
-18192,Mage,18184,120,0,14652,7,0
-18193,Warlock,18184,120,0,14653,8,0
-18195,Get an honorable kill on each of the level 85 Dwarf classes listed below.,0,0,4,0,0,0
+18185,Hunter,18184,60,0,14555,0,0
+18186,Paladin,18184,60,0,14556,1,0
+18187,Priest,18184,60,0,14557,2,0
+18188,Rogue,18184,60,0,14558,3,0
+18189,Warrior,18184,60,0,14559,4,0
+18190,Death Knight,18184,60,0,14560,5,0
+18191,Shaman,18184,60,0,14651,6,0
+18192,Mage,18184,60,0,14652,7,0
+18193,Warlock,18184,60,0,14653,8,0
+18195,Get an honorable kill on each of the level 35 Dwarf classes listed below.,0,0,4,0,0,0
 18196,Death Knight,18195,1,0,14722,1,0
 18197,Hunter,18195,1,0,14723,2,0
 18198,Mage,18195,1,0,14724,3,0
@@ -13559,7 +13537,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 18633,,18632,1400,0,15300,1,2
 18635,"Cut 2,500 gems of at least superior quality.",0,0,4,0,0,0
 18636,,18635,2500,0,14810,0,1
-18638,Craft 500 Epic items with an item level of at least 108.,0,0,4,0,0,0
+18638,Craft 500 Epic items.,0,0,4,0,0,0
 18639,,18638,500,0,14811,0,1
 18641,"In Archmage Xylem's Trial of Shadow in Azshara, trap 20 Weeping Souls without taking damage.",0,0,4,0,0,0
 18642,,18641,20,0,16207,1,1
@@ -13667,16 +13645,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 18788,Win 10 rated battlegrounds.,0,0,4,0,0,0
 18789,Win 10 rated battlegrounds,18788,10,0,15289,1,1
 18791,Earn the General title on all of the classes below.,0,0,4,0,0,0
-18792,Druid,18791,1,0,15555,2,0
-18793,Shaman,18791,1,0,15561,8,0
-18794,Death Knight,18791,1,0,15554,1,0
-18795,Hunter,18791,1,0,15556,3,0
-18796,Mage,18791,1,0,15557,4,0
-18797,Paladin,18791,1,0,15558,5,0
-18798,Priest,18791,1,0,15559,6,0
-18799,Warlock,18791,1,0,15562,9,0
-18800,Warrior,18791,1,0,15563,10,0
-18801,Rogue,18791,1,0,15560,7,0
+18792,Druid,18791,1,0,15555,1,0
+18793,Shaman,18791,1,0,15561,7,0
+18794,Death Knight,18791,1,0,15554,0,0
+18795,Hunter,18791,1,0,15556,2,0
+18796,Mage,18791,1,0,15557,3,0
+18797,Paladin,18791,1,0,15558,4,0
+18798,Priest,18791,1,0,15559,5,0
+18799,Warlock,18791,1,0,15562,8,0
+18800,Warrior,18791,1,0,15563,9,0
+18801,Rogue,18791,1,0,15560,6,0
 18803,Defeat Beth'tilac in Firelands on Heroic Difficulty.,0,1,8,0,0,0
 18804,Beth'tilac,18803,1,0,18051,1,2
 18805,Beth'tilac,18803,1,0,18050,0,2
@@ -13932,7 +13910,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 19151,Slay Pyrachnis without using the Emerald of Aessina.,19148,1,0,17829,0,16
 19152,Slay Galenges before he is weakened a second time.,19148,1,0,17833,3,16
 19153,Slay Nemesis at Ashen Lake without taking damage from Molten Fury.,19148,1,0,17834,4,16
-19155,Get an honorable kill on each of the level 85 Gnome classes listed below.,0,0,4,0,0,0
+19155,Get an honorable kill on each of the level 35 Gnome classes listed below.,0,0,4,0,0,0
 19156,Mage,19155,1,0,14732,2,0
 19157,Rogue,19155,1,0,14733,3,0
 19158,Priest,19155,1,0,14734,4,0
@@ -14046,7 +14024,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 19295,Fish fer Squirky,19292,1,0,17751,3,0
 19296,Live Bait,19292,1,0,17752,4,0
 19297,The Gnomish Bait-o-Matic,19292,1,0,17753,5,0
-19299,Get an honorable kill on each of the level 85 Blood Elf classes listed below.,0,0,4,0,0,0
+19299,Get an honorable kill on each of the level 35 Blood Elf classes listed below.,0,0,4,0,0,0
 19300,Rogue,19299,1,0,14688,4,0
 19301,Warrior,19299,1,0,14691,7,0
 19302,Death Knight,19299,1,0,14685,1,0
@@ -14229,13 +14207,13 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 19615,Defeat the Pit Lord Argaloth.,0,0,4,0,0,0
 19616,Pit Lord Argaloth,19615,1,0,15463,1,2
 19618,Reach level 85 on each of the Draenei classes listed below.,0,0,4,0,0,0
-19619,Warrior,19618,120,0,14566,5,0
-19620,Hunter,19618,120,0,14561,0,0
-19621,Mage,19618,120,0,14562,1,0
-19622,Paladin,19618,120,0,14563,2,0
-19623,Priest,19618,120,0,14564,3,0
-19624,Shaman,19618,120,0,14565,4,0
-19625,Death Knight,19618,120,0,14567,6,0
+19619,Warrior,19618,60,0,14566,5,0
+19620,Hunter,19618,60,0,14561,0,0
+19621,Mage,19618,60,0,14562,1,0
+19622,Paladin,19618,60,0,14563,2,0
+19623,Priest,19618,60,0,14564,3,0
+19624,Shaman,19618,60,0,14565,4,0
+19625,Death Knight,19618,60,0,14567,6,0
 19627,Defeat the Sha of Doubt in Temple of the Jade Serpent while under the effects of Purified Water.,0,0,4,0,0,0
 19628,Kill the Sha of Doubt while under the effects of Purified Water,19627,1,0,19130,1,2
 19630,Number of times the player joined an LFR dungeon with a tank that leaves early,0,0,4,0,0,0
@@ -14463,15 +14441,15 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 20042,First person on the realm to achieve 525 skill in mining.,0,0,4,0,0,0
 20043,,20042,525,0,5573,1,2
 20045,Reach level 85 on each of the Troll classes listed below.,0,0,4,0,0,0
-20046,Druid,20045,120,0,14644,7,0
-20047,Death Knight,20045,120,0,14619,6,0
-20048,Rogue,20045,120,0,14616,3,0
-20049,Shaman,20045,120,0,14617,4,0
-20050,Warrior,20045,120,0,14618,5,0
-20051,Priest,20045,120,0,14615,2,0
-20052,Hunter,20045,120,0,14613,0,0
-20053,Mage,20045,120,0,14614,1,0
-20054,Warlock,20045,120,0,14645,8,0
+20046,Druid,20045,60,0,14644,8,0
+20047,Death Knight,20045,60,0,14619,6,0
+20048,Rogue,20045,60,0,14616,3,0
+20049,Shaman,20045,60,0,14617,4,0
+20050,Warrior,20045,60,0,14618,5,0
+20051,Priest,20045,60,0,14615,2,0
+20052,Hunter,20045,60,0,14613,0,0
+20053,Mage,20045,60,0,14614,1,0
+20054,Warlock,20045,120,0,14645,7,0
 20056,Defeat Princess Theradras while in a guild group.,0,1,8,0,0,0
 20057,Princess Theradras,20056,1,0,14332,1,2
 20059,Win 25 rated battlegrounds.,0,0,4,0,0,0
@@ -14531,8 +14509,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 20145,Earn a battleground rating of 1100.,0,0,4,0,0,0
 20146,,20145,1100,0,15300,1,2
 20148,Overcome a 500 resource disadvantage in a match of the Battle for Gilneas and claim victory.,0,1,8,0,0,0
-20149,Overcome a 500 resource disadvantage,20148,1,0,14938,2,2
-20150,Overcome a 500 resource disadvantage,20148,1,0,14933,1,2
+20149,Overcome a 500 resource disadvantage,20148,1,0,14938,1,2
+20150,Overcome a 500 resource disadvantage,20148,1,0,14933,0,2
 20152,Defeat Commander Springvale without allowing him to receive Unholy Empowerment in Shadowfang Keep on Heroic Difficulty.,0,0,4,0,0,0
 20153,Commander Springvale,20152,1,0,16085,1,2
 20155,Defeat 12 Bloodthirsty Ghouls with Pistol Barrage and then defeat Lord Godfrey in Shadowfang Keep on Heroic Difficulty.,0,0,4,0,0,0
@@ -14749,24 +14727,24 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 20474,Honor Hold,20458,42000,0,5336,13,0
 20475,Kirin Tor,20458,42000,0,4742,9,0
 20477,Reach level 85 on each of the Human classes listed below.,0,0,4,0,0,0
-20478,Death Knight,20477,120,0,14543,6,0
-20479,Mage,20477,120,0,14537,0,0
-20480,Paladin,20477,120,0,14538,1,0
-20481,Priest,20477,120,0,14539,2,0
-20482,Rogue,20477,120,0,14540,3,0
-20483,Warrior,20477,120,0,14541,4,0
-20484,Warlock,20477,120,0,14542,5,0
-20485,Hunter,20477,120,0,14648,7,0
+20478,Death Knight,20477,60,0,14543,6,0
+20479,Mage,20477,60,0,14537,0,0
+20480,Paladin,20477,60,0,14538,1,0
+20481,Priest,20477,60,0,14539,2,0
+20482,Rogue,20477,60,0,14540,3,0
+20483,Warrior,20477,60,0,14541,4,0
+20484,Warlock,20477,60,0,14542,5,0
+20485,Hunter,20477,60,0,14648,7,0
 20487,Reach level 85 on each of the Goblin classes listed below.,0,0,4,0,0,0
-20488,Death Knight,20487,120,0,14637,4,0
-20489,Mage,20487,120,0,14633,0,0
-20490,Priest,20487,120,0,14634,1,0
-20491,Rogue,20487,120,0,14635,2,0
-20492,Warlock,20487,120,0,14636,3,0
-20493,Warrior,20487,120,0,14638,5,0
-20494,Shaman,20487,120,0,14639,6,0
-20495,Hunter,20487,120,0,14640,7,0
-20497,Get an honorable kill on each of the level 85 Orc classes listed below.,0,0,4,0,0,0
+20488,Death Knight,20487,60,0,14637,4,0
+20489,Mage,20487,60,0,14633,0,0
+20490,Priest,20487,60,0,14634,1,0
+20491,Rogue,20487,60,0,14635,2,0
+20492,Warlock,20487,60,0,14636,3,0
+20493,Warrior,20487,60,0,14638,5,0
+20494,Shaman,20487,60,0,14639,6,0
+20495,Hunter,20487,60,0,14640,7,0
+20497,Get an honorable kill on each of the level 35 Orc classes listed below.,0,0,4,0,0,0
 20498,Warlock,20497,1,0,14660,6,0
 20499,Rogue,20497,1,0,14658,4,0
 20500,Death Knight,20497,1,0,14655,1,0
@@ -14801,7 +14779,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 20535,,20534,1,0,18244,1,2
 20537,Logged in during WoW's 8th Anniversary.,0,0,4,0,0,0
 20538,Logged in during 8th anniversary event,20537,1,0,18500,1,2
-20540,Get an honorable kill on each of the level 85 Night Elf classes listed below.,0,0,4,0,0,0
+20540,Get an honorable kill on each of the level 35 Night Elf classes listed below.,0,0,4,0,0,0
 20541,Hunter,20540,1,0,14716,2,0
 20542,Rogue,20540,1,0,14718,4,0
 20543,Druid,20540,1,0,14719,5,0
@@ -15064,7 +15042,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 21007,Collect 100 Jungle Punch Brew,21006,100,0,19211,0,1
 21008,Defeat Captain Ook,0,0,4,0,0,0
 21009,Defeat Captain Ook,21008,1,0,20696,0,0
-21023,Monk,18079,120,0,19214,5,0
+21023,Monk,18079,60,0,19214,5,0
 21024,Defeat Salyis' Warband in Valley of the Four Winds,0,0,4,0,0,0
 21025,Galleon,21024,1,0,19215,0,2
 21033,Kill Un'sok with 8 Overlapped Amber Pools,0,0,4,0,0,0
@@ -15161,13 +15139,13 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 21207,Monk,15097,1,0,19286,0,0
 21208,Monk,17858,1,0,19287,0,0
 21209,Monk,19299,1,0,19288,0,0
-21210,Get an honorable kill on each of the level 85 Pandaren classes listed below.,0,0,4,0,0,0
-21212,Monk,21210,1,0,19298,0,0
-21213,Priest,21210,1,0,19299,0,0
-21214,Mage,21210,1,0,19297,0,0
-21215,Shaman,21210,1,0,19301,0,0
-21216,Rogue,21210,1,0,19300,0,0
-21217,Warrior,21210,1,0,19302,0,0
+21210,Get an honorable kill on each of the level 35 Pandaren classes listed below.,0,0,4,0,0,0
+21212,Monk,21210,1,0,19298,1,0
+21213,Priest,21210,1,0,19299,6,0
+21214,Mage,21210,1,0,19297,2,0
+21215,Shaman,21210,1,0,19301,3,0
+21216,Rogue,21210,1,0,19300,4,0
+21217,Warrior,21210,1,0,19302,5,0
 21218,Hunter,21210,1,0,19296,0,0
 21219,Pandaren Slayer,15649,1,0,19303,0,0
 21220,Pandaren Slayer,17073,1,0,19304,0,0
@@ -15414,21 +15392,21 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 21611,Reach guild level 30.,0,0,4,0,0,0
 21612,Reach guild level 30.,21611,30,0,13878,0,2
 21623,Reach level 90 on each of the Pandaren classes listed below. (A),0,0,4,0,0,0
-21624,Priest,21623,120,0,19459,6,0
-21625,Warrior,21623,120,0,19458,4,0
-21626,Hunter,21623,120,0,19457,5,0
-21627,Mage,21623,120,0,19456,3,0
-21628,Rogue,21623,120,0,19462,0,0
-21629,Shaman,21623,120,0,19454,1,0
-21630,Monk,21623,120,0,19455,2,0
+21624,Priest,21623,60,0,19459,6,0
+21625,Warrior,21623,60,0,19458,4,0
+21626,Hunter,21623,60,0,19457,5,0
+21627,Mage,21623,60,0,19456,3,0
+21628,Rogue,21623,60,0,19462,0,0
+21629,Shaman,21623,60,0,19454,1,0
+21630,Monk,21623,60,0,19455,2,0
 21652,Reach level 90 on each of the Pandaren classes listed below. (H),0,0,4,0,0,0
-21653,Rogue,21652,120,0,14573,5,0
-21654,Shaman,21652,120,0,19469,0,0
-21655,Monk,21652,120,0,19468,1,0
-21656,Mage,21652,120,0,19472,2,0
-21657,Warrior,21652,120,0,19465,3,0
-21658,Hunter,21652,120,0,19464,4,0
-21659,Priest,21652,120,0,19463,6,0
+21653,Rogue,21652,60,0,14573,5,0
+21654,Shaman,21652,60,0,19469,0,0
+21655,Monk,21652,60,0,19468,1,0
+21656,Mage,21652,60,0,19472,2,0
+21657,Warrior,21652,60,0,19465,3,0
+21658,Hunter,21652,60,0,19464,4,0
+21659,Priest,21652,60,0,19463,6,0
 21660,Classy Pandaren,14599,0,0,14581,6,0
 21661,Classy Pandaren,17122,0,0,19474,6,0
 21662,Obtain 600 skill points in all professions and secondary professions.,0,0,4,0,0,0
@@ -15469,14 +15447,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 21697,,21696,150000,0,4984,0,1
 21702,Pandaren Ambassador (H),0,0,4,0,0,0
 21703,The August Celestials,21702,42000,0,19388,1,0
-21704,Get an honorable kill on each of the level 85 Pandaren classes listed below.,0,0,4,0,0,0
-21705,Rogue,21704,1,0,19289,0,0
-21706,Priest,21704,1,0,19292,0,0
-21707,Shaman,21704,1,0,19290,0,0
-21708,Monk,21704,1,0,19293,0,0
+21704,Get an honorable kill on each of the level 35 Pandaren classes listed below.,0,0,4,0,0,0
+21705,Rogue,21704,1,0,19289,6,0
+21706,Priest,21704,1,0,19292,5,0
+21707,Shaman,21704,1,0,19290,2,0
+21708,Monk,21704,1,0,19293,4,0
 21709,Hunter,21704,1,0,19295,0,0
-21710,Mage,21704,1,0,19294,0,0
-21711,Warrior,21704,1,0,19291,0,0
+21710,Mage,21704,1,0,19294,3,0
+21711,Warrior,21704,1,0,19291,1,0
 21712,Shado-Pan,21702,42000,0,18993,2,0
 21713,Golden Lotus,21702,42000,0,19389,0,0
 21714,The Klaxxi,21702,42000,0,19390,3,0
@@ -22499,16 +22477,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 30177,Let's Do Lunch (Ironforge/Thunder Bluff),20187,1,8,0,2,0
 30178,,30177,0,0,17744,0,32
 30179,,30177,0,0,17747,1,32
-30186,Monk,14371,120,0,22112,7,0
-30187,Monk,15770,120,0,22113,7,0
-30188,Monk,20045,120,0,22114,9,0
-30189,Monk,15078,120,0,22115,8,0
-30190,Monk,16510,120,0,22116,7,0
-30191,Monk,20477,120,0,22117,8,0
-30192,Monk,16501,120,0,22118,7,0
-30193,Monk,14607,120,0,22119,6,0
-30194,Monk,18184,120,0,22120,9,0
-30195,Monk,19618,120,0,22121,7,0
+30186,Monk,14371,60,0,22112,7,0
+30187,Monk,15770,60,0,22113,7,0
+30188,Monk,20045,60,0,22114,9,0
+30189,Monk,15078,60,0,22115,8,0
+30190,Monk,16510,60,0,22116,7,0
+30191,Monk,20477,60,0,22117,8,0
+30192,Monk,16501,60,0,22118,7,0
+30193,Monk,14607,60,0,22119,6,0
+30194,Monk,18184,60,0,22120,9,0
+30195,Monk,19618,60,0,22121,7,0
 30196,Tol'Viron Arena Wins,2919,0,0,21042,5,0
 30197,Tol'Viron Matches,2926,0,0,22122,5,0
 30198,Ring of Valor 5v5 Matches,6137,0,0,22123,5,0
@@ -24675,10 +24653,6 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 33130,Un'Goro Crater,103,1,0,23514,12,0
 33131,Un'Goro Crater,1435,1,0,23515,12,0
 33132,Stonetalon Mountains,1435,1,0,23516,9,0
-33133,Tol'vir Arena Kills,983,0,0,23518,5,0
-33134,Tiger's Peak Arena Kills,983,0,0,23517,6,0
-33135,Tol'viron Arena,14188,0,0,23519,5,0
-33136,Tiger's Peak,14188,0,0,23520,6,0
 33137,30 hks in deepwind gorge,914,30,0,22611,10,3
 33138,Puddle Jumper,33020,0,0,23434,5,0
 33139,Weighed down,33020,0,0,23522,6,0
@@ -25646,7 +25620,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 34296,Smoldering Chests,34253,2,8,0,4,10240
 34297,,34296,1,0,24123,0,0
 34298,,34296,1,0,24124,1,0
-34299,Deepwind Gorge,973,0,0,17413,8,0
+34299,,973,0,0,50455,0,2
 34307,Southsea Firebrew,34163,1,0,24129,6,0
 34308,Timeless Isle - Tomb Bone Apart,0,0,4,0,0,0
 34309,,34308,1,0,24130,0,2
@@ -27966,8 +27940,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 38060,,38059,0,0,25373,0,2
 38061,Sucessfully complete a garrison invasion in a party of 3 players,0,1,4,0,0,0
 38062,,38061,0,0,27304,0,2
-38068,Craft 50 Epic items with an item level of at least 136.,0,0,4,0,0,0
-38069,,38068,50,0,25375,0,1
+38068,Craft 50 Epic items from Draenor.,0,50,5,0,0,8193
+38069,,38068,1,0,51308,0,0
 38070,Get 5000 honorable kills in Draenor. (H),0,0,4,0,0,0
 38071,Get 5000 honorable kills in Draenor.,38070,5000,0,25376,0,1
 38072,Collect 10 Blazing Rings,0,0,4,0,0,0
@@ -35960,7 +35934,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 47489,Boost 2.0 [Hunter|Beast] - Practice,0,0,4,0,0,0
 47490,Use Kill Command,47489,2,0,29829,0,0
 47491,Use Barbed Shot,47489,3,0,40240,1,0
-47492,Use Cobra Shot,47489,5,0,29831,2,0
+47492,Use Cobra Shot,47489,4,0,29831,2,0
 47493,Use Bestial Wrath,47489,1,0,29832,3,0
 47496,7.0 Artifacts - Priest - Holy Acquisition - Objective 1 - LWB,0,0,4,0,0,0
 47498,Heal Vindicator Boros to full health.,47496,0,0,29834,0,0
@@ -35976,7 +35950,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 47509,Portal destroyed,47508,1,0,29836,0,0
 47510,7.0 Invasion - Westfall - Defense - Moonbrook Guard Camp,47466,0,4,0,2,32
 47514,Boost 2.0 [Hunter|Beast] - Special A - Multi-Shot,0,0,4,0,0,0
-47515,Use Multi-Shot on the Arcane Constructs,47514,1,0,29839,0,0
+47515,Use Multi-Shot on the Arcane Constructs,47514,3,0,29839,0,0
 47517,7.0 Artifacts - Priest - Holy Acquisition - Objective 2 - LWB,0,0,4,0,0,0
 47519,Assist Jace Darkweaver.,47517,0,0,29833,0,0
 47520,Moonguard Camp defended,47510,1,0,29841,0,0
@@ -37155,8 +37129,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 48848,,48847,0,0,30562,0,2
 48849,Warden Dungeon - Achievement - Boss 4,0,0,4,0,0,0
 48850,,48849,0,0,30563,0,2
-48851,Cast Ice Lance,48838,2,0,30561,1,0
-48852,Cast Frostbolt,48838,6,0,30560,0,0
+48851,Cast Ice Lance,48838,3,0,30561,1,0
+48852,Cast Frostbolt,48838,8,0,30560,0,0
 48854,Cast Blink,48839,1,0,29248,0,0
 48855,[PH] Finale,48842,0,0,29388,0,0
 48856,Unlock 100 head slot appearances,0,0,4,0,0,0
@@ -42805,7 +42779,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 55153,,52074,0,0,34480,35,0
 55154,,52074,0,0,34481,36,0
 55155,A Classy Outfit,0,0,4,0,0,0
-55156,Class Hall Helm Earned,55155,110,0,5212,0,16
+55156,Class Hall Helm Earned,55155,45,0,5212,0,16
 55157,Class Hall Leggings Earned,55155,8,8,0,3,8208
 55158,,55157,0,0,34484,0,0
 55159,,55157,0,0,34485,1,0
@@ -43118,7 +43092,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 55546,,39018,0,0,34685,5,2
 55547,,52253,10,0,34686,21,0
 55548,,52282,10,0,34686,21,0
-55549,Cast Flurry,48838,2,0,34687,2,0
+55549,Cast Flurry,48838,3,0,34687,2,0
 55550,Northern Hawk Owls defeated with Snowfeather Hatchling,0,3,5,0,0,4096
 55552,,55550,0,0,34688,0,0
 55553,Spring Striders defeated with Sharptalon Hatchling,0,3,5,0,0,4096
@@ -43279,9 +43253,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 55748,7.2 Order Hall - Death Knight - Campaign - Chapter 5 - Mission Complete (JLW),0,0,4,0,0,4096
 55749,,55748,1,0,34788,0,0
 55768,Defeat Helya on Mythic difficulty while you still have Test of the Chosen.,0,0,4,0,0,0
-55770,Demon Hunter,18079,120,0,34791,1,0
-55771,Demon Hunter,15078,120,0,34792,9,0
-55772,Demon Hunter,16501,120,0,34793,8,0
+55770,Demon Hunter,18079,60,0,34791,1,0
+55771,Demon Hunter,15078,60,0,34792,9,0
+55772,Demon Hunter,16501,60,0,34793,8,0
 55776,"Earn Achievement ""The Sword in the Skull""",0,0,4,0,0,0
 55777,,55776,0,0,34794,0,2
 55778,"Player has the achievement ""Boldy, You Sought the Power of Ragnaros""",0,0,4,0,0,0
@@ -55550,7 +55524,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 71754,Captain Hermes,71739,1,0,43611,0,0
 71755,Defeat 15 Master Tamers on Kul Tiras or Zandalar with all Critter pets.,0,15,8,0,0,0
 71756,Captain Hermes,71755,1,0,43631,0,0
-71757,Defeat 15 Master Tamers on Kul Tiras or Zandalar with all Dragon pets.,0,15,8,0,0,0
+71757,Defeat 15 Master Tamers on Kul Tiras or Zandalar with all Dragonkin pets.,0,15,8,0,0,0
 71758,Captain Hermes,71757,1,0,43652,0,0
 71759,Defeat 15 Master Tamers on Kul Tiras or Zandalar with all Elemental pets.,0,15,8,0,0,0
 71760,Captain Hermes,71759,1,0,43671,0,0
@@ -62627,7 +62601,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79497,,79496,1,0,44941,0,0
 79498,Complete a Vision of Stormwind,0,0,4,0,0,4128
 79499,Vision of Stormwind Complete,79498,1,0,44942,0,32
-79500,Hunter,14607,120,0,44943,7,0
+79500,Hunter,14607,60,0,44943,7,0
 79502,Armored Tremorbeast,0,0,4,0,0,0
 79503,Defeat the Armored Tremorbeast,79502,1,0,44945,0,0
 79504,Deadsoul Amalgam,0,0,4,0,0,0
@@ -62803,8 +62777,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 79694,Win Warsong Gulch in under 7 minutes,8437,1,0,45076,1,2
 79695,Return the flag 50 times,2383,50,0,45077,1,1
 79696,Killed a Sprinting Player,6347,1,0,45078,1,2
-79697,Kill 2 flag carriers before they leave the Silverwing Flag Room,2077,2,0,45079,1,1
-79698,Kill 2 flag carriers before they leave the Warsong Flag Room,5246,2,0,45080,0,1
+79697,Kill 2 flag carriers before they leave the Silverwing Flag Room,2077,2,0,45079,1,2
+79698,Kill 2 flag carriers before they leave the Warsong Flag Room,5246,2,0,45080,0,2
 79699,"In a single Warsong Gulch battle, carry and capture the flag 3 times without dying.",3655,0,4,0,0,0
 79700,win warsong,79699,1,0,45081,0,2
 79701,3 captures and no death,79699,3,0,45082,1,2
@@ -64724,20 +64698,6 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 81926,8.3 Visions - Stormwind - Old Town - Vanessa - Intro,0,0,4,0,0,4096
 81927,Find Vanessa VanCleef.,81926,1,0,46338,0,0
 81933,,67549,50,0,46342,3,2
-81939,Blade's Edge Arena,14188,0,0,46346,7,0
-81940,Nagrand Arena,14188,0,0,46347,8,0
-81941,Ashamane's Fall,14188,0,0,46348,9,0
-81942,Black Rook Hold Arena,14188,0,0,46349,10,0
-81943,Hook Point,14188,0,0,46350,11,0
-81944,Mugambala,14188,0,0,46351,12,0
-81945,Robodome,14188,0,0,46352,13,0
-81946,Black Rook Hold Arena,983,0,0,46353,7,0
-81947,Nagrand Arena,983,0,0,46354,8,0
-81948,Ashamane's Fall,983,0,0,46355,9,0
-81949,Blade's Edge Arena,983,0,0,46356,10,0
-81950,Hook Point,983,0,0,46357,11,0
-81951,Mugambala,983,0,0,46358,12,0
-81952,The Robodrome,983,0,0,46359,13,0
 81953,Ruins of Lordaeron 2v2 Wins,6151,0,0,46360,6,0
 81954,Ruins of Lordaeron 2v2 Wins,6151,0,0,46361,7,0
 81955,Ruins of Lordaeron 2v2 Wins,6151,0,0,46362,8,0
@@ -65110,7 +65070,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82520,Quests Completed,0,30,5,0,0,10240
 82521,Quests completed,82520,30,0,46663,0,0
 82522,Wage battle in the Court of Harvesters,0,0,4,0,0,0
-82523,Awaken Darkwing Stoneborn,82522,5,0,46664,0,0
+82523,Awaken Darkwing Stoneborn,82522,6,0,46664,0,0
 82524,Dominance Gate reached,0,0,4,0,0,0
 82525,,82524,0,0,46665,0,0
 82526,Dungeons Completed,0,0,4,0,0,32
@@ -65121,8 +65081,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82531,Menagerie of the Master reached,82530,0,0,46668,0,0
 82532,9.0 Revendreth Scenario: Stage 4,0,0,4,0,0,0
 82533,Renathal empowered,82532,1,0,46669,2,0
-82534,Sire Denathrius confronted,0,0,4,0,0,0
-82535,Sire Denathrius confronted,82534,0,0,46670,0,0
+82534,Speak with Prince Renathal,0,0,4,0,0,0
+82535,Speak with Prince Renathal.,82534,0,0,46670,0,0
 82536,9.0 Revendreth Scenario: General Kaal,0,0,4,0,0,0
 82537,Defeat General Kaal,82536,0,0,46671,0,0
 82541,"8.2 Dungeon - Operation: Mechagon, City - Challenge",0,0,4,0,0,0
@@ -65299,7 +65259,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 82725,Assault a tower,82724,1,0,46728,1,0
 82726,Graveyards Defended,5560,1,8,0,4,8192
 82727,Defend a graveyard,82726,1,0,46729,1,0
-82728,Win in 6 minutes,7771,0,4,0,0,8192
+82728,Win in 6 minutes,7771,1,8,0,0,8194
 82729,Win in 6 minutes,82728,1,0,46730,1,2
 82730,Kobold Cave Owned,511,1,8,0,0,8192
 82731,Kobold Cave Owned,82730,1,0,46732,1,2
@@ -66651,8 +66611,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 84897,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 9 - Spawn Real Boss - GJC,0,0,4,0,0,0
 84898,,84897,1,0,47972,0,0
 84900,,82946,1,0,47973,34,0
-84901,Completed NPE On This Character,0,1,8,0,0,8194
-84902,"Alliance NPE - ""The Nation of Kul Tiras""",84901,0,0,47974,0,0
+84901,Complete Exile's Reach.,0,1,8,0,0,2
+84902,"Alliance NPE - ""The Nation of Kul Tiras""",84901,0,0,47974,0,2
 84907,9.0 Ardenweald - MHZ - COV - Ch 2 - Entered the Maw - (STM),0,0,4,0,0,4096
 84908,,84907,0,0,47977,0,0
 84915,9.0 Bastion Campaign - Ch 09 - Loyalty - Stage 3 - Summon Purity - GJC,0,0,4,0,0,0
@@ -66968,81 +66928,81 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85321,Shatter 18 Undying Stonefiends.,85320,1,0,48217,0,0
 85322,Speak with Bolvar to peer into Torghast,0,0,4,0,0,4096
 85323,Speak with Bolvar to peer into Torghast,85322,0,0,48218,0,0
-85324,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85324,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85325,,85324,0,0,48219,0,0
-85326,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85326,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85327,,85326,0,0,48221,0,0
 85328,New Criteria Tree,0,0,4,0,0,0
 85329,,85328,0,0,48222,0,0
 85330,Crithto,0,0,4,0,0,4096
 85331,Crithto,85330,0,0,48223,0,0
-85332,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85332,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85333,,85332,0,0,48224,0,0
-85334,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85334,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85335,,85334,0,0,48225,0,0
 85338,9.0 Bastion - Path of Ascension - Scenario - Step 1 - Preparation (JLW),0,0,4,0,0,0
 85339,Choose an enemy and difficulty to fight,85338,1,0,48227,1,0
-85340,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85340,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85341,,85340,0,0,48228,0,0
 85342,Complete 4 World Quests (Alliance War Campaign) on Zandalar,0,4,5,0,0,4096
 85343,,85342,0,0,48229,0,0
 85344,,85342,0,0,48230,1,0
 85345,,85342,0,0,48231,2,0
-85346,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85346,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85347,,85346,0,0,48232,0,0
-85348,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85348,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85349,,85348,0,0,48233,0,0
-85350,Complete 4 World Quests in Bastion,0,4,5,0,0,6144
+85350,Complete 3 World Quests in Bastion,0,3,5,0,0,6144
 85351,,85350,0,0,48234,0,0
-85352,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85352,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85353,,85352,0,0,48235,0,0
-85354,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85354,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85355,,85354,0,0,48236,0,0
-85356,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85356,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85357,,85356,0,0,48237,0,0
-85358,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85358,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85359,,85358,0,0,48238,0,0
 85360,Choose a soulbind,85338,1,0,48239,0,0
-85361,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85361,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85362,,85361,0,0,48240,0,0
-85363,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85363,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85364,,85363,0,0,48241,0,0
-85365,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85365,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85366,,85365,0,0,48242,0,0
-85367,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85367,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85368,,85367,0,0,48243,0,0
 85369,(Optional) Equip your soulbind,85338,1,0,48244,2,0
-85370,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85370,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85371,,85370,0,0,48245,0,0
-85372,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85372,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85373,,85372,0,0,48246,0,0
-85374,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85374,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85375,,85374,0,0,48247,0,0
-85376,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+85376,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 85377,,85376,0,0,48248,0,0
-85378,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85378,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85379,,85378,0,0,48249,0,0
-85380,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85380,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85381,,85380,0,0,48250,0,0
-85382,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85382,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85383,,85382,0,0,48251,0,0
-85384,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+85384,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 85385,,85384,0,0,48252,0,0
-85386,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85386,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85387,,85386,0,0,48253,0,0
-85388,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85388,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85389,,85388,0,0,48254,0,0
-85390,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85390,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85391,,85390,0,0,48255,0,0
-85392,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+85392,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 85393,,85392,0,0,48256,0,0
-85394,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85394,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85395,,85394,0,0,48257,0,0
-85396,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85396,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85397,,85396,0,0,48258,0,0
-85398,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85398,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85399,,85398,0,0,48259,0,0
-85400,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+85400,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 85401,,85400,0,0,48260,0,0
 85402,9.0 Bastion - Path of Ascension - Tutorial - 02 - Gather Materials - Depleted Goliath Core (JLW),0,2,5,0,0,4096
 85403,Depleted Goliath Core,85402,1,0,48261,0,0
@@ -67110,7 +67070,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85469,Escape the Necropolis,85468,1,0,47895,0,0
 85470,Residue Evil,0,0,4,0,0,0
 85471,Defeat 8 Forlorn Captives.,85470,1,0,48306,0,0
-85472,"Horde NPE - ""Mission Statement""",84901,0,0,48307,1,0
+85472,"Horde NPE - ""Mission Statement""",84901,0,0,48307,1,2
 85479,9.0 Revendreth - Ember Court - Perk 2 - Guest of Honor - Bonus Objective (JDA),0,0,4,0,0,4096
 85480,,85479,1,0,48313,0,0
 85495,9.0 Revendreth - Ember Court - Staff 1 - Bonus Objective (JDA),0,0,4,0,0,4096
@@ -67274,12 +67234,12 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85717,Various Ardenweald Activities,0,0,4,0,0,16
 85718,Various Maldraxxus Activities,0,0,4,0,0,16
 85719,Various Revendreth Activities,0,0,4,0,0,16
-85720,Explore Bastion,0,0,4,0,0,16
+85720,Explore Bastion,0,0,4,0,0,0
 85721,Explore Ardenweald,0,0,4,0,0,16
 85722,Explore Maldraxxus,0,0,4,0,0,16
 85723,Explore Revendreth,0,0,4,0,0,16
-85724,Vignettes: Bastion,0,15,8,0,0,0
-85725,Vignettes: Maldraxxus,0,15,8,0,0,0
+85724,Vignettes: Bastion,0,15,4,0,0,0
+85725,Vignettes: Maldraxxus,0,15,4,0,0,0
 85726,Vignettes: Ardenweald,0,15,8,0,0,0
 85727,Vignettes: Revendreth,0,15,8,0,0,0
 85728,Unique Treasures: Bastion,0,0,4,0,0,0
@@ -67330,7 +67290,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85775,Amarth defeated,85773,1,0,48001,1,0
 85776,Surgeon Stitchflesh defeated,85773,1,0,48002,2,0
 85777,Nalthor the Rimebinder defeated,85773,1,0,48003,3,0
-85778,Enemy Forces,85773,262,9,0,4,0
+85778,Enemy Forces,85773,283,9,0,4,0
 85779,,85768,9999,0,48468,2,0
 85780,,85778,9999,0,48468,2,0
 85781,9.0 Dungeon - De Other Side - Challenge,0,0,4,0,0,0
@@ -67338,7 +67298,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85783,The Manastorms defeated,85781,1,0,48471,1,0
 85784,Dealer Xy'exa defeated,85781,1,0,48470,2,0
 85785,Mueh'zala defeated,85781,1,0,48472,3,0
-85786,Enemy Forces,85781,332,9,0,4,0
+85786,Enemy Forces,85781,384,9,0,4,0
 85787,,85786,9999,0,48468,2,0
 85788,9.0 Dungeon - Halls of Atonement - Challenge,0,0,4,0,0,0
 85789,Halkias defeated,85788,1,0,48110,0,0
@@ -67359,7 +67319,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85804,Executor Tarvold defeated,85802,1,0,48474,1,0
 85805,Grand Proctor Beryllia defeated,85802,1,0,48475,2,0
 85806,General Kaal defeated,85802,1,0,47827,3,0
-85807,Enemy Forces,85802,405,9,0,4,0
+85807,Enemy Forces,85802,364,9,0,4,0
 85808,,85807,9999,0,48468,2,0
 85809,9.0 Dungeon - Challenge - Theater of Pain,0,0,4,0,0,0
 85810,Affront of Challengers defeated,85809,1,0,48437,0,0
@@ -67414,36 +67374,36 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 85888,Alchemy,85886,100,0,48509,1,2
 85889,Alchemy,85886,115,0,48510,2,2
 85890,Alchemy,85886,100,0,48511,3,2
-85891,Alchemy,85886,175,0,48512,4,2
+85891,Alchemy,85886,150,0,48512,4,2
 85892,Alchemy,85886,100,0,48513,5,2
 85893,Alchemy,85886,100,0,48514,6,2
 85894,Alchemy,85886,100,0,48515,7,2
-85895,Alchemy,85886,175,0,48516,8,2
-85896,Alchemy,85886,300,0,48517,9,2
+85895,Alchemy,85886,150,0,48516,8,2
+85896,Alchemy,85886,150,0,48517,9,2
 85897,Alchemy,85886,100,0,48518,10,2
 85898,"Obtain the maximum skill points in a ""Shadowlands"" category of two primary professions.",0,2,8,0,0,0
 85899,Alchemy,85898,175,0,48508,0,2
 85900,Alchemy,85898,100,0,48509,1,2
 85901,Alchemy,85898,115,0,48510,2,2
 85902,Alchemy,85898,100,0,48511,3,2
-85903,Alchemy,85898,175,0,48512,4,2
+85903,Alchemy,85898,150,0,48512,4,2
 85904,Alchemy,85898,100,0,48513,5,2
 85905,Alchemy,85898,100,0,48514,6,2
 85906,Alchemy,85898,100,0,48515,7,2
-85907,Alchemy,85898,175,0,48516,8,2
-85908,Alchemy,85898,300,0,48517,9,2
+85907,Alchemy,85898,150,0,48516,8,2
+85908,Alchemy,85898,150,0,48517,9,2
 85909,Alchemy,85898,100,0,48518,10,2
 85910,"Raise all primary professions to maximum skill points in the ""Shadowlands"" category.",0,2,4,0,0,0
 85911,Shadowlands Alchemy,85910,175,0,48508,0,0
 85912,Shadowlands Blacksmithing,85910,100,0,48509,1,0
 85913,Shadowlands Enchanting,85910,115,0,48510,2,0
 85914,Shadowlands Engineering,85910,100,0,48511,3,0
-85915,Shadowlands Herbalism,85910,175,0,48512,4,0
+85915,Shadowlands Herbalism,85910,150,0,48512,4,0
 85916,Shadowlands Inscription,85910,100,0,48513,5,0
 85917,Shadowlands Jewelcrafting,85910,100,0,48514,6,0
 85918,Shadowlands Leatherworking,85910,100,0,48515,7,0
-85919,Shadowlands Mining,85910,175,0,48516,8,0
-85920,Shadowlands Skinning,85910,300,0,48517,9,0
+85919,Shadowlands Mining,85910,150,0,48516,8,0
+85920,Shadowlands Skinning,85910,150,0,48517,9,0
 85921,Shadowlands Tailoring,85910,100,0,48518,10,0
 85922,All Shattered Devastators Destroyed,0,0,4,0,0,0
 85923,Destroy First Shattered Devastator.,85922,1,0,48519,0,0
@@ -67542,7 +67502,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86017,Crypt Kicker,85719,1,0,48143,6,0
 86018,Best Bud With Benefits,85719,1,0,48592,7,0
 86019,,84666,1,0,48593,1,2048
-86020,Bastion: 50 Lost Anima Shards,0,50,5,0,0,0
+86020,Bastion: 50 Lost Anima Shards,0,50,4,0,0,8193
 86021,Defeat at least 1 Boss in Path of Ascension,0,1,8,0,0,1
 86022,,86021,1,0,48612,0,0
 86023,,86021,1,0,48613,1,0
@@ -67667,7 +67627,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86142,,86103,0,0,48650,38,0
 86143,,86103,0,0,48651,39,0
 86144,Defeat at least 7 Bosses in Path of Ascension,0,7,8,0,0,0
-86145,,86144,0,0,48612,0,0
+86145,,86144,0,0,48612,0,1
 86146,,86144,0,0,48613,1,0
 86147,,86144,0,0,48614,2,0
 86148,,86144,0,0,48615,3,0
@@ -68064,7 +68024,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86544,9.0 Revendreth - Ember Court - Tutorial - Step 2 (JDA),0,0,4,0,0,0
 86545,Improve Temel's mood by cleaning rubble piles,86544,4,0,48779,0,0
 86546,9.0 Revendreth - Ember Court - Tutorial - Step 3 (JDA),0,0,4,0,0,0
-86547,Greet the Ember Court's first guest,86546,0,0,48761,0,0
+86547,Await the guest's arrival,86546,0,0,48761,0,0
 86548,9.0 Revendreth - Ember Court - Tutorial - Step 4 (JDA),0,0,4,0,0,0
 86549,Pick up the formal teapot,86548,0,0,48762,0,0
 86550,Improve Theotar's mood by pouring him a cup of tea,86548,0,0,48763,1,0
@@ -68089,80 +68049,71 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86575,Wrigglemortis,85726,1,0,48783,5,0
 86576,Deifir the Untamed,85726,1,0,48784,6,0
 86577,Old Ardeite,85726,1,0,48785,7,0
-86578,Old Ardeite,85726,1,0,48786,8,0
+86578,Skuld Vit,85726,1,0,48786,8,0
 86579,Hunter Vivanna,85726,1,0,48787,9,0
 86580,Mymaen,85726,1,0,48788,10,0
-86581,"Astra, As Azshara",85726,1,0,48709,11,0
-86582,"Mi'kai, as Argus",85726,1,0,48708,12,0
-86583,"Glimmerdust, As Kil'jaeden",85726,1,0,48707,13,0
-86584,"Senthii, As Gul'dan",85726,1,0,48706,14,0
-86585,"Glimmerdust, As Jaina",85726,1,0,48704,15,0
-86586,"Dreamweaver, As N'Zoth",85726,1,0,48710,16,0
-86587,"Niya, As Xavius",85726,1,0,48705,17,0
-86588,Rotbriar Changeling,85726,1,0,48789,18,0
-86589,Egg-Tender Leh'go,85726,1,0,48790,19,0
-86590,Rootwrithe,85726,1,0,48791,20,0
-86591,The Slumbering Emperor,85726,1,0,48792,21,0
-86592,Night Mare,85726,1,0,48793,22,0
-86593,Dustbrawl,85726,1,0,48794,23,0
-86594,Dustbrawl,85726,1,0,48795,24,0
-86595,Valfir the Unrelenting,85726,1,0,48796,25,0
-86596,Soultwister Cero,85726,1,0,48797,26,0
-86597,Soultwister Cero,85726,1,0,48798,27,0
+86588,Rotbriar Changeling,85726,1,0,48789,11,0
+86589,Egg-Tender Leh'go,85726,1,0,48790,12,0
+86590,Rootwrithe,85726,1,0,48791,13,0
+86591,The Slumbering Emperor,85726,1,0,48792,14,0
+86592,Night Mare,85726,1,0,48793,15,0
+86593,Dustbrawl,85726,1,0,48794,16,0
+86594,Dustbrawl,85726,1,0,48795,17,0
+86595,Valfir the Unrelenting,85726,1,0,48796,18,0
+86596,Soultwister Cero,85726,1,0,48797,19,0
+86597,Soultwister Cero,85726,1,0,48798,20,0
 86598,Soulstalker Doina,85727,1,0,48799,0,0
 86599,Scrivener Lenua,85727,1,0,48800,1,0
 86600,Innervus,85727,1,0,48801,2,0
 86601,Tomb Burster,85727,1,0,48802,3,0
 86602,Stonefist,85727,1,0,48803,4,0
-86603,Forgemaster Madalav,85727,1,0,48804,5,0
-86604,Worldedge Gorger,85727,1,0,48805,6,0
-86605,Worldedge Gorger,85727,1,0,48806,7,0
-86606,Executioner Adrastia,85727,1,0,48807,8,0
-86607,Lord Mortegore,85727,1,0,48808,9,0
-86608,Leeched Soul,85727,1,0,48809,10,0
-86609,Endlurker,85727,1,0,48810,11,0
-86610,Amalgamation of Light,85727,1,0,48811,12,0
-86611,Harika the Horrid,85727,1,0,48813,14,0
-86612,Amalgamation of Filth,85727,1,0,48814,15,0
-86613,Famu the Infinite,85727,1,0,48815,16,0
-86614,Azgar,85727,1,0,48816,17,0
-86615,Tollkeeper Varaboss,85727,1,0,48812,13,0
-86616,Hopecrusher,85727,1,0,48817,18,0
-86617,Bog Beast,85727,1,0,48818,19,0
-86618,Executioner Aatron,85727,1,0,48819,20,0
-86619,Huntmaster Petrus,85727,1,0,48820,21,0
-86620,Grand Arcanist Dimitri,85727,1,0,48821,22,0
-86621,Manifestation of Wrath,85727,1,0,48822,23,0
-86622,Herculon,85724,1,0,48823,0,0
-86623,Fallen Acolyte Erisne,85724,1,0,48824,1,0
-86624,Sigilback,85724,1,0,48825,2,0
-86625,Sigilback,85724,1,0,48826,3,0
-86626,Nemaeus,85724,1,0,48827,4,0
-86627,Baedos,85724,1,0,48828,5,0
-86628,Wingflayer the Cruel,85724,1,0,48829,6,0
-86629,Nikara Blackheart,85724,1,0,48830,7,0
-86630,Dionae,85724,1,0,48831,8,0
-86631,Sundancer,85724,1,0,48832,9,0
-86632,"Basilofos, King of the Hill",85724,1,0,48833,10,0
-86633,Dark Watcher,85724,1,0,48834,11,0
-86634,Cloudfeather Patriarch,85724,1,0,48835,12,0
-86635,Enforcer Aegeon,85724,1,0,48836,13,0
-86636,Unstable Memory,85724,1,0,48837,14,0
-86637,Embodied Hunger,85724,1,0,48838,15,0
-86638,Xixin the Ravening,85724,1,0,48839,16,0
-86639,Worldfeaster Chronn,85724,1,0,48840,17,0
-86640,Collector Astorestes,85724,1,0,48841,18,0
-86641,Demi the Relic Hoarder,85724,1,0,48842,19,0
-86642,Bookkeeper Mnemis,85724,1,0,48843,20,0
-86643,Aspirant Eolis,85724,1,0,48844,21,0
-86644,Echo of Aella,85724,1,0,48845,22,0
-86645,Corrupted Clawguard,85724,1,0,48846,23,0
-86646,Corrupted Clawguard,85724,1,0,48847,24,0
+86604,Worldedge Gorger,85727,1,0,48805,5,0
+86605,Sire Ladinas,85727,1,0,48806,6,0
+86606,Executioner Adrastia,85727,1,0,48807,7,0
+86607,Lord Mortegore,85727,1,0,48808,8,0
+86608,Leeched Soul,85727,1,0,48809,9,0
+86609,Endlurker,85727,1,0,48810,10,0
+86610,Amalgamation of Light,85727,1,0,48811,11,0
+86612,Amalgamation of Filth,85727,1,0,48814,13,0
+86613,Famu the Infinite,85727,1,0,48815,14,0
+86614,Azgar,85727,1,0,48816,15,0
+86615,Tollkeeper Varaboss,85727,1,0,48812,12,0
+86616,Hopecrusher,85727,1,0,48817,16,0
+86617,Bog Beast,85727,1,0,48818,17,0
+86618,Executioner Aatron,85727,1,0,48819,18,0
+86619,Huntmaster Petrus,85727,1,0,48820,19,0
+86620,Grand Arcanist Dimitri,85727,1,0,48821,20,0
+86621,Manifestation of Wrath,85727,1,0,48822,21,0
+86622,Herculon,85724,1,0,50582,0,0
+86623,Fallen Acolyte Erisne,85724,1,0,50596,1,0
+86624,Sigilback,85724,1,0,50597,2,0
+86625,Cloudtail,85724,1,0,50598,3,0
+86626,Nemaeus,85724,1,0,50599,4,0
+86627,Baedos,85724,1,0,50592,5,0
+86628,Wingflayer the Cruel,85724,1,0,50600,6,0
+86629,Vesper Repair: Sophia's Aria,85724,1,0,50594,7,0
+86630,Dionae,85724,1,0,50595,8,0
+86631,Sundancer,85724,1,0,50601,9,0
+86632,"Basilofos, King of the Hill",85724,1,0,50602,10,0
+86633,Dark Watcher,85724,1,0,50603,11,0
+86634,Cloudfeather Guardian,85724,1,0,50604,12,0
+86635,Enforcer Aegeon,85724,1,0,50605,13,0
+86636,Unstable Memory,85724,1,0,50606,14,0
+86637,Embodied Hunger,85724,1,0,50607,15,0
+86638,Xixin the Ravening,85724,1,0,50608,16,0
+86639,Worldfeaster Chronn,85724,1,0,50609,17,0
+86640,Collector Astorestes,85724,1,0,50610,18,0
+86641,Demi the Relic Hoarder,85724,1,0,50611,19,0
+86642,Bookkeeper Mnemis,85724,1,0,50612,20,0
+86643,Aspirant Eolis,85724,1,0,50613,21,0
+86644,Echo of Aella,85724,1,0,50614,22,0
+86645,Corrupted Clawguard,85724,1,0,50615,23,0
+86646,Reekmonger,85724,1,0,50616,24,0
 86647,Indomitable Schmitd,85725,1,0,48848,7,0
-86648,Pesticide,85725,1,0,48849,19,0
+86648,Pesticide,85725,1,0,48849,18,0
 86649,Tahonta,85725,1,0,48850,11,0
 86650,Deadly Dapperling,85725,1,0,48851,16,0
-86651,Deepscar,85725,1,0,48852,20,0
+86651,Deepscar,85725,1,0,48852,19,0
 86652,Gristlebeak,85725,1,0,48853,13,0
 86654,Devour'us,85725,1,0,48855,14,0
 86656,Scunner,85725,1,0,48857,1,0
@@ -68173,11 +68124,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86667,Nirvaska the Summoner,85725,1,0,48868,8,0
 86668,Smorgas The Feaster,85725,1,0,48869,10,0
 86669,Thread Mistress Leeda,85725,1,0,48870,9,0
-86670,Gieger,85725,1,0,48871,18,0
-86671,Bonebreaker Moroc,85725,1,0,48872,0,0
+86671,Corpsecutter Moroc,85725,1,0,48872,0,0
 86672,Sister Chelicerae,85725,1,0,48873,5,0
 86673,Sabreil the Bonecleaver,85725,1,0,48874,12,0
-86674,Warbringer Mal'Korak,85725,1,0,48875,21,0
+86674,Warbringer Mal'Korak,85725,1,0,48875,20,0
 86675,Bubbleblood,85725,1,0,48876,17,0
 86676,9.0 Prologue Dailies Unlocked,0,0,4,0,0,2
 86677,,86676,0,0,48878,0,0
@@ -68280,17 +68230,17 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86776,Dealer Xy'exa defeated,86773,1,0,48470,2,0
 86777,Mueh'zala defeated,86773,1,0,48472,3,0
 86778,Mists of Tirna Scithe,0,0,4,0,0,0
-86779,Ingra Maloch defeat,86778,1,0,49008,0,0
+86779,Ingra Maloch defeated,86778,1,0,49008,0,0
 86780,Mistcaller defeated,86778,1,0,49009,1,0
-86781,Tred'ova defeat,86778,1,0,49010,2,0
+86781,Tred'ova defeated,86778,1,0,49010,2,0
 86782,Mists of Tirna Scithe (Heroic),0,0,4,0,0,0
 86783,Ingra Maloch defeat,86782,1,0,49008,0,0
 86784,Mistcaller defeated,86782,1,0,49009,1,0
 86785,Tred'ova defeat,86782,1,0,49010,2,0
 86786,Mists of Tirna Scithe (Mythic),0,0,4,0,0,0
-86787,Ingra Maloch defeat,86786,1,0,49008,0,0
+86787,Ingra Maloch defeated,86786,1,0,49008,0,0
 86788,Mistcaller defeated,86786,1,0,49009,1,0
-86789,Tred'ova defeat,86786,1,0,49010,2,0
+86789,Tred'ova defeated,86786,1,0,49010,2,0
 86790,De Other Side - Mythic Defeat Muah'zala (Guild),0,0,4,0,0,0
 86791,,86790,1,0,49011,0,2
 86792,Halls of Atonement - Mythic Defeat Lord Chamberlain (Guild),0,0,4,0,0,0
@@ -68315,19 +68265,19 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 86811,,85778,8,0,49025,10,0
 86812,,85778,4,0,49026,11,0
 86813,,85778,6,0,49027,12,0
-86814,,85778,10,0,49028,13,0
-86815,,85778,10,0,49029,14,0
+86814,,85778,15,0,49028,13,0
+86815,,85778,12,0,49029,14,0
 86816,,85778,1,0,49030,15,0
-86817,,85778,1,0,49031,16,0
-86818,,85778,1,0,49032,17,0
-86819,,85778,5,0,49033,18,0
-86820,,85778,5,0,49034,19,0
+86817,,85778,0,0,49031,16,0
+86818,,85778,0,0,49032,17,0
+86819,,85778,4,0,49033,18,0
+86820,,85778,4,0,49034,19,0
 86821,,85778,4,0,49035,20,0
-86822,,85778,8,0,49036,22,0
-86823,,85778,8,0,49037,23,0
-86824,,85778,3,0,49038,24,0
-86825,,85778,8,0,49039,25,0
-86826,,85778,3,0,49040,26,0
+86822,,85778,4,0,49036,22,0
+86823,,85778,6,0,49037,23,0
+86824,,85778,0,0,49038,24,0
+86825,,85778,6,0,49039,25,0
+86826,,85778,0,0,49040,26,0
 86827,Statistic - Muah'zala (Normal),0,0,4,0,0,0
 86828,,86827,0,0,48994,0,2
 86829,Statistic - Muah'zala (Heroic),0,0,4,0,0,0
@@ -68623,19 +68573,19 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87120,9.0 Ardenweald - COV - Ch 2 - Tyrande Scenario - Step 12  - (STM),0,0,4,0,0,0
 87121,Speak with Shandris to leave,87120,0,0,48460,0,2080
 87122,,85768,4,0,49193,9,0
-87123,,85778,5,0,49194,27,0
-87124,,85778,8,0,49195,28,0
-87127,9.0 Revendreth - Ember Court - Tutorial - Q03a - Guest (JDA),0,0,4,0,0,4096
+87123,,85778,4,0,49194,27,0
+87124,,85778,5,0,49195,28,0
+87127,9.0 Revendreth - Ember Court - Tutorial - Q03a - Guest (JDA),0,1,5,0,0,4096
 87129,,87127,0,0,49196,0,0
-87134,9.0 Revendreth - Ember Court - Tutorial - Q03a - Entertainment (JDA),0,0,4,0,0,4096
+87134,9.0 Revendreth - Ember Court - Tutorial - Q03a - Entertainment (JDA),0,1,5,0,0,4096
 87135,,87134,0,0,49199,0,0
-87136,9.0 Revendreth - Ember Court - Tutorial - Q03c - Refreshment (JDA),0,0,4,0,0,4096
+87136,9.0 Revendreth - Ember Court - Tutorial - Q03c - Refreshment (JDA),0,1,5,0,0,4096
 87137,,87136,0,0,49200,0,0
-87138,9.0 Revendreth - Ember Court - Tutorial - Q04 (JDA),0,0,4,0,0,4096
+87138,9.0 Revendreth - Ember Court - Tutorial - Q04 (JDA),0,1,5,0,0,4096
 87139,,87138,0,0,49201,0,0
-87140,9.0 Revendreth - Ember Court - Tutorial - Q04 (JDA),0,0,4,0,0,4096
+87140,9.0 Revendreth - Ember Court - Tutorial - Q04 (JDA),0,1,5,0,0,4096
 87141,,87140,0,0,49202,0,0
-87142,The Third Fall of Kel'thuzad,85869,0,0,48146,7,16
+87142,The Third Fall of Kel'Thuzad,85869,0,0,48146,7,16
 87143,,85800,12,0,49210,4,0
 87144,"9.0 Achievement - Niya, As Xavius",0,0,4,0,0,0
 87145,"Niya, As Xavius",87144,1,0,48705,0,0
@@ -68677,23 +68627,21 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87181,Complete a Trial of Zo'Sorg victorious within the Shadowlands while within War Mode.,87180,1,8,0,0,0
 87182,,87181,0,0,49220,0,0
 87183,,87181,0,0,49221,1,0
-87184,Complete each of the Trials of Zo'Sorg victorious 20 tiimes within the Shadowlands while within War Mode.,0,0,4,0,0,8194
-87185,Complete a Trial of Zo'Sorg victorious within the Shadowlands while within War Mode.,87184,1,8,0,0,0
-87186,,87185,10,0,49220,0,0
-87187,,87185,10,0,49221,1,0
-87188,Kill 50 Enemy Players who follow each of the following Covenants.,0,0,4,0,0,0
-87189,Venthyr,87188,50,0,49222,0,32
-87190,Night Fae,87188,50,0,49223,1,32
-87191,Necrolord,87188,50,0,49224,2,32
-87192,Kyrian,87188,50,0,49225,3,32
+87184,Complete each of the Trials of Zo'Sorg victorious 10 tiimes within the Shadowlands while within War Mode.,0,0,4,0,0,0
+87186,Trial of Strength,87184,10,0,50819,0,0
+87188,Kill 20 Enemy Players who follow each of the following Covenants.,0,0,4,0,0,0
+87189,Venthyr,87188,20,0,49222,0,32
+87190,Night Fae,87188,20,0,49223,1,32
+87191,Necrolord,87188,20,0,49224,2,32
+87192,Kyrian,87188,20,0,49225,3,32
 87193,Complete the World PvP achievements listed below.,0,0,4,0,0,0
-87194,,87193,0,0,49226,0,0
-87195,,87193,0,0,49227,1,0
-87196,,87193,0,0,49228,2,0
-87197,,87193,0,0,49229,3,0
-87198,,87193,0,0,49230,4,0
-87199,,87193,0,0,49231,5,0
-87200,,87193,0,0,49232,6,0
+87194,Covenant Combat,87193,0,0,49226,0,0
+87195,The Many Trials of Zo'Sorg,87193,0,0,49227,1,0
+87196,Impressing Zo'Sorg,87193,0,0,49228,2,0
+87197,Tour of Duty: Bastion,87193,0,0,49229,3,0
+87198,Tour of Duty: Maldraxxus,87193,0,0,49230,4,0
+87199,Tour of Duty: Revendreth,87193,0,0,49231,5,0
+87200,Tour of Duty: Ardenweald,87193,0,0,49232,6,0
 87201,Complete Running a Muck.,0,0,4,0,0,4096
 87202,,87201,1,0,49233,0,0
 87203,DER EXAMPLE,0,0,4,0,0,0
@@ -68720,7 +68668,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87224,,87223,1,0,49242,0,0
 87225,Abduction Scene Viewed (H),0,0,4,0,0,6144
 87226,Learn about your leaders' fate,87225,1,0,49243,0,0
-87227,9.0 Revendreth - Ember Court - Shared - Use RSVP (JDA),0,0,4,0,0,4096
+87227,9.0 Revendreth - Ember Court - Shared - Use RSVP (JDA),0,1,5,0,0,4096
 87228,,87227,0,0,49244,0,0
 87229,Beastwarrens - Hunt 03 - Kill Roiling Stygia,0,0,4,0,0,0
 87230,Find and destroy Roiling Stygia,87229,4,0,49245,0,0
@@ -68730,7 +68678,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87234,Find and destroy Fused Stygia,87233,2,0,49247,0,0
 87235,Beastwarrens - Hunt 03 - Kill Tempered Stygia,0,0,4,0,0,0
 87236,Destroy the Tempered Stygia,87235,0,0,49248,0,0
-87237,9.0 Revendreth - Ember Court - Shared - Use Entertainment Contract (JDA),0,0,4,0,0,4096
+87237,9.0 Revendreth - Ember Court - Shared - Use Entertainment Contract (JDA),0,1,5,0,0,4096
 87238,,87237,0,0,49249,0,0
 87239,Beastwarrens - Hunt 01 - Find and stop the rituals,0,0,4,0,0,0
 87240,Stop the feeding rituals,87239,6,0,49250,0,0
@@ -68738,7 +68686,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87242,Defeat the Gorged Shadehound,87241,1,0,49251,0,0
 87243,Destroy Second Shattered Devastator.,85922,1,0,49252,1,0
 87244,Destroy Third Shattered Devastator.,85922,1,0,49253,2,0
-87245,9.0 Revendreth - Ember Court - Shared - Use Refreshments Contract (JDA),0,0,4,0,0,4096
+87245,9.0 Revendreth - Ember Court - Shared - Use Refreshments Contract (JDA),0,1,5,0,0,4096
 87246,,87245,0,0,49254,0,0
 87247,World Quests in Bastion completed,0,2,5,0,0,4096
 87248,,87247,0,0,49255,0,2
@@ -68772,8 +68720,6 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87276,,87275,0,0,49269,0,2
 87277,World Quests in Revendreth completed,0,5,5,0,0,4096
 87278,,87277,0,0,49270,0,2
-87279,9.0 Revendreth - Ember Court - Tutorial - Q03a - Guest (JDA),0,0,4,0,0,4096
-87280,,87279,0,0,49271,0,0
 87281,9.0 Scenario - Maldraxxus Finale Scenario - Step 2 - CAV,0,0,4,0,0,0
 87282,Listen to Draka's Plan,87281,1,0,49273,0,0
 87283,Defeat Baroness Ninadar,87281,1,0,47890,1,0
@@ -68795,7 +68741,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87300,9.0 Revendreth - Lost Sinstones,0,7,8,0,0,4096
 87301,,87300,1,0,49282,0,0
 87302,,87300,1,0,49283,1,0
-87303,9.0 Maldraxxus - Renown Level 13  (MDE),0,0,4,0,0,4096
+87303,9.0 Maldraxxus - Renown Level 13 (MDE),0,0,4,0,0,4096
 87304,,87303,1,0,49285,0,0
 87305,Bastion Arena matches,0,0,4,0,0,0
 87306,Bastion Arena matches,87305,0,0,49286,0,0
@@ -68809,11 +68755,11 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87314,Bastion Arena 3v3 Wins,2445,0,0,49289,14,0
 87315,Bastion Arena 2v2 Matches,539,0,0,49290,14,0
 87316,Bastion Arena 2v2 Wins,6151,0,0,49291,14,0
-87317,9.0 Maldraxxus - Renown Level 17  (MDE),0,0,4,0,0,4096
+87317,9.0 Maldraxxus - Renown Level 17 (MDE),0,0,4,0,0,4096
 87318,,87317,1,0,49292,0,0
 87319,<Hidden> Shadowlands Alt - Trigger Alt Progression,0,0,4,0,0,0
 87320,,87319,0,0,49293,0,0
-87321,9.0 Maldraxxus - Renown Level 7  (MDE),0,0,4,0,0,4096
+87321,9.0 Maldraxxus - Renown Level 8  (MDE),0,0,4,0,0,4096
 87322,,87321,1,0,49294,0,0
 87323,Achievement - Keystone 10: Shadowlands Dungeons Season 1,0,0,4,0,0,0
 87324,Necrotic Wake,87323,1,0,49295,0,0
@@ -68898,14 +68844,14 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87411,<Hidden> Chromie Time - Hit 49 While In Chromie Time,0,0,4,0,0,0
 87412,,87411,0,0,49351,0,0
 87413,Collect a Tier 26 Set on at least 1 class.,0,1,4,0,0,0
-87414,,87413,1,0,47013,0,2
+87414,,87413,1,0,50568,0,2
 87415,9.0 Chromie Time - Enter Stormwind City - (STM),0,0,4,0,0,4096
 87416,,87415,0,0,49352,0,0
 87417,9.0 Chromie Time - Enter Orgrimmar - (STM),0,0,4,0,0,4096
 87418,,87417,0,0,49353,0,0
 87419,<Hidden> Chromie Time - Hit 50 While In Chromie Time,0,0,4,0,0,0
 87420,,87419,0,0,49357,0,0
-87421,,85778,8,0,49358,21,0
+87421,,85778,4,0,49358,21,0
 87423,Private Stock,0,0,4,0,0,0
 87424,Maldraxxus anima returned,87423,1,0,49359,0,0
 87425,Ardenweald anima returned,87423,1,0,49360,1,0
@@ -68914,30 +68860,30 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87428,,87427,1,0,49364,0,0
 87429,Earn 1000 Honor in Arena Skirmishes,0,0,4,0,0,4096
 87430,,87429,1000,0,49365,0,0
-87431,Earn 1000 Honor in Random Battlegrounds.,0,0,4,0,0,4096
-87432,,87431,1000,0,49368,0,0
-87433,Earn 1000 Conquest in Arenas.,0,0,4,0,0,4096
-87434,,87433,1000,0,49366,0,0
-87435,Earn 1000 Conquest in Rated Battlegrounds.,0,0,4,0,0,4096
-87436,,87435,1000,0,49367,0,0
-87437,Earn 1000 Honor in Epic Battlegrounds.,0,0,4,0,0,4096
-87438,,87437,1000,0,49369,0,0
+87431,Earn 1500 Honor in Random Battlegrounds.,0,0,4,0,0,4096
+87432,,87431,1500,0,49368,0,0
+87433,Earn 250 Conquest in Arenas.,0,0,4,0,0,4096
+87434,,87433,250,0,49366,0,0
+87435,Earn 250 Conquest in Rated Battlegrounds.,0,0,4,0,0,4096
+87436,,87435,250,0,49367,0,0
+87437,Earn 1500 Honor in Epic Battlegrounds.,0,0,4,0,0,4096
+87438,,87437,1500,0,49369,0,0
 87442,Earn 5000 Conquest in Shadowlands Season 1,0,0,4,0,0,0
 87443,Earn 5000 Conquest,87442,500000,0,49370,0,1
 87447,9.0 Maldraxxus - Abominable Stitiching to Rank 1,0,0,4,0,0,4096
 87448,Abominable Stitching to Rank 1,87447,1,0,49374,0,0
 87449,Pour Decision Making,0,0,4,0,0,0
-87450,Wine thrown,87449,0,0,49375,0,0
+87450,Four bottles thrown,87449,0,0,50620,0,0
 87451,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 8 - CAV,0,0,4,0,0,0
-87452,Use Transport Pad,87451,1,0,49376,0,0
+87452,Use the portal on the second floor,87451,1,0,49376,0,0
 87453,Speak to General Draven,84800,1,0,49377,0,0
 87454,9.0 Offline Progression - Start Tutorial Mission - KRB,0,0,4,0,0,4096
 87455,,87454,1,0,49378,0,0
-87456,9.0 Maldraxxus - Renown Level 21  (MDE),0,0,4,0,0,4096
+87456,9.0 Maldraxxus - Renown Level 20 (MDE),0,0,4,0,0,4096
 87457,,87456,1,0,49379,0,0
-87458,9.0 Maldraxxus - Renown Level 22  (MDE),0,0,4,0,0,4096
+87458,9.0 Maldraxxus - Renown Level 22 (MDE),0,0,4,0,0,4096
 87459,,87458,1,0,49380,0,0
-87460,9.0 Maldraxxus - Renown Level 22  (MDE),0,0,4,0,0,4096
+87460,9.0 Maldraxxus - Renown Level 21  (MDE),0,0,4,0,0,4096
 87461,,87460,1,0,49381,0,0
 87462,,85036,9999,0,48468,2,0
 87463,,85036,4,0,49382,3,0
@@ -68984,13 +68930,13 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87512,,87511,0,0,49419,0,0
 87513,,87511,0,0,49420,1,0
 87514,Renown Level 10,0,0,4,0,0,0
-87515,,87514,9,0,49422,0,0
+87515,,87514,1,0,49422,0,0
 87516,Renown Level 20,0,0,4,0,0,0
-87517,,87516,19,0,49422,0,0
+87517,,87516,1,0,51480,0,0
 87518,Renown Level 30,0,0,4,0,0,0
-87519,,87518,29,0,49422,0,0
+87519,,87518,1,0,51481,0,0
 87520,Renown Level 40,0,0,4,0,0,0
-87521,,87520,39,0,49422,0,0
+87521,,87520,1,0,51483,0,0
 87522,Covenant Sanctums - Has Rank III Anima Conductor,0,0,4,0,0,0
 87523,,87522,0,0,49423,0,0
 87524,Covenant Sanctums - Has Rank III Adventures Unlocked,0,0,4,0,0,0
@@ -69017,19 +68963,19 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87545,,87544,50,0,49438,0,1
 87546,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
 87547,,87546,0,0,49440,0,0
-87549,Defeat Shifted Souleaters before they are consumed.,0,20,9,0,0,1
-87550,Defeat Shifted Souleaters before they are consumed.,87549,1,0,49439,0,1
+87549,Defeat Displaced Soul Feeders before they are consumed,0,20,9,0,0,1
+87550,Defeat Displaced Soul Feeders before they are consumed,87549,1,0,49439,0,1
 87551,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
 87552,,87551,0,0,49441,0,0
 87553,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
 87554,,87553,0,0,49442,0,0
 87555,Ardenweald - Garden - Use Prideful Spirits,0,1,8,0,0,4096
-87556,,87555,1,0,49443,0,0
-87557,,87555,1,0,49444,1,0
-87558,,87555,1,0,49445,2,0
+87556,,87555,1,0,51487,0,0
+87557,,87555,1,0,51488,1,0
+87558,,87555,1,0,51489,2,0
 87559,9.0 Maldraxxus - Renown Level 13  (MDE),0,0,4,0,0,4096
 87560,,87559,1,0,49446,0,0
-87561,9.0 Maldraxxus - Renown Level 4  (MDE),0,0,4,0,0,4096
+87561,9.0 Maldraxxus - Renown Level 5  (MDE),0,0,4,0,0,4096
 87562,,87561,1,0,49447,0,0
 87563,Ardenweald - Garden - Use Dutiful Spirits,0,1,8,0,0,4096
 87564,,87563,1,0,49448,0,0
@@ -69040,9 +68986,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87569,Hall of Fame: Denathrius (Personal),0,0,4,0,0,0
 87570,,87569,1,0,49451,0,2
 87571,Ardenweald - Garden - Use Untamed Spirits,0,1,8,0,0,4096
-87572,,87571,1,0,49452,0,0
-87573,,87571,1,0,49453,1,0
-87574,,87571,1,0,49454,2,0
+87572,,87571,1,0,51490,0,0
+87573,,87571,1,0,51491,1,0
+87574,,87571,1,0,51492,2,0
 87575,Achievement - Hall of Fame: Denathrius (Alliance),0,0,4,0,0,0
 87576,,87575,1,0,49455,0,2
 87577,Guild Achievement - Revendreth Raid,0,0,4,0,0,0
@@ -69057,30 +69003,27 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87586,,87577,1,0,49464,8,32
 87587,,87577,1,0,49465,9,32
 87588,Ardenweald - Garden - Use Martial Spirits,0,1,8,0,0,4096
-87589,,87588,1,0,49466,0,0
-87590,,87588,1,0,49467,1,0
-87591,,87588,1,0,49468,2,0
+87589,,87588,1,0,51493,0,0
+87590,,87588,1,0,51494,1,0
+87591,,87588,1,0,51495,2,0
 87592,Druid Forms: Learned Dolphin glyph,0,1,8,0,0,0
-87593,,87592,0,0,49469,0,0
 87594,Druid Forms: Learned Orca glyph,0,1,8,0,0,0
-87595,,87594,0,0,49470,0,0
 87596,Druid Forms: Learned Tideskipper glyph,0,1,8,0,0,0
-87597,,87596,0,0,49471,0,0
-87598,Ve'nari reputation is Envied.,0,0,4,0,0,0
-87599,Ve'nari reputation is Envied.,87598,42000,0,49472,0,0
+87598,Ve'nari reputation is Appreciated.,0,0,4,0,0,2
+87599,Ve'nari reputation is Appreciated.,87598,42000,0,49472,0,2
 87600,"Collect 20,000 Stygia",0,0,4,0,0,1
 87601,"20,000 Stygia collected",87600,20000,0,49473,0,0
-87602,500 souls rescued from The Maw,0,0,4,0,0,1
-87603,500 souls freed.,87602,500,0,49474,0,0
+87602,200 souls rescued from The Maw,0,0,4,0,0,1
+87603,200 souls freed.,87602,200,0,51469,0,1
 87604,9.0 Maldraxxus - Covenant Campaign - Scenario - Step 3 - CAV,0,0,4,0,0,0
-87605,Defeat Nrcromancer Ritualists,87604,6,0,49477,0,0
-87606,Defeat Ascended Lichs,87604,3,0,49478,1,0
+87605,Defeat Necromancer Ritualists,87604,6,0,49477,0,0
+87606,Defeat Ascended Liches,87604,3,0,49478,1,0
 87607,5 bonus objective bosses defeated in The Maw,0,5,8,0,0,1
 87608,Drifting Sorrow,87607,1,0,49475,0,0
 87609,Dartanos,87607,1,0,49476,1,0
 87610,Razkazzar,87607,1,0,49479,2,0
 87611,Orrholyn,87607,1,0,49480,3,0
-87612,Sorath the Sated,87607,1,0,49481,4,0
+87612,Huwerath,87607,1,0,49481,4,0
 87613,Soulsmith Yol-Mattar,87607,1,0,49482,5,0
 87614,Warren Mongrel,87607,1,0,49483,6,0
 87615,Cyrixia,87607,1,0,49484,7,0
@@ -69097,18 +69040,17 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87626,Dartanos,87624,1,0,49476,1,0
 87627,Razkazzar,87624,1,0,49479,2,0
 87628,Orrholyn,87624,1,0,49480,3,0
-87629,Sorath the Sated,87624,1,0,49481,4,0
+87629,Huwerath,87624,1,0,49481,4,0
 87630,Soulsmith Yol-Mattar,87624,1,0,49482,5,0
-87631,Warren Mongrel,87624,1,0,49483,6,0
-87632,Cyrixia,87624,1,0,49484,7,0
-87633,Agonix,87624,1,0,49485,8,0
-87634,Krala,87624,1,0,49486,9,0
-87635,Akros,87624,1,0,49487,10,0
-87636,Malevolent Stygia,87624,1,0,49488,11,0
-87637,Sanngror the Torturer,87624,1,0,49489,12,0
-87638,Houndmaster Vasanok,87624,1,0,49490,13,0
-87639,Skittering Broodmother,87624,1,0,49491,14,0
-87640,Valis the Cruel,87624,1,0,49492,15,0
+87632,Cyrixia,87624,1,0,49484,6,0
+87633,Agonix,87624,1,0,49485,7,0
+87634,Krala,87624,1,0,49486,8,0
+87635,Akros,87624,1,0,49487,9,0
+87636,Malevolent Stygia,87624,1,0,49488,10,0
+87637,Sanngror the Torturer,87624,1,0,49489,11,0
+87638,Houndmaster Vasanok,87624,1,0,49490,12,0
+87639,Skittering Broodmother,87624,1,0,49491,13,0
+87640,Valis the Cruel,87624,1,0,49492,14,0
 87641,Achievement - SL Keystone Master (15+),0,1,8,0,0,0
 87642,,87641,1,0,49493,0,2
 87643,,87641,1,0,49494,1,2
@@ -69132,13 +69074,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87661,The Beastwarrens,87650,1,0,49511,10,0
 87662,Zovaal's Cauldron,87650,1,0,49512,11,0
 87663,Druid Forms: Learned Cheetah glyph,0,1,8,0,0,0
-87664,,87663,0,0,49513,0,0
 87665,Druid Forms: Learned Doe glyph,0,1,8,0,0,0
-87666,,87665,0,0,49513,0,0
 87667,Druid Forms: Learned Sentinel glyph,0,1,8,0,0,0
-87668,,87667,0,0,49514,0,0
 87669,Druid Forms: Learned Humble Flyer glyph,0,1,8,0,0,0
-87670,,87669,0,0,49514,0,0
 87671,Watchers of Death,87061,0,0,49515,16,0
 87672,Elder Longbranch,87061,0,0,49516,17,0
 87673,Decayspeaker,87061,0,0,49517,18,0
@@ -69155,21 +69093,21 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87684,,85786,6,0,49543,5,0
 87685,,85786,3,0,49544,6,0
 87686,,85786,6,0,49545,7,0
-87687,,85786,7,0,49546,8,0
+87687,,85786,8,0,49546,8,0
 87688,,85786,5,0,49547,9,0
 87689,,85786,6,0,49548,10,0
 87690,,85786,5,0,49549,11,0
-87691,,85786,1,0,49550,12,0
+87691,,85786,2,0,49550,12,0
 87692,,85786,8,0,49551,13,0
 87693,,85786,5,0,49552,14,0
 87694,,85786,8,0,49553,15,0
 87695,,85786,5,0,49554,16,0
-87696,,85786,4,0,49555,17,0
-87697,,85786,5,0,49556,18,0
-87698,,85786,3,0,49557,19,0
-87699,,85786,3,0,49558,20,0
-87700,,85786,3,0,49559,21,0
-87701,,85786,6,0,49560,22,0
+87696,,85786,3,0,49555,17,0
+87697,,85786,4,0,49556,18,0
+87698,,85786,2,0,49557,19,0
+87699,,85786,2,0,49558,20,0
+87700,,85786,2,0,49559,21,0
+87701,,85786,5,0,49560,22,0
 87702,,85786,4,0,49561,23,0
 87703,,85786,1,0,49562,24,0
 87704,,85786,12,0,49563,25,0
@@ -69183,7 +69121,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87712,9.0 Ardenweald - World Quest - Hidden Boggarts - In A Row - AJB,0,0,4,0,0,2
 87713,8 boggarts exposed,87712,1,0,49568,0,0
 87714,Use a garden spirit,0,0,4,0,0,0
-87715,,87714,0,0,49569,0,0
+87715,,87714,0,0,51496,0,0
 87716,9.0 Ardenweald - World Quest - We'll Workshop It - All Buffs Tried - AJB,0,0,4,0,0,0
 87717,Faerie Pomander,87716,1,0,49570,0,0
 87718,Slumberweb,87716,1,0,49571,1,0
@@ -69191,19 +69129,19 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87720,Gorm Whisperer,87716,1,0,49573,3,0
 87721,Tirnenn Resilience,87716,1,0,49574,4,0
 87722,Finnan's Luck,87716,1,0,49575,5,0
-87723,,87714,0,0,49576,1,0
-87724,,87714,0,0,49577,2,0
-87725,,87714,0,0,49578,3,0
+87723,,87714,0,0,51497,1,0
+87724,,87714,0,0,51498,2,0
+87725,,87714,0,0,51499,3,0
 87726,Use a greater garden spirit,0,0,4,0,0,0
-87727,,87726,0,0,49579,0,0
-87728,,87726,0,0,49580,1,0
-87729,,87726,0,0,49581,2,0
-87730,,87726,0,0,49582,3,0
+87727,,87726,0,0,51500,0,0
+87728,,87726,0,0,51501,1,0
+87729,,87726,0,0,51502,2,0
+87730,,87726,0,0,51503,3,0
 87731,Use a divine garden spirit,0,0,4,0,0,0
-87732,,87731,0,0,49583,0,0
-87733,,87731,0,0,49584,1,0
-87734,,87731,0,0,49585,2,0
-87735,,87731,0,0,49586,3,0
+87732,,87731,0,0,51504,0,0
+87733,,87731,0,0,51505,1,0
+87734,,87731,0,0,51506,2,0
+87735,,87731,0,0,51507,3,0
 87736,Complete Falir Observation Quests,0,0,4,0,0,0
 87737,,87736,1,0,49587,0,0
 87738,,87736,1,0,49588,1,0
@@ -69426,7 +69364,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 87966,Bring Your Own,87819,1,0,49721,29,16
 87967,Drink to the Dead,87819,1,0,49722,30,16
 87968,Nerissa Heartless,85725,1,0,49723,15,0
-87969,Necromantic Anomaly,85725,1,0,49724,22,0
+87969,Necromantic Anomaly,85725,1,0,49724,21,0
 87970,Vignettes: Mixing Pool,0,0,4,0,0,0
 87971,Pulsing Leech,87970,1,0,48854,0,0
 87972,Gelloh,87970,1,0,48858,1,0
@@ -69492,21 +69430,21 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88032,Casual,88023,1,0,49778,8,16
 88033,Formal,88023,1,0,49779,9,16
 88034,"Draenor is home to many familiar, but different critters, who have been waiting to get some /love.",0,0,4,0,0,0
-88035,,88034,1,0,49746,0,0
-88036,,88034,1,0,49747,1,0
-88037,,88034,1,0,49764,2,0
-88038,,88034,1,0,49765,3,0
-88039,,88034,1,0,49768,4,0
-88040,,88034,1,0,49769,5,0
-88041,,88034,1,0,49780,6,0
-88042,,88034,1,0,49781,7,0
-88043,,88034,1,0,49782,8,0
-88044,,88034,1,0,49783,9,0
-88045,,88034,1,0,49784,10,0
-88046,,88034,1,0,49785,11,0
-88047,,88034,1,0,49786,12,0
-88048,,88034,1,0,49787,13,0
-88049,,88034,1,0,49788,14,0
+88035,Royal Moth,88034,1,0,49746,0,0
+88036,Moonshell Crab,88034,1,0,49747,1,0
+88037,Moon Snake,88034,1,0,49764,2,0
+88038,Mossbite Skitterer,88034,1,0,49765,3,0
+88039,Bloodbeak,88034,1,0,49768,4,0
+88040,Brilliant Bloodfeather,88034,1,0,49769,5,0
+88041,Flat-Tooth Calf,88034,1,0,49780,6,0
+88042,Frostfur Rat,88034,1,0,49781,7,0
+88043,Icespine Hatchling,88034,1,0,49782,8,0
+88044,Twilight Wasp,88034,1,0,49783,9,0
+88045,Parched Lizard,88034,1,0,49784,10,0
+88046,Shadow Sporebat,88034,1,0,49785,11,0
+88047,Thicket Skitterer,88034,1,0,49786,12,0
+88048,Mud Jumper,88034,1,0,49787,13,0
+88049,Leatherhide Runt,88034,1,0,49788,14,0
 88050,,85786,1,0,49789,26,0
 88051,,85815,7,0,49790,3,0
 88052,,85815,4,0,49791,4,0
@@ -69556,16 +69494,16 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88096,Uther,88089,0,0,49833,6,0
 88097,Mikanikos,88089,0,0,49834,7,0
 88098,Ember Court - Grandmaster Vole - Kill Players,0,5,5,0,0,4096
-88099,,88098,10,0,49835,0,0
-88100,Complete all three Hunts in The Maw,0,0,4,0,0,0
+88099,,88098,0,0,49835,0,0
+88100,Complete all four Hunts in The Maw,0,0,4,0,0,0
 88101,Complete Hunt: Shadehounds,88100,1,0,49251,0,0
 88102,Complete Hunt: Soul Eaters,88100,1,0,49238,1,0
 88103,Complete Hunt: Death Elemental,88100,1,0,49248,2,0
 88104,9.0 Bastion - World Quest - Flappy Kyrian - Hard Mode Complete - GJC,0,0,4,0,0,0
-88105,Paragon's Challenge completed,88104,0,0,49839,0,0
+88105,Paragon's Challenge completed,88104,1,0,49839,0,0
 88106,Kill 100 Assassins sent to kill you via Eye of the Jailer in The Maw.,0,0,4,0,0,0
 88107,Kill 100 Assassins in The Maw,88106,100,0,49840,0,1
-88108,Kill 1 Rare or Rare Elite in The Maw,0,1,8,0,0,0
+88108,Kill 5 Rare or Rare Elite bosses in The Maw,0,5,8,0,0,0
 88109,Adjutant Dekaris,88108,1,0,49841,0,0
 88110,"Apholeias, Herald of Loss",88108,1,0,49842,1,0
 88111,Borr-Geth,88108,1,0,49843,2,0
@@ -69586,7 +69524,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88126,"Talaporas, Herald of Pain",88108,1,0,49858,17,0
 88127,Thanassos,88108,1,0,49859,18,0
 88128,Yero the Skittish,88108,1,0,49860,19,0
-88129,Kill 5 Rares or Rare Elites in The Maw,0,5,8,0,0,0
+88129,Kill all of the Rare or Rare Elite bosses in The Maw.,0,10,4,0,0,0
 88130,Adjutant Dekaris,88129,1,0,49841,0,0
 88131,"Apholeias, Herald of Loss",88129,1,0,49842,1,0
 88132,Borr-Geth,88129,1,0,49843,2,0
@@ -69613,20 +69551,20 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88153,,88152,1,0,49862,0,0
 88154,Gain Access to The Beastwarrens in The Maw,0,0,4,0,0,0
 88155,,88154,1,0,49863,0,0
-88156,9.0 Maldraxxus - Fashion Makeover,0,0,4,0,0,0
-88157,Dapper Top Hat,88156,1,0,49864,0,16
-88158,Flower Crown,88156,1,0,49865,1,16
-88159,Halo of Purity,88156,0,0,49866,2,16
-88160,Holiday Hat,88156,1,0,49867,3,16
-88161,Red Eye Lens,88156,1,0,49868,5,16
-88162,Skull Protector,88156,1,0,49869,6,16
-88163,Green Envy Doll,88156,1,0,49870,7,16
-88164,Happiness Bird,88156,1,0,49871,8,16
-88165,Engineering Pack,88156,1,0,49872,12,16
-88166,Outlaw Flag,88156,1,0,49873,23,16
-88167,Six-League Pack,88156,1,0,49874,14,16
-88168,Vesitgial Wings,88156,1,0,49875,16,16
-88169,Operational Instructions,88156,1,0,49876,22,16
+88156,9.0 Maldraxxus - Fashion Makeover,0,25,8,0,0,0
+88157,Chef Hat,88156,1,0,50541,0,16
+88158,Flower Crown,88156,1,0,49865,4,16
+88159,Halo of Purity,88156,1,0,49866,5,16
+88160,Holiday Hat,88156,1,0,49867,6,16
+88161,Red Eye Lens,88156,1,0,49868,9,16
+88162,Skull Protector,88156,1,0,49869,11,16
+88163,Trustworthy Doll,88156,1,0,49870,19,16
+88164,Happiness Bird,88156,1,0,49871,13,16
+88165,Engineering Pack,88156,1,0,49872,23,16
+88166,Outlaw Flag,88156,1,0,49873,34,16
+88167,Six-League Pack,88156,1,0,49874,26,16
+88168,Vesitgial Wings,88156,1,0,49875,27,16
+88169,Operational Instructions,88156,1,0,49876,33,16
 88170,9.0 Revendreth - Ember Court - Achievements - Rendle's Big Day (JDA),0,0,4,0,0,0
 88171,Crown of the Righteous,88170,1,0,49880,0,16
 88172,Fae Revel Masque,88170,1,0,49879,1,16
@@ -69650,10 +69588,10 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88190,1000 Stygia collected,88189,1000,0,49473,0,1
 88191,"Collect 10,000 Stygia",0,0,4,0,0,1
 88192,"10,000 Stygia collected",88191,10000,0,49473,0,0
-88193,Achievement - 100 Different World Quests (9.0),0,100,8,0,0,0
+88193,Achievement - 100 Different World Quests (9.0) - GJC,0,100,8,0,0,0
 88194,,88193,1,0,49890,0,2
 88195,Abominable Stitching - Build Abom,0,0,4,0,0,0
-88196,Chordy,88195,0,0,49891,0,16
+88196,Chordy,88195,1,0,49891,0,0
 88197,Return another Memory to the Runecarver.,0,0,4,0,0,0
 88198,,88197,1,0,49892,0,2
 88199,Return 10 Memories to the Runecarver.,0,10,4,0,0,0
@@ -69665,40 +69603,42 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88205,Sabrina,88195,1,0,49939,5,0
 88206,Toothpick,88195,1,0,49940,6,0
 88207,The Professor,88195,1,0,49941,7,0
+88208,Gas Bag,88195,1,0,51470,8,0
+88209,Guillotine,88195,0,0,51471,9,0
+88210,Mama Tomalin,88195,1,0,51472,10,0
+88211,Naxx,88195,1,0,51473,11,0
+88212,Iron Phillip,88195,1,0,51474,12,0
+88213,Miru Soulblossom,88195,1,0,51475,13,0
+88214,Neena,88195,1,0,51476,14,0
+88215,Unity,88195,1,0,51477,15,0
 88216,Collect all of the Maw Lore items in The Maw,0,0,4,0,0,0
-88217,,88216,1,0,49894,0,0
-88218,,88216,1,0,49895,1,0
-88219,,88216,1,0,49896,2,0
-88220,,88216,1,0,49897,3,0
-88221,,88216,1,0,49898,4,0
-88222,,88216,1,0,49899,5,0
-88223,,88216,1,0,49900,6,0
-88224,,88216,1,0,49901,7,0
-88225,,88216,1,0,49902,8,0
-88226,,88216,1,0,49903,9,0
-88227,,88216,1,0,49904,10,0
-88228,,88216,1,0,49905,11,0
-88229,,88216,1,0,49906,12,0
-88230,,88216,1,0,49907,13,0
-88231,,88216,1,0,49908,14,0
-88232,,88216,1,0,49909,15,0
-88233,,88216,1,0,49910,16,0
-88234,,88216,1,0,49911,17,0
-88235,,88216,1,0,49912,18,0
-88236,,88216,1,0,49913,19,0
-88237,,88216,1,0,49914,20,0
-88238,,88216,1,0,49915,21,0
-88239,Magician's Hat,88156,1,0,49916,4,16
-88240,Spare Weapons,88156,1,0,49917,9,16
-88241,Sticky Cat,88156,1,0,49918,10,16
-88242,Collector Kash's Pack,88156,1,0,49919,11,16
-88243,Safe Fall Pack,88156,1,0,49920,13,16
-88244,Spare Body,88156,1,0,49921,15,16
-88245,Armor Plating,88156,1,0,49922,17,16
-88246,Faction Flag,88156,1,0,49924,20,16
-88247,Butterflies,88156,1,0,49923,19,16
-88248,Intellectuals Monocle,88156,1,0,49925,21,16
-88249,Hitchhiker,88156,1,0,49926,18,16
+88217,Constellan Writ,88216,1,0,49894,0,0
+88218,Shifting Cryptogram,88216,1,0,49895,1,0
+88219,Mawsworn Patrol Map,88216,1,0,49896,2,0
+88220,Coldheart Flight Routes,88216,1,0,49897,3,0
+88221,Chaotic Runes,88216,1,0,49898,4,0
+88222,Puzzling Cryptogram,88216,1,0,49899,5,0
+88223,Worn Obleron Etching,88216,1,0,49900,6,0
+88224,Soulforge Blueprints,88216,1,0,49901,7,0
+88225,Shadebound Testimonial,88216,1,0,49902,8,0
+88226,Venthyr Concordat,88216,1,0,49903,9,0
+88227,Discarded Torments,88216,1,0,49904,10,0
+88231,Box of Torments,88216,1,0,49908,11,0
+88233,Words of the Warden,88216,1,0,49910,12,0
+88234,Korrath's Grimoire: Gyadrek,88216,1,0,49911,13,0
+88235,Korrath's Grimoire: Belidir,88216,1,0,49912,14,0
+88236,Korrath's Grimoire: Aleketh,88216,1,0,49913,15,0
+88237,Tormentor's Notes,88216,1,0,49914,16,0
+88239,Magician's Hat,88156,1,0,49916,7,16
+88240,Spare Weapon,88156,1,0,49917,31,16
+88241,Sticky Cat,88156,1,0,49918,17,16
+88242,Collector Kash's Pack,88156,1,0,49919,22,16
+88243,Safe Fall Pack,88156,1,0,49920,25,16
+88244,Plague Pack,88156,1,0,49921,24,16
+88245,Armor Plating,88156,1,0,49922,20,16
+88246,Faction Flag,88156,1,0,49924,32,16
+88247,Butterflies,88156,1,0,49923,30,16
+88248,Barrel O' Fish,88156,1,0,49925,28,16
 88250,9.0 Bastion - World Quest - Up and Away - Hard Mode Complete - GJC,0,0,4,0,0,0
 88251,Paragon's Challenge completed,88250,0,0,49927,0,0
 88252,Beastwarrens - Hunt 03 DE - Rewards,0,0,4,0,0,0
@@ -69718,7 +69658,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88266,Great Luckydo discovered,0,0,4,0,0,16
 88267,,88266,1,0,49942,0,0
 88268,9.0 Revendreth - Achievement - Parasol Peril,0,0,4,0,0,0
-88269,,88268,10,0,49943,0,32
+88269,"""Parasol Peril"" completed",88268,10,0,49943,0,1
 88270,9.0 Bastion - Exploration - All Blessings - GJC,0,0,4,0,0,0
 88271,Purified Blessing of Grace,88270,1,0,49944,0,0
 88272,Purified Blessing of Power,88270,1,0,49945,1,0
@@ -69747,6 +69687,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88295,Wild Hunter's Stew,88281,1,0,49967,13,0
 88296,Steamed Gorm Tail,88281,1,0,49968,14,0
 88297,Midnight Starpepper,88281,1,0,49969,15,0
+88298,9.0 Ardenweald - Mushroom Dailies - Completion Title - AJB,0,0,4,0,0,0
 88299,Sanctum Complete,0,0,4,0,0,0
 88300,,88299,0,0,49970,0,0
 88301,,88299,0,0,49971,1,0
@@ -69795,24 +69736,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88344,2v2 Deaths,88343,0,0,4962,0,2
 88345,3v3 Deaths,88343,0,0,4963,1,2
 88346,Deaths in Battleground,0,0,5,0,0,0
-88347,,88346,0,0,108,0,0
-88348,,88346,0,0,46745,1,0
-88349,,88346,0,0,45058,2,0
-88350,,88346,0,0,45060,3,0
-88351,,88346,0,0,45059,4,0
-88352,,88346,0,0,20421,5,0
-88353,,88346,0,0,50008,6,0
-88354,,88346,0,0,45057,7,0
-88355,,88346,0,0,46822,8,0
-88356,,88346,0,0,23881,9,0
-88357,,88346,0,0,50009,10,0
-88358,,88346,0,0,3276,11,0
-88359,,88346,0,0,20422,12,0
-88360,,88346,0,0,5549,13,0
-88361,,88346,0,0,20423,14,0
-88362,,88346,0,0,45061,15,0
-88363,,88346,0,0,20420,16,0
-88364,,88346,0,0,107,17,0
+88362,,88346,0,0,50460,0,0
 88365,,3074,0,0,7849,1,0
 88366,,3074,0,0,50010,2,0
 88367,,3074,0,0,50011,3,0
@@ -69835,8 +69759,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88384,Long Sleeved Doublet,87806,1,0,50026,9,16
 88385,Sinrunner Riding,87804,1,0,50027,4,16
 88386,Dredbat Riding,87804,1,0,50028,5,16
-88387,Amalgamation of Sin,85727,1,0,50029,24,0
-88388,Sinstone Hoarder,85727,1,0,50030,25,0
+88387,Amalgamation of Sin,85727,1,0,50029,22,0
+88388,Sinstone Hoarder,85727,1,0,50030,23,0
 88389,Aerto's Body,85730,1,0,50031,0,0
 88390,Lost Satchel,85730,1,0,50032,1,0
 88391,Veilwing Egg,85730,1,0,50033,2,0
@@ -69860,28 +69784,26 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88409,Stolen Equipment,85728,1,0,50052,5,0
 88410,Abandoned Stockpile,85728,1,0,50053,6,0
 88411,Experimental Construct Part,85728,1,0,50054,7,0
-88412,Broken Flute,85728,1,0,50055,8,0
-88413,Memorial Offering,85728,1,0,50056,9,0
-88414,Vesper of the Silver Wind,85728,1,0,50057,10,0
-88415,Gift of Agthia,85728,1,0,50058,11,0
-88416,Gift of Vesiphone,85728,1,0,50059,12,0
-88417,Gift of Chyrus,85728,1,0,50060,13,0
-88418,Gift of Thenios,85728,1,0,50061,14,0
-88419,Gift of Devos,85728,1,0,50062,15,0
+88412,Windsmith's Tools,85728,1,0,50055,8,0
+88413,Memorial Offerings,85728,1,0,50056,9,0
+88415,Gift of Agthia,85728,1,0,50058,10,0
+88416,Gift of Vesiphone,85728,1,0,50059,11,0
+88417,Gift of Chyrus,85728,1,0,50060,12,0
+88418,Gift of Thenios,85728,1,0,50061,13,0
+88419,Gift of Devos,85728,1,0,50062,14,0
 88420,Ornate Bone Shield,85729,1,0,50063,0,0
 88421,Kyrian Keepsake,85729,1,0,50064,1,0
 88422,Halis's Lunch Pail,85729,1,0,50065,2,0
 88423,Vat of Conspicuous Slime,85729,1,0,50066,3,0
 88424,Stolen Jar,85729,1,0,50067,4,0
 88425,Necro Tome,85729,1,0,50068,5,0
-88426,Sword of Oonar,85729,1,0,49436,6,0
-88427,Forgotten Momentos,85729,1,0,50069,7,0
-88428,Chest of Eyes,85729,1,0,50070,8,0
-88429,Misplaced Supplies,85729,1,0,50071,9,0
-88430,Glutharn's Stash,85729,1,0,50072,10,0
-88431,Runespeaker's Trove,85729,1,0,50073,11,0
-88432,Plaguefallen Chest,85729,1,0,50074,12,0
-88433,Ritualist's Cache,85729,1,0,50075,13,0
+88427,Forgotten Momentos,85729,1,0,50069,6,0
+88428,Chest of Eyes,85729,1,0,50070,7,0
+88429,Misplaced Supplies,85729,1,0,50071,8,0
+88430,Glutharn's Stash,85729,1,0,50072,9,0
+88431,Runespeaker's Trove,85729,1,0,50073,10,0
+88432,Plaguefallen Chest,85729,1,0,50074,11,0
+88433,Ritualist's Cache,85729,1,0,50075,12,0
 88434,Lost Quill,85731,1,0,50076,0,0
 88435,Stylish Parasol,85731,1,0,50077,1,0
 88436,The Count,85731,1,0,50078,2,0
@@ -69889,22 +69811,20 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88438,Vrytha's Dredglaive,85731,1,0,50080,4,0
 88439,Makeshift Muckpool,85731,1,0,50081,5,0
 88440,Taskmaster's Trove,85731,1,0,50082,6,0
-88441,Blanchy Assisted,85731,1,0,50083,7,0
-88442,Secret Chamber,85731,1,0,50084,8,0
-88443,Theater of Pain,85722,1,0,50085,0,16
-88444,The Stitchyard,85722,1,0,50086,1,16
-88445,The Spearhead,85722,1,0,50087,2,16
-88446,Sepulcher of Knowledge,85722,1,0,50088,3,16
-88447,Seat of the Primus,85722,1,0,50089,4,16
-88448,Rotting Mound,85722,1,0,50090,5,16
-88449,House of Plagues,85722,1,0,50091,6,16
-88450,Unyielding Assembly,85722,1,0,50092,7,16
-88451,House of Rituals,85722,1,0,50093,8,16
-88452,House of Eyes,85722,1,0,50094,9,16
-88453,House of Constructs,85722,1,0,50095,10,16
-88454,Glutharn's Decay,85722,1,0,50096,11,16
-88455,Forgotten Wounds,85722,1,0,50097,12,16
-88456,Burning Thicket,85722,1,0,50098,13,16
+88442,Forbidden Chamber,85731,1,0,50084,7,0
+88443,Theater of Pain,85722,1,0,50085,0,0
+88444,The Stitchyard,85722,1,0,50086,1,0
+88445,The Spearhead,85722,1,0,50087,2,0
+88446,Sepulcher of Knowledge,85722,1,0,50088,3,0
+88447,Seat of the Primus,85722,1,0,50089,4,0
+88449,House of Plagues,85722,1,0,50091,5,0
+88450,House of the Chosen,85722,1,0,50092,6,0
+88451,House of Rituals,85722,1,0,50093,7,0
+88452,House of Eyes,85722,1,0,50094,8,0
+88453,House of Constructs,85722,1,0,50095,9,0
+88454,Glutharn's Decay,85722,1,0,50096,10,0
+88455,Forgotten Wounds,85722,1,0,50097,11,0
+88456,Burning Thicket,85722,1,0,50098,12,0
 88457,Your Personal Assistant,85231,0,0,50099,4,16
 88458,Complete Lia Spirit Quests,0,0,4,0,0,0
 88459,,88458,0,0,50100,0,0
@@ -70005,7 +69925,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88582,Hole in the Wall,88580,0,0,50175,1,0
 88583,Dominance Gate Battlements,88580,0,0,50176,2,0
 88584,Darkhaven,88580,0,0,50177,3,0
-88585,Dredbats animated:,0,5,8,0,0,10240
+88585,Dredbats animated,0,5,8,0,0,8193
 88586,,88585,0,0,50178,0,0
 88587,,88585,0,0,50179,1,0
 88588,,88585,0,0,50180,2,0
@@ -70019,7 +69939,7 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88596,Byron Test Anima CriteriaTree,0,1000,5,0,0,4096
 88597,Anima Value,88596,1000,0,50190,0,0
 88598,,85778,3,0,50191,0,0
-88599,,85778,27,0,50192,1,0
+88599,,85778,28,0,50192,1,0
 88600,,85800,6,0,50191,0,0
 88601,,85800,60,0,50192,1,0
 88602,,85768,3,0,50191,0,0
@@ -70031,9 +69951,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88608,,85815,3,0,50191,0,0
 88609,,85815,28,0,50192,1,0
 88610,,85786,4,0,50191,0,0
-88611,,85786,34,0,50192,1,0
-88612,,85807,5,0,50191,0,0
-88613,,85807,41,0,50192,1,0
+88611,,85786,39,0,50192,1,0
+88612,,85807,4,0,50191,0,0
+88613,,85807,37,0,50192,1,0
 88614,,87219,0,0,50193,1,0
 88615,,72237,42000,0,50194,109,2
 88616,9.0 Revendreth Raid - LFR Wing 1,0,0,4,0,0,0
@@ -70080,37 +70000,36 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88671,Anima,0,1500,5,0,0,4096
 88672,Anima,88671,1500,0,50221,0,2048
 88673,The critters of the Broken Shore need /love.,0,0,4,0,0,0
-88674,,88673,1,0,50222,0,0
-88675,,88673,1,0,50223,1,0
-88676,,88673,1,0,50224,2,0
-88677,,88673,1,0,50225,3,0
-88678,,88673,1,0,50226,4,0
-88679,,88673,1,0,50227,5,0
-88680,,88673,1,0,50228,6,0
-88681,,88673,1,0,50229,7,0
-88682,,88673,1,0,50230,8,0
-88683,,88673,1,0,50231,9,0
-88684,,88673,1,0,50232,10,0
-88685,,88673,1,0,50233,11,0
-88686,,88673,1,0,50234,12,0
+88674,Felspider,88673,1,0,50222,0,0
+88675,Tenebrous Snake,88673,1,0,50223,1,0
+88676,Albatross Chick,88673,1,0,50224,2,0
+88677,Coastal Sandpiper,88673,1,0,50225,3,0
+88678,Glitterpool Frog,88673,1,0,50226,4,0
+88679,Gleamhoof Fawn,88673,1,0,50227,5,0
+88680,Auburn Ringtail,88673,1,0,50228,6,0
+88681,Blighthawk,88673,1,0,50229,7,0
+88682,Black-Footed Fox Kit,88673,1,0,50230,8,0
+88683,Long-Eared Owl,88673,1,0,50231,9,0
+88684,Golden Eaglet,88673,1,0,50232,10,0
+88685,Tiny Apparition,88673,1,0,50233,11,0
+88686,Echo Batling,88673,1,0,50234,12,0
 88687,The critters of Kul Tiras and Zandalar are worthy of /love as well.,0,0,4,0,0,0
-88688,,88687,1,0,50236,0,0
-88689,,88687,1,0,50237,1,0
-88690,,88687,1,0,50238,2,0
-88691,,88687,1,0,50239,3,0
-88692,,88687,1,0,50240,4,0
-88693,,88687,1,0,50241,5,0
-88694,,88687,1,0,50242,6,0
-88695,,88687,1,0,50243,7,0
-88696,,88687,1,0,50245,8,0
-88697,,88687,1,0,50244,9,0
-88698,,88687,1,0,50246,10,0
-88699,,88687,1,0,50246,11,0
-88700,,88687,1,0,50247,12,0
+88688,Honey Bee,88687,1,0,50236,0,0
+88689,Olivewing,88687,1,0,50237,1,0
+88690,Fluttering Softwing,88687,1,0,50238,2,0
+88691,Drustbat,88687,1,0,50239,3,0
+88692,Tiragarde Gull,88687,1,0,50240,4,0
+88693,Bramble Hare,88687,1,0,50241,5,0
+88694,Jungle Gulper,88687,1,0,50242,6,0
+88695,Crested Gekkota,88687,1,0,50243,7,0
+88696,Nazmani Weevil,88687,1,0,50245,8,0
+88697,Bloodfever Tarantula,88687,1,0,50244,9,0
+88698,Temple Beetle,88687,1,0,50246,10,0
+88700,Vale Flutterby,88687,1,0,50247,11,0
 88701,"The critters of the Shadowlands have been loved, but need more /love.",0,0,4,0,0,0
-88702,,88701,1,0,50248,0,0
-88703,,88701,1,0,50249,1,0
-88704,,88701,1,0,50250,2,0
+88702,Dreadfur Kit,88701,1,0,50248,0,0
+88703,Darkened Wyrmling,88701,1,0,50249,1,0
+88704,Soulwing Flitter,88701,1,0,50250,2,0
 88705,9.0 Revendreth Raid - LFR Wing 2,0,0,4,0,0,0
 88706,Rescue Kael'thas.,88705,1,0,50251,0,0
 88707,Defeat Artificer Xy'mox.,88705,1,0,50252,1,0
@@ -70121,27 +70040,27 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88712,Defeat the Stone Legion Generals.,88709,1,0,50259,2,0
 88713,9.0 Revendreth Raid - LFR Wing 4,0,0,4,0,0,0
 88714,Defeat Sire Denathrius.,88713,1,0,50263,0,0
-88715,,88701,1,0,50254,3,0
-88716,,88701,1,0,50255,4,0
-88717,,88701,1,0,50256,5,0
-88718,,88701,1,0,50260,6,0
-88719,,88701,1,0,50261,7,0
-88720,,88701,1,0,50262,8,0
-88721,,88701,1,0,50264,9,0
-88722,,88701,1,0,50265,10,0
-88723,,88701,1,0,50266,11,0
+88715,Starmoth,88701,1,0,50254,3,0
+88716,Timber Kit,88701,1,0,50255,4,0
+88717,Runewood Hoarder,88701,1,0,50256,5,0
+88718,Chittering Claw,88701,1,0,50260,6,0
+88719,Writhing Rachis,88701,1,0,50261,7,0
+88720,Bubbling Refuse,88701,1,0,50262,8,0
+88721,Shardling,88701,1,0,50264,9,0
+88722,Emaciated Bat,88701,1,0,50265,10,0
+88723,Creeper,88701,1,0,50266,11,0
 88724,Anima,0,1500,5,0,0,4096
 88725,Anima,88724,1500,0,50267,0,2048
 88726,Cast Unstable Affliction on the target dummy,47447,1,0,50268,0,0
 88727,Cast Malefic Rapture,47449,3,0,48109,3,0
-88728,Anima,0,600,5,0,0,4096
-88729,Anima,88728,600,0,50269,0,2048
-88730,Anima,0,600,5,0,0,4096
-88731,Anima,88730,600,0,50270,0,2048
-88732,Anima,0,600,5,0,0,4096
-88733,Anima,88732,600,0,50271,0,2048
-88734,Anima,0,600,5,0,0,4096
-88735,Anima,88734,600,0,50272,0,2048
+88728,Anima,0,400,5,0,0,4096
+88729,Anima,88728,400,0,50269,0,2048
+88730,Anima,0,400,5,0,0,4096
+88731,Anima,88730,400,0,50270,0,2048
+88732,Anima,0,400,5,0,0,4096
+88733,Anima,88732,400,0,50271,0,2048
+88734,Anima,0,400,5,0,0,4096
+88735,Anima,88734,400,0,50272,0,2048
 88736,Anima,0,1500,5,0,0,4096
 88737,Anima,88736,1500,0,50273,0,2048
 88738,Anima,0,1500,5,0,0,4096
@@ -70179,20 +70098,20 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88770,Cloak,88756,1,0,50303,13,0
 88771,Weapon,88756,1,0,50304,14,0
 88772,Loremaster of Shadowlands,29157,1,0,50305,9,0
-88773,,87596,0,0,50306,1,0
-88774,,87592,0,0,50307,1,0
-88775,,87594,0,0,50308,1,0
-88776,,87663,0,0,50312,1,0
-88777,,87665,0,0,50309,1,0
-88778,,87667,0,0,50310,1,0
-88779,,87669,0,0,50311,1,0
-88780,Complete 4 World Quests in Revendreth,0,4,5,0,0,4096
+88773,,87596,0,0,50306,0,0
+88774,,87592,0,0,50307,0,0
+88775,,87594,0,0,50308,0,0
+88776,,87663,0,0,50312,0,0
+88777,,87665,0,0,50309,0,0
+88778,,87667,0,0,50310,0,0
+88779,,87669,0,0,50311,0,0
+88780,Complete 3 World Quests in Revendreth,0,3,5,0,0,4096
 88781,,88780,0,0,50313,0,0
-88782,Complete 4 World Quests in Bastion,0,4,5,0,0,4096
+88782,Complete 3 World Quests in Bastion,0,3,5,0,0,4096
 88783,,88782,0,0,50314,0,0
-88784,Complete 4 World Quests in Ardenweald,0,4,5,0,0,4096
+88784,Complete 3 World Quests in Ardenweald,0,3,5,0,0,4096
 88785,,88784,0,0,50315,0,0
-88786,Complete 4 World Quests in Maldraxxus,0,4,5,0,0,4096
+88786,Complete 3 World Quests in Maldraxxus,0,3,5,0,0,4096
 88787,,88786,0,0,50316,0,0
 88788,9.0 Revendreth - Side Questlines,0,0,4,0,0,0
 88789,The Duelist's Debt,88788,0,0,50317,0,16
@@ -70225,8 +70144,8 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88821,,85294,0,0,50343,3,32
 88822,,85294,0,0,50342,5,32
 88823,,85294,0,0,50344,7,32
-88824,Speak to Apolon,85741,1,0,48458,1,0
-88825,Speak to Apolon,85650,1,0,48458,1,0
+88824,Speak to Adrianos,85741,1,0,48458,1,0
+88825,Speak to Adrianos,85650,1,0,48458,1,0
 88826,Mawsteel Cages Opened,0,0,4,0,0,4096
 88827,,88826,99,0,50345,0,0
 88831,Find Rune Vessel,0,1,5,0,0,4096
@@ -70291,9 +70210,9 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88932,Odalrik,87607,1,0,50408,16,0
 88933,Stygian Incinerator,87607,1,0,50409,17,0
 88934,Dath Rezara,87607,1,0,50410,18,0
-88935,Odalrik,87624,1,0,50408,16,0
-88936,Stygian Incinerator,87624,1,0,50409,17,0
-88937,Dath Rezara,87624,1,0,50410,18,0
+88935,Odalrik,87624,1,0,50408,15,0
+88936,Stygian Incinerator,87624,1,0,50409,16,0
+88937,Dath Rezara,87624,1,0,50410,17,0
 88938,9.0 Alts - Meta Zone Support - Reach Level 60 - GJC,0,0,4,0,0,2
 88939,,88938,60,0,50412,0,0
 88940,Boost 2.0 [Shaman|Enhance] - Basic Combat F - Crash Lightning,0,0,4,0,0,0
@@ -70307,9 +70226,1561 @@ ID,Description_lang,Parent,Amount,Operator,CriteriaID,OrderIndex,Flags
 88949,Completed NPE On This Character + NPE Recruit,0,1,8,0,0,8192
 88950,"Alliance NPE - ""The Nation of Kul Tiras""",88949,0,0,50414,0,0
 88951,"Horde NPE - ""Mission Statement""",88949,0,0,50415,1,0
+88952,Sanctum Upgrade started,0,1,8,0,0,4096
+88953,Transport Network,88952,1,0,50830,0,0
+88954,Anima Conductor,88952,1,0,50417,1,0
+88955,Adventures,88952,1,0,50418,2,0
+88956,Path of Ascension,88952,1,0,50419,3,0
+88957,Anima deposited,0,500,5,0,0,4096
+88958,Anima deposited,88957,500,0,50420,0,2048
+88959,Conduit applied to Pelagos,0,0,4,0,0,4096
+88960,Conduit applied to Pelagos,88959,1,0,50421,0,0
+88961,Conduits added to Forge of Bonds,0,0,4,0,0,4096
+88962,,88961,3,0,50422,0,0
+88963,Complete 2 World Quests in Ardenweald,0,2,5,0,0,4096
+88964,,88963,0,0,50423,0,0
+88965,Complete 2 World Quests in Ardenweald,0,2,5,0,0,4096
+88966,,88965,0,0,50424,0,0
+88967,Complete 2 World Quests in Ardenweald,0,2,5,0,0,4096
+88968,,88967,0,0,50425,0,0
+88969,Complete 2 World Quests in Ardenweald,0,2,5,0,0,4096
+88970,,88969,0,0,50426,0,0
 88971,Complete a World Quest in Ardenweald,0,1,5,0,0,4096
 88972,,88971,0,0,50427,0,0
 88973,Complete a World Quest in Ardenweald,0,1,5,0,0,4096
 88974,,88973,0,0,50428,0,0
 88975,Complete a World Quest in Ardenweald,0,1,5,0,0,4096
 88976,,88975,0,0,50429,0,0
+88977,Complete the dungeon,0,0,4,0,0,2
+88978,Reach the top of the Jailer's Tower,88977,1,0,44166,0,2
+88979,Evade the Tarragrue,0,0,4,0,0,2
+88980,Evade the Tarragrue,88979,1,0,44166,0,2
+88981,Has Learned Any Conduit,0,0,4,0,0,0
+88982,,88981,1,0,50430,0,0
+88983,Has Socketed Any Conduit,0,0,4,0,0,0
+88984,,88983,1,0,50431,0,0
+88985,Check Tracking Quests for Completing Story Completion (DNT),0,0,4,0,0,0
+88986,,88985,0,0,50432,0,0
+88987,Complete all wings of Torghast,0,0,4,0,0,0
+88988,Skoldus Hall,88987,6,0,48160,0,0
+88989,Fracture Chambers,88987,6,0,48161,1,0
+88990,The Soulforges,88987,6,0,48162,2,0
+88991,Coldheart Interstitia,88987,6,0,48164,3,0
+88992,Mort'regar,88987,6,0,48163,4,0
+88993,The Upper Reaches,88987,6,0,48165,5,0
+88994,Complete Layer 4 in each wing of Torghast,0,0,4,0,0,0
+88995,Skoldus Hall,88994,24,0,48160,0,0
+88996,Fracture Chambers,88994,24,0,48161,1,0
+88997,The Soulforges,88994,24,0,48162,2,0
+88998,Coldheart Interstitia,88994,24,0,48164,3,0
+88999,Mort'regar,88994,24,0,48163,4,0
+89000,The Upper Reaches,88994,24,0,48165,5,0
+89001,Complete Layer 8 in each wing of Torghast,0,0,4,0,0,0
+89002,Skoldus Hall,89001,48,0,48160,0,0
+89003,Fracture Chambers,89001,48,0,48161,1,0
+89004,The Soulforges,89001,48,0,48162,2,0
+89005,Coldheart Interstitia,89001,48,0,48164,3,0
+89006,Mort'regar,89001,48,0,48163,4,0
+89007,The Upper Reaches,89001,48,0,48165,5,0
+89008,"Started Shadowlands Story, Not Shadowlands Max Level (DNT)",0,0,4,0,0,0
+89009,,89008,0,0,50433,0,0
+89010,<Hidden> HoA Catch All <DNT>,0,0,4,0,0,0
+89011,,89010,0,0,50435,0,0
+89012,Complete the dungeon,0,0,4,0,0,2
+89013,Reach the top of the Jailer's Tower,89012,1,0,44166,0,2
+89014,Evade the Tarragrue,0,0,4,0,0,2
+89015,Evade the Tarragrue,89014,1,0,44166,0,2
+89016,9.0 NPE - Alliance - Defeat Ravnyr - (STM),0,1,5,0,0,4096
+89017,,89016,0,0,50436,0,0
+89018,9.0 NPE - Horde - Defeat Ravnyr - (STM),0,1,5,0,0,4096
+89019,,89018,0,0,50438,0,0
+89020,,84586,0,0,50439,1,0
+89022,Kill Rokhan,0,0,4,0,0,0
+89023,Kill Rokhan,89022,1,0,50442,0,2
+89024,Kill High Exarch Turalyon,0,0,4,0,0,0
+89025,Kill High Exarch Turalyon,89024,1,0,50441,0,2
+89026,Executing the Exarch,2961,1,8,0,2,2
+89027,Executing the Exarch,89026,0,0,50443,1,0
+89028,Opposing Orgrimmar,5769,0,0,50444,1,0
+89029,Obtain the Sinful Gladiator's Soul Eater from Shadowlands Season 1.,0,0,4,0,0,0
+89030,,89029,1,0,50446,0,2
+89031,,89029,0,0,50447,1,2
+89032,Complete the dungeon,0,0,4,0,0,2
+89033,Reach the top of the Jailer's Tower,89032,1,0,44166,0,2
+89034,Evade the Tarragrue,0,0,4,0,0,2
+89035,Evade the Tarragrue,89034,1,0,44166,0,2
+89036,Blade's Edge Arena matches,808,0,0,46403,1,0
+89037,Circle of Blood victories,15892,0,0,36479,1,0
+89038,Eye of the Storm Honorable Kills,5876,0,0,50448,1,0
+89039,,5729,0,0,50452,4,0
+89040,,5729,0,0,50449,5,0
+89043,,5729,0,0,50453,6,0
+89044,Eye of the Storm Killing Blows,8084,0,0,50454,1,0
+89045,Deepwind Gorge,7774,0,0,43209,17,0
+89046,Deepwind Gorge,7774,0,0,50461,18,0
+89047,Deepwind Gorge,7774,0,0,45055,19,0
+89048,Deepwind Gorge,7774,0,0,50462,20,0
+89049,Deepwind Gorge,7774,0,0,45056,21,0
+89050,Deepwind Gorge,7774,0,0,50463,22,0
+89051,Deepwind Gorge,1962,0,0,5745,16,0
+89052,Deepwind Gorge,1962,0,0,50464,17,0
+89053,Deepwind Gorge,1962,0,0,44965,18,0
+89054,Deepwind Gorge,1962,0,0,44967,19,0
+89055,Deepwind Gorge,1962,0,0,50465,20,0
+89056,Deepwind Gorge,1962,0,0,50466,21,0
+89057,Ring of Trials matches,945,0,0,46398,1,0
+89058,Ring of Trials victories,836,0,0,36480,1,0
+89059,Seething Shore Killing Blows,0,0,4,0,0,0
+89060,,89059,0,0,50467,0,2
+89061,Wintergrasp Killing Blows,0,0,4,0,0,0
+89062,,89061,0,0,50468,0,2
+89063,Ashran Killing Blows,0,0,4,0,0,0
+89064,,89063,0,0,50469,0,2
+89065,Seething Shore Honorable Kills,0,0,4,0,0,0
+89066,,89065,0,0,50470,0,2
+89067,Wintergrasp Honorable Kills,0,0,4,0,0,0
+89068,,89067,0,0,50471,0,2
+89069,Ashran Honorable Kills,0,0,4,0,0,0
+89070,,89069,0,0,50472,0,2
+89071,Complete the Shadowlands achievements listed below.,0,0,4,0,0,0
+89072,Explore Revendreth,89071,0,0,48591,0,0
+89073,Explore Maldraxxus,89071,0,0,48585,1,0
+89074,Explore Ardenweald,89071,0,0,48588,2,0
+89075,Explore Bastion,89071,0,0,48581,3,0
+89076,Adventurer of Revendreth,89071,0,0,48590,4,0
+89077,Adventurer of Ardenweald,89071,0,0,48587,5,0
+89078,Adventurer of Maldraxxus,89071,0,0,48584,6,0
+89079,Adventurer of Bastion,89071,0,0,48580,7,0
+89080,Treasures of Revendreth,89071,0,0,48589,8,0
+89081,Treasures of Ardenweald,89071,0,0,48586,9,0
+89082,Treasures of Maldraxxus,89071,0,0,48583,10,0
+89083,Treasures of Bastion,89071,0,0,48579,11,0
+89088,Complete the dungeon,0,0,4,0,0,2
+89089,Reach the top of the Jailer's Tower,89088,1,0,44166,0,2
+89090,Evade the Tarragrue,0,0,4,0,0,2
+89091,Evade the Tarragrue,89090,1,0,44166,0,2
+89092,Events completed during a single Ember Court,0,0,4,0,0,0
+89093,Events completed during a single Ember Court,89092,10,0,50490,0,1
+89094,Sanctum Upgrade started,0,1,8,0,0,4096
+89095,Transport Network,89094,1,0,50491,0,0
+89096,Anima Conductor,89094,1,0,50492,1,0
+89097,Adventures,89094,1,0,50493,2,0
+89098,Path of Ascension,89094,1,0,50494,3,0
+89099,,72237,42000,0,48574,110,2
+89100,,72237,42000,0,48575,111,2
+89101,,72237,42000,0,48576,112,2
+89102,,72237,42000,0,48577,113,2
+89103,Sanctum Upgrade started,0,1,8,0,0,4096
+89104,Transport Network,89103,1,0,50495,0,0
+89105,Anima Conductor,89103,1,0,50499,1,0
+89106,Adventures,89103,1,0,50500,2,0
+89107,Abomination Factory,89103,1,0,50501,3,0
+89108,Conduits added to Forge of Bonds,0,0,4,0,0,4096
+89109,,89108,3,0,50502,0,0
+89110,Conduit applied to Pelagos,0,0,4,0,0,4096
+89111,Conduit applied to Pelagos,89110,1,0,50503,0,0
+89112,Conduit applied to Marileth,0,0,4,0,0,4096
+89113,Conduit applied to Pelagos,89112,1,0,50504,0,0
+89114,Mysteriously Thrumming Orb acquired,0,0,4,0,0,0
+89115,Mysteriously Thrumming Orb acquired,89114,1,0,50505,0,0
+89116,Aethon,85724,1,0,50617,25,0
+89119,The Ascended Council,85724,1,0,50619,28,0
+89123,Orstus and Sotiros,85724,1,0,50618,27,0
+89125,Vesper Repair: Sophia's Overture,85724,1,0,50593,26,0
+89126,Return Memory to Runecarver,0,1,5,0,0,4096
+89127,,89126,1,0,50514,0,0
+89128,Return 14 Memories to the Runecarver.,0,10,4,0,0,0
+89129,Return 14 Memories to the Runecarver.,89128,14,0,49892,0,1
+89130,,88831,1,0,50406,33,0
+89131,,88831,1,0,50407,34,0
+89132,Sanctum Upgrade started,0,1,8,0,0,4096
+89133,Transport Network,89132,1,0,50517,0,0
+89134,Anima Conductor,89132,1,0,50518,1,0
+89135,Adventures,89132,1,0,50519,2,0
+89136,Queen's Conservatory,89132,1,0,50520,3,0
+89137,Conduit applied to Niya,0,0,4,0,0,4096
+89138,Conduit applied to Niya,89137,1,0,50521,0,0
+89139,Conduits added to Forge of Bonds,0,0,4,0,0,4096
+89140,,89139,3,0,50522,0,0
+89141,9.0 Shadowlands - Bonus Event Weekend - Complete 4 Mythic Dungeons,0,4,5,0,0,4096
+89142,,89141,4,0,50523,0,2
+89143,,89141,4,0,50525,1,2
+89144,,89141,4,0,50526,2,2
+89145,,89141,4,0,50527,3,2
+89146,,89141,4,0,50536,4,2
+89147,,89141,4,0,50537,5,2
+89148,,89141,4,0,50528,6,2
+89149,,89141,4,0,50539,7,2
+89150,,89141,4,0,50524,8,2
+89151,,89141,4,0,50529,9,2
+89152,,89141,4,0,50530,10,2
+89153,,89141,4,0,50531,11,2
+89154,,89141,4,0,50532,12,2
+89155,,89141,4,0,50533,13,2
+89156,,89141,4,0,50534,14,2
+89157,,89141,4,0,50535,15,2
+89158,9.0 Shadowlands - Bonus Event Weekend - World Quests,0,20,5,0,0,4096
+89159,,89158,20,0,50540,0,2
+89160,Dapper Top Hat,88156,1,0,49864,1,16
+89161,Dundae's Hat,88156,1,0,50546,2,16
+89162,Egg Hat,88156,1,0,50550,3,16
+89163,Pirate Hat,88156,1,0,50549,8,16
+89164,Skull Fungus,88156,1,0,50551,10,16
+89165,Unworthy Crown,88156,1,0,50553,12,16
+89166,Trained Corpselice,88156,1,0,50560,18,16
+89167,Hitchhiker,88156,1,0,49926,14,16
+89168,Lovely Candle Display,88156,1,0,50554,15,16
+89169,Shoulder Sprouts,88156,1,0,50556,16,16
+89170,Back Mushrooms,88156,1,0,50558,21,16
+89171,Underpowered Gravity Pack,88156,1,0,50559,29,16
+89172,9.0 Maw Intro - Get Stygia - (STM),0,25,5,0,0,4096
+89173,,89172,25,0,50542,0,2048
+89174,Slay Horde Players,0,25,5,0,0,4096
+89175,,89174,25,0,50543,0,0
+89176,Slay Alliance Players,0,25,5,0,0,4096
+89177,,89176,25,0,50544,0,0
+89178,,58604,1,0,50545,53,0
+89179,Sanctum Upgrade started,0,1,8,0,0,4096
+89180,Transport Network,89179,1,0,50561,0,0
+89181,Anima Conductor,89179,1,0,50562,1,0
+89182,Adventures Upgrades,89179,1,0,50563,2,0
+89183,The Ember Court,89179,1,0,50564,3,0
+89184,Dummy Credit 01,0,0,4,0,0,4096
+89185,,89184,1,0,50567,0,0
+89186,,89184,1,0,50566,1,0
+89187,PvP Season 29 - Set Collection,0,0,4,0,0,2
+89188,Collect any armor set from Shadowlands Season 1 (PvP Season 30).,89187,1,0,50569,0,2
+89189,,58604,1,0,50570,54,0
+89190,9.0 Maldraxxus - A Fashion Abomination,0,0,4,0,0,16
+89191,Chef Hat,89190,1,0,50541,0,0
+89192,Dapper Top Hat,89190,1,0,49864,1,0
+89193,Dundae's Hat,89190,1,0,50546,2,0
+89194,Egg Hat,89190,1,0,50550,3,0
+89195,Flower Crown,89190,1,0,49865,4,0
+89196,Halo of Purity,89190,1,0,49866,5,0
+89197,Holiday Hat,89190,1,0,49867,6,0
+89198,Magician's Hat,89190,1,0,49916,7,0
+89199,Pirate Hat,89190,1,0,50549,8,0
+89200,Red Eye Lens,89190,1,0,49868,9,0
+89201,Skull Fungus,89190,1,0,50551,10,0
+89202,Skull Protector,89190,1,0,49869,11,0
+89203,Unworthy Crown,89190,1,0,50553,12,0
+89204,Happiness Bird,89190,1,0,49871,13,0
+89205,Hitchhiker,89190,1,0,49926,14,0
+89206,Lovely Candle Display,89190,1,0,50554,15,0
+89207,Shoulder Sprouts,89190,1,0,50556,16,0
+89208,Sticky Cat,89190,1,0,49918,17,0
+89209,Trained Corpselice,89190,1,0,50560,18,0
+89210,Trustworthy Doll,89190,1,0,49870,19,0
+89211,Armor Plating,89190,1,0,49922,20,0
+89212,Back Mushrooms,89190,1,0,50558,21,0
+89213,Collector Kash's Pack,89190,1,0,49919,22,0
+89214,Engineering Pack,89190,1,0,49872,23,0
+89215,Plague Pack,89190,1,0,49921,24,0
+89216,Safe Fall Pack,89190,1,0,49920,25,0
+89217,Six-League Pack,89190,1,0,49874,26,0
+89218,Vesitgial Wings,89190,1,0,49875,27,0
+89219,Barrel O' Fish,89190,1,0,49925,28,0
+89220,Underpowered Gravity Pack,89190,1,0,50559,29,0
+89221,Butterflies,89190,1,0,49923,30,0
+89222,Spare Weapon,89190,1,0,49917,31,0
+89223,Faction Flag,89190,1,0,49924,32,0
+89225,Operational Instructions,89190,1,0,49876,33,0
+89226,Outlaw Flag,89190,1,0,49873,34,0
+89227,Conduit applied to Nadjia,0,0,4,0,0,4096
+89228,Conduit applied to Nadjia,89227,1,0,50571,0,0
+89229,Conduits added to Forge of Bonds,0,0,4,0,0,4096
+89230,,89229,3,0,50572,0,0
+89231,Search Skoldus Hall,0,0,4,0,0,4096
+89232,Search Skoldus Hall,89231,1,0,50573,0,0
+89233,Search Fracture Chambers,0,0,4,0,0,4096
+89234,Search Fracture Chambers,89233,1,0,50574,0,0
+89235,Search The Soulforges,0,0,4,0,0,4096
+89236,Search The Soulforges,89235,1,0,50575,0,0
+89237,,85786,6,0,50577,27,0
+89238,9.0 Revendreth - Finale - Stage 7 - Clear the Menagerie,0,0,4,0,0,0
+89239,Slay Myskia,89238,0,0,50579,0,0
+89252,Unlock your covenant's first soulbind,0,1,8,0,0,0
+89253,,89252,1,0,50623,0,0
+89254,,89252,1,0,50624,1,0
+89255,,89252,1,0,50625,2,0
+89256,,89252,1,0,50626,3,0
+89257,Ikras the Devourer,88108,1,0,50621,20,0
+89258,Ikras the Devourer,88129,1,0,50621,20,0
+89259,Soul Remnants Freed,0,0,4,0,0,4096
+89260,Soul Remnants Freed,89259,10,0,50622,0,1
+89261,Unlock Second Soulbind,0,1,8,0,0,0
+89262,,89261,1,0,50627,0,0
+89263,,89261,1,0,50628,1,0
+89264,,89261,1,0,50629,2,0
+89265,,89261,1,0,48524,3,0
+89266,Unlock Third Soulbind,0,1,8,0,0,0
+89267,,89266,1,0,48530,0,0
+89268,,89266,1,0,50632,1,0
+89269,,89266,1,0,50633,2,0
+89270,,89266,1,0,50634,3,0
+89271,Renown Level 34,0,0,4,0,0,0
+89272,,89271,1,0,51482,0,0
+89273,9.0 Maw - Rule 1 - Stygia Dummy - (STM),0,0,4,0,0,4096
+89274,,89273,0,0,50635,0,0
+89281,Souls taken into the Soulkeeper,0,5,5,0,0,4128
+89282,Souls taken into the Soulkeeper,89281,5,0,50636,0,0
+89283,9.0 Achievements - Ardenweald - Exploration - Hidden - Toss a Seed - KRB,0,0,4,0,0,0
+89284,Seed Tossed,89283,1,0,50637,0,0
+89285,,88193,1,0,50638,1,2
+89286,,88193,1,0,50639,2,2
+89287,,88193,1,0,50640,3,2
+89288,,88193,1,0,50641,4,2
+89289,,88193,1,0,50642,5,2
+89290,,88193,1,0,50643,6,2
+89291,,88193,1,0,50644,7,2
+89292,,88193,1,0,50645,8,2
+89293,,88193,1,0,50646,9,2
+89294,,88193,1,0,50647,10,2
+89295,,88193,1,0,50648,11,2
+89296,,88193,1,0,50649,12,2
+89297,,88193,1,0,50650,13,2
+89298,,88193,1,0,50651,14,2
+89299,,88193,1,0,50652,15,2
+89300,,88193,1,0,50653,16,2
+89301,,88193,1,0,50654,17,2
+89302,,88193,1,0,50655,18,2
+89303,,88193,1,0,50656,19,2
+89304,,88193,1,0,50657,20,2
+89305,,88193,1,0,50658,21,2
+89306,,88193,1,0,50659,22,2
+89307,,88193,1,0,50660,23,2
+89308,,88193,1,0,50661,24,2
+89309,,88193,1,0,50662,25,2
+89310,,88193,1,0,50663,26,2
+89311,,88193,1,0,50664,27,2
+89312,,88193,1,0,49820,28,2
+89313,,88193,1,0,50665,29,2
+89314,,88193,1,0,50666,30,2
+89315,,88193,1,0,50667,31,2
+89316,,88193,1,0,50668,32,2
+89317,,88193,1,0,50669,33,2
+89318,,88193,1,0,50670,34,2
+89319,,88193,1,0,50671,35,2
+89320,,88193,1,0,50672,36,2
+89321,,88193,1,0,50673,37,2
+89322,,88193,1,0,50674,38,2
+89323,,88193,1,0,50675,39,2
+89324,,88193,1,0,50676,40,2
+89325,,88193,1,0,50677,41,2
+89326,,88193,1,0,50678,42,2
+89327,,88193,1,0,50679,43,2
+89328,,88193,1,0,50680,44,2
+89329,,88193,1,0,50681,45,2
+89330,,88193,1,0,50682,46,2
+89331,,88193,1,0,50683,47,2
+89332,,88193,1,0,50684,48,2
+89333,,88193,1,0,49821,49,2
+89334,,88193,1,0,50685,50,2
+89335,,88193,1,0,50686,51,2
+89336,,88193,1,0,49822,52,2
+89337,,88193,1,0,50687,53,2
+89338,,88193,1,0,50688,54,2
+89339,,88193,1,0,50689,55,2
+89340,,88193,1,0,50690,56,2
+89341,,88193,1,0,50691,57,2
+89342,,88193,1,0,50692,58,2
+89343,,88193,1,0,50693,59,2
+89344,,88193,1,0,50694,60,2
+89345,,88193,1,0,50695,61,2
+89346,,88193,1,0,50696,62,2
+89347,,88193,1,0,50697,63,2
+89348,,88193,1,0,50698,64,2
+89349,,88193,1,0,50699,65,2
+89350,,88193,1,0,50700,66,2
+89351,,88193,1,0,50701,67,2
+89352,,88193,1,0,50702,68,2
+89353,,88193,1,0,50703,69,2
+89354,,88193,1,0,50704,70,2
+89355,,88193,1,0,50705,71,2
+89356,,88193,1,0,49209,72,2
+89357,,88193,1,0,50706,73,2
+89358,,88193,1,0,50707,74,2
+89359,,88193,1,0,50708,75,2
+89360,,88193,1,0,50709,76,2
+89361,,88193,1,0,50710,77,2
+89362,,88193,1,0,50711,78,2
+89363,,88193,1,0,50712,79,2
+89364,,88193,1,0,50713,80,2
+89365,,88193,1,0,50714,81,2
+89366,,88193,1,0,50715,82,2
+89367,,88193,1,0,50716,83,2
+89369,,88193,1,0,50718,84,2
+89370,,88193,1,0,50719,85,2
+89371,,88193,1,0,50720,86,2
+89372,,88193,1,0,50721,87,2
+89373,,88193,1,0,50722,88,2
+89374,,88193,1,0,50723,89,2
+89375,,88193,1,0,49943,90,2
+89376,,88193,1,0,50724,91,2
+89377,,88193,1,0,50725,92,2
+89378,,88193,1,0,50726,93,2
+89379,,88193,1,0,50727,94,2
+89380,,88193,1,0,50728,95,2
+89381,,88193,1,0,50183,96,2
+89382,,88193,1,0,50729,97,2
+89383,,88193,1,0,50730,98,2
+89384,,88193,1,0,50731,99,2
+89385,,88193,1,0,50732,100,2
+89386,,88193,1,0,50733,101,2
+89387,,88193,1,0,50734,102,2
+89388,,88193,1,0,50735,103,2
+89389,,88193,1,0,50736,104,2
+89390,,88193,1,0,50737,105,2
+89391,,88193,1,0,50738,106,2
+89392,,88193,1,0,50739,107,2
+89393,,88193,1,0,50740,108,2
+89394,,88193,1,0,50741,109,2
+89395,,88193,1,0,50742,110,2
+89396,,88193,1,0,50743,111,2
+89397,,88193,1,0,47993,112,2
+89398,,88193,1,0,47994,113,2
+89399,,88193,1,0,47995,114,2
+89400,,88193,1,0,47996,115,2
+89401,,88193,1,0,50744,116,2
+89402,,88193,1,0,48269,117,2
+89403,,88193,1,0,50745,118,2
+89404,,88193,1,0,50746,119,2
+89405,,88193,1,0,50747,120,2
+89406,,88193,1,0,50748,121,2
+89407,,88193,1,0,50749,122,2
+89408,,88193,1,0,50750,123,2
+89409,,88193,1,0,50751,124,2
+89410,,88193,1,0,50752,125,2
+89411,,88193,1,0,50753,126,2
+89412,,88193,1,0,50754,127,2
+89413,,88193,1,0,50755,128,2
+89414,,88193,1,0,50756,129,2
+89415,,88193,1,0,50757,130,2
+89416,,88193,1,0,50758,131,2
+89417,,88193,1,0,50759,132,2
+89418,,88193,1,0,50760,133,2
+89419,,88193,1,0,50761,134,2
+89420,,88193,1,0,50762,135,2
+89421,,88193,1,0,50763,136,2
+89422,,88193,1,0,50764,137,2
+89423,,88193,1,0,50765,138,2
+89424,,88193,1,0,50766,139,2
+89425,,88193,1,0,50767,140,2
+89426,,88193,1,0,50768,141,2
+89427,,88193,1,0,50769,142,2
+89428,,88193,1,0,50770,143,2
+89429,,88193,1,0,50771,144,2
+89430,,88193,1,0,50772,145,2
+89431,,88193,1,0,50773,146,2
+89432,,88193,1,0,50774,147,2
+89433,,88193,1,0,50775,148,2
+89434,,88193,1,0,50776,149,2
+89435,,88193,1,0,50777,150,2
+89436,,88193,1,0,50778,151,2
+89437,,88193,1,0,50779,152,2
+89438,,88193,1,0,50780,153,2
+89439,,88193,1,0,50781,154,2
+89440,,88193,1,0,50782,155,2
+89441,,88193,1,0,50783,156,2
+89442,,88193,1,0,50784,157,2
+89443,,88193,1,0,50785,158,0
+89444,,88193,1,0,50786,159,2
+89445,,88193,1,0,50787,160,2
+89446,,88193,1,0,50788,161,2
+89447,,88193,1,0,50789,162,2
+89448,,88193,1,0,50790,163,2
+89449,,88193,1,0,50791,164,2
+89450,,88193,1,0,50792,165,2
+89451,,88193,1,0,50793,166,2
+89452,,88193,1,0,49218,167,2
+89453,,88193,1,0,49216,168,2
+89454,,88193,1,0,49219,169,2
+89455,,88193,1,0,49217,170,2
+89456,,88193,1,0,50794,171,2
+89457,,88193,1,0,50795,172,2
+89458,,88193,1,0,50796,173,2
+89459,,88193,1,0,50797,174,2
+89460,,88193,1,0,50798,175,2
+89461,,88193,1,0,50799,176,2
+89462,,88193,1,0,50800,177,2
+89463,,88193,1,0,50801,178,2
+89464,,88193,1,0,50802,179,2
+89465,,88193,1,0,50803,180,2
+89466,,88193,1,0,50804,181,2
+89467,,88193,1,0,50805,182,2
+89468,,88193,1,0,50806,183,2
+89469,,88193,1,0,50807,184,2
+89470,,88193,1,0,50808,185,2
+89471,,88193,1,0,50809,186,2
+89472,,88193,1,0,50810,187,2
+89473,,88193,1,0,50811,188,2
+89474,,88193,1,0,50812,189,2
+89475,,88193,1,0,50813,190,2
+89476,,88193,1,0,50814,191,2
+89477,,88193,1,0,50815,192,2
+89478,,88193,1,0,50816,193,2
+89479,,88193,1,0,50817,194,2
+89480,Torghast: Tracking - Twisting Corridors Unlocked,0,0,4,0,0,0
+89481,Torghast: Tracking - Twisting Corridors Unlocked,89480,1,0,50818,0,0
+89482,Speak to Adrianos,86540,1,0,48458,1,0
+89483,Complete the dungeon,0,0,4,0,0,2
+89484,Reach the top of the Jailer's Tower,89483,1,0,44166,0,2
+89485,Evade the Tarragrue,0,0,4,0,0,2
+89486,Evade the Tarragrue,89485,1,0,44166,0,2
+89487,Complete the dungeon,0,0,4,0,0,2
+89488,Reach the top of the Jailer's Tower,89487,1,0,44166,0,2
+89489,Evade the Tarragrue,0,0,4,0,0,2
+89490,Evade the Tarragrue,89489,1,0,44166,0,2
+89491,Complete the dungeon,0,0,4,0,0,2
+89492,Reach the top of the Jailer's Tower,89491,1,0,44166,0,2
+89493,Evade the Tarragrue,0,0,4,0,0,2
+89494,Evade the Tarragrue,89493,1,0,44166,0,2
+89495,Complete the dungeon,0,0,4,0,0,2
+89496,Reach the top of the Jailer's Tower,89495,1,0,44166,0,2
+89497,Evade the Tarragrue,0,0,4,0,0,2
+89498,Evade the Tarragrue,89497,1,0,44166,0,2
+89499,Complete the dungeon,0,0,4,0,0,2
+89500,Reach the top of the Jailer's Tower,89499,1,0,44166,0,2
+89501,Evade the Tarragrue,0,0,4,0,0,2
+89502,Evade the Tarragrue,89501,1,0,44166,0,2
+89503,Complete the dungeon,0,0,4,0,0,2
+89504,Reach the top of the Jailer's Tower,89503,1,0,44166,0,2
+89505,Evade the Tarragrue,0,0,4,0,0,2
+89506,Evade the Tarragrue,89505,1,0,44166,0,2
+89507,Complete the dungeon,0,0,4,0,0,2
+89508,Reach the top of the Jailer's Tower,89507,1,0,44166,0,2
+89509,Evade the Tarragrue,0,0,4,0,0,2
+89510,Evade the Tarragrue,89509,1,0,44166,0,2
+89511,Complete the dungeon,0,0,4,0,0,2
+89512,Reach the top of the Jailer's Tower,89511,1,0,44166,0,2
+89513,Evade the Tarragrue,0,0,4,0,0,2
+89514,Evade the Tarragrue,89513,1,0,44166,0,2
+89515,Complete the dungeon,0,0,4,0,0,2
+89516,Reach the top of the Jailer's Tower,89515,1,0,44166,0,2
+89517,Evade the Tarragrue,0,0,4,0,0,2
+89518,Evade the Tarragrue,89517,1,0,44166,0,2
+89519,Complete the dungeon,0,0,4,0,0,2
+89520,Reach the top of the Jailer's Tower,89519,1,0,44166,0,2
+89521,Evade the Tarragrue,0,0,4,0,0,2
+89522,Evade the Tarragrue,89521,1,0,44166,0,2
+89523,Complete the dungeon,0,0,4,0,0,2
+89524,Reach the top of the Jailer's Tower,89523,1,0,44166,0,2
+89525,Evade the Tarragrue,0,0,4,0,0,2
+89526,Evade the Tarragrue,89525,1,0,44166,0,2
+89527,Complete the dungeon,0,0,4,0,0,2
+89528,Reach the top of the Jailer's Tower,89527,1,0,44166,0,2
+89529,Evade the Tarragrue,0,0,4,0,0,2
+89530,Evade the Tarragrue,89529,1,0,44166,0,2
+89531,Complete the dungeon,0,0,4,0,0,2
+89532,Reach the top of the Jailer's Tower,89531,1,0,44166,0,2
+89533,Evade the Tarragrue,0,0,4,0,0,2
+89534,Evade the Tarragrue,89533,1,0,44166,0,2
+89535,Complete the dungeon,0,0,4,0,0,2
+89536,Reach the top of the Jailer's Tower,89535,1,0,44166,0,2
+89537,Evade the Tarragrue,0,0,4,0,0,2
+89538,Evade the Tarragrue,89537,1,0,44166,0,2
+89539,Complete the dungeon,0,0,4,0,0,2
+89540,Reach the top of the Jailer's Tower,89539,1,0,44166,0,2
+89541,Evade the Tarragrue,0,0,4,0,0,2
+89542,Evade the Tarragrue,89541,1,0,44166,0,2
+89543,Complete the dungeon,0,0,4,0,0,2
+89544,Reach the top of the Jailer's Tower,89543,1,0,44166,0,2
+89545,Evade the Tarragrue,0,0,4,0,0,2
+89546,Evade the Tarragrue,89545,1,0,44166,0,2
+89547,Complete the dungeon,0,0,4,0,0,2
+89548,Reach the top of the Jailer's Tower,89547,1,0,44166,0,2
+89549,Evade the Tarragrue,0,0,4,0,0,2
+89550,Evade the Tarragrue,89549,1,0,44166,0,2
+89551,Complete the dungeon,0,0,4,0,0,2
+89552,Reach the top of the Jailer's Tower,89551,1,0,44166,0,2
+89553,Evade the Tarragrue,0,0,4,0,0,2
+89554,Evade the Tarragrue,89553,1,0,44166,0,2
+89555,Complete the dungeon,0,0,4,0,0,2
+89556,Reach the top of the Jailer's Tower,89555,1,0,44166,0,2
+89557,Evade the Tarragrue,0,0,4,0,0,2
+89558,Evade the Tarragrue,89557,1,0,44166,0,2
+89559,Complete the dungeon,0,0,4,0,0,2
+89560,Reach the top of the Jailer's Tower,89559,1,0,44166,0,2
+89561,Evade the Tarragrue,0,0,4,0,0,2
+89562,Evade the Tarragrue,89561,1,0,44166,0,2
+89563,Complete the dungeon,0,0,4,0,0,2
+89564,Reach the top of the Jailer's Tower,89563,1,0,44166,0,2
+89565,Evade the Tarragrue,0,0,4,0,0,2
+89566,Evade the Tarragrue,89565,1,0,44166,0,2
+89567,Complete the dungeon,0,0,4,0,0,2
+89568,Reach the top of the Jailer's Tower,89567,1,0,44166,0,2
+89569,Evade the Tarragrue,0,0,4,0,0,2
+89570,Evade the Tarragrue,89569,1,0,44166,0,2
+89571,Complete the dungeon,0,0,4,0,0,2
+89572,Reach the top of the Jailer's Tower,89571,1,0,44166,0,2
+89573,Evade the Tarragrue,0,0,4,0,0,2
+89574,Evade the Tarragrue,89573,1,0,44166,0,2
+89575,Complete the dungeon,0,0,4,0,0,2
+89576,Reach the top of the Jailer's Tower,89575,1,0,44166,0,2
+89577,Evade the Tarragrue,0,0,4,0,0,2
+89578,Evade the Tarragrue,89577,1,0,44166,0,2
+89579,Complete the dungeon,0,0,4,0,0,2
+89580,Reach the top of the Jailer's Tower,89579,1,0,44166,0,2
+89581,Evade the Tarragrue,0,0,4,0,0,2
+89582,Evade the Tarragrue,89581,1,0,44166,0,2
+89583,Complete the dungeon,0,0,4,0,0,2
+89584,Reach the top of the Jailer's Tower,89583,1,0,44166,0,2
+89585,Evade the Tarragrue,0,0,4,0,0,2
+89586,Evade the Tarragrue,89585,1,0,44166,0,2
+89587,Complete the dungeon,0,0,4,0,0,2
+89588,Reach the top of the Jailer's Tower,89587,1,0,44166,0,2
+89589,Evade the Tarragrue,0,0,4,0,0,2
+89590,Evade the Tarragrue,89589,1,0,44166,0,2
+89591,Complete the dungeon,0,0,4,0,0,2
+89592,Reach the top of the Jailer's Tower,89591,1,0,44166,0,2
+89593,Evade the Tarragrue,0,0,4,0,0,2
+89594,Evade the Tarragrue,89593,1,0,44166,0,2
+89595,Complete the dungeon,0,0,4,0,0,2
+89596,Reach the top of the Jailer's Tower,89595,1,0,44166,0,2
+89597,Evade the Tarragrue,0,0,4,0,0,2
+89598,Evade the Tarragrue,89597,1,0,44166,0,2
+89599,Complete the dungeon,0,0,4,0,0,2
+89600,Reach the top of the Jailer's Tower,89599,1,0,44166,0,2
+89601,Evade the Tarragrue,0,0,4,0,0,2
+89602,Evade the Tarragrue,89601,1,0,44166,0,2
+89603,Complete the dungeon,0,0,4,0,0,2
+89604,Reach the top of the Jailer's Tower,89603,1,0,44166,0,2
+89605,Evade the Tarragrue,0,0,4,0,0,2
+89606,Evade the Tarragrue,89605,1,0,44166,0,2
+89607,Complete the dungeon,0,0,4,0,0,2
+89608,Reach the top of the Jailer's Tower,89607,1,0,44166,0,2
+89609,Evade the Tarragrue,0,0,4,0,0,2
+89610,Evade the Tarragrue,89609,1,0,44166,0,2
+89611,Complete the dungeon,0,0,4,0,0,2
+89612,Reach the top of the Jailer's Tower,89611,1,0,44166,0,2
+89613,Evade the Tarragrue,0,0,4,0,0,2
+89614,Evade the Tarragrue,89613,1,0,44166,0,2
+89615,Complete the dungeon,0,0,4,0,0,2
+89616,Reach the top of the Jailer's Tower,89615,1,0,44166,0,2
+89617,Evade the Tarragrue,0,0,4,0,0,2
+89618,Evade the Tarragrue,89617,1,0,44166,0,2
+89619,Complete the dungeon,0,0,4,0,0,2
+89620,Reach the top of the Jailer's Tower,89619,1,0,44166,0,2
+89621,Evade the Tarragrue,0,0,4,0,0,2
+89622,Evade the Tarragrue,89621,1,0,44166,0,2
+89623,Complete the dungeon,0,0,4,0,0,2
+89624,Reach the top of the Jailer's Tower,89623,1,0,44166,0,2
+89625,Evade the Tarragrue,0,0,4,0,0,2
+89626,Evade the Tarragrue,89625,1,0,44166,0,2
+89627,Complete the dungeon,0,0,4,0,0,2
+89628,Reach the top of the Jailer's Tower,89627,1,0,44166,0,2
+89629,Evade the Tarragrue,0,0,4,0,0,2
+89630,Evade the Tarragrue,89629,1,0,44166,0,2
+89631,Complete the dungeon,0,0,4,0,0,2
+89632,Reach the top of the Jailer's Tower,89631,1,0,44166,0,2
+89633,Evade the Tarragrue,0,0,4,0,0,2
+89634,Evade the Tarragrue,89633,1,0,44166,0,2
+89635,Complete the dungeon,0,0,4,0,0,2
+89636,Reach the top of the Jailer's Tower,89635,1,0,44166,0,2
+89637,Evade the Tarragrue,0,0,4,0,0,2
+89638,Evade the Tarragrue,89637,1,0,44166,0,2
+89639,Complete the dungeon,0,0,4,0,0,2
+89640,Reach the top of the Jailer's Tower,89639,1,0,44166,0,2
+89641,Evade the Tarragrue,0,0,4,0,0,2
+89642,Evade the Tarragrue,89641,1,0,44166,0,2
+89643,Complete the dungeon,0,0,4,0,0,2
+89644,Reach the top of the Jailer's Tower,89643,1,0,44166,0,2
+89645,Evade the Tarragrue,0,0,4,0,0,2
+89646,Evade the Tarragrue,89645,1,0,44166,0,2
+89647,Complete the dungeon,0,0,4,0,0,2
+89648,Reach the top of the Jailer's Tower,89647,1,0,44166,0,2
+89649,Evade the Tarragrue,0,0,4,0,0,2
+89650,Evade the Tarragrue,89649,1,0,44166,0,2
+89651,Complete the dungeon,0,0,4,0,0,2
+89652,Reach the top of the Jailer's Tower,89651,1,0,44166,0,2
+89653,Evade the Tarragrue,0,0,4,0,0,2
+89654,Evade the Tarragrue,89653,1,0,44166,0,2
+89655,Complete the dungeon,0,0,4,0,0,2
+89656,Reach the top of the Jailer's Tower,89655,1,0,44166,0,2
+89657,Evade the Tarragrue,0,0,4,0,0,2
+89658,Evade the Tarragrue,89657,1,0,44166,0,2
+89659,Complete the dungeon,0,0,4,0,0,2
+89660,Reach the top of the Jailer's Tower,89659,1,0,44166,0,2
+89661,Evade the Tarragrue,0,0,4,0,0,2
+89662,Evade the Tarragrue,89661,1,0,44166,0,2
+89663,Complete the dungeon,0,0,4,0,0,2
+89664,Reach the top of the Jailer's Tower,89663,1,0,44166,0,2
+89665,Evade the Tarragrue,0,0,4,0,0,2
+89666,Evade the Tarragrue,89665,1,0,44166,0,2
+89667,Complete the dungeon,0,0,4,0,0,2
+89668,Reach the top of the Jailer's Tower,89667,1,0,44166,0,2
+89669,Evade the Tarragrue,0,0,4,0,0,2
+89670,Evade the Tarragrue,89669,1,0,44166,0,2
+89671,Complete the dungeon,0,0,4,0,0,2
+89672,Reach the top of the Jailer's Tower,89671,1,0,44166,0,2
+89673,Evade the Tarragrue,0,0,4,0,0,2
+89674,Evade the Tarragrue,89673,1,0,44166,0,2
+89675,Complete the dungeon,0,0,4,0,0,2
+89676,Reach the top of the Jailer's Tower,89675,1,0,44166,0,2
+89677,Evade the Tarragrue,0,0,4,0,0,2
+89678,Evade the Tarragrue,89677,1,0,44166,0,2
+89679,,75534,42000,0,48575,109,2
+89680,,75534,42000,0,50194,110,2
+89681,,75534,42000,0,48577,111,2
+89682,,75534,42000,0,48576,112,2
+89683,,75534,42000,0,48574,113,2
+89684,,75708,42000,0,48575,109,2
+89685,,75708,42000,0,50194,110,2
+89686,,75708,42000,0,48577,111,2
+89687,,75708,42000,0,48576,112,2
+89688,,75708,42000,0,48574,113,2
+89689,,75880,42000,0,48575,109,2
+89690,,75880,42000,0,50194,110,2
+89691,,75880,42000,0,48577,111,2
+89692,,75880,42000,0,48576,112,2
+89693,,75880,42000,0,48574,113,2
+89694,,76054,42000,0,48575,109,2
+89695,,76054,42000,0,50194,110,2
+89696,,76054,42000,0,48577,111,2
+89697,,76054,42000,0,48576,112,2
+89698,,76054,42000,0,48574,113,2
+89699,,76226,42000,0,48575,109,2
+89700,,76226,42000,0,50194,110,2
+89701,,76226,42000,0,48577,111,2
+89702,,76226,42000,0,48576,112,2
+89703,,76226,42000,0,48574,113,2
+89704,,76398,42000,0,48575,109,2
+89705,,76398,42000,0,50194,110,2
+89706,,76398,42000,0,48577,111,2
+89707,,76398,42000,0,48576,112,2
+89708,,76398,42000,0,48574,113,2
+89709,,76570,42000,0,48575,109,2
+89710,,76570,42000,0,50194,110,2
+89711,,76570,42000,0,48577,111,2
+89712,,76570,42000,0,48576,112,2
+89713,,76570,42000,0,48574,113,2
+89714,,76742,42000,0,48575,109,2
+89715,,76742,42000,0,50194,110,2
+89716,,76742,42000,0,48577,111,2
+89717,,76742,42000,0,48576,112,2
+89718,,76742,42000,0,48574,113,2
+89719,,76914,42000,0,48575,109,2
+89720,,76914,42000,0,50194,110,2
+89721,,76914,42000,0,48577,111,2
+89722,,76914,42000,0,48576,112,2
+89723,,76914,42000,0,48574,113,2
+89724,,77086,42000,0,48575,109,2
+89725,,77086,42000,0,50194,110,2
+89726,,77086,42000,0,48577,111,2
+89727,,77086,42000,0,48576,112,2
+89728,,77086,42000,0,48574,113,2
+89729,,77258,42000,0,48575,109,2
+89730,,77258,42000,0,50194,110,2
+89731,,77258,42000,0,48577,111,2
+89732,,77258,42000,0,48576,112,2
+89733,,77258,42000,0,48574,113,2
+89734,,77430,42000,0,48575,109,2
+89735,,77430,42000,0,50194,110,2
+89736,,77430,42000,0,48577,111,2
+89737,,77430,42000,0,48576,112,2
+89738,,77430,42000,0,48574,113,2
+89739,,77602,42000,0,48575,109,2
+89740,,77602,42000,0,50194,110,2
+89741,,77602,42000,0,48577,111,2
+89742,,77602,42000,0,48576,112,2
+89743,,77602,42000,0,48574,113,2
+89744,,77774,42000,0,48575,109,2
+89745,,77774,42000,0,48574,110,2
+89746,,77774,42000,0,50194,111,2
+89747,,77774,42000,0,48577,112,2
+89748,,77774,42000,0,48576,113,2
+89749,,77946,42000,0,48575,109,2
+89750,,77946,42000,0,48574,110,2
+89751,,77946,42000,0,50194,111,2
+89752,,77946,42000,0,48577,112,2
+89753,,77946,42000,0,48576,113,2
+89754,,78118,42000,0,48575,107,2
+89755,,78118,42000,0,48574,108,2
+89756,,78118,42000,0,50194,109,2
+89757,,78118,42000,0,48577,110,2
+89758,,78118,42000,0,48576,111,2
+89760,Trial of the Hunt,87184,10,0,50820,1,0
+89761,Trial of Combat,87184,10,0,50821,2,0
+89762,Gorgers Slain,0,3,5,0,0,4098
+89763,,89762,3,0,50822,0,0
+89764,,89762,3,0,50823,1,0
+89765,Gorgers Slain,0,7,5,0,0,4098
+89766,,89765,7,0,50824,0,0
+89767,,89765,7,0,50825,1,0
+89768,Any Covenant Intro Complete,0,1,8,0,0,0
+89769,,89768,1,0,48500,0,0
+89770,,89768,1,0,50826,1,0
+89771,,89768,1,0,50827,2,0
+89772,,89768,1,0,50828,3,0
+89773,,10561,1,0,50829,22,2
+89774,Adventures - Raise 3 to Max,0,0,4,0,0,0
+89775,Adventurers,89774,3,4,0,0,8192
+89776,Raise three soulbinds to level 60 in Adventures.,89775,3,0,50831,0,0
+89777,Adventures - Any Adventurer To Level 20,0,0,4,0,0,0
+89778,,89777,0,0,50832,0,0
+89779,Adventures - Any Adventurer To Level 40,0,0,4,0,0,0
+89780,,89779,0,0,50833,0,0
+89781,Adventures - Any Adventurer To Level 60,0,0,4,0,0,0
+89782,,89781,0,0,50834,0,0
+89783,Adventures - 12 Adventures of Covenant Acquired,0,1,8,0,0,0
+89784,Ardenweald,89783,0,4,0,0,1
+89785,,89784,0,0,50835,0,0
+89786,,89784,0,0,50836,1,0
+89787,,89784,0,0,50837,2,0
+89788,,89784,0,0,50838,3,0
+89789,,89784,0,0,50839,4,0
+89790,,89784,0,0,50840,5,0
+89791,,89784,0,0,50841,6,0
+89792,,89784,0,0,50842,7,0
+89793,,89784,0,0,50843,8,0
+89794,,89784,0,0,50844,9,0
+89795,,89784,0,0,50845,10,0
+89796,,89784,0,0,50846,11,0
+89797,,89799,0,0,50847,0,0
+89798,,89799,0,0,50848,1,0
+89799,Bastion,89783,0,4,0,1,1
+89800,,89799,0,0,50849,2,0
+89801,,89799,0,0,50850,3,0
+89802,,89799,0,0,50851,4,0
+89803,,89799,0,0,50852,5,0
+89804,Follower 7,89799,1,8,0,11,0
+89805,,89799,0,0,50855,6,0
+89806,,89799,0,0,50856,7,0
+89807,,89799,0,0,50857,8,0
+89808,,89799,0,0,50858,9,0
+89809,,89799,0,0,50859,10,0
+89810,Maldraxxus,89783,0,4,0,2,1
+89811,,89810,0,0,50872,0,0
+89812,,89810,0,0,50873,1,0
+89813,,89810,0,0,50874,2,0
+89814,,89810,0,0,50875,3,0
+89815,,89810,0,0,50876,4,0
+89816,,89810,0,0,50877,5,0
+89817,,89810,0,0,50878,6,0
+89818,,89810,0,0,50879,7,0
+89819,,89810,0,0,50880,8,0
+89820,,89810,0,0,50881,9,0
+89821,,89810,0,0,50882,10,0
+89822,,89810,0,0,50883,11,0
+89823,Revendreth,89783,0,4,0,3,1
+89824,,89823,0,0,50860,0,0
+89825,,89823,0,0,50861,1,0
+89826,,89823,0,0,50862,2,0
+89827,,89823,0,0,50863,3,0
+89828,,89823,0,0,50864,4,0
+89829,,89823,0,0,50865,5,0
+89830,,89823,0,0,50866,6,0
+89831,,89823,0,0,50867,7,0
+89832,,89823,0,0,50868,8,0
+89833,,89823,0,0,50869,9,0
+89834,,89823,0,0,50870,10,0
+89835,,89823,0,0,50871,11,0
+89836,,89804,0,0,50853,0,0
+89837,,89804,0,0,50854,1,0
+89838,Adventures - Complete an Adventure,0,0,4,0,0,0
+89839,,89838,1,0,50884,0,0
+89840,Adventures - Complete 10 Adventures,0,0,4,0,0,0
+89841,,89840,10,0,50884,0,1
+89842,Adventures - Complete 100 Adventures,0,0,4,0,0,0
+89843,,89842,100,0,50884,0,1
+89844,Adventures - Complete Maw Adventures,0,0,4,0,0,0
+89845,Breach the Planes,89844,0,0,50885,0,0
+89846,Ghelak's Revenge,89844,0,0,50886,1,0
+89847,Coalescing Stygia,89844,0,0,50887,2,0
+89848,Topple the Giants,89844,0,0,50888,3,0
+89849,"Dark Skies, Darker Prospects",89844,0,0,50889,4,0
+89850,Dravok's Plot,89844,0,0,50890,5,0
+89851,Grandiose Designs,89844,0,0,50891,6,0
+89852,Cutting the Threads,89844,0,0,50892,7,0
+89853,Shades of Despair,89844,0,0,50893,8,0
+89854,"Krala, Wings of Woe",89844,0,0,50894,9,0
+89855,Smuggled Cache,85731,0,0,50895,8,0
+89856,Chest of Envious Dreams,85731,0,0,50896,9,0
+89857,Filcher's Prize,85731,0,0,50897,10,0
+89858,Wayfarer's Abandoned Spoils,85731,0,0,50898,11,0
+89859,Remlate's Hidden Cache,85731,0,0,50899,12,0
+89860,Fleeing Soul's Bundle,85731,0,0,50900,13,0
+89861,Gilded Plum Chest,85731,0,0,50901,14,0
+89862,9.0 Alts - Covenant Sanctums - Has Ever Done Ardenweald Play - GJC,0,0,4,0,0,0
+89863,,89862,1,0,50903,0,0
+89866,New Criteria Tree,0,0,4,0,0,0
+89867,,89866,0,0,50904,0,0
+89868,Catch Shadowlands Pets,0,0,4,0,0,0
+89877,Animated Cruor,89868,0,0,50923,0,0
+89880,Bleak Skitterer,89868,0,0,50926,1,0
+89881,Clutch,89868,0,0,50922,2,0
+89882,Copperfur Kit,89868,0,0,50916,3,0
+89883,Deepwood Leaper,89868,0,0,50921,4,0
+89884,Dusky Dredwing Pup,89868,0,0,50907,5,0
+89885,Fledgling Teroclaw,89868,0,0,50911,6,0
+89886,Fluttering Glimmerfly,89868,0,0,50913,7,0
+89887,Glimmerpool Hatchling,89868,0,0,50917,8,0
+89888,Gorm Rootstinger,89868,0,0,50919,9,0
+89889,Lost Soul,89868,0,0,50906,10,0
+89890,Mire Creeper,89868,0,0,50909,11,0
+89891,Necroray Spawnling,89868,0,0,50924,12,0
+89892,Pulsating Maggot,89868,0,0,50925,13,0
+89893,Rosetipped Spiderling,89868,0,0,50910,14,0
+89894,Rustfur Kit,89868,0,0,50915,15,0
+89895,Tranquil Wader,89868,0,0,50920,16,0
+89896,Vibrant Glimmerfly,89868,0,0,50912,17,0
+89897,Wader Chick,89868,0,0,50914,18,0
+89898,Wild Etherwyrm,89868,0,0,50918,19,0
+89899,Withering Creeper,89868,0,0,50908,20,0
+89900,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Aquatic pets.,0,9,8,0,0,0
+89901,Sylla,89900,1,0,51034,0,0
+89902,Eyegor,89900,1,0,51025,1,0
+89903,Addius the Tormenter,89900,1,0,51016,2,0
+89904,Rotgut,89900,1,0,51007,3,0
+89905,Dundley Stickyfingers,89900,1,0,50998,4,0
+89906,Caregiver Maximillian,89900,1,0,50989,5,0
+89907,Zolla,89900,1,0,50980,6,0
+89908,Thenia,89900,1,0,50971,7,0
+89909,Stratios,89900,1,0,50962,8,0
+89910,Glitterdust,89900,1,0,50953,9,0
+89911,Faryl,89900,1,0,50944,10,0
+89912,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Beast pets.,0,9,8,0,0,0
+89913,Sylla,89912,1,0,51033,0,0
+89914,Eyegor,89912,1,0,51024,1,0
+89915,Addius the Tormenter,89912,1,0,51015,2,0
+89916,Rotgut,89912,1,0,51006,3,0
+89917,Dundley Stickyfingers,89912,1,0,50997,4,0
+89918,Caregiver Maximillian,89912,1,0,50988,5,0
+89919,Zolla,89912,1,0,50979,6,0
+89920,Thenia,89912,1,0,50972,7,0
+89921,Stratios,89912,1,0,50961,8,0
+89922,Glitterdust,89912,1,0,50952,9,0
+89923,Faryl,89912,1,0,50943,10,0
+89924,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Critter pets.,0,9,8,0,0,0
+89925,Sylla,89924,1,0,51030,0,0
+89926,Eyegor,89924,1,0,51021,1,0
+89927,Addius the Tormenter,89924,1,0,51012,2,0
+89928,Rotgut,89924,1,0,51003,3,0
+89929,Dundley Stickyfingers,89924,1,0,50994,4,0
+89930,Caregiver Maximillian,89924,1,0,50985,5,0
+89931,Zolla,89924,1,0,50976,6,0
+89932,Thenia,89924,1,0,50967,7,0
+89933,Stratios,89924,1,0,50958,8,0
+89934,Glitterdust,89924,1,0,50949,9,0
+89935,Faryl,89924,1,0,50940,10,0
+89936,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Dragonkin pets.,0,9,8,0,0,0
+89937,Sylla,89936,1,0,51028,0,0
+89938,Eyegor,89936,1,0,51019,1,0
+89939,Addius the Tormenter,89936,1,0,51010,2,0
+89940,Rotgut,89936,1,0,51001,3,0
+89941,Dundley Stickyfingers,89936,1,0,50992,4,0
+89942,Caregiver Maximillian,89936,1,0,50983,5,0
+89943,Zolla,89936,1,0,50974,6,0
+89944,Thenia,89936,1,0,50965,7,0
+89945,Stratios,89936,1,0,50956,8,0
+89946,Glitterdust,89936,1,0,50947,9,0
+89947,Faryl,89936,1,0,50938,10,0
+89948,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Elemental pets.,0,9,8,0,0,0
+89949,Sylla,89948,1,0,51032,0,0
+89950,Eyegor,89948,1,0,51023,1,0
+89951,Addius the Tormenter,89948,1,0,51014,2,0
+89952,Rotgut,89948,1,0,51005,3,0
+89953,Dundley Stickyfingers,89948,1,0,50996,4,0
+89954,Caregiver Maximillian,89948,1,0,50987,5,0
+89955,Zolla,89948,1,0,50978,6,0
+89956,Thenia,89948,1,0,50969,7,0
+89957,Stratios,89948,1,0,50960,8,0
+89958,Glitterdust,89948,1,0,50951,9,0
+89959,Faryl,89948,1,0,50942,10,0
+89960,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Flying pets.,0,9,8,0,0,0
+89961,Sylla,89960,1,0,51029,0,0
+89962,Eyegor,89960,1,0,51020,1,0
+89963,Addius the Tormenter,89960,1,0,51011,2,0
+89964,Rotgut,89960,1,0,51002,3,0
+89965,Dundley Stickyfingers,89960,1,0,50993,4,0
+89966,Caregiver Maximillian,89960,1,0,50984,5,0
+89967,Zolla,89960,1,0,50975,6,0
+89968,Thenia,89960,1,0,50966,7,0
+89969,Stratios,89960,1,0,50957,8,0
+89970,Glitterdust,89960,1,0,50948,9,0
+89971,Faryl,89960,1,0,50939,10,0
+89972,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Humanoid pets.,0,9,8,0,0,0
+89973,Sylla,89972,1,0,51027,0,0
+89974,Eyegor,89972,1,0,51018,1,0
+89975,Addius the Tormenter,89972,1,0,51009,2,0
+89976,Rotgut,89972,1,0,51000,3,0
+89977,Dundley Stickyfingers,89972,1,0,50991,4,0
+89978,Caregiver Maximillian,89972,1,0,50982,5,0
+89979,Zolla,89972,1,0,50973,6,0
+89980,Thenia,89972,1,0,50964,7,0
+89981,Stratios,89972,1,0,50955,8,0
+89982,Glitterdust,89972,1,0,50946,9,0
+89983,Faryl,89972,1,0,50937,10,0
+89984,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Magic pets.,0,9,8,0,0,0
+89985,Sylla,89984,1,0,51031,0,0
+89986,Eyegor,89984,1,0,51022,1,0
+89987,Addius the Tormenter,89984,1,0,51013,2,0
+89988,Rotgut,89984,1,0,51004,3,0
+89989,Dundley Stickyfingers,89984,1,0,50995,4,0
+89990,Caregiver Maximillian,89984,1,0,50986,5,0
+89991,Zolla,89984,1,0,50977,6,0
+89992,Thenia,89984,1,0,50968,7,0
+89993,Stratios,89984,1,0,50959,8,0
+89994,Glitterdust,89984,1,0,50950,9,0
+89995,Faryl,89984,1,0,50941,10,0
+89996,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Mechanical pets.,0,9,8,0,0,0
+89997,Sylla,89996,1,0,51035,0,0
+89998,Eyegor,89996,1,0,51026,1,0
+89999,Addius the Tormenter,89996,1,0,51017,2,0
+90000,Rotgut,89996,1,0,51008,3,0
+90001,Dundley Stickyfingers,89996,1,0,50999,4,0
+90002,Caregiver Maximillian,89996,1,0,50990,5,0
+90003,Zolla,89996,1,0,50981,6,0
+90004,Thenia,89996,1,0,50970,7,0
+90005,Stratios,89996,1,0,50963,8,0
+90006,Glitterdust,89996,1,0,50954,9,0
+90007,Faryl,89996,1,0,50945,10,0
+90008,Defeat 9 Master Tamers in the Shadowlands with a team of all level 25 Undead pets.,0,9,8,0,0,0
+90009,Sylla,90008,1,0,50936,0,0
+90010,Eyegor,90008,1,0,50935,1,0
+90011,Addius the Tormenter,90008,1,0,50934,2,0
+90012,Rotgut,90008,1,0,50933,3,0
+90013,Dundley Stickyfingers,90008,1,0,50932,4,0
+90014,Caregiver Maximillian,90008,1,0,50931,5,0
+90015,Zolla,90008,1,0,50930,6,0
+90016,Thenia,90008,1,0,50929,7,0
+90017,Stratios,90008,1,0,50928,8,0
+90018,Glitterdust,90008,1,0,50927,9,0
+90019,Faryl,90008,1,0,51036,10,0
+90020,Family Exorcist,0,0,4,0,0,0
+90021,Aquatic Apparitions,90020,1,0,51037,0,0
+90022,Beast Busters,90020,1,0,51038,1,0
+90023,Creepy Critters,90020,1,0,51039,2,0
+90024,Deathly Dragonkin,90020,1,0,51040,3,0
+90025,Eerie Elementals,90020,1,0,51041,4,0
+90026,Flickering Fliers,90020,1,0,51042,5,0
+90027,Haunted Humanoids,90020,1,0,51043,6,0
+90028,Mummified Magics,90020,1,0,51044,7,0
+90029,Macabre Mechanicals,90020,1,0,51045,8,0
+90030,Unholy Undead,90020,1,0,51046,9,0
+90031,Achievement - Shadowlands Legendary Pets,0,0,4,0,0,0
+90032,Crystalsnap,90031,1,0,51047,0,0
+90033,Briarpaw,90031,1,0,51048,1,0
+90034,Chittermaw,90031,1,0,51049,2,0
+90035,Mistwing,90031,1,0,51050,3,0
+90036,Sewer Creeper,90031,1,0,51051,4,0
+90037,The Countess,90031,1,0,51052,5,0
+90038,Digallo,90031,1,0,51053,6,0
+90039,Gelatinous,90031,1,0,51054,7,0
+90040,Kostos,90031,1,0,51055,8,0
+90041,Glurp,90031,1,0,51056,9,0
+90042,,88298,42000,0,51057,0,2
+90043,Ratgusher,87607,1,0,51058,19,0
+90044,Ratgusher,87624,1,0,51058,18,0
+90045,Destroy Anima Devourers,0,15,9,0,0,0
+90046,Destroy Anima Devourers.,90045,1,0,51059,0,1
+90047,Defeat the Alpha Anima Devourer.,0,0,4,0,0,0
+90048,Defeat the Alpha Anima Devourer,90047,1,0,51060,0,0
+90049,Beastwarrens - Hunt 04 SE - Rewards,0,0,4,0,0,0
+90050,,90049,0,0,49928,0,0
+90051,Abandoned Curios,85731,0,0,50902,15,0
+90052,,86741,1,0,51064,12,0
+90053,,86751,1,0,51063,10,0
+90054,,86741,1,0,51062,10,0
+90055,,86741,1,0,51065,11,0
+90056,,86741,1,0,51066,13,0
+90057,,86741,1,0,51067,14,0
+90058,,86751,1,0,51068,11,0
+90059,,86751,1,0,51069,12,0
+90060,,86751,1,0,51070,13,0
+90061,,86751,1,0,51071,14,0
+90063,Jailer's forces defeated,0,500,9,0,0,1
+90064,,90063,10,0,51152,0,0
+90065,Executioner defeated,0,1,8,0,0,0
+90066,Executioner defeated,90065,1,0,51074,0,0
+90067,Naelcrotix defeated,90065,1,0,51075,1,2
+90068,Lumisende defeated,90065,1,0,51076,2,2
+90069,Reach level 45.,0,0,4,0,0,0
+90070,Reach level 45,90069,45,0,5212,0,2
+90071,Defeat Kalisthene and Craven Corinth with the Spiritforged Aegis,0,0,4,0,0,0
+90072,Defeat Kalisthene with Spiritforged Aegis,90071,1,0,51077,0,0
+90073,Defeat Craven Corinth with Spiritforged Aegis,90071,1,0,51078,1,0
+90074,"Defeat Alderyn and Myn'ir, and Splinterbark Nightmare in a Trial of Loyalty as Mikanikos",0,0,4,0,0,0
+90075,Defeat Alderyn and Myn'ir in a Trial of Loyalty as Mikanikos,90074,1,0,51079,0,0
+90076,Defeat Splinterbark Nightmare in a Trial of Loyalty as Mikanikos,90074,1,0,51080,1,0
+90077,Defeat a Trial of Loyalty with each equipment,0,0,4,0,0,0
+90078,Defeat a Trial of Humility with each equipment,0,0,4,0,0,0
+90079,Herald's Footpads,90077,1,0,51081,0,0
+90080,Deep Echo Trident,90077,1,0,51082,1,0
+90081,Vial of Lichfrost,90077,1,0,51083,2,0
+90082,Phial of Serenity,90077,1,0,51084,3,0
+90083,Ring of Warding,90077,1,0,51085,4,0
+90084,Spiritforged Aegis,90077,1,0,51086,5,0
+90085,Defeat a Trial of Humility with each equipment,90078,0,4,0,0,0
+90086,Herald's Footpads,90085,1,0,51087,0,0
+90087,Deep Echo Trident,90085,1,0,51088,1,0
+90088,Vial of Lichfrost,90085,1,0,51089,2,0
+90089,Phial of Serenity,90085,1,0,51090,3,0
+90090,Ring of Warding,90085,1,0,51091,4,0
+90091,Spiritforged Aegis,90085,1,0,51092,5,0
+90092,Verdant Kit,89868,0,0,51093,21,0
+90093,Decay Grub,89868,0,0,51094,22,0
+90094,Starmoth,89868,0,0,51095,23,0
+90095,Crawbat,89868,0,0,51096,24,0
+90096,"Defeat Kalisthene and Athanos as Kleia, Pelagos, and Mikanikos",0,0,4,0,0,0
+90097,Defeat Kalisthene as Pelagos,90096,1,0,51098,0,0
+90098,Defeat Kalisthene as Kleia,90096,1,0,51097,1,0
+90099,Defeat Kalisthene as Mikanikos,90096,1,0,51099,2,0
+90100,Defeat Athanos as Pelagos,90096,1,0,51100,3,0
+90101,Defeat Athanos as Kleia,90096,1,0,51101,4,0
+90102,Defeat Athanos as Mikanikos,90096,1,0,51102,5,0
+90103,<Hidden> HoA Catch All <DNT>,0,0,4,0,0,0
+90104,,90103,0,0,51103,0,0
+90105,"Defeat ten Trials of Humility with Pelagos, Kleia, and Mikanikos.",0,0,4,0,0,0
+90106,Defeat Kalisthene as Pelagos,90105,1,0,51104,0,0
+90107,Defeat Kalisthene as Kleia,90105,1,0,51105,1,0
+90108,Defeat Kalisthene as Mikanikos,90105,1,0,51106,2,0
+90109,Defeat Echthra as Pelagos,90105,1,0,51107,3,0
+90110,Defeat Echthra as Kleia,90105,1,0,51108,4,0
+90111,Defeat Echthra as Mikanikos,90105,1,0,51109,5,0
+90112,Defeat Alderyn and Myn'ir as Pelagos,90105,1,0,51110,6,0
+90113,Defeat Alderyn and Myn'ir as Kleia,90105,1,0,51111,7,0
+90114,Defeat Alderyn and Myn'ir as Mikanikos,90105,1,0,51112,8,0
+90115,Defeat Nuuminuuru as Pelagos,90105,1,0,51113,9,0
+90116,Defeat Nuuminuuru as Kleia,90105,1,0,51114,10,0
+90117,Defeat Nuuminuuru as Mikanikos,90105,1,0,51115,11,0
+90118,Defeat Craven Corinth as Pelagos,90105,1,0,51116,12,0
+90119,Defeat Craven Corinth as Kleia,90105,1,0,51117,13,0
+90120,Defeat Craven Corinth as Mikanikos,90105,1,0,51118,14,0
+90121,Defeat Splinterbark Nightmare as Pelagos,90105,1,0,51119,15,0
+90122,Defeat Splinterbark Nightmare as Kleia,90105,1,0,51120,16,0
+90123,Defeat Splinterbark Nightmare as Mikanikos,90105,1,0,51121,17,0
+90124,Defeat Thran'tiok as Pelagos,90105,1,0,51122,18,0
+90125,Defeat Thran'tiok as Kleia,90105,1,0,51123,19,0
+90126,Defeat Thran'tiok as Mikanikos,90105,1,0,51124,20,0
+90127,Defeat Mad Mortimer as Pelagos,90105,1,0,51125,21,0
+90128,Defeat Mad Mortimer as Kleia,90105,1,0,51126,22,0
+90129,Defeat Mad Mortimer as Mikanikos,90105,1,0,51127,23,0
+90130,Defeat Athanos as Pelagos,90105,1,0,51128,24,0
+90131,Defeat Athanos as Kleia,90105,1,0,51129,25,0
+90132,Defeat Athanos as Mikanikos,90105,1,0,51130,26,0
+90133,Defeat Azaruux as Pelagos,90105,1,0,51131,27,0
+90134,Defeat Azaruux as Kleia,90105,1,0,51132,28,0
+90135,Defeat Azaruux as Mikanikos,90105,1,0,51133,29,0
+90136,Defeat all ten Trials of Humility without any charms or active braziers.,0,0,4,0,0,0
+90137,Kalisthene,90136,1,0,51134,0,0
+90138,Echthra,90136,1,0,51135,1,0
+90139,Alderyn and Myn'ir,90136,1,0,51136,2,0
+90140,Nuuminuuru,90136,1,0,51137,3,0
+90141,Craven Corinth,90136,1,0,51138,4,0
+90142,Splinterbark Nightmare,90136,1,0,51139,5,0
+90143,Thran'tiok,90136,1,0,51140,6,0
+90144,Mad Mortimer,90136,1,0,51141,7,0
+90145,Athanos,90136,1,0,51142,8,0
+90146,Azaruux,90136,1,0,51143,9,0
+90147,Wave goodbye to Athanos after he waves to you.,0,0,4,0,0,2
+90148,Wave goodbye to Athanos after he waves to you.,90147,1,0,51144,0,2
+90149,9.0 Bastion Campaign - Ch 01 - 01 - Fly to Hero's Rest - GJC,0,1,8,0,0,4096
+90150,Fly to Hero's Rest in Bastion,90149,1,0,51145,0,0
+90151,Fly to Hero's Rest in Bastion,90149,1,0,51146,1,2
+90152,Killed Any Hunt Creature,0,1,8,0,0,12290
+90153,,90152,1,0,51147,0,0
+90154,,90152,1,0,51148,1,0
+90155,,90152,1,0,51149,2,0
+90156,Completed Hunt 01 Scenario,0,0,4,0,0,12290
+90157,,90156,1,0,51150,0,0
+90158,Zograthos defeated,90065,1,0,51151,3,2
+90159,,90063,10,0,51153,1,0
+90160,,90063,10,0,51154,2,0
+90161,,90063,10,0,51155,3,0
+90162,,90063,10,0,51156,4,0
+90163,,90063,25,0,51157,5,0
+90164,,90063,25,0,51158,6,0
+90165,,90063,25,0,51159,7,0
+90166,9.0 Maw - Rule 1 - Got Cypher - (STM),0,0,4,0,0,4096
+90167,,90166,0,0,51162,0,0
+90168,,90063,25,0,51161,8,0
+90169,,90063,10,0,51163,9,0
+90170,,90063,25,0,51164,10,0
+90171,,90063,25,0,51165,11,0
+90172,,90063,10,0,51166,12,0
+90173,,90063,3,0,51167,13,0
+90174,,90063,10,0,51169,14,0
+90175,,90063,10,0,51170,15,0
+90176,,90063,25,0,51171,16,0
+90177,,88585,0,0,51172,5,0
+90178,,88585,0,0,51173,6,0
+90179,Monk,7276,1,0,51174,10,0
+90180,Demon Hunter,7276,1,0,51175,11,0
+90181,Monk,15546,1,0,51176,10,0
+90182,Demon Hunter,15546,1,0,51177,11,0
+90183,Monk,15478,1,0,51178,10,0
+90184,Demon Hunter,15478,1,0,51179,11,0
+90185,Monk,18791,1,0,51180,10,0
+90186,Demon Hunter,18791,1,0,51181,11,0
+90187,Monk,13027,1,0,51182,10,0
+90188,Demon Hunter,13027,1,0,51183,11,0
+90189,Monk,17636,1,0,51184,10,0
+90190,Demon Hunter,17636,1,0,51185,11,0
+90191,Monk,17709,1,0,51186,10,0
+90192,Demon Hunter,17709,1,0,51187,11,0
+90193,Monk,16450,1,0,51188,10,0
+90194,Demon Hunter,16450,1,0,51188,11,0
+90195,Demon Hunter,20008,1,0,51191,11,0
+90196,Demon Hunter,20352,1,0,51192,11,0
+90197,Demon Hunter,18689,1,0,51193,11,0
+90198,Death Knight,21210,1,0,51194,7,0
+90199,Death Knight,21704,1,0,51195,7,0
+90200,Death Knight,21623,60,0,51196,7,0
+90201,Death Knight,21652,60,0,51197,7,0
+90202,Hunter,19155,1,0,51198,7,0
+90203,Jailer's forces defeated,0,500,9,0,0,1
+90204,,90203,10,0,51199,0,0
+90205,Executioner defeated,0,1,8,0,0,0
+90206,Executioner defeated,90205,1,0,51074,0,0
+90207,Naelcrotix defeated,90205,1,0,51200,1,2
+90208,Lumisende defeated,90205,1,0,51076,2,2
+90209,Zograthos defeated,90205,1,0,51151,3,2
+90210,,90063,10,0,51199,17,0
+90211,,90063,10,0,51201,18,0
+90212,,90063,10,0,51202,19,0
+90213,,90063,10,0,51203,20,0
+90214,,90063,10,0,51204,21,0
+90215,,90063,25,0,51205,22,0
+90216,,90063,10,0,51206,23,0
+90217,,90063,25,0,51207,24,0
+90218,,90063,10,0,51208,25,0
+90219,,90063,10,0,51209,26,0
+90220,,90063,3,0,51210,27,0
+90221,,90063,25,0,51211,28,0
+90222,,90063,25,0,51212,29,0
+90223,,90063,25,0,51213,30,0
+90224,,90063,10,0,51214,31,0
+90225,,90063,10,0,51215,32,0
+90226,,90063,10,0,51216,33,0
+90227,,90063,3,0,51217,34,0
+90228,,90063,25,0,51218,35,0
+90229,,90063,25,0,51219,36,0
+90230,,90063,25,0,51220,37,0
+90231,,90063,25,0,51221,38,0
+90232,,90063,25,0,51222,39,0
+90233,,90063,25,0,51223,40,0
+90234,,90063,15,0,51224,41,0
+90235,,90063,15,0,51225,42,0
+90236,,90063,15,0,51226,43,0
+90237,,90063,25,0,51227,44,0
+90238,,90063,10,0,51228,45,0
+90239,,90063,25,0,51229,46,0
+90240,,90063,25,0,51230,47,0
+90241,,90063,25,0,51231,48,0
+90242,,90063,10,0,51232,49,0
+90243,,90063,25,0,51233,50,0
+90244,,90063,25,0,51234,51,0
+90245,,90063,25,0,51235,52,0
+90246,,90063,25,0,51236,53,0
+90247,,90063,50,0,51237,54,0
+90248,,90063,10,0,51238,55,0
+90249,,90063,10,0,51239,56,0
+90250,,90063,10,0,51240,57,0
+90251,,90063,10,0,51241,58,0
+90252,,90063,10,0,51242,59,0
+90253,,90063,10,0,51243,60,0
+90254,,90063,25,0,51244,61,0
+90255,,90063,3,0,51245,62,0
+90256,,90063,10,0,51246,63,0
+90259,Torghast: Tracking - Vendor Uncommons Unlocked [DNT],0,0,4,0,0,0
+90260,Torghast: Tracking - Vendor Uncommons Unlocked [DNT],90259,1,0,51248,0,0
+90261,Torghast: Tracking - Vendor Rares Unlocked [DNT],0,0,4,0,0,0
+90262,Torghast: Tracking - Vendor Rares Unlocked [DNT],90261,1,0,51249,0,0
+90263,Torghast: Tracking - Vendor Free Cache Unlocked [DNT],0,0,4,0,0,0
+90264,Torghast: Tracking - Vendor Free Cache Unlocked [DNT],90263,1,0,51250,0,0
+90265,Torghast: Tracking - Vendor Extra Life Unlocked [DNT],0,0,4,0,0,0
+90266,Torghast: Tracking - Vendor Extra Life Unlocked [DNT],90265,1,0,51251,0,0
+90267,Torghast: Tracking - Vendor - Higher Epic Chance Unlocked [DNT],0,0,4,0,0,0
+90268,Torghast: Tracking - Vendor - Higher Epic Chance Unlocked [DNT],90267,1,0,51252,0,0
+90269,Torghast: Tracking - Vendor - Obleron Armaments Unlocked [DNT],0,0,4,0,0,0
+90270,Torghast: Tracking - Vendor - Obleron Armaments Unlocked [DNT],90269,1,0,51253,0,0
+90271,Craft 500 Epic items from Pandaria.,0,500,5,0,0,8193
+90272,,90271,1,0,21912,0,0
+90273,,90271,1,0,22081,1,0
+90274,,90271,1,0,22082,2,0
+90275,,90271,1,0,21910,3,0
+90276,,90271,1,0,22083,4,0
+90277,,90271,1,0,21911,5,0
+90278,,90271,1,0,21913,6,0
+90279,,90271,1,0,22085,7,0
+90280,,90271,1,0,21904,8,0
+90281,,90271,1,0,21903,9,0
+90282,,90271,1,0,21901,10,0
+90283,,90271,1,0,21899,11,0
+90284,,90271,1,0,21898,12,0
+90285,,90271,1,0,51259,13,0
+90286,,90271,1,0,51260,14,0
+90287,,90271,1,0,51261,15,0
+90288,,90271,1,0,51262,16,0
+90289,,90271,1,0,51263,17,0
+90290,,90271,1,0,51264,18,0
+90291,,90271,1,0,51265,19,0
+90292,,90271,1,0,51266,20,0
+90293,,90271,1,0,51267,21,0
+90294,,90271,1,0,51268,22,0
+90295,,90271,1,0,51269,23,0
+90296,,90271,1,0,51270,24,0
+90297,,90271,1,0,51271,25,0
+90298,,90271,1,0,51272,26,0
+90299,,90271,1,0,51273,27,0
+90300,,90271,1,0,51274,28,0
+90301,,90271,1,0,51275,29,0
+90302,,90271,1,0,51276,30,0
+90303,,90271,1,0,51277,31,0
+90304,,90271,1,0,51278,32,0
+90305,,90271,1,0,51279,33,0
+90306,,90271,1,0,51280,34,0
+90307,,90271,1,0,51281,35,0
+90308,,90271,1,0,51282,36,0
+90309,,90271,1,0,51283,37,0
+90310,,90271,1,0,51284,38,0
+90311,,90271,1,0,51285,39,0
+90312,,90271,1,0,51286,40,0
+90313,,90271,1,0,51287,41,0
+90314,,90271,1,0,51288,42,0
+90315,,90271,1,0,51289,43,0
+90316,,90271,1,0,51290,44,0
+90317,,90271,1,0,51291,45,0
+90318,,90271,1,0,51292,46,0
+90319,,90271,1,0,51293,47,0
+90320,,90271,1,0,51294,48,0
+90321,,90271,1,0,51295,49,0
+90322,,90271,1,0,51296,50,0
+90323,,90271,1,0,51297,51,0
+90324,,90271,1,0,51298,52,0
+90325,,90271,1,0,51299,53,0
+90326,,90271,1,0,51300,54,0
+90327,,90271,1,0,51301,55,0
+90328,,90271,1,0,51302,56,0
+90329,,90271,1,0,51303,57,0
+90330,,90271,1,0,51304,58,0
+90331,,90271,1,0,51305,59,0
+90332,,90271,1,0,51306,60,0
+90333,,90271,1,0,51307,61,0
+90334,,90271,1,0,51308,62,0
+90335,,90271,1,0,51309,63,0
+90336,,90271,1,0,51310,64,0
+90337,,90271,1,0,51311,65,0
+90338,,90271,1,0,51312,66,0
+90339,,90271,1,0,51313,67,0
+90340,,90271,1,0,51314,68,0
+90341,,90271,1,0,51315,69,0
+90342,,90271,1,0,51316,70,0
+90343,,90271,1,0,51317,71,0
+90344,,90271,1,0,51318,72,0
+90345,,90271,1,0,51319,73,0
+90346,,90271,1,0,51320,74,0
+90347,,90271,1,0,51321,75,0
+90348,,90271,1,0,51322,76,0
+90349,,90271,1,0,51323,77,0
+90350,,90271,1,0,51324,78,0
+90351,,90271,1,0,51325,79,0
+90352,,90271,1,0,51326,80,0
+90353,,90271,1,0,51327,81,0
+90354,,90271,1,0,51328,82,0
+90355,,90271,1,0,51329,83,0
+90356,,90271,1,0,51330,84,0
+90357,,90271,1,0,51331,85,0
+90358,,90271,1,0,51332,86,0
+90359,,90271,1,0,51333,87,0
+90360,,90271,1,0,51334,88,0
+90361,,90271,1,0,51335,89,0
+90362,,90271,1,0,51336,90,0
+90363,,90271,1,0,51337,91,0
+90364,,90271,1,0,51338,92,0
+90365,,90271,1,0,51339,93,0
+90366,,90271,1,0,51340,94,0
+90367,,90271,1,0,51341,95,0
+90368,,90271,1,0,51342,96,0
+90369,,90271,1,0,51343,97,0
+90370,,90271,1,0,51344,98,0
+90371,,90271,1,0,51345,99,0
+90372,,90271,1,0,51346,100,0
+90373,,90271,1,0,51347,101,0
+90374,,90271,1,0,51348,102,0
+90375,,90271,1,0,51349,103,0
+90376,,90271,1,0,51350,104,0
+90377,,90271,1,0,51351,105,0
+90378,,90271,1,0,51352,106,0
+90379,,90271,1,0,51353,107,0
+90380,,90271,1,0,51354,108,0
+90381,,90271,1,0,51355,109,0
+90382,,90271,1,0,51356,110,0
+90383,,90271,1,0,51357,111,0
+90384,,90271,1,0,51358,112,0
+90385,,90271,1,0,51359,113,0
+90386,,90271,1,0,51360,114,0
+90387,,90271,1,0,51361,115,0
+90388,,90271,1,0,51362,116,0
+90389,,90271,1,0,51363,117,0
+90390,,90271,1,0,51364,118,0
+90391,,90271,1,0,51365,119,0
+90392,,90271,1,0,51366,120,0
+90393,,90271,1,0,51367,121,0
+90394,,90271,1,0,51368,122,0
+90395,,90271,1,0,51369,123,0
+90396,,90271,1,0,51370,124,0
+90397,,90271,1,0,51371,125,0
+90398,,90271,1,0,51372,126,0
+90399,,90271,1,0,51373,127,0
+90400,,90271,1,0,51374,128,0
+90401,,90271,1,0,51375,129,0
+90402,,90271,1,0,51376,130,0
+90403,,38068,1,0,51309,1,0
+90404,,38068,1,0,51310,2,0
+90405,,38068,1,0,51311,3,0
+90406,,38068,1,0,51377,4,0
+90407,,38068,1,0,51378,5,0
+90408,,38068,1,0,51379,6,0
+90409,,38068,1,0,51380,7,0
+90410,,38068,1,0,51381,8,0
+90411,,38068,1,0,51382,9,0
+90412,,38068,1,0,51383,10,0
+90413,,38068,1,0,51384,11,0
+90414,,38068,1,0,51385,12,0
+90415,,38068,1,0,51386,13,0
+90416,,38068,1,0,51387,14,0
+90417,,38068,1,0,51388,15,0
+90418,,38068,1,0,51389,16,0
+90419,,38068,1,0,51390,17,0
+90420,,38068,1,0,51391,18,0
+90421,,38068,1,0,51392,19,0
+90422,,38068,1,0,51393,20,0
+90423,,38068,1,0,51394,21,0
+90424,,38068,1,0,51395,22,0
+90425,,38068,1,0,51396,23,0
+90426,,38068,1,0,51397,24,0
+90427,,38068,1,0,51398,25,0
+90428,,38068,1,0,51399,26,0
+90429,,38068,1,0,51400,27,0
+90430,,38068,1,0,51401,28,0
+90431,,38068,1,0,51402,29,0
+90432,,38068,1,0,51403,30,0
+90433,,38068,1,0,51404,31,0
+90434,,38068,1,0,51405,32,0
+90435,,38068,1,0,51406,33,0
+90436,,38068,1,0,51407,34,0
+90437,,38068,1,0,51408,35,0
+90438,,38068,1,0,51409,36,0
+90439,,38068,1,0,51410,37,0
+90440,,38068,1,0,51411,38,0
+90441,,38068,1,0,51412,39,0
+90442,,38068,1,0,51413,40,0
+90443,,38068,1,0,51414,41,0
+90444,,38068,1,0,51415,42,0
+90445,,38068,1,0,51416,43,0
+90446,,38068,1,0,51417,44,0
+90447,,38068,1,0,51418,45,0
+90448,,38068,1,0,51419,46,0
+90449,,38068,1,0,51420,47,0
+90450,,38068,1,0,51421,48,0
+90451,,38068,1,0,51422,49,0
+90452,,38068,1,0,51423,50,0
+90453,,38068,1,0,51424,51,0
+90454,,38068,1,0,51425,52,0
+90455,,38068,1,0,51426,53,0
+90456,,38068,1,0,51427,54,0
+90457,,38068,1,0,51428,55,0
+90458,,38068,1,0,51429,56,0
+90459,,38068,1,0,51430,57,0
+90460,,38068,1,0,51431,58,0
+90461,,38068,1,0,51432,59,0
+90462,,38068,1,0,51433,60,0
+90463,,38068,1,0,51434,61,0
+90464,,38068,1,0,51435,62,0
+90465,,38068,1,0,51436,63,0
+90466,,38068,1,0,51437,64,0
+90467,,38068,1,0,51438,65,0
+90468,,38068,1,0,51439,66,0
+90469,,38068,1,0,51440,67,0
+90470,,38068,1,0,51441,68,0
+90471,,38068,1,0,51442,69,0
+90472,,38068,1,0,51443,70,0
+90473,,38068,1,0,51444,71,0
+90474,,38068,1,0,51445,72,0
+90475,,38068,1,0,51446,73,0
+90476,,38068,1,0,51447,74,0
+90477,,38068,1,0,51448,75,0
+90478,,38068,1,0,51449,76,0
+90479,,38068,1,0,51450,77,0
+90480,,38068,1,0,51451,78,0
+90481,,38068,1,0,51452,79,0
+90482,,38068,1,0,51453,80,0
+90483,,38068,1,0,51454,81,0
+90484,,38068,1,0,51455,82,0
+90485,,38068,1,0,51456,83,0
+90486,,38068,1,0,51457,84,0
+90487,,38068,1,0,51458,85,0
+90488,,38068,1,0,51459,86,0
+90489,,38068,1,0,51460,87,0
+90490,,38068,1,0,51461,88,0
+90491,,38068,1,0,51462,89,0
+90492,Unlock any two of the permanent upgrades from Ve'nari,0,2,8,0,0,0
+90493,Extradimensional Pockets,90492,1,0,51253,1,0
+90494,Ritual Prism of Fortune,90492,1,0,51252,6,0
+90495,Vessel of Unfortunate Spirits,90492,1,0,51251,0,0
+90496,Loupe of Unusual Charm,90492,1,0,51250,11,0
+90497,Rank Insignia: Acquisitionist,90492,1,0,51249,9,0
+90498,Bangle of Seniority,90492,1,0,51248,7,0
+90499,Animated Levitating Chain,90492,1,0,51254,3,0
+90500,Encased Riftwalker Essence,90492,1,0,51255,2,0
+90501,Soul-Stabilizing Salve,90492,1,0,51256,5,0
+90502,Talisman of Destined Defiance,90492,1,0,51257,8,0
+90503,Animaflow Stabilizer,90492,1,0,51258,4,0
+90504,Unlock any five of the permanent upgrades from Ve'nari,0,5,8,0,0,0
+90505,Extradimensional Pockets,90504,1,0,51253,1,0
+90506,Ritual Prism of Fortune,90504,1,0,51252,6,0
+90507,Vessel of Unfortunate Spirits,90504,1,0,51251,0,0
+90508,Loupe of Unusual Charm,90504,1,0,51250,11,0
+90509,Rank Insignia: Acquisitionist,90504,1,0,51249,9,0
+90510,Bangle of Seniority,90504,1,0,51248,7,0
+90511,Animated Levitating Chain,90504,1,0,51254,3,0
+90512,Encased Riftwalker Essence,90504,1,0,51255,2,0
+90513,Soul-Stabilizing Salve,90504,1,0,51256,5,0
+90514,Talisman of Destined Defiance,90504,1,0,51257,8,0
+90515,Animaflow Stabilizer,90504,1,0,51258,4,0
+90516,Complete Hunt: Alpha Anima Devourer,88100,1,0,51060,3,0
+90517,Deposit Anima - Weekly Garden Quest,0,1000,5,0,0,4096
+90518,Anima,90517,1000,0,51463,0,2048
+90519,Possibility Matrix,90492,1,0,51464,10,0
+90520,Possibility Matrix,90504,1,0,51464,10,0
+90521,NPE - Starter Account allowed to be Newcomer,0,1,8,0,0,0
+90522,,90521,1,0,51465,0,0
+90523,,90521,1,0,51466,1,0
+90526,9.0 Dungeons - Spires of Ascension - Bastion City Dungeon,0,0,4,0,0,0
+90527,Kin-Tara defeated,90526,1,0,48045,0,0
+90528,Ventunax defeated,90526,1,0,48046,1,0
+90529,Oryphrion defeated,90526,1,0,48047,2,0
+90530,Devos defeated,90526,1,0,48048,3,0
+90531,9.0 Dungeons - Spires of Ascension - Bastion City Dungeon,0,0,4,0,0,0
+90532,Kin-Tara defeated,90531,1,0,48045,0,0
+90533,Ventunax defeated,90531,1,0,48046,1,0
+90534,Oryphrion defeated,90531,1,0,48047,2,0
+90535,Devos defeated,90531,1,0,48048,3,0
+90536,9.0 Offline Progression - Start Tutorial Mission - OCL,0,0,4,0,0,4096
+90537,,90536,1,0,51468,0,0
+90538,Shadehound Armor Plating,88216,1,0,49905,17,0
+90539,Indecipherable Map,88216,1,0,49906,18,0
+90540,Mawsworn Shackles,88216,1,0,49907,19,0
+90541,Wailing Coin,88216,1,0,49909,20,0
+90542,Mawsworn Orders,88216,1,0,49915,21,0
+90544,Destroy Displaced Soul Feeders,0,0,4,0,0,0
+90545,Destroy Displaced Soul Feeders,90544,20,0,49439,0,0
+90546,Kill 4 Displaced Soul Feeders,0,0,4,0,0,0
+90547,,90546,4,0,49439,0,0
+90548,Kill 12 Displaced Soul Feeders,0,0,4,0,0,0
+90549,,90548,12,0,49439,0,0
+90550,Ardenweald - Garden - Use Dutiful Spirits,0,1,8,0,0,4096
+90551,,90550,1,0,51484,0,0
+90552,,90550,1,0,51485,1,0
+90553,,90550,1,0,51486,2,0
+90554,Defeat Mueh'zala - 9.0 Ardenweald Garden Legendary quest credit,0,0,4,0,0,4096
+90555,,90554,1,0,51508,0,0
+90556,Defeat Mueh'zala - Quest,0,0,4,0,0,4096
+90557,,90556,1,0,51509,0,0
+90558,,6308,100,0,51510,16,2
+90559,,3839,100,0,51510,16,2
+90560,Torghast: Tracking - Vendor - No Single Choices [DNT],0,0,4,0,0,0
+90561,Torghast: Tracking - Vendor - No Single Choices [DNT],90560,1,0,51464,0,0

@@ -1,4 +1,4 @@
-ID,Directory,MapName_lang,Field_9_0_1_33978_002,MapDescription0_lang,MapDescription1_lang,PvpShortDescription_lang,PvpLongDescription_lang,Corpse[0],Corpse[1],MapType,InstanceType,ExpansionID,AreaTableID,LoadingScreenID,TimeOfDayOverride,ParentMapID,CosmeticParentMapID,TimeOffset,MinimapIconScale,CorpseMapID,MaxPlayers,WindSettingsID,ZmpFileDataID,WdtFileDataID,Flags[0],Flags[1]
+ID,Directory,MapName_lang,InternalName,MapDescription0_lang,MapDescription1_lang,PvpShortDescription_lang,PvpLongDescription_lang,Corpse[0],Corpse[1],MapType,InstanceType,ExpansionID,AreaTableID,LoadingScreenID,TimeOfDayOverride,ParentMapID,CosmeticParentMapID,TimeOffset,MinimapIconScale,CorpseMapID,MaxPlayers,WindSettingsID,ZmpFileDataID,WdtFileDataID,Flags[0],Flags[1]
 0,Azeroth,Eastern Kingdoms,Eastern Kingdoms,,,,,0,0,1,0,0,0,4,-1,-1,-1,0,1,-1,0,17,804940,775971,159399517,134479888
 1,Kalimdor,Kalimdor,Kalimdor,,,,,0,0,1,0,0,0,3,-1,-1,-1,0,1,-1,0,17,804935,782779,159399517,134479888
 13,test,Art Team Map,Art Team Map,,,,,0,0,2,0,0,3817,0,-1,-1,-1,0,1,-1,0,0,0,857697,1555,134480920
@@ -180,7 +180,7 @@ As a large-scale battleground, each side attempts to wrest control of the Siege 
 As a large-scale battleground, each side attempts to wrest control of the Siege Factory, Docks, or Hangar in order to secure access to the enemy stronghold and defeat its general (Halford Wyrmbane or Overlord Agmar).",Slay the enemy's leader,"- Capture the vehicle spawn points
 - Siege the enemy fortress
 - Slay the enemy's leader",0,0,1,3,2,0,245,-1,-1,-1,0,1,-1,0,0,0,821811,1565,135004168
-631,IcecrownCitadel,Icecrown Citadel,Icecrown Citadel,,,,,5776.922,2065.9324,1,2,2,0,250,-1,-1,-1,0,1,571,0,0,0,820428,34589,134479880
+631,IcecrownCitadel,Icecrown Citadel,Icecrown Citadel,,,,,5776.922,2065.9324,1,2,2,0,250,-1,-1,-1,0,1,571,0,0,0,820428,34333,134479880
 632,IcecrownCitadel5Man,The Forge of Souls,The Forge of Souls,,,,,5670.7915,2003.6285,1,1,2,0,249,-1,-1,-1,0,1,571,0,0,0,818965,1565,134479880
 637,AbyssalMaw,Abyssal Maw Exterior,Abyssal Maw Exterior,,,,,0,0,1,1,3,0,23,-1,-1,-1,0,1,-1,0,0,0,814762,1565,134479880
 638,Gilneas,Gilneas,Gilneas,,,,,0,0,1,0,0,0,4,-1,654,-1,0,1,-1,0,0,0,782283,1629,134479884
@@ -192,7 +192,7 @@ As a large-scale battleground, each side attempts to wrest control of the Siege 
 646,Deephome,Deepholm,Deepholm,,,,,0,0,1,0,3,0,268,-1,-1,-1,0,1,-1,0,0,0,816934,1629,134488072
 647,Transport_Orgrimmar_to_Thunderbluff,Transport: Orgrimmar to Thunder Bluff,Transport: Orgrimmar to Thunder Bluff,,,,,0,0,3,0,2,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1553,134479880
 648,LostIsles,LostIsles,LostIsles,,,,,0,0,1,0,0,0,3,-1,-1,-1,0,1,-1,0,0,0,787837,271965,134479884
-649,ArgentTournamentRaid,Trial of the Crusader,Trial of the Crusader,,,,,8515.286,736.13715,1,2,2,0,246,-1,-1,-1,0,1,571,0,0,0,818173,34589,134479880
+649,ArgentTournamentRaid,Trial of the Crusader,Trial of the Crusader,,,,,8515.286,736.13715,1,2,2,0,246,-1,-1,-1,0,1,571,0,0,0,818173,34333,134479880
 650,ArgentTournamentDungeon,Trial of the Champion,Trial of the Champion,,,,,8571.435,792.2205,1,1,2,0,247,-1,-1,-1,0,1,571,0,0,0,817987,1565,134479880
 651,ElevatorSpawnTest,ElevatorSpawnTest,ElevatorSpawnTest,,,,,0,0,3,0,0,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1555,134479880
 654,Gilneas2,Gilneas2,Gilneas2,,,,,0,0,1,0,0,0,4,-1,-1,-1,0,1,-1,0,0,0,782341,263709,134479884
@@ -205,9 +205,9 @@ As a large-scale battleground, each side attempts to wrest control of the Siege 
 661,LostIslesPhase2,Lost Isles Town in a Box,Lost Isles Town in a Box,,,,,0,0,1,0,0,0,0,-1,648,-1,0,1,-1,0,0,0,788648,1565,134479884
 662,Transport197195,Transport: Alliance Vashj'ir Ship,Transport: Alliance Vashj'ir Ship,,,,,0,0,3,0,3,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1553,134479880
 668,HallsOfReflection,Halls of Reflection,Halls of Reflection,,,,,5628.875,1973.2865,1,1,2,0,253,-1,-1,-1,0,1,571,0,0,0,818690,1565,134479880
-669,BlackwingDescent,Blackwing Descent,Blackwing Descent,,,,,-7541.7676,-1188.8317,1,2,3,0,260,-1,-1,-1,0,1,0,0,0,0,813052,34589,134479880
+669,BlackwingDescent,Blackwing Descent,Blackwing Descent,,,,,-7541.7676,-1188.8317,1,2,3,0,260,-1,-1,-1,0,1,0,0,0,0,813052,34333,134479880
 670,GrimBatolDungeon,Grim Batol,Grim Batol,,,,,-4047.74,-3446.35,1,1,3,0,257,-1,-1,-1,0,1,0,0,0,0,815686,1565,134479880
-671,GrimBatolRaid,The Bastion of Twilight,The Bastion of Twilight,,,,,-4903.0103,-4221.21,1,2,3,0,266,-1,-1,-1,0,1,0,0,0,0,814552,34589,134479880
+671,GrimBatolRaid,The Bastion of Twilight,The Bastion of Twilight,,,,,-4903.0103,-4221.21,1,2,3,0,266,-1,-1,-1,0,1,0,0,0,0,814552,34333,134479880
 672,Transport197347,Transport: The Skybreaker (Icecrown Citadel Raid),Transport: The Skybreaker (Icecrown Citadel Raid),,,,,0,0,3,0,2,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1553,134479880
 673,Transport197348,Transport: Orgrim's Hammer (Icecrown Citadel Raid),Transport: Orgrim's Hammer (Icecrown Citadel Raid),,,,,0,0,3,0,2,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1553,134479880
 674,Transport197349-2,Transport: Ship to Vashj'ir,Transport: Ship to Vashj'ir,,,,,0,0,3,0,3,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1553,134479880
@@ -215,10 +215,10 @@ As a large-scale battleground, each side attempts to wrest control of the Siege 
 713,Transport197350,Transport: Orgrim's Hammer (IC Dungeon),Transport: Orgrim's Hammer (IC Dungeon),,,,,0,0,3,0,2,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1553,134479880
 718,Transport201834,Transport: The Mighty Wind (Icecrown Citadel Raid),Transport: The Mighty Wind (Icecrown Citadel Raid),,,,,0,0,3,0,2,0,0,-1,-1,-1,0,1,-1,0,0,0,0,1537,134479880
 719,MountHyjalPhase1,Mount Hyjal Phase 1,Mount Hyjal Phase 1,,,,,0,0,1,0,0,0,3,-1,1,-1,0,1,-1,0,0,0,788845,8521309,134479896
-720,Firelands1,Firelands,Firelands,,,,,3987.2,-2943.32,1,2,3,0,275,720,-1,-1,0,1,1,0,0,0,816444,2098973,134479896
+720,Firelands1,Firelands,Firelands,,,,,3987.2,-2943.32,1,2,3,0,275,720,-1,-1,0,1,1,0,0,0,816444,2098717,134479896
 721,Firelands2,Firelands Terrain 2,Firelands Terrain 2,,,,,0,0,1,1,3,0,0,720,-1,-1,0,1,-1,0,0,0,816538,1693,134479896
 723,Stormwind,Stormwind,Stormwind,,,,,0,0,1,0,0,0,0,-1,-1,-1,0,1,-1,0,0,0,790924,1565,134479880
-724,ChamberofAspectsRed,The Ruby Sanctum,The Ruby Sanctum,,,,,3608.1294,186.80208,1,2,2,0,254,-1,-1,-1,0,1,571,0,0,0,821024,34589,134479880
+724,ChamberofAspectsRed,The Ruby Sanctum,The Ruby Sanctum,,,,,3608.1294,186.80208,1,2,2,0,254,-1,-1,-1,0,1,571,0,0,0,821024,34333,134479880
 725,DeepholmeDungeon,The Stonecore,The Stonecore,,,,,1031.908,610.2969,1,1,3,0,258,-1,-1,-1,0,1,646,0,0,0,816583,1565,134479880
 726,CataclysmCTF,Twin Peaks,Twin Peaks,"Nestled in the Twilight Highlands, Twin Peaks has flared as a point of contention between the Alliance and Horde.
 
@@ -261,7 +261,7 @@ After regrouping in Alliance territories, the people of Gilneas have rallied aro
 751,RedgridgeOrcBomb,Redridge - Orc Bomb,Redridge - Orc Bomb,,,,,0,0,1,0,0,0,0,-1,0,-1,0,1,-1,0,0,0,790674,1629,134479896
 752,RedridgeBridgePhaseOne,Redridge - Bridge Phase One,Redridge - Bridge Phase One,,,,,0,0,1,0,0,0,0,-1,-1,-1,0,1,-1,0,0,0,790697,1629,134479880
 753,RedridgeBridgePhaseTwo,Redridge - Bridge Phase Two,Redridge - Bridge Phase Two,,,,,0,0,1,0,0,0,0,-1,-1,-1,0,1,-1,0,0,0,790705,1629,134479880
-754,SkywallRaid,Throne of the Four Winds,Throne of the Four Winds,,,,,-11360.603,72.083336,1,2,3,0,271,-1,-1,-1,0,1,1,0,0,0,817149,34589,134479880
+754,SkywallRaid,Throne of the Four Winds,Throne of the Four Winds,,,,,-11360.603,72.083336,1,2,3,0,271,-1,-1,-1,0,1,1,0,0,0,817149,34333,134479880
 755,UldumDungeon,Lost City of the Tol'vir,Lost City of the Tol'vir,,,,,-10686.149,-1308.6233,1,1,3,0,264,-1,-1,-1,0,1,1,0,0,0,817548,1565,134479880
 757,BaradinHold,Baradin Hold,Baradin Hold,,,,,0,0,1,2,3,0,269,-1,-1,-1,0,1,-1,0,0,0,814917,36413,134479880
 759,UldumPhasedEntrance,Uldum Phased Entrance,Uldum Phased Entrance,,,,,0,0,1,0,0,0,0,-1,1,-1,0,1,-1,0,0,0,791375,8392285,134479896
@@ -281,7 +281,7 @@ The Battle for Gilneas is a 10 vs 10 domination battleground, where each side at
 859,Zul_Gurub5Man,Zul'Gurub,Zul'Gurub,,,,,-11916.229,-1219.8385,1,1,3,0,161,720,-1,-1,0,1,0,0,0,0,815855,7701,134479880
 860,NewRaceStartZone,The Wandering Isle,The Wandering Isle,,,,,0,0,1,0,0,0,289,960,-1,-1,0,1,-1,0,0,0,789076,8666653,134479880
 861,FirelandsDailies,Molten Front,Molten Front,,,,,0,0,1,0,3,0,274,720,-1,-1,0,1,-1,0,0,0,815281,2104861,134479896
-870,HawaiiMainLand,Pandaria,Pandaria,,,,,0,0,1,0,4,0,327,-1,-1,-1,0,1,-1,0,0,804938,805681,8404573,134479896
+870,HawaiiMainLand,Pandaria,Pandaria,,,,,0,0,1,0,4,0,327,-1,-1,-1,0,1,-1,0,0,804938,805681,25181789,134479896
 930,ScenarioAlcazIsland,A Dark Place,A Dark Place,,,,,0,0,1,5,6,0,25,0,-1,-1,0,1,-1,0,0,0,810354,7765,134479872
 938,COTDragonblight,End Time,End Time,,,,,-8288.6045,-4454.0923,1,1,3,0,286,0,-1,-1,0,1,1,0,0,0,813090,15957,134479880
 939,COTWarOfTheAncients,Well of Eternity,Well of Eternity,,,,,-8595.837,-3994.9358,1,1,3,0,287,-1,-1,-1,0,1,1,0,0,0,813203,7773,134479880
@@ -291,7 +291,7 @@ The Battle for Gilneas is a 10 vs 10 domination battleground, where each side at
 960,EastTemple,Temple of the Jade Serpent,Temple of the Jade Serpent,,,,,957.706,-2473.41,1,1,4,0,311,-1,-1,-1,0,1,870,0,0,0,806233,8404573,134479880
 961,StormstoutBrewery,Stormstout Brewery,Stormstout Brewery,,,,,-688.7051,1267.4537,1,1,4,0,318,-1,-1,-1,0,1,870,0,0,0,810358,8404501,134479880
 962,TheGreatWall,Gate of the Setting Sun,Gate of the Setting Sun,,,,,970.81085,2253.664,1,1,4,0,309,0,-1,-1,0,1,870,0,0,0,810651,8396317,134479880
-967,DeathwingBack,Dragon Soul,Dragon Soul,,,,,-8263.276,-4512.6875,1,2,3,0,279,1080,-1,-1,0,1,1,0,0,0,813251,8029,134479880
+967,DeathwingBack,Dragon Soul,Dragon Soul,,,,,-8263.276,-4512.6875,1,2,3,0,279,1080,-1,-1,0,1,1,0,0,0,813251,7773,134479880
 968,EyeoftheStorm2.0,Rated Eye of the Storm,Rated Eye of the Storm,"Hovering high above the ravaged landscape of Netherstorm is the island known as the Eye of the Storm.
 
 This battlefield is coveted by the blood elves for its rich energy deposits.
@@ -312,7 +312,7 @@ This battlefield is coveted by the blood elves for its rich energy deposits.",Ca
 980,TolVirArena,Tol'Viron Arena,Tol'Viron Arena,,,,,0,0,1,4,3,0,319,-1,-1,-1,0,1,-1,0,0,0,817420,3613,135004168
 994,MoguDungeon,Mogu'shan Palace,Mogu'shan Palace,,,,,0,0,1,1,4,0,312,-1,-1,-1,0,1,-1,0,0,0,811448,7709,134479880
 995,MoguInteriorRaid,The Depths [UNUSED],The Depths [UNUSED],,,,,0,0,1,1,4,0,0,-1,-1,-1,0,1,-1,0,0,0,810384,7709,134479880
-996,MoguExteriorRaid,Terrace of Endless Spring,Terrace of Endless Spring,,,,,0,0,1,2,4,0,321,0,-1,-1,0,1,-1,0,0,0,811511,9445213,134479880
+996,MoguExteriorRaid,Terrace of Endless Spring,Terrace of Endless Spring,,,,,0,0,1,2,4,0,321,0,-1,-1,0,1,-1,0,0,0,811511,9444957,134479880
 998,ValleyOfPower,Temple of Kotmogu,Temple of Kotmogu,"The Horde and Alliance wage battle for the ancient Mogu Artifact that is foretold to hold great powers.
 
 Temple of Kotmogu is a 10 vs 10 powerball battleground where each side attempts to control the Mogu Artifact for as long as possible in different scoring zones.","The Horde and Alliance wage battle for the ancient Mogu Artifact that is foretold to hold great powers.
@@ -326,8 +326,8 @@ Temple of Kotmogu is a 10 vs 10 powerball battleground where each side attempts 
 1004,ScarletMonasteryCathedralGY,Scarlet Monastery,Scarlet Monastery,,,,,0,0,1,1,0,0,333,-1,-1,-1,0,1,-1,0,0,0,805002,9444957,134479880
 1005,BrewmasterScenario01,A Brewing Storm,A Brewing Storm,,,,,0,0,1,5,4,0,322,-1,-1,-1,0,1,-1,0,0,0,808160,8396381,134479880
 1007,NewScholomance,Scholomance,Scholomance,,,,,1274.78,-2552.56,1,1,0,0,314,-1,-1,-1,0,1,0,0,0,0,804980,8396381,134479880
-1008,MogushanPalace,Mogu'shan Vaults,Mogu'shan Vaults,,,,,3982.9973,1121.2906,1,2,4,0,313,-1,-1,-1,0,1,870,0,0,0,812395,8404829,134479880
-1009,MantidRaid,Heart of Fear,Heart of Fear,,,,,0,0,1,2,4,0,310,-1,-1,-1,0,1,-1,0,0,0,811209,8404829,134479880
+1008,MogushanPalace,Mogu'shan Vaults,Mogu'shan Vaults,,,,,3982.9973,1121.2906,1,2,4,0,313,-1,-1,-1,0,1,870,0,0,0,812395,8404573,134479880
+1009,MantidRaid,Heart of Fear,Heart of Fear,,,,,0,0,1,2,4,0,310,-1,-1,-1,0,1,-1,0,0,0,811209,8404573,134479880
 1010,MistsCTF3,CTF3,CTF3,"This new map has yet to be created. Horde guys, go beat up those Alliance jerks.","This new map has yet to be created. Alliance guys, go beat up those Horde jerks.",,,0,0,1,3,4,0,262,-1,-1,-1,0,1,-1,0,0,0,870976,7711,135004168
 1011,MantidDungeon,Siege of Niuzao Temple,Siege of Niuzao Temple,,,,,0,0,1,1,4,0,316,-1,-1,-1,0,1,-1,0,0,0,808873,9453149,134479880
 1014,MonkAreaScenario,Peak of Serenity,Peak of Serenity,,,,,0,0,1,5,6,0,327,-1,-1,-1,0,1,-1,0,0,0,812460,680541789,134479880
@@ -353,7 +353,7 @@ Temple of Kotmogu is a 10 vs 10 powerball battleground where each side attempts 
 1075,TheramoreScenarioPhase,Theramore's Fall Phase,Theramore's Fall Phase,,,,,0,0,1,0,0,0,0,-1,1000,-1,0,1,-1,0,0,0,791277,147037,134479880
 1076,JadeForestHordeStartingArea,Jade Forest Horde Starting Area,Jade Forest Horde Starting Area,,,,,0,0,1,0,4,0,0,-1,870,-1,0,1,-1,0,0,0,811033,8535645,134479896
 1095,HordeAmbushScenario,Dagger in the Dark,Dagger in the Dark,,,,,0,0,1,5,4,0,342,-1,-1,-1,0,1,-1,0,0,0,808356,8404573,134479880
-1098,ThunderIslandRaid,Throne of Thunder,Throne of Thunder,,,,,0,0,1,2,4,0,347,-1,-1,-1,0,1,-1,0,0,0,848548,8404829,134479880
+1098,ThunderIslandRaid,Throne of Thunder,Throne of Thunder,,,,,0,0,1,2,4,0,347,-1,-1,-1,0,1,-1,0,0,0,848548,8404573,134479880
 1099,NavalBattleScenario,Naval Battle Scenario,Naval Battle Scenario,,,,,0,0,1,5,4,0,349,-1,-1,-1,0,1,-1,0,0,0,811854,8404573,134479880
 1101,DefenseOfTheAleHouseBG,Defense Of The Ale House BG,Defense Of The Ale House BG,,,,,0,0,1,0,4,0,0,-1,-1,-1,0,1,-1,0,0,0,842186,8396381,134479880
 1102,HordeBaseBeachScenario,Domination Point,Domination Point,,,,,0,0,1,5,4,0,341,-1,-1,-1,0,1,-1,0,0,0,808508,8404573,134479880
@@ -1161,13 +1161,13 @@ A large-scale battleground, each side attempts to destroy each other's tower for
 2209,2209,Emerald Dream - HoA Scenario,Emerald Dream - HoA Scenario,,,,,0,0,1,5,7,0,418,0,-1,-1,0,1,-1,0,12,0,2819980,8404573,134480912
 2210,2210,Siege of Orgrimmar - Coup Scenario,Siege of Orgrimmar - Coup Scenario,,,,,0,0,1,5,7,0,369,-1,-1,-1,0,1,-1,0,12,0,2821940,8404573,134480912
 2211,2211,Gilneas - Worgen Heritage Scenario,Gilneas - Worgen Heritage Scenario,,,,,0,0,1,5,7,0,0,-1,0,0,0,1,-1,0,12,0,2827797,8396381,134218768
-2212,2212,Horrific Vision of Orgrimmar,Horrific Vision of Orgrimmar,,,,,0,0,1,5,7,0,577,0,1,1,0,1,-1,0,12,0,2828486,159391325,171967764
-2213,2213,Horrific Vision of Stormwind,Horrific Vision of Stormwind,,,,,0,0,1,5,7,0,577,0,0,0,0,1,-1,0,12,0,2828487,159391325,171967764
+2212,2212,Horrific Vision of Orgrimmar,Horrific Vision of Orgrimmar,,,,,0,0,1,5,7,0,577,0,-1,1,0,1,-1,0,12,0,2828486,159391325,171967764
+2213,2213,Horrific Vision of Stormwind,Horrific Vision of Stormwind,,,,,0,0,1,5,7,0,577,0,-1,0,0,1,-1,0,12,0,2828487,159391325,171967764
 2214,2214,The Maelstrom - Heart of Azeroth,The Maelstrom - Heart of Azeroth,,,,,0,0,1,5,7,0,272,-1,-1,-1,0,1,-1,0,12,0,2832121,1629,134479872
 2215,2215,Chamber of Heart - Repaired,Chamber of Heart - Repaired,,,,,0,0,1,0,7,0,434,-1,-1,-1,0,1,-1,0,12,0,2832122,142614109,134479888
 2217,2217,"Ny'alotha, the Waking City","Ny'alotha, the Waking City",,,,,0,0,1,2,7,0,575,-1,-1,-1,0,1,-1,0,12,0,2842322,142614109,263696
 2218,2218,"Dummy Map (Dev and empty, use if you want)","Dummy Map (Dev and empty, use if you want)",,,,,0,0,1,0,7,0,0,-1,-1,-1,0,1,-1,0,12,0,2852003,8396383,134218768
-2222,2222,The Shadowlands,The Shadowlands,,,,,0,0,1,0,8,0,576,-1,-1,-1,0,1,-1,0,11,0,2852007,162537053,142607376
+2222,2222,The Shadowlands,The Shadowlands,,,,,0,0,1,0,8,0,576,-1,-1,-1,0,1,-1,0,11,0,2852007,162537053,679478288
 2223,2223,The Eye of Eternity - HoA Scenario,The Eye of Eternity - HoA Scenario,,,,,3869.9814,6984.33,1,5,7,0,236,-1,-1,-1,0,1,571,5,12,0,2887359,1565,134479872
 2224,2224,Programmer Map - Continent,Programmer Map - Continent,,,,,0,0,1,0,7,0,0,-1,-1,-1,0,1,-1,0,12,0,2905476,8396383,134218768
 2225,2225,Programmer Map - Dungeon,Programmer Map - Dungeon,,,,,0,0,1,1,7,0,0,-1,-1,-1,0,1,-1,0,12,0,2905477,8396355,134218768
@@ -1180,11 +1180,11 @@ A large-scale battleground, each side attempts to destroy each other's tower for
 2233,2233,Temple of the Jade Serpent - HoA Scenario,Temple of the Jade Serpent - HoA Scenario,,,,,957.706,-2473.41,1,1,7,0,311,-1,-1,-1,0,1,870,0,12,0,2915791,8404573,134479872
 2234,2234,9.0 Prototype - Seamless Teleport - Transfer Map,9.0 Prototype - Seamless Teleport - Transfer Map,,,,,0,0,1,0,0,0,0,-1,-1,-1,0,1,-1,0,12,0,2921904,8396381,134218768
 2235,2235,Caverns of Time - Anniversary,Caverns of Time - Anniversary,,,,,0,0,1,2,7,0,212,-1,-1,-1,0,1,-1,0,12,0,2931534,276831837,134219280
-2236,2236,Darkmaul Citadel,Darkmaul Citadel,,,,,0,0,1,1,7,0,584,-1,-1,-1,0,1,-1,0,12,0,2956730,8404573,134218768
+2236,2236,Darkmaul Citadel,Darkmaul Citadel,,,,,0,0,1,1,7,0,584,-1,-1,-1,0,1,-1,0,12,0,2956730,8404573,134743056
 2237,2237,8.2.5 Orgrimmar,8.2.5 Orgrimmar,,,,,0,0,1,0,7,0,0,-1,-1,1,0,1,-1,0,12,0,2967752,-2139087267,134218768
 2240,2240,[UNUSED] [DEV MAP] 8.3 Stormheim,8.3 Stormheim,,,,,0,0,1,0,7,0,0,-1,-1,1220,0,1,-1,0,12,0,2982873,8396383,134218768
 2241,2241,Uldum,Uldum,,,,,0,0,1,0,7,0,3,-1,-1,1,0,1,-1,0,12,0,2982874,8396381,201327632
-2242,2242,Dev Map - K,Dev Map - K,,,,,0,0,1,0,7,0,0,-1,870,870,0,1,-1,0,12,0,2984885,8396383,134218768
+2242,2242,Dev Map - K,Dev Map - K,,,,,0,0,1,0,7,0,0,-1,-1,-1,0,1,-1,0,12,0,2984885,8396383,134218768
 2243,2243,Dev Map - J,Dev Map - J,,,,,0,0,1,0,7,0,0,-1,-1,-1,0,1,-1,0,12,0,2984886,142614111,134218768
 2245,2245,Deepwind Gorge,Deepwind Gorge,The Horde and Alliance battle over territory and the allegiance of the Pandaren  within the Valley of the Four Winds.,The Horde and Alliance battle over territory and the allegiance of the Pandaren  within the Valley of the Four Winds.,Capture the objectives,"- Capture and hold the objectives
 - Earn 1500 resources",0,0,1,3,4,0,354,-1,-1,-1,0,1,-1,0,12,0,2992913,8396381,134743056
@@ -1198,29 +1198,29 @@ A large-scale battleground, each side attempts to destroy each other's tower for
 2258,2258,Crapopolis - Scenario,Crapopolis - Scenario,,,,,0,0,1,5,7,0,440,120,-1,-1,0,1,-1,0,12,0,3035887,142622301,134480400
 2261,2261,9.0 Transport - NPE - Alliance Battleship,9.0 Transport - NPE - Alliance Battleship,,,,,0,0,3,0,7,0,0,-1,-1,-1,0,1,-1,0,12,0,0,3585,134479872
 2263,2263,Crapopolis,Crapopolis,,,,,0,0,1,0,7,0,440,-1,-1,-1,0,1,-1,0,12,0,3038771,142622301,134480400
-2264,2264,Visions of N'Zoth - Orgrimmar - Engineering Test,Visions of N'Zoth - Orgrimmar - Engineering Test,,,,,0,0,1,5,7,0,0,0,1,1,0,1,-1,0,12,0,3039014,8396381,134218768
+2264,2264,Visions of N'Zoth - Orgrimmar - Engineering Test,Visions of N'Zoth - Orgrimmar - Engineering Test,,,,,0,0,1,5,7,0,0,0,-1,1,0,1,-1,0,12,0,3039014,8396381,134218768
 2266,2266,Blackwing Descent Scenario,Blackwing Descent Scenario,,,,,0,0,1,5,7,0,260,-1,-1,-1,0,1,-1,0,12,0,3051771,8396381,134218768
 2267,2267,city,city,,,,,0,0,1,0,7,0,572,1320,-1,-1,0,1,-1,0,12,0,3051905,8396381,134480432
 2268,2268,Mechagon City,Mechagon City,,,,,0,0,1,0,7,0,572,1320,-1,-1,0,1,-1,0,12,0,3051906,8396381,134480432
 2274,2274,Vision of the Twisting Sands,Vision of the Twisting Sands,,,,,0,0,1,0,7,0,577,-1,-1,1,0,1,-1,0,12,0,3073642,268443229,134219024
 2275,2275,Vale of Eternal Twilight,Vale of Eternal Twilight,,,,,0,0,1,0,7,0,577,-1,-1,870,0,1,-1,0,12,0,3073643,276840029,134480144
-2276,2276,9.0 Transport - Maldraxxus Badass Necropolis [TEMP NAME],9.0 Transport - Maldraxxus Badass Necropolis [TEMP NAME],,,,,0,0,3,0,8,0,0,-1,-1,-1,0,1,-1,0,12,0,0,3585,134479872
-2277,2277,9.0 SpawnedMO - Maldraxxus Badass Necropolis [TEMP NAME],9.0 SpawnedMO - Maldraxxus Badass Necropolis [TEMP NAME],,,,,0,0,4,0,8,0,0,-1,-1,-1,0,1,-1,0,12,0,3074450,3585,134479872
-2278,2278,Revendreth Scenario,Revendreth Scenario,,,,,0,0,1,5,8,0,579,-1,2222,2222,0,1,-1,0,12,0,3074621,145759837,134218768
+2276,2276,9.0 Transport - Maldraxxus Necropolis [Transport],9.0 Transport - Maldraxxus Necropolis [Transport],,,,,0,0,3,0,8,0,576,-1,-1,-1,0,1,-1,0,12,0,0,3585,134479872
+2277,2277,9.0 SpawnedMO - Maldraxxus Necropolis [WMO],9.0 SpawnedMO - Maldraxxus Necropolis [WMO],,,,,0,0,4,0,8,0,576,-1,-1,-1,0,1,-1,0,12,0,3074450,3585,134479872
+2278,2278,Revendreth Scenario,Revendreth Scenario,,,,,0,0,1,5,8,0,579,-1,2222,2222,0,1,-1,0,12,0,3074621,-2001723811,134218768
 2279,2279,Torghast Test,Torghast Test,,,,,0,0,1,0,8,0,274,-1,-1,-1,0,1,-1,0,12,0,3076096,9444959,134218768
 2282,2282,Blackrock Depths - Pet Dungeon,Blackrock Depths - Pet Dungeon,,,,,0,0,1,5,0,0,103,-1,-1,-1,0,1,-1,0,12,0,3083220,8396381,134218768
-2284,2284,Sanguine Depths,Sanguine Depths,,,,,0,0,1,1,8,0,578,1320,-1,-1,0,1,-1,0,12,0,3085318,10493533,134481456
-2285,2285,Spires of Ascension,Spires of Ascension,,,,,0,0,1,1,8,0,582,720,-1,-1,0,1,-1,0,12,0,3095438,10493533,134481456
-2286,2286,The Necrotic Wake,The Necrotic Wake,,,,,0,0,1,1,8,0,581,1320,-1,-1,0,1,-1,0,12,0,3095985,10493533,134480432
-2287,2287,Halls of Atonement,Halls of Atonement,,,,,0,0,1,1,8,0,588,720,-1,-1,0,1,-1,0,12,0,3095986,10493533,134481456
+2284,2284,Sanguine Depths,9.0 Dungeon - Sanguine Depths,,,,,0,0,1,1,8,0,578,1320,-1,-1,0,1,-1,0,12,0,3085318,10493533,671352368
+2285,2285,Spires of Ascension,9.0 Dungeon - Spires of Ascension,,,,,0,0,1,1,8,0,582,720,-1,-1,0,1,-1,0,12,0,3095438,10493533,671352368
+2286,2286,The Necrotic Wake,9.0 Dungeon - The Necrotic Wake,,,,,0,0,1,1,8,0,581,1320,-1,-1,0,1,-1,0,12,0,3095985,10493533,671351344
+2287,2287,Halls of Atonement,9.0 Dungeon - Halls of Atonement,,,,,0,0,1,1,8,0,588,720,-1,-1,0,1,-1,0,12,0,3095986,10493533,671352368
 2288,2288,[DEV] - Arena of Ascension,Arena of Ascension,,,,,0,0,1,0,8,0,209,1320,-1,2222,0,1,-1,0,12,0,3095987,10493535,134480432
-2289,2289,Plaguefall,Plaguefall,,,,,0,0,1,1,8,0,580,1320,-1,2222,0,1,-1,0,12,0,3095988,10493533,135004720
-2290,2290,Mists of Tirna Scithe,Mists of Tirna Scithe,,,,,0,0,1,1,8,0,586,600,-1,-1,0,1,-1,0,12,0,3095989,10493533,134480432
-2291,2291,De Other Side,De Other Side,,,,,0,0,1,1,8,0,585,1320,-1,-1,0,1,-1,0,12,0,3095990,10493533,134481456
+2289,2289,Plaguefall,9.0 Dungeon - Plaguefall,,,,,0,0,1,1,8,0,580,1320,-1,2222,0,1,-1,0,12,0,3095988,-2136990115,671875632
+2290,2290,Mists of Tirna Scithe,9.0 Dungeon - Mists of Tirna Scithe,,,,,0,0,1,1,8,0,586,600,-1,-1,0,1,-1,0,12,0,3095989,10493533,671351344
+2291,2291,De Other Side,9.0 Dungeon - De Other Side,,,,,0,0,1,1,8,0,585,1320,-1,-1,0,1,-1,0,12,0,3095990,10493533,671876656
 2292,2292,8.3 Epic Battleground - Warfront Arathi (PvP),8.3 Epic Battleground - Warfront Arathi (PvP),,,,,0,0,1,3,7,0,544,0,-1,0,0,1,-1,0,12,0,3148086,-930070945,134483216
-2293,2293,Theater of Pain,Theater of Pain,,,,,0,0,1,1,8,0,587,720,-1,2222,0,1,-1,0,12,0,3153861,10493533,134481456
+2293,2293,Theater of Pain,9.0 Dungeon - Theater of Pain,,,,,0,0,1,1,8,0,587,720,-1,2222,0,1,-1,0,12,0,3153861,10493533,671352368
 2294,2294,[NOT USED] Realm,[NOT USED] Realm,,,,,0,0,1,1,8,0,209,1320,-1,2222,0,1,-1,0,12,0,3171088,8396381,134480432
-2296,2296,Castle Nathria,Castle Nathria,,,,,0,0,1,2,8,0,579,-1,-1,-1,0,1,-1,0,12,0,3177686,144711261,134481424
+2296,2296,Castle Nathria,Castle Nathria,,,,,0,0,1,2,8,0,579,-1,-1,-1,0,1,-1,0,12,0,3177686,144711261,671352336
 2297,2297,Icecrown Citadel (8.3),Icecrown Citadel (8.3),,,,,0,0,1,0,7,0,250,-1,-1,-1,0,1,-1,0,12,0,3182457,8396381,134480916
 2299,2299,Vision of Ysera Scenario,Vision of Ysera Scenario,,,,,0,0,1,5,8,0,0,-1,1220,1220,0,1,-1,0,12,0,3191785,8396381,134218768
 2300,2300,Redridge - 9xp Bastion,Redridge - 9xp Bastion,,,,,0,0,1,5,8,0,4,-1,0,0,0,1,-1,0,12,804940,3204638,7773,134479920
@@ -1232,24 +1232,24 @@ A large-scale battleground, each side attempts to destroy each other's tower for
 2308,2308,Bastion Night Warrior Finale - Ardenweald Covenant Scenario,Bastion Night Warrior Finale - Ardenweald Covenant Scenario,,,,,0,0,1,5,0,0,576,-1,-1,-1,0,1,-1,0,12,0,3257394,11542109,134218768
 2309,2309,Transport: Torghast Bridge Platform01 Elevator,Transport: Torghast Bridge Platform01 Elevator,,,,,0,0,3,0,8,0,0,-1,-1,-1,0,1,-1,0,0,0,0,3585,134479880
 2354,2354,Ardenweald Covenant Chapter 2 Scenario,Ardenweald Covenant Chapter 2 Scenario,,,,,0,0,1,5,8,0,576,-1,-1,-1,0,1,-1,0,12,0,3306844,9444957,134218768
-2355,2355,The Necrotic Wake (Transport),The Necrotic Wake (Transport),,,,,0,0,3,0,8,0,581,-1,2286,2286,0,1,-1,0,12,0,0,3585,134479888
+2355,2355,The Necrotic Wake (Transport),9.0 Dungeon - The Necrotic Wake (Transport),,,,,0,0,3,0,8,0,581,-1,2286,2286,0,1,-1,0,12,0,0,3585,134479888
 2356,2356,Castle Nathria Scenario,Castle Nathria Scenario,,,,,0,0,1,5,8,0,579,-1,-1,-1,0,1,-1,0,12,0,3307710,144711261,134481424
-2360,2360,Sinfall Scenario,Sinfall Scenario,,,,,0,0,1,5,8,0,579,-1,-1,2222,0,1,-1,0,12,0,3386514,142614109,134218768
+2360,2360,Sinfall Scenario,Sinfall Scenario,,,,,0,0,1,5,8,0,579,-1,-1,2222,0,1,-1,0,12,0,3386514,-2004869539,134218768
 2362,2362,Maldraxxus Covenant Finale Scenario,Maldraxxus Covenant Finale Scenario,,,,,0,0,1,5,8,0,576,-1,-1,2222,0,1,-1,0,12,0,3446043,8396381,134218768
 2363,2363,9.0 - Ardenweald - Garden - Queen's Conservatory,9.0 - Ardenweald - Garden (personal map),,,,,0,0,1,5,8,0,576,-1,-1,-1,0,1,-1,0,12,0,3449943,8396381,134218768
-2364,2364,The Maw,MawTest,,,,,0,0,1,0,8,0,0,-1,-1,-1,0,1,-1,0,12,0,3458581,11542109,134218768
+2364,2364,The Maw,MawTest,,,,,0,0,1,0,8,0,576,-1,-1,-1,0,1,-1,0,12,0,3458581,11542109,142607376
 2365,2365,9.0 Maw - Torghast - 9Maw_Bridge_SmallPlatform01,9.0 Maw - Torghast - 9Maw_Bridge_SmallPlatform01,,,,,0,0,4,0,8,0,0,-1,-1,-1,0,1,-1,0,0,0,3478068,3585,134479872
 2366,2366,9.0 Maw - Torghast - 9Maw_Zone_WallTurret01,9.0 Maw - Torghast - 9Maw_Zone_WallTurret01,,,,,0,0,4,0,8,0,0,-1,-1,-1,0,1,-1,0,0,0,3478069,3585,134479872
 2367,2367,9.0 Maw - Torghast - 9Maw_Bridge_Straight03,9.0 Maw - Torghast - 9Maw_Bridge_Straight03,,,,,0,0,4,0,8,0,0,-1,-1,-1,0,1,-1,0,0,0,3482348,3585,134479872
 2368,2368,Maldraxxus Broker Islands,Maldraxxus Broker Islands,,,,,0,0,1,0,8,0,576,-1,-1,-1,0,1,-1,0,12,0,3493361,8396381,134218768
 2369,2369,9.0 NPE - Horde - Starter Transport Ship - (STM),9.0 NPE - Horde - Starter Transport Ship - (STM),,,,,0,0,3,0,7,0,0,-1,-1,-1,0,1,-1,0,12,0,0,3585,134479872
 2370,2370,Maldraxxus Arena,Maldraxxus Arena,,,,,0,0,1,0,8,0,576,-1,-1,2222,0,1,-1,0,12,0,3505090,8396381,134218768
-2371,2371,9.0 Ardenweald Covenant Finale Drust Scenario,9.0 Ardenweald Covenant Finale Drust Scenario,,,,,0,0,1,5,8,0,576,-1,-1,2222,0,1,-1,0,12,0,3505789,8396381,134218768
+2371,2371,9.0 Ardenweald Covenant Finale Drust Scenario,9.0 Ardenweald Covenant Finale Drust Scenario,,,,,0,0,1,5,8,0,576,-1,-1,2222,0,1,-1,0,12,0,3505789,-2139087267,134218768
 2373,2373,Empyrean Domain,Bastion Arena - Path of Ascension - Empyrean Domain,,,,,0,0,1,4,8,0,583,720,-1,-1,0,1,-1,0,12,0,3534288,8396381,134218768
 2375,2375,9.0 Bastion Arena - Path of Ascension,9.0 Empyrean Domain (Bastion Arena- Path of Ascension - Coliseum),,,,,0,0,1,5,8,0,583,720,-1,-1,0,1,-1,0,12,0,3557117,8396381,134218768
 2437,2437,Dev Map - Internapalooza,9.0 Dev Land,,,,,0,0,1,0,7,0,549,-1,-1,-1,0,1,-1,0,12,1602425,3615524,142622303,1040
 2438,2438,SpellPref,Test Dungeon,,,,,0,0,1,2,6,0,244,-1,-1,-1,0,1,-1,0,12,0,3638600,411057759,393216
-2439,2439,De Other Side (Ardenweald Campaign),9.0 Ardenweald Covenant Finale Drust Scenario,,,,,0,0,1,0,8,0,576,-1,-1,2222,0,1,-1,0,12,0,3643212,8396381,1040
+2439,2439,De Other Side (Ardenweald Campaign),9.0 Ardenweald Covenant Finale Drust Scenario,,,,,0,0,1,0,8,0,585,1320,-1,-1,0,1,-1,0,12,0,3643212,8396381,1040
 2440,2440,World Tree 2,,,,,,0,0,1,0,8,0,0,-1,-1,-1,0,1,-1,0,12,0,3643495,8396383,1040
 2452,2452,Dev Map - Internapalooza,9.0 Dev Land,,,,,0,0,1,0,7,0,549,-1,-1,-1,0,1,-1,0,12,1602425,3764239,142622303,1040
 2453,2453,Torghast,Torghast - Entry Chamber,,,,,0,0,1,0,8,0,576,-1,-1,-1,0,1,-1,0,12,0,3777022,8396381,263184
