@@ -165,7 +165,7 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
             break
 
     mythic_regular = f["criteriatree"][(
-            (f["criteriatree"].Description_lang.str.match('.* Dungeon.*Challenge$', na=False)) &
+            (f["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
             (f["criteriatree"].ID.isin(parent_dungeons)))]
 
     regular_count = get_count_table(int(mythic_regular.ID))
@@ -250,7 +250,7 @@ table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count}
 # Checking locale_dump.txt and adding new npcs names to output
 # Read file locale_dump if it exists otherwise set locale_file to []
 try:
-    locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None)
+    locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None, sep="*")
                      .text.unique()
                      .tolist())
 except FileNotFoundError:
