@@ -166,7 +166,8 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
 
     mythic_regular = f["criteriatree"][(
             (f["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
-            (f["criteriatree"].ID.isin(parent_dungeons)))]
+            (f["criteriatree"].ID.isin(parent_dungeons)) &
+            ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))] # This means NOT Teeming
 
     regular_count = get_count_table(int(mythic_regular.ID))
     total_count = get_total_count(int(mythic_regular.ID))
