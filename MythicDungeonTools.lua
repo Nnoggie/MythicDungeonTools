@@ -3917,6 +3917,12 @@ function MDT:UpdatePullButtonNPCData(idx)
     else
         frame.newPullButtons[idx]:ShowReapingIcon(false,currentPercent,oldPercent)
     end
+    --prideful icon
+    if (math.floor(currentPercent/0.2)>math.floor(oldPercent/0.2)) and oldPercent<1 and db.currentSeason == 5 then
+        frame.newPullButtons[idx]:ShowPridefulIcon(true,currentPercent,oldPercent)
+    else
+        frame.newPullButtons[idx]:ShowPridefulIcon(false,currentPercent,oldPercent)
+    end
 end
 
 ---ReloadPullButtons
