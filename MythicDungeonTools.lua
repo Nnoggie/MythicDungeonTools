@@ -2427,6 +2427,12 @@ function MDT:IsWeekTeeming(week)
     return affixWeeks[week][1] == 5
 end
 
+---Returns if the current week has an affix weeks set that includes the inspiring affix
+function MDT:IsWeekInspiring(week)
+    if not week then week = MDT:GetCurrentAffixWeek() or 1 end
+    return affixWeeks[week][1] == 122 or affixWeeks[week][2] == 122
+end
+
 ---IsPresetTeeming
 ---Returns if the preset is set to a week which contains the teeming affix
 function MDT:IsPresetTeeming(preset)
@@ -2912,6 +2918,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
 	MDT:UpdateDungeonEnemies()
     MDT:DungeonEnemies_UpdateTeeming()
     MDT:DungeonEnemies_UpdateSeasonalAffix()
+    MDT:DungeonEnemies_UpdateInspiring()
 
 	if not ignoreReloadPullButtons then
 		MDT:ReloadPullButtons()

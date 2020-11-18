@@ -345,6 +345,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                         MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
                     end
                     MDT:DungeonEnemies_UpdateTeeming()
+                    MDT:DungeonEnemies_UpdateInspiring()
                     MDT:UpdateFreeholdSelector(week)
                     MDT:DungeonEnemies_UpdateBlacktoothEvent(week)
                     MDT:DungeonEnemies_UpdateSeasonalAffix()

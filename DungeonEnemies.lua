@@ -1049,6 +1049,22 @@ function MDT:DungeonEnemies_UpdateInfested(week)
     end
 end
 
+---DungeonEnemies_UpdateInspiring
+---Updates which blips should display inspiring state based on preset.week
+function MDT:DungeonEnemies_UpdateInspiring(week)
+    week = week or preset.week
+    local isInspiring = MDT:IsWeekInspiring(week)
+    for _,blip in pairs(blips) do
+        if blip.clone.inspiring and isInspiring then
+            blip.texture_Indicator:SetVertexColor(1,1,0,1)
+            blip.texture_Indicator:SetScale(1.15)
+            blip.texture_Indicator:Show()
+        else
+            blip.texture_Indicator:Hide()
+        end
+    end
+end
+
 ---Frehold Crews
 MDT.freeholdCrews = {
     [2] = {--blacktooth
