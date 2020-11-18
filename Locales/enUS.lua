@@ -1024,4 +1024,6 @@ L["Zolramus Siphoner"] = "Zolramus Siphoner"
 L["Halkias"] = "Halkias"
 L["Remnant of Fury"] = "Remnant of Fury"
 
+L["plaguefallDevotedNote"] = "Plaguefall Devoted which have already been transformed by Oozing Carcass before engaging Ickor Bileflesh do not award Enemy Forces."
+L["ConnectedTip"] = "Group connections in MDT do not reflect if NPCs are linked together in the game world."
 
