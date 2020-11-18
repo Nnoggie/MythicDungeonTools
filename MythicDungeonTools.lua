@@ -1031,6 +1031,7 @@ local bottomTips = {
     [14] = L["You can cycle through dungeons by holding ALT and using the mousewheel."],
     [15] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
     [16] = L["Expand the top toolbar to gain access to drawing and note features."],
+    [17] = L["ConnectedTip"],
 }
 
 function MDT:UpdateBottomText()
