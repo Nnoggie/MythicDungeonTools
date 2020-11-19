@@ -180,7 +180,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 2;
             };
         };
-        ["id"] = 167615;
+        ["id"] = 165515;
         ["scale"] = 1;
         ["health"] = 80100;
         ["displayId"] = 93074;
