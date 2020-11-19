@@ -1,3 +1,5 @@
+v3.2.9
+- fix library loading issue
 v3.2.8
 - Shadowlands NPC mapping complete
 - Data collection for enemy spells and characteristics (stunnable, slowable etc) is now active by default until next version of MDT. You can send your data in the MDT discord: https://discord.gg/ttcM6uJ
