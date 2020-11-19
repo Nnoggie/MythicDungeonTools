@@ -1,3 +1,6 @@
+v3.2.7
+- Shadowlands NPC mapping complete
+- Data collection for enemy spells and characteristics (stunnable, slowable etc) is now active by default until next version of MDT. You can send your data in the MDT discord: https://discord.gg/ttcM6uJ
 v3.2.6
 - updated the look of pull outlines and adjusted the scale for larger maps
 v3.2.5
