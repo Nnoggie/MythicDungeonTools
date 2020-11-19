@@ -150,7 +150,7 @@ do
 				icon:Show("MythicDungeonTools")
 			end
 
-            if db.dataCollectionActive then MDT.DataCollection:Init() end
+            if --[[db.dataCollectionActive ]] true then MDT.DataCollection:Init() end
             --fix db corruption
             do
                 for _,presets in pairs(db.presets) do

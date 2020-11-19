@@ -19,7 +19,7 @@ function DC:Init()
         return DC[event](self,...)
     end)
     --add spells/characteristics from db to dungeonEnemies
-    for i=15,24 do
+    for i=29,36 do
         if db.dataCollection[i] then
             for id,spells in pairs(db.dataCollection[i]) do
                 local enemies = MDT.dungeonEnemies[i]
@@ -62,15 +62,16 @@ local trackedEvents = {
 }
 local characteristicsSpells = {
     ["Slow"] = {
-        [206760] = true; --Shadow's Grasp
+        [3409] = true; --Crippling Poison
+        [45524] = true; --Chains of Ice
     };
     ["Stun"] ={
         [1833] = true, --Cheap Shot
         [408] = true, --Kidney Shot
-        [199804] = true, --Between the Eyes
         [179057] = true, --Chaos Nova
         [119381] = true, --Leg Sweep
         [30283] = true, --Shadowfury
+        [108194] = true, --Asphyxiate
     },
     ["Sap"] ={
         [6770] = true,
@@ -101,6 +102,8 @@ local characteristicsSpells = {
     ["Root"] = {
         [122] = true, --Frost Nova
         [339] = true, --Entangling Roots
+        [102359] = true, --Mass Root
+        [117526] = true, --Binding Shot
     },
     ["Polymorph"] ={
         [161354] = true,
@@ -143,13 +146,13 @@ local characteristicsSpells = {
     ["Taunt"] ={
         [56222] = true, --Dark Command
         [355] = true, --Taunt
-        [281854] = true, --Torment DPS
         [185245] = true, --Torment
+        [116189] = true, --Provoke
     },
     ["Control Undead"] ={
         [111673] = true,
     },
-    ["Enslave Demon"] ={
+    ["Subjugate Demon"] ={
         [1098] = true,
     },
 }
@@ -174,7 +177,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         local unitType,_,serverId,instanceId,zoneId,id,spawnUid = strsplit("-", sourceGUID)
         id = tonumber(id)
         --dungeon
-        for i=15,26 do
+        for i=29,36 do
             local enemies = MDT.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
@@ -193,8 +196,9 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
     if subevent == "SPELL_AURA_APPLIED" then
         local unitType,_,serverId,instanceId,zoneId,id,spawnUid = strsplit("-", destGUID)
         id = tonumber(id)
+
         --dungeon
-        for i=15,26 do
+        for i=29,36 do
             local enemies = MDT.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
