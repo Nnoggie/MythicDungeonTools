@@ -212,11 +212,6 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
                             enemy.characteristics[characteristic] = true
                         end
                     end
-                    if cmsTimeStamp then
-                        db.dataCollectionGUID[cmsTimeStamp] = db.dataCollectionGUID[cmsTimeStamp] or {}
-                        db.dataCollectionGUID[cmsTimeStamp][id] = db.dataCollectionGUID[cmsTimeStamp][id] or {}
-                        db.dataCollectionGUID[cmsTimeStamp][id][destGUID] = true
-                    end
                     break
                 end
 
