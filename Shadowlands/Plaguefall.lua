@@ -45,7 +45,6 @@ MDT.mapPOIs[dungeonIndex] = {
     };
 };
 
-
 MDT.dungeonEnemies[dungeonIndex] = {
     [27] = {
         ["clones"] = {
@@ -1646,13 +1645,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["id"] = 173360;
+        ["id"] = 168396;
         ["scale"] = 1.5;
         ["name"] = "Plaguebelcher";
         ["displayId"] = 96244;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["count"] = 0;
+        ["count"] = 12;
         ["health"] = 128160;
     };
     [18] = {
@@ -1935,13 +1934,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["id"] = 168891;
+        ["id"] = 168878;
         ["scale"] = 1;
         ["name"] = "Rigged Plagueborer";
         ["displayId"] = 97079;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["count"] = 0;
+        ["count"] = 8;
         ["health"] = 64080;
     };
     [23] = {
