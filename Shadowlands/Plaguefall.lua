@@ -1296,13 +1296,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
                 ["sublevel"] = 1;
             };
         };
-        ["id"] = 168907;
+        ["id"] = 168022;
         ["scale"] = 1.5;
         ["name"] = "Slime Tentacle";
         ["displayId"] = 95688;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["count"] = 0;
+        ["count"] = 10;
         ["health"] = 88110;
     };
     [29] = {
