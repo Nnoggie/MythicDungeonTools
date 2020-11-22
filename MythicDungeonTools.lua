@@ -88,7 +88,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 4,
+        currentSeason = 5,
 		currentExpansion = 3,
         scale = 1,
         enemyForcesFormat = 2,
@@ -215,8 +215,9 @@ end
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
 MDT.scaleMultiplier = {}
---IDs: https://dl.dropboxusercontent.com/s/eknkfgkq6oc8uvc/chrome_Np07WrFii4.png
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
+--https://www.wowhead.com/affixes
+--lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
     [1] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [2] =  {[1]=0,[2]=0,[3]=0,[4]=0},
@@ -225,9 +226,9 @@ local affixWeeks = {
     [5] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [6] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [7] =  {[1]=0,[2]=0,[3]=0,[4]=0},
-    [8] =  {[1]=0,[2]=0,[3]=0,[4]=0},  -->>Bolstering, Necrotic, Tyrannical
-    [9] =  {[1]=0,[2]=0,[3]=0,[4]=0},   -->>Storming, Inspiring, Fortified
-    [10] = {[1]=11,[2]=2,[3]=9,[4]=120},  -->>Bursting, Explosive, Tyrannical
+    [8] =  {[1]=7,[2]=4,[3]=9,[4]=121},  -->>Bolstering, Necrotic, Tyrannical
+    [9] =  {[1]=124,[2]=122,[3]=10,[4]=121},   -->>Storming, Inspiring, Fortified
+    [10] = {[1]=11,[2]=13,[3]=9,[4]=121},  -->>Bursting, Explosive, Tyrannical
     [11] = {[1]=0,[2]=0,[3]=0,[4]=0},
     [12] = {[1]=0,[2]=0,[3]=0,[4]=0},
 }
