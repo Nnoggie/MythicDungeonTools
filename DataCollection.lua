@@ -239,7 +239,7 @@ function DC:DistributeData()
     if not distribution then return end
     --throttle to 1 sync every 5 minutes
     if not DC.lastDistribution or DC.lastDistribution < GetTime() - 300 then
-        DC.lastDistribution.last = GetTime()
+        DC.lastDistribution = GetTime()
         db = MDT:GetDB()
         local package = {
             [1] = db.dataCollection,
