@@ -1,3 +1,6 @@
+v3.3.0
+- Enemy spells and characteristics will now sync between group members
+- Updated to Shadowlands season + affix list
 v3.2.9
 - fix library loading issue
 v3.2.8
