@@ -195,6 +195,7 @@ do
                 MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5,0.5,0.5)
             end
             last = now
+            MDT:RequestDataCollectionUpdate()
         end
     end
     function MDT.PLAYER_ENTERING_WORLD(self, addon)

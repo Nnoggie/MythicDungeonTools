@@ -177,9 +177,17 @@ MDT.liveSessionPrefixes = {
     ["difficulty"] = "MDTLiveLvl",
 }
 
+MDT.dataCollectionPrefixes = {
+    ["request"] = "MDTDataReq",
+    ["distribute"] = "MDTDataDist",
+}
+
 function MDTcommsObject:OnEnable()
     self:RegisterComm(presetCommPrefix)
     for _,prefix in pairs(MDT.liveSessionPrefixes) do
+        self:RegisterComm(prefix)
+    end
+    for _,prefix in pairs(MDT.dataCollectionPrefixes) do
         self:RegisterComm(prefix)
     end
     MDT.transmissionCache = {}
@@ -256,6 +264,15 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                 MDT.liveSessionRequested = false
             end
         end
+    end
+
+    if prefix == MDT.dataCollectionPrefixes.request then
+        MDT.DataCollection:DistributeData()
+    end
+
+    if prefix == MDT.dataCollectionPrefixes.distribute then
+        local package = MDT:StringToTable(message,false)
+        MDT.DataCollection:MergeReceiveData(package)
     end
 
     if prefix == MDT.liveSessionPrefixes.enabled then
