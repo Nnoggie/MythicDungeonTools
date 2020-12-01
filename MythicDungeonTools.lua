@@ -229,7 +229,7 @@ local affixWeeks = {
     [9] =  {[1]=124,[2]=122,[3]=10,[4]=121},   -->>Storming, Inspiring, Fortified
     [10] = {[1]=11,[2]=13,[3]=9,[4]=121},  -->>Bursting, Explosive, Tyrannical
     [11] = {[1]=4,[2]=7,[3]=10,[4]=121},      -->>Sanguine, Grievous, Fortified
-    [12] = {[1]=0,[2]=0,[3]=0,[4]=0},
+    [12] = {[1]=6,[2]=14,[3]=9,[4]=121},   -->>Raging, Quaking, Tyrannical
 }
 
 local dungeonList = {
