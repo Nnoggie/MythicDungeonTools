@@ -218,7 +218,7 @@ MDT.scaleMultiplier = {}
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {[1]=11,[2]=124,[3]=10,[4]=121}, -->>Bursting, Storming, Fortified
+    [1] =  {[1]=11,[2]=3,[3]=10,[4]=121}, -->>Bursting, Volcanic, Fortified
     [2] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [3] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [4] =  {[1]=0,[2]=0,[3]=0,[4]=0},
@@ -4723,7 +4723,6 @@ function MDT:GetCurrentAffixWeek()
     local affixIds = C_MythicPlus.GetCurrentAffixes() --table
     if not affixIds then return end
     if not affixIds[1] then return 1 end
-    ViragDevTool_AddData(affixWeeks)
     for week,affixes in ipairs(affixWeeks) do
         if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
             return week
