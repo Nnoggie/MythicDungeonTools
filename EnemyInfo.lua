@@ -418,6 +418,21 @@ local spellBlacklist = {
     [280404] = true, --Tidal Surge
     [589]    = true, --Shadow Word: Pain
     [5116]   = true, --Concussive Shot
+    [288865] = true, --Meerahs Jukebox
+    [317898] = true, --Blinding Sleet
+    [334882] = true, --
+    [201657] = true, --
+    [320297] = true, --
+    [325748] = true, --
+    [326868] = true, --
+    [132466] = true, --
+    [344991] = true, --
+    [320785] = true, --
+    [335072] = true, --
+    [1604] = true, --
+    [35079] = true, --
+    [50707] = true, --
+    [240443] = true, --
     --[X]  = true,
 }
 local lastEnemyIdx
