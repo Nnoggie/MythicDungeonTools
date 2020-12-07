@@ -218,7 +218,7 @@ MDT.scaleMultiplier = {}
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {[1]=0,[2]=0,[3]=0,[4]=0},
+    [1] =  {[1]=11,[2]=124,[3]=10,[4]=121}, -->>Bursting, Storming, Fortified
     [2] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [3] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [4] =  {[1]=0,[2]=0,[3]=0,[4]=0},
