@@ -1,3 +1,5 @@
+v3.3.3
+- turn off data collection and sync
 v3.3.2
 - minor mapping + affix week updates
 - remove clearly wrong spells in enemy info
