@@ -149,7 +149,7 @@ do
 				icon:Show("MythicDungeonTools")
 			end
 
-            if --[[db.dataCollectionActive ]] true then MDT.DataCollection:Init() end
+            if db.dataCollectionActive then MDT.DataCollection:Init() end
             --fix db corruption
             do
                 for _,presets in pairs(db.presets) do
@@ -194,7 +194,7 @@ do
                 MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5,0.5,0.5)
             end
             last = now
-            MDT:RequestDataCollectionUpdate()
+            --MDT:RequestDataCollectionUpdate()
         end
     end
     function MDT.PLAYER_ENTERING_WORLD(self, addon)
