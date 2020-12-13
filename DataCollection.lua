@@ -228,6 +228,8 @@ end
 
 ---Request users in party/raid to distribute their collected data
 function MDT:RequestDataCollectionUpdate()
+    --temporary lag fix
+    if true then return end
     local distribution = self:IsPlayerInGroup()
     if not distribution then return end
     MDTcommsObject:SendCommMessage(self.dataCollectionPrefixes.request, "0", distribution, nil, "ALERT")
@@ -235,6 +237,8 @@ end
 
 ---Distribute collected data to party/raid
 function DC:DistributeData()
+    --temporary lag fix
+    if true then return end
     local distribution = MDT:IsPlayerInGroup()
     if not distribution then return end
     --throttle to 1 sync every 5 minutes

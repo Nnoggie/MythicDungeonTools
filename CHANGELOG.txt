@@ -1,3 +1,5 @@
+v3.3.4
+- fix lag
 v3.3.3
 - turn off data collection and sync
 v3.3.2
