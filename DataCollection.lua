@@ -256,6 +256,8 @@ end
 
 ---Merge received collected data into own data collection
 function DC:MergeReceiveData(package)
+    --temporary lag fix
+    if true then return end
     db = MDT:GetDB()
     local collection,collectionCC = unpack(package)
     --db.dataCollection[dungeonIdx][npcId][spellId]
