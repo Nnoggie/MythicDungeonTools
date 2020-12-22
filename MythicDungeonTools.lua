@@ -616,7 +616,7 @@ MDT.dungeonMaps = {
         [1] = "MistsOfTirneScithe",
     },
     [32] = {
-        [0] = "Plaguefall_B",
+        [0] = "Plaguefall",
         [1] = "Plaguefall",
         [2] = "Plaguefall_B",
     },
