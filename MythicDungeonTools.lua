@@ -219,8 +219,8 @@ MDT.scaleMultiplier = {}
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
     [1] =  {[1]=11,[2]=3,[3]=10,[4]=121}, -->>Bursting, Volcanic, Fortified
-    [2] =  {[1]=0,[2]=0,[3]=0,[4]=0},
-    [3] =  {[1]=0,[2]=0,[3]=0,[4]=0},
+    [2] = {[1]=7,[2]=124,[3]=9,[4]=121}, -->>Bolstering, Storming, Tyrannical
+    [3] = {[1]=123,[2]=12,[3]=10,[4]=121}, -->>Spiteful, Grievous, Fortified
     [4] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [5] =  {[1]=0,[2]=0,[3]=0,[4]=0},
     [6] =  {[1]=0,[2]=0,[3]=0,[4]=0},
