@@ -1,3 +1,6 @@
+v3.3.5
+- Dungeon NPC Data is no longer included in MDT
+- fix Plaguefall map texture
 v3.3.4
 - fix lag
 v3.3.3
