@@ -1,3 +1,5 @@
+v3.3.8
+- nil fix
 v3.3.6
 - dont remove npcs from profiles if no dungeon import data found
 v3.3.6
