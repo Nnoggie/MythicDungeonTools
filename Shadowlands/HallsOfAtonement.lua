@@ -69,4 +69,5 @@ MDT.mapPOIs[dungeonIndex] = {
     };
 };
 
+MDT.dungeonEnemies[dungeonIndex] = {}
 
