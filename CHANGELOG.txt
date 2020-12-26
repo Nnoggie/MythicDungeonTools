@@ -1,5 +1,3 @@
-v4.0.0
-- clarified dungeon data dialog
 v3.3.9
 - nil fix
 v3.3.6
