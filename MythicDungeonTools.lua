@@ -2847,24 +2847,26 @@ function MDT:EnsureDBTables()
 	end
 
     --removed clones: remove data from presets
-    for pullIdx,pull in pairs(preset.value.pulls) do
-        for enemyIdx,clones in pairs(pull) do
+    if next(db.dungeonImport) then
+        for pullIdx,pull in pairs(preset.value.pulls) do
+            for enemyIdx,clones in pairs(pull) do
 
-            if tonumber(enemyIdx) then
-                --enemy does not exist at all anymore
-                if not MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
-                    pull[enemyIdx] = nil
-                else
-                    --only clones
-                    for k,v in pairs(clones) do
-                        if not MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
-                            clones[k] = nil
+                if tonumber(enemyIdx) then
+                    --enemy does not exist at all anymore
+                    if not MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+                        pull[enemyIdx] = nil
+                    else
+                        --only clones
+                        for k,v in pairs(clones) do
+                            if not MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][v] then
+                                clones[k] = nil
+                            end
                         end
                     end
                 end
             end
+            pull["color"] = pull["color"] or db.defaultColor
         end
-        pull["color"] = pull["color"] or db.defaultColor
     end
 
     MDT:GetCurrentPreset().week = MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek()
