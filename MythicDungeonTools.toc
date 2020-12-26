@@ -36,3 +36,4 @@ LiveSession.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml
+dataImport.lua

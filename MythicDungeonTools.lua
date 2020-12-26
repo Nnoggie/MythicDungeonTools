@@ -118,6 +118,7 @@ local defaultSavedVars = {
             numberCustomColors = 12,
         },
         language = MDT:GetLocaleIndex(),
+        dungeonImport = {},
 	},
 }
 do
@@ -674,6 +675,9 @@ function MDT:ShowInterface(force)
             self.draggedBlip = nil
         end
         MDT:UpdateBottomText()
+        if not next(db.dungeonImport) then
+            MDT:OpenNoDungeonDataWarning()
+        end
 	end
 end
 
@@ -1475,6 +1479,24 @@ function MDT:MakeSidePanel(frame)
         GameTooltip:Show()
     end)
     frame.MDIButton.frame:SetScript("OnLeave",function()
+    end)
+
+    --Data Import
+    frame.DataImportButton = AceGUI:Create("Button")
+    frame.DataImportButton:SetText(L["Import Data"])
+    frame.DataImportButton:SetWidth(buttonWidth)
+    frame.DataImportButton.frame:SetNormalFontObject(fontInstance)
+    frame.DataImportButton.frame:SetHighlightFontObject(fontInstance)
+    frame.DataImportButton.frame:SetDisabledFontObject(fontInstance)
+    frame.DataImportButton:SetCallback("OnClick",function(widget,callbackName,value)
+        MDT:OpenDataImportDialog()
+    end)
+    frame.DataImportButton.frame:SetScript("OnEnter",function()
+        GameTooltip:SetOwner(frame.DataImportButton.frame, "ANCHOR_BOTTOMLEFT",frame.DataImportButton.frame:GetWidth()*(-2),frame.DataImportButton.frame:GetHeight())
+        GameTooltip:AddLine(L["DataImportButtonTooltip"],1,1,1)
+        GameTooltip:Show()
+    end)
+    frame.DataImportButton.frame:SetScript("OnLeave",function()
         GameTooltip:Hide()
     end)
 
@@ -1523,7 +1545,8 @@ function MDT:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
+    frame.sidePanel.WidgetGroup:AddChild(frame.DataImportButton)
+	--frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
     frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCogwheel)
 
@@ -2634,6 +2657,8 @@ function MDT:HideAllDialogs()
 	MDT.main_frame.DeleteConfirmationFrame:Hide()
     MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
     MDT.main_frame.automaticColorsFrame:Hide()
+    MDT.main_frame.noDungeonDataWarning:Hide()
+    MDT.main_frame.dataImportDialog:Hide()
     if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
 end
 
@@ -4936,6 +4961,11 @@ function initFrames()
         end
     end
 
+    --merge imported dungeon data
+    for dungeonIdx,dungeon in pairs(db.dungeonImport) do
+        MDT.dungeonEnemies[dungeonIdx] = dungeon
+    end
+
     db.nonFullscreenScale = db.nonFullscreenScale or 1
     if not db.maximized then db.scale = db.nonFullscreenScale end
 	main_frame:SetFrameStrata(mainFrameStrata)
@@ -4987,6 +5017,8 @@ function initFrames()
 	MDT:MakeSendingStatusBar(main_frame)
 	MDT:MakeAutomaticColorsFrame(main_frame)
     MDT:MakeCustomColorFrame(main_frame.automaticColorsFrame)
+    MDT:CreateDataImportDialog(main_frame)
+    MDT:CreateNoDungeonDataWarning(main_frame)
 
     --devMode
     if db.devMode and MDT.CreateDevPanel then
