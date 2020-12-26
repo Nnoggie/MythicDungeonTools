@@ -80,7 +80,7 @@ function MDT:CreateNoDungeonDataWarning(frame)
     end)
 
     f.label = AceGUI:Create("Label")
-    f.label:SetText(L["noDungeonData1"].."\n"..L["noDungeonData2"])
+    f.label:SetText(L["noDungeonData1"].."\n"..L["noDungeonData2"].."\n"..L["noDungeonData3"])
     f.label:SetWidth(550)
     f.label:SetHeight(50)
     f.label:SetColor(1,0,0)
