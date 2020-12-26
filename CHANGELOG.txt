@@ -1,3 +1,5 @@
+v3.3.6
+- nil fix
 v3.3.5
 - Dungeon NPC Data is no longer included in MDT
 - fix Plaguefall map texture
