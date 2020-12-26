@@ -1,4 +1,4 @@
-﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='AtalDazar.lua'/>
 	<Script file='Freehold.lua'/>
 	<Script file='KingsRest.lua'/>

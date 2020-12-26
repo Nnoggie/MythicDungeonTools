@@ -1,12 +1,3 @@
-v3.3.9
-- nil fix
-v3.3.6
-- dont remove npcs from profiles if no dungeon import data found
-v3.3.6
-- nil fix
-v3.3.5
-- Dungeon NPC Data is no longer included in MDT
-- fix Plaguefall map texture
 v3.3.4
 - fix lag
 v3.3.3

@@ -582,7 +582,6 @@ local function blipDevModeSetup(blip)
         [5] = {0,1,1,1},
     }
     blip:SetScript("OnMouseWheel", function(self, delta)
-        if not db.devModeBlipsScrollable then return end
         if not blip.clone.g then
             local maxGroup = 0
             for _,data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
