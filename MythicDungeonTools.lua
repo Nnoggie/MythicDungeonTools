@@ -2848,7 +2848,6 @@ function MDT:EnsureDBTables()
 	end
 
     --removed clones: remove data from presets
-    if next(db.dungeonImport) then
         for pullIdx,pull in pairs(preset.value.pulls) do
             for enemyIdx,clones in pairs(pull) do
 
@@ -2868,7 +2867,6 @@ function MDT:EnsureDBTables()
             end
             pull["color"] = pull["color"] or db.defaultColor
         end
-    end
 
     MDT:GetCurrentPreset().week = MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek()
 
