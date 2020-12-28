@@ -4991,6 +4991,8 @@ function initFrames()
         MDT.dungeonEnemies[dungeonIdx] = dungeon
     end
 
+    db.MDI.enabled = false
+
     db.nonFullscreenScale = db.nonFullscreenScale or 1
     if not db.maximized then db.scale = db.nonFullscreenScale end
 	main_frame:SetFrameStrata(mainFrameStrata)
