@@ -1,3 +1,5 @@
+v3.4.4
+- MDI nil fix
 v3.4.3
 - add newest and assumed affixes
 v3.4.2
