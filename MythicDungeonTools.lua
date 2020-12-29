@@ -4991,7 +4991,7 @@ function initFrames()
         MDT.dungeonEnemies[dungeonIdx] = dungeon
     end
 
-    db.MDI.enabled = false
+    if db.MDI then db.MDI.enabled = false end
 
     db.nonFullscreenScale = db.nonFullscreenScale or 1
     if not db.maximized then db.scale = db.nonFullscreenScale end
