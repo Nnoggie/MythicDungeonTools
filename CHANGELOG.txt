@@ -1,2 +1,4 @@
+v3.4.6
+- nil fix
 v3.4.5
 - Dungeon Data is included once again
