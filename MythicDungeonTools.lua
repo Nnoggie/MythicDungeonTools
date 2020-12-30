@@ -2634,7 +2634,6 @@ function MDT:HideAllDialogs()
 	MDT.main_frame.DeleteConfirmationFrame:Hide()
     MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
     MDT.main_frame.automaticColorsFrame:Hide()
-    MDT.main_frame.dataImportDialog:Hide()
     if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
 end
 
