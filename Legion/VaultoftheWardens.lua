@@ -5,7 +5,7 @@ MDT.dungeonTotalCount[dungeonIndex] = {normal=210,teeming=252,teemingEnabled=tru
 MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 	[1] = {
 		[1] = {
-            ["name"] = "Tirathon Saltheril",
+            ["name"] = L["Tirathon Saltheril"],
             ["health"] = 93092225,
             ["encounterID"] = 1467,
             ["level"] = 112,
@@ -18,7 +18,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 	},
 	[2] = {
 		[1] = {
-            ["name"] = "Inquisitor Tormentorum",
+            ["name"] = L["Inquisitor Tormentorum"],
             ["health"] = 109796277,
             ["encounterID"] = 1695,
             ["level"] = 112,
@@ -30,7 +30,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 			
         },
 		[2] = {
-            ["name"] = "Glazer",
+            ["name"] = L["Glazer"],
             ["health"] = 93326832,
             ["encounterID"] = 1469,
             ["level"] = 112,
@@ -41,7 +41,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
             ["y"] = -269.54206262591,
         },
 		[3] = {
-            ["name"] = "Ash'Golm",
+            ["name"] = L["Ash'Golm"],
             ["health"] = 109796277,
             ["encounterID"] = 1468,
             ["level"] = 112,
@@ -54,7 +54,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 	},
 	[3] = {
 		[1] = {
-            ["name"] = "Cordana Felsong",
+            ["name"] = L["Cordana Felsong"],
             ["health"] = 114188132,
             ["encounterID"] = 1470,
             ["level"] = 112,
@@ -68,7 +68,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 }
 MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {
-        ["name"] = "Shadow Hunter",
+        ["name"] = L["Shadow Hunter"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -93,7 +93,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[2] = {
-        ["name"] = "Felsworn Infester",
+        ["name"] = L["Felsworn Infester"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -117,7 +117,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[3] = {
-        ["name"] = "Immoliant Fury",
+        ["name"] = L["Immoliant Fury"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -140,7 +140,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[4] = {
-        ["name"] = "Glayvianna Soulrender",
+        ["name"] = L["Glayvianna Soulrender"],
         ["health"] = 35049510,
         ["level"] = 112,
         ["creatureType"] = "Humanoid",
@@ -154,7 +154,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[5] = {
-        ["name"] = "Viletongue Belcher",
+        ["name"] = L["Viletongue Belcher"],
         ["health"] = 2279892,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -207,7 +207,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[6] = {
-        ["name"] = "Felsworn Myrmidon",
+        ["name"] = L["Felsworn Myrmidon"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -224,7 +224,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[7] = {
-        ["name"] = "Fel-Infused Fury",
+        ["name"] = L["Fel-Infused Fury"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -240,7 +240,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[8] = {
-        ["name"] = "Blazing Imp",
+        ["name"] = L["Blazing Imp"],
         ["health"] = 2222895,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -316,7 +316,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },		
     },
 	[9] = {
-        ["name"] = "Foul Mother",
+        ["name"] = L["Foul Mother"],
         ["health"] = 31718924,
         ["level"] = 112,
         ["creatureType"] = "Demon",
@@ -330,7 +330,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[10] = {
-        ["name"] = "Dreadlord Mendacius",
+        ["name"] = L["Dreadlord Mendacius"],
         ["health"] = 41234602,
         ["level"] = 112,
         ["creatureType"] = "Demon",
@@ -344,7 +344,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[11] = {
-        ["name"] = "Blade Dancer Illianna",
+        ["name"] = L["Blade Dancer Illianna"],
         ["health"] = 39859513,
         ["level"] = 111,
         ["creatureType"] = "Demon",
@@ -358,7 +358,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[12] = {
-        ["name"] = "Malignant Defiler",
+        ["name"] = L["Malignant Defiler"],
         ["health"] = 11855438,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -379,7 +379,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[13] = {
-        ["name"] = "Fel Scorcher",
+        ["name"] = L["Fel Scorcher"],
         ["health"] = 9119568,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -400,7 +400,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[14] = {
-        ["name"] = "Grimhorn the Enslaver",
+        ["name"] = L["Grimhorn the Enslaver"],
         ["health"] = 41234602,
         ["level"] = 112,
         ["creatureType"] = "Demon",
@@ -414,7 +414,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[15] = {
-        ["name"] = "Spirit of Vengeance",
+        ["name"] = L["Spirit of Vengeance"],
         ["health"] = 15330582,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -433,7 +433,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[16] = {
-        ["name"] = "Barbed Spiderling",
+        ["name"] = L["Barbed Spiderling"],
         ["health"] = 8891579,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -479,7 +479,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[17] = {
-        ["name"] = "Aranasi Broodmother",
+        ["name"] = L["Aranasi Broodmother"],
         ["health"] = 24528930,
         ["level"] = 111,
         ["creatureType"] = "Demon",

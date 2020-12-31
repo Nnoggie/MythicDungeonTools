@@ -5,7 +5,7 @@ local pi = math.pi
 MDT.dungeonBosses[dungeonIndex] = {--Seat of the Triumvirate
 	[1] = {	
 		[1] = {
-            ["name"] = "Zuraal the Ascended",
+            ["name"] = L["Zuraal the Ascended"],
             ["health"] = 180178506,
             ["encounterID"] = 1979,
             ["level"] = 112,
@@ -16,7 +16,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Seat of the Triumvirate
             ["y"] = -411.36358405116,
         },
 		[2] = {
-            ["name"] = "Saprish",
+            ["name"] = L["Saprish"],
             ["health"] = 180178506, --3x 180m shared 
             ["encounterID"] = 1980,
             ["level"] = 112,
@@ -27,7 +27,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Seat of the Triumvirate
             ["y"] = -203.53924539414,
         },
 		[3] = {
-            ["name"] = "Viceroy Nezhar",
+            ["name"] = L["Viceroy Nezhar"],
             ["health"] = 117679089,
             ["encounterID"] = 1981,
             ["level"] = 112,
@@ -38,7 +38,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Seat of the Triumvirate
             ["y"] = -97.04480566055,
         },
 		[4] = {
-            ["name"] = "L'ura",
+            ["name"] = L["L'ura"],
             ["health"] = 183515145,
             ["encounterID"] = 1982,
             ["level"] = 112,
@@ -52,7 +52,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Seat of the Triumvirate
 }
 MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {
-        ["name"] = "Void Discharge",
+        ["name"] = L["Void Discharge"],
         ["health"] = 7015052*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Aberration",
@@ -142,7 +142,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[2] = {
-        ["name"] = "Shadowguard Subjugator",
+        ["name"] = L["Shadowguard Subjugator"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -239,7 +239,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[3] = {
-        ["name"] = "Famished Broken",
+        ["name"] = L["Famished Broken"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -315,7 +315,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[4] = {
-        ["name"] = "Sapped Voidlord",
+        ["name"] = L["Sapped Voidlord"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -336,7 +336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[5] = {
-        ["name"] = "Shadow Stalker",
+        ["name"] = L["Shadow Stalker"],
         ["health"] = 14205481*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -353,7 +353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
 	
 	[6] = {
-        ["name"] = "Shadowguard Riftstalker",
+        ["name"] = L["Shadowguard Riftstalker"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -409,7 +409,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[7] = {
-        ["name"] = "Shadow Stalker",
+        ["name"] = L["Shadow Stalker"],
         ["health"] = 14205481*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -436,7 +436,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[8] = {
-        ["name"] = "Warp Stalker",
+        ["name"] = L["Warp Stalker"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Aberration",
@@ -454,7 +454,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[9] = {
-        ["name"] = "Umbral War-Adept",
+        ["name"] = L["Umbral War-Adept"],
         ["health"] = 23585511*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -488,7 +488,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[10] = {
-        ["name"] = "Rift Warden",
+        ["name"] = L["Rift Warden"],
         ["health"] = 29028321*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Aberration",
@@ -504,7 +504,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[11] = {
-        ["name"] = "Shadowguard Champion",
+        ["name"] = L["Shadowguard Champion"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -542,7 +542,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[12] = {
-        ["name"] = "Shadowguard Conjurer",
+        ["name"] = L["Shadowguard Conjurer"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -562,7 +562,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[13] = {
-        ["name"] = "Shadowguard Voidbender",
+        ["name"] = L["Shadowguard Voidbender"],
         ["health"] = 14205483*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -613,7 +613,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[14] = {
-        ["name"] = "Bound Voidlord",
+        ["name"] = L["Bound Voidlord"],
         ["health"] = 18239135*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -627,7 +627,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[15] = {
-        ["name"] = "Void Flayer",
+        ["name"] = L["Void Flayer"],
         ["health"] = 4851610*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Aberration",
@@ -647,7 +647,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[16] = {
-        ["name"] = "Grand Shadow-Weaver",
+        ["name"] = L["Grand Shadow-Weaver"],
         ["health"] = 25944063*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -668,7 +668,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[17] = {
-        ["name"] = "Shadowguard Trickster",
+        ["name"] = L["Shadowguard Trickster"],
         ["health"] = 15626032*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -812,7 +812,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 		},
     },
 	[18] = {
-        ["name"] = "Lashing Voidling",
+        ["name"] = L["Lashing Voidling"],
         ["health"] = 4559784*nerfMultiplier,
         ["level"] = 110,
         ["creatureType"] = "Aberration",
@@ -831,7 +831,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[19] = {
-        ["name"] = "Rift Warden",
+        ["name"] = L["Rift Warden"],
         ["health"] = 29028321*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Aberration",

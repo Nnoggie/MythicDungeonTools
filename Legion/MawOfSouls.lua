@@ -5,7 +5,7 @@ MDT.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180,teemingEnabled=tru
 MDT.dungeonBosses[dungeonIndex] = {--Maw of Souls
 	[1] = {
 		[1] = {
-			["name"] = "Ymiron, the Fallen King",				
+			["name"] = L["Ymiron, the Fallen King"],				
 			["encounterID"] = 1502,
 			["health"] = 90276936,
 			["id"] = 96756,
@@ -16,7 +16,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Maw of Souls
 	},
 	[3] = {
 		[1] = {
-			["name"] = "Harbaron",				
+			["name"] = L["Harbaron"],				
 			["encounterID"] = 1512,
 			["health"] = 88812990,
 			["id"] = 96754,
@@ -25,7 +25,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Maw of Souls
 			["y"] = -313.99865085632,
 		},
 		[2] = {
-			["name"] = "Helya",				
+			["name"] = L["Helya"],				
 			["encounterID"] = 1663,
 			["health"] = 789801975,
 			["id"] = 96759,
@@ -37,7 +37,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Maw of Souls
 }
 MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 	[1] = {
-		["name"] = "Enslaved Shieldmaiden",
+		["name"] = L["Enslaved Shieldmaiden"],
 		["health"] = 14819297,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -52,7 +52,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[2] = {
-		["name"] = "Seacursed Slaver",
+		["name"] = L["Seacursed Slaver"],
 		["health"] = 15263877,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -71,7 +71,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[3] = {
-		["name"] = "Cursed Falke",
+		["name"] = L["Cursed Falke"],
 		["health"] = 2279892,
 		["level"] = 110,
 		["creatureType"] = "Beast",
@@ -93,7 +93,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[4] = {
-		["name"] = "Seacursed Soulkeeper",
+		["name"] = L["Seacursed Soulkeeper"],
 		["health"] = 19929757,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -118,7 +118,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[5] = {
-		["name"] = "Runecarver Slave",
+		["name"] = L["Runecarver Slave"],
 		["health"] = 9484355,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -134,7 +134,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[6] = {
-		["name"] = "Runecarver Slave",
+		["name"] = L["Runecarver Slave"],
 		["health"] = 9484355,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -155,7 +155,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[7] = {
-		["name"] = "Waterlogged Soul Guard",
+		["name"] = L["Waterlogged Soul Guard"],
 		["health"] = 16097111,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -174,7 +174,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[8] = {
-		["name"] = "Seacursed Mistmender",
+		["name"] = L["Seacursed Mistmender"],
 		["health"] = 11262700,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -194,7 +194,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[9] = {
-		["name"] = "Seacursed Swiftblade",
+		["name"] = L["Seacursed Swiftblade"],
 		["health"] = 12596403,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -220,7 +220,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[10] = {
-		["name"] = "Shroud Hound",
+		["name"] = L["Shroud Hound"],
 		["health"] = 4445789,
 		["level"] = 110,
 		["creatureType"] = "Undead",
@@ -255,7 +255,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[11] = {
-		["name"] = "Night Watch Mariner",
+		["name"] = L["Night Watch Mariner"],
 		["health"] = 22995873,
 		["level"] = 111,
 		["creatureType"] = "Undead",
@@ -293,7 +293,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[12] = {
-		["name"] = "The Grimewalker",
+		["name"] = L["The Grimewalker"],
 		["health"] = 45991747,
 		["level"] = 111,
 		["creatureType"] = "Giant",
@@ -307,7 +307,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[13] = {
-		["name"] = "Skeletal Warrior",
+		["name"] = L["Skeletal Warrior"],
 		["health"] = 3419838,
 		["level"] = 110,
 		["creatureType"] = "Undead",
@@ -322,7 +322,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[14] = {
-		["name"] = "Helarjar Champion",
+		["name"] = L["Helarjar Champion"],
 		["health"] = 19929757,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -341,7 +341,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[15] = {
-		["name"] = "Helarjar Mistcaller",
+		["name"] = L["Helarjar Mistcaller"],
 		["health"] = 16863640,
 		["level"] = 111,
 		["creatureType"] = "Humanoid",
@@ -358,7 +358,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Maw of Souls
 		},
 	},
 	[16] = {
-		["name"] = "Skjal",
+		["name"] = L["Skjal"],
 		["health"] = 44812472,
 		["level"] = 111,
 		["creatureType"] = "Undead",

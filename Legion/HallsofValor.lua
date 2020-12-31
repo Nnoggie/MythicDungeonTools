@@ -5,7 +5,7 @@ MDT.dungeonTotalCount[dungeonIndex] = {normal=126,teeming=151,teemingEnabled=tru
 MDT.dungeonBosses[dungeonIndex] = {
 	[1] = {
 		[1] = {
-            ["name"] = "Hymdall",
+            ["name"] = L["Hymdall"],
             ["health"] = 108107100,
             ["encounterID"] = 1485,
             ["level"] = 112,
@@ -16,7 +16,7 @@ MDT.dungeonBosses[dungeonIndex] = {
             ["y"] = -221.96453590722,
         },
 		[2] = {
-            ["name"] = "Hyrja",
+            ["name"] = L["Hyrja"],
             ["health"] = 111016239,
             ["encounterID"] = 1486,
             ["level"] = 112,
@@ -30,7 +30,7 @@ MDT.dungeonBosses[dungeonIndex] = {
 	},
 	[2] = {
 		[1] = {
-            ["name"] = "Fenryr", --starts at 60%
+            ["name"] = L["Fenryr"], --starts at 60%
             ["health"] = 121117494,
             ["encounterID"] = 1487,
             ["level"] = 112,
@@ -43,7 +43,7 @@ MDT.dungeonBosses[dungeonIndex] = {
 	},
 	[3] = {
 		[1] = {
-            ["name"] = "God-King Skovald",
+            ["name"] = L["God-King Skovald"],
             ["health"] = 105404422,
             ["encounterID"] = 1488,
             ["level"] = 112,
@@ -54,7 +54,7 @@ MDT.dungeonBosses[dungeonIndex] = {
             ["y"] = -463.32639132102,
         },		
 		[2] = {
-            ["name"] = "Odyn", --dies at 80%
+            ["name"] = L["Odyn"], --dies at 80%
             ["health"] = 555081179,
             ["encounterID"] = 1489,
             ["level"] = -1,
@@ -68,7 +68,7 @@ MDT.dungeonBosses[dungeonIndex] = {
 }
 MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {
-		["name"] = "Valarjar Champion",
+		["name"] = L["Valarjar Champion"],
 		["health"] = 10373509,
 		["level"] = 110,
 		["creatureType"] = "Humanoid",
@@ -108,7 +108,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 		},
 	},
 	[2] = {
-        ["name"] = "Valarjar Thundercaller",
+        ["name"] = L["Valarjar Thundercaller"],
         ["health"] = 15503265,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -138,7 +138,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[3] = {
-        ["name"] = "Storm Drake",
+        ["name"] = L["Storm Drake"],
         ["health"] = 26061988,
         ["level"] = 111,
         ["creatureType"] = "Beast",
@@ -153,7 +153,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[4] = {
-        ["name"] = "Valarjar Mystic",
+        ["name"] = L["Valarjar Mystic"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -174,7 +174,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[5] = {
-        ["name"] = "Stormforged Sentinel",
+        ["name"] = L["Stormforged Sentinel"],
         ["health"] = 24528930,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -214,7 +214,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[6] = {
-        ["name"] = "Valarjar Runecarver",
+        ["name"] = L["Valarjar Runecarver"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -232,7 +232,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[7] = {
-        ["name"] = "Valarjar Marksman",
+        ["name"] = L["Valarjar Marksman"],
         ["health"] = 14522911,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -251,7 +251,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[8] = {
-        ["name"] = "Valarjar Shieldmaiden",
+        ["name"] = L["Valarjar Shieldmaiden"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -269,7 +269,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[9] = {
-        ["name"] = "Valarjar Purifier",
+        ["name"] = L["Valarjar Purifier"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -283,7 +283,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[10] = {
-        ["name"] = "Valarjar Shieldmaiden (No Count)",
+        ["name"] = L["Valarjar Shieldmaiden (No Count)"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -298,7 +298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[11] = {
-        ["name"] = "Valarjar Aspirant",
+        ["name"] = L["Valarjar Aspirant"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -312,7 +312,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[12] = {
-        ["name"] = "Solsten",
+        ["name"] = L["Solsten"],
         ["health"] = 49057860,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -326,7 +326,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[13] = {
-        ["name"] = "Olmyr the Enlightened",
+        ["name"] = L["Olmyr the Enlightened"],
         ["health"] = 49057860,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -340,7 +340,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[14] = {
-        ["name"] = "Gildedfur Stag",
+        ["name"] = L["Gildedfur Stag"],
         ["health"] = 4445789,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -363,7 +363,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[15] = {
-        ["name"] = "Angerhoof Bull",
+        ["name"] = L["Angerhoof Bull"],
         ["health"] = 16301227,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -381,7 +381,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[16] = {
-        ["name"] = "Steeljaw Grizzly",
+        ["name"] = L["Steeljaw Grizzly"],
         ["health"] = 17783157,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -402,7 +402,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[17] = {
-        ["name"] = "Valarjar Trapper",
+        ["name"] = L["Valarjar Trapper"],
         ["health"] = 15263877,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -417,7 +417,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[18] = {
-        ["name"] = "Valarjar Falconer",
+        ["name"] = L["Valarjar Falconer"],
         ["health"] = 13337369,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -432,7 +432,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[19] = {
-        ["name"] = "Fenryr",
+        ["name"] = L["Fenryr"],
         ["health"] = 121117494,
         ["level"] = 112,
         ["creatureType"] = "Beast",
@@ -446,7 +446,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[20] = {
-        ["name"] = "Ebonclaw Worg",
+        ["name"] = L["Ebonclaw Worg"],
         ["health"] = 13337369,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -472,7 +472,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[21] = {
-        ["name"] = "King Ranulf",
+        ["name"] = L["King Ranulf"],
         ["health"] = 35378266,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -486,7 +486,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[22] = {
-        ["name"] = "King Haldor",
+        ["name"] = L["King Haldor"],
         ["health"] = 35378266,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -500,7 +500,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[23] = {
-        ["name"] = "King Bjorn",
+        ["name"] = L["King Bjorn"],
         ["health"] = 35378266,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",
@@ -514,7 +514,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[24] = {
-        ["name"] = "King Tor",
+        ["name"] = L["King Tor"],
         ["health"] = 35378266,
         ["level"] = 111,
         ["creatureType"] = "Humanoid",

@@ -5,7 +5,7 @@ MDT.dungeonTotalCount[dungeonIndex] = {normal=420,teeming=504,teemingEnabled=tru
 MDT.dungeonBosses[dungeonIndex] = {--Lower Karazhan
 	[3] = {
 		[1] = {
-            ["name"] = "Opera Hall: Wikket",
+            ["name"] = L["Opera Hall: Wikket"],
             ["health"] = 132731495, --but there is 2 of them :thinking:
             ["encounterID"] = 1820,
             ["level"] = 112,
@@ -16,7 +16,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Lower Karazhan
             ["y"] = -167.49961474724,
         },		
 		[2] = {
-            ["name"] = "Maiden of Virtue",
+            ["name"] = L["Maiden of Virtue"],
             ["health"] = 93092225,
             ["encounterID"] = 1555,
             ["level"] = 112,
@@ -29,7 +29,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Lower Karazhan
 	},
 	[4] = {
 		[1] = {
-            ["name"] = "Moroes",
+            ["name"] = L["Moroes"],
             ["health"] = 75937736,
             ["encounterID"] = 1837,
             ["level"] = 112,
@@ -42,7 +42,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Lower Karazhan
 	},
 	[6] = {
 		[1] = {
-            ["name"] = "Attumen the Huntsman", --health of horse right now  
+            ["name"] = L["Attumen the Huntsman"], --health of horse right now  
             ["health"] = 36786446,
             ["encounterID"] = 1835,
             ["level"] = 112,
@@ -57,7 +57,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Lower Karazhan
 }
 MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {
-        ["name"] = "Forlorn Spirit",
+        ["name"] = L["Forlorn Spirit"],
         ["health"] = 21771241*nerfMultiplier,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -72,7 +72,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[2] = {
-        ["name"] = "Spectral Patron",
+        ["name"] = L["Spectral Patron"],
         ["health"] = 8418063,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -163,7 +163,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[3] = {
-        ["name"] = "Ghostly Philanthropist",
+        ["name"] = L["Ghostly Philanthropist"],
         ["health"] = 14514161,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -192,7 +192,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[4] = {
-        ["name"] = "Phantom Crew",
+        ["name"] = L["Phantom Crew"],
         ["health"] = 11224084,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -229,7 +229,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[5] = {
-        ["name"] = "Ghostly Understudy",
+        ["name"] = L["Ghostly Understudy"],
         ["health"] = 11224084,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -260,7 +260,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[6] = {
-        ["name"] = "Backup Singer",
+        ["name"] = L["Backup Singer"],
         ["health"] = 12627094,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -284,7 +284,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[7] = {
-        ["name"] = "Skeletal Usher",
+        ["name"] = L["Skeletal Usher"],
         ["health"] = 11224084,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -337,7 +337,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[8] = {
-        ["name"] = "Spectral Patron",
+        ["name"] = L["Spectral Patron"],
         ["health"] = 11224084,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -358,7 +358,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[9] = {
-        ["name"] = "Undying Servant",
+        ["name"] = L["Undying Servant"],
         ["health"] = 9119568,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -434,7 +434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[10] = {
-        ["name"] = "Spectral Valet",
+        ["name"] = L["Spectral Valet"],
         ["health"] = 18868408,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -450,7 +450,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[11] = {
-        ["name"] = "Phantom Guest",
+        ["name"] = L["Phantom Guest"],
         ["health"] = 2279892,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -555,7 +555,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[12] = {
-        ["name"] = "Spectral Retainer",
+        ["name"] = L["Spectral Retainer"],
         ["health"] = 23585511,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -572,7 +572,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[13] = {
-        ["name"] = "Spectral Attendant",
+        ["name"] = L["Spectral Attendant"],
         ["health"] = 9821073,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -592,7 +592,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[14] = {
-        ["name"] = "Phantom Guardsman",
+        ["name"] = L["Phantom Guardsman"],
         ["health"] = 11399460,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -640,7 +640,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[15] = {
-        ["name"] = "Reformed Maiden",
+        ["name"] = L["Reformed Maiden"],
         ["health"] = 7856858,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -666,7 +666,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[16] = {
-        ["name"] = "Wholesome Hostess",
+        ["name"] = L["Wholesome Hostess"],
         ["health"] = 11224084,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -720,7 +720,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[17] = {
-        ["name"] = "Virtuous Lady",
+        ["name"] = L["Virtuous Lady"],
         ["health"] = 7856858,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -747,7 +747,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[18] = {
-        ["name"] = "Spectral Sentry",
+        ["name"] = L["Spectral Sentry"],
         ["health"] = 11224084,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -799,7 +799,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
 	
 	[19] = {
-        ["name"] = "Arcane Warden",
+        ["name"] = L["Arcane Warden"],
         ["health"] = 23585511,
         ["level"] = 111,
         ["creatureType"] = "Elemental",
@@ -819,7 +819,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[20] = {
-        ["name"] = "Skeletal Waiter",
+        ["name"] = L["Skeletal Waiter"],
         ["health"] = 14695587,
         ["level"] = 111,
         ["creatureType"] = "Undead",
@@ -846,7 +846,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[21] = {
-        ["name"] = "Skeletal Hound",
+        ["name"] = L["Skeletal Hound"],
         ["health"] = 14205481,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -869,7 +869,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[22] = {
-        ["name"] = "Ghostly Baker",
+        ["name"] = L["Ghostly Baker"],
         ["health"] = 6839676,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -885,7 +885,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[23] = {
-        ["name"] = "Ghostly Chef",
+        ["name"] = L["Ghostly Chef"],
         ["health"] = 14205481,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -910,7 +910,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[24] = {
-        ["name"] = "Ghostly Steward",
+        ["name"] = L["Ghostly Steward"],
         ["health"] = 14205481,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -926,7 +926,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[25] = {
-        ["name"] = "Spectral Journeyman",
+        ["name"] = L["Spectral Journeyman"],
         ["health"] = 16158753,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -942,7 +942,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[26] = {
-        ["name"] = "Spectral Apprentice",
+        ["name"] = L["Spectral Apprentice"],
         ["health"] = 16158753,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -966,7 +966,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[27] = {
-        ["name"] = "Spectral Charger",
+        ["name"] = L["Spectral Charger"],
         ["health"] = 14205481,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -994,7 +994,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[28] = {
-        ["name"] = "Spectral Stable Hand",
+        ["name"] = L["Spectral Stable Hand"],
         ["health"] = 14205481,
         ["level"] = 110,
         ["creatureType"] = "Undead",
@@ -1016,7 +1016,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[29] = {
-        ["name"] = "Coldmist Widow",
+        ["name"] = L["Coldmist Widow"],
         ["health"] = 11364385,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -1050,7 +1050,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[30] = {
-        ["name"] = "Coldmist Stalker",
+        ["name"] = L["Coldmist Stalker"],
         ["health"] = 11364385,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -1091,7 +1091,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[31] = {
-        ["name"] = "Arcanid",
+        ["name"] = L["Arcanid"],
         ["health"] = 14030105,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -1128,7 +1128,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
     },
 	[32] = {
-		["name"] = "Shrieking Terror",
+		["name"] = L["Shrieking Terror"],
 		["health"] = 21045157*nerfMultiplier,
 		["level"] = 110,
 		["creatureType"] = "Undead",

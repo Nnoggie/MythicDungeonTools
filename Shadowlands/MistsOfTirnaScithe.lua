@@ -206,7 +206,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [288865] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Drust Spiteclaw";
+        ["name"] = L["Drust Spiteclaw"];
         ["count"] = 2;
         ["displayId"] = 86207;
         ["creatureType"] = "Aberration";
@@ -266,7 +266,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         };
         ["stealthDetect"] = true;
         ["scale"] = 1;
-        ["name"] = "Tirnenn Villager";
+        ["name"] = L["Tirnenn Villager"];
         ["count"] = 7;
         ["displayId"] = 95618;
         ["creatureType"] = "Elemental";
@@ -355,7 +355,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [324859] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Drust Soulcleaver";
+        ["name"] = L["Drust Soulcleaver"];
         ["count"] = 4;
         ["displayId"] = 95612;
         ["creatureType"] = "Humanoid";
@@ -447,7 +447,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [322939] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Drust Harvester";
+        ["name"] = L["Drust Harvester"];
         ["count"] = 4;
         ["displayId"] = 95613;
         ["creatureType"] = "Humanoid";
@@ -508,7 +508,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [324859] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Drust Boughbreaker";
+        ["name"] = L["Drust Boughbreaker"];
         ["count"] = 6;
         ["displayId"] = 95615;
         ["creatureType"] = "Aberration";
@@ -546,7 +546,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2400;
         ["instanceID"] = 1184;
-        ["name"] = "Ingra Maloch";
+        ["name"] = L["Ingra Maloch"];
         ["count"] = 0;
         ["displayId"] = 95497;
         ["creatureType"] = "Humanoid";
@@ -576,7 +576,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [326868] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Droman Oulfarran";
+        ["name"] = L["Droman Oulfarran"];
         ["count"] = 0;
         ["displayId"] = 95564;
         ["creatureType"] = "Elemental";
@@ -715,7 +715,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [324737] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Defender";
+        ["name"] = L["Mistveil Defender"];
         ["count"] = 4;
         ["displayId"] = 95256;
         ["creatureType"] = "Humanoid";
@@ -814,7 +814,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [326868] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Stalker";
+        ["name"] = L["Mistveil Stalker"];
         ["count"] = 4;
         ["displayId"] = 93762;
         ["creatureType"] = "Beast";
@@ -882,7 +882,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [325223] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Stinger";
+        ["name"] = L["Mistveil Stinger"];
         ["count"] = 4;
         ["displayId"] = 95198;
         ["creatureType"] = "Beast";
@@ -1000,7 +1000,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [324742] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Guardian";
+        ["name"] = L["Mistveil Guardian"];
         ["count"] = 4;
         ["displayId"] = 95261;
         ["creatureType"] = "Humanoid";
@@ -1103,7 +1103,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [288865] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Tender";
+        ["name"] = L["Mistveil Tender"];
         ["count"] = 4;
         ["displayId"] = 95908;
         ["creatureType"] = "Humanoid";
@@ -1192,7 +1192,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [288865] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Shaper";
+        ["name"] = L["Mistveil Shaper"];
         ["count"] = 4;
         ["displayId"] = 95051;
         ["creatureType"] = "Humanoid";
@@ -1231,7 +1231,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [132951] = {};
         };
         ["scale"] = 1.4;
-        ["name"] = "Mistveil Nightblossom";
+        ["name"] = L["Mistveil Nightblossom"];
         ["count"] = 16;
         ["displayId"] = 55772;
         ["creatureType"] = "Elemental";
@@ -1268,7 +1268,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2402;
         ["instanceID"] = 1184;
-        ["name"] = "Mistcaller";
+        ["name"] = L["Mistcaller"];
         ["count"] = 0;
         ["displayId"] = 96451;
         ["creatureType"] = "Humanoid";
@@ -1332,7 +1332,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [340544] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Spinemaw Staghorn";
+        ["name"] = L["Spinemaw Staghorn"];
         ["count"] = 5;
         ["displayId"] = 94190;
         ["creatureType"] = "Beast";
@@ -1435,7 +1435,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [201657] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Spinemaw Acidgullet";
+        ["name"] = L["Spinemaw Acidgullet"];
         ["count"] = 4;
         ["displayId"] = 94205;
         ["creatureType"] = "Beast";
@@ -1539,7 +1539,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [320297] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Spinemaw Gorger";
+        ["name"] = L["Spinemaw Gorger"];
         ["count"] = 4;
         ["displayId"] = 94197;
         ["creatureType"] = "Beast";
@@ -1719,7 +1719,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [326018] = {};
         };
         ["scale"] = 0.6;
-        ["name"] = "Spinemaw Larva";
+        ["name"] = L["Spinemaw Larva"];
         ["count"] = 1;
         ["displayId"] = 94208;
         ["creatureType"] = "Beast";
@@ -1837,7 +1837,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [288865] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Spinemaw Reaver";
+        ["name"] = L["Spinemaw Reaver"];
         ["count"] = 4;
         ["displayId"] = 95692;
         ["creatureType"] = "Beast";
@@ -2052,7 +2052,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2405;
         ["instanceID"] = 1184;
-        ["name"] = "Tred'ova";
+        ["name"] = L["Tred'ova"];
         ["count"] = 0;
         ["displayId"] = 95809;
         ["creatureType"] = "Beast";
@@ -2081,7 +2081,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [326868] = {};
         };
         ["scale"] = 1.4;
-        ["name"] = "Mistveil Gorgegullet";
+        ["name"] = L["Mistveil Gorgegullet"];
         ["count"] = 16;
         ["displayId"] = 98502;
         ["creatureType"] = "Beast";
@@ -2126,7 +2126,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [325223] = {};
         };
         ["scale"] = 1;
-        ["name"] = "Mistveil Stinger";
+        ["name"] = L["Mistveil Stinger"];
         ["count"] = 4;
         ["displayId"] = 95198;
         ["creatureType"] = "Beast";
@@ -2163,7 +2163,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [288865] = {};
         };
         ["scale"] = 1.4;
-        ["name"] = "Mistveil Matriarch";
+        ["name"] = L["Mistveil Matriarch"];
         ["count"] = 16;
         ["displayId"] = 98569;
         ["creatureType"] = "Dragonkin";

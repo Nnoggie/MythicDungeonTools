@@ -308,7 +308,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Patchwerk Soldier";
+        ["name"] = L["Patchwerk Soldier"];
         ["health"] = 80100;
         ["displayId"] = 95222;
         ["creatureType"] = "Undead";
@@ -501,7 +501,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Blight Bag";
+        ["name"] = L["Blight Bag"];
         ["health"] = 32040;
         ["displayId"] = 94761;
         ["creatureType"] = "Undead";
@@ -589,7 +589,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Corpse Harvester";
+        ["name"] = L["Corpse Harvester"];
         ["health"] = 112140;
         ["displayId"] = 98170;
         ["creatureType"] = "Humanoid";
@@ -656,7 +656,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Stitched Vanguard";
+        ["name"] = L["Stitched Vanguard"];
         ["health"] = 112140;
         ["displayId"] = 95227;
         ["creatureType"] = "Undead";
@@ -695,7 +695,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Zolramus Gatekeeper";
+        ["name"] = L["Zolramus Gatekeeper"];
         ["health"] = 144180;
         ["displayId"] = 95231;
         ["creatureType"] = "Humanoid";
@@ -754,7 +754,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Imprison"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Flesh Crafter";
+        ["name"] = L["Flesh Crafter"];
         ["health"] = 112140;
         ["displayId"] = 96480;
         ["creatureType"] = "Humanoid";
@@ -785,7 +785,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2395;
         ["instanceID"] = 1182;
-        ["name"] = "Blightbone";
+        ["name"] = L["Blightbone"];
         ["health"] = 560700;
         ["displayId"] = 95467;
         ["creatureType"] = "Undead";
@@ -905,7 +905,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Fear"] = true;
             ["Imprison"] = true;
         };
-        ["name"] = "Zolramus Sorcerer";
+        ["name"] = L["Zolramus Sorcerer"];
         ["health"] = 72090;
         ["displayId"] = 94992;
         ["creatureType"] = "Humanoid";
@@ -985,7 +985,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Zolramus Bonecarver";
+        ["name"] = L["Zolramus Bonecarver"];
         ["health"] = 80100;
         ["displayId"] = 93933;
         ["creatureType"] = "Humanoid";
@@ -1051,7 +1051,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Imprison"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Zolramus Necromancer";
+        ["name"] = L["Zolramus Necromancer"];
         ["health"] = 112140;
         ["displayId"] = 95233;
         ["creatureType"] = "Humanoid";
@@ -1117,7 +1117,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Brittlebone Mage";
+        ["name"] = L["Brittlebone Mage"];
         ["health"] = 36045;
         ["displayId"] = 96112;
         ["creatureType"] = "Undead";
@@ -1193,7 +1193,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Brittlebone Warrior";
+        ["name"] = L["Brittlebone Warrior"];
         ["health"] = 80100;
         ["displayId"] = 96107;
         ["creatureType"] = "Undead";
@@ -1261,7 +1261,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Skeletal Marauder";
+        ["name"] = L["Skeletal Marauder"];
         ["health"] = 160200;
         ["displayId"] = 96115;
         ["creatureType"] = "Undead";
@@ -1311,7 +1311,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Imprison"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Zolramus Bonemender";
+        ["name"] = L["Zolramus Bonemender"];
         ["health"] = 80100;
         ["displayId"] = 97668;
         ["creatureType"] = "Humanoid";
@@ -1344,7 +1344,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Nar'zudah";
+        ["name"] = L["Nar'zudah"];
         ["health"] = 240300;
         ["displayId"] = 94780;
         ["creatureType"] = "Humanoid";
@@ -1455,7 +1455,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Skeletal Monstrosity";
+        ["name"] = L["Skeletal Monstrosity"];
         ["health"] = 240300;
         ["displayId"] = 94814;
         ["creatureType"] = "Undead";
@@ -1501,7 +1501,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Brittlebone Crossbowman";
+        ["name"] = L["Brittlebone Crossbowman"];
         ["health"] = 40050;
         ["displayId"] = 96114;
         ["creatureType"] = "Undead";
@@ -1579,7 +1579,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Slow"] = true;
             ["Silence"] = true;
         };
-        ["name"] = "Shuffling Corpse";
+        ["name"] = L["Shuffling Corpse"];
         ["health"] = 28836;
         ["displayId"] = 96132;
         ["creatureType"] = "Undead";
@@ -1620,7 +1620,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2391;
         ["instanceID"] = 1182;
-        ["name"] = "Amarth";
+        ["name"] = L["Amarth"];
         ["health"] = 576720;
         ["displayId"] = 94926;
         ["creatureType"] = "Beast";
@@ -1760,7 +1760,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Disorient"] = true;
             ["Fear"] = true;
         };
-        ["name"] = "Corpse Collector";
+        ["name"] = L["Corpse Collector"];
         ["health"] = 112140;
         ["displayId"] = 98170;
         ["creatureType"] = "Humanoid";
@@ -1795,7 +1795,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Kyrian Stitchwerk";
+        ["name"] = L["Kyrian Stitchwerk"];
         ["health"] = 192240;
         ["displayId"] = 98190;
         ["creatureType"] = "Undead";
@@ -1970,7 +1970,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Slow"] = true;
             ["Stun"] = true;
         };
-        ["name"] = "Spare Parts";
+        ["name"] = L["Spare Parts"];
         ["health"] = 8010;
         ["displayId"] = 95577;
         ["creatureType"] = "Undead";
@@ -2022,7 +2022,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Loyal Creation";
+        ["name"] = L["Loyal Creation"];
         ["health"] = 136170;
         ["displayId"] = 95226;
         ["creatureType"] = "Undead";
@@ -2054,7 +2054,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Separation Assistant";
+        ["name"] = L["Separation Assistant"];
         ["health"] = 160200;
         ["displayId"] = 98227;
         ["creatureType"] = "Humanoid";
@@ -2087,7 +2087,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Stitching Assistant";
+        ["name"] = L["Stitching Assistant"];
         ["health"] = 160200;
         ["displayId"] = 98226;
         ["creatureType"] = "Humanoid";
@@ -2117,7 +2117,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Goregrind";
+        ["name"] = L["Goregrind"];
         ["health"] = 224280;
         ["displayId"] = 99122;
         ["creatureType"] = "Undead";
@@ -2170,7 +2170,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Silence"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Goregrind Bits";
+        ["name"] = L["Goregrind Bits"];
         ["health"] = 80100;
         ["displayId"] = 97800;
         ["creatureType"] = "Undead";
@@ -2222,7 +2222,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Stun"] = true;
             ["Repentance"] = true;
         };
-        ["name"] = "Rotspew Leftovers";
+        ["name"] = L["Rotspew Leftovers"];
         ["health"] = 64080;
         ["displayId"] = 97801;
         ["creatureType"] = "Undead";
@@ -2253,7 +2253,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Rotspew";
+        ["name"] = L["Rotspew"];
         ["health"] = 192240;
         ["displayId"] = 99121;
         ["creatureType"] = "Undead";
@@ -2288,7 +2288,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["characteristics"] = {
             ["Taunt"] = true;
         };
-        ["name"] = "Stitchflesh's Creation";
+        ["name"] = L["Stitchflesh's Creation"];
         ["health"] = 192240;
         ["displayId"] = 96218;
         ["creatureType"] = "Undead";
@@ -2330,7 +2330,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2392;
         ["instanceID"] = 1182;
-        ["name"] = "Surgeon Stitchflesh";
+        ["name"] = L["Surgeon Stitchflesh"];
         ["health"] = 384480;
         ["displayId"] = 96477;
         ["creatureType"] = "Humanoid";
@@ -2370,7 +2370,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["isBoss"] = true;
         ["encounterID"] = 2396;
         ["instanceID"] = 1182;
-        ["name"] = "Nalthor the Rimebinder";
+        ["name"] = L["Nalthor the Rimebinder"];
         ["health"] = 512640;
         ["displayId"] = 96085;
         ["creatureType"] = "Undead";

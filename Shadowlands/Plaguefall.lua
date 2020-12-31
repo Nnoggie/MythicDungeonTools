@@ -113,7 +113,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96986;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Plaguebound Fallen";
+        ["name"] = L["Plaguebound Fallen"];
         ["scale"] = 0.6;
     };
     [2] = {
@@ -164,7 +164,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83592;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Fungret Shroomtender";
+        ["name"] = L["Fungret Shroomtender"];
         ["scale"] = 0.6;
     };
     [3] = {
@@ -242,7 +242,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83596;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Mire Soldier";
+        ["name"] = L["Mire Soldier"];
         ["scale"] = 1;
     };
     [4] = {
@@ -450,7 +450,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95785;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Gushing Slime";
+        ["name"] = L["Gushing Slime"];
         ["scale"] = 0.7;
     };
     [5] = {
@@ -477,7 +477,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96251;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Plaguebound";
+        ["name"] = L["Plaguebound"];
         ["scale"] = 0.5;
     };
     [6] = {
@@ -539,7 +539,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96752;
         ["creatureType"] = "Beast";
         ["level"] = 60;
-        ["name"] = "Plagueroc";
+        ["name"] = L["Plagueroc"];
         ["scale"] = 1;
     };
     [7] = {
@@ -634,7 +634,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 99191;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Decaying Flesh Giant";
+        ["name"] = L["Decaying Flesh Giant"];
         ["scale"] = 1.5;
     };
     [8] = {
@@ -703,7 +703,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83621;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Fungi Stormer";
+        ["name"] = L["Fungi Stormer"];
         ["scale"] = 1;
     };
     [9] = {
@@ -766,7 +766,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 83616;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Fungalmancer";
+        ["name"] = L["Fungalmancer"];
         ["scale"] = 1.3;
     };
     [10] = {
@@ -841,7 +841,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 97079;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Plagueborer";
+        ["name"] = L["Plagueborer"];
         ["scale"] = 1;
     };
     [11] = {
@@ -938,7 +938,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 63503;
         ["creatureType"] = "Beast";
         ["level"] = 60;
-        ["name"] = "Fen Hornet";
+        ["name"] = L["Fen Hornet"];
         ["scale"] = 1;
     };
     [12] = {
@@ -1023,7 +1023,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 99163;
         ["creatureType"] = "Not specified";
         ["level"] = 60;
-        ["name"] = "Hatchling Nest";
+        ["name"] = L["Hatchling Nest"];
         ["scale"] = 1;
     };
     [13] = {
@@ -1076,7 +1076,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96887;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Pestilent Harvester";
+        ["name"] = L["Pestilent Harvester"];
         ["scale"] = 1.3;
     };
     [14] = {
@@ -1105,7 +1105,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95789;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Finger Food";
+        ["name"] = L["Finger Food"];
         ["scale"] = 1;
     };
     [15] = {
@@ -1266,7 +1266,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96244;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Plaguebelcher";
+        ["name"] = L["Plaguebelcher"];
         ["scale"] = 1.5;
     };
     [16] = {
@@ -1303,7 +1303,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95844;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Globgrog";
+        ["name"] = L["Globgrog"];
         ["id"] = 164255;
     };
     [17] = {
@@ -1358,7 +1358,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 99464;
         ["creatureType"] = "Not specified";
         ["level"] = 60;
-        ["name"] = "Unstable Canister";
+        ["name"] = L["Unstable Canister"];
         ["scale"] = 0.6;
     };
     [18] = {
@@ -1473,7 +1473,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 97796;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Rotting Slimeclaw";
+        ["name"] = L["Rotting Slimeclaw"];
         ["scale"] = 1;
     };
     [19] = {
@@ -1536,7 +1536,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 97079;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Rigged Plagueborer";
+        ["name"] = L["Rigged Plagueborer"];
         ["scale"] = 1;
     };
     [20] = {
@@ -1654,7 +1654,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95475;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Blighted Spinebreaker";
+        ["name"] = L["Blighted Spinebreaker"];
         ["scale"] = 1.5;
     };
     [21] = {
@@ -1852,7 +1852,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96459;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Plaguebinder";
+        ["name"] = L["Plaguebinder"];
         ["scale"] = 1;
     };
     [22] = {
@@ -1909,7 +1909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 33010;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Pestilence Slime";
+        ["name"] = L["Pestilence Slime"];
         ["scale"] = 1;
     };
     [23] = {
@@ -1988,7 +1988,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 97477;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Rotmarrow Slime";
+        ["name"] = L["Rotmarrow Slime"];
         ["scale"] = 1;
     };
     [24] = {
@@ -2043,7 +2043,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95787;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Congealed Slime";
+        ["name"] = L["Congealed Slime"];
         ["scale"] = 1;
     };
     [25] = {
@@ -2150,7 +2150,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95688;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Slime Tentacle";
+        ["name"] = L["Slime Tentacle"];
         ["scale"] = 1.5;
     };
     [26] = {
@@ -2185,7 +2185,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96985;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Virulax Blightweaver";
+        ["name"] = L["Virulax Blightweaver"];
         ["scale"] = 1;
     };
     [27] = {
@@ -2224,7 +2224,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96919;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Doctor Ickus";
+        ["name"] = L["Doctor Ickus"];
         ["id"] = 164967;
     };
     [28] = {
@@ -2334,7 +2334,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96445;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Defender of Many Eyes";
+        ["name"] = L["Defender of Many Eyes"];
         ["scale"] = 1;
     };
     [29] = {
@@ -2424,7 +2424,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96116;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Venomous Sniper";
+        ["name"] = L["Venomous Sniper"];
         ["scale"] = 1;
     };
     [30] = {
@@ -2504,7 +2504,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 94406;
         ["creatureType"] = "Beast";
         ["level"] = 60;
-        ["name"] = "Venomfang";
+        ["name"] = L["Venomfang"];
         ["scale"] = 0.6;
     };
     [31] = {
@@ -2567,7 +2567,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96434;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Brood Ambusher";
+        ["name"] = L["Brood Ambusher"];
         ["scale"] = 1;
     };
     [32] = {
@@ -2608,7 +2608,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96475;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Domina Venomblade";
+        ["name"] = L["Domina Venomblade"];
         ["id"] = 164266;
     };
     [33] = {
@@ -2751,7 +2751,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 96988;
         ["creatureType"] = "Undead";
         ["level"] = 60;
-        ["name"] = "Plaguebound Devoted";
+        ["name"] = L["Plaguebound Devoted"];
         ["scale"] = 1;
     };
     [34] = {
@@ -2784,7 +2784,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 94145;
         ["creatureType"] = "Humanoid";
         ["level"] = 60;
-        ["name"] = "Ickor Bileflesh";
+        ["name"] = L["Ickor Bileflesh"];
         ["scale"] = 1.5;
     };
     [35] = {
@@ -2819,7 +2819,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 95794;
         ["creatureType"] = "Aberration";
         ["level"] = 60;
-        ["name"] = "Margrave Stradama";
+        ["name"] = L["Margrave Stradama"];
         ["id"] = 164267;
     };
 };

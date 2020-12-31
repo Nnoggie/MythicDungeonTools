@@ -5,7 +5,7 @@ MDT.dungeonTotalCount[dungeonIndex] = {normal=280,teeming=336,teemingEnabled=tru
 MDT.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
 	[1] = {
 		[1] = {
-            ["name"] = "Archdruid Glaidalis",
+            ["name"] = L["Archdruid Glaidalis"],
             ["health"] = 88813051,
             ["encounterID"] = 1654,
             ["level"] = 112,
@@ -16,7 +16,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
             ["y"] = -341.5737020441,
         },
 		[2] = {
-            ["name"] = "Oakheart",
+            ["name"] = L["Oakheart"],
             ["health"] = 109308301,
             ["encounterID"] = 1655,
             ["level"] = 112,
@@ -27,7 +27,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
             ["y"] = -259.56120430561,
         },
 		[3] = {
-            ["name"] = "Dresaron",
+            ["name"] = L["Dresaron"],
             ["health"] = 111016239,
             ["encounterID"] = 1656,
             ["level"] = 112,
@@ -38,7 +38,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
             ["y"] = -254.48568850622,
         },
 		[4] = {
-            ["name"] = "Shade of Xavius",
+            ["name"] = L["Shade of Xavius"],
             ["health"] = 119555948,
             ["encounterID"] = 1657,
             ["level"] = 112,
@@ -52,7 +52,7 @@ MDT.dungeonBosses[dungeonIndex] = {--Darkheart Thicket
 }
 MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
 	[1] = {
-        ["name"] = "Frenzied Nightclaw",
+        ["name"] = L["Frenzied Nightclaw"],
         ["health"] = 11855438,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -79,7 +79,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[2] = {
-        ["name"] = "Dreadsoul Poisoner",
+        ["name"] = L["Dreadsoul Poisoner"],
         ["health"] = 11855444,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -120,7 +120,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[3] = {
-        ["name"] = "Mindshattered Screecher",
+        ["name"] = L["Mindshattered Screecher"],
         ["health"] = 8891579,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -138,7 +138,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[4] = {
-        ["name"] = "Festerhide Grizzly",
+        ["name"] = L["Festerhide Grizzly"],
         ["health"] = 21462815,
         ["level"] = 111,
         ["creatureType"] = "Beast",
@@ -162,7 +162,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[5] = {
-        ["name"] = "Dreadsoul Ruiner",
+        ["name"] = L["Dreadsoul Ruiner"],
         ["health"] = 11855444,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -205,7 +205,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[6] = {
-        ["name"] = "Crazed Razorbeak",
+        ["name"] = L["Crazed Razorbeak"],
         ["health"] = 11855438,
         ["level"] = 110,
         ["creatureType"] = "Beast",
@@ -222,7 +222,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[7] = {
-        ["name"] = "Rotheart Dryad",
+        ["name"] = L["Rotheart Dryad"],
         ["health"] = 13337369,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -267,7 +267,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[8] = {
-        ["name"] = "Vilethorn Blossom",
+        ["name"] = L["Vilethorn Blossom"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -296,7 +296,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[9] = {
-        ["name"] = "Rotheart Keeper",
+        ["name"] = L["Rotheart Keeper"],
         ["health"] = 16301159,
         ["level"] = 110,
         ["creatureType"] = "Humanoid",
@@ -314,7 +314,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[10] = {
-        ["name"] = "Nightmare Dweller",
+        ["name"] = L["Nightmare Dweller"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -332,7 +332,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[11] = {
-        ["name"] = "Hatespawn Slime",
+        ["name"] = L["Hatespawn Slime"],
         ["health"] = 2222902,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -374,7 +374,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[12] = {
-        ["name"] = "Bloodtainted Fury",
+        ["name"] = L["Bloodtainted Fury"],
         ["health"] = 17783157,
         ["level"] = 110,
         ["creatureType"] = "Elemental",
@@ -414,7 +414,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[13] = {
-        ["name"] = "Taintheart Summoner",
+        ["name"] = L["Taintheart Summoner"],
         ["health"] = 14226533,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -440,7 +440,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[14] = {
-        ["name"] = "Taintheart Stalker",
+        ["name"] = L["Taintheart Stalker"],
         ["health"] = 11855444,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -459,7 +459,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[15] = {
-        ["name"] = "Dreadfire Imp",
+        ["name"] = L["Dreadfire Imp"],
         ["health"] = 8891579,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -478,7 +478,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[16] = {
-        ["name"] = "Taintheart Deadeye",
+        ["name"] = L["Taintheart Deadeye"],
         ["health"] = 11855444,
         ["level"] = 110,
         ["creatureType"] = "Demon",
@@ -495,7 +495,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         },
     },
 	[17] = {
-        ["name"] = "Tormented Bloodseeker",
+        ["name"] = L["Tormented Bloodseeker"],
         ["health"] = 14819297,
         ["level"] = 110,
         ["creatureType"] = "Beast",
