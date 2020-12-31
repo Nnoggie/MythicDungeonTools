@@ -297,7 +297,7 @@ local function MakeEnemeyInfoFrame()
         spellScrollContainer:SetLayout("Fill")
 
         f.spellScroll = AceGUI:Create("ScrollFrame")
-        f.spellScroll:SetLayout("List")
+        f.spellScroll:SetLayout("Flow")
         spellScrollContainer:AddChild(f.spellScroll)
 
         --spellButtons
@@ -510,11 +510,40 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     if data.spells then
         for spellId,spellData in pairs(data.spells) do
             if not spellBlacklist[spellId] then
+
                 local spellButton = AceGUI:Create("MDTSpellButton")
                 spellButton:SetSpell(spellId,spellData)
                 spellButton:Initialize()
                 spellButton:Enable()
                 f.spellScroll:AddChild(spellButton)
+                if spellData.spells then
+                    
+                    -- This is a combo ability
+                    if spellData.comboCount then
+                        local spellComboIndicator = AceGUI:Create("MDTSpellLabel")
+                        spellComboIndicator:SetTitle(spellData.comboCount.." "..L["Random abilities"]);
+                        spellComboIndicator:Initialize()
+                        spellButton:Enable()
+                        f.spellScroll:AddChild(spellComboIndicator)
+                    end
+                    if spellData.comment then
+                        local spellComboIndicator = AceGUI:Create("MDTSpellLabel")
+                        spellComboIndicator:SetTitle(L[spellData.comment]);
+                        spellComboIndicator:Initialize()
+                        spellButton:Enable()
+                        f.spellScroll:AddChild(spellComboIndicator)
+                    end
+                    local comboContainer = AceGUI:Create("SimpleGroup");
+                    comboContainer:SetLayout("IndentedSpellList");
+                    f.spellScroll:AddChild(comboContainer);
+                    for comboSpellId,comboSpellData in pairs(spellData.spells) do
+                        local comboSpellButton = AceGUI:Create("MDTSpellButton")
+                        comboSpellButton:SetSpell(comboSpellId,comboSpellData)
+                        comboSpellButton:Initialize()
+                        comboSpellButton:Enable()
+                        comboContainer:AddChild(comboSpellButton)
+                    end
+                end
             end
         end
     end
@@ -568,3 +597,16 @@ function MDT:ShowEnemyInfoFrame(blip)
     MDT:UpdateEnemyInfoFrame(blip.enemyIdx)
     MDT.EnemyInfoFrame:Show()
 end
+
+AceGUI:RegisterLayout("IndentedSpellList",
+
+     function(content, children)
+        local heightSoFar = -2;
+        for i, child in ipairs(children) do
+            children[i].frame:SetPoint("TOPLEFT", content, "TOPLEFT", 30, heightSoFar)
+            children[i].frame:Show()
+            heightSoFar = heightSoFar - children[i].frame:GetHeight() - 4;
+        end
+        safecall( content.obj.LayoutFinished, content.obj, nil, -1 * heightSoFar )
+     end
+)

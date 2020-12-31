@@ -1,4 +1,4 @@
-﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='LibStub\LibStub.lua'/>
 	<Include file='AceAddon-3.0\AceAddon-3.0.xml'/>
 	<Script file='CallbackHandler-1.0\CallbackHandler-1.0.lua'/>

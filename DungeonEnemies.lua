@@ -420,7 +420,7 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
 
             patrolLines[patrolIdx] = patrolLines[patrolIdx] or MDT.main_frame.mapPanelFrame:CreateTexture("MDTDungeonPatrolLine"..patrolIdx,"BACKGROUND")
             patrolLines[patrolIdx]:SetDrawLayer("OVERLAY", 1)
-            patrolLines[patrolIdx]:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
+            patrolLines[patrolIdx]:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Square_White")
             patrolLines[patrolIdx]:SetVertexColor(0,0.2,0.5,0.6)
             patrolLines[patrolIdx]:Show()
 

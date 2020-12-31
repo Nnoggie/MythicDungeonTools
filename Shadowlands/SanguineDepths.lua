@@ -17,6 +17,55 @@ MDT.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = -1;
         };
+        [2] = {
+            ["y"] = -259.07489011866;
+            ["x"] = 184.71199984255;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "Anima Cage";
+            ["type"] = "generalNote";
+        };
+        [3] = {
+            ["y"] = -297.5843553082;
+            ["x"] = 100.73924740887;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "";
+            ["type"] = "graveyard";
+        };
+        [4] = {
+            ["y"] = -436.17147895239;
+            ["x"] = 561.46025332905;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "Anima Cage";
+            ["type"] = "generalNote";
+        };
+        [5] = {
+            ["y"] = -326.88341164447;
+            ["x"] = 469.8798150419;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "Anima Cage";
+            ["type"] = "generalNote";
+        };
+        [6] = {
+            ["y"] = -230.52642909355;
+            ["x"] = 626.04969656705;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "Anima Cage";
+            ["type"] = "generalNote";
+        };
+        [7] = {
+            ["y"] = -98.675708844608;
+            ["x"] = 408.65728113078;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after defeating Kryxis the Voracious";
+            ["type"] = "graveyard";
+        };
+        [8] = {
+            ["y"] = -342.44570099325;
+            ["x"] = 518.54572171996;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after defeating Executor Tarvold";
+            ["type"] = "graveyard";
+        };
     };
     [2] = {
         [1] = {
@@ -28,9 +77,22 @@ MDT.mapPOIs[dungeonIndex] = {
             ["template"] = "MapLinkPinTemplate";
             ["direction"] = 1;
         };
+        [2] = {
+            ["y"] = -82.103783423492;
+            ["x"] = 478.46309353475;
+            ["template"] = "MapLinkPinTemplate";
+            ["text"] = "Anima Cage";
+            ["type"] = "generalNote";
+        };
+        [3] = {
+            ["y"] = -389.30835353697;
+            ["x"] = 486.68938918971;
+            ["template"] = "DeathReleasePinTemplate";
+            ["graveyardDescription"] = "Unlocks after defeating Grand Proctor Beryllia";
+            ["type"] = "graveyard";
+        };
     };
 };
-
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
         ["clones"] = {
@@ -130,10 +192,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 48060;
         ["displayId"] = 93815;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 2;
-        ["name"] = "Grubby Dirtcruncher";
+        ["name"] = L["Grubby Dirtcruncher"];
     };
     [2] = {
         ["clones"] = {
@@ -231,10 +293,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 48060;
         ["displayId"] = 94227;
-        ["creatureType"] = "Aberration";
+        ["creatureType"] = L["Aberration"];
         ["level"] = 60;
         ["count"] = 1;
-        ["name"] = "Famished Tick";
+        ["name"] = L["Famished Tick"];
     };
     [3] = {
         ["clones"] = {
@@ -305,10 +367,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 80100;
         ["displayId"] = 94441;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Noble Skirmisher";
+        ["name"] = L["Noble Skirmisher"];
     };
     [4] = {
         ["clones"] = {
@@ -391,10 +453,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 72090;
         ["displayId"] = 94226;
-        ["creatureType"] = "Aberration";
+        ["creatureType"] = L["Aberration"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Gluttonous Tick";
+        ["name"] = L["Gluttonous Tick"];
     };
     [5] = {
         ["clones"] = {
@@ -477,10 +539,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 72090;
         ["displayId"] = 93035;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Dreadful Huntmaster";
+        ["name"] = L["Dreadful Huntmaster"];
     };
     [6] = {
         ["clones"] = {
@@ -538,10 +600,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 128160;
         ["displayId"] = 96681;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 7;
-        ["name"] = "Regal Mistdancer";
+        ["name"] = L["Regal Mistdancer"];
     };
     [7] = {
         ["clones"] = {
@@ -579,10 +641,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.5;
         ["health"] = 120150;
         ["displayId"] = 93853;
-        ["creatureType"] = "Aberration";
+        ["creatureType"] = L["Aberration"];
         ["level"] = 60;
         ["count"] = 7;
-        ["name"] = "Insatiable Brute";
+        ["name"] = L["Insatiable Brute"];
     };
     [8] = {
         ["clones"] = {
@@ -617,10 +679,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 560700;
         ["displayId"] = 98966;
-        ["creatureType"] = "Aberration";
+        ["creatureType"] = L["Aberration"];
         ["level"] = 60;
         ["count"] = 0;
-        ["name"] = "Kryxis the Voracious";
+        ["name"] = L["Kryxis the Voracious"];
     };
     [9] = {
         ["clones"] = {
@@ -812,10 +874,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 67284;
         ["displayId"] = 94573;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Wicked Oppressor";
+        ["name"] = L["Wicked Oppressor"];
     };
     [10] = {
         ["clones"] = {
@@ -932,10 +994,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 24030;
         ["displayId"] = 94498;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 1;
-        ["name"] = "Rockbound Sprite";
+        ["name"] = L["Rockbound Sprite"];
     };
     [11] = {
         ["clones"] = {
@@ -1113,10 +1175,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 28035;
         ["displayId"] = 93650;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 1;
-        ["name"] = "Dark Acolyte";
+        ["name"] = L["Dark Acolyte"];
     };
     [12] = {
         ["clones"] = {
@@ -1221,10 +1283,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.4;
         ["health"] = 136170;
         ["displayId"] = 94737;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 7;
-        ["name"] = "Chamber Sentinel";
+        ["name"] = L["Chamber Sentinel"];
     };
     [13] = {
         ["clones"] = {
@@ -1292,10 +1354,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 112140;
         ["displayId"] = 96679;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 7;
-        ["name"] = "Grand Overseer";
+        ["name"] = L["Grand Overseer"];
     };
     [14] = {
         ["clones"] = {
@@ -1331,10 +1393,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 80100;
         ["displayId"] = 92704;
-        ["creatureType"] = "Beast";
+        ["creatureType"] = L["Beast"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Ravenous Dreadbat";
+        ["name"] = L["Ravenous Dreadbat"];
     };
     [15] = {
         ["clones"] = {
@@ -1361,10 +1423,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.5;
         ["health"] = 192240;
         ["displayId"] = 97620;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 10;
-        ["name"] = "Head Custodian Javlin";
+        ["name"] = L["Head Custodian Javlin"];
     };
     [16] = {
         ["clones"] = {
@@ -1480,10 +1542,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 80100;
         ["displayId"] = 97622;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Research Scribe";
+        ["name"] = L["Research Scribe"];
     };
     [17] = {
         ["clones"] = {
@@ -1524,10 +1586,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 128160;
         ["displayId"] = 97780;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 7;
-        ["name"] = "Depths Warden";
+        ["name"] = L["Depths Warden"];
     };
     [18] = {
         ["clones"] = {
@@ -1579,10 +1641,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 16020;
         ["displayId"] = 96655;
-        ["creatureType"] = "Not specified";
+        ["creatureType"] = L["Not specified"];
         ["level"] = 60;
         ["count"] = 1;
-        ["name"] = "Infused Quill-feather";
+        ["name"] = L["Infused Quill-feather"];
     };
     [19] = {
         ["clones"] = {
@@ -1637,10 +1699,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 72090;
         ["displayId"] = 97240;
-        ["creatureType"] = "Aberration";
+        ["creatureType"] = L["Aberration"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Remnant of Fury";
+        ["name"] = L["Remnant of Fury"];
     };
     [20] = {
         ["clones"] = {
@@ -1707,10 +1769,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 72090;
         ["displayId"] = 94279;
-        ["creatureType"] = "Aberration";
+        ["creatureType"] = L["Aberration"];
         ["level"] = 60;
         ["count"] = 4;
-        ["name"] = "Vestige of Doubt";
+        ["name"] = L["Vestige of Doubt"];
     };
     [21] = {
         ["clones"] = {
@@ -1791,10 +1853,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 80100;
         ["displayId"] = 93808;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 2;
-        ["name"] = "Frenzied Ghoul";
+        ["name"] = L["Frenzied Ghoul"];
     };
     [22] = {
         ["clones"] = {
@@ -1821,10 +1883,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 448560;
         ["displayId"] = 96156;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 0;
-        ["name"] = "Executor Tarvold";
+        ["name"] = L["Executor Tarvold"];
     };
     [23] = {
         ["clones"] = {
@@ -1858,10 +1920,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 560700;
         ["displayId"] = 94781;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 0;
-        ["name"] = "Grand Proctor Beryllia";
+        ["name"] = L["Grand Proctor Beryllia"];
     };
     [24] = {
         ["clones"] = {
@@ -1939,10 +2001,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 16020;
         ["displayId"] = 95372;
-        ["creatureType"] = "Beast";
+        ["creatureType"] = L["Beast"];
         ["level"] = 60;
         ["count"] = 1;
-        ["name"] = "Stonewall Gargon";
+        ["name"] = L["Stonewall Gargon"];
     };
     [25] = {
         ["clones"] = {
@@ -1975,10 +2037,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 3204000;
         ["displayId"] = 95721;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 0;
-        ["name"] = "General Kaal";
+        ["name"] = L["General Kaal"];
     };
     [26] = {
         ["clones"] = {
@@ -2065,11 +2127,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
         ["health"] = 32040;
         ["displayId"] = 94954;
-        ["creatureType"] = "Humanoid";
+        ["creatureType"] = L["Humanoid"];
         ["level"] = 60;
         ["count"] = 1;
-        ["name"] = "Sanguine Cadet";
+        ["name"] = L["Sanguine Cadet"];
     };
 };
+
 
 
