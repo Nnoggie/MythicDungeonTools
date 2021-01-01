@@ -1476,6 +1476,7 @@ function MDT:MakeSidePanel(frame)
         GameTooltip:Show()
     end)
     frame.MDIButton.frame:SetScript("OnLeave",function()
+        GameTooltip:Hide()
     end)
 
     --AutomaticColorsCheckbox
@@ -2969,8 +2970,8 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
     if dungeonIdx>=15 then db.currentExpansion = 2 end
     if dungeonIdx>=29 then db.currentExpansion = 3 end
     db.currentDungeonIdx = dungeonIdx
-	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then 
-        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 
+	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then
+        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1
     end
     if init then return end
 	MDT:UpdatePresetDropDown()
@@ -4959,7 +4960,6 @@ function initFrames()
             db.mapPOIs = MDT.mapPOIs
         end
     end
-
 
     db.nonFullscreenScale = db.nonFullscreenScale or 1
     if not db.maximized then db.scale = db.nonFullscreenScale end

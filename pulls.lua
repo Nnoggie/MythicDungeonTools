@@ -173,7 +173,7 @@ end
 function MDT:DrawHullCircle(x, y, size, color, layer, layerSublevel)
     local circle = getTexture()
     circle:SetDrawLayer(layer, layerSublevel)
-    circle:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Circle_White")
+    circle:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White")
     circle:SetVertexColor(color.r,color.g,color.b,color.a)
     circle:SetWidth(1.1*size)
     circle:SetHeight(1.1*size)
@@ -185,7 +185,7 @@ end
 
 function MDT:DrawHullLine(x, y, a, b, size, color, smooth, layer, layerSublevel, lineFactor)
     local line = getTexture()
-    line:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Square_White")
+    line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(color.r,color.g,color.b,color.a)
     DrawLine(line, MDT.main_frame.mapPanelTile1, x, y, a, b, size, lineFactor and lineFactor or 1.1,"TOPLEFT")
     line:SetDrawLayer(layer, layerSublevel)

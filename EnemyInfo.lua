@@ -297,7 +297,7 @@ local function MakeEnemeyInfoFrame()
         spellScrollContainer:SetLayout("Fill")
 
         f.spellScroll = AceGUI:Create("ScrollFrame")
-        f.spellScroll:SetLayout("Flow")
+        f.spellScroll:SetLayout("List")
         spellScrollContainer:AddChild(f.spellScroll)
 
         --spellButtons

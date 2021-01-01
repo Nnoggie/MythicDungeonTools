@@ -26,7 +26,7 @@ function MDT:initToolbar(frame)
 
     frame.toolbar.toggleButton:SetPoint("TOP",frame,"TOP")
     frame.toolbar.toggleButton:SetSize(32,11)
-    frame.toolbar.toggleButton:SetNormalTexture("Interface\\AddOns\\DungeonTools\\Textures\\arrows")
+    frame.toolbar.toggleButton:SetNormalTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\arrows")
     frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.65,1)
 
     frame.toolbar:Hide()
@@ -91,7 +91,7 @@ function MDT:initToolbar(frame)
 
     ---back
     local back = AceGUI:Create("Icon")
-    back:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.5,0.75,0.5,0.75)
+    back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.5,0.75,0.5,0.75)
     back:SetCallback("OnClick",function (widget,callbackName)
         self:PresetObjectStepBack()
         if self.liveSessionActive then self:LiveSession_SendCommand("undo") end
@@ -103,7 +103,7 @@ function MDT:initToolbar(frame)
 
     ---forward
     local forward = AceGUI:Create("Icon")
-    forward:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.75,1,0.5,0.75)
+    forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.75,1,0.5,0.75)
     forward:SetCallback("OnClick",function (widget,callbackName)
         self:PresetObjectStepForward()
         if self.liveSessionActive then self:LiveSession_SendCommand("redo") end
@@ -125,7 +125,7 @@ function MDT:initToolbar(frame)
     local sizeIndicator
     ---minus
     local minus = AceGUI:Create("Icon")
-    minus:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0,0.25,0.5,0.75)
+    minus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0,0.25,0.5,0.75)
     minus:SetCallback("OnClick",function (widget,callbackName)
         db.toolbar.brushSize = db.toolbar.brushSize - 1
         if db.toolbar.brushSize < 1 then db.toolbar.brushSize = 1 end
@@ -166,7 +166,7 @@ function MDT:initToolbar(frame)
 
     ---plus
     local plus = AceGUI:Create("Icon")
-    plus:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.25,0.5,0.5,0.75)
+    plus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.25,0.5,0.5,0.75)
     plus:SetCallback("OnClick",function (widget,callbackName)
         db.toolbar.brushSize = db.toolbar.brushSize + 1
         sizeIndicator:SetText(db.toolbar.brushSize)
@@ -176,7 +176,7 @@ function MDT:initToolbar(frame)
 
     ---pencil
     local pencil = AceGUI:Create("Icon")
-    pencil:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0,0.25,0,0.25)
+    pencil:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0,0.25,0,0.25)
     toolbarTools["pencil"] = pencil
     pencil:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "pencil" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("pencil") end
@@ -186,7 +186,7 @@ function MDT:initToolbar(frame)
 
     ---line
     local line = AceGUI:Create("Icon")
-    line:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0,0.25,0.75,1)
+    line:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0,0.25,0.75,1)
     toolbarTools["line"] = line
     line:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "line" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("line") end
@@ -196,7 +196,7 @@ function MDT:initToolbar(frame)
 
     ---arrow
     local arrow = AceGUI:Create("Icon")
-    arrow:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.25,0.5,0,0.25)
+    arrow:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.25,0.5,0,0.25)
     toolbarTools["arrow"] = arrow
     arrow:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "arrow" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("arrow") end
@@ -206,7 +206,7 @@ function MDT:initToolbar(frame)
 
     ---note
     local note = AceGUI:Create("Icon")
-    note:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.75,1,0,0.25)
+    note:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.75,1,0,0.25)
     toolbarTools["note"] = note
     note:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "note" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("note") end
@@ -216,7 +216,7 @@ function MDT:initToolbar(frame)
 
     ---mover
     local mover = AceGUI:Create("Icon")
-    mover:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.5,0.75,0,0.25)
+    mover:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.5,0.75,0,0.25)
     toolbarTools["mover"] = mover
     mover:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "mover" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("mover") end
@@ -226,10 +226,10 @@ function MDT:initToolbar(frame)
 
     ---cogwheel
     local cogwheel = AceGUI:Create("Icon")
-    cogwheel:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0,0.25,0.25,0.5)
+    cogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0,0.25,0.25,0.5)
     cogwheel:SetCallback("OnClick",function (widget,callbackName)
-        InterfaceOptionsFrame_OpenToCategory("DungeonTools")
-        InterfaceOptionsFrame_OpenToCategory("DungeonTools")
+        InterfaceOptionsFrame_OpenToCategory("MythicDungeonTools")
+        InterfaceOptionsFrame_OpenToCategory("MythicDungeonTools")
         MDT:HideInterface()
     end)
     cogwheel.tooltipText = L["Settings"]
@@ -237,7 +237,7 @@ function MDT:initToolbar(frame)
 
     ---eraser
     local eraser = AceGUI:Create("Icon")
-    eraser:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.25,0.5,0.25,0.5)
+    eraser:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.25,0.5,0.25,0.5)
     toolbarTools["eraser"] = eraser
     eraser:SetCallback("OnClick",function (widget,callbackName)
         if currentTool == "eraser" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("eraser") end
@@ -247,7 +247,7 @@ function MDT:initToolbar(frame)
 
     ---delete
     local delete = AceGUI:Create("Icon")
-    delete:SetImage("Interface\\AddOns\\DungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
+    delete:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.25,0.5,0.75,1)
     delete:SetCallback("OnClick",function (widget,callbackName)
         local prompt = string.format(L["deleteAllDrawingsPrompt"],"\n","\n","\n")
         self:OpenConfirmationFrame(450,150,L["Delete ALL drawings"],L["Delete"],prompt, function()
@@ -315,12 +315,12 @@ end
 
 ---CreateBrushPreview
 function MDT:CreateBrushPreview(frame)
-    frame.brushPreview = CreateFrame("Frame","DungeonToolsBrushPreview",UIParent)
+    frame.brushPreview = CreateFrame("Frame","MythicDungeonToolsBrushPreview",UIParent)
     frame.brushPreview:SetFrameStrata("HIGH")
     frame.brushPreview:SetFrameLevel(4)
     frame.brushPreview:SetSize(1, 1)
     frame.brushPreview.tex = frame.brushPreview:CreateTexture(nil, "OVERLAY")
-    frame.brushPreview.tex:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\ring")
+    frame.brushPreview.tex:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\ring")
     frame.brushPreview.tex:SetAllPoints()
 end
 
@@ -394,7 +394,7 @@ function MDT:UpdateSelectedToolbarTool(widgetName)
     local widget = toolbarTools[widgetName]
     currentTool = widgetName
     toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil,"HIGH",nil,7)
-    toolbar.highlight:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\icons")
+    toolbar.highlight:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons")
     toolbar.highlight:SetTexCoord(0.5,0.75,0.25,0.5)
     toolbar.highlight:SetSize(widget.frame:GetWidth(),widget.frame:GetWidth())
     toolbar.highlight:ClearAllPoints()
@@ -545,11 +545,11 @@ function MDT:StartArrowDrawing()
     local frame = MDT.main_frame
     local startx,starty = MDT:GetCursorPosition()
     local line = getTexture()
-    line:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Square_White")
+    line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
     line:Show()
     local arrow = getTexture()
-    arrow:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\triangle")
+    arrow:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\triangle")
     arrow:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
     line.isOwn = true
     arrow.isOwn = true
@@ -610,7 +610,7 @@ function MDT:StartLineDrawing()
     local frame = MDT.main_frame
     startx,starty = MDT:GetCursorPosition()
     local line = getTexture()
-    line:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Square_White")
+    line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b,db.toolbar.color.a)
     line.isOwn = true
     tinsert(activeTextures,line)
@@ -919,7 +919,7 @@ function MDT:DrawCircle(x, y, size, color, layer, layerSublevel, isOwn, objectIn
     local circle = tex or getTexture()
     if not layer then layer = objectDrawLayer end
     circle:SetDrawLayer(layer, layerSublevel)
-    circle:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Circle_White")
+    circle:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White")
     circle:SetVertexColor(color.r,color.g,color.b,color.a)
     circle:SetWidth(1.1*size)
     circle:SetHeight(1.1*size)
@@ -938,7 +938,7 @@ end
 function MDT:DrawLine(x, y, a, b, size, color, smooth, layer, layerSublevel, lineFactor, isOwn, objectIndex)
     local line = getTexture()
     if not layer then layer = objectDrawLayer end
-    line:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\Square_White")
+    line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
     line:SetVertexColor(color.r,color.g,color.b,color.a)
     DrawLine(line, MDT.main_frame.mapPanelTile1, x, y, a, b, size, lineFactor and lineFactor or 1.1,"TOPLEFT")
     line:SetDrawLayer(layer, layerSublevel)
@@ -956,7 +956,7 @@ end
 function MDT:DrawTriangle(x, y, rotation, size, color, layer, layerSublevel, isOwn, objectIndex)
     local triangle = getTexture()
     if not layer then layer = objectDrawLayer end
-    triangle:SetTexture("Interface\\AddOns\\DungeonTools\\Textures\\triangle")
+    triangle:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\triangle")
     triangle:SetVertexColor(color.r,color.g,color.b,color.a)
     triangle:Show()
     triangle:SetWidth(size)

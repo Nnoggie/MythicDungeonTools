@@ -22,6 +22,7 @@ locales.xml
 AceGUIWidget-MythicDungeonToolsPullButton.lua
 AceGUIWidget-MythicDungeonToolsNewPullButton.lua
 AceGUIWidget-MythicDungeonToolsSpellButton.lua
+AceGUIWidget-MythicDungeonToolsSpellLabel.lua
 Utility.lua
 MythicDungeonTools.lua
 DungeonEnemies.xml

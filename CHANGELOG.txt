@@ -1,19 +1,4 @@
-V3.3.5
--  tantrum zzzzz
-v3.3.4
-- fix lag
-v3.3.3
-- turn off data collection and sync
-v3.3.2
-- minor mapping + affix week updates
-- remove clearly wrong spells in enemy info
-v3.3.1
-- Fixed an issue where an embedded library was causing UI elemennts like game menu and quest list to not work anymore
-v3.3.0
-- Enemy spells and characteristics will now sync between group members
-- Updated to Shadowlands season + affix list
-v3.2.9
-- fix library loading issue
-v3.2.8
-- Shadowlands NPC mapping complete
-- Data collection for enemy spells and characteristics (stunnable, slowable etc) is now active by default until next version of MDT. You can send your data in the MDT discord: https://discord.gg/ttcM6uJ
+v3.4.6
+- nil fix
+v3.4.5
+- Dungeon Data is included once again
