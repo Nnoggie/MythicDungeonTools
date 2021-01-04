@@ -227,9 +227,9 @@ local affixWeeks = {
     [6] =  {[1]=6,[2]=13,[3]=9,[4]=121}, -->>Raging, Explosive, Tyrannical
     [7] =  {[1]=123,[2]=3,[3]=10,[4]=121}, -->>Spiteful, Volcanic, Fortified
     [8] =  {[1]=7,[2]=4,[3]=9,[4]=121},  -->>Bolstering, Necrotic, Tyrannical
-    [9] =  {[1]=124,[2]=122,[3]=10,[4]=121},   -->>Storming, Inspiring, Fortified
+    [9] =  {[1]=122,[2]=124,[3]=10,[4]=121},   -->>Inspiring, Storming, Fortified
     [10] = {[1]=11,[2]=13,[3]=9,[4]=121},  -->>Bursting, Explosive, Tyrannical
-    [11] = {[1]=4,[2]=7,[3]=10,[4]=121},      -->>Sanguine, Grievous, Fortified
+    [11] = {[1]=8,[2]=12,[3]=10,[4]=121},      -->>Sanguine, Grievous, Fortified
     [12] = {[1]=6,[2]=14,[3]=9,[4]=121},   -->>Raging, Quaking, Tyrannical
 }
 
