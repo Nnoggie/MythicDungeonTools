@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 10
 local pi = math.pi
 MDT.dungeonTotalCount[dungeonIndex] = {normal=169,teeming=202,teemingEnabled=true}

@@ -1,3 +1,5 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 1
 local nerfMultiplier = 0.834
 local pi = math.pi
