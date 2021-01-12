@@ -433,6 +433,7 @@ local spellBlacklist = {
     [35079] = true, --
     [50707] = true, --
     [240443] = true, --
+    [328506] = true, --
     --[X]  = true,
 }
 local lastEnemyIdx
