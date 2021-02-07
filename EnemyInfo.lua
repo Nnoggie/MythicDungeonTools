@@ -128,7 +128,7 @@ local function MakeEnemeyInfoFrame()
         model:SetFrameLevel(1)
         model:SetSize(leftContainer.frame:GetWidth()-30,269)
         model:SetScript("OnEnter",nil)
-        model:SetFrameLevel(15)
+        model:SetFrameLevel(150)
         model:Show()
         f.modelContainer = f.modelContainer or AceGUI:Create("InlineGroup")
         local modelContainer = f.modelContainer
