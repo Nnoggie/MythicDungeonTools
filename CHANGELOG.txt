@@ -1,3 +1,6 @@
+v3.4.7
+- affix list fix
+- fix enemy info model frame strata
 v3.4.6
 - nil fix
 v3.4.5
