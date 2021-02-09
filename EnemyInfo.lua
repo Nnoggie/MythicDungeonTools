@@ -443,7 +443,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     if not enemyIdx then return end
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
     local f = MDT.EnemyInfoFrame
-    f:SetTitle(data.name)
+    f:SetTitle(L[data.name])
     f.model:SetDisplayInfo(data.displayId or 39490)
     f.model:ResetModel()
 
@@ -468,7 +468,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
 
     local enemies = {}
     for mobIdx,edata in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-        tinsert(enemies,mobIdx,edata.name)
+        tinsert(enemies,mobIdx,L[edata.name])
     end
     f.enemyDropDown:SetList(enemies)
     f.enemyDropDown:SetValue(enemyIdx)
@@ -528,7 +528,7 @@ function MDT:UpdateEnemyInfoData(enemyIdx)
     if not enemyIdx then return end
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
     --data
-    f.enemyDataContainer.nameEditBox:SetText(data.name)
+    f.enemyDataContainer.nameEditBox:SetText(L[data.name])
     f.enemyDataContainer.nameEditBox.defaultText = data.name
     f.enemyDataContainer.idEditBox:SetText(data.id)
     f.enemyDataContainer.idEditBox.defaultText = data.id
@@ -540,7 +540,7 @@ function MDT:UpdateEnemyInfoData(enemyIdx)
     f.enemyDataContainer.healthEditBox:SetText(healthText)
     f.enemyDataContainer.healthEditBox.defaultText = healthText
 
-    f.enemyDataContainer.creatureTypeEditBox:SetText(data.creatureType)
+    f.enemyDataContainer.creatureTypeEditBox:SetText(L[data.creatureType])
     f.enemyDataContainer.creatureTypeEditBox.defaultText = data.creatureType
     f.enemyDataContainer.levelEditBox:SetText(data.level)
     f.enemyDataContainer.levelEditBox.defaultText = data.level
