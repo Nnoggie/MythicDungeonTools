@@ -2608,16 +2608,35 @@ end
 function MDT:FormatEnemyHealth(amount)
 	amount = tonumber(amount)
     if not amount then return "" end
-    if amount < 1e3 then
-        return 0
-    elseif amount >= 1e12 then
-        return string.format("%.3ft", amount/1e12)
-    elseif amount >= 1e9 then
-        return string.format("%.3fb", amount/1e9)
-    elseif amount >= 1e6 then
-        return string.format("%.2fm", amount/1e6)
-    elseif amount >= 1e3 then
-        return string.format("%.1fk", amount/1e3)
+
+    if self:GetLocaleIndex() == 9 then
+
+        if amount < 1e3 then
+            return 0
+        elseif amount >= 1e16 then
+            return string.format("%.3f경", amount/1e16)
+        elseif amount >= 1e12 then
+            return string.format("%.3f조", amount/1e12)
+        elseif amount >= 1e8 then
+            return string.format("%.2f억", amount/1e8)
+        elseif amount >= 1e4 then
+            return string.format("%.1f만", amount/1e4)
+        end
+
+    else
+
+        if amount < 1e3 then
+            return 0
+        elseif amount >= 1e12 then
+            return string.format("%.3ft", amount/1e12)
+        elseif amount >= 1e9 then
+            return string.format("%.3fb", amount/1e9)
+        elseif amount >= 1e6 then
+            return string.format("%.2fm", amount/1e6)
+        elseif amount >= 1e3 then
+            return string.format("%.1fk", amount/1e3)
+        end
+
     end
 end
 
