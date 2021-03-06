@@ -2147,8 +2147,8 @@ function MDT:UpdatePullTooltip(tooltip)
 						end
                         --topString
                         local newLine = "\n"
-                        local text = newLine..newLine..newLine..v.enemyData.name.." x"..v.enemyData.quantity..newLine
-                        text = text..string.format(L["Level %d %s"],v.enemyData.level,v.enemyData.creatureType)..newLine
+                        local text = newLine..newLine..newLine..L[v.enemyData.name].." x"..v.enemyData.quantity..newLine
+                        text = text..string.format(L["Level %d %s"],v.enemyData.level,L[v.enemyData.creatureType])..newLine
                         local boss = v.enemyData.isBoss or false
                         local health = MDT:CalculateEnemyHealth(boss,v.enemyData.baseHealth,db.currentDifficulty,v.enemyData.ignoreFortified)
                         text = text.. string.format(L["%s HP"],MDT:FormatEnemyHealth(health))..newLine
