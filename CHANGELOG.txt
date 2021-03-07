@@ -1,3 +1,5 @@
+v3.4.9
+- locale error fix
 v3.4.8
 - mapping updates
 - locale fixes
