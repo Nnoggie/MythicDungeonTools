@@ -1,3 +1,6 @@
+v3.4.8
+- mapping updates
+- locale fixes
 v3.4.7
 - affix list fix
 - fix enemy info model frame strata
