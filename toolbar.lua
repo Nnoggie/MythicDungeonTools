@@ -1087,16 +1087,35 @@ function MDT:DrawNote(x, y, text, objectIndex)
     note.PushedTexture:SetSize(15*scale, 15*scale)
     note.HighlightTexture:SetSize(15*scale, 15*scale)
     note.Display.Icon:SetSize(16*scale, 16*scale)
-    note.NormalTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-    note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-    note.HighlightTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-    note.Display.Icon:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-    note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
-    note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
-    note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
-    note.Display.Icon:SetTexCoord(QuestPOI_CalculateNumericTexCoords(note.noteIdx, QUEST_POI_COLOR_BLACK ))
+
+    local text = text or "";
+
+    if not text:match("#spell=") then
+        note.NormalTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+        note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+        note.HighlightTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+        note.Display.Icon:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+
+        note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
+        note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
+        note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
+
+        note.Display.Icon:SetTexCoord(QuestPOI_CalculateNumericTexCoords(note.noteIdx, QUEST_POI_COLOR_BLACK ))
+    else
+        local spellIconId = text:match("#spell=(%d+)")
+        local _, _, icon = GetSpellInfo(spellIconId)
+        note.NormalTexture:SetTexCoord(0,1,0,1)
+        note.PushedTexture:SetTexCoord(0,1,0,1)
+        note.HighlightTexture:SetTexCoord(0,1,0,1)
+        note.Display.Icon:SetTexCoord(0,1,0,1)
+        
+        note.NormalTexture:SetTexture(icon)
+        note.PushedTexture:SetTexture(icon)
+        note.HighlightTexture:SetTexture(icon)
+        note.Display.Icon:SetTexture(icon)
+    end
     note.Display.Icon:Show()
-    note.tooltipText = text or ""
+    note.tooltipText = text
 
     note:RegisterForClicks("AnyUp")
     --click
