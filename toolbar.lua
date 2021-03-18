@@ -6,7 +6,7 @@ local db
 local toolbarTools = {}
 local drawingActive = false
 local currentTool
-local objectDrawLayer = "ARTWORK"
+local objectDrawLayer = "OVERLAY"
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
 
