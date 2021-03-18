@@ -1,3 +1,5 @@
+v3.5.3
+- visual update for pull outlines
 v3.5.2
 - updated G42 and G43 in Plaguefall: Slime Tentacle infront of Domina Venomblade now awards 10 count
 v3.5.1
