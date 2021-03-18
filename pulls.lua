@@ -45,58 +45,6 @@ local function convex_hull(pts)
     return hullpts
 end
 
-local function catmull_rom(t, p0, p1, p2, p3,blipFactor)
-    local ax = 2 * p1[1]
-    local ay = 2 * p1[2]
-    local bx = p2[1] - p0[1]
-    local by = p2[2] - p0[2]
-    local cx = 2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]
-    local cy = 2 * p0[2] - 5 * p1[2] + 4 * p2[2] - p3[2]
-    local dx = -p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]
-    local dy = -p0[2] + 3 * p1[2] - 3 * p2[2] + p3[2]
-
-    local rx = 0.5 * (ax + (bx * t) + (cx * t * t) + (dx * t * t * t))
-    local ry = 0.5 * (ay + (by * t) + (cy * t * t) + (dy * t * t * t))
-    return {rx, ry,blipFactor}
-end
-
-local function wrap_index(index, len)
-    if index < 1 then return len
-    elseif index > (len+1) then return 2
-    elseif index > len then return 1
-    else return index end
-end
-
-local function isCloseMatch(num1,num2)
-    return math.abs(num1 - num2) < 0.001;
-end
-
-local function smooth_contour(points, steps)
-    steps = steps or 5
-    local res = {}
-
-    for i = 1, #points do
-        local p0 = points[wrap_index(i - 1, #points)]
-        local p1 = points[i]
-        local p2 = points[wrap_index(i + 1, #points)]
-        local p3 = points[wrap_index(i + 2, #points)]
-
-        for t = 0, 1, 1/steps do
-            local oldx = res[#res] and res[#res][1]
-            local oldy = res[#res] and res[#res][2]
-            local point = catmull_rom(t, p0, p1, p2, p3,points[i][3])
-            --don't add point if previous point is the same
-            if not oldx or not isCloseMatch(point[1],oldx) or not isCloseMatch(point[2],oldy) then
-                --don't add point if first point is the same
-                if not oldx or not isCloseMatch(point[1],res[1][1]) or not isCloseMatch(point[2],res[1][2]) then
-                    table.insert(res, point)
-                end
-            end
-        end
-    end
-    return res
-end
-
 local function cross(a,b)
     return a[1] * b[2] - a[2] * b[1]
 end
@@ -125,17 +73,24 @@ local function centroid(pts)
     return {rx, ry}
 end
 
-local function expand_polygon(poly, offset)
-    local c = centroid(poly)
+local function expand_polygon(poly, numCirclePoints)
     local res = {}
+    local resIndex = 1
     for i = 1, #poly do
-        local dx = poly[i][1]-c[1]
-        local dy = poly[i][2]-c[2]
-        local len = math.sqrt(dx^2+dy^2)
-        local offsetx = (dx/len)*offset
-        local offsety = (dy/len)*offset
-        res[i] = {poly[i][1]+offsetx, poly[i][2]+offsety}
+        local x = poly[i][1]
+        local y = poly[i][2]
+        local r = poly[i][3]*10
+        local adjustedNumPoints = math.round(numCirclePoints*poly[i][3])
+
+        for j = 1, adjustedNumPoints do
+            local cx = x+r*math.cos(2*math.pi/adjustedNumPoints*j)
+            local cy = y+r*math.sin(2*math.pi/adjustedNumPoints*j)
+            res[resIndex] = {cx,cy,r}
+            resIndex = resIndex + 1
+        end
+
     end
+
     return res
 end
 
@@ -193,22 +148,25 @@ function MDT:DrawHullLine(x, y, a, b, size, color, smooth, layer, layerSublevel,
     line.coords = {x,y,a,b}
     tinsert(activeTextures,line)
     if smooth == true  then
-        MDT:DrawHullCircle(x,y,size,color,layer,layerSublevel)
+        MDT:DrawHullCircle(x,y,size*0.9,color,layer,layerSublevel)
     end
 end
 
-function MDT:DrawHull(vertices,pullColor)
+function MDT:DrawHull(vertices,pullColor,pullIdx)
 
     local hull = convex_hull(vertices)
-    if hull and hull[#hull] and #hull>2 then
+    if hull then
 
-        hull = expand_polygon(hull,7*(MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1))
-        --hull = smooth_contour(hull,10)
+        hull = expand_polygon(hull,13)
+        hull = convex_hull(hull)
+
         for i = 1, #hull do
             local a = hull[i]
             local b = hull[1]
             if i ~= #hull then b = hull[i+1] end
-            MDT:DrawHullLine(a[1], a[2], b[1], b[2], 3*(MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, true, "ARTWORK", -8, 1)
+            --layerSublevel go from -8 to 7
+            --we rotate through the layerSublevel to avoid collisions
+            MDT:DrawHullLine(a[1], a[2], b[1], b[2], 3*(MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, true, "ARTWORK", pullIdx%16-8, 1)
         end
     end
 end
@@ -222,7 +180,7 @@ local function getPullVertices(p,blips)
                     for _,blip in pairs(blips) do
                         if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
                             local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
-                            table.insert(vertices, {endX, endY, blip.data.scale})
+                            table.insert(vertices, {endX, endY, blip.normalScale})
                             break
                         end
                     end
@@ -242,7 +200,7 @@ function MDT:DrawAllHulls(pulls)
     for pullIdx,p in pairs(pulls) do
         local r,g,b = MDT:DungeonEnemies_GetPullColor(pullIdx,pulls)
         vertices = getPullVertices(p,blips)
-        MDT:DrawHull(vertices,{r=r, g=g, b=b, a=1})
+        MDT:DrawHull(vertices,{r=r, g=g, b=b, a=1},pullIdx)
     end
 end
 
