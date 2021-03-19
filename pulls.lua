@@ -80,7 +80,7 @@ local function expand_polygon(poly, numCirclePoints)
         local x = poly[i][1]
         local y = poly[i][2]
         local r = poly[i][3]*10
-        local adjustedNumPoints = math.round(numCirclePoints*poly[i][3])
+        local adjustedNumPoints = math.max(1,math.floor(numCirclePoints*poly[i][3]))
 
         for j = 1, adjustedNumPoints do
             local cx = x+r*math.cos(2*math.pi/adjustedNumPoints*j)
