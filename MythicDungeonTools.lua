@@ -20,7 +20,7 @@ local icon = LibStub("LibDBIcon-1.0")
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 	type = "data source",
 	text = "Mythic Dungeon Tools",
-	icon = "Interface\\ICONS\\inv_relics_hourglass",
+	icon = "Interface\\AddOns\\"..AddonName.."\\Textures\\NnoggieMinimap",
 	OnClick = function(button,buttonPressed)
 		if buttonPressed == "RightButton" then
 			if db.minimap.lock then
@@ -1065,6 +1065,12 @@ function MDT:MakeTopBottomTextures(frame)
 		frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 10, 0)
 		frame.topPanelString:Show()
         --frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
+        frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "HIGH", nil, 7)
+        frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\Nnoggie")
+        frame.topPanelLogo:SetWidth(24)
+        frame.topPanelLogo:SetHeight(24)
+        frame.topPanelLogo:SetPoint("RIGHT",frame.topPanelString,"LEFT",-5,0)
+        frame.topPanelLogo:Show()
 	end
 
     frame.topPanel:ClearAllPoints()
