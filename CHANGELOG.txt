@@ -1,3 +1,5 @@
+v3.5.6
+- fixed an issue causing a long freeze and crash when opening mdt
 v3.5.5
 - logo update
 v3.5.4
