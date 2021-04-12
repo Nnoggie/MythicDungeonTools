@@ -29,6 +29,7 @@ local function convex_hull(pts)
 
     local hull = {}
     local final = 1
+    local tries = 0
     repeat
         table.insert(hull, lower_left)
         final = 1
@@ -36,7 +37,8 @@ local function convex_hull(pts)
             if lower_left == final or is_left_of(pts[lower_left], pts[final], pts[j]) then final = j end
         end
         lower_left = final
-    until final == hull[1]
+        tries = tries + 1
+    until final == hull[1] or tries>100 --deadlocked here otherwise?!?
 
     local hullpts = {}
     for _, index in ipairs(hull) do
@@ -153,11 +155,12 @@ function MDT:DrawHullLine(x, y, a, b, size, color, smooth, layer, layerSublevel,
 end
 
 function MDT:DrawHull(vertices,pullColor,pullIdx)
-
+    --if true then return end
     local hull = convex_hull(vertices)
     if hull then
 
         hull = expand_polygon(hull,13)
+
         hull = convex_hull(hull)
 
         for i = 1, #hull do
