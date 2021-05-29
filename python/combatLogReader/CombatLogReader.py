@@ -190,7 +190,7 @@ def get_npc_count(npcID, regular_count):       # Returns the count of an NPC
 
 def make_aura_check_GUID_list(CL, aura):
     # How to use
-    # 1. Input the combatlog and the aura you want to check for
+    # 1. Input the combatlog and the aura you want to check for like seen below
     # 2. Make 2 lines of code in the table_output generator below like this
     # if npc.destGUID in inspiring_GUID_list:
     #    table_output += f'\t\t\t\t["inspiring"] = true;\n'
@@ -203,15 +203,18 @@ def make_aura_check_GUID_list(CL, aura):
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count, total_count = get_dungeon_count(boss_names)
 
+# Account for mobs with same name, but different npcID
+mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
+
 print("Mapping Initiated [", end="")
 
 npc_locale_en = ""
 table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
-for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
+for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
     unique_npc_index += 1  # Lua is stupid
     table_output += f'\t[{unique_npc_index}] = {{\n\t\t["clones"] = {{\n'
-    for npc_index, npc in enumerate(mobHits[mobHits.destName == unique_npc_name].itertuples()):
+    for npc_index, npc in enumerate(mobHits[mobHits.npcID == unique_npcID].itertuples()):
         npc_index += 1  # Lua is stupid
         table_output += f'\t\t\t[{npc_index}] = {{\n'
         table_output += f'\t\t\t\t["x"] = {npc.MDTx};\n'
@@ -230,14 +233,13 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
     table_output += f'\t\t["name"] = L["{npc.destName}"];\n'
     # Adding npc name to string for easy locale enUS
     npc_locale_en += f'L["{npc.destName}"] = "{npc.destName}"\n'
-    npcID = get_npc_id(npc.destGUID)
-    table_output += f'\t\t["id"] = {npcID};\n'
+    table_output += f'\t\t["id"] = {npc.npcID};\n'
     table_output += f'\t\t["health"] = {npc.maxHP};\n'
     table_output += f'\t\t["level"] = {npc.level};\n'
-    count = get_npc_count(npcID, regular_count)
+    count = get_npc_count(npc.npcID, regular_count)
     table_output += f'\t\t["count"] = {count};\n'
     if request_wowtools:
-        displayID, creatureType = get_displayid_and_creaturetype(npcID)
+        displayID, creatureType = get_displayid_and_creaturetype(npc.npcID)
         table_output += f'\t\t["displayId"] = {displayID};\n'
         table_output += f'\t\t["creatureType"] = L["{creatureType}"];\n'
     table_output += f'\t\t["scale"] = 1;\n'
