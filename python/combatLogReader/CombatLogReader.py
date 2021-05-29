@@ -230,7 +230,7 @@ for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
         table_output += f'\t\t["isBoss"] = true;\n'
         table_output += f'\t\t["encounterID"] = {encounterID};\n'
         table_output += f'\t\t["instanceID"] = {instanceID};\n'
-    table_output += f'\t\t["name"] = L["{npc.destName}"];\n'
+    table_output += f'\t\t["name"] = "{npc.destName}";\n'
     # Adding npc name to string for easy locale enUS
     npc_locale_en += f'L["{npc.destName}"] = "{npc.destName}"\n'
     table_output += f'\t\t["id"] = {npc.npcID};\n'
@@ -241,7 +241,7 @@ for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
     if request_wowtools:
         displayID, creatureType = get_displayid_and_creaturetype(npc.npcID)
         table_output += f'\t\t["displayId"] = {displayID};\n'
-        table_output += f'\t\t["creatureType"] = L["{creatureType}"];\n'
+        table_output += f'\t\t["creatureType"] = "{creatureType}";\n'
     table_output += f'\t\t["scale"] = 1;\n'
     print("-", end="")
 
