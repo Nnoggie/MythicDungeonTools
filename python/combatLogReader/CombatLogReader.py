@@ -222,11 +222,12 @@ mobHits["mobcount"] = [get_npc_count(npcID, regular_count) for npcID in mobHits.
 # Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
 # If you want to include all pets and remove manually simply comment out the five lines below
 HP_threshold = 20000
-deleted_mobs = len(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
-                               (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)])
+deleted_mobs = mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
+                               (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
 mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &
                          (mobHits.mobcount == 0)].index, inplace=True)
-print("{} enemy pets deleted due to low health (sub {}) and no count.".format(deleted_mobs, HP_threshold))
+print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs), HP_threshold))
+
 
 print("Mapping Initiated [", end="")
 
