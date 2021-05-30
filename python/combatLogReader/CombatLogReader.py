@@ -5,7 +5,7 @@ import pyperclip
 from collections import OrderedDict
 from get_wowtools_data import *
 
-request_wowtools = False
+request_wowtools = True
 # How to use:
 # 1. Delete or rename your current WoWCombatLog.txt file to start from fresh
 # 2. Run the dungeon tagging all mobs where they spawn.
