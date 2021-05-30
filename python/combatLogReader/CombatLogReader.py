@@ -189,6 +189,15 @@ def get_npc_count(npcID, regular_count):  # Returns the count of an NPC
     return npc_count
 
 
+def is_mob_unimportant(npc, threshold):
+    if npc[0].astype(str).startswith("Creature") and int(npc[1]) < threshold:
+        mobcount = get_npc_count(npc.npcID, regular_count)
+        if mobcount == 0:
+            return True
+
+    return False
+
+
 def make_aura_check_GUID_list(CL, aura):
     # How to use
     # 1. Input the combatlog and the aura you want to check for like seen below
@@ -206,6 +215,18 @@ regular_count, total_count = get_dungeon_count(boss_names)
 
 # Account for mobs with same name, but different npcID
 mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
+
+# Add count to mobHits table
+mobHits["mobcount"] = [get_npc_count(npcID, regular_count) for npcID in mobHits.npcID]
+
+# Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
+# If you want to include all pets and remove manually simply comment out the five lines below
+HP_threshold = 20000
+deleted_mobs = len(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
+                               (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)])
+mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &
+                         (mobHits.mobcount == 0)].index, inplace=True)
+print("{} enemy pets deleted due to low health (sub {}) and no count.".format(deleted_mobs, HP_threshold))
 
 print("Mapping Initiated [", end="")
 
@@ -238,8 +259,7 @@ for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
     table_output += f'\t\t["id"] = {npc.npcID};\n'
     table_output += f'\t\t["health"] = {npc.maxHP};\n'
     table_output += f'\t\t["level"] = {npc.level};\n'
-    count = get_npc_count(npc.npcID, regular_count)
-    table_output += f'\t\t["count"] = {count};\n'
+    table_output += f'\t\t["count"] = {npc.mobcount};\n'
     if request_wowtools:
         displayID, creatureType = get_displayid_and_creaturetype(npc.npcID)
         table_output += f'\t\t["displayId"] = {displayID};\n'
