@@ -2,6 +2,7 @@ import time
 import pandas as pd
 import numpy as np
 import pyperclip
+from collections import OrderedDict
 from get_wowtools_data import *
 
 request_wowtools = True
@@ -32,9 +33,9 @@ boss_names = CL.loc[(CL.event == "ENCOUNTER_START")].sourceName.to_list()
 
 # Dataframe that contains every initial SPELL_DAMAGE event against each npc
 mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
-                 (~CL.destGUID.str.startswith("Player", na=True)) &     # Filters out damage events against the player
-                 (~CL.ownerGUID.str.startswith("Player", na=True)),      # Filters out damage events against player pets
-                 ["destGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
+                 (~CL.destGUID.str.startswith("Player", na=True)) &  # Filters out damage events against the player
+                 (~CL.ownerGUID.str.startswith("Player", na=True)),  # Filters out damage events against player pets
+                 ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
 mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
 mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
 # Fix Blizzard combat log coords
@@ -250,30 +251,30 @@ table_output += '};'
 print("] Mapping Completed")
 table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n\n"
 
-# Checking locale_dump.txt and adding new npcs names to output
+
 # Read file locale_dump if it exists otherwise set locale_file to []
 try:
     locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None, sep="*")
-                     .text.unique()
-                     .tolist())
+                   .text.unique()
+                   .tolist())
 except FileNotFoundError:
     locale_file = []
 
-# Find new npc names from combat log that have never been seen before
-new_npc_locale_en = [text for text in npc_locale_en.split("\n") if text not in locale_file]
+# Remove all duplicate npc names from locale output
+npc_locale_en = "\n".join(list(OrderedDict.fromkeys(npc_locale_en.split("\n"))))
 
-# Update locale_dump
-for item in new_npc_locale_en:
-    locale_file.append(item)
+# Find new npc names from combat log that have never been seen before and add to local_dump.txt
+[locale_file.append(text) for text in npc_locale_en.split("\n") if text not in locale_file]
 
 with open("locale_dump.txt", "w") as f:
     for item in locale_file:
         f.write(f"{item}\n")
 
 # Add new npc names to output
-locale_en_output = output = f"\n".join(new_npc_locale_en)
-table_output += locale_en_output
+table_output += npc_locale_en
 
 pyperclip.copy(table_output)
 
+print("This dungeon requires {} count to complete and has {} total count. You need to clear {}% of the dungeon."
+      .format(total_count, mobHits.mobcount.sum(), int(round(total_count/mobHits.mobcount.sum(), 2)*100)))
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
