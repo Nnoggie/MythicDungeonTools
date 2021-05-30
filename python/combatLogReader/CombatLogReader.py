@@ -5,7 +5,7 @@ import pyperclip
 from collections import OrderedDict
 from get_wowtools_data import *
 
-request_wowtools = True
+request_wowtools = False
 # How to use:
 # 1. Delete or rename your current WoWCombatLog.txt file to start from fresh
 # 2. Run the dungeon tagging all mobs where they spawn.
@@ -74,7 +74,6 @@ f["map"].rename(columns={"ID": "continentID",
                          "Directory": "directory"},
                 inplace=True)
 
-
 info_columns = ["dungeon_name", "continentID", "UiMapID", "directory",
                 "xmin", "xmax", "ymin", "ymax"]
 # DataFrame merging the UiMapID and their associated dungeon from map with the map extent info from uimapassignment
@@ -85,7 +84,8 @@ map_extent = (f["map"].merge(f["uimapassignment"], on="continentID")[info_column
 
 
 def get_map_extent(UiMapID):  # Returns map extent in minimap coordinates xmin, xmax, ymin, ymax
-    return map_extent.loc[map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]] #TODO FIX THIS TO INCLUDE SL
+    return map_extent.loc[
+        map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]]  # TODO FIX THIS TO INCLUDE SL
 
 
 def convert_to_relative_coord(df):  # Converts mob position to relative position from (0,100). Returns x,y
@@ -95,7 +95,7 @@ def convert_to_relative_coord(df):  # Converts mob position to relative position
     return pd.Series([x, y])
 
 
-def convert_to_MDT_coord(df):       # Converts mob position to coordinates used for the MDT map. Returns x,y as series
+def convert_to_MDT_coord(df):  # Converts mob position to coordinates used for the MDT map. Returns x,y as series
     # MDT INFO FOR SCALE = 1
     # WIDTH = 840
     # HEIGHT = 555
@@ -112,11 +112,11 @@ def convert_to_MDT_coord(df):       # Converts mob position to coordinates used 
     return pd.Series([x, y])
 
 
-def get_npc_id(GUID):       # Splits the GUID and extracts the npcID
+def get_npc_id(GUID):  # Splits the GUID and extracts the npcID
     return int(GUID.split("-")[5])
 
 
-def get_boss_info(name):    # Takes as input a boss name and returns the corresponsing encounterID and instanceID
+def get_boss_info(name):  # Takes as input a boss name and returns the corresponsing encounterID and instanceID
     boss = f["journalencounter"][f["journalencounter"].Name_lang == name]
     encounterID = int(boss.ID)
     instanceID = int(boss.JournalInstanceID)
@@ -135,9 +135,9 @@ mobHits[["MDTx", "MDTy"]] = mobHits.apply(convert_to_MDT_coord, axis=1)
 mobHits["sublevel"] = [UiMapID_to_sublevel(UiMapID) for UiMapID in mobHits.UiMapID]
 
 
-def get_count_table(ID):    # Extracts the count table for a given dungeons enemy forces criteria ID
+def get_count_table(ID):  # Extracts the count table for a given dungeons enemy forces criteria ID
     dungeon_forces = f["criteriatree"][((f["criteriatree"].Parent == ID) &
-                                   (f["criteriatree"].Description_lang == "Enemy Forces"))]
+                                        (f["criteriatree"].Description_lang == "Enemy Forces"))]
     enemy_forces = f["criteriatree"][f["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
     enemy_forces["npcID"] = [int(f["criteria"][f["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
@@ -155,7 +155,7 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
     if not boss_names:
         return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
 
-    #Fixing Blizzard brain not naming bosses the same everywhere
+    # Fixing Blizzard brain not naming bosses the same everywhere
     for i in range(len(boss_names)):
         parent_dungeons = f["criteriatree"][
             f["criteriatree"].Description_lang.str.startswith(boss_names[i], na=False)].Parent
@@ -168,14 +168,14 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
     mythic_regular = f["criteriatree"][(
             (f["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
             (f["criteriatree"].ID.isin(parent_dungeons)) &
-            ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))] # This means NOT Teeming
+            ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
 
     regular_count = get_count_table(int(mythic_regular.ID))
     total_count = get_total_count(int(mythic_regular.ID))
     return regular_count, total_count
 
 
-def get_npc_count(npcID, regular_count):       # Returns the count of an NPC
+def get_npc_count(npcID, regular_count):  # Returns the count of an NPC
     # If the NPC does not give count it returns 0
     # If the NPC gives the same X count and Y teemingCount it returns X, None
     #       and doesn't add teemingCount to npc in lua table
@@ -196,7 +196,7 @@ def make_aura_check_GUID_list(CL, aura):
     # if npc.destGUID in inspiring_GUID_list:
     #    table_output += f'\t\t\t\t["inspiring"] = true;\n'
     GUID_list = CL.loc[((CL.event == "SPELL_AURA_APPLIED") &
-                             (CL.spellName == aura))].destGUID.values
+                        (CL.spellName == aura))].destGUID.values
     return GUID_list
 
 
@@ -210,7 +210,8 @@ mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
 print("Mapping Initiated [", end="")
 
 npc_locale_en = ""
-table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
+table_output = f"MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n"
+table_output += "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
 for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
     unique_npc_index += 1  # Lua is stupid
@@ -247,9 +248,9 @@ for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
     print("-", end="")
 
     table_output += '\t};\n'
-table_output += '};'
+table_output += '};\n\n'
 print("] Mapping Completed")
-table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n\n"
+
 
 
 # Read file locale_dump if it exists otherwise set locale_file to []
