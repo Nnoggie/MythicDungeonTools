@@ -34,7 +34,8 @@ boss_names = CL.loc[(CL.event == "ENCOUNTER_START")].sourceName.to_list()
 # Dataframe that contains every initial SPELL_DAMAGE event against each npc
 mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
                  (~CL.destGUID.str.startswith("Player", na=True)) &  # Filters out damage events against the player
-                 (~CL.ownerGUID.str.startswith("Player", na=True)),  # Filters out damage events against player pets
+                 (~CL.ownerGUID.str.startswith("Player", na=True)) &  # Filters out damage events against player pets
+                 (CL.destName != "Unknown"),
                  ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
 mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
 mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
@@ -220,7 +221,7 @@ mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
 mobHits["mobcount"] = [get_npc_count(npcID, regular_count) for npcID in mobHits.npcID]
 
 # Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
-# If you want to include all pets and remove manually simply comment out the five lines below
+# If you want to include all pets and remove manually simply comment out the six lines below
 HP_threshold = 20000
 deleted_mobs = mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
                                (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
