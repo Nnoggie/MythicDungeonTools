@@ -22,7 +22,7 @@ combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags",
                     "overkill", "school", "resisted", "blocked", "absorbed", "critical", "glancing", "crushing",
                     "isOffHand"]
 
-CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames)
+CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False)
 # Extracting the event from date and time, which are not comma separated
 timesplit = CL.timestampevent.str.split(" ")
 timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])
@@ -86,7 +86,7 @@ map_extent = (f["map"].merge(f["uimapassignment"], on="continentID")[info_column
 
 def get_map_extent(UiMapID):  # Returns map extent in minimap coordinates xmin, xmax, ymin, ymax
     return map_extent.loc[
-        map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]]  # TODO FIX THIS TO INCLUDE SL
+        map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]]
 
 
 def convert_to_relative_coord(df):  # Converts mob position to relative position from (0,100). Returns x,y
