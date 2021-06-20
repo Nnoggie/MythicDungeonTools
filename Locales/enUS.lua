@@ -775,6 +775,7 @@ L["Prideful"] = "Prideful"
 L["Inspiring"] = "Inspiring"
 L["Spiteful"] = "Spiteful"
 L["Storming"] = "Storming"
+L["Tormented"] = "Tormented"
 
 -----Automatically Translated:
 L["Unstable Larva"] = "Unstable Larva"
