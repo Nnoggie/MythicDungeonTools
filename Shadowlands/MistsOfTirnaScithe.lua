@@ -1761,6 +1761,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
              ["sublevel"] = 1;
           };
        };
+       ["spells"] = {
+         [355719] = {};
+         [358784] = {};
+         [358968] = {};
+         [358970] = {};
+         [355806] = {};
+       };
        ["id"] = 179891;
        ["stealthDetect"] = true;
        ["health"] = 358540;
@@ -1869,6 +1876,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
              ["x"] = 667.04336516818;
              ["sublevel"] = 1;
           };
+       };
+       ["spells"] = {
+         [355714] = {};
+         [356923] = {};
+         [356925] = {};
+         [358971] = {};
        };
        ["id"] = 179890;
        ["stealthDetect"] = true;
@@ -1983,6 +1996,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
              ["x"] = 329.77738274742;
              ["sublevel"] = 1;
           };
+       };
+       ["spells"] = {
+         [355710] = {};
+         [356666] = {};
+         [356414] = {};
+         [358894] = {};
        };
        ["id"] = 179892;
        ["stealthDetect"] = true;
@@ -2237,6 +2256,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
              ["x"] = 565.77752389867;
              ["sublevel"] = 1;
           };
+       };
+       ["spells"] = {
+         [355707] = {};
+         [355737] = {};
+         [355732] = {};
+         [358967] = {};
        };
        ["id"] = 179446;
        ["stealthDetect"] = true;
