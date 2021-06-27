@@ -1126,7 +1126,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355710] = {};
          [356414] = {};
       };
-      ["stealthDetect"] = true;
       ["health"] = 336131;
       ["ignoreFortified"] = true;
       ["count"] = 0;
@@ -1152,7 +1151,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [358968] = {};
          [355806] = {};
       };
-      ["stealthDetect"] = true;
       ["scale"] = 1.5;
       ["ignoreFortified"] = true;
       ["count"] = 0;
@@ -1462,7 +1460,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [356925] = {};
          [356923] = {};
       };
-      ["stealthDetect"] = true;
       ["scale"] = 1.5;
       ["ignoreFortified"] = true;
       ["count"] = 0;
@@ -2564,7 +2561,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355707] = {};
          [355737] = {};
       };
-      ["stealthDetect"] = true;
       ["scale"] = 1.5;
       ["ignoreFortified"] = true;
       ["count"] = 0;

@@ -1153,7 +1153,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355806] = {};
        };
        ["id"] = 179891;
-       ["stealthDetect"] = true;
        ["health"] = 358540;
        ["count"] = 0;
        ["creatureType"] = "Humanoid";
@@ -1178,7 +1177,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [358967] = {};
        };
        ["id"] = 179446;
-       ["stealthDetect"] = true;
        ["health"] = 336131;
        ["count"] = 0;
        ["creatureType"] = "Humanoid";
@@ -1491,7 +1489,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [358894] = {};
        };
        ["id"] = 179892;
-       ["stealthDetect"] = true;
        ["health"] = 336131;
        ["count"] = 0;
        ["creatureType"] = "Humanoid";
@@ -2391,7 +2388,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [358971] = {};
        };
        ["id"] = 179890;
-       ["stealthDetect"] = true;
        ["health"] = 336131;
        ["count"] = 0;
        ["creatureType"] = "Humanoid";
