@@ -2,6 +2,7 @@ import time
 import pandas as pd
 import numpy as np
 import pyperclip
+from collections import OrderedDict
 from get_wowtools_data import *
 
 request_wowtools = True
@@ -21,7 +22,7 @@ combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags",
                     "overkill", "school", "resisted", "blocked", "absorbed", "critical", "glancing", "crushing",
                     "isOffHand"]
 
-CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames)
+CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False)
 # Extracting the event from date and time, which are not comma separated
 timesplit = CL.timestampevent.str.split(" ")
 timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])
@@ -32,9 +33,10 @@ boss_names = CL.loc[(CL.event == "ENCOUNTER_START")].sourceName.to_list()
 
 # Dataframe that contains every initial SPELL_DAMAGE event against each npc
 mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
-                 (~CL.destGUID.str.startswith("Player", na=True)) &     # Filters out damage events against the player
-                 (~CL.ownerGUID.str.startswith("Player", na=True)),      # Filters out damage events against player pets
-                 ["destGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
+                 (~CL.destGUID.str.startswith("Player", na=True)) &  # Filters out damage events against the player
+                 (~CL.ownerGUID.str.startswith("Player", na=True)) &  # Filters out damage events against player pets
+                 (CL.destName != "Unknown"),
+                 ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
 mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
 mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
 # Fix Blizzard combat log coords
@@ -73,7 +75,6 @@ f["map"].rename(columns={"ID": "continentID",
                          "Directory": "directory"},
                 inplace=True)
 
-
 info_columns = ["dungeon_name", "continentID", "UiMapID", "directory",
                 "xmin", "xmax", "ymin", "ymax"]
 # DataFrame merging the UiMapID and their associated dungeon from map with the map extent info from uimapassignment
@@ -84,7 +85,8 @@ map_extent = (f["map"].merge(f["uimapassignment"], on="continentID")[info_column
 
 
 def get_map_extent(UiMapID):  # Returns map extent in minimap coordinates xmin, xmax, ymin, ymax
-    return map_extent.loc[map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]] #TODO FIX THIS TO INCLUDE SL
+    return map_extent.loc[
+        map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]]
 
 
 def convert_to_relative_coord(df):  # Converts mob position to relative position from (0,100). Returns x,y
@@ -94,7 +96,7 @@ def convert_to_relative_coord(df):  # Converts mob position to relative position
     return pd.Series([x, y])
 
 
-def convert_to_MDT_coord(df):       # Converts mob position to coordinates used for the MDT map. Returns x,y as series
+def convert_to_MDT_coord(df):  # Converts mob position to coordinates used for the MDT map. Returns x,y as series
     # MDT INFO FOR SCALE = 1
     # WIDTH = 840
     # HEIGHT = 555
@@ -111,11 +113,11 @@ def convert_to_MDT_coord(df):       # Converts mob position to coordinates used 
     return pd.Series([x, y])
 
 
-def get_npc_id(GUID):       # Splits the GUID and extracts the npcID
+def get_npc_id(GUID):  # Splits the GUID and extracts the npcID
     return int(GUID.split("-")[5])
 
 
-def get_boss_info(name):    # Takes as input a boss name and returns the corresponsing encounterID and instanceID
+def get_boss_info(name):  # Takes as input a boss name and returns the corresponsing encounterID and instanceID
     boss = f["journalencounter"][f["journalencounter"].Name_lang == name]
     encounterID = int(boss.ID)
     instanceID = int(boss.JournalInstanceID)
@@ -134,9 +136,9 @@ mobHits[["MDTx", "MDTy"]] = mobHits.apply(convert_to_MDT_coord, axis=1)
 mobHits["sublevel"] = [UiMapID_to_sublevel(UiMapID) for UiMapID in mobHits.UiMapID]
 
 
-def get_count_table(ID):    # Extracts the count table for a given dungeons enemy forces criteria ID
+def get_count_table(ID):  # Extracts the count table for a given dungeons enemy forces criteria ID
     dungeon_forces = f["criteriatree"][((f["criteriatree"].Parent == ID) &
-                                   (f["criteriatree"].Description_lang == "Enemy Forces"))]
+                                        (f["criteriatree"].Description_lang == "Enemy Forces"))]
     enemy_forces = f["criteriatree"][f["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
     enemy_forces["npcID"] = [int(f["criteria"][f["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
@@ -154,7 +156,7 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
     if not boss_names:
         return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
 
-    #Fixing Blizzard brain not naming bosses the same everywhere
+    # Fixing Blizzard brain not naming bosses the same everywhere
     for i in range(len(boss_names)):
         parent_dungeons = f["criteriatree"][
             f["criteriatree"].Description_lang.str.startswith(boss_names[i], na=False)].Parent
@@ -167,14 +169,14 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
     mythic_regular = f["criteriatree"][(
             (f["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
             (f["criteriatree"].ID.isin(parent_dungeons)) &
-            ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))] # This means NOT Teeming
+            ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
 
     regular_count = get_count_table(int(mythic_regular.ID))
     total_count = get_total_count(int(mythic_regular.ID))
     return regular_count, total_count
 
 
-def get_npc_count(npcID, regular_count):       # Returns the count of an NPC
+def get_npc_count(npcID, regular_count):  # Returns the count of an NPC
     # If the NPC does not give count it returns 0
     # If the NPC gives the same X count and Y teemingCount it returns X, None
     #       and doesn't add teemingCount to npc in lua table
@@ -188,14 +190,23 @@ def get_npc_count(npcID, regular_count):       # Returns the count of an NPC
     return npc_count
 
 
+def is_mob_unimportant(npc, threshold):
+    if npc[0].astype(str).startswith("Creature") and int(npc[1]) < threshold:
+        mobcount = get_npc_count(npc.npcID, regular_count)
+        if mobcount == 0:
+            return True
+
+    return False
+
+
 def make_aura_check_GUID_list(CL, aura):
     # How to use
-    # 1. Input the combatlog and the aura you want to check for
+    # 1. Input the combatlog and the aura you want to check for like seen below
     # 2. Make 2 lines of code in the table_output generator below like this
     # if npc.destGUID in inspiring_GUID_list:
     #    table_output += f'\t\t\t\t["inspiring"] = true;\n'
     GUID_list = CL.loc[((CL.event == "SPELL_AURA_APPLIED") &
-                             (CL.spellName == aura))].destGUID.values
+                        (CL.spellName == aura))].destGUID.values
     return GUID_list
 
 
@@ -203,15 +214,32 @@ def make_aura_check_GUID_list(CL, aura):
 inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
 regular_count, total_count = get_dungeon_count(boss_names)
 
+# Account for mobs with same name, but different npcID
+mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
+
+# Add count to mobHits table
+mobHits["mobcount"] = [get_npc_count(npcID, regular_count) for npcID in mobHits.npcID]
+
+# Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
+# If you want to include all pets and remove manually simply comment out the six lines below
+HP_threshold = 20000
+deleted_mobs = mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
+                               (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
+mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &
+                         (mobHits.mobcount == 0)].index, inplace=True)
+print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs), HP_threshold))
+
+
 print("Mapping Initiated [", end="")
 
 npc_locale_en = ""
-table_output = "MDT.dungeonEnemies[dungeonIndex] = {\n"
+table_output = f"MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n"
+table_output += "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
-for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
+for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
     unique_npc_index += 1  # Lua is stupid
     table_output += f'\t[{unique_npc_index}] = {{\n\t\t["clones"] = {{\n'
-    for npc_index, npc in enumerate(mobHits[mobHits.destName == unique_npc_name].itertuples()):
+    for npc_index, npc in enumerate(mobHits[mobHits.npcID == unique_npcID].itertuples()):
         npc_index += 1  # Lua is stupid
         table_output += f'\t\t\t[{npc_index}] = {{\n'
         table_output += f'\t\t\t\t["x"] = {npc.MDTx};\n'
@@ -227,51 +255,49 @@ for unique_npc_index, unique_npc_name in enumerate(mobHits.destName.unique()):
         table_output += f'\t\t["isBoss"] = true;\n'
         table_output += f'\t\t["encounterID"] = {encounterID};\n'
         table_output += f'\t\t["instanceID"] = {instanceID};\n'
-    table_output += f'\t\t["name"] = L["{npc.destName}"];\n'
+    table_output += f'\t\t["name"] = "{npc.destName}";\n'
     # Adding npc name to string for easy locale enUS
     npc_locale_en += f'L["{npc.destName}"] = "{npc.destName}"\n'
-    npcID = get_npc_id(npc.destGUID)
-    table_output += f'\t\t["id"] = {npcID};\n'
+    table_output += f'\t\t["id"] = {npc.npcID};\n'
     table_output += f'\t\t["health"] = {npc.maxHP};\n'
     table_output += f'\t\t["level"] = {npc.level};\n'
-    count = get_npc_count(npcID, regular_count)
-    table_output += f'\t\t["count"] = {count};\n'
+    table_output += f'\t\t["count"] = {npc.mobcount};\n'
     if request_wowtools:
-        displayID, creatureType = get_displayid_and_creaturetype(npcID)
+        displayID, creatureType = get_displayid_and_creaturetype(npc.npcID)
         table_output += f'\t\t["displayId"] = {displayID};\n'
-        table_output += f'\t\t["creatureType"] = L["{creatureType}"];\n'
+        table_output += f'\t\t["creatureType"] = "{creatureType}";\n'
     table_output += f'\t\t["scale"] = 1;\n'
     print("-", end="")
 
     table_output += '\t};\n'
-table_output += '};'
+table_output += '};\n\n'
 print("] Mapping Completed")
-table_output += f"\nMDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n\n"
 
-# Checking locale_dump.txt and adding new npcs names to output
+
+
 # Read file locale_dump if it exists otherwise set locale_file to []
 try:
     locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None, sep="*")
-                     .text.unique()
-                     .tolist())
+                   .text.unique()
+                   .tolist())
 except FileNotFoundError:
     locale_file = []
 
-# Find new npc names from combat log that have never been seen before
-new_npc_locale_en = [text for text in npc_locale_en.split("\n") if text not in locale_file]
+# Remove all duplicate npc names from locale output
+npc_locale_en = "\n".join(list(OrderedDict.fromkeys(npc_locale_en.split("\n"))))
 
-# Update locale_dump
-for item in new_npc_locale_en:
-    locale_file.append(item)
+# Find new npc names from combat log that have never been seen before and add to local_dump.txt
+[locale_file.append(text) for text in npc_locale_en.split("\n") if text not in locale_file]
 
 with open("locale_dump.txt", "w") as f:
     for item in locale_file:
         f.write(f"{item}\n")
 
 # Add new npc names to output
-locale_en_output = output = f"\n".join(new_npc_locale_en)
-table_output += locale_en_output
+table_output += npc_locale_en
 
 pyperclip.copy(table_output)
 
+print("This dungeon requires {} count to complete and has {} total count. You need to clear {}% of the dungeon."
+      .format(total_count, mobHits.mobcount.sum(), int(round(total_count/mobHits.mobcount.sum(), 2)*100)))
 print("Lua table copied to clipboard. Paste into the correct dungeon file.")
