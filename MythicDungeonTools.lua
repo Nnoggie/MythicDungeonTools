@@ -3983,6 +3983,12 @@ function MDT:UpdatePullButtonNPCData(idx)
     else
         frame.newPullButtons[idx]:ShowPridefulIcon(false,currentPercent,oldPercent)
     end
+    --count per health
+    if pullForces>0 then
+        frame.newPullButtons[idx]:ShowCountPerHealth(true,pullForces,totalForcesMax)
+    else
+        frame.newPullButtons[idx]:ShowCountPerHealth(true,pullForces,totalForcesMax)
+    end
 end
 
 ---ReloadPullButtons
