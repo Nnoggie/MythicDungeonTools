@@ -1062,6 +1062,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [356925] = {};
          [358971] = {};
        };
+       ["powers"] = {
+         [357575] = { ["tank"] = true; ["dps"] = true; ["healer"] = true; };
+         [357609] = { ["dps"] = true; };
+         [357706] = { ["dps"] = true; };
+         [357863] = { ["tank"] = true; };
+         [357604] = { ["tank"] = true; };
+         [357747] = { ["healer"] = true; };
+         [357847] = { ["healer"] = true; };
+      };
        ["id"] = 179890;
        ["count"] = 0;
        ["ignoreFortified"] = true;
@@ -1960,6 +1969,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355732] = {};
          [358967] = {};
        };
+       ["powers"] = {
+         [357575] = { ["tank"] = true; ["dps"] = true; ["healer"] = true; };
+         [357864] = { ["dps"] = true; };
+         [357848] = { ["dps"] = true; };
+         [357897] = { ["tank"] = true; };
+         [357839] = { ["tank"] = true; };
+         [357900] = { ["healer"] = true; };
+         [357889] = { ["healer"] = true; };
+      };
        ["id"] = 179446;
        ["count"] = 0;
        ["ignoreFortified"] = true;
@@ -2084,6 +2102,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [356414] = {};
          [358894] = {};
        };
+       ["powers"] = {
+         [357815] = { ["dps"] = true; ["healer"] = true; };
+         [357825] = { ["dps"] = true; };
+         [357834] = { ["dps"] = true; ["tank"] = true; };
+         [357817] = { ["tank"] = true; };
+         [357820] = { ["tank"] = true; };
+         [357842] = { ["healer"] = true; };
+         [357829] = { ["healer"] = true; };
+      };
        ["id"] = 179892;
        ["scale"] = 1.5;
        ["ignoreFortified"] = true;
@@ -2139,6 +2166,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [358970] = {};
          [355806] = {};
        };
+       ["powers"] = {
+         [357524] = { ["tank"] = true; ["dps"] = true; ["healer"] = true; };
+         [356828] = { ["tank"] = true; ["dps"] = true; };
+         [356827] = { ["dps"] = true; ["healer"] = true; };
+         [357778] = { ["tank"] = true; };
+         [357556] = { ["healer"] = true; };
+      };
        ["id"] = 179891;
        ["count"] = 0;
        ["ignoreFortified"] = true;
