@@ -1,3 +1,8 @@
+v3.5.8
+- Tormented Affix support including Abilities and Anima Powers for new minibosses (credit to Blazeton/stschake)
+v3.5.7
+- automatic mapping updates (credit to Stinth)
+- 9.1 updates
 v3.5.6
 - fixed an issue causing a long freeze and crash when opening mdt
 v3.5.5
