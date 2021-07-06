@@ -775,6 +775,7 @@ L["Prideful"] = "Prideful"
 L["Inspiring"] = "Inspiring"
 L["Spiteful"] = "Spiteful"
 L["Storming"] = "Storming"
+L["Tormented"] = "Tormented"
 
 -----Automatically Translated:
 L["Unstable Larva"] = "Unstable Larva"
@@ -1023,6 +1024,10 @@ L["Infused Quill-feather"] = "Infused Quill-feather"
 L["Zolramus Siphoner"] = "Zolramus Siphoner"
 L["Halkias"] = "Halkias"
 L["Remnant of Fury"] = "Remnant of Fury"
+L["Executioner Varruth"] = "Executioner Varruth"
+L["Oros Coldheart"] = "Oros Coldheart"
+L["Soggodon the Breaker"] = "Soggodon the Breaker"
+L["Incinerator Arkolath"] = "Incinerator Arkolath"
 
 L["plaguefallDevotedNote"] = "Plaguefall Devoted which have already been transformed by Oozing Carcass before engaging Ickor Bileflesh do not award Enemy Forces."
 L["ConnectedTip"] = "Group connections in MDT do not reflect if NPCs are linked together in the game world."

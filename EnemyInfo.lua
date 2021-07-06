@@ -65,6 +65,21 @@ AceGUI:RegisterLayout("ThreeColums", function(content, children)
     safecall(content.obj.LayoutFinished, content.obj, nil, nil)
 end)
 
+-- Very simple Layout, Children are stacked on top of each other down the left side
+AceGUI:RegisterLayout("ListWithHidden", function(content, children)
+    local filteredChildren = {}
+    for i = 1, #children do
+        local child = children[i]
+        if not child.hidden then
+            tinsert(filteredChildren, child)
+        else
+            local frame = child.frame
+            frame:ClearAllPoints()
+            frame:Hide()
+        end
+    end
+    AceGUI:GetLayout("List")(content, filteredChildren)
+end)
 
 local currentTab = "tab1"
 local function MakeEnemeyInfoFrame()
@@ -274,7 +289,7 @@ local function MakeEnemeyInfoFrame()
         --Temporary Fix: backdrop frame level is set to 10000 normally
         --rightContainer.frame.backdrop:SetFrameLevel(1)
         rightContainer.frame:SetBackdropColor(1,1,1,0)
-        rightContainer:SetLayout("List")
+        rightContainer:SetLayout("ListWithHidden")
         rightContainer:SetWidth(container.frame:GetWidth()/3)
         rightContainer:SetHeight(container.frame:GetHeight())
 
@@ -283,7 +298,6 @@ local function MakeEnemeyInfoFrame()
         rightDummyIcon:SetImageSize(20, 20)
         rightDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
         rightDummyIcon:SetDisabled(true)
-        rightContainer:AddChild(rightDummyIcon)
 
         --spells
         f.spellScrollContainer = f.spellScrollContainer or AceGUI:Create("InlineGroup")
@@ -300,6 +314,22 @@ local function MakeEnemeyInfoFrame()
         f.spellScroll:SetLayout("List")
         spellScrollContainer:AddChild(f.spellScroll)
 
+        --powers
+        f.powerScrollContainer = f.powerScrollContainer or AceGUI:Create("InlineGroup")
+        local powerScrollContainer = f.powerScrollContainer
+        if not powerScrollContainer.frame.SetBackdrop then
+            Mixin(powerScrollContainer.frame, BackdropTemplateMixin)
+        end
+        powerScrollContainer.frame:SetBackdropColor(1,1,1,0)
+        powerScrollContainer:SetWidth(leftContainer.frame:GetWidth()-20)
+        powerScrollContainer:SetHeight(141)
+        powerScrollContainer:SetLayout("Fill")
+
+        f.powerScroll = AceGUI:Create("ScrollFrame")
+        f.powerScroll:SetLayout("List")
+        powerScrollContainer:AddChild(f.powerScroll)
+        powerScrollContainer.hidden = true
+
         --spellButtons
         f.spellButtonsContainer = f.spellButtonsContainer or AceGUI:Create("InlineGroup")
         local spellButtonsContainer = f.spellButtonsContainer
@@ -311,7 +341,8 @@ local function MakeEnemeyInfoFrame()
         spellScrollContainer:SetLayout("Flow")
 
         local buttonWidth = 110
-        local sendSpellsButton = AceGUI:Create("Button")
+        f.sendSpellsButton = f.sendSpellsButton or AceGUI:Create("Button")
+        local sendSpellsButton = f.sendSpellsButton
         sendSpellsButton:SetText(L["Link Spells"])
         sendSpellsButton:SetWidth(buttonWidth)
         sendSpellsButton:SetCallback("OnClick",function()
@@ -327,7 +358,9 @@ local function MakeEnemeyInfoFrame()
         end)
         spellButtonsContainer:AddChild(sendSpellsButton)
 
+        rightContainer:AddChild(rightDummyIcon)
         rightContainer:AddChild(spellScrollContainer)
+        rightContainer:AddChild(powerScrollContainer)
         rightContainer:AddChild(spellButtonsContainer)
 
 
@@ -465,6 +498,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     f.rightContainer:SetHeight(container.frame:GetHeight())
     f.spellScrollContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
     f.spellButtonsContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
+    f.powerScrollContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth()-20,248))
 
     local enemies = {}
     for mobIdx,edata in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
@@ -506,6 +540,17 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
 
     MDT:UpdateEnemyInfoData(enemyIdx)
 
+    --ace is finicky
+    f.rightContainer:PauseLayout()
+    if data.powers then
+        f.spellScrollContainer:SetHeight(181)
+        f.powerScrollContainer.hidden = false
+    else
+        f.spellScrollContainer:SetHeight(322)
+        f.powerScrollContainer.hidden = true
+    end
+    f.spellScrollContainer:SetLayout("Fill")
+
     --spells
     f.spellScroll:ReleaseChildren()
     if data.spells then
@@ -520,6 +565,21 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
         end
     end
 
+    --powers
+    f.powerScroll:ReleaseChildren()
+    if data.powers then
+        for powerSpellId,powerData in pairs(data.powers) do
+            local powerButton = AceGUI:Create("MDTPowerButton")
+            powerButton:SetSpell(powerSpellId,powerData)
+            powerButton:Initialize()
+            powerButton:Enable()
+            f.powerScroll:AddChild(powerButton)
+        end
+    end
+
+    f.rightContainer:SetHeight(container.frame:GetHeight())
+    f.rightContainer:ResumeLayout()
+    f.rightContainer:DoLayout()
 end
 
 function MDT:UpdateEnemyInfoData(enemyIdx)

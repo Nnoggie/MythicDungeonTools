@@ -606,6 +606,7 @@ local function blipDevModeSetup(blip)
 end
 
 local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
+local tormentedIds = {[179891]=true,[179892]=true,[179890]=true,[179446]=true}
 
 function MDTDungeonEnemyMixin:SetUp(data,clone)
     local scale = MDT:GetScale()
@@ -947,9 +948,11 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
     for _,blip in pairs(blips) do
         if blip.data.corrupted then blip:Hide() end
         if emissaryIds[blip.data.id] then blip:Hide() end
+        if tormentedIds[blip.data.id] then blip:Hide() end
     end
     local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(blips) do
+        if db.currentSeason == 6 and tormentedIds[blip.data.id] and db.currentDifficulty >= 10 then blip:Show() end
         if (db.currentSeason == 4 and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
             local weekData =  blip.clone.week
             if weekData and (not weekData[week] or db.currentDifficulty < 10) then

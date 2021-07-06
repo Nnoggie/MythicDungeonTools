@@ -87,7 +87,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 5,
+        currentSeason = 6,
 		currentExpansion = 3,
         scale = 1,
         enemyForcesFormat = 2,
@@ -4816,6 +4816,7 @@ function MDT:PrintCurrentAffixes()
         [122] =L["Inspiring"],
         [123] =L["Spiteful"],
         [124] =L["Storming"],
+        [128] =L["Tormented"],
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
