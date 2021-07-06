@@ -657,6 +657,11 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     else
         setUpMouseHandlers(self)
     end
+    --tormented visual
+    if data.powers then
+        local tormentedColor = {0.7,0,1,1}
+        self.texture_Background:SetVertexColor(unpack(tormentedColor))
+    end
     if emissaryIds[self.data.id] then self:Hide() end --hide beguiling emissaries by default
     tinsert(blips,self)
     if db.enemyStyle == 2 then
