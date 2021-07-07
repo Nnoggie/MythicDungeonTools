@@ -1287,6 +1287,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Incinerator Arkolath";
        ["scale"] = 1.5;
+       ["iconTexture"] = 236297;
     };
     [17] = {
        ["clones"] = {
@@ -1465,6 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Oros Coldheart";
        ["health"] = 336131;
+       ["iconTexture"] = 136213;
     };
     [9] = {
        ["clones"] = {
@@ -2063,6 +2065,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Executioner Varruth";
        ["scale"] = 1.5;
+       ["iconTexture"] = 237552;
     };
     [35] = {
        ["clones"] = {
@@ -2095,6 +2098,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 62;
        ["name"] = "Soggodon the Breaker";
        ["scale"] = 1.5;
+       ["iconTexture"] = 2103898;
     };
     [1] = {
        ["clones"] = {

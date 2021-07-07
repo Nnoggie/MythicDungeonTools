@@ -1784,6 +1784,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 1.5;
        ["displayId"] = 98535;
        ["ignoreFortified"] = true;
+       ["iconTexture"] = 2103898;
     };
     [13] = {
        ["clones"] = {
@@ -1907,6 +1908,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 1.5;
        ["displayId"] = 92418;
        ["ignoreFortified"] = true;
+       ["iconTexture"] = 237552;
     };
     [15] = {
        ["clones"] = {
@@ -2035,6 +2037,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Oros Coldheart";
        ["count"] = 0;
+       ["iconTexture"] = 136213;
     };
     [19] = {
        ["clones"] = {
@@ -2303,6 +2306,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 1.5;
        ["displayId"] = 100718;
        ["ignoreFortified"] = true;
+       ["iconTexture"] = 236297;
     };
  };
  
