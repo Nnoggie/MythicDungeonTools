@@ -1,3 +1,5 @@
+v3.5.9
+- Tormented Miniboss positions updated + NPC Icons swapped to reflect which ability would transfer to final boss if undefeated
 v3.5.8
 - Tormented Affix support including Abilities and Anima Powers for new minibosses (credit to Blazeton/stschake)
 v3.5.7
