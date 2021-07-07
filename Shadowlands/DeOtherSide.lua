@@ -1114,8 +1114,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
    [32] = {
       ["clones"] = {
          [1] = {
-            ["y"] = -353.75739821598;
-            ["x"] = 301.35232310413;
+            ["y"] = -355.4057005356;
+            ["x"] = 519.5664629665;
             ["sublevel"] = 1;
          };
       };
@@ -1143,13 +1143,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["level"] = 61;
       ["name"] = "Oros Coldheart";
       ["scale"] = 1.5;
+      ["iconTexture"] = 136213;
    };
    [33] = {
       ["clones"] = {
          [1] = {
-            ["y"] = -267.53464555794;
-            ["x"] = 354.11801353272;
-            ["sublevel"] = 4;
+            ["y"] = -231.55688066273;
+            ["x"] = 429.31243632103;
+            ["sublevel"] = 2;
          };
       };
       ["id"] = 179891;
@@ -1175,6 +1176,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["level"] = 62;
       ["name"] = "Soggodon the Breaker";
       ["health"] = 358540;
+      ["iconTexture"] = 2103898;
    };
    [17] = {
       ["clones"] = {
@@ -1464,9 +1466,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
    [34] = {
       ["clones"] = {
          [1] = {
-            ["y"] = -231.55688066273;
-            ["x"] = 429.31243632103;
-            ["sublevel"] = 2;
+            ["y"] = -267.53464555794;
+            ["x"] = 354.11801353272;
+            ["sublevel"] = 4;
          };
       };
       ["id"] = 179890;
@@ -1493,6 +1495,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["level"] = 61;
       ["name"] = "Executioner Varruth";
       ["health"] = 336131;
+      ["iconTexture"] = 237552;
    };
    [9] = {
       ["clones"] = {
@@ -2574,8 +2577,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
    [31] = {
       ["clones"] = {
          [1] = {
-            ["y"] = -355.4057005356;
-            ["x"] = 519.5664629665;
+            ["y"] = -353.75739821598;
+            ["x"] = 301.35232310413;
             ["sublevel"] = 1;
          };
       };
@@ -2603,5 +2606,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["level"] = 61;
       ["name"] = "Incinerator Arkolath";
       ["health"] = 336131;
+      ["iconTexture"] = 236297;
    };
 };

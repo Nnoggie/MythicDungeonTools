@@ -1755,11 +1755,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     [25] = {
        ["clones"] = {
-          [1] = {
-             ["y"] = -89.714339544828;
-             ["x"] = 646.86834775473;
-             ["sublevel"] = 1;
-          };
+         [1] = {
+            ["y"] = -303.39401456739;
+            ["x"] = 329.77738274742;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355719] = {};
@@ -1784,6 +1784,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 1.5;
        ["displayId"] = 98535;
        ["ignoreFortified"] = true;
+       ["iconTexture"] = 2103898;
     };
     [13] = {
        ["clones"] = {
@@ -1877,11 +1878,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     [26] = {
        ["clones"] = {
-          [1] = {
-             ["y"] = -179.65580028353;
-             ["x"] = 667.04336516818;
-             ["sublevel"] = 1;
-          };
+         [1] = {
+            ["y"] = -169.39402663733;
+            ["x"] = 565.77752389867;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355714] = {};
@@ -1907,6 +1908,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 1.5;
        ["displayId"] = 92418;
        ["ignoreFortified"] = true;
+       ["iconTexture"] = 237552;
     };
     [15] = {
        ["clones"] = {
@@ -2006,10 +2008,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     [28] = {
        ["clones"] = {
           [1] = {
-             ["y"] = -303.39401456739;
-             ["x"] = 329.77738274742;
-             ["sublevel"] = 1;
-          };
+            ["y"] = -89.714339544828;
+            ["x"] = 646.86834775473;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355710] = {};
@@ -2035,6 +2037,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Oros Coldheart";
        ["count"] = 0;
+       ["iconTexture"] = 136213;
     };
     [19] = {
        ["clones"] = {
@@ -2274,10 +2277,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     [27] = {
        ["clones"] = {
           [1] = {
-             ["y"] = -169.39402663733;
-             ["x"] = 565.77752389867;
-             ["sublevel"] = 1;
-          };
+            ["y"] = -179.65580028353;
+            ["x"] = 667.04336516818;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355707] = {};
@@ -2303,6 +2306,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["scale"] = 1.5;
        ["displayId"] = 100718;
        ["ignoreFortified"] = true;
+       ["iconTexture"] = 236297;
     };
  };
  

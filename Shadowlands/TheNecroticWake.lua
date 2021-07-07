@@ -1258,10 +1258,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     [33] = {
        ["clones"] = {
           [1] = {
-             ["y"] = -188.89626688555;
-             ["x"] = 133.4112971858;
-             ["sublevel"] = 1;
-          };
+            ["y"] = -275.30696567058;
+            ["x"] = 514.25048922962;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355707] = {};
@@ -1287,6 +1287,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Incinerator Arkolath";
        ["scale"] = 1.5;
+       ["iconTexture"] = 236297;
     };
     [17] = {
        ["clones"] = {
@@ -1436,10 +1437,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     [34] = {
        ["clones"] = {
           [1] = {
-             ["y"] = -318.59052389709;
-             ["x"] = 547.17891536817;
-             ["sublevel"] = 2;
-          };
+            ["y"] = -207.42506601876;
+            ["x"] = 344.79722551451;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355710] = {};
@@ -1465,6 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Oros Coldheart";
        ["health"] = 336131;
+       ["iconTexture"] = 136213;
     };
     [9] = {
        ["clones"] = {
@@ -2033,11 +2035,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     [36] = {
        ["clones"] = {
-          [1] = {
-             ["y"] = -275.30696567058;
-             ["x"] = 514.25048922962;
-             ["sublevel"] = 1;
-          };
+         [1] = {
+            ["y"] = -188.89626688555;
+            ["x"] = 133.4112971858;
+            ["sublevel"] = 1;
+         };
        };
        ["spells"] = {
          [355714] = {};
@@ -2063,14 +2065,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 61;
        ["name"] = "Executioner Varruth";
        ["scale"] = 1.5;
+       ["iconTexture"] = 237552;
     };
     [35] = {
        ["clones"] = {
-          [1] = {
-             ["y"] = -207.42506601876;
-             ["x"] = 344.79722551451;
-             ["sublevel"] = 1;
-          };
+         [1] = {
+            ["y"] = -318.59052389709;
+            ["x"] = 547.17891536817;
+            ["sublevel"] = 2;
+         };
        };
        ["spells"] = {
          [355719] = {};
@@ -2095,6 +2098,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["level"] = 62;
        ["name"] = "Soggodon the Breaker";
        ["scale"] = 1.5;
+       ["iconTexture"] = 2103898;
     };
     [1] = {
        ["clones"] = {
