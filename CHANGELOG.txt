@@ -1,3 +1,5 @@
+v3.6.0
+- LibUIDropDownMenu library Upgrade - this will fix conflicts with other AddOns that use this library
 v3.5.9
 - Tormented Miniboss positions updated + NPC Icons swapped to reflect which ability would transfer to final boss if undefeated
 v3.5.8
