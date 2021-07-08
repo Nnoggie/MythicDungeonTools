@@ -7,6 +7,7 @@ local toolbarTools = {}
 local drawingActive = false
 local currentTool
 local objectDrawLayer = "OVERLAY"
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 local twipe,tinsert,tremove,tgetn,CreateFrame,tonumber,pi,max,min,atan2,abs,pairs,ipairs,GetCursorPosition,GameTooltip = table.wipe,table.insert,table.remove,table.getn,CreateFrame,tonumber,math.pi,math.max,math.min,math.atan2,math.abs,pairs,ipairs,GetCursorPosition,GameTooltip
 
@@ -1030,7 +1031,7 @@ local function makeNoteEditbox()
     return editbox
 end
 
-local noteDropDown = L_Create_UIDropDownMenu("noteDropDown", nil)
+local noteDropDown = LibDD:Create_UIDropDownMenu("noteDropDown", nil)
 local currentNote
 local noteMenu = {}
 do
@@ -1115,11 +1116,11 @@ function MDT:DrawNote(x, y, text, objectIndex)
     end
     note:SetScript("OnClick",function(self,button,down)
         if button == "LeftButton" then
-            L_CloseDropDownMenus()
+            LibDD:CloseDropDownMenus()
             self:OpenEditBox()
         elseif button == "RightButton" then
             currentNote = note
-            L_EasyMenu(noteMenu,noteDropDown, "cursor", 0 , -15, "MENU")
+            LibDD:EasyMenu(noteMenu,noteDropDown, "cursor", 0 , -15, "MENU")
             if noteEditbox and noteEditbox.frame:IsShown() then
                 noteEditbox.frame:Hide()
             end

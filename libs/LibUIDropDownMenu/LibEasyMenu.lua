@@ -1,4 +1,13 @@
---$Id: LibEasyMenu.lua 49 2020-08-18 17:17:08Z arithmandar $
+--$Id: LibEasyMenu.lua 64 2020-11-18 13:13:15Z arithmandar $
+-- //////////////////////////////////////////////////////////////
+-- Notes: 
+--      Functions have been moved to under LibUIDropDownMenu.lua
+--      New function calls are as below:
+--
+--      - lib:EasyMenu(menuList, menuFrame, anchor, x, y, displayMode, autoHideDelay )
+--      - lib:EasyMenu_Initialize( frame, level, menuList )
+--
+-- //////////////////////////////////////////////////////////////
 -- Simplified Menu Display System
 --	This is a basic system for displaying a menu from a structure table.
 --
@@ -14,34 +23,22 @@
 --		autoHideDelay - how long until the menu disappears
 --
 --
--- ----------------------------------------------------------------------------
--- Localized Lua globals.
--- ----------------------------------------------------------------------------
-local _G = getfenv(0)
--- ----------------------------------------------------------------------------
-local MAJOR_VERSION = "LibEasyMenu-1.0"
-local MINOR_VERSION = 90000 + tonumber(("$Rev: 49 $"):match("%d+"))
-
-local LibStub = _G.LibStub
-if not LibStub then error(MAJOR_VERSION .. " requires LibStub.") end
-local Lib = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
-if not Lib then return end
-
-function L_EasyMenu(menuList, menuFrame, anchor, x, y, displayMode, autoHideDelay )
+--[[
+function EasyMenu(menuList, menuFrame, anchor, x, y, displayMode, autoHideDelay )
 	if ( displayMode == "MENU" ) then
 		menuFrame.displayMode = displayMode;
 	end
-	L_UIDropDownMenu_Initialize(menuFrame, L_EasyMenu_Initialize, displayMode, nil, menuList);
-	L_ToggleDropDownMenu(1, nil, menuFrame, anchor, x, y, menuList, nil, autoHideDelay);
+	UIDropDownMenu_Initialize(menuFrame, EasyMenu_Initialize, displayMode, nil, menuList);
+	ToggleDropDownMenu(1, nil, menuFrame, anchor, x, y, menuList, nil, autoHideDelay);
 end
 
-function L_EasyMenu_Initialize( frame, level, menuList )
+function EasyMenu_Initialize( frame, level, menuList )
 	for index = 1, #menuList do
 		local value = menuList[index]
 		if (value.text) then
 			value.index = index;
-			L_UIDropDownMenu_AddButton( value, level );
+			UIDropDownMenu_AddButton( value, level );
 		end
 	end
 end
-
+]]

@@ -2,6 +2,7 @@ local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local MDT = MDT
 local L = MDT.L
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 
 local width,height = 248,32
@@ -195,12 +196,12 @@ local methods = {
                     end
 
                     if #MDT:GetSelection() > 1 then
-                        L_EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                        LibDD:EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     else
                         MDT:SetMapSublevel(self.index)
                         MDT:SetSelectionToPull(self.index)
 
-                        L_EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                        LibDD:EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     end
 
                 else
