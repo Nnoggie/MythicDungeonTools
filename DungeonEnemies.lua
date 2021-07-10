@@ -94,6 +94,21 @@ function MDTDungeonEnemyMixin:OnEnter()
     self:SetFrameLevel(self:GetFrameLevel()+5)
     self:DisplayPatrol(true)
     MDT:DisplayBlipTooltip(self,true)
+	
+	local blipPullId = MDT:FindPullOfBlip(self);
+	
+    if blipPullId ~= nil then
+        local totalForces = MDT:CountForces(blipPullId,false)
+	    local currentForces = MDT:CountForces(blipPullId,true)
+        local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+        local forcesBeforePull = totalForces - currentForces
+
+        GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
+        GameTooltip:AddLine("Forces before pull: ".. MDT:FormatEnemyForces(forcesBeforePull, totalForcesMax, false), 1, 1, 1, 1)
+        GameTooltip:AddLine("Forces after pull: ".. MDT:FormatEnemyForces(totalForces, totalForcesMax, false), 1, 1, 1, 1)
+        GameTooltip:Show()
+    end
+	
     if self.data.corrupted then
         --self.texture_DragDown:Show()
         --self.texture_DragLeft:Show()
@@ -134,6 +149,7 @@ end
 function MDTDungeonEnemyMixin:OnLeave()
     self:updateSizes(1)
     self:SetFrameLevel(self:GetFrameLevel()-5)
+	GameTooltip:Hide()
     if db.devMode then
         if not self.devSelected then self:DisplayPatrol(false) end
     else
