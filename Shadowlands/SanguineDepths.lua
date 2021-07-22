@@ -1056,7 +1056,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["week"] = {
                 [1] = true;
                 [2] = true;
-                [4] = true;
                 [5] = true;
                 [6] = true;
                 [7] = true;
@@ -1073,6 +1072,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["x"] = 261.55314132983;
             ["week"] = {
                 [3] = true;
+                [4] = true;
             };
             ["sublevel"] = 1;
          };
@@ -1985,7 +1985,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["week"] = {
                 [1] = true;
                 [2] = true;
-                [4] = true;
                 [5] = true;
                 [6] = true;
                 [7] = true;
@@ -2002,6 +2001,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["x"] = 565.21027105794;
             ["week"] = {
                 [3] = true;
+                [4] = true;
             };
             ["sublevel"] = 1;
          };
@@ -2140,7 +2140,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["week"] = {
                 [1] = true;
                 [2] = true;
-                [4] = true;
                 [5] = true;
                 [6] = true;
                 [7] = true;
@@ -2157,6 +2156,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["x"] = 511.79428010194;
             ["week"] = {
                 [3] = true;
+                [4] = true;
             };
             ["sublevel"] = 2;
          };
@@ -2225,7 +2225,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["week"] = {
                 [1] = true;
                 [2] = true;
-                [4] = true;
                 [5] = true;
                 [6] = true;
                 [7] = true;
@@ -2242,6 +2241,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["x"] = 472.8031121598;
             ["week"] = {
                 [3] = true;
+                [4] = true;
             };
             ["sublevel"] = 1;
          };
