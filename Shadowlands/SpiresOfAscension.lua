@@ -1319,7 +1319,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
           [1] = {
             ["y"] = -328.11501272076;
             ["x"] = 320.10638742555;
+            ["week"] = {
+                [1] = true;
+                [2] = true;
+                [5] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
+            };
             ["sublevel"] = 2;
+         };
+         [2] = {
+            ["y"] = -380.37685438298;
+            ["x"] = 354.12614370227;
+            ["week"] = {
+                [3] = true;
+                [4] = true;
+                [7] = true;
+                [8] = true;
+                [11] = true;
+                [12] = true;
+            };
+            ["sublevel"] = 3;
          };
        };
        ["spells"] = {
@@ -1353,7 +1374,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
           [1] = {
             ["y"] = -263.6576606658;
             ["x"] = 506.47761372507;
+            ["week"] = {
+                [1] = true;
+                [2] = true;
+                [5] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
+            };
             ["sublevel"] = 2;
+         };
+         [2] = {
+            ["y"] = -305.11363642753;
+            ["x"] = 395.44178521678;
+            ["week"] = {
+                [3] = true;
+                [4] = true;
+                [7] = true;
+                [8] = true;
+                [11] = true;
+                [12] = true;
+            };
+            ["sublevel"] = 3;
          };
        };
        ["spells"] = {
@@ -1454,7 +1496,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [1] = {
             ["y"] = -305.11363642753;
             ["x"] = 395.44178521678;
+            ["week"] = {
+                [1] = true;
+                [2] = true;
+                [5] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
+            };
             ["sublevel"] = 3;
+         };
+         [2] = {
+            ["y"] = -263.6576606658;
+            ["x"] = 506.47761372507;
+            ["week"] = {
+                [3] = true;
+                [4] = true;
+                [7] = true;
+                [8] = true;
+                [11] = true;
+                [12] = true;
+            };
+            ["sublevel"] = 2;
          };
        };
        ["spells"] = {
@@ -1717,7 +1780,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [1] = {
             ["y"] = -380.37685438298;
             ["x"] = 354.12614370227;
+            ["week"] = {
+                [1] = true;
+                [2] = true;
+                [5] = true;
+                [6] = true;
+                [9] = true;
+                [10] = true;
+            };
             ["sublevel"] = 3;
+         };
+         [2] = {
+            ["y"] = -328.11501272076;
+            ["x"] = 320.10638742555;
+            ["week"] = {
+                [3] = true;
+                [4] = true;
+                [7] = true;
+                [8] = true;
+                [11] = true;
+                [12] = true;
+            };
+            ["sublevel"] = 2;
          };
        };
        ["spells"] = {

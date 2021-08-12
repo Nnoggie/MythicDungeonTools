@@ -489,6 +489,9 @@ function MDT:DisplayBlipTooltip(blip, shown)
     ]]
     local occurence = (blip.data.isBoss and "") or blip.cloneIdx
 
+    --remove tormented clones ids
+    if blip.data.powers then occurence = "" end
+
     local text = L[data.name].." "..occurence..group.."\n"..string.format(L["Level %d %s"],data.level,L[data.creatureType]).."\n".. string.format(L["%s HP"],MDT:FormatEnemyHealth(health)).."\n"
     local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
     text = text ..L["Forces"]..": ".. MDT:FormatEnemyForces(count)
@@ -964,8 +967,9 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
     end
     local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(blips) do
-        if db.currentSeason == 6 and tormentedIds[blip.data.id] and db.currentDifficulty >= 10 then blip:Show() end
-        if (db.currentSeason == 4 and blip.data.corrupted) or(db.currentSeason == 3 and emissaryIds[blip.data.id]) then
+        if (db.currentSeason == 6 and tormentedIds[blip.data.id])
+        or (db.currentSeason == 4 and blip.data.corrupted)
+        or (db.currentSeason == 3 and emissaryIds[blip.data.id]) then
             local weekData =  blip.clone.week
             if weekData and (not weekData[week] or db.currentDifficulty < 10) then
                 blip:Hide()
