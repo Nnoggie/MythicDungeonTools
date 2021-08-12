@@ -94,7 +94,7 @@
                     </Anchors>
                 </Texture>
                 <Texture name="$parent_Indicator" hidden="false" parentKey="texture_Indicator" file = "Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
-                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
+                    <TexCoords left="0.826" right="0.924" top="0.338" bottom="0.387"/>
                     <Color r="2.04" g="0" b="0" a="0"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
