@@ -833,7 +833,7 @@ function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b,pulls)
                         if not db.devMode then
                             if db.enemyStyle == 2 then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                            elseif (not blip.data.corrupted) and (not blip.data.powers) and not (blip.data.inspiring and isInspiring) then
+                            elseif (not blip.data.corrupted) then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
                                 blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
                             end
@@ -890,17 +890,11 @@ function MDT:DungeonEnemies_UpdateSelected(pull,pulls)
                                         blip.texture_Background:SetVertexColor(0.5,1,0.1,1)
                                         blip.texture_SelectedHighlight:Hide()
                                     else
-                                        if blip.data.powers then
-                                            blip.texture_SelectedHighlight:SetVertexColor(1,1,1,0.7)
-                                        elseif blip.clone.inspiring and isInspiring then
+                                        if blip.clone.inspiring and isInspiring then
                                             SetPortraitToTexture(blip.texture_Portrait,135946);
-                                            blip.texture_Indicator:SetVertexColor(1,1,0,1)
-                                            blip.texture_Indicator:SetScale(1.15)
-                                            --blip.texture_SelectedHighlight:SetVertexColor(1,1,1,0.7)
-                                        else
-                                            blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                                            blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
                                         end
+                                        blip.texture_Portrait:SetVertexColor(r,g,b,1)
+                                        blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
                                     end
                                 end
                             end
