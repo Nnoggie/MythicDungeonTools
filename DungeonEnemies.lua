@@ -821,6 +821,8 @@ end
 ---DungeonEnemies_UpdateBlipColors
 ---Updates the colors of all selected blips of the specified pull
 function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b,pulls)
+    local week = preset.week
+    local isInspiring = MDT:IsWeekInspiring(week)
     pulls = pulls or preset.value.pulls
     local p = pulls[pull]
     for enemyIdx,clones in pairs(p) do
@@ -831,7 +833,7 @@ function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b,pulls)
                         if not db.devMode then
                             if db.enemyStyle == 2 then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                            elseif not blip.data.corrupted then
+                            elseif (not blip.data.corrupted) and (not blip.data.powers) and not (blip.data.inspiring and isInspiring) then
                                 blip.texture_Portrait:SetVertexColor(r,g,b,1)
                                 blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
                             end
@@ -848,6 +850,8 @@ end
 function MDT:DungeonEnemies_UpdateSelected(pull,pulls)
     preset = MDT:GetCurrentPreset()
     pulls = pulls or preset.value.pulls
+    local week = preset.week
+    local isInspiring = MDT:IsWeekInspiring(week)
     --deselect all
     for _,blip in pairs(blips) do
         blip.texture_SelectedHighlight:Hide()
@@ -886,8 +890,17 @@ function MDT:DungeonEnemies_UpdateSelected(pull,pulls)
                                         blip.texture_Background:SetVertexColor(0.5,1,0.1,1)
                                         blip.texture_SelectedHighlight:Hide()
                                     else
-                                        blip.texture_Portrait:SetVertexColor(r,g,b,1)
-                                        blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
+                                        if blip.data.powers then
+                                            blip.texture_SelectedHighlight:SetVertexColor(1,1,1,0.7)
+                                        elseif blip.clone.inspiring and isInspiring then
+                                            SetPortraitToTexture(blip.texture_Portrait,135946);
+                                            blip.texture_Indicator:SetVertexColor(1,1,0,1)
+                                            blip.texture_Indicator:SetScale(1.15)
+                                            --blip.texture_SelectedHighlight:SetVertexColor(1,1,1,0.7)
+                                        else
+                                            blip.texture_Portrait:SetVertexColor(r,g,b,1)
+                                            blip.texture_SelectedHighlight:SetVertexColor(r,g,b,0.7)
+                                        end
                                     end
                                 end
                             end
@@ -1065,6 +1078,7 @@ function MDT:DungeonEnemies_UpdateInspiring(week)
     local isInspiring = MDT:IsWeekInspiring(week)
     for _,blip in pairs(blips) do
         if blip.clone.inspiring and isInspiring then
+            SetPortraitToTexture(blip.texture_Portrait,135946);
             blip.texture_Indicator:SetVertexColor(1,1,0,1)
             blip.texture_Indicator:SetScale(1.15)
             blip.texture_Indicator:Show()
