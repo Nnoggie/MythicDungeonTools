@@ -1237,7 +1237,7 @@ function MDT:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(dropdown)
 
 	---new profile,rename,export,delete
-	local buttonWidth = 80
+	local buttonWidth = 75
 	frame.sidePanelNewButton = AceGUI:Create("Button")
 	frame.sidePanelNewButton:SetText(L["New"])
 	frame.sidePanelNewButton:SetWidth(buttonWidth)
