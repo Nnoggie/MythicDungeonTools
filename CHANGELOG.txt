@@ -1,3 +1,8 @@
+v3.6.2
+- Affix List Update
+- Tormented Position Rotation implemented (AABB rotation) Credits to walkmanake!
+- Fixed Visual issues with Elvui skin
+- Inspiring visual update: In addition to the yellow border inspiring npcs will now have their portrait replaced by the affix icon
 v3.6.1
 - LibUIDropDownMenu library Upgrade - this will fix conflicts with other AddOns that use this library
 v3.5.9
