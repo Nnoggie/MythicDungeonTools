@@ -1,3 +1,5 @@
+v3.6.4
+- version bump
 v3.6.3
 - Affix List Update
 v3.6.2
