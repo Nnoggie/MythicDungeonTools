@@ -2308,4 +2308,35 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["health"] = 560700;
        ["count"] = 0;
     };
+    [31] = {
+       ["clones"] = {
+          [1] = {
+             ["y"] = -165.99565683313;
+             ["x"] = 276.01386199891;
+             ["sublevel"] = 2;
+          };
+       };
+       ["id"] = 168594;
+       ["spells"] = {
+          [288865] = {};
+          [315536] = {};
+          [328170] = {};
+          [322429] = {};
+          [132951] = {};
+          [240443] = {};
+          [321020] = {};
+          [322418] = {};
+          [322433] = {};
+       };
+       ["characteristics"] = {
+          ["Taunt"] = true;
+       };
+       ["scale"] = 1.4;
+       ["name"] = "Chamber Sentinel";
+       ["displayId"] = 94737;
+       ["creatureType"] = "Humanoid";
+       ["level"] = 60;
+       ["health"] = 136170;
+       ["count"] = 7;
+    };
  };
