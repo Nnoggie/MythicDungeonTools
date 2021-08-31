@@ -1,3 +1,5 @@
+v3.6.6
+- affix list update
 v3.6.5
 - affix list update
 - Added chamber sentinel flying along the gauntlet in Sanguine Depths
