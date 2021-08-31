@@ -229,7 +229,7 @@ local affixWeeks = {
     [7] =  {6,13,10,128}, --raging explosive fortified tormented
     [8] =  {11,3,9,128}, --bursting volcanic tyrannical tormented
     [9] =  {123,12,10,128}, --spiteful grievous fortified tormented
-    [10] = {0,0,9,128},
+    [10] = {122,14,9,128},  --inspiring quaking tyrannical tormented
     [11] = {0,0,10,128},
     [12] = {0,0,9,128},
 }
