@@ -400,7 +400,7 @@ local methods = {
             MDT:UpdatePullButtonColor(self.index, r, g, b)
             MDT:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
             MDT:DrawAllHulls()
-            L_CloseDropDownMenus()
+            LibDD:CloseDropDownMenus()
             if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                 MDT:LiveSession_QueueColorUpdate()
             end
@@ -431,7 +431,7 @@ local methods = {
                 ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
                 ColorPickerFrame:Hide() -- Need to run the OnShow
                 ColorPickerFrame:Show()
-                L_CloseDropDownMenus()
+                LibDD:CloseDropDownMenus()
             end,
             swatchFunc = swatchFunc,
             cancelFunc = cancelFunc,
