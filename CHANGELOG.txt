@@ -1,3 +1,5 @@
+v3.6.8
+- affix list update
 v3.6.7
 - fixed a nil error when changing colors for pulls
 - affix list update
