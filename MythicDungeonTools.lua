@@ -231,7 +231,7 @@ local affixWeeks = {
     [9] =  {123,12,10,128}, --spiteful grievous fortified tormented
     [10] = {122,14,9,128},  --inspiring quaking tyrannical tormented
     [11] = {8,4,10,128},  --sanguine necrotic fortified tormented
-    [12] = {0,0,9,128},
+    [12] = {7,13,9,128},  --bolstering explosive tyrannical tormented
 }
 
 local dungeonList = {
