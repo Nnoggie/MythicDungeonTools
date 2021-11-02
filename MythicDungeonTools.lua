@@ -5058,11 +5058,6 @@ function initFrames()
     --ElvUI skinning
     local skinTooltip = function(tooltip)
         if IsAddOnLoaded("ElvUI") and ElvUI[1].Tooltip then
-            local borderTextures = {"BorderBottom","BorderBottomLeft","BorderBottomRight","BorderLeft","BorderRight","BorderTop","BorderTopLeft","BorderTopRight"}
-            for k,v in pairs(borderTextures) do
-                tooltip[v]:Kill()
-            end
-            tooltip.Background:Kill()
             if not tooltip.SetBackdrop then
                 Mixin(tooltip, BackdropTemplateMixin)
             end
