@@ -2292,7 +2292,7 @@ end
 
 ---MouseDownHook
 function MDT:MouseDownHook()
-    return
+
 end
 
 ---Handles mouse-down events on the map scrollframe
