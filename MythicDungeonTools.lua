@@ -2756,9 +2756,13 @@ function MDT:CreateDungeonSelectDropdown(frame)
 	--Simple Group to hold both dropdowns
 	frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
 	local group = frame.DungeonSelectionGroup
+    if not group.frame.SetBackdrop then
+        Mixin(group.frame, BackdropTemplateMixin)
+    end
+    group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
     group.frame:SetFrameStrata("HIGH")
     group.frame:SetFrameLevel(50)
-	group:SetWidth(200)
+	group:SetWidth(204) --idk ace added weird margin on left
 	group:SetHeight(50)
 	group:SetPoint("TOPLEFT",frame.topPanel,"BOTTOMLEFT",0,2)
     group:SetLayout("List")

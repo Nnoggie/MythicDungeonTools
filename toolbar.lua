@@ -994,7 +994,7 @@ local function makeNoteEditbox()
     if not editbox.frame.SetBackdrop then
         Mixin(editbox.frame, BackdropTemplateMixin)
     end
-    editbox.frame:SetBackdropColor(1,1,1,0)
+    editbox.frame:SetBackdropColor(unpack(MDT.BackdropColor))
     editbox:SetLayout("Flow")
     editbox.multiBox = AceGUI:Create("MultiLineEditBox")
     editbox.multiBox:SetLabel(L["Note Text:"])
