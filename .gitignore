@@ -14,3 +14,4 @@ libs/LibUIDropDownMenu
 venv
 python/combatLogReader/__pycache__
 MythicDungeonTools.iml
+.vscode
