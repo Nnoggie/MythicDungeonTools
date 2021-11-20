@@ -1766,6 +1766,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["id"] = 164563;
+      ["stealthDetect"] = true;
       ["spells"] = {
          [288865] = {};
          [329324] = {};
