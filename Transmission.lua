@@ -49,7 +49,7 @@ local B64tobyte = {
 -- Credit goes to Galmok (galmok@gmail.com)
 local decodeB64Table = {}
 
-function decodeB64(str)
+local function decodeB64(str)
     local bit8 = decodeB64Table
     local decoded_size = 0
     local ch
