@@ -51,8 +51,7 @@ languages = {
     'esES': 'es',
     'ptBR': 'pt',
 }
-#expansions = ['Legion', 'BattleForAzeroth']
-expansions = ['Shadowlands']
+expansions = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 
 def get_npc_names_localized(npc_id):
     name = get_npc_name(npc_id, 'en')
