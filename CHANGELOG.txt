@@ -1,3 +1,8 @@
+v3.7.1
+- fixed visual right click menu issues
+- fixed backgrounds missing on dungeon dropdown + note editbox
+- fixed an issue when loading Legion Dungeons
+- added missing stealth detect flags to certain enemies
 v3.6.8
 - affix list update
 v3.6.7
