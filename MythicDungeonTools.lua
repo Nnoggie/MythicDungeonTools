@@ -4539,7 +4539,7 @@ function MDT:HSVtoRGB(H, S, V)
 	H = H % 361
 
 	local function f(n)
-		k = (n + H/60) % 6
+		local k = (n + H/60) % 6
 		return V - V * S * math.max(math.min(k, 4 - k, 1), 0)
 	end
 
