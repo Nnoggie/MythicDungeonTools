@@ -85,7 +85,6 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
         ["creatureType"] = "Humanoid",
         ["id"] = 101679,
         ["displayId"] = 67296,
-        ["displayId"] = 67296,
         ["count"] = 4,
         ["scale"] = 1,
         ["color"] = {r=1,g=1,b=1,a=0.8},
@@ -101,7 +100,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --Darkheart Thicket
                 [7] = {x = 231.87060067706,y = -172.49971738086},
             }},
 			[3] = {x = 211.05099998093,y = -252.05454021711,sublevel=1,g=14},
-			[4] = {x = 216.67918834006,y = -251.32750870967,sublevel=1,g=14,sublevel=1,g=14,patrolFacing=(34/32)*pi,patrolFacing2=(2/32)*pi,patrol={
+			[4] = {x = 216.67918834006,y = -251.32750870967,sublevel=1,g=14,patrolFacing=(34/32)*pi,patrolFacing2=(2/32)*pi,patrol={
                 [1] = {x = 216.67918834006,y = -251.32750870967},
                 [2] = {x = 212.29368634028,y = -228.13025637098},
                 [3] = {x = 211.73588302154,y = -214.89864537853},

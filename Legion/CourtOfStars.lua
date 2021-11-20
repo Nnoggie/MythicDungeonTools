@@ -196,7 +196,6 @@ MDT.dungeonEnemies[dungeonIndex] = { --Court of Stars
 		["count"] = 8,
 		["scale"] = 1.2,
 		["color"] = {r=1,g=1,b=1,a=0.8},
-		["color"] = {r=1,g=1,b=1,a=0.8},
 		["clones"] = {				
 			[1] = {x = 316.93370545015,y = -295.78855888016,sublevel=1},		
 			[2] = {x = 373.13283047292,y = -304.7924975149,sublevel=1,g=2},		

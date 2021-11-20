@@ -387,7 +387,7 @@ MDT.dungeonEnemies[dungeonIndex] = { --The Arcway
         ["color"] = {r=1,g=1,b=1,a=0.8},
         ["clones"] = {
             [1] = {x = 292.05823017762,y = -340.47828621906,sublevel=1},
-            [2] = {x = 256.01544932303,y = -360.82955651529,sublevel=1,g=47,sublevel=1,patrolFacing=(20/32)*pi,patrolFacing2=(55/32)*pi,patrol={
+            [2] = {x = 256.01544932303,y = -360.82955651529,g=47,sublevel=1,patrolFacing=(20/32)*pi,patrolFacing2=(55/32)*pi,patrol={
                 [1] = {x = 214.83406824345,y = -382.2883447718},
                 [2] = {x = 274.37949578109,y = -350.4701687486},
             }},
