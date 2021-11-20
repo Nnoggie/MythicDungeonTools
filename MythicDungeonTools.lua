@@ -17,7 +17,6 @@ MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local icon = LibStub("LibDBIcon-1.0")
-local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 	type = "data source",
 	text = "Mythic Dungeon Tools",
@@ -3742,7 +3741,7 @@ function MDT:MakePullSelectionButtons(frame)
 
     frame.newPullButtons = {}
 	--rightclick context menu
-    frame.optionsDropDown = LibDD:Create_UIDropDownMenu("PullButtonsOptionsDropDown", nil)
+    frame.optionsDropDown = CreateFrame("frame", "MDTPullButtonsOptionsDropDown", nil, "UIDropDownMenuTemplate")
 end
 
 
@@ -5021,7 +5020,7 @@ function initFrames()
 	-- Set frame position
 	main_frame:ClearAllPoints()
 	main_frame:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
-    main_frame.contextDropdown = LibDD:Create_UIDropDownMenu("MDTContextDropDown", nil)
+    main_frame.contextDropdown = CreateFrame("frame", "MDTContextDropDown", nil, "UIDropDownMenuTemplate")
 
     MDT:CheckCurrentZone(true)
     MDT:EnsureDBTables()

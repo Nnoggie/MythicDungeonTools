@@ -8,7 +8,6 @@
 	<Script file='AceComm-3.0\AceComm-3.0.lua'/>
 	<Script file='AceSerializer-3.0\AceSerializer-3.0.lua'/>
 	<Script file='LibCompress\LibCompress.lua'/>
-	<Include file='LibUIDropDownMenu\LibUIDropDownMenu.xml'/>
 	<Script file='LibDataBroker-1.1\LibDataBroker-1.1.lua'/>
 	<Include file='LibDBIcon-1.0\lib.xml'/>
 	<Include file='AceConfig-3.0\AceConfig-3.0.xml'/>

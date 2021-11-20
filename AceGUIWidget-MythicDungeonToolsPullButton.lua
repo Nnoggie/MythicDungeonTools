@@ -2,7 +2,6 @@ local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local MDT = MDT
 local L = MDT.L
-local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 
 local width,height = 248,32
@@ -196,12 +195,12 @@ local methods = {
                     end
 
                     if #MDT:GetSelection() > 1 then
-                        LibDD:EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                        EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     else
                         MDT:SetMapSublevel(self.index)
                         MDT:SetSelectionToPull(self.index)
 
-                        LibDD:EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
+                        EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0 , -15, "MENU")
                     end
 
                 else
@@ -400,7 +399,7 @@ local methods = {
             MDT:UpdatePullButtonColor(self.index, r, g, b)
             MDT:DungeonEnemies_UpdateBlipColors(self.index,r,g,b)
             MDT:DrawAllHulls()
-            LibDD:CloseDropDownMenus()
+            CloseDropDownMenus()
             if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
                 MDT:LiveSession_QueueColorUpdate()
             end
@@ -431,7 +430,7 @@ local methods = {
                 ColorPickerFrame.previousValues = {self.color.r, self.color.g, self.color.b}
                 ColorPickerFrame:Hide() -- Need to run the OnShow
                 ColorPickerFrame:Show()
-                LibDD:CloseDropDownMenus()
+                CloseDropDownMenus()
             end,
             swatchFunc = swatchFunc,
             cancelFunc = cancelFunc,
