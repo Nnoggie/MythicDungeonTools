@@ -27,7 +27,7 @@ function MDT:initToolbar(frame)
     frame.toolbar.toggleButton:SetPoint("TOP",frame,"TOP")
     frame.toolbar.toggleButton:SetSize(32,11)
     frame.toolbar.toggleButton:SetNormalTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\arrows")
-    frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.65,1)
+    frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.7,1)
 
     frame.toolbar:Hide()
     frame.toolbar:SetScript("OnHide",function()
@@ -39,13 +39,13 @@ function MDT:initToolbar(frame)
             frame.toolbar:Hide()
             frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame,"TOP")
-            frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.65,1)
+            frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.7,1)
             db.toolbarExpanded = false
         else
             frame.toolbar:Show()
             frame.toolbar.toggleButton:ClearAllPoints()
             frame.toolbar.toggleButton:SetPoint("TOP",frame.toolbar,"BOTTOM")
-            frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0,0.35)
+            frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0,1,0.05,0.35)
             db.toolbarExpanded = true
         end
     end)
@@ -91,7 +91,7 @@ function MDT:initToolbar(frame)
 
     ---back
     local back = AceGUI:Create("Icon")
-    back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.5,0.75,0.5,0.75)
+    back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.5,0.75,0.55,0.8)
     back:SetCallback("OnClick",function (widget,callbackName)
         self:PresetObjectStepBack()
         if self.liveSessionActive then self:LiveSession_SendCommand("undo") end
@@ -103,7 +103,7 @@ function MDT:initToolbar(frame)
 
     ---forward
     local forward = AceGUI:Create("Icon")
-    forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.75,1,0.5,0.75)
+    forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons",0.75,1,0.55,0.8)
     forward:SetCallback("OnClick",function (widget,callbackName)
         self:PresetObjectStepForward()
         if self.liveSessionActive then self:LiveSession_SendCommand("redo") end
