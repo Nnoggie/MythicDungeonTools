@@ -5060,9 +5060,10 @@ function initFrames()
             if not tooltip.SetBackdrop then
                 Mixin(tooltip, BackdropTemplateMixin)
             end
-            tooltip:HookScript("OnShow",function(self)
+            tooltip:HookScript("OnShow",function(self) --ignore updates
                 if self:IsForbidden() then return end
-                self:SetTemplate("Transparent", nil, true) --ignore updates
+                self:ClearBackdrop()
+                self:CreateBackdrop('Transparent')
                 local r, g, b = self:GetBackdropColor()
                 self:SetBackdropColor(r, g, b, ElvUI[1].Tooltip.db.colorAlpha)
             end)
