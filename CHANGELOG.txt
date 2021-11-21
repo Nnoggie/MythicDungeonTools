@@ -1,4 +1,4 @@
-v3.7.1
+v3.7.2
 - fixed visual right click menu issues
 - fixed backgrounds missing on dungeon dropdown + note editbox
 - fixed an issue when loading Legion Dungeons
