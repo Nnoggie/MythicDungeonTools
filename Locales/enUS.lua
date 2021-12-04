@@ -1,6 +1,9 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+--TOADD:
+L["TazaveshLower"] = "Tazavesh: Streets of Wonder"
+L["TazaveshUpper"] = "Tazavesh: So'leah's Gambit"
 -- MDT
 L[" >Battle for Azeroth"] = " >Battle for Azeroth"
 L[" >Legion"] = " >Legion"

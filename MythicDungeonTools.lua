@@ -122,7 +122,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,37 do
+    for i=1,39 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
@@ -270,7 +270,9 @@ local dungeonList = {
     [34] = L["Spires of Ascension"],
     [35] = L["The Necrotic Wake"],
     [36] = L["Theater of Pain"],
-    [37] = " <"..L["Battle for Azeroth"],
+    [37] = L["TazaveshLower"],
+    [38] = L["TazaveshUpper"],
+    [39] = " <"..L["Battle for Azeroth"],
 }
 function MDT:GetNumDungeons() return #dungeonList-1 end
 function MDT:GetDungeonName(idx) return dungeonList[idx] end
@@ -433,6 +435,20 @@ local dungeonSubLevels = {
         [3] = L["TheNecroticWakeFloor3"],
     },
     [36] = {
+        [1] = L["TheaterOfPainFloor1"],
+        [2] = L["TheaterOfPainFloor2"],
+        [3] = L["TheaterOfPainFloor3"],
+        [4] = L["TheaterOfPainFloor4"],
+        [5] = L["TheaterOfPainFloor5"],
+    },
+    [37] = {
+        [1] = L["TheaterOfPainFloor1"],
+        [2] = L["TheaterOfPainFloor2"],
+        [3] = L["TheaterOfPainFloor3"],
+        [4] = L["TheaterOfPainFloor4"],
+        [5] = L["TheaterOfPainFloor5"],
+    },
+    [38] = {
         [1] = L["TheaterOfPainFloor1"],
         [2] = L["TheaterOfPainFloor2"],
         [3] = L["TheaterOfPainFloor3"],
@@ -640,6 +656,22 @@ MDT.dungeonMaps = {
         [3] = "NecroticWake_B",
     },
     [36] = {
+        [0] = "TheaterOfPain",
+        [1] = "TheaterOfPain",
+        [2] = "TheaterOfPain_Warlord",
+        [3] = "TheaterOfPain_Lich",
+        [4] = "TheaterOfPain_AbomTop",
+        [5] = "TheaterOfPain_AbomBot",
+    },
+    [37] = {
+        [0] = "TheaterOfPain",
+        [1] = "TheaterOfPain",
+        [2] = "TheaterOfPain_Warlord",
+        [3] = "TheaterOfPain_Lich",
+        [4] = "TheaterOfPain_AbomTop",
+        [5] = "TheaterOfPain_AbomBot",
+    },
+    [38] = {
         [0] = "TheaterOfPain",
         [1] = "TheaterOfPain",
         [2] = "TheaterOfPain_Warlord",
@@ -2483,7 +2515,7 @@ function MDT:MakeMapTexture(frame)
             [14] = true,
             [27] = true,
             [28] = true,
-            [37] = true,
+            [39] = true,
         }
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
             if IsControlKeyDown() then
@@ -2739,7 +2771,7 @@ function MDT:UpdateDungeonDropDown()
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     elseif db.currentExpansion == 3 then
-        for i = 29,37 do
+        for i = 29,39 do
             group.DungeonDropdown:AddItem(i,dungeonList[i])
         end
     end
@@ -2788,7 +2820,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
             db.currentDungeonIdx = 29
             MDT:UpdateDungeonDropDown()
             MDT:UpdateToDungeon(db.currentDungeonIdx)
-        elseif key == 37 then
+        elseif key == 39 then
             db.currentExpansion = 2
             db.currentDungeonIdx = 15
             MDT:UpdateDungeonDropDown()
