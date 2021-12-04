@@ -2937,9 +2937,9 @@ function MDT:EnsureDBTables()
     preset.value.teeming = MDT:IsWeekTeeming(preset.week)
 end
 
-function MDT:GetTileFormat(dungeonIdx)
+function MDT:GetTileFormat(dungeonIdx, sublevel)
     local mapInfo = MDT.mapInfo[dungeonIdx]
-    return mapInfo and mapInfo.tileFormat or 4
+    return mapInfo and mapInfo.tileFormat and mapInfo.tileFormat[sublevel] or 4
 end
 
 function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar)
@@ -2955,7 +2955,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     end
 	local fileName = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
-    local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx)
+    local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx,preset.value.currentSublevel)
 	for i=1,12 do
         if tileFormat == 4 then
             local texName = path..fileName..i

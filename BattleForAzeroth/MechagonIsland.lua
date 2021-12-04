@@ -2,7 +2,10 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 25
 MDT.mapInfo[dungeonIndex] = {
-    tileFormat= 15,
+    tileFormat= {
+        [1] = 15,
+        [2] = 15
+    },
     viewportPositionOverrides = 
     {
         [1] = {
