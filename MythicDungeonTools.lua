@@ -465,7 +465,6 @@ function MDT:GetSublevelName(dungeonIdx, sublevelIdx)
 end
 
 MDT.dungeonMaps = {}
-MDT.dungeonBosses = {}
 MDT.dungeonEnemies = {}
 MDT.mapPOIs = {}
 
