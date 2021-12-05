@@ -11,6 +11,16 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "Waycrest",
+    [1] = "Waycrest1_",
+    [2] = "Waycrest2_",
+    [3] = "Waycrest3_",
+    [4] = "Waycrest4_",
+    [5] = "Waycrest5_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=363,teemingEnabled=true}
 
 MDT.mapPOIs[dungeonIndex] = {

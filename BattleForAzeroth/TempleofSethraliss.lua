@@ -3,6 +3,12 @@ local L = MDT.L
 local dungeonIndex = 20
 MDT.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "TempleOfSethralissA",
+   [1] = "TempleOfSethralissA",
+   [2] = "TempleOfSethralissB",
+}
+
 MDT.mapPOIs[dungeonIndex] = {
    [1] = {
       [1] = {

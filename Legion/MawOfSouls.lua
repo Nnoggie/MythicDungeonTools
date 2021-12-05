@@ -1,6 +1,14 @@
 local dungeonIndex = 7
 local nerfMultiplier = 1
 local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+	[0] = "HelheimDungeonDock",
+	[1] = "HelheimDungeonDock",
+	[2] = "HelheimDungeonDock1_",
+	[3] = "HelheimDungeonDock2_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {--Maw of Souls
 	[1] = {

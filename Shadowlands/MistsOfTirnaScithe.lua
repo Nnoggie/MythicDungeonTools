@@ -8,6 +8,11 @@ MDT.mapInfo[dungeonIndex] = {
 MDT.dungeonTotalCount[dungeonIndex] = {normal=260,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {}
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "MistsOfTirneScithe",
+   [1] = "MistsOfTirneScithe",
+}
+
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
        ["clones"] = {

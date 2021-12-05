@@ -1,7 +1,13 @@
 local dungeonIndex = 11
+local pi = math.pi
 MDT.dungeonTotalCount[dungeonIndex] = {normal=275,teeming=329,teemingEnabled=true}
 local nerfMultiplier = 1
-local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+	[0] = "ArgusDungeon",
+	[1] = "ArgusDungeon",
+}
+
 MDT.dungeonBosses[dungeonIndex] = {--Seat of the Triumvirate
 	[1] = {	
 		[1] = {

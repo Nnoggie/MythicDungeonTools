@@ -11,6 +11,15 @@ MDT.mapInfo[dungeonIndex] = {
     };
 };
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "Brokerdungeonstormheim",
+   [1] = "Brokerdungeon_a",
+   [2] = "Brokerdungeonstormheim",
+   [3] = "Brokerdungeon_aggramar",
+   [4] = "Brokerdungeon_borallus",
+   [5] = "Brokerdungeon_e",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

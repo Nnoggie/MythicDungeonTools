@@ -1,6 +1,14 @@
 local dungeonIndex = 6
 local nerfMultiplier = 1
 local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "Hallsofvalor",
+    [1]= "Hallsofvalor1_",
+    [2]= "Hallsofvalor",
+    [3]= "Hallsofvalor2_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=126,teeming=151,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {
 	[1] = {

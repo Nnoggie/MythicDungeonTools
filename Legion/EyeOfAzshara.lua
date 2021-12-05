@@ -1,6 +1,12 @@
 local dungeonIndex = 5
 local nerfMultiplier = 1
 local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+	[0]= "AszunaDungeon",
+	[1]= "AszunaDungeon",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=206,teeming=242,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {--Eye of Azshara
 	[1] = {

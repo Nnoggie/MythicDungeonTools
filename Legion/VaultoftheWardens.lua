@@ -1,6 +1,14 @@
 local dungeonIndex = 13
 local pi = math.pi
 local nerfMultiplier = 1
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "VaultOfTheWardens",
+    [1]= "VaultOfTheWardens1_",
+    [2]= "VaultOfTheWardens2_",
+    [3]= "VaultOfTheWardens3_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=210,teeming=252,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {--Vault of the Wardens
 	[1] = {

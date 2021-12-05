@@ -14,6 +14,11 @@ MDT.mapInfo[dungeonIndex] = {
 
 MDT.scaleMultiplier[dungeonIndex] = 0.6
 
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "KulTirasPirateTownDungeon",
+    [1]= "KulTirasPirateTownDungeon",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=261,teeming=313,teemingEnabled=true}
 
 local selectorGroup

@@ -12,6 +12,13 @@ MDT.mapInfo[dungeonIndex] = {
     }
 };
 MDT.scaleMultiplier[dungeonIndex] = 0.6
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "Plaguefall",
+   [1] = "Plaguefall",
+   [2] = "Plaguefall_B",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=600,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

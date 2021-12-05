@@ -41,6 +41,18 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "PrisonDungeon",
+    [1] = "PrisonDungeon",
+    [2] = "PrisonDungeon1_",
+    [3] = "PrisonDungeon2_",
+    [4] = "PrisonDungeon3_",
+    [5] = "PrisonDungeon4_",
+    [6] = "PrisonDungeon5_",
+    [7] = "PrisonDungeon6_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=400,teeming=479,teemingEnabled=true}
 
 MDT.mapPOIs[dungeonIndex] = {

@@ -11,6 +11,13 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "ShrineOfTheStorm",
+    [1] = "ShrineOfTheStorm",
+    [2] = "ShrineOfTheStorm1_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=695,teeming=834,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

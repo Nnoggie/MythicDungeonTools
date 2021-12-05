@@ -1,6 +1,14 @@
 local dungeonIndex = 3
 local nerfMultiplier = 1
 local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+	[0] = "SuramarNoblesDistrict",
+	[1] = "SuramarNoblesDistrict",
+	[2] = "SuramarNoblesDistrict1_",
+	[3] = "SuramarNoblesDistrict2_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {--Court of Stars
 	[1] = {

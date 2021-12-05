@@ -1,6 +1,12 @@
 local dungeonIndex = 12
-local nerfMultiplier = 1
 local pi = math.pi
+local nerfMultiplier = 1
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "SuamarCatacombsDungeon",
+    [1]= "SuamarCatacombsDungeon1_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=392,teeming=466,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] ={ --The Arcway
     [1] = {

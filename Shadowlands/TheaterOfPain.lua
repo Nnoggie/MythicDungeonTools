@@ -34,6 +34,15 @@ MDT.mapInfo[dungeonIndex] = {
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "TheaterOfPain",
+   [1] = "TheaterOfPain",
+   [2] = "TheaterOfPain_Warlord",
+   [3] = "TheaterOfPain_Lich",
+   [4] = "TheaterOfPain_AbomTop",
+   [5] = "TheaterOfPain_AbomBot",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=271,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

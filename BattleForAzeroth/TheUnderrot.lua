@@ -11,6 +11,13 @@ MDT.mapInfo[dungeonIndex] = {
       };
    };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "UnderrotExterior",
+   [1] = "UnderrotExterior",
+   [2] = "UnderrotInterior",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=252,teeming=286,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
    [1] = {

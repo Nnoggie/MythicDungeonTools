@@ -2,6 +2,19 @@ local dungeonIndex = 10
 local pi = math.pi
 MDT.dungeonTotalCount[dungeonIndex] = {normal=169,teeming=202,teemingEnabled=true}
 local nerfMultiplier = 0.74 --npcs got nerfed by 26% compared against m0 values, bosses unchanged
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "LegionKarazhanDungeon",
+    [1] = "LegionKarazhanDungeon7_",
+    [2] = "LegionKarazhanDungeon8_",
+    [3] = "LegionKarazhanDungeon9_",
+    [4] = "LegionKarazhanDungeon10_",
+    [5] = "LegionKarazhanDungeon11_",
+    [6] = "LegionKarazhanDungeon12_",
+    [7] = "LegionKarazhanDungeon13_",
+    [8] = "LegionKarazhanDungeon14_",
+}
+
 MDT.dungeonBosses[dungeonIndex] = {--Upper Karazhan
 	[3] = {
 		[1] = {

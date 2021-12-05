@@ -21,6 +21,12 @@ MDT.mapInfo[dungeonIndex] = {
     };
 };
 
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "MechagonDungeon",
+    [1] = "MechagonDungeonExterior",
+    [2] = "MechagonDungeonExterior",
+}
+
 MDT.scaleMultiplier[dungeonIndex] = 0.5
 MDT.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=398,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

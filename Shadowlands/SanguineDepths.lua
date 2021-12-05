@@ -5,6 +5,12 @@ MDT.mapInfo[dungeonIndex] = {
 
 };
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "SanguineDepths_A",
+   [1] = "SanguineDepths_A",
+   [2] = "SanguineDepths_B",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=364,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

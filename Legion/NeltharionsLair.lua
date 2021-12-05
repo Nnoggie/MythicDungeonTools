@@ -1,6 +1,12 @@
 local dungeonIndex = 8
 local nerfMultiplier = 1
 local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "NeltharionsLair",
+    [1] = "NeltharionsLair",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {
 	[1] = {

@@ -23,6 +23,13 @@ MDT.mapInfo[dungeonIndex] = {
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "HallsOfAtonement_A",
+   [1] = "HallsOfAttonementExterior",
+   [2] = "HallsOfAtonement_A",
+   [3] = "HallsOfAtonement_B",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=273,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

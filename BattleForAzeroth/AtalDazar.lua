@@ -1,6 +1,13 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 15
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "CityOfGold",
+    [1]= "CityOfGold1_",
+    [2]= "CityOfGold2_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=198,teeming=237,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

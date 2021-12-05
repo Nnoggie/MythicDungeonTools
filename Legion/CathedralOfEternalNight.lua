@@ -1,6 +1,16 @@
 local dungeonIndex = 2
 local pi = math.pi
 local nerfMultiplier = 1
+
+MDT.dungeonMaps[dungeonIndex] = {
+	[0]= "TombofSargerasDungeon",
+	[1]= "TombofSargerasDungeon1_",
+	[2]= "TombofSargerasDungeon2_",
+	[3]= "TombofSargerasDungeon3_",
+	[4]= "TombofSargerasDungeon4_",
+	[5]= "TombofSargerasDungeon5_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=305,teeming=335,teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = { --Cathedral of Eternal Night
 	[2] = {

@@ -11,8 +11,14 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
-MDT.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "SiegeOfBoralus",
+    [1] = "SiegeOfBoralus",
+    [2] = "SiegeOfBoralus",
+}
+
+MDT.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 
 local selectorGroup
 local AceGUI = LibStub("AceGUI-3.0")

@@ -22,6 +22,14 @@ MDT.mapInfo[dungeonIndex] = {
     }
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "NecroticWake_A",
+   [1] = "NecroticWake_Exterior",
+   [2] = "NecroticWake_A",
+   [3] = "NecroticWake_B",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=283,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

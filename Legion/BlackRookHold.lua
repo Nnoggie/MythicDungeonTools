@@ -1,6 +1,17 @@
 local dungeonIndex = 1
 local nerfMultiplier = 0.834
 local pi = math.pi
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "BlackRookHoldDungeon",
+    [1]= "BlackRookHoldDungeon1_",
+    [2]= "BlackRookHoldDungeon2_",
+    [3]= "BlackRookHoldDungeon3_",
+    [4]= "BlackRookHoldDungeon4_",
+    [5]= "BlackRookHoldDungeon5_",
+    [6]= "BlackRookHoldDungeon6_",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = { normal=300, teeming=360, teemingEnabled=true}
 MDT.dungeonBosses[dungeonIndex] = {--Black Rook Hold
 	[1] = {

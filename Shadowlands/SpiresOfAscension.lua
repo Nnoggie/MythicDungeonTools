@@ -22,6 +22,15 @@ MDT.mapInfo[dungeonIndex] = {
     }
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "SpiresOfAscension_A",
+   [1] = "SpiresOfAscension_A",
+   [2] = "SpiresOfAscension_B",
+   [3] = "SpiresOfAscension_C",
+   [4] = "SpiresOfAscension_D",
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=285,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

@@ -4,6 +4,11 @@ local dungeonIndex = 21
 MDT.dungeonTotalCount[dungeonIndex] = {normal=384,teeming=460,teemingEnabled=true}
 MDT.scaleMultiplier[dungeonIndex] = 0.7
 
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "KezanDungeon",
+    [1] = "KezanDungeon",
+}
+
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {
         [1] = {
