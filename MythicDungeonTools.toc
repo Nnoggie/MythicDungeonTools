@@ -23,7 +23,6 @@ AceGUIWidgets\load_widgets.xml
 Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
-Share\load_share.xml
 Developer\load_developer.xml
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml

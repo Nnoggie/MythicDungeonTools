@@ -4,5 +4,7 @@
 	<Script file='EnemyInfo.lua'/>
 	<Script file='Pointsofinterest.lua'/>
 	<Script file='Toolbar.lua'/>
+	<Script file='Transmission.lua'/>
+	<Script file='LiveSession.lua'/>
 </Ui>
 
