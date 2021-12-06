@@ -26,11 +26,10 @@ DungeonEnemies.xml
 pulls.lua
 EnemyInfo.lua
 Pointsofinterest.lua
-Transmission.lua
+Share\load_share.xml
 toolbar.lua
 devpanel.lua
 DataCollection.lua
-LiveSession.lua
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml
