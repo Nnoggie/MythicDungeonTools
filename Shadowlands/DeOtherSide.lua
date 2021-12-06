@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 29
+MDT.dungeonList[dungeonIndex] = L["De Other Side"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -28,6 +29,21 @@ MDT.mapInfo[dungeonIndex] = {
 
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "DeOtherSide_Ardenweald",
+   [1] = "DeOtherSide_Main",
+   [2] = "DeOtherSide_Gnome",
+   [3] = "DeOtherSide_Hakkar",
+   [4] = "DeOtherSide_Ardenweald",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["De Other Side"],
+    [2] = L["Mechagon"],
+    [3] = L["Zul'Gurub"],
+    [4] = L["Ardenweald"],
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=384,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

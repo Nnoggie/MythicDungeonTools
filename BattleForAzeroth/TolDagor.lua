@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 23
+MDT.dungeonList[dungeonIndex] = L["Tol Dagor"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -41,6 +42,26 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "PrisonDungeon",
+    [1] = "PrisonDungeon",
+    [2] = "PrisonDungeon1_",
+    [3] = "PrisonDungeon2_",
+    [4] = "PrisonDungeon3_",
+    [5] = "PrisonDungeon4_",
+    [6] = "PrisonDungeon5_",
+    [7] = "PrisonDungeon6_",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Tol Dagor Sublevel1"],
+    [2] = L["The Drain"],
+    [3] = L["The Brig"],
+    [4] = L["Detention Block"],
+    [5] = L["Officer Quarters"],
+    [6] = L["Overseer's Redoubt"],
+    [7] = L["Overseer's Summit"],
+}
 MDT.dungeonTotalCount[dungeonIndex] = {normal=400,teeming=479,teemingEnabled=true}
 
 MDT.mapPOIs[dungeonIndex] = {

@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 32
+MDT.dungeonList[dungeonIndex] = L["Plaguefall"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -12,6 +13,17 @@ MDT.mapInfo[dungeonIndex] = {
     }
 };
 MDT.scaleMultiplier[dungeonIndex] = 0.6
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "Plaguefall",
+   [1] = "Plaguefall",
+   [2] = "Plaguefall_B",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Plaguefall"],
+    [2] = L["The Festering Sanctum"],
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=600,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

@@ -1,12 +1,21 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 31
+MDT.dungeonList[dungeonIndex] = L["Mists of Tirna Scithe"]
 MDT.mapInfo[dungeonIndex] = {
 
 };
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=260,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {}
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "MistsOfTirneScithe",
+   [1] = "MistsOfTirneScithe",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+   [1] = L["Mists of Tirna Scithe"],
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
@@ -2393,4 +2402,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["iconTexture"] = 236297;
     };
  };
- 

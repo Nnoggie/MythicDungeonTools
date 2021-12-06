@@ -1,6 +1,21 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+--TODO ADD TO CURSEFORGE:
+L["TazaveshLower"] = "Tazavesh: Streets of Wonder"
+L["TazaveshUpper"] = "Tazavesh: So'leah's Gambit"
+L["TazaveshFloor1"] = "The Veiled Market"
+L["TazaveshFloor2"] = "The Grand Menagerie"
+L["TazaveshFloor3"] = "The P.O.S.T."
+L["TazaveshFloor4"] = "Myza's Oasis"
+L["TazaveshFloor5"] = "Stormheim"
+L["TazaveshFloor6"] = "Aggramar's Vault"
+L["TazaveshFloor7"] = "Boralus Harbor"
+L["TazaveshFloor8"] = "The Opulent Nexus"
+L["Unknown"] = "Unknown"
+L["Eye of Sethraliss"] = "Eye of Sethraliss"
+L["Opera Hall: Wikket"] = "Opera Hall: Wikket"
+L["Attumen the Huntsman"] = "Attumen the Huntsman"
 -- MDT
 L[" >Battle for Azeroth"] = " >Battle for Azeroth"
 L[" >Legion"] = " >Legion"

@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 30
+MDT.dungeonList[dungeonIndex] = L["Halls of Atonement"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -23,6 +24,17 @@ MDT.mapInfo[dungeonIndex] = {
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
 
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "HallsOfAtonement_A",
+   [1] = "HallsOfAttonementExterior",
+   [2] = "HallsOfAtonement_A",
+   [3] = "HallsOfAtonement_B",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["HallsOfAtonementFloor1"],
+    [2] = L["HallsOfAtonementFloor2"],
+    [3] = L["HallsOfAtonementFloor3"],
+}
 MDT.dungeonTotalCount[dungeonIndex] = {normal=273,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

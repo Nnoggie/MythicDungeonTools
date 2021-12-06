@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 34
+MDT.dungeonList[dungeonIndex] = L["Spires of Ascension"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -22,6 +23,21 @@ MDT.mapInfo[dungeonIndex] = {
     }
 };
 MDT.scaleMultiplier[dungeonIndex] = 1.3
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "SpiresOfAscension_A",
+   [1] = "SpiresOfAscension_A",
+   [2] = "SpiresOfAscension_B",
+   [3] = "SpiresOfAscension_C",
+   [4] = "SpiresOfAscension_D",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Honor's Ascent"],
+    [2] = L["Gardens of Repose"],
+    [3] = L["Font of Fealty"],
+    [4] = L["Seat of the Archon"],
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=285,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

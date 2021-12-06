@@ -1,9 +1,20 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 33
+MDT.dungeonList[dungeonIndex] = L["Sanguine Depths"]
 MDT.mapInfo[dungeonIndex] = {
 
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "SanguineDepths_A",
+   [1] = "SanguineDepths_A",
+   [2] = "SanguineDepths_B",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Sanguine DepthsFloor1"],
+    [2] = L["Sanguine DepthsFloor2"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=364,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

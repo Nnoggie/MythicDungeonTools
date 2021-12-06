@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 26
+MDT.dungeonList[dungeonIndex] = L["Mechagon - Workshop"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -16,6 +17,20 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "MechagonDungeon",
+    [1] = "MechagonDungeon1_",
+    [2] = "MechagonDungeon2_",
+    [3] = "MechagonDungeon3_",
+    [4] = "MechagonDungeon4_",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Robodrome"],
+    [2] = L["Waste Pipes"],
+    [3] = L["The Under Junk"],
+    [4] = L["Mechagon City"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 22
+MDT.dungeonList[dungeonIndex] = L["The Underrot"]
 MDT.mapInfo[dungeonIndex] = {
    viewportPositionOverrides =
    {
@@ -11,6 +12,17 @@ MDT.mapInfo[dungeonIndex] = {
       };
    };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "UnderrotExterior",
+   [1] = "UnderrotExterior",
+   [2] = "UnderrotInterior",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Underrot Sublevel"],
+    [2] = L["Ruin's Descent"],
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=252,teeming=286,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
    [1] = {
