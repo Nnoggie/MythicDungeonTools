@@ -14,6 +14,7 @@ How to map (OUTDATED - use python script instead):
 ]]
 
 function MDT:ToggleDevMode()
+    db = MDT:GetDB()
     db.devMode = not db.devMode
     ReloadUI()
 end
