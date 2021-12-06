@@ -561,7 +561,8 @@ function MDT:StartArrowDrawing()
     ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
     ---l: x1,y1,x2,y2,...
     ---t: triangleroation
-    nobj = { d={ db.toolbar.brushSize, 1, MDT:GetCurrentSubLevel(), true, MDT:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b)}, l={}}
+    local arrowBrushSize = db.toolbar.brushSize+8 --we want arrows to be thicker by default compared to lines
+    nobj = { d={ arrowBrushSize, 1, MDT:GetCurrentSubLevel(), true, MDT:RGBToHex(db.toolbar.color.r,db.toolbar.color.g,db.toolbar.color.b)}, l={}}
     nobj.l = { MDT:Round(startx,1), MDT:Round(starty,1)}
     nobj.t = {}
     local scale = MDT:GetScale()
@@ -570,14 +571,14 @@ function MDT:StartArrowDrawing()
         local x,y = MDT:GetCursorPosition()local currentDrawLayer = MDT:GetHighestFrameLevelAtCursor()
         drawLayer = max(drawLayer,currentDrawLayer)
         if x~= startx and y~=starty then
-            DrawLine(line, MDT.main_frame.mapPanelTile1, startx, starty, x, y, (db.toolbar.brushSize*0.3)*scale, 1,"TOPLEFT")
+            DrawLine(line, MDT.main_frame.mapPanelTile1, startx, starty, x, y, (arrowBrushSize*0.3)*scale, 1,"TOPLEFT")
             nobj.l[3] = MDT:Round(x,1)
             nobj.l[4] = MDT:Round(y,1)
         end
         --position arrow head
         arrow:Show()
-        arrow:SetWidth(1*db.toolbar.brushSize*scale)
-        arrow:SetHeight(1*db.toolbar.brushSize*scale)
+        arrow:SetWidth(1*arrowBrushSize*scale)
+        arrow:SetHeight(1*arrowBrushSize*scale)
         --calculate rotation
         local rotation = atan2(starty-y,startx-x)
         arrow:SetRotation(rotation+pi)
