@@ -22,14 +22,9 @@ locales.xml
 AceGUIWidgets\load_widgets.xml
 Utility.lua
 MythicDungeonTools.lua
-DungeonEnemies.xml
-pulls.lua
-EnemyInfo.lua
-Pointsofinterest.lua
+Modules\load_modules.xml
 Share\load_share.xml
-toolbar.lua
-devpanel.lua
-DataCollection.lua
+Developer\load_developer.xml
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml
