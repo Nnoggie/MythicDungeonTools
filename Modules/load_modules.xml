@@ -7,5 +7,6 @@
 	<Script file='Transmission.lua'/>
 	<Script file='LiveSession.lua'/>
 	<Script file='Maximize.lua'/>
+	<Script file='API.lua'/>
 </Ui>
 
