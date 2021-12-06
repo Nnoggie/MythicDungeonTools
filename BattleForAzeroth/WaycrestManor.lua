@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 24
+MDT.dungeonList[dungeonIndex] = L["Waycrest Manor"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 18
+MDT.dungeonList[dungeonIndex] = L["Shrine of the Storm"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

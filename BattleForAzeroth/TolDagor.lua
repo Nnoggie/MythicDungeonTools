@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 23
+MDT.dungeonList[dungeonIndex] = L["Tol Dagor"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

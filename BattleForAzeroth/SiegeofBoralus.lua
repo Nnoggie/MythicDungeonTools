@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 19
+MDT.dungeonList[dungeonIndex] = L["Siege of Boralus"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

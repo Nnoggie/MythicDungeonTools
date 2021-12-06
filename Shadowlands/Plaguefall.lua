@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 32
+MDT.dungeonList[dungeonIndex] = L["Plaguefall"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 3
+MDT.dungeonList[dungeonIndex] = L["Court of Stars"]
 local nerfMultiplier = 1
 local pi = math.pi
 

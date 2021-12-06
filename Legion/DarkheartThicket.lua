@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 4
+MDT.dungeonList[dungeonIndex] = L["Darkheart Thicket"]
 local nerfMultiplier = 1
 local pi = math.pi
 

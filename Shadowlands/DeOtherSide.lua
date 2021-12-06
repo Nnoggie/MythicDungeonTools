@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 29
+MDT.dungeonList[dungeonIndex] = L["De Other Side"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

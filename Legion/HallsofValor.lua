@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 6
+MDT.dungeonList[dungeonIndex] = L["Halls of Valor"]
 local nerfMultiplier = 1
 local pi = math.pi
 

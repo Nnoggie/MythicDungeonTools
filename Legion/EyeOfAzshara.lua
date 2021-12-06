@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 5
+MDT.dungeonList[dungeonIndex] = L["Eye of Azshara"]
 local nerfMultiplier = 1
 local pi = math.pi
 

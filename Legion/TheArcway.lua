@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 12
+MDT.dungeonList[dungeonIndex] = L["The Arcway"]
 local pi = math.pi
 local nerfMultiplier = 1
 

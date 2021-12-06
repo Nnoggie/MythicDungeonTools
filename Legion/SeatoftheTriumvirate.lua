@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 11
+MDT.dungeonList[dungeonIndex] = L["Seat of the Triumvirate"]
 local pi = math.pi
 MDT.dungeonTotalCount[dungeonIndex] = {normal=275,teeming=329,teemingEnabled=true}
 local nerfMultiplier = 1

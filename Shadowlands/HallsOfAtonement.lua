@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 30
+MDT.dungeonList[dungeonIndex] = L["Halls of Atonement"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

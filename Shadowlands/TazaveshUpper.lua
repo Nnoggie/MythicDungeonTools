@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 38
+MDT.dungeonList[dungeonIndex] = L["TazaveshUpper"]
 MDT.mapInfo[dungeonIndex] = {
     tileFormat = {
         [1] = 15,
@@ -105,4 +106,4 @@ MDT.mapPOIs[dungeonIndex] = {
        };
     };
  };
- 
+

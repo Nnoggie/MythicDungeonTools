@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 20
+MDT.dungeonList[dungeonIndex] = L["Temple of Sethraliss"]
 MDT.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
 
 MDT.dungeonMaps[dungeonIndex] = {

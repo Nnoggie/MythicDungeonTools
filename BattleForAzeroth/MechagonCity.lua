@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 26
+MDT.dungeonList[dungeonIndex] = L["Mechagon - Workshop"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

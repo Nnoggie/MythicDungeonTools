@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 33
+MDT.dungeonList[dungeonIndex] = L["Sanguine Depths"]
 MDT.mapInfo[dungeonIndex] = {
 
 };

@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 2
+MDT.dungeonList[dungeonIndex] = L["Cathedral of Eternal Night"]
 local pi = math.pi
 local nerfMultiplier = 1
 

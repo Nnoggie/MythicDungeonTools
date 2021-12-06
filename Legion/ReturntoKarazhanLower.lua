@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 9
+MDT.dungeonList[dungeonIndex] = L["Return to Karazhan Lower"]
 local pi = math.pi
 local nerfMultiplier = 0.74 --npcs got nerfed by 26% compared against m0 values, bosses unchanged
 MDT.dungeonTotalCount[dungeonIndex] = {normal=420,teeming=504,teemingEnabled=true}

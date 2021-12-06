@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 16
+MDT.dungeonList[dungeonIndex] = L["Freehold"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

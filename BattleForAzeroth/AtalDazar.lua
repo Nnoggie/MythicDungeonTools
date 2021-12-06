@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 15
+MDT.dungeonList[dungeonIndex] = L["Atal'Dazar"]
 
 MDT.dungeonMaps[dungeonIndex] = {
     [0]= "CityOfGold",

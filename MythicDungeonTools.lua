@@ -233,49 +233,14 @@ local affixWeeks = {
     [12] = {7,13,9,128},  --bolstering explosive tyrannical tormented
 }
 
-local dungeonList = {
-    [1] = L["Black Rook Hold"],
-    [2] = L["Cathedral of Eternal Night"],
-    [3] = L["Court of Stars"],
-    [4] = L["Darkheart Thicket"],
-    [5] = L["Eye of Azshara"],
-    [6] = L["Halls of Valor"],
-    [7] = L["Maw of Souls"],
-    [8] = L["Neltharion's Lair"],
-    [9] = L["Return to Karazhan Lower"],
-    [10] = L["Return to Karazhan Upper"],
-    [11] = L["Seat of the Triumvirate"],
-    [12] = L["The Arcway"],
-    [13] = L["Vault of the Wardens"],
+MDT.dungeonList = {
     [14] = " >"..L["Battle for Azeroth"],
-    [15] = L["Atal'Dazar"],
-    [16] = L["Freehold"],
-    [17] = L["Kings' Rest"],
-    [18] = L["Shrine of the Storm"],
-    [19] = L["Siege of Boralus"],
-    [20] = L["Temple of Sethraliss"],
-    [21] = L["The MOTHERLODE!!"],
-    [22] = L["The Underrot"],
-    [23] = L["Tol Dagor"],
-    [24] = L["Waycrest Manor"],
-    [25] = L["Mechagon - Junkyard"],
-    [26] = L["Mechagon - Workshop"],
     [27] = " <"..L["Legion"],
     [28] = " >"..L["Shadowlands"],
-    [29] = L["De Other Side"],
-    [30] = L["Halls of Atonement"],
-    [31] = L["Mists of Tirna Scithe"],
-    [32] = L["Plaguefall"],
-    [33] = L["Sanguine Depths"],
-    [34] = L["Spires of Ascension"],
-    [35] = L["The Necrotic Wake"],
-    [36] = L["Theater of Pain"],
-    [37] = L["TazaveshLower"],
-    [38] = L["TazaveshUpper"],
     [39] = " <"..L["Battle for Azeroth"],
 }
-function MDT:GetNumDungeons() return #dungeonList-1 end
-function MDT:GetDungeonName(idx) return dungeonList[idx] end
+function MDT:GetNumDungeons() return #MDT.dungeonList-1 end
+function MDT:GetDungeonName(idx) return MDT.dungeonList[idx] end
 
 local dungeonSubLevels = {
     [1] = {
@@ -2317,7 +2282,7 @@ function MDT:MakeMapTexture(frame)
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
                     local target = db.currentDungeonIdx+delta
-                    if dungeonList[target] and not ignoredTargets[target] then
+                    if MDT.dungeonList[target] and not ignoredTargets[target] then
                         local group = MDT.main_frame.DungeonSelectionGroup
                         group.DungeonDropdown:Fire("OnValueChanged", target)
                     end
@@ -2547,15 +2512,15 @@ function MDT:UpdateDungeonDropDown()
     group.DungeonDropdown:SetList({})
     if db.currentExpansion == 1 then
         for i=1,14 do
-            group.DungeonDropdown:AddItem(i,dungeonList[i])
+            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
         end
     elseif db.currentExpansion == 2 then
         for i=15,28 do
-            group.DungeonDropdown:AddItem(i,dungeonList[i])
+            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
         end
     elseif db.currentExpansion == 3 then
         for i = 29,39 do
-            group.DungeonDropdown:AddItem(i,dungeonList[i])
+            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
         end
     end
 	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
@@ -2631,7 +2596,7 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MDT:EnsureDBTables()
     --dungeonIdx doesnt exist
-    if not dungeonList[db.currentDungeonIdx] or string.find(dungeonList[db.currentDungeonIdx],">") then
+    if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx],">") then
         db.currentDungeonIdx = db.currentExpansion == 1 and 1 or db.currentExpansion == 2 and 15
     end
     local preset = MDT:GetCurrentPreset()

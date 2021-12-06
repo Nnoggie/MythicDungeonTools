@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 13
+MDT.dungeonList[dungeonIndex] = L["Vault of the Wardens"]
 local pi = math.pi
 local nerfMultiplier = 1
 

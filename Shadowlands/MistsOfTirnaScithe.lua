@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 31
+MDT.dungeonList[dungeonIndex] = L["Mists of Tirna Scithe"]
 MDT.mapInfo[dungeonIndex] = {
 
 };
@@ -2398,4 +2399,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["iconTexture"] = 236297;
     };
  };
- 

@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 36
+MDT.dungeonList[dungeonIndex] = L["Theater of Pain"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

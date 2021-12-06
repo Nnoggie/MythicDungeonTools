@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 34
+MDT.dungeonList[dungeonIndex] = L["Spires of Ascension"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {

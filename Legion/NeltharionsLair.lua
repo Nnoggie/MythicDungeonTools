@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 8
+MDT.dungeonList[dungeonIndex] = L["Neltharion's Lair"]
 local nerfMultiplier = 1
 local pi = math.pi
 

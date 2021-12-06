@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 7
+MDT.dungeonList[dungeonIndex] = L["Maw of Souls"]
 local nerfMultiplier = 1
 local pi = math.pi
 

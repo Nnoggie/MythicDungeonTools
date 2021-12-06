@@ -1,4 +1,7 @@
+local MDT = MDT
+local L = MDT.L
 local dungeonIndex = 1
+MDT.dungeonList[dungeonIndex] = L["Black Rook Hold"]
 local nerfMultiplier = 0.834
 local pi = math.pi
 

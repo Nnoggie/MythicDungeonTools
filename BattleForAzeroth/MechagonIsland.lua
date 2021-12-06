@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 25
+MDT.dungeonList[dungeonIndex] = L["Mechagon - Junkyard"]
 MDT.mapInfo[dungeonIndex] = {
     tileFormat= {
         [1] = 15,
