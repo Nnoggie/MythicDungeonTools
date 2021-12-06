@@ -286,11 +286,6 @@ function MDT:HideInterface()
 	self.main_frame.HelpButton:Hide()
 end
 
-function MDT:ToggleDevMode()
-    db.devMode = not db.devMode
-    ReloadUI()
-end
-
 function MDT:ToggleDataCollection()
     db.dataCollectionActive = not db.dataCollectionActive
     print(string.format("%sMDT|r: DataCollection %s. Reload Interface!", mythicColor,db.dataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
