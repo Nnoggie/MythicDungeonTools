@@ -6,5 +6,6 @@
 	<Script file='Toolbar.lua'/>
 	<Script file='Transmission.lua'/>
 	<Script file='LiveSession.lua'/>
+	<Script file='Maximize.lua'/>
 </Ui>
 
