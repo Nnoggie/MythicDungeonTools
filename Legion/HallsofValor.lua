@@ -11,6 +11,11 @@ MDT.dungeonMaps[dungeonIndex] = {
     [2]= "Hallsofvalor",
     [3]= "Hallsofvalor2_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The High Gate"],
+    [2] = L["Field of the Eternal Hunt"],
+    [3] = L["Halls of Valor Sublevel"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=126,teeming=151,teemingEnabled=true}
 

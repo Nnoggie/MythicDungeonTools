@@ -53,7 +53,15 @@ MDT.dungeonMaps[dungeonIndex] = {
     [6] = "PrisonDungeon5_",
     [7] = "PrisonDungeon6_",
 }
-
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Tol Dagor Sublevel1"],
+    [2] = L["The Drain"],
+    [3] = L["The Brig"],
+    [4] = L["Detention Block"],
+    [5] = L["Officer Quarters"],
+    [6] = L["Overseer's Redoubt"],
+    [7] = L["Overseer's Summit"],
+}
 MDT.dungeonTotalCount[dungeonIndex] = {normal=400,teeming=479,teemingEnabled=true}
 
 MDT.mapPOIs[dungeonIndex] = {

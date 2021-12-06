@@ -17,6 +17,16 @@ MDT.dungeonMaps[dungeonIndex] = {
     [7] = "LegionKarazhanDungeon13_",
     [8] = "LegionKarazhanDungeon14_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Lower Broken Stair"],
+    [2] = L["Upper Broken Stair"],
+    [3] = L["The Menagerie"],
+    [4] = L["Guardian's Library"],
+    [5] = L["Library Floor"],
+    [6] = L["Upper Library"],
+    [7] = L["Gamesman's Hall"],
+    [8] = L["Netherspace"],
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {

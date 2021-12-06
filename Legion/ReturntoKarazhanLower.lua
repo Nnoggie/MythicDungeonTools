@@ -15,6 +15,14 @@ MDT.dungeonMaps[dungeonIndex] = {
 	[5] = "LegionKarazhanDungeon2_",
 	[6] = "LegionKarazhanDungeon1_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Master's Terrace"],
+    [2] = L["Opera Hall Balcony"],
+    [3] = L["The Guest Chambers"],
+    [4] = L["The Banquet Hall"],
+    [5] = L["Upper Livery Stables"],
+    [6] = L["The Servant's Quarters"],
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {

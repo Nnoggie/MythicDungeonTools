@@ -11,6 +11,11 @@ MDT.dungeonMaps[dungeonIndex] = {
 	[2] = "HelheimDungeonDock1_",
 	[3] = "HelheimDungeonDock2_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Helmouth Cliffs"],
+    [2] = L["The Hold"],
+    [3] = L["The Naglfar"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=150,teeming=180,teemingEnabled=true}
 

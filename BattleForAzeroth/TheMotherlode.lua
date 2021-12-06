@@ -9,6 +9,9 @@ MDT.dungeonMaps[dungeonIndex] = {
     [0] = "KezanDungeon",
     [1] = "KezanDungeon",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The MOTHERLODE!! Sublevel"],
+}
 
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

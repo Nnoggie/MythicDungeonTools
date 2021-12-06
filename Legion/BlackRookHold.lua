@@ -14,6 +14,14 @@ MDT.dungeonMaps[dungeonIndex] = {
     [5]= "BlackRookHoldDungeon5_",
     [6]= "BlackRookHoldDungeon6_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Ravenscrypt"],
+    [2] = L["The Grand Hall"],
+    [3] = L["Ravenshold"],
+    [4] = L["The Rook's Host"],
+    [5] = L["Lord Ravencrest's Chamber"],
+    [6] = L["The Raven's Crown"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal=300, teeming=360, teemingEnabled=true}
 

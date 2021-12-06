@@ -10,6 +10,9 @@ MDT.dungeonMaps[dungeonIndex] = {
 	[0] = "ArgusDungeon",
 	[1] = "ArgusDungeon",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+	[1] = L["Seat of the Triumvirate Sublevel"],
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
 	[1] = {

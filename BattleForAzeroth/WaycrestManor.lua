@@ -21,6 +21,13 @@ MDT.dungeonMaps[dungeonIndex] = {
     [4] = "Waycrest4_",
     [5] = "Waycrest5_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Grand Foyer"],
+    [2] = L["Upstairs"],
+    [3] = L["The Cellar"],
+    [4] = L["Catacombs"],
+    [5] = L["The Rupture"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=363,teemingEnabled=true}
 

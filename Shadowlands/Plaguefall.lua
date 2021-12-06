@@ -19,6 +19,10 @@ MDT.dungeonMaps[dungeonIndex] = {
    [1] = "Plaguefall",
    [2] = "Plaguefall_B",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Plaguefall"],
+    [2] = L["The Festering Sanctum"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=600,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

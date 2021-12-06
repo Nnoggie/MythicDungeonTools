@@ -30,6 +30,11 @@ MDT.dungeonMaps[dungeonIndex] = {
    [2] = "NecroticWake_A",
    [3] = "NecroticWake_B",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["TheNecroticWakeFloor1"],
+    [2] = L["TheNecroticWakeFloor2"],
+    [3] = L["TheNecroticWakeFloor3"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=283,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

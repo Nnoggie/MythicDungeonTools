@@ -27,6 +27,10 @@ MDT.dungeonMaps[dungeonIndex] = {
     [1] = "MechagonDungeonExterior",
     [2] = "MechagonDungeonExterior",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Mechagon Island"],
+    [2] = L["Mechagon Island (Tunnels)"],
+}
 
 MDT.scaleMultiplier[dungeonIndex] = 0.5
 MDT.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=398,teemingEnabled=true}

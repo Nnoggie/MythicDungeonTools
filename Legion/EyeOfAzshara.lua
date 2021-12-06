@@ -9,7 +9,9 @@ MDT.dungeonMaps[dungeonIndex] = {
 	[0]= "AszunaDungeon",
 	[1]= "AszunaDungeon",
 }
-
+MDT.dungeonSubLevels[dungeonIndex] = {
+	[1] = L["Eye of Azshara Sublevel"],
+}
 MDT.dungeonTotalCount[dungeonIndex] = {normal=206,teeming=242,teemingEnabled=true}
 
 MDT.dungeonEnemies[dungeonIndex] = {

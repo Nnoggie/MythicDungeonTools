@@ -18,6 +18,10 @@ MDT.dungeonMaps[dungeonIndex] = {
    [1] = "UnderrotExterior",
    [2] = "UnderrotInterior",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Underrot Sublevel"],
+    [2] = L["Ruin's Descent"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=252,teeming=286,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

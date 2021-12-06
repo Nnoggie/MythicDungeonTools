@@ -31,6 +31,12 @@ MDT.dungeonMaps[dungeonIndex] = {
    [3] = "SpiresOfAscension_C",
    [4] = "SpiresOfAscension_D",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Honor's Ascent"],
+    [2] = L["Gardens of Repose"],
+    [3] = L["Font of Fealty"],
+    [4] = L["Seat of the Archon"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=285,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

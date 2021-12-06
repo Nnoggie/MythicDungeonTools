@@ -13,6 +13,9 @@ MDT.dungeonMaps[dungeonIndex] = {
    [0] = "MistsOfTirneScithe",
    [1] = "MistsOfTirneScithe",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+   [1] = L["Mists of Tirna Scithe"],
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {

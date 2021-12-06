@@ -19,6 +19,12 @@ MDT.dungeonMaps[dungeonIndex] = {
    [3] = "Brokerdungeon_c",
    [4] = "Brokerdungeon_d",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["TazaveshFloor1"],
+    [2] = L["TazaveshFloor2"],
+    [3] = L["TazaveshFloor3"],
+    [4] = L["TazaveshFloor4"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 

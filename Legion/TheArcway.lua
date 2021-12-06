@@ -9,6 +9,9 @@ MDT.dungeonMaps[dungeonIndex] = {
     [0]= "SuamarCatacombsDungeon",
     [1]= "SuamarCatacombsDungeon1_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+   [1] = L["The Arcway Sublevel"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=392,teeming=466,teemingEnabled=true}
 MDT.dungeonEnemies[dungeonIndex] = {

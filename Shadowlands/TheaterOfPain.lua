@@ -43,6 +43,13 @@ MDT.dungeonMaps[dungeonIndex] = {
    [4] = "TheaterOfPain_AbomTop",
    [5] = "TheaterOfPain_AbomBot",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["TheaterOfPainFloor1"],
+    [2] = L["TheaterOfPainFloor2"],
+    [3] = L["TheaterOfPainFloor3"],
+    [4] = L["TheaterOfPainFloor4"],
+    [5] = L["TheaterOfPainFloor5"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=271,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

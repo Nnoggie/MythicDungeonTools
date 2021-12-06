@@ -18,6 +18,10 @@ MDT.dungeonMaps[dungeonIndex] = {
     [1] = "SiegeOfBoralus",
     [2] = "SiegeOfBoralus",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Siege of Boralus Sublevel"],
+    [2] = L["Siege of Boralus (Upstairs)"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 

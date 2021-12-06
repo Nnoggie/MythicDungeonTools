@@ -18,6 +18,10 @@ MDT.dungeonMaps[dungeonIndex] = {
     [1] = "ShrineOfTheStorm",
     [2] = "ShrineOfTheStorm1_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Shrine of the Storm Sublevel"],
+    [2] = L["Storm's End"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=695,teeming=834,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

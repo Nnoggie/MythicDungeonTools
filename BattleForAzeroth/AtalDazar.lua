@@ -8,6 +8,10 @@ MDT.dungeonMaps[dungeonIndex] = {
     [1]= "CityOfGold1_",
     [2]= "CityOfGold2_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Atal'Dazar Sublevel"],
+    [2] = L["Sacrificial Pits"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=198,teeming=237,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

@@ -11,7 +11,11 @@ MDT.dungeonMaps[dungeonIndex] = {
 	[2] = "SuramarNoblesDistrict1_",
 	[3] = "SuramarNoblesDistrict2_",
 }
-
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Court of Stars Sublevel"],
+    [2] = L["The Jeweled Estate"],
+    [3] = L["The Balconies"],
+}
 MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 
 MDT.dungeonEnemies[dungeonIndex] = {

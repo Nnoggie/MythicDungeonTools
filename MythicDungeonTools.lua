@@ -212,9 +212,7 @@ do
 end
 
 
-MDT.mapInfo = {}
-MDT.dungeonTotalCount = {}
-MDT.scaleMultiplier = {}
+
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
@@ -232,206 +230,31 @@ local affixWeeks = {
     [11] = {8,4,10,128},  --sanguine necrotic fortified tormented
     [12] = {7,13,9,128},  --bolstering explosive tyrannical tormented
 }
-
+MDT.mapInfo = {}
+MDT.dungeonTotalCount = {}
+MDT.scaleMultiplier = {}
+MDT.dungeonMaps = {}
+MDT.dungeonEnemies = {}
+MDT.mapPOIs = {}
+MDT.dungeonSubLevels = {}
 MDT.dungeonList = {
     [14] = " >"..L["Battle for Azeroth"],
     [27] = " <"..L["Legion"],
     [28] = " >"..L["Shadowlands"],
     [39] = " <"..L["Battle for Azeroth"],
 }
+
 function MDT:GetNumDungeons() return #MDT.dungeonList-1 end
 function MDT:GetDungeonName(idx) return MDT.dungeonList[idx] end
 
-local dungeonSubLevels = {
-    [1] = {
-        [1] = L["The Ravenscrypt"],
-        [2] = L["The Grand Hall"],
-        [3] = L["Ravenshold"],
-        [4] = L["The Rook's Host"],
-        [5] = L["Lord Ravencrest's Chamber"],
-        [6] = L["The Raven's Crown"],
-    },
-    [2] = {
-        [1] = L["Hall of the Moon"],
-        [2] = L["Twilight Grove"],
-        [3] = L["The Emerald Archives"],
-        [4] = L["Path of Illumination"],
-        [5] = L["Sacristy of Elune"],
-    },
-    [3] = {
-        [1] = L["Court of Stars Sublevel"],
-        [2] = L["The Jeweled Estate"],
-        [3] = L["The Balconies"],
-    },
-    [4] = {
-        [1] = L["Darkheart Thicket Sublevel"],
-    },
-    [5] = {
-        [1] = L["Eye of Azshara Sublevel"],
-    },
-    [6] = {
-        [1] = L["The High Gate"],
-        [2] = L["Field of the Eternal Hunt"],
-        [3] = L["Halls of Valor Sublevel"],
-    },
-    [7] = {
-        [1] = L["Helmouth Cliffs"],
-        [2] = L["The Hold"],
-        [3] = L["The Naglfar"],
-    },
-    [8] = {
-        [1] = L["Neltharion's Lair Sublevel"],
-    },
-    [9] = {
-        [1] = L["Master's Terrace"],
-        [2] = L["Opera Hall Balcony"],
-        [3] = L["The Guest Chambers"],
-        [4] = L["The Banquet Hall"],
-        [5] = L["Upper Livery Stables"],
-        [6] = L["The Servant's Quarters"],
-    },
-    [10] = {
-        [1] = L["Lower Broken Stair"],
-        [2] = L["Upper Broken Stair"],
-        [3] = L["The Menagerie"],
-        [4] = L["Guardian's Library"],
-        [5] = L["Library Floor"],
-        [6] = L["Upper Library"],
-        [7] = L["Gamesman's Hall"],
-        [8] = L["Netherspace"],
-    },
-    [11] = {
-        [1] = L["Seat of the Triumvirate Sublevel"],
-    },
-    [12] = {
-        [1] = L["The Arcway Sublevel"],
-    },
-    [13] = {
-        [1] = L["The Warden's Court"],
-        [2] = L["Vault of the Wardens Sublevel"],
-        [3] = L["Vault of the Betrayer"],
-    },
-    [15] = {
-        [1] = L["Atal'Dazar Sublevel"],
-        [2] = L["Sacrificial Pits"],
-    },
-    [16] = {
-        [1] = L["Freehold Sublevel"],
-    },
-    [17] = {
-        [1] = L["Kings' Rest Sublevel"],
-    },
-    [18] = {
-        [1] = L["Shrine of the Storm Sublevel"],
-        [2] = L["Storm's End"],
-    },
-    [19] = {
-        [1] = L["Siege of Boralus Sublevel"],
-        [2] = L["Siege of Boralus (Upstairs)"],
-    },
-    [20] = {
-        [1] = L["Temple of Sethraliss Sublevel"],
-        [2] = L["Atrium of Sethraliss"],
-    },
-    [21] = {
-        [1] = L["The MOTHERLODE!! Sublevel"],
-    },
-    [22] = {
-        [1] = L["The Underrot Sublevel"],
-        [2] = L["Ruin's Descent"],
-    },
-    [23] = {
-        [1] = L["Tol Dagor Sublevel1"],
-        [2] = L["The Drain"],
-        [3] = L["The Brig"],
-        [4] = L["Detention Block"],
-        [5] = L["Officer Quarters"],
-        [6] = L["Overseer's Redoubt"],
-        [7] = L["Overseer's Summit"],
-    },
-    [24] = {
-        [1] = L["The Grand Foyer"],
-        [2] = L["Upstairs"],
-        [3] = L["The Cellar"],
-        [4] = L["Catacombs"],
-        [5] = L["The Rupture"],
-    },
-    [25] = {
-        [1] = L["Mechagon Island"],
-        [2] = L["Mechagon Island (Tunnels)"],
-    },
-    [26] = {
-        [1] = L["The Robodrome"],
-        [2] = L["Waste Pipes"],
-        [3] = L["The Under Junk"],
-        [4] = L["Mechagon City"],
-    },
-    [29] = {
-        [1] = L["De Other Side"],
-        [2] = L["Mechagon"],
-        [3] = L["Zul'Gurub"],
-        [4] = L["Ardenweald"],
-    },
-    [30] = {
-        [1] = L["HallsOfAtonementFloor1"],
-        [2] = L["HallsOfAtonementFloor2"],
-        [3] = L["HallsOfAtonementFloor3"],
-    },
-    [31] = {
-        [1] = L["Mists of Tirna Scithe"],
-    },
-    [32] = {
-        [1] = L["Plaguefall"],
-        [2] = L["The Festering Sanctum"],
-    },
-    [33] = {
-        [1] = L["Sanguine DepthsFloor1"],
-        [2] = L["Sanguine DepthsFloor2"],
-    },
-    [34] = {
-        [1] = L["Honor's Ascent"],
-        [2] = L["Gardens of Repose"],
-        [3] = L["Font of Fealty"],
-        [4] = L["Seat of the Archon"],
-    },
-    [35] = {
-        [1] = L["TheNecroticWakeFloor1"],
-        [2] = L["TheNecroticWakeFloor2"],
-        [3] = L["TheNecroticWakeFloor3"],
-    },
-    [36] = {
-        [1] = L["TheaterOfPainFloor1"],
-        [2] = L["TheaterOfPainFloor2"],
-        [3] = L["TheaterOfPainFloor3"],
-        [4] = L["TheaterOfPainFloor4"],
-        [5] = L["TheaterOfPainFloor5"],
-    },
-    [37] = {
-        [1] = L["TazaveshFloor1"],
-        [2] = L["TazaveshFloor2"],
-        [3] = L["TazaveshFloor3"],
-        [4] = L["TazaveshFloor4"],
-    },
-    [38] = {
-        [1] = L["TazaveshFloor1"],
-        [2] = L["TazaveshFloor5"],
-        [3] = L["TazaveshFloor6"],
-        [4] = L["TazaveshFloor7"],
-        [5] = L["TazaveshFloor8"],
-    },
-}
 function MDT:GetDungeonSublevels()
-    return dungeonSubLevels
+    return MDT.dungeonSubLevels
 end
 
 function MDT:GetSublevelName(dungeonIdx, sublevelIdx)
     if not dungeonIdx then dungeonIdx = db.currentDungeonIdx end
-    return dungeonSubLevels[dungeonIdx][sublevelIdx]
+    return MDT.dungeonSubLevels[dungeonIdx][sublevelIdx]
 end
-
-MDT.dungeonMaps = {}
-MDT.dungeonEnemies = {}
-MDT.mapPOIs = {}
 
 function MDT:GetDB()
     return db
@@ -2271,7 +2094,7 @@ function MDT:MakeMapTexture(frame)
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
                     local target = MDT:GetCurrentSubLevel()+delta
-                    if dungeonSubLevels[db.currentDungeonIdx][target] then
+                    if MDT.dungeonSubLevels[db.currentDungeonIdx][target] then
                         MDT:SetCurrentSubLevel(target)
                         MDT:UpdateMap()
                         MDT:ZoomMapToDefault()
@@ -2524,7 +2347,7 @@ function MDT:UpdateDungeonDropDown()
         end
     end
 	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
-	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
+	group.SublevelDropdown:SetList(MDT.dungeonSubLevels[db.currentDungeonIdx])
 	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
     group.DungeonDropdown:ClearFocus()
     group.SublevelDropdown:ClearFocus()

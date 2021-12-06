@@ -9,6 +9,9 @@ MDT.dungeonMaps[dungeonIndex] = {
     [0] = "DarkheartThicket",
     [1] = "DarkheartThicket",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+   [1] = L["Darkheart Thicket Sublevel"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=280,teeming=336,teemingEnabled=true}
 

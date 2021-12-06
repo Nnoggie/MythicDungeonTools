@@ -37,6 +37,12 @@ MDT.dungeonMaps[dungeonIndex] = {
    [3] = "DeOtherSide_Hakkar",
    [4] = "DeOtherSide_Ardenweald",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["De Other Side"],
+    [2] = L["Mechagon"],
+    [3] = L["Zul'Gurub"],
+    [4] = L["Ardenweald"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=384,teeming=1000,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

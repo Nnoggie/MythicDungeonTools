@@ -9,6 +9,9 @@ MDT.dungeonMaps[dungeonIndex] = {
     [0] = "NeltharionsLair",
     [1] = "NeltharionsLair",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+   [1] = L["Neltharion's Lair Sublevel"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
 

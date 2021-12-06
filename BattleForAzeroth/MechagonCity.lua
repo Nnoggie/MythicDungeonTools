@@ -25,6 +25,12 @@ MDT.dungeonMaps[dungeonIndex] = {
     [3] = "MechagonDungeon3_",
     [4] = "MechagonDungeon4_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Robodrome"],
+    [2] = L["Waste Pipes"],
+    [3] = L["The Under Junk"],
+    [4] = L["Mechagon City"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {

@@ -8,6 +8,9 @@ MDT.dungeonMaps[dungeonIndex] = {
     [0] = "KingsRest",
     [1] = "KingsRest1_"
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Kings' Rest Sublevel"],
+}
 
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

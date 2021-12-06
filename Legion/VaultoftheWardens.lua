@@ -11,6 +11,11 @@ MDT.dungeonMaps[dungeonIndex] = {
     [2]= "VaultOfTheWardens2_",
     [3]= "VaultOfTheWardens3_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Warden's Court"],
+    [2] = L["Vault of the Wardens Sublevel"],
+    [3] = L["Vault of the Betrayer"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=210,teeming=252,teemingEnabled=true}
 MDT.dungeonEnemies[dungeonIndex] = {

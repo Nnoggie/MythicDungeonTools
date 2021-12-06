@@ -13,6 +13,13 @@ MDT.dungeonMaps[dungeonIndex] = {
 	[4]= "TombofSargerasDungeon4_",
 	[5]= "TombofSargerasDungeon5_",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Hall of the Moon"],
+    [2] = L["Twilight Grove"],
+    [3] = L["The Emerald Archives"],
+    [4] = L["Path of Illumination"],
+    [5] = L["Sacristy of Elune"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=305,teeming=335,teemingEnabled=true}
 

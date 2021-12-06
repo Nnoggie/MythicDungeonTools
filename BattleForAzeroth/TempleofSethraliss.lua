@@ -9,6 +9,10 @@ MDT.dungeonMaps[dungeonIndex] = {
    [1] = "TempleOfSethralissA",
    [2] = "TempleOfSethralissB",
 }
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Temple of Sethraliss Sublevel"],
+    [2] = L["Atrium of Sethraliss"],
+}
 
 MDT.mapPOIs[dungeonIndex] = {
    [1] = {
