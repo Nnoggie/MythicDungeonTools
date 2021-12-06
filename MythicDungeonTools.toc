@@ -19,10 +19,7 @@
 libs\load_libs.xml
 init.lua
 locales.xml
-AceGUIWidget-MythicDungeonToolsPullButton.lua
-AceGUIWidget-MythicDungeonToolsNewPullButton.lua
-AceGUIWidget-MythicDungeonToolsSpellButton.lua
-AceGUIWidget-MythicDungeonToolsPowerButton.lua
+AceGUIWidgets\load_widgets.xml
 Utility.lua
 MythicDungeonTools.lua
 DungeonEnemies.xml
