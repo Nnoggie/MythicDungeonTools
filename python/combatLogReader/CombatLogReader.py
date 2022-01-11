@@ -39,11 +39,12 @@ mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
                  (CL.destName != "Unknown"),
                  ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
 mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
-mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
+mobHits = mobHits[mobHits.maxHP.astype(int) > 50] # not working for Tazavesh Streets
 # Fix Blizzard combat log coords
 mobHits["xcoord"] = - mobHits.xcoord.astype(float)
 mobHits["ycoord"] = mobHits.ycoord.astype(float)
-mobHits = mobHits.astype({"UiMapID": int, "maxHP": int, "level": int})
+mobHits = mobHits.astype({"UiMapID": int, "maxHP": int, "level": int}) # not working for Tazavesh Streets
+mobHits = mobHits.astype({"UiMapID": int})
 
 unique_UiMapIDs = mobHits.UiMapID.unique().tolist()
 
@@ -172,6 +173,18 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
             (f["criteriatree"].ID.isin(parent_dungeons)) &
             ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
 
+    if 'Mailroom Mayhem' in boss_names:
+        regular_count = get_count_table(int(94220))
+        total_count = get_total_count(int(94220))
+        print('Jebaited blizzard brain is perma broken')
+        return regular_count, total_count
+
+    elif 'Hyldebrande' in boss_names:
+        regular_count = get_count_table(int(73619))
+        total_count = get_total_count(int(73619))
+        print('Jebaited blizzard brain is perma broken')
+        return regular_count, total_count
+
     regular_count = get_count_table(int(mythic_regular.ID))
     total_count = get_total_count(int(mythic_regular.ID))
     return regular_count, total_count
@@ -223,12 +236,12 @@ mobHits["mobcount"] = [get_npc_count(npcID, regular_count) for npcID in mobHits.
 
 # Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
 # If you want to include all pets and remove manually simply comment out the six lines below
-HP_threshold = 20000
+HP_threshold = 20000 # not working for Tazavesh Streets
 deleted_mobs = mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
                                (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
 mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &
                          (mobHits.mobcount == 0)].index, inplace=True)
-print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs), HP_threshold))
+print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs), HP_threshold)) # not working for Tazavesh Streets
 
 
 print("Mapping Initiated [", end="")
