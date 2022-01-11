@@ -7,6 +7,7 @@ from get_wowtools_data import *
 
 request_wowtools = True
 # How to use:
+# 0. Have Advanced Combat Logging Enabled!
 # 1. Delete or rename your current WoWCombatLog.txt file to start from fresh
 # 2. Run the dungeon tagging all mobs where they spawn.
 # 3. Copy the resulting WoWCombatLog.txt file to the directory of this file
