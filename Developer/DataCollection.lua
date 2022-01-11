@@ -24,7 +24,7 @@ end
 
 function DC:AddCollectedDataToEnemyTable()
     --add spells/characteristics from db to dungeonEnemies
-    for i=29,36 do
+    for i=37,38 do --tazavesh dungeons only
         if db.dataCollection[i] then
             for id,spells in pairs(db.dataCollection[i]) do
                 local enemies = MDT.dungeonEnemies[i]
@@ -180,7 +180,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         local unitType,_,serverId,instanceId,zoneId,id,spawnUid = strsplit("-", sourceGUID)
         id = tonumber(id)
         --dungeon
-        for i=29,36 do
+        for i=37,38 do
             local enemies = MDT.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
@@ -201,7 +201,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         id = tonumber(id)
 
         --dungeon
-        for i=29,36 do
+        for i=37,38 do
             local enemies = MDT.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
@@ -228,8 +228,7 @@ end
 
 ---Request users in party/raid to distribute their collected data
 function MDT:RequestDataCollectionUpdate()
-    --temporary lag fix
-    if true then return end
+    print("MDT: Requesting collected data from group members...")
     local distribution = self:IsPlayerInGroup()
     if not distribution then return end
     MDTcommsObject:SendCommMessage(self.dataCollectionPrefixes.request, "0", distribution, nil, "ALERT")
@@ -237,27 +236,21 @@ end
 
 ---Distribute collected data to party/raid
 function DC:DistributeData()
-    --temporary lag fix
-    if true then return end
+    print("MDT: Distributing collected data to group members")
     local distribution = MDT:IsPlayerInGroup()
     if not distribution then return end
-    --throttle to 1 sync every 5 minutes
-    if not DC.lastDistribution or DC.lastDistribution < GetTime() - 300 then
-        DC.lastDistribution = GetTime()
-        db = MDT:GetDB()
-        local package = {
-            [1] = db.dataCollection,
-            [2] = db.dataCollectionCC
-        }
-        local export = MDT:TableToString(package,false,5)
-        MDTcommsObject:SendCommMessage(MDT.dataCollectionPrefixes.distribute, export, distribution, nil, "BULK",nil,nil)
-    end
+    db = MDT:GetDB()
+    local package = {
+        [1] = db.dataCollection,
+        [2] = db.dataCollectionCC
+    }
+    local export = MDT:TableToString(package,false,5)
+    MDTcommsObject:SendCommMessage(MDT.dataCollectionPrefixes.distribute, export, distribution, nil, "BULK",nil,nil)
 end
 
 ---Merge received collected data into own data collection
 function DC:MergeReceiveData(package)
-    --temporary lag fix
-    if true then return end
+    print("MDT: Merging received collected data")
     db = MDT:GetDB()
     local collection,collectionCC = unpack(package)
     --db.dataCollection[dungeonIdx][npcId][spellId]
