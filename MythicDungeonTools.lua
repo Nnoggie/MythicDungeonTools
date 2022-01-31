@@ -4317,6 +4317,7 @@ function MDT:PrintCurrentAffixes()
         [123] =L["Spiteful"],
         [124] =L["Storming"],
         [128] =L["Tormented"],
+        [130] =L["Encrypted"],
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
