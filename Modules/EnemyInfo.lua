@@ -479,6 +479,11 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     f:SetTitle(L[data.name])
     f.model:SetDisplayInfo(data.displayId or 39490)
     f.model:ResetModel()
+    if data.modelPosition then
+        f.model:SetPosition(unpack(data.modelPosition))
+    else
+        f.model:SetPosition(0,0,0)
+    end
 
     local container = f.tabGroup
     ---rescaling
