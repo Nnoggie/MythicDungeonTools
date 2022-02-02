@@ -1015,7 +1015,7 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
     end
     local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(blips) do
-        if (db.currentSeason == 7 and encryptedIds[blip.data.id]) then
+        if (db.currentSeason == 7 and db.currentDifficulty >= 10 and encryptedIds[blip.data.id]) then
             blip:Show()
         elseif (db.currentSeason == 6 and tormentedIds[blip.data.id])
         or (db.currentSeason == 4 and blip.data.corrupted)
