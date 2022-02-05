@@ -1,4 +1,4 @@
-v3.7.3
+v3.7.4
 - nil fix for imported presets without colorpalette
 v3.7.2
 - fixed visual right click menu issues
