@@ -1,3 +1,5 @@
+v3.7.3
+- nil fix for imported presets without colorpalette
 v3.7.2
 - fixed visual right click menu issues
 - fixed backgrounds missing on dungeon dropdown + note editbox
