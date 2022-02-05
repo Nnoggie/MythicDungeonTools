@@ -3539,6 +3539,9 @@ end
 ---GetPresetColorPaletteInfo
 function MDT:GetPresetColorPaletteInfo(preset)
     preset = preset or MDT:GetCurrentPreset()
+    if not preset.colorPaletteInfo then
+        MDT:SetPresetColorPaletteInfo()
+    end
     return preset.colorPaletteInfo
 end
 
