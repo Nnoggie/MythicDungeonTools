@@ -1,3 +1,5 @@
+v3.7.5
+- fix anchor connection bug when dragging and reordering pulls
 v3.7.4
 - nil fix for imported presets without colorpalette
 v3.7.2
