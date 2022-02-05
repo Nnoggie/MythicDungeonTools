@@ -213,6 +213,11 @@ local methods = {
         end
 
         function self.callbacks.OnEnter()
+            --check if any button is currently being dragged before showing tooltip
+            --this would cause an anchor connection error otherwise
+            for _, button in pairs(MDT.main_frame.sidePanel.newPullButtons) do
+                if button.dragging then return end
+            end
             MDT.pullTooltip:SetPoint("TOPRIGHT",self.frame,"TOPLEFT",0,0)
             MDT.pullTooltip:SetPoint("BOTTOMRIGHT",self.frame,"TOPLEFT",-250,-(4+ MDT.pullTooltip.myHeight))
             local tooltipBottom = MDT.pullTooltip:GetBottom()
