@@ -2109,6 +2109,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["id"] = 185683;
+      ["spells"] = {
+         [368078] = {};
+         [366566] = {};
+      };
       ["count"] = 0;
       ["level"] = 62;
       ["health"] = 33022;
@@ -2195,6 +2199,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["id"] = 185685;
+      ["spells"] = {
+         [368243] = {};
+         [366297] = {};
+         [366288] = {};
+      };
       ["count"] = 0;
       ["level"] = 62;
       ["name"] = "Urh Relic";
@@ -2280,6 +2289,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["id"] = 185680;
+      ["spells"] = {
+         [368103] = {};
+         [366406] = {};
+         [366409] = {};
+      };
       ["scale"] = 1;
       ["health"] = 33022;
       ["level"] = 62;

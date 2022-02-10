@@ -2235,6 +2235,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["health"] = 33022;
       ["scale"] = 1;
       ["id"] = 185683;
+      ["spells"] = {
+         [368078] = {};
+         [366566] = {};
+      };
       ["level"] = 62;
       ["count"] = 0;
       ["displayId"] = 101046;
@@ -2321,6 +2325,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["name"] = "Urh Relic";
       ["scale"] = 1;
       ["id"] = 185685;
+      ["spells"] = {
+         [368243] = {};
+         [366297] = {};
+         [366288] = {};
+      };
       ["level"] = 62;
       ["count"] = 0;
       ["displayId"] = 105134;
@@ -2683,6 +2692,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["name"] = "Vy Relic";
       ["id"] = 185680;
+      ["spells"] = {
+         [368103] = {};
+         [366406] = {};
+         [366409] = {};
+      };
       ["scale"] = 1;
       ["level"] = 62;
       ["health"] = 33022;

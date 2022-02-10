@@ -728,6 +728,10 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["id"] = 185683;
+      ["spells"] = {
+         [368078] = {};
+         [366566] = {};
+      };
       ["scale"] = 1;
       ["badCreatureModel"] = true;
       ["modelPosition"] = {
@@ -981,6 +985,11 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["id"] = 185685;
+      ["spells"] = {
+         [368243] = {};
+         [366297] = {};
+         [366288] = {};
+      };
       ["scale"] = 1;
       ["badCreatureModel"] = true;
       ["modelPosition"] = {
@@ -1365,6 +1374,11 @@ MDT.mapPOIs[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["id"] = 185680;
+      ["spells"] = {
+         [368103] = {};
+         [366406] = {};
+         [366409] = {};
+      };
       ["badCreatureModel"] = true;
       ["modelPosition"] = {
          [1] = 0;
