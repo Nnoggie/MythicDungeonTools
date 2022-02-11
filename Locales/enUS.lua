@@ -2,6 +2,10 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 --TODO ADD TO CURSEFORGE:
+L["Encrypted"] = "Encrypted"
+L["Urh Relic"] = "Urh Relic"
+L["Wo Relic"] = "Wo Relic"
+L["Vy Relic"] = "Vy Relic"
 L["TazaveshLower"] = "Tazavesh: Streets of Wonder"
 L["TazaveshUpper"] = "Tazavesh: So'leah's Gambit"
 L["TazaveshFloor1"] = "The Veiled Market"

@@ -456,6 +456,8 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
 
 end
 
+local encryptedIds = {[185685]=true,[185683]=true,[185680]=true}
+
 local ranOnce
 function MDT:DisplayBlipTooltip(blip, shown)
     if not ranOnce then
@@ -471,7 +473,17 @@ function MDT:DisplayBlipTooltip(blip, shown)
     local tooltip = MDT.tooltip
     local data = blip.data
     if shown then
-        tooltip.Model:SetCreature(data.id)
+        --- for some creatures (e.g. encrypted relics) it shows no model; prefer displayId then
+        if data.badCreatureModel then
+            tooltip.Model:SetDisplayInfo(data.displayId)
+        else
+            tooltip.Model:SetCreature(data.id)
+        end
+        if data.modelPosition then
+            tooltip.Model:SetPosition(unpack(data.modelPosition))
+        else
+            tooltip.Model:SetPosition(0,0,0)
+        end
         tooltip.String:Show()
         tooltip:Show()
     else
@@ -492,6 +504,9 @@ function MDT:DisplayBlipTooltip(blip, shown)
     --remove tormented clones ids
     if blip.data.powers then occurence = "" end
 
+    --remove encrypted clones ids
+    if encryptedIds[blip.data.id] then occurence = "" end
+
     local text = L[data.name].." "..occurence..group.."\n"..string.format(L["Level %d %s"],data.level,L[data.creatureType]).."\n".. string.format(L["%s HP"],MDT:FormatEnemyHealth(health)).."\n"
     local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
     text = text ..L["Forces"]..": ".. MDT:FormatEnemyForces(count)
@@ -503,6 +518,38 @@ function MDT:DisplayBlipTooltip(blip, shown)
     if reapingText then text = text .. "\n" .. reapingText end
     text = text .."\n\n["..L["Right click for more info"].."]"
     tooltip.String:SetText(text)
+
+    -- if this mob grants a bonus buff, show it in the tooltip ad-hoc
+    if blip.data.bonusSpell then
+        local name,_,icon = GetSpellInfo(blip.data.bonusSpell)
+        local bonusDesc = GetSpellDescription(blip.data.bonusSpell)
+        local bonusIcon = tooltip.bonusIcon or tooltip:CreateTexture(nil, "OVERLAY");
+        bonusIcon:SetWidth(54);
+        bonusIcon:SetHeight(54);
+        bonusIcon:SetTexture(icon)
+        bonusIcon:SetPoint("TOPLEFT", tooltip.Model, "BOTTOMLEFT",8,-8);
+        tooltip.bonusIcon = bonusIcon
+
+        local bonusString = tooltip.bonusString or tooltip:CreateFontString("MDTToolTipString")
+        bonusString:SetFontObject("GameFontNormalSmall")
+        bonusString:SetFont(tooltip.String:GetFont(),10)
+        bonusString:SetTextColor(1, 1, 1, 1)
+        bonusString:SetJustifyH("LEFT")
+        bonusString:SetWidth(tooltip:GetWidth())
+        bonusString:SetHeight(60)
+        bonusString:SetWidth(200)
+        bonusString:SetText(bonusDesc and bonusDesc or name)
+        bonusString:SetPoint("TOPLEFT", tooltip.bonusIcon, "TOPRIGHT", 8, 3)
+        tooltip.bonusString = bonusString
+
+        tooltip.bonusString:Show()
+        tooltip.bonusIcon:Show()
+        tooltip.mySizes = {x=290, y=180}
+    elseif tooltip.bonusIcon then
+        tooltip.bonusIcon:Hide()
+        tooltip.bonusString:Hide()
+        tooltip.mySizes = {x=290, y=120}
+    end
 
     tooltip:ClearAllPoints()
     if db.tooltipInCorner then
@@ -964,10 +1011,13 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
         if blip.data.corrupted then blip:Hide() end
         if emissaryIds[blip.data.id] then blip:Hide() end
         if tormentedIds[blip.data.id] then blip:Hide() end
+        if encryptedIds[blip.data.id] then blip:Hide() end
     end
     local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(blips) do
-        if (db.currentSeason == 6 and tormentedIds[blip.data.id])
+        if (db.currentSeason == 7 and db.currentDifficulty >= 10 and encryptedIds[blip.data.id]) then
+            blip:Show()
+        elseif (db.currentSeason == 6 and tormentedIds[blip.data.id])
         or (db.currentSeason == 4 and blip.data.corrupted)
         or (db.currentSeason == 3 and emissaryIds[blip.data.id]) then
             local weekData =  blip.clone.week

@@ -87,7 +87,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 6,
+        currentSeason = 7,
 		currentExpansion = 3,
         scale = 1,
         enemyForcesFormat = 2,
@@ -217,18 +217,18 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {11,124,10,128}, --bursting storming fortified tormented
-    [2] =  {6,3,9,128}, --raging volcanic tyrannical tormented
-    [3] =  {122,12,10,128}, -- inspiring grievous fortified tormented
-    [4] =  {123,4,9,128}, -- spiteful necrotic tyrannical tormented
-    [5] =  {7,14,10,128}, -- bolstering quaking fortified tormented
-    [6] =  {8,124,9,128}, --sanguine storming tyrannical tormented
-    [7] =  {6,13,10,128}, --raging explosive fortified tormented
-    [8] =  {11,3,9,128}, --bursting volcanic tyrannical tormented
-    [9] =  {123,12,10,128}, --spiteful grievous fortified tormented
-    [10] = {122,14,9,128},  --inspiring quaking tyrannical tormented
-    [11] = {8,4,10,128},  --sanguine necrotic fortified tormented
-    [12] = {7,13,9,128},  --bolstering explosive tyrannical tormented
+    [1] =  {11,124,10,130}, --bursting storming fortified encrypted
+    [2] =  {6,3,9,130}, --raging volcanic tyrannical encrypted
+    [3] =  {122,12,10,130}, -- inspiring grievous fortified encrypted
+    [4] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted
+    [5] =  {7,14,10,130}, -- bolstering quaking fortified encrypted
+    [6] =  {8,124,9,130}, --sanguine storming tyrannical encrypted
+    [7] =  {6,13,10,130}, --raging explosive fortified encrypted
+    [8] =  {11,3,9,130}, --bursting volcanic tyrannical encrypted
+    [9] =  {123,12,10,130}, --spiteful grievous fortified encrypted
+    [10] = {122,14,9,130},  --inspiring quaking tyrannical encrypted
+    [11] = {8,4,10,130},  --sanguine necrotic fortified encrypted
+    [12] = {7,13,9,130},  --bolstering explosive tyrannical encrypted
 }
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
@@ -4317,6 +4317,7 @@ function MDT:PrintCurrentAffixes()
         [123] =L["Spiteful"],
         [124] =L["Storming"],
         [128] =L["Tormented"],
+        [130] =L["Encrypted"],
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do
