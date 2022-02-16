@@ -637,6 +637,17 @@ local function displaySendingProgress(userArgs,bytesSent,bytesToSend)
             local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
             local presetName = preset.text
             local name, realm = UnitFullName("player")
+
+            --UnitFullName("player") will always return a players name with a capitalised first letter, regardless of whether
+            --or not that is actually the case, while UnitFullName("Nnoggie") will return the player name with case respected. 
+            --This causes a subtle bug for (the few) players who's name does not begin with a capital, where chat links do not 
+            --work, because line 243 in OnCommReceived respects the case of the name, but here in the sending code we do not. 
+            --As a result, the entry in MDT.transmissionCache is indexed with case respected, but read on line 225 of this file 
+            --without respect for case (due to us sending it here, without respect for case). The fix is to subsequently call 
+            --GetUnitName(name) on the name, in order to get the correct case.
+
+            name = UnitFullName(name)
+
             local fullName = name.."+"..realm
             SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]",distribution)
             MDT:SetThrottleValues(true)
