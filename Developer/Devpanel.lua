@@ -828,6 +828,13 @@ function MDT:CreateDevPanel(frame)
             ViragDevTool_AddData(db)
         end)
         container:AddChild(vdtDbButton)
+
+        local leechButton = AceGUI:Create("Button")
+        leechButton:SetText("Leech Data")
+        leechButton:SetCallback("OnClick",function()
+            MDT:RequestDataCollectionUpdate()
+        end)
+        container:AddChild(leechButton)
     end
 
     -- Callback function for OnGroupSelected
