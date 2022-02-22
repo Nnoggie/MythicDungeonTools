@@ -151,7 +151,7 @@ do
 			end
             -- if db.dataCollectionActive then MDT.DataCollection:Init() end
             -- PTR ONLY
-            MDT.DataCollection:Init()
+            --MDT.DataCollection:Init()
             --fix db corruption
             do
                 for _,presets in pairs(db.presets) do
