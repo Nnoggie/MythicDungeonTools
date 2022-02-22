@@ -1,3 +1,6 @@
+v3.8.0
+- added Tazavesh M+ Dungeons
+- added Encrypted Affix (big thanks to Blazeton once again for the contribution!)
 v3.7.7
 - fixed an issue for sending presets via chat links for character names starting with lower case letters
 v3.7.5
