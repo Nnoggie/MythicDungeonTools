@@ -1,7 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
---TODO ADD TO CURSEFORGE:
+
+--MDT
 L["Encrypted"] = "Encrypted"
 L["Urh Relic"] = "Urh Relic"
 L["Wo Relic"] = "Wo Relic"
@@ -20,7 +21,6 @@ L["Unknown"] = "Unknown"
 L["Eye of Sethraliss"] = "Eye of Sethraliss"
 L["Opera Hall: Wikket"] = "Opera Hall: Wikket"
 L["Attumen the Huntsman"] = "Attumen the Huntsman"
-
 L["Customs Security"] = "Customs Security"
 L["Gatewarden Zo'mazz"] = "Gatewarden Zo'mazz"
 L["Support Officer"] = "Support Officer"
@@ -78,8 +78,6 @@ L["Focused Ritualist"] = "Focused Ritualist"
 L["So'leah"] = "So'leah"
 L["So' Cartel Assassin"] = "So' Cartel Assassin"
 L["Portalmancer Zo'honn"] = "Portalmancer Zo'honn"
-
--- MDT
 L[" >Battle for Azeroth"] = " >Battle for Azeroth"
 L[" >Legion"] = " >Legion"
 L["%s HP"] = "%s HP"
