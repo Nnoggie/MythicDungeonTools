@@ -1,8 +1,17 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 21
+MDT.dungeonList[dungeonIndex] = L["The MOTHERLODE!!"]
 MDT.dungeonTotalCount[dungeonIndex] = {normal=384,teeming=460,teemingEnabled=true}
 MDT.scaleMultiplier[dungeonIndex] = 0.7
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "KezanDungeon",
+    [1] = "KezanDungeon",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The MOTHERLODE!! Sublevel"],
+}
 
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

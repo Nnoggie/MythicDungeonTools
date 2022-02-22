@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 19
+MDT.dungeonList[dungeonIndex] = L["Siege of Boralus"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -11,8 +12,18 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
-MDT.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "SiegeOfBoralus",
+    [1] = "SiegeOfBoralus",
+    [2] = "SiegeOfBoralus",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Siege of Boralus Sublevel"],
+    [2] = L["Siege of Boralus (Upstairs)"],
+}
+
+MDT.dungeonTotalCount[dungeonIndex] = {normal=319,teeming=383,teemingEnabled=true}
 
 local selectorGroup
 local AceGUI = LibStub("AceGUI-3.0")

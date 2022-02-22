@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 16
+MDT.dungeonList[dungeonIndex] = L["Freehold"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -13,6 +14,14 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.scaleMultiplier[dungeonIndex] = 0.6
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "KulTirasPirateTownDungeon",
+    [1]= "KulTirasPirateTownDungeon",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Freehold Sublevel"],
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = {normal=261,teeming=313,teemingEnabled=true}
 

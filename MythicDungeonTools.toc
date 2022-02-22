@@ -1,4 +1,4 @@
-## Interface: 90105
+## Interface: 90200
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
 ## Version: 3.7.7
@@ -19,21 +19,11 @@
 libs\load_libs.xml
 init.lua
 locales.xml
-AceGUIWidget-MythicDungeonToolsPullButton.lua
-AceGUIWidget-MythicDungeonToolsNewPullButton.lua
-AceGUIWidget-MythicDungeonToolsSpellButton.lua
-AceGUIWidget-MythicDungeonToolsPowerButton.lua
+AceGUIWidgets\load_widgets.xml
 Utility.lua
 MythicDungeonTools.lua
-DungeonEnemies.xml
-pulls.lua
-EnemyInfo.lua
-Pointsofinterest.lua
-Transmission.lua
-toolbar.lua
-devpanel.lua
-DataCollection.lua
-LiveSession.lua
+Modules\load_modules.xml
+Developer\load_developer.xml
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml

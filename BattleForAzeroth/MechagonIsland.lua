@@ -1,8 +1,12 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 25
+MDT.dungeonList[dungeonIndex] = L["Mechagon - Junkyard"]
 MDT.mapInfo[dungeonIndex] = {
-    tileFormat= 15,
+    tileFormat= {
+        [1] = 15,
+        [2] = 15
+    },
     viewportPositionOverrides = 
     {
         [1] = {
@@ -17,6 +21,16 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "MechagonDungeon",
+    [1] = "MechagonDungeonExterior",
+    [2] = "MechagonDungeonExterior",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Mechagon Island"],
+    [2] = L["Mechagon Island (Tunnels)"],
+}
 
 MDT.scaleMultiplier[dungeonIndex] = 0.5
 MDT.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=398,teemingEnabled=true}

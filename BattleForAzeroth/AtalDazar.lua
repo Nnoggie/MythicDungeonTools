@@ -1,6 +1,18 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 15
+MDT.dungeonList[dungeonIndex] = L["Atal'Dazar"]
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0]= "CityOfGold",
+    [1]= "CityOfGold1_",
+    [2]= "CityOfGold2_",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Atal'Dazar Sublevel"],
+    [2] = L["Sacrificial Pits"],
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=198,teeming=237,teemingEnabled=true}
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {

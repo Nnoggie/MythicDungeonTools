@@ -1,7 +1,18 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 20
+MDT.dungeonList[dungeonIndex] = L["Temple of Sethraliss"]
 MDT.dungeonTotalCount[dungeonIndex] = {normal=220,teeming=264,teemingEnabled=true}
+
+MDT.dungeonMaps[dungeonIndex] = {
+   [0] = "TempleOfSethralissA",
+   [1] = "TempleOfSethralissA",
+   [2] = "TempleOfSethralissB",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Temple of Sethraliss Sublevel"],
+    [2] = L["Atrium of Sethraliss"],
+}
 
 MDT.mapPOIs[dungeonIndex] = {
    [1] = {
@@ -1831,7 +1842,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["name"] = "Eye of Sethraliss";
       ["health"] = 0;
       ["displayId"] = 46941;
-      ["creatureType"] = "";
+      ["creatureType"] = "Unknown";
       ["level"] = 0;
       ["id"] = 68819;
       ["count"] = 12;

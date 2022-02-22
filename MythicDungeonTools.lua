@@ -87,7 +87,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 6,
+        currentSeason = 7,
 		currentExpansion = 3,
         scale = 1,
         enemyForcesFormat = 2,
@@ -122,7 +122,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,37 do
+    for i=1,39 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
@@ -149,8 +149,9 @@ do
 			if not db.minimap.hide then
 				icon:Show("MythicDungeonTools")
 			end
-
-            --if db.dataCollectionActive then MDT.DataCollection:Init() end
+            -- if db.dataCollectionActive then MDT.DataCollection:Init() end
+            -- PTR ONLY
+            MDT.DataCollection:Init()
             --fix db corruption
             do
                 for _,presets in pairs(db.presets) do
@@ -195,7 +196,6 @@ do
                 MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5,0.5,0.5)
             end
             last = now
-            --MDT:RequestDataCollectionUpdate()
         end
     end
     function MDT.PLAYER_ENTERING_WORLD(self, addon)
@@ -212,446 +212,49 @@ do
 end
 
 
-MDT.mapInfo = {}
-MDT.dungeonTotalCount = {}
-MDT.scaleMultiplier = {}
+
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {11,124,10,128}, --bursting storming fortified tormented
-    [2] =  {6,3,9,128}, --raging volcanic tyrannical tormented
-    [3] =  {122,12,10,128}, -- inspiring grievous fortified tormented
-    [4] =  {123,4,9,128}, -- spiteful necrotic tyrannical tormented
-    [5] =  {7,14,10,128}, -- bolstering quaking fortified tormented
-    [6] =  {8,124,9,128}, --sanguine storming tyrannical tormented
-    [7] =  {6,13,10,128}, --raging explosive fortified tormented
-    [8] =  {11,3,9,128}, --bursting volcanic tyrannical tormented
-    [9] =  {123,12,10,128}, --spiteful grievous fortified tormented
-    [10] = {122,14,9,128},  --inspiring quaking tyrannical tormented
-    [11] = {8,4,10,128},  --sanguine necrotic fortified tormented
-    [12] = {7,13,9,128},  --bolstering explosive tyrannical tormented
+    [1] =  {11,124,10,130}, --bursting storming fortified encrypted
+    [2] =  {6,3,9,130}, --raging volcanic tyrannical encrypted
+    [3] =  {122,12,10,130}, -- inspiring grievous fortified encrypted
+    [4] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted
+    [5] =  {7,14,10,130}, -- bolstering quaking fortified encrypted
+    [6] =  {8,124,9,130}, --sanguine storming tyrannical encrypted
+    [7] =  {6,13,10,130}, --raging explosive fortified encrypted
+    [8] =  {11,3,9,130}, --bursting volcanic tyrannical encrypted
+    [9] =  {123,12,10,130}, --spiteful grievous fortified encrypted
+    [10] = {122,14,9,130},  --inspiring quaking tyrannical encrypted
+    [11] = {8,4,10,130},  --sanguine necrotic fortified encrypted
+    [12] = {7,13,9,130},  --bolstering explosive tyrannical encrypted
 }
-
-local dungeonList = {
-    [1] = L["Black Rook Hold"],
-    [2] = L["Cathedral of Eternal Night"],
-    [3] = L["Court of Stars"],
-    [4] = L["Darkheart Thicket"],
-    [5] = L["Eye of Azshara"],
-    [6] = L["Halls of Valor"],
-    [7] = L["Maw of Souls"],
-    [8] = L["Neltharion's Lair"],
-    [9] = L["Return to Karazhan Lower"],
-    [10] = L["Return to Karazhan Upper"],
-    [11] = L["Seat of the Triumvirate"],
-    [12] = L["The Arcway"],
-    [13] = L["Vault of the Wardens"],
+MDT.mapInfo = {}
+MDT.dungeonTotalCount = {}
+MDT.scaleMultiplier = {}
+MDT.dungeonMaps = {}
+MDT.dungeonEnemies = {}
+MDT.mapPOIs = {}
+MDT.dungeonSubLevels = {}
+MDT.dungeonList = {
     [14] = " >"..L["Battle for Azeroth"],
-    [15] = L["Atal'Dazar"],
-    [16] = L["Freehold"],
-    [17] = L["Kings' Rest"],
-    [18] = L["Shrine of the Storm"],
-    [19] = L["Siege of Boralus"],
-    [20] = L["Temple of Sethraliss"],
-    [21] = L["The MOTHERLODE!!"],
-    [22] = L["The Underrot"],
-    [23] = L["Tol Dagor"],
-    [24] = L["Waycrest Manor"],
-    [25] = L["Mechagon - Junkyard"],
-    [26] = L["Mechagon - Workshop"],
     [27] = " <"..L["Legion"],
     [28] = " >"..L["Shadowlands"],
-    [29] = L["De Other Side"],
-    [30] = L["Halls of Atonement"],
-    [31] = L["Mists of Tirna Scithe"],
-    [32] = L["Plaguefall"],
-    [33] = L["Sanguine Depths"],
-    [34] = L["Spires of Ascension"],
-    [35] = L["The Necrotic Wake"],
-    [36] = L["Theater of Pain"],
-    [37] = " <"..L["Battle for Azeroth"],
+    [39] = " <"..L["Battle for Azeroth"],
 }
-function MDT:GetNumDungeons() return #dungeonList-1 end
-function MDT:GetDungeonName(idx) return dungeonList[idx] end
 
-local dungeonSubLevels = {
-    [1] = {
-        [1] = L["The Ravenscrypt"],
-        [2] = L["The Grand Hall"],
-        [3] = L["Ravenshold"],
-        [4] = L["The Rook's Host"],
-        [5] = L["Lord Ravencrest's Chamber"],
-        [6] = L["The Raven's Crown"],
-    },
-    [2] = {
-        [1] = L["Hall of the Moon"],
-        [2] = L["Twilight Grove"],
-        [3] = L["The Emerald Archives"],
-        [4] = L["Path of Illumination"],
-        [5] = L["Sacristy of Elune"],
-    },
-    [3] = {
-        [1] = L["Court of Stars Sublevel"],
-        [2] = L["The Jeweled Estate"],
-        [3] = L["The Balconies"],
-    },
-    [4] = {
-        [1] = L["Darkheart Thicket Sublevel"],
-    },
-    [5] = {
-        [1] = L["Eye of Azshara Sublevel"],
-    },
-    [6] = {
-        [1] = L["The High Gate"],
-        [2] = L["Field of the Eternal Hunt"],
-        [3] = L["Halls of Valor Sublevel"],
-    },
-    [7] = {
-        [1] = L["Helmouth Cliffs"],
-        [2] = L["The Hold"],
-        [3] = L["The Naglfar"],
-    },
-    [8] = {
-        [1] = L["Neltharion's Lair Sublevel"],
-    },
-    [9] = {
-        [1] = L["Master's Terrace"],
-        [2] = L["Opera Hall Balcony"],
-        [3] = L["The Guest Chambers"],
-        [4] = L["The Banquet Hall"],
-        [5] = L["Upper Livery Stables"],
-        [6] = L["The Servant's Quarters"],
-    },
-    [10] = {
-        [1] = L["Lower Broken Stair"],
-        [2] = L["Upper Broken Stair"],
-        [3] = L["The Menagerie"],
-        [4] = L["Guardian's Library"],
-        [5] = L["Library Floor"],
-        [6] = L["Upper Library"],
-        [7] = L["Gamesman's Hall"],
-        [8] = L["Netherspace"],
-    },
-    [11] = {
-        [1] = L["Seat of the Triumvirate Sublevel"],
-    },
-    [12] = {
-        [1] = L["The Arcway Sublevel"],
-    },
-    [13] = {
-        [1] = L["The Warden's Court"],
-        [2] = L["Vault of the Wardens Sublevel"],
-        [3] = L["Vault of the Betrayer"],
-    },
-    [15] = {
-        [1] = L["Atal'Dazar Sublevel"],
-        [2] = L["Sacrificial Pits"],
-    },
-    [16] = {
-        [1] = L["Freehold Sublevel"],
-    },
-    [17] = {
-        [1] = L["Kings' Rest Sublevel"],
-    },
-    [18] = {
-        [1] = L["Shrine of the Storm Sublevel"],
-        [2] = L["Storm's End"],
-    },
-    [19] = {
-        [1] = L["Siege of Boralus Sublevel"],
-        [2] = L["Siege of Boralus (Upstairs)"],
-    },
-    [20] = {
-        [1] = L["Temple of Sethraliss Sublevel"],
-        [2] = L["Atrium of Sethraliss"],
-    },
-    [21] = {
-        [1] = L["The MOTHERLODE!! Sublevel"],
-    },
-    [22] = {
-        [1] = L["The Underrot Sublevel"],
-        [2] = L["Ruin's Descent"],
-    },
-    [23] = {
-        [1] = L["Tol Dagor Sublevel1"],
-        [2] = L["The Drain"],
-        [3] = L["The Brig"],
-        [4] = L["Detention Block"],
-        [5] = L["Officer Quarters"],
-        [6] = L["Overseer's Redoubt"],
-        [7] = L["Overseer's Summit"],
-    },
-    [24] = {
-        [1] = L["The Grand Foyer"],
-        [2] = L["Upstairs"],
-        [3] = L["The Cellar"],
-        [4] = L["Catacombs"],
-        [5] = L["The Rupture"],
-    },
-    [25] = {
-        [1] = L["Mechagon Island"],
-        [2] = L["Mechagon Island (Tunnels)"],
-    },
-    [26] = {
-        [1] = L["The Robodrome"],
-        [2] = L["Waste Pipes"],
-        [3] = L["The Under Junk"],
-        [4] = L["Mechagon City"],
-    },
-    [29] = {
-        [1] = L["De Other Side"],
-        [2] = L["Mechagon"],
-        [3] = L["Zul'Gurub"],
-        [4] = L["Ardenweald"],
-    },
-    [30] = {
-        [1] = L["HallsOfAtonementFloor1"],
-        [2] = L["HallsOfAtonementFloor2"],
-        [3] = L["HallsOfAtonementFloor3"],
-    },
-    [31] = {
-        [1] = L["Mists of Tirna Scithe"],
-    },
-    [32] = {
-        [1] = L["Plaguefall"],
-        [2] = L["The Festering Sanctum"],
-    },
-    [33] = {
-        [1] = L["Sanguine DepthsFloor1"],
-        [2] = L["Sanguine DepthsFloor2"],
-    },
-    [34] = {
-        [1] = L["Honor's Ascent"],
-        [2] = L["Gardens of Repose"],
-        [3] = L["Font of Fealty"],
-        [4] = L["Seat of the Archon"],
-    },
-    [35] = {
-        [1] = L["TheNecroticWakeFloor1"],
-        [2] = L["TheNecroticWakeFloor2"],
-        [3] = L["TheNecroticWakeFloor3"],
-    },
-    [36] = {
-        [1] = L["TheaterOfPainFloor1"],
-        [2] = L["TheaterOfPainFloor2"],
-        [3] = L["TheaterOfPainFloor3"],
-        [4] = L["TheaterOfPainFloor4"],
-        [5] = L["TheaterOfPainFloor5"],
-    },
-}
+function MDT:GetNumDungeons() return #MDT.dungeonList-1 end
+function MDT:GetDungeonName(idx) return MDT.dungeonList[idx] end
+
 function MDT:GetDungeonSublevels()
-    return dungeonSubLevels
+    return MDT.dungeonSubLevels
 end
 
 function MDT:GetSublevelName(dungeonIdx, sublevelIdx)
     if not dungeonIdx then dungeonIdx = db.currentDungeonIdx end
-    return dungeonSubLevels[dungeonIdx][sublevelIdx]
+    return MDT.dungeonSubLevels[dungeonIdx][sublevelIdx]
 end
-
-MDT.dungeonMaps = {
-	[1] = {
-		[0]= "BlackRookHoldDungeon",
-		[1]= "BlackRookHoldDungeon1_",
-		[2]= "BlackRookHoldDungeon2_",
-		[3]= "BlackRookHoldDungeon3_",
-		[4]= "BlackRookHoldDungeon4_",
-		[5]= "BlackRookHoldDungeon5_",
-		[6]= "BlackRookHoldDungeon6_",
-	},
-	[2] = {
-		[0]= "TombofSargerasDungeon",
-		[1]= "TombofSargerasDungeon1_",
-		[2]= "TombofSargerasDungeon2_",
-		[3]= "TombofSargerasDungeon3_",
-		[4]= "TombofSargerasDungeon4_",
-		[5]= "TombofSargerasDungeon5_",
-	},
-	[3] = {
-		[0] = "SuramarNoblesDistrict",
-		[1] = "SuramarNoblesDistrict",
-		[2] = "SuramarNoblesDistrict1_",
-		[3] = "SuramarNoblesDistrict2_",
-	},
-	[4] = {
-		[0] = "DarkheartThicket",
-		[1] = "DarkheartThicket",
-	},
-	[5] = {
-		[0]= "AszunaDungeon",
-		[1]= "AszunaDungeon",
-	},
-	[6] = {
-		[0]= "Hallsofvalor",
-		[1]= "Hallsofvalor1_",
-		[2]= "Hallsofvalor",
-		[3]= "Hallsofvalor2_",
-	},
-
-	[7] = {
-		[0] = "HelheimDungeonDock",
-		[1] = "HelheimDungeonDock",
-		[2] = "HelheimDungeonDock1_",
-		[3] = "HelheimDungeonDock2_",
-	},
-	[8] = {
-		[0] = "NeltharionsLair",
-		[1] = "NeltharionsLair",
-	},
-	[9] = {
-		[0] = "LegionKarazhanDungeon",
-		[1] = "LegionKarazhanDungeon6_",
-		[2] = "LegionKarazhanDungeon5_",
-		[3] = "LegionKarazhanDungeon4_",
-		[4] = "LegionKarazhanDungeon3_",
-		[5] = "LegionKarazhanDungeon2_",
-		[6] = "LegionKarazhanDungeon1_",
-	},
-	[10] = {
-		[0] = "LegionKarazhanDungeon",
-		[1] = "LegionKarazhanDungeon7_",
-		[2] = "LegionKarazhanDungeon8_",
-		[3] = "LegionKarazhanDungeon9_",
-		[4] = "LegionKarazhanDungeon10_",
-		[5] = "LegionKarazhanDungeon11_",
-		[6] = "LegionKarazhanDungeon12_",
-		[7] = "LegionKarazhanDungeon13_",
-		[8] = "LegionKarazhanDungeon14_",
-	},
-	[11] = {
-		[0] = "ArgusDungeon",
-		[1] = "ArgusDungeon",
-	},
-	[12] = {
-		[0]= "SuamarCatacombsDungeon",
-		[1]= "SuamarCatacombsDungeon1_",
-	},
-	[13] = {
-		[0]= "VaultOfTheWardens",
-		[1]= "VaultOfTheWardens1_",
-		[2]= "VaultOfTheWardens2_",
-		[3]= "VaultOfTheWardens3_",
-	},
-	[15] = {
-		[0]= "CityOfGold",
-		[1]= "CityOfGold1_",
-		[2]= "CityOfGold2_",
-	},
-	[16] = {
-		[0]= "KulTirasPirateTownDungeon",
-		[1]= "KulTirasPirateTownDungeon",
-	},
-	[17] = {
-        [0] = "KingsRest",
-        [1] = "KingsRest1_"
-	},
-    [18] = {
-        [0] = "ShrineOfTheStorm",
-        [1] = "ShrineOfTheStorm",
-        [2] = "ShrineOfTheStorm1_",
-    },
-    [19] = {
-        [0] = "SiegeOfBoralus",
-        [1] = "SiegeOfBoralus",
-        [2] = "SiegeOfBoralus",
-    },
-    [20] = {
-        [0] = "TempleOfSethralissA",
-        [1] = "TempleOfSethralissA",
-        [2] = "TempleOfSethralissB",
-    },
-    [21] = {
-        [0] = "KezanDungeon",
-        [1] = "KezanDungeon",
-    },
-    [22] = {
-        [0] = "UnderrotExterior",
-        [1] = "UnderrotExterior",
-        [2] = "UnderrotInterior",
-    },
-    [23] = {
-        [0] = "PrisonDungeon",
-        [1] = "PrisonDungeon",
-        [2] = "PrisonDungeon1_",
-        [3] = "PrisonDungeon2_",
-        [4] = "PrisonDungeon3_",
-        [5] = "PrisonDungeon4_",
-        [6] = "PrisonDungeon5_",
-        [7] = "PrisonDungeon6_",
-    },
-    [24] = {
-        [0] = "Waycrest",
-        [1] = "Waycrest1_",
-        [2] = "Waycrest2_",
-        [3] = "Waycrest3_",
-        [4] = "Waycrest4_",
-        [5] = "Waycrest5_",
-    },
-    [25] = {
-        [0] = "MechagonDungeon",
-        [1] = "MechagonDungeonExterior",
-        [2] = "MechagonDungeonExterior",
-    },
-    [26] = {
-        [0] = "MechagonDungeon",
-        [1] = "MechagonDungeon1_",
-        [2] = "MechagonDungeon2_",
-        [3] = "MechagonDungeon3_",
-        [4] = "MechagonDungeon4_",
-    },
-    [29] = {
-        [0] = "DeOtherSide_Ardenweald",
-        [1] = "DeOtherSide_Main",
-        [2] = "DeOtherSide_Gnome",
-        [3] = "DeOtherSide_Hakkar",
-        [4] = "DeOtherSide_Ardenweald",
-    },
-    [30] = {
-        [0] = "HallsOfAtonement_A",
-        [1] = "HallsOfAttonementExterior",
-        [2] = "HallsOfAtonement_A",
-        [3] = "HallsOfAtonement_B",
-    },
-    [31] = {
-        [0] = "MistsOfTirneScithe",
-        [1] = "MistsOfTirneScithe",
-    },
-    [32] = {
-        [0] = "Plaguefall",
-        [1] = "Plaguefall",
-        [2] = "Plaguefall_B",
-    },
-    [33] = {
-        [0] = "SanguineDepths_A",
-        [1] = "SanguineDepths_A",
-        [2] = "SanguineDepths_B",
-    },
-    [34] = {
-        [0] = "SpiresOfAscension_A",
-        [1] = "SpiresOfAscension_A",
-        [2] = "SpiresOfAscension_B",
-        [3] = "SpiresOfAscension_C",
-        [4] = "SpiresOfAscension_D",
-    },
-    [35] = {
-        [0] = "NecroticWake_A",
-        [1] = "NecroticWake_Exterior",
-        [2] = "NecroticWake_A",
-        [3] = "NecroticWake_B",
-    },
-    [36] = {
-        [0] = "TheaterOfPain",
-        [1] = "TheaterOfPain",
-        [2] = "TheaterOfPain_Warlord",
-        [3] = "TheaterOfPain_Lich",
-        [4] = "TheaterOfPain_AbomTop",
-        [5] = "TheaterOfPain_AbomBot",
-    },
-
-}
-MDT.dungeonBosses = {}
-MDT.dungeonEnemies = {}
-MDT.mapPOIs = {}
 
 function MDT:GetDB()
     return db
@@ -681,11 +284,6 @@ end
 function MDT:HideInterface()
 	self.main_frame:Hide()
 	self.main_frame.HelpButton:Hide()
-end
-
-function MDT:ToggleDevMode()
-    db.devMode = not db.devMode
-    ReloadUI()
 end
 
 function MDT:ToggleDataCollection()
@@ -875,108 +473,6 @@ function MDT:GetFullScreenSizes()
     end
     local scale = newSizey/sizey --use this for adjusting NPC / POI positions later
     return newSizex, newSizey, scale, isNarrow
-end
-
----Maximize
----FULLSCREEN the UI
-function MDT:Maximize()
-    local f = MDT.main_frame
-
-    local oldScrollH = f.scrollFrame:GetHorizontalScroll()
-    local oldScrollV = f.scrollFrame:GetVerticalScroll()
-    local oldSizeX = f.scrollFrame:GetWidth()
-    local oldSizeY = f.scrollFrame:GetHeight()
-    if not f.blackoutFrame then
-        f.blackoutFrame = CreateFrame("Frame", "MDTBlackoutFrame", f)
-        f.blackoutFrame:EnableMouse(true)
-        f.blackoutFrameTex = f.blackoutFrame:CreateTexture(nil, "BACKGROUND")
-        f.blackoutFrameTex:SetAllPoints()
-        f.blackoutFrameTex:SetDrawLayer(canvasDrawLayer, -6)
-        f.blackoutFrameTex:SetColorTexture(0.058823399245739,0.058823399245739,0.058823399245739,1)
-        f.blackoutFrame:ClearAllPoints()
-        f.blackoutFrame:SetAllPoints(UIParent)
-    end
-    f.blackoutFrame:Show()
-    f.topPanel:RegisterForDrag(nil)
-    f.bottomPanel:RegisterForDrag(nil)
-    local newSizex, newSizey, scale, isNarrow = MDT:GetFullScreenSizes()
-    db.scale = scale
-    f:ClearAllPoints()
-    if not isNarrow then
-        f:SetPoint("TOP", UIParent,"TOP", -(f.sidePanel:GetWidth()/2), -30)
-    else
-        f:SetPoint("LEFT", UIParent,"LEFT")
-    end
-    f:SetSize(newSizex,newSizey)
-    f.scrollFrame:SetSize(newSizex, newSizey)
-    f.mapPanelFrame:SetSize(newSizex, newSizey)
-    for i=1,12 do
-        f["mapPanelTile"..i]:SetSize((newSizex/4+5*db.scale),(newSizex/4+5*db.scale))
-    end
-    for i=1,10 do
-        for j=1,15 do
-            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
-        end
-    end
-    f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
-    f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
-    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
-    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
-    MDT:ZoomMap(0)
-    MDT:UpdateEnemyInfoFrame()
-    MDT:UpdateMap()
-    if db.devMode then
-        f.devPanel:ClearAllPoints()
-        f.devPanel:SetPoint("TOPLEFT",f,"TOPLEFT",0,-45)
-    end
-    f.resizer:Hide()
-    MDT:CreateTutorialButton(MDT.main_frame)
-    db.maximized = true
-end
-
----Minimize
----Restore normal UI
-function MDT:Minimize()
-    local f = MDT.main_frame
-
-    local oldScrollH = f.scrollFrame:GetHorizontalScroll()
-    local oldScrollV = f.scrollFrame:GetVerticalScroll()
-    local oldSizeX = f.scrollFrame:GetWidth()
-    local oldSizeY = f.scrollFrame:GetHeight()
-    if f.blackoutFrame then f.blackoutFrame:Hide() end
-    f.topPanel:RegisterForDrag("LeftButton")
-    f.bottomPanel:RegisterForDrag("LeftButton")
-    db.scale = db.nonFullscreenScale
-    local newSizex = sizex*db.scale
-    local newSizey = sizey*db.scale
-    f:ClearAllPoints()
-    f:SetPoint(db.anchorTo, UIParent,db.anchorFrom, db.xoffset, db.yoffset)
-    f:SetSize(newSizex,newSizey)
-    f.scrollFrame:SetSize(newSizex, newSizey)
-    f.mapPanelFrame:SetSize(newSizex, newSizey)
-    for i=1,12 do
-        f["mapPanelTile"..i]:SetSize(newSizex/4+(5*db.scale),newSizex/4+(5*db.scale))
-    end
-    for i=1,10 do
-        for j=1,15 do
-            f["largeMapPanelTile"..i..j]:SetSize(newSizex/15,newSizex/15)
-        end
-    end
-    f.scrollFrame:SetVerticalScroll(oldScrollV * (newSizey / oldSizeY))
-    f.scrollFrame:SetHorizontalScroll(oldScrollH * (newSizex / oldSizeX))
-    f.scrollFrame.cursorY = f.scrollFrame.cursorY * (newSizey / oldSizeY)
-    f.scrollFrame.cursorX = f.scrollFrame.cursorX * (newSizex / oldSizeX)
-    MDT:ZoomMap(0)
-    MDT:UpdateEnemyInfoFrame()
-    MDT:UpdateMap()
-    if db.devMode then
-        f.devPanel:ClearAllPoints()
-        f.devPanel:SetPoint("TOPRIGHT",f.topPanel,"TOPLEFT",0,0)
-    end
-    f.resizer:Show()
-    MDT:CreateTutorialButton(MDT.main_frame)
-
-    db.maximized = false
 end
 
 function MDT:SkinProgressBar(progressBar)
@@ -1529,7 +1025,7 @@ function MDT:MakeSidePanel(frame)
 	frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
 	frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-	frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
+	--frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
     frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
     frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCogwheel)
 
@@ -2483,7 +1979,7 @@ function MDT:MakeMapTexture(frame)
             [14] = true,
             [27] = true,
             [28] = true,
-            [37] = true,
+            [39] = true,
         }
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
             if IsControlKeyDown() then
@@ -2491,7 +1987,7 @@ function MDT:MakeMapTexture(frame)
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
                     local target = MDT:GetCurrentSubLevel()+delta
-                    if dungeonSubLevels[db.currentDungeonIdx][target] then
+                    if MDT.dungeonSubLevels[db.currentDungeonIdx][target] then
                         MDT:SetCurrentSubLevel(target)
                         MDT:UpdateMap()
                         MDT:ZoomMapToDefault()
@@ -2502,7 +1998,7 @@ function MDT:MakeMapTexture(frame)
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
                     local target = db.currentDungeonIdx+delta
-                    if dungeonList[target] and not ignoredTargets[target] then
+                    if MDT.dungeonList[target] and not ignoredTargets[target] then
                         local group = MDT.main_frame.DungeonSelectionGroup
                         group.DungeonDropdown:Fire("OnValueChanged", target)
                     end
@@ -2732,19 +2228,19 @@ function MDT:UpdateDungeonDropDown()
     group.DungeonDropdown:SetList({})
     if db.currentExpansion == 1 then
         for i=1,14 do
-            group.DungeonDropdown:AddItem(i,dungeonList[i])
+            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
         end
     elseif db.currentExpansion == 2 then
         for i=15,28 do
-            group.DungeonDropdown:AddItem(i,dungeonList[i])
+            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
         end
     elseif db.currentExpansion == 3 then
-        for i = 29,37 do
-            group.DungeonDropdown:AddItem(i,dungeonList[i])
+        for i = 29,39 do
+            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
         end
     end
 	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
-	group.SublevelDropdown:SetList(dungeonSubLevels[db.currentDungeonIdx])
+	group.SublevelDropdown:SetList(MDT.dungeonSubLevels[db.currentDungeonIdx])
 	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
     group.DungeonDropdown:ClearFocus()
     group.SublevelDropdown:ClearFocus()
@@ -2788,7 +2284,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
             db.currentDungeonIdx = 29
             MDT:UpdateDungeonDropDown()
             MDT:UpdateToDungeon(db.currentDungeonIdx)
-        elseif key == 37 then
+        elseif key == 39 then
             db.currentExpansion = 2
             db.currentDungeonIdx = 15
             MDT:UpdateDungeonDropDown()
@@ -2816,7 +2312,7 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MDT:EnsureDBTables()
     --dungeonIdx doesnt exist
-    if not dungeonList[db.currentDungeonIdx] or string.find(dungeonList[db.currentDungeonIdx],">") then
+    if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx],">") then
         db.currentDungeonIdx = db.currentExpansion == 1 and 1 or db.currentExpansion == 2 and 15
     end
     local preset = MDT:GetCurrentPreset()
@@ -2905,9 +2401,9 @@ function MDT:EnsureDBTables()
     preset.value.teeming = MDT:IsWeekTeeming(preset.week)
 end
 
-function MDT:GetTileFormat(dungeonIdx)
+function MDT:GetTileFormat(dungeonIdx, sublevel)
     local mapInfo = MDT.mapInfo[dungeonIdx]
-    return mapInfo and mapInfo.tileFormat or 4
+    return mapInfo and mapInfo.tileFormat and mapInfo.tileFormat[sublevel] or 4
 end
 
 function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar)
@@ -2923,7 +2419,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     end
 	local fileName = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
 	local path = "Interface\\WorldMap\\"..mapName.."\\"
-    local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx)
+    local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx,preset.value.currentSublevel)
 	for i=1,12 do
         if tileFormat == 4 then
             local texName = path..fileName..i
@@ -4824,6 +4320,7 @@ function MDT:PrintCurrentAffixes()
         [123] =L["Spiteful"],
         [124] =L["Storming"],
         [128] =L["Tormented"],
+        [130] =L["Encrypted"],
     }
     local affixIds = C_MythicPlus.GetCurrentAffixes()
     for idx,data in ipairs(affixIds) do

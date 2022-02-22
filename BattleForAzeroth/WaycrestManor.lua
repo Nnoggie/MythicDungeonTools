@@ -1,6 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 24
+MDT.dungeonList[dungeonIndex] = L["Waycrest Manor"]
 MDT.mapInfo[dungeonIndex] = {
     viewportPositionOverrides =
     {
@@ -11,6 +12,23 @@ MDT.mapInfo[dungeonIndex] = {
         };
     };
 };
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "Waycrest",
+    [1] = "Waycrest1_",
+    [2] = "Waycrest2_",
+    [3] = "Waycrest3_",
+    [4] = "Waycrest4_",
+    [5] = "Waycrest5_",
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["The Grand Foyer"],
+    [2] = L["Upstairs"],
+    [3] = L["The Cellar"],
+    [4] = L["Catacombs"],
+    [5] = L["The Rupture"],
+}
+
 MDT.dungeonTotalCount[dungeonIndex] = {normal=303,teeming=363,teemingEnabled=true}
 
 MDT.mapPOIs[dungeonIndex] = {

@@ -1,7 +1,16 @@
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 17
+MDT.dungeonList[dungeonIndex] = L["Kings' Rest"]
 MDT.dungeonTotalCount[dungeonIndex] = {normal=246,teeming=286,teemingEnabled=true}
+
+MDT.dungeonMaps[dungeonIndex] = {
+    [0] = "KingsRest",
+    [1] = "KingsRest1_"
+}
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["Kings' Rest Sublevel"],
+}
 
 MDT.mapPOIs[dungeonIndex] = {
     [1] = {
