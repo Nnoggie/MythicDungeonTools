@@ -1,3 +1,9 @@
+v3.7.7
+- fixed an issue for sending presets via chat links for character names starting with lower case letters
+v3.7.5
+- fix anchor connection bug when dragging and reordering pulls
+v3.7.4
+- nil fix for imported presets without colorpalette
 v3.7.2
 - fixed visual right click menu issues
 - fixed backgrounds missing on dungeon dropdown + note editbox
