@@ -1,4 +1,4 @@
-v3.8.0
+v3.8.1
 - added Tazavesh M+ Dungeons
 - added Encrypted Affix (big thanks to Blazeton once again for the contribution!)
 v3.7.7
