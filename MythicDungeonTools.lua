@@ -1035,7 +1035,7 @@ function MDT:MakeSidePanel(frame)
         local sep = ""
         for _,affixID in ipairs(affixes) do
             local name, _, filedataid = C_ChallengeMode.GetAffixInfo(affixID)
-            name = name or "Unknown"
+            name = name or L["Unknown"]
             filedataid = filedataid or 134400 --questionmark
             if longText then
                 ret = ret or ""
