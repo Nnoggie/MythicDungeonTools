@@ -1,3 +1,5 @@
+v3.8.2
+- fix nil error
 v3.8.1
 - added Tazavesh M+ Dungeons
 - added Encrypted Affix (big thanks to Blazeton once again for the contribution!)
