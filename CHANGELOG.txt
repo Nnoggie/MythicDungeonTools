@@ -1,3 +1,5 @@
+v3.8.3
+- fix being stuck in MDI mode
 v3.8.2
 - fix nil error
 v3.8.1
