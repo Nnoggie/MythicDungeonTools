@@ -217,18 +217,18 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {11,124,10,130}, --bursting storming fortified encrypted
-    [2] =  {6,3,9,130}, --raging volcanic tyrannical encrypted
-    [3] =  {122,12,10,130}, -- inspiring grievous fortified encrypted
-    [4] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted
-    [5] =  {7,14,10,130}, -- bolstering quaking fortified encrypted
-    [6] =  {8,124,9,130}, --sanguine storming tyrannical encrypted
-    [7] =  {6,13,10,130}, --raging explosive fortified encrypted
-    [8] =  {11,3,9,130}, --bursting volcanic tyrannical encrypted
-    [9] =  {123,12,10,130}, --spiteful grievous fortified encrypted
-    [10] = {122,14,9,130},  --inspiring quaking tyrannical encrypted
-    [11] = {8,4,10,130},  --sanguine necrotic fortified encrypted
-    [12] = {7,13,9,130},  --bolstering explosive tyrannical encrypted
+    [1] =  {7,13,9,130}, -- bolstering explosive fortified encrypted
+    [2] =  {0,0,10,130}, -- tyrannical encrypted
+    [3] =  {0,0,9,130}, --  fortified encrypted
+    [4] =  {0,0,10,130}, --  tyrannical encrypted
+    [5] =  {0,0,9,130}, --  fortified encrypted
+    [6] =  {0,0,10,130}, -- tyrannical encrypted
+    [7] =  {0,0,9,130}, -- fortified encrypted
+    [8] =  {0,0,10,130}, -- tyrannical encrypted
+    [9] =  {0,0,9,130}, -- fortified encrypted
+    [10] = {0,0,10,130},  -- tyrannical encrypted
+    [11] = {0,0,9,130},  -- fortified encrypted
+    [12] = {0,0,10,130},  -- tyrannical encrypted
 }
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
