@@ -2382,13 +2382,17 @@ function MDT:EnsureDBTables()
         preset.freeholdCrewSelected = true
     end
 
-    db.MDI = db.MDI or {}
-    preset.mdi = preset.mdi or {}
+    --MDI mode isn't needed in SL, disable it for anyone it's still on
+    --db.MDI = db.MDI or {}
+    --preset.mdi = preset.mdi or {}
+    --preset.mdiEnabled = preset.mdiEnabled or db.MDI.enabled
+    db.MDI = {}
+    preset.mdi = {}
+    preset.mdiEnabled = false
     preset.mdi.freehold = preset.mdi.freehold or 1
     preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
     preset.mdi.beguiling = preset.mdi.beguiling or 1
     preset.difficulty = preset.difficulty or db.currentDifficulty
-    preset.mdiEnabled = preset.mdiEnabled or db.MDI.enabled
 
     --make sure sublevel actually exists for the dungeon
     --this might have been caused by bugged dropdowns in the past
