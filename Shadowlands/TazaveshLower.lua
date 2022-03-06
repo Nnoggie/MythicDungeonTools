@@ -45,8 +45,6 @@ MDT.dungeonSubLevels[dungeonIndex] = {
     [4] = L["TazaveshFloor2"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = {normal=160,teeming=192,teemingEnabled=true}
-
 MDT.mapPOIs[dungeonIndex] = {
    [1] = {
       [1] = {

@@ -23,7 +23,7 @@ combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags",
                     "overkill", "school", "resisted", "blocked", "absorbed", "critical", "glancing", "crushing",
                     "isOffHand"]
 
-CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False)
+CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False, on_bad_lines='skip')
 # Extracting the event from date and time, which are not comma separated
 timesplit = CL.timestampevent.str.split(" ")
 timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])

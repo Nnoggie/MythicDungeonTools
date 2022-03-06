@@ -117,7 +117,7 @@ MDT.mapPOIs[dungeonIndex] = {
     };
  };
 
- MDT.dungeonTotalCount[dungeonIndex] = {normal=332,teeming=1000,teemingEnabled=true}
+ MDT.dungeonTotalCount[dungeonIndex] = {normal=346,teeming=1000,teemingEnabled=true}
  MDT.dungeonEnemies[dungeonIndex] = {
    [1] = {
       ["clones"] = {
