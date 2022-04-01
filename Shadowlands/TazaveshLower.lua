@@ -414,6 +414,11 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["id"] = 180495;
+      ["spells"] = {
+         [357512] = {};
+         [344663] = {};
+         [357508] = {};
+      };	  
       ["scale"] = 1;
       ["name"] = "Enraged Direhorn";
       ["displayId"] = 47441;
@@ -1208,6 +1213,12 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["id"] = 180091;
+      ["spells"] = {
+         [356407] = {};
+         [356408] = {};
+         [356404] = {};
+         [344663] = {};
+      };	  
       ["scale"] = 1;
       ["name"] = "Ancient Core Hound";
       ["displayId"] = 101639;
@@ -1244,6 +1255,10 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["id"] = 180567;
+      ["spells"] = {
+         [357827] = {};
+         [344663] = {};
+      };	  
       ["scale"] = 0.8;
       ["name"] = "Frenzied Nightclaw";
       ["displayId"] = 101951;
@@ -1827,4 +1842,3 @@ MDT.mapPOIs[dungeonIndex] = {
       ["iconTexture"] = 4335643;
    };
 };
-
