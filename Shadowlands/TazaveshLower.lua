@@ -227,7 +227,8 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 5;
             ["sublevel"] = 1;
          };
-         [3] = {
+         [3] = {            
+            ["inspiring"] = true;
             ["y"] = -253.24857233171;
             ["x"] = 645.76793200298;
             ["g"] = 5;
@@ -918,7 +919,8 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 15;
             ["sublevel"] = 1;
          };
-         [8] = {
+         [8] = {            
+            ["inspiring"] = true;
             ["y"] = -221.03494931265;
             ["x"] = 464.64980083189;
             ["g"] = 12;
@@ -1585,7 +1587,8 @@ MDT.mapPOIs[dungeonIndex] = {
    };
    [1] = {
       ["clones"] = {
-         [6] = {
+         [6] = {            
+            ["inspiring"] = true;
             ["y"] = -263.68958529496;
             ["x"] = 607.79378078901;
             ["g"] = 7;
