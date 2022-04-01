@@ -1,3 +1,7 @@
+v3.8.6
+- affix list updates
+- encrypted / inspiring updates
+- added missing npc Abilities and stealth detection
 v3.8.5
 - tazavesh count update
 v3.8.4
