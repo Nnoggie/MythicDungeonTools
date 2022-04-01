@@ -218,11 +218,11 @@ end
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
     [1] =  {7,13,9,130}, -- bolstering explosive tyrannical encrypted
-    [2] =  {11,124,10,130}, -- fortified encrypted
-    [3] =  {6,3,9,130}, --  tyrannical encrypted
-    [4] =  {122,12,10,130}, --  fortified encrypted
-    [5] =  {123,4,9,130}, --  tyrannical encrypted
-    [6] =  {7,14,10,130}, -- fortified encrypted
+    [2] =  {11,124,10,130}, -- bursting storming fortified encrypted
+    [3] =  {6,3,9,130}, -- raging volcanic tyrannical encrypted
+    [4] =  {122,12,10,130}, -- inspiring grievous fortified encrypted
+    [5] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted
+    [6] =  {0,0,10,130}, -- fortified encrypted
     [7] =  {0,0,9,130}, -- tyrannical encrypted
     [8] =  {0,0,10,130}, -- fortified encrypted
     [9] =  {0,0,9,130}, -- tyrannical encrypted
