@@ -458,11 +458,11 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 1;
          };
          [76] = {
-            ["inspiring"] = true;
             ["y"] = -251.6745280159;
-            ["x"] = 475.89391228458;
-            ["g"] = 19;
+            ["inspiring"] = true;
             ["sublevel"] = 1;
+            ["g"] = 19;
+            ["x"] = 475.89391228458;
          };
          [77] = {
             ["y"] = -252.37786417918;
@@ -596,16 +596,16 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 6;
             ["sublevel"] = 1;
          };
-         [95] = {
-            ["y"] = -263.4476513722;
-            ["x"] = 530.37419862863;
-            ["g"] = 21;
+         [47] = {
+            ["y"] = -256.02716240142;
+            ["x"] = 149.16305845855;
+            ["g"] = 11;
             ["sublevel"] = 1;
          };
-         [94] = {
-            ["y"] = -267.52666206934;
-            ["x"] = 535.35844190368;
-            ["g"] = 21;
+         [63] = {
+            ["y"] = -142.94750080307;
+            ["x"] = 363.86181022904;
+            ["g"] = 7;
             ["sublevel"] = 1;
          };
          [27] = {
@@ -620,10 +620,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 20;
             ["sublevel"] = 1;
          };
-         [87] = {
-            ["y"] = -283.66440360135;
-            ["x"] = 434.97776350113;
-            ["g"] = 18;
+         [67] = {
+            ["y"] = -136.49001930045;
+            ["x"] = 416.71148926145;
+            ["g"] = 8;
             ["sublevel"] = 1;
          };
          [7] = {
@@ -638,15 +638,15 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 6;
             ["sublevel"] = 1;
          };
-         [83] = {
-            ["y"] = -206.9558887117;
-            ["x"] = 420.95673964612;
-            ["g"] = 9;
+         [71] = {
+            ["y"] = -195.66079706956;
+            ["x"] = 488.69626448887;
+            ["g"] = 10;
             ["sublevel"] = 1;
          };
-         [79] = {
-            ["y"] = -256.74597982054;
-            ["x"] = 474.37909937075;
+         [75] = {
+            ["y"] = -247.36533845415;
+            ["x"] = 471.05856;
             ["g"] = 19;
             ["sublevel"] = 1;
          };
@@ -662,22 +662,22 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 6;
             ["sublevel"] = 1;
          };
-         [75] = {
-            ["y"] = -247.36533845415;
-            ["x"] = 471.05856;
+         [79] = {
+            ["y"] = -256.74597982054;
+            ["x"] = 474.37909937075;
             ["g"] = 19;
             ["sublevel"] = 1;
          };
-         [71] = {
-            ["y"] = -195.66079706956;
-            ["x"] = 488.69626448887;
-            ["g"] = 10;
+         [83] = {
+            ["y"] = -206.9558887117;
+            ["x"] = 420.95673964612;
+            ["g"] = 9;
             ["sublevel"] = 1;
          };
-         [67] = {
-            ["y"] = -136.49001930045;
-            ["x"] = 416.71148926145;
-            ["g"] = 8;
+         [87] = {
+            ["y"] = -283.66440360135;
+            ["x"] = 434.97776350113;
+            ["g"] = 18;
             ["sublevel"] = 1;
          };
          [30] = {
@@ -686,16 +686,16 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 6;
             ["sublevel"] = 1;
          };
-         [63] = {
-            ["y"] = -142.94750080307;
-            ["x"] = 363.86181022904;
-            ["g"] = 7;
+         [94] = {
+            ["y"] = -267.52666206934;
+            ["x"] = 535.35844190368;
+            ["g"] = 21;
             ["sublevel"] = 1;
          };
-         [47] = {
-            ["y"] = -256.02716240142;
-            ["x"] = 149.16305845855;
-            ["g"] = 11;
+         [95] = {
+            ["y"] = -263.4476513722;
+            ["x"] = 530.37419862863;
+            ["g"] = 21;
             ["sublevel"] = 1;
          };
       };
@@ -703,23 +703,23 @@ MDT.mapPOIs[dungeonIndex] = {
       ["spells"] = {
          [355147] = {};
       };
-      ["characteristics"] = {
-         ["Slow"] = true;
-      };
-      ["scale"] = 0.7;
+      ["health"] = 29735;
+      ["count"] = 1;
       ["name"] = "Murkbrine Shorerunner";
       ["displayId"] = 101786;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["count"] = 1;
-      ["health"] = 29735;
+      ["scale"] = 0.7;
+      ["characteristics"] = {
+         ["Slow"] = true;
+      };
    };
    [2] = {
       ["clones"] = {
-         [4] = {
-            ["y"] = -309.26465096839;
-            ["x"] = 186.66568051978;
-            ["g"] = 14;
+         [14] = {
+            ["y"] = -278.72183698329;
+            ["x"] = 420.85060475963;
+            ["g"] = 18;
             ["sublevel"] = 1;
          };
          [13] = {
@@ -746,10 +746,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 4;
             ["sublevel"] = 1;
          };
-         [15] = {
-            ["y"] = -296.78562119972;
-            ["x"] = 491.75568602614;
-            ["g"] = 20;
+         [4] = {
+            ["y"] = -309.26465096839;
+            ["x"] = 186.66568051978;
+            ["g"] = 14;
             ["sublevel"] = 1;
          };
          [8] = {
@@ -782,16 +782,16 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 7;
             ["sublevel"] = 1;
          };
-         [3] = {
-            ["y"] = -270.80019209912;
-            ["x"] = 240.31516413081;
-            ["g"] = 15;
-            ["sublevel"] = 1;
-         };
          [11] = {
             ["y"] = -133.62565248212;
             ["x"] = 431.98526680686;
             ["g"] = 8;
+            ["sublevel"] = 1;
+         };
+         [3] = {
+            ["y"] = -270.80019209912;
+            ["x"] = 240.31516413081;
+            ["g"] = 15;
             ["sublevel"] = 1;
          };
          [6] = {
@@ -806,31 +806,31 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 10;
             ["sublevel"] = 1;
          };
-         [14] = {
-            ["y"] = -278.72183698329;
-            ["x"] = 420.85060475963;
-            ["g"] = 18;
+         [15] = {
+            ["y"] = -296.78562119972;
+            ["x"] = 491.75568602614;
+            ["g"] = 20;
             ["sublevel"] = 1;
          };
       };
       ["id"] = 178139;
       ["spells"] = {
          [355147] = {};
-         [355057] = {};
          [355048] = {};
+         [355057] = {};
       };
+      ["health"] = 198234;
+      ["count"] = 6;
+      ["name"] = "Murkbrine Shellcrusher";
+      ["displayId"] = 101785;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["scale"] = 1.5;
       ["characteristics"] = {
          ["Stun"] = true;
          ["Slow"] = true;
          ["Incapacitate"] = true;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Murkbrine Shellcrusher";
-      ["displayId"] = 101785;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["count"] = 6;
-      ["health"] = 198234;
    };
    [4] = {
       ["clones"] = {
@@ -862,16 +862,16 @@ MDT.mapPOIs[dungeonIndex] = {
          [355464] = {};
          [355465] = {};
       };
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
-      ["scale"] = 2;
+      ["health"] = 330390;
+      ["count"] = 15;
       ["name"] = "Coastwalker Goliath";
       ["displayId"] = 101790;
       ["creatureType"] = "Giant";
       ["level"] = 61;
-      ["count"] = 15;
-      ["health"] = 330390;
+      ["scale"] = 2;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
    };
    [8] = {
       ["clones"] = {
@@ -881,32 +881,32 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 2;
          };
       };
+      ["health"] = 1156365;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 175663;
       ["spells"] = {
          [346960] = {};
          [346961] = {};
          [347097] = {};
          [346876] = {};
-         [346877] = {};
+         [346766] = {};
          [347094] = {};
          [346828] = {};
-         [353312] = {};
+         [346877] = {};
          [346116] = {};
-         [346766] = {};
+         [353312] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2448;
       ["instanceID"] = 1194;
-      ["scale"] = 2;
+      ["count"] = 0;
       ["name"] = "Hylbrande";
       ["displayId"] = 100546;
       ["creatureType"] = "Mechanical";
       ["level"] = 62;
-      ["count"] = 0;
-      ["health"] = 1156365;
+      ["scale"] = 2;
+      ["id"] = 175663;
    };
    [16] = {
       ["clones"] = {
@@ -917,11 +917,11 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
          [2] = {
-            ["inspiring"] = true;
             ["y"] = -359.43379694508;
-            ["x"] = 475.99002161812;
-            ["g"] = 29;
+            ["inspiring"] = true;
             ["sublevel"] = 4;
+            ["g"] = 29;
+            ["x"] = 475.99002161812;
          };
          [4] = {
             ["y"] = -287.07838869058;
@@ -941,19 +941,19 @@ MDT.mapPOIs[dungeonIndex] = {
          [354297] = {};
          [357260] = {};
       };
+      ["health"] = 165195;
+      ["count"] = 5;
+      ["name"] = "Focused Ritualist";
+      ["displayId"] = 101669;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["scale"] = 2;
       ["characteristics"] = {
          ["Stun"] = true;
          ["Slow"] = true;
          ["Taunt"] = true;
          ["Fear"] = true;
       };
-      ["scale"] = 2;
-      ["name"] = "Focused Ritualist";
-      ["displayId"] = 101669;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["count"] = 5;
-      ["health"] = 165195;
    };
    [17] = {
       ["clones"] = {
@@ -963,10 +963,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
       };
+      ["health"] = 1486755;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 177269;
       ["spells"] = {
          [353635] = {};
          [350804] = {};
@@ -975,22 +975,22 @@ MDT.mapPOIs[dungeonIndex] = {
          [351057] = {};
          [351646] = {};
          [351080] = {};
-         [350875] = {};
-         [350796] = {};
-         [350885] = {};
-         [351096] = {};
          [351101] = {};
+         [351096] = {};
+         [350885] = {};
+         [350796] = {};
+         [350875] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2455;
       ["instanceID"] = 1194;
-      ["scale"] = 2;
+      ["count"] = 0;
       ["name"] = "So'leah";
       ["displayId"] = 100737;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
-      ["count"] = 0;
-      ["health"] = 1486755;
+      ["scale"] = 2;
+      ["id"] = 177269;
    };
    [9] = {
       ["clones"] = {
@@ -1042,18 +1042,18 @@ MDT.mapPOIs[dungeonIndex] = {
          [368662] = {};
          [356133] = {};
       };
+      ["health"] = 198234;
+      ["count"] = 5;
+      ["name"] = "Burly Deckhand";
+      ["displayId"] = 101457;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["scale"] = 1.5;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Slow"] = true;
          ["Stun"] = true;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Burly Deckhand";
-      ["displayId"] = 101457;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["count"] = 5;
-      ["health"] = 198234;
    };
    [18] = {
       ["clones"] = {
@@ -1098,8 +1098,8 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
          [3] = {
-            ["y"] = -274.52203591701;
-            ["x"] = 381.59103503655;
+            ["y"] = -326.18322834186;
+            ["x"] = 286.60979783526;
             ["sublevel"] = 1;
          };
          [6] = {
@@ -1108,27 +1108,27 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
-      ["scale"] = 1;
-      ["count"] = 0;
       ["id"] = 185683;
+      ["ignoreFortified"] = true;
+      ["scale"] = 1;
       ["spells"] = {
          [366566] = {};
          [368079] = {};
          [368078] = {};
       };
-      ["level"] = 62;
-      ["health"] = 33022;
-      ["displayId"] = 101046;
-      ["badCreatureModel"] = true;
-      ["name"] = "Wo Relic";
-      ["bonusSpell"] = 368241;
-      ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
          [1] = 0;
          [2] = 0;
          [3] = 0.6;
       };
-      ["ignoreFortified"] = true;
+      ["name"] = "Wo Relic";
+      ["bonusSpell"] = 368241;
+      ["badCreatureModel"] = true;
+      ["count"] = 0;
+      ["displayId"] = 101046;
+      ["creatureType"] = "Mechanical";
+      ["level"] = 62;
+      ["health"] = 33022;
       ["iconTexture"] = 4335644;
    };
    [5] = {
@@ -1242,17 +1242,17 @@ MDT.mapPOIs[dungeonIndex] = {
          [355121] = {};
          [355118] = {};
       };
-      ["characteristics"] = {
-         ["Stun"] = true;
-         ["Slow"] = true;
-      };
-      ["scale"] = 1;
+      ["health"] = 165195;
+      ["count"] = 3;
       ["name"] = "Murkbrine Wavejumper";
       ["displayId"] = 101787;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["count"] = 3;
-      ["health"] = 165195;
+      ["scale"] = 1;
+      ["characteristics"] = {
+         ["Stun"] = true;
+         ["Slow"] = true;
+      };
    };
    [10] = {
       ["clones"] = {
@@ -1304,18 +1304,18 @@ MDT.mapPOIs[dungeonIndex] = {
          [356843] = {};
          [356260] = {};
       };
+      ["health"] = 148676;
+      ["count"] = 5;
+      ["name"] = "Hourglass Tidesage";
+      ["displayId"] = 101468;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["scale"] = 1.5;
       ["characteristics"] = {
          ["Stun"] = true;
          ["Slow"] = true;
          ["Incapacitate"] = true;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Hourglass Tidesage";
-      ["displayId"] = 101468;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["count"] = 5;
-      ["health"] = 148676;
    };
    [20] = {
       ["clones"] = {
@@ -1360,8 +1360,8 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
          [3] = {
-            ["y"] = -285.04835726346;
-            ["x"] = 357.64363929181;
+            ["y"] = -316.26030050283;
+            ["x"] = 267.23651502001;
             ["sublevel"] = 1;
          };
          [6] = {
@@ -1370,28 +1370,28 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
-      ["id"] = 185680;
-      ["health"] = 33022;
       ["scale"] = 1;
+      ["ignoreFortified"] = true;
+      ["id"] = 185680;
       ["spells"] = {
          [366406] = {};
-         [368104] = {};
-         [368103] = {};
          [366409] = {};
+         [368103] = {};
+         [368104] = {};
       };
-      ["level"] = 62;
-      ["name"] = "Vy Relic";
-      ["displayId"] = 103111;
-      ["badCreatureModel"] = true;
-      ["count"] = 0;
-      ["bonusSpell"] = 368240;
-      ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
          [1] = 0;
          [2] = 0;
          [3] = 0.75;
       };
-      ["ignoreFortified"] = true;
+      ["count"] = 0;
+      ["bonusSpell"] = 368240;
+      ["badCreatureModel"] = true;
+      ["health"] = 33022;
+      ["displayId"] = 103111;
+      ["creatureType"] = "Mechanical";
+      ["level"] = 62;
+      ["name"] = "Vy Relic";
       ["iconTexture"] = 4335643;
    };
    [11] = {
@@ -1408,22 +1408,22 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["id"] = 179399;
-      ["scale"] = 1;
+      ["health"] = 33039;
       ["name"] = "Drunk Pirate";
       ["displayId"] = 101469;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
       ["count"] = 0;
-      ["health"] = 33039;
+      ["scale"] = 1;
    };
    [3] = {
       ["clones"] = {
          [1] = {
-            ["inspiring"] = true;
             ["y"] = -177.66299627614;
-            ["x"] = 249.69831645553;
-            ["g"] = 1;
+            ["inspiring"] = true;
             ["sublevel"] = 1;
+            ["g"] = 1;
+            ["x"] = 249.69831645553;
          };
          [2] = {
             ["y"] = -161.34438708277;
@@ -1539,37 +1539,37 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 8;
             ["sublevel"] = 1;
          };
-         [19] = {
-            ["y"] = -269.12515193048;
-            ["x"] = 427.7112984898;
-            ["g"] = 18;
-            ["sublevel"] = 1;
-         };
          [15] = {
             ["y"] = -193.68793887372;
             ["x"] = 506.21593088141;
             ["g"] = 10;
             ["sublevel"] = 1;
          };
+         [19] = {
+            ["y"] = -269.12515193048;
+            ["x"] = 427.7112984898;
+            ["g"] = 18;
+            ["sublevel"] = 1;
+         };
       };
       ["id"] = 178142;
       ["spells"] = {
          [355147] = {};
-         [355234] = {};
          [355225] = {};
+         [355234] = {};
       };
+      ["health"] = 148676;
+      ["count"] = 3;
+      ["name"] = "Murkbrine Fishmancer";
+      ["displayId"] = 101789;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["scale"] = 1;
       ["characteristics"] = {
          ["Stun"] = true;
          ["Slow"] = true;
          ["Taunt"] = true;
       };
-      ["scale"] = 1;
-      ["name"] = "Murkbrine Fishmancer";
-      ["displayId"] = 101789;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["count"] = 3;
-      ["health"] = 148676;
    };
    [6] = {
       ["clones"] = {
@@ -1627,10 +1627,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 10;
             ["sublevel"] = 1;
          };
-         [14] = {
-            ["y"] = -250.85950286669;
-            ["x"] = 537.37451378588;
-            ["g"] = 21;
+         [3] = {
+            ["y"] = -229.41584117977;
+            ["x"] = 302.40065068259;
+            ["g"] = 13;
             ["sublevel"] = 1;
          };
          [11] = {
@@ -1651,10 +1651,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 18;
             ["sublevel"] = 1;
          };
-         [3] = {
-            ["y"] = -229.41584117977;
-            ["x"] = 302.40065068259;
-            ["g"] = 13;
+         [14] = {
+            ["y"] = -250.85950286669;
+            ["x"] = 537.37451378588;
+            ["g"] = 21;
             ["sublevel"] = 1;
          };
       };
@@ -1663,17 +1663,17 @@ MDT.mapPOIs[dungeonIndex] = {
          [355132] = {};
          [355147] = {};
       };
-      ["characteristics"] = {
-         ["Stun"] = true;
-         ["Slow"] = true;
-      };
-      ["scale"] = 1;
+      ["health"] = 165195;
+      ["count"] = 3;
       ["name"] = "Murkbrine Scalebinder";
       ["displayId"] = 101788;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["count"] = 3;
-      ["health"] = 165195;
+      ["scale"] = 1;
+      ["characteristics"] = {
+         ["Stun"] = true;
+         ["Slow"] = true;
+      };
    };
    [12] = {
       ["clones"] = {
@@ -1684,11 +1684,11 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 3;
          };
          [2] = {
-            ["inspiring"] = true;
             ["y"] = -364.03542012585;
-            ["x"] = 434.889999698;
-            ["g"] = 27;
+            ["inspiring"] = true;
             ["sublevel"] = 3;
+            ["g"] = 27;
+            ["x"] = 434.889999698;
          };
          [4] = {
             ["y"] = -327.04371254081;
@@ -1707,16 +1707,16 @@ MDT.mapPOIs[dungeonIndex] = {
       ["spells"] = {
          [368661] = {};
       };
-      ["characteristics"] = {
-         ["Slow"] = true;
-      };
-      ["scale"] = 1.5;
+      ["health"] = 165195;
+      ["count"] = 5;
       ["name"] = "Corsair Officer";
       ["displayId"] = 101464;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["count"] = 5;
-      ["health"] = 165195;
+      ["scale"] = 1.5;
+      ["characteristics"] = {
+         ["Slow"] = true;
+      };
    };
    [13] = {
       ["clones"] = {
@@ -1726,10 +1726,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
+      ["health"] = 1156365;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 175546;
       ["spells"] = {
          [347149] = {};
          [347151] = {};
@@ -1740,13 +1740,13 @@ MDT.mapPOIs[dungeonIndex] = {
       ["isBoss"] = true;
       ["encounterID"] = 2449;
       ["instanceID"] = 1194;
-      ["scale"] = 1.5;
+      ["count"] = 0;
       ["name"] = "Timecap'n Hooktail";
       ["displayId"] = 100063;
       ["creatureType"] = "Dragonkin";
       ["level"] = 62;
-      ["count"] = 0;
-      ["health"] = 1156365;
+      ["scale"] = 1.5;
+      ["id"] = 175546;
    };
    [7] = {
       ["clones"] = {
@@ -1780,16 +1780,16 @@ MDT.mapPOIs[dungeonIndex] = {
          [355577] = {};
          [355584] = {};
       };
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
-      ["scale"] = 2;
+      ["health"] = 264312;
+      ["count"] = 10;
       ["name"] = "Stormforged Guardian";
       ["displayId"] = 67358;
       ["creatureType"] = "Elemental";
       ["level"] = 61;
-      ["count"] = 10;
-      ["health"] = 264312;
+      ["scale"] = 2;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
    };
    [14] = {
       ["clones"] = {
@@ -1817,16 +1817,96 @@ MDT.mapPOIs[dungeonIndex] = {
          [357228] = {};
          [357238] = {};
       };
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
-      ["scale"] = 2.5;
+      ["health"] = 264312;
+      ["count"] = 10;
       ["name"] = "Adorned Starseer";
       ["displayId"] = 101668;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["count"] = 10;
-      ["health"] = 264312;
+      ["scale"] = 2.5;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
+   };
+   [19] = {
+      ["clones"] = {
+         [7] = {
+            ["y"] = -391.54369236317;
+            ["x"] = 371.01055740241;
+            ["sublevel"] = 3;
+         };
+         [1] = {
+            ["y"] = -165.47633824613;
+            ["x"] = 233.75656567514;
+            ["sublevel"] = 1;
+         };
+         [2] = {
+            ["y"] = -207.16092269729;
+            ["x"] = 493.25089011202;
+            ["sublevel"] = 1;
+         };
+         [4] = {
+            ["y"] = -271.34439295692;
+            ["x"] = 441.97844297335;
+            ["sublevel"] = 2;
+         };
+         [8] = {
+            ["y"] = -319.91997834422;
+            ["x"] = 594.55417906869;
+            ["sublevel"] = 4;
+         };
+         [9] = {
+            ["y"] = -251.15062612944;
+            ["x"] = 468.78501290872;
+            ["sublevel"] = 4;
+         };
+         [5] = {
+            ["y"] = -283.56103312134;
+            ["x"] = 533.78234233289;
+            ["sublevel"] = 3;
+         };
+         [10] = {
+            ["y"] = -262.68914283141;
+            ["x"] = 278.78501567546;
+            ["sublevel"] = 4;
+         };
+         [3] = {
+            ["y"] = -322.73572053187;
+            ["x"] = 276.86113958691;
+            ["sublevel"] = 1;
+         };
+         [6] = {
+            ["y"] = -386.40324795435;
+            ["x"] = 457.55432553605;
+            ["sublevel"] = 3;
+         };
+      };
+      ["scale"] = 1;
+      ["ignoreFortified"] = true;
+      ["modelPosition"] = {
+         [1] = 0;
+         [2] = 0;
+         [3] = 0.75;
+      };
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
+      ["spells"] = {
+         [368077] = {};
+         [368243] = {};
+         [366297] = {};
+         [366288] = {};
+      };
+      ["name"] = "Urh Relic";
+      ["bonusSpell"] = 368239;
+      ["health"] = 33022;
+      ["badCreatureModel"] = true;
+      ["count"] = 0;
+      ["displayId"] = 105134;
+      ["creatureType"] = "Mechanical";
+      ["level"] = 62;
+      ["id"] = 185685;
+      ["iconTexture"] = 4335642;
    };
    [15] = {
       ["clones"] = {
@@ -1878,6 +1958,13 @@ MDT.mapPOIs[dungeonIndex] = {
          [357281] = {};
          [357284] = {};
       };
+      ["health"] = 181715;
+      ["count"] = 5;
+      ["name"] = "Devoted Accomplice";
+      ["displayId"] = 101670;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["scale"] = 2;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -1885,93 +1972,7 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
          ["Fear"] = true;
       };
-      ["scale"] = 2;
-      ["name"] = "Devoted Accomplice";
-      ["displayId"] = 101670;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["count"] = 5;
-      ["health"] = 181715;
-   };
-   [19] = {
-      ["clones"] = {
-         [7] = {
-            ["y"] = -391.54369236317;
-            ["x"] = 371.01055740241;
-            ["sublevel"] = 3;
-         };
-         [1] = {
-            ["y"] = -165.47633824613;
-            ["x"] = 233.75656567514;
-            ["sublevel"] = 1;
-         };
-         [2] = {
-            ["y"] = -207.16092269729;
-            ["x"] = 493.25089011202;
-            ["sublevel"] = 1;
-         };
-         [4] = {
-            ["y"] = -271.34439295692;
-            ["x"] = 441.97844297335;
-            ["sublevel"] = 2;
-         };
-         [8] = {
-            ["y"] = -319.91997834422;
-            ["x"] = 594.55417906869;
-            ["sublevel"] = 4;
-         };
-         [9] = {
-            ["y"] = -251.15062612944;
-            ["x"] = 468.78501290872;
-            ["sublevel"] = 4;
-         };
-         [5] = {
-            ["y"] = -283.56103312134;
-            ["x"] = 533.78234233289;
-            ["sublevel"] = 3;
-         };
-         [10] = {
-            ["y"] = -262.68914283141;
-            ["x"] = 278.78501567546;
-            ["sublevel"] = 4;
-         };
-         [3] = {
-            ["y"] = -284.25889558534;
-            ["x"] = 372.38049821165;
-            ["sublevel"] = 1;
-         };
-         [6] = {
-            ["y"] = -386.40324795435;
-            ["x"] = 457.55432553605;
-            ["sublevel"] = 3;
-         };
-      };
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
-      ["scale"] = 1;
-      ["count"] = 0;
-      ["id"] = 185685;
-      ["spells"] = {
-         [368077] = {};
-         [368243] = {};
-         [366297] = {};
-         [366288] = {};
-      };
-      ["level"] = 62;
-      ["name"] = "Urh Relic";
-      ["displayId"] = 105134;
-      ["badCreatureModel"] = true;
-      ["health"] = 33022;
-      ["bonusSpell"] = 368239;
-      ["creatureType"] = "Mechanical";
-      ["modelPosition"] = {
-         [1] = 0;
-         [2] = 0;
-         [3] = 0.75;
-      };
-      ["ignoreFortified"] = true;
-      ["iconTexture"] = 4335642;
    };
 };
+
 
