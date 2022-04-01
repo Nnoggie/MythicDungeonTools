@@ -392,6 +392,7 @@ MDT.mapPOIs[dungeonIndex] = {
          [356929] = {};
          [356943] = {};
       };
+      ["stealthDetect"] = true;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
