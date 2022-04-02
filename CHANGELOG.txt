@@ -1,3 +1,5 @@
+v3.8.7
+- fixed an issue where npc health would not be scaled properly based on the fortified / tyranical affix
 v3.8.6
 - affix list updates
 - encrypted / inspiring updates
