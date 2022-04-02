@@ -1777,7 +1777,7 @@ end
 
 ---IsCurrentPresetFortified
 function MDT:IsCurrentPresetFortified()
-    return self:GetCurrentPreset().week%2 == 1
+    return affixWeeks[self:GetCurrentPreset().week][3] == 10
 end
 
 ---IsCurrentPresetTyrannical
