@@ -1,3 +1,5 @@
+v3.8.9
+- affix update
 v3.8.8
 - updated Tazavesh Streets for hotfixed count and dungeon layout changes
 v3.8.7
