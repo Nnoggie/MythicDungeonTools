@@ -1640,8 +1640,7 @@ MDT.mapPOIs[dungeonIndex] = {
          [3] = {
             ["y"] = -230.28475373641;
             ["x"] = 459.77300085632;
-			["patrol"] = {};
-            ["g"] = None;
+	    ["patrol"] = {};
             ["sublevel"] = 1;
          };
          [1] = {
