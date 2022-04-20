@@ -1,3 +1,5 @@
+v3.9.1
+- affix update
 v3.9.0
 - affix update
 - Streets of wonder: Skulker unlinked from G14
