@@ -26,7 +26,7 @@ def get_latest_version(filename):
     time.sleep(2)
     latest_build = response.json()[0]
 
-    data_url = f"https://wow.tools/dbc/api/export/?name={filename}&build={latest_build}"
+    data_url = f"https://wow.tools/dbc/api/export/?name={filename}&build={latest_build}&useHotfixes=true"
     data_response = requests.get(data_url, headers=headers)
     time.sleep(2)
     with open(f"{filename}.csv", "wb") as f:
