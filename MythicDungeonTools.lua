@@ -2571,6 +2571,15 @@ MDT.zoneIdToDungeonIdx = {
     [1694] = 34,--spires of ascension
     [1695] = 34,--spires of ascension
     [1697] = 32,--plaguefall
+    [1989] = 37,--tazavesh streets
+    [1990] = 37,--tazavesh streets
+    [1991] = 37,--tazavesh streets
+    [1992] = 37,--tazavesh streets
+    [1993] = 38,--tazavesh gambit
+    [1995] = 38,--tazavesh gambit
+    [1996] = 38,--tazavesh gambit
+    [1997] = 38,--tazavesh gambit
+    --https://wowpedia.fandom.com/wiki/UiMapID
 }
 local lastUpdatedDungeonIdx
 function MDT:CheckCurrentZone(init)
