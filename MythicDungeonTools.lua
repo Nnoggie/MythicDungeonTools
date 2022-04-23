@@ -2095,15 +2095,14 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
 	return round(mult*baseHealth,0)
 end
 
-function MDT:ReverseCalcEnemyHealth(unit, level, boss)
+function MDT:ReverseCalcEnemyHealth(unit, level, boss,fortified)
     local health = UnitHealthMax(unit)
-    local fortified = MDT:IsCurrentPresetFortified()
-    local tyrannical = MDT:IsCurrentPresetTyrannical()
     local mult = 1
+    local tyrannical = not fortified
     if boss == false and fortified == true then mult = 1.2 end
     if boss == true and tyrannical == true then mult = 1.3 end
     mult = round((1.08^math.max(level-2,0))*mult,2)
-    local baseHealth = health/mult
+    local baseHealth = round(health/mult,0)
     return baseHealth
 end
 

@@ -292,67 +292,64 @@ end
 local enemiesToScale
 function DC:InitHealthTrack()
     db = MDT:GetDB()
-    local enemyCount = 0
-    local totalEnemies = 0
-    local changedEnemies = {}
-    for _,enemy in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-        totalEnemies = totalEnemies + 1
-    end
+    local changedEnemies = {}    
     f = CreateFrame("Frame")
     f:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+    f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
     f:SetScript("OnEvent", function(self, event, ...)
-        if event == "UPDATE_MOUSEOVER_UNIT" then
-            local unit = "mouseover"
-            local npcId
-            local guid = UnitGUID(unit)
-            if guid then
-                npcId = select(6,strsplit("-", guid))
-            end
-            if npcId then
-                local npcHealth = UnitHealthMax(unit)
-                for enemyIdx,enemy in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-                    if enemy.id == tonumber(npcId) then
-                        if enemy.health ~= npcHealth then
-                            print(npcHealth/enemy.health)
-                            enemy.health = npcHealth
-                            enemyCount = enemyCount + 1
-                            changedEnemies[enemyIdx] = true
-                            local enemiesLeft = " "
-                            enemiesToScale = {}
-                            for k,v in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-                                if not changedEnemies[k] then
-                                    enemiesLeft = enemiesLeft..v.name..", "
-                                    enemiesToScale[k] = true
+        local zoneId = C_Map.GetBestMapForUnit("player")
+        local dungeonIdx = MDT.zoneIdToDungeonIdx[zoneId]
+        if dungeonIdx then
+            --check difficulty if challenge mode and m+ level
+            local difficultyID = GetDungeonDifficultyID()
+            local isChallenge = difficultyID and C_ChallengeMode.IsChallengeModeActive()
+            local level,activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
+            local fortified = activeAffixIDs[1] == 10
+            local level = isChallenge and level
+            if level then
+                local unit
+                if event == "UPDATE_MOUSEOVER_UNIT" then
+                    unit= "mouseover"
+                elseif event == "NAME_PLATE_UNIT_ADDED" then
+                    unit = ...
+                end
+                if unit then
+                    local guid = UnitGUID(unit)
+                    local npcId
+                    if guid then
+                        npcId = select(6,strsplit("-", guid))
+                    end
+                    if npcId then
+                        for enemyIdx,enemy in pairs(MDT.dungeonEnemies[dungeonIdx]) do
+                            if enemy.id == tonumber(npcId) then
+                                local isBoss = enemy.isBoss and true or false
+                                local npcHealth = MDT:ReverseCalcEnemyHealth(unit,level,isBoss,fortified)
+                                if enemy.health ~= npcHealth then
+                                    changedEnemies[dungeonIdx] = changedEnemies[dungeonIdx] or {}
+                                    changedEnemies[dungeonIdx][enemy.id] = {
+                                        ["oldHealth"] = enemy.health,
+                                        ["newHealth"] = npcHealth,
+                                        ["name"] = enemy.name,
+                                        ["npcId"] = enemy.id,
+                                    }
+                                    enemy.health = npcHealth
                                 end
+                                break
                             end
-                            print(enemyCount.."/"..totalEnemies..enemiesLeft)
                         end
-                        break
                     end
                 end
             end
         end
     end)
+
+    function MDT:ReportHealthTrack()
+        vdt(changedEnemies)
+    end
+
 end
 
---season 4
-function MDT:FinishHPTrack()
-    local multiplier = 1.526092251434
-    local constantNpcs = {
-        [155432]=15369884, --enchanted
-        [155433]=999042,
-        [155434]=614795,
-        [161243]=2151786, --sam
-        [161244]=2151786, --blood
-        [161241]=2151786, --spider
-        [161124]=2151786, --tank
-    }
-    for enemyIdx in pairs(enemiesToScale) do
-        local enemy = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-        if enemy.health>1 then
-            local newHealth = constantNpcs[enemy.id] or math.floor(enemy.health*multiplier)
-            enemy.health = newHealth
-            print(enemy.name)
-        end
-    end
-end
+
+
+
+
