@@ -21,7 +21,8 @@ def update_count(match, mob_count):
     info[match.group(3)] = int(match.group(4))
     true_count = mob_count[mob_count.index == info['id']].values[0][0] if len(mob_count[mob_count.index == info['id']]) > 0 else 0
     if true_count != info['count']:
-        print(f"    Mob with id {info['id']} has been updated: {info['count']} -> {true_count}")
+        npc_name = pattern_npc_name.search(match.group()).group(1)
+        print(f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {true_count}")
         return match.group().replace(f'["count"] = {info["count"]}', f'["count"] = {true_count}')
 
     # print(match.group())
@@ -135,6 +136,7 @@ pattern_dungeonEnemies = re.compile(r"MDT\.dungeonEnemies\[dungeonIndex\] = \{[\
 pattern_enemy_match = re.compile(r"{[\s\S]+?\"(id|count)\"\D*([\d]+).*[\s\S]+?\"(id|count)\"\D*([\d]+)[\s\S]+?}")
 pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
 pattern_count_value = re.compile(r"normal=(\d+)")
+pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
 
 # Make sure initial working directory is MythicDungeonTools
 while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith("MythicDungeonTools"):
@@ -143,6 +145,7 @@ while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswit
 # Loop through all expansions and dungeons and update count information
 for expansion in expansions:
     dungeon_filenames = os.listdir(expansion)
+    print(f"- {expansion}")
     for dungeon_filename in dungeon_filenames:
         if dungeon_filename.endswith(".lua") and dungeon_filename != "overrides.lua":
             file_path = os.path.join(os.getcwd(), expansion, dungeon_filename)
