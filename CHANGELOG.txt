@@ -1,3 +1,55 @@
+v3.9.2
+- count updates:
+  - Black Rook Hold.
+      Wyrmtongue Trickster with id 98900 has been updated: 4 -> 3
+      Wyrmtongue Scavenger with id 98792 has been updated: 4 -> 3
+      Total dungeon count has been updated: 300 -> 312
+  - Court of Stars.
+      Duskwatch Sentry with id 104251 has been updated: 4 -> 3
+      Felbound Enforcer with id 104278 has been updated: 10 -> 12
+  - Darkheart Thicket.
+      Vilethorn Blossom with id 99360 has been updated: 9 -> 4
+      Total dungeon count has been updated: 280 -> 273
+  - Eye of Azshara.
+      Hatecoil Warrior with id 111637 has been updated: 4 -> 0
+  - Neltharion's Lair.
+      Mightstone Breaker with id 90997 has been updated: 4 -> 5
+      Rockback Gnasher with id 91006 has been updated: 4 -> 3
+      Rockback Gnasher with id 91006 has been updated: 4 -> 3
+  - Return to Karazhan Lower.
+      Coldmist Widow with id 115019 has been updated: 8 -> 4
+      Arcanid with id 115020 has been updated: 8 -> 4
+  - Return to Karazhan Upper.
+      Abstract Nullifier with id 115765 has been updated: 16 -> 12
+  - Atal'Dazar.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - Freehold.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - Kings' Rest.
+      Shadow of Zul with id 138489 has been updated: 8 -> 0
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - Shrine of the Storm.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 9
+  - Siege of Boralus.
+      Kul Tiran Halberd with id 141283 has been updated: 4 -> 0
+      Kul Tiran Footman with id 141495 has been updated: 1 -> 0
+      Kul Tiran Marksman with id 141285 has been updated: 4 -> 0
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - Temple of Sethraliss.
+      Eye of Sethraliss with id 68819 has been updated: 12 -> 0
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - The MOTHERLODE!!.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - The Underrot.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - Tol Dagor.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 7
+  - Waycrest Manor.
+      Enchanted Emissary with id 155432 has been updated: 0 -> 4
+  - De Other Side.
+      Atal'ai Devoted with id 171333 has been updated: 2 -> 0
+  - Plaguefall.
+      Plaguebelcher with id 168396 has been updated: 0 -> 12
 v3.9.1
 - affix update
 v3.9.0
