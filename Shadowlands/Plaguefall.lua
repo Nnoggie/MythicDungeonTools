@@ -3110,7 +3110,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1.5;
       ["name"] = "Plaguebelcher";
-      ["count"] = 0;
+      ["count"] = 12;
       ["displayId"] = 96244;
       ["creatureType"] = "Aberration";
       ["level"] = 60;

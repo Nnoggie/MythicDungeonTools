@@ -2387,7 +2387,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["Taunt"] = true;
         };
         ["health"] = 15369884;
-        ["count"] = 0;
+        ["count"] = 4;
         ["ignoreFortified"] = true;
         ["name"] = "Enchanted Emissary";
         ["displayId"] = 39391;

@@ -1845,7 +1845,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["creatureType"] = "Unknown";
       ["level"] = 0;
       ["id"] = 68819;
-      ["count"] = 12;
+      ["count"] = 0;
    };
    [22] = {
       ["clones"] = {
@@ -2543,7 +2543,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 39391;
       ["creatureType"] = "Humanoid";
       ["level"] = 121;
-      ["count"] = 0;
+      ["count"] = 4;
       ["iconTexture"] = 135735;
    };
    [29] = {

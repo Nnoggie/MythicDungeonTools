@@ -3334,7 +3334,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;
-        ["count"] = 0;
+        ["count"] = 7;
         ["iconTexture"] = 135735;
     };
     [23] = {

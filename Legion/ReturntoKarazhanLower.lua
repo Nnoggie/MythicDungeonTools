@@ -3622,7 +3622,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 	   ["displayId"] = 16050;
 	   ["creatureType"] = "Beast";
 	   ["level"] = 110;
-	   ["count"] = 8;
+	   ["count"] = 4;
 	   ["health"] = 11364385;
 	};
 	[29] = {
@@ -3898,7 +3898,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 	   ["displayId"] = 72245;
 	   ["creatureType"] = "Beast";
 	   ["level"] = 110;
-	   ["count"] = 8;
+	   ["count"] = 4;
 	   ["health"] = 14030105;
 	};
 	[31] = {

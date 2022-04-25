@@ -1321,7 +1321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
       ["health"] = 16020;
-      ["count"] = 2;
+      ["count"] = 0;
    };
    [21] = {
       ["clones"] = {

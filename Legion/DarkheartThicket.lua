@@ -13,7 +13,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
    [1] = L["Darkheart Thicket Sublevel"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = {normal=280,teeming=336,teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal=273,teeming=336,teemingEnabled=true}
 
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
@@ -455,7 +455,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 69687;
        ["creatureType"] = "Elemental";
        ["level"] = 110;
-       ["count"] = 9;
+       ["count"] = 4;
        ["health"] = 14819297;
     };
     [16] = {

@@ -1466,7 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 85860;
         ["creatureType"] = "Humanoid";
         ["level"] = -1;
-        ["count"] = 8;
+        ["count"] = 0;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
@@ -2031,7 +2031,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["id"] = 155432;
         ["name"] = "Enchanted Emissary";
         ["ignoreFortified"] = true;
-        ["count"] = 0;
+        ["count"] = 4;
         ["displayId"] = 39391;
         ["creatureType"] = "Humanoid";
         ["level"] = 121;

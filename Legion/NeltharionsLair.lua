@@ -543,7 +543,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 64679;
        ["creatureType"] = "Humanoid";
        ["level"] = 110;
-       ["count"] = 4;
+       ["count"] = 5;
        ["health"] = 14819297;
     };
     [18] = {
@@ -1013,7 +1013,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 65050;
        ["creatureType"] = "Beast";
        ["level"] = 110;
-       ["count"] = 4;
+       ["count"] = 3;
        ["health"] = 14819297;
     };
     [6] = {
@@ -1073,7 +1073,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 65050;
        ["creatureType"] = "Beast";
        ["level"] = 110;
-       ["count"] = 4;
+       ["count"] = 3;
        ["health"] = 14819297;
     };
     [24] = {

@@ -347,7 +347,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 	   ["displayId"] = 70566;
 	   ["creatureType"] = "Humanoid";
 	   ["level"] = 110;
-	   ["count"] = 4;
+	   ["count"] = 3;
 	   ["health"] = 4445789;
 	};
 	[4] = {
@@ -1800,7 +1800,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 	   ["displayId"] = 68765;
 	   ["creatureType"] = "Demon";
 	   ["level"] = 111;
-	   ["count"] = 10;
+	   ["count"] = 12;
 	   ["health"] = 30661163;
 	};
 	[7] = {

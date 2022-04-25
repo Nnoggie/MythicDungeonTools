@@ -342,7 +342,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 	   ["creatureType"] = "Humanoid";
 	   ["level"] = 110;
 	   ["name"] = "Hatecoil Warrior";
-	   ["count"] = 4;
+	   ["count"] = 0;
 	};
 	[4] = {
 	   ["clones"] = {

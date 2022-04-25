@@ -165,7 +165,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
        ["displayId"] = 74335;
        ["creatureType"] = "Mechanical";
        ["level"] = 111;
-       ["count"] = 16;
+       ["count"] = 12;
        ["health"] = 32221436.68;
     };
     [5] = {

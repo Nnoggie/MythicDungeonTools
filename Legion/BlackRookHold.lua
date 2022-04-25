@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
     [6] = L["The Raven's Crown"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal=300, teeming=360, teemingEnabled=true}
+MDT.dungeonTotalCount[dungeonIndex] = { normal=312, teeming=360, teemingEnabled=true}
 
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {
@@ -919,7 +919,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
           };
        };
        ["id"] = 98900;
-       ["count"] = 4;
+       ["count"] = 3;
        ["name"] = "Wyrmtongue Trickster";
        ["health"] = 4943717.646;
        ["displayId"] = 64483;
@@ -1153,7 +1153,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
           };
        };
        ["id"] = 98792;
-       ["count"] = 4;
+       ["count"] = 3;
        ["name"] = "Wyrmtongue Scavenger";
        ["health"] = 13595223.318;
        ["displayId"] = 64476;
