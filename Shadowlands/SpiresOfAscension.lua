@@ -144,7 +144,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Mender";
-      ["health"] = 64080;
+      ["health"] = "132156";
       ["displayId"] = 94304;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -156,12 +156,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
          ["Fear"] = true;
          ["Polymorph"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Repentance"] = true;
       };
    };
@@ -218,7 +218,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Vanguard";
-      ["health"] = 80100;
+      ["health"] = "165195";
       ["displayId"] = 93491;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -228,9 +228,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Incapacitate"] = true;
          ["Root"] = true;
          ["Fear"] = true;
-         ["Mind Control"] = true;
-         ["Polymorph"] = true;
          ["Disorient"] = true;
+         ["Polymorph"] = true;
+         ["Mind Control"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
@@ -370,7 +370,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1.5;
       ["name"] = "Forsworn Goliath";
-      ["health"] = 176220;
+      ["health"] = "264312";
       ["displayId"] = 92664;
       ["creatureType"] = "Mechanical";
       ["level"] = 60;
@@ -421,7 +421,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Castigator";
-      ["health"] = 80100;
+      ["health"] = "165195";
       ["displayId"] = 93483;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -433,12 +433,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
          ["Fear"] = true;
          ["Polymorph"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Repentance"] = true;
       };
    };
@@ -465,7 +465,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Azules";
-      ["health"] = 640800;
+      ["health"] = "1718028";
       ["displayId"] = 93471;
       ["creatureType"] = "Beast";
       ["level"] = 60;
@@ -504,7 +504,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2399;
       ["instanceID"] = 1186;
       ["name"] = "Kin-Tara";
-      ["health"] = 640800;
+      ["health"] = "1321934";
       ["displayId"] = 95068;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -687,7 +687,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 0.7;
       ["name"] = "Etherdiver";
-      ["health"] = 48060;
+      ["health"] = "99117";
       ["displayId"] = 93471;
       ["creatureType"] = "Beast";
       ["level"] = 60;
@@ -700,8 +700,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Silence"] = true;
          ["Stun"] = true;
+         ["Silence"] = true;
          ["Slow"] = true;
          ["Disorient"] = true;
          ["Imprison"] = true;
@@ -766,7 +766,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Skirmisher";
-      ["health"] = 80100;
+      ["health"] = "165195";
       ["displayId"] = 93491;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -778,12 +778,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
          ["Fear"] = true;
          ["Polymorph"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Sap"] = true;
          ["Stun"] = true;
          ["Silence"] = true;
          ["Slow"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Repentance"] = true;
       };
    };
@@ -838,7 +838,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Champion";
-      ["health"] = 64080;
+      ["health"] = "132156";
       ["displayId"] = 94313;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -850,12 +850,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
          ["Fear"] = true;
          ["Polymorph"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Repentance"] = true;
       };
    };
@@ -919,7 +919,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Squad-Leader";
-      ["health"] = 128160;
+      ["health"] = "264312";
       ["displayId"] = 94919;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1032,13 +1032,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["id"] = 163506;
       ["spells"] = {
          [288865] = {};
-         [27638] = {};
          [317898] = {};
-         [132466] = {};
+         [27638] = {};
+         [30831] = {};
          [224729] = {};
          [132951] = {};
          [323744] = {};
-         [30831] = {};
+         [132466] = {};
       };
       ["scale"] = 0.7;
       ["name"] = "Forsworn Stealthclaw";
@@ -1047,7 +1047,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 93462;
       ["creatureType"] = "Beast";
       ["stealth"] = true;
-      ["health"] = 80100;
+      ["health"] = "165195";
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -1056,8 +1056,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Silence"] = true;
          ["Stun"] = true;
+         ["Silence"] = true;
          ["Slow"] = true;
          ["Disorient"] = true;
          ["Imprison"] = true;
@@ -1131,14 +1131,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [323804] = {};
          [317898] = {};
          [334882] = {};
-         [323786] = {};
-         [132951] = {};
          [224729] = {};
+         [132951] = {};
+         [323786] = {};
          [288865] = {};
       };
       ["scale"] = 1;
       ["name"] = "Kyrian Dark-Praetor";
-      ["health"] = 104130;
+      ["health"] = "148676";
       ["displayId"] = 92193;
       ["creatureType"] = "Mechanical";
       ["level"] = 60;
@@ -1201,7 +1201,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Inquisitor";
-      ["health"] = 80100;
+      ["health"] = "165195";
       ["displayId"] = 94316;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1211,9 +1211,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Incapacitate"] = true;
          ["Root"] = true;
          ["Fear"] = true;
-         ["Disorient"] = true;
-         ["Polymorph"] = true;
          ["Mind Control"] = true;
+         ["Polymorph"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
@@ -1249,7 +1249,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["encounterID"] = 2416;
       ["instanceID"] = 1186;
       ["name"] = "Ventunax";
-      ["health"] = 480600;
+      ["health"] = "991450";
       ["displayId"] = 92193;
       ["creatureType"] = "Mechanical";
       ["level"] = 60;
@@ -1288,17 +1288,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328203] = {};
          [121308] = {};
          [132951] = {};
-         [323739] = {};
-         [328205] = {};
          [336444] = {};
-         [328217] = {};
+         [328205] = {};
+         [323739] = {};
          [324392] = {};
+         [328217] = {};
          [326868] = {};
          [288865] = {};
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Helion";
-      ["health"] = 128160;
+      ["health"] = "264312";
       ["displayId"] = 94919;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1369,7 +1369,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Warden";
-      ["health"] = 72090;
+      ["health"] = "148676";
       ["displayId"] = 94313;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1381,12 +1381,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
          ["Fear"] = true;
          ["Polymorph"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Repentance"] = true;
       };
    };
@@ -1440,7 +1440,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1;
       ["name"] = "Forsworn Justicar";
-      ["health"] = 80100;
+      ["health"] = "165195";
       ["displayId"] = 95754;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1452,12 +1452,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
          ["Fear"] = true;
          ["Polymorph"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Repentance"] = true;
       };
    };
@@ -1546,7 +1546,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 0.7;
       ["name"] = "Forsworn Usurper";
-      ["health"] = 16020;
+      ["health"] = "33039";
       ["displayId"] = 93482;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1558,12 +1558,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Fear"] = true;
          ["Imprison"] = true;
          ["Polymorph"] = true;
-         ["Mind Control"] = true;
+         ["Disorient"] = true;
          ["Sap"] = true;
          ["Silence"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
+         ["Mind Control"] = true;
          ["Repentance"] = true;
       };
    };
@@ -1584,23 +1584,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [338729] = {};
          [334053] = {};
          [324427] = {};
-         [324392] = {};
-         [338731] = {};
-         [132951] = {};
          [323372] = {};
          [324046] = {};
+         [324608] = {};
+         [324392] = {};
+         [338731] = {};
          [323195] = {};
          [324444] = {};
          [323878] = {};
          [331997] = {};
-         [324608] = {};
+         [132951] = {};
          [326868] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2414;
       ["instanceID"] = 1186;
       ["name"] = "Oryphrion";
-      ["health"] = 881100;
+      ["health"] = "1817659";
       ["displayId"] = 97621;
       ["creatureType"] = "Mechanical";
       ["level"] = 60;
@@ -1636,7 +1636,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1.5;
       ["name"] = "Klotos";
-      ["health"] = 240300;
+      ["health"] = "495585";
       ["displayId"] = 95759;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1675,7 +1675,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1.5;
       ["name"] = "Lakesis";
-      ["health"] = 240300;
+      ["health"] = "495585";
       ["displayId"] = 95759;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1709,7 +1709,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 1.5;
       ["name"] = "Astronos";
-      ["health"] = 240300;
+      ["health"] = "495585";
       ["displayId"] = 95759;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1737,7 +1737,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [322908] = {};
          [323010] = {};
          [322999] = {};
-         [325748] = {};
+         [132951] = {};
          [335817] = {};
          [323011] = {};
          [334625] = {};
@@ -1745,13 +1745,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [322818] = {};
          [322817] = {};
          [326868] = {};
-         [132951] = {};
+         [325748] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2412;
       ["instanceID"] = 0;
       ["name"] = "Devos";
-      ["health"] = 961200;
+      ["health"] = "1982901";
       ["displayId"] = 95665;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
@@ -1869,14 +1869,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [357842] = {
             ["healer"] = true;
          };
-         [357820] = {
+         [357834] = {
+            ["dps"] = true;
             ["tank"] = true;
          };
          [357825] = {
             ["dps"] = true;
          };
-         [357834] = {
-            ["dps"] = true;
+         [357820] = {
             ["tank"] = true;
          };
          [357829] = {
@@ -2026,8 +2026,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["spells"] = {
          [355714] = {};
          [356923] = {};
-         [358971] = {};
          [356925] = {};
+         [358971] = {};
       };
       ["scale"] = 1.5;
       ["name"] = "Executioner Varruth";
@@ -2108,16 +2108,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["scale"] = 1;
+      ["health"] = "33039";
       ["id"] = 185683;
       ["spells"] = {
          [368078] = {};
          [366566] = {};
       };
-      ["count"] = 0;
       ["level"] = 62;
-      ["health"] = 33022;
+      ["count"] = 0;
       ["displayId"] = 101046;
-      ["badCreatureModel"] = true;
+      ["ignoreFortified"] = true;
       ["name"] = "Wo Relic";
       ["bonusSpell"] = 368241;
       ["creatureType"] = "Mechanical";
@@ -2126,7 +2126,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [2] = 0;
          [3] = 0.6;
       };
-      ["ignoreFortified"] = true;
+      ["badCreatureModel"] = true;
       ["iconTexture"] = 4335644;
    };
    [29] = {
@@ -2198,18 +2198,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["scale"] = 1;
+      ["name"] = "Urh Relic";
       ["id"] = 185685;
       ["spells"] = {
          [368243] = {};
          [366297] = {};
          [366288] = {};
       };
-      ["count"] = 0;
       ["level"] = 62;
-      ["name"] = "Urh Relic";
+      ["count"] = 0;
       ["displayId"] = 105134;
-      ["badCreatureModel"] = true;
-      ["health"] = 33022;
+      ["ignoreFortified"] = true;
+      ["health"] = "33039";
       ["bonusSpell"] = 368239;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -2217,7 +2217,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [2] = 0;
          [3] = 0.75;
       };
-      ["ignoreFortified"] = true;
+      ["badCreatureModel"] = true;
       ["iconTexture"] = 4335642;
    };
    [30] = {
@@ -2289,17 +2289,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["id"] = 185680;
+      ["name"] = "Vy Relic";
+      ["scale"] = 1;
       ["spells"] = {
-         [368103] = {};
          [366406] = {};
+         [368103] = {};
          [366409] = {};
       };
-      ["scale"] = 1;
-      ["health"] = 33022;
       ["level"] = 62;
-      ["name"] = "Vy Relic";
+      ["health"] = "33039";
       ["displayId"] = 103111;
-      ["badCreatureModel"] = true;
+      ["ignoreFortified"] = true;
       ["count"] = 0;
       ["bonusSpell"] = 368240;
       ["creatureType"] = "Mechanical";
@@ -2308,7 +2308,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [2] = 0;
          [3] = 0.75;
       };
-      ["ignoreFortified"] = true;
+      ["badCreatureModel"] = true;
       ["iconTexture"] = 4335643;
    };
 };
