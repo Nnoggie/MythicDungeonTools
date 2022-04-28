@@ -1743,16 +1743,6 @@ function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
         if enemy.corrupted then return false end
     end
 
-    --beguiling weekly configuration
-    local weekData = clone.week
-    if weekData then
-        if weekData[week] and not (clone.faction and clone.faction~= preset.faction) and db.currentDifficulty >= 10 then
-            return true
-        else
-            return false
-        end
-    end
-
     --filter enemies out that have filters and conditions are not met
     local include = clone.include or enemy.include
     if include then
@@ -1770,11 +1760,22 @@ function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
             local levelIncluded = db.currentDifficulty >= include.level
             tinsert(pass,levelIncluded)
         end
+        --TODO: week
         local shouldInclude = true
         for _,v in pairs(pass) do
            shouldInclude = shouldInclude and v
         end
         if not shouldInclude then return false end
+    end
+
+    --beguiling weekly configuration
+    local weekData = clone.week
+    if weekData then
+        if weekData[week] and not (clone.faction and clone.faction~= preset.faction) and db.currentDifficulty >= 10 then
+            return true
+        else
+            return false
+        end
     end
 
     week = week%3
