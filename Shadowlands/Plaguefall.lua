@@ -93,19 +93,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["id"] = 168968;
       ["spells"] = {
          [1604] = {};
-         [288865] = {};
+         [331871] = {};
          [331874] = {};
          [132951] = {};
-         [331871] = {};
          [224729] = {};
+         [288865] = {};
       };
-      ["scale"] = 0.6;
-      ["name"] = "Plaguebound Fallen";
-      ["count"] = 0;
-      ["displayId"] = 96986;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = 16020;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -119,6 +112,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 0;
+      ["health"] = "33039";
+      ["displayId"] = 96986;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Plaguebound Fallen";
+      ["scale"] = 0.6;
    };
    [2] = {
       ["clones"] = {
@@ -149,27 +149,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [132951] = {};
          [224729] = {};
       };
-      ["scale"] = 0.6;
-      ["name"] = "Fungret Shroomtender";
-      ["count"] = 0;
-      ["displayId"] = 83592;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = "24812";
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Disorient"] = true;
          ["Stun"] = true;
-         ["Slow"] = true;
          ["Silence"] = true;
-         ["Imprison"] = true;
+         ["Slow"] = true;
+         ["Disorient"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 0;
+      ["health"] = "24779";
+      ["displayId"] = 83592;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Fungret Shroomtender";
+      ["scale"] = 0.6;
    };
    [3] = {
       ["clones"] = {
@@ -188,9 +188,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [3] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 351.34414485775;
-            ["g"] = 10;
             ["y"] = -132.87993338916;
+            ["g"] = 10;
+            ["x"] = 351.34414485775;
          };
          [4] = {
             ["y"] = -116.45375722543;
@@ -224,30 +224,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [224729] = {};
          [132466] = {};
          [331967] = {};
-         [132951] = {};
          [320297] = {};
+         [132951] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Mire Soldier";
-      ["count"] = 8;
-      ["displayId"] = 83596;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Silence"] = true;
+         ["Disorient"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
-         ["Imprison"] = true;
+         ["Silence"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "132156";
+      ["displayId"] = 83596;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Mire Soldier";
+      ["scale"] = 1;
    };
    [4] = {
       ["clones"] = {
@@ -289,9 +289,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [7] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 407.36312195122;
-            ["g"] = 16;
             ["y"] = -90.581912636277;
+            ["g"] = 16;
+            ["x"] = 407.36312195122;
          };
          [8] = {
             ["y"] = -86.487909817884;
@@ -356,9 +356,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [18] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 409.34102945531;
-            ["g"] = 16;
             ["y"] = -99.313616006827;
+            ["g"] = 16;
+            ["x"] = 409.34102945531;
          };
          [19] = {
             ["y"] = -100.88022632029;
@@ -381,9 +381,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [22] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 472.32585365854;
-            ["g"] = 31;
             ["y"] = -297.46733006512;
+            ["g"] = 31;
+            ["x"] = 472.32585365854;
          };
          [23] = {
             ["y"] = -299.16331467926;
@@ -432,17 +432,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [132951] = {};
          [328662] = {};
          [346989] = {};
-         [224729] = {};
-         [288865] = {};
          [326868] = {};
+         [288865] = {};
+         [224729] = {};
       };
-      ["scale"] = 0.7;
-      ["name"] = "Gushing Slime";
-      ["count"] = 1;
-      ["displayId"] = 95785;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = "49625";
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -456,6 +449,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 1;
+      ["health"] = "49559";
+      ["displayId"] = 95785;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Gushing Slime";
+      ["scale"] = 0.7;
    };
    [5] = {
       ["clones"] = {
@@ -473,16 +473,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["id"] = 168155;
-      ["scale"] = 0.5;
-      ["name"] = "Plaguebound";
-      ["count"] = 0;
-      ["displayId"] = 96251;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = "165414";
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 0;
+      ["health"] = "165414";
+      ["displayId"] = 96251;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Plaguebound";
+      ["scale"] = 0.5;
    };
    [6] = {
       ["clones"] = {
@@ -542,19 +542,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328175] = {};
          [330403] = {};
          [331967] = {};
-         [330404] = {};
          [132951] = {};
+         [330404] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Plagueroc";
-      ["count"] = 12;
-      ["displayId"] = 96752;
-      ["creatureType"] = "Beast";
-      ["level"] = 60;
-      ["health"] = 112140;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 12;
+      ["health"] = "231273";
+      ["displayId"] = 96752;
+      ["creatureType"] = "Beast";
+      ["level"] = 60;
+      ["name"] = "Plagueroc";
+      ["scale"] = 1;
    };
    [7] = {
       ["clones"] = {
@@ -641,16 +641,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [132951] = {};
       };
       ["stealthDetect"] = true;
-      ["scale"] = 1.5;
-      ["name"] = "Decaying Flesh Giant";
-      ["count"] = 14;
-      ["displayId"] = 99191;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = "297745";
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 14;
+      ["health"] = "297351";
+      ["displayId"] = 99191;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Decaying Flesh Giant";
+      ["scale"] = 1.5;
    };
    [8] = {
       ["clones"] = {
@@ -685,41 +685,41 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [336449] = {};
          [330423] = {};
          [334882] = {};
-         [317898] = {};
+         [326868] = {};
          [328177] = {};
          [121308] = {};
          [340358] = {};
-         [331967] = {};
-         [132951] = {};
+         [320297] = {};
+         [330422] = {};
          [328175] = {};
          [224729] = {};
-         [330422] = {};
-         [320297] = {};
+         [132951] = {};
+         [331967] = {};
          [328176] = {};
-         [326868] = {};
+         [317898] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Fungi Stormer";
-      ["count"] = 8;
-      ["displayId"] = 83621;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = "132331";
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Imprison"] = true;
-         ["Fear"] = true;
-         ["Polymorph"] = true;
-         ["Disorient"] = true;
-         ["Sap"] = true;
-         ["Stun"] = true;
-         ["Silence"] = true;
-         ["Slow"] = true;
-         ["Mind Control"] = true;
          ["Repentance"] = true;
+         ["Disorient"] = true;
+         ["Polymorph"] = true;
+         ["Mind Control"] = true;
+         ["Sap"] = true;
+         ["Silence"] = true;
+         ["Stun"] = true;
+         ["Slow"] = true;
+         ["Fear"] = true;
+         ["Imprison"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "132156";
+      ["displayId"] = 83621;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Fungi Stormer";
+      ["scale"] = 1;
    };
    [9] = {
       ["clones"] = {
@@ -738,9 +738,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [3] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 366.37096965138;
-            ["g"] = 8;
             ["y"] = -113.51747989998;
+            ["g"] = 8;
+            ["x"] = 366.37096965138;
          };
       };
       ["id"] = 168578;
@@ -752,46 +752,46 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328016] = {};
          [121308] = {};
          [340358] = {};
-         [334882] = {};
-         [132951] = {};
+         [50707] = {};
+         [288865] = {};
          [328175] = {};
          [224729] = {};
-         [320297] = {};
          [331967] = {};
-         [288865] = {};
-         [50707] = {};
+         [320297] = {};
+         [132951] = {};
+         [334882] = {};
       };
-      ["scale"] = 1.3;
-      ["name"] = "Fungalmancer";
-      ["count"] = 8;
-      ["displayId"] = 83616;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 96120;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
-         ["Disorient"] = true;
+         ["Repentance"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Silence"] = true;
          ["Stun"] = true;
+         ["Silence"] = true;
          ["Slow"] = true;
-         ["Imprison"] = true;
-         ["Repentance"] = true;
+         ["Disorient"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "198234";
+      ["displayId"] = 83616;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Fungalmancer";
+      ["scale"] = 1.3;
    };
    [10] = {
       ["clones"] = {
          [1] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 329.30375973909;
-            ["g"] = 4;
             ["y"] = -111.00579022831;
+            ["g"] = 4;
+            ["x"] = 329.30375973909;
          };
          [2] = {
             ["y"] = -100.89984733656;
@@ -802,9 +802,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [3] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 351.28491667896;
-            ["g"] = 6;
             ["y"] = -94.838229880129;
+            ["g"] = 6;
+            ["x"] = 351.28491667896;
          };
          [4] = {
             ["y"] = -88.997148896034;
@@ -834,30 +834,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328175] = {};
          [224729] = {};
          [331967] = {};
-         [344003] = {};
          [132951] = {};
+         [344003] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Plagueborer";
-      ["count"] = 8;
-      ["displayId"] = 97079;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = "132331";
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Silence"] = true;
+         ["Disorient"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
-         ["Imprison"] = true;
+         ["Silence"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "132156";
+      ["displayId"] = 97079;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Plagueborer";
+      ["scale"] = 1;
    };
    [11] = {
       ["clones"] = {
@@ -930,18 +930,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [132951] = {};
          [327515] = {};
          [224729] = {};
-         [340358] = {};
+         [328175] = {};
          [331967] = {};
          [326868] = {};
-         [328175] = {};
+         [340358] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Fen Hornet";
-      ["count"] = 8;
-      ["displayId"] = 63503;
-      ["creatureType"] = "Beast";
-      ["level"] = 60;
-      ["health"] = "132331";
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -949,12 +942,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Polymorph"] = true;
          ["Disorient"] = true;
          ["Sap"] = true;
-         ["Fear"] = true;
+         ["Imprison"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
          ["Silence"] = true;
-         ["Imprison"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "132156";
+      ["displayId"] = 63503;
+      ["creatureType"] = "Beast";
+      ["level"] = 60;
+      ["name"] = "Fen Hornet";
+      ["scale"] = 1;
    };
    [12] = {
       ["clones"] = {
@@ -1027,19 +1027,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["id"] = 163915;
       ["spells"] = {
          [340358] = {};
-         [132951] = {};
          [328175] = {};
+         [132951] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Hatchling Nest";
-      ["count"] = 10;
-      ["displayId"] = 99163;
-      ["creatureType"] = "Not specified";
-      ["level"] = 60;
-      ["health"] = "165414";
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 10;
+      ["health"] = "165195";
+      ["displayId"] = 99163;
+      ["creatureType"] = "Not specified";
+      ["level"] = 60;
+      ["name"] = "Hatchling Nest";
+      ["scale"] = 1;
    };
    [13] = {
       ["clones"] = {
@@ -1063,36 +1063,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [121308] = {};
          [340358] = {};
          [328002] = {};
-         [317898] = {};
          [327995] = {};
-         [224729] = {};
-         [331967] = {};
-         [320297] = {};
-         [132951] = {};
          [328175] = {};
+         [224729] = {};
+         [132951] = {};
+         [320297] = {};
+         [331967] = {};
+         [317898] = {};
       };
-      ["scale"] = 1.3;
-      ["name"] = "Pestilent Harvester";
-      ["count"] = 8;
-      ["displayId"] = 96887;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 96120;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
-         ["Mind Control"] = true;
+         ["Repentance"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Disorient"] = true;
          ["Sap"] = true;
-         ["Stun"] = true;
          ["Silence"] = true;
+         ["Stun"] = true;
          ["Slow"] = true;
-         ["Imprison"] = true;
-         ["Repentance"] = true;
+         ["Mind Control"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "198234";
+      ["displayId"] = 96887;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Pestilent Harvester";
+      ["scale"] = 1.3;
    };
    [14] = {
       ["clones"] = {
@@ -1107,21 +1107,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [334640] = {};
          [132951] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Finger Food";
-      ["count"] = 0;
-      ["displayId"] = 95789;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 248310;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Disorient"] = true;
          ["Root"] = true;
          ["Slow"] = true;
-         ["Stun"] = true;
          ["Banish"] = true;
+         ["Stun"] = true;
       };
+      ["count"] = 0;
+      ["health"] = "512105";
+      ["displayId"] = 95789;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Finger Food";
+      ["scale"] = 1;
    };
    [15] = {
       ["clones"] = {
@@ -1260,23 +1260,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["id"] = 168396;
       ["spells"] = {
          [326868] = {};
-         [327233] = {};
+         [288865] = {};
          [327581] = {};
          [340358] = {};
          [132951] = {};
          [327594] = {};
-         [288865] = {};
+         [327233] = {};
       };
-      ["scale"] = 1.5;
-      ["name"] = "Plaguebelcher";
-      ["count"] = 12;
-      ["displayId"] = 96244;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 128160;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 12;
+      ["health"] = "264312";
+      ["displayId"] = 96244;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Plaguebelcher";
+      ["scale"] = 1.5;
    };
    [16] = {
       ["clones"] = {
@@ -1286,34 +1286,34 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["id"] = 164255;
       ["scale"] = 1;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
       ["spells"] = {
          [319780] = {};
          [326868] = {};
          [324652] = {};
          [332865] = {};
          [132951] = {};
-         [326242] = {};
-         [324667] = {};
+         [325748] = {};
+         [288865] = {};
          [324459] = {};
          [324490] = {};
          [324527] = {};
-         [288865] = {};
-         [325748] = {};
+         [324667] = {};
+         [326242] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2419;
       ["instanceID"] = 1183;
-      ["name"] = "Globgrog";
       ["count"] = 0;
+      ["health"] = "935598";
       ["displayId"] = 95844;
       ["creatureType"] = "Aberration";
       ["level"] = 60;
-      ["health"] = 560700;
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
+      ["name"] = "Globgrog";
+      ["id"] = 164255;
    };
    [17] = {
       ["clones"] = {
@@ -1359,16 +1359,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328986] = {};
          [326868] = {};
       };
-      ["scale"] = 0.6;
-      ["name"] = "Unstable Canister";
-      ["count"] = 0;
-      ["displayId"] = 99464;
-      ["creatureType"] = "Not specified";
-      ["level"] = 60;
-      ["health"] = 4005;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 0;
+      ["health"] = "8260";
+      ["displayId"] = 99464;
+      ["creatureType"] = "Not specified";
+      ["level"] = 60;
+      ["name"] = "Unstable Canister";
+      ["scale"] = 0.6;
    };
    [18] = {
       ["clones"] = {
@@ -1451,25 +1451,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [336449] = {};
          [317898] = {};
          [320512] = {};
-         [132951] = {};
-         [186439] = {};
          [325748] = {};
-         [201657] = {};
-         [331967] = {};
+         [186439] = {};
+         [340358] = {};
          [328175] = {};
+         [320297] = {};
+         [201657] = {};
          [224729] = {};
          [326868] = {};
-         [320297] = {};
+         [331967] = {};
          [344991] = {};
-         [340358] = {};
+         [132951] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Rotting Slimeclaw";
-      ["count"] = 6;
-      ["displayId"] = 97796;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -1478,12 +1471,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Control Undead"] = true;
          ["Polymorph"] = true;
          ["Disorient"] = true;
-         ["Fear"] = true;
+         ["Repentance"] = true;
          ["Silence"] = true;
          ["Slow"] = true;
          ["Stun"] = true;
-         ["Repentance"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 6;
+      ["health"] = "132156";
+      ["displayId"] = 97796;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Rotting Slimeclaw";
+      ["scale"] = 1;
    };
    [19] = {
       ["clones"] = {
@@ -1517,36 +1517,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [288865] = {};
          [317898] = {};
          [132951] = {};
-         [340358] = {};
+         [326868] = {};
          [328501] = {};
          [328175] = {};
          [224729] = {};
          [132466] = {};
          [331967] = {};
          [334926] = {};
-         [326868] = {};
+         [340358] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Rigged Plagueborer";
-      ["count"] = 8;
-      ["displayId"] = 97079;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Stun"] = true;
+         ["Disorient"] = true;
          ["Silence"] = true;
          ["Slow"] = true;
-         ["Disorient"] = true;
-         ["Imprison"] = true;
+         ["Stun"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "132156";
+      ["displayId"] = 97079;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Rigged Plagueborer";
+      ["scale"] = 1;
    };
    [20] = {
       ["clones"] = {
@@ -1652,35 +1652,35 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [332581] = {};
          [328175] = {};
          [331967] = {};
-         [132951] = {};
          [336449] = {};
+         [132951] = {};
       };
-      ["scale"] = 1.5;
-      ["name"] = "Blighted Spinebreaker";
-      ["count"] = 12;
-      ["displayId"] = 95475;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = 128160;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 12;
+      ["health"] = "264312";
+      ["displayId"] = 95475;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Blighted Spinebreaker";
+      ["scale"] = 1.5;
    };
    [21] = {
       ["clones"] = {
          [1] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 475.92322857336;
-            ["g"] = 18;
             ["y"] = -135.7955205792;
+            ["g"] = 18;
+            ["x"] = 475.92322857336;
          };
          [2] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 482.93750112458;
-            ["g"] = 25;
             ["y"] = -159.39610144832;
+            ["g"] = 25;
+            ["x"] = 482.93750112458;
          };
          [3] = {
             ["sublevel"] = 1;
@@ -1739,9 +1739,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
                   ["x"] = 505.99704119615;
                };
             };
-            ["y"] = -134.5623545947;
-            ["g"] = 20;
             ["x"] = 501.43419879591;
+            ["g"] = 20;
+            ["y"] = -134.5623545947;
          };
          [4] = {
             ["y"] = -123.81726968817;
@@ -1800,9 +1800,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [6] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 500.417472786;
-            ["g"] = 29;
             ["y"] = -212.52949114825;
+            ["g"] = 29;
+            ["x"] = 500.417472786;
          };
          [7] = {
             ["y"] = -232.44102184085;
@@ -1828,41 +1828,41 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328180] = {};
          [328094] = {};
          [317898] = {};
-         [326868] = {};
-         [325748] = {};
-         [121308] = {};
+         [336449] = {};
          [132951] = {};
-         [331967] = {};
+         [121308] = {};
+         [340358] = {};
+         [320297] = {};
          [288865] = {};
          [328175] = {};
          [224729] = {};
          [132466] = {};
-         [320297] = {};
-         [340358] = {};
-         [336449] = {};
+         [331967] = {};
+         [325748] = {};
+         [326868] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Plaguebinder";
-      ["count"] = 8;
-      ["displayId"] = 96459;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
-         ["Disorient"] = true;
+         ["Repentance"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Stun"] = true;
          ["Silence"] = true;
+         ["Stun"] = true;
          ["Slow"] = true;
-         ["Imprison"] = true;
-         ["Repentance"] = true;
+         ["Disorient"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "132155";
+      ["displayId"] = 96459;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Plaguebinder";
+      ["scale"] = 1;
    };
    [22] = {
       ["clones"] = {
@@ -1893,20 +1893,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [340357] = {};
          [321975] = {};
          [132951] = {};
-         [346989] = {};
+         [334882] = {};
          [321999] = {};
          [326868] = {};
          [224729] = {};
          [340356] = {};
-         [334882] = {};
+         [346989] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Pestilence Slime";
-      ["count"] = 6;
-      ["displayId"] = 33010;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -1920,6 +1913,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 6;
+      ["health"] = "132156";
+      ["displayId"] = 33010;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Pestilence Slime";
+      ["scale"] = 1;
    };
    [23] = {
       ["clones"] = {
@@ -1976,16 +1976,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [319070] = {};
          [224729] = {};
          [132466] = {};
-         [346989] = {};
          [317898] = {};
+         [346989] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Rotmarrow Slime";
-      ["count"] = 6;
-      ["displayId"] = 97477;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -1999,6 +1992,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 6;
+      ["health"] = "132156";
+      ["displayId"] = 97477;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Rotmarrow Slime";
+      ["scale"] = 1;
    };
    [24] = {
       ["clones"] = {
@@ -2031,16 +2031,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [321935] = {};
          [224729] = {};
          [333737] = {};
-         [346989] = {};
          [326868] = {};
+         [346989] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Congealed Slime";
-      ["count"] = 6;
-      ["displayId"] = 95787;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 64080;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2054,6 +2047,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 6;
+      ["health"] = "132156";
+      ["displayId"] = 95787;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Congealed Slime";
+      ["scale"] = 1;
    };
    [25] = {
       ["clones"] = {
@@ -2127,21 +2127,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328432] = {};
          [329224] = {};
          [132951] = {};
-         [319898] = {};
+         [326868] = {};
          [328175] = {};
          [345429] = {};
          [340358] = {};
          [328429] = {};
          [329226] = {};
-         [326868] = {};
+         [319898] = {};
       };
-      ["scale"] = 1.5;
-      ["name"] = "Slime Tentacle";
-      ["count"] = 10;
-      ["displayId"] = 95688;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 88110;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2155,6 +2148,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 10;
+      ["health"] = "181715";
+      ["displayId"] = 95688;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Slime Tentacle";
+      ["scale"] = 1.5;
    };
    [26] = {
       ["clones"] = {
@@ -2177,19 +2177,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [320529] = {};
          [132466] = {};
          [331967] = {};
-         [132951] = {};
          [336449] = {};
+         [132951] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Virulax Blightweaver";
-      ["count"] = 25;
-      ["displayId"] = 96985;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 153792;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 25;
+      ["health"] = "317172";
+      ["displayId"] = 96985;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Virulax Blightweaver";
+      ["scale"] = 1;
    };
    [27] = {
       ["clones"] = {
@@ -2199,36 +2199,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["id"] = 164967;
       ["scale"] = 1;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
       ["spells"] = {
          [329110] = {};
          [326868] = {};
          [332617] = {};
          [330026] = {};
-         [132951] = {};
+         [288865] = {};
          [322358] = {};
          [329217] = {};
-         [340358] = {};
-         [328175] = {};
-         [333808] = {};
-         [132466] = {};
-         [331967] = {};
          [325748] = {};
-         [288865] = {};
+         [328175] = {};
+         [132466] = {};
+         [333808] = {};
+         [331967] = {};
+         [340358] = {};
+         [132951] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2403;
       ["instanceID"] = 1183;
-      ["name"] = "Doctor Ickus";
       ["count"] = 0;
+      ["health"] = "924047";
       ["displayId"] = 96919;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["health"] = 448560;
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
+      ["name"] = "Doctor Ickus";
+      ["id"] = 164967;
    };
    [28] = {
       ["clones"] = {
@@ -2247,9 +2247,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [3] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 441.47226688588;
-            ["g"] = 37;
             ["y"] = -352.38715828053;
+            ["g"] = 37;
+            ["x"] = 441.47226688588;
          };
          [4] = {
             ["y"] = -353.92617284545;
@@ -2278,9 +2278,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [8] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 473.86816353298;
-            ["g"] = 45;
             ["y"] = -401.43858988635;
+            ["g"] = 45;
+            ["x"] = 473.86816353298;
          };
          [9] = {
             ["y"] = -406.22566854897;
@@ -2309,22 +2309,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [35079] = {};
          [186439] = {};
          [340358] = {};
-         [132951] = {};
-         [336451] = {};
          [201657] = {};
-         [224729] = {};
-         [317898] = {};
-         [320297] = {};
-         [325748] = {};
+         [336451] = {};
          [328175] = {};
+         [224729] = {};
+         [325748] = {};
+         [320297] = {};
+         [317898] = {};
+         [132951] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Defender of Many Eyes";
-      ["count"] = 8;
-      ["displayId"] = 96445;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = 88110;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2333,12 +2326,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Control Undead"] = true;
          ["Polymorph"] = true;
          ["Disorient"] = true;
-         ["Fear"] = true;
+         ["Repentance"] = true;
          ["Silence"] = true;
          ["Slow"] = true;
          ["Stun"] = true;
-         ["Repentance"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "181715";
+      ["displayId"] = 96445;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Defender of Many Eyes";
+      ["scale"] = 1;
    };
    [29] = {
       ["clones"] = {
@@ -2381,9 +2381,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [7] = {
             ["sublevel"] = 1;
             ["inspiring"] = true;
-            ["x"] = 450.67024390244;
-            ["g"] = 44;
             ["y"] = -401.97804931587;
+            ["g"] = 44;
+            ["x"] = 450.67024390244;
          };
       };
       ["id"] = 167493;
@@ -2403,18 +2403,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [340358] = {};
          [328338] = {};
          [186439] = {};
-         [328395] = {};
-         [288865] = {};
-         [328175] = {};
          [35079] = {};
+         [328175] = {};
+         [288865] = {};
+         [328395] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Venomous Sniper";
-      ["count"] = 8;
-      ["displayId"] = 96116;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = 72090;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2423,12 +2416,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Control Undead"] = true;
          ["Polymorph"] = true;
          ["Disorient"] = true;
-         ["Fear"] = true;
+         ["Repentance"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
          ["Silence"] = true;
-         ["Repentance"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 8;
+      ["health"] = "148676";
+      ["displayId"] = 96116;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Venomous Sniper";
+      ["scale"] = 1;
    };
    [30] = {
       ["clones"] = {
@@ -2483,20 +2483,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328342] = {};
          [132951] = {};
          [1604] = {};
-         [328343] = {};
+         [326868] = {};
          [224729] = {};
          [132466] = {};
          [320297] = {};
          [340358] = {};
-         [326868] = {};
+         [328343] = {};
       };
-      ["scale"] = 0.6;
-      ["name"] = "Venomfang";
-      ["count"] = 0;
-      ["displayId"] = 94406;
-      ["creatureType"] = "Beast";
-      ["level"] = 60;
-      ["health"] = 32040;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2509,6 +2502,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Stun"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 0;
+      ["health"] = "283079";
+      ["displayId"] = 94406;
+      ["creatureType"] = "Beast";
+      ["level"] = 60;
+      ["name"] = "Venomfang";
+      ["scale"] = 0.6;
    };
    [31] = {
       ["clones"] = {
@@ -2542,36 +2542,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [317898] = {};
          [338077] = {};
          [132951] = {};
-         [328409] = {};
+         [340358] = {};
          [328475] = {};
          [338079] = {};
-         [328400] = {};
-         [328539] = {};
          [224729] = {};
-         [340358] = {};
+         [328539] = {};
+         [328400] = {};
+         [328409] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Brood Ambusher";
-      ["count"] = 12;
-      ["displayId"] = 96434;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 80100;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
          ["Root"] = true;
-         ["Fear"] = true;
-         ["Disorient"] = true;
+         ["Repentance"] = true;
+         ["Imprison"] = true;
          ["Polymorph"] = true;
          ["Mind Control"] = true;
          ["Sap"] = true;
-         ["Stun"] = true;
          ["Silence"] = true;
+         ["Stun"] = true;
          ["Slow"] = true;
-         ["Imprison"] = true;
-         ["Repentance"] = true;
+         ["Disorient"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 12;
+      ["health"] = "165195";
+      ["displayId"] = 96434;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Brood Ambusher";
+      ["scale"] = 1;
    };
    [32] = {
       ["clones"] = {
@@ -2581,38 +2581,38 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["id"] = 164266;
       ["scale"] = 1;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
       ["spells"] = {
          [288865] = {};
          [336449] = {};
          [336258] = {};
          [325552] = {};
-         [331818] = {};
+         [326868] = {};
          [325245] = {};
          [339184] = {};
          [333353] = {};
-         [336306] = {};
-         [132951] = {};
+         [325551] = {};
+         [340358] = {};
          [325550] = {};
          [328539] = {};
          [332313] = {};
-         [340358] = {};
-         [325551] = {};
-         [326868] = {};
+         [132951] = {};
+         [336306] = {};
+         [331818] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2423;
       ["instanceID"] = 1183;
-      ["name"] = "Domina Venomblade";
       ["count"] = 0;
+      ["health"] = "1155058";
       ["displayId"] = 96475;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["health"] = 560700;
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
+      ["name"] = "Domina Venomblade";
+      ["id"] = 164266;
    };
    [33] = {
       ["clones"] = {
@@ -2730,18 +2730,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [341022] = {};
          [201657] = {};
          [224729] = {};
-         [340358] = {};
+         [328175] = {};
          [320297] = {};
          [325748] = {};
-         [328175] = {};
+         [340358] = {};
       };
-      ["scale"] = 1;
-      ["name"] = "Plaguebound Devoted";
-      ["count"] = 4;
-      ["displayId"] = 96988;
-      ["creatureType"] = "Undead";
-      ["level"] = 60;
-      ["health"] = 32040;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2750,12 +2743,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Control Undead"] = true;
          ["Polymorph"] = true;
          ["Disorient"] = true;
-         ["Fear"] = true;
+         ["Repentance"] = true;
          ["Stun"] = true;
          ["Slow"] = true;
          ["Silence"] = true;
-         ["Repentance"] = true;
+         ["Fear"] = true;
       };
+      ["count"] = 4;
+      ["health"] = "39647";
+      ["displayId"] = 96988;
+      ["creatureType"] = "Undead";
+      ["level"] = 60;
+      ["name"] = "Plaguebound Devoted";
+      ["scale"] = 1;
    };
    [34] = {
       ["clones"] = {
@@ -2773,22 +2773,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [326868] = {};
          [121308] = {};
          [132951] = {};
-         [336449] = {};
-         [330786] = {};
-         [325748] = {};
-         [330816] = {};
          [340358] = {};
+         [330816] = {};
+         [325748] = {};
+         [330786] = {};
+         [336449] = {};
       };
-      ["scale"] = 1.5;
-      ["name"] = "Ickor Bileflesh";
-      ["count"] = 25;
-      ["displayId"] = 94145;
-      ["creatureType"] = "Humanoid";
-      ["level"] = 60;
-      ["health"] = 153792;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 25;
+      ["health"] = "317172";
+      ["displayId"] = 94145;
+      ["creatureType"] = "Humanoid";
+      ["level"] = 60;
+      ["name"] = "Ickor Bileflesh";
+      ["scale"] = 1.5;
    };
    [35] = {
       ["clones"] = {
@@ -2798,8 +2798,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 2;
          };
       };
-      ["id"] = 164267;
       ["scale"] = 1;
+      ["characteristics"] = {
+         ["Taunt"] = true;
+      };
       ["spells"] = {
          [288865] = {};
          [322304] = {};
@@ -2807,23 +2809,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [322492] = {};
          [331399] = {};
          [132951] = {};
-         [340358] = {};
+         [336449] = {};
          [322232] = {};
          [322491] = {};
-         [336449] = {};
+         [340358] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2404;
       ["instanceID"] = 1183;
-      ["name"] = "Margrave Stradama";
       ["count"] = 0;
+      ["health"] = "1056053";
       ["displayId"] = 95794;
       ["creatureType"] = "Aberration";
       ["level"] = 60;
-      ["health"] = 512640;
-      ["characteristics"] = {
-         ["Taunt"] = true;
-      };
+      ["name"] = "Margrave Stradama";
+      ["id"] = 164267;
    };
    [36] = {
       ["clones"] = {
@@ -2842,21 +2842,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [328432] = {};
          [329224] = {};
          [132951] = {};
-         [319898] = {};
+         [326868] = {};
          [328175] = {};
          [345429] = {};
          [340358] = {};
          [328429] = {};
          [329226] = {};
-         [326868] = {};
+         [319898] = {};
       };
-      ["scale"] = 1.5;
-      ["name"] = "Slime Tentacle";
-      ["count"] = 10;
-      ["displayId"] = 95688;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 88110;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Incapacitate"] = true;
@@ -2870,6 +2863,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Silence"] = true;
          ["Fear"] = true;
       };
+      ["count"] = 10;
+      ["health"] = "181715";
+      ["displayId"] = 95688;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Slime Tentacle";
+      ["scale"] = 1.5;
    };
    [37] = {
       ["clones"] = {
@@ -2883,29 +2883,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["id"] = 168396;
       ["spells"] = {
          [326868] = {};
-         [327233] = {};
+         [288865] = {};
          [327581] = {};
          [340358] = {};
          [132951] = {};
          [327594] = {};
-         [288865] = {};
+         [327233] = {};
       };
-      ["scale"] = 1.5;
-      ["name"] = "Plaguebelcher";
-      ["count"] = 0;
-      ["displayId"] = 96244;
-      ["creatureType"] = "Aberration";
-      ["level"] = 60;
-      ["health"] = 128160;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
+      ["count"] = 0;
+      ["health"] = 128160;
+      ["displayId"] = 96244;
+      ["creatureType"] = "Aberration";
+      ["level"] = 60;
+      ["name"] = "Plaguebelcher";
+      ["scale"] = 1.5;
    };
    [38] = {
       ["clones"] = {
          [1] = {
             ["y"] = -263.39073876864;
             ["x"] = 493.33518549204;
+            ["sublevel"] = 1;
             ["week"] = {
                [1] = true;
                [2] = true;
@@ -2914,11 +2915,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [9] = true;
                [10] = true;
             };
-            ["sublevel"] = 1;
          };
          [2] = {
             ["y"] = -96.330604482266;
             ["x"] = 365.62249442263;
+            ["sublevel"] = 1;
             ["week"] = {
                [11] = true;
                [7] = true;
@@ -2927,7 +2928,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [12] = true;
                [4] = true;
             };
-            ["sublevel"] = 1;
          };
       };
       ["powers"] = {
@@ -2940,8 +2940,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [357863] = {
             ["tank"] = true;
          };
-         [357604] = {
-            ["tank"] = true;
+         [357847] = {
+            ["healer"] = true;
          };
          [357706] = {
             ["dps"] = true;
@@ -2951,29 +2951,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["dps"] = true;
             ["healer"] = true;
          };
-         [357847] = {
-            ["healer"] = true;
+         [357604] = {
+            ["tank"] = true;
          };
       };
       ["id"] = 179890;
       ["spells"] = {
          [355714] = {};
-         [356923] = {};
          [358971] = {};
          [356925] = {};
+         [356923] = {};
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 128;
+         ["level"] = 10;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Executioner Varruth";
-      ["ignoreFortified"] = true;
       ["health"] = 336131;
+      ["count"] = 0;
+      ["ignoreFortified"] = true;
+      ["name"] = "Executioner Varruth";
       ["displayId"] = 92418;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["count"] = 0;
+      ["scale"] = 1.5;
       ["iconTexture"] = 237552;
    };
    [39] = {
@@ -2981,6 +2981,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [1] = {
             ["y"] = -120.4487443875;
             ["x"] = 526.87699972842;
+            ["sublevel"] = 1;
             ["week"] = {
                [1] = true;
                [2] = true;
@@ -2989,11 +2990,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [9] = true;
                [10] = true;
             };
-            ["sublevel"] = 1;
          };
          [2] = {
             ["y"] = -365.64881855542;
             ["x"] = 474.45940882119;
+            ["sublevel"] = 1;
             ["week"] = {
                [11] = true;
                [7] = true;
@@ -3002,13 +3003,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [12] = true;
                [4] = true;
             };
-            ["sublevel"] = 1;
          };
       };
       ["powers"] = {
          [357815] = {
-            ["dps"] = true;
             ["healer"] = true;
+            ["dps"] = true;
          };
          [357817] = {
             ["tank"] = true;
@@ -3016,18 +3016,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [357842] = {
             ["healer"] = true;
          };
-         [357820] = {
-            ["tank"] = true;
+         [357829] = {
+            ["healer"] = true;
          };
          [357825] = {
             ["dps"] = true;
          };
          [357834] = {
-            ["dps"] = true;
             ["tank"] = true;
+            ["dps"] = true;
          };
-         [357829] = {
-            ["healer"] = true;
+         [357820] = {
+            ["tank"] = true;
          };
       };
       ["id"] = 179892;
@@ -3038,17 +3038,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [356414] = {};
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 128;
+         ["level"] = 10;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Oros Coldheart";
-      ["ignoreFortified"] = true;
       ["count"] = 0;
+      ["health"] = 336131;
+      ["ignoreFortified"] = true;
+      ["name"] = "Oros Coldheart";
       ["displayId"] = 97237;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["health"] = 336131;
+      ["scale"] = 1.5;
       ["iconTexture"] = 136213;
    };
    [40] = {
@@ -3056,6 +3056,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [1] = {
             ["y"] = -365.64881855542;
             ["x"] = 474.45940882119;
+            ["sublevel"] = 1;
             ["week"] = {
                [1] = true;
                [2] = true;
@@ -3064,11 +3065,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [9] = true;
                [10] = true;
             };
-            ["sublevel"] = 1;
          };
          [2] = {
             ["y"] = -120.4487443875;
             ["x"] = 526.87699972842;
+            ["sublevel"] = 1;
             ["week"] = {
                [11] = true;
                [7] = true;
@@ -3077,17 +3078,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [12] = true;
                [4] = true;
             };
-            ["sublevel"] = 1;
          };
       };
       ["powers"] = {
          [356828] = {
-            ["tank"] = true;
             ["dps"] = true;
+            ["tank"] = true;
          };
          [356827] = {
-            ["dps"] = true;
             ["healer"] = true;
+            ["dps"] = true;
          };
          [357524] = {
             ["tank"] = true;
@@ -3110,17 +3110,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355806] = {};
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 128;
+         ["level"] = 10;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Soggodon the Breaker";
-      ["ignoreFortified"] = true;
       ["health"] = 358540;
+      ["count"] = 0;
+      ["ignoreFortified"] = true;
+      ["name"] = "Soggodon the Breaker";
       ["displayId"] = 98535;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
-      ["count"] = 0;
+      ["scale"] = 1.5;
       ["iconTexture"] = 2103898;
    };
    [41] = {
@@ -3128,6 +3128,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [1] = {
             ["y"] = -96.330604482266;
             ["x"] = 365.62249442263;
+            ["sublevel"] = 1;
             ["week"] = {
                [1] = true;
                [2] = true;
@@ -3136,11 +3137,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [9] = true;
                [10] = true;
             };
-            ["sublevel"] = 1;
          };
          [2] = {
             ["y"] = -263.39073876864;
             ["x"] = 493.33518549204;
+            ["sublevel"] = 1;
             ["week"] = {
                [11] = true;
                [7] = true;
@@ -3149,7 +3150,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
                [12] = true;
                [4] = true;
             };
-            ["sublevel"] = 1;
          };
       };
       ["powers"] = {
@@ -3159,8 +3159,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [357889] = {
             ["healer"] = true;
          };
-         [357897] = {
+         [357575] = {
             ["tank"] = true;
+            ["dps"] = true;
+            ["healer"] = true;
          };
          [357900] = {
             ["healer"] = true;
@@ -3168,13 +3170,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [357839] = {
             ["tank"] = true;
          };
-         [357575] = {
-            ["tank"] = true;
-            ["dps"] = true;
-            ["healer"] = true;
-         };
          [357848] = {
             ["dps"] = true;
+         };
+         [357897] = {
+            ["tank"] = true;
          };
       };
       ["id"] = 179446;
@@ -3185,17 +3185,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355737] = {};
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 128;
+         ["level"] = 10;
       };
-      ["scale"] = 1.5;
-      ["name"] = "Incinerator Arkolath";
-      ["ignoreFortified"] = true;
       ["health"] = 336131;
+      ["count"] = 0;
+      ["ignoreFortified"] = true;
+      ["name"] = "Incinerator Arkolath";
       ["displayId"] = 100718;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["count"] = 0;
+      ["scale"] = 1.5;
       ["iconTexture"] = 236297;
    };
    [42] = {
@@ -3282,29 +3282,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 130;
+         ["level"] = 10;
       };
-      ["id"] = 185683;
-      ["level"] = 62;
-      ["scale"] = 1;
-      ["spells"] = {
-         [368078] = {};
-         [366566] = {};
-      };
-      ["ignoreFortified"] = true;
-      ["displayId"] = 101046;
-      ["health"] = "27569";
-      ["badCreatureModel"] = true;
       ["count"] = 0;
-      ["bonusSpell"] = 368241;
-      ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
          [1] = 0;
          [2] = 0;
          [3] = 0.6;
       };
+      ["scale"] = 1;
+      ["spells"] = {
+         [368078] = {};
+         [366566] = {};
+      };
+      ["badCreatureModel"] = true;
+      ["bonusSpell"] = 368241;
       ["name"] = "Wo Relic";
+      ["ignoreFortified"] = true;
+      ["health"] = "33039";
+      ["displayId"] = 101046;
+      ["creatureType"] = "Mechanical";
+      ["level"] = 62;
+      ["id"] = 185683;
       ["iconTexture"] = 4335644;
    };
    [43] = {
@@ -3391,30 +3391,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 130;
+         ["level"] = 10;
       };
-      ["id"] = 185685;
-      ["level"] = 62;
+      ["count"] = 0;
+      ["modelPosition"] = {
+         [1] = 0;
+         [2] = 0;
+         [3] = 0.75;
+      };
       ["scale"] = 1;
       ["spells"] = {
          [368243] = {};
          [366297] = {};
          [366288] = {};
       };
-      ["ignoreFortified"] = true;
-      ["displayId"] = 105134;
-      ["name"] = "Urh Relic";
       ["badCreatureModel"] = true;
-      ["count"] = 0;
       ["bonusSpell"] = 368239;
+      ["health"] = "33039";
+      ["ignoreFortified"] = true;
+      ["name"] = "Urh Relic";
+      ["displayId"] = 105134;
       ["creatureType"] = "Mechanical";
-      ["modelPosition"] = {
-         [1] = 0;
-         [2] = 0;
-         [3] = 0.75;
-      };
-      ["health"] = "27569";
+      ["level"] = 62;
+      ["id"] = 185685;
       ["iconTexture"] = 4335642;
    };
    [44] = {
@@ -3501,30 +3501,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
       };
       ["include"] = {
-         ["level"] = 10;
          ["affix"] = 130;
+         ["level"] = 10;
       };
-      ["scale"] = 1;
-      ["level"] = 62;
+      ["health"] = "33039";
+      ["modelPosition"] = {
+         [1] = 0;
+         [2] = 0;
+         [3] = 0.75;
+      };
       ["id"] = 185680;
       ["spells"] = {
          [366406] = {};
          [368103] = {};
          [366409] = {};
       };
-      ["ignoreFortified"] = true;
-      ["displayId"] = 103111;
-      ["name"] = "Vy Relic";
       ["badCreatureModel"] = true;
-      ["health"] = "27569";
       ["bonusSpell"] = 368240;
-      ["creatureType"] = "Mechanical";
-      ["modelPosition"] = {
-         [1] = 0;
-         [2] = 0;
-         [3] = 0.75;
-      };
       ["count"] = 0;
+      ["ignoreFortified"] = true;
+      ["name"] = "Vy Relic";
+      ["displayId"] = 103111;
+      ["creatureType"] = "Mechanical";
+      ["level"] = 62;
+      ["scale"] = 1;
       ["iconTexture"] = 4335643;
    };
 };
