@@ -58,8 +58,6 @@ v3.9.2
       Enchanted Emissary with id 155432 has been updated: 0 -> 4
   - De Other Side
       Atal'ai Devoted with id 171333 has been updated: 2 -> 0
-  - Plaguefall
-      Plaguebelcher with id 168396 has been updated: 0 -> 12
 v3.9.1
 - affix update
 v3.9.0
