@@ -1819,14 +1819,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355707] = {};
          [355737] = {};
       };
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 128;
+      };
       ["scale"] = 1.5;
-      ["name"] = "Incinerator Arkolath";
+      ["count"] = 0;
       ["ignoreFortified"] = true;
       ["health"] = 336131;
       ["displayId"] = 100718;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["count"] = 0;
+      ["name"] = "Incinerator Arkolath";
       ["iconTexture"] = 236297;
    };
    [25] = {
@@ -1890,14 +1894,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [355710] = {};
          [356414] = {};
       };
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 128;
+      };
       ["scale"] = 1.5;
-      ["name"] = "Oros Coldheart";
+      ["count"] = 0;
       ["ignoreFortified"] = true;
       ["health"] = 336131;
       ["displayId"] = 97237;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["count"] = 0;
+      ["name"] = "Oros Coldheart";
       ["iconTexture"] = 136213;
    };
    [26] = {
@@ -1958,14 +1966,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [358968] = {};
          [355806] = {};
       };
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 128;
+      };
       ["scale"] = 1.5;
-      ["name"] = "Soggodon the Breaker";
+      ["count"] = 0;
       ["ignoreFortified"] = true;
       ["health"] = 358540;
       ["displayId"] = 98535;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
-      ["count"] = 0;
+      ["name"] = "Soggodon the Breaker";
       ["iconTexture"] = 2103898;
    };
    [27] = {
@@ -2029,14 +2041,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [356925] = {};
          [358971] = {};
       };
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 128;
+      };
       ["scale"] = 1.5;
-      ["name"] = "Executioner Varruth";
+      ["count"] = 0;
       ["ignoreFortified"] = true;
       ["health"] = 336131;
       ["displayId"] = 92418;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["count"] = 0;
+      ["name"] = "Executioner Varruth";
       ["iconTexture"] = 237552;
    };
    [28] = {
@@ -2107,18 +2123,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
-      ["scale"] = 1;
-      ["health"] = "33039";
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 130;
+      };
       ["id"] = 185683;
+      ["level"] = 62;
+      ["scale"] = 1;
       ["spells"] = {
          [368078] = {};
          [366566] = {};
       };
-      ["level"] = 62;
-      ["count"] = 0;
+      ["badCreatureModel"] = true;
       ["displayId"] = 101046;
+      ["count"] = 0;
       ["ignoreFortified"] = true;
-      ["name"] = "Wo Relic";
+      ["health"] = "33039";
       ["bonusSpell"] = 368241;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -2126,7 +2146,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [2] = 0;
          [3] = 0.6;
       };
-      ["badCreatureModel"] = true;
+      ["name"] = "Wo Relic";
       ["iconTexture"] = 4335644;
    };
    [29] = {
@@ -2197,19 +2217,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
-      ["scale"] = 1;
-      ["name"] = "Urh Relic";
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 130;
+      };
       ["id"] = 185685;
+      ["level"] = 62;
+      ["scale"] = 1;
       ["spells"] = {
          [368243] = {};
          [366297] = {};
          [366288] = {};
       };
-      ["level"] = 62;
-      ["count"] = 0;
+      ["badCreatureModel"] = true;
       ["displayId"] = 105134;
+      ["count"] = 0;
       ["ignoreFortified"] = true;
-      ["health"] = "33039";
+      ["name"] = "Urh Relic";
       ["bonusSpell"] = 368239;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -2217,7 +2241,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [2] = 0;
          [3] = 0.75;
       };
-      ["badCreatureModel"] = true;
+      ["health"] = "33039";
       ["iconTexture"] = 4335642;
    };
    [30] = {
@@ -2288,19 +2312,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
-      ["id"] = 185680;
-      ["name"] = "Vy Relic";
+      ["include"] = {
+         ["level"] = 10;
+         ["affix"] = 130;
+      };
       ["scale"] = 1;
+      ["level"] = 62;
+      ["id"] = 185680;
       ["spells"] = {
          [366406] = {};
          [368103] = {};
          [366409] = {};
       };
-      ["level"] = 62;
-      ["health"] = "33039";
+      ["badCreatureModel"] = true;
       ["displayId"] = 103111;
+      ["health"] = "33039";
       ["ignoreFortified"] = true;
-      ["count"] = 0;
+      ["name"] = "Vy Relic";
       ["bonusSpell"] = 368240;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -2308,7 +2336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          [2] = 0;
          [3] = 0.75;
       };
-      ["badCreatureModel"] = true;
+      ["count"] = 0;
       ["iconTexture"] = 4335643;
    };
 };
