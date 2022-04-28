@@ -8,6 +8,7 @@ v3.9.2
     - spires
     - plaguefall
     - theater of pain
+    - halls of atonement
 - Dungeon updates by Blizzard that include count changes will from now on be updated via an automated script. Thanks once again to Stinth!
 - Count updates:
   - Black Rook Hold
