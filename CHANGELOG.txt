@@ -5,7 +5,7 @@ v3.9.2
 - Health values for Season 3 for all Shadowlands dungeons have been updated
     - spires
     - plaguefall
-- Count updates have been automated thanks to Stinth and will now periodically catch when Blizzard changes dungeons.
+- Dungeon updates by Blizzard that include count changes will from now on be updated via an automated script. Thanks once again to Stinth!
 - Count updates:
   - Black Rook Hold
       Wyrmtongue Trickster with id 98900 has been updated: 4 -> 3
