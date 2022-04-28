@@ -3,6 +3,7 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["Efficiency Score"] = "Efficiency Score"
 L["Encrypted"] = "Encrypted"
 L["Urh Relic"] = "Urh Relic"
 L["Wo Relic"] = "Wo Relic"

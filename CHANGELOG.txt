@@ -1,4 +1,5 @@
 v3.9.2
+- New Feature: Efficiency Score! This is a new value on NPC tooltips that indicates how valuable an NPCs dungeon count is compared to their health. If this feature proves valuable it can be extended to pulls and even full routes.
 - Importing and renaming a preset now requires one less button press
 - Fixed an issue where Tormented enemies (SL Season 2 Affix) could be visible in the pull list and pull outlines
 - Affix update
