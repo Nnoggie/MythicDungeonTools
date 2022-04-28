@@ -7,6 +7,7 @@ v3.9.2
 - Health values for Season 3 for all Shadowlands dungeons have been updated
     - spires
     - plaguefall
+    - theater of pain
 - Dungeon updates by Blizzard that include count changes will from now on be updated via an automated script. Thanks once again to Stinth!
 - Count updates:
   - Black Rook Hold
