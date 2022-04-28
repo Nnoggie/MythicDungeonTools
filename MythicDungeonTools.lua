@@ -3723,9 +3723,8 @@ function MDT:MakeRenameFrame(frame)
 	frame.RenameFrame.Editbox = AceGUI:Create("EditBox")
 	frame.RenameFrame.Editbox:SetLabel(L["Preset Name"]..":")
 	frame.RenameFrame.Editbox:SetWidth(200)
-	frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(...)
-        local widget, event, text = ...
-		--check if name is valid, block button if so, unblock if valid
+    frame.RenameFrame.Editbox:SetCallback("OnTextChanged", function(widget, event, text)
+        --check if name is valid, block button if so, unblock if valid
 		if MDT:SanitizePresetName(text) then
 			frame.RenameFrame.PresetRenameLabel:SetText(nil)
 			frame.RenameFrame.RenameButton:SetDisabled(false)
@@ -3737,8 +3736,9 @@ function MDT:MakeRenameFrame(frame)
 			frame.RenameFrame.RenameButton.text:SetTextColor(0.5,0.5,0.5)
 			renameText = nil
 		end
-		frame.presetCreationFrame:DoLayout()
-	end)
+		frame.RenameFrame:DoLayout()
+    end)
+	frame.RenameFrame.Editbox:DisableButton(true)
 
 	frame.RenameFrame:AddChild(frame.RenameFrame.Editbox)
 
