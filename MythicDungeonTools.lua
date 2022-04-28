@@ -109,7 +109,7 @@ local defaultSavedVars = {
         },
 		presets = {},
 		currentPreset = {},
-		dataCollectionActive = false,
+		newDataCollectionActive = false,
 		colorPaletteInfo = {
             autoColoring = true,
             forceColorBlindMode = false,
@@ -149,7 +149,7 @@ do
 			if not db.minimap.hide then
 				icon:Show("MythicDungeonTools")
 			end
-            -- if db.dataCollectionActive then MDT.DataCollection:Init() end
+            if db.newDataCollectionActive then MDT.DataCollection:Init() end
             -- PTR ONLY
             --MDT.DataCollection:Init()
             --fix db corruption
@@ -287,8 +287,8 @@ function MDT:HideInterface()
 end
 
 function MDT:ToggleDataCollection()
-    db.dataCollectionActive = not db.dataCollectionActive
-    print(string.format("%sMDT|r: DataCollection %s. Reload Interface!", mythicColor,db.dataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
+    db.newDataCollectionActive = not db.newDataCollectionActive
+    print(string.format("%sMDT|r: DataCollection %s. Reload Interface!", mythicColor,db.newDataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
 end
 
 function MDT:ToggleHealthTrack()
