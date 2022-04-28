@@ -586,6 +586,7 @@ function MDT:GetEfficiencyScoreString(count,health)
     local score = 2.5*(count/totalCount)*300/(health/100000)
     local formattedScore = MDT:Round(score,1)
     local value = score/10
+    --https://stackoverflow.com/a/7947812/17380548
     local colorHex = MDT:RGBToHex(math.max(0,math.min(1,2*(1-value))), math.min(1,2*value), 0)
     return ("|cFF%s%s|r"):format(colorHex, formattedScore)
 end
