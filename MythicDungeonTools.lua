@@ -1159,6 +1159,8 @@ function MDT:MakeSidePanel(frame)
             MDT:POI_UpdateAll()
             MDT:KillAllAnimatedLines()
             MDT:DrawAllAnimatedLines()
+            MDT:ReloadPullButtons()
+            MDT:DrawAllHulls()
         else
             db.currentDifficulty = difficulty or db.currentDifficulty
         end
@@ -1730,37 +1732,59 @@ local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
 ---Checks if the specified clone is part of the current map configuration
 function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
     local preset = MDT:GetCurrentPreset()
-    local isCloneBlacktoothEvent = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].blacktoothEvent
-    local cloneFaction = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].faction
+    local enemy = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+    local clone = enemy["clones"][cloneIdx]
 
     local week = self:GetEffectivePresetWeek()
 
     if db.currentSeason ~= 3 then
-        if emissaryIds[MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id] then return false end
+        if emissaryIds[enemy.id] then return false end
     elseif db.currentSeason ~= 4 then
-        if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].corrupted then return false end
+        if enemy.corrupted then return false end
     end
 
     --beguiling weekly configuration
-    local weekData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].week
+    local weekData = clone.week
     if weekData then
-        if weekData[week] and not (cloneFaction and cloneFaction~= preset.faction) and db.currentDifficulty >= 10 then
+        if weekData[week] and not (clone.faction and clone.faction~= preset.faction) and db.currentDifficulty >= 10 then
             return true
         else
             return false
         end
     end
 
+    --filter enemies out that have filters and conditions are not met
+    local include = clone.include or enemy.include
+    if include then
+        local pass = {}
+        if include.affix then
+            local affixIncluded = false
+            for _, value in pairs(affixWeeks[week]) do
+                if value == include.affix then
+                    affixIncluded = true
+                end
+            end
+            tinsert(pass,affixIncluded)
+        end
+        if include.level then
+            local levelIncluded = db.currentDifficulty >= include.level
+            tinsert(pass,levelIncluded)
+        end
+        local shouldInclude = true
+        for _,v in pairs(pass) do
+           shouldInclude = shouldInclude and v
+        end
+        if not shouldInclude then return false end
+    end
+
     week = week%3
     if week == 0 then week = 3 end
     local isBlacktoothWeek = week == 2
 
-    if not isCloneBlacktoothEvent or isBlacktoothWeek then
-        if not (cloneFaction and cloneFaction~= preset.faction) then
-            local isCloneTeeming = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].teeming
-            local isCloneNegativeTeeming = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx].negativeTeeming
-            if MDT:IsCurrentPresetTeeming() or ((isCloneTeeming and isCloneTeeming == false) or (not isCloneTeeming)) then
-                if not(MDT:IsCurrentPresetTeeming() and isCloneNegativeTeeming) then
+    if not clone.blacktoothEvent or isBlacktoothWeek then
+        if not (clone.faction and clone.faction~= preset.faction) then
+            if MDT:IsCurrentPresetTeeming() or ((clone.teeming and clone.teeming == false) or (not clone.teeming)) then
+                if not(MDT:IsCurrentPresetTeeming() and clone.negativeTeeming) then
                     return true
                 end
             end
@@ -2497,8 +2521,8 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
     if dungeonIdx>=15 then db.currentExpansion = 2 end
     if dungeonIdx>=29 then db.currentExpansion = 3 end
     db.currentDungeonIdx = dungeonIdx
-	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then 
-        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1 
+	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then
+        db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1
     end
     if init then return end
 	MDT:UpdatePresetDropDown()
