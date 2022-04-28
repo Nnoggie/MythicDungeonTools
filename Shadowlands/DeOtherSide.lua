@@ -1312,7 +1312,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["displayId"] = 97298;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
-      ["count"] = 2;
+      ["count"] = 0;
       ["name"] = "Atal'ai Devoted";
    };
    [18] = {

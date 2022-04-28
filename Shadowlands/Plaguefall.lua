@@ -2893,7 +2893,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["count"] = 0;
+      ["count"] = 12;
       ["health"] = 128160;
       ["displayId"] = 96244;
       ["creatureType"] = "Aberration";
