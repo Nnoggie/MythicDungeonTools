@@ -313,13 +313,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
          [3] = {
             ["sublevel"] = 1;
-            ["inspiring"] = true;
             ["y"] = -208.37933262827;
             ["g"] = 15;
             ["x"] = 539.49317710124;
          };
          [4] = {
             ["sublevel"] = 1;
+            ["inspiring"] = true;
             ["x"] = 561.69958131078;
             ["patrol"] = {
                [1] = {
@@ -418,6 +418,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          };
          [8] = {
             ["sublevel"] = 1;
+            ["inspiring"] = true;
             ["x"] = 534.76211372536;
             ["patrol"] = {
                [1] = {
