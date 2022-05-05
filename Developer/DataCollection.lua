@@ -18,36 +18,34 @@ function DC:Init()
     f:SetScript("OnEvent", function(self, event, ...)
         return DC[event](self,...)
     end)
-    DC:AddCollectedDataToEnemyTable()
 
 end
 
-function DC:AddCollectedDataToEnemyTable()
-    --add spells/characteristics from db to dungeonEnemies
-    for i=37,38 do --tazavesh dungeons only
-        if db.dataCollection[i] then
-            for id,spells in pairs(db.dataCollection[i]) do
-                local enemies = MDT.dungeonEnemies[i]
-                for enemyIdx,enemy in pairs(enemies) do
-                    if enemy.id == id then
-                        enemy.spells = enemy.spells or {}
-                        for spellId,_ in pairs(spells) do
-                            enemy.spells[spellId] = enemy.spells[spellId] or {}
-                        end
+function DC:AddCollectedDataToEnemyTable(dungeonIndex)
+    --add spells/characteristics from db to dungeonEnemies    
+    local enemies = MDT.dungeonEnemies[dungeonIndex]
+    local collectedData = db.dataCollection[dungeonIndex]
+    if collectedData then
+        for id,spells in pairs(collectedData) do
+            for enemyIdx,enemy in pairs(enemies) do
+                if enemy.id == id then
+                    enemy.spells = enemy.spells or {}
+                    for spellId,_ in pairs(spells) do
+                        enemy.spells[spellId] = enemy.spells[spellId] or {}
                     end
-
                 end
+
             end
         end
-        if db.dataCollectionCC[i] then
-            for id,characteristics in pairs(db.dataCollectionCC[i]) do
-                local enemies = MDT.dungeonEnemies[i]
-                for enemyIdx,enemy in pairs(enemies) do
-                    if enemy.id == id then
-                        enemy.characteristics = enemy.characteristics or {}
-                        for characteristic,_ in pairs(characteristics) do
-                            enemy.characteristics[characteristic] = true
-                        end
+    end
+    local collectedCC = db.dataCollectionCC[dungeonIndex]
+    if collectedCC then
+        for id,characteristics in pairs(collectedCC) do
+            for enemyIdx,enemy in pairs(enemies) do
+                if enemy.id == id then
+                    enemy.characteristics = enemy.characteristics or {}
+                    for characteristic,_ in pairs(characteristics) do
+                        enemy.characteristics[characteristic] = true
                     end
                 end
             end

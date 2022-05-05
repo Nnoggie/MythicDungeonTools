@@ -332,6 +332,22 @@ function MDT:CreateDevPanel(frame)
             scaleSlider:SetValue(scale)
             countSlider:SetValue(count)
         end
+
+        local enemyInfoButton = AceGUI:Create("Button")
+        enemyInfoButton:SetText("Open Enemy Info")
+        enemyInfoButton:SetCallback("OnClick",function()
+            local devBlip = MDT:GetCurrentDevmodeBlip()
+            if devBlip then MDT:ShowEnemyInfoFrame(devBlip) else print("MDT DevMode: Please select a blip") end
+        end)
+        container:AddChild(enemyInfoButton)
+
+        local collectedDataButton = AceGUI:Create("Button")
+        collectedDataButton:SetText("Add collected spells + cc")
+        collectedDataButton:SetCallback("OnClick",function()
+            MDT.DataCollection:AddCollectedDataToEnemyTable(db.currentDungeonIdx)
+        end)
+        container:AddChild(collectedDataButton)
+
         local function updateDropdown(npcId,idx)
             if not MDT.dungeonEnemies[db.currentDungeonIdx] then return end
             idx = idx or 1
@@ -810,6 +826,8 @@ function MDT:CreateDevPanel(frame)
         clearCacheButton:SetText("Clear Cache")
         clearCacheButton:SetCallback("OnClick",function()
             MDT:ResetDataCache()
+            db.dataCollection[db.currentDungeonIdx] = {}
+            db.dataCollectionCC[db.currentDungeonIdx] = {}
         end)
         container:AddChild(clearCacheButton)
 
