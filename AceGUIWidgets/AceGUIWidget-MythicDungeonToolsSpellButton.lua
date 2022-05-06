@@ -34,13 +34,37 @@ local methods = {
                 GameTooltip:AddLine(interruptible)
             end
             GameTooltip:Show()
+            if MDT:GetDB().devMode then
+                self.frame:EnableKeyboard(true);
+            end
         end
 
         function self.callbacks.OnLeave()
             GameTooltip:Hide()
+            if MDT:GetDB().devMode then
+                self.frame:EnableKeyboard(false);
+            end
         end
 
-        function self.callbacks.OnKeyDown(self, key)
+        function self.callbacks.OnKeyDown(_,key)
+            local db = MDT:GetDB()
+            if db.devMode then
+                local enemies = MDT.dungeonEnemies[db.currentDungeonIdx]
+                local devBlip = MDT:GetCurrentDevmodeBlip()
+                local enemyIdx = MDT:GetEnemyInfoEnemyIdx()
+                local enemy = enemies[enemyIdx]
+                --toggle interruptible
+                if key == "I" then
+                    local spell = enemy.spells[self.spellId]
+                    spell.interruptible = not spell.interruptible
+                end
+                --remove spell
+                if key == "R" then
+                    enemy.spells[self.spellId] = nil
+                end
+                MDT:UpdateEnemyInfoFrame(enemyIdx)
+            end
+
             if (key == "ESCAPE") then
                 --
             end

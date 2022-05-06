@@ -293,6 +293,12 @@ local function MakeEnemeyInfoFrame()
         rightContainer:SetWidth(container.frame:GetWidth()/3)
         rightContainer:SetHeight(container.frame:GetHeight())
 
+        if db.devMode then
+            local devModeLabel = AceGUI:Create("Label")
+            devModeLabel:SetText("Alt Right Click: Delete\nI: Toggle Interruptible")
+            rightContainer:AddChild(devModeLabel)
+        end
+
         --spacing
         local rightDummyIcon = AceGUI:Create("Icon")
         rightDummyIcon:SetImageSize(20, 20)
@@ -470,6 +476,13 @@ local spellBlacklist = {
     --[X]  = true,
 }
 local lastEnemyIdx
+function MDT:GetEnemyInfoEnemyIdx()
+    return lastEnemyIdx
+end
+function MDT:GetEnemyInfoSpellBlacklist()
+    return spellBlacklist
+end
+
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
     if not enemyIdx then enemyIdx = lastEnemyIdx end
     lastEnemyIdx = enemyIdx
@@ -560,7 +573,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     f.spellScroll:ReleaseChildren()
     if data.spells then
         for spellId,spellData in pairs(data.spells) do
-            if not spellBlacklist[spellId] then
+            if MDT:GetDB().devMode or not spellBlacklist[spellId] then
                 local spellButton = AceGUI:Create("MDTSpellButton")
                 spellButton:SetSpell(spellId,spellData)
                 spellButton:Initialize()
