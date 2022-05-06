@@ -21,11 +21,12 @@ function DC:Init()
 
 end
 
-function DC:AddCollectedDataToEnemyTable(dungeonIndex)
+function DC:AddCollectedDataToEnemyTable(dungeonIndex,ignoreSpells,ignoreCC)
+    if not dungeonIndex then dungeonIndex = db.currentDungeonIdx end
     --add spells/characteristics from db to dungeonEnemies    
     local enemies = MDT.dungeonEnemies[dungeonIndex]
     local collectedData = db.dataCollection[dungeonIndex]
-    if collectedData then
+    if collectedData and not ignoreSpells then
         for id,spells in pairs(collectedData) do
             for enemyIdx,enemy in pairs(enemies) do
                 if enemy.id == id then
@@ -39,7 +40,7 @@ function DC:AddCollectedDataToEnemyTable(dungeonIndex)
         end
     end
     local collectedCC = db.dataCollectionCC[dungeonIndex]
-    if collectedCC then
+    if collectedCC and not ignoreCC then
         for id,characteristics in pairs(collectedCC) do
             for enemyIdx,enemy in pairs(enemies) do
                 if enemy.id == id then
