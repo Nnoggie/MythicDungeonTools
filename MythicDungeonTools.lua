@@ -532,6 +532,7 @@ local bottomTips = {
     [15] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
     [16] = L["Expand the top toolbar to gain access to drawing and note features."],
     [17] = L["ConnectedTip"],
+    [18] = L["EfficiencyScoreTip"]
 }
 
 function MDT:UpdateBottomText()

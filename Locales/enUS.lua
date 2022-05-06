@@ -3,6 +3,7 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["EfficiencyScoreTip"] = "Efficiency Score indicates how valuable an NPCs dungeon count is compared to their raw health."
 L["Efficiency Score"] = "Efficiency Score"
 L["Encrypted"] = "Encrypted"
 L["Urh Relic"] = "Urh Relic"
