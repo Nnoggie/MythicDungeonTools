@@ -122,10 +122,10 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
       };
+      ["id"] = 176705;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 176705;
       ["spells"] = {
          [350101] = {};
          [350086] = {};
@@ -134,12 +134,12 @@ MDT.mapPOIs[dungeonIndex] = {
       ["encounterID"] = 2454;
       ["instanceID"] = 0;
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Venza Goldfuse";
       ["displayId"] = 100564;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
+      ["count"] = 0;
       ["health"] = "594030";
-      ["name"] = "Venza Goldfuse";
    };
    [2] = {
       ["clones"] = {
@@ -156,12 +156,12 @@ MDT.mapPOIs[dungeonIndex] = {
          [352796] = {};
       };
       ["scale"] = 0.8;
-      ["name"] = "Gatewarden Zo'mazz";
+      ["health"] = 280832;
       ["displayId"] = 101505;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
       ["count"] = 18;
-      ["health"] = 280832;
+      ["name"] = "Gatewarden Zo'mazz";
    };
    [3] = {
       ["clones"] = {
@@ -177,25 +177,31 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 5;
             ["sublevel"] = 1;
          };
-         [4] = {
-            ["y"] = -243.90522867059;
-            ["x"] = 619.28805029422;
-            ["g"] = 6;
-            ["sublevel"] = 1;
-         };
          [3] = {
             ["y"] = -261.66064363705;
             ["x"] = 632.31866015354;
             ["g"] = 4;
             ["sublevel"] = 1;
          };
+         [4] = {
+            ["y"] = -243.90522867059;
+            ["x"] = 619.28805029422;
+            ["g"] = 6;
+            ["sublevel"] = 1;
+         };
+         [5] = {
+            ["y"] = -283.24611790319;
+            ["x"] = 613.14194896298;
+            ["g"] = 8;
+            ["sublevel"] = 1;
+         };
       };
       ["id"] = 177817;
       ["spells"] = {
-         [354297] = {
+         [355934] = {
             ["interruptible"] = true;
          };
-         [355934] = {
+         [354297] = {
             ["interruptible"] = true;
          };
          [355980] = {};
@@ -205,12 +211,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
+      ["name"] = "Support Officer";
       ["displayId"] = 100876;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 4;
       ["health"] = 148676;
-      ["name"] = "Support Officer";
    };
    [4] = {
       ["clones"] = {
@@ -251,12 +257,6 @@ MDT.mapPOIs[dungeonIndex] = {
             ["g"] = 6;
             ["sublevel"] = 1;
          };
-         [7] = {
-            ["y"] = -282.51501956551;
-            ["x"] = 613.8016989585;
-            ["g"] = 8;
-            ["sublevel"] = 1;
-         };
       };
       ["id"] = 177816;
       ["spells"] = {
@@ -276,25 +276,19 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Incapacitate"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
+      ["name"] = "Interrogation Specialist";
       ["displayId"] = 100877;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 4;
       ["health"] = 148676;
-      ["name"] = "Interrogation Specialist";
    };
    [5] = {
       ["clones"] = {
          [1] = {
             ["y"] = -267.74730778368;
             ["x"] = 628.17304689452;
-            ["g"] = 4;
-            ["sublevel"] = 1;
             ["patrol"] = {
-               [1] = {
-                  ["y"] = -267.74730778368;
-                  ["x"] = 628.17304689452;
-               };
                [2] = {
                   ["y"] = -267.57677417457;
                   ["x"] = 624.47282782525;
@@ -302,6 +296,10 @@ MDT.mapPOIs[dungeonIndex] = {
                [3] = {
                   ["y"] = -254.64230179823;
                   ["x"] = 624.47282782525;
+               };
+               [1] = {
+                  ["y"] = -267.74730778368;
+                  ["x"] = 628.17304689452;
                };
                [4] = {
                   ["y"] = -254.64230179823;
@@ -312,6 +310,8 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["x"] = 640.52323883238;
                };
             };
+            ["g"] = 4;
+            ["sublevel"] = 1;
          };
          [2] = {
             ["y"] = -282.64237319601;
@@ -335,12 +335,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 8;
+      ["name"] = "Armored Overseer";
       ["displayId"] = 100874;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
+      ["count"] = 8;
       ["health"] = 264312;
-      ["name"] = "Armored Overseer";
    };
    [6] = {
       ["clones"] = {
@@ -353,10 +353,10 @@ MDT.mapPOIs[dungeonIndex] = {
       ["id"] = 179334;
       ["spells"] = {
          [352390] = {};
-         [354297] = {
+         [356537] = {
             ["interruptible"] = true;
          };
-         [356537] = {
+         [354297] = {
             ["interruptible"] = true;
          };
          [356548] = {};
@@ -365,12 +365,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["scale"] = 1;
-      ["count"] = 20;
+      ["name"] = "Portalmancer Zo'honn";
       ["displayId"] = 100877;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
+      ["count"] = 20;
       ["health"] = 330390;
-      ["name"] = "Portalmancer Zo'honn";
    };
    [7] = {
       ["clones"] = {
@@ -382,25 +382,25 @@ MDT.mapPOIs[dungeonIndex] = {
       };
       ["id"] = 175616;
       ["spells"] = {
-         [347992] = {};
-         [353411] = {};
          [345990] = {};
          [346204] = {};
-         [348128] = {};
-         [345770] = {};
          [347949] = {};
          [348350] = {};
+         [348128] = {};
+         [345770] = {};
+         [347992] = {};
+         [353411] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2437;
       ["instanceID"] = 0;
       ["scale"] = 1;
-      ["name"] = "Zo'phex";
+      ["health"] = 1156365;
       ["displayId"] = 100049;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
       ["count"] = 0;
-      ["health"] = 1156365;
+      ["name"] = "Zo'phex";
    };
    [8] = {
       ["clones"] = {
@@ -412,21 +412,21 @@ MDT.mapPOIs[dungeonIndex] = {
       };
       ["id"] = 179837;
       ["spells"] = {
+         [356929] = {};
          [356942] = {};
          [356001] = {};
-         [356929] = {};
       };
       ["stealthDetect"] = true;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
       ["scale"] = 1;
-      ["count"] = 20;
+      ["name"] = "Tracker Zo'korss";
       ["displayId"] = 101474;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
+      ["count"] = 20;
       ["health"] = 495585;
-      ["name"] = "Tracker Zo'korss";
    };
    [10] = {
       ["clones"] = {
@@ -442,12 +442,12 @@ MDT.mapPOIs[dungeonIndex] = {
          [357512] = {};
       };
       ["scale"] = 1;
-      ["name"] = "Enraged Direhorn";
+      ["health"] = 330390;
       ["displayId"] = 47441;
       ["creatureType"] = "Beast";
       ["level"] = 60;
       ["count"] = 10;
-      ["health"] = 330390;
+      ["name"] = "Enraged Direhorn";
    };
    [12] = {
       ["clones"] = {
@@ -541,12 +541,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Stun"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
+      ["name"] = "Market Peacekeeper";
       ["displayId"] = 101475;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 4;
       ["health"] = "198234";
-      ["name"] = "Market Peacekeeper";
    };
    [14] = {
       ["clones"] = {
@@ -568,17 +568,17 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -321.530611163;
                   ["x"] = 350.34916876573;
                };
-               [3] = {
-                  ["y"] = -331.00280737105;
-                  ["x"] = 340.03064749404;
-               };
                [4] = {
                   ["y"] = -321.530611163;
                   ["x"] = 350.34916876573;
                };
+               [3] = {
+                  ["y"] = -331.00280737105;
+                  ["x"] = 340.03064749404;
+               };
             };
             ["g"] = 23;
-            ["y"] = -306.05841495442;            
+            ["y"] = -306.05841495442;
          };
          [3] = {
             ["sublevel"] = 1;
@@ -592,13 +592,13 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -280.889993761;
                   ["x"] = 350.34916876573;
                };
-               [3] = {
-                  ["y"] = -271.41779755295;
-                  ["x"] = 340.03064749404;
-               };
                [4] = {
                   ["y"] = -280.889993761;
                   ["x"] = 350.34916876573;
+               };
+               [3] = {
+                  ["y"] = -271.41779755295;
+                  ["x"] = 340.03064749404;
                };
             };
             ["g"] = 19;
@@ -612,12 +612,12 @@ MDT.mapPOIs[dungeonIndex] = {
          [355783] = {};
       };
       ["scale"] = 0.8;
-      ["count"] = 8;
       ["name"] = "Commerce Enforcer";
+      ["health"] = "251096";
       ["displayId"] = 101477;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
-      ["health"] = "251096";
+      ["count"] = 8;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
@@ -658,17 +658,25 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 1;
             ["x"] = 467.0224395179;
             ["patrol"] = {
-               [1] = {
-                  ["y"] = -207.97514650233;
-                  ["x"] = 467.0224395179;
+               [6] = {
+                  ["y"] = -227.68776249375;
+                  ["x"] = 459.47285920012;
                };
                [2] = {
                   ["y"] = -196.74015937995;
                   ["x"] = 484.47950068755;
                };
+               [8] = {
+                  ["y"] = -227.68776249375;
+                  ["x"] = 459.47285920012;
+               };
                [3] = {
                   ["y"] = -184.72582917661;
                   ["x"] = 484.47950068755;
+               };
+               [1] = {
+                  ["y"] = -207.97514650233;
+                  ["x"] = 467.0224395179;
                };
                [4] = {
                   ["y"] = -196.74015937995;
@@ -678,16 +686,8 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -207.97514650233;
                   ["x"] = 467.0224395179;
                };
-               [6] = {
-                  ["y"] = -227.68776249375;
-                  ["x"] = 459.47285920012;
-               };
                [7] = {
                   ["y"] = -250.01062560029;
-                  ["x"] = 459.47285920012;
-               };
-               [8] = {
-                  ["y"] = -227.68776249375;
                   ["x"] = 459.47285920012;
                };
             };
@@ -701,12 +701,12 @@ MDT.mapPOIs[dungeonIndex] = {
          [356967] = {};
       };
       ["scale"] = 0.8;
-      ["name"] = "Cartel Muscle";
+      ["health"] = "247793";
       ["displayId"] = 101598;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
       ["count"] = 8;
-      ["health"] = "247793";
+      ["name"] = "Cartel Muscle";
    };
    [20] = {
       ["clones"] = {
@@ -725,19 +725,19 @@ MDT.mapPOIs[dungeonIndex] = {
       };
       ["id"] = 179269;
       ["spells"] = {
+         [350916] = {};
+         [353706] = {};
          [350922] = {
             ["interruptible"] = true;
          };
-         [350916] = {};
-         [353706] = {};
       };
       ["scale"] = 2;
-      ["name"] = "Oasis Security";
+      ["health"] = "317174";
       ["displayId"] = 101270;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
       ["count"] = 0;
-      ["health"] = "317174";
+      ["name"] = "Oasis Security";
    };
    [24] = {
       ["clones"] = {
@@ -748,28 +748,28 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 2;
          };
       };
+      ["id"] = 176563;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 176563;
       ["spells"] = {
-         [359028] = {};
-         [350919] = {};
          [355438] = {};
+         [350919] = {};
          [350922] = {
             ["interruptible"] = true;
          };
+         [359028] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2452;
       ["instanceID"] = 0;
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Zo'gron";
       ["displayId"] = 101481;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
+      ["count"] = 0;
       ["health"] = "742538";
-      ["name"] = "Zo'gron";
    };
    [28] = {
       ["clones"] = {
@@ -829,12 +829,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["scale"] = 2;
-      ["count"] = 3;
+      ["name"] = "Defective Sorter";
       ["displayId"] = 100408;
       ["creatureType"] = "Mechanical";
       ["level"] = 60;
+      ["count"] = 3;
       ["health"] = "66078";
-      ["name"] = "Defective Sorter";
    };
    [32] = {
       ["clones"] = {
@@ -844,29 +844,29 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
+      ["id"] = 175806;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 175806;
       ["spells"] = {
+         [347623] = {};
          [347632] = {};
+         [347249] = {};
          [347636] = {};
          [347610] = {};
-         [347249] = {};
-         [354264] = {};
-         [347623] = {};
          [357188] = {};
+         [354264] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2451;
       ["instanceID"] = 1194;
       ["scale"] = 1;
-      ["count"] = 0;
+      ["name"] = "So'azmi";
       ["displayId"] = 99094;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
+      ["count"] = 0;
       ["health"] = "1039553";
-      ["name"] = "So'azmi";
    };
    [33] = {
       ["clones"] = {
@@ -935,9 +935,9 @@ MDT.mapPOIs[dungeonIndex] = {
          ["level"] = 10;
          ["affix"] = 130;
       };
-      ["scale"] = 1;
-      ["level"] = 62;
       ["id"] = 185683;
+      ["level"] = 62;
+      ["scale"] = 1;
       ["spells"] = {
          [368078] = {};
          [368079] = {};
@@ -947,7 +947,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["displayId"] = 101046;
       ["count"] = 0;
       ["ignoreFortified"] = true;
-      ["name"] = "Wo Relic";
+      ["health"] = "33039";
       ["bonusSpell"] = 368241;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -955,7 +955,7 @@ MDT.mapPOIs[dungeonIndex] = {
          [2] = 0;
          [3] = 0.6;
       };
-      ["health"] = "33039";
+      ["name"] = "Wo Relic";
       ["iconTexture"] = 4335644;
    };
    [17] = {
@@ -1027,12 +1027,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 5;
+      ["name"] = "Cartel Smuggler";
       ["displayId"] = 101595;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 5;
       ["health"] = "148676";
-      ["name"] = "Cartel Smuggler";
    };
    [21] = {
       ["clones"] = {
@@ -1063,12 +1063,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Stun"] = true;
       };
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Disruptive Patron";
       ["displayId"] = 101271;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 0;
       ["health"] = "237881";
-      ["name"] = "Disruptive Patron";
    };
    [25] = {
       ["clones"] = {
@@ -1079,26 +1079,26 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
       };
+      ["id"] = 176556;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 176556;
       ["spells"] = {
-         [349797] = {};
          [349498] = {};
          [349663] = {};
          [355938] = {};
+         [349797] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2454;
       ["instanceID"] = 0;
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Alcruux";
       ["displayId"] = 101039;
       ["creatureType"] = "Aberration";
       ["level"] = 62;
+      ["count"] = 0;
       ["health"] = "396020";
-      ["name"] = "Alcruux";
    };
    [29] = {
       ["clones"] = {
@@ -1138,12 +1138,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["scale"] = 2;
-      ["count"] = 5;
+      ["name"] = "P.O.S.T. Worker";
       ["displayId"] = 100406;
       ["creatureType"] = "Mechanical";
       ["level"] = 60;
+      ["count"] = 5;
       ["health"] = "165195";
-      ["name"] = "P.O.S.T. Worker";
    };
    [34] = {
       ["scale"] = 1;
@@ -1228,7 +1228,7 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["ignoreFortified"] = true;
-      ["name"] = "Urh Relic";
+      ["health"] = "33039";
       ["displayId"] = 105134;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -1236,8 +1236,8 @@ MDT.mapPOIs[dungeonIndex] = {
          [2] = 0;
          [3] = 0.75;
       };
+      ["name"] = "Urh Relic";
       ["count"] = 0;
-      ["health"] = "33039";
    };
    [9] = {
       ["clones"] = {
@@ -1265,12 +1265,12 @@ MDT.mapPOIs[dungeonIndex] = {
          };
       };
       ["scale"] = 1;
-      ["name"] = "Ancient Core Hound";
+      ["health"] = 396468;
       ["displayId"] = 101639;
       ["creatureType"] = "Beast";
       ["level"] = 61;
       ["count"] = 12;
-      ["health"] = 396468;
+      ["name"] = "Ancient Core Hound";
    };
    [11] = {
       ["clones"] = {
@@ -1304,12 +1304,12 @@ MDT.mapPOIs[dungeonIndex] = {
          [357827] = {};
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
       ["name"] = "Frenzied Nightclaw";
+      ["health"] = "132156";
       ["displayId"] = 101951;
       ["creatureType"] = "Beast";
       ["level"] = 60;
-      ["health"] = "132156";
+      ["count"] = 4;
       ["characteristics"] = {
          ["Taunt"] = true;
          ["Stun"] = true;
@@ -1375,12 +1375,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Incapacitate"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
+      ["name"] = "Veteran Sparkcaster";
       ["displayId"] = 101476;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 4;
       ["health"] = "148676";
-      ["name"] = "Veteran Sparkcaster";
    };
    [15] = {
       ["clones"] = {
@@ -1400,12 +1400,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Taunt"] = true;
       };
       ["scale"] = 1;
-      ["count"] = 25;
+      ["name"] = "Commander Zo'far";
       ["displayId"] = 101473;
       ["creatureType"] = "Humanoid";
       ["level"] = 61;
+      ["count"] = 25;
       ["health"] = "396468";
-      ["name"] = "Commander Zo'far";
    };
    [18] = {
       ["clones"] = {
@@ -1464,12 +1464,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 5;
+      ["name"] = "Cartel Wiseguy";
       ["displayId"] = 101596;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 5;
       ["health"] = "132156";
-      ["name"] = "Cartel Wiseguy";
    };
    [22] = {
       ["clones"] = {
@@ -1495,12 +1495,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
       };
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Brawling Patron";
       ["displayId"] = 101546;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 0;
       ["health"] = "158587";
-      ["name"] = "Brawling Patron";
    };
    [26] = {
       ["clones"] = {
@@ -1511,32 +1511,32 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 4;
          };
       };
+      ["id"] = 176555;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 176555;
       ["spells"] = {
+         [349954] = {};
+         [350037] = {};
          [349934] = {
             ["interruptible"] = false;
          };
+         [349999] = {};
          [349987] = {};
-         [349954] = {};
-         [350037] = {};
          [349933] = {
             ["interruptible"] = true;
          };
-         [349999] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2454;
       ["instanceID"] = 0;
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Achillite";
       ["displayId"] = 101044;
       ["creatureType"] = "Mechanical";
       ["level"] = 62;
+      ["count"] = 0;
       ["health"] = "495025";
-      ["name"] = "Achillite";
    };
    [30] = {
       ["clones"] = {
@@ -1573,12 +1573,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Fear"] = true;
       };
       ["scale"] = 2;
-      ["count"] = 5;
+      ["name"] = "Overloaded Mailemental";
       ["displayId"] = 68547;
       ["creatureType"] = "Elemental";
       ["level"] = 60;
+      ["count"] = 5;
       ["health"] = "123896";
-      ["name"] = "Overloaded Mailemental";
    };
    [35] = {
       ["clones"] = {
@@ -1647,9 +1647,9 @@ MDT.mapPOIs[dungeonIndex] = {
          ["level"] = 10;
          ["affix"] = 130;
       };
-      ["id"] = 185680;
-      ["level"] = 62;
       ["scale"] = 1;
+      ["level"] = 62;
+      ["id"] = 185680;
       ["spells"] = {
          [366406] = {};
          [366409] = {};
@@ -1660,7 +1660,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["displayId"] = 103111;
       ["health"] = "33039";
       ["ignoreFortified"] = true;
-      ["count"] = 0;
+      ["name"] = "Vy Relic";
       ["bonusSpell"] = 368240;
       ["creatureType"] = "Mechanical";
       ["modelPosition"] = {
@@ -1668,7 +1668,7 @@ MDT.mapPOIs[dungeonIndex] = {
          [2] = 0;
          [3] = 0.75;
       };
-      ["name"] = "Vy Relic";
+      ["count"] = 0;
       ["iconTexture"] = 4335643;
    };
    [1] = {
@@ -1727,16 +1727,18 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
+      ["name"] = "Customs Security";
       ["displayId"] = 100873;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 4;
       ["health"] = 181715;
-      ["name"] = "Customs Security";
    };
    [19] = {
       ["clones"] = {
          [6] = {
+            ["y"] = -198.00157511432;
+            ["x"] = 523.90377976758;
             ["patrol"] = {
                [1] = {
                   ["y"] = -198.00157511432;
@@ -1746,20 +1748,20 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -200.32310312508;
                   ["x"] = 519.55135903103;
                };
-               [3] = {
-                  ["y"] = -210.39888637358;
-                  ["x"] = 519.55135903103;
-               };
                [4] = {
                   ["y"] = -200.32310312508;
                   ["x"] = 519.55135903103;
                };
+               [3] = {
+                  ["y"] = -210.39888637358;
+                  ["x"] = 519.55135903103;
+               };
             };
-            ["y"] = -198.00157511432;
-            ["x"] = 523.90377976758;
             ["sublevel"] = 1;
          };
          [2] = {
+            ["y"] = -250.87885648057;
+            ["x"] = 427.68430440106;
             ["patrol"] = {
                [1] = {
                   ["y"] = -250.87885648057;
@@ -1769,21 +1771,25 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -258.12597991712;
                   ["x"] = 422.29464720923;
                };
-               [3] = {
-                  ["y"] = -268.8804816052;
-                  ["x"] = 408.05220863596;
-               };
                [4] = {
                   ["y"] = -258.12597991712;
                   ["x"] = 422.29464720923;
                };
+               [3] = {
+                  ["y"] = -268.8804816052;
+                  ["x"] = 408.05220863596;
+               };
             };
-            ["y"] = -250.87885648057;
-            ["x"] = 427.68430440106;
             ["sublevel"] = 1;
          };
          [3] = {
+            ["y"] = -229.99408453314;
+            ["x"] = 455.84904613314;
             ["patrol"] = {
+               [7] = {
+                  ["y"] = -208.80696834477;
+                  ["x"] = 473.17667685004;
+               };
                [1] = {
                   ["y"] = -229.99408453314;
                   ["x"] = 455.84904613314;
@@ -1792,25 +1798,9 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -235.98387929438;
                   ["x"] = 455.30096211225;
                };
-               [3] = {
-                  ["y"] = -237.14653115971;
-                  ["x"] = 449.48772773335;
-               };
                [4] = {
                   ["y"] = -235.98387929438;
                   ["x"] = 455.30096211225;
-               };
-               [5] = {
-                  ["y"] = -232.78659602013;
-                  ["x"] = 462.05020809223;
-               };
-               [6] = {
-                  ["y"] = -226.24670266616;
-                  ["x"] = 462.05020809223;
-               };
-               [7] = {
-                  ["y"] = -208.80696834477;
-                  ["x"] = 473.17667685004;
                };
                [8] = {
                   ["y"] = -208.80696834477;
@@ -1820,24 +1810,36 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -208.80696834477;
                   ["x"] = 473.17667685004;
                };
+               [5] = {
+                  ["y"] = -232.78659602013;
+                  ["x"] = 462.05020809223;
+               };
                [10] = {
                   ["y"] = -208.95229515024;
                   ["x"] = 463.87549934901;
                };
-               [11] = {
-                  ["y"] = -211.56825872876;
-                  ["x"] = 458.64358466584;
+               [3] = {
+                  ["y"] = -237.14653115971;
+                  ["x"] = 449.48772773335;
+               };
+               [6] = {
+                  ["y"] = -226.24670266616;
+                  ["x"] = 462.05020809223;
                };
                [12] = {
                   ["y"] = -215.49220097808;
                   ["x"] = 455.84904613314;
                };
+               [11] = {
+                  ["y"] = -211.56825872876;
+                  ["x"] = 458.64358466584;
+               };
             };
-            ["y"] = -229.99408453314;
-            ["x"] = 455.84904613314;
             ["sublevel"] = 1;
          };
          [1] = {
+            ["y"] = -268.45419357553;
+            ["x"] = 397.25835569669;
             ["patrol"] = {
                [1] = {
                   ["y"] = -268.45419357553;
@@ -1852,11 +1854,11 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["x"] = 408.92418194262;
                };
             };
-            ["y"] = -268.45419357553;
-            ["x"] = 397.25835569669;
             ["sublevel"] = 1;
          };
          [4] = {
+            ["y"] = -193.97487316114;
+            ["x"] = 488.83791543002;
             ["patrol"] = {
                [1] = {
                   ["y"] = -193.97487316114;
@@ -1871,11 +1873,11 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["x"] = 489.98513724104;
                };
             };
-            ["y"] = -193.97487316114;
-            ["x"] = 488.83791543002;
             ["sublevel"] = 1;
          };
          [5] = {
+            ["y"] = -210.11582463089;
+            ["x"] = 493.51948521735;
             ["patrol"] = {
                [1] = {
                   ["y"] = -210.11582463089;
@@ -1885,17 +1887,15 @@ MDT.mapPOIs[dungeonIndex] = {
                   ["y"] = -210.23816983497;
                   ["x"] = 504.11557149944;
                };
-               [3] = {
-                  ["y"] = -196.022935075;
-                  ["x"] = 504.11557149944;
-               };
                [4] = {
                   ["y"] = -210.23816983497;
                   ["x"] = 504.11557149944;
                };
+               [3] = {
+                  ["y"] = -196.022935075;
+                  ["x"] = 504.11557149944;
+               };
             };
-            ["y"] = -210.11582463089;
-            ["x"] = 493.51948521735;
             ["sublevel"] = 1;
          };
       };
@@ -1909,12 +1909,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Slow"] = true;
       };
       ["scale"] = 0.8;
-      ["count"] = 4;
+      ["name"] = "Cartel Skulker";
       ["displayId"] = 101734;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 4;
       ["health"] = "165195";
-      ["name"] = "Cartel Skulker";
    };
    [23] = {
       ["clones"] = {
@@ -1941,12 +1941,12 @@ MDT.mapPOIs[dungeonIndex] = {
          ["Stun"] = true;
       };
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "Brawling Patron";
       ["displayId"] = 101544;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
+      ["count"] = 0;
       ["health"] = "158587";
-      ["name"] = "Brawling Patron";
    };
    [31] = {
       ["clones"] = {
@@ -1956,25 +1956,25 @@ MDT.mapPOIs[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
+      ["id"] = 175646;
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["id"] = 175646;
       ["spells"] = {
-         [346286] = {};
-         [346962] = {};
          [346742] = {};
+         [346286] = {};
          [346947] = {};
+         [346962] = {};
       };
       ["isBoss"] = true;
       ["encounterID"] = 2436;
       ["instanceID"] = 0;
       ["scale"] = 2;
-      ["count"] = 0;
+      ["name"] = "P.O.S.T. Master";
       ["displayId"] = 100722;
       ["creatureType"] = "Humanoid";
       ["level"] = 62;
+      ["count"] = 0;
       ["health"] = "1039553";
-      ["name"] = "P.O.S.T. Master";
    };
 };
