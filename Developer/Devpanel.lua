@@ -366,6 +366,7 @@ function MDT:CreateDevPanel(frame)
                     end
                 end
             end
+            MDT.EnemyInfoFrame:Hide()
         end)
         container:AddChild(cleanSpellDataButton)
 
