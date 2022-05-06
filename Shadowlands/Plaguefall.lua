@@ -2876,7 +2876,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 1;
          };
       };
-      ["id"] = 168396;
+      ["id"] = 173360;
       ["spells"] = {
          [327233] = {};
          [327581] = {};
