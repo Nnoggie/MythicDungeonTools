@@ -5,7 +5,8 @@ local MDT = MDT
 
 MDT.DataCollection = {}
 local DC = MDT.DataCollection
-function DC:Init()
+function DC:Init()    
+    print("MDT: Spell+Characteristics Tracking Init")
     db = MDT:GetDB()
     db.dataCollection = db.dataCollection or {}
     db.dataCollectionCC = db.dataCollectionCC or {}
@@ -287,63 +288,59 @@ function DC:MergeReceiveData(package)
     DC:AddCollectedDataToEnemyTable()
 end
 
----HealthTrack
-local enemiesToScale
 function DC:InitHealthTrack()
+    print("MDT: Health Tracking Init")
     db = MDT:GetDB()
-    local changedEnemies = {}    
-    f = CreateFrame("Frame")
-    f:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-    f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-    f:SetScript("OnEvent", function(self, event, ...)
-        local zoneId = C_Map.GetBestMapForUnit("player")
-        local dungeonIdx = MDT.zoneIdToDungeonIdx[zoneId]
-        if dungeonIdx then
-            --check difficulty if challenge mode and m+ level
-            local difficultyID = GetDungeonDifficultyID()
-            local isChallenge = difficultyID and C_ChallengeMode.IsChallengeModeActive()
-            local level,activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
-            local fortified = activeAffixIDs[1] == 10
-            local level = isChallenge and level
-            if level then
-                local unit
-                if event == "UPDATE_MOUSEOVER_UNIT" then
-                    unit= "mouseover"
-                elseif event == "NAME_PLATE_UNIT_ADDED" then
-                    unit = ...
+    db.healthTracking = db.healthTracking or {}
+    local healthTrackingFrame = CreateFrame("Frame")
+    healthTrackingFrame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+    healthTrackingFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    healthTrackingFrame:SetScript("OnEvent", function(_, event, ...)
+        --check difficulty if challenge mode and m+ level
+        local difficultyID = GetDungeonDifficultyID()
+        local isChallenge = difficultyID and C_ChallengeMode.IsChallengeModeActive()
+        local level,activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
+        local fortified = activeAffixIDs[1] == 10
+        level = isChallenge and level
+        if level then
+            local unit
+            if event == "UPDATE_MOUSEOVER_UNIT" then
+                unit= "mouseover"
+            elseif event == "NAME_PLATE_UNIT_ADDED" then
+                unit = ...
+            end
+            if unit then
+                local guid = UnitGUID(unit)
+                local npcId
+                if guid then
+                    npcId = select(6,strsplit("-", guid))
                 end
-                if unit then
-                    local guid = UnitGUID(unit)
-                    local npcId
-                    if guid then
-                        npcId = select(6,strsplit("-", guid))
-                    end
-                    if npcId then
-                        for enemyIdx,enemy in pairs(MDT.dungeonEnemies[dungeonIdx]) do
-                            if enemy.id == tonumber(npcId) then
-                                local isBoss = enemy.isBoss and true or false
-                                local npcHealth = MDT:ReverseCalcEnemyHealth(unit,level,isBoss,fortified)
-                                if enemy.health ~= npcHealth then
-                                    changedEnemies[dungeonIdx] = changedEnemies[dungeonIdx] or {}
-                                    changedEnemies[dungeonIdx][enemy.id] = {
-                                        ["oldHealth"] = enemy.health,
-                                        ["newHealth"] = npcHealth,
-                                        ["name"] = enemy.name,
-                                        ["npcId"] = enemy.id,
-                                    }
-                                    enemy.health = npcHealth
-                                end
-                                break
-                            end
-                        end
-                    end
+                if npcId then
+                    db.healthTracking[tonumber(npcId)] = {
+                        ["health"] = UnitHealthMax(unit),
+                        ["name"] = UnitName(unit),
+                        ["level"] = level,
+                        ["fortified"] = fortified
+                    }
                 end
             end
         end
     end)
 
-    function MDT:ReportHealthTrack()
-        vdt(changedEnemies)
+    function MDT:ProcessHealthTrack()
+        local enemies = MDT.dungeonEnemies[db.currentDungeonIdx]
+        if enemies then
+            for enemyIdx,enemy in pairs(enemies) do
+                local tracked = db.healthTracking[enemy.id]
+                if tracked then
+                    local isBoss = enemy.isBoss and true or false
+                    local baseHealth = MDT:ReverseCalcEnemyHealth(tracked.health,tracked.level,isBoss,tracked.fortified)
+                    enemy.health = baseHealth
+                else
+                    print("MDT HPTRACK: Missing: "..enemy.name.." id: "..enemy.id)
+                end
+            end
+        end
     end
 
 end

@@ -355,6 +355,13 @@ function MDT:CreateDevPanel(frame)
         end)
         container:AddChild(collectedCharacteristicsButton)
 
+        local collectedHealthButton = AceGUI:Create("Button")
+        collectedHealthButton:SetText("Add collected Health Values")
+        collectedHealthButton:SetCallback("OnClick",function()
+            MDT:ProcessHealthTrack()
+        end)
+        container:AddChild(collectedHealthButton)
+
         local cleanSpellDataButton = AceGUI:Create("Button")
         cleanSpellDataButton:SetText("Clean spells")
         cleanSpellDataButton:SetCallback("OnClick",function()
@@ -376,6 +383,20 @@ function MDT:CreateDevPanel(frame)
             MDT.EnemyInfoFrame:Hide()
         end)
         container:AddChild(cleanSpellDataButton)
+
+        local button3 = AceGUI:Create("Button")
+        button3:SetText("Export to LUA")
+        button3:SetCallback("OnClick",function()
+            MDT:CleanEnemyData(db.currentDungeonIdx)
+            local export = tshow(MDT.dungeonEnemies[db.currentDungeonIdx],"MDT.dungeonEnemies[dungeonIndex]")
+            MDT.main_frame.ExportFrame:ClearAllPoints()
+            MDT.main_frame.ExportFrame:Show()
+            MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame,"CENTER",0,50)
+            MDT.main_frame.ExportFrameEditbox:SetText(export)
+            MDT.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
+            MDT.main_frame.ExportFrameEditbox:SetFocus()
+        end)
+        container:AddChild(button3)
 
         local function updateDropdown(npcId,idx)
             if not MDT.dungeonEnemies[db.currentDungeonIdx] then return end
@@ -696,42 +717,6 @@ function MDT:CreateDevPanel(frame)
         end
         blipsMovableCheckbox:SetValue(db.devModeBlipsMovable)
         blipsScrollableCheckbox:SetValue(db.devModeBlipsScrollable)
-
-        local button3 = AceGUI:Create("Button")
-        button3:SetText("Export to LUA")
-        button3:SetCallback("OnClick",function()
-            MDT:CleanEnemyData(db.currentDungeonIdx)
-            local export = tshow(MDT.dungeonEnemies[db.currentDungeonIdx],"MDT.dungeonEnemies[dungeonIndex]")
-            MDT.main_frame.ExportFrame:ClearAllPoints()
-            MDT.main_frame.ExportFrame:Show()
-            MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame,"CENTER",0,50)
-            MDT.main_frame.ExportFrameEditbox:SetText(export)
-            MDT.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-            MDT.main_frame.ExportFrameEditbox:SetFocus()
-        end)
-        container:AddChild(button3)
-
-        local button4 = AceGUI:Create("Button")
-        button4:SetText("Export Expansion")
-        button4:SetCallback("OnClick",function()
-            local dungeons = {}
-            for i = 29,36 do
-                MDT:CleanEnemyData(i)
-                dungeons[i] = MDT.dungeonEnemies[i]
-            end
-            local export = MDT:TableToString(dungeons,true,5)
-            MDT.main_frame.ExportFrame:ClearAllPoints()
-            MDT.main_frame.ExportFrame:Show()
-            MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame,"CENTER",0,50)
-            MDT.main_frame.ExportFrameEditbox:SetText(export)
-            MDT.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-            MDT.main_frame.ExportFrameEditbox:SetFocus()
-        end)
-        container:AddChild(button4)
-
-
-
-
 
         updateDropdown(nil,currentEnemyIdx)
         end

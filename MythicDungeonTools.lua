@@ -56,8 +56,6 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
         MDT:ResetMainFramePos()
 	elseif rqst == "dc" then
         MDT:ToggleDataCollection()
-    elseif rqst == "hptrack" then
-        MDT:ToggleHealthTrack()
     else
 		MDT:ShowInterface()
 	end
@@ -149,9 +147,10 @@ do
 			if not db.minimap.hide then
 				icon:Show("MythicDungeonTools")
 			end
-            if db.newDataCollectionActive then MDT.DataCollection:Init() end
-            -- PTR ONLY
-            --MDT.DataCollection:Init()
+            if db.newDataCollectionActive then 
+                MDT.DataCollection:Init()
+                MDT.DataCollection:InitHealthTrack()
+            end
             --fix db corruption
             do
                 for _,presets in pairs(db.presets) do
@@ -290,12 +289,6 @@ function MDT:ToggleDataCollection()
     db.newDataCollectionActive = not db.newDataCollectionActive
     print(string.format("%sMDT|r: DataCollection %s. Reload Interface!", mythicColor,db.newDataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
 end
-
-function MDT:ToggleHealthTrack()
-    MDT.DataCollection:InitHealthTrack()
-    print(string.format("%sMDT|r: HealthTrack %s.", mythicColor,"|cFF00FF00Enabled|r"))
-end
-
 
 function MDT:CreateMenu()
     -- Close button
@@ -2121,8 +2114,7 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
 	return round(mult*baseHealth,0)
 end
 
-function MDT:ReverseCalcEnemyHealth(unit, level, boss,fortified)
-    local health = UnitHealthMax(unit)
+function MDT:ReverseCalcEnemyHealth(health, level, boss,fortified)
     local mult = 1
     local tyrannical = not fortified
     if boss == false and fortified == true then mult = 1.2 end
