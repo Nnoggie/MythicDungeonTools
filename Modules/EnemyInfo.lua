@@ -295,7 +295,7 @@ local function MakeEnemeyInfoFrame()
 
         if db.devMode then
             local devModeLabel = AceGUI:Create("Label")
-            devModeLabel:SetText("Alt Right Click: Delete\nI: Toggle Interruptible")
+            devModeLabel:SetText("R: Delete\nI: Toggle Interruptible\nS: Print SpellId")
             rightContainer:AddChild(devModeLabel)
         end
 
