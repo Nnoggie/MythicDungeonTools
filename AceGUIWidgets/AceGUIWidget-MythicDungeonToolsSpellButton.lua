@@ -57,12 +57,17 @@ local methods = {
                 if key == "I" then
                     local spell = enemy.spells[self.spellId]
                     spell.interruptible = not spell.interruptible
+                    MDT:UpdateEnemyInfoFrame(enemyIdx)
                 end
                 --remove spell
                 if key == "R" then
                     enemy.spells[self.spellId] = nil
+                    MDT:UpdateEnemyInfoFrame(enemyIdx)
                 end
-                MDT:UpdateEnemyInfoFrame(enemyIdx)
+                --print spellId
+                if key == "S" then
+                    print(self.spellId)
+                end
             end
 
             if (key == "ESCAPE") then
