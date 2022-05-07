@@ -1840,7 +1840,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 2;
       ["name"] = "Eye of Sethraliss";
-      ["health"] = 0;
+      ["health"] = 12;
       ["displayId"] = 46941;
       ["creatureType"] = "Unknown";
       ["level"] = 0;
