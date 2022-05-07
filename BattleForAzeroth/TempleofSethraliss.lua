@@ -1840,12 +1840,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       ["scale"] = 2;
       ["name"] = "Eye of Sethraliss";
-      ["health"] = 12;
+      ["health"] = 0;
       ["displayId"] = 46941;
       ["creatureType"] = "Unknown";
       ["level"] = 0;
       ["id"] = 68819;
-      ["count"] = 0;
+      ["count"] = 12;
    };
    [22] = {
       ["clones"] = {
