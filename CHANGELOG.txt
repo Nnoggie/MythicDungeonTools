@@ -2,15 +2,21 @@ v3.9.2
 - New Feature: Efficiency Score! This is a new value on NPC tooltips that indicates how valuable an NPCs dungeon count is compared to their health. If this feature proves valuable it can be extended to pulls and even full routes.
 - Importing and renaming a preset now requires one less button press
 - Fixed an issue where Tormented enemies (SL Season 2 Affix) could be visible in the pull list and pull outlines
-- Cleaned up Spell Data for enemies and added interruptible flag to apropriate spells.
+- Cleaned up Spell Data for enemies and added interruptible flag to appropriate spells.
 - Affix update
 - Multiple Tazavesh Streets / Gambit updates including Patrol Paths, Fixed Group Linking and more by walkmanake
-- Health values for Season 3 for all Shadowlands dungeons have been updated
+- Health values for Season 3 have been updated for all Shadowlands dungeons
     - spires
     - plaguefall
     - theater of pain
     - halls of atonement
     - tazavesh upper
+    - sanguine depths
+    - tazavesh lower
+
+    - dos
+    - mists
+    - necrotic wake
 - Dungeon updates by Blizzard that include count changes will from now on be updated via an automated script. Thanks once again to Stinth!
 - Count updates:
   - Black Rook Hold
