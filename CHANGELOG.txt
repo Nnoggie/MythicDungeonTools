@@ -10,6 +10,7 @@ v3.9.2
     - plaguefall
     - theater of pain
     - halls of atonement
+    - tazavesh upper
 - Dungeon updates by Blizzard that include count changes will from now on be updated via an automated script. Thanks once again to Stinth!
 - Count updates:
   - Black Rook Hold
