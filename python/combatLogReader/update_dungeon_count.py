@@ -12,14 +12,31 @@ expansions = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 # 3. Run the script, it writes directly to the files automatically.
 
 
+# Takes as input an npcid
+# If mob is in non-standard mob table output converted id
+def npcid_to_event_asset(npcid, mob_count):
+    # converter should have the MDT npcid as key and the GameEvent Asset id as value
+    converter = {
+        138489: 64192,      # Shadow of Zul, Kings' Rest
+        68819: 63453,       # Eye of Sethraliss, Temple of Sethraliss
+    }
+    if npcid in converter.keys() and len(mob_count[mob_count.index == converter[npcid]]) > 0:
+
+        return mob_count[mob_count.index == converter[npcid]].values[0][0]
+    else:
+        return 0
+
+
 # Takes as input the regex match of a single mob and its count found in dungeon.lau MDT file,
 # as well as true count for db file
 # Outputs updated string
 def update_count(match, mob_count):
-    info = {}
-    info[match.group(1)] = int(match.group(2))
-    info[match.group(3)] = int(match.group(4))
-    true_count = mob_count[mob_count.index == info['id']].values[0][0] if len(mob_count[mob_count.index == info['id']]) > 0 else 0
+    # keys will be 'id' and 'count'
+    info = {match.group(1): int(match.group(2)), match.group(3): int(match.group(4))}
+    if len(mob_count[mob_count.index == info['id']]) > 0:
+        true_count = mob_count[mob_count.index == info['id']].values[0][0]
+    else:
+        true_count = npcid_to_event_asset(info['id'], mob_count)
     if true_count != info['count']:
         npc_name = pattern_npc_name.search(match.group()).group(1)
         print(f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {true_count}")
