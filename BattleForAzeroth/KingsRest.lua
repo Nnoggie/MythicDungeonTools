@@ -1466,7 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 85860;
         ["creatureType"] = "Humanoid";
         ["level"] = -1;
-        ["count"] = 0;
+        ["count"] = 8;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
