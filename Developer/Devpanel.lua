@@ -358,7 +358,12 @@ function MDT:CreateDevPanel(frame)
         local collectedHealthButton = AceGUI:Create("Button")
         collectedHealthButton:SetText("Add collected Health Values")
         collectedHealthButton:SetCallback("OnClick",function()
-            MDT:ProcessHealthTrack()
+            if db.newDataCollectionActive then
+                MDT:ProcessHealthTrack()
+            else
+                print("MDT DevMode: Cant process Health Track, reload to enable Data Collection first!")
+                MDT:ToggleDataCollection()
+            end
         end)
         container:AddChild(collectedHealthButton)
 
