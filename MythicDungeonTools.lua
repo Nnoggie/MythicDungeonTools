@@ -216,18 +216,19 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {7,13,9,130}, -- bolstering explosive tyrannical encrypted
-    [2] =  {11,124,10,130}, -- bursting storming fortified encrypted
-    [3] =  {6,3,9,130}, -- raging volcanic tyrannical encrypted
-    [4] =  {122,12,10,130}, -- inspiring grievous fortified encrypted
-    [5] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted
-    [6] =  {7,14,10,130}, -- bolstering quaking fortified encrypted
-    [7] =  {8,124,9,130}, -- sanguine storming tyrannical encrypted
-    [8] =  {6,13,10,130}, -- raging explosive fortified encrypted
-    [9] =  {11,3,9,130}, -- bursting volcanic tyrannical encrypted
-    [10] = {123,4,10,130},  -- spiteful necrotic fortified encrypted
-    [11] = {0,0,9,130},  -- tyrannical encrypted
-    [12] = {0,0,10,130},  -- fortified encrypted
+    [1] =  {7,13,9,130}, -- bolstering explosive tyrannical encrypted - march 1, 2022
+    [2] =  {11,124,10,130}, -- bursting storming fortified encrypted - march 8, 2022
+    [3] =  {6,3,9,130}, -- raging volcanic tyrannical encrypted - march 15, 2022
+    [4] =  {122,12,10,130}, -- inspiring grievous fortified encrypted - march 22, 2022
+    [5] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted - march 29, 2022
+    [6] =  {7,14,10,130}, -- bolstering quaking fortified encrypted - april 5, 2022
+    [7] =  {8,124,9,130}, -- sanguine storming tyrannical encrypted - april 12, 2022
+    [8] =  {6,13,10,130}, -- raging explosive fortified encrypted - april 19, 2022
+    [9] =  {11,3,9,130}, -- bursting volcanic tyrannical encrypted - april 26, 2022
+    [10] = {123,4,10,130},  -- spiteful necrotic fortified encrypted - may 3, 2022
+    [11] = {122,14,9,130},  -- inspiring quaking tyrannical encrypted - may 10, 2022
+    [12] = {8,12,10,130},  -- sanguine grievous fortified encrypted - may 17, 2022
+	[13] = {7,13,9,130}, -- bolstering explosive tyrannical encrypted - may 24, 2022
 }
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
@@ -1055,7 +1056,7 @@ function MDT:MakeSidePanel(frame)
         for week,affixes in ipairs(affixWeeks) do
             tinsert(affixWeekMarkups,makeAffixString(week,affixes))
         end
-        local order = {1,2,3,4,5,6,7,8,9,10,11,12}
+        local order = {1,2,3,4,5,6,7,8,9,10,11,12,13}
         affixDropdown:SetList(affixWeekMarkups,order)
         --mouseover list items
         for itemIdx,item in ipairs(affixDropdown.pullout.items) do
