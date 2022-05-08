@@ -1203,7 +1203,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["health"] = 256320;
+      ["health"] = 528624;
       ["count"] = 20;
       ["displayId"] = 97489;
       ["creatureType"] = "Humanoid";
@@ -2061,7 +2061,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["characteristics"] = {
          ["Taunt"] = true;
       };
-      ["health"] = 256320;
+      ["health"] = 528624;
       ["count"] = 20;
       ["displayId"] = 96829;
       ["creatureType"] = "Humanoid";
