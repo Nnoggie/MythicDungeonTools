@@ -1210,7 +1210,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             ["sublevel"] = 3;
          };
       };
-      ["id"] = 171333;
+      ["id"] = 170486;
       ["spells"] = {};
       ["characteristics"] = {
          ["Taunt"] = true;
@@ -1223,7 +1223,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Imprison"] = true;
       };
       ["scale"] = 1;
-      ["count"] = 0;
+      ["count"] = 2;
       ["displayId"] = 97298;
       ["creatureType"] = "Humanoid";
       ["level"] = 60;
