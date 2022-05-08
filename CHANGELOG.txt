@@ -1,3 +1,5 @@
+v3.9.2.2
+- Theater of Pain: Health update for Minibosses
 v3.9.2.1
 - De Other Side: Fixed npcid and count for Atal'ai Devoted
 v3.9.2
