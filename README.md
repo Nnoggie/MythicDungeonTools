@@ -20,7 +20,6 @@ Mythic Dungeon Tools is a Mythic+ Dungeon Planner AddOn which helps you perfectl
 - Detailed enemy info including crowd control and casted spells
 - Toolbar with drawing and note tools
 - Route management including export/import via paste strings
-- MDI Mode
 - Ingame sharing functions to share routes to party members
 - Live mode for cooperative editing of routes including drawing, selecting enemies and more!
 
