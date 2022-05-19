@@ -4,6 +4,8 @@
 
 ## Download
 
+Latest Release: https://github.com/Hekili/hekili/releases/latest
+
 Curseforge: https://www.curseforge.com/wow/addons/mythic-dungeon-tools
 
 ## Description
