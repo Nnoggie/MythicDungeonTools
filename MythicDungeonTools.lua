@@ -1683,6 +1683,8 @@ function MDT:UpdatePullTooltip(tooltip)
 
             local text = L["Forces"]..": ".. MDT:FormatEnemyForces(pullForces,totalForcesMax,false)
             text = text.. "\n"..L["Total"]..": ".. MDT:FormatEnemyForces(totalForces,totalForcesMax,true)
+            local pullHealth = MDT:SumCurrentPullHealth(tooltip.currentPull)
+            text = text .."\n"..L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(pullForces,pullHealth)
 
             tooltip.botString:SetText(text)
             tooltip.botString:Show()
@@ -1719,6 +1721,29 @@ function MDT:CountForces(currentPull, currentOnly)
         end
     end
     return pullCurrent
+end
+
+---Adds up health of all enemies in the current pull
+function MDT:SumCurrentPullHealth(currentPull)
+    currentPull = currentPull or 1000
+    local preset = self:GetCurrentPreset()
+    local teeming = self:IsCurrentPresetTeeming()
+    local totalHealth = 0
+    for pullIdx,pull in pairs(preset.value.pulls) do
+        if pullIdx == currentPull then
+            for enemyIdx,clones in pairs(pull) do
+                if tonumber(enemyIdx) then
+                    for k,v in pairs(clones) do
+                        if MDT:IsCloneIncluded(enemyIdx,v) then
+                            local health = self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].health
+                            totalHealth = totalHealth + health
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return totalHealth
 end
 
 local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}
@@ -4649,7 +4674,7 @@ function initFrames()
         local pullTT = MDT.pullTooltip
         MDT.pullTooltip:SetClampedToScreen(true)
 		MDT.pullTooltip:SetFrameStrata("TOOLTIP")
-        MDT.pullTooltip.myHeight = 160
+        MDT.pullTooltip.myHeight = 180
 		MDT.pullTooltip:SetSize(250, MDT.pullTooltip.myHeight)
         MDT.pullTooltip.Model = CreateFrame("PlayerModel", nil, MDT.pullTooltip)
         MDT.pullTooltip.Model:SetFrameLevel(1)
@@ -4696,7 +4721,7 @@ function initFrames()
         botString:SetTextColor(1, 1, 1, 1)
         botString:SetJustifyH("TOP")
         botString:SetJustifyV("TOP")
-        botString:SetHeight(23)
+        botString:SetHeight(40)
         botString:SetWidth(250)
         botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
         botString:Hide()
