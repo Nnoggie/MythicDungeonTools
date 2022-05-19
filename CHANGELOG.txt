@@ -1,3 +1,7 @@
+v3.9.3
+- Added Efficiency Score to pull tooltips
+- Tazavesh Streets: Added missing encrypted relics to Frenzied Nightclaw Pack
+- affix update
 v3.9.2.2
 - Theater of Pain: Health update for Minibosses
 v3.9.2.1
