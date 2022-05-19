@@ -226,8 +226,8 @@ local affixWeeks = {
     [8] =  {6,13,10,130}, -- raging explosive fortified encrypted
     [9] =  {11,3,9,130}, -- bursting volcanic tyrannical encrypted
     [10] = {123,4,10,130},  -- spiteful necrotic fortified encrypted
-    [11] = {122,14,9,130},  -- tyrannical encrypted
-    [12] = {8,12,10,130},  -- fortified encrypted
+    [11] = {122,14,9,130},  -- inspiring quaking tyrannical encrypted
+    [12] = {8,12,10,130},  -- sanguine grievous fortified encrypted
 }
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
