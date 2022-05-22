@@ -1803,7 +1803,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
          ["Incapacitate"] = true;
          ["Root"] = true;
          ["Banish"] = true;
-         ["Polymorph"] = true;
          ["Disorient"] = true;
          ["Mind Control"] = true;
          ["Stun"] = true;
@@ -2622,7 +2621,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["id"] = 168907;
       ["spells"] = {
          [319898] = {
-            ["interruptible"] = true;
+            ["interruptible"] = false;
          };
          [329224] = {};
       };
@@ -2635,16 +2634,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["health"] = "181715";
       ["characteristics"] = {
          ["Taunt"] = true;
-         ["Incapacitate"] = true;
-         ["Root"] = true;
-         ["Banish"] = true;
-         ["Polymorph"] = true;
-         ["Disorient"] = true;
-         ["Mind Control"] = true;
-         ["Stun"] = true;
-         ["Slow"] = true;
-         ["Silence"] = true;
-         ["Fear"] = true;
       };
    };
    [44] = {
