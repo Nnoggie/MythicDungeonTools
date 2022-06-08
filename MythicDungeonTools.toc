@@ -15,6 +15,7 @@
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
 ## OptionalDeps: ElvUI, LibStub, Ace3
 ## SavedVariables: MythicDungeonToolsDB
+## X-Curse-Project-ID: 288981
 
 libs\load_libs.xml
 init.lua

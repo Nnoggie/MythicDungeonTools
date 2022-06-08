@@ -1,0 +1,32 @@
+# Based on the example from https://github.com/BigWigsMods/packager/wiki/GitHub-Actions-workflow
+
+name: Package and release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # specify the environment variables used by the packager, matching the secrets from the project on GitHub
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}  # "GITHUB_TOKEN" is a secret always provided to the workflow
+                                                 # for your own token, the name cannot start with "GITHUB_"
+
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # gets git history for changelogs
+
+      # -w 0 disables WowInterface release
+      # -a 0 disables Wago release
+      - name: Package and release
+        uses: BigWigsMods/packager@v2
+        with:
+          args: -w 0 -a 0
