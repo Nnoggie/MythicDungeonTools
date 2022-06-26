@@ -140,7 +140,7 @@ def get_count_table(ID):  # Extracts the count table for a given dungeons enemy 
 
     """
     dungeon_forces = db["criteriatree"][((db["criteriatree"].Parent == ID) &
-                                        (db["criteriatree"].Description_lang == "Enemy Forces"))]
+                                         (db["criteriatree"].Description_lang == "Enemy Forces"))]
     enemy_forces = db["criteriatree"][db["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
     enemy_forces["npcID"] = [int(db["criteria"][db["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
@@ -158,7 +158,7 @@ def get_total_count(ID):
 
     """
     dungeon_forces = db["criteriatree"][((db["criteriatree"].Parent == ID) &
-                                        (db["criteriatree"].Description_lang == "Enemy Forces"))].Amount
+                                         (db["criteriatree"].Description_lang == "Enemy Forces"))].Amount
     return int(dungeon_forces)
 
 
@@ -280,7 +280,8 @@ if __name__ == "__main__":
                         "overkill", "school", "resisted", "blocked", "absorbed", "critical", "glancing", "crushing",
                         "isOffHand"]
 
-    CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False, on_bad_lines='skip')
+    CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False,
+                     on_bad_lines='skip')
     # Extracting the event from date and time, which are not comma separated
     timesplit = CL.timestampevent.str.split(" ")
     timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])
@@ -292,31 +293,32 @@ if __name__ == "__main__":
     # Dataframe that contains every initial SPELL_DAMAGE event against each npc
     mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
                      (~CL.destGUID.str.startswith("Player", na=True)) &  # Filters out damage events against the player
-                     (~CL.ownerGUID.str.startswith("Player", na=True)) &  # Filters out damage events against player pets
+                     (~CL.ownerGUID.str.startswith("Player",
+                                                   na=True)) &  # Filters out damage events against player pets
                      (CL.destName != "Unknown"),
                      ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
     mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
-    mobHits = mobHits[mobHits.maxHP.astype(int) > 50] # not working for Tazavesh Streets
+    mobHits = mobHits[mobHits.maxHP.astype(int) > 50]  # not working for Tazavesh Streets
     # Fix Blizzard combat log coords
     mobHits["xcoord"] = - mobHits.xcoord.astype(float)
     mobHits["ycoord"] = mobHits.ycoord.astype(float)
-    mobHits = mobHits.astype({"UiMapID": int, "maxHP": int, "level": int}) # not working for Tazavesh Streets
+    mobHits = mobHits.astype({"UiMapID": int, "maxHP": int, "level": int})  # not working for Tazavesh Streets
     mobHits = mobHits.astype({"UiMapID": int})
 
     unique_UiMapIDs = mobHits.UiMapID.unique().tolist()
 
     db["uimapassignment"].rename(columns={"MapID": "continentID",
-                                         "Region[0]": "ymin",
-                                         "Region[1]": "xmax",
-                                         "Region[3]": "ymax",
-                                         "Region[4]": "xmin"},
-                                inplace=True)
+                                          "Region[0]": "ymin",
+                                          "Region[1]": "xmax",
+                                          "Region[3]": "ymax",
+                                          "Region[4]": "xmin"},
+                                 inplace=True)
     db["uimapassignment"].xmin = db["uimapassignment"].xmin * -1  # Multiply by -1 because of blizzard coords
     db["uimapassignment"].xmax = db["uimapassignment"].xmax * -1  # Multiply by -1 because of blizzard coords
     db["map"].rename(columns={"ID": "continentID",
-                             "MapName_lang": "dungeon_name",
-                             "Directory": "directory"},
-                    inplace=True)
+                              "MapName_lang": "dungeon_name",
+                              "Directory": "directory"},
+                     inplace=True)
 
     info_columns = ["dungeon_name", "continentID", "UiMapID", "directory",
                     "xmin", "xmax", "ymin", "ymax"]
@@ -345,17 +347,17 @@ if __name__ == "__main__":
 
     # Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
     # If you want to include all pets and remove manually simply comment out the six lines below
-    HP_threshold = 20000 # not working for Tazavesh Streets
+    HP_threshold = 20000  # not working for Tazavesh Streets
     deleted_mobs = mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
-                                   (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
+                               (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
     mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &
                              (mobHits.mobcount == 0)].index, inplace=True)
-    print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs), HP_threshold)) # not working for Tazavesh Streets
-
+    print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs),
+                                                                                  HP_threshold))  # not working for Tazavesh Streets
 
     print("Mapping Initiated [", end="")
 
-    npc_locale_en = ""
+    npc_locale_list = []
     table_output = f"MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n"
     table_output += "MDT.dungeonEnemies[dungeonIndex] = {\n"
 
@@ -379,8 +381,8 @@ if __name__ == "__main__":
             table_output += f'\t\t["encounterID"] = {encounterID};\n'
             table_output += f'\t\t["instanceID"] = {instanceID};\n'
         table_output += f'\t\t["name"] = "{npc.destName}";\n'
-        # Adding npc name to string for easy locale enUS
-        npc_locale_en += f'L["{npc.destName}"] = "{npc.destName}"\n'
+        # Adding npc name to list for easy locale enUS
+        npc_locale_list.append(npc.destName)
         table_output += f'\t\t["id"] = {npc.npcID};\n'
         table_output += f'\t\t["health"] = {npc.maxHP};\n'
         table_output += f'\t\t["level"] = {npc.level};\n'
@@ -398,23 +400,10 @@ if __name__ == "__main__":
 
 
 
-    # Read file locale_dump if it exists otherwise set locale_file to []
-    try:
-        locale_file = (pd.read_csv("locale_dump.txt", names=["text"], header=None, sep="*")
-                       .text.unique()
-                       .tolist())
-    except FileNotFoundError:
-        locale_file = []
-
-    # Remove all duplicate npc names from locale output
-    npc_locale_en = "\n".join(list(OrderedDict.fromkeys(npc_locale_en.split("\n"))))
-
-    # Find new npc names from combat log that have never been seen before and add to local_dump.txt
-    [locale_file.append(text) for text in npc_locale_en.split("\n") if text not in locale_file]
-
-    with open("locale_dump.txt", "w") as f:
-        for item in locale_file:
-            f.write(f"{item}\n")
+    # Create locale enUS from unique names in npc_locale_list
+    npc_locale_en = ""
+    for destName in set(npc_locale_list):
+        npc_locale_en += f'L["{destName}"] = "{destName}"\n'
 
     # Add new npc names to output
     table_output += npc_locale_en
@@ -422,5 +411,5 @@ if __name__ == "__main__":
     pyperclip.copy(table_output)
 
     print("This dungeon requires {} count to complete and has {} total count. You need to clear {}% of the dungeon."
-          .format(total_count, mobHits.mobcount.sum(), int(round(total_count/mobHits.mobcount.sum(), 2)*100)))
+          .format(total_count, mobHits.mobcount.sum(), int(round(total_count / mobHits.mobcount.sum(), 2) * 100)))
     print("Lua table copied to clipboard. Paste into the correct dungeon file.")
