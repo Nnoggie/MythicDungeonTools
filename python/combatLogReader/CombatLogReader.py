@@ -25,6 +25,8 @@ request_wowtools = True
 #   criteriatree: contains information about which criteria from the above list is triggered when count is
 #        attributed in a mythic dungeon as well as the amount of count attributed
 #   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
+wowtools_files = ["uimapassignment", "map", "criteria", "criteriatree", "journalencounter"]
+db = load_db_files(wowtools_files)
 
 
 def get_map_extent(UiMapID):
@@ -269,9 +271,6 @@ def make_aura_check_GUID_list(CL, aura):
 
 
 if __name__ == "__main__":
-    wowtools_files = ["uimapassignment", "map", "criteria", "criteriatree", "journalencounter"]
-    db = load_db_files(wowtools_files)
-
     combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags", "sourceRaidFlags", "destGUID",
                         "destName", "destFlags", "destRaidFlags", "spellId", "spellName", "spellSchool", "unitGUID",
                         "ownerGUID",

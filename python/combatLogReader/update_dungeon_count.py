@@ -12,13 +12,15 @@ EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 # 3. Run the script, it writes directly to the files automatically.
 
 # Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
-    #   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
-    #       Which means it contains minimap coordinate points for the borders of the in-game map
-    #   map: contains UiMapIDs and their associated dungeons
-    #   criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
-    #   criteriatree: contains information about which criteria from the above list is triggered when count is
-    #        attributed in a mythic dungeon as well as the amount of count attributed
-    #   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
+#   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
+#       Which means it contains minimap coordinate points for the borders of the in-game map
+#   map: contains UiMapIDs and their associated dungeons
+#   criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
+#   criteriatree: contains information about which criteria from the above list is triggered when count is
+#        attributed in a mythic dungeon as well as the amount of count attributed
+#   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
+wowtools_files = ["criteria", "criteriatree", "journalencounter"]
+db = load_db_files(wowtools_files)
 
 def npcid_to_event_asset(npcid, dungeon_count_table):
     """Converts NPC ID to CombatEventID if mob exists in dictionary below.
@@ -177,9 +179,6 @@ def update_file(fullpath):
 
 
 if __name__ == "__main__":
-    wowtools_files = ["criteria", "criteriatree", "journalencounter"]
-    db = load_db_files(wowtools_files)
-
     # Locate dungeon
     # Get "encounterID" from MDT dungeon.lua file
     # Get DungeonEncounterID from journalencounter db by searching encounterID as ID
