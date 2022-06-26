@@ -2,7 +2,7 @@ import os
 import re
 import pandas as pd
 from get_wowtools_data import *
-from CombatLogReader import get_count_table, get_total_count
+from dungeon_mapper import get_count_table, get_total_count
 
 EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 # How to use:
