@@ -8,7 +8,7 @@ from get_wowtools_data import *
 request_wowtools = True
 # How to use:
 # 1. Have Advanced Combat Logging Enabled!
-# 2. Delete the following files from the directory
+# 2. Delete the following files from the directory wowdb_files
 #       uimapassignment.csv, map.csv, criteria.csv, criteriatree.csv, journalencounter.csv
 # 2. Delete or rename your current WoWCombatLog.txt file to start from fresh
 # 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
@@ -16,7 +16,8 @@ request_wowtools = True
 # 5. Run this script
 # 6. Open the .lua file for the given dungeon and paste what has been added to your clipboard
 
-# Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
+
+# Importing files from wow.tools; If the file is available in the directory it is read otherwise it is downloaded first
 #   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
 #       Which means it contains minimap coordinate points for the borders of the in-game map
 #   map: contains UiMapIDs and their associated dungeons
@@ -24,93 +25,169 @@ request_wowtools = True
 #   criteriatree: contains information about which criteria from the above list is triggered when count is
 #        attributed in a mythic dungeon as well as the amount of count attributed
 #   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
-wowtools_files = ["uimapassignment", "map", "criteria", "criteriatree", "journalencounter"]
-f = {}
-for file in wowtools_files:
-    try:
-        f[file] = pd.read_csv(f"{file}.csv")
-    except FileNotFoundError:
-        f[file] = get_latest_version(file)
 
 
-def get_map_extent(UiMapID):  # Returns map extent in minimap coordinates xmin, xmax, ymin, ymax
+def get_map_extent(UiMapID):
+    """Returns map extent in minimap coordinates xmin, xmax, ymin, ymax.
+
+    Args:
+        UiMapID (int): UiMapID for a given dungeon map level
+
+    Returns:
+        dataframe row: Map extent for the given UiMapID
+
+    """
     return map_extent.loc[
         map_extent.UiMapID == UiMapID, ["xmin", "xmax", "ymin", "ymax"]]
 
 
-def convert_to_relative_coord(df):  # Converts mob position to relative position from (0,100). Returns x,y
-    extent = get_map_extent(df.UiMapID)
-    x = float((df.xcoord - extent.xmin) / (extent.xmax - extent.xmin))
-    y = float((df.ycoord - extent.ymin) / (extent.ymax - extent.ymin))
+def convert_to_relative_coord(dataframe_row):
+    """Converts mob position to relative position from (0,100).
+
+    Args:
+        dataframe_row (dataframe): X and Y coordinates for a mob hit in combatlog coordinates
+
+    Returns:
+        pandas series: X and Y coordinates for a mob hit in combatlog in relative coordinates
+
+    """
+    extent = get_map_extent(dataframe_row.UiMapID)
+    x = float((dataframe_row.xcoord - extent.xmin) / (extent.xmax - extent.xmin))
+    y = float((dataframe_row.ycoord - extent.ymin) / (extent.ymax - extent.ymin))
     return pd.Series([x, y])
 
 
-def convert_to_MDT_coord(df):  # Converts mob position to coordinates used for the MDT map. Returns x,y as series
-    # MDT INFO FOR SCALE = 1
-    # WIDTH = 840
-    # HEIGHT = 555
-    # HEIGHT IS NEGATIVE
-    # 0,0 IS TOP LEFT CORNER
-    extent = get_map_extent(df.UiMapID)
+def convert_to_MDT_coord(dataframe_row):
+    """Converts mob position to coordinates used for the MDT map
+
+    MDT width and height at scale = 1
+    WIDTH = 840
+    HEIGHT = 555
+    Heigh is negative
+    0,0 is top left corner
+
+    Args:
+        dataframe_row (dataframe): X and Y coordinates for a mob hit in combatlog coordinates
+
+    Returns:
+        pandas series: X and Y coordinates for a mob hit in combatlog in MDT coordinates
+
+    """
+    extent = get_map_extent(dataframe_row.UiMapID)
     # MDT width and height at scale = 1
     width = 840
     height = 555
-    x = float((df.xcoord - extent.xmin) / (extent.xmax - extent.xmin))
-    y = float((df.ycoord - extent.ymin) / (extent.ymax - extent.ymin))
+    x = float((dataframe_row.xcoord - extent.xmin) / (extent.xmax - extent.xmin))
+    y = float((dataframe_row.ycoord - extent.ymin) / (extent.ymax - extent.ymin))
     x = x * width
     y = -(1 - y) * height
     return pd.Series([x, y])
 
 
-def get_npc_id(GUID):  # Splits the GUID and extracts the npcID
+def get_npc_id(GUID):
+    """Splits the GUID and extracts the npcID
+
+    Args:
+        GUID (string): Creature GUID
+
+    Returns:
+        int: NPC ID associated with GUID
+
+    """
     return int(GUID.split("-")[5])
 
 
-def get_boss_info(name):  # Takes as input a boss name and returns the corresponsing encounterID and instanceID
-    boss = f["journalencounter"][f["journalencounter"].Name_lang == name]
+def get_boss_info(name):
+    """Finds encounterID and instanceID associated with a boss
+
+    Args:
+        name (string): Boss name
+
+    Returns:
+        int: encounterID associated with the boss
+        int: instanceID associated with the boss
+
+    """
+    boss = db["journalencounter"][db["journalencounter"].Name_lang == name]
     encounterID = int(boss.ID)
     instanceID = int(boss.JournalInstanceID)
     return encounterID, instanceID
 
 
 def UiMapID_to_sublevel(UiMapID):
+    """Converts UiMapId to MDT map sublevel
+
+    Args:
+        UiMapID (string): UiMapID for a given creature
+
+    Returns:
+        int: MDT map sublevel associated with that UiMapID (1 is first seen UiMapID, 2 is second etc.)
+
+    """
     return unique_UiMapIDs.index(UiMapID) + 1
 
 
 def get_count_table(ID):  # Extracts the count table for a given dungeons enemy forces criteria ID
-    dungeon_forces = f["criteriatree"][((f["criteriatree"].Parent == ID) &
-                                        (f["criteriatree"].Description_lang == "Enemy Forces"))]
-    enemy_forces = f["criteriatree"][f["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
-    enemy_forces["npcID"] = [int(f["criteria"][f["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
+    """Extracts the dungeon table for a dungeon
+
+    Args:
+        ID (int): dungeonID for dungeon
+
+    Returns:
+        dataframe: Count table for dungeon
+
+    """
+    dungeon_forces = db["criteriatree"][((db["criteriatree"].Parent == ID) &
+                                        (db["criteriatree"].Description_lang == "Enemy Forces"))]
+    enemy_forces = db["criteriatree"][db["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
+    enemy_forces["npcID"] = [int(db["criteria"][db["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
     return count_table
 
 
 def get_total_count(ID):
-    dungeon_forces = f["criteriatree"][((f["criteriatree"].Parent == ID) &
-                                        (f["criteriatree"].Description_lang == "Enemy Forces"))].Amount
+    """Extracts total count for a dungeon
+
+    Args:
+        ID (int): dungeonID for dungeon
+
+    Returns:
+        int: Total count needed for dungeon completion
+
+    """
+    dungeon_forces = db["criteriatree"][((db["criteriatree"].Parent == ID) &
+                                        (db["criteriatree"].Description_lang == "Enemy Forces"))].Amount
     return int(dungeon_forces)
 
 
-def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns count and teeming_count for dungeon
-    # The function uses the first boss name in boss_names to figure out which dungeon it is
+def get_dungeon_count(boss_names):
+    """Find dungeon count table and total count from list of dungeon bosses
+
+    Args:
+        boss_names (list): List of names of bosses in the dungeon
+
+    Returns:
+        dataframe: Dataframe containing count information for dungeon
+        int: Total count needed for dungeon completion
+
+    """
     if not boss_names:
         return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
 
     # Fixing Blizzard brain not naming bosses the same everywhere
     for i in range(len(boss_names)):
-        parent_dungeons = f["criteriatree"][
-            f["criteriatree"].Description_lang.str.startswith(boss_names[i], na=False)].Parent
+        parent_dungeons = db["criteriatree"][
+            db["criteriatree"].Description_lang.str.startswith(boss_names[i], na=False)].Parent
         if len(parent_dungeons) == 0:
             print("Fixing Blizzard Brain.")
         else:
             print("Correct boss name found.")
             break
 
-    mythic_regular = f["criteriatree"][(
-            (f["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
-            (f["criteriatree"].ID.isin(parent_dungeons)) &
-            ~f["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
+    mythic_regular = db["criteriatree"][(
+            (db["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
+            (db["criteriatree"].ID.isin(parent_dungeons)) &
+            ~db["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
 
     if 'Mailroom Mayhem' in boss_names:
         regular_count = get_count_table(int(94220))
@@ -130,6 +207,16 @@ def get_dungeon_count(boss_names):  # Imput is a list of dungeon bosses, returns
 
 
 def get_npc_count(npcID, regular_count):  # Returns the count of an NPC
+    """Checks dungeon count table for count related to an NPC ID
+
+    Args:
+        npcID (int): Creature NPC ID
+        regular_count (dataframe): Count table associated with the dungeon
+
+    Returns:
+        int: True count for the NPC ID
+
+    """
     # If the NPC does not give count it returns 0
     # If the NPC gives the same X count and Y teemingCount it returns X, None
     #       and doesn't add teemingCount to npc in lua table
@@ -144,6 +231,15 @@ def get_npc_count(npcID, regular_count):  # Returns the count of an NPC
 
 
 def is_mob_unimportant(npc, threshold):
+    """Boolean check to see if an NPC's max health is above a threshold
+
+    Args:
+        npc: Information about the NPC
+        threshold (int): Minimun threshold for an NPC to be important
+
+    Returns:
+        bool: Boolean controlling whether the NPC is unimportant
+    """
     if npc[0].astype(str).startswith("Creature") and int(npc[1]) < threshold:
         mobcount = get_npc_count(npc.npcID, regular_count)
         if mobcount == 0:
@@ -153,17 +249,29 @@ def is_mob_unimportant(npc, threshold):
 
 
 def make_aura_check_GUID_list(CL, aura):
-    # How to use
-    # 1. Input the combatlog and the aura you want to check for like seen below
-    # 2. Make 2 lines of code in the table_output generator below like this
-    # if npc.destGUID in inspiring_GUID_list:
-    #    table_output += f'\t\t\t\t["inspiring"] = true;\n'
+    """Maps auras to NPC data in MDT
+
+    How to use
+    1. Input the combatlog and the aura you want to check for like seen below
+    2. Make 2 lines of code in the table_output generator below like the example below
+        if npc.destGUID in inspiring_GUID_list:
+            table_output += f'\t\t\t\t["inspiring"] = true;\n'
+    Args:
+        CL (dataframe): Combatlog dataframe
+        aura (string): Name of aura to map
+
+    Returns:
+        list: List of GUIDs affected by the aura
+    """
     GUID_list = CL.loc[((CL.event == "SPELL_AURA_APPLIED") &
                         (CL.spellName == aura))].destGUID.values
     return GUID_list
 
 
 if __name__ == "__main__":
+    wowtools_files = ["uimapassignment", "map", "criteria", "criteriatree", "journalencounter"]
+    db = load_db_files(wowtools_files)
+
     combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags", "sourceRaidFlags", "destGUID",
                         "destName", "destFlags", "destRaidFlags", "spellId", "spellName", "spellSchool", "unitGUID",
                         "ownerGUID",
@@ -198,15 +306,15 @@ if __name__ == "__main__":
 
     unique_UiMapIDs = mobHits.UiMapID.unique().tolist()
 
-    f["uimapassignment"].rename(columns={"MapID": "continentID",
+    db["uimapassignment"].rename(columns={"MapID": "continentID",
                                          "Region[0]": "ymin",
                                          "Region[1]": "xmax",
                                          "Region[3]": "ymax",
                                          "Region[4]": "xmin"},
                                 inplace=True)
-    f["uimapassignment"].xmin = f["uimapassignment"].xmin * -1  # Multiply by -1 because of blizzard coords
-    f["uimapassignment"].xmax = f["uimapassignment"].xmax * -1  # Multiply by -1 because of blizzard coords
-    f["map"].rename(columns={"ID": "continentID",
+    db["uimapassignment"].xmin = db["uimapassignment"].xmin * -1  # Multiply by -1 because of blizzard coords
+    db["uimapassignment"].xmax = db["uimapassignment"].xmax * -1  # Multiply by -1 because of blizzard coords
+    db["map"].rename(columns={"ID": "continentID",
                              "MapName_lang": "dungeon_name",
                              "Directory": "directory"},
                     inplace=True)
@@ -214,7 +322,7 @@ if __name__ == "__main__":
     info_columns = ["dungeon_name", "continentID", "UiMapID", "directory",
                     "xmin", "xmax", "ymin", "ymax"]
     # DataFrame merging the UiMapID and their associated dungeon from map with the map extent info from uimapassignment
-    map_extent = (f["map"].merge(f["uimapassignment"], on="continentID")[info_columns]
+    map_extent = (db["map"].merge(db["uimapassignment"], on="continentID")[info_columns]
                   .copy()
                   .round(1)
                   .drop_duplicates())
