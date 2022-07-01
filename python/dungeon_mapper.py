@@ -144,7 +144,6 @@ def get_dungeon_id(boss_info, mobHits):
     if not len(boss_info) > 0:
         return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
     # Attempt to find bosses by DungeonEncounterIDs
-    print(boss_info)
     DungeonEncounterIDs = [int(id) for id in boss_info.sourceGUID]
     CriteriaIDs = db['criteria'][db['criteria'].Asset.isin(DungeonEncounterIDs)].ID.values
     ParentIDs = db['criteriatree'][db['criteriatree'].CriteriaID.isin(CriteriaIDs)].Parent.values
