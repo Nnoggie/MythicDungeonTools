@@ -6,6 +6,7 @@ from collections import OrderedDict
 from get_wowtools_data import *
 
 request_wowtools = True
+GROUP_SEC_DELIMITER = 10
 # How to use:
 # 1. Have Advanced Combat Logging Enabled!
 # 2. Delete the following files from the directory wowdb_files
@@ -340,7 +341,8 @@ if __name__ == "__main__":
                      (~CL.ownerGUID.str.startswith("Player",
                                                    na=True)) &  # Filters out damage events against player pets
                      (CL.destName != "Unknown"),
-                     ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
+                     ["destGUID", "ownerGUID", "destName", "xcoord",
+                      "ycoord", "UiMapID", "maxHP", "level", "time"]].copy(deep=True)
     mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
     mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
     # Fix Blizzard combat log coords
@@ -399,7 +401,18 @@ if __name__ == "__main__":
     mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &
                              (mobHits.mobcount == 0)].index, inplace=True)
     print("{} enemy pets deleted due to low health (sub {}) and no count.".format(len(deleted_mobs),
-                                                                                  HP_threshold))  # not working for Tazavesh Streets
+                                                                                  HP_threshold))
+    # Preparing data for automatic grouping
+    mobHits["delta_pre"] = pd.to_datetime(mobHits.time).diff().dt.seconds.fillna(0)
+    mobHits["delta_post"] = mobHits.delta_pre.shift(-1).fillna(100)
+    # Find last mob of all groups
+    mobHits.loc[(mobHits.delta_pre < GROUP_SEC_DELIMITER) & (mobHits.delta_post > GROUP_SEC_DELIMITER), 'group'] = 1
+    # Set their group number
+    mobHits['group'] = mobHits.group.cumsum()
+    # Set "single mob groups" to group 0
+    mobHits.loc[(mobHits.delta_pre > GROUP_SEC_DELIMITER) & (mobHits.delta_post > GROUP_SEC_DELIMITER), 'group'] = 0
+    # Fill the remaning mobs with next seen group number
+    mobHits.group.fillna(method="bfill", inplace=True)
 
     print("Mapping Initiated [", end="")
 
@@ -416,6 +429,8 @@ if __name__ == "__main__":
             table_output += f'\t\t\t\t["x"] = {npc.MDTx};\n'
             table_output += f'\t\t\t\t["y"] = {npc.MDTy};\n'
             table_output += f'\t\t\t\t["sublevel"] = {npc.sublevel};\n'
+            if npc.group != 0:
+                table_output += f'\t\t\t\t["g"] = {int(npc.group)};\n'
             if npc.destGUID in inspiring_GUID_list:
                 table_output += f'\t\t\t\t["inspiring"] = true;\n'
             table_output += f'\t\t\t}};\n'
