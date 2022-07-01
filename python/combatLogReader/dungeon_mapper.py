@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pyperclip
 from collections import OrderedDict
-from get_wowtools_data import *
+from web_scraper import *
 
 request_wowtools = True
 GROUP_SEC_DELIMITER = 10

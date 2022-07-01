@@ -82,6 +82,31 @@ def load_db_files(wowtools_files = ["uimapassignment", "map", "criteria", "crite
 
     return db
 
+
+def get_npc_name(npc_id):
+    """Collects and returns NPC name given an NPC ID through wowhead.
+
+    Args:
+        npcId: Creature NPC ID
+
+    Returns:
+        string: Creature name
+
+    """
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
+    }
+    url = f'https://ptr.wowhead.com/tooltip/npc/{npc_id}'
+    response = requests.get(url, headers=headers)
+    time.sleep(0.2)
+    if response.status_code == 200:
+        name = response.json()["name"]
+        return name
+    else:
+        if response.status_code == 404:
+            print("No NPC found.")
+            return "No Name"
+
 if __name__ == "__main__":      # Meaning if this file is run itself and not imported by another script
     print("If you want to map with combat log, but scrape and import the displayIds and creatureType later,\n"
           "a rewrite of the function associated with the 'Export to LUA' button in the devpanel is necessary\n"

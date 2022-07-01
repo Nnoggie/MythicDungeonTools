@@ -1,7 +1,7 @@
 import os
 import re
 import pandas as pd
-from get_wowtools_data import *
+from web_scraper import *
 from dungeon_mapper import get_count_table, get_total_count
 
 EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
@@ -43,6 +43,28 @@ def npcid_to_event_asset(npcid, dungeon_count_table):
     else:
         return 0
 
+def get_potential_new_ids(original_name, dungeon_count_table):
+    """Checks dungeon_count_table for npc matching original_name
+
+    Args:
+        original_name (string): Name of npc with count changes
+        dungeon_count_table (dataaframe):  True count dataframe for dungeon
+
+    Returns:
+        list: All npc ids with names matching original_name
+        list: All count associated with the above npc ids
+
+    """
+    potential_new_ids = []
+    potential_new_count = []
+    for id in dungeon_count_table.index.to_list():
+        name = get_npc_name(id)
+        if name == original_name:
+            potential_new_ids.append(id)
+            potential_new_count.append(dungeon_count_table.loc[id, "count"])
+
+    return potential_new_ids, potential_new_count
+
 
 def update_count(match, dungeon_count_table):
     """Updates the MDT creature information string with true count.
@@ -63,15 +85,19 @@ def update_count(match, dungeon_count_table):
         true_count = npcid_to_event_asset(info['id'], dungeon_count_table)
     if true_count != info['count']:
         npc_name = pattern_npc_name.search(match.group()).group(1)
+        if true_count == 0:
+            print(f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {true_count}")
+            print(f"    Collecting potential new IDs for npc: ", end="")
+            new_ids, new_counts = get_potential_new_ids(npc_name, dungeon_count_table)
+            print("IDs: {}, respective count: {}".format(new_ids, new_counts))
+            return match.group().replace(f'["count"] = {info["count"]}', f'["count"] = {true_count}')
+
         print(f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {true_count}")
         return match.group().replace(f'["count"] = {info["count"]}', f'["count"] = {true_count}')
 
-    # print(match.group())
     return match.group()
 
 
-# Takes as input the regex match of current count found in dungeon.lua MDT file, as well as true count from db file
-# Outputs updated string
 def update_total_count(match, total_count):
     """Updates the MDT dungeon count information string with true count.
 
@@ -90,7 +116,6 @@ def update_total_count(match, total_count):
     return match.group()
 
 
-# Takes as input the text from a dungeon.lua MDT file and finds the dungoen associated with the file
 def get_dungeon_from_file_text(file_text):
     """Collects dungeon ID from MDT dungeon.lua file text.
 
@@ -139,7 +164,6 @@ def get_dungeon_from_file_text(file_text):
             print("WARNING: NEW SHIT BLIZZARD BRAIN DISCOVERED")
 
 
-# Takes the direct path to a dungeon.lua MDT file and updates the count for the mobs found in the file
 def update_file(fullpath):
     """Updates creature and total count found in a dungeon.lua MDT file directly.
 
@@ -147,7 +171,7 @@ def update_file(fullpath):
         fullpath (string): Filepath to a dungeon.lua MDT file
 
     Returns:
-        nothing: Updated the dungeon.lua MDT file content directly
+        nothing: Updates the dungeon.lua MDT file content directly
 
     """
     with open(fullpath, "r") as file:
@@ -175,8 +199,6 @@ def update_file(fullpath):
 
     with open(fullpath, "w") as file:
         file.write(updated_text)
-
-
 
 
 if __name__ == "__main__":
