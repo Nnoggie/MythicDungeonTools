@@ -99,7 +99,7 @@ def get_npc_id(GUID):
     return int(GUID.split("-")[5])
 
 
-def get_boss_info(name):
+def get_additional_boss_info(name):
     """Finds encounterID and instanceID associated with a boss
 
     Args:
@@ -129,8 +129,79 @@ def UiMapID_to_sublevel(UiMapID):
     return unique_UiMapIDs.index(UiMapID) + 1
 
 
-def get_count_table(ID):  # Extracts the count table for a given dungeons enemy forces criteria ID
-    """Extracts the dungeon table for a dungeon
+def get_dungeon_id(boss_info, mobHits):
+    """Find a dungeons ID from boss info and combatlog hits in the dungeon
+
+    Args:
+        boss_info (dataframe): Dataframe containing information about bosses in the dungeon
+        mobHits (dataframe): Dataframe containing the first combatlog hit of each creature in the dungeon
+
+    Returns:
+        int: The CriteriaTree ID for the Mythic+ dungeon
+
+    """
+    if not len(boss_info) > 0:
+        return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
+    # Attempt to find bosses by DungeonEncounterIDs
+    print(boss_info)
+    DungeonEncounterIDs = [int(id) for id in boss_info.sourceGUID]
+    CriteriaIDs = db['criteria'][db['criteria'].Asset.isin(DungeonEncounterIDs)].ID.values
+    ParentIDs = db['criteriatree'][db['criteriatree'].CriteriaID.isin(CriteriaIDs)].Parent.values
+
+    challenge_at_end = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
+                                          & (db['criteriatree'].Description_lang.str.endswith("Challenge"))
+                                          & (db['criteriatree'].Operator == 4)]
+
+    challenge_contained = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
+                                             & (db['criteriatree'].Description_lang.str.contains("Challenge"))
+                                             & (~db['criteriatree'].Description_lang.str.contains("More Trash",
+                                                                                                  na=False))
+                                             & (db['criteriatree'].Operator == 4)]
+    if len(challenge_at_end) > 0:
+        print("Dungeon ID located.")
+        return challenge_at_end.ID.values[0]
+
+    elif len(challenge_contained) > 0:
+        print("Dungeon ID located.")
+        return challenge_contained.ID.values[0]
+
+    else:
+        # Weird case where blizzard doesn't use the journalencounterid, but instead the npcID
+        print("Locating dungeon through EncounterID failed, trying NPC IDs.")
+        all_npcids = mobHits[mobHits.destName.isin(boss_info.sourceName.to_list())].npcID.to_list()
+        CriteriaIDs = db['criteria'][db['criteria'].Asset.isin(all_npcids)].ID.values
+        ParentIDs = db['criteriatree'][db['criteriatree'].CriteriaID.isin(CriteriaIDs)].Parent.values
+        if len(db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
+                                  & (db['criteriatree'].Description_lang.str.endswith("Challenge"))]) > 0:
+            dungeonID = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs)) & (
+                db['criteriatree'].Description_lang.str.endswith("Challenge"))].ID.values[0]
+
+            print("Dungeon ID located.")
+            return dungeonID
+
+        else:
+            print("Locating dungeon through NPC IDs failed, trying boss names.")
+
+    # Fixing Blizzard brain not naming bosses the same everywhere
+    for boss_name in boss_info.sourceName.to_list():
+        parent_dungeons = db["criteriatree"][
+            db["criteriatree"].Description_lang.str.startswith(boss_name, na=False)].Parent
+        if len(parent_dungeons) == 0:
+            print("Fixing Blizzard Brain.")
+        else:
+            print("Correct boss name found.")
+            mythic_regular = db["criteriatree"][(
+                    (db["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
+                    (db["criteriatree"].ID.isin(parent_dungeons)) &
+                    ~db["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
+
+            print("Dungeon ID located.")
+            return mythic_regular.ID
+
+    print("WARNING: No dungeon ID could be located.")
+
+def get_count_table(ID):
+    """Extracts the dungeon count table for a dungeon
 
     Args:
         ID (int): dungeonID for dungeon
@@ -143,6 +214,7 @@ def get_count_table(ID):  # Extracts the count table for a given dungeons enemy 
                                          (db["criteriatree"].Description_lang == "Enemy Forces"))]
     enemy_forces = db["criteriatree"][db["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
     enemy_forces["npcID"] = [int(db["criteria"][db["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
+    # An enemy can have multiple entries by blizzard mistake, the enemy will then attribute count from all entries
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
     return count_table
 
@@ -162,49 +234,21 @@ def get_total_count(ID):
     return int(dungeon_forces)
 
 
-def get_dungeon_count(boss_names):
+def get_dungeon_count(boss_info, mobHits):
     """Find dungeon count table and total count from list of dungeon bosses
 
     Args:
-        boss_names (list): List of names of bosses in the dungeon
+        boss_info (dataframe): Dataframe containing information about bosses in the dungeon
+        mobHits (dataframe): Dataframe containing the first combatlog hit of each creature in the dungeon
 
     Returns:
         dataframe: Dataframe containing count information for dungeon
         int: Total count needed for dungeon completion
 
     """
-    if not boss_names:
-        return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
-
-    # Fixing Blizzard brain not naming bosses the same everywhere
-    for i in range(len(boss_names)):
-        parent_dungeons = db["criteriatree"][
-            db["criteriatree"].Description_lang.str.startswith(boss_names[i], na=False)].Parent
-        if len(parent_dungeons) == 0:
-            print("Fixing Blizzard Brain.")
-        else:
-            print("Correct boss name found.")
-            break
-
-    mythic_regular = db["criteriatree"][(
-            (db["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
-            (db["criteriatree"].ID.isin(parent_dungeons)) &
-            ~db["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
-
-    if 'Mailroom Mayhem' in boss_names:
-        regular_count = get_count_table(int(94220))
-        total_count = get_total_count(int(94220))
-        print('Jebaited blizzard brain is perma broken')
-        return regular_count, total_count
-
-    elif 'Hyldebrande' in boss_names:
-        regular_count = get_count_table(int(73619))
-        total_count = get_total_count(int(73619))
-        print('Jebaited blizzard brain is perma broken')
-        return regular_count, total_count
-
-    regular_count = get_count_table(int(mythic_regular.ID))
-    total_count = get_total_count(int(mythic_regular.ID))
+    dungeonID = get_dungeon_id(boss_info, mobHits)
+    regular_count = get_count_table(int(dungeonID))
+    total_count = get_total_count(int(dungeonID))
     return regular_count, total_count
 
 
@@ -287,8 +331,8 @@ if __name__ == "__main__":
     timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])
     CL = pd.concat([CL, timesplitdf], axis=1).drop(["remove", "timestampevent"], axis=1)
 
-    # List containing all bosses from log
-    boss_names = CL.loc[(CL.event == "ENCOUNTER_START")].sourceName.to_list()
+    # List containing all information for bosses from log
+    boss_info = CL.loc[(CL.event == "ENCOUNTER_START")]
 
     # Dataframe that contains every initial SPELL_DAMAGE event against each npc
     mobHits = CL.loc[(CL.event == "SPELL_DAMAGE") &
@@ -298,7 +342,7 @@ if __name__ == "__main__":
                      (CL.destName != "Unknown"),
                      ["destGUID", "ownerGUID", "destName", "xcoord", "ycoord", "UiMapID", "maxHP", "level"]]
     mobHits.drop_duplicates(subset=["destGUID"], keep="first", inplace=True)
-    mobHits = mobHits[mobHits.maxHP.astype(int) > 50]  # not working for Tazavesh Streets
+    mobHits = mobHits[mobHits.maxHP.astype(int) > 50]
     # Fix Blizzard combat log coords
     mobHits["xcoord"] = - mobHits.xcoord.astype(float)
     mobHits["ycoord"] = mobHits.ycoord.astype(float)
@@ -337,10 +381,12 @@ if __name__ == "__main__":
 
     # # Inspiring Presence Mapping
     inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
-    regular_count, total_count = get_dungeon_count(boss_names)
 
     # Account for mobs with same name, but different npcID
     mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
+
+    # Get count for dungeon
+    regular_count, total_count = get_dungeon_count(boss_info, mobHits)
 
     # Add count to mobHits table
     mobHits["mobcount"] = [get_npc_count(npcID, regular_count) for npcID in mobHits.npcID]
@@ -375,8 +421,8 @@ if __name__ == "__main__":
             table_output += f'\t\t\t}};\n'
 
         table_output += '\t\t};\n'
-        if npc.destName in boss_names:
-            encounterID, instanceID = get_boss_info(npc.destName)
+        if npc.destName in boss_info.sourceName.to_list():
+            encounterID, instanceID = get_additional_boss_info(npc.destName)
             table_output += f'\t\t["isBoss"] = true;\n'
             table_output += f'\t\t["encounterID"] = {encounterID};\n'
             table_output += f'\t\t["instanceID"] = {instanceID};\n'

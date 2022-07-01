@@ -114,6 +114,7 @@ def get_dungeon_from_file_text(file_text):
     
     challenge_contained = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
                                      & (db['criteriatree'].Description_lang.str.contains("Challenge"))
+                                     & (~db['criteriatree'].Description_lang.str.contains("More Trash", na=False))
                                      & (db['criteriatree'].Operator == 4)]
     if len(challenge_at_end) > 0:
         return challenge_at_end.ID.values[0]
