@@ -380,8 +380,11 @@ if __name__ == "__main__":
     # Move through the dungeon sublevels in the same order as the sublevel-dropdown to avoid errors
     mobHits["sublevel"] = [UiMapID_to_sublevel(UiMapID) for UiMapID in mobHits.UiMapID]
 
-    # # Inspiring Presence Mapping
+    # Inspiring Presence Mapping
     inspiring_GUID_list = make_aura_check_GUID_list(CL, "Inspiring Presence")
+
+    # Shadowlands season 4 Shrouded affix (Disguised debuff)
+    disguised_GUID_list = make_aura_check_GUID_list(CL, "Disguised")
 
     # Account for mobs with same name, but different npcID
     mobHits["npcID"] = [get_npc_id(GUID) for GUID in mobHits.destGUID]
@@ -432,6 +435,8 @@ if __name__ == "__main__":
                 table_output += f'\t\t\t\t["g"] = {int(npc.group)};\n'
             if npc.destGUID in inspiring_GUID_list:
                 table_output += f'\t\t\t\t["inspiring"] = true;\n'
+            if npc.destGUID in disguised_GUID_list:
+                table_output += f'\t\t\t\t["disguised"] = true;\n'
             table_output += f'\t\t\t}};\n'
 
         table_output += '\t\t};\n'
