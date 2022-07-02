@@ -403,6 +403,20 @@ def create_map_doors(pois):
     door_pois.sort_values(by="time", inplace=True)
     door_pois["connectionIndex"] = (-1 * (door_pois.markerid.astype(int)-1)).cumsum()
     door_pois["direction"] = door_pois.apply(get_door_direction, axis=1)
+    door_pairs = door_pois.groupby('connectionIndex')['connectionIndex'].count()
+    door_pairs = door_pairs[door_pairs == 2].index.to_list()
+
+    blue_sublevels = door_pois.loc[(door_pois.connectionIndex.isin(door_pairs)) & (door_pois.markerid == "0"),
+                                   "from_sublevel"].to_list()
+    green_sublevels = door_pois.loc[(door_pois.connectionIndex.isin(door_pairs)) & (door_pois.markerid == "1"),
+                                   "from_sublevel"].to_list()
+
+    door_pois.loc[(door_pois.connectionIndex.isin(door_pairs)) & (door_pois.markerid == "0"),
+                  "to_sublevel"] = green_sublevels
+    door_pois.loc[(door_pois.connectionIndex.isin(door_pairs)) & (door_pois.markerid == "1"),
+                  "to_sublevel"] = blue_sublevels
+
+    door_pois = door_pois.astype({"from_sublevel": int, "to_sublevel": int})
     return door_pois
 
 
