@@ -376,6 +376,7 @@ def create_map_doors(pois):
 
     Returns:
         dataframe: A dataframe containing only WORLD_MARKER_PLACED events rich with information needed for mapping
+
     """
     blue_pois = pois[(pois.event == "MAP_CHANGE") | ((pois.event == "WORLD_MARKER_PLACED") & (pois.markerid == "0"))].copy() # Blue world marker
     blue_pois.loc[pois.event == "MAP_CHANGE", "to_UiMapID"] = pois[pois.event == "MAP_CHANGE"].MapID
@@ -385,9 +386,13 @@ def create_map_doors(pois):
     green_pois.loc[pois.event == "MAP_CHANGE", "to_UiMapID"] = pois[pois.event == "MAP_CHANGE"].MapID
     # green_marker_pois.to_UiMapID.fillna(method="bfill", inplace=True)
     for index in green_pois[green_pois.event == "WORLD_MARKER_PLACED"].index.to_list():
-        previous_map = int(green_pois[((green_pois.event == "MAP_CHANGE")
-                                   & (green_pois.UiMapID != green_pois.loc[index, "UiMapID"]))].loc[:index].iloc[-1].MapID)
-        green_pois.loc[:index, "to_UiMapID"] = previous_map
+        map_changes = green_pois[((green_pois.event == "MAP_CHANGE")
+                                  & (green_pois.UiMapID != green_pois.loc[index, "UiMapID"]))].loc[:index]
+        if len(map_changes) > 0:
+            previous_map = int(map_changes.iloc[-1].MapID)
+            green_pois.loc[:index, "to_UiMapID"] = previous_map
+        else:
+            green_pois.drop(index, inplace=True)
 
     door_pois = pd.concat([blue_pois, green_pois])
     door_pois.drop(door_pois.index[door_pois.event == "MAP_CHANGE"], axis=0, inplace=True)
