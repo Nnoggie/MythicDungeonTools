@@ -6,6 +6,7 @@ from collections import OrderedDict
 from web_scraper import *
 
 request_wowtools = True
+toggle_door_mapping = True
 GROUP_SEC_DELIMITER = 10
 # How to use:
 # 1. Have Advanced Combat Logging Enabled!
@@ -13,6 +14,8 @@ GROUP_SEC_DELIMITER = 10
 #       uimapassignment.csv, map.csv, criteria.csv, criteriatree.csv, journalencounter.csv
 # 2. Delete or rename your current WoWCombatLog.txt file to start from fresh
 # 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
+# 4. NEW: Place a blue world marker before passing through a door that swaps map
+#           and a green world marker after passing through the same door
 # 4. Copy the resulting WoWCombatLog.txt file to the directory of this file
 # 5. Run this script
 # 6. Open the .lua file for the given dungeon and paste what has been added to your clipboard
@@ -193,12 +196,14 @@ def get_dungeon_id(boss_info, mobHits):
             mythic_regular = db["criteriatree"][(
                     (db["criteriatree"].Description_lang.str.contains('Dungeon.*Challenge', na=False)) &
                     (db["criteriatree"].ID.isin(parent_dungeons)) &
-                    ~db["criteriatree"].Description_lang.str.contains("More Trash", na=False))]  # This means NOT Teeming
+                    ~db["criteriatree"].Description_lang.str.contains("More Trash",
+                                                                      na=False))]  # This means NOT Teeming
 
             print("Dungeon ID located.")
             return mythic_regular.ID
 
     print("WARNING: No dungeon ID could be located.")
+
 
 def get_count_table(ID):
     """Extracts the dungeon count table for a dungeon
@@ -285,6 +290,7 @@ def is_mob_unimportant(npc, threshold):
 
     Returns:
         bool: Boolean controlling whether the NPC is unimportant
+
     """
     if npc[0].astype(str).startswith("Creature") and int(npc[1]) < threshold:
         mobcount = get_npc_count(npc.npcID, regular_count)
@@ -308,10 +314,92 @@ def make_aura_check_GUID_list(CL, aura):
 
     Returns:
         list: List of GUIDs affected by the aura
+
     """
     GUID_list = CL.loc[((CL.event == "SPELL_AURA_APPLIED") &
                         (CL.spellName == aura))].destGUID.values
     return GUID_list
+
+
+def create_mapPOIs(combatlog):
+    """Searches combatlog for MAP_CHANGE and WORLD_MARKER_PLACED events
+
+    Args:
+        combatlog (dataframe): The combatlog from hitting every mob in the dungeon
+
+    Returns:
+        dataframe: A dataframe containing all MAP_CHANGED and WORLD_MARKER_PLACED events in the combatlog
+
+    """
+    pois = combatlog.loc[(combatlog.event == "MAP_CHANGE") | (combatlog.event == "WORLD_MARKER_PLACED"),
+                         ["event", "sourceGUID", "sourceName", "sourceFlags", "sourceRaidFlags", "destGUID",
+                          "destName", "time"]].copy(deep=True)
+    pois.rename(columns={"sourceGUID": "MapID",
+                         "sourceName": "markerid",
+                         "sourceFlags": "ycoord",
+                         "sourceRaidFlags": "xcoord"},
+                inplace=True)
+    pois.loc[pois.event == "MAP_CHANGE", "UiMapID"] = pois[pois.event == "MAP_CHANGE"].MapID
+    pois.UiMapID.fillna(method="ffill", inplace=True)
+    pois = pois.astype({"UiMapID": int, "ycoord": float, "xcoord": float})
+    pois["xcoord"] = -pois["xcoord"]
+
+    pois[["MDTx", "MDTy"]] = pois.apply(convert_to_MDT_coord, axis=1)
+    return pois
+
+def get_door_direction(door):
+    """Calculates mapPOI door direction based on closest map extent border
+
+    Args:
+        door (dataframe row): A single row from pois dataframe
+
+    Returns:
+        int: mapPOI door direction based on closest map extent border
+
+    """
+    extent = get_map_extent(door.UiMapID)
+    x = door.xcoord
+    y = door.ycoord
+    index = extent.index[0]
+    distance = np.array([abs(x - extent.loc[index, "xmin"]),
+                        abs(extent.loc[index, "xmax"] - x),
+                        abs(y - extent.loc[index, "ymin"]),
+                        abs(extent.loc[index, "ymax"] - y)])
+    direction = [-2, 2, -1, 1]
+    return direction[np.argmin(distance)]
+
+def create_map_doors(pois):
+    """Uses coordinate information from WORLD_MARKER_PLACED and map info from MAP_CHANGED to map "doors"
+
+    Args:
+        pois (dataframe): A dataframe containing all MAP_CHANGED and WORLD_MARKER_PLACED events in a combatlog
+
+    Returns:
+        dataframe: A dataframe containing only WORLD_MARKER_PLACED events rich with information needed for mapping
+    """
+    blue_pois = pois[(pois.event == "MAP_CHANGE") | ((pois.event == "WORLD_MARKER_PLACED") & (pois.markerid == "0"))].copy() # Blue world marker
+    blue_pois.loc[pois.event == "MAP_CHANGE", "to_UiMapID"] = pois[pois.event == "MAP_CHANGE"].MapID
+    blue_pois.to_UiMapID.fillna(method="bfill", inplace=True)
+
+    green_pois = pois[(pois.event == "MAP_CHANGE") | ((pois.event == "WORLD_MARKER_PLACED") & (pois.markerid == "1"))].copy() # Green world marker
+    green_pois.loc[pois.event == "MAP_CHANGE", "to_UiMapID"] = pois[pois.event == "MAP_CHANGE"].MapID
+    # green_marker_pois.to_UiMapID.fillna(method="bfill", inplace=True)
+    for index in green_pois[green_pois.event == "WORLD_MARKER_PLACED"].index.to_list():
+        previous_map = int(green_pois[((green_pois.event == "MAP_CHANGE")
+                                   & (green_pois.UiMapID != green_pois.loc[index, "UiMapID"]))].loc[:index].iloc[-1].MapID)
+        green_pois.loc[:index, "to_UiMapID"] = previous_map
+
+    door_pois = pd.concat([blue_pois, green_pois])
+    door_pois.drop(door_pois.index[door_pois.event == "MAP_CHANGE"], axis=0, inplace=True)
+
+    door_pois = door_pois.astype({"to_UiMapID": int})
+    door_pois["from_sublevel"] = door_pois.UiMapID.apply(UiMapID_to_sublevel)
+    door_pois["to_sublevel"] = door_pois.to_UiMapID.apply(UiMapID_to_sublevel)
+    door_pois.sort_values(by="time", inplace=True)
+    door_pois["connectionIndex"] = (-1 * (door_pois.markerid.astype(int)-1)).cumsum()
+    door_pois["direction"] = door_pois.apply(get_door_direction, axis=1)
+    return door_pois
+
 
 
 if __name__ == "__main__":
@@ -416,12 +504,36 @@ if __name__ == "__main__":
     # Fill the remaning mobs with next seen group number
     mobHits.group.fillna(method="bfill", inplace=True)
 
+    # Create mapPOIs from WORLD_MARKER_PLACED
+    if toggle_door_mapping:
+        pois = create_mapPOIs(CL)
+        door_pois = create_map_doors(pois) # Blue (0) and green (1) marker
+
     print("Mapping Initiated [", end="")
 
     npc_locale_list = []
-    table_output = f"MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n"
-    table_output += "MDT.dungeonEnemies[dungeonIndex] = {\n"
+    table_output = f'MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n'
+    if toggle_door_mapping:
+        table_output += f'MDT.mapPOIs[dungeonIndex] = {{\n'
+        # Mapping mapPOIs
+        for sublevel in door_pois["from_sublevel"].unique():
+            table_output += f'\t[{sublevel}] = {{\n'
+            for idx, (_, door) in enumerate(door_pois[door_pois.from_sublevel == sublevel].iterrows()):
+                table_output += f'\t\t[{idx+1}] = {{\n'
+                table_output += f'\t\t\t["y"] = {door.MDTy};\n'
+                table_output += f'\t\t\t["x"] = {door.MDTx};\n'
+                table_output += f'\t\t\t["connectionIndex"] = {door.connectionIndex};\n'
+                table_output += f'\t\t\t["target"] = {door.to_sublevel};\n'
+                table_output += f'\t\t\t["type"] = "mapLink";\n'
+                table_output += f'\t\t\t["template"] = "MapLinkPinTemplate";\n'
+                table_output += f'\t\t\t["direction"] = {door.direction};\n'
+                table_output += f'\t\t}};\n'
 
+            table_output += f'\t}};\n'
+        table_output += f'}};\n\n'
+
+    table_output += 'MDT.dungeonEnemies[dungeonIndex] = {\n'
+    # Mapping dungeon enemies
     for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
         unique_npc_index += 1  # Lua is stupid
         table_output += f'\t[{unique_npc_index}] = {{\n\t\t["clones"] = {{\n'
@@ -462,8 +574,6 @@ if __name__ == "__main__":
         table_output += '\t};\n'
     table_output += '};\n\n'
     print("] Mapping Completed")
-
-
 
     # Create locale enUS from unique names in npc_locale_list
     npc_locale_en = ""
