@@ -173,6 +173,18 @@ function DC.PLAYER_ENTERING_WORLD(self,...)
     cmsTimeStamp = nil
 end
 
+-- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
+local dungeonsToTrack = {
+    [1] = 40,
+    [2] = 41,
+    [3] = 37,
+    [4] = 38,
+    [5] = 25,
+    [6] = 26,
+    [7] = 9,
+    [8] = 10,
+}
+
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
     local timestamp,subevent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool = CombatLogGetCurrentEventInfo()
     --enemy spells
@@ -180,7 +192,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         local unitType,_,serverId,instanceId,zoneId,id,spawnUid = strsplit("-", sourceGUID)
         id = tonumber(id)
         --dungeon
-        for i=37,38 do
+        for _,i in pairs(dungeonsToTrack) do
             local enemies = MDT.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
@@ -201,7 +213,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self,...)
         id = tonumber(id)
 
         --dungeon
-        for i=37,38 do
+        for _,i in pairs(dungeonsToTrack) do
             local enemies = MDT.dungeonEnemies[i]
             --enemy
             for enemyIdx,enemy in pairs(enemies) do
