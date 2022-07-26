@@ -605,6 +605,23 @@ local function blipDevModeSetup(blip)
     blip:SetMovable(true)
     blip:RegisterForDrag("LeftButton")
 
+    local groupColors = {
+        [1] = {1,0,0,1},
+        [2] = {0,1,0,1},
+        [3] = {0,0,1,1},
+        [4] = {1,0,1,1},
+        [5] = {0,1,1,1},
+    }
+    local function updateBlipText()
+        if db.devModeBlipTextHidden then 
+            blip.fontstring_Text1:SetText("")
+            return
+        end
+        blip.fontstring_Text1:Show()
+        blip.fontstring_Text1:SetText((blip.clone.g or "").."  "..WrapTextInColorCode((blip.clone.scale or ""), "ffffffff"))
+        if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g%5+1])) end
+    end
+
     local xOffset,yOffset
     blip:SetScript("OnMouseDown",function()
         local x,y = MDT:GetCursorPosition()
@@ -634,35 +651,53 @@ local function blipDevModeSetup(blip)
         MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x = x
         MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y = y
     end)
-    local groupColors = {
-        [1] = {1,0,0,1},
-        [2] = {0,1,0,1},
-        [3] = {0,0,1,1},
-        [4] = {1,0,1,1},
-        [5] = {0,1,1,1},
-    }
     blip:SetScript("OnMouseWheel", function(self, delta)
         if not db.devModeBlipsScrollable then return end
-        if not blip.clone.g then
-            local maxGroup = 0
-            for _,data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-                for _,clone in pairs(data.clones) do
-                    maxGroup = (clone.g and (clone.g>maxGroup)) and clone.g or maxGroup
+        -- alt scroll to scale blip and connected blips
+        if IsAltKeyDown() then            
+            if IsShiftKeyDown() then
+                -- scale whole sublevel
+                for _,data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+                    for _,clone in pairs(data.clones) do
+                        if clone.sublevel == MDT:GetCurrentSubLevel() then
+                            clone.scale = (clone.scale or 1) + delta*0.1
+                        end
+                    end
+                end
+            else
+                -- only scale this blip and it's connected blips
+                if blip.clone.g then
+                    for _,data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+                        for _,clone in pairs(data.clones) do
+                            if clone.g == blip.clone.g then
+                                clone.scale = (clone.scale or 1) + delta*0.1
+                            end
+                        end
+                    end
+                else
+                    blip.clone.scale = (blip.clone.scale or 1) + delta*0.1
                 end
             end
-            if IsControlKeyDown() then
-                maxGroup = maxGroup + 1
-            end
-            blip.clone.g = maxGroup
+            MDT:UpdateMap()
         else
-            blip.clone.g = blip.clone.g + delta
+            if not blip.clone.g then
+                local maxGroup = 0
+                for _,data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+                    for _,clone in pairs(data.clones) do
+                        maxGroup = (clone.g and (clone.g>maxGroup)) and clone.g or maxGroup
+                    end
+                end
+                if IsControlKeyDown() then
+                    maxGroup = maxGroup + 1
+                end
+                blip.clone.g = maxGroup
+            else
+                blip.clone.g = blip.clone.g + delta
+            end
+            updateBlipText()
         end
-        blip.fontstring_Text1:SetText(blip.clone.g)
-        if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g%5+1])) end
     end)
-    blip.fontstring_Text1:Show()
-    blip.fontstring_Text1:SetText(blip.clone.g)
-    if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g%5+1])) end
+    updateBlipText()
 end
 
 local emissaryIds = {[155432]=true,[155433]=true,[155434]=true}

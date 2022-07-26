@@ -541,6 +541,15 @@ function MDT:CreateDevPanel(frame)
         end)
         container:AddChild(blipsScrollableCheckbox)
 
+        --bliptext shown toggle
+        local blipTextHiddenCheckbox = AceGUI:Create("CheckBox")
+        blipTextHiddenCheckbox:SetLabel("Hide Blip Text")
+        blipTextHiddenCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            db.devModeBlipTextHidden = value or nil
+            MDT:UpdateMap()
+        end)
+        container:AddChild(blipTextHiddenCheckbox)
+
         --clone options
 
         --group
@@ -728,6 +737,7 @@ function MDT:CreateDevPanel(frame)
         end
         blipsMovableCheckbox:SetValue(db.devModeBlipsMovable)
         blipsScrollableCheckbox:SetValue(db.devModeBlipsScrollable)
+        blipTextHiddenCheckbox:SetValue(db.devModeBlipTextHidden)
 
         updateDropdown(nil,currentEnemyIdx)
         end
