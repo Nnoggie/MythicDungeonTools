@@ -66,6 +66,29 @@ def get_potential_new_ids(original_name, dungeon_count_table):
     return potential_new_ids, potential_new_count
 
 
+def fix_split_count_db(dungeon_id, true_count_table):
+    """Combines count tables together when split eg. Siege of Boralus (Alliance and Horde)
+
+    Args:
+        dungeon_id: Id associated with the dungeon
+        dungeon_count_table (dataframe): True count dataframe for dungeon
+
+    Returns:
+        dungeon_count_table (dataframe): Combined true count dataframe for dungeon
+
+    """
+    split_dungeons = {
+        67227: [67283]  # Siege of Boralus
+    }
+    if dungeon_id in split_dungeons.keys():
+        for other_id in split_dungeons[dungeon_id]:
+            other_table = get_count_table(other_id)
+            true_count_table = pd.concat((true_count_table, other_table[~other_table.index.isin(true_count_table.index)]))
+        return true_count_table
+    else:
+        return true_count_table
+
+
 def update_count(match, dungeon_count_table):
     """Updates the MDT creature information string with true count.
 
@@ -182,14 +205,16 @@ def update_file(fullpath):
         # String containing only table MDT.dungeonEnemies[dungeonIndex]
         dungeon_enemies = pattern_dungeonEnemies.search(file_text)[0]
         # Get true mob count table
-        true_mob_count = get_count_table(get_dungeon_from_file_text(file_text))
+        dungeon_id = get_dungeon_from_file_text(file_text)
+        true_mob_count = get_count_table(dungeon_id)
+        true_mob_count = fix_split_count_db(dungeon_id, true_mob_count)
         # Replace old MDT.dungeonEnemies[dungeonIndex] with new string containing true count
         dungeon_enemies_true_count = pattern_enemy_match.sub(lambda match: update_count(match, true_mob_count), dungeon_enemies)
 
         # String containing only table MDT.dungeonTotalCount[dungeonIndex]
         total_count = pattern_dungeonTotalCount.search(file_text)[0]
         # Get true total count
-        true_total_count = get_total_count(get_dungeon_from_file_text(file_text))
+        true_total_count = get_total_count(dungeon_id)
         # Replace old count value with new true count
         true_count_string = pattern_count_value.sub(lambda match: update_total_count(match, true_total_count), total_count)
         # print(true_count_string)
