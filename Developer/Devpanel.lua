@@ -146,7 +146,7 @@ function MDT:CreateDevPanel(frame)
 
     devPanel:SetTabs(
         {
-            {text="POI", value="tab1"},
+            {text="POI/Zoom", value="tab1"},
             {text="Enemy", value="tab2"},
             {text="Infested", value="tab3"},
             {text="Week", value="tab4"},
@@ -287,6 +287,12 @@ function MDT:CreateDevPanel(frame)
                 end,
             },
             [7] = {
+                text="Export Zoom Settings",
+                func=function()
+                    MDT:ExportCurrentZoomPanSettings()
+                end,
+            },
+            [8] = {
                 text="Export to LUA",
                 func=function()
                     local export = tshow(MDT.mapPOIs[db.currentDungeonIdx],"MDT.mapPOIs[dungeonIndex]")

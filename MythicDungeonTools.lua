@@ -1507,9 +1507,6 @@ function MDT:OnPanFadeOut(deltaTime)
 end
 
 function MDT:ExportCurrentZoomPanSettings()
-    local mainFrame = MDTMapPanelFrame
-    local scrollFrame = MDTScrollFrame
-
     local zoom = MDTMapPanelFrame:GetScale()
     local panH = MDTScrollFrame:GetHorizontalScroll() / MDT:GetScale()
     local panV = MDTScrollFrame:GetVerticalScroll() / MDT:GetScale()
