@@ -8,5 +8,6 @@
 	<Script file='LiveSession.lua'/>
 	<Script file='Maximize.lua'/>
 	<Script file='API.lua'/>
+	<Script file='DungeonSelect.lua'/>
 </Ui>
 

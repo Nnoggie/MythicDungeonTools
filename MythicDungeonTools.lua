@@ -117,6 +117,7 @@ local defaultSavedVars = {
         },
         language = MDT:GetLocaleIndex(),
         dungeonImport = {},
+        selectedDungeonList = 4,
 	},
 }
 do
@@ -2263,91 +2264,6 @@ function MDT:OpenCustomColorsDialog(frame)
     MDT.main_frame.automaticColorsFrame.CustomColorFrame:SetPoint("CENTER",264,-7)
 	MDT.main_frame.automaticColorsFrame.CustomColorFrame:SetStatusText("")
 	MDT.main_frame.automaticColorsFrame.CustomColorFrame:Show()
-end
-
-function MDT:UpdateDungeonDropDown()
-	local group = MDT.main_frame.DungeonSelectionGroup
-    group.DungeonDropdown:SetList({})
-    if db.currentExpansion == 1 then
-        for i=1,14 do
-            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
-        end
-    elseif db.currentExpansion == 2 then
-        for i=15,28 do
-            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
-        end
-    elseif db.currentExpansion == 3 then
-        for i = 29,39 do
-            group.DungeonDropdown:AddItem(i,MDT.dungeonList[i])
-        end
-    end
-	group.DungeonDropdown:SetValue(db.currentDungeonIdx)
-	group.SublevelDropdown:SetList(MDT.dungeonSubLevels[db.currentDungeonIdx])
-	group.SublevelDropdown:SetValue(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel)
-    group.DungeonDropdown:ClearFocus()
-    group.SublevelDropdown:ClearFocus()
-end
-
----CreateDungeonSelectDropdown
----Creates both dungeon and sublevel dropdowns
-function MDT:CreateDungeonSelectDropdown(frame)
-	--Simple Group to hold both dropdowns
-	frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
-	local group = frame.DungeonSelectionGroup
-    if not group.frame.SetBackdrop then
-        Mixin(group.frame, BackdropTemplateMixin)
-    end
-    group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
-    group.frame:SetFrameStrata("HIGH")
-    group.frame:SetFrameLevel(50)
-	group:SetWidth(204) --idk ace added weird margin on left
-	group:SetHeight(50)
-	group:SetPoint("TOPLEFT",frame.topPanel,"BOTTOMLEFT",0,2)
-    group:SetLayout("List")
-
-    MDT:FixAceGUIShowHide(group)
-
-    --dungeon select
-	group.DungeonDropdown = AceGUI:Create("Dropdown")
-	group.DungeonDropdown.text:SetJustifyH("LEFT")
-	group.DungeonDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-        if key == 14 then
-            db.currentExpansion = 2
-            db.currentDungeonIdx = 15
-            MDT:UpdateDungeonDropDown()
-            MDT:UpdateToDungeon(db.currentDungeonIdx)
-        elseif key == 27 then
-            db.currentExpansion = 1
-            db.currentDungeonIdx = 1
-            MDT:UpdateDungeonDropDown()
-            MDT:UpdateToDungeon(db.currentDungeonIdx)
-        elseif key == 28 then
-            db.currentExpansion = 3
-            db.currentDungeonIdx = 29
-            MDT:UpdateDungeonDropDown()
-            MDT:UpdateToDungeon(db.currentDungeonIdx)
-        elseif key == 39 then
-            db.currentExpansion = 2
-            db.currentDungeonIdx = 15
-            MDT:UpdateDungeonDropDown()
-            MDT:UpdateToDungeon(db.currentDungeonIdx)
-        else
-            MDT:UpdateToDungeon(key)
-        end
-	end)
-	group:AddChild(group.DungeonDropdown)
-
-	--sublevel select
-	group.SublevelDropdown = AceGUI:Create("Dropdown")
-	group.SublevelDropdown.text:SetJustifyH("LEFT")
-	group.SublevelDropdown:SetCallback("OnValueChanged",function(widget,callbackName,key)
-		db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
-		MDT:UpdateMap()
-        MDT:ZoomMapToDefault()
-	end)
-	group:AddChild(group.SublevelDropdown)
-
-	MDT:UpdateDungeonDropDown()
 end
 
 ---EnsureDBTables
