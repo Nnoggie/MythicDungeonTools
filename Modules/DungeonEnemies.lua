@@ -672,7 +672,8 @@ function MDTDungeonEnemyMixin:SetUp(data,clone)
     local scale = MDT:GetScale()
     self:ClearAllPoints()
     self:SetPoint("CENTER", MDT.main_frame.mapPanelTile1,"TOPLEFT",clone.x*scale,clone.y*scale)
-    self.normalScale = data.scale*(data.isBoss and 1.7 or 1)*(MDT.scaleMultiplier[db.currentDungeonIdx] or 1)*scale
+    local cloneScale = clone.scale or 1
+    self.normalScale = cloneScale*data.scale*(data.isBoss and 1.7 or 1)*(MDT.scaleMultiplier[db.currentDungeonIdx] or 1)*scale
     self.normalScale = self.normalScale * 0.6
     self:SetSize(self.normalScale*13,self.normalScale*13)
     self:updateSizes(1)
