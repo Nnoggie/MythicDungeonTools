@@ -1,6 +1,13 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+--TO ADD SEASON 4:
+L["GrimrailDepot"] = "Grimrail Depot"
+L["IronDocks"] = "Iron Docks"
+L["Train Depot"] = "Train Depot"
+L["Rafters"] = "Rafters"
+L["Rear Train Cars"] = "Rear Train Cars"
+L["Forward Train Cars"] = "Forward Train Cars"
 
 --MDT
 L["EfficiencyScoreTip"] = "Efficiency Score indicates how valuable an NPCs dungeon count is compared to their raw health."
