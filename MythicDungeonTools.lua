@@ -86,7 +86,6 @@ local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
         currentSeason = 7,
-		currentExpansion = 3,
         scale = 1,
         enemyForcesFormat = 2,
         enemyStyle = 1,
@@ -2261,7 +2260,7 @@ end
 function MDT:EnsureDBTables()
     --dungeonIdx doesnt exist
     if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx],">") then
-        db.currentDungeonIdx = db.currentExpansion == 1 and 1 or db.currentExpansion == 2 and 15 or db.currentExpansion == 3 and 29 or 1
+        db.currentDungeonIdx = 1
     end
     local preset = MDT:GetCurrentPreset()
     preset.week = preset.week or MDT:GetCurrentAffixWeek()
@@ -2442,9 +2441,6 @@ end
 ---UpdateToDungeon
 ---Updates the map to the specified dungeon
 function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
-    db.currentExpansion = 1
-    if dungeonIdx>=15 then db.currentExpansion = 2 end
-    if dungeonIdx>=29 then db.currentExpansion = 3 end
     db.currentDungeonIdx = dungeonIdx
 	if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then
         db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel=1
