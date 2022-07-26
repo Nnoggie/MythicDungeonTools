@@ -6,21 +6,21 @@ MDT.dungeonTotalCount[dungeonIndex] = {normal=420,teeming=504,teemingEnabled=tru
 MDT.mapInfo[dungeonIndex] = {
 	viewportPositionOverrides =
 	{
-		[1] = {
-			zoomScale = 1.2999999523163;
-			horizontalPan = 78.003474839972;
-			verticalPan = 32.294165083552;
-		};
-    [2] = {
-      zoomScale = 1.2999999523163;
-      horizontalPan = 137.99641255679;
-      verticalPan = 85.576163891348;
-    };
-    [4] = {
-      zoomScale = 1.5999999046326;
-      horizontalPan = 145.48786850778;
-      verticalPan = 191.08311735375;
-    };
+      [1] = {
+         zoomScale = 1.2999999523163;
+         horizontalPan = 78.003474839972;
+         verticalPan = 32.294165083552;
+      };
+      [2] = {
+         zoomScale = 1.2999999523163;
+         horizontalPan = 137.99641255679;
+         verticalPan = 85.576163891348;
+      };
+      [4] = {
+         zoomScale = 1.5999999046326;
+         horizontalPan = 145.48786850778;
+         verticalPan = 191.08311735375;
+      };
   }
 };
 
