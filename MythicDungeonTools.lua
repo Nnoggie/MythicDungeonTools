@@ -85,7 +85,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 7,
+        currentSeason = 8,
         scale = 1,
         enemyForcesFormat = 2,
         enemyStyle = 1,
