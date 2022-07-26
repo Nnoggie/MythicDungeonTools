@@ -120,7 +120,7 @@ local defaultSavedVars = {
 	},
 }
 do
-    for i=1,39 do
+    for i=1,80 do
         defaultSavedVars.global.presets[i] = {
             [1] = {text="Default",value={},colorPaletteInfo={autoColoring=true,colorPaletteIdx=4}},
             [2] = {text="<New Preset>",value=0},
@@ -237,10 +237,11 @@ MDT.dungeonEnemies = {}
 MDT.mapPOIs = {}
 MDT.dungeonSubLevels = {}
 MDT.dungeonList = {
-    [14] = " >"..L["Battle for Azeroth"],
-    [27] = " <"..L["Legion"],
-    [28] = " >"..L["Shadowlands"],
-    [39] = " <"..L["Battle for Azeroth"],
+    -- these were for the old dropdown menu, need to fix this at some point
+    [14] = "-",
+    [27] = "-",
+    [28] = "-",
+    [39] = "-",
 }
 
 function MDT:GetNumDungeons() return #MDT.dungeonList-1 end
