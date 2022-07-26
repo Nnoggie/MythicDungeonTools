@@ -857,6 +857,21 @@ function MDT:CreateDevPanel(frame)
     end
 
     local function DrawGroup6(container)
+        local toggleDevModeButton = AceGUI:Create("Button")
+        toggleDevModeButton:SetText("Toggle DevMode")
+        toggleDevModeButton:SetCallback("OnClick",function()
+            MDT:ToggleDevMode()
+        end)
+        container:AddChild(toggleDevModeButton)
+
+        local loadOnStartUpCheckbox = AceGUI:Create("CheckBox")
+        loadOnStartUpCheckbox:SetLabel("Load MDT on Startup")
+        loadOnStartUpCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            db.loadOnStartUp = value or nil
+        end)
+        loadOnStartUpCheckbox:SetValue(db.loadOnStartUp)
+        container:AddChild(loadOnStartUpCheckbox)
+
         local clearCacheButton = AceGUI:Create("Button")
         clearCacheButton:SetText("Clear Cache")
         clearCacheButton:SetCallback("OnClick",function()

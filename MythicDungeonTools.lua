@@ -206,11 +206,9 @@ do
             C_MythicPlus.RequestRewards()
         end)
         self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+        if db.loadOnStartUp then MDT:ShowInterface(true) end
     end
-
 end
-
-
 
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 --https://www.wowhead.com/affixes
@@ -4661,5 +4659,9 @@ function initFrames()
     end
 
     framesInitialized = true
+end
+
+function MDT:StartUp()
+    vdt(db)
 end
 
