@@ -78,8 +78,8 @@ function MDT:UpdateDungeonDropDown()
   local sublevelDropdown = MDT.main_frame.DungeonSelectionGroup.SublevelDropdown
   local currentDungeonIdx = db.currentDungeonIdx
   dungeonDropdown:SetList(dungeonSelectionToNames[db.selectedDungeonList])
+	dungeonDropdown:SetValue(indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx])
   dungeonDropdown:ClearFocus()
-	dungeonDropdown:SetValue(indexToDungeonSelection[currentDungeonIdx])
 	sublevelDropdown:SetList(MDT.dungeonSubLevels[currentDungeonIdx])
 	sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
   sublevelDropdown:ClearFocus()
@@ -146,9 +146,10 @@ function MDT:CreateDungeonSelectDropdown(frame)
   --create lists
   for i=1,#dungeonSelectionToIndex do
     dungeonSelectionToNames[i] = {}
+    indexToDungeonSelection[i] = {}
     for j=1,#dungeonSelectionToIndex[i] do
       dungeonSelectionToNames[i][j] = MDT.dungeonList[dungeonSelectionToIndex[i][j]]
-      indexToDungeonSelection[dungeonSelectionToIndex[i][j]] = j
+      indexToDungeonSelection[i][dungeonSelectionToIndex[i][j]] = j
     end
     dungeonSelectionToNames[i][#dungeonSelectionToIndex[i]+1] = "> More Dungeons"
   end
