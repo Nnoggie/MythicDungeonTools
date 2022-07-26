@@ -2020,12 +2020,6 @@ function MDT:MakeMapTexture(frame)
 		-- Enable mousewheel scrolling
 		frame.scrollFrame:EnableMouseWheel(true)
         local lastModifiedScroll
-        local ignoredTargets = {--ignore alt scroll if expansion would be changed
-            [14] = true,
-            [27] = true,
-            [28] = true,
-            [39] = true,
-        }
 		frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
             if IsControlKeyDown() then
                 if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.1 then
