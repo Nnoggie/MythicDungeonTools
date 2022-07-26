@@ -2042,11 +2042,7 @@ function MDT:MakeMapTexture(frame)
                 if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.3 then
                     lastModifiedScroll = GetTime()
                     delta = delta*-1
-                    local target = db.currentDungeonIdx+delta
-                    if MDT.dungeonList[target] and not ignoredTargets[target] then
-                        local group = MDT.main_frame.DungeonSelectionGroup
-                        group.DungeonDropdown:Fire("OnValueChanged", target)
-                    end
+                    MDT:ScrollToNextDungeon(delta)
                 end
             else
                 MDT:ZoomMap(delta)
