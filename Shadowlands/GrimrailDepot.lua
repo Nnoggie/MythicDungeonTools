@@ -3,7 +3,18 @@ local L = MDT.L
 local dungeonIndex = 40
 MDT.dungeonList[dungeonIndex] = L["GrimrailDepot"]
 MDT.mapInfo[dungeonIndex] = {
-    
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 108.09110952974;
+      verticalPan = 18.640150307329;
+    };
+    [3] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 1.6514100445647e-07;
+      verticalPan = 67.74931221652;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
