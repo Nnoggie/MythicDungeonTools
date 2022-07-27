@@ -9,7 +9,7 @@ MDT.mapInfo[dungeonIndex] = {
       horizontalPan = 108.09110952974;
       verticalPan = 18.640150307329;
     };
-    [3] = {
+    [4] = {
       zoomScale = 1.2999999523163;
       horizontalPan = 1.6514100445647e-07;
       verticalPan = 67.74931221652;
