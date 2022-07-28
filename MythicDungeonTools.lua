@@ -1,4 +1,4 @@
--- Made by Nnoggie, 2017-2020
+-- Made by Nnoggie, 2017-2022
 local AddonName, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
@@ -85,7 +85,7 @@ local initFrames
 local defaultSavedVars = {
 	global = {
         toolbarExpanded = true,
-        currentSeason = 7,
+        currentSeason = 8,
         scale = 1,
         enemyForcesFormat = 2,
         enemyStyle = 1,
@@ -206,28 +206,26 @@ do
             C_MythicPlus.RequestRewards()
         end)
         self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+        if db.loadOnStartUp then MDT:ShowInterface(true) end
     end
-
 end
-
-
 
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-    [1] =  {7,13,9,130}, -- bolstering explosive tyrannical encrypted
-    [2] =  {11,124,10,130}, -- bursting storming fortified encrypted
-    [3] =  {6,3,9,130}, -- raging volcanic tyrannical encrypted
-    [4] =  {122,12,10,130}, -- inspiring grievous fortified encrypted
-    [5] =  {123,4,9,130}, -- spiteful necrotic tyrannical encrypted
-    [6] =  {7,14,10,130}, -- bolstering quaking fortified encrypted
-    [7] =  {8,124,9,130}, -- sanguine storming tyrannical encrypted
-    [8] =  {6,13,10,130}, -- raging explosive fortified encrypted
-    [9] =  {11,3,9,130}, -- bursting volcanic tyrannical encrypted
-    [10] = {123,4,10,130},  -- spiteful necrotic fortified encrypted
-    [11] = {122,14,9,130},  -- inspiring quaking tyrannical encrypted
-    [12] = {8,12,10,130},  -- sanguine grievous fortified encrypted
+    [1] =  {0,0,9,131}, -- bolstering explosive tyrannical shrouded
+    [2] =  {0,0,10,131}, -- bursting storming fortified shrouded
+    [3] =  {0,0,9,131}, -- raging volcanic tyrannical shrouded
+    [4] =  {0,0,10,131}, -- inspiring grievous fortified shrouded
+    [5] =  {0,0,9,131}, -- spiteful necrotic tyrannical shrouded
+    [6] =  {0,0,10,131}, -- bolstering quaking fortified shrouded
+    [7] =  {0,0,9,131}, -- sanguine storming tyrannical shrouded
+    [8] =  {0,0,10,131}, -- raging explosive fortified shrouded
+    [9] =  {0,0,9,131}, -- bursting volcanic tyrannical shrouded
+    [10] = {0,0,10,131},  -- spiteful necrotic fortified shrouded
+    [11] = {0,0,9,131},  -- inspiring quaking tyrannical shrouded
+    [12] = {0,0,10,131},  -- sanguine grievous fortified shrouded
 }
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
@@ -1507,9 +1505,6 @@ function MDT:OnPanFadeOut(deltaTime)
 end
 
 function MDT:ExportCurrentZoomPanSettings()
-    local mainFrame = MDTMapPanelFrame
-    local scrollFrame = MDTScrollFrame
-
     local zoom = MDTMapPanelFrame:GetScale()
     local panH = MDTScrollFrame:GetHorizontalScroll() / MDT:GetScale()
     local panV = MDTScrollFrame:GetVerticalScroll() / MDT:GetScale()
@@ -4664,5 +4659,9 @@ function initFrames()
     end
 
     framesInitialized = true
+end
+
+function MDT:StartUp()
+    vdt(db)
 end
 

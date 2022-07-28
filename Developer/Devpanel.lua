@@ -146,7 +146,7 @@ function MDT:CreateDevPanel(frame)
 
     devPanel:SetTabs(
         {
-            {text="POI", value="tab1"},
+            {text="POI/Zoom", value="tab1"},
             {text="Enemy", value="tab2"},
             {text="Infested", value="tab3"},
             {text="Week", value="tab4"},
@@ -287,6 +287,12 @@ function MDT:CreateDevPanel(frame)
                 end,
             },
             [7] = {
+                text="Export Zoom Settings",
+                func=function()
+                    MDT:ExportCurrentZoomPanSettings()
+                end,
+            },
+            [8] = {
                 text="Export to LUA",
                 func=function()
                     local export = tshow(MDT.mapPOIs[db.currentDungeonIdx],"MDT.mapPOIs[dungeonIndex]")
@@ -535,6 +541,15 @@ function MDT:CreateDevPanel(frame)
         end)
         container:AddChild(blipsScrollableCheckbox)
 
+        --bliptext shown toggle
+        local blipTextHiddenCheckbox = AceGUI:Create("CheckBox")
+        blipTextHiddenCheckbox:SetLabel("Hide Blip Text")
+        blipTextHiddenCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            db.devModeBlipTextHidden = value or nil
+            MDT:UpdateMap()
+        end)
+        container:AddChild(blipTextHiddenCheckbox)
+
         --clone options
 
         --group
@@ -722,6 +737,7 @@ function MDT:CreateDevPanel(frame)
         end
         blipsMovableCheckbox:SetValue(db.devModeBlipsMovable)
         blipsScrollableCheckbox:SetValue(db.devModeBlipsScrollable)
+        blipTextHiddenCheckbox:SetValue(db.devModeBlipTextHidden)
 
         updateDropdown(nil,currentEnemyIdx)
         end
@@ -841,6 +857,21 @@ function MDT:CreateDevPanel(frame)
     end
 
     local function DrawGroup6(container)
+        local toggleDevModeButton = AceGUI:Create("Button")
+        toggleDevModeButton:SetText("Toggle DevMode")
+        toggleDevModeButton:SetCallback("OnClick",function()
+            MDT:ToggleDevMode()
+        end)
+        container:AddChild(toggleDevModeButton)
+
+        local loadOnStartUpCheckbox = AceGUI:Create("CheckBox")
+        loadOnStartUpCheckbox:SetLabel("Load MDT on Startup")
+        loadOnStartUpCheckbox:SetCallback("OnValueChanged",function (widget,callbackName,value)
+            db.loadOnStartUp = value or nil
+        end)
+        loadOnStartUpCheckbox:SetValue(db.loadOnStartUp)
+        container:AddChild(loadOnStartUpCheckbox)
+
         local clearCacheButton = AceGUI:Create("Button")
         clearCacheButton:SetText("Clear Cache")
         clearCacheButton:SetCallback("OnClick",function()
