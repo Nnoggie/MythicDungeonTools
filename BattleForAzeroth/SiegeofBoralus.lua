@@ -437,7 +437,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [256627] = {};
         };
         ["id"] = 141283;
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Kul Tiran Halberd";
         ["displayId"] = 84074;
         ["creatureType"] = "Humanoid";
@@ -645,7 +645,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [273930] = {};
         };
         ["id"] = 141495;
-        ["count"] = 0;
+        ["count"] = 1;
         ["name"] = "Kul Tiran Footman";
         ["displayId"] = 86025;
         ["creatureType"] = "Humanoid";
@@ -797,7 +797,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [277564] = {};
         };
         ["id"] = 141285;
-        ["count"] = 0;
+        ["count"] = 4;
         ["name"] = "Kul Tiran Marksman";
         ["displayId"] = 88463;
         ["creatureType"] = "Humanoid";

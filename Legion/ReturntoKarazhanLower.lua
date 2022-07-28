@@ -250,7 +250,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 5;
      ["displayId"] = 26404;
      ["creatureType"] = "Undead";
      ["level"] = 111;
@@ -943,7 +943,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 1;
+     ["count"] = 4;
      ["displayId"] = 73338;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -1087,7 +1087,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 1;
+     ["count"] = 3;
      ["displayId"] = 73302;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -1395,7 +1395,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 5;
      ["displayId"] = 73313;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -1719,7 +1719,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 5;
      ["displayId"] = 16494;
      ["creatureType"] = "Undead";
      ["level"] = 111;
@@ -2646,7 +2646,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 16454;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -2979,7 +2979,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 16543;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -3098,7 +3098,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 16547;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -3342,7 +3342,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 16458;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -3410,7 +3410,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 8;
+     ["count"] = 7;
      ["displayId"] = 61125;
      ["creatureType"] = "Elemental";
      ["level"] = 111;
@@ -3562,7 +3562,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1.2;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 73458;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -3601,7 +3601,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 1;
+     ["count"] = 3;
      ["displayId"] = 16529;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -3683,7 +3683,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 16524;
      ["creatureType"] = "Undead";
      ["level"] = 110;
@@ -4198,7 +4198,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 16050;
      ["creatureType"] = "Beast";
      ["level"] = 110;
@@ -4385,7 +4385,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 0.8;
-     ["count"] = 4;
+     ["count"] = 3;
      ["displayId"] = 27683;
      ["creatureType"] = "Beast";
      ["level"] = 110;
@@ -4541,7 +4541,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["r"] = 1;
      };
      ["scale"] = 1;
-     ["count"] = 4;
+     ["count"] = 5;
      ["displayId"] = 10698;
      ["creatureType"] = "Undead";
      ["level"] = 110;

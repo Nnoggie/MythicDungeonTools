@@ -418,7 +418,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
             [294324] = {};
         };
         ["scale"] = 1;
-        ["count"] = 6;
+        ["count"] = 7;
         ["name"] = "Waste Processing Unit";
         ["displayId"] = 92177;
         ["creatureType"] = "Mechanical";
@@ -631,7 +631,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["displayId"] = 90712;
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
-        ["count"] = 8;
+        ["count"] = 10;
         ["characteristics"] = {
             ["Taunt"] = true;
         };
@@ -1144,7 +1144,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["creatureType"] = "Mechanical";
         ["level"] = 121;
         ["health"] = 1229592;
-        ["count"] = 6;
+        ["count"] = 8;
     };
     [26] = {
         ["clones"] = {
