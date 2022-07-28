@@ -329,7 +329,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
 			 ["sublevel"] = 1;
 		  };
 	   };
-	   ["id"] = 111637;
+	   ["id"] = 91781;
 	   ["scale"] = 1;
 	   ["color"] = {
 		  ["a"] = 0.8;

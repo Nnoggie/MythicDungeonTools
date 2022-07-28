@@ -6,7 +6,7 @@ from collections import OrderedDict
 from web_scraper import *
 
 request_wowtools = True
-toggle_door_mapping = True
+toggle_door_mapping = False
 GROUP_SEC_DELIMITER = 10
 # How to use:
 # 1. Have Advanced Combat Logging Enabled!
@@ -16,9 +16,9 @@ GROUP_SEC_DELIMITER = 10
 # 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
 # 4. NEW: Place a blue world marker before passing through a door that swaps map
 #           and a green world marker after passing through the same door
-# 4. Copy the resulting WoWCombatLog.txt file to the directory of this file
-# 5. Run this script
-# 6. Open the .lua file for the given dungeon and paste what has been added to your clipboard
+# 5. Copy the resulting WoWCombatLog.txt file to the directory of this file
+# 6. Run this script
+# 7. Open the .lua file for the given dungeon and paste what has been added to your clipboard
 
 
 # Importing files from wow.tools; If the file is available in the directory it is read otherwise it is downloaded first
