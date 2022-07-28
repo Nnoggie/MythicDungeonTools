@@ -12,5 +12,7 @@ libs/LibDBIcon-1.0
 libs/LibStub
 venv
 python/combatLogReader/__pycache__
+python/__pycache__
+wowdb_files
 MythicDungeonTools.iml
 .vscode
