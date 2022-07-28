@@ -201,7 +201,8 @@ def update_file(fullpath):
         file_text = file.read()
         # Dungeon name
         print(f'Verifying {pattern_dungeon_name.search(file_text).group(1)}.')
-
+        if pattern_empty_dungeon_file.search(file_text):
+            return
         # String containing only table MDT.dungeonEnemies[dungeonIndex]
         dungeon_enemies = pattern_dungeonEnemies.search(file_text)[0]
         # Get true mob count table
@@ -217,7 +218,6 @@ def update_file(fullpath):
         true_total_count = get_total_count(dungeon_id)
         # Replace old count value with new true count
         true_count_string = pattern_count_value.sub(lambda match: update_total_count(match, true_total_count), total_count)
-        # print(true_count_string)
 
         updated_text = pattern_dungeonTotalCount.sub(true_count_string, file_text)
         updated_text = pattern_dungeonEnemies.sub(dungeon_enemies_true_count, updated_text)
@@ -234,6 +234,7 @@ if __name__ == "__main__":
     # Get Parent from CriteriaTree by searching for CriteriaID as CriteriaID
     # There will be multiple parents, the correct ID will be the one where Description_lang contains "Challenge"
     pattern_dungeon_name = re.compile(r'MDT\.dungeonList\[dungeonIndex\] = L\[\"([\w\S ]+)\"]')
+    pattern_empty_dungeon_file = re.compile(r'MDT\.dungeonEnemies\[dungeonIndex\] = {}')
     pattern_dungeonEnemies = re.compile(r"MDT\.dungeonEnemies\[dungeonIndex\] = \{[\s\S]*};")
     pattern_enemy_match = re.compile(r"{[\s\S]+?\"(id|count)\"\D*([\d]+).*[\s\S]+?\"(id|count)\"\D*([\d]+)[\s\S]+?}")
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
