@@ -1,4 +1,4 @@
-## Interface: 90207
+## Interface: 90205
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
 ## Version: 3.9.4
