@@ -1076,6 +1076,27 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
                 blip:Show()
             end
         end
+        if (db.currentSeason == 8 ) then
+            if db.currentDifficulty >= 10 then
+                if blip.clone.shrouded then
+                    blip.texture_Indicator:SetVertexColor(1,0,1,1)
+                    blip.texture_Indicator:SetScale(1.15)
+                    blip.texture_Indicator:Show()
+                    blip:Show()
+                elseif blip.clone.disguised then
+                    blip.texture_Indicator:Hide()
+                    blip:Hide()
+                end
+            else
+                if blip.clone.shrouded then
+                    blip.texture_Indicator:Hide()
+                    blip:Hide()
+                elseif blip.clone.disguised then
+                    blip.texture_Indicator:Show()
+                    blip:Show()
+                end
+            end
+        end
     end
 end
 

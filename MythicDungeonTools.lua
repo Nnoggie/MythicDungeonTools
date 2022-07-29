@@ -1756,6 +1756,15 @@ function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
     elseif db.currentSeason ~= 4 then
         if enemy.corrupted then return false end
     end
+    
+    --shrouded
+    local shroudedActive = db.currentSeason == 8 and db.currentDifficulty >= 10
+    if shroudedActive then
+        if clone.disguised then return false end
+    else
+        if clone.shrouded then return false end
+    end
+
 
     --filter enemies out that have filters and conditions are not met
     local include = clone.include or enemy.include

@@ -152,6 +152,7 @@ function MDT:CreateDevPanel(frame)
             {text="Week", value="tab4"},
             {text="Corrupted", value="tab5"},
             {text="Manage DB", value="tab6"},
+            {text="Shrouded", value="tab7"},
         }
     )
     devPanel:SetWidth(250)
@@ -905,6 +906,103 @@ function MDT:CreateDevPanel(frame)
         container:AddChild(leechButton)
     end
 
+    local shroudedEnemyData = {
+        [1] = {
+          ["clones"] = {
+          };
+          ["name"] = "Nathrezim Infiltrator";
+          ["characteristics"] = {
+            ["Taunt"] = true;
+          };
+          ["spells"] = {
+            [373364] = {};
+            [373429] = {};
+            [373370] = {};
+            [373391] = {};
+          };
+          ["health"] = 999999;
+          ["count"] = 0;
+          ["displayId"] = 101016;
+          ["creatureType"] = "Demon";
+          ["level"] = 61;
+          ["id"] = 189878;
+          ["scale"] = 1.2
+        },
+        [2] = {
+          ["clones"] = {
+          };
+          ["name"] = "Zul'gamux";
+          ["characteristics"] = {
+            ["Taunt"] = true;
+          };
+          ["spells"] = {
+            [373509] = {};
+            [373724] = {};
+            [373513] = {};
+            [373552] = {};
+            [373570] = {};
+            [373607] = {};
+          };
+          ["health"] = 999999;
+          ["count"] = 0;
+          ["displayId"] = 101106;
+          ["creatureType"] = "Demon";
+          ["level"] = 61;
+          ["id"] = 190128;
+          ["scale"] = 1.8
+        },
+      }
+
+    local function DrawGroup7(container)
+
+        local currentShroudedTypeEditBox = AceGUI:Create("EditBox")
+        currentShroudedTypeEditBox:SetLabel("Shrouded Type: (number: 1 or 2)")
+        currentShroudedTypeEditBox:SetText("1")
+        container:AddChild(currentShroudedTypeEditBox)
+
+        local makeShroudedButton = AceGUI:Create("Button")
+        makeShroudedButton:SetText("Make Shrouded")
+        makeShroudedButton:SetCallback("OnClick",function()
+            local value = currentShroudedTypeEditBox:GetText()
+            local shroudedIndex = tonumber(value)
+            local currentBlip = MDT:GetCurrentDevmodeBlip()
+            if currentBlip and (shroudedIndex == 1 or shroudedIndex == 2)then
+                local data = MDT.dungeonEnemies[db.currentDungeonIdx]
+                local shroudedData = shroudedEnemyData[shroudedIndex]
+                -- 1. create shrouded enemy if it doesnt exist in this dungeon
+                local shroudedEnemyExists = false
+                for _,enemy in pairs(data) do
+                    if enemy.id == shroudedData.id then
+                        shroudedEnemyExists = true
+                        break;
+                    end
+                end
+                if not shroudedEnemyExists then
+                    tinsert(data,MDT:DeepCopy(shroudedData))
+                end
+                -- 2. find the shrouded enemy in the data table for this dungeon
+                local shroudedEnemy = nil
+                for _,enemy in pairs(data) do
+                    if enemy.id == shroudedData.id then
+                        shroudedEnemy = enemy
+                        break;
+                    end
+                end
+                -- 3. add the clone from this blip to the shrouded enemy, make sure to deep copy clone data
+                local clone = MDT:DeepCopy(currentBlip.clone)
+                clone.shrouded = true
+                tinsert(shroudedEnemy.clones,clone)
+
+                -- 4. add disguised tag to original enemy
+                currentBlip.clone.disguised = true
+
+                MDT:UpdateMap()
+            end
+        end)
+        container:AddChild(makeShroudedButton)
+
+    end
+
     -- Callback function for OnGroupSelected
     local function SelectGroup(container, event, group)
         container:ReleaseChildren()
@@ -920,6 +1018,8 @@ function MDT:CreateDevPanel(frame)
             DrawGroup5(container)
         elseif group == "tab6" then
             DrawGroup6(container)
+        elseif group == "tab7" then
+            DrawGroup7(container)
         end
     end
     devPanel:SetCallback("OnGroupSelected", SelectGroup)

@@ -3,6 +3,8 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["Zul'gamux"] = "Zul'gamux"
+L["Nathrezim Infiltrator"] = "Nathrezim Infiltrator"
 L["GrimrailDepot"] = "Grimrail Depot"
 L["IronDocks"] = "Iron Docks"
 L["Train Depot"] = "Train Depot"
