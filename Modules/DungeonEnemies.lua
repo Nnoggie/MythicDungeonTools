@@ -664,6 +664,10 @@ local function blipDevModeSetup(blip)
                         end
                     end
                 end
+            elseif IsControlKeyDown() then
+                -- only scale this specific blip
+                local clone = MDT.dungeonEnemies[db.currentDungeonIdx][self.enemyIdx].clones[self.cloneIdx]
+                clone.scale = (clone.scale or 1) + delta*0.1
             else
                 -- only scale this blip and it's connected blips
                 if blip.clone.g then
