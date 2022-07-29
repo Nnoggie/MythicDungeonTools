@@ -1049,18 +1049,15 @@ function MDT:DungeonEnemies_UpdateTeeming()
     MDT:DungeonEnemies_UpdateBlacktoothEvent()
 end
 
----DungeonEnemies_UpdateSeasonalAffix
 ---Updates visibility state and appearance of enemies related to the current seasonal affix
 function MDT:DungeonEnemies_UpdateSeasonalAffix()
     --hide all beguiling and corrupted blips first
+    local week = self:GetEffectivePresetWeek()
     for _,blip in pairs(blips) do
         if blip.data.corrupted then blip:Hide() end
         if emissaryIds[blip.data.id] then blip:Hide() end
         if tormentedIds[blip.data.id] then blip:Hide() end
         if encryptedIds[blip.data.id] then blip:Hide() end
-    end
-    local week = self:GetEffectivePresetWeek()
-    for _,blip in pairs(blips) do
         if (db.currentSeason == 7 and db.currentDifficulty >= 10 and encryptedIds[blip.data.id]) then
             blip:Show()
         elseif (db.currentSeason == 6 and tormentedIds[blip.data.id])
