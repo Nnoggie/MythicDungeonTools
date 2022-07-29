@@ -115,8 +115,6 @@ local defaultSavedVars = {
             customPaletteValues = {},
             numberCustomColors = 12,
         },
-        language = MDT:GetLocaleIndex(),
-        dungeonImport = {},
         selectedDungeonList = 4,
 	},
 }
@@ -3891,31 +3889,6 @@ function MDT:RegisterOptions()
         name = "Mythic Dungeon Tools",
         type = 'group',
         args = {
-            --[[
-            language = {
-                type = 'select',
-                style = 'dropdown',
-                name = "Language",
-                desc = "Sets the Language of the AddOn. Requires Reload to take effect",
-                values = {
-                    [1] = "English",
-                    [2] = "Deutsch",
-                    [3] = "Español (esES)",
-                    [4] = "Español (esMX)",
-                    [5] = "Français",
-                    [6] = "Italiano",
-                    [7] = "Português Brasileiro",
-                    [8] = "Русский",
-                    [9] = "한국어",
-                    [10] = "简体中文 (zhCN)",
-                    [11] = "國語 (zhTW)",
-                },
-                get = function() return db.language end,
-                set = function(_, newValue)
-                    db.language = newValue
-                end,
-            },
-            ]]
             enable = {
                 type = 'toggle',
                 name = L["Enable Minimap Button"],
