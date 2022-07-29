@@ -4642,8 +4642,3 @@ function initFrames()
 
     framesInitialized = true
 end
-
-function MDT:StartUp()
-    vdt(db)
-end
-
