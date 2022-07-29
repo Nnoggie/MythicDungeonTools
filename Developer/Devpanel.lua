@@ -874,11 +874,11 @@ function MDT:CreateDevPanel(frame)
         container:AddChild(loadOnStartUpCheckbox)
 
         local clearCacheButton = AceGUI:Create("Button")
-        clearCacheButton:SetText("Clear Cache")
+        clearCacheButton:SetText("Clear Cache + DC")
         clearCacheButton:SetCallback("OnClick",function()
             MDT:ResetDataCache()
-            db.dataCollection[db.currentDungeonIdx] = {}
-            db.dataCollectionCC[db.currentDungeonIdx] = {}
+            db.dataCollection = {}
+            db.dataCollectionCC = {}
         end)
         container:AddChild(clearCacheButton)
 
