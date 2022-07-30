@@ -4484,6 +4484,7 @@ function initFrames()
 	MDT:MakeSendingStatusBar(main_frame)
 	MDT:MakeAutomaticColorsFrame(main_frame)
     MDT:MakeCustomColorFrame(main_frame.automaticColorsFrame)
+    MDT:POI_CreateDropDown(main_frame)
 
     --devMode
     if db.devMode and MDT.CreateDevPanel then

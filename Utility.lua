@@ -108,3 +108,35 @@ U.TMEnd = function()
     end
     ViragDevTool_AddData(stepTimes)
 end
+
+local function getGroupMembers(reversed, forceParty)
+    local unit  = (not forceParty and IsInRaid()) and 'raid' or 'party'
+    local numGroupMembers = forceParty and GetNumSubgroupMembers()  or GetNumGroupMembers()
+    local i = reversed and numGroupMembers or (unit == 'party' and 0 or 1)
+    return function()
+        local ret
+        if i == 0 and unit == 'party' then 
+            ret = 'player'
+        elseif i <= numGroupMembers and i > 0 then
+            ret = unit .. i
+        end
+        i = i + (reversed and -1 or 1)
+        return ret
+    end
+ end
+
+U.GetGroupMembers = function()
+    local groupMembers = {}
+    --iterate over all group members and add them to the list
+    for unit in getGroupMembers(false, false) do
+        local name = UnitName(unit)
+        if name then
+            local _,class = UnitClass(unit)
+            local _,_,_,classHexString = GetClassColor(class)
+            local coloredName = "|c"..classHexString..name.."|r"
+            tinsert(groupMembers, coloredName)
+        end
+    end
+    return groupMembers
+end
+

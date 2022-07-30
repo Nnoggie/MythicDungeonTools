@@ -281,9 +281,9 @@ function MDT:CreateDevPanel(frame)
                         MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] = {}
                     end
                     local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
-                    local botIndex = tonumber(option1:GetText())
-                    local posx,posy = 400+(30*botIndex),-250
-                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="mechagonBot",botIndex=botIndex})
+                    local botType = tonumber(option1:GetText())
+                    local posx,posy = 400+(30*botType),-250
+                    tinsert(pois,{x=posx,y=posy,template="MapLinkPinTemplate",type="mechagonBot",botType=botType})
                     MDT:POI_UpdateAll()
                 end,
             },

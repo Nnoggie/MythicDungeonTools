@@ -15,10 +15,25 @@ function MDT:POI_CreateFramePools()
 end
 
 --devMode
+local mechagonBotTypeIndexCounter = {
+    [1] = 0,
+    [2] = 0,
+    [3] = 0,
+}
 local function POI_SetDevOptions(frame,poi)
     frame:SetMovable(true)
     frame:EnableMouse(true)
     frame:SetScript("OnMouseDown", function(self, button)
+        if IsControlKeyDown() and poi.type == "mechagonBot" then            
+            if poi.botTypeIndex then return end
+            local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+            local poiData = pois[frame.poiIdx]
+            mechagonBotTypeIndexCounter[poi.botType] = mechagonBotTypeIndexCounter[poi.botType] + 1
+            poiData.botTypeIndex = mechagonBotTypeIndexCounter[poi.botType]
+            MDT:UpdateMap()
+            return
+        end
+
         if button == "LeftButton" and not self.isMoving then
             self:StartMoving()
             self.isMoving = true
@@ -447,16 +462,44 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             [2] = {text=L["Grease Bot"],color={r=1, g=0, b=0, a=0.8}, spellId=303924, textureId=252178}, --red
             [3] = {text=L["Shock Bot"],color={r=0, g=.8, b=1, a=0.8}, spellId=304063, textureId=136099}, --blue
         }
-        frame.Texture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b,botOptions[poi.botIndex].color.a)
-        frame.HighlightTexture:SetVertexColor(botOptions[poi.botIndex].color.r,botOptions[poi.botIndex].color.g,botOptions[poi.botIndex].color.b,botOptions[poi.botIndex].color.a)
-        frame:SetScript("OnClick",function()
+        frame.Texture:SetVertexColor(botOptions[poi.botType].color.r,botOptions[poi.botType].color.g,botOptions[poi.botType].color.b,botOptions[poi.botType].color.a)
+        -- if db.devMode and poi.botTypeIndex then
+        --     frame.Texture:SetVertexColor(0.45,0.45,0.45,0.6)
+        -- end
+        frame.HighlightTexture:SetVertexColor(botOptions[poi.botType].color.r,botOptions[poi.botType].color.g,botOptions[poi.botType].color.b,botOptions[poi.botType].color.a)
 
+        frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+        frame.playerAssignmentString:ClearAllPoints()
+        frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+        frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
+        frame.playerAssignmentString:SetJustifyV("CENTER")
+        frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
+        frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
+        frame.playerAssignmentString:SetText("")
+        frame.playerAssignmentString:SetScale(0.25)
+        frame.playerAssignmentString:Show()
+
+        frame:SetScript("OnClick",function()
+            local menu = {
+                { text = "Assign a player", isTitle = true, notCheckable = true },
+            }
+            local group = MDT.U.GetGroupMembers()
+            for _,player in pairs(group) do
+                table.insert(menu,{text=player,func=function()
+                    frame.playerAssignmentString:SetText(player)
+                end, checked = player == frame.playerAssignmentString:GetText()})
+            end
+            table.insert(menu,{text="Clear",func=function()
+                frame.playerAssignmentString:SetText("")
+            end,notCheckable = true})
+
+            EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0 , -15, "MENU")
         end)
         frame:SetScript("OnEnter",function()
             GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-            GameTooltip_SetTitle(GameTooltip, botOptions[poi.botIndex].text)
-            GameTooltip:AddTexture(botOptions[poi.botIndex].textureId)
-            GameTooltip:AddSpellByID(botOptions[poi.botIndex].spellId)
+            GameTooltip_SetTitle(GameTooltip, botOptions[poi.botType].text.." "..poi.botTypeIndex)
+            GameTooltip:AddTexture(botOptions[poi.botType].textureId)
+            GameTooltip:AddSpellByID(botOptions[poi.botType].spellId)
             GameTooltip:Show()
             frame.HighlightTexture:Show()
         end)
@@ -464,6 +507,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
             GameTooltip:Hide()
             frame.HighlightTexture:Hide()
         end)
+        
     end
     --fullscreen sizes
     local scale = MDT:GetScale()
@@ -505,6 +549,7 @@ function MDT:POI_UpdateAll()
             and (not poi.difficulty or poi.difficulty<=db.currentDifficulty)
         then
             local poiFrame = framePools:Acquire(poi.template)
+            if poiFrame.playerAssignmentString then poiFrame.playerAssignmentString:Hide() end
             poiFrame.poiIdx = poiIdx
             POI_SetOptions(poiFrame,poi.type,poi)
             poiFrame.x = poi.x
@@ -690,4 +735,8 @@ function MDT:FindConnectedDoor(npcId, numConnection)
             end
         end
     end
+end
+
+function MDT:POI_CreateDropDown(frame)
+    frame.poiDropDown = CreateFrame("frame", "MDTPullButtonsOptionsDropDown", nil, "UIDropDownMenuTemplate")
 end
