@@ -4485,6 +4485,7 @@ function initFrames()
 	MDT:MakeAutomaticColorsFrame(main_frame)
     MDT:MakeCustomColorFrame(main_frame.automaticColorsFrame)
     MDT:POI_CreateDropDown(main_frame)
+    MDT:CreateLiveShareGroup()
 
     --devMode
     if db.devMode and MDT.CreateDevPanel then
