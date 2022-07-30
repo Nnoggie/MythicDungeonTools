@@ -567,6 +567,14 @@ function MDT:POI_UpdateAll()
     end
 end
 
+function MDT:POI_GetFrameForPOI(poiIdx)
+    for _,poiFrame in pairs(points) do
+        if poiFrame.poiIdx == poiIdx then
+            return poiFrame
+        end
+    end
+end
+
 ---Animated Lines
 ---Credit to Grimonja for this part
 local texturePool
@@ -747,6 +755,9 @@ function MDT:POI_SetMechagonBotAssignment(sublevel, poiIdx, player)
     MDT:GetCurrentPreset().value.mechagonBots = MDT:GetCurrentPreset().value.mechagonBots or {}
     MDT:GetCurrentPreset().value.mechagonBots[sublevel] = MDT:GetCurrentPreset().value.mechagonBots[sublevel] or {}
     MDT:GetCurrentPreset().value.mechagonBots[sublevel][poiIdx] = player
+    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+        MDT:LiveSession_SendMechagonBotAssignment(sublevel, poiIdx, player)
+    end
 end
 
 function MDT:POI_GetMechagonBotAssignment(sublevel, poiIdx)

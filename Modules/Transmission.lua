@@ -175,6 +175,7 @@ MDT.liveSessionPrefixes = {
     ["reqPre"] = "MDTLiveReqPre",
     ["corrupted"] = "MDTLiveCor",
     ["difficulty"] = "MDTLiveLvl",
+    ["mechagonBot"] = "MDTLiveMechagon",
 }
 
 MDT.dataCollectionPrefixes = {
@@ -373,6 +374,21 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
                     MDT:KillAllAnimatedLines()
                     MDT:DrawAllAnimatedLines()
                 end
+            end
+        end
+    end
+
+    if prefix == MDT.liveSessionPrefixes.mechagonBot then
+        if MDT.liveSessionActive then
+            local preset = MDT:GetCurrentLivePreset()
+            local sublevel, poiIdx, player = unpack(MDT:StringToTable(message,false))
+            preset.value.mechagonBots = preset.value.mechagonBots or {}
+            preset.value.mechagonBots[sublevel] = preset.value.mechagonBots[sublevel] or {}
+            preset.value.mechagonBots[sublevel][poiIdx] = player
+            MDT:UpdateMap()
+            if MDT:GetCurrentSubLevel() == sublevel then
+                local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
+                if poiFrame then UIFrameFlash(poiFrame, 0.5, 1, 1, true, 1, 0); end
             end
         end
     end
