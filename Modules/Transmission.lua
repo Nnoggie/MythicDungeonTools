@@ -386,7 +386,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             preset.value.mechagonBots[sublevel] = preset.value.mechagonBots[sublevel] or {}
             preset.value.mechagonBots[sublevel][poiIdx] = player
             MDT:UpdateMap()
-            if MDT:GetCurrentSubLevel() == sublevel then
+            if sender ~= UnitFullName("player") and MDT:GetCurrentSubLevel() == sublevel then
                 local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
                 if poiFrame then UIFrameFlash(poiFrame, 0.5, 1, 1, true, 1, 0); end
             end
