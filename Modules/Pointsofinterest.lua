@@ -481,7 +481,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
 
         frame:SetScript("OnClick",function()
             local menu = {
-                { text = "Assign a player", isTitle = true, notCheckable = true },
+                { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
             }
             local group = MDT.U.GetGroupMembers()
             for _,player in pairs(group) do
@@ -490,7 +490,7 @@ local function POI_SetOptions(frame,type,poi,homeSublevel)
                     MDT:POI_SetMechagonBotAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
                 end, checked = player == frame.playerAssignmentString:GetText()})
             end
-            table.insert(menu,{text="Clear",func=function()
+            table.insert(menu,{text=L["dropdownClear"],func=function()
                 frame.playerAssignmentString:SetText("")
                 MDT:POI_SetMechagonBotAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
             end,notCheckable = true})
