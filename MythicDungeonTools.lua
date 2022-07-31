@@ -127,7 +127,7 @@ local defaultSavedVars = {
 do
   for i = 1, 80 do
     defaultSavedVars.global.presets[i] = {
-      [1] = { text = "Default", value = {}, colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [1] = { text = "Default", value = {}, objects = {}, colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
       [2] = { text = "<New Preset>", value = 0 },
     }
     defaultSavedVars.global.currentPreset[i] = 1
@@ -158,16 +158,20 @@ do
       end
       --fix db corruption
       do
-        for _, presets in pairs(db.presets) do
-          for presetIdx, preset in pairs(presets) do
-            if presetIdx == 1 then
-              if preset.text ~= "Default" then
-                preset.text = "Default"
-                preset.value = {}
-              end
-            end
-          end
-        end
+        -- this was responsible for overwriting the default preset on load
+        -- was this needed for anything?
+
+        -- for _, presets in pairs(db.presets) do
+        --   for presetIdx, preset in pairs(presets) do
+        --     if presetIdx == 1 then
+        --       if preset.text ~= "Default" then
+        --         preset.text = "Default"
+        --         preset.value = {}
+        --       end
+        --     end
+        --   end
+        -- end
+
         for k, v in pairs(db.currentPreset) do
           if v <= 0 then db.currentPreset[k] = 1 end
         end
