@@ -57,6 +57,9 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     MDT:ResetMainFramePos()
   elseif rqst == "dc" then
     MDT:ToggleDataCollection()
+  elseif rqst == "hardreset" then
+    local prompt = L["hardResetPrompt"]
+    MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
   else
     MDT:ShowInterface()
   end
