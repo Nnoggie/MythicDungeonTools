@@ -3,6 +3,7 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["Shrouded"] = "Shrouded"
 L["dropdownAssignPlayer"] = "Assign to Player"
 L["dropdownClear"] = "Clear"
 L["Zul'gamux"] = "Zul'gamux"
