@@ -881,6 +881,14 @@ function MDT:CreateDevPanel(frame)
     loadOnStartUpCheckbox:SetValue(db.loadOnStartUp)
     container:AddChild(loadOnStartUpCheckbox)
 
+    local loadCacheCheckbox = AceGUI:Create("CheckBox")
+    loadCacheCheckbox:SetLabel("Load Cache in devmode")
+    loadCacheCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+      db.loadCache = value or nil
+    end)
+    loadCacheCheckbox:SetValue(db.loadCache)
+    container:AddChild(loadCacheCheckbox)
+
     local clearCacheButton = AceGUI:Create("Button")
     clearCacheButton:SetText("Clear Cache + DC")
     clearCacheButton:SetCallback("OnClick", function()

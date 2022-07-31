@@ -4461,7 +4461,7 @@ function initFrames()
   tinsert(UISpecialFrames, "MDTFrame")
 
   --cache dungeon data to not lose data during reloads
-  if db.devMode then
+  if db.devMode and db.loadCache then
     if db.dungeonEnemies then
       MDT.dungeonEnemies = db.dungeonEnemies
     else
