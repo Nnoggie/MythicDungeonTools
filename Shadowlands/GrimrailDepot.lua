@@ -25,78 +25,78 @@ MDT.dungeonMaps[dungeonIndex] = {
   [4] = "BlackrockTrainDepotDungeon4_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-   [1] = L["Train Depot"],
-   [2] = L["Rafters"],
-   [3] = L["Rear Train Cars"],
-   [4] = L["Forward Train Cars"],
+  [1] = L["Train Depot"],
+  [2] = L["Rafters"],
+  [3] = L["Rear Train Cars"],
+  [4] = L["Forward Train Cars"],
 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
-     [1] = {
-        ["y"] = -146.89221596194;
-        ["x"] = 608.1555672928;
-        ["connectionIndex"] = 1;
-        ["target"] = 2;
-        ["type"] = "mapLink";
-        ["template"] = "MapLinkPinTemplate";
-        ["direction"] = 1;
-     };
+    [1] = {
+      ["y"] = -146.89221596194;
+      ["x"] = 608.1555672928;
+      ["connectionIndex"] = 1;
+      ["target"] = 2;
+      ["type"] = "mapLink";
+      ["template"] = "MapLinkPinTemplate";
+      ["direction"] = 1;
+    };
   };
   [2] = {
-     [1] = {
-        ["y"] = -141.61582922212;
-        ["x"] = 575.32466428391;
-        ["connectionIndex"] = 1;
-        ["target"] = 1;
-        ["type"] = "mapLink";
-        ["template"] = "MapLinkPinTemplate";
-        ["direction"] = -1;
-     };
-     [2] = {
-        ["y"] = -419.50622414568;
-        ["x"] = 589.39491710193;
-        ["connectionIndex"] = 2;
-        ["target"] = 3;
-        ["type"] = "mapLink";
-        ["template"] = "MapLinkPinTemplate";
-        ["direction"] = 2;
-     };
+    [1] = {
+      ["y"] = -141.61582922212;
+      ["x"] = 575.32466428391;
+      ["connectionIndex"] = 1;
+      ["target"] = 1;
+      ["type"] = "mapLink";
+      ["template"] = "MapLinkPinTemplate";
+      ["direction"] = -1;
+    };
+    [2] = {
+      ["y"] = -419.50622414568;
+      ["x"] = 589.39491710193;
+      ["connectionIndex"] = 2;
+      ["target"] = 3;
+      ["type"] = "mapLink";
+      ["template"] = "MapLinkPinTemplate";
+      ["direction"] = 2;
+    };
   };
   [3] = {
-     [1] = {
-        ["y"] = -288.1824443779;
-        ["x"] = 51.202194875684;
-        ["connectionIndex"] = 2;
-        ["target"] = 2;
-        ["type"] = "mapLink";
-        ["template"] = "MapLinkPinTemplate";
-        ["direction"] = -2;
-     };
-     [2] = {
-        ["y"] = -288.76876920935;
-        ["x"] = 755.89479856502;
-        ["connectionIndex"] = 3;
-        ["target"] = 4;
-        ["type"] = "mapLink";
-        ["template"] = "MapLinkPinTemplate";
-        ["direction"] = 2;
-     };
+    [1] = {
+      ["y"] = -288.1824443779;
+      ["x"] = 51.202194875684;
+      ["connectionIndex"] = 2;
+      ["target"] = 2;
+      ["type"] = "mapLink";
+      ["template"] = "MapLinkPinTemplate";
+      ["direction"] = -2;
+    };
+    [2] = {
+      ["y"] = -288.76876920935;
+      ["x"] = 755.89479856502;
+      ["connectionIndex"] = 3;
+      ["target"] = 4;
+      ["type"] = "mapLink";
+      ["template"] = "MapLinkPinTemplate";
+      ["direction"] = 2;
+    };
   };
   [4] = {
-     [1] = {
-        ["y"] = -288.1824443779;
-        ["x"] = 25.992709560802;
-        ["connectionIndex"] = 3;
-        ["target"] = 3;
-        ["type"] = "mapLink";
-        ["template"] = "MapLinkPinTemplate";
-        ["direction"] = -2;
-     };
+    [1] = {
+      ["y"] = -288.1824443779;
+      ["x"] = 25.992709560802;
+      ["connectionIndex"] = 3;
+      ["target"] = 3;
+      ["type"] = "mapLink";
+      ["template"] = "MapLinkPinTemplate";
+      ["direction"] = -2;
+    };
   };
 };
 
 
 
- MDT.dungeonTotalCount[dungeonIndex] = {normal=1000,teeming=1000,teemingEnabled=true}
- MDT.dungeonEnemies[dungeonIndex] = {}
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 1000, teeming = 1000, teemingEnabled = true }
+MDT.dungeonEnemies[dungeonIndex] = {}

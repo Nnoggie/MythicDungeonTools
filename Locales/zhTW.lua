@@ -1,4 +1,4 @@
-if not(GetLocale() == "zhTW") then
+if not (GetLocale() == "zhTW") then
   return
 end
 local addonName, MDT = ...

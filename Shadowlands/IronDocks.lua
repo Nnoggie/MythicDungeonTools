@@ -7,7 +7,7 @@ MDT.dungeonMaps[dungeonIndex] = {
   [1] = "IronDocks1_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-   [1] = L["IronDocks"],
+  [1] = L["IronDocks"],
 }
 MDT.mapInfo[dungeonIndex] = {
   viewportPositionOverrides = {
@@ -21,15 +21,15 @@ MDT.mapInfo[dungeonIndex] = {
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
-     [1] = {
-        ["y"] = -246.22239132748;
-        ["x"] = 248.70555745877;
-        ["template"] = "DeathReleasePinTemplate";
-        ["graveyardDescription"] = "";
-        ["type"] = "graveyard";
-     };
+    [1] = {
+      ["y"] = -246.22239132748;
+      ["x"] = 248.70555745877;
+      ["template"] = "DeathReleasePinTemplate";
+      ["graveyardDescription"] = "";
+      ["type"] = "graveyard";
+    };
   };
 };
 
- MDT.dungeonTotalCount[dungeonIndex] = {normal=1000,teeming=1000,teemingEnabled=true}
- MDT.dungeonEnemies[dungeonIndex] = {}
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 1000, teeming = 1000, teemingEnabled = true }
+MDT.dungeonEnemies[dungeonIndex] = {}
