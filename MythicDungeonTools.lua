@@ -2549,7 +2549,11 @@ MDT.zoneIdToDungeonIdx = {
   [1993] = 38, --tazavesh gambit
   [1995] = 38, --tazavesh gambit
   [1996] = 38, --tazavesh gambit
-  [1997] = 38, --tazavesh gambit
+  [606] = 40, --grimrail depot
+  [607] = 40, --grimrail depot
+  [608] = 40, --grimrail depot
+  [609] = 40, --grimrail depot
+  [595] = 41, --iron docks
   --https://wowpedia.fandom.com/wiki/UiMapID
 }
 local lastUpdatedDungeonIdx
