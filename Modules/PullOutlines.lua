@@ -158,7 +158,8 @@ function MDT:DrawHull(vertices, pullColor, pullIdx)
   local hull = convex_hull(vertices)
   if hull then
 
-    hull = expand_polygon(hull, 13)
+    -- expand_polygon: higher value = more points = more expensive = smoother outlines
+    hull = expand_polygon(hull, 30)
 
     hull = convex_hull(hull)
 
