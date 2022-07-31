@@ -84,6 +84,7 @@ end
 -- MDT.U:TMStep("ReleaseAll")
 -- MDT.U:TMStep("AddBlips")
 -- MDT.U:TMEnd()
+-- Open VDT to see the results, times are in elapsed milliseconds
 local debugTimes
 U.TMStart = function(self, segmentName)
   debugTimes = {}
