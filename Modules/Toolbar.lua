@@ -95,7 +95,6 @@ function MDT:initToolbar(frame)
   back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, 0.75, 0.55, 0.8)
   back:SetCallback("OnClick", function(widget, callbackName)
     self:PresetObjectStepBack()
-    if self.liveSessionActive then self:LiveSession_SendCommand("undo") end
   end)
   back.tooltipText = L["Undo"]
   local t = back.frame:CreateTexture(nil, "ARTWORK")
@@ -107,7 +106,6 @@ function MDT:initToolbar(frame)
   forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0.55, 0.8)
   forward:SetCallback("OnClick", function(widget, callbackName)
     self:PresetObjectStepForward()
-    if self.liveSessionActive then self:LiveSession_SendCommand("redo") end
   end)
   forward.tooltipText = L["Redo"]
   tinsert(widgets, forward)

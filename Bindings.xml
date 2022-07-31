@@ -2,6 +2,12 @@
     <Binding name="MDTTOGGLE" runOnUp="false" category="Mythic Dungeon Tools">
       MDT:ShowInterface()
     </Binding>
+    <Binding name="MDTUNDODRAWING" runOnUp="false" category="Mythic Dungeon Tools">
+      MDT:PresetObjectStepBack()
+    </Binding>
+    <Binding name="MDTREDODRAWING" runOnUp="false" category="Mythic Dungeon Tools">
+      MDT:PresetObjectStepForward()
+    </Binding>
     <Binding name="MDTNPC" runOnUp="false" category="Mythic Dungeon Tools">
         MDT:AddCloneAtCursorPosition()
     </Binding>

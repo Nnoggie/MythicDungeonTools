@@ -3,6 +3,8 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["undoDrawing"] = "Undo Drawing"
+L["redoDrawing"] = "Redo Drawing"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\nThis will reload the UI!"
 L["hardResetPromptTitle"] = "Delete ALL settings"
 L["Shrouded"] = "Shrouded"

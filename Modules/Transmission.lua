@@ -475,8 +475,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
       if message == "deletePresetObjects" then MDT:DeletePresetObjects(preset, true) end
-      if message == "undo" then MDT:PresetObjectStepBack(preset, true) end
-      if message == "redo" then MDT:PresetObjectStepForward(preset, true) end
+      if message == "undo" then MDT:PresetObjectStepBack(preset, true, true) end
+      if message == "redo" then MDT:PresetObjectStepForward(preset, true, true) end
       if message == "clear" then MDT:ClearPreset(preset, true) end
     end
   end

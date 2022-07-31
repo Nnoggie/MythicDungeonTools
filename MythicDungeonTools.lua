@@ -48,6 +48,8 @@ SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
 BINDING_NAME_MDTTOGGLE = L["Toggle Window"]
 BINDING_NAME_MDTNPC = L["New NPC at Cursor Position"]
 BINDING_NAME_MDTWAYPOINT = L["New Patrol Waypoint at Cursor Position"]
+BINDING_NAME_MDTUNDODRAWING = L["undoDrawing"]
+BINDING_NAME_MDTREDODRAWING = L["redoDrawing"]
 
 function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   local rqst, arg = strsplit(' ', cmd)
@@ -4182,7 +4184,9 @@ function MDT:DeletePresetObjects(preset, silent)
 end
 
 ---Undo the latest drawing
-function MDT:PresetObjectStepBack(preset, silent)
+function MDT:PresetObjectStepBack(preset, silent, ignoreLiveSession)
+  --keybind can be pressed before the frames are initialized
+  if not framesInitialized then return end
   preset = preset or self:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   preset.objects = preset.objects or {}
@@ -4199,10 +4203,12 @@ function MDT:PresetObjectStepBack(preset, silent)
       end
     end
   end
+  if self.liveSessionActive and not ignoreLiveSession then self:LiveSession_SendCommand("undo") end
 end
 
 ---Redo the latest drawing
-function MDT:PresetObjectStepForward(preset, silent)
+function MDT:PresetObjectStepForward(preset, silent, ignoreLiveSession)
+  if not framesInitialized then return end
   preset = preset or MDT:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   preset.objects = preset.objects or {}
@@ -4219,6 +4225,7 @@ function MDT:PresetObjectStepForward(preset, silent)
       end
     end
   end
+  if self.liveSessionActive and not ignoreLiveSession then self:LiveSession_SendCommand("redo") end
 end
 
 function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
