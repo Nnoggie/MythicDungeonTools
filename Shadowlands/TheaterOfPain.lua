@@ -96,7 +96,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -371.66498923535;
       ["x"] = 395.77796738459;
       ["template"] = "MapLinkPinTemplate";
-      ["text"] = L["theaterOfPain_miniBossNote"];
+      ["text"] = "theaterOfPain_miniBossNote";
       ["scale"] = 2;
       ["type"] = "generalNote";
     };
@@ -104,7 +104,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -286.77060932602;
       ["x"] = 479.7469803976;
       ["template"] = "MapLinkPinTemplate";
-      ["text"] = L["theaterOfPain_miniBossNote"];
+      ["text"] = "theaterOfPain_miniBossNote";
       ["scale"] = 2;
       ["type"] = "generalNote";
     };
@@ -113,7 +113,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 603.84404895006;
       ["template"] = "MapLinkPinTemplate";
       ["scale"] = 2;
-      ["text"] = L["theaterOfPain_miniBossNote"];
+      ["text"] = "theaterOfPain_miniBossNote";
       ["type"] = "generalNote";
     };
   };

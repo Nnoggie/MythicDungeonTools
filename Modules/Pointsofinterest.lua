@@ -13,6 +13,11 @@ function MDT:POI_CreateFramePools()
   MDT.poi_framePools:CreatePool("Frame", MDT.main_frame.mapPanelFrame, "MDTAnimatedLineTemplate")
 end
 
+local function formatPoiString(formattedText)
+  local localizedString = L[formattedText[1]]
+  return string.format(localizedString, unpack(formattedText, 2))
+end
+
 --devMode
 local mechagonBotTypeIndexCounter = {
   [1] = 0,
@@ -160,7 +165,7 @@ local function POI_SetOptions(frame, type, poi)
     local blipFrame
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(poi.tooltipText, 1, 1, 1)
+      GameTooltip:AddLine(L[poi.tooltipText], 1, 1, 1)
       GameTooltip:AddLine(L["Right-Click to reset NPC position"], 1, 1, 1)
       frame.HighlightTexture:Show()
       --highlight associated npc
@@ -234,8 +239,13 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetScript("OnClick", nil)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(poi.doorName ..
-        (slen(poi.doorDescription) > 0 and "\n" .. poi.doorDescription or "") ..
+      local doorName = poi.doorName and L[poi.doorName] or ""
+      local doorDescription = poi.doorDescription and L[poi.doorDescription] or ""
+      if poi.formattedDoorDescription then
+        doorDescription = formatPoiString(poi.formattedDoorDescription)
+      end
+      GameTooltip:AddLine(doorName ..
+        (slen(doorDescription) > 0 and "\n" .. doorDescription or "") ..
         (poi.lockpick and "\n|cFF32CD32" .. L["Locked"] or ""), 1, 1, 1, 1)
       GameTooltip:Show()
     end)
@@ -248,9 +258,10 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetSize(12 * scale, 12 * scale)
     frame:SetScript("OnClick", nil)
     frame:SetScript("OnEnter", function()
+      local text = poi.graveyardDescription and L[poi.graveyardDescription] or ""
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip:AddLine(L["Graveyard"] ..
-        (slen(poi.graveyardDescription) > 0 and "\n" .. poi.graveyardDescription or
+        (slen(text) > 0 and "\n" .. text or
             ""), 1, 1, 1, 1)
       GameTooltip:Show()
     end)
@@ -449,7 +460,8 @@ local function POI_SetOptions(frame, type, poi)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(poi.text, 1, 1, 1, 1)
+      local text = (poi.text and L[poi.text]) or (poi.formattedText and formatPoiString(poi.formattedText)) or ""
+      GameTooltip:AddLine(text, 1, 1, 1, 1)
       GameTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()

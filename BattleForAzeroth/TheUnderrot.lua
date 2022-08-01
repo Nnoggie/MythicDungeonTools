@@ -32,7 +32,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["index"] = 3;
       ["y"] = -224.08700914697;
       ["x"] = 388.05381306055;
-      ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
+      ["tooltipText"] = "Entropic Spire of Ny'alotha";
       ["weeks"] = {
         [1] = true;
         [2] = true;
@@ -69,7 +69,10 @@ MDT.mapPOIs[dungeonIndex] = {
         [7] = true;
       };
       ["difficulty"] = 10;
-      ["text"] = string.format(L["underrotVoidNote"], "\n");
+      ["formattedText"] = {
+        [1] = "underrotVoidNote",
+        [2] = "\n",
+      },
       ["season"] = 3;
       ["type"] = "generalNote";
     };
@@ -79,7 +82,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["index"] = 3;
       ["y"] = -259.17035648262;
       ["x"] = 633.47460185582;
-      ["tooltipText"] = L["Brutal Spire of Ny'alotha"];
+      ["tooltipText"] = "Brutal Spire of Ny'alotha";
       ["weeks"] = {
         [1] = true;
         [2] = true;
@@ -102,7 +105,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["index"] = 4;
       ["y"] = -86.857596613134;
       ["x"] = 476.43070789296;
-      ["tooltipText"] = L["Cursed Spire of Ny'alotha"];
+      ["tooltipText"] = "Cursed Spire of Ny'alotha";
       ["weeks"] = {
         [1] = true;
         [2] = true;
@@ -130,7 +133,10 @@ MDT.mapPOIs[dungeonIndex] = {
         [7] = true;
       };
       ["difficulty"] = 10;
-      ["text"] = string.format(L["underrotVoidNote"], "\n");
+      ["formattedText"] = {
+        [1] = "underrotVoidNote",
+        [2] = "\n",
+      },
       ["season"] = 3;
       ["type"] = "generalNote";
     };
@@ -140,7 +146,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["index"] = 5;
       ["y"] = -424.66002059941;
       ["x"] = 420.66398356862;
-      ["tooltipText"] = L["Entropic Spire of Ny'alotha"];
+      ["tooltipText"] = "Entropic Spire of Ny'alotha";
       ["weeks"] = {
         [11] = true;
         [7] = true;
@@ -157,7 +163,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["index"] = 6;
       ["y"] = -224.46022867992;
       ["x"] = 387.98452582283;
-      ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
+      ["tooltipText"] = "Defiled Spire of Ny'alotha";
       ["weeks"] = {
         [11] = true;
         [7] = true;
@@ -174,7 +180,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["index"] = 1;
       ["y"] = -424.36083618939;
       ["x"] = 420.96318081863;
-      ["tooltipText"] = L["Defiled Spire of Ny'alotha"];
+      ["tooltipText"] = "Defiled Spire of Ny'alotha";
       ["weeks"] = {
         [1] = true;
         [2] = true;
@@ -190,7 +196,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 392.23609464769;
       ["template"] = "MapLinkPinTemplate";
       ["scale"] = 2;
-      ["text"] = L["underrotMatronNote"];
+      ["text"] = "underrotMatronNote";
       ["type"] = "generalNote";
     };
   };

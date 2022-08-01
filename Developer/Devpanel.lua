@@ -301,13 +301,9 @@ function MDT:CreateDevPanel(frame)
       [8] = {
         text = "Export to LUA",
         func = function()
-          local export = tshow(MDT.mapPOIs[db.currentDungeonIdx], "MDT.mapPOIs[dungeonIndex]")
-          MDT.main_frame.ExportFrame:ClearAllPoints()
-          MDT.main_frame.ExportFrame:Show()
-          MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-          MDT.main_frame.ExportFrameEditbox:SetText(export)
-          MDT.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-          MDT.main_frame.ExportFrameEditbox:SetFocus()
+          local export = MDT:CreatePOIToLuaExportString(db.currentDungeonIdx)
+          MDT:VerifyExportString("return" .. strsub(export, 28), MDT.mapPOIs[db.currentDungeonIdx])
+          MDT:ExportString(export)
         end,
       },
     }
