@@ -36,626 +36,626 @@ MDT.scaleMultiplier[dungeonIndex] = 0.5
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 332, teeming = 398, teemingEnabled = true }
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
-    [27] = {
-      ["y"] = -148.83642133179;
-      ["x"] = 556.5056967313;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 7;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
+    [1] = {
+      y = -297.96115507462,
+      x = 610.60679250533,
+      scale = 0.5,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -1,
+      connectionIndex = 1,
+    },
     [2] = {
-      ["y"] = -333.65168296924;
-      ["x"] = 558.46857732898;
-      ["connectionIndex"] = 2;
-      ["scale"] = 0.5;
-      ["target"] = 2;
-      ["direction"] = -1;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mapLink";
-    };
-    [38] = {
-      ["y"] = -325.89388207122;
-      ["x"] = 625.50506837666;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 5;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
+      y = -333.65168296924,
+      x = 558.46857732898,
+      scale = 0.5,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -1,
+      connectionIndex = 2,
+    },
     [3] = {
-      ["y"] = -279.52125521908;
-      ["x"] = 574.45866688737;
-      ["connectionIndex"] = 3;
-      ["scale"] = 0.5;
-      ["target"] = 2;
-      ["direction"] = -1;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mapLink";
-    };
-    [54] = {
-      ["npcId"] = 161243;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 5;
-      ["scale"] = 0.7;
-      ["y"] = -270.61464902703;
-      ["x"] = 577.99812590181;
-      ["tooltipText"] = "Entropic Spire of Ny'alotha";
-      ["weeks"] = {
-        [11] = true;
-        [7] = true;
-        [8] = true;
-        [3] = true;
-        [12] = true;
-        [4] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -279.52125521908,
+      x = 574.45866688737,
+      scale = 0.5,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -1,
+      connectionIndex = 3,
+    },
     [4] = {
-      ["y"] = -212.8444832396;
-      ["x"] = 551.06437148011;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 6;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
+      y = -212.8444832396,
+      x = 551.06437148011,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 6,
+      botType = 1,
+    },
     [5] = {
-      ["y"] = -234.65759416891;
-      ["x"] = 570.4081232409;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 1;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
+      y = -234.65759416891,
+      x = 570.4081232409,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 1,
+      botType = 2,
+    },
     [6] = {
-      ["y"] = -224.89429558233;
-      ["x"] = 562.56343670748;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 1;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-    };
+      y = -224.89429558233,
+      x = 562.56343670748,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 1,
+      botType = 3,
+    },
     [7] = {
-      ["y"] = -215.3780669261;
-      ["x"] = 538.28593360371;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 8;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-    };
+      y = -215.3780669261,
+      x = 538.28593360371,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 8,
+      botType = 3,
+    },
     [8] = {
-      ["y"] = -139.58217635844;
-      ["x"] = 530.76707758754;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 11;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-    };
-    [10] = {
-      ["y"] = -206.38100056202;
-      ["x"] = 473.22877422011;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 12;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-    };
-    [12] = {
-      ["y"] = -243.80641854948;
-      ["x"] = 507.60863715781;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 13;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [14] = {
-      ["y"] = -205.13106218576;
-      ["x"] = 513.73813124503;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 9;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [16] = {
-      ["y"] = -166.33469091189;
-      ["x"] = 516.46610694203;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 7;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [20] = {
-      ["y"] = -187.08231781308;
-      ["x"] = 550.57489525023;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 6;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [24] = {
-      ["y"] = -191.36945506668;
-      ["x"] = 494.86977577049;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 10;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [28] = {
-      ["y"] = -329.98960490412;
-      ["x"] = 544.42214188352;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 15;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
-    [32] = {
-      ["y"] = -302.39525882203;
-      ["x"] = 637.10119258941;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 4;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
-    [40] = {
-      ["y"] = -301.81138788132;
-      ["x"] = 564.09880332545;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 7;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-    [48] = {
-      ["y"] = -347.57321131611;
-      ["x"] = 559.90337311529;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 6;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-    };
-    [56] = {
-      ["y"] = -238.80601466935;
-      ["x"] = 534.95029943284;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 11;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [33] = {
-      ["y"] = -333.27209326218;
-      ["x"] = 540.5428343558;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 16;
-      ["type"] = "mechagonBot";
-      ["botType"] = 2;
-    };
-    [41] = {
-      ["y"] = -329.82991272512;
-      ["x"] = 541.40178345696;
-      ["template"] = "MapLinkPinTemplate";
-      ["textAnchorTo"] = "LEFT";
-      ["textAnchor"] = "RIGHT";
-      ["botTypeIndex"] = 15;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-    [49] = {
-      ["y"] = -207.97570465004;
-      ["x"] = 600.80557421753;
-      ["template"] = "DeathReleasePinTemplate";
-      ["scale"] = 0.7;
-      ["graveyardDescription"] = "";
-      ["type"] = "graveyard";
-    };
-    [57] = {
-      ["y"] = -346.19602053885;
-      ["x"] = 635.97784011762;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 4;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [17] = {
-      ["y"] = -254.04748764752;
-      ["x"] = 556.82840548883;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 1;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
-    [21] = {
-      ["y"] = -118.92712169951;
-      ["x"] = 489.2563140263;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 8;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [25] = {
-      ["y"] = -228.72613757021;
-      ["x"] = 532.02295809942;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 12;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [29] = {
-      ["y"] = -352.44074204014;
-      ["x"] = 596.77823559925;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 3;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
-    [34] = {
-      ["y"] = -275.94831310475;
-      ["x"] = 503.74331369707;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 13;
-      ["type"] = "mechagonBot";
-      ["botType"] = 2;
-    };
-    [42] = {
-      ["y"] = -291.83494913422;
-      ["x"] = 618.73302802505;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 3;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-    [50] = {
-      ["npcId"] = 161124;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 1;
-      ["scale"] = 0.7;
-      ["y"] = -172.55633390924;
-      ["x"] = 534.93111665765;
-      ["tooltipText"] = "Brutal Spire of Ny'alotha";
-      ["weeks"] = {
-        [7] = true;
-        [1] = true;
-        [2] = true;
-        [4] = true;
-        [8] = true;
-        [9] = true;
-        [5] = true;
-        [10] = true;
-        [3] = true;
-        [6] = true;
-        [12] = true;
-        [11] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-    [55] = {
-      ["npcId"] = 161244;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 6;
-      ["scale"] = 0.7;
-      ["y"] = -289.7184787073;
-      ["x"] = 483.39369558387;
-      ["tooltipText"] = "Defiled Spire of Ny'alotha";
-      ["weeks"] = {
-        [11] = true;
-        [7] = true;
-        [8] = true;
-        [3] = true;
-        [12] = true;
-        [4] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-    [35] = {
-      ["y"] = -292.08747935885;
-      ["x"] = 559.07757956957;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 2;
-      ["type"] = "mechagonBot";
-      ["botType"] = 2;
-    };
+      y = -139.58217635844,
+      x = 530.76707758754,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 11,
+      botType = 3,
+    },
     [9] = {
-      ["y"] = -175.04651198904;
-      ["x"] = 540.92635472145;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 10;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
+      y = -175.04651198904,
+      x = 540.92635472145,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 10,
+      botType = 3,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [10] = {
+      y = -206.38100056202,
+      x = 473.22877422011,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 12,
+      botType = 3,
+    },
     [11] = {
-      ["y"] = -189.66852472879;
-      ["x"] = 536.25128071194;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 9;
-      ["botType"] = 3;
-      ["type"] = "mechagonBot";
-    };
+      y = -189.66852472879,
+      x = 536.25128071194,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 9,
+      botType = 3,
+    },
+    [12] = {
+      y = -243.80641854948,
+      x = 507.60863715781,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 13,
+      botType = 3,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
     [13] = {
-      ["y"] = -203.53954883103;
-      ["x"] = 468.19847280834;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 16;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
+      y = -203.53954883103,
+      x = 468.19847280834,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 16,
+      botType = 1,
+    },
+    [14] = {
+      y = -205.13106218576,
+      x = 513.73813124503,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 9,
+      botType = 1,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
     [15] = {
-      ["y"] = -230.02592508614;
-      ["x"] = 508.38130358793;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 10;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
+      y = -230.02592508614,
+      x = 508.38130358793,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 10,
+      botType = 1,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [16] = {
+      y = -166.33469091189,
+      x = 516.46610694203,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 7,
+      botType = 1,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [17] = {
+      y = -254.04748764752,
+      x = 556.82840548883,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 1,
+      botType = 1,
+    },
     [18] = {
-      ["y"] = -265.29687652619;
-      ["x"] = 520.24553702452;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 12;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
-    [22] = {
-      ["y"] = -187.87968029456;
-      ["x"] = 497.79772569009;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 9;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [26] = {
-      ["y"] = -315.72810679216;
-      ["x"] = 659.3448129009;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 5;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [30] = {
-      ["y"] = -304.59653072578;
-      ["x"] = 567.08288779037;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 5;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
-    [36] = {
-      ["y"] = -329.26453635893;
-      ["x"] = 621.16750899703;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 3;
-      ["type"] = "mechagonBot";
-      ["botType"] = 2;
-      ["textAnchor"] = "RIGHT",
-      ["textAnchorTo"] = "LEFT"
-    };
-    [44] = {
-      ["y"] = -281.59674117243;
-      ["x"] = 492.40373351868;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 13;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
-    [52] = {
-      ["npcId"] = 161244;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 3;
-      ["scale"] = 0.7;
-      ["y"] = -268.50623130873;
-      ["x"] = 576.43749229974;
-      ["tooltipText"] = "Defiled Spire of Ny'alotha";
-      ["weeks"] = {
-        [6] = true;
-        [2] = true;
-        [10] = true;
-        [1] = true;
-        [5] = true;
-        [9] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-    [51] = {
-      ["npcId"] = 161241;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 2;
-      ["scale"] = 0.7;
-      ["y"] = -327.16981399342;
-      ["x"] = 527.67937674097;
-      ["tooltipText"] = "Cursed Spire of Ny'alotha";
-      ["weeks"] = {
-        [7] = true;
-        [1] = true;
-        [2] = true;
-        [4] = true;
-        [8] = true;
-        [9] = true;
-        [5] = true;
-        [10] = true;
-        [3] = true;
-        [6] = true;
-        [12] = true;
-        [11] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-    [47] = {
-      ["y"] = -286.52084611685;
-      ["x"] = 504.37857399737;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 14;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [46] = {
-      ["y"] = -319.75288185165;
-      ["x"] = 517.29742984149;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 15;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
-    [39] = {
-      ["y"] = -323.46076098317;
-      ["x"] = 582.93940045404;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 4;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-    [43] = {
-      ["y"] = -255.91895040514;
-      ["x"] = 594.40817186316;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 2;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-    [37] = {
-      ["y"] = -268.14726196017;
-      ["x"] = 508.09388369307;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 14;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-    [45] = {
-      ["y"] = -303.87790100323;
-      ["x"] = 495.48728594798;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 14;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
-    [53] = {
-      ["npcId"] = 161243;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 4;
-      ["scale"] = 0.7;
-      ["y"] = -289.37552297437;
-      ["x"] = 483.8464170069;
-      ["tooltipText"] = "Entropic Spire of Ny'alotha";
-      ["weeks"] = {
-        [6] = true;
-        [2] = true;
-        [10] = true;
-        [1] = true;
-        [5] = true;
-        [9] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-    [1] = {
-      ["y"] = -297.96115507462;
-      ["x"] = 610.60679250533;
-      ["connectionIndex"] = 1;
-      ["scale"] = 0.5;
-      ["target"] = 2;
-      ["direction"] = -1;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mapLink";
-    };
+      y = -265.29687652619,
+      x = 520.24553702452,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 12,
+      botType = 1,
+    },
     [19] = {
-      ["y"] = -116.93772826178;
-      ["x"] = 496.41813267883;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 8;
-      ["botType"] = 1;
-      ["type"] = "mechagonBot";
-    };
+      y = -116.93772826178,
+      x = 496.41813267883,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 8,
+      botType = 1,
+    },
+    [20] = {
+      y = -187.08231781308,
+      x = 550.57489525023,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 6,
+      botType = 2,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [21] = {
+      y = -118.92712169951,
+      x = 489.2563140263,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 8,
+      botType = 2,
+    },
+    [22] = {
+      y = -187.87968029456,
+      x = 497.79772569009,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 9,
+      botType = 2,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
     [23] = {
-      ["y"] = -208.37735018763;
-      ["x"] = 511.4190611012;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 11;
-      ["botType"] = 2;
-      ["type"] = "mechagonBot";
-    };
+      y = -208.37735018763,
+      x = 511.4190611012,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 11,
+      botType = 2,
+    },
+    [24] = {
+      y = -191.36945506668,
+      x = 494.86977577049,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 10,
+      botType = 2,
+    },
+    [25] = {
+      y = -228.72613757021,
+      x = 532.02295809942,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 12,
+      botType = 2,
+    },
+    [26] = {
+      y = -315.72810679216,
+      x = 659.3448129009,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 5,
+      botType = 2,
+    },
+    [27] = {
+      y = -148.83642133179,
+      x = 556.5056967313,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 7,
+      botType = 2,
+    },
+    [28] = {
+      y = -329.98960490412,
+      x = 544.42214188352,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 15,
+      botType = 1,
+    },
+    [29] = {
+      y = -352.44074204014,
+      x = 596.77823559925,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 3,
+      botType = 1,
+    },
+    [30] = {
+      y = -304.59653072578,
+      x = 567.08288779037,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 5,
+      botType = 1,
+    },
     [31] = {
-      ["y"] = -301.05546920244;
-      ["x"] = 590.09738341794;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 2;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
-  };
+      y = -301.05546920244,
+      x = 590.09738341794,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 2,
+      botType = 1,
+    },
+    [32] = {
+      y = -302.39525882203,
+      x = 637.10119258941,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 4,
+      botType = 1,
+    },
+    [33] = {
+      y = -333.27209326218,
+      x = 540.5428343558,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 16,
+      botType = 2,
+    },
+    [34] = {
+      y = -275.94831310475,
+      x = 503.74331369707,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 13,
+      botType = 2,
+    },
+    [35] = {
+      y = -292.08747935885,
+      x = 559.07757956957,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 2,
+      botType = 2,
+    },
+    [36] = {
+      y = -329.26453635893,
+      x = 621.16750899703,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 3,
+      botType = 2,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [37] = {
+      y = -268.14726196017,
+      x = 508.09388369307,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 14,
+      botType = 3,
+    },
+    [38] = {
+      y = -325.89388207122,
+      x = 625.50506837666,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 5,
+      botType = 3,
+    },
+    [39] = {
+      y = -323.46076098317,
+      x = 582.93940045404,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 4,
+      botType = 3,
+    },
+    [40] = {
+      y = -301.81138788132,
+      x = 564.09880332545,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 7,
+      botType = 3,
+    },
+    [41] = {
+      y = -329.82991272512,
+      x = 541.40178345696,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 15,
+      botType = 3,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [42] = {
+      y = -291.83494913422,
+      x = 618.73302802505,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 3,
+      botType = 3,
+    },
+    [43] = {
+      y = -255.91895040514,
+      x = 594.40817186316,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 2,
+      botType = 3,
+    },
+    [44] = {
+      y = -281.59674117243,
+      x = 492.40373351868,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 13,
+      botType = 1,
+    },
+    [45] = {
+      y = -303.87790100323,
+      x = 495.48728594798,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 14,
+      botType = 1,
+    },
+    [46] = {
+      y = -319.75288185165,
+      x = 517.29742984149,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 15,
+      botType = 2,
+    },
+    [47] = {
+      y = -286.52084611685,
+      x = 504.37857399737,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 14,
+      botType = 2,
+    },
+    [48] = {
+      y = -347.57321131611,
+      x = 559.90337311529,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 6,
+      botType = 3,
+    },
+    [49] = {
+      y = -207.97570465004,
+      x = 600.80557421753,
+      scale = 0.7,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "",
+    },
+    [50] = {
+      y = -172.55633390924,
+      x = 534.93111665765,
+      scale = 0.7,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [3] = true,
+        [4] = true,
+        [5] = true,
+        [6] = true,
+        [7] = true,
+        [8] = true,
+        [9] = true,
+        [10] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161124,
+      index = 1,
+      tooltipText = "Brutal Spire of Ny'alotha",
+    },
+    [51] = {
+      y = -327.16981399342,
+      x = 527.67937674097,
+      scale = 0.7,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [3] = true,
+        [4] = true,
+        [5] = true,
+        [6] = true,
+        [7] = true,
+        [8] = true,
+        [9] = true,
+        [10] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161241,
+      index = 2,
+      tooltipText = "Cursed Spire of Ny'alotha",
+    },
+    [52] = {
+      y = -268.50623130873,
+      x = 576.43749229974,
+      scale = 0.7,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [5] = true,
+        [6] = true,
+        [9] = true,
+        [10] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161244,
+      index = 3,
+      tooltipText = "Defiled Spire of Ny'alotha",
+    },
+    [53] = {
+      y = -289.37552297437,
+      x = 483.8464170069,
+      scale = 0.7,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [5] = true,
+        [6] = true,
+        [9] = true,
+        [10] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161243,
+      index = 4,
+      tooltipText = "Entropic Spire of Ny'alotha",
+    },
+    [54] = {
+      y = -270.61464902703,
+      x = 577.99812590181,
+      scale = 0.7,
+      weeks = {
+        [3] = true,
+        [4] = true,
+        [7] = true,
+        [8] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161243,
+      index = 5,
+      tooltipText = "Entropic Spire of Ny'alotha",
+    },
+    [55] = {
+      y = -289.7184787073,
+      x = 483.39369558387,
+      scale = 0.7,
+      weeks = {
+        [3] = true,
+        [4] = true,
+        [7] = true,
+        [8] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161244,
+      index = 6,
+      tooltipText = "Defiled Spire of Ny'alotha",
+    },
+    [56] = {
+      y = -238.80601466935,
+      x = 534.95029943284,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 11,
+      botType = 1,
+      textAnchorTo = "LEFT",
+      textAnchor = "RIGHT",
+    },
+    [57] = {
+      y = -346.19602053885,
+      x = 635.97784011762,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 4,
+      botType = 2,
+    },
+  },
   [2] = {
-    [6] = {
-      ["y"] = -298.91144346753;
-      ["x"] = 578.82099588496;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 17;
-      ["type"] = "mechagonBot";
-      ["botType"] = 2;
-    };
-    [2] = {
-      ["y"] = -333.65168296924;
-      ["x"] = 558.46857732898;
-      ["connectionIndex"] = 2;
-      ["scale"] = 0.5;
-      ["target"] = 1;
-      ["direction"] = 1;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mapLink";
-    };
-    [3] = {
-      ["y"] = -271.00840459281;
-      ["x"] = 584.04916856459;
-      ["connectionIndex"] = 3;
-      ["scale"] = 0.5;
-      ["target"] = 1;
-      ["direction"] = 1;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mapLink";
-    };
     [1] = {
-      ["y"] = -297.96115507462;
-      ["x"] = 610.60679250533;
-      ["connectionIndex"] = 1;
-      ["scale"] = 0.5;
-      ["target"] = 1;
-      ["direction"] = 1;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mapLink";
-    };
+      y = -297.96115507462,
+      x = 610.60679250533,
+      scale = 0.5,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 1,
+      direction = 1,
+      connectionIndex = 1,
+    },
+    [2] = {
+      y = -333.65168296924,
+      x = 558.46857732898,
+      scale = 0.5,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 1,
+      direction = 1,
+      connectionIndex = 2,
+    },
+    [3] = {
+      y = -271.00840459281,
+      x = 584.04916856459,
+      scale = 0.5,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 1,
+      direction = 1,
+      connectionIndex = 3,
+    },
     [4] = {
-      ["y"] = -306.08658646836;
-      ["x"] = 590.280927351;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 17;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
+      y = -306.08658646836,
+      x = 590.280927351,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 17,
+      botType = 1,
+    },
     [5] = {
-      ["y"] = -305.25034924344;
-      ["x"] = 560.10336429371;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 18;
-      ["type"] = "mechagonBot";
-      ["botType"] = 1;
-    };
+      y = -305.25034924344,
+      x = 560.10336429371,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 18,
+      botType = 1,
+    },
+    [6] = {
+      y = -298.91144346753,
+      x = 578.82099588496,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 17,
+      botType = 2,
+    },
     [7] = {
-      ["y"] = -295.90008002847;
-      ["x"] = 575.16221744207;
-      ["template"] = "MapLinkPinTemplate";
-      ["botTypeIndex"] = 16;
-      ["type"] = "mechagonBot";
-      ["botType"] = 3;
-    };
-  };
-};
+      y = -295.90008002847,
+      x = 575.16221744207,
+      template = "MapLinkPinTemplate",
+      type = "mechagonBot",
+      botTypeIndex = 16,
+      botType = 3,
+    },
+  },
+}
 
 
 MDT.dungeonEnemies[dungeonIndex] = {

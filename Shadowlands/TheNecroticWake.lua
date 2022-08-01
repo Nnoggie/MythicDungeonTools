@@ -40,16 +40,16 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 283, teeming = 1000, teemingEna
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["y"] = -224.85072612286;
-      ["x"] = 228.01889531903;
-      ["connectionIndex"] = 1;
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
-  };
-};
+      y = -224.85072612286,
+      x = 228.01889531903,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = 1,
+      connectionIndex = 1,
+    },
+  },
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {

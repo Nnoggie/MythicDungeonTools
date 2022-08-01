@@ -55,139 +55,138 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 271, teeming = 1000, teemingEna
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["y"] = -213.03570672361;
-      ["x"] = 422.3263894392;
-      ["connectionIndex"] = 1;
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -1;
-    };
-  };
+      y = -213.03570672361,
+      x = 422.3263894392,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -1,
+      connectionIndex = 1,
+    },
+  },
   [2] = {
     [1] = {
-      ["y"] = -190.01484617386;
-      ["x"] = 271.56378333015;
-      ["connectionIndex"] = 1;
-      ["target"] = 1;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
+      y = -190.01484617386,
+      x = 271.56378333015,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 1,
+      direction = 1,
+      connectionIndex = 1,
+    },
     [2] = {
-      ["y"] = -98.174992961846;
-      ["x"] = 270.7719140048;
-      ["connectionIndex"] = 2;
-      ["target"] = 3;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
+      y = -98.174992961846,
+      x = 270.7719140048,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 3,
+      direction = 1,
+      connectionIndex = 2,
+    },
     [3] = {
-      ["y"] = -160.7212020877;
-      ["x"] = 179.72326263409;
-      ["connectionIndex"] = 3;
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -2;
-    };
+      y = -160.7212020877,
+      x = 179.72326263409,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = -2,
+      connectionIndex = 3,
+    },
     [4] = {
-      ["y"] = -371.66498923535;
-      ["x"] = 395.77796738459;
-      ["template"] = "MapLinkPinTemplate";
-      ["text"] = "theaterOfPain_miniBossNote";
-      ["scale"] = 2;
-      ["type"] = "generalNote";
-    };
+      y = -371.66498923535,
+      x = 395.77796738459,
+      scale = 2,
+      template = "MapLinkPinTemplate",
+      type = "generalNote",
+      text = "theaterOfPain_miniBossNote",
+    },
     [5] = {
-      ["y"] = -286.77060932602;
-      ["x"] = 479.7469803976;
-      ["template"] = "MapLinkPinTemplate";
-      ["text"] = "theaterOfPain_miniBossNote";
-      ["scale"] = 2;
-      ["type"] = "generalNote";
-    };
+      y = -286.77060932602,
+      x = 479.7469803976,
+      scale = 2,
+      template = "MapLinkPinTemplate",
+      type = "generalNote",
+      text = "theaterOfPain_miniBossNote",
+    },
     [6] = {
-      ["y"] = -435.65690452825;
-      ["x"] = 603.84404895006;
-      ["template"] = "MapLinkPinTemplate";
-      ["scale"] = 2;
-      ["text"] = "theaterOfPain_miniBossNote";
-      ["type"] = "generalNote";
-    };
-  };
+      y = -435.65690452825,
+      x = 603.84404895006,
+      scale = 2,
+      template = "MapLinkPinTemplate",
+      type = "generalNote",
+      text = "theaterOfPain_miniBossNote",
+    },
+  },
   [3] = {
     [1] = {
-      ["y"] = -465.53471872035;
-      ["x"] = 600.91809113105;
-      ["connectionIndex"] = 2;
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -1;
-    };
-  };
+      y = -465.53471872035,
+      x = 600.91809113105,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -1,
+      connectionIndex = 2,
+    },
+  },
   [4] = {
     [1] = {
-      ["y"] = -388.73733430644;
-      ["x"] = 689.5927878488;
-      ["connectionIndex"] = 3;
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 2;
-    };
+      y = -388.73733430644,
+      x = 689.5927878488,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = 2,
+      connectionIndex = 3,
+    },
     [2] = {
-      ["y"] = -365.77737100344;
-      ["x"] = 155.17979851978;
-      ["connectionIndex"] = 4;
-      ["target"] = 5;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
+      y = -365.77737100344,
+      x = 155.17979851978,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 5,
+      direction = 1,
+      connectionIndex = 4,
+    },
     [3] = {
-      ["y"] = -140.92807052201;
-      ["x"] = 213.76718798327;
-      ["connectionIndex"] = 5;
-      ["target"] = 5;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -1;
-    };
-  };
+      y = -140.92807052201,
+      x = 213.76718798327,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 5,
+      direction = -1,
+      connectionIndex = 5,
+    },
+  },
   [5] = {
     [1] = {
-      ["y"] = -123.51013920768;
-      ["x"] = 212.18385705726;
-      ["connectionIndex"] = 5;
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
+      y = -123.51013920768,
+      x = 212.18385705726,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = 1,
+      connectionIndex = 5,
+    },
     [2] = {
-      ["y"] = -330.14987688884;
-      ["x"] = 144.09573454242;
-      ["connectionIndex"] = 4;
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -1;
-    };
+      y = -330.14987688884,
+      x = 144.09573454242,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = -1,
+      connectionIndex = 4,
+    },
     [3] = {
-      ["y"] = -472.65995527842;
-      ["x"] = 543.91574181367;
-      ["connectionIndex"] = 6;
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
-  };
-};
-
+      y = -472.65995527842,
+      x = 543.91574181367,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = 1,
+      connectionIndex = 6,
+    },
+  },
+}
 MDT.dungeonEnemies[dungeonIndex] = {
   [27] = {
     ["clones"] = {

@@ -33,14 +33,14 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["y"] = -271.3633800292;
-      ["x"] = 714.72250671485;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "";
-      ["type"] = "graveyard";
-    };
-  };
-};
+      y = -271.3633800292,
+      x = 714.72250671485,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "",
+    },
+  },
+}
 
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 290, teeming = 1000, teemingEnabled = true }

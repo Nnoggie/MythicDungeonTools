@@ -48,74 +48,74 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["y"] = -297.16465402191;
-      ["x"] = 538.2460884279;
-      ["connectionIndex"] = 1;
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 2;
-    };
+      y = -297.16465402191,
+      x = 538.2460884279,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = 2,
+      connectionIndex = 1,
+    },
     [2] = {
-      ["y"] = -106.33895309988;
-      ["x"] = 191.11163560234;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "";
-      ["type"] = "graveyard";
-    };
-  };
+      y = -106.33895309988,
+      x = 191.11163560234,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "",
+    },
+  },
   [2] = {
     [1] = {
-      ["y"] = -133.28719090954;
-      ["x"] = 152.95188346973;
-      ["connectionIndex"] = 1;
-      ["target"] = 1;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -2;
-    };
+      y = -133.28719090954,
+      x = 152.95188346973,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 1,
+      direction = -2,
+      connectionIndex = 1,
+    },
     [2] = {
-      ["y"] = -320.47170086583;
-      ["x"] = 534.60425588888;
-      ["connectionIndex"] = 2;
-      ["target"] = 3;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -1;
-    };
-  };
+      y = -320.47170086583,
+      x = 534.60425588888,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 3,
+      direction = -1,
+      connectionIndex = 2,
+    },
+  },
   [3] = {
     [1] = {
-      ["y"] = -200.29488416438;
-      ["x"] = 660.60781085846;
-      ["connectionIndex"] = 2;
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 1;
-    };
+      y = -200.29488416438,
+      x = 660.60781085846,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = 1,
+      connectionIndex = 2,
+    },
     [2] = {
-      ["y"] = -345.9637472103;
-      ["x"] = 364.90002325125;
-      ["connectionIndex"] = 3;
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = -2;
-    };
-  };
+      y = -345.9637472103,
+      x = 364.90002325125,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = -2,
+      connectionIndex = 3,
+    },
+  },
   [4] = {
     [1] = {
-      ["y"] = -299.3496847796;
-      ["x"] = 698.48184402983;
-      ["connectionIndex"] = 3;
-      ["target"] = 3;
-      ["type"] = "mapLink";
-      ["template"] = "MapLinkPinTemplate";
-      ["direction"] = 2;
-    };
-  };
-};
+      y = -299.3496847796,
+      x = 698.48184402983,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 3,
+      direction = 2,
+      connectionIndex = 3,
+    },
+  },
+}
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 346, teeming = 1000, teemingEnabled = true }
 MDT.dungeonEnemies[dungeonIndex] = {

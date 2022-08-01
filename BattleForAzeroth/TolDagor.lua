@@ -67,585 +67,585 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 400, teeming = 479, teemingEnab
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["y"] = -262.48238754636;
-      ["x"] = 429.14575221168;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 2;
-      ["connectionIndex"] = 1;
-      ["type"] = "mapLink";
-      ["direction"] = -2;
-    };
+      y = -262.48238754636,
+      x = 429.14575221168,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -2,
+      connectionIndex = 1,
+    },
     [2] = {
-      ["y"] = -323.24173620103;
-      ["x"] = 647.46008933814;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "";
-      ["type"] = "graveyard";
-    };
+      y = -323.24173620103,
+      x = 647.46008933814,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "",
+    },
     [3] = {
-      ["y"] = -281.83580607976;
-      ["x"] = 462.50964014617;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "tdGraveyardNote1";
-      ["type"] = "graveyard";
-    };
+      y = -281.83580607976,
+      x = 462.50964014617,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "tdGraveyardNote1",
+    },
     [4] = {
-      ["npcId"] = 161241;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 1;
-      ["y"] = -252.7038536196;
-      ["x"] = 459.11832084016;
-      ["tooltipText"] = "Cursed Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [5] = true;
-        [6] = true;
-        [9] = true;
-        [10] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -252.7038536196,
+      x = 459.11832084016,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [5] = true,
+        [6] = true,
+        [9] = true,
+        [10] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161241,
+      index = 1,
+      tooltipText = "Cursed Spire of Ny'alotha",
+    },
     [5] = {
-      ["npcId"] = 161124;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 5;
-      ["y"] = -256.01460431956;
-      ["x"] = 454.01295713084;
-      ["tooltipText"] = "Brutal Spire of Ny'alotha";
-      ["weeks"] = {
-        [11] = true;
-        [7] = true;
-        [8] = true;
-        [3] = true;
-        [12] = true;
-        [4] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-  };
+      y = -256.01460431956,
+      x = 454.01295713084,
+      weeks = {
+        [3] = true,
+        [4] = true,
+        [7] = true,
+        [8] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161124,
+      index = 5,
+      tooltipText = "Brutal Spire of Ny'alotha",
+    },
+  },
   [2] = {
     [1] = {
-      ["y"] = -293.64644125367;
-      ["x"] = 592.87359409387;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 1;
-      ["connectionIndex"] = 1;
-      ["type"] = "mapLink";
-      ["direction"] = 2;
-    };
+      y = -293.64644125367,
+      x = 592.87359409387,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 1,
+      direction = 2,
+      connectionIndex = 1,
+    },
     [2] = {
-      ["y"] = -120.99821179174;
-      ["x"] = 454.00006758794;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 3;
-      ["type"] = "mapLink";
-      ["direction"] = -2;
-      ["connectionIndex"] = 2;
-    };
+      y = -120.99821179174,
+      x = 454.00006758794,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 3,
+      direction = -2,
+      connectionIndex = 2,
+    },
     [3] = {
-      ["y"] = -226.92509913277;
-      ["x"] = 497.30085206047;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "";
-      ["lockpick"] = true;
-      ["doorName"] = "Sewer Gate";
-      ["type"] = "door";
-    };
+      y = -226.92509913277,
+      x = 497.30085206047,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "",
+      lockpick = true,
+      doorName = "Sewer Gate",
+    },
     [4] = {
-      ["y"] = -259.49817884669;
-      ["x"] = 327.37631924595;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -259.49817884669,
+      x = 327.37631924595,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [5] = {
-      ["y"] = -252.32441542972;
-      ["x"] = 541.88933589202;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -252.32441542972,
+      x = 541.88933589202,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [6] = {
-      ["y"] = -198.70891225244;
-      ["x"] = 570.90039133419;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -198.70891225244,
+      x = 570.90039133419,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [7] = {
-      ["y"] = -161.93013251665;
-      ["x"] = 438.08534915751;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -161.93013251665,
+      x = 438.08534915751,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [8] = {
-      ["y"] = -246.92767963576;
-      ["x"] = 413.76855097664;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -246.92767963576,
+      x = 413.76855097664,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [9] = {
-      ["y"] = -145.16687134973;
-      ["x"] = 461.34582715726;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
-  };
+      y = -145.16687134973,
+      x = 461.34582715726,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
+  },
   [3] = {
     [1] = {
-      ["y"] = -187.11512731937;
-      ["x"] = 476.41240071571;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 2;
-      ["type"] = "mapLink";
-      ["direction"] = -1;
-      ["connectionIndex"] = 2;
-    };
+      y = -187.11512731937,
+      x = 476.41240071571,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 2,
+      direction = -1,
+      connectionIndex = 2,
+    },
     [2] = {
-      ["y"] = -460.41462426303;
-      ["x"] = 311.79902903432;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["direction"] = 1;
-      ["connectionIndex"] = 3;
-    };
+      y = -460.41462426303,
+      x = 311.79902903432,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = 1,
+      connectionIndex = 3,
+    },
     [3] = {
-      ["y"] = -350.76394802461;
-      ["x"] = 310.03890671508;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Gate";
-      ["type"] = "door";
-    };
+      y = -350.76394802461,
+      x = 310.03890671508,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "",
+      lockpick = true,
+      doorName = "Prison Gate",
+    },
     [4] = {
-      ["y"] = -294.67309052738;
-      ["x"] = 478.42943341834;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Gate";
-      ["type"] = "door";
-    };
+      y = -294.67309052738,
+      x = 478.42943341834,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "",
+      lockpick = true,
+      doorName = "Prison Gate",
+    },
     [5] = {
-      ["y"] = -326.6835033043;
-      ["x"] = 298.43826548799;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -326.6835033043,
+      x = 298.43826548799,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Barsx";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Barsx",
+    },
     [6] = {
-      ["y"] = -236.06541579087;
-      ["x"] = 358.09242143672;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -236.06541579087,
+      x = 358.09242143672,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [7] = {
-      ["y"] = -418.6335527449;
-      ["x"] = 429.49956431235;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -418.6335527449,
+      x = 429.49956431235,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [8] = {
-      ["y"] = -303.0449876628;
-      ["x"] = 317.04689195555;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -303.0449876628,
+      x = 317.04689195555,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [9] = {
-      ["y"] = -254.86541064356;
-      ["x"] = 347.29237946953;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -254.86541064356,
+      x = 347.29237946953,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [10] = {
-      ["y"] = -369.72975641613;
-      ["x"] = 461.57195383542;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -369.72975641613,
+      x = 461.57195383542,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [11] = {
-      ["y"] = -392.9440473463;
-      ["x"] = 445.50049335717;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -392.9440473463,
+      x = 445.50049335717,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [12] = {
-      ["y"] = -322.22977757645;
-      ["x"] = 491.92910587132;
-      ["template"] = "MapLinkPinTemplate";
-      ["formattedDoorDescription"] = {
+      y = -322.22977757645,
+      x = 491.92910587132,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      formattedDoorDescription = {
         [1] = "tdBuffGateNote",
         [2] = "\n",
         [3] = "\n",
         [4] = "\n",
         [5] = "\n",
       },
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [13] = {
-      ["y"] = -324.41146834197;
-      ["x"] = 357.03975190127;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -324.41146834197,
+      x = 357.03975190127,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [14] = {
-      ["y"] = -323.00387569819;
-      ["x"] = 308.69262661692;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -323.00387569819,
+      x = 308.69262661692,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [15] = {
-      ["y"] = -170.64246587206;
-      ["x"] = 414.72803284209;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -170.64246587206,
+      x = 414.72803284209,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [16] = {
-      ["y"] = -200.28001925019;
-      ["x"] = 353.45401378142;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -200.28001925019,
+      x = 353.45401378142,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [17] = {
-      ["y"] = -395.00750840427;
-      ["x"] = 384.18148542908;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -395.00750840427,
+      x = 384.18148542908,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [18] = {
-      ["y"] = -237.49898650692;
-      ["x"] = 414.00297776122;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -237.49898650692,
+      x = 414.00297776122,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [19] = {
-      ["y"] = -178.47965873006;
-      ["x"] = 384.77433124093;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "tdprisonkey";
-    };
+      y = -178.47965873006,
+      x = 384.77433124093,
+      template = "MapLinkPinTemplate",
+      type = "tdprisonkey",
+    },
     [20] = {
-      ["npcId"] = 161244;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 2;
-      ["y"] = -200.24400336915;
-      ["x"] = 364.90530121951;
-      ["tooltipText"] = "Defiled Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [3] = true;
-        [4] = true;
-        [5] = true;
-        [6] = true;
-        [7] = true;
-        [8] = true;
-        [9] = true;
-        [10] = true;
-        [11] = true;
-        [12] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-  };
+      y = -200.24400336915,
+      x = 364.90530121951,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [3] = true,
+        [4] = true,
+        [5] = true,
+        [6] = true,
+        [7] = true,
+        [8] = true,
+        [9] = true,
+        [10] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161244,
+      index = 2,
+      tooltipText = "Defiled Spire of Ny'alotha",
+    },
+  },
   [4] = {
     [1] = {
-      ["y"] = -441.99833049439;
-      ["x"] = 313.00005758367;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 3;
-      ["type"] = "mapLink";
-      ["direction"] = -1;
-      ["connectionIndex"] = 3;
-    };
+      y = -441.99833049439,
+      x = 313.00005758367,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 3,
+      direction = -1,
+      connectionIndex = 3,
+    },
     [2] = {
-      ["y"] = -371.99834172614;
-      ["x"] = 219.00000645407;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 5;
-      ["type"] = "mapLink";
-      ["direction"] = 1;
-      ["connectionIndex"] = 4;
-    };
+      y = -371.99834172614,
+      x = 219.00000645407,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 5,
+      direction = 1,
+      connectionIndex = 4,
+    },
     [3] = {
-      ["y"] = -358.690180572;
-      ["x"] = 336.15677336968;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "tdGraveyardNote2";
-      ["type"] = "graveyard";
-    };
+      y = -358.690180572,
+      x = 336.15677336968,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "tdGraveyardNote2",
+    },
     [4] = {
-      ["y"] = -234.18683041859;
-      ["x"] = 322.38299113063;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "tdHowlisNote";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      y = -234.18683041859,
+      x = 322.38299113063,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "tdHowlisNote",
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [5] = {
-      ["y"] = -183.15399599877;
-      ["x"] = 359.05915201413;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "tdHowlisNote";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      y = -183.15399599877,
+      x = 359.05915201413,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "tdHowlisNote",
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [6] = {
-      ["y"] = -208.98680115971;
-      ["x"] = 341.18300314946;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "tdHowlisNote";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      y = -208.98680115971,
+      x = 341.18300314946,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "tdHowlisNote",
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [7] = {
-      ["y"] = -278.27853729051;
-      ["x"] = 491.23264157131;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "tdHowlisNote";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      y = -278.27853729051,
+      x = 491.23264157131,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "tdHowlisNote",
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [8] = {
-      ["y"] = -305.64700893053;
-      ["x"] = 475.44313696461;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "tdHowlisNote";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      y = -305.64700893053,
+      x = 475.44313696461,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "tdHowlisNote",
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [9] = {
-      ["y"] = -330.91014402277;
-      ["x"] = 460.17995520134;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "tdHowlisNote";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Bars";
-      ["type"] = "door";
-    };
+      y = -330.91014402277,
+      x = 460.17995520134,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "tdHowlisNote",
+      lockpick = true,
+      doorName = "Prison Bars",
+    },
     [10] = {
-      ["y"] = -210.61333863941;
-      ["x"] = 359.14450923037;
-      ["template"] = "MapLinkPinTemplate";
-      ["text"] = "tdWardenFightingNote";
-      ["type"] = "generalNote";
-    };
-  };
+      y = -210.61333863941,
+      x = 359.14450923037,
+      template = "MapLinkPinTemplate",
+      type = "generalNote",
+      text = "tdWardenFightingNote",
+    },
+  },
   [5] = {
     [1] = {
-      ["y"] = -384.99838623404;
-      ["x"] = 212.99992649071;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 4;
-      ["type"] = "mapLink";
-      ["direction"] = -1;
-      ["connectionIndex"] = 4;
-    };
+      y = -384.99838623404,
+      x = 212.99992649071,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 4,
+      direction = -1,
+      connectionIndex = 4,
+    },
     [2] = {
-      ["y"] = -92.998271234334;
-      ["x"] = 487.99998658896;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 6;
-      ["type"] = "mapLink";
-      ["direction"] = 1;
-      ["connectionIndex"] = 5;
-    };
+      y = -92.998271234334,
+      x = 487.99998658896,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 6,
+      direction = 1,
+      connectionIndex = 5,
+    },
     [3] = {
-      ["y"] = -404.49679019861;
-      ["x"] = 356.9995854944;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Gate";
-      ["type"] = "door";
-    };
+      y = -404.49679019861,
+      x = 356.9995854944,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "",
+      lockpick = true,
+      doorName = "Prison Gate",
+    },
     [4] = {
-      ["y"] = -270.18747899972;
-      ["x"] = 484.87937131732;
-      ["template"] = "MapLinkPinTemplate";
-      ["doorDescription"] = "";
-      ["lockpick"] = true;
-      ["doorName"] = "Prison Gate";
-      ["type"] = "door";
-    };
+      y = -270.18747899972,
+      x = 484.87937131732,
+      template = "MapLinkPinTemplate",
+      type = "door",
+      doorDescription = "",
+      lockpick = true,
+      doorName = "Prison Gate",
+    },
     [5] = {
-      ["npcId"] = 161243;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 3;
-      ["y"] = -294.76305450035;
-      ["x"] = 480.36573269417;
-      ["tooltipText"] = "Entropic Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [3] = true;
-        [4] = true;
-        [5] = true;
-        [6] = true;
-        [7] = true;
-        [8] = true;
-        [9] = true;
-        [10] = true;
-        [11] = true;
-        [12] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-  };
+      y = -294.76305450035,
+      x = 480.36573269417,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [3] = true,
+        [4] = true,
+        [5] = true,
+        [6] = true,
+        [7] = true,
+        [8] = true,
+        [9] = true,
+        [10] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161243,
+      index = 3,
+      tooltipText = "Entropic Spire of Ny'alotha",
+    },
+  },
   [6] = {
     [1] = {
-      ["y"] = -155.99833837338;
-      ["x"] = 452.00002179295;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 5;
-      ["type"] = "mapLink";
-      ["direction"] = -1;
-      ["connectionIndex"] = 5;
-    };
+      y = -155.99833837338,
+      x = 452.00002179295,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 5,
+      direction = -1,
+      connectionIndex = 5,
+    },
     [2] = {
-      ["y"] = -199.9983239565;
-      ["x"] = 519.99998390675;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 7;
-      ["type"] = "mapLink";
-      ["direction"] = 1;
-      ["connectionIndex"] = 6;
-    };
+      y = -199.9983239565,
+      x = 519.99998390675,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 7,
+      direction = 1,
+      connectionIndex = 6,
+    },
     [3] = {
-      ["y"] = -98.627695689899;
-      ["x"] = 387.54905152042;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "heavyCannon";
-    };
+      y = -98.627695689899,
+      x = 387.54905152042,
+      template = "MapLinkPinTemplate",
+      type = "heavyCannon",
+    },
     [4] = {
-      ["y"] = -238.8518062721;
-      ["x"] = 587.3175423851;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "heavyCannon";
-    };
+      y = -238.8518062721,
+      x = 587.3175423851,
+      template = "MapLinkPinTemplate",
+      type = "heavyCannon",
+    },
     [5] = {
-      ["y"] = -482.48947620288;
-      ["x"] = 427.66171594679;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "tdGraveyardNote3";
-      ["type"] = "graveyard";
-    };
+      y = -482.48947620288,
+      x = 427.66171594679,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "tdGraveyardNote3",
+    },
     [6] = {
-      ["npcId"] = 161124;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 4;
-      ["y"] = -373.03081292743;
-      ["x"] = 235.56798352785;
-      ["tooltipText"] = "Brutal Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [5] = true;
-        [6] = true;
-        [9] = true;
-        [10] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -373.03081292743,
+      x = 235.56798352785,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [5] = true,
+        [6] = true,
+        [9] = true,
+        [10] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161124,
+      index = 4,
+      tooltipText = "Brutal Spire of Ny'alotha",
+    },
     [7] = {
-      ["npcId"] = 161241;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 6;
-      ["y"] = -367.44586314567;
-      ["x"] = 237.88885800912;
-      ["tooltipText"] = "Cursed Spire of Ny'alotha";
-      ["weeks"] = {
-        [11] = true;
-        [7] = true;
-        [8] = true;
-        [3] = true;
-        [12] = true;
-        [4] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-  };
+      y = -367.44586314567,
+      x = 237.88885800912,
+      weeks = {
+        [3] = true,
+        [4] = true,
+        [7] = true,
+        [8] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161241,
+      index = 6,
+      tooltipText = "Cursed Spire of Ny'alotha",
+    },
+  },
   [7] = {
     [1] = {
-      ["y"] = -159.99830585159;
-      ["x"] = 569.99996362254;
-      ["template"] = "MapLinkPinTemplate";
-      ["target"] = 6;
-      ["type"] = "mapLink";
-      ["direction"] = -1;
-      ["connectionIndex"] = 6;
-    };
-  };
-};
+      y = -159.99830585159,
+      x = 569.99996362254,
+      template = "MapLinkPinTemplate",
+      type = "mapLink",
+      target = 6,
+      direction = -1,
+      connectionIndex = 6,
+    },
+  },
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {

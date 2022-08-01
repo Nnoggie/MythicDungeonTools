@@ -16,181 +16,181 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["y"] = -480.35147832794;
-      ["x"] = 434.8042835021;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "";
-      ["type"] = "graveyard";
-    };
+      y = -480.35147832794,
+      x = 434.8042835021,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "",
+    },
     [2] = {
-      ["y"] = -165.41051814016;
-      ["x"] = 230.88050878771;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mlFrackingTotem";
-    };
+      y = -165.41051814016,
+      x = 230.88050878771,
+      template = "MapLinkPinTemplate",
+      type = "mlFrackingTotem",
+    },
     [3] = {
-      ["y"] = -159.0643543431;
-      ["x"] = 229.53433707512;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mlFrackingTotem";
-    };
+      y = -159.0643543431,
+      x = 229.53433707512,
+      template = "MapLinkPinTemplate",
+      type = "mlFrackingTotem",
+    },
     [4] = {
-      ["y"] = -116.94137664378;
-      ["x"] = 286.53431587181;
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "mlMineCart";
-    };
+      y = -116.94137664378,
+      x = 286.53431587181,
+      template = "MapLinkPinTemplate",
+      type = "mlMineCart",
+    },
     [5] = {
-      ["y"] = -262.08125072401;
-      ["x"] = 367.76549732401;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "mlGraveyardNote1";
-      ["type"] = "graveyard";
-    };
+      y = -262.08125072401,
+      x = 367.76549732401,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "mlGraveyardNote1",
+    },
     [6] = {
-      ["y"] = -121.09600689235;
-      ["x"] = 275.70035521298;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "mlGraveyardNote2";
-      ["type"] = "graveyard";
-    };
+      y = -121.09600689235,
+      x = 275.70035521298,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "mlGraveyardNote2",
+    },
     [7] = {
-      ["y"] = -112.60568055995;
-      ["x"] = 479.54906443908;
-      ["template"] = "DeathReleasePinTemplate";
-      ["graveyardDescription"] = "mlGraveyardNote3";
-      ["type"] = "graveyard";
-    };
+      y = -112.60568055995,
+      x = 479.54906443908,
+      template = "DeathReleasePinTemplate",
+      type = "graveyard",
+      graveyardDescription = "mlGraveyardNote3",
+    },
     [8] = {
-      ["y"] = -273.73565889455;
-      ["x"] = 409.95526615971;
-      ["template"] = "MapLinkPinTemplate";
-      ["text"] = "mlJockeyNote";
-      ["type"] = "generalNote";
-    };
+      y = -273.73565889455,
+      x = 409.95526615971,
+      template = "MapLinkPinTemplate",
+      type = "generalNote",
+      text = "mlJockeyNote",
+    },
     [9] = {
-      ["y"] = -348.49370305917;
-      ["x"] = 415.73284153458;
-      ["template"] = "MapLinkPinTemplate";
-      ["text"] = "mlJockeyNote";
-      ["type"] = "generalNote";
-    };
+      y = -348.49370305917,
+      x = 415.73284153458,
+      template = "MapLinkPinTemplate",
+      type = "generalNote",
+      text = "mlJockeyNote",
+    },
     [10] = {
-      ["npcId"] = 161124;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 1;
-      ["y"] = -405.33085878462;
-      ["x"] = 451.71529736273;
-      ["tooltipText"] = "Brutal Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [3] = true;
-        [4] = true;
-        [5] = true;
-        [6] = true;
-        [7] = true;
-        [8] = true;
-        [9] = true;
-        [10] = true;
-        [11] = true;
-        [12] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -405.33085878462,
+      x = 451.71529736273,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [3] = true,
+        [4] = true,
+        [5] = true,
+        [6] = true,
+        [7] = true,
+        [8] = true,
+        [9] = true,
+        [10] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161124,
+      index = 1,
+      tooltipText = "Brutal Spire of Ny'alotha",
+    },
     [11] = {
-      ["npcId"] = 161241;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 2;
-      ["y"] = -275.22932156066;
-      ["x"] = 296.59599494222;
-      ["tooltipText"] = "Cursed Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [5] = true;
-        [6] = true;
-        [9] = true;
-        [10] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -275.22932156066,
+      x = 296.59599494222,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [5] = true,
+        [6] = true,
+        [9] = true,
+        [10] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161241,
+      index = 2,
+      tooltipText = "Cursed Spire of Ny'alotha",
+    },
     [12] = {
-      ["npcId"] = 161244;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 3;
-      ["y"] = -106.30385916865;
-      ["x"] = 341.12996466647;
-      ["tooltipText"] = "Defiled Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [5] = true;
-        [6] = true;
-        [9] = true;
-        [10] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -106.30385916865,
+      x = 341.12996466647,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [5] = true,
+        [6] = true,
+        [9] = true,
+        [10] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161244,
+      index = 3,
+      tooltipText = "Defiled Spire of Ny'alotha",
+    },
     [13] = {
-      ["npcId"] = 161243;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 4;
-      ["y"] = -118.90339334755;
-      ["x"] = 531.00495086141;
-      ["tooltipText"] = "Entropic Spire of Ny'alotha";
-      ["weeks"] = {
-        [1] = true;
-        [2] = true;
-        [3] = true;
-        [4] = true;
-        [5] = true;
-        [6] = true;
-        [7] = true;
-        [8] = true;
-        [9] = true;
-        [10] = true;
-        [11] = true;
-        [12] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -118.90339334755,
+      x = 531.00495086141,
+      weeks = {
+        [1] = true,
+        [2] = true,
+        [3] = true,
+        [4] = true,
+        [5] = true,
+        [6] = true,
+        [7] = true,
+        [8] = true,
+        [9] = true,
+        [10] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161243,
+      index = 4,
+      tooltipText = "Entropic Spire of Ny'alotha",
+    },
     [14] = {
-      ["npcId"] = 161244;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 5;
-      ["y"] = -275.62658557555;
-      ["x"] = 295.26874509012;
-      ["tooltipText"] = "Defiled Spire of Ny'alotha";
-      ["weeks"] = {
-        [11] = true;
-        [7] = true;
-        [8] = true;
-        [3] = true;
-        [12] = true;
-        [4] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
+      y = -275.62658557555,
+      x = 295.26874509012,
+      weeks = {
+        [3] = true,
+        [4] = true,
+        [7] = true,
+        [8] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161244,
+      index = 5,
+      tooltipText = "Defiled Spire of Ny'alotha",
+    },
     [15] = {
-      ["npcId"] = 161241;
-      ["type"] = "nyalothaSpire";
-      ["index"] = 6;
-      ["y"] = -108.08239691446;
-      ["x"] = 339.76874564595;
-      ["tooltipText"] = "Cursed Spire of Ny'alotha";
-      ["weeks"] = {
-        [11] = true;
-        [7] = true;
-        [8] = true;
-        [3] = true;
-        [12] = true;
-        [4] = true;
-      };
-      ["template"] = "VignettePinTemplate";
-    };
-  };
-};
+      y = -108.08239691446,
+      x = 339.76874564595,
+      weeks = {
+        [3] = true,
+        [4] = true,
+        [7] = true,
+        [8] = true,
+        [11] = true,
+        [12] = true,
+      },
+      template = "VignettePinTemplate",
+      type = "nyalothaSpire",
+      npcId = 161241,
+      index = 6,
+      tooltipText = "Cursed Spire of Ny'alotha",
+    },
+  },
+}
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
