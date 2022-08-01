@@ -164,17 +164,23 @@ function MDT:CreatePOIToLuaExportString(dungeonIndex)
 end
 
 function MDT:TestPOIToLuaExport()
+  local testResult = ""
   for i = 1, 100 do
+    local res
     local dungeonName = MDT:GetDungeonName(i)
     if dungeonName and dungeonName ~= "-" then
       local export = MDT:CreatePOIToLuaExportString(i)
       if export then
         if MDT:VerifyExportString("return" .. strsub(export, 28), MDT.mapPOIs[i]) then
-          print(i .. ": " .. dungeonName .. ": verified")
+          res = i .. ": " .. dungeonName .. ": verified"
         end
       else
-        print(i .. ": " .. dungeonName .. ": No POI Data")
+        res = i .. ": " .. dungeonName .. ": No POI Data"
       end
     end
+    if res then
+      testResult = testResult .. res .. "\n"
+    end
   end
+  MDT:ExportString(testResult)
 end
