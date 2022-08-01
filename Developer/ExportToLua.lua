@@ -6,7 +6,7 @@ local slen = string.len
 -- preserved. The resulting data would always be in random order and even small changes in the data cause
 -- the export to be completely different.
 -- We want instead to have a consistent way to export the dungeon data to lua that makes versioning easier.
--- If something like x and y position chang then only those values will change in the otherwise identical
+-- If for example x and y position change then only those values will change in the otherwise identical
 -- dungeon data string representation. This will make it easier to compare dungeon data between versions.
 
 function MDT:ExportString(export)
