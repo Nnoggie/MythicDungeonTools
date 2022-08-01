@@ -1,7 +1,7 @@
 local MDT = MDT
 local slen = string.len
 
--- The purpose of these functions is to provide a way better way to export the dungeon data to lua format.
+-- The purpose of these functions is to provide a much better way to export the dungeon data to lua format.
 -- Using the tShow function from Devpanel.lua does not work well because index and field orders are not
 -- preserved. The resulting data will always be in random order and even small changes in the data cause
 -- the export to be completely different.
