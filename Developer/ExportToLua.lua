@@ -123,7 +123,7 @@ do
   -- call 2: export enemies of dungeon 1
   -- call 3: export pois of dungeon 2
   -- ...
-  local dungeonIndex = 1
+  local dungeonIndex = 0
   local targetIsEnemies = true
 
   function MDT:ExportDungeonDataIncrementally()
