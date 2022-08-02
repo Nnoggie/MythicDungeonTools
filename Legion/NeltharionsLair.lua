@@ -150,12 +150,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96247;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Vileshard Crawler";
     ["displayId"] = 34068;
@@ -181,12 +176,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98406;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Embershard Scorpion";
     ["displayId"] = 65795;
@@ -223,12 +213,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91001;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Tarspitter Lurker";
     ["displayId"] = 37550;
@@ -251,12 +236,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 92610;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Understone Drummer";
     ["displayId"] = 64336;
@@ -347,12 +327,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 103459;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rockback Snapper";
     ["displayId"] = 66336;
@@ -390,12 +365,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102404;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Stoneclaw Grubmaster";
     ["displayId"] = 64667;
@@ -530,12 +500,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 90997;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Mightstone Breaker";
     ["displayId"] = 64679;
@@ -602,12 +567,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102430;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Tarspitter Slug";
     ["displayId"] = 66603;
@@ -638,12 +598,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105636;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Understone Drudge";
     ["displayId"] = 64776;
@@ -729,12 +684,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91008;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rockbound Pelter";
     ["displayId"] = 67568;
@@ -771,12 +721,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102232;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rockbound Trapper";
     ["displayId"] = 64665;
@@ -811,12 +756,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 113537;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Emberhusk Dominator";
     ["displayId"] = 70784;
@@ -913,12 +853,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91332;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Stoneclaw Hunter";
     ["displayId"] = 64667;
@@ -1000,12 +935,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91006;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rockback Gnasher";
     ["displayId"] = 65050;
@@ -1024,12 +954,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101438;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Vileshard Chunk";
     ["displayId"] = 64606;
@@ -1060,12 +985,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91006;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rockback Gnasher";
     ["displayId"] = 65050;
@@ -1107,12 +1027,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 92387;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Drums of War";
     ["displayId"] = 63017;
@@ -1181,12 +1096,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91000;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Vileshard Hulk";
     ["displayId"] = 65783;
@@ -1247,12 +1157,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 90998;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Blightshard Shaper";
     ["displayId"] = 65780;
@@ -1304,12 +1209,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102253;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Understone Demolisher";
     ["displayId"] = 64783;
@@ -1334,12 +1234,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101437;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Burning Geode";
     ["displayId"] = 33425;

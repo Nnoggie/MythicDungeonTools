@@ -64,12 +64,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [2] = {
     ["clones"] = {
@@ -167,12 +162,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [3] = {
     ["clones"] = {
@@ -229,12 +219,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [4] = {
     ["clones"] = {
@@ -277,12 +262,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [5] = {
     ["clones"] = {
@@ -331,12 +311,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [6] = {
     ["clones"] = {
@@ -367,12 +342,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [7] = {
     ["clones"] = {
@@ -421,12 +391,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 111;
     ["scale"] = 1.4;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [8] = {
     ["clones"] = {
@@ -492,12 +457,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [9] = {
     ["clones"] = {
@@ -615,12 +575,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [10] = {
     ["clones"] = {
@@ -669,12 +624,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [11] = {
     ["clones"] = {
@@ -753,12 +703,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [12] = {
     ["clones"] = {
@@ -873,12 +818,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [13] = {
     ["clones"] = {
@@ -954,12 +894,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [14] = {
     ["clones"] = {
@@ -1054,12 +989,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental";
     ["level"] = 111;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [15] = {
     ["clones"] = {
@@ -1169,12 +1099,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [16] = {
     ["clones"] = {
@@ -1229,12 +1154,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [17] = {
     ["clones"] = {
@@ -1279,12 +1199,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [18] = {
     ["clones"] = {
@@ -1615,12 +1530,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [19] = {
     ["clones"] = {
@@ -1774,12 +1684,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [20] = {
     ["clones"] = {
@@ -1852,12 +1757,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 111;
     ["scale"] = 1.4;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [21] = {
     ["clones"] = {
@@ -1908,12 +1808,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [22] = {
     ["clones"] = {
@@ -1958,12 +1853,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [23] = {
     ["clones"] = {
@@ -1993,12 +1883,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 110;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [24] = {
     ["clones"] = {
@@ -2017,12 +1902,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon";
     ["level"] = 111;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["r"] = 1;
-      ["g"] = 1;
-      ["b"] = 1;
-    };
+
   };
   [25] = {
     ["clones"] = {

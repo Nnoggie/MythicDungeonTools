@@ -34,12 +34,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102104;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Enslaved Shieldmaiden";
     ["displayId"] = 25801;
@@ -90,12 +85,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97043;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Seacursed Slaver";
     ["displayId"] = 66091;
@@ -156,12 +146,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97163;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.7;
     ["name"] = "Cursed Falke";
     ["displayId"] = 25630;
@@ -237,12 +222,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97200;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Seacursed Soulkeeper";
     ["displayId"] = 66090;
@@ -273,12 +253,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102375;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Runecarver Slave";
     ["displayId"] = 66119;
@@ -339,12 +314,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 114712;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Runecarver Slave";
     ["displayId"] = 66119;
@@ -388,12 +358,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99188;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Waterlogged Soul Guard";
     ["displayId"] = 66102;
@@ -451,12 +416,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97365;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Seacursed Mistmender";
     ["displayId"] = 70529;
@@ -544,12 +504,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98919;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Seacursed Swiftblade";
     ["displayId"] = 66103;
@@ -667,12 +622,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97119;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Shroud Hound";
     ["displayId"] = 64467;
@@ -788,12 +738,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97182;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["name"] = "Night Watch Mariner";
     ["displayId"] = 67179;
@@ -811,12 +756,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97185;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "The Grimewalker";
     ["displayId"] = 30710;
@@ -841,12 +781,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98973;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Skeletal Warrior";
     ["displayId"] = 66184;
@@ -893,12 +828,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97097;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Helarjar Champion";
     ["displayId"] = 66181;
@@ -935,12 +865,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99033;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Helarjar Mistcaller";
     ["displayId"] = 70528;
@@ -958,12 +883,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99307;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Skjal";
     ["displayId"] = 66121;

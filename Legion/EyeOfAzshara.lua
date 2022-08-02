@@ -101,12 +101,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91785;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 11855438;
     ["displayId"] = 51124;
@@ -206,12 +201,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["id"] = 91782;
     ["scale"] = 1.4;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["health"] = 24528930;
     ["displayId"] = 66813;
     ["creatureType"] = "Humanoid";
@@ -329,12 +319,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["id"] = 91781;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["health"] = 14819297;
     ["displayId"] = 66499;
     ["creatureType"] = "Humanoid";
@@ -392,12 +377,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["id"] = 95861;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["health"] = 14819297;
     ["displayId"] = 66153;
     ["creatureType"] = "Humanoid";
@@ -499,12 +479,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["id"] = 91783;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["health"] = 14819297;
     ["displayId"] = 66152;
     ["creatureType"] = "Humanoid";
@@ -578,12 +553,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["id"] = 100216;
     ["scale"] = 1;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["health"] = 14819297;
     ["displayId"] = 18393;
     ["creatureType"] = "Humanoid";
@@ -665,12 +635,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91786;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 17783157;
     ["displayId"] = 51219;
@@ -767,12 +732,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97171;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["health"] = 30661163;
     ["displayId"] = 66163;
@@ -861,12 +821,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91787;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.7;
     ["health"] = 8891579;
     ["displayId"] = 39490;
@@ -923,12 +878,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97173;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 17783157;
     ["displayId"] = 36212;
@@ -1151,12 +1101,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97172;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.7;
     ["health"] = 5243751;
     ["displayId"] = 25675;
@@ -1189,12 +1134,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97170;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 14819297;
     ["displayId"] = 19365;
@@ -1227,12 +1167,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95920;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 8891579;
     ["displayId"] = 23504;
@@ -1455,12 +1390,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99630;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["health"] = 5334947;
     ["displayId"] = 66508;
@@ -1769,12 +1699,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91793;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["health"] = 5334947;
     ["displayId"] = 42978;
@@ -1799,12 +1724,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95947;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 14819297;
     ["displayId"] = 66063;
@@ -1988,12 +1908,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91792;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["health"] = 30661163;
     ["displayId"] = 55460;
@@ -2014,12 +1929,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91790;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 14819297;
     ["displayId"] = 61620;
@@ -2037,12 +1947,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98173;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.5;
     ["health"] = 18396698;
     ["displayId"] = 29934;
@@ -2059,12 +1964,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100250;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.5;
     ["health"] = 18396698;
     ["displayId"] = 66536;
@@ -2081,12 +1981,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100249;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.5;
     ["health"] = 18396698;
     ["displayId"] = 66535;
@@ -2103,12 +1998,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100248;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.5;
     ["health"] = 18396698;
     ["displayId"] = 66534;
@@ -2163,12 +2053,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91796;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.5;
     ["health"] = 25755377;
     ["displayId"] = 66819;
@@ -2209,12 +2094,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95939;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.5;
     ["health"] = 25755377;
     ["displayId"] = 66820;
@@ -2467,12 +2347,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 106787;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["health"] = 5334947;
     ["displayId"] = 66508;
@@ -2639,12 +2514,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101414;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 10373509;
     ["displayId"] = 1763;
@@ -3070,12 +2940,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 91794;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["health"] = 4445789;
     ["displayId"] = 1763;

@@ -66,12 +66,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98425;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Unstable Amalgamation";
     ["displayId"] = 33922;
@@ -132,12 +127,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98728;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Acidic Bile";
     ["displayId"] = 46333;
@@ -283,12 +273,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105952;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Withered Manawraith";
     ["displayId"] = 70161;
@@ -365,12 +350,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98756;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Arcane Anomaly";
     ["displayId"] = 55131;
@@ -447,12 +427,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105651;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Dreadborne Seer";
     ["displayId"] = 67378;
@@ -531,12 +506,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105629;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Wyrmtongue Scavenger";
     ["displayId"] = 65211;
@@ -717,12 +687,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102351;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Mana Wyrm";
     ["displayId"] = 19285;
@@ -754,12 +719,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105682;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["name"] = "Felguard Destroyer";
     ["displayId"] = 39908;
@@ -1025,12 +985,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98733;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Withered Fiend";
     ["displayId"] = 70160;
@@ -1067,12 +1022,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105921;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Nightborne Spellsword";
     ["displayId"] = 69434;
@@ -1155,12 +1105,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105915;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Nightborne Reclaimer";
     ["displayId"] = 69432;
@@ -1318,12 +1263,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98732;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Plagued Rat";
     ["displayId"] = 27972;
@@ -1772,12 +1712,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 113699;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Forgotten Spirit";
     ["displayId"] = 70550;
@@ -1916,12 +1851,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105876;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Enchanted Broodling";
     ["displayId"] = 69416;
@@ -2006,12 +1936,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98759;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Vicious Manafang";
     ["displayId"] = 65920;
@@ -2098,12 +2023,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 106059;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Warp Shade";
     ["displayId"] = 31471;
@@ -2206,12 +2126,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98770;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Wrathguard Felblade";
     ["displayId"] = 64693;
@@ -2248,12 +2163,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105706;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Priestess of Misery";
     ["displayId"] = 21542;
@@ -2397,12 +2307,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105617;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Eredar Chaosbringer";
     ["displayId"] = 63997;

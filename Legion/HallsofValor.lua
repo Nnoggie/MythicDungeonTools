@@ -174,12 +174,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97087;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Champion";
     ["displayId"] = 67274;
@@ -285,12 +280,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95842;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Thundercaller";
     ["displayId"] = 67277;
@@ -354,12 +344,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95834;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Mystic";
     ["displayId"] = 64208;
@@ -403,12 +388,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95832;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Shieldmaiden";
     ["displayId"] = 25801;
@@ -461,12 +441,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96677;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Steeljaw Grizzly";
     ["displayId"] = 41014;
@@ -491,12 +466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96934;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Trapper";
     ["displayId"] = 67281;
@@ -515,12 +485,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97197;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Purifier";
     ["displayId"] = 64200;
@@ -545,12 +510,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99804;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Falconer";
     ["displayId"] = 25811;
@@ -681,12 +641,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96574;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Stormforged Sentinel";
     ["displayId"] = 67429;
@@ -711,12 +666,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101639;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Shieldmaiden";
     ["displayId"] = 25801;
@@ -804,12 +754,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96608;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Ebonclaw Worg";
     ["displayId"] = 70154;
@@ -827,12 +772,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97083;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "King Ranulf";
     ["displayId"] = 28087;
@@ -851,12 +791,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101637;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Aspirant";
     ["displayId"] = 70645;
@@ -874,12 +809,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95843;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "King Haldor";
     ["displayId"] = 28086;
@@ -903,12 +833,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97068;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Storm Drake";
     ["displayId"] = 67203;
@@ -952,12 +877,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96664;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Runecarver";
     ["displayId"] = 64200;
@@ -975,12 +895,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97219;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Solsten";
     ["displayId"] = 64575;
@@ -998,12 +913,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97084;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "King Tor";
     ["displayId"] = 28088;
@@ -1021,12 +931,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95674;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.8;
     ["name"] = "Fenryr";
     ["displayId"] = 64466;
@@ -1063,12 +968,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97202;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Olmyr the Enlightened";
     ["displayId"] = 64464;
@@ -1155,12 +1055,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96640;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Valarjar Marksman";
     ["displayId"] = 25811;
@@ -1223,12 +1118,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96609;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Gildedfur Stag";
     ["displayId"] = 45090;
@@ -1265,12 +1155,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97081;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "King Bjorn";
     ["displayId"] = 28085;
@@ -1327,12 +1212,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96611;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Angerhoof Bull";
     ["displayId"] = 65853;

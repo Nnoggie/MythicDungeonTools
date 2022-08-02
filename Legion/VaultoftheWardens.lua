@@ -85,12 +85,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98926;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadow Hunter";
     ["displayId"] = 70675;
@@ -171,12 +166,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96587;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Felsworn Infester";
     ["displayId"] = 64253;
@@ -194,12 +184,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98177;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Glayvianna Soulrender";
     ["displayId"] = 70670;
@@ -546,12 +531,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98963;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Blazing Imp";
     ["displayId"] = 65894;
@@ -720,12 +700,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97677;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Barbed Spiderling";
     ["displayId"] = 65922;
@@ -761,12 +736,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 97678;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Aranasi Broodmother";
     ["displayId"] = 65926;
@@ -784,12 +754,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98533;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Foul Mother";
     ["displayId"] = 67347;
@@ -1033,12 +998,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96480;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Viletongue Belcher";
     ["displayId"] = 73258;
@@ -1056,12 +1016,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99649;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Dreadlord Mendacius";
     ["displayId"] = 66917;
@@ -1118,12 +1073,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96657;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Blade Dancer Illianna";
     ["displayId"] = 58479;
@@ -1212,12 +1162,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 96584;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Immoliant Fury";
     ["displayId"] = 65666;
@@ -1255,12 +1200,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 98954;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Felsworn Myrmidon";
     ["displayId"] = 64727;
@@ -1315,12 +1255,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102584;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Malignant Defiler";
     ["displayId"] = 65542;
@@ -1375,12 +1310,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102583;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Fel Scorcher";
     ["displayId"] = 62511;
@@ -1412,12 +1342,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99956;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Fel-Infused Fury";
     ["displayId"] = 70673;
@@ -1435,12 +1360,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 102566;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Grimhorn the Enslaver";
     ["displayId"] = 64805;
@@ -1504,12 +1424,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100364;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Spirit of Vengeance";
     ["displayId"] = 66403;

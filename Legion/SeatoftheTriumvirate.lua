@@ -456,12 +456,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122478;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Void Discharge";
     ["displayId"] = 76601;
@@ -877,12 +872,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 124171;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadowguard Subjugator";
     ["displayId"] = 76542;
@@ -937,12 +927,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122398;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Sapped Voidlord";
     ["displayId"] = 56285;
@@ -985,12 +970,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122407;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Warp Stalker";
     ["displayId"] = 75244;
@@ -1528,12 +1508,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122401;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadowguard Trickster";
     ["displayId"] = 75005;
@@ -1582,12 +1557,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 125857;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Lashing Voidling";
     ["displayId"] = 29209;
@@ -1699,12 +1669,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122421;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["name"] = "Umbral War-Adept";
     ["displayId"] = 76899;
@@ -1727,12 +1692,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 125860;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["name"] = "Rift Warden";
     ["displayId"] = 76471;
@@ -1757,12 +1717,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122560;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadow Stalker";
     ["displayId"] = 76593;
@@ -1790,12 +1745,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122571;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Rift Warden";
     ["displayId"] = 76471;
@@ -1972,12 +1922,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122403;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadowguard Champion";
     ["displayId"] = 76939;
@@ -2345,12 +2290,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122322;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["name"] = "Famished Broken";
     ["displayId"] = 75479;
@@ -2566,12 +2506,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122413;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadowguard Riftstalker";
     ["displayId"] = 75003;
@@ -2626,12 +2561,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122405;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadowguard Conjurer";
     ["displayId"] = 75011;
@@ -2835,12 +2765,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122404;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadowguard Voidbender";
     ["displayId"] = 76423;
@@ -2938,12 +2863,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122408;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadow Stalker";
     ["displayId"] = 76593;
@@ -2998,12 +2918,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 124947;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Void Flayer";
     ["displayId"] = 78264;
@@ -3068,12 +2983,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 122423;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Grand Shadow-Weaver";
     ["displayId"] = 76900;

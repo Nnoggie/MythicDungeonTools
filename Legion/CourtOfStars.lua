@@ -171,12 +171,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 111563;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Duskwatch Guard";
     ["displayId"] = 70561;
@@ -334,12 +329,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104251;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Duskwatch Sentry";
     ["displayId"] = 70566;
@@ -461,12 +451,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104270;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["name"] = "Guardian Construct";
     ["displayId"] = 68553;
@@ -497,12 +482,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105704;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Arcane Manifestation";
     ["displayId"] = 54282;
@@ -520,12 +500,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104275;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Imacu'tya";
     ["displayId"] = 17543;
@@ -543,12 +518,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 108151;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Gerenth the Vile";
     ["displayId"] = 66917;
@@ -605,12 +575,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104277;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Legion Hound";
     ["displayId"] = 62513;
@@ -714,12 +679,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105699;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Mana Saber";
     ["displayId"] = 64620;
@@ -769,12 +729,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104300;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Shadow Mistress";
     ["displayId"] = 10923;
@@ -980,12 +935,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105715;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Watchful Inquisitor";
     ["displayId"] = 68418;
@@ -1250,12 +1200,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105703;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Mana Wyrm";
     ["displayId"] = 70565;
@@ -1400,12 +1345,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104247;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Duskwatch Arcanist";
     ["displayId"] = 70563;
@@ -1613,12 +1553,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104295;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Blazing Imp";
     ["displayId"] = 17035;
@@ -1787,12 +1722,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104278;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Felbound Enforcer";
     ["displayId"] = 68765;
@@ -1842,12 +1772,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 105705;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Bound Energy";
     ["displayId"] = 55561;
@@ -1865,12 +1790,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104274;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Baalgar the Watchful";
     ["displayId"] = 63588;
@@ -1907,12 +1827,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 104273;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Jazshariu";
     ["displayId"] = 9018;

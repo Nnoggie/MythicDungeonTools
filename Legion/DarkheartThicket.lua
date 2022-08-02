@@ -104,12 +104,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95772;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Frenzied Nightclaw";
     ["displayId"] = 64385;
@@ -245,12 +240,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101679;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Dreadsoul Poisoner";
     ["displayId"] = 67296;
@@ -326,12 +316,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95779;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["name"] = "Festerhide Grizzly";
     ["displayId"] = 66633;
@@ -442,12 +427,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99360;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Vilethorn Blossom";
     ["displayId"] = 69687;
@@ -485,12 +465,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100539;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Taintheart Deadeye";
     ["displayId"] = 64486;
@@ -557,12 +532,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100526;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Tormented Bloodseeker";
     ["displayId"] = 61828;
@@ -605,12 +575,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99359;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rotheart Keeper";
     ["displayId"] = 69688;
@@ -793,12 +758,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95771;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Dreadsoul Ruiner";
     ["displayId"] = 64539;
@@ -836,12 +796,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 101991;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Nightmare Dweller";
     ["displayId"] = 71636;
@@ -1054,12 +1009,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100529;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.6;
     ["name"] = "Hatespawn Slime";
     ["displayId"] = 47926;
@@ -1102,12 +1052,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95769;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Mindshattered Screecher";
     ["displayId"] = 64536;
@@ -1144,12 +1089,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 95766;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Crazed Razorbeak";
     ["displayId"] = 64535;
@@ -1274,12 +1214,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100531;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Bloodtainted Fury";
     ["displayId"] = 29278;
@@ -1355,12 +1290,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99366;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Taintheart Summoner";
     ["displayId"] = 66131;
@@ -1508,12 +1438,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99358;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Rotheart Dryad";
     ["displayId"] = 69689;
@@ -1563,12 +1488,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 99365;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Taintheart Stalker";
     ["displayId"] = 66740;
@@ -1636,12 +1556,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 100527;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["name"] = "Dreadfire Imp";
     ["displayId"] = 12190;

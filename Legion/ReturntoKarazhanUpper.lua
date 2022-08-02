@@ -183,12 +183,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 114626;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 16110718.34;
     ["displayId"] = 26404;
@@ -207,12 +202,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 114627;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 15573416.18;
     ["displayId"] = 10698;
@@ -231,12 +221,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115765;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["health"] = 32221436.68;
     ["displayId"] = 74335;
@@ -327,12 +312,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115484;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["health"] = 8305822.16;
     ["displayId"] = 73837;
@@ -390,12 +370,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115757;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["health"] = 18258814.76;
     ["displayId"] = 73944;
@@ -456,12 +431,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 114338;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["health"] = 6873911.06;
     ["displayId"] = 55144;
@@ -492,12 +462,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115417;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["health"] = 17184766.18;
     ["displayId"] = 73857;
@@ -522,12 +487,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115419;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["health"] = 16110718.34;
     ["displayId"] = 73859;
@@ -568,12 +528,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 114334;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["health"] = 12888583.7;
     ["displayId"] = 61850;
@@ -670,12 +625,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 114364;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 2491747.98;
     ["displayId"] = 62387;
@@ -707,12 +657,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115418;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 0.8;
     ["health"] = 18151408.2;
     ["displayId"] = 73858;
@@ -876,12 +821,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115831;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 8999917;
     ["displayId"] = 62384;
@@ -964,12 +904,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115488;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.2;
     ["health"] = 12888574.82;
     ["displayId"] = 63419;
@@ -988,12 +923,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115486;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1;
     ["health"] = 17453278.14;
     ["displayId"] = 73838;
@@ -1011,12 +941,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 115388;
-    ["color"] = {
-      ["a"] = 0.8;
-      ["b"] = 1;
-      ["g"] = 1;
-      ["r"] = 1;
-    };
+
     ["scale"] = 1.4;
     ["health"] = 45110011.5;
     ["displayId"] = 16293;
