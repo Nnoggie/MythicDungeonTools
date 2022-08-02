@@ -9,6 +9,7 @@ local slen = string.len
 -- If for example x and y position change then only those values will change in the otherwise identical
 -- dungeon data string representation. This will make it easier to compare dungeon data between versions.
 
+--- @param export string
 function MDT:ExportString(export)
   if not export then return end
   MDT:ShowInterface(true)
@@ -49,6 +50,12 @@ local function recursiveExport(obj, schema, indentCount)
   local res = ""
   local actualObjectType = type(obj)
   if schema.type == "schemaArray" then
+    if actualObjectType ~= "table" then
+      print("MDT recursiveExport: Error in " ..
+        schema.name ..
+        ": Expected table, got " .. actualObjectType .. " (field: " .. schema.name .. "; value: " .. tostring(obj) .. ")")
+      return "\"Error: Expected table, got " .. actualObjectType .. " (value: " .. tostring(obj) .. ")\";\n"
+    end
     res = res .. "{\n"
     for _, field in ipairs(schema.fields) do
       if obj[field.name] then
@@ -58,6 +65,10 @@ local function recursiveExport(obj, schema, indentCount)
     end
     return res .. getIndent(indentCount) .. "};\n"
   elseif schema.type == "array" then
+    if actualObjectType ~= "table" then
+      print("MDT recursiveExport: Error: Expected table, got " .. actualObjectType .. " (value: " .. tostring(obj) .. ")")
+      return "\"Error: Expected table, got " .. actualObjectType .. " (value: " .. tostring(obj) .. ")\";\n"
+    end
     res = res .. "{\n"
     for fieldName, value in pairsByKeys(obj) do
       local fieldNameType = type(fieldName)
@@ -67,7 +78,10 @@ local function recursiveExport(obj, schema, indentCount)
     end
     return res .. getIndent(indentCount) .. "};\n"
   elseif actualObjectType ~= schema.type then
-    return "\"TYPEERROR: " .. schema.type .. " expected, " .. actualObjectType .. " found\";\n"
+    print("MDT recursiveExport: Error: Expected " ..
+      schema.type .. ", got " .. actualObjectType .. " (field: " .. schema.name .. "; value: " .. tostring(obj) .. ")")
+    return "\"TYPEERROR: " ..
+        schema.type .. " expected, " .. actualObjectType .. " found" .. " (value: " .. tostring(obj) .. ")\";\n"
   elseif schema.type == "string" then
     return "\"" .. obj .. "\";\n"
   else
@@ -81,4 +95,25 @@ function MDT:ExportLuaTable(obj, schema)
     return
   end
   return (schema.name or "local table") .. " = " .. recursiveExport(obj, schema, 0)
+end
+
+--- @param target "enemies" | "pois"
+--- @param dungeonIndex number
+function MDT:TestExport(target, dungeonIndex)
+  local schema = MDT:GetSchema(target)
+  local dataToExport = (target == "enemies" and MDT.dungeonEnemies) or (target == "pois" and MDT.mapPOIs)
+  for i = dungeonIndex or 1, dungeonIndex or 100 do
+    local dungeonName = MDT:GetDungeonName(i)
+    if dungeonName and dungeonName ~= "-" then
+      print(dungeonName)
+      local export = MDT:ExportLuaTable(dataToExport[i], schema)
+      if dungeonIndex then
+        MDT:ExportString(export)
+      end
+      -- see results in chat frame, we don't need to show the data in the export frame
+      -- TODO: catch and throw errors with error() and pcall() and show all error details in the export frame
+      -- https://stackoverflow.com/questions/35735857/how-do-you-throw-lua-error-up
+      -- https://www.lua.org/manual/5.3/manual.html#pdf-error
+    end
+  end
 end

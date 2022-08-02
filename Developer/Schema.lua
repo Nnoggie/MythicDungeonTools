@@ -455,6 +455,7 @@ local schemas = {
   }
 }
 
+--- @param schemaName "enemies" | "pois"
 function MDT:GetSchema(schemaName)
   return schemas[schemaName]
 end
