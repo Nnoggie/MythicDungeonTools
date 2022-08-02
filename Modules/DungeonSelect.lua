@@ -118,3 +118,20 @@ function MDT:ScrollToNextDungeon(delta)
     dungeonDropdown:Fire("OnValueChanged", target)
   end
 end
+
+function MDT:FixDungeonDropDownList()
+  local valueToSet = indexToDungeonSelection[db.selectedDungeonList][db.currentDungeonIdx]
+  if not valueToSet then
+    -- dungeon not in selected list, find latest list that contains dungeon
+    for i = #dungeonSelectionToIndex, 1, -1 do
+      local list = dungeonSelectionToIndex[i]
+      for _, dungeonIndex in pairs(list) do
+        if dungeonIndex == db.currentDungeonIdx then
+          db.selectedDungeonList = i
+          MDT:UpdateDungeonDropDown()
+          break
+        end
+      end
+    end
+  end
+end

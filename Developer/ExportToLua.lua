@@ -135,6 +135,10 @@ do
     if dungeonName and dungeonName ~= "-" then
       MDT:ShowInterface(true)
       MDT:UpdateToDungeon(dungeonIndex)
+      local dropDown = self.main_frame.DungeonSelectionGroup.DungeonDropdown
+      if not dropDown.value then
+        MDT:FixDungeonDropDownList()
+      end
       MDT.main_frame.ExportFrame:Hide()
       local obj = targetIsEnemies and MDT.dungeonEnemies[dungeonIndex] or MDT.mapPOIs[dungeonIndex]
       local schema = MDT:GetSchema(targetIsEnemies and "enemies" or "pois")
