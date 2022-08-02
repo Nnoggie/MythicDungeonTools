@@ -11,6 +11,7 @@ local tinsert, tremove, CreateFrame, tonumber, max, min, abs, pairs, ipairs, Get
 
 local sizex = 840
 local sizey = 555
+local framesInitialized, initFrames
 
 local mythicColor = "|cFFFFFFFF"
 MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0.9 }
@@ -61,6 +62,9 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     MDT:ToggleDataCollection()
   elseif rqst == "hardreset" then
     local prompt = L["hardResetPrompt"]
+    if not framesInitialized then
+      initFrames()
+    end
     MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
   else
     MDT:ShowInterface()
@@ -84,7 +88,6 @@ function MDT:GetLocaleIndex()
   return localeToIndex[GetLocale()] or 1
 end
 
-local initFrames
 -------------------------
 --- Saved Variables  ----
 -------------------------
@@ -270,7 +273,6 @@ function MDT:GetDB()
   return db
 end
 
-local framesInitialized
 function MDT:ShowInterface(force)
   if not framesInitialized then initFrames() end
   if self.main_frame:IsShown() and not force then
