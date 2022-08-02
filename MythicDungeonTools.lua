@@ -139,13 +139,14 @@ do
 end
 
 -- Init db
+local eventFrame
 do
-  local frame = CreateFrame("Frame")
-  frame:RegisterEvent("ADDON_LOADED")
-  frame:RegisterEvent("GROUP_ROSTER_UPDATE")
-  frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+  eventFrame = CreateFrame("Frame")
+  eventFrame:RegisterEvent("ADDON_LOADED")
+  eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+  eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
   --TODO Register Affix Changed event
-  frame:SetScript("OnEvent", function(self, event, ...)
+  eventFrame:SetScript("OnEvent", function(self, event, ...)
     return MDT[event](self, ...)
   end)
 
@@ -182,7 +183,10 @@ do
       end
       --register AddOn Options
       MDT:RegisterOptions()
-      self:UnregisterEvent("ADDON_LOADED")
+      eventFrame:UnregisterEvent("ADDON_LOADED")
+    elseif addon == "Blizzard_ChallengesUI" then
+      eventFrame:UnregisterEvent("ADDON_LOADED")
+      MDT:UpdateAffixWeeks()
     end
   end
 
@@ -220,7 +224,7 @@ do
       C_MythicPlus.RequestMapInfo()
       C_MythicPlus.RequestRewards()
     end)
-    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+    eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
     if db.loadOnStartUp then MDT:ShowInterface(true) end
   end
 end
@@ -248,7 +252,9 @@ function MDT:UpdateAffixWeeks()
   -- Then from current time calculate which week in the affix rotation is live
   -- By doing this weekly you can populate the entire affix weeks rotation
   if not IsAddOnLoaded("Blizzard_ChallengesUI") then
+    eventFrame:RegisterEvent("ADDON_LOADED")
     LoadAddOn("Blizzard_ChallengesUI")
+    return
   end
   -- copied from MDT:GetCurrentAffixWeek not sure if necessary
   C_MythicPlus.RequestCurrentAffixes()
