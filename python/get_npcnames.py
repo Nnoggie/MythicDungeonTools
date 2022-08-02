@@ -10,6 +10,12 @@ import math
 import time
 from collections import OrderedDict 
 
+# Usage: 
+# 1. Refer to requirements.txt to install required packages
+# 2. Make sure to be in /python working directory
+# 3. Run this script
+# 4. Open the generated lua files and copy the contents to https://www.curseforge.com/wow/addons/mythic-dungeon-tools/localization
+
 # wowhead is picky
 browser_headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',

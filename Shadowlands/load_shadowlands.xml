@@ -16,4 +16,6 @@ regex to replace names:
     <Script file='TheaterOfPain.lua'/>
     <Script file='TazaveshLower.lua'/>
     <Script file='TazaveshUpper.lua'/>
+    <Script file='GrimrailDepot.lua'/>
+    <Script file='IronDocks.lua'/>
 </Ui>
