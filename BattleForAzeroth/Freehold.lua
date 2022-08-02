@@ -3434,7 +3434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["y"] = -403.58138534747;
         ["x"] = 423.43540478732;
-        ["blacktoothEvent"] = 0;
+        ["blacktoothEvent"] = true;
         ["g"] = 72;
         ["sublevel"] = 1;
       };
