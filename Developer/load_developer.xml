@@ -2,4 +2,5 @@
 	<Script file='Devpanel.lua'/>
 	<Script file='DataCollection.lua'/>
 	<Script file='ExportToLua.lua'/>
+	<Script file='Schema.lua'/>
 </Ui>

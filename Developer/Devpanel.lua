@@ -301,8 +301,7 @@ function MDT:CreateDevPanel(frame)
       [8] = {
         text = "Export to LUA",
         func = function()
-          local export = MDT:CreatePOIToLuaExportString(db.currentDungeonIdx)
-          MDT:VerifyExportString("return" .. strsub(export, 28), MDT.mapPOIs[db.currentDungeonIdx])
+          local export = MDT:ExportLuaTable(MDT.mapPOIs[db.currentDungeonIdx], MDT:GetSchema("pois"))
           MDT:ExportString(export)
         end,
       },
@@ -401,13 +400,8 @@ function MDT:CreateDevPanel(frame)
     button3:SetText("Export to LUA")
     button3:SetCallback("OnClick", function()
       MDT:CleanEnemyData(db.currentDungeonIdx)
-      local export = tshow(MDT.dungeonEnemies[db.currentDungeonIdx], "MDT.dungeonEnemies[dungeonIndex]")
-      MDT.main_frame.ExportFrame:ClearAllPoints()
-      MDT.main_frame.ExportFrame:Show()
-      MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-      MDT.main_frame.ExportFrameEditbox:SetText(export)
-      MDT.main_frame.ExportFrameEditbox:HighlightText(0, slen(export))
-      MDT.main_frame.ExportFrameEditbox:SetFocus()
+      local export = MDT:ExportLuaTable(MDT.dungeonEnemies[db.currentDungeonIdx], MDT:GetSchema("enemies"))
+      MDT:ExportString(export)
     end)
     container:AddChild(button3)
 
