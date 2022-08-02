@@ -257,8 +257,8 @@ function MDT:UpdateAffixWeeks()
 
   local season_start = { -- Edit this at the start of the season - IMPORTANT: This is North America launch in PST time
     ["year"] = 2022,
-    ["month"] = 3,
-    ["day"] = 1,
+    ["month"] = 8,
+    ["day"] = 2,
     ["hour"] = 8 -- You'll never need to change this
   }
 
