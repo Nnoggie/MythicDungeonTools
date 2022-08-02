@@ -119,9 +119,9 @@ function MDT:TestExport(target, dungeonIndex)
 end
 
 do
-  -- call 1: export pois of dungeon 1
-  -- call 2: export enemies of dungeon 1
-  -- call 3: export pois of dungeon 2
+  -- call 1: export enemies of dungeon 1
+  -- call 2: export pois of dungeon 1
+  -- call 3: export enemies of dungeon 2
   -- ...
   local dungeonIndex = 0
   local targetIsEnemies = true
