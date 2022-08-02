@@ -124,12 +124,18 @@ do
   -- call 3: export enemies of dungeon 2
   -- ...
   local dungeonIndex = 0
-  local targetIsEnemies = true
+  local targetIsEnemies = false
+  local startSet = false
 
-  function MDT:ExportDungeonDataIncrementally()
+  --- @param start number optional dungeonIndex to start from
+  function MDT:ExportDungeonDataIncrementally(start)
     targetIsEnemies = not targetIsEnemies
     if targetIsEnemies then
       dungeonIndex = dungeonIndex + 1
+    end
+    if start and not startSet then
+      dungeonIndex = start
+      startSet = true
     end
     local dungeonName = MDT:GetDungeonName(dungeonIndex)
     if dungeonName and dungeonName ~= "-" then
