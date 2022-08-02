@@ -19,17 +19,19 @@ MDT.mapInfo[dungeonIndex] = {
   }
 };
 
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 1000, teeming = 1000, teemingEnabled = true }
+
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      y = -246.22239132748,
-      x = 248.70555745877,
-      template = "DeathReleasePinTemplate",
-      type = "graveyard",
-      graveyardDescription = "",
-    },
-  },
-}
+      ["template"] = "DeathReleasePinTemplate";
+      ["type"] = "graveyard";
+      ["x"] = 248.70555745877;
+      ["y"] = -246.22239132748;
+      ["graveyardDescription"] = "";
+    };
+  };
+};
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 1000, teeming = 1000, teemingEnabled = true }
-MDT.dungeonEnemies[dungeonIndex] = {}
+MDT.dungeonEnemies[dungeonIndex] = {
+};
