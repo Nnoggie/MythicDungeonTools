@@ -30,8 +30,22 @@ function MDT:UpdateDungeonDropDown()
   local dungeonDropdown = MDT.main_frame.DungeonSelectionGroup.DungeonDropdown
   local sublevelDropdown = MDT.main_frame.DungeonSelectionGroup.SublevelDropdown
   local currentDungeonIdx = db.currentDungeonIdx
+  local valueToSet = indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx]
+  if not valueToSet then
+    -- dungeon not in selected list, find latest list that contains dungeon
+    for i = #dungeonSelectionToIndex, 1, -1 do
+      local list = dungeonSelectionToIndex[i]
+      for _, dungeonIndex in pairs(list) do
+        if dungeonIndex == currentDungeonIdx then
+          db.selectedDungeonList = i
+          valueToSet = indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx]
+          break
+        end
+      end
+    end
+  end
   dungeonDropdown:SetList(dungeonSelectionToNames[db.selectedDungeonList])
-  dungeonDropdown:SetValue(indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx])
+  dungeonDropdown:SetValue(valueToSet)
   dungeonDropdown:ClearFocus()
   sublevelDropdown:SetList(MDT.dungeonSubLevels[currentDungeonIdx])
   sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
