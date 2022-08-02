@@ -264,7 +264,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Risen Bonesoldier";
-    ["health"] = "132318";
+    ["health"] = 132318;
   };
   [2] = {
     ["clones"] = {
@@ -340,7 +340,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Risen Cultist";
-    ["health"] = "165398";
+    ["health"] = 165398;
   };
   [3] = {
     ["clones"] = {
@@ -377,7 +377,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Risen Warlord";
-    ["health"] = "297716";
+    ["health"] = 297716;
   };
   [4] = {
     ["clones"] = {
@@ -448,7 +448,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Skeletal Raptor";
-    ["health"] = "82097";
+    ["health"] = 82097;
   };
   [5] = {
     ["clones"] = {
@@ -484,7 +484,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Death Speaker";
-    ["health"] = "281177";
+    ["health"] = 281177;
   };
   [6] = {
     ["clones"] = {
@@ -689,7 +689,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Enraged Spirit";
-    ["health"] = "297716";
+    ["health"] = 297716;
   };
   [7] = {
     ["clones"] = {
@@ -717,7 +717,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["name"] = "Defunct Dental Drill";
-    ["health"] = "297716";
+    ["health"] = 297716;
   };
   [8] = {
     ["clones"] = {
@@ -788,7 +788,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["name"] = "Volatile Memory";
-    ["health"] = "33079";
+    ["health"] = 33079;
   };
   [9] = {
     ["clones"] = {
@@ -840,7 +840,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["name"] = "Headless Client";
-    ["health"] = "165398";
+    ["health"] = 165398;
   };
   [10] = {
     ["clones"] = {
@@ -865,7 +865,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["name"] = "4.RF-4.RF";
-    ["health"] = "297716";
+    ["health"] = 297716;
   };
   [11] = {
     ["clones"] = {
@@ -909,7 +909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["name"] = "Lubricator";
-    ["health"] = "231557";
+    ["health"] = 231557;
   };
   [12] = {
     ["clones"] = {
@@ -958,7 +958,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration";
     ["level"] = 60;
     ["name"] = "Sentient Oil";
-    ["health"] = "181938";
+    ["health"] = 181938;
   };
   [13] = {
     ["clones"] = {
@@ -989,7 +989,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Millhouse Manastorm";
-    ["health"] = "892053";
+    ["health"] = 892053;
   };
   [14] = {
     ["clones"] = {
@@ -1024,7 +1024,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Millificent Manastorm";
-    ["health"] = "759897";
+    ["health"] = 759897;
   };
   [15] = {
     ["clones"] = {
@@ -1118,7 +1118,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Atal'ai Hoodoo Hexxer";
-    ["health"] = "264636";
+    ["health"] = 264636;
   };
   [16] = {
     ["clones"] = {
@@ -1175,7 +1175,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Atal'ai High Priest";
-    ["health"] = "181938";
+    ["health"] = 181938;
   };
   [17] = {
     ["clones"] = {
@@ -1228,7 +1228,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Atal'ai Devoted";
-    ["health"] = "10135";
+    ["health"] = 10135;
   };
   [18] = {
     ["clones"] = {
@@ -1281,7 +1281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 60;
     ["name"] = "Atal'ai Deathwalker";
-    ["health"] = "198477";
+    ["health"] = 198477;
   };
   [19] = {
     ["clones"] = {
@@ -1310,7 +1310,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Hakkar the Soulflayer";
-    ["health"] = "958131";
+    ["health"] = 958131;
   };
   [20] = {
     ["clones"] = {
@@ -1387,7 +1387,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Weald Shimmermoth";
-    ["health"] = "148858";
+    ["health"] = 148858;
   };
   [21] = {
     ["clones"] = {
@@ -1472,7 +1472,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["stealth"] = true;
     ["name"] = "Spriggan Mendbender";
-    ["health"] = "115779";
+    ["health"] = 115779;
   };
   [22] = {
     ["clones"] = {
@@ -1550,7 +1550,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Juvenile Runestag";
-    ["health"] = "132318";
+    ["health"] = 132318;
   };
   [23] = {
     ["clones"] = {
@@ -1754,7 +1754,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Runestag Elderhorn";
-    ["health"] = "198477";
+    ["health"] = 198477;
   };
   [24] = {
     ["clones"] = {
@@ -1873,7 +1873,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["stealth"] = true;
     ["name"] = "Spriggan Barkbinder";
-    ["health"] = "115779";
+    ["health"] = 115779;
   };
   [25] = {
     ["clones"] = {
@@ -1973,7 +1973,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Bladebeak Hatchling";
-    ["health"] = "33079";
+    ["health"] = 33079;
   };
   [26] = {
     ["clones"] = {
@@ -2210,7 +2210,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Territorial Bladebeak";
-    ["health"] = "165398";
+    ["health"] = 165398;
   };
   [27] = {
     ["clones"] = {
@@ -2251,7 +2251,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["name"] = "Bladebeak Matriarch";
-    ["health"] = "330795";
+    ["health"] = 330795;
   };
   [28] = {
     ["clones"] = {
@@ -2275,7 +2275,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Dragonkin";
     ["level"] = 60;
     ["name"] = "Mythresh, Sky's Talons";
-    ["health"] = "396955";
+    ["health"] = 396955;
   };
   [29] = {
     ["clones"] = {
@@ -2304,7 +2304,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Dealer Xy'exa";
-    ["health"] = "1123326";
+    ["health"] = 1123326;
   };
   [30] = {
     ["clones"] = {
@@ -2340,7 +2340,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["name"] = "Mueh'zala";
-    ["health"] = "13215600";
+    ["health"] = 13215600;
   };
   [31] = {
     ["clones"] = {
@@ -2723,7 +2723,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["bonusSpell"] = 368241;
     ["name"] = "Wo Relic";
     ["ignoreFortified"] = true;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["displayId"] = 101046;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;
@@ -2811,7 +2811,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["badCreatureModel"] = true;
     ["bonusSpell"] = 368239;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["ignoreFortified"] = true;
     ["name"] = "Urh Relic";
     ["displayId"] = 105134;
@@ -2907,7 +2907,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 103111;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["iconTexture"] = 4335643;
   };
 };

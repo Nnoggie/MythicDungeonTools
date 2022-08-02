@@ -844,7 +844,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 178163;
     ["spells"] = {};
     ["name"] = "Murkbrine Shorerunner";
-    ["health"] = "26463";
+    ["health"] = 26463;
     ["count"] = 1;
     ["displayId"] = 101786;
     ["creatureType"] = "Humanoid";
@@ -959,7 +959,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355048] = {};
     };
     ["name"] = "Murkbrine Shellcrusher";
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["count"] = 6;
     ["displayId"] = 101785;
     ["creatureType"] = "Humanoid";
@@ -1104,7 +1104,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355464] = {};
     };
     ["name"] = "Coastwalker Goliath";
-    ["health"] = "330795";
+    ["health"] = 330795;
     ["count"] = 15;
     ["displayId"] = 101790;
     ["creatureType"] = "Giant";
@@ -1138,7 +1138,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2448;
     ["instanceID"] = 1194;
-    ["health"] = "991170";
+    ["health"] = 991170;
     ["count"] = 0;
     ["displayId"] = 100546;
     ["creatureType"] = "Mechanical";
@@ -1184,7 +1184,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Focused Ritualist";
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["count"] = 5;
     ["displayId"] = 101669;
     ["creatureType"] = "Humanoid";
@@ -1223,7 +1223,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2455;
     ["instanceID"] = 1194;
-    ["health"] = "982910";
+    ["health"] = 982910;
     ["count"] = 0;
     ["displayId"] = 100737;
     ["creatureType"] = "Humanoid";
@@ -1299,7 +1299,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [356133] = {};
     };
     ["name"] = "Burly Deckhand";
-    ["health"] = "198477";
+    ["health"] = 198477;
     ["count"] = 5;
     ["displayId"] = 101457;
     ["creatureType"] = "Humanoid";
@@ -1388,7 +1388,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 101046;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["iconTexture"] = 4335644;
   };
   [5] = {
@@ -1501,7 +1501,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355118] = {};
     };
     ["name"] = "Murkbrine Wavejumper";
-    ["health"] = "132318";
+    ["health"] = 132318;
     ["count"] = 3;
     ["displayId"] = 101787;
     ["creatureType"] = "Humanoid";
@@ -1567,7 +1567,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Hourglass Tidesage";
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["count"] = 5;
     ["displayId"] = 101468;
     ["creatureType"] = "Humanoid";
@@ -1653,7 +1653,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["bonusSpell"] = 368240;
     ["count"] = 0;
     ["badCreatureModel"] = true;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["displayId"] = 103111;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;
@@ -1674,7 +1674,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["id"] = 179399;
-    ["health"] = "33079";
+    ["health"] = 33079;
     ["name"] = "Drunk Pirate";
     ["displayId"] = 101469;
     ["creatureType"] = "Humanoid";
@@ -1826,7 +1826,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Murkbrine Fishmancer";
-    ["health"] = "115779";
+    ["health"] = 115779;
     ["count"] = 3;
     ["displayId"] = 101789;
     ["creatureType"] = "Humanoid";
@@ -1931,7 +1931,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355147] = {};
     };
     ["name"] = "Murkbrine Scalebinder";
-    ["health"] = "115779";
+    ["health"] = 115779;
     ["count"] = 3;
     ["displayId"] = 101788;
     ["creatureType"] = "Humanoid";
@@ -1975,7 +1975,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [368661] = {};
     };
     ["name"] = "Corsair Officer";
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["count"] = 5;
     ["displayId"] = 101464;
     ["creatureType"] = "Humanoid";
@@ -2006,7 +2006,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2449;
     ["instanceID"] = 1194;
-    ["health"] = "1040729";
+    ["health"] = 1040729;
     ["count"] = 0;
     ["displayId"] = 100063;
     ["creatureType"] = "Dragonkin";
@@ -2047,7 +2047,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355584] = {};
     };
     ["name"] = "Stormforged Guardian";
-    ["health"] = "238173";
+    ["health"] = 238173;
     ["count"] = 10;
     ["displayId"] = 67358;
     ["creatureType"] = "Elemental";
@@ -2081,7 +2081,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [357238] = {};
     };
     ["name"] = "Adorned Starseer";
-    ["health"] = "248097";
+    ["health"] = 248097;
     ["count"] = 10;
     ["displayId"] = 101668;
     ["creatureType"] = "Humanoid";
@@ -2172,7 +2172,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [2] = 0;
       [3] = 0.75;
     };
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["bonusSpell"] = 368239;
   };
   [15] = {
@@ -2258,7 +2258,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Devoted Accomplice";
-    ["health"] = "181938";
+    ["health"] = 181938;
     ["count"] = 5;
     ["displayId"] = 101670;
     ["creatureType"] = "Humanoid";

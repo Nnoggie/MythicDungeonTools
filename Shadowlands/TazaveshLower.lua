@@ -66,7 +66,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2454;
     ["instanceID"] = 0;
-    ["health"] = "594702";
+    ["health"] = 594702;
     ["count"] = 0;
     ["displayId"] = 100564;
     ["creatureType"] = "Humanoid";
@@ -88,7 +88,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [356548] = {};
       [352796] = {};
     };
-    ["health"] = "264636";
+    ["health"] = 264636;
     ["name"] = "Gatewarden Zo'mazz";
     ["displayId"] = 101505;
     ["creatureType"] = "Humanoid";
@@ -140,7 +140,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355980] = {};
     };
     ["name"] = "Support Officer";
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["count"] = 4;
     ["displayId"] = 100876;
     ["creatureType"] = "Humanoid";
@@ -206,7 +206,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Interrogation Specialist";
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["count"] = 4;
     ["displayId"] = 100877;
     ["creatureType"] = "Humanoid";
@@ -268,7 +268,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [356001] = {};
     };
     ["name"] = "Armored Overseer";
-    ["health"] = "215017";
+    ["health"] = 215017;
     ["count"] = 8;
     ["displayId"] = 100874;
     ["creatureType"] = "Humanoid";
@@ -298,7 +298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [356548] = {};
     };
     ["name"] = "Portalmancer Zo'honn";
-    ["health"] = "330795";
+    ["health"] = 330795;
     ["count"] = 20;
     ["displayId"] = 100877;
     ["creatureType"] = "Humanoid";
@@ -331,7 +331,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2437;
     ["instanceID"] = 0;
-    ["health"] = "1040729";
+    ["health"] = 1040729;
     ["name"] = "Zo'phex";
     ["displayId"] = 100049;
     ["creatureType"] = "Humanoid";
@@ -357,7 +357,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["stealthDetect"] = true;
     ["name"] = "Tracker Zo'korss";
-    ["health"] = "330795";
+    ["health"] = 330795;
     ["count"] = 20;
     ["displayId"] = 101474;
     ["creatureType"] = "Humanoid";
@@ -381,7 +381,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [357512] = {};
     };
     ["count"] = 10;
-    ["health"] = "264636";
+    ["health"] = 264636;
     ["name"] = "Enraged Direhorn";
     ["displayId"] = 47441;
     ["creatureType"] = "Beast";
@@ -477,7 +477,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355637] = {};
     };
     ["name"] = "Market Peacekeeper";
-    ["health"] = "198477";
+    ["health"] = 198477;
     ["count"] = 4;
     ["displayId"] = 101475;
     ["creatureType"] = "Humanoid";
@@ -557,7 +557,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
     };
-    ["health"] = "251404";
+    ["health"] = 251404;
     ["count"] = 8;
     ["displayId"] = 101477;
     ["creatureType"] = "Humanoid";
@@ -643,7 +643,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [357229] = {};
       [356967] = {};
     };
-    ["health"] = "248097";
+    ["health"] = 248097;
     ["name"] = "Cartel Muscle";
     ["displayId"] = 101598;
     ["creatureType"] = "Humanoid";
@@ -676,7 +676,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [350916] = {};
     };
-    ["health"] = "264636";
+    ["health"] = 264636;
     ["name"] = "Oasis Security";
     ["displayId"] = 101270;
     ["creatureType"] = "Humanoid";
@@ -709,7 +709,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2452;
     ["instanceID"] = 0;
-    ["health"] = "743378";
+    ["health"] = 743378;
     ["count"] = 0;
     ["displayId"] = 101481;
     ["creatureType"] = "Humanoid";
@@ -775,7 +775,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [347721] = {};
     };
     ["name"] = "Defective Sorter";
-    ["health"] = "66159";
+    ["health"] = 66159;
     ["count"] = 3;
     ["displayId"] = 100408;
     ["creatureType"] = "Mechanical";
@@ -813,7 +813,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2451;
     ["instanceID"] = 1194;
-    ["health"] = "1040729";
+    ["health"] = 1040729;
     ["count"] = 0;
     ["displayId"] = 99094;
     ["creatureType"] = "Humanoid";
@@ -893,7 +893,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["affix"] = 130;
       ["level"] = 10;
     };
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["modelPosition"] = {
       [1] = 0;
       [2] = 0;
@@ -981,7 +981,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Cartel Smuggler";
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["count"] = 5;
     ["displayId"] = 101595;
     ["creatureType"] = "Humanoid";
@@ -1018,7 +1018,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [353706] = {};
     };
     ["name"] = "Disruptive Patron";
-    ["health"] = "198477";
+    ["health"] = 198477;
     ["count"] = 0;
     ["displayId"] = 101271;
     ["creatureType"] = "Humanoid";
@@ -1054,7 +1054,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2454;
     ["instanceID"] = 0;
-    ["health"] = "396468";
+    ["health"] = 396468;
     ["count"] = 0;
     ["displayId"] = 101039;
     ["creatureType"] = "Aberration";
@@ -1099,7 +1099,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [348008] = {};
     };
     ["name"] = "P.O.S.T. Worker";
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["count"] = 5;
     ["displayId"] = 100406;
     ["creatureType"] = "Mechanical";
@@ -1191,7 +1191,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [366297] = {};
       [366288] = {};
     };
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["count"] = 0;
     ["ignoreFortified"] = true;
     ["name"] = "Urh Relic";
@@ -1236,7 +1236,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 12;
-    ["health"] = "238173";
+    ["health"] = 238173;
     ["name"] = "Ancient Core Hound";
     ["displayId"] = 101639;
     ["creatureType"] = "Beast";
@@ -1281,7 +1281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Stun"] = true;
     };
-    ["health"] = "132318";
+    ["health"] = 132318;
     ["count"] = 4;
     ["displayId"] = 101951;
     ["creatureType"] = "Beast";
@@ -1344,7 +1344,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Veteran Sparkcaster";
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["count"] = 4;
     ["displayId"] = 101476;
     ["creatureType"] = "Humanoid";
@@ -1371,7 +1371,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355473] = {};
     };
     ["name"] = "Commander Zo'far";
-    ["health"] = "396955";
+    ["health"] = 396955;
     ["count"] = 25;
     ["displayId"] = 101473;
     ["creatureType"] = "Humanoid";
@@ -1434,7 +1434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [357197] = {};
     };
     ["name"] = "Cartel Wiseguy";
-    ["health"] = "132318";
+    ["health"] = 132318;
     ["count"] = 5;
     ["displayId"] = 101596;
     ["creatureType"] = "Humanoid";
@@ -1467,7 +1467,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [348566] = {};
     };
     ["name"] = "Brawling Patron";
-    ["health"] = "132318";
+    ["health"] = 132318;
     ["count"] = 0;
     ["displayId"] = 101546;
     ["creatureType"] = "Humanoid";
@@ -1507,7 +1507,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2454;
     ["instanceID"] = 0;
-    ["health"] = "495585";
+    ["health"] = 495585;
     ["count"] = 0;
     ["displayId"] = 101044;
     ["creatureType"] = "Mechanical";
@@ -1547,7 +1547,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["name"] = "Overloaded Mailemental";
-    ["health"] = "124048";
+    ["health"] = 124048;
     ["count"] = 5;
     ["displayId"] = 68547;
     ["creatureType"] = "Elemental";
@@ -1649,7 +1649,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["bonusSpell"] = 368240;
     ["count"] = 0;
     ["badCreatureModel"] = true;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["displayId"] = 103111;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;
@@ -1709,7 +1709,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355900] = {};
     };
     ["name"] = "Customs Security";
-    ["health"] = "181938";
+    ["health"] = 181938;
     ["count"] = 4;
     ["displayId"] = 100873;
     ["creatureType"] = "Humanoid";
@@ -1891,7 +1891,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [355830] = {};
     };
     ["name"] = "Cartel Skulker";
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["count"] = 4;
     ["displayId"] = 101734;
     ["creatureType"] = "Humanoid";
@@ -1924,7 +1924,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [348566] = {};
     };
     ["name"] = "Brawling Patron";
-    ["health"] = "132318";
+    ["health"] = 132318;
     ["count"] = 0;
     ["displayId"] = 101544;
     ["creatureType"] = "Humanoid";
@@ -1958,7 +1958,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2436;
     ["instanceID"] = 0;
-    ["health"] = "1040729";
+    ["health"] = 1040729;
     ["count"] = 0;
     ["displayId"] = 100722;
     ["creatureType"] = "Humanoid";

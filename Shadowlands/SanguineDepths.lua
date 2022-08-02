@@ -118,7 +118,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [316068] = {};
     };
     ["count"] = 2;
-    ["health"] = "223514";
+    ["health"] = 223514;
     ["name"] = "Grubby Dirtcruncher";
     ["displayId"] = 93815;
     ["creatureType"] = "Humanoid";
@@ -218,7 +218,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 1;
-    ["health"] = "99239";
+    ["health"] = 99239;
     ["name"] = "Famished Tick";
     ["displayId"] = 94227;
     ["creatureType"] = "Aberration";
@@ -283,7 +283,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [324609] = {};
     };
     ["count"] = 4;
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["name"] = "Noble Skirmisher";
     ["displayId"] = 94441;
     ["creatureType"] = "Humanoid";
@@ -367,7 +367,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [320843] = {};
     };
     ["count"] = 4;
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["name"] = "Gluttonous Tick";
     ["displayId"] = 94226;
     ["creatureType"] = "Aberration";
@@ -441,7 +441,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [334558] = {};
     };
     ["count"] = 4;
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["name"] = "Dreadful Huntmaster";
     ["displayId"] = 93035;
     ["creatureType"] = "Humanoid";
@@ -507,7 +507,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [320991] = {};
     };
     ["count"] = 7;
-    ["health"] = "264636";
+    ["health"] = 264636;
     ["name"] = "Regal Mistdancer";
     ["displayId"] = 96681;
     ["creatureType"] = "Humanoid";
@@ -544,7 +544,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [321178] = {};
     };
     ["count"] = 7;
-    ["health"] = "248097";
+    ["health"] = 248097;
     ["name"] = "Insatiable Brute";
     ["displayId"] = 93853;
     ["creatureType"] = "Aberration";
@@ -578,7 +578,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2388;
     ["instanceID"] = 1189;
-    ["health"] = "1156365";
+    ["health"] = 1156365;
     ["name"] = "Kryxis the Voracious";
     ["displayId"] = 98966;
     ["creatureType"] = "Aberration";
@@ -755,7 +755,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 4;
-    ["health"] = "138934";
+    ["health"] = 138934;
     ["name"] = "Wicked Oppressor";
     ["displayId"] = 94573;
     ["creatureType"] = "Humanoid";
@@ -871,7 +871,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [321264] = {};
     };
     ["count"] = 1;
-    ["health"] = "49620";
+    ["health"] = 49620;
     ["name"] = "Rockbound Sprite";
     ["displayId"] = 94498;
     ["creatureType"] = "Humanoid";
@@ -1046,7 +1046,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 1;
-    ["health"] = "57889";
+    ["health"] = 57889;
     ["name"] = "Dark Acolyte";
     ["displayId"] = 93650;
     ["creatureType"] = "Humanoid";
@@ -1162,7 +1162,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [328170] = {};
     };
     ["count"] = 7;
-    ["health"] = "281177";
+    ["health"] = 281177;
     ["name"] = "Chamber Sentinel";
     ["displayId"] = 94737;
     ["creatureType"] = "Humanoid";
@@ -1226,7 +1226,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 7;
-    ["health"] = "231557";
+    ["health"] = 231557;
     ["name"] = "Grand Overseer";
     ["displayId"] = 96679;
     ["creatureType"] = "Humanoid";
@@ -1271,7 +1271,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 4;
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["name"] = "Ravenous Dreadbat";
     ["displayId"] = 92704;
     ["creatureType"] = "Beast";
@@ -1308,7 +1308,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [334326] = {};
     };
     ["count"] = 10;
-    ["health"] = "396955";
+    ["health"] = 396955;
     ["name"] = "Head Custodian Javlin";
     ["displayId"] = 97620;
     ["creatureType"] = "Humanoid";
@@ -1407,7 +1407,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 4;
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["name"] = "Research Scribe";
     ["displayId"] = 97622;
     ["creatureType"] = "Humanoid";
@@ -1456,7 +1456,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [335308] = {};
     };
     ["count"] = 7;
-    ["health"] = "264636";
+    ["health"] = 264636;
     ["name"] = "Depths Warden";
     ["displayId"] = 97780;
     ["creatureType"] = "Humanoid";
@@ -1500,7 +1500,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 1;
-    ["health"] = "33079";
+    ["health"] = 33079;
     ["name"] = "Infused Quill-feather";
     ["displayId"] = 96655;
     ["creatureType"] = "Not specified";
@@ -1552,7 +1552,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
     ["count"] = 4;
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["name"] = "Remnant of Fury";
     ["displayId"] = 97240;
     ["creatureType"] = "Aberration";
@@ -1613,7 +1613,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 162049;
     ["spells"] = {};
     ["count"] = 4;
-    ["health"] = "148858";
+    ["health"] = 148858;
     ["name"] = "Vestige of Doubt";
     ["displayId"] = 94279;
     ["creatureType"] = "Aberration";
@@ -1690,7 +1690,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [321220] = {};
     };
     ["count"] = 2;
-    ["health"] = "165398";
+    ["health"] = 165398;
     ["name"] = "Frenzied Ghoul";
     ["displayId"] = 93808;
     ["creatureType"] = "Humanoid";
@@ -1728,7 +1728,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2415;
     ["instanceID"] = 1189;
-    ["health"] = "925092";
+    ["health"] = 925092;
     ["name"] = "Executor Tarvold";
     ["displayId"] = 96156;
     ["creatureType"] = "Humanoid";
@@ -1757,7 +1757,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2421;
     ["instanceID"] = 1189;
-    ["health"] = "1156365";
+    ["health"] = 1156365;
     ["name"] = "Grand Proctor Beryllia";
     ["displayId"] = 94781;
     ["creatureType"] = "Humanoid";
@@ -1821,7 +1821,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 171455;
     ["spells"] = {};
     ["count"] = 1;
-    ["health"] = "33079";
+    ["health"] = 33079;
     ["name"] = "Stonewall Gargon";
     ["displayId"] = 95372;
     ["creatureType"] = "Beast";
@@ -1861,7 +1861,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2407;
     ["instanceID"] = 1189;
-    ["health"] = "6607800";
+    ["health"] = 6607800;
     ["name"] = "General Kaal";
     ["displayId"] = 95721;
     ["creatureType"] = "Humanoid";
@@ -1934,7 +1934,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [334753] = {};
     };
     ["count"] = 1;
-    ["health"] = "66159";
+    ["health"] = 66159;
     ["name"] = "Sanguine Cadet";
     ["displayId"] = 94954;
     ["creatureType"] = "Humanoid";
@@ -2272,7 +2272,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [328170] = {};
     };
     ["count"] = 7;
-    ["health"] = "264636";
+    ["health"] = 264636;
     ["name"] = "Chamber Sentinel";
     ["displayId"] = 94737;
     ["creatureType"] = "Humanoid";
@@ -2357,7 +2357,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["ignoreFortified"] = true;
     ["bonusSpell"] = 368241;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["badCreatureModel"] = true;
     ["count"] = 0;
     ["displayId"] = 101046;
@@ -2428,7 +2428,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["affix"] = 130;
       ["level"] = 10;
     };
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["modelPosition"] = {
       [1] = 0;
       [2] = 0;
@@ -2529,7 +2529,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["bonusSpell"] = 368240;
     ["name"] = "Vy Relic";
     ["badCreatureModel"] = true;
-    ["health"] = "27566";
+    ["health"] = 27566;
     ["displayId"] = 103111;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;

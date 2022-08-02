@@ -155,7 +155,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94304;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "132156";
+    ["health"] = 132156;
     ["scale"] = 1;
   };
   [2] = {
@@ -222,7 +222,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93491;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "165195";
+    ["health"] = 165195;
     ["scale"] = 1;
   };
   [4] = {
@@ -281,7 +281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93483;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "165195";
+    ["health"] = 165195;
     ["scale"] = 1;
   };
   [8] = {
@@ -353,7 +353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93491;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "165195";
+    ["health"] = 165195;
     ["scale"] = 1;
   };
   [16] = {
@@ -429,7 +429,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94313;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "148676";
+    ["health"] = 148676;
     ["scale"] = 1;
   };
   [17] = {
@@ -495,7 +495,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95754;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "165195";
+    ["health"] = 165195;
     ["scale"] = 1;
   };
   [9] = {
@@ -558,7 +558,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94313;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "132156";
+    ["health"] = 132156;
     ["scale"] = 1;
   };
   [18] = {
@@ -660,7 +660,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93482;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "33039";
+    ["health"] = 33039;
     ["scale"] = 0.7;
   };
   [5] = {
@@ -686,7 +686,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93471;
     ["creatureType"] = "Beast";
     ["level"] = 60;
-    ["health"] = "1718028";
+    ["health"] = 1718028;
     ["scale"] = 1;
   };
   [10] = {
@@ -743,7 +743,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94919;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "264312";
+    ["health"] = 264312;
     ["scale"] = 1;
   };
   [20] = {
@@ -775,7 +775,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95759;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "495585";
+    ["health"] = 495585;
     ["scale"] = 1.5;
   };
   [30] = {
@@ -866,7 +866,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["bonusSpell"] = 368240;
     ["name"] = "Vy Relic";
     ["badCreatureModel"] = true;
-    ["health"] = "33039";
+    ["health"] = 33039;
     ["displayId"] = 103111;
     ["creatureType"] = "Mechanical";
     ["level"] = 62;
@@ -900,7 +900,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95759;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "495585";
+    ["health"] = 495585;
     ["scale"] = 1.5;
   };
   [11] = {
@@ -1022,7 +1022,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true;
       ["Fear"] = true;
     };
-    ["health"] = "165195";
+    ["health"] = 165195;
     ["stealth"] = true;
     ["name"] = "Forsworn Stealthclaw";
     ["displayId"] = 93462;
@@ -1057,7 +1057,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95759;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "495585";
+    ["health"] = 495585;
     ["scale"] = 1.5;
   };
   [3] = {
@@ -1192,7 +1192,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 92664;
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
-    ["health"] = "264312";
+    ["health"] = 264312;
     ["scale"] = 1.5;
   };
   [6] = {
@@ -1222,7 +1222,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95068;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "1321934";
+    ["health"] = 1321934;
     ["id"] = 162059;
   };
   [12] = {
@@ -1305,7 +1305,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 92193;
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
-    ["health"] = "148676";
+    ["health"] = 148676;
     ["scale"] = 1;
   };
   [24] = {
@@ -1415,7 +1415,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 97621;
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
-    ["health"] = "1817659";
+    ["health"] = 1817659;
     ["id"] = 162060;
   };
   [25] = {
@@ -1549,7 +1549,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94316;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "165195";
+    ["health"] = 165195;
     ["scale"] = 1;
   };
   [26] = {
@@ -1881,7 +1881,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93471;
     ["creatureType"] = "Beast";
     ["level"] = 60;
-    ["health"] = "99117";
+    ["health"] = 99117;
     ["scale"] = 0.7;
   };
   [14] = {
@@ -1911,7 +1911,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 92193;
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
-    ["health"] = "991450";
+    ["health"] = 991450;
     ["id"] = 162058;
   };
   [28] = {
@@ -1999,7 +1999,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["ignoreFortified"] = true;
     ["bonusSpell"] = 368241;
-    ["health"] = "33039";
+    ["health"] = 33039;
     ["badCreatureModel"] = true;
     ["count"] = 0;
     ["displayId"] = 101046;
@@ -2037,7 +2037,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95665;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "1982901";
+    ["health"] = 1982901;
     ["id"] = 162061;
   };
   [29] = {
@@ -2112,7 +2112,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["affix"] = 130;
       ["level"] = 10;
     };
-    ["health"] = "33039";
+    ["health"] = 33039;
     ["modelPosition"] = {
       [1] = 0;
       [2] = 0;
@@ -2176,7 +2176,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94919;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
-    ["health"] = "264312";
+    ["health"] = 264312;
     ["scale"] = 1;
   };
 };
