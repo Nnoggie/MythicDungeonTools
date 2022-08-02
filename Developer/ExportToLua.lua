@@ -117,3 +117,30 @@ function MDT:TestExport(target, dungeonIndex)
     end
   end
 end
+
+do
+  -- call 1: export pois of dungeon 1
+  -- call 2: export enemies of dungeon 1
+  -- call 3: export pois of dungeon 2
+  -- ...
+  local dungeonIndex = 1
+  local targetIsEnemies = true
+
+  function MDT:ExportDungeonDataIncrementally()
+    targetIsEnemies = not targetIsEnemies
+    if targetIsEnemies then
+      dungeonIndex = dungeonIndex + 1
+    end
+    local dungeonName = MDT:GetDungeonName(dungeonIndex)
+    if dungeonName and dungeonName ~= "-" then
+      MDT:ShowInterface(true)
+      MDT:UpdateToDungeon(dungeonIndex)
+      MDT.main_frame.ExportFrame:Hide()
+      local obj = targetIsEnemies and MDT.dungeonEnemies[dungeonIndex] or MDT.mapPOIs[dungeonIndex]
+      local schema = MDT:GetSchema(targetIsEnemies and "enemies" or "pois")
+      local export = MDT:ExportLuaTable(obj, schema)
+      MDT:ExportString(export)
+    end
+  end
+
+end
