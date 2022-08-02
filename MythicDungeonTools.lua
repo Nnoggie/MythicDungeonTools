@@ -274,6 +274,7 @@ function MDT:UpdateAffixWeeks()
   local offset = time() - time(date("!*t")) + 7 * hour -- offset between na and utc
   local utc_na_season_start = time(season_start) + offset -- na regional season start time in utc time
   local utc_region_week_start = GetServerTime() - (one_week - C_DateAndTime.GetSecondsUntilWeeklyReset()) + 20 -- players regional weekly start time in utc
+  if utc_na_season_start > utc_region_week_start then return end
   -- 20 second buffer because GetSecondsUntilWeeklyReset is not precise
   local region_offset = (utc_region_week_start - utc_na_season_start) % one_week -- difference between na reset time and players regional reset time
   local elapsed_season = utc_region_week_start - (utc_na_season_start + region_offset) -- total time since season start
