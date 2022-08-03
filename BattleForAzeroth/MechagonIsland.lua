@@ -867,7 +867,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [5] = {
     ["name"] = "Scrapbone Trashtosser";
     ["id"] = 150142;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["displayId"] = 765;
@@ -939,6 +939,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -162.45570174702;
         ["g"] = 7;
         ["sublevel"] = 1;
+        ["inspiring"] = true;
       };
       [9] = {
         ["x"] = 513.41049429145;
@@ -981,7 +982,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [6] = {
     ["name"] = "Pistonhead Blaster";
     ["id"] = 150250;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["displayId"] = 92012;
@@ -1083,7 +1084,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [7] = {
     ["name"] = "Pistonhead Scrapper";
     ["id"] = 150249;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["displayId"] = 92006;
@@ -1162,7 +1163,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [8] = {
     ["name"] = "Scrapbone Grinder";
     ["id"] = 150143;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["displayId"] = 160;
@@ -1296,6 +1297,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -184.30415222146;
         ["g"] = 1;
         ["sublevel"] = 1;
+        ["inspiring"] = true;
       };
       [5] = {
         ["x"] = 547.60215659016;
@@ -1464,6 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -159.89926406475;
         ["g"] = 13;
         ["sublevel"] = 1;
+        ["inspiring"] = true;
       };
       [33] = {
         ["x"] = 482.64732649812;
@@ -1536,6 +1539,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -186.41756205201;
         ["g"] = 20;
         ["sublevel"] = 1;
+        ["inspiring"] = true;
       };
       [45] = {
         ["x"] = 521.05088040576;
@@ -1548,7 +1552,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [10] = {
     ["name"] = "Scrapbone Shaman";
     ["id"] = 150146;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 614795;
     ["scale"] = 1;
     ["displayId"] = 4905;
@@ -1722,7 +1726,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [12] = {
     ["name"] = "Weaponized Crawler";
     ["id"] = 150253;
-    ["count"] = 6;
+    ["count"] = 10;
     ["health"] = 1536990;
     ["scale"] = 1.4;
     ["displayId"] = 90711;
@@ -1874,7 +1878,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [13] = {
     ["name"] = "Scraphound";
     ["id"] = 150254;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["stealthDetect"] = true;
@@ -1926,6 +1930,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -217.30262878107;
         ["g"] = 36;
         ["sublevel"] = 1;
+        ["inspiring"] = true;
       };
       [7] = {
         ["x"] = 573.20671335716;
@@ -1964,7 +1969,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [14] = {
     ["name"] = "Pistonhead Mechanic";
     ["id"] = 150251;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 922194;
     ["scale"] = 1;
     ["displayId"] = 92025;
@@ -2051,7 +2056,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [15] = {
     ["name"] = "Saurolisk Bonenipper";
     ["id"] = 150154;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["displayId"] = 77484;
@@ -2148,7 +2153,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [16] = {
     ["name"] = "Scrapbone Bully";
     ["id"] = 150160;
-    ["count"] = 5;
+    ["count"] = 4;
     ["health"] = 1229592;
     ["scale"] = 1.4;
     ["displayId"] = 11611;
@@ -2419,7 +2424,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [21] = {
     ["name"] = "Gnome-Eating Slime";
     ["id"] = 150195;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 384248;
     ["scale"] = 0.6;
     ["displayId"] = 91656;
@@ -2712,7 +2717,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [24] = {
     ["name"] = "Mechagon Trooper";
     ["id"] = 155094;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["displayId"] = 90851;
@@ -2838,7 +2843,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [25] = {
     ["name"] = "Slime Elemental";
     ["id"] = 150165;
-    ["count"] = 5;
+    ["count"] = 4;
     ["health"] = 1229592;
     ["scale"] = 1;
     ["displayId"] = 4907;
@@ -3226,7 +3231,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [28] = {
     ["name"] = "Mechagon Prowler";
     ["id"] = 150293;
-    ["count"] = 4;
+    ["count"] = 3;
     ["health"] = 768495;
     ["scale"] = 1;
     ["stealth"] = true;
@@ -3356,7 +3361,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [29] = {
     ["name"] = "Toxic Monstrosity";
     ["id"] = 150168;
-    ["count"] = 6;
+    ["count"] = 5;
     ["health"] = 1383291;
     ["scale"] = 1.4;
     ["displayId"] = 91906;
@@ -3529,6 +3534,151 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 460.60612432968;
         ["y"] = -335.86566559552;
         ["g"] = 55;
+        ["sublevel"] = 1;
+      };
+    };
+  };
+  [33] = {
+    ["name"] = "Nathrezim Infiltrator";
+    ["id"] = 189878;
+    ["count"] = 0;
+    ["health"] = 999999;
+    ["scale"] = 1.2;
+    ["displayId"] = 101016;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373364] = {
+      };
+      [373370] = {
+      };
+      [373391] = {
+      };
+      [373429] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 564.4286325781;
+        ["y"] = -201.65738508659;
+        ["g"] = 35;
+        ["sublevel"] = 1;
+      };
+      [2] = {
+        ["x"] = 551.86885889892;
+        ["y"] = -159.58165079998;
+        ["sublevel"] = 1;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 551.86885889892;
+            ["y"] = -159.58165079998;
+          };
+          [2] = {
+            ["x"] = 552.67421607235;
+            ["y"] = -154.56733623081;
+          };
+          [3] = {
+            ["x"] = 551.86885889892;
+            ["y"] = -159.58165079998;
+          };
+          [4] = {
+            ["x"] = 550.98006139361;
+            ["y"] = -162.9851688528;
+          };
+          [5] = {
+            ["x"] = 547.32704136161;
+            ["y"] = -164.52049667241;
+          };
+          [6] = {
+            ["x"] = 542.8269417182;
+            ["y"] = -159.17332196167;
+          };
+          [7] = {
+            ["x"] = 547.32704136161;
+            ["y"] = -164.52049667241;
+          };
+          [8] = {
+            ["x"] = 550.98006139361;
+            ["y"] = -162.9851688528;
+          };
+        };
+      };
+      [3] = {
+        ["x"] = 517.21382244627;
+        ["y"] = -152.16648255968;
+        ["sublevel"] = 1;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 517.21382244627;
+            ["y"] = -152.16648255968;
+          };
+          [2] = {
+            ["x"] = 521.59921449116;
+            ["y"] = -151.66529889187;
+          };
+          [3] = {
+            ["x"] = 525.67136539937;
+            ["y"] = -149.53524679503;
+          };
+          [4] = {
+            ["x"] = 528.30259847544;
+            ["y"] = -143.89688751488;
+          };
+          [5] = {
+            ["x"] = 525.67136539937;
+            ["y"] = -149.53524679503;
+          };
+          [6] = {
+            ["x"] = 521.59921449116;
+            ["y"] = -151.66529889187;
+          };
+          [7] = {
+            ["x"] = 517.21382244627;
+            ["y"] = -152.16648255968;
+          };
+          [8] = {
+            ["x"] = 511.38751256924;
+            ["y"] = -152.16648255968;
+          };
+          [9] = {
+            ["x"] = 510.13454264539;
+            ["y"] = -155.86274302845;
+          };
+          [10] = {
+            ["x"] = 512.64048249309;
+            ["y"] = -159.99754323944;
+          };
+          [11] = {
+            ["x"] = 515.77290999129;
+            ["y"] = -163.19261466324;
+          };
+          [12] = {
+            ["x"] = 512.64048249309;
+            ["y"] = -159.99754323944;
+          };
+          [13] = {
+            ["x"] = 510.13454264539;
+            ["y"] = -155.86274302845;
+          };
+          [14] = {
+            ["x"] = 511.38751256924;
+            ["y"] = -152.16648255968;
+          };
+        };
+      };
+      [4] = {
+        ["x"] = 492.76961137568;
+        ["y"] = -121.03273025087;
+        ["g"] = 12;
+        ["sublevel"] = 1;
+      };
+      [5] = {
+        ["x"] = 509.27367775042;
+        ["y"] = -184.42247310314;
+        ["g"] = 19;
         ["sublevel"] = 1;
       };
     };
