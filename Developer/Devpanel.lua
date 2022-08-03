@@ -1029,6 +1029,18 @@ function MDT:CreateDevPanel(frame)
       inspiringCheckbox:SetValue(currentBlip.clone.inspiring)
     end
 
+    local unDisguiseButton = AceGUI:Create("Button")
+    unDisguiseButton:SetText("Remove Disguised Tag")
+    unDisguiseButton:SetCallback("OnClick", function()
+      local currentBlip = MDT:GetCurrentDevmodeBlip()
+      if currentBlip then
+        local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+        data.clones[currentBlip.cloneIdx].disguised = nil
+        MDT:UpdateMap()
+      end
+    end)
+    container:AddChild(unDisguiseButton)
+
   end
 
   -- Callback function for OnGroupSelected
