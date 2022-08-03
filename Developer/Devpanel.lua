@@ -875,6 +875,9 @@ function MDT:CreateDevPanel(frame)
     loadCacheCheckbox:SetLabel("Load Cache in devmode")
     loadCacheCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
       db.loadCache = value or nil
+      if value then
+        ReloadUI()
+      end
     end)
     loadCacheCheckbox:SetValue(db.loadCache)
     container:AddChild(loadCacheCheckbox)
