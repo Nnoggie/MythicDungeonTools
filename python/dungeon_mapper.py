@@ -83,6 +83,9 @@ def convert_to_MDT_coord(dataframe_row):
     # MDT width and height at scale = 1
     width = 840
     height = 555
+    if len(extent) > 1:
+        extent = extent.iloc[-1]
+
     x = float((dataframe_row.xcoord - extent.xmin) / (extent.xmax - extent.xmin))
     y = float((dataframe_row.ycoord - extent.ymin) / (extent.ymax - extent.ymin))
     x = x * width
