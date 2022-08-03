@@ -875,6 +875,9 @@ function MDT:CreateDevPanel(frame)
     loadCacheCheckbox:SetLabel("Load Cache in devmode")
     loadCacheCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
       db.loadCache = value or nil
+      if value then
+        ReloadUI()
+      end
     end)
     loadCacheCheckbox:SetValue(db.loadCache)
     container:AddChild(loadCacheCheckbox)
@@ -1006,6 +1009,37 @@ function MDT:CreateDevPanel(frame)
       end
     end)
     container:AddChild(makeShroudedButton)
+
+    local inspiringCheckbox = AceGUI:Create("CheckBox")
+    inspiringCheckbox:SetLabel("Inspiring")
+    inspiringCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+      currentInspiring = value and true or nil
+      local currentBlip = MDT:GetCurrentDevmodeBlip()
+      if currentBlip then
+        local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+        data.clones[currentBlip.cloneIdx].inspiring = currentInspiring
+        MDT:UpdateMap()
+      end
+    end)
+    inspiringCheckbox:SetValue(currentInspiring)
+    container:AddChild(inspiringCheckbox)
+
+    local currentBlip = MDT:GetCurrentDevmodeBlip()
+    if currentBlip then
+      inspiringCheckbox:SetValue(currentBlip.clone.inspiring)
+    end
+
+    local unDisguiseButton = AceGUI:Create("Button")
+    unDisguiseButton:SetText("Remove Disguised Tag")
+    unDisguiseButton:SetCallback("OnClick", function()
+      local currentBlip = MDT:GetCurrentDevmodeBlip()
+      if currentBlip then
+        local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
+        data.clones[currentBlip.cloneIdx].disguised = nil
+        MDT:UpdateMap()
+      end
+    end)
+    container:AddChild(unDisguiseButton)
 
   end
 

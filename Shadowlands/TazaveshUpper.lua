@@ -572,6 +572,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -276.28035052709;
         ["g"] = 17;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [58] = {
         ["x"] = 355.59847345408;
@@ -859,7 +860,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [2] = {
     ["name"] = "Murkbrine Shellcrusher";
     ["id"] = 178139;
-    ["count"] = 6;
+    ["count"] = 3;
     ["health"] = 148858;
     ["scale"] = 1.5;
     ["displayId"] = 101785;
@@ -906,6 +907,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -252.9230742988;
         ["g"] = 11;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [6] = {
         ["x"] = 302.29148384973;
@@ -978,7 +980,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [3] = {
     ["name"] = "Murkbrine Fishmancer";
     ["id"] = 178142;
-    ["count"] = 3;
+    ["count"] = 2;
     ["health"] = 115779;
     ["scale"] = 1;
     ["displayId"] = 101789;
@@ -1045,6 +1047,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -282.73539121779;
         ["g"] = 15;
         ["sublevel"] = 1;
+        ["inspiring"] = true;
       };
       [9] = {
         ["x"] = 151.00034500865;
@@ -1057,6 +1060,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -242.79354358246;
         ["g"] = 11;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [11] = {
         ["x"] = 307.22255711141;
@@ -1093,6 +1097,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -198.6911983138;
         ["g"] = 9;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [17] = {
         ["x"] = 423.15490068986;
@@ -1135,7 +1140,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [4] = {
     ["name"] = "Coastwalker Goliath";
     ["id"] = 178165;
-    ["count"] = 15;
+    ["count"] = 18;
     ["health"] = 330795;
     ["scale"] = 2;
     ["displayId"] = 101790;
@@ -1280,7 +1285,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [5] = {
     ["name"] = "Murkbrine Wavejumper";
     ["id"] = 178133;
-    ["count"] = 3;
+    ["count"] = 2;
     ["health"] = 132318;
     ["scale"] = 1;
     ["displayId"] = 101787;
@@ -1312,6 +1317,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -77.477447746006;
         ["g"] = 4;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 237.9859901832;
@@ -1396,13 +1402,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -271.53036764937;
         ["g"] = 21;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
     };
   };
   [6] = {
     ["name"] = "Murkbrine Scalebinder";
     ["id"] = 178141;
-    ["count"] = 3;
+    ["count"] = 2;
     ["health"] = 115779;
     ["scale"] = 1;
     ["displayId"] = 101788;
@@ -1529,24 +1536,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -146.87810971469;
         ["g"] = 22;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
       [2] = {
         ["x"] = 154.95923302991;
         ["y"] = -165.95070526927;
         ["g"] = 22;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
       [3] = {
         ["x"] = 254.78486486487;
         ["y"] = -298.08;
         ["g"] = 23;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
       [4] = {
         ["x"] = 274.33945945946;
         ["y"] = -286.11;
         ["g"] = 23;
         ["sublevel"] = 2;
+        ["scale"] = 1;
+        ["disguised"] = true;
       };
     };
   };
@@ -1586,6 +1598,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 473.60056162639;
         ["y"] = -257.48827250141;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
     };
   };
@@ -1674,7 +1687,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [10] = {
     ["name"] = "Hourglass Tidesage";
     ["id"] = 179388;
-    ["count"] = 5;
+    ["count"] = 4;
     ["health"] = 148858;
     ["scale"] = 1.5;
     ["displayId"] = 101468;
@@ -1840,7 +1853,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [14] = {
     ["name"] = "Adorned Starseer";
     ["id"] = 180429;
-    ["count"] = 10;
+    ["count"] = 12;
     ["health"] = 248097;
     ["scale"] = 2.5;
     ["displayId"] = 101668;
@@ -1974,7 +1987,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [16] = {
     ["name"] = "Focused Ritualist";
     ["id"] = 180431;
-    ["count"] = 5;
+    ["count"] = 4;
     ["health"] = 165398;
     ["scale"] = 2;
     ["displayId"] = 101669;
@@ -2115,6 +2128,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 438.22839277274;
         ["y"] = -250.71941189653;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
       [5] = {
         ["x"] = 522.46660448237;
@@ -2203,6 +2217,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 441.97844297335;
         ["y"] = -271.34439295692;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
       [5] = {
         ["x"] = 533.78234233289;
@@ -2288,6 +2303,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 456.04088982685;
         ["y"] = -286.65688336604;
         ["sublevel"] = 2;
+        ["scale"] = 1;
       };
       [5] = {
         ["x"] = 547.9928784093;
@@ -2318,6 +2334,111 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 279.55422371282;
         ["y"] = -325.7660505555;
         ["sublevel"] = 4;
+      };
+    };
+  };
+  [21] = {
+    ["name"] = "Nathrezim Infiltrator";
+    ["id"] = 189878;
+    ["count"] = 0;
+    ["health"] = 999999;
+    ["scale"] = 1.2;
+    ["displayId"] = 101016;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373364] = {
+      };
+      [373370] = {
+      };
+      [373391] = {
+      };
+      [373429] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 233.94326834183;
+        ["y"] = -77.477447746006;
+        ["g"] = 4;
+        ["sublevel"] = 1;
+        ["shrouded"] = true;
+      };
+      [2] = {
+        ["x"] = 409.74727672495;
+        ["y"] = -198.6911983138;
+        ["g"] = 9;
+        ["sublevel"] = 1;
+        ["shrouded"] = true;
+      };
+      [3] = {
+        ["x"] = 361.66291862445;
+        ["y"] = -276.28035052709;
+        ["g"] = 17;
+        ["sublevel"] = 1;
+        ["shrouded"] = true;
+      };
+      [4] = {
+        ["x"] = 145.83042121382;
+        ["y"] = -242.79354358246;
+        ["g"] = 11;
+        ["sublevel"] = 1;
+        ["shrouded"] = true;
+      };
+      [5] = {
+        ["x"] = 140.61127672495;
+        ["y"] = -252.9230742988;
+        ["g"] = 11;
+        ["sublevel"] = 1;
+        ["shrouded"] = true;
+      };
+      [6] = {
+        ["x"] = 274.33945945946;
+        ["y"] = -286.11;
+        ["g"] = 23;
+        ["sublevel"] = 2;
+        ["scale"] = 1.7;
+        ["shrouded"] = true;
+      };
+    };
+  };
+  [22] = {
+    ["name"] = "Zul'gamux";
+    ["id"] = 190128;
+    ["count"] = 0;
+    ["health"] = 999999;
+    ["scale"] = 1.8;
+    ["displayId"] = 101106;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373509] = {
+      };
+      [373513] = {
+      };
+      [373552] = {
+      };
+      [373570] = {
+      };
+      [373607] = {
+      };
+      [373724] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 542.25309982999;
+        ["y"] = -276.07008514377;
+        ["g"] = 21;
+        ["sublevel"] = 1;
+        ["shrouded"] = true;
+        ["disguised"] = true;
       };
     };
   };

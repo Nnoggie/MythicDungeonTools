@@ -234,7 +234,7 @@ if __name__ == "__main__":
     # Get Parent from CriteriaTree by searching for CriteriaID as CriteriaID
     # There will be multiple parents, the correct ID will be the one where Description_lang contains "Challenge"
     pattern_dungeon_name = re.compile(r'MDT\.dungeonList\[dungeonIndex\] = L\[\"([\w\S ]+)\"]')
-    pattern_empty_dungeon_file = re.compile(r'MDT\.dungeonEnemies\[dungeonIndex\] = {}')
+    pattern_empty_dungeon_file = re.compile(r'MDT\.dungeonEnemies\[dungeonIndex\] = {\n}')
     pattern_dungeonEnemies = re.compile(r"MDT\.dungeonEnemies\[dungeonIndex\] = \{[\s\S]*};")
     pattern_enemy_match = re.compile(r"{[\s\S]+?\"(id|count)\"\D*([\d]+).*[\s\S]+?\"(id|count)\"\D*([\d]+)[\s\S]+?}")
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")

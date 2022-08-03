@@ -81,6 +81,7 @@ local defaultSizes = {
   ["texture_DragLeft"] = 8,
   ["texture_DragRight"] = 8,
   ["texture_DragUp"] = 8,
+  ["shrouded_Indicator"] = 20,
 }
 
 function MDTDungeonEnemyMixin:updateSizes(scale)
@@ -797,6 +798,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
     end
   end
   self.texture_Indicator:Hide()
+  self.shrouded_Indicator:Hide()
   if db.devMode then blipDevModeSetup(self) end
 end
 
@@ -1101,20 +1103,20 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
     if (db.currentSeason == 8) then
       if db.currentDifficulty >= 10 then
         if blip.clone.shrouded then
-          blip.texture_Indicator:SetVertexColor(1, 0, 1, 1)
-          blip.texture_Indicator:SetScale(1.15)
-          blip.texture_Indicator:Show()
+          blip.shrouded_Indicator:SetVertexColor(1, 0, 1, 1)
+          blip.shrouded_Indicator:SetScale(1.15)
+          blip.shrouded_Indicator:Show()
           blip:Show()
         elseif blip.clone.disguised then
-          blip.texture_Indicator:Hide()
+          blip.shrouded_Indicator:Hide()
           blip:Hide()
         end
       else
         if blip.clone.shrouded then
-          blip.texture_Indicator:Hide()
+          blip.shrouded_Indicator:Hide()
           blip:Hide()
         elseif blip.clone.disguised then
-          blip.texture_Indicator:Show()
+          blip.shrouded_Indicator:Show()
           blip:Show()
         end
       end
