@@ -287,6 +287,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 2.2;
+        ["inspiring"] = true;
       };
       [4] = {
         ["x"] = 446.37515683814;
