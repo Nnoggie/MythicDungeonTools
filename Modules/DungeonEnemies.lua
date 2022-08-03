@@ -798,6 +798,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
     end
   end
   self.texture_Indicator:Hide()
+  self.shrouded_Indicator:Hide()
   if db.devMode then blipDevModeSetup(self) end
 end
 
