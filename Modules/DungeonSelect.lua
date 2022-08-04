@@ -1,6 +1,7 @@
 local MDT = MDT
 local AceGUI = LibStub("AceGUI-3.0")
 local db
+local L = MDT.L
 
 -- The idea here is to redo the dungeon select dropdown to be more user friendly.
 -- This was necesarry as the old implementation did not allow for a dungeon to be part of multiple dungeon sets.
@@ -8,10 +9,10 @@ local db
 
 local seasonListActive = false
 local seasonList = {
-  [1] = "Legion",
-  [2] = "BFA",
-  [3] = "Shadowlands",
-  [4] = "Shadowlands Season 4",
+  [1] = L["Legion"],
+  [2] = L["BFA"],
+  [3] = L["Shadowlands"],
+  [4] = L["Shadowlands Season 4"],
   -- [5]= "Dragonflight Season 1",
 }
 
@@ -104,7 +105,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
       dungeonSelectionToNames[i][j] = MDT.dungeonList[dungeonSelectionToIndex[i][j]]
       indexToDungeonSelection[i][dungeonSelectionToIndex[i][j]] = j
     end
-    dungeonSelectionToNames[i][#dungeonSelectionToIndex[i] + 1] = "> More Dungeons"
+    dungeonSelectionToNames[i][#dungeonSelectionToIndex[i] + 1] = L["> More Dungeons"]
   end
 
   MDT:UpdateDungeonDropDown()
