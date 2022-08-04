@@ -2,6 +2,27 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Grimrail Scout"] = "Grimrail Scout"
+L["Assault Cannon"] = "Assault Cannon"
+L["Grom'kar Grenadier"] = "Grom'kar Grenadier"
+L["Iron Infantry"] = "Iron Infantry"
+L["Grimrail Overseer"] = "Grimrail Overseer"
+L["Skylord Tovra"] = "Skylord Tovra"
+L["Grom'kar Gunner"] = "Grom'kar Gunner"
+L["Grom'kar Cinderseer"] = "Grom'kar Cinderseer"
+L["Grom'kar Captain"] = "Grom'kar Captain"
+L["Grom'kar Far Seer"] = "Grom'kar Far Seer"
+L["Railmaster Rocketspark"] = "Railmaster Rocketspark"
+L["Grom'kar Boomer"] = "Grom'kar Boomer"
+L["Nitrogg Thundertower"] = "Nitrogg Thundertower"
+L["Grimrail Technician"] = "Grimrail Technician"
+L["Grom'kar Hulk"] = "Grom'kar Hulk"
+L["Grimrail Laborer"] = "Grimrail Laborer"
+L["Grimrail Loader"] = "Grimrail Loader"
+L["Grimrail Bombardier"] = "Grimrail Bombardier"
+L["Borka the Brute"] = "Borka the Brute"
+
+
 --MDT
 L["undoDrawing"] = "Undo Drawing"
 L["redoDrawing"] = "Redo Drawing"

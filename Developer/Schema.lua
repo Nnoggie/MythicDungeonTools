@@ -385,6 +385,14 @@ local schemas = {
                 type = "boolean"
               },
               {
+                name = "shrouded",
+                type = "boolean"
+              },
+              {
+                name = "disguised",
+                type = "boolean"
+              },
+              {
                 name = "note",
                 type = "string"
               },

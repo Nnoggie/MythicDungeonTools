@@ -1,3 +1,6 @@
+v3.9.4.2
+- updated enemies + count values for all dungeons except iron docks
+- Incomplete: shrouded, inspiring, spells and cc susceptibility
 v3.9.4
 - Updated for Season 4 Dungeons with Shrouded affix support
 - New: Users can now assign Mechagon Bots in Mechagon: Junkyard to specific party members
