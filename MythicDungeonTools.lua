@@ -2364,8 +2364,10 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MDT:EnsureDBTables()
   --dungeonIdx doesnt exist
-  if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx], ">") then
-    db.currentDungeonIdx = 1
+  if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx], ">") or
+      not db.selectedDungeonList then
+    db.currentDungeonIdx = defaultSavedVars.global.currentDungeonIdx
+    db.selectedDungeonList = defaultSavedVars.global.selectedDungeonList
   end
   local preset = MDT:GetCurrentPreset()
   preset.week = preset.week or MDT:GetCurrentAffixWeek()
