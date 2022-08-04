@@ -223,6 +223,15 @@ def get_count_table(ID):
     enemy_forces["npcID"] = [int(db["criteria"][db["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     # An enemy can have multiple entries by blizzard mistake, the enemy will then attribute count from all entries
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
+    # Game event converter replaces game event ids with npc ids
+    game_event_converter = {
+        # format is game event: npcID
+        64192: 138489,      # Shadow of Zul, Kings' Rest
+        63453: 68819,       # Eye of Sethraliss, Temple of Sethraliss
+        80831: 190128,      # Zul'gamux, Shrouded Affix (Big One)
+        80779: 189878,      # Nathrezim Infiltrator, Shrouded Affix (Small One)
+    }
+    count_table.rename(index=game_event_converter, inplace=True)
     return count_table
 
 
