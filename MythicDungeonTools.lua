@@ -131,8 +131,8 @@ local defaultSavedVars = {
 do
   for i = 1, 80 do
     defaultSavedVars.global.presets[i] = {
-      [1] = { text = "Default", value = {}, objects = {}, colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
-      [2] = { text = "<New Preset>", value = 0 },
+      [1] = { text = L["Default"], value = {}, objects = {}, colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [2] = { text = L["<New Preset>"], value = 0 },
     }
     defaultSavedVars.global.currentPreset[i] = 1
   end
@@ -2297,12 +2297,12 @@ function MDT:OpenNewPresetDialog()
   local presetList = {}
   local countPresets = 0
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-    if v.text ~= "<New Preset>" then
+    if v.text ~= L["<New Preset>"] then
       table.insert(presetList, k, v.text)
       countPresets = countPresets + 1
     end
   end
-  table.insert(presetList, 1, "Empty")
+  table.insert(presetList, 1, L["Empty"])
   MDT.main_frame.PresetCreationDropDown:SetList(presetList)
   MDT.main_frame.PresetCreationDropDown:SetValue(1)
   MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"] .. " " .. countPresets + 1)
