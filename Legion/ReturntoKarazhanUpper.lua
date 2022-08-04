@@ -166,7 +166,6 @@ MDT.mapPOIs[dungeonIndex] = {
   };
 };
 
-
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Forlorn Spirit";
@@ -183,6 +182,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -155.57717427968;
         ["sublevel"] = 1;
         ["scale"] = 2;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 589.45739867598;
@@ -331,6 +331,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 1;
         ["sublevel"] = 1;
         ["scale"] = 2;
+        ["inspiring"] = true;
       };
       [3] = {
         ["x"] = 251.92956938108;
@@ -352,6 +353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 2;
         ["sublevel"] = 1;
         ["scale"] = 2;
+        ["disguised"] = true;
       };
       [6] = {
         ["x"] = 335.51092203845;
@@ -387,6 +389,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 2;
+        ["inspiring"] = true;
       };
       [11] = {
         ["x"] = 399.40254652721;
@@ -419,6 +422,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -224.86141950088;
         ["sublevel"] = 2;
         ["scale"] = 2.5;
+        ["disguised"] = true;
         ["patrolFacing"] = 1.9634954084936;
         ["patrolFacing2"] = 4.5160394395353;
         ["patrol"] = {
@@ -453,6 +457,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -197.14074829487;
         ["sublevel"] = 2;
         ["scale"] = 2.5;
+        ["disguised"] = true;
       };
       [3] = {
         ["x"] = 485.03591289818;
@@ -501,30 +506,32 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -221.68617830559;
         ["sublevel"] = 2;
         ["scale"] = 2.5;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 224.99634234794;
         ["y"] = -210.49869462475;
         ["sublevel"] = 2;
-        ["scale"] = 2.5;
+        ["scale"] = 3;
       };
       [3] = {
         ["x"] = 228.63476638022;
         ["y"] = -253.17700153437;
         ["sublevel"] = 2;
-        ["scale"] = 2.5;
+        ["scale"] = 3;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 212.72561812359;
         ["y"] = -285.44971305058;
         ["sublevel"] = 2;
-        ["scale"] = 2.5;
+        ["scale"] = 3;
       };
       [5] = {
         ["x"] = 166.81651753839;
         ["y"] = -273.96741412704;
         ["sublevel"] = 2;
-        ["scale"] = 2.5;
+        ["scale"] = 3;
       };
       [6] = {
         ["x"] = 532.46149506956;
@@ -574,6 +581,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 4;
         ["scale"] = 2.5;
       };
+      [14] = {
+        ["x"] = 487.04143040706;
+        ["y"] = -311.03628342242;
+        ["sublevel"] = 4;
+        ["scale"] = 2.5;
+        ["disguised"] = true;
+      };
     };
   };
   [9] = {
@@ -609,6 +623,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -374.34635524231;
         ["sublevel"] = 3;
         ["scale"] = 2;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 473.66804823727;
@@ -669,6 +684,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -203.65505816842;
         ["sublevel"] = 3;
         ["scale"] = 3;
+        ["disguised"] = true;
       };
       [3] = {
         ["x"] = 464.98593800353;
@@ -736,6 +752,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 6;
         ["sublevel"] = 4;
         ["scale"] = 2;
+        ["inspiring"] = true;
       };
       [8] = {
         ["x"] = 193.16237132049;
@@ -743,6 +760,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 7;
         ["sublevel"] = 4;
         ["scale"] = 2;
+        ["disguised"] = true;
       };
       [9] = {
         ["x"] = 184.52604882834;
@@ -778,6 +796,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 8;
         ["sublevel"] = 4;
         ["scale"] = 2;
+        ["inspiring"] = true;
       };
       [14] = {
         ["x"] = 112.26403565029;
@@ -853,10 +872,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 111;
     ["clones"] = {
       [1] = {
-        ["x"] = 502.30082732607;
-        ["y"] = -245.85890748732;
+        ["x"] = 513.993903931;
+        ["y"] = -252.14324101615;
+        ["g"] = 15;
         ["sublevel"] = 4;
         ["scale"] = 2.5;
+      };
+      [2] = {
+        ["x"] = 489.46533752061;
+        ["y"] = -250.7343364559;
+        ["g"] = 15;
+        ["sublevel"] = 4;
+        ["scale"] = 2.5;
+        ["disguised"] = true;
       };
     };
   };
@@ -953,6 +981,133 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -170.2433924311;
         ["sublevel"] = 3;
         ["scale"] = 2;
+      };
+    };
+  };
+  [20] = {
+    ["name"] = "Nathrezim Infiltrator";
+    ["id"] = 189878;
+    ["count"] = 6;
+    ["health"] = 999999;
+    ["scale"] = 1.2;
+    ["displayId"] = 101016;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373364] = {
+      };
+      [373370] = {
+      };
+      [373391] = {
+      };
+      [373429] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 590.75941310579;
+        ["y"] = -155.57717427968;
+        ["sublevel"] = 1;
+        ["scale"] = 2;
+        ["shrouded"] = true;
+      };
+      [2] = {
+        ["x"] = 350.7056608343;
+        ["y"] = -245.04909140713;
+        ["g"] = 2;
+        ["sublevel"] = 1;
+        ["scale"] = 2;
+        ["shrouded"] = true;
+      };
+      [3] = {
+        ["x"] = 101.81658901231;
+        ["y"] = -197.14074829487;
+        ["sublevel"] = 2;
+        ["scale"] = 2.5;
+        ["shrouded"] = true;
+      };
+      [4] = {
+        ["x"] = 228.63476638022;
+        ["y"] = -253.17700153437;
+        ["sublevel"] = 2;
+        ["scale"] = 2.5;
+        ["shrouded"] = true;
+      };
+      [5] = {
+        ["x"] = 474.68903952577;
+        ["y"] = -374.34635524231;
+        ["sublevel"] = 3;
+        ["scale"] = 2.5;
+        ["shrouded"] = true;
+      };
+      [6] = {
+        ["x"] = 449.54575180258;
+        ["y"] = -203.65505816842;
+        ["sublevel"] = 3;
+        ["scale"] = 2.5;
+        ["shrouded"] = true;
+      };
+      [7] = {
+        ["x"] = 193.16237132049;
+        ["y"] = -151.18846039437;
+        ["g"] = 7;
+        ["sublevel"] = 4;
+        ["scale"] = 2;
+        ["shrouded"] = true;
+      };
+      [8] = {
+        ["x"] = 489.46533752061;
+        ["y"] = -250.7343364559;
+        ["g"] = 15;
+        ["sublevel"] = 4;
+        ["scale"] = 2.5;
+        ["shrouded"] = true;
+      };
+      [9] = {
+        ["x"] = 487.04143040706;
+        ["y"] = -311.03628342242;
+        ["sublevel"] = 4;
+        ["scale"] = 2.5;
+        ["shrouded"] = true;
+      };
+    };
+  };
+  [21] = {
+    ["name"] = "Zul'gamux";
+    ["id"] = 190128;
+    ["count"] = 18;
+    ["health"] = 999999;
+    ["scale"] = 1.8;
+    ["displayId"] = 101106;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373509] = {
+      };
+      [373513] = {
+      };
+      [373552] = {
+      };
+      [373570] = {
+      };
+      [373607] = {
+      };
+      [373724] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 194.8477021485;
+        ["y"] = -224.79269060588;
+        ["sublevel"] = 2;
+        ["scale"] = 2.3;
+        ["shrouded"] = true;
       };
     };
   };
