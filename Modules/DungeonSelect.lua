@@ -31,6 +31,8 @@ function MDT:UpdateDungeonDropDown()
   local dungeonDropdown = MDT.main_frame.DungeonSelectionGroup.DungeonDropdown
   local sublevelDropdown = MDT.main_frame.DungeonSelectionGroup.SublevelDropdown
   local currentDungeonIdx = db.currentDungeonIdx
+  local index = math.min(#dungeonSelectionToIndex, db.selectedDungeonList)
+  db.selectedDungeonList = index
   dungeonDropdown:SetList(dungeonSelectionToNames[db.selectedDungeonList])
   dungeonDropdown:SetValue(indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx])
   dungeonDropdown:ClearFocus()
@@ -62,7 +64,10 @@ function MDT:CreateDungeonSelectDropdown(frame)
   group.DungeonDropdown.text:SetJustifyH("LEFT")
   group.DungeonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     if (seasonListActive) then
-      db.selectedDungeonList = key
+      -- make sure we don't go out of bounds
+      -- this probably happens if dropdown is being spammed (?)
+      local index = math.min(#dungeonSelectionToIndex, key)
+      db.selectedDungeonList = index
       MDT:UpdateDungeonDropDown()
       seasonListActive = false
       local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
