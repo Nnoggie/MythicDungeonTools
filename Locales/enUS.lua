@@ -1440,4 +1440,13 @@ L["Zolramus Siphoner"] = "Zolramus Siphoner"
 L["Zolramus Sorcerer"] = "Zolramus Sorcerer"
 L["Zul'Gurub"] = "Zul'Gurub"
 L["Zuraal the Ascended"] = "Zuraal the Ascended"
+
+L["> More Dungeons"] = "> More Dungeons"
+L["Legion"] = "Legion"
+L["BFA"] = "BFA"
+L["Shadowlands"] = "Shadowlands"
+L["Shadowlands Season 4"] = "Shadowlands Season 4"
+L["Default"] = "Default"
+L["<New Preset>"] = "<New Preset>"
+L["Empty"] = "Empty"
 --@localization(locale="enUS", format="lua_additive_table", namespace="MDT", handle-subnamespaces="none")@
