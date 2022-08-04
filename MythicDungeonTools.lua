@@ -223,9 +223,9 @@ do
       C_MythicPlus.RequestCurrentAffixes()
       C_MythicPlus.RequestMapInfo()
       C_MythicPlus.RequestRewards()
+      if db.loadOnStartUp then MDT:ShowInterface(true) end
     end)
     eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    if db.loadOnStartUp then MDT:ShowInterface(true) end
   end
 end
 
