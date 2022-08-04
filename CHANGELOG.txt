@@ -1,3 +1,5 @@
+v3.9.4.3
+- nil error fix
 v3.9.4.2
 - updated enemies + count values for all dungeons except iron docks
 - Incomplete: shrouded, inspiring, spells and cc susceptibility
