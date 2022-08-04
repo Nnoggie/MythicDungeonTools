@@ -261,6 +261,16 @@ function MDT:UpdateAffixWeeks()
   C_MythicPlus.RequestMapInfo()
   C_MythicPlus.RequestRewards()
 
+  -- Save current weeks affixes to db
+  local current_affixes = C_MythicPlus.GetCurrentAffixes()
+  -- retry after 5 if Blizzard not ready yet
+  if not current_affixes then
+    C_Timer.After(5, function()
+      MDT:UpdateAffixWeeks()
+    end)
+    return
+  end
+
   local season_start = { -- Edit this at the start of the season - IMPORTANT: This is North America launch in PST time
     ["year"] = 2022,
     ["month"] = 8,
@@ -280,8 +290,6 @@ function MDT:UpdateAffixWeeks()
   local elapsed_season = utc_region_week_start - (utc_na_season_start + region_offset) -- total time since season start
   local current_week_idx = math.floor(elapsed_season / one_week) % #affixWeeks + 1 -- weekly affix rotation index of current week for player
 
-  -- Save current weeks affixes to db
-  local current_affixes = C_MythicPlus.GetCurrentAffixes()
   db.knownAffixWeeks[current_week_idx] = {}
   for k, idx in pairs({ 2, 3, 1, 4 }) do
     tinsert(db.knownAffixWeeks[current_week_idx], current_affixes[idx]["id"])
@@ -297,6 +305,12 @@ function MDT:UpdateAffixWeeks()
       affixWeeks[week_idx] = known_affixes
     end
   end
+
+  local sidepanel = MDT.main_frame.sidePanel
+  if not sidepanel then return end -- sidepanel not ready yet, will handle setting these itself anyway
+  local dropdown = sidepanel.affixDropdown
+  dropdown:UpdateAffixList()
+  dropdown:SetValue(MDT:GetCurrentPreset().week)
 end
 
 MDT.mapInfo = {}
