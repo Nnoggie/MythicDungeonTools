@@ -22,26 +22,6 @@ EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 wowtools_files = ["criteria", "criteriatree", "journalencounter"]
 db = load_db_files(wowtools_files)
 
-def npcid_to_event_asset(npcid, dungeon_count_table):
-    """Converts NPC ID to CombatEventID if mob exists in dictionary below.
-    
-    Args:
-        npcid: Creatue NPC ID
-        dungeon_count_table: True count dataframe for dungeon
-
-    Returns:
-        int: Creatue true count value
-
-    """
-    converter = {
-        138489: 64192,      # Shadow of Zul, Kings' Rest
-        68819: 63453,       # Eye of Sethraliss, Temple of Sethraliss
-    }
-    if npcid in converter.keys() and len(dungeon_count_table[dungeon_count_table.index == converter[npcid]]) > 0:
-
-        return dungeon_count_table[dungeon_count_table.index == converter[npcid]].values[0][0]
-    else:
-        return 0
 
 def get_potential_new_ids(original_name, dungeon_count_table):
     """Checks dungeon_count_table for npc matching original_name
@@ -103,9 +83,11 @@ def update_count(match, dungeon_count_table):
     # keys will be 'id' and 'count'
     info = {match.group(1): int(match.group(2)), match.group(3): int(match.group(4))}
     if len(dungeon_count_table[dungeon_count_table.index == info['id']]) > 0:
+        # if npcid is found in count table
         true_count = dungeon_count_table[dungeon_count_table.index == info['id']].values[0][0]
     else:
-        true_count = npcid_to_event_asset(info['id'], dungeon_count_table)
+        # if npcid is not found in count table
+        true_count = 0
     if true_count != info['count']:
         npc_name = pattern_npc_name.search(match.group()).group(1)
         if true_count == 0:
