@@ -134,7 +134,7 @@ def update_total_count(match, total_count):
     """
     if total_count != int(match.group(1)):
         print(f"    Total dungeon count has been updated: {match.group(1)} -> {total_count}")
-        return match.group().replace(f'normal={match.group(1)}', f'normal={total_count}')
+        return match.group().replace(f'normal = {match.group(1)}', f'normal = {total_count}')
 
     return match.group()
 
@@ -238,7 +238,7 @@ if __name__ == "__main__":
     pattern_dungeonEnemies = re.compile(r"MDT\.dungeonEnemies\[dungeonIndex\] = \{[\s\S]*};")
     pattern_enemy_match = re.compile(r"{[\s\S]+?\"(id|count)\"\D*([\d]+).*[\s\S]+?\"(id|count)\"\D*([\d]+)[\s\S]+?}")
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
-    pattern_count_value = re.compile(r"normal=(\d+)")
+    pattern_count_value = re.compile(r"normal = (\d+)")
     pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
     
     # Make sure initial working directory is MythicDungeonTools
