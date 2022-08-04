@@ -1,6 +1,7 @@
 local MDT = MDT
 local AceGUI = LibStub("AceGUI-3.0")
 local db
+local L = MDT.L
 
 -- The idea here is to redo the dungeon select dropdown to be more user friendly.
 -- This was necesarry as the old implementation did not allow for a dungeon to be part of multiple dungeon sets.
