@@ -21,6 +21,7 @@ L["Grimrail Laborer"] = "Grimrail Laborer"
 L["Grimrail Loader"] = "Grimrail Loader"
 L["Grimrail Bombardier"] = "Grimrail Bombardier"
 L["Borka the Brute"] = "Borka the Brute"
+L["Shady Dealer"] = "Shady Dealer"
 
 
 --MDT
