@@ -1448,6 +1448,6 @@ L["BFA"] = "BFA"
 L["Shadowlands"] = "Shadowlands"
 L["Shadowlands Season 4"] = "Shadowlands Season 4"
 L["Default"] = "Default"
-L["<New Preset>"] = "<New Preset>"
+L["<New Preset>"] = "<New Route>"
 L["Empty"] = "Empty"
 --@localization(locale="enUS", format="lua_additive_table", namespace="MDT", handle-subnamespaces="none")@
