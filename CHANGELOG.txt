@@ -1,3 +1,5 @@
+v3.9.5.2
+- russian locale
 v3.9.5.1
 - Added additional Nathrezim Infiltrators to Streets of Wonder, So'leah Gambit and Mechagon Workshop
 - fixed Zul'Gamux in Gambit not awarding count
