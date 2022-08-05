@@ -233,8 +233,8 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 0, 0, 9, 131 }, -- bolstering explosive tyrannical shrouded
-  [2] = { 122, 14, 10, 131 }, -- bursting storming fortified shrouded
+  [1] = { 122, 14, 9, 131 }, -- bolstering explosive tyrannical shrouded
+  [2] = { 0, 0, 10, 131 }, -- bursting storming fortified shrouded
   [3] = { 0, 0, 9, 131 }, -- raging volcanic tyrannical shrouded
   [4] = { 0, 0, 10, 131 }, -- inspiring grievous fortified shrouded
   [5] = { 0, 0, 9, 131 }, -- spiteful necrotic tyrannical shrouded
