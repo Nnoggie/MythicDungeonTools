@@ -37,6 +37,27 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -427.48094307747;
       ["graveyardDescription"] = "Unlocks after defeating Grimrail Enforcers";
     };
+    [3] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "ironDocksIronStar";
+      ["x"] = 266.11253379826;
+      ["y"] = -319.65767561333;
+      ["starIndex"] = 1;
+    };
+    [4] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "ironDocksIronStar";
+      ["x"] = 264.81445187747;
+      ["y"] = -350.09036679726;
+      ["starIndex"] = 2;
+    };
+    [5] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "ironDocksIronStar";
+      ["x"] = 266.42209080433;
+      ["y"] = -378.53379369692;
+      ["starIndex"] = 3;
+    };
   };
 };
 

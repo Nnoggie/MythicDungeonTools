@@ -295,3 +295,11 @@ function MDT:LiveSession_SendMechagonBotAssignment(sublevel, poiIdx, player)
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.mechagonBot, export .. "", distribution, nil, "ALERT")
   end
 end
+
+function MDT:LiveSession_SendPOIAssignment(sublevel, poiIdx, value)
+  local distribution = self:IsPlayerInGroup()
+  if distribution then
+    local export = MDT:TableToString({ sublevel, poiIdx, value }, false, 5)
+    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.poiAssignment, export, distribution, nil, "ALERT")
+  end
+end

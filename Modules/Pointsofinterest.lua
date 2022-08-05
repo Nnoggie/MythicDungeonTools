@@ -530,6 +530,58 @@ local function POI_SetOptions(frame, type, poi)
     end)
 
   end
+  if type == "ironDocksIronStar" then
+    frame:SetSize(9, 9)
+    frame.Texture:SetSize(9, 9)
+    frame.HighlightTexture:SetSize(9, 9)
+    frame.HighlightTexture:SetAtlas("mechagon-projects")
+    frame.Texture:SetAtlas("mechagon-projects")
+    frame.Texture:SetVertexColor(1, 1, 1, 1)
+    frame.HighlightTexture:SetVertexColor(1, 1, 1, 1)
+
+    frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+    frame.playerAssignmentString:ClearAllPoints()
+    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
+    frame.playerAssignmentString:SetJustifyV("CENTER")
+    frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
+    frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
+    frame.playerAssignmentString:SetText(MDT:POI_GetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx) or "")
+    frame.playerAssignmentString:SetScale(0.4)
+    frame.playerAssignmentString:Show()
+
+    frame:SetScript("OnClick", function()
+      local menu = {
+        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
+      }
+      local group = MDT.U.GetGroupMembers()
+      for _, player in pairs(group) do
+        table.insert(menu, { text = player, func = function()
+          frame.playerAssignmentString:SetText(player)
+          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
+        end, checked = player == frame.playerAssignmentString:GetText() })
+      end
+      table.insert(menu, { text = L["dropdownClear"], func = function()
+        frame.playerAssignmentString:SetText("")
+        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+      end, notCheckable = true })
+
+      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+    end)
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(GameTooltip, L["ironDocksIronStar"] .. " " .. poi.starIndex)
+      GameTooltip:AddTexture(450907)
+      GameTooltip:AddSpellByID(167299)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+
+  end
   --fullscreen sizes
   local scale = MDT:GetScale()
   frame:SetSize(frame:GetWidth() * scale, frame:GetHeight() * scale)
@@ -792,4 +844,21 @@ function MDT:POI_GetMechagonBotAssignment(sublevel, poiIdx)
   local sublevelBots = mechagonBots[sublevel]
   if not sublevelBots then return "" end
   return sublevelBots[poiIdx] or ""
+end
+
+function MDT:POI_SetPOIAssignment(sublevel, poiIdx, value)
+  MDT:GetCurrentPreset().value.poiAssignments = MDT:GetCurrentPreset().value.poiAssignments or {}
+  MDT:GetCurrentPreset().value.poiAssignments[sublevel] = MDT:GetCurrentPreset().value.poiAssignments[sublevel] or {}
+  MDT:GetCurrentPreset().value.poiAssignments[sublevel][poiIdx] = value
+  if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+    MDT:LiveSession_SendPOIAssignment(sublevel, poiIdx, value)
+  end
+end
+
+function MDT:POI_GetPOIAssignment(sublevelIdx, poiIdx)
+  local sublevels = MDT:GetCurrentPreset().value.poiAssignments
+  if not sublevels then return end
+  local assignments = sublevels[sublevelIdx]
+  if not assignments then return end
+  return assignments[poiIdx]
 end

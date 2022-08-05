@@ -178,6 +178,7 @@ MDT.liveSessionPrefixes = {
   ["corrupted"] = "MDTLiveCor",
   ["difficulty"] = "MDTLiveLvl",
   ["mechagonBot"] = "MDTLiveMechagon",
+  ["poiAssignment"] = "MDTPOIAssignment",
 }
 
 MDT.dataCollectionPrefixes = {
@@ -387,6 +388,21 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       preset.value.mechagonBots = preset.value.mechagonBots or {}
       preset.value.mechagonBots[sublevel] = preset.value.mechagonBots[sublevel] or {}
       preset.value.mechagonBots[sublevel][poiIdx] = player
+      MDT:UpdateMap()
+      if sender ~= UnitFullName("player") and MDT:GetCurrentSubLevel() == sublevel then
+        local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
+        if poiFrame then UIFrameFlash(poiFrame, 0.5, 1, 1, true, 1, 0); end
+      end
+    end
+  end
+
+  if prefix == MDT.liveSessionPrefixes.poiAssignment then
+    if MDT.liveSessionActive then
+      local preset = MDT:GetCurrentLivePreset()
+      local sublevel, poiIdx, value = unpack(MDT:StringToTable(message, false))
+      preset.value.poiAssignments = preset.value.poiAssignments or {}
+      preset.value.poiAssignments[sublevel] = preset.value.poiAssignments[sublevel] or {}
+      preset.value.poiAssignments[sublevel][poiIdx] = value
       MDT:UpdateMap()
       if sender ~= UnitFullName("player") and MDT:GetCurrentSubLevel() == sublevel then
         local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
