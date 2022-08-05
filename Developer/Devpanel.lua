@@ -192,7 +192,7 @@ function MDT:CreateDevPanel(frame)
 
     --graveyard options
     local option5 = AceGUI:Create("EditBox")
-    option5:SetLabel("Graveyard Description")
+    option5:SetLabel("Graveyard Description / General Note Text")
     option5:SetText("")
     container:AddChild(option5)
 
