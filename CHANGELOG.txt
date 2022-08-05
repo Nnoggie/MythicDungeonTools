@@ -1,3 +1,7 @@
+v3.9.5.1
+- Added additional Nathrezim Infiltrators to Streets of Wonder and So'leah Gambit
+- fixed group linking of a few npcs
+- increased the size of Iron Docks Iron Stars 
 v3.9.5
 - S4 Dungeon Mapping complete including shrouded + inspiring
 - Added user assignable Iron Stars in Iron Docks
