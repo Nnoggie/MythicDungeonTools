@@ -288,14 +288,6 @@ function MDT:LiveSession_SendDifficulty()
   end
 end
 
-function MDT:LiveSession_SendMechagonBotAssignment(sublevel, poiIdx, player)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    local export = MDT:TableToString({ sublevel, poiIdx, player }, false, 5)
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.mechagonBot, export .. "", distribution, nil, "ALERT")
-  end
-end
-
 function MDT:LiveSession_SendPOIAssignment(sublevel, poiIdx, value)
   local distribution = self:IsPlayerInGroup()
   if distribution then

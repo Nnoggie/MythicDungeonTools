@@ -494,7 +494,7 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:SetJustifyV("CENTER")
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
     frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
-    frame.playerAssignmentString:SetText(MDT:POI_GetMechagonBotAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx))
+    frame.playerAssignmentString:SetText(MDT:POI_GetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx) or "")
     frame.playerAssignmentString:SetScale(0.25)
     frame.playerAssignmentString:Show()
 
@@ -506,12 +506,12 @@ local function POI_SetOptions(frame, type, poi)
       for _, player in pairs(group) do
         table.insert(menu, { text = player, func = function()
           frame.playerAssignmentString:SetText(player)
-          MDT:POI_SetMechagonBotAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
+          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
         end, checked = player == frame.playerAssignmentString:GetText() })
       end
       table.insert(menu, { text = L["dropdownClear"], func = function()
         frame.playerAssignmentString:SetText("")
-        MDT:POI_SetMechagonBotAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
       end, notCheckable = true })
 
       EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
@@ -827,23 +827,6 @@ end
 
 function MDT:POI_CreateDropDown(frame)
   frame.poiDropDown = CreateFrame("frame", "MDTPullButtonsOptionsDropDown", nil, "UIDropDownMenuTemplate")
-end
-
-function MDT:POI_SetMechagonBotAssignment(sublevel, poiIdx, player)
-  MDT:GetCurrentPreset().value.mechagonBots = MDT:GetCurrentPreset().value.mechagonBots or {}
-  MDT:GetCurrentPreset().value.mechagonBots[sublevel] = MDT:GetCurrentPreset().value.mechagonBots[sublevel] or {}
-  MDT:GetCurrentPreset().value.mechagonBots[sublevel][poiIdx] = player
-  if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-    MDT:LiveSession_SendMechagonBotAssignment(sublevel, poiIdx, player)
-  end
-end
-
-function MDT:POI_GetMechagonBotAssignment(sublevel, poiIdx)
-  local mechagonBots = MDT:GetCurrentPreset().value.mechagonBots
-  if not mechagonBots then return "" end
-  local sublevelBots = mechagonBots[sublevel]
-  if not sublevelBots then return "" end
-  return sublevelBots[poiIdx] or ""
 end
 
 function MDT:POI_SetPOIAssignment(sublevel, poiIdx, value)
