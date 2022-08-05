@@ -531,9 +531,9 @@ local function POI_SetOptions(frame, type, poi)
 
   end
   if type == "ironDocksIronStar" then
-    frame:SetSize(9, 9)
-    frame.Texture:SetSize(9, 9)
-    frame.HighlightTexture:SetSize(9, 9)
+    frame:SetSize(18, 18)
+    frame.Texture:SetSize(18, 18)
+    frame.HighlightTexture:SetSize(18, 18)
     frame.HighlightTexture:SetAtlas("mechagon-projects")
     frame.Texture:SetAtlas("mechagon-projects")
     frame.Texture:SetVertexColor(1, 1, 1, 1)
