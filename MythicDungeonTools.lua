@@ -131,7 +131,8 @@ local defaultSavedVars = {
 do
   for i = 1, 80 do
     defaultSavedVars.global.presets[i] = {
-      [1] = { text = L["Default"], value = {}, objects = {}, colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [1] = { text = L["Default"], value = {}, objects = {},
+        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
       [2] = { text = L["<New Preset>"], value = 0 },
     }
     defaultSavedVars.global.currentPreset[i] = 1
