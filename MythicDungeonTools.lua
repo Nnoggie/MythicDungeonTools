@@ -131,7 +131,8 @@ local defaultSavedVars = {
 do
   for i = 1, 80 do
     defaultSavedVars.global.presets[i] = {
-      [1] = { text = L["Default"], value = {}, objects = {}, colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [1] = { text = L["Default"], value = {}, objects = {},
+        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
       [2] = { text = L["<New Preset>"], value = 0 },
     }
     defaultSavedVars.global.currentPreset[i] = 1
@@ -233,8 +234,8 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 0, 0, 9, 131 }, -- bolstering explosive tyrannical shrouded
-  [2] = { 122, 14, 10, 131 }, -- bursting storming fortified shrouded
+  [1] = { 122, 14, 9, 131 }, -- bolstering explosive tyrannical shrouded
+  [2] = { 0, 0, 10, 131 }, -- bursting storming fortified shrouded
   [3] = { 0, 0, 9, 131 }, -- raging volcanic tyrannical shrouded
   [4] = { 0, 0, 10, 131 }, -- inspiring grievous fortified shrouded
   [5] = { 0, 0, 9, 131 }, -- spiteful necrotic tyrannical shrouded
@@ -1797,8 +1798,8 @@ function MDT:UpdatePullTooltip(tooltip)
 
       local text = L["Forces"] .. ": " .. MDT:FormatEnemyForces(pullForces, totalForcesMax, false)
       text = text .. "\n" .. L["Total"] .. ": " .. MDT:FormatEnemyForces(totalForces, totalForcesMax, true)
-      local pullHealth = MDT:SumCurrentPullHealth(tooltip.currentPull)
-      text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(pullForces, pullHealth)
+      -- local pullHealth = MDT:SumCurrentPullHealth(tooltip.currentPull)
+      -- text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(pullForces, pullHealth)
 
       tooltip.botString:SetText(text)
       tooltip.botString:Show()

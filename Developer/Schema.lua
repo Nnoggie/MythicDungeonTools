@@ -103,6 +103,10 @@ local schemas = {
             type = "string"
           },
           {
+            name = "starIndex",
+            type = "number"
+          },
+          {
             name = "formattedDoorDescription",
             type = "array",
             fields = {

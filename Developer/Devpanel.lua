@@ -192,7 +192,7 @@ function MDT:CreateDevPanel(frame)
 
     --graveyard options
     local option5 = AceGUI:Create("EditBox")
-    option5:SetLabel("Graveyard Description")
+    option5:SetLabel("Graveyard Description / General Note Text")
     option5:SetText("")
     container:AddChild(option5)
 
@@ -293,12 +293,26 @@ function MDT:CreateDevPanel(frame)
         end,
       },
       [7] = {
+        text = "Iron Docks Iron Star",
+        func = function()
+          if not MDT.mapPOIs[db.currentDungeonIdx] then MDT.mapPOIs[db.currentDungeonIdx] = {} end
+          if not MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] then
+            MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] = {}
+          end
+          local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+          local posx, posy = 430, -250
+          tinsert(pois,
+            { x = posx, y = posy, template = "MapLinkPinTemplate", type = "ironDocksIronStar", starIndex = 1 })
+          MDT:POI_UpdateAll()
+        end,
+      },
+      [8] = {
         text = "Export Zoom Settings",
         func = function()
           MDT:ExportCurrentZoomPanSettings()
         end,
       },
-      [8] = {
+      [9] = {
         text = "Export to LUA",
         func = function()
           local export = MDT:ExportLuaTable(MDT.mapPOIs[db.currentDungeonIdx], MDT:GetSchema("pois"))
