@@ -182,7 +182,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["type"] = "mapLink";
       ["x"] = 329.09257461962;
       ["y"] = -56.020965296348;
-      ["target"] = 5;
+      ["target"] = 4;
       ["direction"] = 1;
       ["connectionIndex"] = 7;
     };
@@ -269,6 +269,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 1;
         ["sublevel"] = 1;
         ["scale"] = 2;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 268.3810873401;
@@ -527,6 +528,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 22;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["inspiring"] = true;
       };
       [30] = {
         ["x"] = 255.12433184584;
@@ -576,6 +578,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 23;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["inspiring"] = true;
       };
       [37] = {
         ["x"] = 273.57533726022;
@@ -696,6 +699,56 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["scale"] = 2;
         ["teeming"] = true;
+      };
+      [54] = {
+        ["x"] = 201.97347945815;
+        ["y"] = -227.0167110551;
+        ["g"] = 103;
+        ["sublevel"] = 3;
+      };
+      [55] = {
+        ["x"] = 206.87490931041;
+        ["y"] = -199.94275425178;
+        ["g"] = 103;
+        ["sublevel"] = 3;
+      };
+      [56] = {
+        ["x"] = 206.20030538956;
+        ["y"] = -209.63631973138;
+        ["g"] = 103;
+        ["sublevel"] = 3;
+        ["disguised"] = true;
+      };
+      [57] = {
+        ["x"] = 204.02072423023;
+        ["y"] = -217.90631114019;
+        ["g"] = 103;
+        ["sublevel"] = 3;
+      };
+      [58] = {
+        ["x"] = 183.91750518535;
+        ["y"] = -179.63670838954;
+        ["g"] = 104;
+        ["sublevel"] = 3;
+      };
+      [59] = {
+        ["x"] = 181.8290546604;
+        ["y"] = -186.52871522402;
+        ["g"] = 104;
+        ["sublevel"] = 3;
+      };
+      [60] = {
+        ["x"] = 179.32282798714;
+        ["y"] = -195.09155776636;
+        ["g"] = 104;
+        ["sublevel"] = 3;
+        ["inspiring"] = true;
+      };
+      [61] = {
+        ["x"] = 176.60778494249;
+        ["y"] = -202.81900934331;
+        ["g"] = 104;
+        ["sublevel"] = 3;
       };
     };
   };
@@ -899,6 +952,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -141.33485383034;
         ["sublevel"] = 3;
         ["scale"] = 1.6;
+        ["inspiring"] = true;
         ["patrolFacing"] = 2.9452431127404;
         ["patrolFacing2"] = 4.7123889803847;
         ["patrol"] = {
@@ -1074,6 +1128,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 12;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [12] = {
         ["x"] = 72.462796498498;
@@ -1116,10 +1171,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 14;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [18] = {
-        ["x"] = 109.00362280268;
-        ["y"] = -192.67921166387;
+        ["x"] = 83.164721364641;
+        ["y"] = -196.94959369521;
         ["g"] = 14;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
@@ -1346,12 +1402,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -253.92611638357;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
+        ["disguised"] = true;
       };
       [9] = {
         ["x"] = 220.64393291811;
         ["y"] = -146.29215166546;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
+        ["disguised"] = true;
       };
       [10] = {
         ["x"] = 348.21653245397;
@@ -1573,6 +1631,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -267.45550568482;
         ["sublevel"] = 4;
         ["scale"] = 1.8;
+        ["disguised"] = true;
         ["patrolFacing"] = 3.0434178831651;
         ["patrolFacing2"] = 4.7123889803847;
         ["patrol"] = {
@@ -1750,6 +1809,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 26;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["inspiring"] = true;
       };
       [2] = {
         ["x"] = 504.94788291929;
@@ -1875,6 +1935,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -273.47400509062;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [20] = {
         ["x"] = 515.03397887344;
@@ -1928,6 +1989,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 53;
         ["sublevel"] = 4;
         ["scale"] = 1.4;
+        ["disguised"] = true;
       };
       [28] = {
         ["x"] = 289.26948119799;
@@ -1970,6 +2032,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 54;
         ["sublevel"] = 4;
         ["scale"] = 1.4;
+        ["inspiring"] = true;
       };
       [34] = {
         ["x"] = 354.079891839;
@@ -2012,6 +2075,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 55;
         ["sublevel"] = 4;
         ["scale"] = 1.4;
+        ["disguised"] = true;
       };
       [40] = {
         ["x"] = 345.6358082346;
@@ -2047,6 +2111,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 56;
         ["sublevel"] = 4;
         ["scale"] = 1.4;
+        ["inspiring"] = true;
       };
       [45] = {
         ["x"] = 272.78329716904;
@@ -2356,6 +2421,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 29;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 491.81632322975;
@@ -2384,6 +2450,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 85;
         ["sublevel"] = 4;
         ["scale"] = 1.8;
+        ["inspiring"] = true;
       };
       [6] = {
         ["x"] = 453.29076167775;
@@ -2507,6 +2574,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 65;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["disguised"] = true;
       };
       [9] = {
         ["x"] = 441.55737525728;
@@ -2716,6 +2784,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 48;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [11] = {
         ["x"] = 691.80376495691;
@@ -2756,6 +2825,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 32;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 540.73879177152;
@@ -2784,6 +2854,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 38;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["inspiring"] = true;
         ["patrolFacing"] = 1.3744467859455;
         ["patrolFacing2"] = 4.319689898686;
         ["patrol"] = {
@@ -2891,6 +2962,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 39;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["inspiring"] = true;
       };
       [7] = {
         ["x"] = 564.00122708666;
@@ -2933,6 +3005,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 48;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [13] = {
         ["x"] = 687.06690454009;
@@ -3002,6 +3075,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 40;
         ["sublevel"] = 3;
         ["scale"] = 1.2;
+        ["disguised"] = true;
       };
       [6] = {
         ["x"] = 572.27804168689;
@@ -3169,6 +3243,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 66;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["inspiring"] = true;
       };
       [11] = {
         ["x"] = 310.47206994794;
@@ -3203,6 +3278,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -283.95085016049;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["inspiring"] = true;
         ["patrolFacing"] = 4.8105637508094;
         ["patrol"] = {
           [1] = {
@@ -3259,6 +3335,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 70;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["disguised"] = true;
       };
       [19] = {
         ["x"] = 265.52518685127;
@@ -3574,12 +3651,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 59;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 371.61462663003;
         ["y"] = -168.34076785299;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["inspiring"] = true;
         ["patrolFacing"] = 3.8288160465626;
         ["patrol"] = {
           [1] = {
@@ -3642,6 +3721,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 60;
         ["sublevel"] = 5;
         ["scale"] = 2.6;
+        ["disguised"] = true;
       };
       [3] = {
         ["x"] = 549.89517562282;
@@ -3676,6 +3756,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 6;
         ["scale"] = 1.6;
       };
+      [3] = {
+        ["x"] = 345.32054765079;
+        ["y"] = -410.43947826619;
+        ["g"] = 72;
+        ["sublevel"] = 6;
+        ["scale"] = 1.6;
+      };
     };
   };
   [25] = {
@@ -3689,48 +3776,42 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["clones"] = {
       [1] = {
-        ["x"] = 359.01605427655;
-        ["y"] = -436.97949443916;
-        ["g"] = 71;
+        ["x"] = 337.00723669233;
+        ["y"] = -416.63465738104;
+        ["g"] = 72;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
       };
       [2] = {
-        ["x"] = 369.36563782991;
-        ["y"] = -409.59361660775;
+        ["x"] = 372.00753624996;
+        ["y"] = -404.30971669491;
         ["g"] = 72;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
       };
       [3] = {
-        ["x"] = 357.32555951114;
-        ["y"] = -405.12258192042;
+        ["x"] = 358.76661937563;
+        ["y"] = -405.84314277449;
         ["g"] = 72;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["disguised"] = true;
       };
       [4] = {
-        ["x"] = 349.38385811121;
-        ["y"] = -415.26551810336;
-        ["g"] = 72;
-        ["sublevel"] = 6;
-        ["scale"] = 1.6;
-      };
-      [5] = {
         ["x"] = 375.48133091261;
         ["y"] = -500.82063045226;
         ["g"] = 78;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
       };
-      [6] = {
+      [5] = {
         ["x"] = 337.13490235035;
         ["y"] = -489.48254312404;
         ["g"] = 79;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
       };
-      [7] = {
+      [6] = {
         ["x"] = 394.05460694759;
         ["y"] = -327.37198587238;
         ["g"] = 64;
@@ -3738,7 +3819,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.6;
         ["teeming"] = true;
       };
-      [8] = {
+      [7] = {
         ["x"] = 401.78186544864;
         ["y"] = -321.00832335797;
         ["g"] = 64;
@@ -3746,7 +3827,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.6;
         ["teeming"] = true;
       };
-      [9] = {
+      [8] = {
         ["x"] = 374.39834690511;
         ["y"] = -257.80464444771;
         ["g"] = 63;
@@ -3754,7 +3835,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.6;
         ["teeming"] = true;
       };
-      [10] = {
+      [9] = {
         ["x"] = 372.58021872588;
         ["y"] = -273.71373418341;
         ["g"] = 63;
@@ -3762,12 +3843,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.6;
         ["teeming"] = true;
       };
-      [11] = {
+      [10] = {
         ["x"] = 342.97797472221;
         ["y"] = -447.95454333974;
         ["g"] = 71;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["inspiring"] = true;
       };
     };
   };
@@ -3842,6 +3924,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 77;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["inspiring"] = true;
       };
       [10] = {
         ["x"] = 365.46645607242;
@@ -3938,6 +4021,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 79;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 337.34136104222;
@@ -3985,6 +4069,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 88;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["inspiring"] = true;
       };
       [5] = {
         ["x"] = 450.12849303752;
@@ -4006,6 +4091,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 89;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["disguised"] = true;
       };
       [8] = {
         ["x"] = 399.90988575157;
@@ -4034,6 +4120,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 90;
         ["sublevel"] = 6;
         ["scale"] = 1.6;
+        ["disguised"] = true;
       };
       [12] = {
         ["x"] = 495.99602039345;
@@ -4437,8 +4524,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 1820;
     ["clones"] = {
       [1] = {
-        ["x"] = 150.7837953006;
-        ["y"] = -183.00574341892;
+        ["x"] = 146.13319650169;
+        ["y"] = -191.60933722616;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
@@ -4541,6 +4628,242 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 8;
         ["sublevel"] = 2;
         ["scale"] = 2.3;
+        ["shrouded"] = true;
+      };
+      [3] = {
+        ["x"] = 263.29146003598;
+        ["y"] = -200.58280451202;
+        ["g"] = 1;
+        ["sublevel"] = 1;
+        ["scale"] = 2;
+        ["shrouded"] = true;
+      };
+      [4] = {
+        ["x"] = 220.64393291811;
+        ["y"] = -146.29215166546;
+        ["sublevel"] = 3;
+        ["scale"] = 1.4;
+        ["shrouded"] = true;
+      };
+      [5] = {
+        ["x"] = 211.88855019607;
+        ["y"] = -253.92611638357;
+        ["sublevel"] = 3;
+        ["scale"] = 1.4;
+        ["shrouded"] = true;
+      };
+      [6] = {
+        ["x"] = 69.47191792085;
+        ["y"] = -127.86977643415;
+        ["g"] = 12;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [7] = {
+        ["x"] = 436.18461918803;
+        ["y"] = -264.53258398215;
+        ["g"] = 29;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [8] = {
+        ["x"] = 482.89329270994;
+        ["y"] = -273.47400509062;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [9] = {
+        ["x"] = 572.42375161859;
+        ["y"] = -203.31076464694;
+        ["g"] = 40;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [10] = {
+        ["x"] = 532.13041579922;
+        ["y"] = -143.31591506306;
+        ["g"] = 32;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [11] = {
+        ["x"] = 663.97109735553;
+        ["y"] = -196.89822281874;
+        ["g"] = 48;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [12] = {
+        ["x"] = 669.95439181589;
+        ["y"] = -187.4218495326;
+        ["g"] = 48;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
+        ["shrouded"] = true;
+      };
+      [13] = {
+        ["x"] = 289.63498114001;
+        ["y"] = -292.74235803917;
+        ["g"] = 53;
+        ["sublevel"] = 4;
+        ["scale"] = 1.4;
+        ["shrouded"] = true;
+      };
+      [14] = {
+        ["x"] = 336.4901074167;
+        ["y"] = -415.38503446069;
+        ["g"] = 55;
+        ["sublevel"] = 4;
+        ["scale"] = 1.4;
+        ["shrouded"] = true;
+      };
+      [15] = {
+        ["x"] = 433.1342795752;
+        ["y"] = -267.45550568482;
+        ["sublevel"] = 4;
+        ["scale"] = 1.8;
+        ["shrouded"] = true;
+        ["patrolFacing"] = 3.0434178831651;
+        ["patrolFacing2"] = 4.7123889803847;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 431.68705880048;
+            ["y"] = -271.31479686697;
+          };
+          [2] = {
+            ["x"] = 422.4297218147;
+            ["y"] = -342.3424789402;
+          };
+          [3] = {
+            ["x"] = 431.68705880048;
+            ["y"] = -271.31479686697;
+          };
+          [4] = {
+            ["x"] = 589.99037051703;
+            ["y"] = -291.08517782603;
+          };
+          [5] = {
+            ["x"] = 590.44488300561;
+            ["y"] = -304.72154733896;
+          };
+          [6] = {
+            ["x"] = 589.99037051703;
+            ["y"] = -291.08517782603;
+          };
+        };
+      };
+      [16] = {
+        ["x"] = 426.72527454426;
+        ["y"] = -115.18923981587;
+        ["g"] = 59;
+        ["sublevel"] = 5;
+        ["scale"] = 2.6;
+        ["shrouded"] = true;
+      };
+      [17] = {
+        ["x"] = 555.09026285612;
+        ["y"] = -116.28283964657;
+        ["g"] = 60;
+        ["sublevel"] = 5;
+        ["scale"] = 2.6;
+        ["shrouded"] = true;
+      };
+      [18] = {
+        ["x"] = 253.15222576475;
+        ["y"] = -321.49798114558;
+        ["g"] = 70;
+        ["sublevel"] = 5;
+        ["scale"] = 2.6;
+        ["shrouded"] = true;
+      };
+      [19] = {
+        ["x"] = 453.18056622134;
+        ["y"] = -437.4948125575;
+        ["g"] = 65;
+        ["sublevel"] = 5;
+        ["scale"] = 2.6;
+        ["shrouded"] = true;
+      };
+      [20] = {
+        ["x"] = 391.03725290222;
+        ["y"] = -225.41327646165;
+        ["g"] = 89;
+        ["sublevel"] = 6;
+        ["scale"] = 1.6;
+        ["shrouded"] = true;
+      };
+      [21] = {
+        ["x"] = 555.57792244947;
+        ["y"] = -149.50792091336;
+        ["g"] = 90;
+        ["sublevel"] = 6;
+        ["scale"] = 1.6;
+        ["shrouded"] = true;
+      };
+      [22] = {
+        ["x"] = 340.26370609731;
+        ["y"] = -479.44050572748;
+        ["g"] = 79;
+        ["sublevel"] = 6;
+        ["scale"] = 1.6;
+        ["shrouded"] = true;
+      };
+      [23] = {
+        ["x"] = 206.20030538956;
+        ["y"] = -209.63631973138;
+        ["g"] = 103;
+        ["sublevel"] = 3;
+        ["shrouded"] = true;
+      };
+      [24] = {
+        ["x"] = 358.76661937563;
+        ["y"] = -405.84314277449;
+        ["g"] = 72;
+        ["sublevel"] = 6;
+        ["scale"] = 1.6;
+        ["shrouded"] = true;
+      };
+    };
+  };
+  [37] = {
+    ["name"] = "Zul'gamux";
+    ["id"] = 190128;
+    ["count"] = 12;
+    ["health"] = 999999;
+    ["scale"] = 1.8;
+    ["displayId"] = 101106;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373509] = {
+      };
+      [373513] = {
+      };
+      [373552] = {
+      };
+      [373570] = {
+      };
+      [373607] = {
+      };
+      [373724] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 82.19065541269;
+        ["y"] = -214.33618428887;
+        ["g"] = 14;
+        ["sublevel"] = 3;
+        ["scale"] = 1.2;
         ["shrouded"] = true;
       };
     };
