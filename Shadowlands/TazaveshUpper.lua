@@ -2440,7 +2440,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [7] = {
         ["x"] = 538.99158745165;
         ["y"] = -264.28246427986;
-        ["g"] = 26;
+        ["g"] = 25;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
         ["shrouded"] = true;
@@ -2466,6 +2466,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 30;
         ["sublevel"] = 4;
         ["scale"] = 1.7;
+        ["shrouded"] = true;
+      };
+      [11] = {
+        ["x"] = 521.41160171385;
+        ["y"] = -133.3525102302;
+        ["sublevel"] = 4;
+        ["scale"] = 2;
         ["shrouded"] = true;
       };
     };
@@ -2503,6 +2510,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 21;
         ["sublevel"] = 1;
         ["shrouded"] = true;
+        ["disguised"] = true;
+      };
+    };
+  };
+  [23] = {
+    ["name"] = "Shady Dealer";
+    ["id"] = 180315;
+    ["count"] = 0;
+    ["health"] = 0;
+    ["scale"] = 1;
+    ["displayId"] = 93594;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 521.41160171385;
+        ["y"] = -133.3525102302;
+        ["sublevel"] = 4;
+        ["scale"] = 2;
         ["disguised"] = true;
       };
     };
