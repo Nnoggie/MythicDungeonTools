@@ -1798,8 +1798,8 @@ function MDT:UpdatePullTooltip(tooltip)
 
       local text = L["Forces"] .. ": " .. MDT:FormatEnemyForces(pullForces, totalForcesMax, false)
       text = text .. "\n" .. L["Total"] .. ": " .. MDT:FormatEnemyForces(totalForces, totalForcesMax, true)
-      local pullHealth = MDT:SumCurrentPullHealth(tooltip.currentPull)
-      text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(pullForces, pullHealth)
+      -- local pullHealth = MDT:SumCurrentPullHealth(tooltip.currentPull)
+      -- text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(pullForces, pullHealth)
 
       tooltip.botString:SetText(text)
       tooltip.botString:Show()
