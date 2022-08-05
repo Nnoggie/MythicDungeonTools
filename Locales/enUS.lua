@@ -2,6 +2,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["manaDevourerNote"] = "Mana Devourer 1 is representing the Boss because it also awards enemy forces"
 L["Grom'kar Footsoldier"] = "Grom'kar Footsoldier"
 L["Unruly Ogron"] = "Unruly Ogron"
 L["Grom'kar Flameslinger"] = "Grom'kar Flameslinger"

@@ -132,6 +132,13 @@ MDT.mapPOIs[dungeonIndex] = {
       ["direction"] = -1;
       ["connectionIndex"] = 4;
     };
+    [4] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "generalNote";
+      ["x"] = 97.230636733041;
+      ["y"] = -133.25821564774;
+      ["text"] = "manaDevourerNote";
+    };
   };
   [5] = {
     [1] = {
@@ -253,7 +260,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [4] = {
     ["name"] = "Abstract Nullifier";
     ["id"] = 115765;
-    ["count"] = 12;
+    ["count"] = 18;
     ["health"] = 32221436.68;
     ["scale"] = 1.2;
     ["displayId"] = 74335;
@@ -264,7 +271,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 336.99656507;
         ["y"] = -166.49866242334;
         ["sublevel"] = 1;
-        ["scale"] = 2;
+        ["scale"] = 3.2;
       };
     };
   };
@@ -763,15 +770,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["disguised"] = true;
       };
       [9] = {
-        ["x"] = 184.52604882834;
-        ["y"] = -139.87494629325;
+        ["x"] = 180.5786709392;
+        ["y"] = -134.71297722697;
         ["g"] = 7;
         ["sublevel"] = 4;
         ["scale"] = 2;
       };
       [10] = {
-        ["x"] = 177.75077163202;
-        ["y"] = -153.93726646726;
+        ["x"] = 177.14345866881;
+        ["y"] = -161.22470928233;
         ["g"] = 7;
         ["sublevel"] = 4;
         ["scale"] = 2;
