@@ -1,6 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+
+--MDT
 L["ironDocksIronStar"] = "Iron Star"
 L["manaDevourerNote"] = "Mana Devourer 1 is representing the Boss because it also awards enemy forces"
 L["Grom'kar Footsoldier"] = "Grom'kar Footsoldier"
@@ -53,9 +55,6 @@ L["Grimrail Loader"] = "Grimrail Loader"
 L["Grimrail Bombardier"] = "Grimrail Bombardier"
 L["Borka the Brute"] = "Borka the Brute"
 L["Shady Dealer"] = "Shady Dealer"
-
-
---MDT
 L["undoDrawing"] = "Undo Drawing"
 L["redoDrawing"] = "Redo Drawing"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\nThis will reload the UI!"
