@@ -2510,7 +2510,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 21;
         ["sublevel"] = 1;
         ["shrouded"] = true;
-        ["disguised"] = true;
       };
     };
   };
