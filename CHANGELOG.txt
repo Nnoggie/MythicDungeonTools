@@ -1,3 +1,6 @@
+v3.9.5
+- S4 Dungeon Mapping complete including shrouded + inspiring
+- Added user assignable Iron Stars in Iron Docks
 v3.9.4.3
 - nil error fix
 v3.9.4.2
