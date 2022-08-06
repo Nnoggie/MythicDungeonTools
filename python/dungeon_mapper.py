@@ -319,7 +319,7 @@ def make_aura_check_GUID_list(CL, aura):
     1. Input the combatlog and the aura you want to check for like seen below
     2. Make 2 lines of code in the table_output generator below like the example below
         if npc.destGUID in inspiring_GUID_list:
-            table_output += f'\t\t\t\t["inspiring"] = true;\n'
+            table_output += f'        ["inspiring"] = true;\n'
     Args:
         CL (dataframe): Combatlog dataframe
         aura (string): Name of aura to map
@@ -551,61 +551,59 @@ if __name__ == "__main__":
         table_output += f'MDT.mapPOIs[dungeonIndex] = {{\n'
         # Mapping mapPOIs
         for sublevel in door_pois["from_sublevel"].unique():
-            table_output += f'\t[{sublevel}] = {{\n'
+            table_output += f'  [{sublevel}] = {{\n'
             for idx, (_, door) in enumerate(door_pois[door_pois.from_sublevel == sublevel].iterrows()):
-                table_output += f'\t\t[{idx+1}] = {{\n'
-                table_output += f'\t\t\t["y"] = {door.MDTy};\n'
-                table_output += f'\t\t\t["x"] = {door.MDTx};\n'
-                table_output += f'\t\t\t["connectionIndex"] = {door.connectionIndex};\n'
-                table_output += f'\t\t\t["target"] = {door.to_sublevel};\n'
-                table_output += f'\t\t\t["type"] = "mapLink";\n'
-                table_output += f'\t\t\t["template"] = "MapLinkPinTemplate";\n'
-                table_output += f'\t\t\t["direction"] = {door.direction};\n'
-                table_output += f'\t\t}};\n'
+                table_output += f'    [{idx+1}] = {{\n'
+                table_output += f'      ["y"] = {door.MDTy};\n'
+                table_output += f'      ["x"] = {door.MDTx};\n'
+                table_output += f'      ["connectionIndex"] = {door.connectionIndex};\n'
+                table_output += f'      ["target"] = {door.to_sublevel};\n'
+                table_output += f'      ["type"] = "mapLink";\n'
+                table_output += f'      ["template"] = "MapLinkPinTemplate";\n'
+                table_output += f'      ["direction"] = {door.direction};\n'
+                table_output += f'    }};\n'
 
-            table_output += f'\t}};\n'
+            table_output += f'  }};\n'
         table_output += f'}};\n\n'
 
     table_output += 'MDT.dungeonEnemies[dungeonIndex] = {\n'
     # Mapping dungeon enemies
     for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
         unique_npc_index += 1  # Lua is stupid
-        table_output += f'\t[{unique_npc_index}] = {{\n\t\t["clones"] = {{\n'
+        table_output += f'  [{unique_npc_index}] = {{\n    ["clones"] = {{\n'
         for npc_index, npc in enumerate(mobHits[mobHits.npcID == unique_npcID].itertuples()):
             npc_index += 1  # Lua is stupid
-            table_output += f'\t\t\t[{npc_index}] = {{\n'
-            table_output += f'\t\t\t\t["x"] = {npc.MDTx};\n'
-            table_output += f'\t\t\t\t["y"] = {npc.MDTy};\n'
-            table_output += f'\t\t\t\t["sublevel"] = {npc.sublevel};\n'
+            table_output += f'      [{npc_index}] = {{\n'
+            table_output += f'        ["x"] = {npc.MDTx};\n'
+            table_output += f'        ["y"] = {npc.MDTy};\n'
+            table_output += f'        ["sublevel"] = {npc.sublevel};\n'
             if npc.group != 0:
-                table_output += f'\t\t\t\t["g"] = {int(npc.group)};\n'
+                table_output += f'        ["g"] = {int(npc.group)};\n'
             if npc.destGUID in inspiring_GUID_list:
-                table_output += f'\t\t\t\t["inspiring"] = true;\n'
+                table_output += f'        ["inspiring"] = true;\n'
             if npc.destGUID in disguised_GUID_list:
-                table_output += f'\t\t\t\t["disguised"] = true;\n'
-            table_output += f'\t\t\t}};\n'
+                table_output += f'        ["disguised"] = true;\n'
+            table_output += f'      }};\n'
 
-        table_output += '\t\t};\n'
+        table_output += '    };\n'
         if npc.destName in boss_info.sourceName.to_list():
             encounterID, instanceID = get_additional_boss_info(npc.destName)
-            table_output += f'\t\t["isBoss"] = true;\n'
-            table_output += f'\t\t["encounterID"] = {encounterID};\n'
-            table_output += f'\t\t["instanceID"] = {instanceID};\n'
-        table_output += f'\t\t["name"] = "{npc.destName}";\n'
+            table_output += f'    ["isBoss"] = true;\n'
+            table_output += f'    ["encounterID"] = {encounterID};\n'
+            table_output += f'    ["instanceID"] = {instanceID};\n'
+        table_output += f'    ["name"] = "{npc.destName}";\n'
         # Adding npc name to list for easy locale enUS
         npc_locale_list.append(npc.destName)
-        table_output += f'\t\t["id"] = {npc.npcID};\n'
-        table_output += f'\t\t["health"] = {npc.maxHP};\n'
-        table_output += f'\t\t["level"] = {npc.level};\n'
-        table_output += f'\t\t["count"] = {npc.mobcount};\n'
+        table_output += f'    ["id"] = {npc.npcID};\n'
+        table_output += f'    ["health"] = {npc.maxHP};\n'
+        table_output += f'    ["level"] = {npc.level};\n'
+        table_output += f'    ["count"] = {npc.mobcount};\n'
         if request_wowtools:
             displayID, creatureType = get_displayid_and_creaturetype(npc.npcID)
-            table_output += f'\t\t["displayId"] = {displayID};\n'
-            table_output += f'\t\t["creatureType"] = "{creatureType}";\n'
-        table_output += f'\t\t["scale"] = 1;\n'
-        print("-", end="")
-
-        table_output += '\t};\n'
+            table_output += f'    ["displayId"] = {displayID};\n'
+            table_output += f'    ["creatureType"] = "{creatureType}";\n'
+        table_output += f'    ["scale"] = 1;\n'
+        table_output += '  };\n'
     table_output += '};\n\n'
     print("] Mapping Completed")
 
