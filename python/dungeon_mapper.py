@@ -431,7 +431,12 @@ def create_map_doors(pois):
     door_pois = door_pois.astype({"from_sublevel": int, "to_sublevel": int})
     return door_pois
 
+def print_progressbar(progress, total, size=60):
+    x = int(size*progress/total)
+    print(f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total}", end="\r", flush=True)
 
+    if progress == total:
+        print("\n", flush=True)
 
 if __name__ == "__main__":
     if not os.getcwd().endswith("python") and os.path.isdir(os.getcwd() + "/python"):
@@ -543,8 +548,9 @@ if __name__ == "__main__":
         pois = create_mapPOIs(CL)
         door_pois = create_map_doors(pois) # Blue (0) and green (1) marker
 
-    print("Mapping Initiated [", end="")
-
+    total_mobs = len(mobHits)
+    mapping_progress = 0
+    print_progressbar(0, total_mobs, size=60)
     npc_locale_list = []
     table_output = f'MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n'
     if toggle_door_mapping:
@@ -584,6 +590,8 @@ if __name__ == "__main__":
             if npc.destGUID in disguised_GUID_list:
                 table_output += f'        ["disguised"] = true;\n'
             table_output += f'      }};\n'
+            mapping_progress += 1
+            print_progressbar(mapping_progress, total_mobs, size=60)
 
         table_output += '    };\n'
         if npc.destName in boss_info.sourceName.to_list():
@@ -605,7 +613,6 @@ if __name__ == "__main__":
         table_output += f'    ["scale"] = 1;\n'
         table_output += '  };\n'
     table_output += '};\n\n'
-    print("] Mapping Completed")
 
     # Create locale enUS from unique names in npc_locale_list
     npc_locale_en = ""
@@ -614,9 +621,7 @@ if __name__ == "__main__":
 
     # Add new npc names to output
     table_output += npc_locale_en
-
     pyperclip.copy(table_output)
-
     print("This dungeon requires {} count to complete and has {} total count. You need to clear {}% of the dungeon."
           .format(total_count, mobHits.mobcount.sum(), int(round(total_count / mobHits.mobcount.sum(), 2) * 100)))
     print("Lua table copied to clipboard. Paste into the correct dungeon file.")
