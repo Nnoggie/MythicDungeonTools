@@ -71,6 +71,9 @@ def load_db_files(wowtools_files = ["uimapassignment", "map", "criteria", "crite
         dict: Dictionary of dataframes containing wowdb data
 
     """
+    if not os.getcwd().endswith("python") and os.path.isdir(os.getcwd() + "/python"):
+        os.chdir(os.getcwd() + "/python")
+
     if not os.path.exists(os.getcwd() + '/wowdb_files'):
         os.mkdir(os.getcwd() + '/wowdb_files')
 

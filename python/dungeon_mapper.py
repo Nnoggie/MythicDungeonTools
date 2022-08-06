@@ -1,4 +1,5 @@
-import time
+import os
+import sys
 import pandas as pd
 import numpy as np
 import pyperclip
@@ -433,6 +434,9 @@ def create_map_doors(pois):
 
 
 if __name__ == "__main__":
+    if not os.getcwd().endswith("python") and os.path.isdir(os.getcwd() + "/python"):
+        os.chdir(os.getcwd() + "/python")
+
     combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags", "sourceRaidFlags", "destGUID",
                         "destName", "destFlags", "destRaidFlags", "spellId", "spellName", "spellSchool", "unitGUID",
                         "ownerGUID",
