@@ -88,7 +88,27 @@ def update_count(match, dungeon_count_table):
     else:
         # if npcid is not found in count table
         true_count = 0
-    if true_count != info['count']:
+
+    # Hardcoded count for if in game count does not match db files
+    unexplainable_count = {
+        # npcid: {'db_count': X, 'hardcoded_count': Y}
+        115765: {'db_count': 12, 'hardcoded_count': 18}
+    }
+    if info['id'] in unexplainable_count.keys():
+        npc_name = pattern_npc_name.search(match.group()).group(1)
+        if unexplainable_count[info['id']]['db_count'] != true_count:
+            # This is a warning that the db_count for the mob has changed since last looked at
+            print(
+                f"    {npc_name} with id {info['id']} has hardcoded count {unexplainable_count[info['id']]['hardcoded_count']}"
+                f"\n        Warning this npcs db count changed: {unexplainable_count[info['id']]['db_count']} -> {true_count}"
+                f" (Report to Stinth, no changes made in MDT)")
+        if unexplainable_count[info['id']]['hardcoded_count'] != info['count']:
+            print(
+                f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {unexplainable_count[info['id']]['hardcoded_count']} (Hardcoded)")
+            new_count = unexplainable_count[info['id']]['hardcoded_count']
+            return match.group().replace(f'["count"] = {info["count"]}', f'["count"] = {new_count}')
+
+    elif true_count != info['count']:
         npc_name = pattern_npc_name.search(match.group()).group(1)
         if true_count == 0:
             print(f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {true_count}")
