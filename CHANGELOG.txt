@@ -1,3 +1,6 @@
+v3.9.5.4
+- Added clickable iron stars in Iron Docks to include in pulls
+- Updated API function MDT:GetEnemyForces() to prefer current dungeon of player
 v3.9.5.3
 - Added even more additional Nathrezim Infiltrators to Streets of Wonder
 v3.9.5.2
@@ -6,7 +9,7 @@ v3.9.5.1
 - Added additional Nathrezim Infiltrators to Streets of Wonder, So'leah Gambit and Mechagon Workshop
 - fixed Zul'Gamux in Gambit not awarding count
 - fixed group linking of a few npcs
-- increased the size of Iron Docks Iron Stars 
+- increased the size of Iron Docks Iron Stars
 v3.9.5
 - S4 Dungeon Mapping complete including shrouded + inspiring
 - Added user assignable Iron Stars in Iron Docks
