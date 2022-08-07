@@ -5,7 +5,7 @@ local slen = string.len
 -- Using the tShow function from Devpanel.lua does not work well because index and field orders are not
 -- preserved. The resulting data would always be in random order and even small changes in the data cause
 -- the export to be completely different.
--- We want to instead have a consistent way to export the dungeon data to lua that makes versioning easier.
+-- We want to instead have a consistent way to export the dungeon data that makes versioning easier.
 -- If for example x and y position change then only those values will change in the otherwise identical
 -- dungeon data string representation. This will make it easier to compare dungeon data between versions.
 
@@ -63,6 +63,27 @@ local function recursiveExport(obj, schema, indentCount)
         res = res .. recursiveExport(obj[field.name], field, indentCount + 1)
       end
     end
+    --handle non schema fields
+    for key, value in pairs(obj) do
+      local keyExists = false
+      for _, field in ipairs(schema.fields) do
+        if field.name == key then
+          keyExists = true
+        end
+      end
+      if not keyExists then
+        local valueType = type(value)
+        if valueType == "table" then
+          valueType = "array"
+        end
+        print("MDT recurseiveExport: Error: Non schema field " ..
+          key ..
+          " of type " .. valueType .. " in " .. (schema.name or
+              "unnamed schema") .. " (field: " .. key .. "; value: " .. tostring(value) .. ")")
+        res = res .. getIndent(indentCount + 1) .. "[\"" .. key .. "\"] = "
+        res = res .. recursiveExport(value, { type = valueType }, indentCount + 1)
+      end
+    end
     return res .. getIndent(indentCount) .. "};\n"
   elseif schema.type == "array" then
     if actualObjectType ~= "table" then
@@ -104,7 +125,7 @@ end
 --- @param dungeonIndex number
 function MDT:TestExport(target, dungeonIndex)
   local schema = MDT:GetSchema(target)
-  local dataToExport = (target == "enemies" and MDT.dungeonEnemies) or (target == "pois" and MDT.mapPOIs)
+  local dataToExport = (target == "enemies" and MDT.dungeonEnemies) or (target == "pois" and MDT.mapPOIs) or {}
   for i = dungeonIndex or 1, dungeonIndex or 100 do
     local dungeonName = MDT:GetDungeonName(i)
     if dungeonName and dungeonName ~= "-" then

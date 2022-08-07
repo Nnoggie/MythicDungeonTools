@@ -1,3 +1,4 @@
+---@diagnostic disable: assign-type-mismatch
 local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local MDT = MDT

@@ -40,22 +40,22 @@ MDT.mapPOIs[dungeonIndex] = {
     [3] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "ironDocksIronStar";
-      ["x"] = 266.11253379826;
-      ["y"] = -319.65767561333;
+      ["x"] = 270.67760352742;
+      ["y"] = -320.03080240584;
       ["starIndex"] = 1;
     };
     [4] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "ironDocksIronStar";
-      ["x"] = 264.81445187747;
-      ["y"] = -350.09036679726;
+      ["x"] = 270.94430038219;
+      ["y"] = -348.5158205704;
       ["starIndex"] = 2;
     };
     [5] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "ironDocksIronStar";
-      ["x"] = 266.42209080433;
-      ["y"] = -378.53379369692;
+      ["x"] = 271.23275754648;
+      ["y"] = -378.08312556949;
       ["starIndex"] = 3;
     };
   };
@@ -1797,6 +1797,37 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 558.41684184762;
         ["y"] = -256.13865063963;
+        ["g"] = 33;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+    };
+  };
+  [34] = {
+    ["name"] = "Iron Star";
+    ["id"] = 81247;
+    ["count"] = 0;
+    ["health"] = 0;
+    ["scale"] = 3.3;
+    ["displayId"] = 59425;
+    ["creatureType"] = "Mechanical";
+    ["level"] = 61;
+    ["clones"] = {
+      [1] = {
+        ["x"] = 254.23177295328;
+        ["y"] = -377.48161154942;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [2] = {
+        ["x"] = 253.74427747106;
+        ["y"] = -348.96185559287;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [3] = {
+        ["x"] = 253.71907248389;
+        ["y"] = -320.35893382964;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
