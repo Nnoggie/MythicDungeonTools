@@ -29,7 +29,8 @@
     "MDTMapPanelFrame",
     "HelpPlate_IsShowing",
     "HelpPlate_Show",
-    "UISpecialFrames"
+    "UISpecialFrames",
+    "vdt"
   ],
   "Lua.diagnostics.disable": [
     "deprecated",
