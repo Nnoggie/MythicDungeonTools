@@ -1,3 +1,5 @@
+v3.9.5.3
+- Added even more additional Nathrezim Infiltrators to Streets of Wonder
 v3.9.5.2
 - russian locale
 v3.9.5.1
