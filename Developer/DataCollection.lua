@@ -198,7 +198,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
       local enemies = MDT.dungeonEnemies[i]
       --enemy
       for enemyIdx, enemy in pairs(enemies) do
-        if enemy.id == id then
+        if id and spellId and enemy.id == id then
           db.dataCollection[i] = db.dataCollection[i] or {}
           db.dataCollection[i][id] = db.dataCollection[i][id] or {}
           db.dataCollection[i][id][spellId] = {}
@@ -212,7 +212,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
   --characteristics
   if subevent == "SPELL_AURA_APPLIED" then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", destGUID)
-    id = tonumber(id)
+    id = tonumber(id) or 0
 
     --dungeon
     for _, i in pairs(dungeonsToTrack) do
@@ -315,8 +315,8 @@ function DC:InitHealthTrack()
     local isChallenge = difficultyID and C_ChallengeMode.IsChallengeModeActive()
     local level, activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
     local fortified = activeAffixIDs[1] == 10
-    level = isChallenge and level
-    if level then
+    level = isChallenge and level or -1
+    if level > -1 then
       local unit
       if event == "UPDATE_MOUSEOVER_UNIT" then
         unit = "mouseover"

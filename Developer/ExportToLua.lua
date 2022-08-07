@@ -104,7 +104,7 @@ end
 --- @param dungeonIndex number
 function MDT:TestExport(target, dungeonIndex)
   local schema = MDT:GetSchema(target)
-  local dataToExport = (target == "enemies" and MDT.dungeonEnemies) or (target == "pois" and MDT.mapPOIs)
+  local dataToExport = (target == "enemies" and MDT.dungeonEnemies) or (target == "pois" and MDT.mapPOIs) or {}
   for i = dungeonIndex or 1, dungeonIndex or 100 do
     local dungeonName = MDT:GetDungeonName(i)
     if dungeonName and dungeonName ~= "-" then
