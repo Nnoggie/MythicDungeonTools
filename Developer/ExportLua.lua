@@ -5,7 +5,7 @@ local slen = string.len
 -- Using the tShow function from Devpanel.lua does not work well because index and field orders are not
 -- preserved. The resulting data would always be in random order and even small changes in the data cause
 -- the export to be completely different.
--- We want to instead have a consistent way to export the dungeon data to lua that makes versioning easier.
+-- We want to instead have a consistent way to export the dungeon data that makes versioning easier.
 -- If for example x and y position change then only those values will change in the otherwise identical
 -- dungeon data string representation. This will make it easier to compare dungeon data between versions.
 
