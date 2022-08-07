@@ -1,15 +1,6 @@
 .idea/
-libs/AceAddon-3.0
-libs/AceComm-3.0
-libs/AceConfig-3.0
-libs/AceDB-3.0
-libs/AceGUI-3.0
-libs/AceSerializer-3.0
-libs/CallbackHandler-1.0
-libs/LibCompress
-libs/LibDataBroker-1.1
-libs/LibDBIcon-1.0
-libs/LibStub
+libs/*
+!libs/LibDeflate
 venv
 python/combatLogReader/__pycache__
 python/__pycache__
