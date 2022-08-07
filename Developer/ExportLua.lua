@@ -63,6 +63,27 @@ local function recursiveExport(obj, schema, indentCount)
         res = res .. recursiveExport(obj[field.name], field, indentCount + 1)
       end
     end
+    --handle non schema fields
+    for key, value in pairs(obj) do
+      local keyExists = false
+      for _, field in ipairs(schema.fields) do
+        if field.name == key then
+          keyExists = true
+        end
+      end
+      if not keyExists then
+        local valueType = type(value)
+        if valueType == "table" then
+          valueType = "array"
+        end
+        print("MDT recurseiveExport: Error: Non schema field " ..
+          key ..
+          " of type " .. valueType .. " in " .. (schema.name or
+              "unnamed schema") .. " (field: " .. key .. "; value: " .. tostring(value) .. ")")
+        res = res .. getIndent(indentCount + 1) .. "[\"" .. key .. "\"] = "
+        res = res .. recursiveExport(value, { type = valueType }, indentCount + 1)
+      end
+    end
     return res .. getIndent(indentCount) .. "};\n"
   elseif schema.type == "array" then
     if actualObjectType ~= "table" then
