@@ -742,6 +742,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -174.05630959732;
         ["g"] = 10;
         ["sublevel"] = 1;
+        ["scale"] = 1.4;
       };
     };
   };
