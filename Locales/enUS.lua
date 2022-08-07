@@ -3,6 +3,7 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["Iron Star"] = "Iron Star"
 L["ironDocksIronStar"] = "Iron Star"
 L["manaDevourerNote"] = "Mana Devourer 1 is representing the Boss because it also awards enemy forces"
 L["Grom'kar Footsoldier"] = "Grom'kar Footsoldier"
