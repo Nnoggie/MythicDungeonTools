@@ -36,5 +36,8 @@
     "deprecated",
     "undefined-field",
     "param-type-mismatch"
+  ],
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "master"
   ]
 }
