@@ -30,7 +30,11 @@
     "HelpPlate_IsShowing",
     "HelpPlate_Show",
     "UISpecialFrames",
-    "vdt"
+    "vdt",
+    "GetLocale",
+    "IsAltKeyDown",
+    "WrapTextInColorCode",
+    "tonumber"
   ],
   "Lua.diagnostics.disable": [
     "deprecated",
