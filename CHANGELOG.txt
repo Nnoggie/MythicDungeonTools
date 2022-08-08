@@ -1,3 +1,5 @@
+v3.9.5.5
+- Minor Updates in Lower Karazhan
 v3.9.5.4
 - Added clickable iron stars in Iron Docks to include in pulls
 - Updated API function MDT:GetEnemyForces() to prefer current dungeon of player
