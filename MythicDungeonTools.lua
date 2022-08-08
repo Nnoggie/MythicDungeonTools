@@ -2369,8 +2369,9 @@ end
 ---Makes sure profiles are valid and have their fields set
 function MDT:EnsureDBTables()
   --dungeonIdx doesnt exist
+  local seasonList = MDT:GetSeasonList()
   if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx], ">") or
-      not db.selectedDungeonList then
+      not db.selectedDungeonList or not seasonList[db.selectedDungeonList] then
     db.currentDungeonIdx = defaultSavedVars.global.currentDungeonIdx
     db.selectedDungeonList = defaultSavedVars.global.selectedDungeonList
   end
