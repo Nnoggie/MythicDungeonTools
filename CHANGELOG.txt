@@ -1,3 +1,7 @@
+v3.9.5.6
+- Added AddOn conflict detection and notification
+- Added an easier way to disable the minimap button via middle click or /mdt minimap
+
 v3.9.5.5
 - Minor Updates in Lower Karazhan
 v3.9.5.4
