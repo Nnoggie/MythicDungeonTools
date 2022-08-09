@@ -407,7 +407,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blastatron X-80";
     ["id"] = 151476;
     ["count"] = 9;
-    ["health"] = 1921238;
+    ["health"] = 532625;
     ["scale"] = 1.4;
     ["displayId"] = 90712;
     ["creatureType"] = "Mechanical";
@@ -419,6 +419,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [293986] = {
       };
       [294015] = {
+      };
+      [295168] = {
       };
       [295169] = {
       };
@@ -441,13 +443,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Citizen";
     ["id"] = 144300;
     ["count"] = 0;
-    ["health"] = 192124;
+    ["health"] = 53263;
     ["scale"] = 0.7;
     ["displayId"] = 91167;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
       ["Stun"] = true;
+    };
+    ["spells"] = {
+      [344663] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -558,16 +564,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defense Bot Mk I";
     ["id"] = 151649;
     ["count"] = 3;
-    ["health"] = 806920;
+    ["health"] = 223703;
     ["scale"] = 1;
     ["displayId"] = 91349;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [294195] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -602,12 +611,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Tinkerer";
     ["id"] = 144294;
     ["count"] = 3;
-    ["health"] = 768495;
+    ["health"] = 213050;
     ["scale"] = 1;
     ["displayId"] = 91170;
     ["creatureType"] = "Humanoid";
     ["level"] = 120;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
       ["Polymorph"] = true;
       ["Stun"] = true;
     };
@@ -615,6 +626,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [293827] = {
       };
       [293854] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -663,17 +676,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Workshop Defender";
     ["id"] = 144299;
     ["count"] = 3;
-    ["health"] = 768495;
+    ["health"] = 213050;
     ["scale"] = 1;
     ["displayId"] = 91183;
     ["creatureType"] = "Humanoid";
     ["level"] = 120;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Polymorph"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [293670] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -721,7 +737,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Mechanic";
     ["id"] = 144295;
     ["count"] = 3;
-    ["health"] = 768495;
+    ["health"] = 213050;
     ["scale"] = 1;
     ["displayId"] = 91171;
     ["creatureType"] = "Humanoid";
@@ -808,7 +824,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Head Machinist Sparkflux";
     ["id"] = 144248;
     ["count"] = 0;
-    ["health"] = 5379465;
+    ["health"] = 1494224;
     ["scale"] = 1;
     ["displayId"] = 23397;
     ["creatureType"] = "Mechanical";
@@ -816,10 +832,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2348;
     ["instanceID"] = 1178;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [285440] = {
       };
       [285454] = {
+      };
+      [285460] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -834,17 +857,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spider Tank";
     ["id"] = 144296;
     ["count"] = 5;
-    ["health"] = 1229592;
+    ["health"] = 340880;
     ["scale"] = 1;
     ["displayId"] = 90710;
     ["creatureType"] = "Mechanical";
     ["level"] = 121;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [293986] = {
       };
       [294015] = {
       };
       [296348] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -870,12 +898,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defense Bot Mk III";
     ["id"] = 144298;
     ["count"] = 6;
-    ["health"] = 1229592;
+    ["health"] = 340880;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 90855;
     ["creatureType"] = "Mechanical";
     ["level"] = 121;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [294195] = {
       };
@@ -884,6 +915,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [297128] = {
       };
       [297133] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -989,7 +1022,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aerial Unit R-21/X";
     ["id"] = 150396;
     ["count"] = 0;
-    ["health"] = 3688776;
+    ["health"] = 1024610;
     ["scale"] = 1;
     ["displayId"] = 90547;
     ["creatureType"] = "Mechanical";
@@ -1011,6 +1044,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [291928] = {
       };
+      [344663] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -1025,18 +1060,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Junkyard D.0.G.";
     ["id"] = 151773;
     ["count"] = 4;
-    ["health"] = 768495;
+    ["health"] = 213050;
     ["scale"] = 1;
     ["displayId"] = 90511;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [294107] = {
       };
       [294180] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -1068,7 +1106,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Waste Processing Unit";
     ["id"] = 144293;
     ["count"] = 6;
-    ["health"] = 1229592;
+    ["health"] = 340880;
     ["scale"] = 1;
     ["displayId"] = 92177;
     ["creatureType"] = "Mechanical";
@@ -1083,6 +1121,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [294291] = {
       };
       [294324] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -1119,11 +1159,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Living Waste";
     ["id"] = 144301;
     ["count"] = 1;
-    ["health"] = 76850;
+    ["health"] = 21305;
     ["scale"] = 1;
     ["displayId"] = 92217;
     ["creatureType"] = "Elemental";
     ["level"] = 120;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [294349] = {
       };
@@ -1235,7 +1278,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Omega Buster";
     ["id"] = 144249;
     ["count"] = 0;
-    ["health"] = 4610970;
+    ["health"] = 1280763;
     ["scale"] = 1;
     ["displayId"] = 90998;
     ["creatureType"] = "Mechanical";
@@ -1255,6 +1298,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [292290] = {
       };
+      [344663] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -1269,7 +1314,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bomb Tonk";
     ["id"] = 151657;
     ["count"] = 3;
-    ["health"] = 302142;
+    ["health"] = 127830;
     ["scale"] = 1.5;
     ["displayId"] = 21209;
     ["creatureType"] = "Mechanical";
@@ -1299,11 +1344,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rocket Tonk";
     ["id"] = 151659;
     ["count"] = 3;
-    ["health"] = 503570;
+    ["health"] = 213050;
     ["scale"] = 1.5;
     ["displayId"] = 91228;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [294103] = {
       };
@@ -1331,11 +1379,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Strider Tonk";
     ["id"] = 151658;
     ["count"] = 3;
-    ["health"] = 503570;
+    ["health"] = 213050;
     ["scale"] = 1.5;
     ["displayId"] = 91229;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [294061] = {
       };
@@ -1366,7 +1417,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Platinum Pummeler";
     ["id"] = 144244;
     ["count"] = 0;
-    ["health"] = 2014280;
+    ["health"] = 512305;
     ["scale"] = 1.5;
     ["displayId"] = 91216;
     ["creatureType"] = "Mechanical";
@@ -1374,6 +1425,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2336;
     ["instanceID"] = 1178;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [282801] = {
       };
@@ -1399,7 +1453,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gnomercy 4.U.";
     ["id"] = 145185;
     ["count"] = 0;
-    ["health"] = 2014280;
+    ["health"] = 1024610;
     ["scale"] = 1.5;
     ["displayId"] = 91879;
     ["creatureType"] = "Mechanical";
@@ -1407,6 +1461,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2336;
     ["instanceID"] = 1178;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [283421] = {
       };
@@ -1422,6 +1479,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [285468] = {
       };
+      [318587] = {
+      };
+      [344663] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -1436,7 +1497,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "K.U.-J.0.";
     ["id"] = 144246;
     ["count"] = 0;
-    ["health"] = 4918368;
+    ["health"] = 1366147;
     ["scale"] = 1;
     ["displayId"] = 90775;
     ["creatureType"] = "Mechanical";
@@ -1444,6 +1505,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2339;
     ["instanceID"] = 1178;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [291922] = {
       };
@@ -1459,6 +1523,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [294929] = {
       };
+      [344663] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -1473,11 +1539,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Alarm-o-Bot";
     ["id"] = 151325;
     ["count"] = 0;
-    ["health"] = 38425;
+    ["health"] = 10653;
     ["scale"] = 1;
     ["displayId"] = 90874;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 477.5225723606;
@@ -1491,16 +1560,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "G.U.A.R.D.";
     ["id"] = 144303;
     ["count"] = 3;
-    ["health"] = 768495;
+    ["health"] = 213050;
     ["scale"] = 1;
     ["displayId"] = 68856;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [294107] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -1522,7 +1594,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 4;
-    ["health"] = 999999;
+    ["health"] = 239096;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -1531,6 +1603,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [176039] = {
+      };
+      [228014] = {
+      };
+      [344663] = {
+      };
       [373364] = {
       };
       [373370] = {
@@ -1596,7 +1674,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 12;
-    ["health"] = 999999;
+    ["health"] = 639150;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -1605,6 +1683,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [344663] = {
+      };
       [373509] = {
       };
       [373513] = {
@@ -1616,6 +1696,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [373607] = {
       };
       [373724] = {
+      };
+      [373729] = {
+      };
+      [373744] = {
+      };
+      [373747] = {
+      };
+      [374273] = {
       };
     };
     ["clones"] = {

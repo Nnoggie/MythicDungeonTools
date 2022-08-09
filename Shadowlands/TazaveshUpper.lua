@@ -130,6 +130,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
@@ -867,7 +870,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -988,6 +994,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1292,6 +1299,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1416,6 +1426,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1613,6 +1626,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1702,6 +1717,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Incapacitate"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1802,6 +1819,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
@@ -1923,6 +1944,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -2019,7 +2042,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -2375,7 +2402,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 6;
-    ["health"] = 250131;
+    ["health"] = 239096;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";

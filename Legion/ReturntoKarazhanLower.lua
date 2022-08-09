@@ -237,10 +237,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 26404;
     ["creatureType"] = "Undead";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [228252] = {
       };
       [228254] = {
+      };
+      [344663] = {
       };
     };
     ["clones"] = {
@@ -269,6 +274,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -278,8 +284,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [227983] = {
       };
       [228014] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -792,6 +796,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [228010] = {
       };
+      [228014] = {
+      };
       [228017] = {
       };
       [238566] = {
@@ -992,8 +998,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [228164] = {
       };
-      [343502] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1102,6 +1106,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -1254,6 +1259,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -1862,6 +1869,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 16494;
     ["creatureType"] = "Undead";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [228278] = {
       };
@@ -1900,6 +1910,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -1914,13 +1925,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [29579] = {
       };
+      [29580] = {
+      };
       [29581] = {
       };
       [29583] = {
       };
-      [29930] = {
+      [29928] = {
       };
-      [343502] = {
+      [29930] = {
       };
     };
     ["clones"] = {
@@ -2529,7 +2542,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["spells"] = {
-      [343502] = {
+      [241788] = {
       };
     };
     ["clones"] = {
@@ -2596,6 +2609,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -2603,8 +2618,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [228276] = {
       };
       [241774] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -2957,6 +2970,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 16543;
     ["creatureType"] = "Undead";
     ["level"] = 110;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [228575] = {
+      };
+      [228576] = {
+      };
+      [228625] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 532.13041579922;
@@ -3311,8 +3335,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [6660] = {
       };
-      [343502] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -3633,6 +3655,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73472;
     ["creatureType"] = "Undead";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [230297] = {
       };
@@ -3811,8 +3836,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["spells"] = {
-      [343502] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -3926,6 +3949,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -3967,12 +3992,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["characteristics"] = {
+      ["Incapacitate"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
-      [343502] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -4063,6 +4088,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 110;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -4070,8 +4098,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [228603] = {
       };
       [241828] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -4193,6 +4219,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 16397;
     ["creatureType"] = "Undead";
     ["level"] = 110;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [6016] = {
       };
@@ -4262,8 +4291,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 110;
     ["spells"] = {
-      [343502] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -4711,11 +4738,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shrieking Terror";
     ["id"] = 114627;
     ["count"] = 5;
-    ["health"] = 15573416.18;
+    ["health"] = 383490;
     ["scale"] = 1;
     ["displayId"] = 10698;
     ["creatureType"] = "Undead";
     ["level"] = 110;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [228239] = {
+      };
+      [228241] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 472.61093967535;
@@ -4759,7 +4795,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Maiden of Virtue";
     ["id"] = 113971;
     ["count"] = 0;
-    ["health"] = 1489665;
+    ["health"] = 1492131;
     ["scale"] = 1;
     ["displayId"] = 16198;
     ["creatureType"] = "Giant";
@@ -4798,7 +4834,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Attumen the Huntsman";
     ["id"] = 114264;
     ["count"] = 0;
-    ["health"] = 425619;
+    ["health"] = 426323;
     ["scale"] = 1;
     ["displayId"] = 73811;
     ["creatureType"] = "Undead";
@@ -4817,6 +4853,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [227404] = {
       };
+      [227645] = {
+      };
       [228895] = {
       };
     };
@@ -4833,7 +4871,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Moroes";
     ["id"] = 114312;
     ["count"] = 0;
-    ["health"] = 1191732;
+    ["health"] = 1193705;
     ["scale"] = 1;
     ["displayId"] = 16540;
     ["creatureType"] = "Undead";
@@ -4870,7 +4908,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 4;
-    ["health"] = 250131;
+    ["health"] = 239096;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -4879,6 +4917,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [176039] = {
+      };
+      [228014] = {
+      };
+      [344663] = {
+      };
       [373364] = {
       };
       [373370] = {
@@ -5119,6 +5163,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [344663] = {
+      };
       [373509] = {
       };
       [373513] = {

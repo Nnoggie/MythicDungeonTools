@@ -93,6 +93,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55909;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [164102] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 276.36820088227;
@@ -142,6 +149,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 56280;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [164163] = {
+      };
+      [164168] = {
+      };
+      [164170] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 275.33020680944;
@@ -271,6 +289,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 56293;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [163966] = {
+      };
+      [164192] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 260.39575313114;
@@ -308,7 +336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Railmaster Rocketspark";
     ["id"] = 77803;
     ["count"] = 0;
-    ["health"] = 1218646;
+    ["health"] = 937648;
     ["scale"] = 1;
     ["displayId"] = 54096;
     ["creatureType"] = "Humanoid";
@@ -316,6 +344,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1138;
     ["instanceID"] = 536;
+    ["spells"] = {
+      [161091] = {
+      };
+      [162171] = {
+      };
+      [162407] = {
+      };
+      [162422] = {
+      };
+      [162423] = {
+      };
+      [162491] = {
+      };
+      [162500] = {
+      };
+      [162507] = {
+      };
+      [162513] = {
+      };
+      [162572] = {
+      };
+      [163929] = {
+      };
+      [163930] = {
+      };
+      [163947] = {
+      };
+      [166561] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 630.53553772437;
@@ -330,7 +388,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Borka the Brute";
     ["id"] = 77816;
     ["count"] = 0;
-    ["health"] = 1467914;
+    ["health"] = 1129439;
     ["scale"] = 1;
     ["displayId"] = 60108;
     ["creatureType"] = "Humanoid";
@@ -338,6 +396,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1138;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [161090] = {
+      };
+      [161092] = {
+      };
+      [162617] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 605.62735257215;
@@ -357,6 +426,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 59182;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [164187] = {
+      };
+      [164188] = {
+      };
+      [164218] = {
+      };
+      [164241] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 587.07779171895;
@@ -387,6 +469,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55374;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [176039] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 587.71482232273;
@@ -459,6 +549,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55280;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [166675] = {
+      };
+      [166676] = {
+      };
+      [176039] = {
+      };
+      [176147] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 570.891672321;
@@ -500,6 +605,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55306;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [161150] = {
+      };
+      [161153] = {
+      };
+      [176039] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 357.83804788042;
@@ -533,6 +650,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 60769;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["spells"] = {
+      [176025] = {
+      };
+      [176031] = {
+      };
+      [176032] = {
+      };
+      [176033] = {
+      };
+      [176039] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 355.35942718229;
@@ -574,6 +703,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55281;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [156301] = {
+      };
+      [160963] = {
+      };
+      [161258] = {
+      };
+      [176039] = {
+      };
+      [176127] = {
+      };
+      [176131] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 176.77248263747;
@@ -607,6 +755,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 58663;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [176023] = {
+      };
+      [176039] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 164.9933492626;
@@ -621,7 +778,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nitrogg Thundertower";
     ["id"] = 79545;
     ["count"] = 0;
-    ["health"] = 1938755;
+    ["health"] = 1491712;
     ["scale"] = 1;
     ["displayId"] = 55162;
     ["creatureType"] = "Humanoid";
@@ -629,6 +786,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1163;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [161153] = {
+      };
+      [163536] = {
+      };
+      [163539] = {
+      };
+      [163541] = {
+      };
+      [163550] = {
+      };
+      [163741] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 532.16581109577;
@@ -647,6 +821,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 57126;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [166335] = {
+      };
+      [166336] = {
+      };
+      [166340] = {
+      };
+      [166341] = {
+      };
+      [166364] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 247.40878026178;
@@ -680,6 +869,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55909;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Disorient"] = true;
+    };
+    ["spells"] = {
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 142.53467371818;
@@ -756,6 +950,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 57131;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["spells"] = {
+      [166350] = {
+      };
+      [166397] = {
+      };
+      [166404] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 192.15882443014;
@@ -775,6 +977,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 57133;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [166378] = {
+      };
+      [166380] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 168.62552728553;
@@ -789,7 +1000,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skylord Tovra";
     ["id"] = 80005;
     ["count"] = 0;
-    ["health"] = 2215720;
+    ["health"] = 1704814;
     ["scale"] = 1;
     ["displayId"] = 55630;
     ["creatureType"] = "Humanoid";
@@ -797,6 +1008,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1133;
     ["instanceID"] = 536;
+    ["spells"] = {
+      [161588] = {
+      };
+      [162055] = {
+      };
+      [162057] = {
+      };
+      [162058] = {
+      };
+      [162065] = {
+      };
+      [162066] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 45.861747629694;
@@ -810,7 +1035,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 6;
-    ["health"] = 999999;
+    ["health"] = 239096;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -819,6 +1044,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [176039] = {
+      };
+      [228014] = {
+      };
+      [344663] = {
+      };
       [373364] = {
       };
       [373370] = {
@@ -897,7 +1128,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 18;
-    ["health"] = 999999;
+    ["health"] = 639150;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -906,6 +1137,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [344663] = {
+      };
       [373509] = {
       };
       [373513] = {
@@ -917,6 +1150,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [373607] = {
       };
       [373724] = {
+      };
+      [373729] = {
+      };
+      [373744] = {
+      };
+      [373747] = {
+      };
+      [374273] = {
       };
     };
     ["clones"] = {
