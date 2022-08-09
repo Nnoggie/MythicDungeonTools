@@ -234,6 +234,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -165.2445073506;
         ["sublevel"] = 1;
         ["scale"] = 2;
+        ["disguised"] = true;
       };
     };
   };
@@ -497,7 +498,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -224.86141950088;
         ["sublevel"] = 2;
         ["scale"] = 2.5;
-        ["disguised"] = true;
         ["patrolFacing"] = 1.9634954084936;
         ["patrolFacing2"] = 4.5160394395353;
         ["patrol"] = {
@@ -1338,10 +1338,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 194.8477021485;
-        ["y"] = -224.79269060588;
-        ["sublevel"] = 2;
-        ["scale"] = 2.3;
+        ["x"] = 565.48515026323;
+        ["y"] = -165.2445073506;
+        ["sublevel"] = 1;
+        ["scale"] = 2;
         ["shrouded"] = true;
       };
     };
