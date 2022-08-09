@@ -30,6 +30,10 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
       else
         icon:Lock("MythicDungeonTools")
       end
+    elseif (buttonPressed == 'MiddleButton') then
+      db.minimap.hide = true
+      icon:Hide("MythicDungeonTools")
+      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
     else
       MDT:ShowInterface()
     end
@@ -39,6 +43,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
     tooltip:AddLine(mythicColor .. "Mythic Dungeon Tools|r")
     tooltip:AddLine(L["Click to toggle AddOn Window"])
     tooltip:AddLine(L["Right-click to lock Minimap Button"])
+    tooltip:AddLine(L["Middle-click to disable Minimap Button"])
   end,
 })
 
@@ -66,6 +71,14 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
       initFrames()
     end
     MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
+  elseif rqst == "minimap" then
+    db.minimap.hide = not db.minimap.hide
+    if not db.minimap.hide then
+      icon:Show("MythicDungeonTools")
+    else
+      icon:Hide("MythicDungeonTools")
+      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+    end
   else
     MDT:ShowInterface()
   end
@@ -235,17 +248,17 @@ end
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
   [1] = { 122, 14, 9, 131 }, -- bolstering explosive tyrannical shrouded
-  [2] = { 0, 0, 10, 131 }, -- bursting storming fortified shrouded
-  [3] = { 0, 0, 9, 131 }, -- raging volcanic tyrannical shrouded
-  [4] = { 0, 0, 10, 131 }, -- inspiring grievous fortified shrouded
-  [5] = { 0, 0, 9, 131 }, -- spiteful necrotic tyrannical shrouded
-  [6] = { 0, 0, 10, 131 }, -- bolstering quaking fortified shrouded
-  [7] = { 0, 0, 9, 131 }, -- sanguine storming tyrannical shrouded
-  [8] = { 0, 0, 10, 131 }, -- raging explosive fortified shrouded
-  [9] = { 0, 0, 9, 131 }, -- bursting volcanic tyrannical shrouded
-  [10] = { 0, 0, 10, 131 }, -- spiteful necrotic fortified shrouded
-  [11] = { 0, 0, 9, 131 }, -- inspiring quaking tyrannical shrouded
-  [12] = { 0, 0, 10, 131 }, -- sanguine grievous fortified shrouded
+  [2] = { 8, 12, 10, 131 }, -- sanguine grievous fortified shrouded
+  [3] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [4] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [5] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [6] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [7] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [8] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [9] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [10] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [11] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [12] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
 }
 
 function MDT:UpdateAffixWeeks()
@@ -347,6 +360,10 @@ function MDT:GetDB()
 end
 
 function MDT:ShowInterface(force)
+  if self:CheckAddonConflicts() then
+    self.ShowConflictFrame()
+    return
+  end
   if not framesInitialized then initFrames() end
   if self.main_frame:IsShown() and not force then
     MDT:HideInterface()
@@ -3571,6 +3588,57 @@ function MDT:UpdatePullButtonNPCData(idx)
   else
     frame.newPullButtons[idx]:ShowPridefulIcon(false, currentPercent, oldPercent)
   end
+  --shrouded icon
+  --count amount of shrouded in this pull
+  local shroudedCount = 0
+  if preset.value.pulls[idx] then
+    for enemyIdx, clones in pairs(preset.value.pulls[idx]) do
+      if tonumber(enemyIdx) then
+        if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+          for k, cloneIdx in pairs(clones) do
+            local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
+            if cloneData and cloneData.shrouded then
+              -- count zul'gamux as 3
+              if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id == 190128 then
+                shroudedCount = shroudedCount + 3
+              else
+                shroudedCount = shroudedCount + 1
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  if shroudedCount > 0 then
+    -- count amount of shrouded in all previous pulls
+    local shroudedCountAllPrevious = 1 -- get one buff stack for free
+    for i = 1, idx - 1 do
+      if preset.value.pulls[i] then
+        for enemyIdx, clones in pairs(preset.value.pulls[i]) do
+          if tonumber(enemyIdx) then
+            if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+              for k, cloneIdx in pairs(clones) do
+                local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
+                if cloneData and cloneData.shrouded then
+                  -- count zul'gamux as 3
+                  if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id == 190128 then
+                    shroudedCountAllPrevious = shroudedCountAllPrevious + 3
+                  else
+                    shroudedCountAllPrevious = shroudedCountAllPrevious + 1
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    frame.newPullButtons[idx]:ShowShroudedIcon(true, shroudedCountAllPrevious + shroudedCount)
+  else
+    frame.newPullButtons[idx]:ShowShroudedIcon(false)
+  end
+
   --count per health
   if pullForces > 0 then
     frame.newPullButtons[idx]:ShowCountPerHealth(true, pullForces, totalForcesMax)

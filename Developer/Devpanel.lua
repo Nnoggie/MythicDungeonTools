@@ -406,7 +406,7 @@ function MDT:CreateDevPanel(frame)
           end
         end
       end
-      MDT.EnemyInfoFrame:Hide()
+      if MDT.EnemyInfoFrame then MDT.EnemyInfoFrame:Hide() end
     end)
     container:AddChild(cleanSpellDataButton)
 
