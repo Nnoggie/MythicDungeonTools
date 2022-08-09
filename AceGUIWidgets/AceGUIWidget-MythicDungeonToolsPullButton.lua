@@ -1253,6 +1253,16 @@ local methods = {
       self.percentageFontString:Hide()
     end
   end,
+  ["ShowShroudedIcon"] = function(self, show, amountShrouded)
+    if show then
+      self.shroudedIcon:Show()
+      self.shroudedCounter:SetText(amountShrouded)
+      self.shroudedCounter:Show()
+    else
+      self.shroudedIcon:Hide()
+      self.shroudedCounter:Hide()
+    end
+  end,
   ["ShowCountPerHealth"] = function(self, show, count, health)
     if show then
       local text = "1.2"
@@ -1409,6 +1419,23 @@ local function Constructor()
   multiPridefulFontString:SetPoint("RIGHT", button, "RIGHT", 1, -12)
   multiPridefulFontString:Hide()
 
+  --shrouded icon
+  local shroudedIcon = button:CreateTexture(nil, "BACKGROUND", nil, 2)
+  shroudedIcon:SetSize(height - 5, height - 5)
+  shroudedIcon:SetPoint("RIGHT", button, "RIGHT", -10, 0)
+  shroudedIcon:SetAlpha(1)
+  SetPortraitToTexture(shroudedIcon, "Interface\\Icons\\spell_shadow_nethercloak")
+  shroudedIcon:Hide()
+
+  --shrouded counter
+  local shroudedCounter = button:CreateFontString(nil, "BACKGROUND", nil)
+  shroudedCounter:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+  shroudedCounter:SetTextColor(1, 1, 1, 1);
+  shroudedCounter:SetWidth(50)
+  shroudedCounter:SetHeight(10)
+  shroudedCounter:SetPoint("RIGHT", button, "RIGHT", 1, -12)
+  shroudedCounter:Hide()
+
   --count per health indicator
   local countPerHealthFontString = button:CreateFontString(nil, "BACKGROUND", nil)
   countPerHealthFontString:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
@@ -1432,6 +1459,8 @@ local function Constructor()
     multiReapingFontString = multiReapingFontString,
     pridefulIcon = pridefulIcon,
     multiPridefulFontString = multiPridefulFontString,
+    shroudedIcon = shroudedIcon,
+    shroudedCounter = shroudedCounter,
     color = color,
     type = Type,
     countPerHealthFontString = countPerHealthFontString,

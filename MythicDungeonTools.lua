@@ -3588,6 +3588,47 @@ function MDT:UpdatePullButtonNPCData(idx)
   else
     frame.newPullButtons[idx]:ShowPridefulIcon(false, currentPercent, oldPercent)
   end
+  --shrouded icon
+  --count amount of shrouded in this pull
+  local shroudedCount = 0
+  if preset.value.pulls[idx] then
+    for enemyIdx, clones in pairs(preset.value.pulls[idx]) do
+      if tonumber(enemyIdx) then
+        if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+          for k, cloneIdx in pairs(clones) do
+            local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
+            if cloneData and cloneData.shrouded then
+              shroudedCount = shroudedCount + 1
+            end
+          end
+        end
+      end
+    end
+  end
+  if shroudedCount > 0 then
+    -- count amount of shrouded in all previous pulls
+    local shroudedCountAllPrevious = 0
+    for i = 1, idx - 1 do
+      if preset.value.pulls[i] then
+        for enemyIdx, clones in pairs(preset.value.pulls[i]) do
+          if tonumber(enemyIdx) then
+            if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
+              for k, cloneIdx in pairs(clones) do
+                local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
+                if cloneData and cloneData.shrouded then
+                  shroudedCountAllPrevious = shroudedCountAllPrevious + 1
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    frame.newPullButtons[idx]:ShowShroudedIcon(true, shroudedCountAllPrevious + shroudedCount)
+  else
+    frame.newPullButtons[idx]:ShowShroudedIcon(false)
+  end
+
   --count per health
   if pullForces > 0 then
     frame.newPullButtons[idx]:ShowCountPerHealth(true, pullForces, totalForcesMax)
