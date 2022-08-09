@@ -3598,7 +3598,12 @@ function MDT:UpdatePullButtonNPCData(idx)
           for k, cloneIdx in pairs(clones) do
             local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
             if cloneData and cloneData.shrouded then
-              shroudedCount = shroudedCount + 1
+              -- count zul'gamux as 3
+              if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id == 190128 then
+                shroudedCount = shroudedCount + 3
+              else
+                shroudedCount = shroudedCount + 1
+              end
             end
           end
         end
@@ -3616,7 +3621,12 @@ function MDT:UpdatePullButtonNPCData(idx)
               for k, cloneIdx in pairs(clones) do
                 local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
                 if cloneData and cloneData.shrouded then
-                  shroudedCountAllPrevious = shroudedCountAllPrevious + 1
+                  -- count zul'gamux as 3
+                  if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id == 190128 then
+                    shroudedCountAllPrevious = shroudedCountAllPrevious + 3
+                  else
+                    shroudedCountAllPrevious = shroudedCountAllPrevious + 1
+                  end
                 end
               end
             end
