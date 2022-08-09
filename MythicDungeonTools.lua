@@ -3612,7 +3612,7 @@ function MDT:UpdatePullButtonNPCData(idx)
   end
   if shroudedCount > 0 then
     -- count amount of shrouded in all previous pulls
-    local shroudedCountAllPrevious = 0
+    local shroudedCountAllPrevious = 1 -- get one buff stack for free
     for i = 1, idx - 1 do
       if preset.value.pulls[i] then
         for enemyIdx, clones in pairs(preset.value.pulls[i]) do
