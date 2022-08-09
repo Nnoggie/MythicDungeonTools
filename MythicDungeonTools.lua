@@ -248,17 +248,17 @@ end
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
   [1] = { 122, 14, 9, 131 }, -- bolstering explosive tyrannical shrouded
-  [2] = { 0, 0, 10, 131 }, -- bursting storming fortified shrouded
-  [3] = { 0, 0, 9, 131 }, -- raging volcanic tyrannical shrouded
-  [4] = { 0, 0, 10, 131 }, -- inspiring grievous fortified shrouded
-  [5] = { 0, 0, 9, 131 }, -- spiteful necrotic tyrannical shrouded
-  [6] = { 0, 0, 10, 131 }, -- bolstering quaking fortified shrouded
-  [7] = { 0, 0, 9, 131 }, -- sanguine storming tyrannical shrouded
-  [8] = { 0, 0, 10, 131 }, -- raging explosive fortified shrouded
-  [9] = { 0, 0, 9, 131 }, -- bursting volcanic tyrannical shrouded
-  [10] = { 0, 0, 10, 131 }, -- spiteful necrotic fortified shrouded
-  [11] = { 0, 0, 9, 131 }, -- inspiring quaking tyrannical shrouded
-  [12] = { 0, 0, 10, 131 }, -- sanguine grievous fortified shrouded
+  [2] = { 8, 12, 10, 131 }, -- sanguine grievous fortified shrouded
+  [3] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [4] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [5] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [6] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [7] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [8] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [9] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [10] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [11] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
+  [12] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
 }
 
 function MDT:UpdateAffixWeeks()
