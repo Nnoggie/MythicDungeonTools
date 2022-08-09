@@ -473,6 +473,7 @@ local spellBlacklist = {
   [50707]  = true, --
   [240443] = true, --
   [328506] = true, --
+  [343502] = true, -- inspiring presence
   --[X]  = true,
 }
 local lastEnemyIdx
