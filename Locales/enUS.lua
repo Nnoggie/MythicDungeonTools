@@ -3,6 +3,8 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["Addon Conflict"] = "Addon Conflict"
+L["conflictPrompt"] = "MDT has detected that you have certain AddOns installed that are conflicting with MDT.\n\nPlease remove the following AddOns:\n\n"
 L["Iron Star"] = "Iron Star"
 L["ironDocksIronStar"] = "Iron Star"
 L["manaDevourerNote"] = "Mana Devourer 1 is representing the Boss because it also awards enemy forces"

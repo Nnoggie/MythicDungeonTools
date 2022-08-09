@@ -9,5 +9,6 @@
 	<Script file='Maximize.lua'/>
 	<Script file='API.lua'/>
 	<Script file='DungeonSelect.lua'/>
+	<Script file='Conflicts.lua'/>
 </Ui>
 

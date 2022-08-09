@@ -347,6 +347,10 @@ function MDT:GetDB()
 end
 
 function MDT:ShowInterface(force)
+  if self:CheckAddonConflicts() then
+    self.ShowConflictFrame()
+    return
+  end
   if not framesInitialized then initFrames() end
   if self.main_frame:IsShown() and not force then
     MDT:HideInterface()
