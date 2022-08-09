@@ -800,8 +800,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [228017] = {
       };
-      [238566] = {
-      };
     };
     ["clones"] = {
       [1] = {
