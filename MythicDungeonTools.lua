@@ -30,6 +30,10 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
       else
         icon:Lock("MythicDungeonTools")
       end
+    elseif (buttonPressed == 'MiddleButton') then
+      db.minimap.hide = true
+      icon:Hide("MythicDungeonTools")
+      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
     else
       MDT:ShowInterface()
     end
@@ -39,6 +43,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
     tooltip:AddLine(mythicColor .. "Mythic Dungeon Tools|r")
     tooltip:AddLine(L["Click to toggle AddOn Window"])
     tooltip:AddLine(L["Right-click to lock Minimap Button"])
+    tooltip:AddLine(L["Middle-click to disable Minimap Button"])
   end,
 })
 
@@ -66,6 +71,14 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
       initFrames()
     end
     MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
+  elseif rqst == "minimap" then
+    db.minimap.hide = not db.minimap.hide
+    if not db.minimap.hide then
+      icon:Show("MythicDungeonTools")
+    else
+      icon:Hide("MythicDungeonTools")
+      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+    end
   else
     MDT:ShowInterface()
   end
