@@ -353,6 +353,8 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -268.14726196017;
       ["botType"] = 3;
       ["botTypeIndex"] = 14;
+      ["textAnchor"] = "RIGHT";
+      ["textAnchorTo"] = "LEFT";
     };
     [38] = {
       ["template"] = "MapLinkPinTemplate";
