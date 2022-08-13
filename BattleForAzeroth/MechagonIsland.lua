@@ -870,7 +870,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scrapbone Trashtosser";
     ["id"] = 150142;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 765;
     ["creatureType"] = "Humanoid";
@@ -891,10 +891,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [300561] = {
       };
       [316690] = {
-      };
-      [343502] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -990,7 +986,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Pistonhead Blaster";
     ["id"] = 150250;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 92012;
     ["creatureType"] = "Humanoid";
@@ -1012,8 +1008,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [299525] = {
       };
       [299535] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -1099,7 +1093,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Pistonhead Scrapper";
     ["id"] = 150249;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 92006;
     ["creatureType"] = "Humanoid";
@@ -1108,6 +1102,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
       ["Root"] = true;
+      ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -1117,8 +1112,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [299449] = {
       };
       [299450] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1187,7 +1180,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scrapbone Grinder";
     ["id"] = 150143;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 160;
     ["creatureType"] = "Humanoid";
@@ -1205,8 +1198,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [300296] = {
       };
       [300414] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1289,7 +1280,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scrapbone Grunter";
     ["id"] = 150547;
     ["count"] = 1;
-    ["health"] = 106525;
+    ["health"] = 106357;
     ["scale"] = 0.6;
     ["displayId"] = 92699;
     ["creatureType"] = "Humanoid";
@@ -1304,8 +1295,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true;
     };
     ["spells"] = {
-      [343502] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1588,7 +1577,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scrapbone Shaman";
     ["id"] = 150146;
     ["count"] = 3;
-    ["health"] = 170440;
+    ["health"] = 170172;
     ["scale"] = 1;
     ["displayId"] = 4905;
     ["creatureType"] = "Humanoid";
@@ -1597,6 +1586,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
       ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -1689,7 +1679,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Malfunctioning Scrapbot";
     ["id"] = 152009;
     ["count"] = 5;
-    ["health"] = 340880;
+    ["health"] = 340343;
     ["scale"] = 1.2;
     ["displayId"] = 91017;
     ["creatureType"] = "Mechanical";
@@ -1707,8 +1697,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [300102] = {
       };
       [300129] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1767,7 +1755,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Weaponized Crawler";
     ["id"] = 150253;
     ["count"] = 10;
-    ["health"] = 426100;
+    ["health"] = 425429;
     ["scale"] = 1.4;
     ["displayId"] = 90711;
     ["creatureType"] = "Mechanical";
@@ -1919,21 +1907,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scraphound";
     ["id"] = 150254;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 90510;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [294107] = {
       };
       [299475] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -2012,7 +1999,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Pistonhead Mechanic";
     ["id"] = 150251;
     ["count"] = 3;
-    ["health"] = 255660;
+    ["health"] = 255257;
     ["scale"] = 1;
     ["displayId"] = 92025;
     ["creatureType"] = "Humanoid";
@@ -2020,6 +2007,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -2102,7 +2090,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Saurolisk Bonenipper";
     ["id"] = 150154;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 77484;
     ["creatureType"] = "Beast";
@@ -2203,7 +2191,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scrapbone Bully";
     ["id"] = 150160;
     ["count"] = 4;
-    ["health"] = 340880;
+    ["health"] = 340343;
     ["scale"] = 1.4;
     ["displayId"] = 11611;
     ["creatureType"] = "Humanoid";
@@ -2317,7 +2305,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Heavy Scrapbot";
     ["id"] = 150276;
     ["count"] = 5;
-    ["health"] = 340880;
+    ["health"] = 340343;
     ["scale"] = 1.4;
     ["displayId"] = 90773;
     ["creatureType"] = "Mechanical";
@@ -2428,8 +2416,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [302682] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -2466,8 +2452,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [297262] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -2481,7 +2465,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gnome-Eating Slime";
     ["id"] = 150195;
     ["count"] = 3;
-    ["health"] = 106525;
+    ["health"] = 106357;
     ["scale"] = 0.6;
     ["displayId"] = 91656;
     ["creatureType"] = "Elemental";
@@ -2494,8 +2478,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["spells"] = {
       [300818] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -2595,13 +2577,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toxic Lurker";
     ["id"] = 150169;
     ["count"] = 4;
-    ["health"] = 221572;
+    ["health"] = 221223;
     ["scale"] = 1;
     ["displayId"] = 40976;
     ["creatureType"] = "Elemental";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -2724,22 +2709,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Renormalizer";
     ["id"] = 150297;
     ["count"] = 4;
-    ["health"] = 170440;
+    ["health"] = 170172;
     ["scale"] = 1;
     ["displayId"] = 92207;
     ["creatureType"] = "Humanoid";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Mind Control"] = true;
+      ["Polymorph"] = true;
       ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [284219] = {
       };
       [301629] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -2785,7 +2772,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Trooper";
     ["id"] = 155094;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 90851;
     ["creatureType"] = "Humanoid";
@@ -2793,6 +2780,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Root"] = true;
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
@@ -2801,10 +2789,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [299498] = {
       };
       [299502] = {
-      };
-      [343502] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -2921,7 +2905,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Slime Elemental";
     ["id"] = 150165;
     ["count"] = 4;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 4907;
     ["creatureType"] = "Elemental";
@@ -2940,10 +2924,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [300777] = {
       };
       [300816] = {
-      };
-      [343502] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -3044,7 +3024,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Anodized Coilbearer";
     ["id"] = 155090;
     ["count"] = 4;
-    ["health"] = 213050;
+    ["health"] = 212714;
     ["scale"] = 1;
     ["displayId"] = 91123;
     ["creatureType"] = "Mechanical";
@@ -3059,8 +3039,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [301692] = {
       };
       [303941] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -3158,7 +3136,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Cavalry";
     ["id"] = 150292;
     ["count"] = 5;
-    ["health"] = 340880;
+    ["health"] = 340343;
     ["scale"] = 1.2;
     ["stealthDetect"] = true;
     ["displayId"] = 90851;
@@ -3175,8 +3153,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [301680] = {
       };
       [301681] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -3328,7 +3304,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Prowler";
     ["id"] = 150293;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["stealth"] = true;
     ["displayId"] = 74812;
@@ -3340,8 +3316,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["spells"] = {
       [301712] = {
-      };
-      [343502] = {
       };
     };
     ["clones"] = {
@@ -3466,7 +3440,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toxic Monstrosity";
     ["id"] = 150168;
     ["count"] = 5;
-    ["health"] = 383490;
+    ["health"] = 382886;
     ["scale"] = 1.4;
     ["displayId"] = 91906;
     ["creatureType"] = "Elemental";
@@ -3580,8 +3554,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [298259] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -3612,8 +3584,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [302274] = {
       };
       [302279] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -3668,7 +3638,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 7;
-    ["health"] = 239096;
+    ["health"] = 67389;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -3677,12 +3647,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [176039] = {
-      };
-      [228014] = {
-      };
-      [344663] = {
-      };
       [373364] = {
       };
       [373370] = {
@@ -3937,7 +3901,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 21;
-    ["health"] = 639150;
+    ["health"] = 531786;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -3946,8 +3910,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [344663] = {
-      };
       [373509] = {
       };
       [373513] = {

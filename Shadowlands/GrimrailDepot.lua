@@ -88,7 +88,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Laborer";
     ["id"] = 81235;
     ["count"] = 2;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 55909;
     ["creatureType"] = "Humanoid";
@@ -144,7 +144,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Overseer";
     ["id"] = 81212;
     ["count"] = 7;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 56280;
     ["creatureType"] = "Humanoid";
@@ -284,7 +284,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Technician";
     ["id"] = 81236;
     ["count"] = 4;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 56293;
     ["creatureType"] = "Humanoid";
@@ -336,7 +336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Railmaster Rocketspark";
     ["id"] = 77803;
     ["count"] = 0;
-    ["health"] = 937648;
+    ["health"] = 937420;
     ["scale"] = 1;
     ["displayId"] = 54096;
     ["creatureType"] = "Humanoid";
@@ -344,6 +344,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1138;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [161091] = {
       };
@@ -388,7 +391,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Borka the Brute";
     ["id"] = 77816;
     ["count"] = 0;
-    ["health"] = 1129439;
+    ["health"] = 1129165;
     ["scale"] = 1;
     ["displayId"] = 60108;
     ["creatureType"] = "Humanoid";
@@ -421,7 +424,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Bombardier";
     ["id"] = 81407;
     ["count"] = 12;
-    ["health"] = 351533;
+    ["health"] = 351964;
     ["scale"] = 1;
     ["displayId"] = 59182;
     ["creatureType"] = "Humanoid";
@@ -464,7 +467,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Iron Infantry";
     ["id"] = 80940;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 55374;
     ["creatureType"] = "Humanoid";
@@ -474,8 +477,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true;
     };
     ["spells"] = {
-      [176039] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -544,7 +545,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Gunner";
     ["id"] = 80937;
     ["count"] = 6;
-    ["health"] = 191745;
+    ["health"] = 191980;
     ["scale"] = 1;
     ["displayId"] = 55280;
     ["creatureType"] = "Humanoid";
@@ -558,8 +559,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [166675] = {
       };
       [166676] = {
-      };
-      [176039] = {
       };
       [176147] = {
       };
@@ -600,21 +599,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Grenadier";
     ["id"] = 80936;
     ["count"] = 7;
-    ["health"] = 223703;
+    ["health"] = 223978;
     ["scale"] = 1;
     ["displayId"] = 55306;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [161150] = {
       };
       [161153] = {
-      };
-      [176039] = {
       };
     };
     ["clones"] = {
@@ -645,21 +644,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Cinderseer";
     ["id"] = 88163;
     ["count"] = 8;
-    ["health"] = 202398;
+    ["health"] = 202646;
     ["scale"] = 1;
     ["displayId"] = 60769;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Disorient"] = true;
+    };
     ["spells"] = {
       [176025] = {
       };
-      [176031] = {
-      };
       [176032] = {
-      };
-      [176033] = {
-      };
-      [176039] = {
       };
     };
     ["clones"] = {
@@ -698,7 +695,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Boomer";
     ["id"] = 80935;
     ["count"] = 7;
-    ["health"] = 202398;
+    ["health"] = 202646;
     ["scale"] = 1;
     ["displayId"] = 55281;
     ["creatureType"] = "Humanoid";
@@ -706,6 +703,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -714,8 +712,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [160963] = {
       };
       [161258] = {
-      };
-      [176039] = {
       };
       [176127] = {
       };
@@ -750,7 +746,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Hulk";
     ["id"] = 80938;
     ["count"] = 18;
-    ["health"] = 426100;
+    ["health"] = 426623;
     ["scale"] = 1;
     ["displayId"] = 58663;
     ["creatureType"] = "Humanoid";
@@ -760,8 +756,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["spells"] = {
       [176023] = {
-      };
-      [176039] = {
       };
     };
     ["clones"] = {
@@ -778,7 +772,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nitrogg Thundertower";
     ["id"] = 79545;
     ["count"] = 0;
-    ["health"] = 1491712;
+    ["health"] = 1491350;
     ["scale"] = 1;
     ["displayId"] = 55162;
     ["creatureType"] = "Humanoid";
@@ -816,7 +810,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Far Seer";
     ["id"] = 82579;
     ["count"] = 12;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 57126;
     ["creatureType"] = "Humanoid";
@@ -864,12 +858,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Loader";
     ["id"] = 82594;
     ["count"] = 1;
-    ["health"] = 85220;
+    ["health"] = 85325;
     ["scale"] = 1;
     ["displayId"] = 55909;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Disorient"] = true;
     };
     ["spells"] = {
@@ -945,7 +940,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Scout";
     ["id"] = 82590;
     ["count"] = 12;
-    ["health"] = 276965;
+    ["health"] = 277305;
     ["scale"] = 1;
     ["displayId"] = 57131;
     ["creatureType"] = "Humanoid";
@@ -972,7 +967,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Captain";
     ["id"] = 82597;
     ["count"] = 18;
-    ["health"] = 426100;
+    ["health"] = 426623;
     ["scale"] = 1;
     ["displayId"] = 57133;
     ["creatureType"] = "Humanoid";
@@ -1000,7 +995,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skylord Tovra";
     ["id"] = 80005;
     ["count"] = 0;
-    ["health"] = 1704814;
+    ["health"] = 1704400;
     ["scale"] = 1;
     ["displayId"] = 55630;
     ["creatureType"] = "Humanoid";
@@ -1008,6 +1003,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1133;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [161588] = {
       };
@@ -1035,7 +1033,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 6;
-    ["health"] = 239096;
+    ["health"] = 67389;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -1044,12 +1042,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [176039] = {
-      };
-      [228014] = {
-      };
-      [344663] = {
-      };
       [373364] = {
       };
       [373370] = {
@@ -1128,7 +1120,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 18;
-    ["health"] = 639150;
+    ["health"] = 531786;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -1137,8 +1129,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [344663] = {
-      };
       [373509] = {
       };
       [373513] = {

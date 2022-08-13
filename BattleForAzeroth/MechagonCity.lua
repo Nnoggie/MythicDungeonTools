@@ -407,7 +407,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blastatron X-80";
     ["id"] = 151476;
     ["count"] = 9;
-    ["health"] = 532625;
+    ["health"] = 533279;
     ["scale"] = 1.4;
     ["displayId"] = 90712;
     ["creatureType"] = "Mechanical";
@@ -443,7 +443,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Citizen";
     ["id"] = 144300;
     ["count"] = 0;
-    ["health"] = 53263;
+    ["health"] = 53328;
     ["scale"] = 0.7;
     ["displayId"] = 91167;
     ["creatureType"] = "Mechanical";
@@ -452,8 +452,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true;
     };
     ["spells"] = {
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -564,7 +562,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defense Bot Mk I";
     ["id"] = 151649;
     ["count"] = 3;
-    ["health"] = 223703;
+    ["health"] = 223978;
     ["scale"] = 1;
     ["displayId"] = 91349;
     ["creatureType"] = "Mechanical";
@@ -575,8 +573,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["spells"] = {
       [294195] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -611,23 +607,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Tinkerer";
     ["id"] = 144294;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 91170;
     ["creatureType"] = "Humanoid";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Silence"] = true;
       ["Polymorph"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [293827] = {
       };
       [293854] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -676,7 +672,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Workshop Defender";
     ["id"] = 144299;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 91183;
     ["creatureType"] = "Humanoid";
@@ -684,12 +680,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Polymorph"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [293670] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -737,13 +732,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Mechanic";
     ["id"] = 144295;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 91171;
     ["creatureType"] = "Humanoid";
     ["level"] = 120;
     ["characteristics"] = {
       ["Polymorph"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -824,7 +820,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Head Machinist Sparkflux";
     ["id"] = 144248;
     ["count"] = 0;
-    ["health"] = 1494224;
+    ["health"] = 1491350;
     ["scale"] = 1;
     ["displayId"] = 23397;
     ["creatureType"] = "Mechanical";
@@ -842,8 +838,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [285460] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -857,7 +851,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spider Tank";
     ["id"] = 144296;
     ["count"] = 5;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 90710;
     ["creatureType"] = "Mechanical";
@@ -871,8 +865,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [294015] = {
       };
       [296348] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -898,7 +890,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defense Bot Mk III";
     ["id"] = 144298;
     ["count"] = 6;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 90855;
@@ -915,8 +907,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [297128] = {
       };
       [297133] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1022,7 +1012,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aerial Unit R-21/X";
     ["id"] = 150396;
     ["count"] = 0;
-    ["health"] = 1024610;
+    ["health"] = 1022640;
     ["scale"] = 1;
     ["displayId"] = 90547;
     ["creatureType"] = "Mechanical";
@@ -1044,8 +1034,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [291928] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1060,21 +1048,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Junkyard D.0.G.";
     ["id"] = 151773;
     ["count"] = 4;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 90511;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [294107] = {
       };
       [294180] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1106,7 +1093,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Waste Processing Unit";
     ["id"] = 144293;
     ["count"] = 6;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 92177;
     ["creatureType"] = "Mechanical";
@@ -1121,8 +1108,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [294291] = {
       };
       [294324] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1159,13 +1144,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Living Waste";
     ["id"] = 144301;
     ["count"] = 1;
-    ["health"] = 21305;
+    ["health"] = 21331;
     ["scale"] = 1;
     ["displayId"] = 92217;
     ["creatureType"] = "Elemental";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [294349] = {
@@ -1278,7 +1265,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Omega Buster";
     ["id"] = 144249;
     ["count"] = 0;
-    ["health"] = 1280763;
+    ["health"] = 1278300;
     ["scale"] = 1;
     ["displayId"] = 90998;
     ["creatureType"] = "Mechanical";
@@ -1298,8 +1285,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [292290] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1314,7 +1299,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bomb Tonk";
     ["id"] = 151657;
     ["count"] = 3;
-    ["health"] = 127830;
+    ["health"] = 127987;
     ["scale"] = 1.5;
     ["displayId"] = 21209;
     ["creatureType"] = "Mechanical";
@@ -1344,7 +1329,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rocket Tonk";
     ["id"] = 151659;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1.5;
     ["displayId"] = 91228;
     ["creatureType"] = "Mechanical";
@@ -1379,7 +1364,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Strider Tonk";
     ["id"] = 151658;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1.5;
     ["displayId"] = 91229;
     ["creatureType"] = "Mechanical";
@@ -1417,7 +1402,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Platinum Pummeler";
     ["id"] = 144244;
     ["count"] = 0;
-    ["health"] = 512305;
+    ["health"] = 511320;
     ["scale"] = 1.5;
     ["displayId"] = 91216;
     ["creatureType"] = "Mechanical";
@@ -1453,7 +1438,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gnomercy 4.U.";
     ["id"] = 145185;
     ["count"] = 0;
-    ["health"] = 1024610;
+    ["health"] = 1022640;
     ["scale"] = 1.5;
     ["displayId"] = 91879;
     ["creatureType"] = "Mechanical";
@@ -1481,8 +1466,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [318587] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1497,7 +1480,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "K.U.-J.0.";
     ["id"] = 144246;
     ["count"] = 0;
-    ["health"] = 1366147;
+    ["health"] = 1363520;
     ["scale"] = 1;
     ["displayId"] = 90775;
     ["creatureType"] = "Mechanical";
@@ -1523,8 +1506,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [294929] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1539,7 +1520,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Alarm-o-Bot";
     ["id"] = 151325;
     ["count"] = 0;
-    ["health"] = 10653;
+    ["health"] = 10666;
     ["scale"] = 1;
     ["displayId"] = 90874;
     ["creatureType"] = "Mechanical";
@@ -1560,19 +1541,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "G.U.A.R.D.";
     ["id"] = 144303;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 68856;
     ["creatureType"] = "Mechanical";
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
       [294107] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1594,7 +1574,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 4;
-    ["health"] = 239096;
+    ["health"] = 67389;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -1603,12 +1583,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [176039] = {
-      };
-      [228014] = {
-      };
-      [344663] = {
-      };
       [373364] = {
       };
       [373370] = {
@@ -1674,7 +1648,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 12;
-    ["health"] = 639150;
+    ["health"] = 531786;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -1683,8 +1657,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [344663] = {
-      };
       [373509] = {
       };
       [373513] = {
