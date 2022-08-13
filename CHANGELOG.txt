@@ -1,3 +1,6 @@
+v3.9.5.8
+- backend updates
+- spells / health updates
 v3.9.5.7
 - Moved Zul'Gamux in Upper Karazhan to Shrieking Terror 1
 v3.9.5.6
