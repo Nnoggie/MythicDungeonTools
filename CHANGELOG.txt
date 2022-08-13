@@ -1,4 +1,5 @@
 v3.9.5.8
+- Added tooltip for shrouded bounty stack counter
 - backend updates
 - spells / health updates
 v3.9.5.7
