@@ -25,6 +25,8 @@ end
 function DC:AddCollectedDataToEnemyTable(dungeonIndex, ignoreSpells, ignoreCC)
   if not dungeonIndex then dungeonIndex = db.currentDungeonIdx end
   --add spells/characteristics from db to dungeonEnemies
+  local spellsAdded = 0
+  local ccAdded = 0
   local enemies = MDT.dungeonEnemies[dungeonIndex]
   local collectedData = db.dataCollection[dungeonIndex]
   if collectedData and not ignoreSpells then
@@ -33,6 +35,9 @@ function DC:AddCollectedDataToEnemyTable(dungeonIndex, ignoreSpells, ignoreCC)
         if enemy.id == id then
           enemy.spells = enemy.spells or {}
           for spellId, _ in pairs(spells) do
+            if not enemy.spells[spellId] then
+              spellsAdded = spellsAdded + 1
+            end
             enemy.spells[spellId] = enemy.spells[spellId] or {}
           end
         end
@@ -47,12 +52,18 @@ function DC:AddCollectedDataToEnemyTable(dungeonIndex, ignoreSpells, ignoreCC)
         if enemy.id == id then
           enemy.characteristics = enemy.characteristics or {}
           for characteristic, _ in pairs(characteristics) do
+            if not enemy.characteristics[characteristic] then
+              ccAdded = ccAdded + 1
+            end
             enemy.characteristics[characteristic] = true
           end
         end
       end
     end
   end
+
+  if not ignoreSpells then print("Added " .. spellsAdded .. " new spells") end
+  if not ignoreCC then print("Added " .. ccAdded .. " new CC characteristics") end
 end
 
 local trackedEvents = {
@@ -342,19 +353,26 @@ function DC:InitHealthTrack()
   end)
 
   function MDT:ProcessHealthTrack()
+
     local enemies = MDT.dungeonEnemies[db.currentDungeonIdx]
     if enemies then
+      local numEnemyHealthChanged = 0
       for enemyIdx, enemy in pairs(enemies) do
         local tracked = db.healthTracking[enemy.id]
         if tracked then
           local isBoss = enemy.isBoss and true or false
           local baseHealth = MDT:ReverseCalcEnemyHealth(tracked.health, tracked.level, isBoss, tracked.fortified)
+          if baseHealth ~= enemy.health then
+            numEnemyHealthChanged = numEnemyHealthChanged + 1
+          end
           enemy.health = baseHealth
         else
           print("MDT HPTRACK: Missing: " .. enemy.name .. " id: " .. enemy.id)
         end
       end
+      print("MDT HPTRACK: Processed " .. numEnemyHealthChanged .. " enemies")
     end
+
   end
 
 end
