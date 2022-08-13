@@ -232,7 +232,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forlorn Spirit";
     ["id"] = 114626;
     ["count"] = 5;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 26404;
     ["creatureType"] = "Undead";
@@ -245,7 +245,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [228254] = {
       };
-      [344663] = {
+      [228255] = {
       };
     };
     ["clones"] = {
@@ -799,6 +799,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [228014] = {
       };
       [228017] = {
+      };
+      [238566] = {
       };
     };
     ["clones"] = {
@@ -4736,7 +4738,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shrieking Terror";
     ["id"] = 114627;
     ["count"] = 5;
-    ["health"] = 383490;
+    ["health"] = 383960;
     ["scale"] = 1;
     ["displayId"] = 10698;
     ["creatureType"] = "Undead";
@@ -4906,7 +4908,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 4;
-    ["health"] = 239096;
+    ["health"] = 67389;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -4915,12 +4917,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [176039] = {
-      };
-      [228014] = {
-      };
-      [344663] = {
-      };
       [373364] = {
       };
       [373370] = {
@@ -5152,7 +5148,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 12;
-    ["health"] = 639150;
+    ["health"] = 531786;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -5161,8 +5157,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [344663] = {
-      };
       [373509] = {
       };
       [373513] = {

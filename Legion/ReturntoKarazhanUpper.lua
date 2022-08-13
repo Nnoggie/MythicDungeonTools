@@ -178,7 +178,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forlorn Spirit";
     ["id"] = 114626;
     ["count"] = 4;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 26404;
     ["creatureType"] = "Undead";
@@ -191,7 +191,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [228254] = {
       };
-      [344663] = {
+      [228255] = {
       };
     };
     ["clones"] = {
@@ -214,7 +214,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shrieking Terror";
     ["id"] = 114627;
     ["count"] = 4;
-    ["health"] = 383490;
+    ["health"] = 383960;
     ["scale"] = 1;
     ["displayId"] = 10698;
     ["creatureType"] = "Undead";
@@ -242,17 +242,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Damaged Golem";
     ["id"] = 114334;
     ["count"] = 6;
-    ["health"] = 306792;
+    ["health"] = 307168;
     ["scale"] = 1.2;
     ["displayId"] = 61850;
     ["creatureType"] = "Mechanical";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [227529] = {
       };
       [242894] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -290,7 +291,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Abstract Nullifier";
     ["id"] = 115765;
     ["count"] = 18;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1.2;
     ["displayId"] = 74335;
     ["creatureType"] = "Mechanical";
@@ -320,15 +321,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Confluence";
     ["id"] = 114338;
     ["count"] = 9;
-    ["health"] = 306792;
+    ["health"] = 307168;
     ["scale"] = 1.4;
     ["displayId"] = 55144;
     ["creatureType"] = "Elemental";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [228700] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -366,7 +368,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana-Gorged Wyrm";
     ["id"] = 114364;
     ["count"] = 1;
-    ["health"] = 102264;
+    ["health"] = 102390;
     ["scale"] = 1;
     ["displayId"] = 62387;
     ["creatureType"] = "Beast";
@@ -378,8 +380,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [228362] = {
       };
       [232271] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -476,7 +476,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infused Pyromancer";
     ["id"] = 115488;
     ["count"] = 8;
-    ["health"] = 468710;
+    ["health"] = 469285;
     ["scale"] = 1.2;
     ["displayId"] = 63419;
     ["creatureType"] = "Demon";
@@ -570,7 +570,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fel Bat";
     ["id"] = 115484;
     ["count"] = 4;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 0.8;
     ["displayId"] = 73837;
     ["creatureType"] = "Demon";
@@ -676,7 +676,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wrathguard Flamebringer";
     ["id"] = 115757;
     ["count"] = 12;
-    ["health"] = 639150;
+    ["health"] = 639934;
     ["scale"] = 1.2;
     ["displayId"] = 73944;
     ["creatureType"] = "Demon";
@@ -705,7 +705,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rat";
     ["id"] = 115417;
     ["count"] = 7;
-    ["health"] = 383490;
+    ["health"] = 383960;
     ["scale"] = 1.2;
     ["displayId"] = 73857;
     ["creatureType"] = "Beast";
@@ -749,7 +749,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ancient Tome";
     ["id"] = 115419;
     ["count"] = 7;
-    ["health"] = 298270;
+    ["health"] = 298636;
     ["scale"] = 1.4;
     ["displayId"] = 73859;
     ["creatureType"] = "Beast";
@@ -773,13 +773,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spider";
     ["id"] = 115418;
     ["count"] = 7;
-    ["health"] = 319575;
+    ["health"] = 319967;
     ["scale"] = 0.8;
     ["displayId"] = 73858;
     ["creatureType"] = "Beast";
     ["level"] = 111;
     ["characteristics"] = {
       ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [229704] = {
+      };
+      [229705] = {
+      };
+      [229706] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -808,15 +816,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Devourer";
     ["id"] = 115831;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 62384;
     ["creatureType"] = "Elemental";
     ["level"] = 112;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Disorient"] = true;
+    };
     ["spells"] = {
       [230218] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -980,7 +990,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Erudite Slayer";
     ["id"] = 115486;
     ["count"] = 9;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 73838;
     ["creatureType"] = "Demon";
@@ -989,8 +999,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [229608] = {
       };
       [229611] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1015,7 +1023,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King";
     ["id"] = 115388;
     ["count"] = 18;
-    ["health"] = 639150;
+    ["health"] = 639934;
     ["scale"] = 1.4;
     ["displayId"] = 16293;
     ["creatureType"] = "Humanoid";
@@ -1028,8 +1036,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [229468] = {
       };
       [229489] = {
-      };
-      [344663] = {
       };
     };
     ["clones"] = {
@@ -1044,7 +1050,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Curator";
     ["id"] = 114247;
     ["count"] = 0;
-    ["health"] = 1608981;
+    ["health"] = 2091168;
     ["scale"] = 1;
     ["displayId"] = 16958;
     ["creatureType"] = "Mechanical";
@@ -1065,8 +1071,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [227465] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1081,7 +1085,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Viz'aduum the Watcher";
     ["id"] = 114790;
     ["count"] = 0;
-    ["health"] = 1704814;
+    ["health"] = 1704400;
     ["scale"] = 1;
     ["displayId"] = 73709;
     ["creatureType"] = "Humanoid";
@@ -1106,8 +1110,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [230084] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1121,7 +1123,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shade of Medivh";
     ["id"] = 114350;
     ["count"] = 0;
-    ["health"] = 1491712;
+    ["health"] = 1491350;
     ["scale"] = 1;
     ["displayId"] = 73834;
     ["creatureType"] = "Humanoid";
@@ -1156,8 +1158,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [228958] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1172,7 +1172,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Devourer";
     ["id"] = 114252;
     ["count"] = 0;
-    ["health"] = 1917915;
+    ["health"] = 1917450;
     ["scale"] = 1;
     ["displayId"] = 73157;
     ["creatureType"] = "Dragonkin";
@@ -1191,8 +1191,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [227618] = {
       };
-      [344663] = {
-      };
     };
     ["clones"] = {
       [1] = {
@@ -1207,7 +1205,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 6;
-    ["health"] = 239096;
+    ["health"] = 67389;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -1216,12 +1214,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [176039] = {
-      };
-      [228014] = {
-      };
-      [344663] = {
-      };
       [373364] = {
       };
       [373370] = {
@@ -1304,7 +1296,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 18;
-    ["health"] = 639150;
+    ["health"] = 531786;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -1313,8 +1305,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
-      [344663] = {
-      };
       [373509] = {
       };
       [373513] = {

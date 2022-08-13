@@ -667,7 +667,6 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
 
       local fullName = name .. "+" .. realm
       SendChatMessage(prefix .. fullName .. " - " .. dungeon .. ": " .. presetName .. "]", distribution)
-      MDT:SetThrottleValues(true)
     end
   end
 end
@@ -708,15 +707,9 @@ function MDT:GetPresetSize(forChat, level)
   return string.len(export)
 end
 
-local defaultCPS = tonumber(_G.ChatThrottleLib.MAX_CPS)
-local defaultBURST = tonumber(_G.ChatThrottleLib.BURST)
-function MDT:SetThrottleValues(default)
+function MDT:SetThrottleValues()
   if not _G.ChatThrottleLib then return end
-  if default then
-    _G.ChatThrottleLib.MAX_CPS = defaultCPS
-    _G.ChatThrottleLib.BURST = defaultBURST
-  else --4000/16000 is fine but we go safe with 2000/10000
-    _G.ChatThrottleLib.MAX_CPS = 2000
-    _G.ChatThrottleLib.BURST = 10000
-  end
+  --4000/16000 is fine but we go safe with 2000/10000
+  _G.ChatThrottleLib.MAX_CPS = 2000
+  _G.ChatThrottleLib.BURST = 10000
 end
