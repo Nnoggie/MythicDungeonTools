@@ -1764,8 +1764,21 @@ function MDT:UpdatePullTooltip(tooltip)
     tooltip:Hide()
   else
     if frame.sidePanel.newPullButtons and tooltip.currentPull and frame.sidePanel.newPullButtons[tooltip.currentPull] then
-      --enemy portraits
       local showData
+
+      local shroudedIcon = frame.sidePanel.newPullButtons[tooltip.currentPull].shroudedIcon
+      local shroudedCounter = frame.sidePanel.newPullButtons[tooltip.currentPull].shroudedCounter
+      if MouseIsOver(shroudedIcon) and shroudedIcon:IsShown() then
+        tooltip.topString:SetText("\n\n\n\n" .. L["Bounty stacks \nafter this pull"] .. ": " .. shroudedCounter:GetText())
+        local shroudedDisplayId = 101016
+        if (not tooltip.modelNpcId or (tooltip.modelNpcId ~= shroudedDisplayId)) then
+          tooltip.Model:SetDisplayInfo(shroudedDisplayId)
+          tooltip.modelNpcId = shroudedDisplayId
+        end
+        showData = true
+      end
+
+      --enemy portraits
       for k, v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
         if MouseIsOver(v) then
           if v:IsShown() then

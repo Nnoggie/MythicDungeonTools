@@ -3,6 +3,7 @@ local L = MDT.L
 L = L or {}
 
 --MDT
+L["Bounty stacks \nafter this pull"] = "Bounty stacks \nafter this pull"
 L["AddOn Conflict"] = "AddOn Conflict"
 L["conflictPrompt"] = "MDT has detected that you have certain AddOns installed that are conflicting with MDT.\n\nPlease remove the following AddOns:\n\n"
 L["Middle-click to disable Minimap Button"] = "Middle-click to disable Minimap Button"
