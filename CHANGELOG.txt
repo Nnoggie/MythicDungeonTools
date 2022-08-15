@@ -1,3 +1,5 @@
+v3.9.5.9
+- various bugfixes
 v3.9.5.8
 - Added tooltip for shrouded bounty stack counter
 - backend updates

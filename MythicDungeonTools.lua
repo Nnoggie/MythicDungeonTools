@@ -3567,6 +3567,8 @@ function MDT:UpdatePullButtonNPCData(idx)
                 enemyTable[enemyTableIdx].baseHealth = baseHealth
                 enemyTable[enemyTableIdx].ignoreFortified = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx][
                     "ignoreFortified"]
+                enemyTable[enemyTableIdx].isBoss = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx][
+                    "isBoss"]
               end
             end
           end
