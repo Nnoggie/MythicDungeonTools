@@ -1,3 +1,5 @@
+v3.9.6
+- affix rotation update
 v3.9.5.9
 - various bugfixes
 v3.9.5.8
