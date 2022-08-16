@@ -247,18 +247,18 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 122, 14, 9, 131 }, -- bolstering explosive tyrannical shrouded
-  [2] = { 8, 12, 10, 131 }, -- sanguine grievous fortified shrouded
-  [3] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
-  [4] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
-  [5] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
-  [6] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
-  [7] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
-  [8] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
-  [9] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
-  [10] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
-  [11] = { 0, 0, 9, 131 }, -- ? ? tyrannical shrouded
-  [12] = { 0, 0, 10, 131 }, -- ? ? fortified shrouded
+  [1] = { 122, 14, 9, 131 },
+  [2] = { 8, 12, 10, 131 },
+  [3] = { 7, 13, 9, 131 },
+  [4] = { 11, 124, 10, 131 },
+  [5] = { 6, 3, 9, 131 },
+  [6] = { 122, 12, 10, 131 },
+  [7] = { 123, 4, 9, 131 },
+  [8] = { 7, 14, 10, 131 },
+  [9] = { 8, 124, 9, 131 },
+  [10] = { 6, 13, 10, 131 },
+  [11] = { 11, 3, 9, 131 },
+  [12] = { 123, 4, 10, 131 },
 }
 
 function MDT:UpdateAffixWeeks()
