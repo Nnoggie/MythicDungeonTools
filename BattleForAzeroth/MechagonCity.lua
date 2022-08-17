@@ -450,6 +450,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 120;
     ["characteristics"] = {
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
     };
@@ -570,6 +571,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [294195] = {
@@ -621,6 +623,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [293827] = {
@@ -681,10 +684,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Mind Control"] = true;
       ["Polymorph"] = true;
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [293670] = {
@@ -741,11 +746,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 120;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Silence"] = true;
       ["Polymorph"] = true;
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [293729] = {
@@ -1062,6 +1070,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [294107] = {
@@ -1158,6 +1167,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [294349] = {
@@ -1311,6 +1321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 120;
     ["characteristics"] = {
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [301088] = {
@@ -1345,6 +1356,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [294103] = {
@@ -1381,6 +1393,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [294061] = {
@@ -1537,6 +1550,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 120;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
     };
@@ -1562,6 +1576,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [294107] = {
