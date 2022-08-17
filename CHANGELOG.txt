@@ -1,3 +1,5 @@
+v3.9.6.1
+- Mechagon - Workshop count changes: Nathrezim Infiltrator : 4 -> 3 and Zul'gamux: 12 -> 9
 v3.9.6
 - affix rotation update
 v3.9.5.9
