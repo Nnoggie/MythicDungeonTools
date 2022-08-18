@@ -232,7 +232,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forlorn Spirit";
     ["id"] = 114626;
     ["count"] = 5;
-    ["health"] = 341298;
+    ["health"] = 340880;
     ["scale"] = 1;
     ["displayId"] = 26404;
     ["creatureType"] = "Undead";
@@ -786,6 +786,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead";
     ["level"] = 111;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
     };
@@ -1910,6 +1912,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
@@ -2508,6 +2511,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73465;
     ["creatureType"] = "Undead";
     ["level"] = 111;
+    ["spells"] = {
+      [241784] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 479.13696638026;
@@ -2541,7 +2548,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 16514;
     ["creatureType"] = "Undead";
     ["level"] = 110;
+    ["characteristics"] = {
+      ["Incapacitate"] = true;
+    };
     ["spells"] = {
+      [228279] = {
+      };
       [241788] = {
       };
     };
@@ -3205,6 +3217,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["characteristics"] = {
       ["Disorient"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [228559] = {
@@ -3331,9 +3344,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Disorient"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [6660] = {
+      };
+      [228273] = {
       };
     };
     ["clones"] = {
@@ -4738,7 +4754,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shrieking Terror";
     ["id"] = 114627;
     ["count"] = 5;
-    ["health"] = 383960;
+    ["health"] = 382886;
     ["scale"] = 1;
     ["displayId"] = 10698;
     ["creatureType"] = "Undead";
@@ -4795,7 +4811,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Maiden of Virtue";
     ["id"] = 113971;
     ["count"] = 0;
-    ["health"] = 1492131;
+    ["health"] = 1491350;
     ["scale"] = 1;
     ["displayId"] = 16198;
     ["creatureType"] = "Giant";
@@ -4834,7 +4850,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Attumen the Huntsman";
     ["id"] = 114264;
     ["count"] = 0;
-    ["health"] = 426323;
+    ["health"] = 426100;
     ["scale"] = 1;
     ["displayId"] = 73811;
     ["creatureType"] = "Undead";
@@ -4871,7 +4887,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Moroes";
     ["id"] = 114312;
     ["count"] = 0;
-    ["health"] = 1193705;
+    ["health"] = 1193080;
     ["scale"] = 1;
     ["displayId"] = 16540;
     ["creatureType"] = "Undead";
@@ -4908,7 +4924,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
     ["count"] = 4;
-    ["health"] = 67389;
+    ["health"] = 239096;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -5148,7 +5164,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
     ["count"] = 12;
-    ["health"] = 531786;
+    ["health"] = 639150;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
