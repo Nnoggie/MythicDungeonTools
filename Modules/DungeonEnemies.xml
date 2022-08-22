@@ -15,7 +15,7 @@
             </Layer>
             <Layer level="BACKGROUND">
                 <Texture name="$parent_DragDown" hidden="true" parentKey="texture_DragDown"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
-                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <TexCoords left="0.083984375" right="0.1015625" top="0.71" bottom="0.74"/>
                     <Anchors>
                         <Anchor point="TOP" relativepoint="BOTTOM">
                             <Offset>
@@ -27,7 +27,7 @@
             </Layer>
             <Layer level="BACKGROUND">
                 <Texture name="$parent_DragLeft" hidden="true" parentKey="texture_DragLeft"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
-                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <TexCoords left="0.083984375" right="0.1015625" top="0.71" bottom="0.74"/>
                     <Anchors>
                         <Anchor point="RIGHT" relativepoint="LEFT">
                             <Offset>
@@ -39,7 +39,7 @@
             </Layer>
             <Layer level="BACKGROUND">
                 <Texture name="$parent_DragRight" hidden="true" parentKey="texture_DragRight"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
-                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <TexCoords left="0.083984375" right="0.10156255" top="0.71" bottom="0.74"/>
                     <Anchors>
                         <Anchor point="LEFT" relativepoint="RIGHT">
                             <Offset>
@@ -51,7 +51,7 @@
             </Layer>
             <Layer level="BACKGROUND">
                 <Texture name="$parent_DragUp" hidden="true" parentKey="texture_DragUp"  file="Interface\MINIMAP\ObjectIconsAtlas" alphaMode="BLEND">
-                    <TexCoords left="0.083984375‬‬‬‬" right="0.1015625‬5‬‬‬" top="0.71" bottom="0.74‬‬‬‬‬"/>
+                    <TexCoords left="0.083984375" right="0.10156255" top="0.71" bottom="0.74"/>
                     <Anchors>
                         <Anchor point="BOTTOM" relativepoint="TOP">
                             <Offset>
