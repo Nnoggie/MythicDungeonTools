@@ -50,7 +50,7 @@ def get_latest_version(filename):
     response = requests.get(url, headers=headers)
     time.sleep(2)
     latest_build = response.json()[0]
-    latest_build = "9.2.7.45114" # hardcode desired build here
+    latest_build = "9.2.7.45161" # hardcode desired build here
 
     data_url = f"https://wow.tools/dbc/api/export/?name={filename}&build={latest_build}&useHotfixes=true"
     data_response = requests.get(data_url, headers=headers)
