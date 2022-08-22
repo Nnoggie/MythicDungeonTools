@@ -1,3 +1,5 @@
+v3.9.6.4
+- Tazavesh Streets: Added missing Infiltrator
 v3.9.6.3
 - Lower Karazhan: Added Spectral Patron near G1 and fixed npcId and count for Spectral Patron in area under the opera
 v3.9.6.2
