@@ -1,3 +1,5 @@
+v3.9.6.5
+- Tazavesh / Mechagon Workshop: Removed Shady Dealer / Mechagon Mechanics in keys without shrouded affix
 v3.9.6.4
 - Tazavesh Streets: Added missing Infiltrator
 v3.9.6.3
