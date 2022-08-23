@@ -2550,28 +2550,4 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [23] = {
-    ["name"] = "Shady Dealer";
-    ["id"] = 180315;
-    ["count"] = 0;
-    ["health"] = 0;
-    ["scale"] = 1;
-    ["displayId"] = 93594;
-    ["creatureType"] = "Humanoid";
-    ["level"] = 60;
-    ["characteristics"] = {
-      ["Taunt"] = true;
-    };
-    ["spells"] = {
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 521.41160171385;
-        ["y"] = -133.3525102302;
-        ["sublevel"] = 4;
-        ["scale"] = 2;
-        ["disguised"] = true;
-      };
-    };
-  };
 };
