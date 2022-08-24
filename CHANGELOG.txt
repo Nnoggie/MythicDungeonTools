@@ -1,3 +1,5 @@
+v3.9.6.6
+- Karazhan Lower: Hotfix changes for Skeletal Usher and Arcane Warden
 v3.9.6.5
 - Tazavesh / Mechagon Workshop: Removed Shady Dealer / Mechagon Mechanics in keys without shrouded affix
 - Karazhan Upper: Removed Slayer in keys without shrouded affix
