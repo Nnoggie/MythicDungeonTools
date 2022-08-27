@@ -1,0 +1,47 @@
+{
+  "Lua.diagnostics.globals": [
+    "DrawLine",
+    "CreateFramePoolCollection",
+    "errorhandler",
+    "MDTScrollFrame",
+    "GameTooltip",
+    "AddOnSkins",
+    "EasyMenu",
+    "GameTooltip_SetTitle",
+    "CreateTexturePool",
+    "InterfaceOptionsFrame_OpenToCategory",
+    "MouseIsOver",
+    "MDTToolbarFrame",
+    "CloseDropDownMenus",
+    "QuestPOI_CalculateNumericTexCoords",
+    "QUEST_POI_COLOR_BLACK",
+    "ChatFrame_AddMessageEventFilter",
+    "DEFAULT_CHAT_FRAME",
+    "_",
+    "ColorPickerFrame",
+    "L_CloseDropDownMenus",
+    "ReloadUI",
+    "ViragDevTool_AddData",
+    "UIFrameFlash",
+    "ElvUI",
+    "SlashCmdList",
+    "HelpPlate_Hide",
+    "MDTMapPanelFrame",
+    "HelpPlate_IsShowing",
+    "HelpPlate_Show",
+    "UISpecialFrames",
+    "vdt",
+    "GetLocale",
+    "IsAltKeyDown",
+    "WrapTextInColorCode",
+    "tonumber"
+  ],
+  "Lua.diagnostics.disable": [
+    "deprecated",
+    "undefined-field",
+    "param-type-mismatch"
+  ],
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "master"
+  ]
+}

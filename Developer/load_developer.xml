@@ -1,6 +1,6 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Devpanel.lua'/>
 	<Script file='DataCollection.lua'/>
-	<Script file='ExportToLua.lua'/>
+	<Script file='ExportLua.lua'/>
 	<Script file='Schema.lua'/>
 </Ui>

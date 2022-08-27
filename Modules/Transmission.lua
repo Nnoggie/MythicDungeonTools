@@ -177,7 +177,7 @@ MDT.liveSessionPrefixes = {
   ["reqPre"] = "MDTLiveReqPre",
   ["corrupted"] = "MDTLiveCor",
   ["difficulty"] = "MDTLiveLvl",
-  ["mechagonBot"] = "MDTLiveMechagon",
+  ["poiAssignment"] = "MDTPOIAssignment",
 }
 
 MDT.dataCollectionPrefixes = {
@@ -380,13 +380,13 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     end
   end
 
-  if prefix == MDT.liveSessionPrefixes.mechagonBot then
+  if prefix == MDT.liveSessionPrefixes.poiAssignment then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local sublevel, poiIdx, player = unpack(MDT:StringToTable(message, false))
-      preset.value.mechagonBots = preset.value.mechagonBots or {}
-      preset.value.mechagonBots[sublevel] = preset.value.mechagonBots[sublevel] or {}
-      preset.value.mechagonBots[sublevel][poiIdx] = player
+      local sublevel, poiIdx, value = unpack(MDT:StringToTable(message, false))
+      preset.value.poiAssignments = preset.value.poiAssignments or {}
+      preset.value.poiAssignments[sublevel] = preset.value.poiAssignments[sublevel] or {}
+      preset.value.poiAssignments[sublevel][poiIdx] = value
       MDT:UpdateMap()
       if sender ~= UnitFullName("player") and MDT:GetCurrentSubLevel() == sublevel then
         local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
@@ -667,7 +667,6 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
 
       local fullName = name .. "+" .. realm
       SendChatMessage(prefix .. fullName .. " - " .. dungeon .. ": " .. presetName .. "]", distribution)
-      MDT:SetThrottleValues(true)
     end
   end
 end
@@ -708,15 +707,9 @@ function MDT:GetPresetSize(forChat, level)
   return string.len(export)
 end
 
-local defaultCPS = tonumber(_G.ChatThrottleLib.MAX_CPS)
-local defaultBURST = tonumber(_G.ChatThrottleLib.BURST)
-function MDT:SetThrottleValues(default)
+function MDT:SetThrottleValues()
   if not _G.ChatThrottleLib then return end
-  if default then
-    _G.ChatThrottleLib.MAX_CPS = defaultCPS
-    _G.ChatThrottleLib.BURST = defaultBURST
-  else --4000/16000 is fine but we go safe with 2000/10000
-    _G.ChatThrottleLib.MAX_CPS = 2000
-    _G.ChatThrottleLib.BURST = 10000
-  end
+  --4000/16000 is fine but we go safe with 2000/10000
+  _G.ChatThrottleLib.MAX_CPS = 2000
+  _G.ChatThrottleLib.BURST = 10000
 end

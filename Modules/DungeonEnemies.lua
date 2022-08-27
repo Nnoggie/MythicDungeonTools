@@ -210,6 +210,7 @@ local function setUpMouseHandlers(self)
     preset.value.pulls = tempPulls
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull(), tempPulls)
     MDT:ReloadPullButtons()
+    MDT:UpdateProgressbar()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())
     end
@@ -528,7 +529,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
       "\n" .. string.format(L["%s HP"], MDT:FormatEnemyHealth(health)) .. "\n"
   local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
   text = text .. L["Forces"] .. ": " .. MDT:FormatEnemyForces(count)
-  text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(count, data.health)
+  -- text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(count, data.health)
   local reapingText
   if blip.data.reaping and db.MDI.enabled and preset.mdi.beguiling == 13 then
     local reapingIcon = CreateTextureMarkup(MDT.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0

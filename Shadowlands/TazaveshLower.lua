@@ -49,12 +49,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Customs Security";
     ["id"] = 177807;
     ["count"] = 4;
-    ["health"] = 181938;
+    ["health"] = 234643;
     ["scale"] = 0.8;
     ["displayId"] = 100873;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -84,6 +89,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -263.45446927374;
         ["g"] = 2;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 658.49915762309;
@@ -116,7 +122,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gatewarden Zo'mazz";
     ["id"] = 178392;
     ["count"] = 18;
-    ["health"] = 264636;
+    ["health"] = 341298;
     ["scale"] = 0.8;
     ["displayId"] = 101505;
     ["creatureType"] = "Humanoid";
@@ -140,7 +146,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Support Officer";
     ["id"] = 177817;
     ["count"] = 4;
-    ["health"] = 148858;
+    ["health"] = 191980;
     ["scale"] = 0.8;
     ["displayId"] = 100876;
     ["creatureType"] = "Humanoid";
@@ -148,6 +154,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -179,6 +189,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -261.66064363705;
         ["g"] = 4;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 619.28805029422;
@@ -198,7 +209,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Interrogation Specialist";
     ["id"] = 177816;
     ["count"] = 4;
-    ["health"] = 148858;
+    ["health"] = 191980;
     ["scale"] = 0.8;
     ["displayId"] = 100877;
     ["creatureType"] = "Humanoid";
@@ -206,6 +217,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -263,7 +276,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Armored Overseer";
     ["id"] = 177808;
     ["count"] = 8;
-    ["health"] = 215017;
+    ["health"] = 277305;
     ["scale"] = 0.8;
     ["displayId"] = 100874;
     ["creatureType"] = "Humanoid";
@@ -317,6 +330,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -272.111783067;
         ["g"] = 9;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
     };
   };
@@ -324,7 +338,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Portalmancer Zo'honn";
     ["id"] = 179334;
     ["count"] = 24;
-    ["health"] = 330795;
+    ["health"] = 426623;
     ["scale"] = 1;
     ["displayId"] = 100877;
     ["creatureType"] = "Humanoid";
@@ -356,7 +370,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zo'phex";
     ["id"] = 175616;
     ["count"] = 0;
-    ["health"] = 1040729;
+    ["health"] = 1278300;
     ["scale"] = 1;
     ["displayId"] = 100049;
     ["creatureType"] = "Humanoid";
@@ -397,7 +411,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tracker Zo'korss";
     ["id"] = 179837;
     ["count"] = 18;
-    ["health"] = 330795;
+    ["health"] = 426623;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 101474;
@@ -426,7 +440,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ancient Core Hound";
     ["id"] = 180091;
     ["count"] = 12;
-    ["health"] = 238173;
+    ["health"] = 307168;
     ["scale"] = 1;
     ["displayId"] = 101639;
     ["creatureType"] = "Beast";
@@ -463,7 +477,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Enraged Direhorn";
     ["id"] = 180495;
     ["count"] = 10;
-    ["health"] = 264636;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 47441;
     ["creatureType"] = "Beast";
@@ -489,13 +503,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Frenzied Nightclaw";
     ["id"] = 180567;
     ["count"] = 4;
-    ["health"] = 132318;
+    ["health"] = 170649;
     ["scale"] = 0.8;
     ["displayId"] = 101951;
     ["creatureType"] = "Beast";
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -533,7 +548,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Market Peacekeeper";
     ["id"] = 179840;
     ["count"] = 4;
-    ["health"] = 198477;
+    ["health"] = 255974;
     ["scale"] = 0.8;
     ["displayId"] = 101475;
     ["creatureType"] = "Humanoid";
@@ -541,7 +556,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
       ["Imprison"] = true;
+      ["Sap"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -565,32 +584,32 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [3] = {
-        ["x"] = 373.11722553419;
-        ["y"] = -304.27526874905;
+        ["x"] = 375.42493236622;
+        ["y"] = -300.81372500691;
         ["g"] = 21;
         ["sublevel"] = 1;
       };
       [4] = {
-        ["x"] = 374.37364836616;
-        ["y"] = -297.24943204901;
+        ["x"] = 375.09480778279;
+        ["y"] = -295.08599506389;
         ["g"] = 21;
         ["sublevel"] = 1;
       };
       [5] = {
-        ["x"] = 359.84645307514;
-        ["y"] = -311.98046840036;
+        ["x"] = 360.85606965606;
+        ["y"] = -312.55737447599;
         ["g"] = 23;
         ["sublevel"] = 1;
       };
       [6] = {
-        ["x"] = 370.82896305125;
-        ["y"] = -282.54150837989;
+        ["x"] = 370.54052239286;
+        ["y"] = -276.91651114672;
         ["g"] = 20;
         ["sublevel"] = 1;
       };
       [7] = {
-        ["x"] = 375.84117997616;
-        ["y"] = -282.02061452514;
+        ["x"] = 376.12963714045;
+        ["y"] = -278.99178128829;
         ["g"] = 20;
         ["sublevel"] = 1;
       };
@@ -605,10 +624,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -327.95849162011;
         ["g"] = 25;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [10] = {
-        ["x"] = 334.8173420739;
-        ["y"] = -331.70396648045;
+        ["x"] = 336.54810156554;
+        ["y"] = -331.84821982145;
         ["g"] = 25;
         ["sublevel"] = 1;
       };
@@ -635,13 +655,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Veteran Sparkcaster";
     ["id"] = 179841;
     ["count"] = 4;
-    ["health"] = 148858;
+    ["health"] = 191980;
     ["scale"] = 0.8;
     ["displayId"] = 101476;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -655,14 +677,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 367.1620977354;
-        ["y"] = -302.77575418994;
+        ["x"] = 371.48900471746;
+        ["y"] = -303.78537077086;
         ["g"] = 21;
         ["sublevel"] = 1;
       };
       [2] = {
-        ["x"] = 370.82883526028;
-        ["y"] = -292.66231757384;
+        ["x"] = 371.54999467691;
+        ["y"] = -290.9315415763;
         ["g"] = 21;
         ["sublevel"] = 1;
       };
@@ -671,10 +693,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -311.24648044693;
         ["g"] = 23;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [4] = {
-        ["x"] = 347.29223098987;
-        ["y"] = -281.59899711266;
+        ["x"] = 343.39798499539;
+        ["y"] = -282.89710386967;
         ["g"] = 19;
         ["sublevel"] = 1;
       };
@@ -683,6 +706,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -278.14165218297;
         ["g"] = 19;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [6] = {
         ["x"] = 356.1701852661;
@@ -702,7 +726,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Commerce Enforcer";
     ["id"] = 179842;
     ["count"] = 8;
-    ["health"] = 251404;
+    ["health"] = 324233;
     ["scale"] = 0.8;
     ["displayId"] = 101477;
     ["creatureType"] = "Humanoid";
@@ -724,12 +748,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -297.34471273293;
         ["g"] = 21;
         ["sublevel"] = 1;
+        ["scale"] = 1.4;
       };
       [2] = {
-        ["x"] = 356.33864170828;
-        ["y"] = -306.05841495442;
+        ["x"] = 358.21364628797;
+        ["y"] = -304.32766371573;
         ["g"] = 23;
         ["sublevel"] = 1;
+        ["scale"] = 1.3;
         ["patrol"] = {
           [1] = {
             ["x"] = 356.33864170828;
@@ -750,10 +776,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
         };
       };
       [3] = {
-        ["x"] = 352.35219076206;
-        ["y"] = -284.16372984022;
+        ["x"] = 350.62141476452;
+        ["y"] = -284.45223652222;
         ["g"] = 19;
         ["sublevel"] = 1;
+        ["scale"] = 1.3;
         ["patrol"] = {
           [1] = {
             ["x"] = 356.33864170828;
@@ -779,7 +806,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Commander Zo'far";
     ["id"] = 179821;
     ["count"] = 24;
-    ["health"] = 396955;
+    ["health"] = 511947;
     ["scale"] = 1;
     ["displayId"] = 101473;
     ["creatureType"] = "Humanoid";
@@ -807,7 +834,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cartel Muscle";
     ["id"] = 180348;
     ["count"] = 8;
-    ["health"] = 248097;
+    ["health"] = 319575;
     ["scale"] = 0.8;
     ["displayId"] = 101598;
     ["creatureType"] = "Humanoid";
@@ -820,10 +847,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 391.66538317687;
-        ["y"] = -253.81507330601;
+        ["x"] = 399.09111978456;
+        ["y"] = -254.47514759507;
         ["g"] = 16;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 428.84111080049;
@@ -895,12 +923,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cartel Smuggler";
     ["id"] = 180335;
     ["count"] = 5;
-    ["health"] = 148858;
+    ["health"] = 191745;
     ["scale"] = 0.8;
     ["displayId"] = 101595;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Fear"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -948,14 +978,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["inspiring"] = true;
       };
       [7] = {
-        ["x"] = 471.79594294305;
-        ["y"] = -194.61299889433;
+        ["x"] = 471.65173086681;
+        ["y"] = -196.19953805678;
         ["g"] = 11;
         ["sublevel"] = 1;
+        ["disguised"] = true;
       };
       [8] = {
-        ["x"] = 464.96559810232;
-        ["y"] = -196.18471952693;
+        ["x"] = 466.40790042967;
+        ["y"] = -190.8481712051;
         ["g"] = 11;
         ["sublevel"] = 1;
       };
@@ -971,12 +1002,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cartel Wiseguy";
     ["id"] = 180336;
     ["count"] = 5;
-    ["health"] = 132318;
+    ["health"] = 170440;
     ["scale"] = 0.8;
     ["displayId"] = 101596;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Silence"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -989,8 +1021,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 401.18896947111;
-        ["y"] = -252.58283677549;
+        ["x"] = 391.78306665011;
+        ["y"] = -254.56303131574;
         ["g"] = 16;
         ["sublevel"] = 1;
       };
@@ -1036,12 +1068,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cartel Skulker";
     ["id"] = 179893;
     ["count"] = 4;
-    ["health"] = 165398;
+    ["health"] = 213050;
     ["scale"] = 0.8;
     ["displayId"] = 101734;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1220,11 +1253,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Oasis Security";
     ["id"] = 179269;
     ["count"] = 0;
-    ["health"] = 264636;
+    ["health"] = 341298;
     ["scale"] = 2;
     ["displayId"] = 101270;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [350916] = {
       };
@@ -1236,15 +1272,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 315.68021752086;
-        ["y"] = -148.39088633001;
+        ["x"] = 314.29562316528;
+        ["y"] = -139.62165669745;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
       };
       [2] = {
-        ["x"] = 310.57892596806;
-        ["y"] = -139.89968186092;
+        ["x"] = 307.80965802857;
+        ["y"] = -130.89968650243;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1255,7 +1291,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Disruptive Patron";
     ["id"] = 176565;
     ["count"] = 0;
-    ["health"] = 198477;
+    ["health"] = 255974;
     ["scale"] = 2;
     ["displayId"] = 101271;
     ["creatureType"] = "Humanoid";
@@ -1263,6 +1299,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1277,15 +1316,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 308.19609747017;
-        ["y"] = -152.1282393907;
+        ["x"] = 306.58071097922;
+        ["y"] = -142.89746510156;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
       };
       [2] = {
         ["x"] = 302.63858095037;
-        ["y"] = -143.84767866726;
+        ["y"] = -135.53999369128;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1296,12 +1335,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brawling Patron";
     ["id"] = 180159;
     ["count"] = 0;
-    ["health"] = 132318;
+    ["health"] = 170649;
     ["scale"] = 2;
     ["displayId"] = 101546;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1311,15 +1354,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 344.03903199163;
-        ["y"] = -114.69054946951;
+        ["x"] = 342.42364550068;
+        ["y"] = -110.30594785795;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
       };
       [2] = {
-        ["x"] = 345.3669737831;
-        ["y"] = -125.32959747097;
+        ["x"] = 340.75158003617;
+        ["y"] = -121.6372930372;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1330,13 +1373,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brawling Patron";
     ["id"] = 176562;
     ["count"] = 0;
-    ["health"] = 132318;
+    ["health"] = 170649;
     ["scale"] = 2;
     ["displayId"] = 101544;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1346,15 +1392,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 351.2132836011;
-        ["y"] = -121.3014226457;
+        ["x"] = 347.75174489326;
+        ["y"] = -117.60911821193;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
       };
       [2] = {
-        ["x"] = 338.89060821409;
-        ["y"] = -120.41427587453;
+        ["x"] = 336.12139309349;
+        ["y"] = -113.72196418478;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1365,7 +1411,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zo'gron";
     ["id"] = 176563;
     ["count"] = 0;
-    ["health"] = 743378;
+    ["health"] = 958725;
     ["scale"] = 2;
     ["displayId"] = 101481;
     ["creatureType"] = "Humanoid";
@@ -1389,8 +1435,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 328.4980004686;
-        ["y"] = -135.10808721665;
+        ["x"] = 324.80569603483;
+        ["y"] = -126.80038903595;
         ["g"] = 33;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1401,7 +1447,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Alcruux";
     ["id"] = 176556;
     ["count"] = 0;
-    ["health"] = 396468;
+    ["health"] = 511320;
     ["scale"] = 2;
     ["displayId"] = 101039;
     ["creatureType"] = "Aberration";
@@ -1424,8 +1470,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 392.49408152768;
-        ["y"] = -353.56599787513;
+        ["x"] = 391.23990571436;
+        ["y"] = -372.12788172412;
         ["g"] = 34;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1436,7 +1482,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Achillite";
     ["id"] = 176555;
     ["count"] = 0;
-    ["health"] = 495585;
+    ["health"] = 639150;
     ["scale"] = 2;
     ["displayId"] = 101044;
     ["creatureType"] = "Mechanical";
@@ -1464,8 +1510,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 378.35428666308;
-        ["y"] = -365.20462221433;
+        ["x"] = 370.30981482273;
+        ["y"] = -382.40475709526;
         ["g"] = 34;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1476,7 +1522,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venza Goldfuse";
     ["id"] = 176705;
     ["count"] = 0;
-    ["health"] = 594702;
+    ["health"] = 766980;
     ["scale"] = 2;
     ["displayId"] = 100564;
     ["creatureType"] = "Humanoid";
@@ -1495,8 +1541,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 395.11755744036;
-        ["y"] = -370.34932801987;
+        ["x"] = 388.72121916885;
+        ["y"] = -387.40618941051;
         ["g"] = 34;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
@@ -1507,13 +1553,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defective Sorter";
     ["id"] = 176396;
     ["count"] = 3;
-    ["health"] = 66159;
+    ["health"] = 85325;
     ["scale"] = 2;
     ["displayId"] = 100408;
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Incapacitate"] = true;
+      ["Silence"] = true;
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
@@ -1581,13 +1629,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "P.O.S.T. Worker";
     ["id"] = 176394;
     ["count"] = 5;
-    ["health"] = 165398;
+    ["health"] = 213311;
     ["scale"] = 2;
     ["displayId"] = 100406;
     ["creatureType"] = "Mechanical";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1618,6 +1671,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 31;
         ["sublevel"] = 1;
         ["scale"] = 0.5;
+        ["disguised"] = true;
       };
       [4] = {
         ["x"] = 249.22125757572;
@@ -1632,14 +1686,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Overloaded Mailemental";
     ["id"] = 176395;
     ["count"] = 5;
-    ["health"] = 124048;
+    ["health"] = 159984;
     ["scale"] = 2;
     ["displayId"] = 68547;
     ["creatureType"] = "Elemental";
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
       ["Fear"] = true;
+      ["Banish"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -1678,7 +1736,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "P.O.S.T. Master";
     ["id"] = 175646;
     ["count"] = 0;
-    ["health"] = 1040729;
+    ["health"] = 1342215;
     ["scale"] = 2;
     ["displayId"] = 100722;
     ["creatureType"] = "Humanoid";
@@ -1712,7 +1770,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "So'azmi";
     ["id"] = 175806;
     ["count"] = 0;
-    ["health"] = 1040729;
+    ["health"] = 1342215;
     ["scale"] = 1;
     ["displayId"] = 99094;
     ["creatureType"] = "Humanoid";
@@ -2045,6 +2103,189 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 409.46337094747;
         ["y"] = -323.34797769537;
         ["sublevel"] = 1;
+      };
+    };
+  };
+  [36] = {
+    ["name"] = "Nathrezim Infiltrator";
+    ["id"] = 189878;
+    ["count"] = 3;
+    ["health"] = 261167;
+    ["scale"] = 1.2;
+    ["displayId"] = 101016;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373364] = {
+      };
+      [373370] = {
+      };
+      [373391] = {
+      };
+      [373429] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 632.31866015354;
+        ["y"] = -261.66064363705;
+        ["g"] = 4;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [2] = {
+        ["x"] = 426.10033900562;
+        ["y"] = -324.79442694978;
+        ["g"] = 28;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [3] = {
+        ["x"] = 376.99295745706;
+        ["y"] = -358.16337155465;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [4] = {
+        ["x"] = 330.00536352801;
+        ["y"] = -327.95849162011;
+        ["g"] = 25;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [5] = {
+        ["x"] = 353.90882002384;
+        ["y"] = -311.24648044693;
+        ["g"] = 23;
+        ["sublevel"] = 1;
+        ["scale"] = 0.7;
+        ["shrouded"] = true;
+      };
+      [6] = {
+        ["x"] = 349.0732058309;
+        ["y"] = -277.70891691883;
+        ["g"] = 19;
+        ["sublevel"] = 1;
+        ["scale"] = 0.7;
+        ["shrouded"] = true;
+      };
+      [7] = {
+        ["x"] = 271.77521769953;
+        ["y"] = -228.2229719583;
+        ["g"] = 31;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [8] = {
+        ["x"] = 363.33146150204;
+        ["y"] = -172.88177293298;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [9] = {
+        ["x"] = 334.85501178455;
+        ["y"] = -150.4005367927;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [10] = {
+        ["x"] = 471.65173086681;
+        ["y"] = -196.19953805678;
+        ["g"] = 11;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [11] = {
+        ["x"] = 446.75995518067;
+        ["y"] = -315.23678576772;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [12] = {
+        ["x"] = 478.0580361773;
+        ["y"] = -304.56370562997;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [13] = {
+        ["x"] = 232.48843058711;
+        ["y"] = -178.94424691233;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [14] = {
+        ["x"] = 422.04037868945;
+        ["y"] = -131.60883050281;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+      [15] = {
+        ["x"] = 399.09111978456;
+        ["y"] = -254.47514759507;
+        ["g"] = 16;
+        ["sublevel"] = 1;
+        ["scale"] = 0.7;
+        ["shrouded"] = true;
+      };
+      [16] = {
+        ["x"] = 664.99849565238;
+        ["y"] = -263.45446927374;
+        ["g"] = 2;
+        ["sublevel"] = 1;
+        ["scale"] = 0.8;
+        ["shrouded"] = true;
+      };
+    };
+  };
+  [37] = {
+    ["name"] = "Zul'gamux";
+    ["id"] = 190128;
+    ["count"] = 9;
+    ["health"] = 639150;
+    ["scale"] = 1.8;
+    ["displayId"] = 101106;
+    ["creatureType"] = "Demon";
+    ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373509] = {
+      };
+      [373513] = {
+      };
+      [373552] = {
+      };
+      [373570] = {
+      };
+      [373607] = {
+      };
+      [373724] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 582.15858119552;
+        ["y"] = -272.111783067;
+        ["g"] = 9;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+        ["shrouded"] = true;
       };
     };
   };

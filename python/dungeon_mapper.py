@@ -1,4 +1,5 @@
-import time
+import os
+import sys
 import pandas as pd
 import numpy as np
 import pyperclip
@@ -223,6 +224,15 @@ def get_count_table(ID):
     enemy_forces["npcID"] = [int(db["criteria"][db["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     # An enemy can have multiple entries by blizzard mistake, the enemy will then attribute count from all entries
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
+    # Game event converter replaces game event ids with npc ids
+    game_event_converter = {
+        # format is game event: npcID
+        64192: 138489,      # Shadow of Zul, Kings' Rest
+        63453: 68819,       # Eye of Sethraliss, Temple of Sethraliss
+        80831: 190128,      # Zul'gamux, Shrouded Affix (Big One)
+        80779: 189878,      # Nathrezim Infiltrator, Shrouded Affix (Small One)
+    }
+    count_table.rename(index=game_event_converter, inplace=True)
     return count_table
 
 
@@ -309,7 +319,7 @@ def make_aura_check_GUID_list(CL, aura):
     1. Input the combatlog and the aura you want to check for like seen below
     2. Make 2 lines of code in the table_output generator below like the example below
         if npc.destGUID in inspiring_GUID_list:
-            table_output += f'\t\t\t\t["inspiring"] = true;\n'
+            table_output += f'        ["inspiring"] = true;\n'
     Args:
         CL (dataframe): Combatlog dataframe
         aura (string): Name of aura to map
@@ -421,9 +431,17 @@ def create_map_doors(pois):
     door_pois = door_pois.astype({"from_sublevel": int, "to_sublevel": int})
     return door_pois
 
+def print_progressbar(progress, total, size=60):
+    x = int(size*progress/total)
+    print(f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total}", end="\r", flush=True)
 
+    if progress == total:
+        print("\n", flush=True)
 
 if __name__ == "__main__":
+    if not os.getcwd().endswith("python") and os.path.isdir(os.getcwd() + "/python"):
+        os.chdir(os.getcwd() + "/python")
+
     combatlog_cnames = ["timestampevent", "sourceGUID", "sourceName", "sourceFlags", "sourceRaidFlags", "destGUID",
                         "destName", "destFlags", "destRaidFlags", "spellId", "spellName", "spellSchool", "unitGUID",
                         "ownerGUID",
@@ -530,71 +548,71 @@ if __name__ == "__main__":
         pois = create_mapPOIs(CL)
         door_pois = create_map_doors(pois) # Blue (0) and green (1) marker
 
-    print("Mapping Initiated [", end="")
-
+    total_mobs = len(mobHits)
+    mapping_progress = 0
+    print_progressbar(0, total_mobs, size=60)
     npc_locale_list = []
     table_output = f'MDT.dungeonTotalCount[dungeonIndex] = {{normal={total_count},teeming=1000,teemingEnabled=true}}\n'
     if toggle_door_mapping:
         table_output += f'MDT.mapPOIs[dungeonIndex] = {{\n'
         # Mapping mapPOIs
         for sublevel in door_pois["from_sublevel"].unique():
-            table_output += f'\t[{sublevel}] = {{\n'
+            table_output += f'  [{sublevel}] = {{\n'
             for idx, (_, door) in enumerate(door_pois[door_pois.from_sublevel == sublevel].iterrows()):
-                table_output += f'\t\t[{idx+1}] = {{\n'
-                table_output += f'\t\t\t["y"] = {door.MDTy};\n'
-                table_output += f'\t\t\t["x"] = {door.MDTx};\n'
-                table_output += f'\t\t\t["connectionIndex"] = {door.connectionIndex};\n'
-                table_output += f'\t\t\t["target"] = {door.to_sublevel};\n'
-                table_output += f'\t\t\t["type"] = "mapLink";\n'
-                table_output += f'\t\t\t["template"] = "MapLinkPinTemplate";\n'
-                table_output += f'\t\t\t["direction"] = {door.direction};\n'
-                table_output += f'\t\t}};\n'
+                table_output += f'    [{idx+1}] = {{\n'
+                table_output += f'      ["y"] = {door.MDTy};\n'
+                table_output += f'      ["x"] = {door.MDTx};\n'
+                table_output += f'      ["connectionIndex"] = {door.connectionIndex};\n'
+                table_output += f'      ["target"] = {door.to_sublevel};\n'
+                table_output += f'      ["type"] = "mapLink";\n'
+                table_output += f'      ["template"] = "MapLinkPinTemplate";\n'
+                table_output += f'      ["direction"] = {door.direction};\n'
+                table_output += f'    }};\n'
 
-            table_output += f'\t}};\n'
+            table_output += f'  }};\n'
         table_output += f'}};\n\n'
 
     table_output += 'MDT.dungeonEnemies[dungeonIndex] = {\n'
     # Mapping dungeon enemies
     for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
         unique_npc_index += 1  # Lua is stupid
-        table_output += f'\t[{unique_npc_index}] = {{\n\t\t["clones"] = {{\n'
+        table_output += f'  [{unique_npc_index}] = {{\n    ["clones"] = {{\n'
         for npc_index, npc in enumerate(mobHits[mobHits.npcID == unique_npcID].itertuples()):
             npc_index += 1  # Lua is stupid
-            table_output += f'\t\t\t[{npc_index}] = {{\n'
-            table_output += f'\t\t\t\t["x"] = {npc.MDTx};\n'
-            table_output += f'\t\t\t\t["y"] = {npc.MDTy};\n'
-            table_output += f'\t\t\t\t["sublevel"] = {npc.sublevel};\n'
+            table_output += f'      [{npc_index}] = {{\n'
+            table_output += f'        ["x"] = {npc.MDTx};\n'
+            table_output += f'        ["y"] = {npc.MDTy};\n'
+            table_output += f'        ["sublevel"] = {npc.sublevel};\n'
             if npc.group != 0:
-                table_output += f'\t\t\t\t["g"] = {int(npc.group)};\n'
+                table_output += f'        ["g"] = {int(npc.group)};\n'
             if npc.destGUID in inspiring_GUID_list:
-                table_output += f'\t\t\t\t["inspiring"] = true;\n'
+                table_output += f'        ["inspiring"] = true;\n'
             if npc.destGUID in disguised_GUID_list:
-                table_output += f'\t\t\t\t["disguised"] = true;\n'
-            table_output += f'\t\t\t}};\n'
+                table_output += f'        ["disguised"] = true;\n'
+            table_output += f'      }};\n'
+            mapping_progress += 1
+            print_progressbar(mapping_progress, total_mobs, size=60)
 
-        table_output += '\t\t};\n'
+        table_output += '    };\n'
         if npc.destName in boss_info.sourceName.to_list():
             encounterID, instanceID = get_additional_boss_info(npc.destName)
-            table_output += f'\t\t["isBoss"] = true;\n'
-            table_output += f'\t\t["encounterID"] = {encounterID};\n'
-            table_output += f'\t\t["instanceID"] = {instanceID};\n'
-        table_output += f'\t\t["name"] = "{npc.destName}";\n'
+            table_output += f'    ["isBoss"] = true;\n'
+            table_output += f'    ["encounterID"] = {encounterID};\n'
+            table_output += f'    ["instanceID"] = {instanceID};\n'
+        table_output += f'    ["name"] = "{npc.destName}";\n'
         # Adding npc name to list for easy locale enUS
         npc_locale_list.append(npc.destName)
-        table_output += f'\t\t["id"] = {npc.npcID};\n'
-        table_output += f'\t\t["health"] = {npc.maxHP};\n'
-        table_output += f'\t\t["level"] = {npc.level};\n'
-        table_output += f'\t\t["count"] = {npc.mobcount};\n'
+        table_output += f'    ["id"] = {npc.npcID};\n'
+        table_output += f'    ["health"] = {npc.maxHP};\n'
+        table_output += f'    ["level"] = {npc.level};\n'
+        table_output += f'    ["count"] = {npc.mobcount};\n'
         if request_wowtools:
             displayID, creatureType = get_displayid_and_creaturetype(npc.npcID)
-            table_output += f'\t\t["displayId"] = {displayID};\n'
-            table_output += f'\t\t["creatureType"] = "{creatureType}";\n'
-        table_output += f'\t\t["scale"] = 1;\n'
-        print("-", end="")
-
-        table_output += '\t};\n'
+            table_output += f'    ["displayId"] = {displayID};\n'
+            table_output += f'    ["creatureType"] = "{creatureType}";\n'
+        table_output += f'    ["scale"] = 1;\n'
+        table_output += '  };\n'
     table_output += '};\n\n'
-    print("] Mapping Completed")
 
     # Create locale enUS from unique names in npc_locale_list
     npc_locale_en = ""
@@ -603,9 +621,7 @@ if __name__ == "__main__":
 
     # Add new npc names to output
     table_output += npc_locale_en
-
     pyperclip.copy(table_output)
-
     print("This dungeon requires {} count to complete and has {} total count. You need to clear {}% of the dungeon."
           .format(total_count, mobHits.mobcount.sum(), int(round(total_count / mobHits.mobcount.sum(), 2) * 100)))
     print("Lua table copied to clipboard. Paste into the correct dungeon file.")

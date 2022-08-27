@@ -1,6 +1,7 @@
 local MDT = MDT
 local AceGUI = LibStub("AceGUI-3.0")
 local db
+local L = MDT.L
 
 -- The idea here is to redo the dungeon select dropdown to be more user friendly.
 -- This was necesarry as the old implementation did not allow for a dungeon to be part of multiple dungeon sets.
@@ -8,12 +9,16 @@ local db
 
 local seasonListActive = false
 local seasonList = {
-  [1] = "Legion",
-  [2] = "BFA",
-  [3] = "Shadowlands",
-  [4] = "Shadowlands Season 4",
+  [1] = L["Legion"],
+  [2] = L["BFA"],
+  [3] = L["Shadowlands"],
+  [4] = L["Shadowlands Season 4"],
   -- [5]= "Dragonflight Season 1",
 }
+
+function MDT:GetSeasonList()
+  return seasonList
+end
 
 local dungeonSelectionToIndex = {
   [1] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 },
@@ -30,6 +35,8 @@ function MDT:UpdateDungeonDropDown()
   local dungeonDropdown = MDT.main_frame.DungeonSelectionGroup.DungeonDropdown
   local sublevelDropdown = MDT.main_frame.DungeonSelectionGroup.SublevelDropdown
   local currentDungeonIdx = db.currentDungeonIdx
+  local index = math.min(#dungeonSelectionToIndex, db.selectedDungeonList)
+  db.selectedDungeonList = index
   dungeonDropdown:SetList(dungeonSelectionToNames[db.selectedDungeonList])
   dungeonDropdown:SetValue(indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx])
   dungeonDropdown:ClearFocus()
@@ -61,7 +68,10 @@ function MDT:CreateDungeonSelectDropdown(frame)
   group.DungeonDropdown.text:SetJustifyH("LEFT")
   group.DungeonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     if (seasonListActive) then
-      db.selectedDungeonList = key
+      -- make sure we don't go out of bounds
+      -- this probably happens if dropdown is being spammed (?)
+      local index = math.min(#dungeonSelectionToIndex, key)
+      db.selectedDungeonList = index
       MDT:UpdateDungeonDropDown()
       seasonListActive = false
       local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
@@ -104,7 +114,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
       dungeonSelectionToNames[i][j] = MDT.dungeonList[dungeonSelectionToIndex[i][j]]
       indexToDungeonSelection[i][dungeonSelectionToIndex[i][j]] = j
     end
-    dungeonSelectionToNames[i][#dungeonSelectionToIndex[i] + 1] = "> More Dungeons"
+    dungeonSelectionToNames[i][#dungeonSelectionToIndex[i] + 1] = L["> More Dungeons"]
   end
 
   MDT:UpdateDungeonDropDown()

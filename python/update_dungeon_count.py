@@ -22,26 +22,6 @@ EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 wowtools_files = ["criteria", "criteriatree", "journalencounter"]
 db = load_db_files(wowtools_files)
 
-def npcid_to_event_asset(npcid, dungeon_count_table):
-    """Converts NPC ID to CombatEventID if mob exists in dictionary below.
-    
-    Args:
-        npcid: Creatue NPC ID
-        dungeon_count_table: True count dataframe for dungeon
-
-    Returns:
-        int: Creatue true count value
-
-    """
-    converter = {
-        138489: 64192,      # Shadow of Zul, Kings' Rest
-        68819: 63453,       # Eye of Sethraliss, Temple of Sethraliss
-    }
-    if npcid in converter.keys() and len(dungeon_count_table[dungeon_count_table.index == converter[npcid]]) > 0:
-
-        return dungeon_count_table[dungeon_count_table.index == converter[npcid]].values[0][0]
-    else:
-        return 0
 
 def get_potential_new_ids(original_name, dungeon_count_table):
     """Checks dungeon_count_table for npc matching original_name
@@ -103,10 +83,32 @@ def update_count(match, dungeon_count_table):
     # keys will be 'id' and 'count'
     info = {match.group(1): int(match.group(2)), match.group(3): int(match.group(4))}
     if len(dungeon_count_table[dungeon_count_table.index == info['id']]) > 0:
+        # if npcid is found in count table
         true_count = dungeon_count_table[dungeon_count_table.index == info['id']].values[0][0]
     else:
-        true_count = npcid_to_event_asset(info['id'], dungeon_count_table)
-    if true_count != info['count']:
+        # if npcid is not found in count table
+        true_count = 0
+
+    # Hardcoded count for if in game count does not match db files
+    unexplainable_count = {
+        # npcid: {'db_count': X, 'hardcoded_count': Y}
+        115765: {'db_count': 12, 'hardcoded_count': 18}
+    }
+    if info['id'] in unexplainable_count.keys():
+        npc_name = pattern_npc_name.search(match.group()).group(1)
+        if unexplainable_count[info['id']]['db_count'] != true_count:
+            # This is a warning that the db_count for the mob has changed since last looked at
+            print(
+                f"    {npc_name} with id {info['id']} has hardcoded count {unexplainable_count[info['id']]['hardcoded_count']}"
+                f"\n        Warning this npcs db count changed: {unexplainable_count[info['id']]['db_count']} -> {true_count}"
+                f" (Report to Stinth, no changes made in MDT)")
+        if unexplainable_count[info['id']]['hardcoded_count'] != info['count']:
+            print(
+                f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {unexplainable_count[info['id']]['hardcoded_count']} (Hardcoded)")
+            new_count = unexplainable_count[info['id']]['hardcoded_count']
+            return match.group().replace(f'["count"] = {info["count"]}', f'["count"] = {new_count}')
+
+    elif true_count != info['count']:
         npc_name = pattern_npc_name.search(match.group()).group(1)
         if true_count == 0:
             print(f"    {npc_name} with id {info['id']} has been updated: {info['count']} -> {true_count}")
@@ -134,7 +136,7 @@ def update_total_count(match, total_count):
     """
     if total_count != int(match.group(1)):
         print(f"    Total dungeon count has been updated: {match.group(1)} -> {total_count}")
-        return match.group().replace(f'normal={match.group(1)}', f'normal={total_count}')
+        return match.group().replace(f'normal = {match.group(1)}', f'normal = {total_count}')
 
     return match.group()
 
@@ -238,7 +240,7 @@ if __name__ == "__main__":
     pattern_dungeonEnemies = re.compile(r"MDT\.dungeonEnemies\[dungeonIndex\] = \{[\s\S]*};")
     pattern_enemy_match = re.compile(r"{[\s\S]+?\"(id|count)\"\D*([\d]+).*[\s\S]+?\"(id|count)\"\D*([\d]+)[\s\S]+?}")
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
-    pattern_count_value = re.compile(r"normal=(\d+)")
+    pattern_count_value = re.compile(r"normal = (\d+)")
     pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
     
     # Make sure initial working directory is MythicDungeonTools

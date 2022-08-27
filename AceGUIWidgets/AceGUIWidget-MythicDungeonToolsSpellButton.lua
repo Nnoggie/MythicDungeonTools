@@ -197,6 +197,7 @@ local function Constructor()
     type = Type
   }
   for method, func in pairs(methods) do
+    ---@diagnostic disable-next-line: assign-type-mismatch
     widget[method] = func
   end
 

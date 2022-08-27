@@ -473,6 +473,11 @@ local spellBlacklist = {
   [50707]  = true, --
   [240443] = true, --
   [328506] = true, --
+  [343502] = true, -- inspiring presence
+  [344663] = true, -- shattered psyche
+  [176039] = true, -- flametongue
+  [176033] = true, -- flametongue
+  [176031] = true, -- flametongue
   --[X]  = true,
 }
 local lastEnemyIdx

@@ -88,11 +88,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Laborer";
     ["id"] = 81235;
     ["count"] = 2;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 55909;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [164102] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 276.36820088227;
@@ -137,11 +144,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Overseer";
     ["id"] = 81212;
     ["count"] = 7;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 56280;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [164163] = {
+      };
+      [164168] = {
+      };
+      [164170] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 275.33020680944;
@@ -266,11 +284,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Technician";
     ["id"] = 81236;
     ["count"] = 4;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 56293;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [163966] = {
+      };
+      [164192] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 260.39575313114;
@@ -308,7 +336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Railmaster Rocketspark";
     ["id"] = 77803;
     ["count"] = 0;
-    ["health"] = 1218646;
+    ["health"] = 937420;
     ["scale"] = 1;
     ["displayId"] = 54096;
     ["creatureType"] = "Humanoid";
@@ -316,6 +344,39 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1138;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [161091] = {
+      };
+      [162171] = {
+      };
+      [162407] = {
+      };
+      [162422] = {
+      };
+      [162423] = {
+      };
+      [162491] = {
+      };
+      [162500] = {
+      };
+      [162507] = {
+      };
+      [162513] = {
+      };
+      [162572] = {
+      };
+      [163929] = {
+      };
+      [163930] = {
+      };
+      [163947] = {
+      };
+      [166561] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 630.53553772437;
@@ -330,7 +391,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Borka the Brute";
     ["id"] = 77816;
     ["count"] = 0;
-    ["health"] = 1467914;
+    ["health"] = 1129165;
     ["scale"] = 1;
     ["displayId"] = 60108;
     ["creatureType"] = "Humanoid";
@@ -338,6 +399,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1138;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [161090] = {
+      };
+      [161092] = {
+      };
+      [162617] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 605.62735257215;
@@ -352,11 +424,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Bombardier";
     ["id"] = 81407;
     ["count"] = 12;
-    ["health"] = 351533;
+    ["health"] = 351964;
     ["scale"] = 1;
     ["displayId"] = 59182;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [164187] = {
+      };
+      [164188] = {
+      };
+      [164218] = {
+      };
+      [164241] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 587.07779171895;
@@ -382,18 +467,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Iron Infantry";
     ["id"] = 80940;
     ["count"] = 3;
-    ["health"] = 213050;
+    ["health"] = 213311;
     ["scale"] = 1;
     ["displayId"] = 55374;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 586.99363819023;
-        ["y"] = -300.79934822162;
+        ["x"] = 587.71482232273;
+        ["y"] = -309.45318642878;
         ["g"] = 6;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
+        ["disguised"] = true;
       };
       [2] = {
         ["x"] = 586.5097068697;
@@ -401,10 +493,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 6;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
+        ["inspiring"] = true;
       };
       [3] = {
-        ["x"] = 602.52752162772;
-        ["y"] = -285.03435488013;
+        ["x"] = 569.35441326982;
+        ["y"] = -301.98148049295;
         ["g"] = 6;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
@@ -415,6 +508,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 7;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
+        ["inspiring"] = true;
       };
       [5] = {
         ["x"] = 378.52924459299;
@@ -422,24 +516,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 7;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
+        ["disguised"] = true;
       };
       [6] = {
-        ["x"] = 264.04318807906;
-        ["y"] = -279.60111483922;
+        ["x"] = 277.74510888991;
+        ["y"] = -272.75013380142;
         ["g"] = 8;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [7] = {
-        ["x"] = 266.89316163205;
-        ["y"] = -298.96352590458;
+        ["x"] = 279.87393957516;
+        ["y"] = -295.35774966874;
         ["g"] = 8;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [8] = {
-        ["x"] = 150.4168255993;
-        ["y"] = -273.04796898586;
+        ["x"] = 176.37838148553;
+        ["y"] = -268.36049908079;
         ["g"] = 9;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
@@ -450,11 +545,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Gunner";
     ["id"] = 80937;
     ["count"] = 6;
-    ["health"] = 191745;
+    ["health"] = 191980;
     ["scale"] = 1;
     ["displayId"] = 55280;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [166675] = {
+      };
+      [166676] = {
+      };
+      [176147] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 570.891672321;
@@ -464,25 +572,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.7;
       };
       [2] = {
-        ["x"] = 249.50825580208;
-        ["y"] = -307.22007019028;
+        ["x"] = 265.37364648091;
+        ["y"] = -305.0566003223;
         ["g"] = 8;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [3] = {
-        ["x"] = 233.66259688399;
-        ["y"] = -290.2252486447;
+        ["x"] = 257.82125433611;
+        ["y"] = -270.39348966378;
         ["g"] = 8;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [4] = {
-        ["x"] = 79.95876407978;
-        ["y"] = -289.02480937675;
+        ["x"] = 77.79531484418;
+        ["y"] = -290.46711574461;
         ["g"] = 10;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
+        ["inspiring"] = true;
       };
     };
   };
@@ -490,22 +599,34 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Grenadier";
     ["id"] = 80936;
     ["count"] = 7;
-    ["health"] = 223703;
+    ["health"] = 223978;
     ["scale"] = 1;
     ["displayId"] = 55306;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [161150] = {
+      };
+      [161153] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 358.19866057905;
-        ["y"] = -273.1110804828;
+        ["x"] = 357.83804788042;
+        ["y"] = -258.68799617183;
         ["g"] = 7;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [2] = {
-        ["x"] = 245.61296365737;
-        ["y"] = -269.32210382587;
+        ["x"] = 249.93986212857;
+        ["y"] = -289.15382154203;
         ["g"] = 8;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
@@ -523,29 +644,40 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Cinderseer";
     ["id"] = 88163;
     ["count"] = 8;
-    ["health"] = 202398;
+    ["health"] = 202646;
     ["scale"] = 1;
     ["displayId"] = 60769;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Disorient"] = true;
+    };
+    ["spells"] = {
+      [176025] = {
+      };
+      [176032] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 356.44118274866;
-        ["y"] = -297.32269122973;
+        ["x"] = 355.35942718229;
+        ["y"] = -281.09672911703;
         ["g"] = 7;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [2] = {
-        ["x"] = 152.17753894289;
-        ["y"] = -287.44339549667;
+        ["x"] = 190.39870927211;
+        ["y"] = -311.24148151492;
         ["g"] = 9;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
+        ["disguised"] = true;
       };
       [3] = {
-        ["x"] = 104.1593905764;
-        ["y"] = -294.38142374666;
+        ["x"] = 106.32292234151;
+        ["y"] = -305.19875245417;
         ["g"] = 10;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
@@ -563,29 +695,47 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Boomer";
     ["id"] = 80935;
     ["count"] = 7;
-    ["health"] = 202398;
+    ["health"] = 202646;
     ["scale"] = 1;
     ["displayId"] = 55281;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [156301] = {
+      };
+      [160963] = {
+      };
+      [161258] = {
+      };
+      [176127] = {
+      };
+      [176131] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 160.18596972327;
-        ["y"] = -306.45854067875;
+        ["x"] = 176.77248263747;
+        ["y"] = -315.47295031978;
         ["g"] = 9;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [2] = {
-        ["x"] = 172.8150014067;
-        ["y"] = -270.17934021496;
+        ["x"] = 196.97365885882;
+        ["y"] = -273.06395295068;
         ["g"] = 9;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
       };
       [3] = {
-        ["x"] = 87.305086039845;
-        ["y"] = -307.51743418586;
+        ["x"] = 87.305065407467;
+        ["y"] = -311.12318978932;
         ["g"] = 10;
         ["sublevel"] = 2;
         ["scale"] = 2.7;
@@ -596,18 +746,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Hulk";
     ["id"] = 80938;
     ["count"] = 18;
-    ["health"] = 426100;
+    ["health"] = 426623;
     ["scale"] = 1;
     ["displayId"] = 58663;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [176023] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 180.85865741192;
-        ["y"] = -293.93204159013;
+        ["x"] = 164.9933492626;
+        ["y"] = -290.32628598667;
         ["g"] = 9;
         ["sublevel"] = 2;
-        ["scale"] = 3.6;
+        ["scale"] = 3.4;
       };
     };
   };
@@ -615,7 +772,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nitrogg Thundertower";
     ["id"] = 79545;
     ["count"] = 0;
-    ["health"] = 1938755;
+    ["health"] = 1491350;
     ["scale"] = 1;
     ["displayId"] = 55162;
     ["creatureType"] = "Humanoid";
@@ -623,6 +780,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1163;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [161153] = {
+      };
+      [163536] = {
+      };
+      [163539] = {
+      };
+      [163541] = {
+      };
+      [163550] = {
+      };
+      [163741] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 532.16581109577;
@@ -636,31 +810,47 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Far Seer";
     ["id"] = 82579;
     ["count"] = 12;
-    ["health"] = 340880;
+    ["health"] = 341298;
     ["scale"] = 1;
     ["displayId"] = 57126;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [166335] = {
+      };
+      [166336] = {
+      };
+      [166340] = {
+      };
+      [166341] = {
+      };
+      [166364] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 245.18982839375;
-        ["y"] = -316.22851753379;
+        ["x"] = 247.40878026178;
+        ["y"] = -307.79656645887;
         ["sublevel"] = 3;
         ["scale"] = 2.4;
       };
       [2] = {
-        ["x"] = 179.6174263598;
-        ["y"] = -300.6054758476;
+        ["x"] = 192.93101059952;
+        ["y"] = -304.59954858015;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 2.4;
       };
       [3] = {
-        ["x"] = 208.34849242049;
-        ["y"] = -274.74766410554;
+        ["x"] = 212.34261594043;
+        ["y"] = -297.82466703704;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 2.4;
+        ["disguised"] = true;
       };
     };
   };
@@ -668,74 +858,81 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Loader";
     ["id"] = 82594;
     ["count"] = 1;
-    ["health"] = 85220;
+    ["health"] = 85325;
     ["scale"] = 1;
     ["displayId"] = 55909;
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Disorient"] = true;
+    };
+    ["spells"] = {
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 215.75960288305;
-        ["y"] = -289.60780742598;
+        ["x"] = 142.53467371818;
+        ["y"] = -267.86234829243;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [2] = {
-        ["x"] = 194.72561201769;
-        ["y"] = -265.28758196852;
+        ["x"] = 160.99775693063;
+        ["y"] = -260.84972901984;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [3] = {
-        ["x"] = 191.25790274364;
-        ["y"] = -276.87364212014;
+        ["x"] = 185.93248936271;
+        ["y"] = -259.56590896679;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [4] = {
-        ["x"] = 185.34658706823;
-        ["y"] = -285.51763309872;
+        ["x"] = 121.88507659514;
+        ["y"] = -269.98504620358;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [5] = {
-        ["x"] = 206.92759977971;
-        ["y"] = -310.14358308813;
+        ["x"] = 103.52526040637;
+        ["y"] = -309.69970129722;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [6] = {
-        ["x"] = 214.31096354115;
-        ["y"] = -301.36754474086;
+        ["x"] = 180.13950599383;
+        ["y"] = -315.12485840932;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [7] = {
-        ["x"] = 84.56389194197;
-        ["y"] = -284.95501482362;
-        ["g"] = 17;
+        ["x"] = 101.87162509532;
+        ["y"] = -274.30411188067;
+        ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [8] = {
-        ["x"] = 95.043039863345;
-        ["y"] = -288.44211081836;
-        ["g"] = 17;
+        ["x"] = 128.32711473427;
+        ["y"] = -310.63145174282;
+        ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
       };
       [9] = {
-        ["x"] = 85.969184800693;
-        ["y"] = -297.73614697753;
-        ["g"] = 17;
+        ["x"] = 153.86857361615;
+        ["y"] = -314.15626891123;
+        ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 1.4;
+        ["inspiring"] = true;
       };
     };
   };
@@ -743,15 +940,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grimrail Scout";
     ["id"] = 82590;
     ["count"] = 12;
-    ["health"] = 276965;
+    ["health"] = 277305;
     ["scale"] = 1;
     ["displayId"] = 57131;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["spells"] = {
+      [166350] = {
+      };
+      [166397] = {
+      };
+      [166404] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 199.70326586019;
-        ["y"] = -293.34662858309;
+        ["x"] = 192.15882443014;
+        ["y"] = -278.25784729777;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 2.4;
@@ -762,15 +967,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grom'kar Captain";
     ["id"] = 82597;
     ["count"] = 18;
-    ["health"] = 426100;
+    ["health"] = 426623;
     ["scale"] = 1;
     ["displayId"] = 57133;
     ["creatureType"] = "Humanoid";
     ["level"] = 61;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [166378] = {
+      };
+      [166380] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 191.2587246072;
-        ["y"] = -317.24194963818;
+        ["x"] = 168.62552728553;
+        ["y"] = -299.04665605257;
         ["g"] = 16;
         ["sublevel"] = 3;
         ["scale"] = 2.8;
@@ -781,7 +995,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skylord Tovra";
     ["id"] = 80005;
     ["count"] = 0;
-    ["health"] = 2215720;
+    ["health"] = 1704400;
     ["scale"] = 1;
     ["displayId"] = 55630;
     ["creatureType"] = "Humanoid";
@@ -789,10 +1003,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1133;
     ["instanceID"] = 536;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [161588] = {
+      };
+      [162055] = {
+      };
+      [162057] = {
+      };
+      [162058] = {
+      };
+      [162065] = {
+      };
+      [162066] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 141.71974714776;
-        ["y"] = -287.33103430912;
+        ["x"] = 45.861747629694;
+        ["y"] = -289.54998617715;
         ["sublevel"] = 3;
         ["scale"] = 2.4;
       };
@@ -801,8 +1032,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [19] = {
     ["name"] = "Nathrezim Infiltrator";
     ["id"] = 189878;
-    ["count"] = 0;
-    ["health"] = 999999;
+    ["count"] = 6;
+    ["health"] = 261167;
     ["scale"] = 1.2;
     ["displayId"] = 101016;
     ["creatureType"] = "Demon";
@@ -851,13 +1082,45 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.2;
         ["shrouded"] = true;
       };
+      [5] = {
+        ["x"] = 587.71482232273;
+        ["y"] = -309.45318642878;
+        ["g"] = 6;
+        ["sublevel"] = 2;
+        ["scale"] = 2.7;
+        ["shrouded"] = true;
+      };
+      [6] = {
+        ["x"] = 378.52924459299;
+        ["y"] = -294.66081125335;
+        ["g"] = 7;
+        ["sublevel"] = 2;
+        ["scale"] = 2.7;
+        ["shrouded"] = true;
+      };
+      [7] = {
+        ["x"] = 197.97083317766;
+        ["y"] = -305.47221477872;
+        ["g"] = 9;
+        ["sublevel"] = 2;
+        ["scale"] = 2.7;
+        ["shrouded"] = true;
+      };
+      [8] = {
+        ["x"] = 216.66954407067;
+        ["y"] = -297.61862620891;
+        ["g"] = 16;
+        ["sublevel"] = 3;
+        ["scale"] = 2.4;
+        ["shrouded"] = true;
+      };
     };
   };
   [20] = {
     ["name"] = "Zul'gamux";
     ["id"] = 190128;
-    ["count"] = 0;
-    ["health"] = 999999;
+    ["count"] = 18;
+    ["health"] = 639150;
     ["scale"] = 1.8;
     ["displayId"] = 101106;
     ["creatureType"] = "Demon";
@@ -877,6 +1140,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [373607] = {
       };
       [373724] = {
+      };
+      [373729] = {
+      };
+      [373744] = {
+      };
+      [373747] = {
+      };
+      [374273] = {
       };
     };
     ["clones"] = {
