@@ -296,6 +296,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 74335;
     ["creatureType"] = "Mechanical";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [230050] = {
       };
@@ -1111,9 +1114,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 441.34070658681;
-        ["y"] = -303.40479297808;
-        ["sublevel"] = 8;
+        ["x"] = 449.63635738203;
+        ["y"] = -294.33741984929;
+        ["sublevel"] = 6;
       };
     };
   };

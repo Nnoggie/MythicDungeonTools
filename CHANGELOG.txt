@@ -1,3 +1,5 @@
+v3.9.6.7
+- Tazavesh Streets: Added Infiltrator to G12
 v3.9.6.6
 - Karazhan Lower: Hotfix changes for Skeletal Usher and Arcane Warden
 v3.9.6.5
