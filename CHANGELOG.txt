@@ -1,3 +1,5 @@
+v3.9.6.8
+- Lower Karazhan Count Changes: Arcanid: 4->7, Coldmist Widow: 3->6
 v3.9.6.7
 - Tazavesh Streets: Added Infiltrator to G12
 v3.9.6.6
