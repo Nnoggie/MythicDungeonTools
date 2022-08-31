@@ -93,7 +93,7 @@ def load_db_files(wowtools_files = ["uimapassignment", "map", "criteria", "crite
     for file in wowtools_files:
         try:
             # if the file is more than a day old, download a new version
-            max_file_age = 30#60*60*24
+            max_file_age = 60*60*24
             if (time.time() - os.path.getmtime(f"wowdb_files/{file}.csv")) < max_file_age:
                 db[file] = pd.read_csv(f"wowdb_files/{file}.csv")
             else:
