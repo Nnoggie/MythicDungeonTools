@@ -92,7 +92,9 @@ def update_count(match, dungeon_count_table):
     # Hardcoded count for if in game count does not match db files
     unexplainable_count = {
         # npcid: {'db_count': X, 'hardcoded_count': Y}
-        115765: {'db_count': 12, 'hardcoded_count': 18}
+        115765: {'db_count': 12, 'hardcoded_count': 18},    # Abstract Nullifier, Upper Karazhan
+        115019: {'db_count': 3, 'hardcoded_count': 6},      # Coldmist Widow, Lower Karazhan
+        115020: {'db_count': 4, 'hardcoded_count': 7},      # Arcanid, Lower Karazhan
     }
     if info['id'] in unexplainable_count.keys():
         npc_name = pattern_npc_name.search(match.group()).group(1)
