@@ -580,6 +580,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Sap"] = true;
     };
     ["spells"] = {
       [229597] = {
@@ -830,6 +831,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 112;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
@@ -1004,6 +1006,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73838;
     ["creatureType"] = "Demon";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [229608] = {
       };
@@ -1029,6 +1034,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 16293;
     ["creatureType"] = "Humanoid";
     ["level"] = 111;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [229427] = {
       };

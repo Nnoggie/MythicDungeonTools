@@ -1,3 +1,5 @@
+v3.9.6.9
+- Tazavesh Streets: Replaced 2x "Interrogation Specialist" in G4 and G5 with "Customs Security"
 v3.9.6.8
 - Lower Karazhan Count Changes: Arcanid: 4->7, Coldmist Widow: 3->6
 v3.9.6.7

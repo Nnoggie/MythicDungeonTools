@@ -73,6 +73,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
@@ -300,6 +302,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
@@ -406,6 +409,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 60;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
@@ -802,6 +807,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
