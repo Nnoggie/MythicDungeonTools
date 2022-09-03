@@ -146,7 +146,7 @@ local function Constructor()
   button.dgroup = nil;
   button.data = {};
 
-  local background = button:CreateTexture(nil, "BACKGROUND");
+  local background = button:CreateTexture(nil, "BACKGROUND", nil, 0);
   button.background = background;
   background:SetTexture("Interface\\BUTTONS\\UI-Listbox-Highlight2.blp");
   background:SetBlendMode("ADD");
@@ -156,13 +156,13 @@ local function Constructor()
   background:SetPoint("LEFT", button, "LEFT");
   background:SetPoint("RIGHT", button, "RIGHT");
 
-  local icon = button:CreateTexture(nil, "OVERLAY");
+  local icon = button:CreateTexture(nil, "OVERLAY", nil, 0);
   button.icon = icon;
   icon:SetWidth(height);
   icon:SetHeight(height);
   icon:SetPoint("LEFT", button, "LEFT");
 
-  local interruptibleIcon = button:CreateTexture(nil, "OVERLAY");
+  local interruptibleIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
   interruptibleIcon:SetWidth(height * 0.8);
   interruptibleIcon:SetHeight(height * 0.8);
   interruptibleIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")

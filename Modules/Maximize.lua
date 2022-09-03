@@ -16,7 +16,7 @@ function MDT:Maximize()
   if not f.blackoutFrame then
     f.blackoutFrame = CreateFrame("Frame", "MDTBlackoutFrame", f)
     f.blackoutFrame:EnableMouse(true)
-    f.blackoutFrameTex = f.blackoutFrame:CreateTexture(nil, "BACKGROUND")
+    f.blackoutFrameTex = f.blackoutFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     f.blackoutFrameTex:SetAllPoints()
     f.blackoutFrameTex:SetDrawLayer(canvasDrawLayer, -6)
     f.blackoutFrameTex:SetColorTexture(0.058823399245739, 0.058823399245739, 0.058823399245739, 1)

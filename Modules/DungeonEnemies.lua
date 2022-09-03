@@ -415,7 +415,7 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
     local oldWaypointBlip
     for patrolIdx, waypoint in ipairs(self.clone.patrol) do
       patrolPoints[patrolIdx] = patrolPoints[patrolIdx] or
-          MDT.main_frame.mapPanelFrame:CreateTexture("MDTDungeonPatrolPoint" .. patrolIdx, "BACKGROUND")
+          MDT.main_frame.mapPanelFrame:CreateTexture("MDTDungeonPatrolPoint" .. patrolIdx, "BACKGROUND", nil, 0)
 
 
       patrolPoints[patrolIdx]:SetDrawLayer("OVERLAY", 2)
@@ -430,7 +430,7 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
       patrolPoints[patrolIdx]:Show()
 
       patrolLines[patrolIdx] = patrolLines[patrolIdx] or
-          MDT.main_frame.mapPanelFrame:CreateTexture("MDTDungeonPatrolLine" .. patrolIdx, "BACKGROUND")
+          MDT.main_frame.mapPanelFrame:CreateTexture("MDTDungeonPatrolLine" .. patrolIdx, "BACKGROUND", nil, 0)
       patrolLines[patrolIdx]:SetDrawLayer("OVERLAY", 1)
       patrolLines[patrolIdx]:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
       patrolLines[patrolIdx]:SetVertexColor(0, 0.2, 0.5, 0.6)
@@ -545,7 +545,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
   if blip.data.bonusSpell then
     local name, _, icon = GetSpellInfo(blip.data.bonusSpell)
     local bonusDesc = GetSpellDescription(blip.data.bonusSpell)
-    local bonusIcon = tooltip.bonusIcon or tooltip:CreateTexture(nil, "OVERLAY");
+    local bonusIcon = tooltip.bonusIcon or tooltip:CreateTexture(nil, "OVERLAY", nil, 0);
     bonusIcon:SetWidth(54);
     bonusIcon:SetHeight(54);
     bonusIcon:SetTexture(icon)
@@ -554,7 +554,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
 
     local bonusString = tooltip.bonusString or tooltip:CreateFontString("MDTToolTipString")
     bonusString:SetFontObject("GameFontNormalSmall")
-    bonusString:SetFont(tooltip.String:GetFont(), 10)
+    bonusString:SetFont(tooltip.String:GetFont(), 10, "")
     bonusString:SetTextColor(1, 1, 1, 1)
     bonusString:SetJustifyH("LEFT")
     bonusString:SetWidth(tooltip:GetWidth())
@@ -751,7 +751,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
   end
   self:SetFrameLevel(raise)
   self.fontstring_Text1:SetFontObject("GameFontNormal")
-  self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), 10 * self.normalScale, "OUTLINE")
+  self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), 10 * self.normalScale, "OUTLINE", "")
   self.fontstring_Text1:SetText((clone.isBoss and data.count == 0 and "") or data.count)
   self.texture_MouseHighlight:SetAlpha(0.4)
   self.texture_SelectedHighlight:SetVertexColor(unpack(selectedGreen))
@@ -1435,7 +1435,7 @@ local function ArrayRemove(t, fnKeep)
         t[j] = t[i];
         t[i] = nil;
       end
-      j = j + 1;  -- Increment position of where we'll place the next kept value.
+      j = j + 1; -- Increment position of where we'll place the next kept value.
     else
       t[i] = nil;
     end

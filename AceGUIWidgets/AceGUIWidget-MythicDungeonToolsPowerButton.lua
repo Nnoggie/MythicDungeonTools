@@ -127,7 +127,7 @@ local function Constructor()
   button.dgroup = nil;
   button.data = {};
 
-  local background = button:CreateTexture(nil, "BACKGROUND");
+  local background = button:CreateTexture(nil, "BACKGROUND", nil, 0);
   button.background = background;
   background:SetTexture("Interface\\BUTTONS\\UI-Listbox-Highlight2.blp");
   background:SetBlendMode("ADD");
@@ -137,13 +137,13 @@ local function Constructor()
   background:SetPoint("LEFT", button, "LEFT");
   background:SetPoint("RIGHT", button, "RIGHT");
 
-  local icon = button:CreateTexture(nil, "OVERLAY");
+  local icon = button:CreateTexture(nil, "OVERLAY", nil, 0);
   button.icon = icon;
   icon:SetWidth(height);
   icon:SetHeight(height);
   icon:SetPoint("LEFT", button, "LEFT");
 
-  local tankIcon = button:CreateTexture(nil, "OVERLAY");
+  local tankIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
   tankIcon:SetWidth(height * 0.4);
   tankIcon:SetHeight(height * 0.4);
   tankIcon:SetTexture("Interface/LFGFrame/RoleIcons")
@@ -151,7 +151,7 @@ local function Constructor()
   tankIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT", 0, 2);
   tankIcon:Hide()
 
-  local dpsIcon = button:CreateTexture(nil, "OVERLAY");
+  local dpsIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
   dpsIcon:SetWidth(height * 0.4);
   dpsIcon:SetHeight(height * 0.4);
   dpsIcon:SetTexture("Interface/LFGFrame/RoleIcons")
@@ -159,7 +159,7 @@ local function Constructor()
   dpsIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT", 16, 2);
   dpsIcon:Hide()
 
-  local healerIcon = button:CreateTexture(nil, "OVERLAY");
+  local healerIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
   healerIcon:SetWidth(height * 0.4);
   healerIcon:SetHeight(height * 0.4);
   healerIcon:SetTexture("Interface/LFGFrame/RoleIcons")

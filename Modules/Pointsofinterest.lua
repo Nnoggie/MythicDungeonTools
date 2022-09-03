@@ -142,7 +142,7 @@ local function POI_SetOptions(frame, type, poi)
     end
     local scale = MDT:GetScale()
     frame.textString:SetFontObject("GameFontNormal")
-    frame.textString:SetFont(frame.textString:GetFont(), 5 * poiScale * scale, "OUTLINE")
+    frame.textString:SetFont(frame.textString:GetFont(), 5 * poiScale * scale, "OUTLINE", "")
     frame.textString:SetPoint("BOTTOM", frame, "BOTTOM", 0, 4 * scale)
     frame.textString:SetText("")
     frame:SetScript("OnMouseUp", function(self, button)

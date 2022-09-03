@@ -19,7 +19,7 @@ function MDT:initToolbar(frame)
   frame.toolbar = CreateFrame("Frame", "MDTToolbarFrame", frame)
   frame.toolbar:SetFrameStrata("HIGH")
   frame.toolbar:SetFrameLevel(5)
-  frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "HIGH", nil, 6)
+  frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "OVERLAY", nil, 6)
   frame.toolbar.tex:SetAllPoints()
   frame.toolbar.tex:SetColorTexture(unpack(MDT.BackdropColor))
   frame.toolbar.toggleButton = CreateFrame("Button", nil, frame);
@@ -97,7 +97,7 @@ function MDT:initToolbar(frame)
     self:PresetObjectStepBack()
   end)
   back.tooltipText = L["Undo"]
-  local t = back.frame:CreateTexture(nil, "ARTWORK")
+  local t = back.frame:CreateTexture(nil, "ARTWORK", nil, 0)
   back.frame:SetHighlightTexture(t)
   tinsert(widgets, back)
 
@@ -287,7 +287,7 @@ local notePoolCollection
 local function getTexture()
   local size = tgetn(texturePool)
   if size == 0 then
-    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else
     local tex = texturePool[size]
     tremove(texturePool, size)
@@ -320,7 +320,7 @@ function MDT:CreateBrushPreview(frame)
   frame.brushPreview:SetFrameStrata("HIGH")
   frame.brushPreview:SetFrameLevel(4)
   frame.brushPreview:SetSize(1, 1)
-  frame.brushPreview.tex = frame.brushPreview:CreateTexture(nil, "OVERLAY")
+  frame.brushPreview.tex = frame.brushPreview:CreateTexture(nil, "OVERLAY", nil, 0)
   frame.brushPreview.tex:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\ring")
   frame.brushPreview.tex:SetAllPoints()
 end
@@ -396,7 +396,7 @@ function MDT:UpdateSelectedToolbarTool(widgetName)
   end
   local widget = toolbarTools[widgetName]
   currentTool = widgetName
-  toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil, "HIGH", nil, 7)
+  toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil, "OVERLAY", nil, 7)
   toolbar.highlight:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons")
   toolbar.highlight:SetTexCoord(0.5, 0.75, 0.25, 0.5)
   toolbar.highlight:SetSize(widget.frame:GetWidth(), widget.frame:GetWidth())

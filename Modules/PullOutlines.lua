@@ -100,7 +100,7 @@ local texturePool = {}
 local function getTexture()
   local size = tgetn(texturePool)
   if size == 0 then
-    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else
     local tex = texturePool[size]
     tremove(texturePool, size)
