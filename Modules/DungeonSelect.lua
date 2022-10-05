@@ -83,6 +83,9 @@ function MDT:CreateDungeonSelectDropdown(frame)
       local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
       -- "> More Dungeons" is only added to the name list, so checking here works
       if #currentList + 1 == key then
+        -- value has to be set to nil here, otherwise the dropdown will inherit the selected index
+        -- from the previous list and could highlight the season at the given index, making it unselectable
+        group.DungeonDropdown.value = nil
         group.DungeonDropdown:SetList(seasonList)
         seasonListActive = true
         --need to delay opening the dropdown until the list is populated
