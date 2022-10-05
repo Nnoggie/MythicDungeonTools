@@ -8,8 +8,9 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "BrackenHideHollow",
+  [1] = "BrackenHideHollow",
+  [2] = "BrackenHideHollow_A",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["BrackenhideHollow"],

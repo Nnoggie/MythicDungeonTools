@@ -8,8 +8,10 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "ShadowmoonDungeon",
+  [1] = "ShadowmoonDungeon1_",
+  [2] = "ShadowmoonDungeon2_",
+  [3] = "ShadowmoonDungeon3_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["CryptOfTheAncients"],

@@ -8,8 +8,9 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "Uldaman_Upres",
+  [1] = "Uldaman_upres_A",
+  [2] = "Uldaman_upres_B",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["HallOfTheKeepers"],

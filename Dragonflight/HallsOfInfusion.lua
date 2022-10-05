@@ -8,8 +8,9 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "HallsOfInfusion",
+  [1] = "HallsOfInfusion_A",
+  [2] = "HallsOfInfusion_B",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["InfusersRotunda"],

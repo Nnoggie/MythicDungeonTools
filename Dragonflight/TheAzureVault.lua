@@ -8,8 +8,12 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "ArcaneNexus",
+  [1] = "ArcaneNexus_A",
+  [2] = "ArcaneNexus_B",
+  [3] = "ArcaneNexus_C",
+  [4] = "ArcaneNexus_D",
+  [5] = "ArcaneNexus_E",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TheArcaneConservatory"],

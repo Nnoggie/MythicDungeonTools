@@ -8,8 +8,11 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "DragonAcademy",
+  [1] = "DragonAcademy_A",
+  [2] = "DragonAcademy_B",
+  [3] = "DragonAcademy_C",
+
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AlgetharAcademy"],

@@ -8,9 +8,9 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
-  [2] = "BlackrockTrainDepotDungeon3_",
+  [0] = "RubyLifePools",
+  [1] = "RubyLifePools_A",
+  [2] = "RubyLifePools_B",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Infusion Chambers"],

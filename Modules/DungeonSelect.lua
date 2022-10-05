@@ -7,6 +7,15 @@ local L = MDT.L
 -- This was necesarry as the old implementation did not allow for a dungeon to be part of multiple dungeon sets.
 -- Additional dungeon lists just need to be added to seasonList and dungeonSelectionToIndex.
 
+-- How to find the dungeon map files:
+-- Add launch option "- console" to wow
+-- Unsync your Config.wtf from wow servers: SET synchronizeConfig "0"
+-- Add the following to the Config.wtf: SET ConsoleKey "F10" (or whatever key you want)
+-- Go to character selection screen and press your console key
+-- Run ExportInterfaceFiles art
+-- Open the folder BlizzardInterfaceArt in VSCode and search for the dungeon name
+-- To get names of dungeons: https://wow.tools/maps/ (search for dungeon name and then check the url)
+
 local seasonListActive = false
 local seasonList = {
   [1] = L["Legion"],
@@ -14,6 +23,7 @@ local seasonList = {
   [3] = L["Shadowlands"],
   [4] = L["Shadowlands Season 4"],
   [5] = L["Dragonflight Season 1"],
+  -- [6] = L["Dragonflight Season 2"],
 }
 
 function MDT:GetSeasonList()
@@ -25,7 +35,8 @@ local dungeonSelectionToIndex = {
   [2] = { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 },
   [3] = { 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 },
   [4] = { 40, 41, 37, 38, 25, 26, 9, 10 },
-  [5] = { 42, 43, 44, 45, 46, 47, 48, 49, 50, 51 }
+  [5] = { 42, 43, 44, 45, 6, 3, 46, 47 },
+  -- [6] = { 48, 49, 50, 51 }
 }
 
 local indexToDungeonSelection = {}

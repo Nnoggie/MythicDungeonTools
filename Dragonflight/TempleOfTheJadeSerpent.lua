@@ -8,8 +8,9 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "EastTemple",
+  [1] = "EastTemple1_",
+  [2] = "EastTemple2_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TempleOfTheJadeSerpent"],

@@ -3,13 +3,17 @@ local L = MDT.L
 local dungeonIndex = 43
 MDT.dungeonList[dungeonIndex] = L["TheNokhudOffensive"]
 MDT.mapInfo[dungeonIndex] = {
+  tileFormat = {
+    [1] = 15,
+    [2] = 15
+  },
   viewportPositionOverrides = {
   }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BlackrockTrainDepotDungeon",
-  [1] = "BlackrockTrainDepotDungeon1_",
+  [0] = "CentaurPlanes",
+  [1] = "CentaurPlanes",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TheNokhudOffensive"],

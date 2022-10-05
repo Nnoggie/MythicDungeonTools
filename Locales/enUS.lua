@@ -2,10 +2,11 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Dragonflight Season 1"] = "Dragonflight Season 1"
+L["Dragonflight Season 2"] = "Dragonflight Season 2"
 L["RubyLifePools"] = "Ruby Life Pools"
 L["Infusion Chambers"] = "Infusion Chambers"
 L["Ruby Overlook"] = "Ruby Overlook"
-L["Dragonflight Season 1"] = "Dragonflight Season 1"
 L["TheNokhudOffensive"] = "The Nokhud Offensive"
 L["TheAzureVault"] = "The Azure Vault"
 L["TheArcaneConservatory"] = "The Arcane Conservatory"
