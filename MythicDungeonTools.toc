@@ -27,3 +27,4 @@ Developer\load_developer.xml
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml
+Dragonflight\load_dragonflight.xml

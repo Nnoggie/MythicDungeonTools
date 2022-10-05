@@ -13,7 +13,7 @@ local seasonList = {
   [2] = L["BFA"],
   [3] = L["Shadowlands"],
   [4] = L["Shadowlands Season 4"],
-  -- [5]= "Dragonflight Season 1",
+  [5] = L["Dragonflight Season 1"],
 }
 
 function MDT:GetSeasonList()
@@ -25,7 +25,7 @@ local dungeonSelectionToIndex = {
   [2] = { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 },
   [3] = { 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 },
   [4] = { 40, 41, 37, 38, 25, 26, 9, 10 },
-  -- [5] = {42,43,44,45,...}
+  [5] = { 42, 43, 44, 45, 46, 47, 48, 49, 50, 51 }
 }
 
 local indexToDungeonSelection = {}

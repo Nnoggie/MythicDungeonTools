@@ -107,12 +107,12 @@ end
 local defaultSavedVars = {
   global = {
     toolbarExpanded = true,
-    currentSeason = 8,
+    currentSeason = 9,
     scale = 1,
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
     enemyStyle = 1,
-    currentDungeonIdx = 40,
+    currentDungeonIdx = 42,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -137,7 +137,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 4,
+    selectedDungeonList = 5,
     knownAffixWeeks = {},
   },
 }
