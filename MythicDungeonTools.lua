@@ -2029,12 +2029,15 @@ function MDT:PingMap(x, y)
   self.ping:SetSequence(0)
 end
 
+local function modelSetTransformFixed(self, tx, ty, tz, rx, ry, rz, s)
+  -- In Dragonflight the api changed, this converts to the new api
+  self:SetTransform(CreateVector3D(tx, ty, tz), CreateVector3D(rx, ry, rz), s)
+end
+
 function MDT:SetPingOffsets(mapScale)
   local scale = 0.35
   local offset = (10.25 / 1000) * mapScale
-  ---@diagnostic disable-next-line: redundant-parameter
-  -- TODO: Need to figure this out
-  -- MDT.ping:SetTransform(offset, offset, 0, 0, 0, 0, scale)
+  modelSetTransformFixed(self.ping, offset, offset, 0, 0, 0, 0, scale)
 end
 
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
