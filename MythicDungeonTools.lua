@@ -2033,7 +2033,8 @@ function MDT:SetPingOffsets(mapScale)
   local scale = 0.35
   local offset = (10.25 / 1000) * mapScale
   ---@diagnostic disable-next-line: redundant-parameter
-  MDT.ping:SetTransform(offset, offset, 0, 0, 0, 0, scale)
+  -- TODO: Need to figure this out
+  -- MDT.ping:SetTransform(offset, offset, 0, 0, 0, 0, scale)
 end
 
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
