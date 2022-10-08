@@ -8,11 +8,9 @@ from web_scraper import *
 
 request_wowtools = True
 toggle_door_mapping = False
-GROUP_SEC_DELIMITER = 10
+GROUP_SEC_DELIMITER = 5
 # How to use:
 # 1. Have Advanced Combat Logging Enabled!
-# 2. Delete the following files from the directory wowdb_files
-#       uimapassignment.csv, map.csv, criteria.csv, criteriatree.csv, journalencounter.csv
 # 2. Delete or rename your current WoWCombatLog.txt file to start from fresh
 # 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
 # 4. NEW: Place a blue world marker before passing through a door that swaps map
@@ -524,7 +522,7 @@ if __name__ == "__main__":
 
     # Removing enemy pets below HP threshold and no count, this is an attempt to only remove unimportant pets
     # If you want to include all pets and remove manually simply comment out the six lines below
-    HP_threshold = 20000  # not working for Tazavesh Streets
+    HP_threshold = 130000  # not working for Tazavesh Streets
     deleted_mobs = mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) &
                                (mobHits.maxHP < 20000) & (mobHits.mobcount == 0)]
     mobHits.drop(mobHits.loc[(mobHits.ownerGUID.str.startswith("Creature")) & (mobHits.maxHP < 20000) &

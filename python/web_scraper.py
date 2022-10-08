@@ -52,7 +52,7 @@ def get_latest_version(filename):
     with requests.get(available_builds_url, headers=headers) as r:
         time.sleep(0.5)
         available_builds = r.json()
-    
+
     # Get latest live patch version
     latest_build_url = f"https://wow.tools"
     with requests.get(latest_build_url, headers=headers) as r:
@@ -60,8 +60,8 @@ def get_latest_version(filename):
         page_text = r.text
         # Get newest live build available on wow.tools
         latest_build = re.search(r"<td>Retail</td>\s*<td>(.*?)</td>", page_text).group(1)
-    # latest_build = "9.2.7.45161" # hardcode desired build here
-    
+    latest_build = "10.0.2.45969" # hardcode desired build here
+
     # If database file available at latest live patch version download it
     if latest_build in available_builds:
         data_url = f"https://wow.tools/dbc/api/export/?name={filename}&build={latest_build}&useHotfixes=true"
