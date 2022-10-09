@@ -1,3 +1,5 @@
+v4.0.0.2-Alpha
+- fix xml error
 v4.0.0.1-Alpha
 - cleaned up initial mapping
 - data collection active for Alpha versions
