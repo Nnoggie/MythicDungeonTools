@@ -171,7 +171,9 @@ do
       if not db.minimap.hide then
         icon:Show("MythicDungeonTools")
       end
-      if db.newDataCollectionActive then
+      local version = GetAddOnMetadata(AddonName, "Version")
+      local isAlpha = string.find(version, "Alpha")
+      if db.newDataCollectionActive or isAlpha then
         MDT.DataCollection:Init()
         MDT.DataCollection:InitHealthTrack()
       end
