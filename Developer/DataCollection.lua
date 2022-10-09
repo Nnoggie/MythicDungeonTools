@@ -188,14 +188,14 @@ end
 
 -- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
 local dungeonsToTrack = {
-  [1] = 40,
-  [2] = 41,
-  [3] = 37,
-  [4] = 38,
-  [5] = 25,
-  [6] = 26,
-  [7] = 9,
-  [8] = 10,
+  [1] = 42,
+  [2] = 43,
+  [3] = 44,
+  [4] = 45,
+  [5] = 6,
+  [6] = 3,
+  [7] = 46,
+  [8] = 47,
 }
 
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
