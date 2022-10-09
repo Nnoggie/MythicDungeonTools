@@ -274,7 +274,9 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   end
 
   if prefix == MDT.dataCollectionPrefixes.distribute then
+    if sender == UnitFullName("player") then return end
     local package = MDT:StringToTable(message, false)
+    print("Received data package from " .. fullName)
     MDT.DataCollection:MergeReceiveData(package)
   end
 
