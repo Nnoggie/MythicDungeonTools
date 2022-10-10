@@ -142,7 +142,7 @@ local defaultSavedVars = {
   },
 }
 do
-  for i = 1, 80 do
+  for i = 1, 120 do
     defaultSavedVars.global.presets[i] = {
       [1] = { text = L["Default"], value = {}, objects = {},
         colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
@@ -4630,7 +4630,19 @@ function MDT:HardReset()
   ReloadUI()
 end
 
+MDT.modules = {}
+function MDT:RegisterModule(modulename, module)
+  MDT.modules[modulename] = module
+end
+
 function initFrames()
+
+  for _, module in pairs(MDT.modules) do
+    if module.OnInitialize then
+      module:OnInitialize()
+    end
+  end
+
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
   tinsert(UISpecialFrames, "MDTFrame")
 

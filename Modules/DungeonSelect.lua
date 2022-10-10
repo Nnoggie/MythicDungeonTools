@@ -17,7 +17,7 @@ local L = MDT.L
 -- To get names of dungeons: https://wow.tools/maps/ (search for dungeon name and then check the url)
 
 local seasonListActive = false
-local seasonList = {
+MDT.seasonList = {
   [1] = L["Legion"],
   [2] = L["BFA"],
   [3] = L["Shadowlands"],
@@ -25,12 +25,7 @@ local seasonList = {
   [5] = L["Dragonflight Season 1"],
   -- [6] = L["Dragonflight Season 2"],
 }
-
-function MDT:GetSeasonList()
-  return seasonList
-end
-
-local dungeonSelectionToIndex = {
+MDT.dungeonSelectionToIndex = {
   [1] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 },
   [2] = { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 },
   [3] = { 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 },
@@ -38,6 +33,13 @@ local dungeonSelectionToIndex = {
   [5] = { 42, 43, 44, 45, 6, 3, 46, 47 },
   -- [6] = { 48, 49, 50, 51 }
 }
+
+local seasonList = MDT.seasonList
+local dungeonSelectionToIndex = MDT.dungeonSelectionToIndex
+
+function MDT:GetSeasonList()
+  return seasonList
+end
 
 local indexToDungeonSelection = {}
 local dungeonSelectionToNames = {}
