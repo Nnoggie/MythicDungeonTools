@@ -585,9 +585,8 @@ local function POI_SetOptions(frame, type, poi)
 
   if type == "textFrame" then
     frame:SetSize(18, 18)
-    frame.Texture:Hide()
-    frame.HighlightTexture:Hide()
-
+    frame.Texture:SetTexture(nil)
+    frame.HighlightTexture:SetTexture(nil)
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
     frame.playerAssignmentString:SetFontObject("GameFontNormalMed3Outline")
@@ -598,7 +597,14 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:SetText(poi.text)
     frame.playerAssignmentString:SetScale(2)
     frame.playerAssignmentString:Show()
+  end
 
+  if type == "worldMarker" then
+    frame:SetSize(18, 18)
+    frame.Texture:SetSize(18, 18)
+    frame.Texture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
+    frame.HighlightTexture:SetSize(18, 18)
+    frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
   end
 
   --fullscreen sizes
