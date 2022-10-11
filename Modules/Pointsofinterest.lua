@@ -582,6 +582,25 @@ local function POI_SetOptions(frame, type, poi)
     end)
 
   end
+
+  if type == "textFrame" then
+    frame:SetSize(18, 18)
+    frame.Texture:Hide()
+    frame.HighlightTexture:Hide()
+
+    frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+    frame.playerAssignmentString:ClearAllPoints()
+    frame.playerAssignmentString:SetFontObject("GameFontNormalMed3Outline")
+    frame.playerAssignmentString:SetJustifyH("CENTER")
+    frame.playerAssignmentString:SetJustifyV("CENTER")
+    frame.playerAssignmentString:SetPoint("CENTER", frame, "CENTER", 0, 0)
+    frame.playerAssignmentString:SetTextColor(1, 1, 0, 1)
+    frame.playerAssignmentString:SetText(poi.text)
+    frame.playerAssignmentString:SetScale(2)
+    frame.playerAssignmentString:Show()
+
+  end
+
   --fullscreen sizes
   local scale = MDT:GetScale()
   frame:SetSize(frame:GetWidth() * scale, frame:GetHeight() * scale)
