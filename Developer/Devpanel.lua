@@ -137,6 +137,7 @@ local currentTeeming
 local currentInspiring
 local currentPatrol
 local currentBossEnemyIdx = 1
+local currentCloneScale
 ---CreateDevPanel
 ---Creates the dev panel which contains buttons to add npcs, objects to the map
 function MDT:CreateDevPanel(frame)
@@ -731,6 +732,7 @@ function MDT:CreateDevPanel(frame)
     if currentBlip then
       cloneGroup:SetText(currentBlip.clone.g)
       currentCloneGroup = currentBlip.clone.g
+      currentCloneScale = currentBlip.clone.scale
       teemingCheckbox:SetValue(currentBlip.clone.teeming)
       inspiringCheckbox:SetValue(currentBlip.clone.inspiring)
       currentTeeming = currentBlip.clone.teeming
@@ -1135,7 +1137,8 @@ function MDT:AddCloneAtCursorPosition()
     cursorx = cursorx * (1 / scale)
     cursory = cursory * (1 / scale)
     tinsert(data.clones,
-      { x = cursorx, y = cursory, sublevel = MDT:GetCurrentSubLevel(), g = currentCloneGroup, teeming = currentTeeming })
+      { x = cursorx, y = cursory, sublevel = MDT:GetCurrentSubLevel(), g = currentCloneGroup, teeming = currentTeeming,
+        scale = currentCloneScale })
     print(string.format("MDT: Created clone %s %d at %d,%d", data.name, #data.clones, cursorx, cursory))
     MDT:UpdateMap()
   end
