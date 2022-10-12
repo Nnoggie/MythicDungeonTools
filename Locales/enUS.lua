@@ -2,6 +2,8 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+
+
 L["Dragonflight Season 1"] = "Dragonflight Season 1"
 L["Dragonflight Season 2"] = "Dragonflight Season 2"
 L["RubyLifePools"] = "Ruby Life Pools"
@@ -34,7 +36,6 @@ L["ChamberOfFlames"] = "Chamber of Flames"
 L["UldamanLegacyOfTyr"] = "Uldaman: Legacy of Tyr"
 L["HallOfTheKeepers"] = "Hall of the Keepers"
 L["TheVaultOfTyr"] = "The Vault of Tyr"
-
 L["Crystal Fury"] = "Crystal Fury"
 L["Crystal Thrasher"] = "Crystal Thrasher"
 L["Volatile Sapling"] = "Volatile Sapling"
@@ -88,11 +89,6 @@ L["Primalist Cinderweaver"] = "Primalist Cinderweaver"
 L["Erkhart Stormvein"] = "Erkhart Stormvein"
 L["Primalist Shockcaster"] = "Primalist Shockcaster"
 L["Defier Draghar"] = "Defier Draghar"
-
-
-
-
---MDT
 L["Bounty stacks \nafter this pull"] = "Bounty stacks \nafter this pull"
 L["AddOn Conflict"] = "AddOn Conflict"
 L["conflictPrompt"] = "MDT has detected that you have certain AddOns installed that are conflicting with MDT.\n\nPlease remove the following AddOns:\n\n"
