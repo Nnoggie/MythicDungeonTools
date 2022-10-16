@@ -1,7 +1,7 @@
 ## Interface: 90207
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 3.9.7.0
+## Version: 3.9.7.1
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-deDE: Tool für das Planen und Optimieren von Mythic+ Dungeons
 ## Notes-esES: Herramienta para planificar y optimizar las rutas de mazmorras de Piedras Angulares
