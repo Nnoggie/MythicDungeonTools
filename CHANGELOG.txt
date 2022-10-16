@@ -1,3 +1,5 @@
+3.9.7.1
+- fixed a nil error that resulted from fixing a nil error
 3.9.7.0
 - fixed a nil error
 v3.9.6.9
