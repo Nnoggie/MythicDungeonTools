@@ -2,8 +2,26 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
-
-
+L["Alpha Eagle"] = "Alpha Eagle"
+L["Arcane Forager"] = "Arcane Forager"
+L["Hungry Lasher"] = "Hungry Lasher"
+L["Algeth'ar Enforcer"] = "Algeth'ar Enforcer"
+L["Territorial Eagle"] = "Territorial Eagle"
+L["Algeth'ar Security"] = "Algeth'ar Security"
+L["Overgrown Ancient"] = "Overgrown Ancient"
+L["Aggravated Skitterfly"] = "Aggravated Skitterfly"
+L["Vexamus"] = "Vexamus"
+L["Crawth"] = "Crawth"
+L["Guardian Sentry"] = "Guardian Sentry"
+L["Echo of Doragosa"] = "Echo of Doragosa"
+L["Algeth'ar Nurse"] = "Algeth'ar Nurse"
+L["Vile Lasher"] = "Vile Lasher"
+L["Corrupted Manafiend"] = "Corrupted Manafiend"
+L["Unruly Textbook"] = "Unruly Textbook"
+L["Algeth'ar Educator"] = "Algeth'ar Educator"
+L["Spellbound Battleaxe"] = "Spellbound Battleaxe"
+L["Arcane Ravager"] = "Arcane Ravager"
+L["Spellbound Scepter"] = "Spellbound Scepter"
 L["Dragonflight Season 1"] = "Dragonflight Season 1"
 L["Dragonflight Season 2"] = "Dragonflight Season 2"
 L["RubyLifePools"] = "Ruby Life Pools"
