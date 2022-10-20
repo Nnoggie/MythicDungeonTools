@@ -1,4 +1,6 @@
 v4.0.0.6-Alpha
+- toc update
+v4.0.0.6-Alpha
 - Agethar Academy Mapping
 v4.0.0.5-Alpha
 - locale fix
