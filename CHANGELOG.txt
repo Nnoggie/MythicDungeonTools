@@ -1,4 +1,4 @@
-v4.0.0.6-Alpha
+v4.0.0.7-Alpha
 - toc update
 v4.0.0.6-Alpha
 - Agethar Academy Mapping
