@@ -2,6 +2,8 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Settings"] = "Settings"
+L["openSettingsTooltip"] = "Click to open settings"
 L["Alpha Eagle"] = "Alpha Eagle"
 L["Arcane Forager"] = "Arcane Forager"
 L["Hungry Lasher"] = "Hungry Lasher"

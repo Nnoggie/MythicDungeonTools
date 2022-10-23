@@ -22,7 +22,31 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [2] = L["Ruby Overlook"],
 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 567.73755225206;
+      ["y"] = -257.14167551054;
+      ["target"] = 2;
+      ["direction"] = 1;
+      ["connectionIndex"] = 1;
+    };
+  };
+  [2] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 421.382992211;
+      ["y"] = -310.821569174;
+      ["target"] = 1;
+      ["direction"] = -1;
+      ["connectionIndex"] = 1;
+    };
+  };
+};
+
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 660, teeming = 1000, teemingEnabled = true }
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
