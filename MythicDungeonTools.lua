@@ -18,7 +18,7 @@ MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0
 
 local AceGUI = LibStub("AceGUI-3.0")
 local db
-local icon = LibStub("LibDBIcon-1.0")
+local minimapIcon = LibStub("LibDBIcon-1.0")
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   type = "data source",
   text = "Mythic Dungeon Tools",
@@ -26,13 +26,13 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   OnClick = function(button, buttonPressed)
     if buttonPressed == "RightButton" then
       if db.minimap.lock then
-        icon:Unlock("MythicDungeonTools")
+        minimapIcon:Unlock("MythicDungeonTools")
       else
-        icon:Lock("MythicDungeonTools")
+        minimapIcon:Lock("MythicDungeonTools")
       end
     elseif (buttonPressed == 'MiddleButton') then
       db.minimap.hide = true
-      icon:Hide("MythicDungeonTools")
+      minimapIcon:Hide("MythicDungeonTools")
       print(L["MDT: Use /mdt minimap to show the minimap icon again"])
     else
       MDT:ShowInterface()
@@ -74,9 +74,9 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   elseif rqst == "minimap" then
     db.minimap.hide = not db.minimap.hide
     if not db.minimap.hide then
-      icon:Show("MythicDungeonTools")
+      minimapIcon:Show("MythicDungeonTools")
     else
-      icon:Hide("MythicDungeonTools")
+      minimapIcon:Hide("MythicDungeonTools")
       print(L["MDT: Use /mdt minimap to show the minimap icon again"])
     end
   else
@@ -167,9 +167,9 @@ do
   function MDT.ADDON_LOADED(self, addon)
     if addon == "MythicDungeonTools" then
       db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
-      icon:Register("MythicDungeonTools", LDB, db.minimap)
+      minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
       if not db.minimap.hide then
-        icon:Show("MythicDungeonTools")
+        minimapIcon:Show("MythicDungeonTools")
       end
       local version = GetAddOnMetadata(AddonName, "Version")
       local isAlpha = string.find(version, "Alpha")
@@ -197,8 +197,6 @@ do
           if v <= 0 then db.currentPreset[k] = 1 end
         end
       end
-      --register AddOn Options
-      MDT:RegisterOptions()
       eventFrame:UnregisterEvent("ADDON_LOADED")
     elseif addon == "Blizzard_ChallengesUI" then
       eventFrame:UnregisterEvent("ADDON_LOADED")
@@ -1102,39 +1100,22 @@ function MDT:MakeSidePanel(frame)
   frame.MDIButton.frame:SetScript("OnLeave", function()
   end)
 
-  --AutomaticColorsCheckbox
-  frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
-  frame.AutomaticColorsCheckSidePanel:SetLabel(L["Automatically color pulls"])
-  frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-  frame.AutomaticColorsCheckSidePanel:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.colorPaletteInfo.autoColoring = value
-    MDT:SetPresetColorPaletteInfo()
-    frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-    if value == true then
-      frame.toggleForceColorBlindMode:SetDisabled(false)
-      MDT:ColorAllPulls()
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
-    else
-      frame.toggleForceColorBlindMode:SetDisabled(true)
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
-    end
-  end)
-  --AutomaticColorsCogwheel
-  frame.AutomaticColorsCogwheel = AceGUI:Create("Icon")
-  local colorCogwheel = frame.AutomaticColorsCogwheel
-  colorCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
-  colorCogwheel:SetImageSize(25, 25)
-  colorCogwheel:SetWidth(30)
-  colorCogwheel:SetCallback("OnEnter", function(...)
-    GameTooltip:SetOwner(colorCogwheel.frame, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(L["Click to adjust color settings"], 1, 1, 1)
+  --Settings cogwheel
+  frame.settingsCogwheel = AceGUI:Create("Icon")
+  local settinggsCogwheel = frame.settingsCogwheel
+  settinggsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
+  settinggsCogwheel:SetImageSize(25, 25)
+  settinggsCogwheel:SetWidth(30)
+  settinggsCogwheel:SetCallback("OnEnter", function(...)
+    GameTooltip:SetOwner(settinggsCogwheel.frame, "ANCHOR_CURSOR")
+    GameTooltip:AddLine(L["openSettingsTooltip"], 1, 1, 1)
     GameTooltip:Show()
   end)
-  colorCogwheel:SetCallback("OnLeave", function(...)
+  settinggsCogwheel:SetCallback("OnLeave", function(...)
     GameTooltip:Hide()
   end)
-  colorCogwheel:SetCallback("OnClick", function(...)
-    self:OpenAutomaticColorsDialog()
+  settinggsCogwheel:SetCallback("OnClick", function(...)
+    self:OpenSettingsDialog()
   end)
 
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
@@ -1145,9 +1126,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-  --frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
-  frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCogwheel)
+  frame.sidePanel.WidgetGroup:AddChild(frame.settingsCogwheel)
 
   --Week Dropdown (Infested / Affixes)
   local function makeAffixString(week, affixes, longText)
@@ -2330,8 +2309,8 @@ function MDT:HideAllDialogs()
   MDT.main_frame.RenameFrame:Hide()
   MDT.main_frame.ClearConfirmationFrame:Hide()
   MDT.main_frame.DeleteConfirmationFrame:Hide()
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
-  MDT.main_frame.automaticColorsFrame:Hide()
+  MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
+  MDT.main_frame.settingsFrame:Hide()
   if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
 end
 
@@ -2379,13 +2358,13 @@ function MDT:OpenClearPresetDialog()
   MDT.main_frame.ClearConfirmationFrame:Show()
 end
 
-function MDT:OpenAutomaticColorsDialog()
+function MDT:OpenSettingsDialog()
   MDT:HideAllDialogs()
-  MDT.main_frame.automaticColorsFrame:ClearAllPoints()
-  MDT.main_frame.automaticColorsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  MDT.main_frame.automaticColorsFrame:SetStatusText("")
-  MDT.main_frame.automaticColorsFrame:Show()
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+  MDT.main_frame.settingsFrame:ClearAllPoints()
+  MDT.main_frame.settingsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+  MDT.main_frame.settingsFrame:SetStatusText("")
+  MDT.main_frame.settingsFrame:Show()
+  MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
   if db.colorPaletteInfo.colorPaletteIdx == 6 then
     MDT:OpenCustomColorsDialog()
   end
@@ -2393,11 +2372,11 @@ end
 
 function MDT:OpenCustomColorsDialog(frame)
   MDT:HideAllDialogs()
-  MDT.main_frame.automaticColorsFrame:Show() --Not the prettiest way to handle this, but it works.
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:ClearAllPoints()
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:SetPoint("CENTER", 264, -7)
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:SetStatusText("")
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:Show()
+  MDT.main_frame.settingsFrame:Show() --Not the prettiest way to handle this, but it works.
+  MDT.main_frame.settingsFrame.CustomColorFrame:ClearAllPoints()
+  MDT.main_frame.settingsFrame.CustomColorFrame:SetPoint("CENTER", 264, -7)
+  MDT.main_frame.settingsFrame.CustomColorFrame:SetStatusText("")
+  MDT.main_frame.settingsFrame.CustomColorFrame:Show()
 end
 
 ---Makes sure profiles are valid and have their fields set
@@ -3257,13 +3236,26 @@ function MDT:MakeCustomColorFrame(frame)
   frame.CustomColorFrame:Hide()
 end
 
-function MDT:MakeAutomaticColorsFrame(frame)
-  frame.automaticColorsFrame = AceGUI:Create("Frame")
-  frame.automaticColorsFrame:SetTitle(L["Automatic Coloring"])
-  frame.automaticColorsFrame:SetWidth(240)
-  frame.automaticColorsFrame:SetHeight(220)
-  frame.automaticColorsFrame:EnableResize(false)
-  frame.automaticColorsFrame:SetLayout("Flow")
+function MDT:MakeSettingsFrame(frame)
+  frame.settingsFrame = AceGUI:Create("Frame")
+  frame.settingsFrame:SetTitle(L["Settings"])
+  frame.settingsFrame:SetWidth(240)
+  frame.settingsFrame:SetHeight(220)
+  frame.settingsFrame:EnableResize(false)
+  frame.settingsFrame:SetLayout("Flow")
+
+  frame.minimapCheckbox = AceGUI:Create("CheckBox")
+  frame.minimapCheckbox:SetLabel(L["Enable Minimap Button"])
+  frame.minimapCheckbox:SetValue(not db.minimap.hide)
+  frame.minimapCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.minimap.hide = not value
+    if not db.minimap.hide then
+      minimapIcon:Show("MythicDungeonTools")
+    else
+      minimapIcon:Hide("MythicDungeonTools")
+    end
+  end)
+  frame.settingsFrame:AddChild(frame.minimapCheckbox)
 
   frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
   frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
@@ -3276,13 +3268,13 @@ function MDT:MakeAutomaticColorsFrame(frame)
       frame.toggleForceColorBlindMode:SetDisabled(false)
       MDT:ColorAllPulls()
       MDT:DrawAllHulls()
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
+      MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
     else
       frame.toggleForceColorBlindMode:SetDisabled(true)
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
+      MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
     end
   end)
-  frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
+  frame.settingsFrame:AddChild(frame.AutomaticColorsCheck)
 
   --Toggle local color blind mode
   frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
@@ -3294,7 +3286,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
     MDT:ColorAllPulls()
     MDT:DrawAllHulls()
   end)
-  frame.automaticColorsFrame:AddChild(frame.toggleForceColorBlindMode)
+  frame.settingsFrame:AddChild(frame.toggleForceColorBlindMode)
 
   frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
   frame.PaletteSelectDropdown:SetList(colorPaletteNames)
@@ -3305,14 +3297,14 @@ function MDT:MakeAutomaticColorsFrame(frame)
       db.colorPaletteInfo.colorPaletteIdx = value
       MDT:OpenCustomColorsDialog()
     else
-      MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+      MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
       db.colorPaletteInfo.colorPaletteIdx = value
     end
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
     MDT:DrawAllHulls()
   end)
-  frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
+  frame.settingsFrame:AddChild(frame.PaletteSelectDropdown)
 
   -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
   -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
@@ -3323,16 +3315,16 @@ function MDT:MakeAutomaticColorsFrame(frame)
       db.colorPaletteInfo.autoColoring = true
       frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
       frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
+      MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
       frame.toggleForceColorBlindMode:SetDisabled(false)
     end
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
     MDT:DrawAllHulls()
   end)
-  frame.automaticColorsFrame:AddChild(frame.button)
+  frame.settingsFrame:AddChild(frame.button)
 
-  frame.automaticColorsFrame:Hide()
+  frame.settingsFrame:Hide()
 end
 
 function MDT:MakePullSelectionButtons(frame)
@@ -4096,70 +4088,6 @@ function MDT:CreateTutorialButton(parent)
   parent.HelpButton:SetScript("OnClick", TutorialButtonOnClick)
 end
 
----Register the options of the addon to the blizzard options
-function MDT:RegisterOptions()
-  MDT.blizzardOptionsMenuTable = {
-    name = "Mythic Dungeon Tools",
-    type = 'group',
-    args = {
-      enable = {
-        type = 'toggle',
-        name = L["Enable Minimap Button"],
-        desc = L["If the Minimap Button is enabled"],
-        get = function() return not db.minimap.hide end,
-        set = function(_, newValue)
-          db.minimap.hide = not newValue
-          if not db.minimap.hide then
-            icon:Show("MythicDungeonTools")
-          else
-            icon:Hide("MythicDungeonTools")
-          end
-        end,
-        order = 1,
-        width = "full",
-      },
-      tooltipSelect = {
-        type = 'select',
-        name = L["Choose NPC tooltip position"],
-        values = {
-          [1] = L["Next to the NPC"],
-          [2] = L["In the bottom right corner"],
-        },
-        get = function() return db.tooltipInCorner and 2 or 1 end,
-        set = function(_, newValue)
-          if newValue == 1 then db.tooltipInCorner = false end
-          if newValue == 2 then db.tooltipInCorner = true end
-        end,
-        style = 'dropdown',
-      },
-      enemyForcesFormat = {
-        type = "select",
-        name = L["Choose Enemy Forces Format"],
-        values = {
-          [1] = L["Forces only: 5/200"],
-          [2] = L["Forces+%: 5/200 (2.5%)"],
-        },
-        get = function() return db.enemyForcesFormat end,
-        set = function(_, newValue) db.enemyForcesFormat = newValue end,
-        style = "dropdown",
-      },
-      enemyStyle = {
-        type = "select",
-        name = L["Choose Enemy Style. Requires Reload"],
-        values = {
-          [1] = L["Portrait"],
-          [2] = L["Plain Texture"],
-        },
-        get = function() return db.enemyStyle end,
-        set = function(_, newValue) db.enemyStyle = newValue end,
-        style = "dropdown",
-      },
-    }
-  }
-  LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MythicDungeonTools", MDT.blizzardOptionsMenuTable)
-  self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MythicDungeonTools", "MythicDungeonTools")
-end
-
 function MDT:Round(number, decimals)
   return (("%%.%df"):format(decimals)):format(number)
 end
@@ -4707,8 +4635,8 @@ function initFrames()
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
   MDT:MakeSendingStatusBar(main_frame)
-  MDT:MakeAutomaticColorsFrame(main_frame)
-  MDT:MakeCustomColorFrame(main_frame.automaticColorsFrame)
+  MDT:MakeSettingsFrame(main_frame)
+  MDT:MakeCustomColorFrame(main_frame.settingsFrame)
   MDT:POI_CreateDropDown(main_frame)
 
   --devMode
