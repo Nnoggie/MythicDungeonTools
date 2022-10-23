@@ -1,9 +1,8 @@
 import os
-import sys
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 import pyperclip
-from collections import OrderedDict
 from web_scraper import *
 
 request_wowtools = True
@@ -11,13 +10,11 @@ toggle_door_mapping = False
 GROUP_SEC_DELIMITER = 5
 # How to use:
 # 1. Have Advanced Combat Logging Enabled!
-# 2. Delete or rename your current WoWCombatLog.txt file to start from fresh
+# 2. Delete or rename your current WoWCombatLog.txt file to start from fresh.
 # 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
-# 4. NEW: Place a blue world marker before passing through a door that swaps map
-#           and a green world marker after passing through the same door
-# 5. Copy the resulting WoWCombatLog.txt file to the directory of this file
-# 6. Run this script
-# 7. Open the .lua file for the given dungeon and paste what has been added to your clipboard
+# 4. Copy the resulting WoWCombatLog.txt file to the directory of this file.
+# 5. Run this script.
+# 6. Open the .lua file for the given dungeon and paste what has been added to your clipboard.
 
 
 # Importing files from wow.tools; If the file is available in the directory it is read otherwise it is downloaded first
@@ -28,8 +25,6 @@ GROUP_SEC_DELIMITER = 5
 #   criteriatree: contains information about which criteria from the above list is triggered when count is
 #        attributed in a mythic dungeon as well as the amount of count attributed
 #   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
-wowtools_files = ["uimapassignment", "map", "criteria", "criteriatree", "journalencounter"]
-db = load_db_files(wowtools_files)
 
 
 def get_map_extent(UiMapID):
@@ -208,20 +203,23 @@ def get_dungeon_id(boss_info, mobHits):
     print("WARNING: No dungeon ID could be located.")
 
 
-def get_count_table(ID):
+def get_count_table(ID, db_files = None):
     """Extracts the dungeon count table for a dungeon
 
     Args:
         ID (int): dungeonID for dungeon
+        db_files (dict): Dictionary of database files to use
 
     Returns:
         dataframe: Count table for dungeon
 
     """
-    dungeon_forces = db["criteriatree"][((db["criteriatree"].Parent == ID) &
-                                         (db["criteriatree"].Description_lang == "Enemy Forces"))]
-    enemy_forces = db["criteriatree"][db["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
-    enemy_forces["npcID"] = [int(db["criteria"][db["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
+    if db_files is None:
+        db_files = db
+    dungeon_forces = db_files["criteriatree"][((db_files["criteriatree"].Parent == ID) &
+                                         (db_files["criteriatree"].Description_lang == "Enemy Forces"))]
+    enemy_forces = db_files["criteriatree"][db_files["criteriatree"].Parent == int(dungeon_forces.ID)].copy()
+    enemy_forces["npcID"] = [int(db_files["criteria"][db_files["criteria"].ID == ID].Asset) for ID in enemy_forces.CriteriaID]
     # An enemy can have multiple entries by blizzard mistake, the enemy will then attribute count from all entries
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
     # Game event converter replaces game event ids with npc ids
@@ -236,18 +234,21 @@ def get_count_table(ID):
     return count_table
 
 
-def get_total_count(ID):
+def get_total_count(ID, db_files = None):
     """Extracts total count for a dungeon
 
     Args:
         ID (int): dungeonID for dungeon
+        db_files (dict): Dictionary of database files to use
 
     Returns:
         int: Total count needed for dungeon completion
 
     """
-    dungeon_forces = db["criteriatree"][((db["criteriatree"].Parent == ID) &
-                                         (db["criteriatree"].Description_lang == "Enemy Forces"))].Amount
+    if db_files is None:
+        db_files = db
+    dungeon_forces = db_files["criteriatree"][((db_files["criteriatree"].Parent == ID) &
+                                         (db_files["criteriatree"].Description_lang == "Enemy Forces"))].Amount
     return int(dungeon_forces)
 
 
@@ -456,6 +457,10 @@ if __name__ == "__main__":
     ADVANCED_COMBAT_LOGGING = CL.loc[0, "sourceFlags"] == "1"
     if not ADVANCED_COMBAT_LOGGING:
         print("WARNING: Advanced combat logging was NOT enabled!")
+        
+    GAME_VERSION = CL.loc[0, "destGUID"]
+    wowtools_files = ["uimapassignment", "map", "criteria", "criteriatree", "journalencounter"]
+    db = load_db_files(wowtools_files, GAME_VERSION)
     # Extracting the event from date and time, which are not comma separated
     timesplit = CL.timestampevent.str.split(" ")
     timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])
@@ -628,3 +633,4 @@ if __name__ == "__main__":
     print("This dungeon requires {} count to complete and has {} total count. You need to clear {}% of the dungeon."
           .format(total_count, mobHits.mobcount.sum(), int(round(total_count / mobHits.mobcount.sum(), 2) * 100)))
     print("Lua table copied to clipboard. Paste into the correct dungeon file.")
+    

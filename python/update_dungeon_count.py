@@ -1,14 +1,17 @@
 import os
 import re
-import pandas as pd
-from web_scraper import *
-from dungeon_mapper import get_count_table, get_total_count
 
-EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
+import pandas as pd
+from dungeon_mapper import get_count_table, get_total_count
+from web_scraper import *
+
+EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands', 'Dragonflight']
 # How to use:
 # 1. Update the list "EXPANSIONS" above to include all expansions. Use name of MDT expansion dungeon folders.
-# 2. Delete the following files from the directory "/wowdb_files"
-#       uimapassignment.csv, map.csv, criteria.csv, criteriatree.csv, journalencounter.csv
+# 2. Set the variable GAME_VERSION to the desired game version (eg. "9.2.7")
+#    Latest db files will be downloaded from the corresponding game version.
+#    If GAME_VERSION is set to None, the latest RETAIL db files will be downloaded.
+GAME_VERSION = "9.2.7" # <--- Set this variable
 # 3. Run the script, it writes directly to the files automatically.
 
 # Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
@@ -20,7 +23,7 @@ EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands']
 #        attributed in a mythic dungeon as well as the amount of count attributed
 #   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
 wowtools_files = ["criteria", "criteriatree", "journalencounter"]
-db = load_db_files(wowtools_files)
+db = load_db_files(wowtools_files, GAME_VERSION)
 
 
 def get_potential_new_ids(original_name, dungeon_count_table):
@@ -62,7 +65,7 @@ def fix_split_count_db(dungeon_id, true_count_table):
     }
     if dungeon_id in split_dungeons.keys():
         for other_id in split_dungeons[dungeon_id]:
-            other_table = get_count_table(other_id)
+            other_table = get_count_table(other_id, db)
             true_count_table = pd.concat((true_count_table, other_table[~other_table.index.isin(true_count_table.index)]))
         return true_count_table
     else:
@@ -188,7 +191,8 @@ def get_dungeon_from_file_text(file_text):
             return dungeonID
 
         else:
-            print("WARNING: NEW SHIT BLIZZARD BRAIN DISCOVERED")
+            print("    Dungeon not found in database for game version. Skipping.")
+            return None
 
 
 def update_file(fullpath):
@@ -211,7 +215,9 @@ def update_file(fullpath):
         dungeon_enemies = pattern_dungeonEnemies.search(file_text)[0]
         # Get true mob count table
         dungeon_id = get_dungeon_from_file_text(file_text)
-        true_mob_count = get_count_table(dungeon_id)
+        if not dungeon_id:
+            return
+        true_mob_count = get_count_table(dungeon_id, db)
         true_mob_count = fix_split_count_db(dungeon_id, true_mob_count)
         # Replace old MDT.dungeonEnemies[dungeonIndex] with new string containing true count
         dungeon_enemies_true_count = pattern_enemy_match.sub(lambda match: update_count(match, true_mob_count), dungeon_enemies)
@@ -219,7 +225,7 @@ def update_file(fullpath):
         # String containing only table MDT.dungeonTotalCount[dungeonIndex]
         total_count = pattern_dungeonTotalCount.search(file_text)[0]
         # Get true total count
-        true_total_count = get_total_count(dungeon_id)
+        true_total_count = get_total_count(dungeon_id, db)
         # Replace old count value with new true count
         true_count_string = pattern_count_value.sub(lambda match: update_total_count(match, true_total_count), total_count)
 
@@ -238,7 +244,7 @@ if __name__ == "__main__":
     # Get Parent from CriteriaTree by searching for CriteriaID as CriteriaID
     # There will be multiple parents, the correct ID will be the one where Description_lang contains "Challenge"
     pattern_dungeon_name = re.compile(r'MDT\.dungeonList\[dungeonIndex\] = L\[\"([\w\S ]+)\"]')
-    pattern_empty_dungeon_file = re.compile(r'MDT\.dungeonEnemies\[dungeonIndex\] = {\n}')
+    pattern_empty_dungeon_file = re.compile(r'MDT\.dungeonEnemies\[dungeonIndex\] = {\n?}')
     pattern_dungeonEnemies = re.compile(r"MDT\.dungeonEnemies\[dungeonIndex\] = \{[\s\S]*};")
     pattern_enemy_match = re.compile(r"{[\s\S]+?\"(id|count)\"\D*([\d]+).*[\s\S]+?\"(id|count)\"\D*([\d]+)[\s\S]+?}")
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
