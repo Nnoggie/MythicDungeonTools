@@ -453,6 +453,9 @@ if __name__ == "__main__":
 
     CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False,
                      on_bad_lines='skip')
+    ADVANCED_COMBAT_LOGGING = CL.loc[0, "sourceFlags"] == "1"
+    if not ADVANCED_COMBAT_LOGGING:
+        print("WARNING: Advanced combat logging was NOT enabled!")
     # Extracting the event from date and time, which are not comma separated
     timesplit = CL.timestampevent.str.split(" ")
     timesplitdf = pd.DataFrame.from_records(timesplit, columns=["date", "time", "remove", "event"])
