@@ -107,12 +107,12 @@ end
 local defaultSavedVars = {
   global = {
     toolbarExpanded = true,
-    currentSeason = 8,
+    currentSeason = 9,
     scale = 1,
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
     enemyStyle = 1,
-    currentDungeonIdx = 40,
+    currentDungeonIdx = 42,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -137,12 +137,12 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 4,
+    selectedDungeonList = 5,
     knownAffixWeeks = {},
   },
 }
 do
-  for i = 1, 80 do
+  for i = 1, 120 do
     defaultSavedVars.global.presets[i] = {
       [1] = { text = L["Default"], value = {}, objects = {},
         colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
@@ -171,7 +171,9 @@ do
       if not db.minimap.hide then
         icon:Show("MythicDungeonTools")
       end
-      if db.newDataCollectionActive then
+      local version = GetAddOnMetadata(AddonName, "Version")
+      local isAlpha = string.find(version, "Alpha")
+      if db.newDataCollectionActive or isAlpha then
         MDT.DataCollection:Init()
         MDT.DataCollection:InitHealthTrack()
       end
@@ -2033,7 +2035,7 @@ function MDT:SetPingOffsets(mapScale)
   local scale = 0.35
   local offset = (10.25 / 1000) * mapScale
   ---@diagnostic disable-next-line: redundant-parameter
-  MDT.ping:SetTransform(offset, offset, 0, 0, 0, 0, scale)
+  self.ping:SetTransform(CreateVector3D(offset, offset, 0), CreateVector3D(0, 0, 0), scale)
 end
 
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
@@ -4628,7 +4630,19 @@ function MDT:HardReset()
   ReloadUI()
 end
 
+MDT.modules = {}
+function MDT:RegisterModule(modulename, module)
+  MDT.modules[modulename] = module
+end
+
 function initFrames()
+
+  for _, module in pairs(MDT.modules) do
+    if module.OnInitialize then
+      module:OnInitialize()
+    end
+  end
+
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
   tinsert(UISpecialFrames, "MDTFrame")
 
@@ -4657,9 +4671,8 @@ function initFrames()
   main_frame.background:SetAlpha(0.2)
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
-  -- main_frame:SetMinResize(sizex * 0.75, sizey * 0.75)
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  -- main_frame:SetMaxResize(sizex * fullscreenScale, sizey * fullscreenScale)
+  main_frame:SetResizeBounds(sizex * 0.75, sizey * 0.75, sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
   main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)

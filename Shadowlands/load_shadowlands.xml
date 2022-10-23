@@ -1,9 +1,6 @@
 <!--
 Thank you to Stinth for the big help with the automatic mapping scripts!
 Also thanks to Mombe, Gemsplitter, Mendo, Kvisky, Zivils, Omny
-regex to replace names:
-\["creatureType"\] = (".*");
-\["creatureType"\] = L\[$1\];
 -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file='DeOtherSide.lua'/>
