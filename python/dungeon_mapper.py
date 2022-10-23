@@ -104,18 +104,20 @@ def get_npc_id(GUID):
     return int(GUID.split("-")[5])
 
 
-def get_additional_boss_info(name):
+def get_additional_boss_info(name, UiMapIDs):
     """Finds encounterID and instanceID associated with a boss
 
     Args:
         name (string): Boss name
+        UiMapIDs (list): List of all unique UiMapIDs from the combatlog
 
     Returns:
         int: encounterID associated with the boss
         int: instanceID associated with the boss
 
     """
-    boss = db["journalencounter"][db["journalencounter"].Name_lang == name]
+    boss = db["journalencounter"][((db["journalencounter"].Name_lang == name)
+                                    & (db["journalencounter"].UiMapID.isin(UiMapIDs)))]
     encounterID = int(boss.ID)
     instanceID = int(boss.JournalInstanceID)
     return encounterID, instanceID
@@ -593,7 +595,7 @@ if __name__ == "__main__":
 
         table_output += '    };\n'
         if npc.destName in boss_info.sourceName.to_list():
-            encounterID, instanceID = get_additional_boss_info(npc.destName)
+            encounterID, instanceID = get_additional_boss_info(npc.destName, unique_UiMapIDs)
             table_output += f'    ["isBoss"] = true;\n'
             table_output += f'    ["encounterID"] = {encounterID};\n'
             table_output += f'    ["instanceID"] = {instanceID};\n'
