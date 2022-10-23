@@ -2,6 +2,25 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 6
 MDT.dungeonList[dungeonIndex] = L["Halls of Valor"]
+MDT.mapInfo[dungeonIndex] = {
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 89.457192425912;
+      verticalPan = 71.813251807696;
+    };
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 57.336695007874;
+      verticalPan = 51.264758196579;
+    };
+    [3] = {
+      zoomScale = 2.1999998092651;
+      horizontalPan = 235.01032882171;
+      verticalPan = 302.72723590221;
+    };
+  }
+};
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "Hallsofvalor",
@@ -14,6 +33,51 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [2] = L["Field of the Eternal Hunt"],
   [3] = L["Halls of Valor Sublevel"],
 }
+
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 329.23456681436;
+      ["y"] = -413.43617620588;
+      ["target"] = 2;
+      ["direction"] = -2;
+      ["connectionIndex"] = 1;
+    };
+    [2] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 402.40915092487;
+      ["y"] = -421.51943213215;
+      ["target"] = 3;
+      ["direction"] = -1;
+      ["connectionIndex"] = 2;
+    };
+  };
+  [2] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 581.30357701612;
+      ["y"] = -152.09241810794;
+      ["target"] = 1;
+      ["direction"] = 2;
+      ["connectionIndex"] = 1;
+    };
+  };
+  [3] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 432.53122827353;
+      ["y"] = -339.17912358901;
+      ["target"] = 1;
+      ["direction"] = 1;
+      ["connectionIndex"] = 2;
+    };
+  };
+};
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 126, teeming = 151, teemingEnabled = true }
 
