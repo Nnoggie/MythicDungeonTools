@@ -1,3 +1,9 @@
+v4.0.0.8-Alpha
+- removed keybindings to avoid taint
+- removed settings in blizzard interface options to avoid taint
+- minimap button option has been moved into the options window
+- Halls of Valor mapping
+- fixed notes
 v4.0.0.7-Alpha
 - toc update
 v4.0.0.6-Alpha
