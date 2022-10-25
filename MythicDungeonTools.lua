@@ -19,6 +19,22 @@ MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local minimapIcon = LibStub("LibDBIcon-1.0")
+
+function MDT:HideMinimapButton()
+  db.minimap.hide = true
+  minimapIcon:Hide("MythicDungeonTools")
+  -- update the checkbox in settings
+  MDT.main_frame.minimapCheckbox:SetValue(false)
+  print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+end
+
+function MDT:ShowMinimapButton()
+  db.minimap.hide = false
+  minimapIcon:Show("MythicDungeonTools")
+  -- update the checkbox in settings
+  MDT.main_frame.minimapCheckbox:SetValue(true)
+end
+
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   type = "data source",
   text = "Mythic Dungeon Tools",
@@ -31,9 +47,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
         minimapIcon:Lock("MythicDungeonTools")
       end
     elseif (buttonPressed == 'MiddleButton') then
-      db.minimap.hide = true
-      minimapIcon:Hide("MythicDungeonTools")
-      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+      MDT:HideMinimapButton()
     else
       MDT:ShowInterface()
     end
@@ -72,12 +86,10 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     end
     MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
   elseif rqst == "minimap" then
-    db.minimap.hide = not db.minimap.hide
-    if not db.minimap.hide then
-      minimapIcon:Show("MythicDungeonTools")
+    if db.minimap.hide then
+      MDT:ShowMinimapButton()
     else
-      minimapIcon:Hide("MythicDungeonTools")
-      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+      MDT:HideMinimapButton()
     end
   else
     MDT:ShowInterface()
