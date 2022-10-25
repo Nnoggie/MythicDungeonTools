@@ -1,3 +1,5 @@
+v4.0.1.1
+- fix toc
 v4.0.1.0
 - prepatch release
 v4.0.0.8-Alpha
