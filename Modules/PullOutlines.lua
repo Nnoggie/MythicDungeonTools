@@ -60,16 +60,12 @@ end
 local function centroid(pts)
   local rx = 0
   local ry = 0
-
-  local area = area(pts)
-  for i = 1, #pts - 1 do
-    rx = rx + ((pts[i][1] + pts[i + 1][1]) * ((pts[i][1] * pts[i + 1][2]) - (pts[i + 1][1] * pts[i][2])))
-    ry = ry + ((pts[i][2] + pts[i + 1][2]) * ((pts[i][1] * pts[i + 1][2]) - (pts[i + 1][1] * pts[i][2])))
+  for k, v in pairs(pts) do
+    rx = rx + v[1]
+    ry = ry + v[2]
   end
-  rx = rx + ((pts[#pts][1] + pts[1][1]) * ((pts[#pts][1] * pts[1][2]) - (pts[1][1] * pts[#pts][2])))
-  ry = ry + ((pts[#pts][2] + pts[1][2]) * ((pts[#pts][1] * pts[1][2]) - (pts[1][1] * pts[#pts][2])))
-  rx = rx / (area * 6)
-  ry = ry / (area * 6)
+  rx = rx / #pts
+  ry = ry / #pts
   return { rx, ry }
 end
 
@@ -100,7 +96,7 @@ local texturePool = {}
 local function getTexture()
   local size = tgetn(texturePool)
   if size == 0 then
-    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else
     local tex = texturePool[size]
     tremove(texturePool, size)
@@ -124,6 +120,77 @@ function MDT:ReleaseHullTextures()
     releaseTexture(tex)
   end
   twipe(activeTextures)
+end
+
+--make a pool for fontStrings
+local activeFontStrings = {}
+local fontStringPool = {}
+local frameIndex = 0
+local function getFontString()
+  local size = tgetn(fontStringPool)
+  if size == 0 then
+    local fsFrame = CreateFrame("Frame", "MDTFontStringContainerFrame" .. frameIndex, MDT.main_frame.mapPanelFrame)
+    frameIndex = frameIndex + 1
+    fsFrame:SetFrameStrata("HIGH")
+    fsFrame:SetFrameLevel(100)
+    fsFrame:SetWidth(40)
+    fsFrame:SetHeight(40)
+    local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
+    fs:SetPoint("CENTER", 0, 0)
+    fs:SetJustifyH("CENTER")
+    fs:SetJustifyV("MIDDLE")
+    fs:SetTextColor(1, 1, 1, 1)
+    fs:SetFontObject("GameFontNormalMed3Outline")
+    fsFrame.fs = fs
+    return fsFrame
+  else
+    local fsFrame = fontStringPool[size]
+    tremove(fontStringPool, size)
+    fsFrame.fs:SetText("")
+    return fsFrame
+  end
+end
+
+local function releaseFontString(fsFrame)
+  fsFrame:Hide()
+  tinsert(fontStringPool, fsFrame)
+end
+
+function MDT:ReleaseHullFontStrings()
+  for k, fsFrame in pairs(activeFontStrings) do
+    releaseFontString(fsFrame)
+  end
+  twipe(activeFontStrings)
+end
+
+function MDT:DrawHullFontString(hull, pullIdx)
+  --2. get centroid of each pull
+  local center
+  if hull and hull[#hull] then
+    if #hull > 2 then
+      center = centroid(hull)
+      center[1] = center[1]
+      center[2] = center[2]
+    elseif #hull == 2 then
+      local x1 = hull[1][1]
+      local y1 = hull[1][2]
+      local x2 = hull[2][1]
+      local y2 = hull[2][2]
+      center = { (x1 + x2) / 2, (y1 + y2) / 2 }
+    elseif #hull == 1 then
+      local x1 = hull[1][1]
+      local y1 = hull[1][2]
+      center = { x1, y1 + 15 }
+    end
+  end
+  if not center then return end
+  local fsFrame = getFontString()
+  fsFrame.fs:SetText(pullIdx)
+  fsFrame:ClearAllPoints()
+  fsFrame:SetSize(40, 40)
+  fsFrame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", center[1], center[2])
+  fsFrame:Show()
+  tinsert(activeFontStrings, fsFrame)
 end
 
 function MDT:DrawHullCircle(x, y, size, color, layer, layerSublevel)
@@ -197,6 +264,7 @@ end
 
 function MDT:DrawAllHulls(pulls)
   MDT:ReleaseHullTextures()
+  MDT:ReleaseHullFontStrings()
   local preset = MDT:GetCurrentPreset()
   local blips = MDT:GetDungeonEnemyBlips()
   local vertices
@@ -205,6 +273,7 @@ function MDT:DrawAllHulls(pulls)
     local r, g, b = MDT:DungeonEnemies_GetPullColor(pullIdx, pulls)
     vertices = getPullVertices(p, blips)
     MDT:DrawHull(vertices, { r = r, g = g, b = b, a = 1 }, pullIdx)
+    MDT:DrawHullFontString(vertices, pullIdx)
   end
 end
 

@@ -142,7 +142,7 @@ local function POI_SetOptions(frame, type, poi)
     end
     local scale = MDT:GetScale()
     frame.textString:SetFontObject("GameFontNormal")
-    frame.textString:SetFont(frame.textString:GetFont(), 5 * poiScale * scale, "OUTLINE")
+    frame.textString:SetFont(frame.textString:GetFont(), 5 * poiScale * scale, "OUTLINE", "")
     frame.textString:SetPoint("BOTTOM", frame, "BOTTOM", 0, 4 * scale)
     frame.textString:SetText("")
     frame:SetScript("OnMouseUp", function(self, button)
@@ -572,7 +572,7 @@ local function POI_SetOptions(frame, type, poi)
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip_SetTitle(GameTooltip, L["ironDocksIronStar"] .. " " .. poi.starIndex)
       GameTooltip:AddTexture(450907)
-      GameTooltip:AddSpellByID(167299)
+      GameTooltip:SetSpellByID(167299)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
@@ -582,6 +582,31 @@ local function POI_SetOptions(frame, type, poi)
     end)
 
   end
+
+  if type == "textFrame" then
+    frame:SetSize(18, 18)
+    frame.Texture:SetTexture(nil)
+    frame.HighlightTexture:SetTexture(nil)
+    frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+    frame.playerAssignmentString:ClearAllPoints()
+    frame.playerAssignmentString:SetFontObject("GameFontNormalMed3Outline")
+    frame.playerAssignmentString:SetJustifyH("CENTER")
+    frame.playerAssignmentString:SetJustifyV("CENTER")
+    frame.playerAssignmentString:SetPoint("CENTER", frame, "CENTER", 0, 0)
+    frame.playerAssignmentString:SetTextColor(1, 1, 0, 1)
+    frame.playerAssignmentString:SetText(poi.text)
+    frame.playerAssignmentString:SetScale(2)
+    frame.playerAssignmentString:Show()
+  end
+
+  if type == "worldMarker" then
+    frame:SetSize(18, 18)
+    frame.Texture:SetSize(18, 18)
+    frame.Texture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
+    frame.HighlightTexture:SetSize(18, 18)
+    frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
+  end
+
   --fullscreen sizes
   local scale = MDT:GetScale()
   frame:SetSize(frame:GetWidth() * scale, frame:GetHeight() * scale)

@@ -93,7 +93,7 @@ local function Constructor()
   button.dgroup = nil;
   button.data = {};
 
-  local background = button:CreateTexture(nil, "BACKGROUND");
+  local background = button:CreateTexture(nil, "BACKGROUND", nil, 0);
   button.background = background;
   background:SetTexture("Interface\\BUTTONS\\UI-Listbox-Highlight2.blp");
   background:SetBlendMode("ADD");

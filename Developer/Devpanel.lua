@@ -137,6 +137,7 @@ local currentTeeming
 local currentInspiring
 local currentPatrol
 local currentBossEnemyIdx = 1
+local currentCloneScale
 ---CreateDevPanel
 ---Creates the dev panel which contains buttons to add npcs, objects to the map
 function MDT:CreateDevPanel(frame)
@@ -307,12 +308,42 @@ function MDT:CreateDevPanel(frame)
         end,
       },
       [8] = {
+        text = "Text Frame",
+        func = function()
+          if not MDT.mapPOIs[db.currentDungeonIdx] then MDT.mapPOIs[db.currentDungeonIdx] = {} end
+          if not MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] then
+            MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] = {}
+          end
+          local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+          local posx, posy = 430, -250
+          local text = option5:GetText()
+          tinsert(pois,
+            { x = posx, y = posy, template = "MapLinkPinTemplate", type = "textFrame", text = text })
+          MDT:POI_UpdateAll()
+        end,
+      },
+      [9] = {
+        text = "World Marker",
+        func = function()
+          if not MDT.mapPOIs[db.currentDungeonIdx] then MDT.mapPOIs[db.currentDungeonIdx] = {} end
+          if not MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] then
+            MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] = {}
+          end
+          local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+          local posx, posy = 430, -250
+          local index = tonumber(option5:GetText())
+          tinsert(pois,
+            { x = posx, y = posy, template = "MapLinkPinTemplate", type = "worldMarker", index = index })
+          MDT:POI_UpdateAll()
+        end,
+      },
+      [10] = {
         text = "Export Zoom Settings",
         func = function()
           MDT:ExportCurrentZoomPanSettings()
         end,
       },
-      [9] = {
+      [11] = {
         text = "Export to LUA",
         func = function()
           local export = MDT:ExportLuaTable(MDT.mapPOIs[db.currentDungeonIdx], MDT:GetSchema("pois"))
@@ -731,6 +762,7 @@ function MDT:CreateDevPanel(frame)
     if currentBlip then
       cloneGroup:SetText(currentBlip.clone.g)
       currentCloneGroup = currentBlip.clone.g
+      currentCloneScale = currentBlip.clone.scale
       teemingCheckbox:SetValue(currentBlip.clone.teeming)
       inspiringCheckbox:SetValue(currentBlip.clone.inspiring)
       currentTeeming = currentBlip.clone.teeming
@@ -1135,7 +1167,8 @@ function MDT:AddCloneAtCursorPosition()
     cursorx = cursorx * (1 / scale)
     cursory = cursory * (1 / scale)
     tinsert(data.clones,
-      { x = cursorx, y = cursory, sublevel = MDT:GetCurrentSubLevel(), g = currentCloneGroup, teeming = currentTeeming })
+      { x = cursorx, y = cursory, sublevel = MDT:GetCurrentSubLevel(), g = currentCloneGroup, teeming = currentTeeming,
+        scale = currentCloneScale })
     print(string.format("MDT: Created clone %s %d at %d,%d", data.name, #data.clones, cursorx, cursory))
     MDT:UpdateMap()
   end

@@ -16,7 +16,7 @@ function MDT:Maximize()
   if not f.blackoutFrame then
     f.blackoutFrame = CreateFrame("Frame", "MDTBlackoutFrame", f)
     f.blackoutFrame:EnableMouse(true)
-    f.blackoutFrameTex = f.blackoutFrame:CreateTexture(nil, "BACKGROUND")
+    f.blackoutFrameTex = f.blackoutFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     f.blackoutFrameTex:SetAllPoints()
     f.blackoutFrameTex:SetDrawLayer(canvasDrawLayer, -6)
     f.blackoutFrameTex:SetColorTexture(0.058823399245739, 0.058823399245739, 0.058823399245739, 1)
@@ -24,8 +24,8 @@ function MDT:Maximize()
     f.blackoutFrame:SetAllPoints(UIParent)
   end
   f.blackoutFrame:Show()
-  f.topPanel:RegisterForDrag(nil)
-  f.bottomPanel:RegisterForDrag(nil)
+  f.topPanel:SetMouseClickEnabled(false)
+  f.bottomPanel:SetMouseClickEnabled(false)
   local newSizex, newSizey, scale, isNarrow = MDT:GetFullScreenSizes()
   db.scale = scale
   f:ClearAllPoints()
@@ -72,8 +72,8 @@ function MDT:Minimize()
   local oldSizeX = f.scrollFrame:GetWidth()
   local oldSizeY = f.scrollFrame:GetHeight()
   if f.blackoutFrame then f.blackoutFrame:Hide() end
-  f.topPanel:RegisterForDrag("LeftButton")
-  f.bottomPanel:RegisterForDrag("LeftButton")
+  f.topPanel:SetMouseClickEnabled(true)
+  f.bottomPanel:SetMouseClickEnabled(true)
   db.scale = db.nonFullscreenScale
   local newSizex = sizex * db.scale
   local newSizey = sizey * db.scale

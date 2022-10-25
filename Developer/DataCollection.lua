@@ -3,6 +3,18 @@ local db
 local f
 local MDT = MDT
 
+-- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
+local dungeonsToTrack = {
+  [1] = 42,
+  [2] = 43,
+  [3] = 44,
+  [4] = 45,
+  [5] = 6,
+  [6] = 3,
+  [7] = 46,
+  [8] = 47,
+}
+
 MDT.DataCollection = {}
 local DC = MDT.DataCollection
 function DC:Init()
@@ -20,6 +32,10 @@ function DC:Init()
     return DC[event](self, ...)
   end)
 
+  -- add already collected spells to the data
+  for k, dungeonIndex in pairs(dungeonsToTrack) do
+    DC:AddCollectedDataToEnemyTable(dungeonIndex)
+  end
 end
 
 function DC:AddCollectedDataToEnemyTable(dungeonIndex, ignoreSpells, ignoreCC)
@@ -185,18 +201,6 @@ function DC.PLAYER_ENTERING_WORLD(self, ...)
   if C_ChallengeMode.IsChallengeModeActive() then return end
   cmsTimeStamp = nil
 end
-
--- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
-local dungeonsToTrack = {
-  [1] = 40,
-  [2] = 41,
-  [3] = 37,
-  [4] = 38,
-  [5] = 25,
-  [6] = 26,
-  [7] = 9,
-  [8] = 10,
-}
 
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
   local timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool = CombatLogGetCurrentEventInfo()

@@ -71,7 +71,7 @@
 
             <Layer level="ARTWORK">
 
-                <Texture name="$parent_SelectedHighlight" textureSubLevel="6" hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
+                <Texture name="$parent_SelectedHighlight" hidden="true" parentKey="texture_SelectedHighlight" file="Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
                     <TexCoords left="0.69" right="0.81" top="0.39" bottom="0.333"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
@@ -85,7 +85,7 @@
                         <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
-                <Texture name="$parent_Reaping" textureSubLevel="7" hidden="true" parentKey="texture_Reaping" file = "Interface\Icons\ability_warlock_improvedsoulleech" >
+                <Texture name="$parent_Reaping" hidden="true" parentKey="texture_Reaping" file = "Interface\Icons\ability_warlock_improvedsoulleech" >
                     <Color r="0" g="0" b="0" a="0"/>
                     <Anchors>
                         <Anchor point="TOP">

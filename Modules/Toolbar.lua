@@ -19,7 +19,7 @@ function MDT:initToolbar(frame)
   frame.toolbar = CreateFrame("Frame", "MDTToolbarFrame", frame)
   frame.toolbar:SetFrameStrata("HIGH")
   frame.toolbar:SetFrameLevel(5)
-  frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "HIGH", nil, 6)
+  frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "OVERLAY", nil, 6)
   frame.toolbar.tex:SetAllPoints()
   frame.toolbar.tex:SetColorTexture(unpack(MDT.BackdropColor))
   frame.toolbar.toggleButton = CreateFrame("Button", nil, frame);
@@ -97,7 +97,7 @@ function MDT:initToolbar(frame)
     self:PresetObjectStepBack()
   end)
   back.tooltipText = L["Undo"]
-  local t = back.frame:CreateTexture(nil, "ARTWORK")
+  local t = back.frame:CreateTexture(nil, "ARTWORK", nil, 0)
   back.frame:SetHighlightTexture(t)
   tinsert(widgets, back)
 
@@ -287,7 +287,7 @@ local notePoolCollection
 local function getTexture()
   local size = tgetn(texturePool)
   if size == 0 then
-    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY")
+    return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else
     local tex = texturePool[size]
     tremove(texturePool, size)
@@ -320,7 +320,7 @@ function MDT:CreateBrushPreview(frame)
   frame.brushPreview:SetFrameStrata("HIGH")
   frame.brushPreview:SetFrameLevel(4)
   frame.brushPreview:SetSize(1, 1)
-  frame.brushPreview.tex = frame.brushPreview:CreateTexture(nil, "OVERLAY")
+  frame.brushPreview.tex = frame.brushPreview:CreateTexture(nil, "OVERLAY", nil, 0)
   frame.brushPreview.tex:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\ring")
   frame.brushPreview.tex:SetAllPoints()
 end
@@ -396,7 +396,7 @@ function MDT:UpdateSelectedToolbarTool(widgetName)
   end
   local widget = toolbarTools[widgetName]
   currentTool = widgetName
-  toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil, "HIGH", nil, 7)
+  toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil, "OVERLAY", nil, 7)
   toolbar.highlight:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons")
   toolbar.highlight:SetTexCoord(0.5, 0.75, 0.25, 0.5)
   toolbar.highlight:SetSize(widget.frame:GetWidth(), widget.frame:GetWidth())
@@ -454,7 +454,7 @@ function MDT:OverrideScrollframeScripts()
   --make notes draggable
   if notePoolCollection then
     if currentTool == "mover" then
-      for note, _ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+      for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
         note:SetMovable(true)
         note:RegisterForDrag("LeftButton")
         local xOffset, yOffset
@@ -489,7 +489,7 @@ function MDT:OverrideScrollframeScripts()
         end)
       end
     else
-      for note, _ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+      for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
         note:SetMovable(false)
         note:RegisterForDrag()
       end
@@ -506,7 +506,7 @@ function MDT:RestoreScrollframeScripts()
   frame.scrollFrame:SetScript("OnMouseUp", MDT.OnMouseUp)
   --make notes not draggable
   if notePoolCollection then
-    for note, _ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+    for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
       note:SetMovable(false)
       note:RegisterForDrag()
     end
@@ -813,7 +813,7 @@ function MDT:HideAllPresetObjects()
   end
   --notes
   if notePoolCollection then
-    local notes = notePoolCollection.pools.QuestPinTemplate.activeObjects
+    local notes = notePoolCollection.pools.QuestPinTemplatenil.activeObjects
     for note, _ in pairs(notes) do
       note:Hide()
     end
@@ -913,7 +913,7 @@ end
 ---StartNoteDrawing
 function MDT:StartNoteDrawing()
   --check if we have less than 25 notes
-  if notePoolCollection and notePoolCollection.pools.QuestPinTemplate.numActiveObjects > 24 then
+  if notePoolCollection and notePoolCollection.pools.QuestPinTemplatenil.numActiveObjects > 24 then
     MDT:UpdateSelectedToolbarTool()
     return
   end
@@ -1018,7 +1018,7 @@ local function makeNoteEditbox()
   editbox.multiBox:SetLabel(L["Note Text:"])
 
   editbox.multiBox:SetCallback("OnEnterPressed", function(widget, callbackName, text)
-    for note, _ in pairs(notePoolCollection.pools.QuestPinTemplate.activeObjects) do
+    for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
       if note.noteIdx == editbox.noteIdx then
         note.tooltipText = text
         updateNoteObjText(text, note)
@@ -1096,7 +1096,10 @@ function MDT:DrawNote(x, y, text, objectIndex)
   local scale = MDT:GetScale()
   --setup
   local note = notePoolCollection:Acquire("QuestPinTemplate")
-  note.noteIdx = notePoolCollection.pools.QuestPinTemplate.numActiveObjects
+  -- FramePoolCollection_GetPoolKey is concatenating the sixth argument of CreatePool ("specialization").
+  -- This naive approach is just using toString on any value, even nil, which results in "nil" as a string.
+  -- Because of this our pool key is "QuestPinTemplatenil" instead of "QuestPinTemplate".
+  note.noteIdx = notePoolCollection.pools.QuestPinTemplatenil.numActiveObjects
   note.objectIndex = objectIndex
   note:ClearAllPoints()
   note:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)

@@ -18,7 +18,23 @@ MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0
 
 local AceGUI = LibStub("AceGUI-3.0")
 local db
-local icon = LibStub("LibDBIcon-1.0")
+local minimapIcon = LibStub("LibDBIcon-1.0")
+
+function MDT:HideMinimapButton()
+  db.minimap.hide = true
+  minimapIcon:Hide("MythicDungeonTools")
+  -- update the checkbox in settings
+  MDT.main_frame.minimapCheckbox:SetValue(false)
+  print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+end
+
+function MDT:ShowMinimapButton()
+  db.minimap.hide = false
+  minimapIcon:Show("MythicDungeonTools")
+  -- update the checkbox in settings
+  MDT.main_frame.minimapCheckbox:SetValue(true)
+end
+
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   type = "data source",
   text = "Mythic Dungeon Tools",
@@ -26,14 +42,12 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   OnClick = function(button, buttonPressed)
     if buttonPressed == "RightButton" then
       if db.minimap.lock then
-        icon:Unlock("MythicDungeonTools")
+        minimapIcon:Unlock("MythicDungeonTools")
       else
-        icon:Lock("MythicDungeonTools")
+        minimapIcon:Lock("MythicDungeonTools")
       end
     elseif (buttonPressed == 'MiddleButton') then
-      db.minimap.hide = true
-      icon:Hide("MythicDungeonTools")
-      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+      MDT:HideMinimapButton()
     else
       MDT:ShowInterface()
     end
@@ -72,12 +86,10 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     end
     MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
   elseif rqst == "minimap" then
-    db.minimap.hide = not db.minimap.hide
-    if not db.minimap.hide then
-      icon:Show("MythicDungeonTools")
+    if db.minimap.hide then
+      MDT:ShowMinimapButton()
     else
-      icon:Hide("MythicDungeonTools")
-      print(L["MDT: Use /mdt minimap to show the minimap icon again"])
+      MDT:HideMinimapButton()
     end
   else
     MDT:ShowInterface()
@@ -107,12 +119,12 @@ end
 local defaultSavedVars = {
   global = {
     toolbarExpanded = true,
-    currentSeason = 8,
+    currentSeason = 9,
     scale = 1,
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
     enemyStyle = 1,
-    currentDungeonIdx = 40,
+    currentDungeonIdx = 42,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -137,12 +149,12 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 4,
+    selectedDungeonList = 5,
     knownAffixWeeks = {},
   },
 }
 do
-  for i = 1, 80 do
+  for i = 1, 120 do
     defaultSavedVars.global.presets[i] = {
       [1] = { text = L["Default"], value = {}, objects = {},
         colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
@@ -167,11 +179,13 @@ do
   function MDT.ADDON_LOADED(self, addon)
     if addon == "MythicDungeonTools" then
       db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
-      icon:Register("MythicDungeonTools", LDB, db.minimap)
+      minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
       if not db.minimap.hide then
-        icon:Show("MythicDungeonTools")
+        minimapIcon:Show("MythicDungeonTools")
       end
-      if db.newDataCollectionActive then
+      local version = GetAddOnMetadata(AddonName, "Version")
+      local isAlpha = string.find(version, "Alpha")
+      if db.newDataCollectionActive or isAlpha then
         MDT.DataCollection:Init()
         MDT.DataCollection:InitHealthTrack()
       end
@@ -195,8 +209,6 @@ do
           if v <= 0 then db.currentPreset[k] = 1 end
         end
       end
-      --register AddOn Options
-      MDT:RegisterOptions()
       eventFrame:UnregisterEvent("ADDON_LOADED")
     elseif addon == "Blizzard_ChallengesUI" then
       eventFrame:UnregisterEvent("ADDON_LOADED")
@@ -262,6 +274,8 @@ local affixWeeks = {
 }
 
 function MDT:UpdateAffixWeeks()
+  -- TODO: Fix this at some point
+  if true then return end
   -- The idea is to know the season start date: season_start
   -- Then from current time calculate which week in the affix rotation is live
   -- By doing this weekly you can populate the entire affix weeks rotation
@@ -365,6 +379,7 @@ function MDT:ShowInterface(force)
     return
   end
   if not framesInitialized then initFrames() end
+  if not framesInitialized then return end
   if self.main_frame:IsShown() and not force then
     MDT:HideInterface()
   else
@@ -418,7 +433,7 @@ function MDT:CreateMenu()
   local liveReturnButton = self.main_frame.liveReturnButton
   liveReturnButton:ClearAllPoints()
   liveReturnButton:SetPoint("RIGHT", self.main_frame.topPanel, "RIGHT", 0, 0)
-  liveReturnButton.Icon = liveReturnButton:CreateTexture(nil, "OVERLAY")
+  liveReturnButton.Icon = liveReturnButton:CreateTexture(nil, "OVERLAY", nil, 0)
   liveReturnButton.Icon:SetTexture("Interface\\Buttons\\UI-RefreshButton")
   liveReturnButton.Icon:SetSize(16, 16)
   liveReturnButton.Icon:SetTexCoord(1, 0, 0, 1) --flipped image
@@ -433,7 +448,7 @@ function MDT:CreateMenu()
   local setLivePresetButton = self.main_frame.setLivePresetButton
   setLivePresetButton:ClearAllPoints()
   setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
-  setLivePresetButton.Icon = setLivePresetButton:CreateTexture(nil, "OVERLAY")
+  setLivePresetButton.Icon = setLivePresetButton:CreateTexture(nil, "OVERLAY", nil, 0)
   setLivePresetButton.Icon:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
   setLivePresetButton.Icon:SetSize(16, 16)
   setLivePresetButton.Icon:SetPoint("CENTER", setLivePresetButton, "CENTER")
@@ -466,19 +481,19 @@ function MDT:CreateMenu()
     self:CreateTutorialButton(self.main_frame)
     self.main_frame:SetScript("OnSizeChanged", function() end)
   end)
-  local normal = resizer:CreateTexture(nil, "OVERLAY")
+  local normal = resizer:CreateTexture(nil, "OVERLAY", nil, 0)
   normal:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
   normal:SetTexCoord(0, 1, 0, 1)
   normal:SetPoint("BOTTOMLEFT", resizer, 0, 6)
   normal:SetPoint("TOPRIGHT", resizer, -6, 0)
   resizer:SetNormalTexture(normal)
-  local pushed = resizer:CreateTexture(nil, "OVERLAY")
+  local pushed = resizer:CreateTexture(nil, "OVERLAY", nil, 0)
   pushed:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
   pushed:SetTexCoord(0, 1, 0, 1)
   pushed:SetPoint("BOTTOMLEFT", resizer, 0, 6)
   pushed:SetPoint("TOPRIGHT", resizer, -6, 0)
   resizer:SetPushedTexture(pushed)
-  local highlight = resizer:CreateTexture(nil, "OVERLAY")
+  local highlight = resizer:CreateTexture(nil, "OVERLAY", nil, 0)
   highlight:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
   highlight:SetTexCoord(0, 1, 0, 1)
   highlight:SetPoint("BOTTOMLEFT", resizer, 0, 6)
@@ -641,7 +656,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame:SetMovable(true)
   if frame.topPanel == nil then
     frame.topPanel = CreateFrame("Frame", "MDTTopPanel", frame)
-    frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND")
+    frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND", nil, 0)
     frame.topPanelTex:SetAllPoints()
     frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
     frame.topPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
@@ -658,8 +673,8 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString:ClearAllPoints()
     frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 10, 0)
     frame.topPanelString:Show()
-    --frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
-    frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "HIGH", nil, 7)
+    frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
+    frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "ARTWORK", nil, 7)
     frame.topPanelLogo:SetTexture("Interface\\AddOns\\" .. AddonName .. "\\Textures\\Nnoggie")
     frame.topPanelLogo:SetWidth(24)
     frame.topPanelLogo:SetHeight(24)
@@ -693,7 +708,7 @@ function MDT:MakeTopBottomTextures(frame)
 
   if frame.bottomPanel == nil then
     frame.bottomPanel = CreateFrame("Frame", "MDTBottomPanel", frame)
-    frame.bottomPanelTex = frame.bottomPanel:CreateTexture(nil, "BACKGROUND")
+    frame.bottomPanelTex = frame.bottomPanel:CreateTexture(nil, "BACKGROUND", nil, 0)
     frame.bottomPanelTex:SetAllPoints()
     frame.bottomPanelTex:SetDrawLayer(canvasDrawLayer, -5)
     frame.bottomPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
@@ -747,7 +762,7 @@ function MDT:MakeSidePanel(frame)
 
   if frame.sidePanel == nil then
     frame.sidePanel = CreateFrame("Frame", "MDTSidePanel", frame)
-    frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND")
+    frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND", nil, 0)
     frame.sidePanelTex:SetAllPoints()
     frame.sidePanelTex:SetDrawLayer(canvasDrawLayer, -5)
     frame.sidePanelTex:SetColorTexture(unpack(MDT.BackdropColor))
@@ -761,7 +776,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, -30)
 
   frame.sidePanelString = frame.sidePanel:CreateFontString("MDTSidePanelText")
-  frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10)
+  frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10, "")
   frame.sidePanelString:SetTextColor(1, 1, 1, 1)
   frame.sidePanelString:SetJustifyH("LEFT")
   frame.sidePanelString:SetJustifyV("TOP")
@@ -842,7 +857,7 @@ function MDT:MakeSidePanel(frame)
   if not fontInstance then return end
   fontInstance:CopyFontObject(frame.sidePanelNewButton.frame:GetNormalFontObject())
   local fontName, height = fontInstance:GetFont()
-  fontInstance:SetFont(fontName, 10)
+  fontInstance:SetFont(fontName, 10, "")
   frame.sidePanelNewButton.frame:SetNormalFontObject(fontInstance)
   frame.sidePanelNewButton.frame:SetHighlightFontObject(fontInstance)
   frame.sidePanelNewButton.frame:SetDisabledFontObject(fontInstance)
@@ -1098,39 +1113,22 @@ function MDT:MakeSidePanel(frame)
   frame.MDIButton.frame:SetScript("OnLeave", function()
   end)
 
-  --AutomaticColorsCheckbox
-  frame.AutomaticColorsCheckSidePanel = AceGUI:Create("CheckBox")
-  frame.AutomaticColorsCheckSidePanel:SetLabel(L["Automatically color pulls"])
-  frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-  frame.AutomaticColorsCheckSidePanel:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.colorPaletteInfo.autoColoring = value
-    MDT:SetPresetColorPaletteInfo()
-    frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-    if value == true then
-      frame.toggleForceColorBlindMode:SetDisabled(false)
-      MDT:ColorAllPulls()
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
-    else
-      frame.toggleForceColorBlindMode:SetDisabled(true)
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
-    end
-  end)
-  --AutomaticColorsCogwheel
-  frame.AutomaticColorsCogwheel = AceGUI:Create("Icon")
-  local colorCogwheel = frame.AutomaticColorsCogwheel
-  colorCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
-  colorCogwheel:SetImageSize(25, 25)
-  colorCogwheel:SetWidth(30)
-  colorCogwheel:SetCallback("OnEnter", function(...)
-    GameTooltip:SetOwner(colorCogwheel.frame, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(L["Click to adjust color settings"], 1, 1, 1)
+  --Settings cogwheel
+  frame.settingsCogwheel = AceGUI:Create("Icon")
+  local settinggsCogwheel = frame.settingsCogwheel
+  settinggsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
+  settinggsCogwheel:SetImageSize(25, 25)
+  settinggsCogwheel:SetWidth(30)
+  settinggsCogwheel:SetCallback("OnEnter", function(...)
+    GameTooltip:SetOwner(settinggsCogwheel.frame, "ANCHOR_CURSOR")
+    GameTooltip:AddLine(L["openSettingsTooltip"], 1, 1, 1)
     GameTooltip:Show()
   end)
-  colorCogwheel:SetCallback("OnLeave", function(...)
+  settinggsCogwheel:SetCallback("OnLeave", function(...)
     GameTooltip:Hide()
   end)
-  colorCogwheel:SetCallback("OnClick", function(...)
-    self:OpenAutomaticColorsDialog()
+  settinggsCogwheel:SetCallback("OnClick", function(...)
+    self:OpenSettingsDialog()
   end)
 
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
@@ -1141,9 +1139,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-  --frame.sidePanel.WidgetGroup:AddChild(frame.MDIButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCheckSidePanel)
-  frame.sidePanel.WidgetGroup:AddChild(frame.AutomaticColorsCogwheel)
+  frame.sidePanel.WidgetGroup:AddChild(frame.settingsCogwheel)
 
   --Week Dropdown (Infested / Affixes)
   local function makeAffixString(week, affixes, longText)
@@ -1410,7 +1406,7 @@ function MDT:DisplayMDISelector()
     end
 
     MDT.MDISelector:SetLayout("Flow")
-    MDT.MDISelector.frame.bg = MDT.MDISelector.frame:CreateTexture(nil, "BACKGROUND")
+    MDT.MDISelector.frame.bg = MDT.MDISelector.frame:CreateTexture(nil, "BACKGROUND", nil, 0)
     MDT.MDISelector.frame.bg:SetAllPoints(MDT.MDISelector.frame)
     MDT.MDISelector.frame.bg:SetColorTexture(unpack(MDT.BackdropColor))
     MDT.MDISelector:SetWidth(145)
@@ -2031,7 +2027,7 @@ function MDT:SetPingOffsets(mapScale)
   local scale = 0.35
   local offset = (10.25 / 1000) * mapScale
   ---@diagnostic disable-next-line: redundant-parameter
-  MDT.ping:SetTransform(offset, offset, 0, 0, 0, 0, scale)
+  self.ping:SetTransform(CreateVector3D(offset, offset, 0), CreateVector3D(0, 0, 0), scale)
 end
 
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
@@ -2206,7 +2202,7 @@ function MDT:MakeMapTexture(frame)
 
     --create the 12 tiles and set the scrollchild
     for i = 1, 12 do
-      frame["mapPanelTile" .. i] = frame.mapPanelFrame:CreateTexture("MDTmapPanelTile" .. i, "BACKGROUND")
+      frame["mapPanelTile" .. i] = frame.mapPanelFrame:CreateTexture("MDTmapPanelTile" .. i, "BACKGROUND", nil, 0)
       frame["mapPanelTile" .. i]:SetDrawLayer(canvasDrawLayer, 0)
       --frame["mapPanelTile"..i]:SetAlpha(0.3)
       frame["mapPanelTile" .. i]:SetSize(frame:GetWidth() / 4 + (5 * db.scale), frame:GetWidth() / 4 + (5 * db.scale))
@@ -2326,8 +2322,8 @@ function MDT:HideAllDialogs()
   MDT.main_frame.RenameFrame:Hide()
   MDT.main_frame.ClearConfirmationFrame:Hide()
   MDT.main_frame.DeleteConfirmationFrame:Hide()
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
-  MDT.main_frame.automaticColorsFrame:Hide()
+  MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
+  MDT.main_frame.settingsFrame:Hide()
   if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
 end
 
@@ -2375,13 +2371,13 @@ function MDT:OpenClearPresetDialog()
   MDT.main_frame.ClearConfirmationFrame:Show()
 end
 
-function MDT:OpenAutomaticColorsDialog()
+function MDT:OpenSettingsDialog()
   MDT:HideAllDialogs()
-  MDT.main_frame.automaticColorsFrame:ClearAllPoints()
-  MDT.main_frame.automaticColorsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  MDT.main_frame.automaticColorsFrame:SetStatusText("")
-  MDT.main_frame.automaticColorsFrame:Show()
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+  MDT.main_frame.settingsFrame:ClearAllPoints()
+  MDT.main_frame.settingsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+  MDT.main_frame.settingsFrame:SetStatusText("")
+  MDT.main_frame.settingsFrame:Show()
+  MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
   if db.colorPaletteInfo.colorPaletteIdx == 6 then
     MDT:OpenCustomColorsDialog()
   end
@@ -2389,11 +2385,11 @@ end
 
 function MDT:OpenCustomColorsDialog(frame)
   MDT:HideAllDialogs()
-  MDT.main_frame.automaticColorsFrame:Show() --Not the prettiest way to handle this, but it works.
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:ClearAllPoints()
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:SetPoint("CENTER", 264, -7)
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:SetStatusText("")
-  MDT.main_frame.automaticColorsFrame.CustomColorFrame:Show()
+  MDT.main_frame.settingsFrame:Show() --Not the prettiest way to handle this, but it works.
+  MDT.main_frame.settingsFrame.CustomColorFrame:ClearAllPoints()
+  MDT.main_frame.settingsFrame.CustomColorFrame:SetPoint("CENTER", 264, -7)
+  MDT.main_frame.settingsFrame.CustomColorFrame:SetStatusText("")
+  MDT.main_frame.settingsFrame.CustomColorFrame:Show()
 end
 
 ---Makes sure profiles are valid and have their fields set
@@ -3254,13 +3250,26 @@ function MDT:MakeCustomColorFrame(frame)
   frame.CustomColorFrame:Hide()
 end
 
-function MDT:MakeAutomaticColorsFrame(frame)
-  frame.automaticColorsFrame = AceGUI:Create("Frame")
-  frame.automaticColorsFrame:SetTitle(L["Automatic Coloring"])
-  frame.automaticColorsFrame:SetWidth(240)
-  frame.automaticColorsFrame:SetHeight(220)
-  frame.automaticColorsFrame:EnableResize(false)
-  frame.automaticColorsFrame:SetLayout("Flow")
+function MDT:MakeSettingsFrame(frame)
+  frame.settingsFrame = AceGUI:Create("Frame")
+  frame.settingsFrame:SetTitle(L["Settings"])
+  frame.settingsFrame:SetWidth(240)
+  frame.settingsFrame:SetHeight(220)
+  frame.settingsFrame:EnableResize(false)
+  frame.settingsFrame:SetLayout("Flow")
+
+  frame.minimapCheckbox = AceGUI:Create("CheckBox")
+  frame.minimapCheckbox:SetLabel(L["Enable Minimap Button"])
+  frame.minimapCheckbox:SetValue(not db.minimap.hide)
+  frame.minimapCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.minimap.hide = not value
+    if not db.minimap.hide then
+      minimapIcon:Show("MythicDungeonTools")
+    else
+      minimapIcon:Hide("MythicDungeonTools")
+    end
+  end)
+  frame.settingsFrame:AddChild(frame.minimapCheckbox)
 
   frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
   frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
@@ -3273,13 +3282,13 @@ function MDT:MakeAutomaticColorsFrame(frame)
       frame.toggleForceColorBlindMode:SetDisabled(false)
       MDT:ColorAllPulls()
       MDT:DrawAllHulls()
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
+      MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
     else
       frame.toggleForceColorBlindMode:SetDisabled(true)
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
+      MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
     end
   end)
-  frame.automaticColorsFrame:AddChild(frame.AutomaticColorsCheck)
+  frame.settingsFrame:AddChild(frame.AutomaticColorsCheck)
 
   --Toggle local color blind mode
   frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
@@ -3291,7 +3300,7 @@ function MDT:MakeAutomaticColorsFrame(frame)
     MDT:ColorAllPulls()
     MDT:DrawAllHulls()
   end)
-  frame.automaticColorsFrame:AddChild(frame.toggleForceColorBlindMode)
+  frame.settingsFrame:AddChild(frame.toggleForceColorBlindMode)
 
   frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
   frame.PaletteSelectDropdown:SetList(colorPaletteNames)
@@ -3302,14 +3311,14 @@ function MDT:MakeAutomaticColorsFrame(frame)
       db.colorPaletteInfo.colorPaletteIdx = value
       MDT:OpenCustomColorsDialog()
     else
-      MDT.main_frame.automaticColorsFrame.CustomColorFrame:Hide()
+      MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
       db.colorPaletteInfo.colorPaletteIdx = value
     end
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
     MDT:DrawAllHulls()
   end)
-  frame.automaticColorsFrame:AddChild(frame.PaletteSelectDropdown)
+  frame.settingsFrame:AddChild(frame.PaletteSelectDropdown)
 
   -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
   -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
@@ -3320,16 +3329,16 @@ function MDT:MakeAutomaticColorsFrame(frame)
       db.colorPaletteInfo.autoColoring = true
       frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
       frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-      MDT.main_frame.AutomaticColorsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
+      MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
       frame.toggleForceColorBlindMode:SetDisabled(false)
     end
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
     MDT:DrawAllHulls()
   end)
-  frame.automaticColorsFrame:AddChild(frame.button)
+  frame.settingsFrame:AddChild(frame.button)
 
-  frame.automaticColorsFrame:Hide()
+  frame.settingsFrame:Hide()
 end
 
 function MDT:MakePullSelectionButtons(frame)
@@ -4093,70 +4102,6 @@ function MDT:CreateTutorialButton(parent)
   parent.HelpButton:SetScript("OnClick", TutorialButtonOnClick)
 end
 
----Register the options of the addon to the blizzard options
-function MDT:RegisterOptions()
-  MDT.blizzardOptionsMenuTable = {
-    name = "Mythic Dungeon Tools",
-    type = 'group',
-    args = {
-      enable = {
-        type = 'toggle',
-        name = L["Enable Minimap Button"],
-        desc = L["If the Minimap Button is enabled"],
-        get = function() return not db.minimap.hide end,
-        set = function(_, newValue)
-          db.minimap.hide = not newValue
-          if not db.minimap.hide then
-            icon:Show("MythicDungeonTools")
-          else
-            icon:Hide("MythicDungeonTools")
-          end
-        end,
-        order = 1,
-        width = "full",
-      },
-      tooltipSelect = {
-        type = 'select',
-        name = L["Choose NPC tooltip position"],
-        values = {
-          [1] = L["Next to the NPC"],
-          [2] = L["In the bottom right corner"],
-        },
-        get = function() return db.tooltipInCorner and 2 or 1 end,
-        set = function(_, newValue)
-          if newValue == 1 then db.tooltipInCorner = false end
-          if newValue == 2 then db.tooltipInCorner = true end
-        end,
-        style = 'dropdown',
-      },
-      enemyForcesFormat = {
-        type = "select",
-        name = L["Choose Enemy Forces Format"],
-        values = {
-          [1] = L["Forces only: 5/200"],
-          [2] = L["Forces+%: 5/200 (2.5%)"],
-        },
-        get = function() return db.enemyForcesFormat end,
-        set = function(_, newValue) db.enemyForcesFormat = newValue end,
-        style = "dropdown",
-      },
-      enemyStyle = {
-        type = "select",
-        name = L["Choose Enemy Style. Requires Reload"],
-        values = {
-          [1] = L["Portrait"],
-          [2] = L["Plain Texture"],
-        },
-        get = function() return db.enemyStyle end,
-        set = function(_, newValue) db.enemyStyle = newValue end,
-        style = "dropdown",
-      },
-    }
-  }
-  LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("MythicDungeonTools", MDT.blizzardOptionsMenuTable)
-  self.blizzardOptionsMenu = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MythicDungeonTools", "MythicDungeonTools")
-end
-
 function MDT:Round(number, decimals)
   return (("%%.%df"):format(decimals)):format(number)
 end
@@ -4491,6 +4436,7 @@ function MDT:ResetMainFramePos(soft)
     db.nonFullscreenScale = 1
     db.maximized = false
     if not framesInitialized then initFrames() end
+    if not framesInitialized then return end
     f.maximizeButton:Minimize()
     db.xoffset = 0
     db.yoffset = -150
@@ -4508,12 +4454,12 @@ function MDT:DropIndicator()
     indicator:SetHeight(4)
     indicator:SetFrameStrata("FULLSCREEN")
 
-    local texture = indicator:CreateTexture(nil, "FULLSCREEN")
+    local texture = indicator:CreateTexture(nil, "FULLSCREEN", nil, 0)
     texture:SetBlendMode("ADD")
     texture:SetAllPoints(indicator)
     texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
 
-    local icon = indicator:CreateTexture(nil, "OVERLAY")
+    local icon = indicator:CreateTexture(nil, "OVERLAY", nil, 0)
     icon:ClearAllPoints()
     icon:SetSize(16, 16)
     icon:SetPoint("CENTER", indicator)
@@ -4627,7 +4573,31 @@ function MDT:HardReset()
   ReloadUI()
 end
 
+MDT.modules = {}
+function MDT:RegisterModule(modulename, module)
+  MDT.modules[modulename] = module
+end
+
 function initFrames()
+
+  -- check game version
+  -- gameVersion is for example in form 9.2.7 or 10.0.2
+  local gameVersion = GetBuildInfo()
+  ---@diagnostic disable-next-line: cast-local-type
+  gameVersion = string.gsub(gameVersion, "%.", "")
+  ---@diagnostic disable-next-line: cast-local-type
+  gameVersion = tonumber(gameVersion)
+  if gameVersion < 1000 then
+    print("MythicDungeonTools: Unsupported game version. This version of MDT is for Dragonflight only.")
+    return
+  end
+
+  for _, module in pairs(MDT.modules) do
+    if module.OnInitialize then
+      module:OnInitialize()
+    end
+  end
+
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
   tinsert(UISpecialFrames, "MDTFrame")
 
@@ -4649,19 +4619,18 @@ function initFrames()
   if not db.maximized then db.scale = db.nonFullscreenScale end
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
-  main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND")
+  main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
   main_frame.background:SetAllPoints()
   main_frame.background:SetDrawLayer(canvasDrawLayer, 1)
   main_frame.background:SetColorTexture(unpack(MDT.BackdropColor))
   main_frame.background:SetAlpha(0.2)
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
-  main_frame:SetMinResize(sizex * 0.75, sizey * 0.75)
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  main_frame:SetMaxResize(sizex * fullscreenScale, sizey * fullscreenScale)
+  main_frame:SetResizeBounds(sizex * 0.75, sizey * 0.75, sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
-  main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND")
+  main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
   main_frame.mainFrametex:SetAllPoints()
   main_frame.mainFrametex:SetDrawLayer(canvasDrawLayer, -5)
   main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
@@ -4693,8 +4662,8 @@ function initFrames()
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
   MDT:MakeSendingStatusBar(main_frame)
-  MDT:MakeAutomaticColorsFrame(main_frame)
-  MDT:MakeCustomColorFrame(main_frame.automaticColorsFrame)
+  MDT:MakeSettingsFrame(main_frame)
+  MDT:MakeCustomColorFrame(main_frame.settingsFrame)
   MDT:POI_CreateDropDown(main_frame)
 
   --devMode
@@ -4719,9 +4688,9 @@ function initFrames()
         local r, g, b = self:GetBackdropColor()
         self:SetBackdropColor(r, g, b, ElvUI[1].Tooltip.db.colorAlpha)
       end)
-      if tooltip.String then tooltip.String:SetFont(tooltip.String:GetFont(), 11) end
-      if tooltip.topString then tooltip.topString:SetFont(tooltip.topString:GetFont(), 11) end
-      if tooltip.botString then tooltip.botString:SetFont(tooltip.botString:GetFont(), 11) end
+      if tooltip.String then tooltip.String:SetFont(tooltip.String:GetFont(), 11, "") end
+      if tooltip.topString then tooltip.topString:SetFont(tooltip.topString:GetFont(), 11, "") end
+      if tooltip.botString then tooltip.botString:SetFont(tooltip.botString:GetFont(), 11, "") end
     end
   end
   --tooltip new
@@ -4746,7 +4715,7 @@ function initFrames()
     tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 7, -7)
     tooltip.String = tooltip:CreateFontString("MDTToolTipString")
     tooltip.String:SetFontObject("GameFontNormalSmall")
-    tooltip.String:SetFont(tooltip.String:GetFont(), 10)
+    tooltip.String:SetFont(tooltip.String:GetFont(), 10, "")
     tooltip.String:SetTextColor(1, 1, 1, 1)
     tooltip.String:SetJustifyH("LEFT")
     --tooltip.String:SetJustifyV("CENTER")
@@ -4789,7 +4758,7 @@ function initFrames()
 
     MDT.pullTooltip.topString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
     MDT.pullTooltip.topString:SetFontObject("GameFontNormalSmall")
-    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont(), 10)
+    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont(), 10, "")
     MDT.pullTooltip.topString:SetTextColor(1, 1, 1, 1)
     MDT.pullTooltip.topString:SetJustifyH("LEFT")
     MDT.pullTooltip.topString:SetJustifyV("TOP")
@@ -4798,7 +4767,7 @@ function initFrames()
     MDT.pullTooltip.topString:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 110, -7)
     MDT.pullTooltip.topString:Hide()
 
-    local heading = MDT.pullTooltip:CreateTexture(nil, "TOOLTIP")
+    local heading = MDT.pullTooltip:CreateTexture(nil, "OVERLAY", nil, 0)
     heading:SetHeight(8)
     heading:SetPoint("LEFT", 12, -30)
     heading:SetPoint("RIGHT", MDT.pullTooltip, "RIGHT", -12, -30)
@@ -4809,7 +4778,7 @@ function initFrames()
     MDT.pullTooltip.botString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
     local botString = MDT.pullTooltip.botString
     botString:SetFontObject("GameFontNormalSmall")
-    botString:SetFont(MDT.pullTooltip.topString:GetFont(), 10)
+    botString:SetFont(MDT.pullTooltip.topString:GetFont(), 10, "")
     botString:SetTextColor(1, 1, 1, 1)
     botString:SetJustifyH("TOP")
     botString:SetJustifyV("TOP")

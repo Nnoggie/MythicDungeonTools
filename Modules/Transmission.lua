@@ -274,7 +274,9 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   end
 
   if prefix == MDT.dataCollectionPrefixes.distribute then
+    if sender == UnitFullName("player") then return end
     local package = MDT:StringToTable(message, false)
+    print("Received data package from " .. fullName)
     MDT.DataCollection:MergeReceiveData(package)
   end
 
@@ -597,7 +599,7 @@ end
 function MDT:MakeSendingStatusBar(f)
   f.SendingStatusBar = CreateFrame("StatusBar", nil, f)
   local statusbar = f.SendingStatusBar
-  statusbar:SetMinMaxValues(0, 1)
+  -- statusbar:SetMinMaxValues(0, 1)
   statusbar:SetPoint("LEFT", f.bottomPanel, "LEFT", 5, 0)
   statusbar:SetWidth(200)
   statusbar:SetHeight(20)
@@ -606,7 +608,7 @@ function MDT:MakeSendingStatusBar(f)
   statusbar:GetStatusBarTexture():SetVertTile(false)
   statusbar:SetStatusBarColor(0.26, 0.42, 1)
 
-  statusbar.bg = statusbar:CreateTexture(nil, "BACKGROUND")
+  statusbar.bg = statusbar:CreateTexture(nil, "BACKGROUND", nil, 0)
   statusbar.bg:SetTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
   statusbar.bg:SetAllPoints(true)
   statusbar.bg:SetVertexColor(0.26, 0.42, 1)
