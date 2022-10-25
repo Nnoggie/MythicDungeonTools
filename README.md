@@ -32,7 +32,7 @@ Mythic Dungeon Tools is a Mythic+ Dungeon Planner AddOn which helps you perfectl
 
 [![Foo](https://i.imgur.com/Y2fEMMH.png)](https://streamlabs.com/nnoggie/tip) Support me with a [Donation](https://streamlabs.com/nnoggie/tip "Donate")
 
-[![Foo](https://i.imgur.com/CKxlJJd.png)](https://www.patreon.com/mythicdungeontools) Support me on [Patreon](https://www.patreon.com/mythicdungeontools "Patreon")
+[![Foo](https://i.imgur.com/CKxlJJd.png)](https://www.patreon.com/nnoggie) Support me on [Patreon](https://www.patreon.com/nnoggie "Patreon")
 
 [![Foo](https://i.imgur.com/UxFnFkD.png)](https://www.twitch.tv/nnoggie) Watch me live on [Twitch](https://www.twitch.tv/nnoggie "Twitch")
 
