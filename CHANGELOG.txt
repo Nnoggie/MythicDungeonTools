@@ -1,3 +1,5 @@
+v4.0.1.0
+- prepatch release
 v4.0.0.8-Alpha
 - removed keybindings to avoid taint
 - removed settings in blizzard interface options to avoid taint
