@@ -379,6 +379,7 @@ function MDT:ShowInterface(force)
     return
   end
   if not framesInitialized then initFrames() end
+  if not framesInitialized then return end
   if self.main_frame:IsShown() and not force then
     MDT:HideInterface()
   else
@@ -4434,6 +4435,7 @@ function MDT:ResetMainFramePos(soft)
     db.nonFullscreenScale = 1
     db.maximized = false
     if not framesInitialized then initFrames() end
+    if not framesInitialized then return end
     f.maximizeButton:Minimize()
     db.xoffset = 0
     db.yoffset = -150
@@ -4576,6 +4578,18 @@ function MDT:RegisterModule(modulename, module)
 end
 
 function initFrames()
+
+  -- check game version
+  -- gameVersion is for example in form 9.2.7 or 10.0.2
+  local gameVersion = GetBuildInfo()
+  ---@diagnostic disable-next-line: cast-local-type
+  gameVersion = string.gsub(gameVersion, "%.", "")
+  ---@diagnostic disable-next-line: cast-local-type
+  gameVersion = tonumber(gameVersion)
+  if gameVersion < 1000 then
+    print("MythicDungeonTools: Unsupported game version. This version of MDT is for Dragonflight only.")
+    return
+  end
 
   for _, module in pairs(MDT.modules) do
     if module.OnInitialize then
