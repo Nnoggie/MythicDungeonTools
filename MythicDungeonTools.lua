@@ -2402,6 +2402,7 @@ function MDT:EnsureDBTables()
     db.selectedDungeonList = defaultSavedVars.global.selectedDungeonList
   end
   local preset = MDT:GetCurrentPreset()
+  if preset.week and (preset.week < 1 or preset.week > 12) then preset.week = nil end
   preset.week = preset.week or MDT:GetCurrentAffixWeek()
   db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
   db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
