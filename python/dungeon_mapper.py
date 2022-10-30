@@ -3,6 +3,8 @@ import os
 import numpy as np
 import pandas as pd
 import pyperclip
+import tkinter as Tk
+from tkinter import filedialog
 from web_scraper import *
 
 request_wowtools = True
@@ -146,7 +148,7 @@ def get_dungeon_id(boss_info, mobHits):
         return print("Error: Combat log does not contain any boss fights. A boss fight required for collecting count.")
     # Attempt to find bosses by DungeonEncounterIDs
     DungeonEncounterIDs = [int(id) for id in boss_info.sourceGUID]
-    CriteriaIDs = db['criteria'][db['criteria'].Asset.isin(DungeonEncounterIDs)].ID.values
+    CriteriaIDs = db['criteria'][(db['criteria'].Asset.isin(DungeonEncounterIDs)) & (db['criteria'].Type == 165)].ID.values
     ParentIDs = db['criteriatree'][db['criteriatree'].CriteriaID.isin(CriteriaIDs)].Parent.values
 
     challenge_at_end = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
@@ -168,7 +170,7 @@ def get_dungeon_id(boss_info, mobHits):
 
     else:
         # Weird case where blizzard doesn't use the journalencounterid, but instead the npcID
-        print("Locating dungeon through EncounterID failed, trying NPC IDs.")
+        print("-- Locating dungeon through EncounterID failed, trying NPC IDs.")
         all_npcids = mobHits[mobHits.destName.isin(boss_info.sourceName.to_list())].npcID.to_list()
         CriteriaIDs = db['criteria'][db['criteria'].Asset.isin(all_npcids)].ID.values
         ParentIDs = db['criteriatree'][db['criteriatree'].CriteriaID.isin(CriteriaIDs)].Parent.values
@@ -179,9 +181,17 @@ def get_dungeon_id(boss_info, mobHits):
 
             print("Dungeon ID located.")
             return dungeonID
+        
+        if len(db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
+                                  & (db['criteriatree'].Description_lang == "Shadowmoon Burial Grounds")]) > 0:
+            dungeonID = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs)) 
+                                           & (db['criteriatree'].Description_lang == "Shadowmoon Burial Grounds")].ID.values[0]
 
-        else:
-            print("Locating dungeon through NPC IDs failed, trying boss names.")
+            print("Dungeon ID located.")
+            return dungeonID
+
+        
+        print("-- Locating dungeon through NPC IDs failed, trying boss names.")
 
     # Fixing Blizzard brain not naming bosses the same everywhere
     for boss_name in boss_info.sourceName.to_list():
@@ -196,9 +206,9 @@ def get_dungeon_id(boss_info, mobHits):
                     (db["criteriatree"].ID.isin(parent_dungeons)) &
                     ~db["criteriatree"].Description_lang.str.contains("More Trash",
                                                                       na=False))]  # This means NOT Teeming
-
-            print("Dungeon ID located.")
-            return mythic_regular.ID
+            if len(mythic_regular) > 0:
+                print("Dungeon ID located.")
+                return mythic_regular.ID
 
     print("WARNING: No dungeon ID could be located.")
 
@@ -432,6 +442,18 @@ def create_map_doors(pois):
     door_pois = door_pois.astype({"from_sublevel": int, "to_sublevel": int})
     return door_pois
 
+def pick_log_to_map():
+    """Allows the user pick a log to map
+
+    Returns:
+        str: The path to the log file
+
+    """
+    root = Tk.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename(initialdir=os.getcwd(), filetypes=(("Text files", "*.txt"), ("all files", "*.*")))
+    return file_path
+
 def print_progressbar(progress, total, size=60):
     x = int(size*progress/total)
     print(f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total}", end="\r", flush=True)
@@ -451,8 +473,10 @@ if __name__ == "__main__":
                         "resourceCost", "unknown", "ycoord", "xcoord", "UiMapID", "facing", "level", "amount",
                         "overkill", "school", "resisted", "blocked", "absorbed", "critical", "glancing", "crushing",
                         "isOffHand"]
+    
+    combatlog_file_path = pick_log_to_map()
 
-    CL = pd.read_csv("WoWCombatLog.txt", sep=",", header=None, names=combatlog_cnames, low_memory=False,
+    CL = pd.read_csv(combatlog_file_path, sep=",", header=None, names=combatlog_cnames, low_memory=False,
                      on_bad_lines='skip')
     ADVANCED_COMBAT_LOGGING = CL.loc[0, "sourceFlags"] == "1"
     if not ADVANCED_COMBAT_LOGGING:
