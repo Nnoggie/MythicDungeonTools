@@ -119,7 +119,7 @@ end
 local defaultSavedVars = {
   global = {
     toolbarExpanded = true,
-    currentSeason = 9,
+    currentSeason = 8,
     scale = 1,
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
