@@ -183,9 +183,7 @@ do
       if not db.minimap.hide then
         minimapIcon:Show("MythicDungeonTools")
       end
-      local version = GetAddOnMetadata(AddonName, "Version")
-      local isAlpha = string.find(version, "Alpha")
-      if db.newDataCollectionActive or isAlpha then
+      if db.newDataCollectionActive or MDT:IsOnBetaServer() then
         MDT.DataCollection:Init()
         MDT.DataCollection:InitHealthTrack()
       end
@@ -355,6 +353,11 @@ MDT.dungeonList = {
   [28] = "-",
   [39] = "-",
 }
+
+function MDT:IsOnBetaServer()
+  local realm = GetRealmName()
+  return realm == "Valdrakken"
+end
 
 function MDT:GetNumDungeons() return #MDT.dungeonList - 1 end
 
