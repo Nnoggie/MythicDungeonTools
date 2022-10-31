@@ -1,3 +1,5 @@
+v4.0.1.2
+- added mapping for Shadowmoon Burial Grounds, Court of Stars and Nokhud Offensive
 v4.0.1.1
 - fix toc
 v4.0.1.0
