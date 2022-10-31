@@ -323,6 +323,26 @@ function MDT:CreateDevPanel(frame)
         end,
       },
       [9] = {
+        text = "Zoom Icon",
+        func = function()
+          if not MDT.mapPOIs[db.currentDungeonIdx] then MDT.mapPOIs[db.currentDungeonIdx] = {} end
+          if not MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] then
+            MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] = {}
+          end
+          local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+          local posx, posy = 430, -250
+
+          local index = MDTMapPanelFrame:GetScale() - 2 -- this is the threshold after which the button should zoom out
+          local value1 = MDTMapPanelFrame:GetScale()
+          local value2 = MDTScrollFrame:GetHorizontalScroll() / MDT:GetScale()
+          local value3 = MDTScrollFrame:GetVerticalScroll() / MDT:GetScale()
+          tinsert(pois,
+            { x = posx, y = posy, template = "MapLinkPinTemplate", type = "zoom", index = index, value1 = value1,
+              value2 = value2, value3 = value3 })
+          MDT:POI_UpdateAll()
+        end,
+      },
+      [10] = {
         text = "World Marker",
         func = function()
           if not MDT.mapPOIs[db.currentDungeonIdx] then MDT.mapPOIs[db.currentDungeonIdx] = {} end
@@ -337,13 +357,13 @@ function MDT:CreateDevPanel(frame)
           MDT:POI_UpdateAll()
         end,
       },
-      [10] = {
+      [11] = {
         text = "Export Zoom Settings",
         func = function()
           MDT:ExportCurrentZoomPanSettings()
         end,
       },
-      [11] = {
+      [12] = {
         text = "Export to LUA",
         func = function()
           local export = MDT:ExportLuaTable(MDT.mapPOIs[db.currentDungeonIdx], MDT:GetSchema("pois"))

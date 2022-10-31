@@ -127,6 +127,18 @@ local schemas = {
               type = "boolean"
             }
           },
+          {
+            name = "value1",
+            type = "number"
+          },
+          {
+            name = "value2",
+            type = "number"
+          },
+          {
+            name = "value3",
+            type = "number"
+          },
         }
       }
     },

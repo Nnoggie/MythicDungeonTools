@@ -1655,6 +1655,17 @@ function MDT:ExportCurrentZoomPanSettings()
   MDT.main_frame.ExportFrameEditbox:SetLabel("Current pan/zoom settings");
 end
 
+function MDT:SetViewPortPosition(zoomScale, horizontalPan, verticalPan)
+  local scaledSizeX = MDTMapPanelFrame:GetWidth() * zoomScale
+  local scaledSizeY = MDTMapPanelFrame:GetHeight() * zoomScale
+  MDTScrollFrame.maxX = (scaledSizeX - MDTMapPanelFrame:GetWidth()) / zoomScale
+  MDTScrollFrame.maxY = (scaledSizeY - MDTMapPanelFrame:GetHeight()) / zoomScale
+  MDTScrollFrame.zoomedIn = abs(zoomScale - 1) > 0.02
+  MDTMapPanelFrame:SetScale(zoomScale)
+  MDTScrollFrame:SetHorizontalScroll(horizontalPan * MDT:GetScale())
+  MDTScrollFrame:SetVerticalScroll(verticalPan * MDT:GetScale())
+end
+
 function MDT:ZoomMapToDefault()
   local currentMap = db.presets[db.currentDungeonIdx]
   local currentSublevel = currentMap[db.currentPreset[db.currentDungeonIdx]].value.currentSublevel

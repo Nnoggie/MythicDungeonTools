@@ -607,6 +607,39 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
   end
 
+  if type == "zoom" then
+    local size = 14
+    frame:SetSize(size, size)
+    frame.Texture:SetAtlas("communities-icon-searchmagnifyingglass")
+    frame.Texture:SetSize(size, size)
+    frame.HighlightTexture:SetAtlas("communities-icon-searchmagnifyingglass")
+    frame.HighlightTexture:SetSize(size, size)
+
+    local function shouldZoomIn()
+      local currentScale = MDTMapPanelFrame:GetScale()
+      return currentScale < poi.index
+    end
+
+    frame:SetScript("OnClick", function()
+      if shouldZoomIn() then
+        MDT:SetViewPortPosition(poi.value1, poi.value2, poi.value3)
+      else
+        MDT:ZoomMapToDefault()
+      end
+    end)
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:AddLine("Zoom " .. (shouldZoomIn() and "in" or "out"), 1, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+
+  end
+
   --fullscreen sizes
   local scale = MDT:GetScale()
   frame:SetSize(frame:GetWidth() * scale, frame:GetHeight() * scale)
