@@ -222,35 +222,16 @@ def get_dungeon_from_file_text(file_text):
         if (
             len(
                 db["criteriatree"][
-                    (db["criteriatree"].ID.isin(ParentIDs))
-                    & (db["criteriatree"].Description_lang.str.endswith("Challenge"))
+                    (db["criteriatree"].Parent.isin(ParentIDs))
+                    & (db["criteriatree"].Description_lang == "Enemy Forces")
                 ]
             )
             > 0
         ):
             dungeonID = db["criteriatree"][
-                (db["criteriatree"].ID.isin(ParentIDs))
-                & (db["criteriatree"].Description_lang.str.endswith("Challenge"))
-            ].ID.values[0]
-
-            return dungeonID
-
-        elif (
-            len(
-                db["criteriatree"][
-                    (db["criteriatree"].ID.isin(ParentIDs))
-                    & (
-                        db["criteriatree"].Description_lang
-                        == "Shadowmoon Burial Grounds"
-                    )
-                ]
-            )
-            > 0
-        ):
-            dungeonID = db["criteriatree"][
-                (db["criteriatree"].ID.isin(ParentIDs))
-                & (db["criteriatree"].Description_lang == "Shadowmoon Burial Grounds")
-            ].ID.values[0]
+                (db["criteriatree"].Parent.isin(ParentIDs))
+                & (db["criteriatree"].Description_lang == "Enemy Forces")
+            ].Parent.values[0]
 
             return dungeonID
 
