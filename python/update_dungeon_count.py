@@ -11,7 +11,7 @@ EXPANSIONS = ["Legion", "BattleForAzeroth", "Shadowlands", "Dragonflight"]
 # 2. Set the variable GAME_VERSION to the desired game version (eg. "9.2.7")
 #    Latest db files will be downloaded from the corresponding game version.
 #    If GAME_VERSION is set to None, the latest RETAIL db files will be downloaded.
-GAME_VERSION = "9.2.7"  # <--- Set this variable
+GAME_VERSION = "10.0.2" # <--- Set this variable
 # 3. Run the script, it writes directly to the files automatically.
 
 # Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
@@ -183,28 +183,20 @@ def get_dungeon_from_file_text(file_text):
     pattern_encounterID = re.compile(r"encounterID\D*([\d]+)")
     encounterIDs = pattern_encounterID.findall(file_text)
     encounterIDs = [int(ID) for ID in encounterIDs]
-    DungeonEncounterIDs = db["journalencounter"][
-        db["journalencounter"].ID.isin(encounterIDs)
-    ].DungeonEncounterID.values
-    CriteriaIDs = db["criteria"][
-        db["criteria"].Asset.isin(DungeonEncounterIDs)
-    ].ID.values
-    ParentIDs = db["criteriatree"][
-        db["criteriatree"].CriteriaID.isin(CriteriaIDs)
-    ].Parent.values
 
-    challenge_at_end = db["criteriatree"][
-        (db["criteriatree"].ID.isin(ParentIDs))
-        & (db["criteriatree"].Description_lang.str.endswith("Challenge"))
-        & (db["criteriatree"].Operator == 4)
-    ]
+    DungeonEncounterIDs = db['journalencounter'][db['journalencounter'].ID.isin(encounterIDs)].DungeonEncounterID.values
+    CriteriaIDs = db['criteria'][db['criteria'].Asset.isin(DungeonEncounterIDs)].ID.values
+    ParentIDs = db['criteriatree'][db['criteriatree'].CriteriaID.isin(CriteriaIDs)].Parent.values
 
-    challenge_contained = db["criteriatree"][
-        (db["criteriatree"].ID.isin(ParentIDs))
-        & (db["criteriatree"].Description_lang.str.contains("Challenge"))
-        & (~db["criteriatree"].Description_lang.str.contains("More Trash", na=False))
-        & (db["criteriatree"].Operator == 4)
-    ]
+    challenge_at_end = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
+                             & (db['criteriatree'].Description_lang.str.endswith("Challenge"))
+                             & (db['criteriatree'].Operator == 4)]
+
+    challenge_contained = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
+                                     & (db['criteriatree'].Description_lang.str.contains("Challenge"))
+                                     & (~db['criteriatree'].Description_lang.str.contains("More Trash", na=False))
+                                     & (db['criteriatree'].Operator == 4)]
+
     if len(challenge_at_end) > 0:
         return challenge_at_end.ID.values[0]
 
@@ -330,10 +322,12 @@ if __name__ == "__main__":
     pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
 
     # Make sure initial working directory is MythicDungeonTools
-    while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith(
-        "MythicDungeonTools"
-    ):
+
         os.chdir("..")
+
+    while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith("MythicDungeonTools"):
+        os.chdir('..')
+
 
     # Loop through all expansions and dungeons and update count information
     for expansion in EXPANSIONS:
