@@ -11,7 +11,7 @@ EXPANSIONS = ['Legion', 'BattleForAzeroth', 'Shadowlands', 'Dragonflight']
 # 2. Set the variable GAME_VERSION to the desired game version (eg. "9.2.7")
 #    Latest db files will be downloaded from the corresponding game version.
 #    If GAME_VERSION is set to None, the latest RETAIL db files will be downloaded.
-GAME_VERSION = "9.2.7" # <--- Set this variable
+GAME_VERSION = "10.0.2" # <--- Set this variable
 # 3. Run the script, it writes directly to the files automatically.
 
 # Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
@@ -166,7 +166,7 @@ def get_dungeon_from_file_text(file_text):
     challenge_at_end = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
                              & (db['criteriatree'].Description_lang.str.endswith("Challenge"))
                              & (db['criteriatree'].Operator == 4)]
-    
+
     challenge_contained = db['criteriatree'][(db['criteriatree'].ID.isin(ParentIDs))
                                      & (db['criteriatree'].Description_lang.str.contains("Challenge"))
                                      & (~db['criteriatree'].Description_lang.str.contains("More Trash", na=False))
@@ -250,11 +250,11 @@ if __name__ == "__main__":
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
     pattern_count_value = re.compile(r"normal = (\d+)")
     pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
-    
+
     # Make sure initial working directory is MythicDungeonTools
     while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith("MythicDungeonTools"):
         os.chdir('..')
-    
+
     # Loop through all expansions and dungeons and update count information
     for expansion in EXPANSIONS:
         dungeon_filenames = os.listdir(expansion)
