@@ -292,6 +292,7 @@ def get_count_table(ID, db_files=None):
         63453: 68819,  # Eye of Sethraliss, Temple of Sethraliss
         80831: 190128,  # Zul'gamux, Shrouded Affix (Big One)
         80779: 189878,  # Nathrezim Infiltrator, Shrouded Affix (Small One)
+        77283: 107435,  # Gerenth the Vile, Court of Stars (Suspicious Noble)
     }
     count_table.rename(index=game_event_converter, inplace=True)
     return count_table
