@@ -111,6 +111,7 @@ L["Depraved Mistweaver"] = "Depraved Mistweaver"
 L["Wise Mari"] = "Wise Mari"
 L["Peril"] = "Peril"
 L["The Talking Fish"] = "The Talking Fish"
+L["Thundering"] = "Thundering"
 
 L["Settings"] = "Settings"
 L["openSettingsTooltip"] = "Click to open settings"
