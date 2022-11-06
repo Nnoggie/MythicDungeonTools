@@ -1,3 +1,7 @@
+v4.0.1.5
+- fixed health tracking and calculation
+- Temple of the Jade Serpent added
+- partially updated mapping in Nokhud Offensive
 v4.0.1.4
 - datacollection on beta realm
 v4.0.1.3
