@@ -320,6 +320,10 @@ end
 function DC:InitHealthTrack()
   print("MDT: Health Tracking Init")
   db = MDT:GetDB()
+  if not db.healthTrackVersion or db.healthTrackVersion < 2 then
+    db.healthTrackVersion = 2
+    db.healthTracking = {}
+  end
   db.healthTracking = db.healthTracking or {}
   local healthTrackingFrame = CreateFrame("Frame")
   healthTrackingFrame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
@@ -329,7 +333,20 @@ function DC:InitHealthTrack()
     local difficultyID = GetDungeonDifficultyID()
     local isChallenge = difficultyID and C_ChallengeMode.IsChallengeModeActive()
     local level, activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
-    local fortified = activeAffixIDs[1] == 10
+    local fortified
+    local tyrannical
+    local thundering
+    for k, v in pairs(activeAffixIDs) do
+      if v == 10 then
+        fortified = true
+      end
+      if v == 132 then
+        thundering = true
+      end
+      if v == 9 then
+        tyrannical = true
+      end
+    end
     level = isChallenge and level or -1
     if level > -1 then
       local unit
@@ -349,7 +366,9 @@ function DC:InitHealthTrack()
             ["health"] = UnitHealthMax(unit),
             ["name"] = UnitName(unit),
             ["level"] = level,
-            ["fortified"] = fortified
+            ["fortified"] = fortified,
+            ["thundering"] = thundering,
+            ["tyrannical"] = tyrannical
           }
         end
       end
@@ -357,7 +376,6 @@ function DC:InitHealthTrack()
   end)
 
   function MDT:ProcessHealthTrack()
-
     local enemies = MDT.dungeonEnemies[db.currentDungeonIdx]
     if enemies then
       local numEnemyHealthChanged = 0
@@ -365,7 +383,9 @@ function DC:InitHealthTrack()
         local tracked = db.healthTracking[enemy.id]
         if tracked then
           local isBoss = enemy.isBoss and true or false
-          local baseHealth = MDT:ReverseCalcEnemyHealth(tracked.health, tracked.level, isBoss, tracked.fortified)
+          local baseHealth = MDT:ReverseCalcEnemyHealth(tracked.health, tracked.level, isBoss, tracked.fortified,
+            tracked.tyrannical,
+            tracked.thundering)
           if baseHealth ~= enemy.health then
             numEnemyHealthChanged = numEnemyHealthChanged + 1
           end
@@ -376,7 +396,5 @@ function DC:InitHealthTrack()
       end
       print("MDT HPTRACK: Processed " .. numEnemyHealthChanged .. " enemies")
     end
-
   end
-
 end
