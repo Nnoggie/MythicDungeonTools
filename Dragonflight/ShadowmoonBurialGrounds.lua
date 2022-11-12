@@ -60,6 +60,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 58273;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [164907] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 171.32682441927;
@@ -128,6 +135,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55792;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [152814] = {
+      };
+      [152818] = {
+      };
+      [152819] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 160.58887194257;
@@ -161,6 +180,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55719;
     ["creatureType"] = "Aberration";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [152964] = {
+      };
+      [169302] = {
+      };
+      [394512] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 316.80948543859;
@@ -200,6 +230,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 52976;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [398154] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 320.53618455696;
@@ -296,6 +334,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55159;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [398151] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 329.90659209306;
@@ -336,6 +382,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 42365;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 442.61882953772;
@@ -848,6 +898,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1139;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [153089] = {
+      };
+      [153093] = {
+      };
+      [153094] = {
+      };
+      [153153] = {
+      };
+      [153240] = {
+      };
+      [162696] = {
+      };
+      [164686] = {
+      };
+      [164974] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 442.29739198379;
@@ -866,6 +934,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55816;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [154327] = {
+      };
+      [156776] = {
+      };
+      [317898] = {
+      };
+      [398150] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 583.8550256693;
@@ -927,6 +1010,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 53124;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 567.02550091075;
@@ -988,6 +1079,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55823;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [153268] = {
+      };
+      [156722] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 636.81615226247;
@@ -1030,6 +1127,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1168;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [152792] = {
+      };
+      [152800] = {
+      };
+      [152801] = {
+      };
+      [152962] = {
+      };
+      [153067] = {
+      };
+      [153072] = {
+      };
+      [153501] = {
+      };
+      [153623] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 663.22669954168;
@@ -1048,6 +1163,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 53050;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [156718] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 182.02523616939;
@@ -1109,6 +1234,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 63345;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [1604] = {
+      };
+      [153524] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 199.41955368614;
@@ -1177,6 +1315,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 59296;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [153395] = {
+      };
+      [153485] = {
+      };
+      [153496] = {
+      };
+      [154175] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 234.85849407339;
@@ -1204,6 +1355,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1140;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [153680] = {
+      };
+      [153686] = {
+      };
+      [153804] = {
+      };
+      [154175] = {
+      };
+      [165578] = {
+      };
+      [165579] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 357.78909090909;
@@ -1225,6 +1390,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1160;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [154442] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 636.99540066916;
