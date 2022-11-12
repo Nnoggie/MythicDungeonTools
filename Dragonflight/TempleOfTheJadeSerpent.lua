@@ -15,7 +15,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TempleOfTheJadeSerpent"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 271, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 289, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -1371,7 +1371,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [23] = {
     ["name"] = "Shambling Infester";
     ["id"] = 200387;
-    ["count"] = 0;
+    ["count"] = 18;
     ["health"] = 1717308;
     ["scale"] = 1;
     ["displayId"] = 46020;
