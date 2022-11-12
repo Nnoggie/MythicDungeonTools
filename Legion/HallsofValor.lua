@@ -79,7 +79,7 @@ MDT.mapPOIs[dungeonIndex] = {
   };
 };
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 250, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 270, teeming = 1000, teemingEnabled = true }
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Valarjar Champion";

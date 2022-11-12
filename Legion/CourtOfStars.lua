@@ -27,11 +27,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Duskwatch Guard";
     ["id"] = 111563;
     ["count"] = 4;
-    ["health"] = 715545;
+    ["health"] = 717294;
     ["scale"] = 1;
     ["displayId"] = 70561;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [209027] = {
+      };
+      [209033] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 359.14546565175;
@@ -45,11 +56,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Duskwatch Sentry";
     ["id"] = 104251;
     ["count"] = 1;
-    ["health"] = 178886;
+    ["health"] = 179323;
     ["scale"] = 1;
     ["displayId"] = 70566;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [209036] = {
+      };
+      [210261] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 347.96976623397;
@@ -178,11 +199,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Wyrm";
     ["id"] = 105703;
     ["count"] = 1;
-    ["health"] = 143109;
+    ["health"] = 143459;
     ["scale"] = 1;
     ["displayId"] = 70565;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [209477] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 344.80901792002;
@@ -477,11 +507,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Guardian Construct";
     ["id"] = 104270;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147671;
     ["scale"] = 1;
     ["displayId"] = 68553;
     ["creatureType"] = "Mechanical";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [209413] = {
+      };
+      [209495] = {
+      };
+      [209512] = {
+      };
+      [225100] = {
+      };
+      [225101] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 374.8547080505;
@@ -583,11 +628,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Duskwatch Guard";
     ["id"] = 104246;
     ["count"] = 4;
-    ["health"] = 715545;
+    ["health"] = 717294;
     ["scale"] = 1;
     ["displayId"] = 70561;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [209027] = {
+      };
+      [209033] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 352.80901047139;
@@ -730,11 +787,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Saber";
     ["id"] = 105699;
     ["count"] = 2;
-    ["health"] = 214664;
+    ["health"] = 215189;
     ["scale"] = 1;
     ["displayId"] = 64620;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [209516] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 349.25027841164;
@@ -816,11 +881,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Duskwatch Arcanist";
     ["id"] = 104247;
     ["count"] = 4;
-    ["health"] = 572436;
+    ["health"] = 573835;
     ["scale"] = 1;
     ["displayId"] = 70563;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [209404] = {
+      };
+      [209410] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 316.19411726004;
@@ -950,11 +1025,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bound Energy";
     ["id"] = 105705;
     ["count"] = 3;
-    ["health"] = 429327;
+    ["health"] = 430377;
     ["scale"] = 1;
     ["displayId"] = 55561;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [212031] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 291.45428072899;
@@ -992,11 +1075,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Manifestation";
     ["id"] = 105704;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147671;
     ["scale"] = 1;
     ["displayId"] = 54282;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["spells"] = {
+      [209485] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 278.95185315419;
@@ -1022,7 +1109,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Patrol Captain Gerdo";
     ["id"] = 104215;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 5019049;
     ["scale"] = 1;
     ["displayId"] = 68521;
     ["creatureType"] = "Humanoid";
@@ -1030,6 +1117,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1718;
     ["instanceID"] = 800;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [207261] = {
+      };
+      [207278] = {
+      };
+      [207806] = {
+      };
+      [207815] = {
+      };
+      [219488] = {
+      };
+      [219498] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 293.4089870319;
@@ -1042,11 +1146,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Watchful Inquisitor";
     ["id"] = 105715;
     ["count"] = 4;
-    ["health"] = 715545;
+    ["health"] = 717294;
     ["scale"] = 1;
     ["displayId"] = 68418;
     ["creatureType"] = "Demon";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [211299] = {
+      };
+      [212784] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 416.21835877917;
@@ -1209,11 +1322,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Imp";
     ["id"] = 104295;
     ["count"] = 1;
-    ["health"] = 143109;
+    ["health"] = 143459;
     ["scale"] = 1;
     ["displayId"] = 17035;
     ["creatureType"] = "Demon";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [211401] = {
+      };
+      [211406] = {
+      };
+      [211412] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 421.15618249929;
@@ -1433,11 +1560,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadow Mistress";
     ["id"] = 104300;
     ["count"] = 4;
-    ["health"] = 643991;
+    ["health"] = 645566;
     ["scale"] = 1;
     ["displayId"] = 10923;
     ["creatureType"] = "Demon";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [211470] = {
+      };
+      [211473] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 447.70786733357;
@@ -1475,11 +1615,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Legion Hound";
     ["id"] = 104277;
     ["count"] = 2;
-    ["health"] = 286218;
+    ["health"] = 286918;
     ["scale"] = 1;
     ["displayId"] = 62513;
     ["creatureType"] = "Demon";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [211384] = {
+      };
+      [211391] = {
+      };
+      [211477] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 442.13360291428;
@@ -1517,11 +1668,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Felbound Enforcer";
     ["id"] = 104278;
     ["count"] = 10;
-    ["health"] = 1287981;
+    ["health"] = 1291130;
     ["scale"] = 1;
     ["displayId"] = 68765;
     ["creatureType"] = "Demon";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [211464] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 396.13204921856;
@@ -1682,11 +1840,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Imacu'tya";
     ["id"] = 104275;
     ["count"] = 0;
-    ["health"] = 1431090;
+    ["health"] = 2008424;
     ["scale"] = 1;
     ["displayId"] = 17543;
     ["creatureType"] = "Demon";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [209378] = {
+      };
+      [209713] = {
+      };
+      [397892] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 489.34217702513;
@@ -1700,11 +1869,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Baalgar the Watchful";
     ["id"] = 104274;
     ["count"] = 0;
-    ["health"] = 1216427;
+    ["health"] = 1864966;
     ["scale"] = 1;
     ["displayId"] = 63588;
     ["creatureType"] = "Demon";
     ["level"] = 71;
+    ["spells"] = {
+      [207980] = {
+      };
+      [207981] = {
+      };
+      [209719] = {
+      };
+      [397907] = {
+      };
+      [397908] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 490.52788551926;
@@ -1718,11 +1899,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Jazshariu";
     ["id"] = 104273;
     ["count"] = 0;
-    ["health"] = 1717308;
+    ["health"] = 4303767;
     ["scale"] = 1;
     ["displayId"] = 9018;
     ["creatureType"] = "Demon";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [207850] = {
+      };
+      [207979] = {
+      };
+      [397897] = {
+      };
+      [397903] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 505.43826677384;
@@ -1736,7 +1930,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Talixae Flamewreath";
     ["id"] = 104217;
     ["count"] = 0;
-    ["health"] = 3577725;
+    ["health"] = 3585035;
     ["scale"] = 1;
     ["displayId"] = 69267;
     ["creatureType"] = "Demon";
@@ -1744,6 +1938,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1719;
     ["instanceID"] = 800;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [207881] = {
+      };
+      [207906] = {
+      };
+      [207907] = {
+      };
+      [208165] = {
+      };
+      [209722] = {
+      };
+      [211457] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 521.37597819604;
@@ -1757,11 +1968,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gerenth the Vile";
     ["id"] = 107435;
     ["count"] = 19;
-    ["health"] = 1431090;
+    ["health"] = 946828;
     ["scale"] = 1;
     ["displayId"] = 69968;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [214692] = {
+      };
+      [373364] = {
+      };
+      [373552] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 557.25604495891;
@@ -1775,7 +1997,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Advisor Melandrus";
     ["id"] = 104218;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 5019049;
     ["scale"] = 1;
     ["displayId"] = 70592;
     ["creatureType"] = "Humanoid";
@@ -1783,6 +2005,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1720;
     ["instanceID"] = 800;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [209602] = {
+      };
+      [209628] = {
+      };
+      [209667] = {
+      };
+      [209676] = {
+      };
+      [209678] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 590.33767941904;

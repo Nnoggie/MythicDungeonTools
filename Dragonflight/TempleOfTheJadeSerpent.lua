@@ -15,7 +15,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TempleOfTheJadeSerpent"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 271, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 289, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -29,7 +29,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 40330;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
+      [317898] = {
+      };
       [397888] = {
       };
       [397889] = {
@@ -82,101 +88,107 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 39442;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
+      [317898] = {
+      };
       [397886] = {
       };
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 317.00948928661;
-        ["y"] = -183.60883200052;
+        ["x"] = 312.86150955949;
+        ["y"] = -183.41131238561;
         ["g"] = 1;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [2] = {
-        ["x"] = 301.5151822901;
-        ["y"] = -177.6685334125;
+        ["x"] = 303.4904123462;
+        ["y"] = -180.23633361567;
         ["g"] = 1;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [3] = {
         ["x"] = 307.27531397845;
         ["y"] = -184.89682918077;
         ["g"] = 1;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [4] = {
-        ["x"] = 289.968;
-        ["y"] = -155.11538461538;
+        ["x"] = 286.01755119013;
+        ["y"] = -156.1030052946;
         ["g"] = 1;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [5] = {
-        ["x"] = 283.1667540502;
-        ["y"] = -160.84233488737;
+        ["x"] = 284.15437472942;
+        ["y"] = -159.85472551049;
         ["g"] = 1;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [6] = {
-        ["x"] = 287.06651530882;
-        ["y"] = -147.03123308902;
+        ["x"] = 287.46157714331;
+        ["y"] = -150.98167059656;
         ["g"] = 1;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [7] = {
-        ["x"] = 278.67352424387;
-        ["y"] = -117.31356443155;
+        ["x"] = 274.52555581909;
+        ["y"] = -118.10364289119;
         ["g"] = 2;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [8] = {
         ["x"] = 268.73266886741;
         ["y"] = -117.46763567334;
         ["g"] = 2;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [9] = {
-        ["x"] = 263.67813581141;
-        ["y"] = -110.9084514294;
+        ["x"] = 265.06079572045;
+        ["y"] = -112.48860834868;
         ["g"] = 2;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [10] = {
         ["x"] = 286.08710826621;
         ["y"] = -61.403646645586;
         ["g"] = 3;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [11] = {
-        ["x"] = 292.65077480249;
-        ["y"] = -78.14988505681;
+        ["x"] = 283.76223389885;
+        ["y"] = -65.113387030726;
         ["g"] = 3;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [12] = {
-        ["x"] = 282.28581818182;
-        ["y"] = -75.619885433715;
+        ["x"] = 297.297512357;
+        ["y"] = -63.571008086851;
         ["g"] = 3;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [13] = {
-        ["x"] = 297.08894745673;
-        ["y"] = -62.534689836528;
+        ["x"] = 291.95335835273;
+        ["y"] = -61.54711436665;
         ["g"] = 3;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
     };
   };
@@ -184,11 +196,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupt Living Water";
     ["id"] = 59873;
     ["count"] = 12;
-    ["health"] = 1073318;
+    ["health"] = 1145623;
     ["scale"] = 1;
     ["displayId"] = 43999;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [397878] = {
+      };
+      [397881] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 278.0531966018;
@@ -216,7 +237,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wise Mari";
     ["id"] = 56448;
     ["count"] = 0;
-    ["health"] = 4293270;
+    ["health"] = 4300785;
     ["scale"] = 1;
     ["displayId"] = 41125;
     ["creatureType"] = "Humanoid";
@@ -224,6 +245,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 672;
     ["instanceID"] = 313;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [121483] = {
+      };
+      [397783] = {
+      };
+      [397793] = {
+      };
+      [397797] = {
+      };
+      [397798] = {
+      };
+      [397799] = {
+      };
+      [397801] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 374.57890909091;
@@ -242,8 +282,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 40907;
     ["creatureType"] = "Aberration";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
       [114646] = {
+      };
+      [317898] = {
+      };
+      [395859] = {
       };
     };
     ["clones"] = {
@@ -436,11 +485,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Xiang";
     ["id"] = 65317;
     ["count"] = 5;
-    ["health"] = 1146818;
+    ["health"] = 1145623;
     ["scale"] = 1;
     ["displayId"] = 42431;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [114803] = {
+      };
+      [114805] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 179.629640073;
@@ -455,11 +513,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Jiang";
     ["id"] = 59547;
     ["count"] = 5;
-    ["health"] = 1146818;
+    ["health"] = 1145623;
     ["scale"] = 1;
     ["displayId"] = 42431;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [114803] = {
+      };
+      [114805] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 193.66506746288;
@@ -474,12 +538,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lesser Sha";
     ["id"] = 59598;
     ["count"] = 1;
-    ["health"] = 215029;
+    ["health"] = 214805;
     ["scale"] = 1;
     ["displayId"] = 40884;
     ["creatureType"] = "Aberration";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
+      [395869] = {
+      };
       [397503] = {
       };
     };
@@ -489,70 +559,70 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -444.31060436341;
         ["g"] = 6;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [2] = {
         ["x"] = 215.14185349118;
         ["y"] = -448.58605069544;
         ["g"] = 6;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [3] = {
         ["x"] = 229.28626683016;
         ["y"] = -446.0230606137;
         ["g"] = 6;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [4] = {
         ["x"] = 216.14196483977;
         ["y"] = -457.60208136582;
         ["g"] = 6;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [5] = {
         ["x"] = 222.29723757447;
         ["y"] = -463.35701824112;
         ["g"] = 6;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [6] = {
         ["x"] = 285.63189002394;
         ["y"] = -453.80726977714;
         ["g"] = 7;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [7] = {
         ["x"] = 291.5714479094;
         ["y"] = -449.38692269684;
         ["g"] = 7;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [8] = {
         ["x"] = 275.55314020801;
         ["y"] = -450.36047058268;
         ["g"] = 7;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [9] = {
         ["x"] = 274.03967239621;
         ["y"] = -442.05682751472;
         ["g"] = 7;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [10] = {
         ["x"] = 279.28180757734;
         ["y"] = -456.48726980118;
         ["g"] = 7;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
     };
   };
@@ -560,11 +630,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Talking Fish";
     ["id"] = 59546;
     ["count"] = 8;
-    ["health"] = 860114;
+    ["health"] = 859217;
     ["scale"] = 1;
     ["displayId"] = 40855;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["spells"] = {
+      [395872] = {
+      };
+      [395878] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 226.58094378987;
@@ -579,11 +655,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Songbird Queen";
     ["id"] = 59553;
     ["count"] = 8;
-    ["health"] = 1146818;
+    ["health"] = 1145623;
     ["scale"] = 1;
     ["displayId"] = 40856;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["spells"] = {
+      [396001] = {
+      };
+      [396003] = {
+      };
+      [396007] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 282.90161486334;
@@ -598,13 +682,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Crybaby Hozen";
     ["id"] = 59552;
     ["count"] = 8;
-    ["health"] = 967628;
+    ["health"] = 966619;
     ["scale"] = 1;
     ["displayId"] = 39483;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
     ["spells"] = {
       [396008] = {
+      };
+      [396010] = {
+      };
+      [396018] = {
       };
     };
     ["clones"] = {
@@ -621,11 +709,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Golden Beetle";
     ["id"] = 59545;
     ["count"] = 8;
-    ["health"] = 645086;
+    ["health"] = 644413;
     ["scale"] = 1;
     ["displayId"] = 31460;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["spells"] = {
+      [396019] = {
+      };
+      [396020] = {
+      };
+      [396029] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 268.34284667923;
@@ -640,11 +736,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Nodding Tiger";
     ["id"] = 59544;
     ["count"] = 8;
-    ["health"] = 716762;
+    ["health"] = 716014;
     ["scale"] = 1;
     ["displayId"] = 40723;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [396073] = {
+      };
+      [396093] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 271.43009764088;
@@ -659,7 +765,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupted Scroll";
     ["id"] = 57080;
     ["count"] = 0;
-    ["health"] = 89596;
+    ["health"] = 89502;
     ["scale"] = 1;
     ["displayId"] = 42914;
     ["creatureType"] = "Not specified";
@@ -677,7 +783,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Strife";
     ["id"] = 59051;
     ["count"] = 0;
-    ["health"] = 2404227;
+    ["health"] = 2293748;
     ["scale"] = 1;
     ["displayId"] = 40594;
     ["creatureType"] = "Elemental";
@@ -685,6 +791,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 664;
     ["instanceID"] = 313;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [113309] = {
+      };
+      [113315] = {
+      };
+      [113379] = {
+      };
+      [113394] = {
+      };
+      [114571] = {
+      };
+      [396150] = {
+      };
+      [396151] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 232.13234666712;
@@ -699,7 +824,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Peril";
     ["id"] = 59726;
     ["count"] = 0;
-    ["health"] = 2404227;
+    ["health"] = 2293748;
     ["scale"] = 1;
     ["displayId"] = 40594;
     ["creatureType"] = "Elemental";
@@ -707,6 +832,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 664;
     ["instanceID"] = 313;
+    ["spells"] = {
+      [113309] = {
+      };
+      [113315] = {
+      };
+      [113379] = {
+      };
+      [113394] = {
+      };
+      [114571] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 225.9814636926;
@@ -726,7 +863,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 40884;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
+      [317898] = {
+      };
+      [395869] = {
+      };
       [397503] = {
       };
     };
@@ -736,168 +881,168 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -461.71454810294;
         ["g"] = 10;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [2] = {
         ["x"] = 385.11008811449;
         ["y"] = -464.54955852485;
         ["g"] = 10;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [3] = {
         ["x"] = 375.60927793543;
         ["y"] = -478.18065565947;
         ["g"] = 10;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [4] = {
         ["x"] = 383.62190045264;
         ["y"] = -476.46028504602;
         ["g"] = 10;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [5] = {
         ["x"] = 368.44422151713;
         ["y"] = -472.6455742048;
         ["g"] = 10;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [6] = {
-        ["x"] = 334.82344697635;
-        ["y"] = -310.4153523191;
+        ["x"] = 333.03935799764;
+        ["y"] = -306.84719477879;
         ["g"] = 13;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [7] = {
         ["x"] = 330.50082531887;
         ["y"] = -302.07763004361;
         ["g"] = 13;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [8] = {
         ["x"] = 337.60363636364;
         ["y"] = -295.06137479542;
         ["g"] = 13;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [9] = {
-        ["x"] = 347.928;
-        ["y"] = -295.51554828151;
+        ["x"] = 332.58495116065;
+        ["y"] = -297.29963726022;
         ["g"] = 13;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [10] = {
-        ["x"] = 373.61564654265;
-        ["y"] = -314.33380338152;
+        ["x"] = 378.96787264455;
+        ["y"] = -315.22582745375;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [11] = {
-        ["x"] = 377.32295922992;
-        ["y"] = -298.81876399041;
+        ["x"] = 385.88653324323;
+        ["y"] = -308.98798133374;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [12] = {
-        ["x"] = 383.42149152688;
-        ["y"] = -312.97722247523;
+        ["x"] = 384.49194083068;
+        ["y"] = -313.86925675603;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [13] = {
-        ["x"] = 368.41892199725;
-        ["y"] = -307.03248554741;
+        ["x"] = 372.87910360979;
+        ["y"] = -314.88241988581;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [14] = {
         ["x"] = 384.95748755741;
         ["y"] = -304.2884121504;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [15] = {
         ["x"] = 355.59435606726;
         ["y"] = -254.14867575689;
         ["g"] = 16;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [16] = {
-        ["x"] = 360.92485908556;
-        ["y"] = -249.47629903565;
+        ["x"] = 359.4975899443;
+        ["y"] = -251.61719764326;
         ["g"] = 16;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [17] = {
-        ["x"] = 346.64549351572;
-        ["y"] = -252.74414751451;
+        ["x"] = 346.28867367826;
+        ["y"] = -249.35441520577;
         ["g"] = 16;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [18] = {
-        ["x"] = 361.8854374184;
-        ["y"] = -240.22557395565;
+        ["x"] = 350.46734553969;
+        ["y"] = -252.53571032371;
         ["g"] = 16;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [19] = {
         ["x"] = 345.19922258826;
         ["y"] = -244.1593142743;
         ["g"] = 16;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [20] = {
         ["x"] = 477.76530995447;
         ["y"] = -134.50851107931;
         ["g"] = 18;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [21] = {
         ["x"] = 489.40873771259;
         ["y"] = -135.67282054297;
         ["g"] = 18;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [22] = {
         ["x"] = 487.3711336909;
         ["y"] = -146.44300371129;
         ["g"] = 18;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [23] = {
         ["x"] = 474.85442803083;
         ["y"] = -148.48062438905;
         ["g"] = 18;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
       [24] = {
         ["x"] = 482.13159952778;
         ["y"] = -152.84688065022;
         ["g"] = 18;
         ["sublevel"] = 1;
-        ["scale"] = 0.8;
+        ["scale"] = 0.6;
       };
     };
   };
@@ -905,11 +1050,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Depraved Mistweaver";
     ["id"] = 200137;
     ["count"] = 8;
-    ["health"] = 643991;
+    ["health"] = 644413;
     ["scale"] = 1;
     ["displayId"] = 69004;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [397911] = {
+      };
+      [397914] = {
+      };
+      [397936] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 459.51647997553;
@@ -957,6 +1116,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73618;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [397899] = {
+      };
+      [397904] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 447.994287392;
@@ -1088,6 +1260,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 41677;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [110125] = {
+      };
+      [317898] = {
+      };
+      [397931] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 391.12996984099;
@@ -1116,7 +1300,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Liu Flameheart";
     ["id"] = 56732;
     ["count"] = 0;
-    ["health"] = 5259256;
+    ["health"] = 5017583;
     ["scale"] = 1;
     ["displayId"] = 39487;
     ["creatureType"] = "Humanoid";
@@ -1124,10 +1308,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 658;
     ["instanceID"] = 313;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [106797] = {
+      };
+      [106823] = {
+      };
+      [106841] = {
+      };
+      [106856] = {
+      };
+      [106864] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 373.62547589321;
-        ["y"] = -281.0723349655;
+        ["x"] = 342.72757327764;
+        ["y"] = -276.03229962329;
         ["g"] = 16;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
@@ -1138,7 +1337,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sha of Doubt";
     ["id"] = 56439;
     ["count"] = 0;
-    ["health"] = 6010578;
+    ["health"] = 5017583;
     ["scale"] = 1;
     ["displayId"] = 45980;
     ["creatureType"] = "Elemental";
@@ -1146,6 +1345,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 335;
     ["instanceID"] = 313;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [106113] = {
+      };
+      [106228] = {
+      };
+      [106736] = {
+      };
+      [117665] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 515.12566018268;
@@ -1153,6 +1365,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 19;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
+      };
+    };
+  };
+  [23] = {
+    ["name"] = "Shambling Infester";
+    ["id"] = 200387;
+    ["count"] = 18;
+    ["health"] = 1717308;
+    ["scale"] = 1;
+    ["displayId"] = 46020;
+    ["creatureType"] = "Aberration";
+    ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 376.27935444511;
+        ["y"] = -286.70274593049;
+        ["g"] = 13;
+        ["sublevel"] = 1;
+        ["scale"] = 1.7;
       };
     };
   };
