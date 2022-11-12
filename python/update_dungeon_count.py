@@ -311,7 +311,10 @@ if __name__ == "__main__":
     pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
 
     # Make sure initial working directory is MythicDungeonTools
-
+    while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith(
+        "MythicDungeonTools"
+    ):
+        os.chdir("..")
 
 
     # Loop through all expansions and dungeons and update count information
