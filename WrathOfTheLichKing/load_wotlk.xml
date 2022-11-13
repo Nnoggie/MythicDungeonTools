@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file='AhnKahetTheOldKingdom.lua'/>
+  <Script file='AzjolNerub.lua'/>
+  <Script file='DrakTharonKeep.lua'/>
+  <Script file='Gundrak.lua'/>
+  <Script file='HallsOfLightning.lua'/>
+  <Script file='HallsOfStone.lua'/>
+  <Script file='Naxxramas.lua'/>
+  <Script file='TheCullingOfStratholme.lua'/>
+  <Script file='TheNexus.lua'/>
+  <Script file='TheOculus.lua'/>
+  <Script file='TheVioletHold.lua'/>
+  <Script file='UtgardeKeep.lua'/>
+  <Script file='UtgardePinnacle.lua'/>
+</Ui>
