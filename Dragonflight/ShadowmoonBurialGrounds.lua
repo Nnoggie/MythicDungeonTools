@@ -55,11 +55,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Reanimated Ritual Bones";
     ["id"] = 75715;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 58273;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [164907] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 171.32682441927;
@@ -123,11 +130,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadowmoon Bone-Mender";
     ["id"] = 75713;
     ["count"] = 6;
-    ["health"] = 858654;
+    ["health"] = 860408;
     ["scale"] = 1;
     ["displayId"] = 55792;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [152814] = {
+      };
+      [152818] = {
+      };
+      [152819] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 160.58887194257;
@@ -156,11 +175,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Void Spawn";
     ["id"] = 75652;
     ["count"] = 10;
-    ["health"] = 1431090;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 55719;
     ["creatureType"] = "Aberration";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [152964] = {
+      };
+      [169302] = {
+      };
+      [394512] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 316.80948543859;
@@ -195,11 +225,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defiled Spirit";
     ["id"] = 75451;
     ["count"] = 3;
-    ["health"] = 715545;
+    ["health"] = 537756;
     ["scale"] = 1;
     ["displayId"] = 52976;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [398154] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 320.53618455696;
@@ -291,11 +329,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadowmoon Loyalist";
     ["id"] = 75506;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 788708;
     ["scale"] = 1;
     ["displayId"] = 55159;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [398151] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 329.90659209306;
@@ -331,11 +377,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corpse Skitterling";
     ["id"] = 77006;
     ["count"] = 1;
-    ["health"] = 71555;
+    ["health"] = 107551;
     ["scale"] = 1;
     ["displayId"] = 42365;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Slow"] = true;
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 442.61882953772;
@@ -840,7 +890,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sadana Bloodfury";
     ["id"] = 75509;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 4507144;
     ["scale"] = 1;
     ["displayId"] = 54587;
     ["creatureType"] = "Humanoid";
@@ -848,6 +898,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1139;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [153089] = {
+      };
+      [153093] = {
+      };
+      [153094] = {
+      };
+      [153153] = {
+      };
+      [153240] = {
+      };
+      [162696] = {
+      };
+      [164686] = {
+      };
+      [164974] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 442.29739198379;
@@ -861,11 +929,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadowmoon Enslaver";
     ["id"] = 76446;
     ["count"] = 6;
-    ["health"] = 715545;
+    ["health"] = 681157;
     ["scale"] = 1;
     ["displayId"] = 55816;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [154327] = {
+      };
+      [156776] = {
+      };
+      [317898] = {
+      };
+      [398150] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 583.8550256693;
@@ -922,11 +1005,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Subjugated Soul";
     ["id"] = 76444;
     ["count"] = 4;
-    ["health"] = 715545;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 53124;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 567.02550091075;
@@ -983,11 +1074,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadowmoon Exhumer";
     ["id"] = 77700;
     ["count"] = 8;
-    ["health"] = 915896;
+    ["health"] = 1003810;
     ["scale"] = 1;
     ["displayId"] = 55823;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [153268] = {
+      };
+      [156722] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 636.81615226247;
@@ -1022,7 +1119,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nhallish";
     ["id"] = 75829;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 4578685;
     ["scale"] = 1;
     ["displayId"] = 59978;
     ["creatureType"] = "Undead";
@@ -1030,6 +1127,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1168;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [152792] = {
+      };
+      [152800] = {
+      };
+      [152801] = {
+      };
+      [152962] = {
+      };
+      [153067] = {
+      };
+      [153072] = {
+      };
+      [153501] = {
+      };
+      [153623] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 663.22669954168;
@@ -1043,11 +1158,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Monstrous Corpse Spider";
     ["id"] = 76104;
     ["count"] = 6;
-    ["health"] = 1144872;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 53050;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [156718] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 182.02523616939;
@@ -1104,11 +1229,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Plagued Bat";
     ["id"] = 75459;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 573606;
     ["scale"] = 1;
     ["displayId"] = 63345;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [1604] = {
+      };
+      [153524] = {
+      };
+      [317898] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 199.41955368614;
@@ -1172,11 +1310,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Carrion Worm";
     ["id"] = 76057;
     ["count"] = 0;
-    ["health"] = 1717308;
+    ["health"] = 1720817;
     ["scale"] = 1;
     ["displayId"] = 59296;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [153395] = {
+      };
+      [153485] = {
+      };
+      [153496] = {
+      };
+      [154175] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 234.85849407339;
@@ -1196,7 +1347,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bonemaw";
     ["id"] = 75452;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 5007937;
     ["scale"] = 1;
     ["displayId"] = 59273;
     ["creatureType"] = "Beast";
@@ -1204,6 +1355,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1140;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [153680] = {
+      };
+      [153686] = {
+      };
+      [153804] = {
+      };
+      [154175] = {
+      };
+      [165578] = {
+      };
+      [165579] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 357.78909090909;
@@ -1217,7 +1382,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ner'zhul";
     ["id"] = 76407;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 5437189;
     ["scale"] = 1;
     ["displayId"] = 58912;
     ["creatureType"] = "Humanoid";
@@ -1225,6 +1390,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1160;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [154442] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 636.99540066916;

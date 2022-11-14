@@ -48,8 +48,8 @@ MDT.mapPOIs[dungeonIndex] = {
     [2] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
-      ["x"] = 402.40915092487;
-      ["y"] = -421.51943213215;
+      ["x"] = 402.25094965935;
+      ["y"] = -436.29296627037;
       ["target"] = 3;
       ["direction"] = -1;
       ["connectionIndex"] = 2;
@@ -79,23 +79,31 @@ MDT.mapPOIs[dungeonIndex] = {
   };
 };
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 250, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 270, teeming = 1000, teemingEnabled = true }
+
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Valarjar Champion";
     ["id"] = 97087;
     ["count"] = 3;
-    ["health"] = 858654;
+    ["health"] = 788478;
     ["scale"] = 1;
     ["displayId"] = 67274;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [199772] = {
+      };
+      [397410] = {
       };
     };
     ["clones"] = {
@@ -154,81 +162,38 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [10] = {
-        ["x"] = 398.31145245873;
-        ["y"] = -319.62886411289;
+        ["x"] = 398.73385602791;
+        ["y"] = -322.79893001912;
         ["g"] = 6;
         ["sublevel"] = 1;
       };
       [11] = {
-        ["x"] = 405.51338189675;
-        ["y"] = -320.12281696817;
-        ["g"] = 6;
-        ["sublevel"] = 1;
-      };
-      [12] = {
         ["x"] = 420.58794286884;
         ["y"] = -370.99493685343;
         ["g"] = 7;
         ["sublevel"] = 1;
       };
-      [13] = {
-        ["x"] = 440.53039442594;
-        ["y"] = -371.18025612493;
-        ["sublevel"] = 1;
-        ["patrol"] = {
-          [1] = {
-            ["x"] = 440.53039442594;
-            ["y"] = -371.18025612493;
-          };
-          [2] = {
-            ["x"] = 425.31446571821;
-            ["y"] = -367.18305623276;
-          };
-          [3] = {
-            ["x"] = 440.53039442594;
-            ["y"] = -371.18025612493;
-          };
-          [4] = {
-            ["x"] = 447.21574427699;
-            ["y"] = -376.91696203398;
-          };
-          [5] = {
-            ["x"] = 455.84355290087;
-            ["y"] = -384.43863550466;
-          };
-          [6] = {
-            ["x"] = 447.21574427699;
-            ["y"] = -376.91696203398;
-          };
-        };
-      };
-      [14] = {
-        ["x"] = 436.53574109789;
-        ["y"] = -385.47343618411;
-        ["g"] = 8;
-        ["sublevel"] = 1;
-      };
-      [15] = {
+      [12] = {
         ["x"] = 455.18030021001;
         ["y"] = -386.40899818073;
         ["g"] = 9;
         ["sublevel"] = 1;
       };
-      [16] = {
-        ["x"] = 373.86572080278;
-        ["y"] = -359.35353326057;
+      [13] = {
+        ["x"] = 373.33050635944;
+        ["y"] = -357.74786951343;
         ["g"] = 14;
         ["sublevel"] = 1;
       };
-      [17] = {
-        ["x"] = 378.27862444079;
-        ["y"] = -390.59706989515;
+      [14] = {
+        ["x"] = 380.06267258526;
+        ["y"] = -391.31068915294;
         ["g"] = 15;
         ["sublevel"] = 1;
       };
-      [18] = {
-        ["x"] = 336.54821141011;
-        ["y"] = -381.39080236236;
+      [15] = {
+        ["x"] = 341.00839302265;
+        ["y"] = -392.63047921806;
         ["g"] = 16;
         ["sublevel"] = 1;
       };
@@ -238,13 +203,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Thundercaller";
     ["id"] = 95842;
     ["count"] = 3;
-    ["health"] = 751322;
+    ["health"] = 716798;
     ["scale"] = 1;
     ["displayId"] = 67277;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -275,14 +245,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [4] = {
-        ["x"] = 406.45647810389;
-        ["y"] = -328.34121338922;
+        ["x"] = 410.0246356442;
+        ["y"] = -330.12527174225;
         ["g"] = 6;
         ["sublevel"] = 1;
       };
       [5] = {
-        ["x"] = 438.551164109;
-        ["y"] = -394.37826148284;
+        ["x"] = 438.72956892345;
+        ["y"] = -396.51916009045;
         ["g"] = 8;
         ["sublevel"] = 1;
       };
@@ -293,41 +263,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [7] = {
-        ["x"] = 375.46965747338;
-        ["y"] = -382.19726675771;
+        ["x"] = 375.29127307606;
+        ["y"] = -384.15972992519;
         ["g"] = 15;
         ["sublevel"] = 1;
       };
       [8] = {
-        ["x"] = 359.1172647148;
-        ["y"] = -400.9326469154;
+        ["x"] = 376.56846968663;
+        ["y"] = -366.01895851565;
+        ["g"] = 14;
         ["sublevel"] = 1;
-        ["patrol"] = {
-          [1] = {
-            ["x"] = 359.1172647148;
-            ["y"] = -400.9326469154;
-          };
-          [2] = {
-            ["x"] = 350.57961984051;
-            ["y"] = -408.89320022038;
-          };
-          [3] = {
-            ["x"] = 359.1172647148;
-            ["y"] = -400.9326469154;
-          };
-          [4] = {
-            ["x"] = 364.07434971845;
-            ["y"] = -395.17722305801;
-          };
-          [5] = {
-            ["x"] = 373.8082808369;
-            ["y"] = -392.08007754148;
-          };
-          [6] = {
-            ["x"] = 364.07434971845;
-            ["y"] = -395.17722305801;
-          };
-        };
       };
     };
   };
@@ -335,11 +280,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Storm Drake";
     ["id"] = 97068;
     ["count"] = 8;
-    ["health"] = 1431090;
+    ["health"] = 1433595;
     ["scale"] = 1;
     ["displayId"] = 67203;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [198888] = {
       };
@@ -360,7 +308,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hymdall";
     ["id"] = 94960;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 5492531;
     ["scale"] = 1;
     ["displayId"] = 67773;
     ["creatureType"] = "Humanoid";
@@ -391,11 +339,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormforged Sentinel";
     ["id"] = 96574;
     ["count"] = 6;
-    ["health"] = 1144872;
+    ["health"] = 1290235;
     ["scale"] = 1;
     ["displayId"] = 67429;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [198745] = {
       };
@@ -430,8 +381,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         };
       };
       [2] = {
-        ["x"] = 402.64796942238;
-        ["y"] = -364.48156506749;
+        ["x"] = 401.64323532251;
+        ["y"] = -363.60834232759;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
         ["patrol"] = {
@@ -502,15 +453,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         };
       };
       [3] = {
-        ["x"] = 411.03882486996;
-        ["y"] = -399.68465117054;
+        ["x"] = 411.57405973042;
+        ["y"] = -406.99936085704;
         ["g"] = 13;
         ["sublevel"] = 1;
         ["scale"] = 1.3;
       };
       [4] = {
-        ["x"] = 394.82348371027;
-        ["y"] = -399.40759438415;
+        ["x"] = 392.86101033423;
+        ["y"] = -406.72230407065;
         ["g"] = 13;
         ["sublevel"] = 1;
         ["scale"] = 1.3;
@@ -521,12 +472,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Mystic";
     ["id"] = 95834;
     ["count"] = 3;
-    ["health"] = 715545;
+    ["health"] = 645118;
     ["scale"] = 1;
     ["displayId"] = 64208;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -543,8 +501,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [2] = {
-        ["x"] = 397.85220433325;
-        ["y"] = -327.79668331784;
+        ["x"] = 394.81926123628;
+        ["y"] = -330.47278616023;
         ["g"] = 6;
         ["sublevel"] = 1;
       };
@@ -555,15 +513,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [4] = {
-        ["x"] = 430.86503885408;
-        ["y"] = -391.8410643583;
+        ["x"] = 430.68661362251;
+        ["y"] = -395.58762671305;
         ["g"] = 8;
         ["sublevel"] = 1;
       };
       [5] = {
-        ["x"] = 368.2916676519;
-        ["y"] = -366.26414083907;
+        ["x"] = 368.82688209524;
+        ["y"] = -367.51300516588;
         ["g"] = 14;
+        ["sublevel"] = 1;
+      };
+      [6] = {
+        ["x"] = 347.66642015241;
+        ["y"] = -386.71424366546;
+        ["g"] = 16;
         ["sublevel"] = 1;
       };
     };
@@ -572,12 +536,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Runecarver";
     ["id"] = 96664;
     ["count"] = 3;
-    ["health"] = 787100;
+    ["health"] = 752637;
     ["scale"] = 1;
     ["displayId"] = 64200;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -594,10 +565,53 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [2] = {
-        ["x"] = 336.8895782767;
-        ["y"] = -390.37488891869;
+        ["x"] = 335.64072415845;
+        ["y"] = -386.80673137838;
         ["g"] = 16;
         ["sublevel"] = 1;
+      };
+      [3] = {
+        ["x"] = 408.02394205921;
+        ["y"] = -379.59733156586;
+        ["g"] = 23;
+        ["sublevel"] = 1;
+      };
+      [4] = {
+        ["x"] = 464.22235696338;
+        ["y"] = -389.76655911775;
+        ["g"] = 9;
+        ["sublevel"] = 1;
+      };
+      [5] = {
+        ["x"] = 360.24127645627;
+        ["y"] = -402.24683374465;
+        ["sublevel"] = 1;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 359.1172647148;
+            ["y"] = -400.9326469154;
+          };
+          [2] = {
+            ["x"] = 350.57961984051;
+            ["y"] = -408.89320022038;
+          };
+          [3] = {
+            ["x"] = 359.1172647148;
+            ["y"] = -400.9326469154;
+          };
+          [4] = {
+            ["x"] = 364.07434971845;
+            ["y"] = -395.17722305801;
+          };
+          [5] = {
+            ["x"] = 373.8082808369;
+            ["y"] = -392.08007754148;
+          };
+          [6] = {
+            ["x"] = 364.07434971845;
+            ["y"] = -395.17722305801;
+          };
+        };
       };
     };
   };
@@ -605,13 +619,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Marksman";
     ["id"] = 96640;
     ["count"] = 3;
-    ["health"] = 822877;
+    ["health"] = 716798;
     ["scale"] = 1;
     ["displayId"] = 25811;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [191401] = {
+      };
+      [199210] = {
       };
       [199247] = {
       };
@@ -620,40 +645,48 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 462.82103730822;
-        ["y"] = -389.87056057766;
-        ["g"] = 9;
-        ["sublevel"] = 1;
-      };
-      [2] = {
-        ["x"] = 376.76379049683;
-        ["y"] = -367.09461741908;
-        ["g"] = 14;
-        ["sublevel"] = 1;
-      };
-      [3] = {
-        ["x"] = 369.72576379396;
-        ["y"] = -388.52942759706;
+        ["x"] = 372.5803224936;
+        ["y"] = -391.38394546246;
         ["g"] = 15;
         ["sublevel"] = 1;
       };
-      [4] = {
-        ["x"] = 343.84059468303;
-        ["y"] = -386.43693145391;
+      [2] = {
+        ["x"] = 343.48380547126;
+        ["y"] = -380.01423563109;
         ["g"] = 16;
         ["sublevel"] = 1;
       };
-      [5] = {
+      [3] = {
         ["x"] = 344.37658046656;
         ["y"] = -213.5868491983;
         ["g"] = 17;
         ["sublevel"] = 2;
         ["scale"] = 1.7;
       };
-      [6] = {
+      [4] = {
         ["x"] = 340.24804368046;
         ["y"] = -230.02487184746;
         ["g"] = 17;
+        ["sublevel"] = 2;
+        ["scale"] = 1.7;
+      };
+      [5] = {
+        ["x"] = 395.89222450299;
+        ["y"] = -379.59717982096;
+        ["g"] = 23;
+        ["sublevel"] = 1;
+      };
+      [6] = {
+        ["x"] = 305.34243837067;
+        ["y"] = -320.50812855965;
+        ["g"] = 24;
+        ["sublevel"] = 2;
+        ["scale"] = 1.7;
+      };
+      [7] = {
+        ["x"] = 314.89526259212;
+        ["y"] = -332.07217663464;
+        ["g"] = 24;
         ["sublevel"] = 2;
         ["scale"] = 1.7;
       };
@@ -663,11 +696,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Shieldmaiden";
     ["id"] = 95832;
     ["count"] = 4;
-    ["health"] = 1001763;
+    ["health"] = 931837;
     ["scale"] = 1;
     ["displayId"] = 25801;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [198944] = {
       };
@@ -699,19 +740,73 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 11;
         ["sublevel"] = 1;
       };
+      [5] = {
+        ["x"] = 405.93886738539;
+        ["y"] = -323.37194590601;
+        ["g"] = 6;
+        ["sublevel"] = 1;
+      };
+      [6] = {
+        ["x"] = 365.38457889271;
+        ["y"] = -360.15091074287;
+        ["g"] = 14;
+        ["sublevel"] = 1;
+      };
+      [7] = {
+        ["x"] = 439.95893469039;
+        ["y"] = -372.46103690237;
+        ["sublevel"] = 1;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 440.53039442594;
+            ["y"] = -371.18025612493;
+          };
+          [2] = {
+            ["x"] = 425.31446571821;
+            ["y"] = -367.18305623276;
+          };
+          [3] = {
+            ["x"] = 440.53039442594;
+            ["y"] = -371.18025612493;
+          };
+          [4] = {
+            ["x"] = 447.21574427699;
+            ["y"] = -376.91696203398;
+          };
+          [5] = {
+            ["x"] = 455.84355290087;
+            ["y"] = -384.43863550466;
+          };
+          [6] = {
+            ["x"] = 447.21574427699;
+            ["y"] = -376.91696203398;
+          };
+        };
+      };
+      [8] = {
+        ["x"] = 435.67717830942;
+        ["y"] = -389.40972907174;
+        ["g"] = 8;
+        ["sublevel"] = 1;
+      };
     };
   };
   [10] = {
     ["name"] = "Valarjar Purifier";
     ["id"] = 97197;
     ["count"] = 5;
-    ["health"] = 1502645;
+    ["health"] = 1146876;
     ["scale"] = 1;
     ["displayId"] = 64200;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [192563] = {
+      };
+      [192565] = {
       };
     };
     ["clones"] = {
@@ -720,6 +815,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -438.86048873841;
         ["g"] = 11;
         ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [2] = {
+        ["x"] = 402.10072353531;
+        ["y"] = -387.09029465804;
+        ["g"] = 23;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
       };
     };
   };
@@ -727,11 +830,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Aspirant";
     ["id"] = 101637;
     ["count"] = 7;
-    ["health"] = 1717308;
+    ["health"] = 1433595;
     ["scale"] = 1;
     ["displayId"] = 70645;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [191508] = {
       };
@@ -754,11 +860,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Shieldmaiden";
     ["id"] = 101639;
     ["count"] = 4;
-    ["health"] = 1001763;
+    ["health"] = 931837;
     ["scale"] = 1;
     ["displayId"] = 25801;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Imprison"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
       [198944] = {
       };
@@ -784,11 +896,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Solsten";
     ["id"] = 97219;
     ["count"] = 0;
-    ["health"] = 1860417;
+    ["health"] = 1863674;
     ["scale"] = 1;
     ["displayId"] = 64575;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [191976] = {
       };
@@ -810,13 +925,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Olmyr the Enlightened";
     ["id"] = 97202;
     ["count"] = 0;
-    ["health"] = 1860417;
+    ["health"] = 1863674;
     ["scale"] = 1;
     ["displayId"] = 64464;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [192158] = {
+      };
+      [192206] = {
       };
       [192288] = {
       };
@@ -836,7 +956,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hyrja";
     ["id"] = 95833;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 4993210;
     ["scale"] = 1;
     ["displayId"] = 72718;
     ["creatureType"] = "Humanoid";
@@ -860,11 +980,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [192133] = {
       };
+      [192206] = {
+      };
       [192307] = {
       };
       [200682] = {
       };
       [200901] = {
+      };
+      [215457] = {
       };
     };
     ["clones"] = {
@@ -879,7 +1003,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gildedfur Stag";
     ["id"] = 96609;
     ["count"] = 1;
-    ["health"] = 429327;
+    ["health"] = 430079;
     ["scale"] = 1;
     ["displayId"] = 45090;
     ["creatureType"] = "Beast";
@@ -960,11 +1084,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Storm Drake";
     ["id"] = 99891;
     ["count"] = 8;
-    ["health"] = 1216427;
+    ["health"] = 1218556;
     ["scale"] = 1;
     ["displayId"] = 67203;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [198888] = {
+      };
+      [198892] = {
+      };
+      [207753] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 496.2624;
@@ -978,11 +1113,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Angerhoof Bull";
     ["id"] = 96611;
     ["count"] = 4;
-    ["health"] = 787100;
+    ["health"] = 788478;
     ["scale"] = 1;
     ["displayId"] = 65853;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Imprison"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [190225] = {
       };
@@ -1035,9 +1178,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [185425] = {
+      };
+      [196194] = {
+      };
+      [320679] = {
       };
     };
     ["clones"] = {
@@ -1095,11 +1244,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Valarjar Trapper";
     ["id"] = 96934;
     ["count"] = 3;
-    ["health"] = 880120;
+    ["health"] = 881661;
     ["scale"] = 1;
     ["displayId"] = 67281;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [199341] = {
       };
@@ -1121,13 +1274,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 2;
         ["scale"] = 1.7;
       };
+      [3] = {
+        ["x"] = 300.81721346978;
+        ["y"] = -333.83189681296;
+        ["g"] = 24;
+        ["sublevel"] = 2;
+        ["scale"] = 1.7;
+      };
     };
   };
   [21] = {
     ["name"] = "Fenryr";
     ["id"] = 95674;
     ["count"] = 0;
-    ["health"] = 6439905;
+    ["health"] = 4938339;
     ["scale"] = 1;
     ["displayId"] = 64466;
     ["creatureType"] = "Beast";
@@ -1135,6 +1295,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1487;
     ["instanceID"] = 721;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [196496] = {
       };
@@ -1164,13 +1327,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ebonclaw Worg";
     ["id"] = 96608;
     ["count"] = 3;
-    ["health"] = 643991;
+    ["health"] = 645118;
     ["scale"] = 1;
     ["displayId"] = 70154;
     ["creatureType"] = "Beast";
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Imprison"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [199177] = {
@@ -1196,15 +1363,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.7;
       };
       [3] = {
-        ["x"] = 275.86621088395;
-        ["y"] = -350.15028211368;
+        ["x"] = 273.35229614535;
+        ["y"] = -351.65864246467;
         ["g"] = 19;
         ["sublevel"] = 2;
         ["scale"] = 1.7;
       };
       [4] = {
-        ["x"] = 281.40412249175;
-        ["y"] = -338.6283661376;
+        ["x"] = 275.37070985735;
+        ["y"] = -338.125574559;
         ["g"] = 19;
         ["sublevel"] = 2;
         ["scale"] = 1.7;
@@ -1277,7 +1444,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fenryr";
     ["id"] = 99868;
     ["count"] = 0;
-    ["health"] = 6439905;
+    ["health"] = 4938339;
     ["scale"] = 1;
     ["displayId"] = 64466;
     ["creatureType"] = "Beast";
@@ -1319,15 +1486,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Ranulf";
     ["id"] = 97083;
     ["count"] = 11;
-    ["health"] = 1860417;
+    ["health"] = 1863674;
     ["scale"] = 1;
     ["displayId"] = 28087;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [199590] = {
+      };
+      [199591] = {
+      };
+      [199592] = {
+      };
       [199593] = {
       };
+      [199652] = {
+      };
+      [199674] = {
+      };
       [199726] = {
+      };
+      [200969] = {
       };
     };
     ["clones"] = {
@@ -1343,19 +1525,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Haldor";
     ["id"] = 95843;
     ["count"] = 11;
-    ["health"] = 1788863;
+    ["health"] = 1791994;
     ["scale"] = 1;
     ["displayId"] = 28086;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [199590] = {
+      };
       [199591] = {
+      };
+      [199592] = {
       };
       [199593] = {
       };
       [199652] = {
       };
+      [199674] = {
+      };
       [199726] = {
+      };
+      [200969] = {
       };
     };
     ["clones"] = {
@@ -1371,12 +1564,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Bjorn";
     ["id"] = 97081;
     ["count"] = 11;
-    ["health"] = 1860417;
+    ["health"] = 1863674;
     ["scale"] = 1;
     ["displayId"] = 28085;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [199590] = {
+      };
       [199591] = {
       };
       [199592] = {
@@ -1388,6 +1586,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [199674] = {
       };
       [199726] = {
+      };
+      [200969] = {
       };
     };
     ["clones"] = {
@@ -1403,11 +1603,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Tor";
     ["id"] = 97084;
     ["count"] = 11;
-    ["health"] = 2146635;
+    ["health"] = 2150393;
     ["scale"] = 1;
     ["displayId"] = 28088;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [199590] = {
       };
@@ -1439,7 +1642,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "God-King Skovald";
     ["id"] = 95675;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 4993210;
     ["scale"] = 1;
     ["displayId"] = 65873;
     ["creatureType"] = "Humanoid";
@@ -1447,6 +1650,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1488;
     ["instanceID"] = 721;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [193659] = {
       };
@@ -1479,7 +1685,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Odyn";
     ["id"] = 95676;
     ["count"] = 0;
-    ["health"] = 25044075;
+    ["health"] = 19204651;
     ["scale"] = 1;
     ["displayId"] = 67230;
     ["creatureType"] = "Humanoid";
@@ -1508,6 +1714,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [198077] = {
       };
       [198263] = {
+      };
+      [198412] = {
       };
     };
     ["clones"] = {

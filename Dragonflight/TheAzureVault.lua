@@ -10,9 +10,9 @@ MDT.mapInfo[dungeonIndex] = {
       verticalPan = 86.334611786945;
     };
     [2] = {
-      zoomScale = 1.5999999046326;
-      horizontalPan = 161.55765744722;
-      verticalPan = 143.47071048056;
+      zoomScale = 1.2999999523163;
+      horizontalPan = 111.62481573922;
+      verticalPan = 43.260061835168;
     };
     [3] = {
       zoomScale = 1.2999999523163;
@@ -42,66 +42,118 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [4] = L["LowerChamber"],
   [5] = L["CrystalChamber"],
 }
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 375.91817249733;
+      ["y"] = -247.91777180005;
+      ["target"] = 2;
+      ["direction"] = -1;
+      ["connectionIndex"] = 1;
+    };
+  };
+  [2] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 339.6253290197;
+      ["y"] = -100.48961257863;
+      ["target"] = 1;
+      ["direction"] = 1;
+      ["connectionIndex"] = 1;
+    };
+    [2] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 415.10499993933;
+      ["y"] = -346.92889267752;
+      ["target"] = 3;
+      ["direction"] = -1;
+      ["connectionIndex"] = 2;
+    };
+  };
+  [3] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 208.2600036006;
+      ["y"] = -307.14508429513;
+      ["target"] = 2;
+      ["direction"] = 1;
+      ["connectionIndex"] = 2;
+    };
+    [2] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 686.33066424902;
+      ["y"] = -175.3764748621;
+      ["target"] = 4;
+      ["direction"] = -1;
+      ["connectionIndex"] = 3;
+    };
+  };
+  [4] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 744.61501701204;
+      ["y"] = -147.60710936621;
+      ["target"] = 3;
+      ["direction"] = 1;
+      ["connectionIndex"] = 3;
+    };
+    [2] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 388.10190813456;
+      ["y"] = -245.6825716138;
+      ["target"] = 5;
+      ["direction"] = -1;
+      ["connectionIndex"] = 4;
+    };
+  };
+  [5] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 253.80450797624;
+      ["y"] = -280.95593947574;
+      ["target"] = 4;
+      ["direction"] = 1;
+      ["connectionIndex"] = 4;
+    };
+  };
+};
+
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 410, teeming = 1000, teemingEnabled = true }
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
-    ["name"] = "Shrieking Whelp";
-    ["id"] = 187999;
-    ["count"] = 0;
-    ["health"] = 61315;
-    ["scale"] = 1;
-    ["displayId"] = 106357;
-    ["creatureType"] = "Dragonkin";
-    ["level"] = 70;
-    ["clones"] = {
-      [1] = {
-        ["x"] = 605.61819083437;
-        ["y"] = -223.86165148529;
-        ["g"] = 1;
-        ["sublevel"] = 1;
-        ["scale"] = 1;
-      };
-      [2] = {
-        ["x"] = 592.41177853421;
-        ["y"] = -227.58292337113;
-        ["g"] = 1;
-        ["sublevel"] = 1;
-        ["scale"] = 1;
-      };
-      [3] = {
-        ["x"] = 589.89317253853;
-        ["y"] = -217.92830708637;
-        ["g"] = 1;
-        ["sublevel"] = 1;
-        ["scale"] = 1;
-      };
-      [4] = {
-        ["x"] = 599.62906937214;
-        ["y"] = -231.08767417598;
-        ["g"] = 1;
-        ["sublevel"] = 1;
-        ["scale"] = 1;
-      };
-      [5] = {
-        ["x"] = 598.35589658358;
-        ["y"] = -219.62231568248;
-        ["g"] = 1;
-        ["sublevel"] = 1;
-        ["scale"] = 1;
-      };
-    };
-  };
-  [2] = {
     ["name"] = "Conjured Lasher";
     ["id"] = 196102;
     ["count"] = 5;
-    ["health"] = 551835;
+    ["health"] = 645211;
     ["scale"] = 1;
     ["displayId"] = 76261;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [387564] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 557.59505436998;
@@ -167,15 +219,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.5;
       };
       [10] = {
-        ["x"] = 381.65280586439;
-        ["y"] = -200.25734912833;
+        ["x"] = 384.97118600673;
+        ["y"] = -200.69979306271;
         ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
       };
       [11] = {
-        ["x"] = 428.46163133787;
-        ["y"] = -241.73456011367;
+        ["x"] = 435.98322885686;
+        ["y"] = -239.07989650737;
         ["g"] = 6;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
@@ -195,37 +247,52 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.5;
       };
       [14] = {
-        ["x"] = 441.42977970992;
-        ["y"] = -233.87876841223;
+        ["x"] = 447.62409606022;
+        ["y"] = -232.10896735746;
         ["g"] = 6;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
       };
       [15] = {
-        ["x"] = 391.0355974499;
-        ["y"] = -244.14573360203;
+        ["x"] = 401.87560042846;
+        ["y"] = -240.16370021673;
         ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
       };
       [16] = {
-        ["x"] = 373.84509934552;
-        ["y"] = -228.8642016362;
+        ["x"] = 391.98555382758;
+        ["y"] = -229.74912748081;
         ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
       };
     };
   };
-  [3] = {
+  [2] = {
     ["name"] = "Shrieking Whelp";
     ["id"] = 187159;
     ["count"] = 1;
-    ["health"] = 61315;
+    ["health"] = 286760;
     ["scale"] = 1;
     ["displayId"] = 102138;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [370223] = {
+      };
+      [370225] = {
+      };
+      [397726] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 597.68067392625;
@@ -234,8 +301,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
       };
       [2] = {
-        ["x"] = 430.6788663264;
-        ["y"] = -222.15962986575;
+        ["x"] = 434.66093768755;
+        ["y"] = -217.51393057887;
         ["g"] = 6;
         ["sublevel"] = 1;
         ["scale"] = 1;
@@ -249,15 +316,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [4] = {
+  [3] = {
     ["name"] = "Arcane Tender";
     ["id"] = 196115;
     ["count"] = 8;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 107894;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [375596] = {
+      };
+      [375602] = {
+      };
+      [375649] = {
+      };
+      [375652] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 477.13163227026;
@@ -267,15 +347,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2;
       };
       [2] = {
-        ["x"] = 382.56571885968;
-        ["y"] = -180.57788605348;
-        ["g"] = 8;
+        ["x"] = 380.3534485533;
+        ["y"] = -172.39254668122;
         ["sublevel"] = 1;
         ["scale"] = 2;
       };
     };
   };
-  [5] = {
+  [4] = {
     ["name"] = "Crystal Fury";
     ["id"] = 187160;
     ["count"] = 5;
@@ -284,46 +363,60 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64607;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [370764] = {
+      };
+      [389686] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 446.97785397098;
-        ["y"] = -216.26289706503;
-        ["g"] = 6;
+        ["y"] = -203.65305505585;
+        ["g"] = 35;
         ["sublevel"] = 1;
         ["scale"] = 2;
       };
       [2] = {
-        ["x"] = 434.55550013337;
-        ["y"] = -201.94389510097;
-        ["g"] = 6;
+        ["x"] = 433.22814301299;
+        ["y"] = -195.30713481628;
+        ["g"] = 35;
         ["sublevel"] = 1;
         ["scale"] = 2;
       };
       [3] = {
         ["x"] = 281.88507738389;
         ["y"] = -245.06257425102;
-        ["g"] = 12;
+        ["g"] = 36;
         ["sublevel"] = 2;
         ["scale"] = 2;
       };
       [4] = {
         ["x"] = 307.2049921633;
         ["y"] = -257.2591050251;
-        ["g"] = 12;
+        ["g"] = 36;
         ["sublevel"] = 2;
         ["scale"] = 2;
       };
       [5] = {
         ["x"] = 298.6741771445;
         ["y"] = -276.56776624997;
-        ["g"] = 12;
+        ["g"] = 36;
         ["sublevel"] = 2;
         ["scale"] = 2;
       };
       [6] = {
         ["x"] = 268.19074299208;
         ["y"] = -265.84185392543;
-        ["g"] = 12;
+        ["g"] = 36;
         ["sublevel"] = 2;
         ["scale"] = 2;
       };
@@ -350,7 +443,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [6] = {
+  [5] = {
     ["name"] = "Crystal Thrasher";
     ["id"] = 187139;
     ["count"] = 8;
@@ -359,32 +452,50 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 106012;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [370766] = {
+      };
+      [371005] = {
+      };
+      [371007] = {
+      };
+    };
     ["clones"] = {
       [1] = {
-        ["x"] = 414.27104299359;
-        ["y"] = -223.03151036162;
-        ["g"] = 6;
+        ["x"] = 419.80169344232;
+        ["y"] = -215.06739295655;
+        ["g"] = 35;
         ["sublevel"] = 1;
         ["scale"] = 2;
       };
       [2] = {
         ["x"] = 288.22426407286;
         ["y"] = -259.68355018952;
-        ["g"] = 12;
+        ["g"] = 36;
         ["sublevel"] = 2;
         ["scale"] = 2;
       };
     };
   };
-  [7] = {
+  [6] = {
     ["name"] = "Volatile Sapling";
     ["id"] = 191313;
     ["count"] = 1;
-    ["health"] = 61315;
+    ["health"] = 71691;
     ["scale"] = 1;
     ["displayId"] = 107890;
     ["creatureType"] = "Aberration";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [375591] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 244.0968287288;
@@ -401,8 +512,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
       };
       [3] = {
-        ["x"] = 254.27169745257;
-        ["y"] = -247.44781996107;
+        ["x"] = 252.28069974784;
+        ["y"] = -245.89924087349;
         ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1;
@@ -415,8 +526,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
       };
       [5] = {
-        ["x"] = 354.39647361955;
-        ["y"] = -278.65566575061;
+        ["x"] = 357.93607572908;
+        ["y"] = -276.88583937861;
         ["g"] = 10;
         ["sublevel"] = 1;
         ["scale"] = 1;
@@ -429,8 +540,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1;
       };
       [7] = {
-        ["x"] = 357.91871311274;
-        ["y"] = -267.30369137963;
+        ["x"] = 360.13098341912;
+        ["y"] = -268.63101052417;
         ["g"] = 10;
         ["sublevel"] = 1;
         ["scale"] = 1;
@@ -472,15 +583,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [8] = {
+  [7] = {
     ["name"] = "Arcane Tender";
     ["id"] = 191164;
     ["count"] = 8;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 107894;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [375596] = {
+      };
+      [375602] = {
+      };
+      [375649] = {
+      };
+      [375652] = {
+      };
+      [375732] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 311.68131147541;
@@ -502,11 +629,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [9] = {
+  [8] = {
     ["name"] = "Leymor";
     ["id"] = 186644;
     ["count"] = 0;
-    ["health"] = 4292050;
+    ["health"] = 5022728;
     ["scale"] = 1;
     ["displayId"] = 107127;
     ["creatureType"] = "Elemental";
@@ -514,6 +641,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2492;
     ["instanceID"] = 1203;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374364] = {
+      };
+      [374567] = {
+      };
+      [374570] = {
+      };
+      [374582] = {
+      };
+      [374720] = {
+      };
+      [374729] = {
+      };
+      [374731] = {
+      };
+      [374789] = {
+      };
+      [375729] = {
+      };
+      [386660] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 312.17704918033;
@@ -523,15 +675,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [10] = {
+  [9] = {
     ["name"] = "Shrieking Whelp";
     ["id"] = 188100;
     ["count"] = 1;
-    ["health"] = 61315;
+    ["health"] = 286760;
     ["scale"] = 1;
     ["displayId"] = 102138;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [370225] = {
+      };
+      [371042] = {
+      };
+      [397726] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 326.01230769231;
@@ -556,15 +719,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [11] = {
+  [10] = {
     ["name"] = "Arcane Elemental";
     ["id"] = 186741;
     ["count"] = 5;
-    ["health"] = 613150;
+    ["health"] = 716900;
     ["scale"] = 1;
     ["displayId"] = 107911;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [371306] = {
+      };
+      [386546] = {
+      };
+      [386549] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 280.62075453735;
@@ -638,15 +816,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [12] = {
+  [11] = {
     ["name"] = "Unstable Curator";
     ["id"] = 187154;
     ["count"] = 8;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 68973;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [371352] = {
+      };
+      [371358] = {
+      };
+      [389804] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 425.7771795895;
@@ -671,15 +860,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [13] = {
+  [12] = {
     ["name"] = "Rune Seal Keeper";
     ["id"] = 187155;
     ["count"] = 5;
-    ["health"] = 613150;
+    ["health"] = 716900;
     ["scale"] = 1;
     ["displayId"] = 105096;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [377488] = {
+      };
+      [377503] = {
+      };
+      [378065] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 476.51487755064;
@@ -718,15 +921,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [14] = {
+  [13] = {
     ["name"] = "Crystal Fury";
     ["id"] = 196116;
     ["count"] = 5;
-    ["health"] = 674465;
+    ["health"] = 788591;
     ["scale"] = 1;
     ["displayId"] = 64607;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Disorient"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [370764] = {
+      };
+      [389686] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 402.73974348742;
@@ -772,15 +987,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [15] = {
+  [14] = {
     ["name"] = "Crystal Thrasher";
     ["id"] = 196117;
     ["count"] = 8;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 106012;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [370766] = {
+      };
+      [371005] = {
+      };
+      [371007] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 470.33365473576;
@@ -798,15 +1024,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [16] = {
+  [15] = {
     ["name"] = "Arcane Construct";
     ["id"] = 186740;
     ["count"] = 5;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 104019;
     ["creatureType"] = "Elemental";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [387067] = {
+      };
+      [387122] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 261.09119481773;
@@ -845,15 +1080,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [17] = {
+  [16] = {
     ["name"] = "Astral Attendant";
     ["id"] = 189555;
     ["count"] = 3;
-    ["health"] = 367890;
+    ["health"] = 430140;
     ["scale"] = 1;
     ["displayId"] = 107525;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [374868] = {
+      };
+      [374885] = {
+      };
+      [378065] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 359.4132589729;
@@ -899,15 +1148,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [18] = {
+  [17] = {
     ["name"] = "Vault Guard";
     ["id"] = 190510;
     ["count"] = 5;
-    ["health"] = 674465;
+    ["health"] = 788591;
     ["scale"] = 1;
     ["displayId"] = 104202;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+    };
+    ["spells"] = {
+      [374778] = {
+      };
+      [377105] = {
+      };
+      [378065] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 528.77391304348;
@@ -950,15 +1212,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [19] = {
+  [18] = {
     ["name"] = "Scalebane Lieutenant";
     ["id"] = 191739;
     ["count"] = 8;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 104234;
     ["creatureType"] = "Dragonkin";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374778] = {
+      };
+      [377105] = {
+      };
+      [378065] = {
+      };
+      [391118] = {
+      };
+      [391120] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 587.2891271195;
@@ -968,11 +1245,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [20] = {
+  [19] = {
     ["name"] = "Azureblade";
     ["id"] = 186739;
     ["count"] = 0;
-    ["health"] = 3065750;
+    ["health"] = 3587663;
     ["scale"] = 1;
     ["displayId"] = 106829;
     ["creatureType"] = "Dragonkin";
@@ -980,6 +1257,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2505;
     ["instanceID"] = 1203;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [372222] = {
+      };
+      [378734] = {
+      };
+      [384132] = {
+      };
+      [384223] = {
+      };
+      [384625] = {
+      };
+      [385578] = {
+      };
+      [385579] = {
+      };
+      [390462] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 640.00065324397;
@@ -989,15 +1287,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [21] = {
+  [20] = {
     ["name"] = "Drakonid Breaker";
     ["id"] = 187240;
     ["count"] = 8;
-    ["health"] = 981040;
+    ["health"] = 1147041;
     ["scale"] = 1;
     ["displayId"] = 109739;
     ["creatureType"] = "Dragonkin";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [391136] = {
+      };
+      [391143] = {
+      };
+      [396991] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 722.42299266729;
@@ -1035,15 +1344,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [22] = {
+  [21] = {
     ["name"] = "Tarasek Delver";
     ["id"] = 187242;
     ["count"] = 3;
-    ["health"] = 367890;
+    ["health"] = 430140;
     ["scale"] = 1;
     ["displayId"] = 106882;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [386640] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 674.64530071397;
@@ -1141,15 +1459,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [23] = {
+  [22] = {
     ["name"] = "Nullmagic Hornswog";
     ["id"] = 187246;
     ["count"] = 5;
-    ["health"] = 613150;
+    ["health"] = 716900;
     ["scale"] = 1;
     ["displayId"] = 102558;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Root"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [386526] = {
+      };
+      [386536] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 642.89384699293;
@@ -1215,11 +1544,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [24] = {
+  [23] = {
     ["name"] = "Telash Greywing";
     ["id"] = 186737;
     ["count"] = 0;
-    ["health"] = 4292050;
+    ["health"] = 5022728;
     ["scale"] = 1;
     ["displayId"] = 109087;
     ["creatureType"] = "Dragonkin";
@@ -1227,6 +1556,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2483;
     ["instanceID"] = 1203;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [386781] = {
+      };
+      [386881] = {
+      };
+      [386910] = {
+      };
+      [387150] = {
+      };
+      [387151] = {
+      };
+      [387152] = {
+      };
+      [387928] = {
+      };
+      [388008] = {
+      };
+      [388084] = {
+      };
+      [396722] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 307.49209302326;
@@ -1236,11 +1590,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [25] = {
+  [24] = {
     ["name"] = "Umbrelskul";
     ["id"] = 186738;
     ["count"] = 0;
-    ["health"] = 5150460;
+    ["health"] = 6027274;
     ["scale"] = 1;
     ["displayId"] = 108968;
     ["creatureType"] = "Elemental";
@@ -1248,6 +1602,33 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2508;
     ["instanceID"] = 1203;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374881] = {
+      };
+      [374916] = {
+      };
+      [374917] = {
+      };
+      [374918] = {
+      };
+      [384696] = {
+      };
+      [384699] = {
+      };
+      [384978] = {
+      };
+      [385075] = {
+      };
+      [388773] = {
+      };
+      [388777] = {
+      };
+      [388804] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 436.39149817252;

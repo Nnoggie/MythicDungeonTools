@@ -76,11 +76,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Warspear";
     ["id"] = 192791;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 108672;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [381683] = {
       };
@@ -215,15 +219,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Longbow";
     ["id"] = 192789;
     ["count"] = 5;
-    ["health"] = 643991;
+    ["health"] = 645307;
     ["scale"] = 1;
     ["displayId"] = 108667;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [373392] = {
       };
       [384476] = {
+      };
+      [384479] = {
       };
       [384868] = {
       };
@@ -333,11 +343,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Hornsounder";
     ["id"] = 192796;
     ["count"] = 5;
-    ["health"] = 572436;
+    ["health"] = 573606;
     ["scale"] = 1;
     ["displayId"] = 108597;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [373392] = {
+      };
+      [383823] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 608.9709258747;
@@ -389,11 +408,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Beastmaster";
     ["id"] = 192794;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 108670;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [383693] = {
       };
@@ -435,11 +457,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Plainstomper";
     ["id"] = 191847;
     ["count"] = 8;
-    ["health"] = 1287981;
+    ["health"] = 1290613;
     ["scale"] = 1;
     ["displayId"] = 108673;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [384336] = {
+      };
+      [384365] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 614.59659485845;
@@ -637,11 +665,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "War Ohuna";
     ["id"] = 192803;
     ["count"] = 0;
-    ["health"] = 286218;
+    ["health"] = 286803;
     ["scale"] = 1;
     ["displayId"] = 101437;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [334610] = {
       };
@@ -652,28 +683,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -315.42689958954;
         ["g"] = 4;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [2] = {
         ["x"] = 642.94590093773;
         ["y"] = -291.83624442739;
         ["g"] = 6;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [3] = {
         ["x"] = 624.64526437331;
         ["y"] = -256.77417062306;
         ["g"] = 7;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [4] = {
         ["x"] = 622.10676833137;
         ["y"] = -303.73622091067;
         ["g"] = 9;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
     };
   };
@@ -681,14 +712,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Lancemaster";
     ["id"] = 192800;
     ["count"] = 8;
-    ["health"] = 1287981;
+    ["health"] = 1290613;
     ["scale"] = 1;
     ["displayId"] = 108528;
     ["iconTexture"] = 135127;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [384336] = {
+      };
+      [384365] = {
+      };
       [384510] = {
+      };
+      [384512] = {
       };
     };
     ["clones"] = {
@@ -719,7 +759,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Granyth";
     ["id"] = 186616;
     ["count"] = 0;
-    ["health"] = 6869232;
+    ["health"] = 5437189;
     ["scale"] = 1;
     ["displayId"] = 105823;
     ["creatureType"] = "Dragonkin";
@@ -727,6 +767,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2498;
     ["instanceID"] = 1198;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [385916] = {
+      };
+      [387155] = {
+      };
+      [388283] = {
+      };
+      [388817] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 626.53037929075;
@@ -740,11 +793,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Arcblade";
     ["id"] = 194898;
     ["count"] = 6;
-    ["health"] = 858654;
+    ["health"] = 860408;
     ["scale"] = 1;
     ["displayId"] = 109038;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [387135] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 484.57902857686;
@@ -787,12 +849,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormcaller Boroo";
     ["id"] = 194317;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108819;
     ["iconTexture"] = 136048;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [386012] = {
+      };
+      [387145] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 480.70996018888;
@@ -807,13 +875,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormsurge Totem";
     ["id"] = 194897;
     ["count"] = 0;
-    ["health"] = 343461;
+    ["health"] = 344163;
     ["scale"] = 1;
     ["displayId"] = 107517;
     ["creatureType"] = "Not specified";
     ["level"] = 70;
     ["spells"] = {
+      [382628] = {
+      };
       [384881] = {
+      };
+      [386694] = {
+      };
+      [387146] = {
       };
     };
     ["clones"] = {
@@ -822,28 +896,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -413.88379724718;
         ["g"] = 10;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [2] = {
         ["x"] = 454.64490403249;
         ["y"] = -413.87906401781;
         ["g"] = 11;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [3] = {
         ["x"] = 457.36879995881;
         ["y"] = -436.58779164254;
         ["g"] = 13;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [4] = {
         ["x"] = 477.48973310548;
         ["y"] = -445.42681391546;
         ["g"] = 16;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
     };
   };
@@ -851,11 +925,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Thunderbeast";
     ["id"] = 195696;
     ["count"] = 10;
-    ["health"] = 1431090;
+    ["health"] = 1434014;
     ["scale"] = 1;
     ["displayId"] = 110545;
     ["creatureType"] = "Beast";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [386028] = {
+      };
+      [387125] = {
+      };
+      [387127] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 477.41509946319;
@@ -1008,15 +1093,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Stormspeaker";
     ["id"] = 194894;
     ["count"] = 6;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 108711;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
+      [317898] = {
+      };
+      [386012] = {
+      };
       [386015] = {
       };
       [386022] = {
+      };
+      [386024] = {
+      };
+      [386025] = {
       };
     };
     ["clones"] = {
@@ -1054,13 +1151,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unstable Squall";
     ["id"] = 194895;
     ["count"] = 0;
-    ["health"] = 286218;
+    ["health"] = 286803;
     ["scale"] = 1;
     ["displayId"] = 101201;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Banish"] = true;
+    };
     ["spells"] = {
+      [386018] = {
+      };
       [386019] = {
+      };
+      [386026] = {
       };
     };
     ["clones"] = {
@@ -1069,7 +1173,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -418.51357259389;
         ["g"] = 11;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [2] = {
         ["x"] = 444.54614711101;
@@ -1098,12 +1202,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormcaller Arynga";
     ["id"] = 195265;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108819;
     ["iconTexture"] = 136048;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [386012] = {
+      };
+      [387145] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 450.77832572724;
@@ -1118,13 +1228,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primal Stormshield";
     ["id"] = 194896;
     ["count"] = 6;
-    ["health"] = 930209;
+    ["health"] = 932110;
     ["scale"] = 1;
     ["displayId"] = 108335;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
+      [386223] = {
+      };
+      [386225] = {
+      };
       [386227] = {
+      };
+      [386228] = {
       };
     };
     ["clones"] = {
@@ -1204,11 +1324,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nokhud Neophyte";
     ["id"] = 196263;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 108223;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [386012] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 439.01417311508;
@@ -1258,12 +1385,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormcaller Solongo";
     ["id"] = 194315;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108818;
     ["iconTexture"] = 136048;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [386012] = {
+      };
+      [387145] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 453.88774618362;
@@ -1278,11 +1411,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primal Gust";
     ["id"] = 195579;
     ["count"] = 2;
-    ["health"] = 286218;
+    ["health"] = 286803;
     ["scale"] = 1;
     ["displayId"] = 102511;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [386319] = {
       };
@@ -1293,14 +1429,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -433.70079573356;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.2;
+        ["scale"] = 0.4;
       };
       [2] = {
         ["x"] = 463.59685500313;
         ["y"] = -431.99734765389;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.2;
+        ["scale"] = 0.4;
         ["patrol"] = {
           [1] = {
             ["x"] = 463.80018392071;
@@ -1381,14 +1517,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -431.60011635923;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.2;
+        ["scale"] = 0.4;
       };
       [4] = {
         ["x"] = 461.9673126599;
         ["y"] = -433.41945608395;
         ["g"] = 14;
         ["sublevel"] = 1;
-        ["scale"] = 0.2;
+        ["scale"] = 0.4;
       };
     };
   };
@@ -1396,12 +1532,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormcaller Zarii";
     ["id"] = 194316;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108818;
     ["iconTexture"] = 136048;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [386012] = {
+      };
+      [387145] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 475.52934682158;
@@ -1416,7 +1558,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Raging Tempest";
     ["id"] = 186615;
     ["count"] = 0;
-    ["health"] = 7155450;
+    ["health"] = 7154196;
     ["scale"] = 1;
     ["displayId"] = 107145;
     ["creatureType"] = "Elemental";
@@ -1424,10 +1566,37 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2497;
     ["instanceID"] = 1198;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [382628] = {
+      };
+      [384185] = {
+      };
+      [384186] = {
+      };
+      [384316] = {
+      };
+      [384620] = {
+      };
+      [384628] = {
+      };
+      [384686] = {
+      };
+      [384687] = {
+      };
+      [384761] = {
+      };
       [386914] = {
       };
       [386915] = {
+      };
+      [386916] = {
+      };
+      [391967] = {
+      };
+      [394875] = {
       };
     };
     ["clones"] = {
@@ -1443,11 +1612,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ukhel Corruptor";
     ["id"] = 195842;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 109006;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [387608] = {
+      };
+      [387611] = {
+      };
+      [387613] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 319.71875544239;
@@ -1579,12 +1761,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soulharvester Galtmaa";
     ["id"] = 195927;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109014;
     ["iconTexture"] = 136214;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [387411] = {
+      };
+      [388318] = {
+      };
+      [395035] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 316.72848846086;
@@ -1599,11 +1789,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ukhel Beastcaller";
     ["id"] = 195878;
     ["count"] = 6;
-    ["health"] = 930209;
+    ["health"] = 1003810;
     ["scale"] = 1;
     ["displayId"] = 109021;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [387440] = {
+      };
+      [387821] = {
+      };
+      [387823] = {
+      };
+      [387824] = {
+      };
+      [387826] = {
+      };
+      [388449] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 313.28047220311;
@@ -1653,11 +1860,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Desecrated Ohuna";
     ["id"] = 195876;
     ["count"] = 4;
-    ["health"] = 572436;
+    ["health"] = 573606;
     ["scale"] = 1;
     ["displayId"] = 109019;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [387629] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 315.68854160272;
@@ -1782,7 +1996,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Desecrated Bakar";
     ["id"] = 195875;
     ["count"] = 4;
-    ["health"] = 286218;
+    ["health"] = 286803;
     ["scale"] = 1;
     ["displayId"] = 109018;
     ["creatureType"] = "Undead";
@@ -1800,14 +2014,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -382.5440640421;
         ["g"] = 22;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [3] = {
         ["x"] = 318.82282949458;
         ["y"] = -384.33458203556;
         ["g"] = 22;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [4] = {
         ["x"] = 311.51423317268;
@@ -1821,42 +2035,42 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -391.80459161423;
         ["g"] = 28;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [6] = {
         ["x"] = 292.79155148917;
         ["y"] = -389.77647471098;
         ["g"] = 28;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [7] = {
         ["x"] = 289.3889542598;
         ["y"] = -388.29473250536;
         ["g"] = 28;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [8] = {
         ["x"] = 289.1260171185;
         ["y"] = -390.70640320492;
         ["g"] = 28;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [9] = {
         ["x"] = 303.85053977839;
         ["y"] = -349.12148491946;
         ["g"] = 35;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
       [10] = {
         ["x"] = 300.84153941842;
         ["y"] = -348.70220450932;
         ["g"] = 35;
         ["sublevel"] = 1;
-        ["scale"] = 0.3;
+        ["scale"] = 0.4;
       };
     };
   };
@@ -1864,11 +2078,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Risen Mystic";
     ["id"] = 195877;
     ["count"] = 5;
-    ["health"] = 572436;
+    ["health"] = 573606;
     ["scale"] = 1;
     ["displayId"] = 109020;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [387596] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 309.88642347012;
@@ -1932,11 +2156,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ukhel Deathspeaker";
     ["id"] = 195851;
     ["count"] = 6;
-    ["health"] = 858654;
+    ["health"] = 860408;
     ["scale"] = 1;
     ["displayId"] = 109035;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [387614] = {
+      };
+      [387615] = {
+      };
+      [387616] = {
+      };
+      [396376] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 313.04126801529;
@@ -2069,11 +2307,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Risen Warrior";
     ["id"] = 195855;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 109017;
     ["creatureType"] = "Undead";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [388801] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 310.8836225156;
@@ -2137,19 +2384,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soulharvester Tumen";
     ["id"] = 195929;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109036;
     ["iconTexture"] = 136214;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [387411] = {
+      };
+      [388318] = {
+      };
+      [395035] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 306.83674704999;
         ["y"] = -386.8059965735;
         ["g"] = 26;
         ["sublevel"] = 1;
-        ["scale"] = 0.6;
+        ["scale"] = 0.8;
       };
     };
   };
@@ -2157,12 +2412,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soulharvester Mandakh";
     ["id"] = 195930;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109037;
     ["iconTexture"] = 136214;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [387411] = {
+      };
+      [388318] = {
+      };
+      [395035] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 281.888551529;
@@ -2177,12 +2440,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soulharvester Duuren";
     ["id"] = 195928;
     ["count"] = 8;
-    ["health"] = 1144872;
+    ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109015;
     ["iconTexture"] = 136214;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["spells"] = {
+      [387411] = {
+      };
+      [388318] = {
+      };
+      [395035] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 297.41247300367;
@@ -2197,7 +2468,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Teera";
     ["id"] = 186339;
     ["count"] = 0;
-    ["health"] = 6439905;
+    ["health"] = 7154196;
     ["scale"] = 1;
     ["displayId"] = 105721;
     ["creatureType"] = "Undead";
@@ -2205,6 +2476,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2478;
     ["instanceID"] = 537;
+    ["spells"] = {
+      [345561] = {
+      };
+      [382670] = {
+      };
+      [384808] = {
+      };
+      [385434] = {
+      };
+      [386016] = {
+      };
+      [386411] = {
+      };
+      [386547] = {
+      };
+      [392151] = {
+      };
+      [392198] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 272.37317844225;
@@ -2219,7 +2510,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Maruuk";
     ["id"] = 186338;
     ["count"] = 0;
-    ["health"] = 6439905;
+    ["health"] = 7154196;
     ["scale"] = 1;
     ["displayId"] = 105722;
     ["creatureType"] = "Undead";
@@ -2227,6 +2518,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2478;
     ["instanceID"] = 537;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [345561] = {
+      };
+      [382836] = {
+      };
+      [385339] = {
+      };
+      [386063] = {
+      };
+      [392198] = {
+      };
+      [395669] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 267.57206278182;
@@ -2241,16 +2549,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Batak";
     ["id"] = 193462;
     ["count"] = 16;
-    ["health"] = 2075081;
+    ["health"] = 1720817;
     ["scale"] = 1;
     ["displayId"] = 108221;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373395] = {
+      };
+      [382233] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 297.12819297501;
         ["y"] = -214.71256829863;
-        ["g"] = 42;
+        ["g"] = 41;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
@@ -2260,16 +2577,33 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Balara";
     ["id"] = 193457;
     ["count"] = 16;
-    ["health"] = 2075081;
+    ["health"] = 1720817;
     ["scale"] = 1;
     ["displayId"] = 108222;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [372147] = {
+      };
+      [374711] = {
+      };
+      [382267] = {
+      };
+      [382274] = {
+      };
+      [382277] = {
+      };
+      [383067] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 296.24911069711;
         ["y"] = -220.25822107978;
-        ["g"] = 42;
+        ["g"] = 41;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
@@ -2279,7 +2613,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Balakar Khan";
     ["id"] = 186151;
     ["count"] = 0;
-    ["health"] = 8586540;
+    ["health"] = 5723357;
     ["scale"] = 1;
     ["displayId"] = 107680;
     ["creatureType"] = "Humanoid";
@@ -2287,12 +2621,434 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2477;
     ["instanceID"] = 1198;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [375929] = {
+      };
+      [375937] = {
+      };
+      [375943] = {
+      };
+      [376634] = {
+      };
+      [376644] = {
+      };
+      [376660] = {
+      };
+      [376683] = {
+      };
+      [376685] = {
+      };
+      [376724] = {
+      };
+      [376727] = {
+      };
+      [376827] = {
+      };
+      [376829] = {
+      };
+      [376864] = {
+      };
+      [376865] = {
+      };
+      [376866] = {
+      };
+      [376892] = {
+      };
+      [376894] = {
+      };
+      [376896] = {
+      };
+      [393421] = {
+      };
+      [393425] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 282.88962254967;
         ["y"] = -214.57548309082;
         ["sublevel"] = 1;
         ["scale"] = 0.7;
+      };
+    };
+  };
+  [38] = {
+    ["name"] = "Nokhud Warspear";
+    ["id"] = 192791;
+    ["count"] = 5;
+    ["health"] = 717007;
+    ["scale"] = 1;
+    ["displayId"] = 108672;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [381683] = {
+      };
+      [381692] = {
+      };
+      [384134] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 339.67502962434;
+        ["y"] = -218.54664745672;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [2] = {
+        ["x"] = 339.03975781058;
+        ["y"] = -225.40173975057;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+    };
+  };
+  [39] = {
+    ["name"] = "Nokhud Longbow";
+    ["id"] = 192789;
+    ["count"] = 5;
+    ["health"] = 645307;
+    ["scale"] = 1;
+    ["displayId"] = 108667;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [373392] = {
+      };
+      [384476] = {
+      };
+      [384479] = {
+      };
+      [384868] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 336.35776138098;
+        ["y"] = -227.36359324845;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+    };
+  };
+  [40] = {
+    ["name"] = "Primalist Arcblade";
+    ["id"] = 194898;
+    ["count"] = 6;
+    ["health"] = 860408;
+    ["scale"] = 1;
+    ["displayId"] = 109038;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [317898] = {
+      };
+      [387135] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 309.94340262271;
+        ["y"] = -217.60904938168;
+        ["g"] = 40;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [2] = {
+        ["x"] = 309.05565594375;
+        ["y"] = -223.5759899126;
+        ["g"] = 40;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [3] = {
+        ["x"] = 302.59105605131;
+        ["y"] = -198.79909169341;
+        ["g"] = 42;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [4] = {
+        ["x"] = 295.03201398179;
+        ["y"] = -198.52413218244;
+        ["g"] = 42;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [5] = {
+        ["x"] = 293.58976580681;
+        ["y"] = -239.12770315956;
+        ["g"] = 45;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [6] = {
+        ["x"] = 285.61285441755;
+        ["y"] = -238.06412390028;
+        ["g"] = 45;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+    };
+  };
+  [41] = {
+    ["name"] = "Nokhud Defender";
+    ["id"] = 199717;
+    ["count"] = 8;
+    ["health"] = 1326463;
+    ["scale"] = 1;
+    ["displayId"] = 108529;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 71;
+    ["clones"] = {
+      [1] = {
+        ["x"] = 352.14192864844;
+        ["y"] = -226.78255712972;
+        ["g"] = 37;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [2] = {
+        ["x"] = 353.25399865395;
+        ["y"] = -221.85728086906;
+        ["g"] = 37;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [3] = {
+        ["x"] = 342.09838587794;
+        ["y"] = -222.32356260699;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 342.09838587794;
+            ["y"] = -222.32356260699;
+          };
+          [2] = {
+            ["x"] = 348.93854112644;
+            ["y"] = -223.53424549255;
+          };
+          [3] = {
+            ["x"] = 342.09838587794;
+            ["y"] = -222.32356260699;
+          };
+          [4] = {
+            ["x"] = 334.26109757284;
+            ["y"] = -220.6625720184;
+          };
+          [5] = {
+            ["x"] = 326.70966239804;
+            ["y"] = -219.38627337277;
+          };
+          [6] = {
+            ["x"] = 334.26109757284;
+            ["y"] = -220.6625720184;
+          };
+        };
+      };
+      [4] = {
+        ["x"] = 324.45931955362;
+        ["y"] = -222.61336509157;
+        ["g"] = 39;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [5] = {
+        ["x"] = 324.23796824987;
+        ["y"] = -217.93926060723;
+        ["g"] = 39;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [6] = {
+        ["x"] = 311.8325009048;
+        ["y"] = -220.64302384799;
+        ["g"] = 40;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 311.8325009048;
+            ["y"] = -220.64302384799;
+          };
+          [2] = {
+            ["x"] = 316.0500044065;
+            ["y"] = -221.1768296404;
+          };
+          [3] = {
+            ["x"] = 319.96190910407;
+            ["y"] = -220.30002008808;
+          };
+          [4] = {
+            ["x"] = 316.0500044065;
+            ["y"] = -221.1768296404;
+          };
+          [5] = {
+            ["x"] = 311.8325009048;
+            ["y"] = -220.64302384799;
+          };
+          [6] = {
+            ["x"] = 306.54001388922;
+            ["y"] = -219.82789632067;
+          };
+          [7] = {
+            ["x"] = 300.33490132178;
+            ["y"] = -218.00683923353;
+          };
+          [8] = {
+            ["x"] = 306.54001388922;
+            ["y"] = -219.82789632067;
+          };
+        };
+      };
+      [7] = {
+        ["x"] = 299.15484415271;
+        ["y"] = -196.31186669017;
+        ["g"] = 42;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 299.15484415271;
+            ["y"] = -196.31186669017;
+          };
+          [2] = {
+            ["x"] = 298.07195522897;
+            ["y"] = -203.85497190786;
+          };
+          [3] = {
+            ["x"] = 299.15484415271;
+            ["y"] = -196.31186669017;
+          };
+          [4] = {
+            ["x"] = 299.19537749217;
+            ["y"] = -190.2876283881;
+          };
+          [5] = {
+            ["x"] = 300.31877997628;
+            ["y"] = -185.79400856211;
+          };
+          [6] = {
+            ["x"] = 299.19537749217;
+            ["y"] = -190.2876283881;
+          };
+        };
+      };
+      [8] = {
+        ["x"] = 297.73748037787;
+        ["y"] = -183.99135755078;
+        ["g"] = 43;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [9] = {
+        ["x"] = 303.26809009182;
+        ["y"] = -185.58672035384;
+        ["g"] = 43;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [10] = {
+        ["x"] = 287.2082415641;
+        ["y"] = -251.14620599673;
+        ["g"] = 44;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [11] = {
+        ["x"] = 292.73887562154;
+        ["y"] = -250.08260239395;
+        ["g"] = 44;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [12] = {
+        ["x"] = 289.22906771741;
+        ["y"] = -240.72308422024;
+        ["g"] = 45;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+    };
+  };
+  [42] = {
+    ["name"] = "Nokhud Thunderfist";
+    ["id"] = 193373;
+    ["count"] = 5;
+    ["health"] = 717007;
+    ["scale"] = 1;
+    ["displayId"] = 110840;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["clones"] = {
+      [1] = {
+        ["x"] = 337.82293680819;
+        ["y"] = -216.24505622301;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [2] = {
+        ["x"] = 306.60980594375;
+        ["y"] = -224.08634849357;
+        ["g"] = 40;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [3] = {
+        ["x"] = 307.8387548869;
+        ["y"] = -215.59425828139;
+        ["g"] = 40;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [4] = {
+        ["x"] = 304.31469327969;
+        ["y"] = -201.7576522069;
+        ["g"] = 42;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [5] = {
+        ["x"] = 293.32256016323;
+        ["y"] = -201.11187971052;
+        ["g"] = 42;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [6] = {
+        ["x"] = 295.92963774289;
+        ["y"] = -236.46873066785;
+        ["g"] = 45;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [7] = {
+        ["x"] = 283.80477819698;
+        ["y"] = -234.66062401792;
+        ["g"] = 45;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
       };
     };
   };
