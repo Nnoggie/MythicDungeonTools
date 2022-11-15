@@ -287,14 +287,20 @@ def get_count_table(ID, db_files=None):
     count_table = enemy_forces.groupby(["npcID"]).agg(count=("Amount", "sum"))
     # Game event converter replaces game event ids with npc ids
     game_event_converter = {
-        # format is game event: npcID
-        64192: 138489,  # Shadow of Zul, Kings' Rest
-        63453: 68819,  # Eye of Sethraliss, Temple of Sethraliss
-        80831: 190128,  # Zul'gamux, Shrouded Affix (Big One)
-        80779: 189878,  # Nathrezim Infiltrator, Shrouded Affix (Small One)
-        77283: 107435,  # Gerenth the Vile, Court of Stars (Suspicious Noble)
+        # format is npcID: game event
+        138489: 64192,  # Shadow of Zul, Kings' Rest
+        68819: 63453,  # Eye of Sethraliss, Temple of Sethraliss
+        190128: 80831,  # Zul'gamux, Shrouded Affix (Big One)
+        189878: 80779,  # Nathrezim Infiltrator, Shrouded Affix (Small One)
+        107435: 77283,  # Gerenth the Vile, Court of Stars (Suspicious Noble)
+        97202: 46333,  # Olmyr the Enlightened, Halls of Valor
+        97219: 46333,  # Solsten, Halls of Valor
     }
-    count_table.rename(index=game_event_converter, inplace=True)
+    # For all game events, add a new row to the count table with the npcID
+    for npcID, game_event in game_event_converter.items():
+        if game_event in count_table.index:
+            new_row = pd.DataFrame([count_table.loc[game_event]], index=[npcID])
+            count_table = pd.concat([count_table, new_row])
     return count_table
 
 

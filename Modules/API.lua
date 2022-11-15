@@ -5,7 +5,7 @@ local MDT = MDT
 do
   local dungeonCountCache = {}
 
-  --- Usage: local count, maxCountNormal, maxCountTeeming, teemingCount = MDT:GetEnemyForcers(npcId)
+  --- Usage: local count, maxCountNormal, maxCountTeeming, teemingCount = MDT:GetEnemyForces(npcId)
   --- Prefers to find the npc in the current dungeon of the player
   --- @param npcId number
   --- @return number | nil, number | nil, number | nil, number | nil
