@@ -22,10 +22,7 @@ init.lua
 locales.xml
 AceGUIWidgets\load_widgets.xml
 Utility.lua
-MythicDungeonTools.lua
+Wrath\core.lua
 Modules\load_modules.xml
 Developer\load_developer.xml
-Legion\load_legion.xml
-BattleForAzeroth\load_bfa.xml
-Shadowlands\load_shadowlands.xml
-Dragonflight\load_dragonflight.xml
+
