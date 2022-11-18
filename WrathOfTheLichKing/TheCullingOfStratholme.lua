@@ -4,14 +4,14 @@ local L = MDT.L
 local dungeonIndex = 60
 MDT.dungeonList[dungeonIndex] = L["The Culling of Stratholme"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 96.255301137603;
+      verticalPan = 11.715346580575;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -32,22 +32,22 @@ MDT.mapPOIs[dungeonIndex] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 398;
+      ["y"] = -134.8;
       ["target"] = 2;
       ["direction"] = 1;
       ["connectionIndex"] = 1;
-      ["y"] = -134.8;
-      ["x"] = 398;
     };
   };
   [2] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 425.83267135035;
+      ["y"] = -419.62397746892;
       ["target"] = 1;
       ["direction"] = -1;
       ["connectionIndex"] = 1;
-      ["y"] = -459.4;
-      ["x"] = 423.9;
     };
   };
 };
@@ -648,4 +648,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

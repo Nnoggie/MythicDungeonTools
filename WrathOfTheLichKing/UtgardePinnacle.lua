@@ -3,14 +3,14 @@ local L = MDT.L
 local dungeonIndex = 67
 MDT.dungeonList[dungeonIndex] = L["Utgarde Pinnacle"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 128.65844034308;
+      verticalPan = 76.137281154922;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -866,4 +866,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

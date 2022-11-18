@@ -3,14 +3,14 @@ local L = MDT.L
 local dungeonIndex = 54
 MDT.dungeonList[dungeonIndex] = L["Drak'Tharon Keep"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 38.290098748912;
+      verticalPan = 8.056462321277;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -803,4 +803,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

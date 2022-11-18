@@ -3,14 +3,9 @@ local L = MDT.L
 local dungeonIndex = 63
 MDT.dungeonList[dungeonIndex] = L["The Oculus"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -743,4 +738,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

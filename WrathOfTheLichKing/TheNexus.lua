@@ -3,14 +3,14 @@ local L = MDT.L
 local dungeonIndex = 62
 MDT.dungeonList[dungeonIndex] = L["The Nexus"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 3.7913107964013;
+      verticalPan = 29.042644751635;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -1403,4 +1403,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

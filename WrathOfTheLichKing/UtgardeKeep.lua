@@ -3,14 +3,19 @@ local L = MDT.L
 local dungeonIndex = 66
 MDT.dungeonList[dungeonIndex] = L["Utgarde Keep"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 119.65419227667;
+      verticalPan = 70.865069636615;
+    };
+    [3] = {
+      zoomScale = 1.5999999046326;
+      horizontalPan = 185.59290528023;
+      verticalPan = 30.602843054018;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -951,4 +956,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

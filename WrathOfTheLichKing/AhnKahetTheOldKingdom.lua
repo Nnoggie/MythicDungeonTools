@@ -3,14 +3,14 @@ local L = MDT.L
 local dungeonIndex = 52
 MDT.dungeonList[dungeonIndex] = L["Ahn'kahet: The Old Kingdom"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 160.91396035223;
+      verticalPan = 50.901648814653;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -1355,4 +1355,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-
