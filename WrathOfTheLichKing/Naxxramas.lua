@@ -3,14 +3,29 @@ local L = MDT.L
 local dungeonIndex = 70
 MDT.dungeonList[dungeonIndex] = L["Naxxramas"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides =
+  {
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 113.81931807355;
+      verticalPan = 54.722345011423;
+    };
+    [3] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 77.920785439193;
+      verticalPan = 42.963549180727;
+    };
+    [4] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 119.59507409344;
+      verticalPan = 10.899920907182;
+    };
+    [6] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 102.65277339623;
+      verticalPan = 50.546052531288;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -4533,4 +4548,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-
