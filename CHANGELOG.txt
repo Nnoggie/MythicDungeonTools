@@ -1,3 +1,5 @@
+v4.0.1.11
+- fixed an error when dragging pulls around in the side bar
 v4.0.1.10
 - fix miniboss count court of stars
 v4.0.1.9
