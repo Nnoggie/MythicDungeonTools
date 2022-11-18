@@ -17,24 +17,27 @@ local L = MDT.L
 -- To get names of dungeons: https://wow.tools/maps/ (search for dungeon name and then check the url)
 
 local seasonListActive = false
-MDT.seasonList = {
-  [1] = L["Wrath of the Lich King"],
-  [2] = L["Legion"],
-  [3] = L["BFA"],
-  [4] = L["Shadowlands"],
-  [5] = L["Shadowlands Season 4"],
-  [6] = L["Dragonflight Season 1"],
-  -- [7] = L["Dragonflight Season 2"],
-}
-MDT.dungeonSelectionToIndex = {
-  [1] = { 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76 },
-  [2] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 },
-  [3] = { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 },
-  [4] = { 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 },
-  [5] = { 40, 41, 37, 38, 25, 26, 9, 10 },
-  [6] = { 42, 43, 44, 45, 6, 3, 46, 47 },
-  -- [7] = { 48, 49, 50, 51 }
-}
+
+MDT.seasonList = {}
+MDT.dungeonSelectionToIndex = {}
+
+if MDT:IsDragonflight() then
+  tinsert(MDT.seasonList, L["Legion"])
+  tinsert(MDT.seasonList, L["BFA"])
+  tinsert(MDT.seasonList, L["Shadowlands"])
+  tinsert(MDT.seasonList, L["Shadowlands Season 4"])
+  tinsert(MDT.seasonList, L["Dragonflight Season 1"])
+  tinsert(MDT.dungeonSelectionToIndex, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 })
+  tinsert(MDT.dungeonSelectionToIndex, { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 })
+  tinsert(MDT.dungeonSelectionToIndex, { 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 })
+  tinsert(MDT.dungeonSelectionToIndex, { 40, 41, 37, 38, 25, 26, 9, 10 })
+  tinsert(MDT.dungeonSelectionToIndex, { 42, 43, 44, 45, 6, 3, 46, 47 })
+end
+
+if MDT:IsWrath() then
+  tinsert(MDT.seasonList, L["Wrath of the Lich King"])
+  tinsert(MDT.dungeonSelectionToIndex, { 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76 })
+end
 
 local seasonList = MDT.seasonList
 local dungeonSelectionToIndex = MDT.dungeonSelectionToIndex

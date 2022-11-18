@@ -170,7 +170,6 @@ do
   eventFrame = CreateFrame("Frame")
   eventFrame:RegisterEvent("ADDON_LOADED")
   eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-  eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
   --TODO Register Affix Changed event
   eventFrame:SetScript("OnEvent", function(self, event, ...)
     return MDT[event](self, ...)
@@ -240,17 +239,6 @@ do
     end
   end
 
-  function MDT.PLAYER_ENTERING_WORLD(self, addon)
-    --initialize Blizzard_ChallengesUI
-    C_Timer.After(1, function()
-      LoadAddOn("Blizzard_ChallengesUI")
-      C_MythicPlus.RequestCurrentAffixes()
-      C_MythicPlus.RequestMapInfo()
-      C_MythicPlus.RequestRewards()
-      if db.loadOnStartUp then MDT:ShowInterface(true) end
-    end)
-    eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
-  end
 end
 
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
@@ -2440,7 +2428,7 @@ function MDT:EnsureDBTables()
   end
   local preset = MDT:GetCurrentPreset()
   if preset.week and (preset.week < 1 or preset.week > 12) then preset.week = nil end
-  preset.week = preset.week or MDT:GetCurrentAffixWeek()
+  preset.week = preset.week or 1
   db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
   db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
   db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[
@@ -2497,7 +2485,7 @@ function MDT:EnsureDBTables()
     pull["color"] = pull["color"] or db.defaultColor
   end
 
-  MDT:GetCurrentPreset().week = MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek()
+  MDT:GetCurrentPreset().week = MDT:GetCurrentPreset().week or 1
 
   if db.currentDungeonIdx == 19 then
     local englishFaction = UnitFactionGroup("player")
@@ -4653,7 +4641,8 @@ function initFrames()
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  main_frame:SetResizeBounds(sizex * 0.75, sizey * 0.75, sizex * fullscreenScale, sizey * fullscreenScale)
+  main_frame:SetMinResize(sizex * 0.75, sizey * 0.75)
+  main_frame:SetMaxResize(sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
   main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)

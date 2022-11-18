@@ -1966,8 +1966,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   };
   [20] = {
     ["name"] = "Gerenth the Vile";
-    ["id"] = 107435;
-    ["count"] = 19;
+    ["id"] = 108151;
+    ["count"] = 12;
     ["health"] = 946828;
     ["scale"] = 1;
     ["displayId"] = 69968;

@@ -30,10 +30,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [317898] = {
       };
       [397888] = {
@@ -52,21 +57,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [2] = {
         ["x"] = 290.80674917143;
         ["y"] = -69.509840229206;
-        ["g"] = 3;
+        ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
       [3] = {
         ["x"] = 326.04218181818;
         ["y"] = -106.44312602291;
-        ["g"] = 4;
+        ["g"] = 5;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
       [4] = {
         ["x"] = 333.28145454545;
         ["y"] = -85.520867430442;
-        ["g"] = 4;
+        ["g"] = 5;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -93,7 +98,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [317898] = {
+      };
+      [395829] = {
       };
       [397886] = {
       };
@@ -123,70 +132,70 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [4] = {
         ["x"] = 286.01755119013;
         ["y"] = -156.1030052946;
-        ["g"] = 1;
+        ["g"] = 2;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [5] = {
         ["x"] = 284.15437472942;
         ["y"] = -159.85472551049;
-        ["g"] = 1;
+        ["g"] = 2;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [6] = {
         ["x"] = 287.46157714331;
         ["y"] = -150.98167059656;
-        ["g"] = 1;
+        ["g"] = 2;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [7] = {
         ["x"] = 274.52555581909;
         ["y"] = -118.10364289119;
-        ["g"] = 2;
+        ["g"] = 3;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [8] = {
         ["x"] = 268.73266886741;
         ["y"] = -117.46763567334;
-        ["g"] = 2;
+        ["g"] = 3;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [9] = {
         ["x"] = 265.06079572045;
         ["y"] = -112.48860834868;
-        ["g"] = 2;
+        ["g"] = 3;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [10] = {
         ["x"] = 286.08710826621;
         ["y"] = -61.403646645586;
-        ["g"] = 3;
+        ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [11] = {
         ["x"] = 283.76223389885;
         ["y"] = -65.113387030726;
-        ["g"] = 3;
+        ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [12] = {
         ["x"] = 297.297512357;
         ["y"] = -63.571008086851;
-        ["g"] = 3;
+        ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [13] = {
         ["x"] = 291.95335835273;
         ["y"] = -61.54711436665;
-        ["g"] = 3;
+        ["g"] = 4;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
@@ -205,6 +214,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [397878] = {
       };
       [397881] = {
@@ -214,20 +225,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 278.0531966018;
         ["y"] = -152.42636286641;
+        ["g"] = 2;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
       [2] = {
         ["x"] = 273.64235425721;
         ["y"] = -108.45392344642;
-        ["g"] = 2;
+        ["g"] = 3;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
       [3] = {
         ["x"] = 328.47054545455;
         ["y"] = -94.680032733224;
-        ["g"] = 4;
+        ["g"] = 5;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
@@ -249,9 +261,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
     };
     ["spells"] = {
+      [106055] = {
+      };
+      [106062] = {
+      };
       [121483] = {
       };
       [397783] = {
+      };
+      [397785] = {
       };
       [397793] = {
       };
@@ -284,11 +302,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
       [114646] = {
+      };
+      [228318] = {
       };
       [317898] = {
       };
@@ -498,12 +520,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [114805] = {
       };
+      [228318] = {
+      };
     };
     ["clones"] = {
       [1] = {
         ["x"] = 179.629640073;
         ["y"] = -397.27087059883;
-        ["g"] = 5;
+        ["g"] = 6;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
@@ -518,17 +542,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 42431;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [114803] = {
       };
       [114805] = {
+      };
+      [228318] = {
       };
     };
     ["clones"] = {
       [1] = {
         ["x"] = 193.66506746288;
         ["y"] = -402.27910235544;
-        ["g"] = 5;
+        ["g"] = 6;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
@@ -548,6 +577,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [395869] = {
       };
       [397503] = {
@@ -557,70 +588,70 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 220.7011147046;
         ["y"] = -444.31060436341;
-        ["g"] = 6;
+        ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [2] = {
         ["x"] = 215.14185349118;
         ["y"] = -448.58605069544;
-        ["g"] = 6;
+        ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [3] = {
         ["x"] = 229.28626683016;
         ["y"] = -446.0230606137;
-        ["g"] = 6;
+        ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [4] = {
         ["x"] = 216.14196483977;
         ["y"] = -457.60208136582;
-        ["g"] = 6;
+        ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [5] = {
         ["x"] = 222.29723757447;
         ["y"] = -463.35701824112;
-        ["g"] = 6;
+        ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [6] = {
         ["x"] = 285.63189002394;
         ["y"] = -453.80726977714;
-        ["g"] = 7;
+        ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [7] = {
         ["x"] = 291.5714479094;
         ["y"] = -449.38692269684;
-        ["g"] = 7;
+        ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [8] = {
         ["x"] = 275.55314020801;
         ["y"] = -450.36047058268;
-        ["g"] = 7;
+        ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [9] = {
         ["x"] = 274.03967239621;
         ["y"] = -442.05682751472;
-        ["g"] = 7;
+        ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
       [10] = {
         ["x"] = 279.28180757734;
         ["y"] = -456.48726980118;
-        ["g"] = 7;
+        ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
@@ -636,6 +667,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 70;
     ["spells"] = {
+      [228318] = {
+      };
       [395872] = {
       };
       [395878] = {
@@ -645,7 +678,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 226.58094378987;
         ["y"] = -454.3918455594;
-        ["g"] = 6;
+        ["g"] = 7;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
@@ -661,6 +694,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 71;
     ["spells"] = {
+      [228318] = {
+      };
       [396001] = {
       };
       [396003] = {
@@ -672,7 +707,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 282.90161486334;
         ["y"] = -443.47366595502;
-        ["g"] = 7;
+        ["g"] = 8;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
@@ -688,6 +723,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
     ["spells"] = {
+      [228318] = {
+      };
       [396008] = {
       };
       [396010] = {
@@ -699,7 +736,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 281.63322964732;
         ["y"] = -401.68806952307;
-        ["g"] = 8;
+        ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1.4;
       };
@@ -714,7 +751,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 31460;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Silence"] = true;
+    };
     ["spells"] = {
+      [228318] = {
+      };
       [396019] = {
       };
       [396020] = {
@@ -726,7 +768,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 268.34284667923;
         ["y"] = -405.21101107527;
-        ["g"] = 8;
+        ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -743,9 +785,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [396073] = {
       };
       [396093] = {
@@ -755,7 +801,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 271.43009764088;
         ["y"] = -392.53003814086;
-        ["g"] = 8;
+        ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -814,7 +860,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 232.13234666712;
         ["y"] = -414.68542376359;
-        ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -832,6 +877,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 664;
     ["instanceID"] = 313;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [113309] = {
       };
@@ -848,7 +896,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 225.9814636926;
         ["y"] = -429.53950061335;
-        ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -864,10 +911,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Silence"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [317898] = {
       };
       [395869] = {
@@ -1056,10 +1106,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [317898] = {
       };
       [397911] = {
@@ -1101,7 +1156,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [5] = {
         ["x"] = 522.91152949366;
         ["y"] = -221.39515757477;
-        ["g"] = 20;
+        ["g"] = 19;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -1118,10 +1173,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Silence"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
+      [228318] = {
+      };
       [317898] = {
       };
       [397899] = {
@@ -1203,7 +1261,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [5] = {
         ["x"] = 518.50547034068;
         ["y"] = -213.04194196723;
-        ["g"] = 20;
+        ["g"] = 19;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
         ["patrol"] = {
@@ -1261,11 +1319,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
       [110125] = {
+      };
+      [228318] = {
       };
       [317898] = {
       };
@@ -1327,7 +1388,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 342.72757327764;
         ["y"] = -276.03229962329;
-        ["g"] = 16;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -1362,7 +1422,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 515.12566018268;
         ["y"] = -330.88904330015;
-        ["g"] = 19;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -1384,7 +1443,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 376.27935444511;
         ["y"] = -286.70274593049;
-        ["g"] = 13;
         ["sublevel"] = 1;
         ["scale"] = 1.7;
       };
