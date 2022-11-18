@@ -25,7 +25,6 @@ Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
 Developer\load_developer.xml
-WrathOfTheLichKing\load_wotlk.xml
 Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml

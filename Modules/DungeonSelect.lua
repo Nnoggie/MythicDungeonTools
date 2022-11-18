@@ -35,8 +35,11 @@ if MDT:IsDragonflight() then
 end
 
 if MDT:IsWrath() then
-  tinsert(MDT.seasonList, L["Wrath of the Lich King"])
-  tinsert(MDT.dungeonSelectionToIndex, { 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76 })
+  tinsert(MDT.seasonList, L["Wrath Dungeons"])
+  tinsert(MDT.seasonList, L["Wrath Raids"])
+  tinsert(MDT.dungeonSelectionToIndex,
+    { 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 71, 72, 73, 74, 75, 76 })
+  tinsert(MDT.dungeonSelectionToIndex, { 70 })
 end
 
 local seasonList = MDT.seasonList

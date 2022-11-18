@@ -2,6 +2,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Wrath Raids"]    = "Wrath Raids"
+L["Wrath Dungeons"] = "Wrath Dungeons"
+
 L["Nokhud Saboteur"] = "Nokhud Saboteur"
 L["Primalist Arcblade"] = "Primalist Arcblade"
 L["Nokhud Houndsman"] = "Nokhud Houndsman"

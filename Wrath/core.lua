@@ -124,7 +124,7 @@ local defaultSavedVars = {
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
     enemyStyle = 1,
-    currentDungeonIdx = 42,
+    currentDungeonIdx = 70,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -375,7 +375,6 @@ function MDT:ShowInterface(force)
     MDT:HideInterface()
   else
     self.main_frame:Show()
-    self.main_frame.HelpButton:Show()
     self:CheckCurrentZone()
     --edge case if user closed MDT window while in the process of dragging a corrupted blip
     if self.draggedBlip then
@@ -391,7 +390,6 @@ end
 
 function MDT:HideInterface()
   self.main_frame:Hide()
-  self.main_frame.HelpButton:Hide()
 end
 
 function MDT:ToggleDataCollection()
@@ -469,7 +467,6 @@ function MDT:CreateMenu()
     self.main_frame:StopMovingOrSizing()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
-    self:CreateTutorialButton(self.main_frame)
     self.main_frame:SetScript("OnSizeChanged", function() end)
   end)
   local normal = resizer:CreateTexture(nil, "OVERLAY", nil, 0)
@@ -533,7 +530,6 @@ function MDT:StartScaling()
   oldScrollValues.oldScrollV = f.scrollFrame:GetVerticalScroll()
   oldScrollValues.oldSizeX = f.scrollFrame:GetWidth()
   oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
-  HelpPlate_Hide(true)
   self:DungeonEnemies_HideAllBlips()
   self:POI_HideAllPoints()
   self:KillAllAnimatedLines()
@@ -576,33 +572,6 @@ function MDT:GetFullScreenSizes()
   end
   local scale = newSizey / sizey --use this for adjusting NPC / POI positions later
   return newSizex, newSizey, scale, isNarrow
-end
-
-function MDT:SkinProgressBar(progressBar)
-  local bar = progressBar and progressBar.Bar
-  if not bar then return end
-  bar.Icon:Hide()
-  bar.IconBG:Hide()
-  if IsAddOnLoaded("ElvUI") then
-    local E, L, V, P, G = unpack(ElvUI)
-    if bar.BarFrame then bar.BarFrame:Hide() end
-    if bar.BarFrame2 then bar.BarFrame2:Hide() end
-    if bar.BarFrame3 then bar.BarFrame3:Hide() end
-    if bar.BarGlow then bar.BarGlow:Hide() end
-    if bar.Sheen then bar.Sheen:Hide() end
-    if bar.IconBG then bar.IconBG:SetAlpha(0) end
-    if bar.BorderLeft then bar.BorderLeft:SetAlpha(0) end
-    if bar.BorderRight then bar.BorderRight:SetAlpha(0) end
-    if bar.BorderMid then bar.BorderMid:SetAlpha(0) end
-    bar:Height(18)
-    bar:StripTextures()
-    bar:CreateBackdrop("Transparent")
-    bar:SetStatusBarTexture(E.media.normTex)
-    local label = bar.Label
-    if not label then return end
-    label:ClearAllPoints()
-    label:SetPoint("CENTER", bar, "CENTER")
-  end
 end
 
 function MDT:IsFrameOffScreen()
@@ -1134,25 +1103,7 @@ function MDT:MakeSidePanel(frame)
 
   --Week Dropdown (Infested / Affixes)
   local function makeAffixString(week, affixes, longText)
-    local ret
-    local sep = ""
-    for _, affixID in ipairs(affixes) do
-      local name, _, filedataid = C_ChallengeMode.GetAffixInfo(affixID)
-      name = name or L["Unknown"]
-      filedataid = filedataid or 134400 --questionmark
-      if longText then
-        ret = ret or ""
-        ret = ret .. sep .. name
-        sep = ", "
-      else
-        ret = ret or week .. (week > 9 and ". " or ".   ")
-        if week == MDT:GetCurrentAffixWeek() then
-          ret = WrapTextInColorCode(ret, "FF00FF00")
-        end
-        ret = ret .. CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9, 0, 0) .. "  "
-      end
-    end
-    return ret
+    return week
   end
 
   frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
@@ -1219,7 +1170,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
 
-  frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
+  -- frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
 
   --affix not current week warning
   frame.sidePanel.affixWeekWarning = AceGUI:Create("Icon")
@@ -1245,7 +1196,7 @@ function MDT:MakeSidePanel(frame)
   end)
   affixWeekWarning.image:Hide()
   affixWeekWarning:SetDisabled(true)
-  frame.sidePanel.WidgetGroup:AddChild(affixWeekWarning)
+  -- frame.sidePanel.WidgetGroup:AddChild(affixWeekWarning)
 
   --difficulty slider
   frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
@@ -1302,7 +1253,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.DifficultySlider:SetCallback("OnLeave", function()
     GameTooltip:Hide()
   end)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
+  -- frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
 
   --dungeon level below 10 warning
   frame.sidePanel.difficultyWarning = AceGUI:Create("Icon")
@@ -1348,7 +1299,7 @@ function MDT:MakeSidePanel(frame)
   end
 
   difficultyWarning:Toggle(db.currentDifficulty)
-  frame.sidePanel.WidgetGroup:AddChild(difficultyWarning)
+  -- frame.sidePanel.WidgetGroup:AddChild(difficultyWarning)
 
   frame.sidePanel.middleLine = AceGUI:Create("Heading")
   frame.sidePanel.middleLine:SetWidth(240)
@@ -1356,11 +1307,10 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
 
   --progress bar
-  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioTrackerProgressBarTemplate")
+  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "TooltipProgressBarTemplate")
   frame.sidePanel.ProgressBar:Show()
   frame.sidePanel.ProgressBar:ClearAllPoints()
   frame.sidePanel.ProgressBar:SetPoint("TOP", frame.sidePanel.WidgetGroup.frame, "BOTTOM", -10, 5)
-  MDT:SkinProgressBar(frame.sidePanel.ProgressBar)
 end
 
 ---ToggleMDIMode
@@ -2602,9 +2552,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   MDT:UpdateDungeonDropDown()
   --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
   frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
-  MDT:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
-  MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
-  MDT:DisplayMDISelector()
   MDT:DrawAllPresetObjects()
   MDT:KillAllAnimatedLines()
   MDT:DrawAllAnimatedLines()
@@ -4073,60 +4020,6 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   f:Show()
 end
 
----Creates the tutorial button and sets up the help plate frames
-function MDT:CreateTutorialButton(parent)
-  local scale = self:GetScale()
-  local sidePanelHeight = MDT.main_frame.sidePanel.PullButtonScrollGroup.frame:GetHeight()
-  local helpPlate = {
-    FramePos = { x = 0, y = 0 },
-    FrameSize = { width = sizex, height = sizey },
-    [1] = { ButtonPos = { x = 205, y = 0 }, HighLightBox = { x = 0, y = 0, width = 200, height = 56 },
-      ToolTipDir = "RIGHT", ToolTipText = L["helpPlateDungeonSelect"] },
-    [2] = { ButtonPos = { x = 205, y = -210 * scale },
-      HighLightBox = { x = 0, y = -58, width = (sizex - 6) * scale, height = (sizey * scale) - 58 }, ToolTipDir = "RIGHT",
-      ToolTipText = string.format(L["helpPlateNPC"], "\n", "\n") },
-    [3] = { ButtonPos = { x = 900 * scale, y = 0 * scale },
-      HighLightBox = { x = 838 * scale, y = 30, width = 251, height = 115 }, ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlatePresets"] },
-    [4] = { ButtonPos = { x = 900 * scale, y = -87 * scale },
-      HighLightBox = { x = 838 * scale, y = 30 - 115, width = 251, height = 102 }, ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlateDungeon"] },
-    [5] = { ButtonPos = { x = 900 * scale, y = -(115 + 102 * scale) },
-      HighLightBox = { x = 838 * scale, y = (30 - (115 + 102)), width = 251, height = (sidePanelHeight) + 43 },
-      ToolTipDir = "LEFT", ToolTipText = string.format(L["helpPlatePulls"], "\n") },
-  }
-  if not parent.HelpButton then
-    parent.HelpButton = CreateFrame("Button", "MDTMainHelpPlateButton", parent, "MainHelpPlateButton")
-    parent.HelpButton:ClearAllPoints()
-    parent.HelpButton:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, 48)
-    parent.HelpButton:SetScale(0.8)
-    parent.HelpButton:SetFrameStrata(mainFrameStrata)
-    parent.HelpButton:SetFrameLevel(6)
-    parent.HelpButton:Hide()
-    --hook to make button hide
-    local originalHide = parent.Hide
-    function parent:Hide(...)
-      parent.HelpButton:Hide()
-      return originalHide(self, ...)
-    end
-
-    local function TutorialButtonOnHide(self)
-      HelpPlate_Hide(true)
-    end
-
-    parent.HelpButton:SetScript("OnHide", TutorialButtonOnHide)
-  end
-  local function TutorialButtonOnClick(self)
-    if not HelpPlate_IsShowing(helpPlate) then
-      HelpPlate_Show(helpPlate, MDT.main_frame, self)
-    else
-      HelpPlate_Hide(true)
-    end
-  end
-
-  parent.HelpButton:SetScript("OnClick", TutorialButtonOnClick)
-end
-
 function MDT:Round(number, decimals)
   return (("%%.%df"):format(decimals)):format(number)
 end
@@ -4392,20 +4285,6 @@ function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
 end
 
 function MDT:GetCurrentAffixWeek()
-  if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-    LoadAddOn("Blizzard_ChallengesUI")
-  end
-  C_MythicPlus.RequestCurrentAffixes()
-  C_MythicPlus.RequestMapInfo()
-  C_MythicPlus.RequestRewards()
-  local affixIds = C_MythicPlus.GetCurrentAffixes() --table
-  if not affixIds then return end
-  if not affixIds[1] then return 1 end
-  for week, affixes in ipairs(affixWeeks) do
-    if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
-      return week
-    end
-  end
   return 1
 end
 
@@ -4673,7 +4552,6 @@ function initFrames()
   MDT:MakeRenameFrame(main_frame)
   MDT:MakeDeleteConfirmationFrame(main_frame)
   MDT:MakeClearConfirmationFrame(main_frame)
-  MDT:CreateTutorialButton(main_frame)
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
   MDT:MakeSendingStatusBar(main_frame)
