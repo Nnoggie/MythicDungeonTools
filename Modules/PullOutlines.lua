@@ -114,14 +114,6 @@ local function releaseTexture(tex)
   tinsert(texturePool, tex)
 end
 
----ReleaseAllActiveTextures
-function MDT:ReleaseHullTextures()
-  for k, tex in pairs(activeTextures) do
-    releaseTexture(tex)
-  end
-  twipe(activeTextures)
-end
-
 --make a pool for fontStrings
 local activeFontStrings = {}
 local fontStringPool = {}
@@ -161,6 +153,15 @@ function MDT:ReleaseHullFontStrings()
     releaseFontString(fsFrame)
   end
   twipe(activeFontStrings)
+end
+
+---ReleaseAllActiveTextures
+function MDT:ReleaseHullTextures()
+  for k, tex in pairs(activeTextures) do
+    releaseTexture(tex)
+  end
+  twipe(activeTextures)
+  MDT:ReleaseHullFontStrings()
 end
 
 function MDT:DrawHullFontString(hull, pullIdx)
