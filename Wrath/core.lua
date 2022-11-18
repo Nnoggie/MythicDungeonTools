@@ -2557,6 +2557,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   MDT:DrawAllPresetObjects()
   MDT:KillAllAnimatedLines()
   MDT:DrawAllAnimatedLines()
+  MDT:POI_UpdateAll()
 end
 
 ---Updates the map to the specified dungeon
