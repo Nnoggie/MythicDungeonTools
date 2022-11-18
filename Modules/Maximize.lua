@@ -57,7 +57,9 @@ function MDT:Maximize()
     f.devPanel:SetPoint("TOPLEFT", f, "TOPLEFT", 0, -45)
   end
   f.resizer:Hide()
-  MDT:CreateTutorialButton(MDT.main_frame)
+  if MDT:IsDragonflight() then
+    MDT:CreateTutorialButton(MDT.main_frame)
+  end
   db.maximized = true
 end
 
@@ -102,7 +104,9 @@ function MDT:Minimize()
     f.devPanel:SetPoint("TOPRIGHT", f.topPanel, "TOPLEFT", 0, 0)
   end
   f.resizer:Show()
-  MDT:CreateTutorialButton(MDT.main_frame)
+  if MDT:IsDragonflight() then
+    MDT:CreateTutorialButton(MDT.main_frame)
+  end
 
   db.maximized = false
 end

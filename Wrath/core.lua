@@ -1958,12 +1958,14 @@ MDT.OnMouseUp = function(self, button)
 
   --play minimap ping on right click at cursor position
   --only ping if we didnt pan
-  if scrollFrame.oldX == scrollFrame.cursorX or scrollFrame.oldY == scrollFrame.cursorY then
-    if button == "RightButton" then
-      local x, y = MDT:GetCursorPosition()
-      MDT:PingMap(x, y)
-      local sublevel = MDT:GetCurrentSubLevel()
-      if MDT.liveSessionActive then MDT:LiveSession_SendPing(x, y, sublevel) end
+  if MDT:IsDragonflight() then
+    if scrollFrame.oldX == scrollFrame.cursorX or scrollFrame.oldY == scrollFrame.cursorY then
+      if button == "RightButton" then
+        local x, y = MDT:GetCursorPosition()
+        MDT:PingMap(x, y)
+        local sublevel = MDT:GetCurrentSubLevel()
+        if MDT.liveSessionActive then MDT:LiveSession_SendPing(x, y, sublevel) end
+      end
     end
   end
 end
