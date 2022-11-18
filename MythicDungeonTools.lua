@@ -4490,7 +4490,7 @@ function MDT:DropIndicator()
     indicator:SetHeight(4)
     indicator:SetFrameStrata("FULLSCREEN")
 
-    local texture = indicator:CreateTexture(nil, "FULLSCREEN", nil, 0)
+    local texture = indicator:CreateTexture(nil, "OVERLAY", nil, 0)
     texture:SetBlendMode("ADD")
     texture:SetAllPoints(indicator)
     texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
