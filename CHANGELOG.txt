@@ -1,3 +1,5 @@
+v4.0.1.10
+- fix miniboss count court of stars
 v4.0.1.9
 - toc update for 10.0.2
 v4.0.1.8
