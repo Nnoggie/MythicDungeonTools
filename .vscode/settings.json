@@ -34,7 +34,8 @@
     "GetLocale",
     "IsAltKeyDown",
     "WrapTextInColorCode",
-    "tonumber"
+    "tonumber",
+    "GetCursorPosition"
   ],
   "Lua.diagnostics.disable": [
     "deprecated",
