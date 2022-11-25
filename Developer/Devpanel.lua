@@ -442,22 +442,7 @@ function MDT:CreateDevPanel(frame)
     local cleanSpellDataButton = AceGUI:Create("Button")
     cleanSpellDataButton:SetText("Clean spells")
     cleanSpellDataButton:SetCallback("OnClick", function()
-      local blacklist = MDT:GetEnemyInfoSpellBlacklist()
-      for i = 1, 100 do
-        local enemies = MDT.dungeonEnemies[i]
-        if enemies then
-          for enemyIdx, enemy in pairs(enemies) do
-            if enemy.spells then
-              for spellId, spell in pairs(enemy.spells) do
-                if blacklist[spellId] then
-                  enemy.spells[spellId] = nil
-                end
-              end
-            end
-          end
-        end
-      end
-      if MDT.EnemyInfoFrame then MDT.EnemyInfoFrame:Hide() end
+      MDT:CleanEnemyInfoSpells()
     end)
     container:AddChild(cleanSpellDataButton)
 

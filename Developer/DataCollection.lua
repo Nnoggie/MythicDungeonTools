@@ -36,6 +36,7 @@ function DC:Init()
   for k, dungeonIndex in pairs(dungeonsToTrack) do
     DC:AddCollectedDataToEnemyTable(dungeonIndex)
   end
+  MDT:CleanEnemyInfoSpells()
 end
 
 function DC:AddCollectedDataToEnemyTable(dungeonIndex, ignoreSpells, ignoreCC)
@@ -315,6 +316,26 @@ function DC:MergeReceiveData(package)
     end
   end
   DC:AddCollectedDataToEnemyTable()
+  MDT:CleanEnemyInfoSpells()
+end
+
+function MDT:CleanEnemyInfoSpells()
+  local blacklist = MDT:GetEnemyInfoSpellBlacklist()
+  for i = 1, 100 do
+    local enemies = MDT.dungeonEnemies[i]
+    if enemies then
+      for enemyIdx, enemy in pairs(enemies) do
+        if enemy.spells then
+          for spellId, spell in pairs(enemy.spells) do
+            if blacklist[spellId] then
+              enemy.spells[spellId] = nil
+            end
+          end
+        end
+      end
+    end
+  end
+  if MDT.EnemyInfoFrame then MDT.EnemyInfoFrame:Hide() end
 end
 
 function DC:InitHealthTrack()
