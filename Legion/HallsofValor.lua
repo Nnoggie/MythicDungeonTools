@@ -210,11 +210,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Silence"] = true;
       ["Root"] = true;
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Imprison"] = true;
+      ["Sap"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -543,6 +545,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Imprison"] = true;
+      ["Sap"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -629,6 +632,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Incapacitate"] = true;
       ["Silence"] = true;
       ["Root"] = true;
+      ["Fear"] = true;
       ["Disorient"] = true;
       ["Imprison"] = true;
       ["Stun"] = true;
@@ -729,6 +733,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true;
       ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [198944] = {
@@ -890,6 +895,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Root"] = true;
       ["Imprison"] = true;
+      ["Sap"] = true;
+      ["Stun"] = true;
       ["Slow"] = true;
     };
     ["spells"] = {
@@ -1031,6 +1038,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [199108] = {
@@ -1112,6 +1120,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71;
     ["characteristics"] = {
       ["Taunt"] = true;
+      ["Root"] = true;
     };
     ["spells"] = {
       [198888] = {
@@ -1200,7 +1209,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true;
       ["Root"] = true;
+      ["Fear"] = true;
+      ["Imprison"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [185425] = {
@@ -1379,8 +1391,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Root"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
       ["Imprison"] = true;
+      ["Sap"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [199177] = {
