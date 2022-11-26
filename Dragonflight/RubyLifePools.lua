@@ -11,6 +11,11 @@ MDT.mapInfo[dungeonIndex] = {
     };
   }
 };
+local zones = { 2094, 2095 }
+-- add zones to MDT.zoneIdToDungeonIdx
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "RubyLifePools",

@@ -2,7 +2,6 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 3
 MDT.dungeonList[dungeonIndex] = L["Court of Stars"]
-
 MDT.mapInfo[dungeonIndex] = {
   viewportPositionOverrides = {
     [1] = {
@@ -12,6 +11,11 @@ MDT.mapInfo[dungeonIndex] = {
     };
   }
 };
+local zones = { 761, 762, 763 }
+-- add zones to MDT.zoneIdToDungeonIdx
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "SuramarNoblesDistrict",

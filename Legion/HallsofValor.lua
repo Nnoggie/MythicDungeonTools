@@ -21,6 +21,11 @@ MDT.mapInfo[dungeonIndex] = {
     };
   }
 };
+local zones = { 703, 704, 705 }
+-- add zones to MDT.zoneIdToDungeonIdx
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "Hallsofvalor",
