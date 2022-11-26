@@ -6,6 +6,11 @@ MDT.mapInfo[dungeonIndex] = {
   viewportPositionOverrides = {
   }
 };
+local zones = { 429, 430 }
+-- add zones to MDT.zoneIdToDungeonIdx
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "EastTemple",

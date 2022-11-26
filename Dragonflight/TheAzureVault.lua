@@ -26,6 +26,11 @@ MDT.mapInfo[dungeonIndex] = {
     };
   }
 };
+local zones = { 2073, 2074, 2075, 2076, 2077 }
+-- add zones to MDT.zoneIdToDungeonIdx
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "ArcaneNexus",
