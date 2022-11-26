@@ -1,3 +1,6 @@
+v4.0.1.16
+- nil fix
+- dungeon zone ids
 v4.0.1.15
 - spells update
 v4.0.1.14
