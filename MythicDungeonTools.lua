@@ -1398,11 +1398,13 @@ function MDT:DisplayMDISelector()
     local widget = MDT.MDISelector.frame
     function frame:Hide(...)
       widget:Hide()
+      ---@diagnostic disable-next-line: redundant-parameter
       return originalHide(self, ...)
     end
 
     function frame:Show(...)
       if db.MDI.enabled then widget:Show() end
+      ---@diagnostic disable-next-line: redundant-parameter
       return originalShow(self, ...)
     end
 
