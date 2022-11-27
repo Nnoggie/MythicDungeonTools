@@ -295,6 +295,7 @@ def get_count_table(ID, db_files=None):
         107435: 77283,  # Gerenth the Vile, Court of Stars (Suspicious Noble)
         97202: 46333,  # Olmyr the Enlightened, Halls of Valor
         97219: 46333,  # Solsten, Halls of Valor
+        76057: 83187,  # Carrion Worm, Shadowmoon Burial Grounds
     }
     # For all game events, add a new row to the count table with the npcID
     for npcID, game_event in game_event_converter.items():
