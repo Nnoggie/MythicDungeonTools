@@ -934,6 +934,7 @@ function MDT:MakeSidePanel(frame)
     MDT:SetUniqueID(preset)
     preset.mdiEnabled = db.MDI.enabled
     preset.difficulty = db.currentDifficulty
+    preset.addonVersion = db.version
     local export = MDT:TableToString(preset, true, 5)
     MDT:HideAllDialogs()
     MDT.main_frame.ExportFrame:Show()
