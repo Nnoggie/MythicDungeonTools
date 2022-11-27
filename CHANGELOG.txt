@@ -1,4 +1,4 @@
-v4.0.1.18
+v4.0.1.19
 - shadowmoon total count update
 v4.0.1.17
 - shadowmoon mapping update
