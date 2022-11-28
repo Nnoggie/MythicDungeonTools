@@ -222,6 +222,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["scale"] = 0.4;
       };
+      [12] = {
+        ["x"] = 339.67502962434;
+        ["y"] = -218.54664745672;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [13] = {
+        ["x"] = 339.03975781058;
+        ["y"] = -225.40173975057;
+        ["g"] = 38;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
     };
   };
   [2] = {
@@ -2809,48 +2823,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [38] = {
-    ["name"] = "Nokhud Warspear";
-    ["id"] = 192791;
-    ["count"] = 5;
-    ["health"] = 717007;
-    ["scale"] = 1;
-    ["displayId"] = 108672;
-    ["creatureType"] = "Humanoid";
-    ["level"] = 70;
-    ["characteristics"] = {
-      ["Taunt"] = true;
-      ["Silence"] = true;
-      ["Root"] = true;
-      ["Fear"] = true;
-      ["Disorient"] = true;
-      ["Stun"] = true;
-    };
-    ["spells"] = {
-      [381683] = {
-      };
-      [381692] = {
-      };
-      [384134] = {
-      };
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 339.67502962434;
-        ["y"] = -218.54664745672;
-        ["g"] = 38;
-        ["sublevel"] = 1;
-        ["scale"] = 0.4;
-      };
-      [2] = {
-        ["x"] = 339.03975781058;
-        ["y"] = -225.40173975057;
-        ["g"] = 38;
-        ["sublevel"] = 1;
-        ["scale"] = 0.4;
-      };
-    };
-  };
-  [39] = {
     ["name"] = "Nokhud Longbow";
     ["id"] = 192789;
     ["count"] = 5;
@@ -2889,7 +2861,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [40] = {
+  [39] = {
     ["name"] = "Primalist Arcblade";
     ["id"] = 194898;
     ["count"] = 6;
@@ -2957,7 +2929,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [41] = {
+  [40] = {
     ["name"] = "Nokhud Defender";
     ["id"] = 199717;
     ["count"] = 8;
@@ -3152,7 +3124,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [42] = {
+  [41] = {
     ["name"] = "Nokhud Thunderfist";
     ["id"] = 193373;
     ["count"] = 5;
