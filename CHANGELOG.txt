@@ -1,3 +1,5 @@
+v4.0.1.20
+- fix nokhud data
 v4.0.1.19
 - shadowmoon total count update
 v4.0.1.17
