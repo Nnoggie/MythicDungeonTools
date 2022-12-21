@@ -1,5 +1,5 @@
 ##### To install packages in new environment use pip install -r python/requirements.txt #####
-certifi==2022.6.15
+certifi==2022.12.7
 charset-normalizer==2.1.0
 idna==3.3
 numpy==1.23.1
