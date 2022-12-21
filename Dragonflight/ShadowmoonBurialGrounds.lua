@@ -962,7 +962,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [8] = {
-    ["name"] = "Shadowmoon Enslaver";
+    ["name"] = "Shadowmoon Dominator";
     ["id"] = 76446;
     ["count"] = 6;
     ["health"] = 681157;
