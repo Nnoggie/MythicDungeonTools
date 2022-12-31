@@ -29,7 +29,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TheNokhudOffensive"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 580, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 520, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -80,7 +80,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Nokhud Warspear";
     ["id"] = 192791;
-    ["count"] = 5;
+    ["count"] = 6;
     ["health"] = 717007;
     ["scale"] = 1;
     ["displayId"] = 108672;
@@ -261,6 +261,34 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 308.65662100988;
         ["y"] = -223.12705010677;
         ["g"] = 41;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [18] = {
+        ["x"] = 293.47477392535;
+        ["y"] = -238.5421177803;
+        ["g"] = 46;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [19] = {
+        ["x"] = 285.76824922951;
+        ["y"] = -237.89217625144;
+        ["g"] = 46;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [20] = {
+        ["x"] = 301.70039106068;
+        ["y"] = -199.09077713849;
+        ["g"] = 43;
+        ["sublevel"] = 1;
+        ["scale"] = 0.4;
+      };
+      [21] = {
+        ["x"] = 295.73998676227;
+        ["y"] = -198.61120865951;
+        ["g"] = 43;
         ["sublevel"] = 1;
         ["scale"] = 0.4;
       };
@@ -792,7 +820,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [7] = {
     ["name"] = "Nokhud Lancemaster";
     ["id"] = 192800;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1290613;
     ["scale"] = 1;
     ["displayId"] = 108528;
@@ -934,7 +962,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [10] = {
     ["name"] = "Stormcaller Boroo";
     ["id"] = 194317;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108819;
@@ -1016,7 +1044,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [12] = {
     ["name"] = "Primalist Thunderbeast";
     ["id"] = 195696;
-    ["count"] = 10;
+    ["count"] = 12;
     ["health"] = 1434014;
     ["scale"] = 1;
     ["displayId"] = 110545;
@@ -1306,7 +1334,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [15] = {
     ["name"] = "Stormcaller Arynga";
     ["id"] = 195265;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108819;
@@ -1332,7 +1360,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [16] = {
     ["name"] = "Primal Stormshield";
     ["id"] = 194896;
-    ["count"] = 6;
+    ["count"] = 7;
     ["health"] = 932110;
     ["scale"] = 1;
     ["displayId"] = 108335;
@@ -1498,7 +1526,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [18] = {
     ["name"] = "Stormcaller Solongo";
     ["id"] = 194315;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108818;
@@ -1527,7 +1555,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [19] = {
     ["name"] = "Primal Gust";
     ["id"] = 195579;
-    ["count"] = 2;
+    ["count"] = 0;
     ["health"] = 286803;
     ["scale"] = 1;
     ["displayId"] = 102511;
@@ -1650,7 +1678,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [20] = {
     ["name"] = "Stormcaller Zarii";
     ["id"] = 194316;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 108818;
@@ -1894,7 +1922,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [23] = {
     ["name"] = "Soulharvester Galtmaa";
     ["id"] = 195927;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109014;
@@ -1989,7 +2017,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [25] = {
     ["name"] = "Desecrated Ohuna";
     ["id"] = 195876;
-    ["count"] = 4;
+    ["count"] = 2;
     ["health"] = 573606;
     ["scale"] = 1;
     ["displayId"] = 109019;
@@ -2145,7 +2173,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [26] = {
     ["name"] = "Desecrated Bakar";
     ["id"] = 195875;
-    ["count"] = 4;
+    ["count"] = 1;
     ["health"] = 286803;
     ["scale"] = 1;
     ["displayId"] = 109018;
@@ -2539,7 +2567,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [30] = {
     ["name"] = "Soulharvester Tumen";
     ["id"] = 195929;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109036;
@@ -2567,7 +2595,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [31] = {
     ["name"] = "Soulharvester Mandakh";
     ["id"] = 195930;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109037;
@@ -2598,7 +2626,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [32] = {
     ["name"] = "Soulharvester Duuren";
     ["id"] = 195928;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1147211;
     ["scale"] = 1;
     ["displayId"] = 109015;
@@ -2843,63 +2871,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [38] = {
-    ["name"] = "Primalist Arcblade";
-    ["id"] = 194898;
-    ["count"] = 6;
-    ["health"] = 860408;
-    ["scale"] = 1;
-    ["displayId"] = 109038;
-    ["creatureType"] = "Humanoid";
-    ["level"] = 70;
-    ["characteristics"] = {
-      ["Taunt"] = true;
-      ["Silence"] = true;
-      ["Root"] = true;
-      ["Fear"] = true;
-      ["Disorient"] = true;
-      ["Sap"] = true;
-      ["Stun"] = true;
-      ["Slow"] = true;
-    };
-    ["spells"] = {
-      [387135] = {
-      };
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 302.59105605131;
-        ["y"] = -198.79909169341;
-        ["g"] = 43;
-        ["sublevel"] = 1;
-        ["scale"] = 0.4;
-      };
-      [2] = {
-        ["x"] = 295.03201398179;
-        ["y"] = -198.52413218244;
-        ["g"] = 43;
-        ["sublevel"] = 1;
-        ["scale"] = 0.4;
-      };
-      [3] = {
-        ["x"] = 293.58976580681;
-        ["y"] = -239.12770315956;
-        ["g"] = 46;
-        ["sublevel"] = 1;
-        ["scale"] = 0.4;
-      };
-      [4] = {
-        ["x"] = 285.61285441755;
-        ["y"] = -238.06412390028;
-        ["g"] = 46;
-        ["sublevel"] = 1;
-        ["scale"] = 0.4;
-      };
-    };
-  };
-  [39] = {
     ["name"] = "Nokhud Defender";
     ["id"] = 199717;
-    ["count"] = 8;
+    ["count"] = 10;
     ["health"] = 1326463;
     ["scale"] = 1;
     ["displayId"] = 108529;
@@ -3050,15 +3024,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 0.6;
       };
       [11] = {
-        ["x"] = 289.22906771741;
-        ["y"] = -240.72308422024;
+        ["x"] = 289.69331849745;
+        ["y"] = -240.53739878431;
         ["g"] = 46;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [12] = {
+        ["x"] = 290.21263988051;
+        ["y"] = -265.07558950342;
+        ["g"] = 48;
+        ["sublevel"] = 1;
+        ["scale"] = 0.6;
+      };
+      [13] = {
+        ["x"] = 295.26642389701;
+        ["y"] = -262.58649580492;
+        ["g"] = 48;
         ["sublevel"] = 1;
         ["scale"] = 0.6;
       };
     };
   };
-  [40] = {
+  [39] = {
     ["name"] = "Nokhud Thunderfist";
     ["id"] = 193373;
     ["count"] = 5;
