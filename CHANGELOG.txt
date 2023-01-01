@@ -1,3 +1,5 @@
+v4.0.1.23
+- More Academy fixes
 v4.0.1.22
 - Agethar Academy + Nokhud Offensive count fixes
 v4.0.1.21
