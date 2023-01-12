@@ -1,3 +1,5 @@
+v4.0.1.24
+- adjust to blizzard academy count fix
 v4.0.1.23
 - More Academy fixes
 v4.0.1.22
