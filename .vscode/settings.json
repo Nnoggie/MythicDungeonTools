@@ -40,6 +40,7 @@
   "Lua.diagnostics.disable": [
     "deprecated",
     "undefined-field",
+    "param-type-mismatch",
     "param-type-mismatch"
   ],
   "githubPullRequests.ignoredPullRequestBranches": [
