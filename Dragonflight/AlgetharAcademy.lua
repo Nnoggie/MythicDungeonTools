@@ -27,7 +27,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [2] = L["ThePitch"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 405, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 450, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -157,6 +157,48 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
+      [9] = {
+        ["x"] = 262.02949401076;
+        ["y"] = -233.96860214834;
+        ["g"] = 7;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [10] = {
+        ["x"] = 262.572290218;
+        ["y"] = -223.92655783236;
+        ["g"] = 7;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [11] = {
+        ["x"] = 258.90830905053;
+        ["y"] = -205.47093547201;
+        ["g"] = 9;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [12] = {
+        ["x"] = 263.11510195521;
+        ["y"] = -197.05734966265;
+        ["g"] = 9;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [13] = {
+        ["x"] = 274.37847073868;
+        ["y"] = -188.23662981416;
+        ["g"] = 8;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [14] = {
+        ["x"] = 284.55618498776;
+        ["y"] = -186.33680038139;
+        ["g"] = 8;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
     };
   };
   [2] = {
@@ -218,6 +260,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
+      [6] = {
+        ["x"] = 280.83891010722;
+        ["y"] = -177.21821927523;
+        ["g"] = 8;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [7] = {
+        ["x"] = 250.71280821924;
+        ["y"] = -233.12789809349;
+        ["g"] = 7;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
     };
   };
   [3] = {
@@ -267,6 +323,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 309.22354974101;
         ["y"] = -65.768635722974;
         ["g"] = 11;
+        ["sublevel"] = 1;
+        ["scale"] = 1.2;
+      };
+      [4] = {
+        ["x"] = 243.47573546205;
+        ["y"] = -192.07719073914;
+        ["g"] = 9;
         ["sublevel"] = 1;
         ["scale"] = 1.2;
       };
@@ -456,122 +519,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [6] = {
-    ["name"] = "Spellbound Battleaxe";
-    ["id"] = 197904;
-    ["count"] = 0;
-    ["health"] = 788015;
-    ["scale"] = 1;
-    ["displayId"] = 109246;
-    ["creatureType"] = "Not specified";
-    ["level"] = 70;
-    ["characteristics"] = {
-      ["Taunt"] = true;
-      ["Silence"] = true;
-      ["Root"] = true;
-      ["Fear"] = true;
-      ["Disorient"] = true;
-      ["Stun"] = true;
-    };
-    ["spells"] = {
-      [387523] = {
-      };
-      [388911] = {
-      };
-      [388912] = {
-      };
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 252.63604389718;
-        ["y"] = -232.6510526405;
-        ["g"] = 7;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-      [2] = {
-        ["x"] = 279.58782379645;
-        ["y"] = -176.67632973742;
-        ["g"] = 8;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-    };
-  };
-  [7] = {
-    ["name"] = "Corrupted Manafiend";
-    ["id"] = 196798;
-    ["count"] = 0;
-    ["health"] = 716377;
-    ["scale"] = 1;
-    ["displayId"] = 107525;
-    ["creatureType"] = "Elemental";
-    ["level"] = 70;
-    ["characteristics"] = {
-      ["Taunt"] = true;
-      ["Silence"] = true;
-      ["Root"] = true;
-      ["Fear"] = true;
-      ["Disorient"] = true;
-      ["Stun"] = true;
-    };
-    ["spells"] = {
-      [387523] = {
-      };
-      [388862] = {
-      };
-      [388863] = {
-      };
-      [388866] = {
-      };
-      [388868] = {
-      };
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 263.4157526168;
-        ["y"] = -221.33238419711;
-        ["g"] = 7;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-      [2] = {
-        ["x"] = 262.58346245545;
-        ["y"] = -230.18949465187;
-        ["g"] = 7;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-      [3] = {
-        ["x"] = 274.24158261064;
-        ["y"] = -188.55025369626;
-        ["g"] = 8;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-      [4] = {
-        ["x"] = 282.22980730453;
-        ["y"] = -184.64821379799;
-        ["g"] = 8;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-      [5] = {
-        ["x"] = 255.64264752536;
-        ["y"] = -206.20765279934;
-        ["g"] = 9;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-      [6] = {
-        ["x"] = 258.84997154399;
-        ["y"] = -196.77961534937;
-        ["g"] = 9;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-    };
-  };
-  [8] = {
     ["name"] = "Unruly Textbook";
     ["id"] = 196044;
     ["count"] = 4;
@@ -626,46 +573,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [9] = {
-    ["name"] = "Spellbound Scepter";
-    ["id"] = 197905;
-    ["count"] = 0;
-    ["health"] = 644740;
-    ["scale"] = 1;
-    ["displayId"] = 109246;
-    ["creatureType"] = "Not specified";
-    ["level"] = 70;
-    ["characteristics"] = {
-      ["Taunt"] = true;
-      ["Silence"] = true;
-      ["Root"] = true;
-      ["Fear"] = true;
-      ["Disorient"] = true;
-      ["Stun"] = true;
-    };
-    ["spells"] = {
-      [387523] = {
-      };
-      [388884] = {
-      };
-      [388886] = {
-      };
-      [388899] = {
-      };
-      [396812] = {
-      };
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 245.37915504332;
-        ["y"] = -193.55305663419;
-        ["g"] = 9;
-        ["sublevel"] = 1;
-        ["scale"] = 1.2;
-      };
-    };
-  };
-  [10] = {
+  [7] = {
     ["name"] = "Vexamus";
     ["id"] = 194181;
     ["count"] = 0;
@@ -709,7 +617,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [11] = {
+  [8] = {
     ["name"] = "Guardian Sentry";
     ["id"] = 192680;
     ["count"] = 18;
@@ -740,7 +648,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [12] = {
+  [9] = {
     ["name"] = "Territorial Eagle";
     ["id"] = 192329;
     ["count"] = 2;
@@ -868,7 +776,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [13] = {
+  [10] = {
     ["name"] = "Alpha Eagle";
     ["id"] = 192333;
     ["count"] = 8;
@@ -912,7 +820,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [14] = {
+  [11] = {
     ["name"] = "Crawth";
     ["id"] = 191736;
     ["count"] = 0;
@@ -952,7 +860,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [15] = {
+  [12] = {
     ["name"] = "Aggravated Skitterfly";
     ["id"] = 197406;
     ["count"] = 4;
@@ -1027,7 +935,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [16] = {
+  [13] = {
     ["name"] = "Vile Lasher";
     ["id"] = 197219;
     ["count"] = 9;
@@ -1071,7 +979,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [17] = {
+  [14] = {
     ["name"] = "Hungry Lasher";
     ["id"] = 197398;
     ["count"] = 2;
@@ -1261,7 +1169,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [18] = {
+  [15] = {
     ["name"] = "Overgrown Ancient";
     ["id"] = 196482;
     ["count"] = 0;
@@ -1303,7 +1211,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [19] = {
+  [16] = {
     ["name"] = "Algeth'ar Echoknight";
     ["id"] = 196200;
     ["count"] = 8;
@@ -1405,7 +1313,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [20] = {
+  [17] = {
     ["name"] = "Spectral Invoker";
     ["id"] = 196202;
     ["count"] = 5;
@@ -1538,7 +1446,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [21] = {
+  [18] = {
     ["name"] = "Ethereal Restorer";
     ["id"] = 196203;
     ["count"] = 6;
@@ -1607,7 +1515,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [22] = {
+  [19] = {
     ["name"] = "Echo of Doragosa";
     ["id"] = 190609;
     ["count"] = 0;
