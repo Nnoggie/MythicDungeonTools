@@ -1,7 +1,7 @@
-## Interface: 100002
+## Interface: 30400
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 4.0.1.25
+## Version: 4.0.1.11
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-deDE: Tool für das Planen und Optimieren von Mythic+ Dungeons
 ## Notes-esES: Herramienta para planificar y optimizar las rutas de mazmorras de Piedras Angulares
@@ -22,10 +22,8 @@ init.lua
 locales.xml
 AceGUIWidgets\load_widgets.xml
 Utility.lua
-MythicDungeonTools.lua
+Wrath\core.lua
 Modules\load_modules.xml
 Developer\load_developer.xml
-Legion\load_legion.xml
-BattleForAzeroth\load_bfa.xml
-Shadowlands\load_shadowlands.xml
-Dragonflight\load_dragonflight.xml
+WrathOfTheLichKing\load_wotlk.xml
+
