@@ -121,9 +121,10 @@ L["Nokhud Stormcaster"] = "Nokhud Stormcaster"
 L["Nokhud Thunderfist"] = "Nokhud Thunderfist"
 L["Nokhud Thunderfist"] = "Nokhud Thunderfist"
 L["Shambling Infester"] = "Shambling Infester"
-
-L["Settings"] = "Settings"
-L["openSettingsTooltip"] = "Click to open settings"
+]]
+L["Settings"] = "설정"
+L["openSettingsTooltip"] = "클릭하여 설정 열기"
+--[[
 L["Alpha Eagle"] = "Alpha Eagle"
 L["Arcane Forager"] = "Arcane Forager"
 L["Hungry Lasher"] = "Hungry Lasher"
@@ -144,26 +145,36 @@ L["Spectral Invoker"] = "Spectral Invoker"
 L["Spellbound Battleaxe"] = "Spellbound Battleaxe"
 L["Arcane Ravager"] = "Arcane Ravager"
 L["Spellbound Scepter"] = "Spellbound Scepter"
-L["Dragonflight Season 1"] = "Dragonflight Season 1"
-L["Dragonflight Season 2"] = "Dragonflight Season 2"
-L["RubyLifePools"] = "Ruby Life Pools"
+]]
+L["Dragonflight Season 1"] = "용군단 1시즌"
+L["Dragonflight Season 2"] = "용군단 2시즌"
+L["RubyLifePools"] = "루비 생명의 웅덩이"
+--[[
 L["Infusion Chambers"] = "Infusion Chambers"
 L["Ruby Overlook"] = "Ruby Overlook"
-L["TheNokhudOffensive"] = "The Nokhud Offensive"
-L["TheAzureVault"] = "The Azure Vault"
+]]
+L["TheNokhudOffensive"] = "노쿠드 공격대"
+L["TheAzureVault"] = "하늘빛 보관소"
+--[[
 L["TheArcaneConservatory"] = "The Arcane Conservatory"
 L["UpperChamber"] = "Upper Chamber"
 L["MausoleumOfLegends"] = "Mausoleum Of Legends"
 L["LowerChamber"] = "Lower Chamber"
 L["CrystalChamber"] = "Crystal Chamber"
-L["AlgetharAcademy"] = "Algeth'ar Academy"
+]]
+L["AlgetharAcademy"] = "알게타르 대학"
+--[[
 L["ThePitch"] = "The Pitch"
 L["TheHeadteachersEnclave"] = "The Headteacher's Enclave"
-L["ShadowmoonBurialGrounds"] = "Shadowmoon Burial Grounds"
+]]
+L["ShadowmoonBurialGrounds"] = "어둠달 골짜기"
+--[[
 L["CryptOfTheAncients"] = "Crypt of the Ancients"
 L["AltarOfShadow"] = "Altar of Shadow"
 L["EdgeOfReality"] = "Edge of Reality"
-L["TempleOfTheJadeSerpent"] = "Temple of the Jade Serpent"
+]]
+L["TempleOfTheJadeSerpent"] = "옥룡사"
+--[[
 L["TheScrollkeepersSanctum"] = "The Scrollkeeper's Sanctum"
 L["BrackenhideHollow"] = "Brackenhide Hollow"
 L["DenOfDecay"] = "Den of Decay"
@@ -231,9 +242,13 @@ L["Primalist Shockcaster"] = "Primalist Shockcaster"
 L["Defier Draghar"] = "Defier Draghar"
 L["Bounty stacks \nafter this pull"] = "Bounty stacks \nafter this pull"
 L["AddOn Conflict"] = "AddOn Conflict"
-L["conflictPrompt"] = "MDT has detected that you have certain AddOns installed that are conflicting with MDT.\n\nPlease remove the following AddOns:\n\n"
+]]
+L["conflictPrompt"] = "MDT와 충돌을 일으키는 애드온이 있습니다.\n\n다음 애드온들을 삭제해주세요:\n\n"
+--[[
 L["Middle-click to disable Minimap Button"] = "Middle-click to disable Minimap Button"
-L["MDT: Use /mdt minimap to show the minimap icon again"] = "MDT: Use /mdt minimap to show the minimap icon again"
+]]
+L["MDT: Use /mdt minimap to show the minimap icon again"] = "MDT: /mdt minimap 명령어로 미니맵 아이콘을 다시 띄울 수 있습니다."
+--[[
 L["Iron Star"] = "Iron Star"
 L["ironDocksIronStar"] = "Iron Star"
 L["manaDevourerNote"] = "Mana Devourer 1 is representing the Boss because it also awards enemy forces"
@@ -288,8 +303,10 @@ L["Borka the Brute"] = "Borka the Brute"
 L["Shady Dealer"] = "Shady Dealer"
 L["undoDrawing"] = "Undo Drawing"
 L["redoDrawing"] = "Redo Drawing"
-L["hardResetPrompt"] = "Do you really want to reset all settings to default?\nThis will reload the UI!"
-L["hardResetPromptTitle"] = "Delete ALL settings"
+]]
+L["hardResetPrompt"] = "정말로 모든 설정을 초기화하시겠습니까?\n초기화 후 UI가 리로드됩니다!"
+L["hardResetPromptTitle"] = "모든 설정 삭제"
+--[[
 L["Shrouded"] = "Shrouded"
 L["dropdownAssignPlayer"] = "Assign to Player"
 L["dropdownClear"] = "Clear"
@@ -567,8 +584,10 @@ L["Cordana Felsong"] = "Cordana Felsong"
 L["Corpse Collector"] = "Corpse Collector"
 L["Corpse Harvester"] = "Corpse Harvester"
 L["Corstilax"] = "Corstilax"
-L["Court of Stars"] = "Court of Stars"
-L["Court of Stars Sublevel"] = "Court of Stars"
+]]
+L["Court of Stars"] = "별의 궁정"
+L["Court of Stars Sublevel"] = "별의 궁정"
+--[[
 L["Cove Seagull"] = "Cove Seagull"
 L["Coven Diviner"] = "Coven Diviner"
 L["Coven Thornshaper"] = "Coven Thornshaper"
@@ -850,8 +869,10 @@ L["Hakkar the Soulflayer"] = "Hakkar the Soulflayer"
 L["Halkias"] = "Halkias"
 L["Hall of the Moon"] = "Hall of the Moon"
 L["Halls of Atonement"] = "Halls of Atonement"
-L["Halls of Valor"] = "Halls of Valor"
-L["Halls of Valor Sublevel"] = "Halls of Valor"
+]]
+L["Halls of Valor"] = "용맹의 전당"
+L["Halls of Valor Sublevel"] = "용맹의 전당"
+--[[
 L["HallsOfAtonementFloor1"] = "Halls of Atonement"
 L["HallsOfAtonementFloor2"] = "The Nave of Pain"
 L["HallsOfAtonementFloor3"] = "The Sanctuary of Souls"
