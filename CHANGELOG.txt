@@ -1,3 +1,5 @@
+v4.0.2.3
+- wotlk: fix resize error
 v4.0.2.2
 - WoTLK release
 v4.0.1.25
