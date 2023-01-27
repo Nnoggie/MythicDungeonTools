@@ -4523,8 +4523,7 @@ function initFrames()
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  main_frame:SetMinResize(sizex * 0.75, sizey * 0.75)
-  main_frame:SetMaxResize(sizex * fullscreenScale, sizey * fullscreenScale)
+  main_frame:SetResizeBounds(sizex * 0.75, sizey * 0.75, sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
   main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
