@@ -1,4 +1,4 @@
-v4.0.2.1
+v4.0.2.2
 - WoTLK release
 v4.0.1.25
 - replace beastcaller with warrior g21 nokhud
