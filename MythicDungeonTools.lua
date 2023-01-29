@@ -4746,6 +4746,7 @@ function initFrames()
   coroutine.yield()
   MDT:MakeSendingStatusBar(main_frame)
   MDT:POI_CreateDropDown(main_frame)
+  MDT:CreateLiveShareGroup()
 
   --devMode
   if db.devMode and MDT.CreateDevPanel then
