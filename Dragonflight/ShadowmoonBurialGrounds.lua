@@ -1216,14 +1216,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71;
     ["characteristics"] = {
       ["Taunt"] = true;
-      ["Incapacitate"] = true;
-      ["Silence"] = true;
-      ["Root"] = true;
-      ["Fear"] = true;
-      ["Disorient"] = true;
-      ["Imprison"] = true;
-      ["Stun"] = true;
-      ["Slow"] = true;
     };
     ["spells"] = {
       [156717] = {
