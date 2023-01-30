@@ -76,7 +76,7 @@ local function recursiveExport(obj, schema, indentCount)
         if valueType == "table" then
           valueType = "array"
         end
-        print("MDT recurseiveExport: Error: Non schema field " ..
+        print("MDT recursiveExport: Error: Non schema field " ..
           key ..
           " of type " .. valueType .. " in " .. (schema.name or
               "unnamed schema") .. " (field: " .. key .. "; value: " .. tostring(value) .. ")")
