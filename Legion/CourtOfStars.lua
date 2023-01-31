@@ -1737,7 +1737,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 396.13204921856;
         ["y"] = -328.72945571547;
-        ["g"] = 32;
         ["sublevel"] = 1;
         ["scale"] = 1.5;
         ["patrol"] = {
