@@ -10,6 +10,7 @@
   <Script file='TheNexus.lua'/>
   <Script file='TheOculus.lua'/>
   <Script file='TheVioletHold.lua'/>
+  <Script file='Ulduar.lua'/>
   <Script file='UtgardeKeep.lua'/>
   <Script file='UtgardePinnacle.lua'/>
 </Ui>
