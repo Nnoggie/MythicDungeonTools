@@ -1,3 +1,7 @@
+v4.0.2.5
+- potential fix for MDT breaking especially during Dungeons
+- SBG: moved Void Spawn 2, added 10 skitterings after Bonemaw
+- Academy: changed Ethereal Restorer 6 to be an Echoknight instead
 v4.0.2.4
 - small mapping updates
 v4.0.2.3
