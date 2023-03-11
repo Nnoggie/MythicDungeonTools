@@ -155,7 +155,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 5,
+    selectedDungeonList = 6,
     knownAffixWeeks = {},
   },
 }
