@@ -1,3 +1,5 @@
+v4.0.2.6
+- nil fix
 v4.0.2.5
 - potential fix for MDT breaking especially during Dungeons
 - SBG: moved Void Spawn 2, added 10 skitterings after Bonemaw
