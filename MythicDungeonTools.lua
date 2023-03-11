@@ -364,7 +364,14 @@ MDT.dungeonList = {
 
 function MDT:IsOnBetaServer()
   local realm = GetRealmName()
-  return realm == "Valdrakken"
+  local realms = {
+    ["Anasterian"] = true,
+    ["Benedictus"] = true,
+    ["Broxigar"] = true,
+    ["Lycanthoth"] = true,
+    ["Nobundo"] = true,
+  }
+  return realms[realm]
 end
 
 function MDT:GetNumDungeons() return #MDT.dungeonList - 1 end
