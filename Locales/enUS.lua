@@ -2,6 +2,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Zoom"] = "Zoom"
+L["zoomIn"] = "In"
+L["zoomOut"] = "Out"
 L["Nokhud Saboteur"] = "Nokhud Saboteur"
 L["Primalist Arcblade"] = "Primalist Arcblade"
 L["Nokhud Houndsman"] = "Nokhud Houndsman"
