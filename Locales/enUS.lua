@@ -2,6 +2,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["VortexPinnacle"] = "Vortex Pinnacle"
 L["Zoom"] = "Zoom"
 L["zoomIn"] = "In"
 L["zoomOut"] = "Out"
