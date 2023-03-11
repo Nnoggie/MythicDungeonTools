@@ -2052,10 +2052,10 @@ function MDT:PingMap(x, y)
 end
 
 function MDT:SetPingOffsets(mapScale)
-  local scale = 0.35
-  local offset = (10.25 / 1000) * mapScale
+  --local scale = 0.35
+  --local offset = (10.25 / 1000) * mapScale
   ---@diagnostic disable-next-line: redundant-parameter
-  self.ping:SetTransform(CreateVector3D(offset, offset, 0), CreateVector3D(0, 0, 0), scale)
+  --self.ping:SetTransform(CreateVector3D(offset, offset, 0), CreateVector3D(0, 0, 0), scale)
 end
 
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI

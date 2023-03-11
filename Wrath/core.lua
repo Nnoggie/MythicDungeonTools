@@ -1972,22 +1972,22 @@ end
 
 ---Pings the map
 function MDT:PingMap(x, y)
-  self.ping:ClearAllPoints()
-  self.ping:SetPoint("CENTER", self.main_frame.mapPanelTile1, "TOPLEFT", x, y)
-  self.ping:SetModel("interface/minimap/ping/minimapping.m2")
-  local mainFrame = MDTMapPanelFrame
-  local mapScale = mainFrame:GetScale()
-  self:SetPingOffsets(mapScale)
-  self.ping:Show()
-  UIFrameFadeOut(self.ping, 2, 1, 0)
-  self.ping:SetSequence(0)
+  -- self.ping:ClearAllPoints()
+  -- self.ping:SetPoint("CENTER", self.main_frame.mapPanelTile1, "TOPLEFT", x, y)
+  -- self.ping:SetModel("interface/minimap/ping/minimapping.m2")
+  -- local mainFrame = MDTMapPanelFrame
+  -- local mapScale = mainFrame:GetScale()
+  -- self:SetPingOffsets(mapScale)
+  -- self.ping:Show()
+  -- UIFrameFadeOut(self.ping, 2, 1, 0)
+  -- self.ping:SetSequence(0)
 end
 
 function MDT:SetPingOffsets(mapScale)
-  local scale = 0.35
-  local offset = (10.25 / 1000) * mapScale
+  --local scale = 0.35
+  --local offset = (10.25 / 1000) * mapScale
   ---@diagnostic disable-next-line: redundant-parameter
-  self.ping:SetTransform(CreateVector3D(offset, offset, 0), CreateVector3D(0, 0, 0), scale)
+  --self.ping:SetTransform(CreateVector3D(offset, offset, 0), CreateVector3D(0, 0, 0), scale)
 end
 
 ---Sets the sublevel of the currently active preset, need to UpdateMap to reflect the change in UI
@@ -4691,16 +4691,16 @@ function initFrames()
 
   --ping
   MDT.ping = CreateFrame("PlayerModel", nil, MDT.main_frame.mapPanelFrame)
-  local ping = MDT.ping
-  --ping:SetModel("interface/minimap/ping/minimapping.m2")
-  ping:SetModel(120590)
-  ping:SetPortraitZoom(1)
-  ping:SetCamera(1)
-  ping:SetFrameLevel(50)
-  ping:SetFrameStrata("DIALOG")
-  ping.mySize = 45
-  ping:SetSize(ping.mySize, ping.mySize)
-  ping:Hide()
+  -- local ping = MDT.ping
+  -- --ping:SetModel("interface/minimap/ping/minimapping.m2")
+  -- ping:SetModel(120590)
+  -- ping:SetPortraitZoom(1)
+  -- ping:SetCamera(1)
+  -- ping:SetFrameLevel(50)
+  -- ping:SetFrameStrata("DIALOG")
+  -- ping.mySize = 45
+  -- ping:SetSize(ping.mySize, ping.mySize)
+  -- ping:Hide()
 
   --Set affix dropdown to preset week
   --gotta set the list here, as affixes are not ready to be retrieved yet on login
