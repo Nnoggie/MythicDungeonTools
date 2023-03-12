@@ -1135,6 +1135,10 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
   settinggsCogwheel:SetCallback("OnClick", function(...)
+    if not MDT.main_frame.settingsFrame then
+      MDT:MakeSettingsFrame(MDT.main_frame)
+      MDT:MakeCustomColorFrame(MDT.main_frame.settingsFrame)
+    end
     self:OpenSettingsDialog()
   end)
 
@@ -4695,8 +4699,8 @@ function initFrames()
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
   MDT:MakeSendingStatusBar(main_frame)
-  MDT:MakeSettingsFrame(main_frame)
-  MDT:MakeCustomColorFrame(main_frame.settingsFrame)
+  -- MDT:MakeSettingsFrame(main_frame)
+  -- MDT:MakeCustomColorFrame(main_frame.settingsFrame)
   MDT:POI_CreateDropDown(main_frame)
 
   --devMode
