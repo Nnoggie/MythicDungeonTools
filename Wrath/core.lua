@@ -2310,8 +2310,10 @@ function MDT:HideAllDialogs()
   MDT.main_frame.RenameFrame:Hide()
   MDT.main_frame.ClearConfirmationFrame:Hide()
   MDT.main_frame.DeleteConfirmationFrame:Hide()
-  MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
-  MDT.main_frame.settingsFrame:Hide()
+  if MDT.main_frame.settingsFrame then
+    MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
+    MDT.main_frame.settingsFrame:Hide()
+  end
   if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
 end
 
