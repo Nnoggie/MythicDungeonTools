@@ -4678,7 +4678,7 @@ function MDT:CreateCoroutineHandler()
     local hasData = true;
 
     -- Resume
-    while (debugprofilestop() - start < max(1,((InCombatLockdown() and IsInInstance()) and 8 or 16) - (elapsed * 100)) and hasData) do
+    while (debugprofilestop() - start < max(1,((InCombatLockdown() and IsInInstance()) and 8 or 16) - (elapsed * 1000)) and hasData) do
       -- Stop loop without data
       hasData = false;
 
