@@ -1,3 +1,5 @@
+v4.0.2.9
+- settingsFrame nil fix
 v4.0.2.8
 - use coroutines for addon loading to prevent the addon crashing during combat in dungeons
 v4.0.2.7
