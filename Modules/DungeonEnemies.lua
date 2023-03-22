@@ -973,7 +973,7 @@ function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b, pulls)
 end
 
 ---Updates the selected Enemies on the map and marks them according to their pull color
-function MDT:DungeonEnemies_UpdateSelected(pull, pulls)
+function MDT:DungeonEnemies_UpdateSelected(pull, pulls,ignoreHulls)
   preset = MDT:GetCurrentPreset()
   pulls = pulls or preset.value.pulls
   local week = preset.week
@@ -1034,7 +1034,7 @@ function MDT:DungeonEnemies_UpdateSelected(pull, pulls)
       end
     end
   end
-  MDT:DrawAllHulls(pulls)
+  if not ignoreHulls then MDT:DrawAllHulls(pulls) end
 end
 
 ---DungeonEnemies_SetPullColor

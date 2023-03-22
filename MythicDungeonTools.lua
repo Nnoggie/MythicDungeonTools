@@ -83,10 +83,14 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     MDT:ToggleDataCollection()
   elseif rqst == "hardreset" then
     local prompt = L["hardResetPrompt"]
-    if not framesInitialized then
-      initFrames()
+    local func = function()
+      if not framesInitialized then
+        initFrames()
+      end
+      MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
     end
-    MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
+    local co = coroutine.create(func)
+    MDT.coHandler:AddAction("hardReset",co)
   elseif rqst == "minimap" then
     if db.minimap.hide then
       MDT:ShowMinimapButton()
@@ -385,24 +389,28 @@ function MDT:ShowInterface(force)
     self.ShowConflictFrame()
     return
   end
-  if not framesInitialized then initFrames() end
-  if not framesInitialized then return end
-  if self.main_frame:IsShown() and not force then
-    MDT:HideInterface()
-  else
-    self.main_frame:Show()
-    self.main_frame.HelpButton:Show()
-    self:CheckCurrentZone()
-    --edge case if user closed MDT window while in the process of dragging a corrupted blip
-    if self.draggedBlip then
-      if MDT.liveSessionActive then
-        MDT:LiveSession_SendCorruptedPositions(MDT:GetRiftOffsets())
+  local func = function()
+    if not framesInitialized then initFrames() end
+    if not framesInitialized then return end
+    if self.main_frame:IsShown() and not force then
+      MDT:HideInterface()
+    else
+      self.main_frame:Show()
+      self.main_frame.HelpButton:Show()
+      self:CheckCurrentZone()
+      --edge case if user closed MDT window while in the process of dragging a corrupted blip
+      if self.draggedBlip then
+        if MDT.liveSessionActive then
+          MDT:LiveSession_SendCorruptedPositions(MDT:GetRiftOffsets())
+        end
+        self:UpdateMap()
+        self.draggedBlip = nil
       end
-      self:UpdateMap()
-      self.draggedBlip = nil
+      MDT:UpdateBottomText()
     end
-    MDT:UpdateBottomText()
   end
+  local co = coroutine.create(func)
+  MDT.coHandler:AddAction("showInterface",co)
 end
 
 function MDT:HideInterface()
@@ -3553,9 +3561,10 @@ function MDT:SetMapSublevel(pull)
 
   MDT:UpdateDungeonDropDown()
   if shouldResetZoom then MDT:ZoomMapToDefault() end
+  return shouldResetZoom
 end
 
-function MDT:SetSelectionToPull(pull)
+function MDT:SetSelectionToPull(pull,ignoreHulls)
   --if pull is not specified set pull to last pull in preset (for adding new pulls)
   if not pull then
     local count = 0
@@ -3571,7 +3580,7 @@ function MDT:SetSelectionToPull(pull)
     MDT:GetCurrentPreset().value.selection = { pull }
     MDT:PickPullButton(pull)
 
-    MDT:DungeonEnemies_UpdateSelected(pull)
+    MDT:DungeonEnemies_UpdateSelected(pull, nil, ignoreHulls)
   elseif type(pull) == "table" then
     MDT:GetCurrentPreset().value.currentPull = pull[#pull]
     MDT:GetCurrentPreset().value.selection = pull
@@ -3579,7 +3588,7 @@ function MDT:SetSelectionToPull(pull)
     MDT:ClearPullButtonPicks()
     for _, pullIdx in ipairs(MDT:GetSelection()) do
       MDT:PickPullButton(pullIdx, true)
-      MDT:DungeonEnemies_UpdateSelected(pullIdx)
+      MDT:DungeonEnemies_UpdateSelected(pullIdx, nil, ignoreHulls)
     end
   end
 end
@@ -4481,21 +4490,25 @@ function MDT:IsPlayerInGroup()
 end
 
 function MDT:ResetMainFramePos(soft)
-  --soft reset just redraws the window with existing coordinates from db
-  local f = self.main_frame
-  if not soft then
-    db.nonFullscreenScale = 1
-    db.maximized = false
-    if not framesInitialized then initFrames() end
-    if not framesInitialized then return end
-    f.maximizeButton:Minimize()
-    db.xoffset = 0
-    db.yoffset = -150
-    db.anchorFrom = "TOP"
-    db.anchorTo = "TOP"
+  local func = function()
+    --soft reset just redraws the window with existing coordinates from db
+    local f = self.main_frame
+    if not soft then
+      db.nonFullscreenScale = 1
+      db.maximized = false
+      if not framesInitialized then initFrames() end
+      if not framesInitialized then return end
+      f.maximizeButton:Minimize()
+      db.xoffset = 0
+      db.yoffset = -150
+      db.anchorFrom = "TOP"
+      db.anchorTo = "TOP"
+    end
+    f:ClearAllPoints()
+    f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
   end
-  f:ClearAllPoints()
-  f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
+  local co = coroutine.create(func)
+  MDT.coHandler:AddAction("resetMainFramePos",co)
 end
 
 function MDT:DropIndicator()
@@ -4629,6 +4642,68 @@ function MDT:RegisterModule(modulename, module)
   MDT.modules[modulename] = module
 end
 
+-- credit to WeakAuras
+function MDT:CreateCoroutineHandler()
+    local coHandler = {}
+    coHandler.frame = CreateFrame("Frame")
+    coHandler.update = {}
+    coHandler.size = 0
+
+    function coHandler.AddAction(self, name, func)
+        if not name then
+            name = string.format("NIL", coHandler.size+1);
+        end
+        if not coHandler.update[name] then
+            coHandler.update[name] = func;
+            coHandler.size = coHandler.size + 1
+            coHandler.frame:Show();
+        end
+    end
+
+    function coHandler.RemoveAction(self, name)
+        if coHandler.update[name] then
+            coHandler.update[name] = nil;
+            coHandler.size = coHandler.size - 1
+            if coHandler.size == 0 then
+                coHandler.frame:Hide();
+            end
+        end
+    end
+
+    -- Setup frame
+  coHandler.frame:Hide();
+  coHandler.frame:SetScript("OnUpdate", function(self, elapsed)
+    -- Start timing
+    local start = debugprofilestop();
+    local hasData = true;
+
+    -- Resume as often as possible (Limit to 16ms per frame -> 60 FPS)
+    while (debugprofilestop() - start < 16 and hasData) do
+      -- Stop loop without data
+      hasData = false;
+
+      -- Resume all coroutines
+      for name, func in pairs(coHandler.update) do
+        -- Loop has data
+        hasData = true;
+
+        -- Resume or remove
+        if coroutine.status(func) ~= "dead" then
+          local ok, msg = coroutine.resume(func)
+          if not ok then
+            geterrorhandler()(msg .. '\n' .. debugstack(func))
+          end
+        else
+          coHandler:RemoveAction(name);
+        end
+      end
+    end
+  end);
+  MDT.coHandler = coHandler
+end
+
+MDT:CreateCoroutineHandler()
+
 function initFrames()
   for _, module in pairs(MDT.modules) do
     if module.OnInitialize then
@@ -4679,26 +4754,38 @@ function initFrames()
   main_frame:ClearAllPoints()
   main_frame:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
   main_frame.contextDropdown = CreateFrame("frame", "MDTContextDropDown", nil, "UIDropDownMenuTemplate")
-
   MDT:CheckCurrentZone(true)
   MDT:EnsureDBTables()
   MDT:MakeTopBottomTextures(main_frame)
+  coroutine.yield()
   MDT:MakeMapTexture(main_frame)
+  coroutine.yield()
   MDT:MakeSidePanel(main_frame)
+  coroutine.yield()
   MDT:CreateMenu()
+  coroutine.yield()
   MDT:MakePresetCreationFrame(main_frame)
+  coroutine.yield()
   MDT:MakePresetImportFrame(main_frame)
+  coroutine.yield()
   MDT:DungeonEnemies_CreateFramePools()
   --MDT:UpdateDungeonEnemies(main_frame)
   MDT:CreateDungeonSelectDropdown(main_frame)
+  coroutine.yield()
   MDT:MakePullSelectionButtons(main_frame.sidePanel)
+  coroutine.yield()
   MDT:MakeExportFrame(main_frame)
+  coroutine.yield()
   MDT:MakeRenameFrame(main_frame)
+  coroutine.yield()
   MDT:MakeDeleteConfirmationFrame(main_frame)
+  coroutine.yield()
   MDT:MakeClearConfirmationFrame(main_frame)
+  coroutine.yield()
   MDT:CreateTutorialButton(main_frame)
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
+  coroutine.yield()
   MDT:MakeSendingStatusBar(main_frame)
   -- MDT:MakeSettingsFrame(main_frame)
   -- MDT:MakeCustomColorFrame(main_frame.settingsFrame)
@@ -4827,7 +4914,9 @@ function initFrames()
     skinTooltip(pullTT)
   end
 
+  coroutine.yield()
   MDT:initToolbar(main_frame)
+  coroutine.yield()
   if db.toolbarExpanded then
     main_frame.toolbar.toggleButton:Click()
   end
@@ -4849,7 +4938,9 @@ function initFrames()
   --gotta set the list here, as affixes are not ready to be retrieved yet on login
   main_frame.sidePanel.affixDropdown:UpdateAffixList()
   main_frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or (MDT:GetCurrentAffixWeek() or 1))
+  coroutine.yield()
   MDT:UpdateToDungeon(db.currentDungeonIdx)
+  coroutine.yield()
   main_frame:Hide()
 
   --Maximize if needed

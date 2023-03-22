@@ -133,8 +133,8 @@ local methods = {
 
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             tinsert(MDT:GetSelection(), self.index)
-            MDT:SetMapSublevel(self.index)
-            MDT:SetSelectionToPull(MDT:GetSelection())
+            local changed = MDT:SetMapSublevel(self.index)
+            MDT:SetSelectionToPull(MDT:GetSelection(), nil, not changed)
           else
             MDT.U.iremove_if(MDT:GetSelection(), function(entry)
               return entry == self.index
@@ -159,8 +159,8 @@ local methods = {
             end
           end
 
-          MDT:SetMapSublevel(self.index)
-          MDT:SetSelectionToPull(selection)
+          local changed = MDT:SetMapSublevel(self.index)
+          MDT:SetSelectionToPull(selection, not changed)
           --print(#selection)
         elseif (mouseButton == "RightButton") then
           local maxPulls = #MDT:GetCurrentPreset().value.pulls
@@ -174,7 +174,7 @@ local methods = {
           -- Add current pull to selection, if not already selected
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             if #MDT:GetSelection() == 1 then
-              MDT:SetSelectionToPull(self.index)
+              MDT:SetSelectionToPull(self.index,true)
             else
               tinsert(MDT:GetSelection(), self.index)
               self:Pick()
@@ -192,8 +192,8 @@ local methods = {
           if #MDT:GetSelection() > 1 then
             EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           else
-            MDT:SetMapSublevel(self.index)
-            MDT:SetSelectionToPull(self.index)
+            local changed = MDT:SetMapSublevel(self.index)
+            MDT:SetSelectionToPull(self.index, not changed)
 
             EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           end
@@ -201,8 +201,8 @@ local methods = {
         else
           --normal click
           MDT:GetCurrentPreset().value.selection = { self.index }
-          MDT:SetMapSublevel(self.index)
-          MDT:SetSelectionToPull(self.index)
+          local changed = MDT:SetMapSublevel(self.index)
+          MDT:SetSelectionToPull(self.index, not changed)
         end
       end
     end
