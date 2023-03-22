@@ -4677,8 +4677,8 @@ function MDT:CreateCoroutineHandler()
     local start = debugprofilestop();
     local hasData = true;
 
-    -- Resume as often as possible (Limit to 16ms per frame -> 60 FPS)
-    while (debugprofilestop() - start < 16 and hasData) do
+    -- Resume
+    while (debugprofilestop() - start < max(1,((InCombatLockdown() and IsInInstance()) and 8 or 16) - (elapsed * 100)) and hasData) do
       -- Stop loop without data
       hasData = false;
 
