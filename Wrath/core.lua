@@ -71,6 +71,7 @@ BINDING_NAME_MDTWAYPOINT = L["New Patrol Waypoint at Cursor Position"]
 BINDING_NAME_MDTUNDODRAWING = L["undoDrawing"]
 BINDING_NAME_MDTREDODRAWING = L["redoDrawing"]
 
+---@diagnostic disable-next-line: duplicate-set-field
 function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   local rqst, arg = strsplit(' ', cmd)
   if rqst == "devmode" then
@@ -1336,12 +1337,14 @@ function MDT:DisplayMDISelector()
     local frame = MDT.main_frame
     local originalShow, originalHide = frame.Show, frame.Hide
     local widget = MDT.MDISelector.frame
+---@diagnostic disable-next-line: duplicate-set-field
     function frame:Hide(...)
       widget:Hide()
       ---@diagnostic disable-next-line: redundant-parameter
       return originalHide(self, ...)
     end
 
+---@diagnostic disable-next-line: duplicate-set-field
     function frame:Show(...)
       if db.MDI.enabled then widget:Show() end
       ---@diagnostic disable-next-line: redundant-parameter
