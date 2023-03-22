@@ -98,13 +98,16 @@ end
 
 U.TMEnd = function()
   local stepTimes = {}
+  local total = 0
   for segmentIdx, data in ipairs(debugTimes) do
     if segmentIdx > 1 then
       local time = data.time - debugTimes[segmentIdx - 1].time
       stepTimes[data.name] = time
+      total = total + time
     end
   end
   ViragDevTool_AddData(stepTimes)
+  ViragDevTool_AddData(total)
 end
 
 local function getGroupMembers(reversed, forceParty)
