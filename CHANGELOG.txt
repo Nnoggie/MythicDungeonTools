@@ -1,3 +1,5 @@
+- v4.0.2.10
+  - various bugfixes for routes not being imported properly when clicking on chat links
 - v4.0.2.9
   - settingsFrame nil fix
 - v4.0.2.8
