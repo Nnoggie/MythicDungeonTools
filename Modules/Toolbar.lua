@@ -277,7 +277,7 @@ function MDT:initToolbar(frame)
 
   MDT:CreateBrushPreview(frame)
   MDT:UpdateSelectedToolbarTool()
-
+  frame.toolbar.widgetGroup.frame:Hide()
 end
 
 ---TexturePool

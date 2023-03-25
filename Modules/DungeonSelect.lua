@@ -71,6 +71,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
   --Simple Group to hold both dropdowns
   frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
   local group = frame.DungeonSelectionGroup
+  group.frame:Hide()
   if not group.frame.SetBackdrop then
     Mixin(group.frame, BackdropTemplateMixin)
   end

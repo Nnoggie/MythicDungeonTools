@@ -3341,7 +3341,7 @@ function MDT:MakePullSelectionButtons(frame)
     Mixin(frame.PullButtonScrollGroup.frame, BackdropTemplateMixin)
   end
   frame.PullButtonScrollGroup.frame:SetBackdropColor(1, 1, 1, 0)
-  frame.PullButtonScrollGroup.frame:Show()
+  frame.PullButtonScrollGroup.frame:Hide()
 
   self:FixAceGUIShowHide(frame.PullButtonScrollGroup)
 
@@ -4579,7 +4579,16 @@ function initFrames()
     end
   end
 
+  local initSpinner = CreateFrame("Button", "MDTInitSpinner", UIParent,"LoadingSpinnerTemplate")
+  initSpinner.BackgroundFrame.Background:SetVertexColor(0,1,0,1)
+  initSpinner.AnimFrame.Circle:SetVertexColor(0,1,0,1)
+  initSpinner:SetPoint("CENTER", UIParent, "CENTER",0,150)
+  initSpinner:SetSize(60, 60)
+  initSpinner:Show()
+  initSpinner.Anim:Play()
+
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
+  main_frame:Hide()
   tinsert(UISpecialFrames, "MDTFrame")
 
   --cache dungeon data to not lose data during reloads
@@ -4790,6 +4799,7 @@ function initFrames()
   coroutine.yield()
   if db.toolbarExpanded then
     main_frame.toolbar.toggleButton:Click()
+    main_frame.toolbar.widgetGroup.frame:Hide()
   end
 
   --ping
@@ -4812,7 +4822,6 @@ function initFrames()
   coroutine.yield()
   MDT:UpdateToDungeon(db.currentDungeonIdx)
   coroutine.yield()
-  main_frame:Hide()
 
   --Maximize if needed
   if db.maximized then MDT:Maximize() end
@@ -4822,4 +4831,6 @@ function initFrames()
   end
 
   framesInitialized = true
+  initSpinner:Hide()
+  initSpinner.Anim:Stop()
 end
