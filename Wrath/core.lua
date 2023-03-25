@@ -4563,6 +4563,11 @@ end);
 MDT.coHandler = coHandler
 end
 
+function MDT:Async(func,name)
+  local co = coroutine.create(func)
+  MDT.coHandler:AddAction(name,co)
+end
+
 MDT:CreateCoroutineHandler()
 
 
