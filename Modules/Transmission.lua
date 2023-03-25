@@ -210,10 +210,12 @@ hooksecurefunc("SetItemRef", function(link, text)
     local playerName, playerRealm = UnitFullName("player")
     playerName = playerName .. "-" .. playerRealm
     if sender == playerName then
-      MDT:ShowInterface(true)
+      MDT:Async(function() MDT:ShowInterface(true) end,"showInterface")
     else
-      MDT:ShowInterface(true)
-      MDT:LiveSession_Enable()
+      MDT:Async(function()
+        MDT:ShowInterface(true)
+        MDT:LiveSession_Enable()
+      end,"showInterfaceLive")
     end
     return
   elseif (link and link:sub(0, 15) == "garrmission:mdt") then
@@ -226,8 +228,10 @@ hooksecurefunc("SetItemRef", function(link, text)
     sender = name .. "-" .. realm
     local preset = MDT.transmissionCache[sender]
     if preset then
-      MDT:ShowInterface(true)
-      MDT:OpenChatImportPresetDialog(sender, preset)
+      MDT:Async(function()
+        MDT:ShowInterface(true)
+        MDT:OpenChatImportPresetDialog(sender, preset)
+      end,"showInterfaceChatImport")
     end
     return
   end

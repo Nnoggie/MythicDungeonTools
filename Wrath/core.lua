@@ -49,7 +49,9 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
     elseif (buttonPressed == 'MiddleButton') then
       MDT:HideMinimapButton()
     else
-      MDT:ShowInterface()
+      MDT:Async(function()
+        MDT:ShowInterface()
+      end,"showInterface")
     end
   end,
   OnTooltipShow = function(tooltip)
@@ -97,7 +99,9 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
       MDT:HideMinimapButton()
     end
   else
-    MDT:ShowInterface()
+    MDT:Async(function()
+      MDT:ShowInterface()
+    end,"showInterface")
   end
 end
 
@@ -374,27 +378,23 @@ function MDT:ShowInterface(force)
     self.ShowConflictFrame()
     return
   end
-  local func = function()
-    if not framesInitialized then initFrames() end
-    if not framesInitialized then return end
-    if self.main_frame:IsShown() and not force then
-      MDT:HideInterface()
-    else
-      self.main_frame:Show()
-      self:CheckCurrentZone()
-      --edge case if user closed MDT window while in the process of dragging a corrupted blip
-      if self.draggedBlip then
-        if MDT.liveSessionActive then
-          MDT:LiveSession_SendCorruptedPositions(MDT:GetRiftOffsets())
-        end
-        self:UpdateMap()
-        self.draggedBlip = nil
+  if not framesInitialized then initFrames() end
+  if not framesInitialized then return end
+  if self.main_frame:IsShown() and not force then
+    MDT:HideInterface()
+  else
+    self.main_frame:Show()
+    self:CheckCurrentZone()
+    --edge case if user closed MDT window while in the process of dragging a corrupted blip
+    if self.draggedBlip then
+      if MDT.liveSessionActive then
+        MDT:LiveSession_SendCorruptedPositions(MDT:GetRiftOffsets())
       end
-      MDT:UpdateBottomText()
+      self:UpdateMap()
+      self.draggedBlip = nil
     end
+    MDT:UpdateBottomText()
   end
-  local co = coroutine.create(func)
-  MDT.coHandler:AddAction("showInterface",co)
 end
 
 function MDT:HideInterface()

@@ -12,15 +12,17 @@ local slen = string.len
 --- @param export string
 function MDT:ExportString(export)
   if not export then return end
-  MDT:ShowInterface(true)
-  local exportFrame = MDT.main_frame.ExportFrame
-  local editBox = MDT.main_frame.ExportFrameEditbox
-  exportFrame:ClearAllPoints()
-  exportFrame:Show()
-  exportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  editBox:SetText(export)
-  editBox:HighlightText(0, slen(export))
-  editBox:SetFocus()
+  MDT:Async(function()
+    MDT:ShowInterface(true)
+    local exportFrame = MDT.main_frame.ExportFrame
+    local editBox = MDT.main_frame.ExportFrameEditbox
+    exportFrame:ClearAllPoints()
+    exportFrame:Show()
+    exportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+    editBox:SetText(export)
+    editBox:HighlightText(0, slen(export))
+    editBox:SetFocus()
+  end,"exportString")
 end
 
 --https://www.lua.org/pil/19.3.html
@@ -163,17 +165,19 @@ do
     end
     local dungeonName = MDT:GetDungeonName(dungeonIndex)
     if dungeonName and dungeonName ~= "-" then
-      MDT:ShowInterface(true)
-      MDT:UpdateToDungeon(dungeonIndex)
-      local dropDown = self.main_frame.DungeonSelectionGroup.DungeonDropdown
-      if not dropDown.value then
-        MDT:FixDungeonDropDownList()
-      end
-      MDT.main_frame.ExportFrame:Hide()
-      local obj = targetIsEnemies and MDT.dungeonEnemies[dungeonIndex] or MDT.mapPOIs[dungeonIndex]
-      local schema = MDT:GetSchema(targetIsEnemies and "enemies" or "pois")
-      local export = MDT:ExportLuaTable(obj, schema)
-      MDT:ExportString(export)
+      MDT:Async(function()
+        MDT:ShowInterface(true)
+        MDT:UpdateToDungeon(dungeonIndex)
+        local dropDown = self.main_frame.DungeonSelectionGroup.DungeonDropdown
+        if not dropDown.value then
+          MDT:FixDungeonDropDownList()
+        end
+        MDT.main_frame.ExportFrame:Hide()
+        local obj = targetIsEnemies and MDT.dungeonEnemies[dungeonIndex] or MDT.mapPOIs[dungeonIndex]
+        local schema = MDT:GetSchema(targetIsEnemies and "enemies" or "pois")
+        local export = MDT:ExportLuaTable(obj, schema)
+        MDT:ExportString(export)
+      end,"exportIncrementally")
     end
   end
 
