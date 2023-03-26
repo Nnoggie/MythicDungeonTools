@@ -50,7 +50,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
     elseif (buttonPressed == 'MiddleButton') then
       MDT:HideMinimapButton()
     else
-      MDT:Async(function() MDT:ShowInterface() end,"showInterface")
+      MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface")
     end
   end,
   OnTooltipShow = function(tooltip)
@@ -98,7 +98,7 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
       MDT:HideMinimapButton()
     end
   else
-    MDT:Async(function() MDT:ShowInterface() end,"showInterface")
+    MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface")
   end
 end
 
@@ -253,7 +253,7 @@ do
       C_MythicPlus.RequestCurrentAffixes()
       C_MythicPlus.RequestMapInfo()
       C_MythicPlus.RequestRewards()
-      if db.loadOnStartUp then MDT:Async(function() MDT:ShowInterface(true) end,"showInterface") end
+      if db.loadOnStartUp then MDT:Async(function() MDT:ShowInterfaceInternal(true) end,"showInterface") end
     end)
     eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
   end
@@ -385,6 +385,10 @@ function MDT:GetDB()
 end
 
 function MDT:ShowInterface(force)
+  MDT:Async(function() MDT:ShowInterfaceInternal(force) end,"showInterface")
+end
+
+function MDT:ShowInterfaceInternal(force)
   if self:CheckAddonConflicts() then
     self.ShowConflictFrame()
     return

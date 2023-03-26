@@ -13,7 +13,7 @@ local slen = string.len
 function MDT:ExportString(export)
   if not export then return end
   MDT:Async(function()
-    MDT:ShowInterface(true)
+    MDT:ShowInterfaceInternal(true)
     local exportFrame = MDT.main_frame.ExportFrame
     local editBox = MDT.main_frame.ExportFrameEditbox
     exportFrame:ClearAllPoints()
@@ -166,7 +166,7 @@ do
     local dungeonName = MDT:GetDungeonName(dungeonIndex)
     if dungeonName and dungeonName ~= "-" then
       MDT:Async(function()
-        MDT:ShowInterface(true)
+        MDT:ShowInterfaceInternal(true)
         MDT:UpdateToDungeon(dungeonIndex)
         local dropDown = self.main_frame.DungeonSelectionGroup.DungeonDropdown
         if not dropDown.value then

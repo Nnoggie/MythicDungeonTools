@@ -50,7 +50,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
       MDT:HideMinimapButton()
     else
       MDT:Async(function()
-        MDT:ShowInterface()
+        MDT:ShowInterfaceInternal()
       end,"showInterface")
     end
   end,
@@ -100,7 +100,7 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     end
   else
     MDT:Async(function()
-      MDT:ShowInterface()
+      MDT:ShowInterfaceInternal()
     end,"showInterface")
   end
 end
@@ -373,7 +373,7 @@ function MDT:GetDB()
   return db
 end
 
-function MDT:ShowInterface(force)
+function MDT:ShowInterfaceInternal(force)
   if self:CheckAddonConflicts() then
     self.ShowConflictFrame()
     return

@@ -210,10 +210,10 @@ hooksecurefunc("SetItemRef", function(link, text)
     local playerName, playerRealm = UnitFullName("player")
     playerName = playerName .. "-" .. playerRealm
     if sender == playerName then
-      MDT:Async(function() MDT:ShowInterface(true) end,"showInterface")
+      MDT:Async(function() MDT:ShowInterfaceInternal(true) end,"showInterface")
     else
       MDT:Async(function()
-        MDT:ShowInterface(true)
+        MDT:ShowInterfaceInternal(true)
         MDT:LiveSession_Enable()
       end,"showInterfaceLive")
     end
@@ -229,7 +229,7 @@ hooksecurefunc("SetItemRef", function(link, text)
     local preset = MDT.transmissionCache[sender]
     if preset then
       MDT:Async(function()
-        MDT:ShowInterface(true)
+        MDT:ShowInterfaceInternal(true)
         MDT:OpenChatImportPresetDialog(sender, preset)
       end,"showInterfaceChatImport")
     end
