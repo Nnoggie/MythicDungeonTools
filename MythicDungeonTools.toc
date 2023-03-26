@@ -1,7 +1,7 @@
 ## Interface: 100007
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 4.0.2.10
+## Version: 4.0.2.11
 ## X-Curse-Project-ID: 288981
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-deDE: Tool für das Planen und Optimieren von Mythic+ Dungeons
