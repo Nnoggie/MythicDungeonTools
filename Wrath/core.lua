@@ -373,6 +373,10 @@ function MDT:GetDB()
   return db
 end
 
+function MDT:ShowInterface(force)
+  MDT:Async(function() MDT:ShowInterfaceInternal(force) end,"showInterface")
+end
+
 function MDT:ShowInterfaceInternal(force)
   if self:CheckAddonConflicts() then
     self.ShowConflictFrame()
