@@ -2559,19 +2559,23 @@ function MDT:GetTileFormat(dungeonIdx, sublevel)
 end
 
 function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar)
+  if not framesInitialized then coroutine.yield() end
   local mapName
   local frame = MDT.main_frame
   mapName = MDT.dungeonMaps[db.currentDungeonIdx][0]
   MDT:EnsureDBTables()
+  if not framesInitialized then coroutine.yield() end
   local preset = MDT:GetCurrentPreset()
   if preset.difficulty then
     db.currentDifficulty = preset.difficulty
     frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
     frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
   end
+  if not framesInitialized then coroutine.yield() end
   local fileName = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
   local path = "Interface\\WorldMap\\" .. mapName .. "\\"
   local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx, preset.value.currentSublevel)
+  if not framesInitialized then coroutine.yield() end
   for i = 1, 12 do
     if tileFormat == 4 then
       local texName = path .. fileName .. i
@@ -2585,6 +2589,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
       end
     end
   end
+  if not framesInitialized then coroutine.yield() end
   for i = 1, 10 do
     for j = 1, 15 do
       if tileFormat == 15 then
@@ -2596,14 +2601,20 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
       end
     end
   end
+  if not framesInitialized then coroutine.yield() end
   MDT:UpdateDungeonEnemies()
+  if not framesInitialized then coroutine.yield() end
   MDT:DungeonEnemies_UpdateTeeming()
+  if not framesInitialized then coroutine.yield() end
   MDT:DungeonEnemies_UpdateSeasonalAffix()
+  if not framesInitialized then coroutine.yield() end
   MDT:DungeonEnemies_UpdateInspiring()
+  if not framesInitialized then coroutine.yield() end
 
   if not ignoreReloadPullButtons then
     MDT:ReloadPullButtons()
   end
+  if not framesInitialized then coroutine.yield() end
   --handle delete button disable/enable
   local presetCount = 0
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -2617,6 +2628,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
     MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
   end
+  if not framesInitialized then coroutine.yield() end
   --live mode
   local livePreset = MDT:GetCurrentLivePreset()
   if MDT.liveSessionActive and preset ~= livePreset then
@@ -2627,17 +2639,25 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT.main_frame.setLivePresetButton:Hide()
   end
   MDT:UpdatePresetDropdownTextColor()
+  if not framesInitialized then coroutine.yield() end
 
   if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
   MDT:UpdateDungeonDropDown()
+  if not framesInitialized then coroutine.yield() end
   --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
   frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
   MDT:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
+  if not framesInitialized then coroutine.yield() end
   MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
+  if not framesInitialized then coroutine.yield() end
   MDT:DisplayMDISelector()
+  if not framesInitialized then coroutine.yield() end
   MDT:DrawAllPresetObjects()
+  if not framesInitialized then coroutine.yield() end
   MDT:KillAllAnimatedLines()
+  if not framesInitialized then coroutine.yield() end
   MDT:DrawAllAnimatedLines()
+  if not framesInitialized then coroutine.yield() end
 end
 
 ---Updates the map to the specified dungeon
