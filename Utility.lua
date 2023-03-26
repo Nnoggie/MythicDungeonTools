@@ -92,6 +92,7 @@ U.TMStart = function(self, segmentName)
 end
 
 U.TMStep = function(self, segmentName)
+  if not debugTimes then return end
   tinsert(debugTimes, { name = segmentName, time = debugprofilestop() })
 end
 
