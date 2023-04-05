@@ -2,7 +2,7 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 51
-MDT.dungeonList[dungeonIndex] = L["UldamanLegacyOfTyr"]
+MDT.dungeonList[dungeonIndex] = L["Uldaman: Legacy of Tyr"]
 MDT.mapInfo[dungeonIndex] = {
   --  viewportPositionOverrides =
   --  {
