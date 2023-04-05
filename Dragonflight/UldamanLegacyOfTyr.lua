@@ -15,9 +15,9 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "uldamanlegacyoftyr",
-  [1] = "uldamanlegacyoftyr1_",
-  [2] = "uldamanlegacyoftyr2_",
+  [0] = "Uldaman_Upres",
+  [1] = "Uldaman_upres_A",
+  [2] = "Uldaman_upres_B",
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -58,10 +58,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 184134;
     ["count"] = 1;
     ["health"] = 286202;
-    ["scale"] = 1;
+    ["scale"] = 0.8;
     ["displayId"] = 92697;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
@@ -91,49 +91,49 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["y"] = -310.3;
         ["x"] = 704.1;
-        ["g"] = 2;
+        ["g"] = 3;
       };
       [6] = {
         ["sublevel"] = 1;
         ["y"] = -315.9;
         ["x"] = 707;
-        ["g"] = 2;
+        ["g"] = 3;
       };
       [7] = {
         ["sublevel"] = 1;
         ["y"] = -317;
         ["x"] = 713.1;
-        ["g"] = 2;
+        ["g"] = 3;
       };
       [8] = {
         ["sublevel"] = 1;
         ["y"] = -311.6;
         ["x"] = 717.3;
-        ["g"] = 2;
+        ["g"] = 3;
       };
       [9] = {
         ["sublevel"] = 1;
         ["y"] = -393.7;
         ["x"] = 583.7;
-        ["g"] = 3;
+        ["g"] = 9;
       };
       [10] = {
         ["sublevel"] = 1;
         ["y"] = -394.1;
         ["x"] = 587.7;
-        ["g"] = 3;
+        ["g"] = 9;
       };
       [11] = {
         ["sublevel"] = 1;
         ["y"] = -394.1;
         ["x"] = 591;
-        ["g"] = 3;
+        ["g"] = 9;
       };
       [12] = {
         ["sublevel"] = 1;
         ["y"] = -393.8;
         ["x"] = 594.4;
-        ["g"] = 3;
+        ["g"] = 9;
       };
     };
   };
@@ -145,13 +145,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 92697;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -310.6;
         ["x"] = 710.8;
-        ["g"] = 2;
+        ["g"] = 3;
       };
       [2] = {
         ["sublevel"] = 1;
@@ -169,31 +169,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["y"] = -395.1;
         ["x"] = 620.2;
-        ["g"] = 5;
+        ["g"] = 6;
       };
       [5] = {
         ["sublevel"] = 1;
         ["y"] = -395;
         ["x"] = 627.1;
-        ["g"] = 5;
+        ["g"] = 6;
       };
       [6] = {
         ["sublevel"] = 1;
         ["y"] = -398.4;
         ["x"] = 593;
-        ["g"] = 3;
+        ["g"] = 9;
       };
       [7] = {
         ["sublevel"] = 1;
         ["y"] = -398.6;
         ["x"] = 587.9;
-        ["g"] = 3;
+        ["g"] = 9;
       };
       [8] = {
         ["sublevel"] = 1;
         ["y"] = -349.4;
         ["x"] = 540.4;
-        ["g"] = 6;
+        ["g"] = 11;
       };
     };
   };
@@ -205,13 +205,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 92699;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -288.5;
         ["x"] = 695;
-        ["g"] = 7;
+        ["g"] = 2;
         ["patrol"] = {
           [1] = {
             ["y"] = -304;
@@ -255,19 +255,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["y"] = -398.1;
         ["x"] = 623.5;
-        ["g"] = 5;
+        ["g"] = 6;
       };
       [3] = {
         ["sublevel"] = 1;
         ["y"] = -346.5;
         ["x"] = 536.1;
-        ["g"] = 6;
+        ["g"] = 11;
       };
       [4] = {
         ["sublevel"] = 1;
         ["y"] = -352.4;
         ["x"] = 536.1;
-        ["g"] = 6;
+        ["g"] = 11;
       };
     };
   };
@@ -279,43 +279,43 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 103338;
     ["creatureType"] = "Beast";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -291.4;
         ["x"] = 695.2;
-        ["g"] = 7;
+        ["g"] = 2;
       };
       [2] = {
         ["sublevel"] = 1;
         ["y"] = -349;
         ["x"] = 626.3;
-        ["g"] = 8;
+        ["g"] = 5;
       };
       [3] = {
         ["sublevel"] = 1;
         ["y"] = -350.8;
         ["x"] = 633.6;
-        ["g"] = 8;
+        ["g"] = 5;
       };
       [4] = {
         ["sublevel"] = 1;
         ["y"] = -344.9;
         ["x"] = 630.4;
-        ["g"] = 8;
+        ["g"] = 5;
       };
       [5] = {
         ["sublevel"] = 1;
         ["y"] = -432.2;
         ["x"] = 620.3;
-        ["g"] = 9;
+        ["g"] = 7;
       };
       [6] = {
         ["sublevel"] = 1;
         ["y"] = -433.7;
         ["x"] = 625.7;
-        ["g"] = 9;
+        ["g"] = 7;
       };
       [7] = {
         ["sublevel"] = 1;
@@ -336,54 +336,57 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 184581;
     ["count"] = 0;
     ["health"] = 1787435;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 105887;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -474;
         ["x"] = 642.8;
-        ["g"] = 11;
+        ["g"] = 8;
       };
     };
+    ["isBoss"] = true;
   };
   [6] = {
     ["name"] = "Olaf";
     ["id"] = 184580;
     ["count"] = 0;
     ["health"] = 1907986;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 105883;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -475.5;
         ["x"] = 649.7;
-        ["g"] = 11;
+        ["g"] = 8;
       };
     };
+    ["isBoss"] = true;
   };
   [7] = {
     ["name"] = "Eric \"The Swift\"";
     ["id"] = 184582;
     ["count"] = 0;
     ["health"] = 1787435;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 105884;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -476.9;
         ["x"] = 656.3;
-        ["g"] = 11;
+        ["g"] = 8;
       };
     };
+    ["isBoss"] = true;
   };
   [8] = {
     ["name"] = "Burly Rock-Thrower";
@@ -393,7 +396,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 765;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
@@ -420,10 +423,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 184018;
     ["count"] = 0;
     ["health"] = 3572917;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 107143;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
@@ -431,6 +434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 482;
       };
     };
+    ["isBoss"] = true;
   };
   [10] = {
     ["name"] = "Earthen Custodian";
@@ -440,7 +444,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 6025;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
@@ -480,79 +484,79 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["y"] = -351;
         ["x"] = 253.3;
-        ["g"] = 13;
+        ["g"] = 15;
       };
       [4] = {
         ["sublevel"] = 1;
         ["y"] = -350.5;
         ["x"] = 259.2;
-        ["g"] = 13;
+        ["g"] = 15;
       };
       [5] = {
         ["sublevel"] = 1;
         ["y"] = -319.4;
         ["x"] = 251.2;
-        ["g"] = 14;
+        ["g"] = 16;
       };
       [6] = {
         ["sublevel"] = 1;
         ["y"] = -314.4;
         ["x"] = 250.8;
-        ["g"] = 14;
+        ["g"] = 16;
       };
       [7] = {
         ["sublevel"] = 1;
         ["y"] = -318.5;
         ["x"] = 212.2;
-        ["g"] = 15;
+        ["g"] = 17;
       };
       [8] = {
         ["sublevel"] = 1;
         ["y"] = -338;
         ["x"] = 201.5;
-        ["g"] = 16;
+        ["g"] = 19;
       };
       [9] = {
         ["sublevel"] = 1;
         ["y"] = -338.3;
         ["x"] = 206.6;
-        ["g"] = 16;
+        ["g"] = 19;
       };
       [10] = {
         ["sublevel"] = 1;
         ["y"] = -300.5;
         ["x"] = 161.8;
-        ["g"] = 17;
+        ["g"] = 21;
       };
       [11] = {
         ["sublevel"] = 1;
         ["y"] = -294.6;
         ["x"] = 161.6;
-        ["g"] = 17;
+        ["g"] = 21;
       };
       [12] = {
         ["sublevel"] = 2;
         ["y"] = -465.6;
         ["x"] = 444;
-        ["g"] = 18;
+        ["g"] = 26;
       };
       [13] = {
         ["sublevel"] = 2;
         ["y"] = -500.5;
         ["x"] = 498.7;
-        ["g"] = 19;
+        ["g"] = 27;
       };
       [14] = {
         ["sublevel"] = 2;
         ["y"] = -494.3;
         ["x"] = 495.2;
-        ["g"] = 19;
+        ["g"] = 27;
       };
       [15] = {
         ["sublevel"] = 2;
         ["y"] = -499.9;
         ["x"] = 525.2;
-        ["g"] = 20;
+        ["g"] = 28;
         ["patrol"] = {
           [1] = {
             ["y"] = -495.4;
@@ -604,25 +608,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
         ["y"] = -369.9;
         ["x"] = 332.4;
-        ["g"] = 21;
+        ["g"] = 13;
       };
       [17] = {
         ["sublevel"] = 1;
         ["y"] = -369.6;
         ["x"] = 340.9;
-        ["g"] = 21;
+        ["g"] = 13;
       };
       [18] = {
         ["sublevel"] = 1;
         ["y"] = -252.4;
         ["x"] = 200.8;
-        ["g"] = 22;
+        ["g"] = 20;
       };
       [19] = {
         ["sublevel"] = 1;
         ["y"] = -252.3;
         ["x"] = 207.2;
-        ["g"] = 22;
+        ["g"] = 20;
       };
     };
   };
@@ -634,7 +638,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 106782;
     ["creatureType"] = "Elemental";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
@@ -659,10 +663,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 184124;
     ["count"] = 0;
     ["health"] = 4492735;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 109735;
     ["creatureType"] = "Giant";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
@@ -670,6 +674,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 256.3;
       };
     };
+    ["isBoss"] = true;
   };
   [13] = {
     ["name"] = "Earthen Weaver";
@@ -679,55 +684,55 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 6026;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -345.6;
         ["x"] = 255.8;
-        ["g"] = 13;
+        ["g"] = 15;
       };
       [2] = {
         ["sublevel"] = 1;
         ["y"] = -318.5;
         ["x"] = 245.6;
-        ["g"] = 14;
+        ["g"] = 16;
       };
       [3] = {
         ["sublevel"] = 1;
         ["y"] = -313.8;
         ["x"] = 245.2;
-        ["g"] = 14;
+        ["g"] = 16;
       };
       [4] = {
         ["sublevel"] = 1;
         ["y"] = -314.5;
         ["x"] = 218.3;
-        ["g"] = 15;
+        ["g"] = 17;
       };
       [5] = {
         ["sublevel"] = 1;
         ["y"] = -319.7;
         ["x"] = 218.3;
-        ["g"] = 15;
+        ["g"] = 17;
       };
       [6] = {
         ["sublevel"] = 1;
         ["y"] = -293.3;
         ["x"] = 172.7;
-        ["g"] = 17;
+        ["g"] = 21;
       };
       [7] = {
         ["sublevel"] = 2;
         ["y"] = -435.6;
         ["x"] = 391.1;
-        ["g"] = 23;
+        ["g"] = 25;
       };
       [8] = {
         ["sublevel"] = 2;
         ["y"] = -430.9;
         ["x"] = 395.7;
-        ["g"] = 23;
+        ["g"] = 25;
       };
       [9] = {
         ["sublevel"] = 2;
@@ -738,43 +743,43 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 2;
         ["y"] = -472;
         ["x"] = 437.5;
-        ["g"] = 18;
+        ["g"] = 26;
       };
       [11] = {
         ["sublevel"] = 2;
         ["y"] = -474.1;
         ["x"] = 445.8;
-        ["g"] = 18;
+        ["g"] = 26;
       };
       [12] = {
         ["sublevel"] = 1;
         ["y"] = -365.1;
         ["x"] = 336.4;
-        ["g"] = 21;
+        ["g"] = 13;
       };
       [13] = {
         ["sublevel"] = 1;
         ["y"] = -422.1;
         ["x"] = 334.5;
-        ["g"] = 24;
+        ["g"] = 14;
       };
       [14] = {
         ["sublevel"] = 1;
         ["y"] = -421.6;
         ["x"] = 341;
-        ["g"] = 24;
+        ["g"] = 14;
       };
       [15] = {
         ["sublevel"] = 1;
         ["y"] = -240.2;
         ["x"] = 200.3;
-        ["g"] = 22;
+        ["g"] = 20;
       };
       [16] = {
         ["sublevel"] = 1;
         ["y"] = -241;
         ["x"] = 207.4;
-        ["g"] = 22;
+        ["g"] = 20;
       };
     };
   };
@@ -786,61 +791,61 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 6009;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -284.5;
         ["x"] = 221.9;
-        ["g"] = 25;
+        ["g"] = 18;
       };
       [2] = {
         ["sublevel"] = 1;
         ["y"] = -277.3;
         ["x"] = 222.2;
-        ["g"] = 25;
+        ["g"] = 18;
       };
       [3] = {
         ["sublevel"] = 1;
         ["y"] = -301.6;
         ["x"] = 172.6;
-        ["g"] = 17;
+        ["g"] = 21;
       };
       [4] = {
         ["sublevel"] = 2;
         ["y"] = -505.1;
         ["x"] = 526.9;
-        ["g"] = 20;
+        ["g"] = 28;
       };
       [5] = {
         ["sublevel"] = 2;
         ["y"] = -427.2;
         ["x"] = 514.9;
-        ["g"] = 26;
+        ["g"] = 30;
       };
       [6] = {
         ["sublevel"] = 2;
         ["y"] = -423.3;
         ["x"] = 523.4;
-        ["g"] = 26;
+        ["g"] = 30;
       };
       [7] = {
         ["sublevel"] = 2;
         ["y"] = -395.2;
         ["x"] = 499.6;
-        ["g"] = 27;
+        ["g"] = 31;
       };
       [8] = {
         ["sublevel"] = 2;
         ["y"] = -392.3;
         ["x"] = 505.7;
-        ["g"] = 27;
+        ["g"] = 31;
       };
       [9] = {
         ["sublevel"] = 1;
         ["y"] = -246.3;
         ["x"] = 204.1;
-        ["g"] = 22;
+        ["g"] = 20;
       };
     };
   };
@@ -852,19 +857,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 108686;
     ["creatureType"] = "Elemental";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -344;
         ["x"] = 203.5;
-        ["g"] = 16;
+        ["g"] = 19;
       };
       [2] = {
         ["sublevel"] = 1;
         ["y"] = -297.5;
         ["x"] = 167.1;
-        ["g"] = 17;
+        ["g"] = 21;
       };
     };
   };
@@ -876,31 +881,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 84003;
     ["creatureType"] = "Beast";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -295.6;
         ["x"] = 139.3;
-        ["g"] = 28;
+        ["g"] = 22;
       };
       [2] = {
         ["sublevel"] = 1;
         ["y"] = -301.4;
         ["x"] = 137.5;
-        ["g"] = 28;
+        ["g"] = 22;
       };
       [3] = {
         ["sublevel"] = 1;
         ["y"] = -216.3;
         ["x"] = 103.4;
-        ["g"] = 29;
+        ["g"] = 24;
       };
       [4] = {
         ["sublevel"] = 1;
         ["y"] = -219.7;
         ["x"] = 107.3;
-        ["g"] = 29;
+        ["g"] = 24;
       };
     };
   };
@@ -912,25 +917,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 57297;
     ["creatureType"] = "Beast";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -255.4;
         ["x"] = 94.2;
-        ["g"] = 30;
+        ["g"] = 23;
       };
       [2] = {
         ["sublevel"] = 1;
         ["y"] = -257.7;
         ["x"] = 116.3;
-        ["g"] = 30;
+        ["g"] = 23;
       };
       [3] = {
         ["sublevel"] = 1;
         ["y"] = -246.1;
         ["x"] = 106.8;
-        ["g"] = 30;
+        ["g"] = 23;
       };
     };
   };
@@ -939,17 +944,76 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 184422;
     ["count"] = 0;
     ["health"] = 2981424;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 107816;
     ["creatureType"] = "Giant";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 1;
         ["y"] = -116.4;
         ["x"] = 187.8;
+        ["patrol"] = {
+          [1] = {
+            ["y"] = -161.6;
+            ["x"] = 160.3;
+          };
+          [2] = {
+            ["y"] = -149;
+            ["x"] = 151.7;
+          };
+          [3] = {
+            ["y"] = -133.3;
+            ["x"] = 153.1;
+          };
+          [4] = {
+            ["y"] = -126.3;
+            ["x"] = 157.7;
+          };
+          [5] = {
+            ["y"] = -116.7;
+            ["x"] = 171.5;
+          };
+          [6] = {
+            ["y"] = -115.1;
+            ["x"] = 183.9;
+          };
+          [7] = {
+            ["y"] = -119.1;
+            ["x"] = 195.6;
+          };
+          [8] = {
+            ["y"] = -128.2;
+            ["x"] = 204.4;
+          };
+          [9] = {
+            ["y"] = -142.3;
+            ["x"] = 208.2;
+          };
+          [10] = {
+            ["y"] = -155.3;
+            ["x"] = 206.1;
+          };
+          [11] = {
+            ["y"] = -164.2;
+            ["x"] = 198.1;
+          };
+          [12] = {
+            ["y"] = -170;
+            ["x"] = 184.6;
+          };
+          [13] = {
+            ["y"] = -168.8;
+            ["x"] = 171.6;
+          };
+          [14] = {
+            ["y"] = -161.1;
+            ["x"] = 160;
+          };
+        };
       };
     };
+    ["isBoss"] = true;
   };
   [19] = {
     ["name"] = "Ebonstone Golem";
@@ -959,43 +1023,43 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 108689;
     ["creatureType"] = "Elemental";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 2;
         ["y"] = -435.9;
         ["x"] = 397.8;
-        ["g"] = 23;
+        ["g"] = 25;
       };
       [2] = {
         ["sublevel"] = 2;
         ["y"] = -469.6;
         ["x"] = 450.8;
-        ["g"] = 18;
+        ["g"] = 26;
       };
       [3] = {
         ["sublevel"] = 2;
         ["y"] = -471.1;
         ["x"] = 535.7;
-        ["g"] = 31;
+        ["g"] = 29;
       };
       [4] = {
         ["sublevel"] = 2;
         ["y"] = -467.9;
         ["x"] = 542;
-        ["g"] = 31;
+        ["g"] = 29;
       };
       [5] = {
         ["sublevel"] = 2;
         ["y"] = -422;
         ["x"] = 517.6;
-        ["g"] = 26;
+        ["g"] = 30;
       };
       [6] = {
         ["sublevel"] = 2;
         ["y"] = -396.2;
         ["x"] = 504;
-        ["g"] = 27;
+        ["g"] = 31;
       };
     };
   };
@@ -1007,13 +1071,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 6026;
     ["creatureType"] = "Humanoid";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 2;
         ["y"] = -501.2;
         ["x"] = 530.8;
-        ["g"] = 20;
+        ["g"] = 28;
       };
     };
   };
@@ -1025,7 +1089,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 19058;
     ["creatureType"] = "Dragonkin";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 2;
@@ -1054,7 +1118,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1;
     ["displayId"] = 106470;
     ["creatureType"] = "Dragonkin";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 2;
@@ -1070,13 +1134,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 2;
         ["y"] = -285.9;
         ["x"] = 394.4;
-        ["g"] = 33;
+        ["g"] = 35;
       };
       [4] = {
         ["sublevel"] = 2;
         ["y"] = -282.6;
         ["x"] = 399.8;
-        ["g"] = 33;
+        ["g"] = 35;
       };
     };
   };
@@ -1085,10 +1149,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 191311;
     ["count"] = 1;
     ["health"] = 142809;
-    ["scale"] = 1;
+    ["scale"] = 0.8;
     ["displayId"] = 101939;
     ["creatureType"] = "Dragonkin";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 2;
@@ -1112,37 +1176,37 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 2;
         ["y"] = -316.3;
         ["x"] = 388;
-        ["g"] = 35;
+        ["g"] = 33;
       };
       [5] = {
         ["sublevel"] = 2;
         ["y"] = -314.4;
         ["x"] = 392.8;
-        ["g"] = 35;
+        ["g"] = 33;
       };
       [6] = {
         ["sublevel"] = 2;
         ["y"] = -308.8;
         ["x"] = 390.6;
-        ["g"] = 35;
+        ["g"] = 33;
       };
       [7] = {
         ["sublevel"] = 2;
         ["y"] = -310.7;
         ["x"] = 385.4;
-        ["g"] = 35;
+        ["g"] = 33;
       };
       [8] = {
         ["sublevel"] = 2;
         ["y"] = -305.8;
         ["x"] = 383.2;
-        ["g"] = 35;
+        ["g"] = 33;
       };
       [9] = {
         ["sublevel"] = 2;
         ["y"] = -303.2;
         ["x"] = 388.6;
-        ["g"] = 35;
+        ["g"] = 33;
       };
     };
   };
@@ -1151,10 +1215,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 184125;
     ["count"] = 0;
     ["health"] = 6559028;
-    ["scale"] = 1;
+    ["scale"] = 1.6;
     ["displayId"] = 106056;
     ["creatureType"] = "Dragonkin";
-    ["level"] = 60;
+    ["level"] = 70;
     ["clones"] = {
       [1] = {
         ["sublevel"] = 2;
@@ -1162,6 +1226,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 344.2;
       };
     };
+    ["isBoss"] = true;
   };
 };
-
