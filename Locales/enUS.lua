@@ -2,6 +2,8 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Dragonflight Season 2"] = "Dragonflight Season 2"
+L["VortexPinnacle"] = "Vortex Pinnacle"
 L["Zoom"] = "Zoom"
 L["zoomIn"] = "In"
 L["zoomOut"] = "Out"

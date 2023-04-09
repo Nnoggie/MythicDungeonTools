@@ -155,7 +155,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 5,
+    selectedDungeonList = 6,
     knownAffixWeeks = {},
   },
 }
@@ -263,16 +263,16 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 6, 14, 10, 132 },
-  [2] = { 11, 12, 9, 132 },
-  [3] = { 8, 3, 10, 132 },
-  [4] = { 6, 124, 9, 132 },
-  [5] = { 123, 12, 10, 132 },
-  [6] = { 8, 13, 9, 132 },
-  [7] = { 7, 124, 10, 132 },
-  [8] = { 123, 14, 9, 132 },
-  [9] = { 11, 13, 10, 132 },
-  [10] = { 7, 3, 9, 132 },
+  [1] = { 6, 14, 10},
+  [2] = { 11, 12, 9},
+  [3] = { 8, 3, 10},
+  [4] = { 6, 124, 9},
+  [5] = { 123, 12, 10},
+  [6] = { 8, 13, 9},
+  [7] = { 7, 124, 10},
+  [8] = { 123, 14, 9},
+  [9] = { 11, 13, 10},
+  [10] = { 7, 3, 9},
 }
 
 function MDT:UpdateAffixWeeks()
@@ -364,7 +364,14 @@ MDT.dungeonList = {
 
 function MDT:IsOnBetaServer()
   local realm = GetRealmName()
-  return realm == "Valdrakken"
+  local realms = {
+    ["Anasterian"] = true,
+    ["Benedictus"] = true,
+    ["Broxigar"] = true,
+    ["Lycanthoth"] = true,
+    ["Nobundo"] = true,
+  }
+  return realms[realm]
 end
 
 function MDT:GetNumDungeons() return #MDT.dungeonList - 1 end

@@ -8,7 +8,9 @@
   - use coroutines for addon loading to prevent the addon crashing during combat in dungeons
 - v4.0.2.7
   - 10.0.7 update
-- v4.0.2.6
+- v4.0.3.0
+- 10.1 update
+v4.0.2.6
   - nil fix
 - v4.0.2.5
   - potential fix for MDT breaking especially during Dungeons
