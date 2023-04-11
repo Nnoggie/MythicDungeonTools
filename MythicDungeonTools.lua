@@ -84,9 +84,6 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   elseif rqst == "hardreset" then
     local prompt = L["hardResetPrompt"]
     local func = function()
-      if not framesInitialized then
-        initFrames()
-      end
       MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
     end
     local co = coroutine.create(func)
@@ -4072,10 +4069,20 @@ end
 
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
 function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2)
-  local f = MDT.main_frame.ConfirmationFrame
-  if not f then
-    MDT.main_frame.ConfirmationFrame = AceGUI:Create("Frame")
+  local f
+  if MDT.main_frame then
     f = MDT.main_frame.ConfirmationFrame
+  else
+    f = MDT.tempConfirmationFrame
+  end
+  if not f then
+    if MDT.main_frame then
+      MDT.main_frame.ConfirmationFrame = AceGUI:Create("Frame")
+      f = MDT.main_frame.ConfirmationFrame
+    else
+      MDT.tempConfirmationFrame = AceGUI:Create("Frame")
+      f = MDT.tempConfirmationFrame
+    end
     f:EnableResize(false)
     f:SetLayout("Flow")
     f:SetCallback("OnClose", function(widget)
@@ -4094,7 +4101,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     f.CancelButton:SetText(L["Cancel"])
     f.CancelButton:SetWidth(100)
     f.CancelButton:SetCallback("OnClick", function()
-      MDT:HideAllDialogs()
+      if MDT.main_frame then MDT:HideAllDialogs() else f:Hide() end
     end)
     f:AddChild(f.CancelButton)
   end
@@ -4118,10 +4125,10 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     end)
   else
     f.CancelButton:SetCallback("OnClick", function()
-      MDT:HideAllDialogs()
+      if MDT.main_frame then MDT:HideAllDialogs() else f:Hide() end
     end)
   end
-  MDT:HideAllDialogs()
+  if MDT.main_frame then MDT:HideAllDialogs() end
   f:ClearAllPoints()
   f:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
   f.label:SetText(prompt)
