@@ -604,7 +604,7 @@ function MDT:SkinProgressBar(progressBar)
   if not bar then return end
   bar.Icon:Hide()
   bar.IconBG:Hide()
-  if IsAddOnLoaded("ElvUI") then
+  if IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     if bar.BarFrame then bar.BarFrame:Hide() end
     if bar.BarFrame2 then bar.BarFrame2:Hide() end
