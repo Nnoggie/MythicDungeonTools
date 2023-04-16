@@ -516,7 +516,7 @@ end
 
 function MDT:SkinMenuButtons()
   --attempt to skin close button for ElvUI
-  if IsAddOnLoaded("ElvUI") then
+  if IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     local S
     if E then S = E:GetModule("Skins") end
@@ -4845,7 +4845,7 @@ function initFrames()
 
   --ElvUI skinning
   local skinTooltip = function(tooltip)
-    if IsAddOnLoaded("ElvUI") and ElvUI[1].Tooltip then
+    if IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
       if not tooltip.SetBackdrop then
         Mixin(tooltip, BackdropTemplateMixin)
       end

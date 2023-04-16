@@ -626,7 +626,7 @@ function MDT:MakeSendingStatusBar(f)
   statusbar.value:SetTextColor(1, 1, 1)
   statusbar:Hide()
 
-  if IsAddOnLoaded("ElvUI") then
+  if IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     statusbar:SetStatusBarTexture(E.media.normTex)
   end
