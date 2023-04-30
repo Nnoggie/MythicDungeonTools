@@ -8,9 +8,9 @@ from socket import error as SocketError
 import threading
 import math
 import time
-from collections import OrderedDict 
+from collections import OrderedDict
 
-# Usage: 
+# Usage:
 # 1. Refer to requirements.txt to install required packages
 # 2. Make sure to be in /python working directory
 # 3. Run this script
@@ -57,7 +57,7 @@ languages = {
     'esES': 'es',
     'ptBR': 'pt',
 }
-expansions = ['Legion', 'BattleForAzeroth', 'Shadowlands']
+expansions = ['Legion', 'BattleForAzeroth', 'Shadowlands', 'Dragonflight']
 
 def get_npc_names_localized(npc_id):
     name = get_npc_name(npc_id, 'en')
@@ -75,10 +75,10 @@ def collect_mdt_npcids():
     # reaping and awakening mobs
     ids = [148716, 148893, 148894, 161169, 160984, 161164, 161167]
     for expansion in expansions:
-        for filename in os.listdir('..\{}'.format(expansion)):
+        for filename in os.listdir('{}'.format(expansion)):
             if not filename.endswith(".lua"):
                 continue
-            f = open('..\{}\\{}'.format(expansion,filename))
+            f = open('{}\\{}'.format(expansion,filename))
             line = f.readline()
             while line:
                 npc_id = re.search('\[\"id\"\] = (\d*)', line)
@@ -115,6 +115,11 @@ def split_list(a, n):
     return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
 
 if __name__ == "__main__":
+    # Make sure initial working directory is MythicDungeonTools
+    while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith(
+        "MythicDungeonTools"
+    ):
+        os.chdir("..")
     ids = collect_mdt_npcids()
     total_ids = len(ids)
     print(f'{total_ids} NPC IDs in dungeon files')

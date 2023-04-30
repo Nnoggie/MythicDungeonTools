@@ -173,7 +173,6 @@ MDT.liveSessionPrefixes = {
   ["week"] = "MDTLiveWeek",
   ["free"] = "MDTLiveFree",
   ["bora"] = "MDTLiveBora",
-  ["mdi"] = "MDTLiveMDI",
   ["reqPre"] = "MDTLiveReqPre",
   ["corrupted"] = "MDTLiveCor",
   ["difficulty"] = "MDTLiveLvl",
@@ -372,8 +371,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
           end
           MDT:DungeonEnemies_UpdateTeeming()
           MDT:DungeonEnemies_UpdateInspiring()
-          MDT:UpdateFreeholdSelector(week)
-          MDT:DungeonEnemies_UpdateBlacktoothEvent(week)
           MDT:DungeonEnemies_UpdateSeasonalAffix()
           MDT:DungeonEnemies_UpdateBoralusFaction(preset.faction)
           MDT:POI_UpdateAll()
@@ -519,23 +516,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     end
   end
 
-  --freehold
-  if prefix == MDT.liveSessionPrefixes.free then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local value, week = string.match(message, "(.*):(.*)")
-      value = value == "T" and true or false
-      week = tonumber(week)
-      preset.freeholdCrew = (value and week) or nil
-      if preset == MDT:GetCurrentPreset() then
-        MDT:DungeonEnemies_UpdateFreeholdCrew(preset.freeholdCrew)
-        MDT:UpdateFreeholdSelector(week)
-        MDT:ReloadPullButtons()
-        MDT:UpdateProgressbar()
-      end
-    end
-  end
-
   --Siege of Boralus
   if prefix == MDT.liveSessionPrefixes.bora then
     if MDT.liveSessionActive then
@@ -547,51 +527,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         MDT:ReloadPullButtons()
         MDT:UpdateProgressbar()
       end
-    end
-  end
-
-  --MDI
-  if prefix == MDT.liveSessionPrefixes.mdi then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local updateUI = preset == MDT:GetCurrentPreset()
-      local action, data = string.match(message, "(.*):(.*)")
-      data = tonumber(data)
-      if action == "toggle" then
-        MDT:GetDB().MDI.enabled = data == 1 or false
-        MDT:DisplayMDISelector()
-      elseif action == "beguiling" then
-        preset.mdi.beguiling = data
-        if updateUI then
-          MDT.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-          MDT:DungeonEnemies_UpdateSeasonalAffix()
-          MDT:DungeonEnemies_UpdateBoralusFaction(preset.faction)
-          MDT:UpdateProgressbar()
-          MDT:ReloadPullButtons()
-          MDT:POI_UpdateAll()
-          MDT:KillAllAnimatedLines()
-          MDT:DrawAllAnimatedLines()
-        end
-      elseif action == "freehold" then
-        preset.mdi.freehold = data
-        if updateUI then
-          MDT.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
-          if preset.mdi.freeholdJoined then
-            MDT:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
-          end
-          MDT:DungeonEnemies_UpdateBlacktoothEvent()
-          MDT:UpdateProgressbar()
-          MDT:ReloadPullButtons()
-        end
-      elseif action == "join" then
-        preset.mdi.freeholdJoined = data == 1 or false
-        if updateUI then
-          MDT:DungeonEnemies_UpdateFreeholdCrew()
-          MDT:ReloadPullButtons()
-          MDT:UpdateProgressbar()
-        end
-      end
-
     end
   end
 
@@ -696,9 +631,8 @@ function MDT:SendToGroup(distribution, silent, preset)
   preset = preset or MDT:GetCurrentPreset()
   --set unique id
   MDT:SetUniqueID(preset)
-  --gotta encode mdi mode / difficulty into preset
+  --gotta encode difficulty into preset
   local db = MDT:GetDB()
-  preset.mdiEnabled = db.MDI.enabled
   preset.difficulty = db.currentDifficulty
   local export = MDT:TableToString(preset, false, 5)
   MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,

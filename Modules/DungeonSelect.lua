@@ -23,15 +23,17 @@ MDT.dungeonSelectionToIndex = {}
 
 if MDT:IsDragonflight() then
   tinsert(MDT.seasonList, L["Legion"])
-  tinsert(MDT.seasonList, L["BFA"])
-  tinsert(MDT.seasonList, L["Shadowlands"])
-  tinsert(MDT.seasonList, L["Shadowlands Season 4"])
-  tinsert(MDT.seasonList, L["Dragonflight Season 1"])
   tinsert(MDT.dungeonSelectionToIndex, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 })
+  tinsert(MDT.seasonList, L["BFA"])
   tinsert(MDT.dungeonSelectionToIndex, { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 })
+  tinsert(MDT.seasonList, L["Shadowlands"])
   tinsert(MDT.dungeonSelectionToIndex, { 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 })
+  tinsert(MDT.seasonList, L["Shadowlands Season 4"])
   tinsert(MDT.dungeonSelectionToIndex, { 40, 41, 37, 38, 25, 26, 9, 10 })
+  tinsert(MDT.seasonList, L["Dragonflight Season 1"])
   tinsert(MDT.dungeonSelectionToIndex, { 42, 43, 44, 45, 6, 3, 46, 47 })
+  tinsert(MDT.seasonList, L["Dragonflight Season 2"])
+  tinsert(MDT.dungeonSelectionToIndex, { 49, 48, 51, 50, 8, 16, 22, 80, 77})
 end
 
 if MDT:IsWrath() then

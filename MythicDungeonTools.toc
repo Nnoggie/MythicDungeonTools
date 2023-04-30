@@ -1,7 +1,7 @@
-## Interface: 100007
+## Interface: 100100
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 4.0.2.12
+## Version: 4.0.3.0-alpha
 ## X-Curse-Project-ID: 288981
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-deDE: Tool für das Planen und Optimieren von Mythic+ Dungeons
@@ -16,6 +16,7 @@
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
 ## OptionalDeps: ElvUI, LibStub, Ace3
 ## SavedVariables: MythicDungeonToolsDB
+## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\Nnoggie
 
 BuildCheck.lua
 libs\load_libs.xml

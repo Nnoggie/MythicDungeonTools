@@ -519,7 +519,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
 
   --remove encrypted clones ids
   if encryptedIds[blip.data.id] then occurence = "" end
-
+  if not L[data.name] then print("MDT: Could not find localization for "..data.name) end
   local text = L[data.name] ..
       " " ..
       occurence ..
@@ -527,16 +527,11 @@ function MDT:DisplayBlipTooltip(blip, shown)
       "\n" ..
       string.format(L["Level %d %s"], data.level, L[data.creatureType]) ..
       "\n" .. string.format(L["%s HP"], MDT:FormatEnemyHealth(health)) .. "\n"
+
   local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
   text = text .. L["Forces"] .. ": " .. MDT:FormatEnemyForces(count)
   text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(count, data.health)
   local reapingText
-  if blip.data.reaping and db.MDI.enabled and preset.mdi.beguiling == 13 then
-    local reapingIcon = CreateTextureMarkup(MDT.reapingStatic[tostring(blip.data.reaping)].iconTexture, 32, 32, 16, 16, 0
-      , 1, 0, 1, 0, 0) or ""
-    reapingText = L["Reaping"] .. ": " .. reapingIcon ..
-        " " .. MDT.reapingStatic[tostring(blip.data.reaping)].name .. "\n"
-  end
   if reapingText then text = text .. "\n" .. reapingText end
   text = text .. "\n\n[" .. L["Right click for more info"] .. "]"
   tooltip.String:SetText(text)
@@ -1076,7 +1071,6 @@ function MDT:DungeonEnemies_UpdateTeeming()
       end
     end
   end
-  MDT:DungeonEnemies_UpdateBlacktoothEvent()
 end
 
 ---Updates visibility state and appearance of enemies related to the current seasonal affix
@@ -1126,30 +1120,6 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
   end
 end
 
----DungeonEnemies_UpdateBlacktoothEvent
----Updates visibility state of blacktooth event blips
-function MDT:DungeonEnemies_UpdateBlacktoothEvent()
-  local week
-  if db.MDI.enabled then
-    week = preset.mdi.freehold or 1
-  else
-    week = preset.week % 3
-  end
-  if week == 0 then week = 3 end
-  local isBlacktoothWeek = week == 2
-  for _, blip in pairs(blips) do
-    if blip.clone.blacktoothEvent then
-      if isBlacktoothWeek then
-        blip:Enable()
-        blip:Show()
-      else
-        blip:Disable()
-        blip:Hide()
-      end
-    end
-  end
-end
-
 function MDT:DungeonEnemies_UpdateBoralusFaction(faction)
   preset = MDT:GetCurrentPreset()
   local teeming = MDT:IsPresetTeeming(preset)
@@ -1158,11 +1128,7 @@ function MDT:DungeonEnemies_UpdateBoralusFaction(faction)
       --handle beguiling npcs here
       if emissaryIds[blip.data.id] then
         local week
-        if db.MDI.enabled then
-          week = preset.mdi.beguiling or 1
-        else
-          week = preset.week
-        end
+        week = preset.week
         local weekData = blip.clone.week
         if weekData and not weekData[week] then
           blip:Hide()
@@ -1225,59 +1191,6 @@ function MDT:DungeonEnemies_UpdateInspiring(week)
       blip.texture_Indicator:Show()
     else
       blip.texture_Indicator:Hide()
-    end
-  end
-end
-
----Frehold Crews
-MDT.freeholdCrews = {
-  [2] = { --blacktooth
-    [129548] = true,
-    [129529] = true,
-    [129547] = true,
-    [126847] = true,
-  },
-  [1] = { --cutwater
-    [129559] = true,
-    [129599] = true,
-    [126845] = true,
-    [129601] = true,
-  },
-  [3] = { --bilge rat
-    [129550] = true,
-    [129527] = true,
-    [129600] = true,
-    [129526] = true,
-    [126848] = true,
-  },
-}
----DungeonEnemies_UpdateFreeholdCrew
----Updates the enemies in Freehold to reflect the weekly event of "joining" a crew i.e. disabling npcs of the crew
-function MDT:DungeonEnemies_UpdateFreeholdCrew(crewIdx)
-  --override crew with mdi data
-  if db.MDI.enabled then
-    crewIdx = (preset.mdi.freeholdJoined and preset.mdi.freehold) or nil
-  end
-  --if we are not in freehold map we need to tidy up our mess a bit
-  if not crewIdx then
-    for _, blip in pairs(blips) do
-      blip:Enable()
-      blip:SetAlpha(1)
-      blip.texture_Portrait:SetDesaturated(false)
-    end
-    return
-  end
-
-  local crew = MDT.freeholdCrews[crewIdx]
-  for _, blip in pairs(blips) do
-    if crew[blip.data.id] and not blip.clone.blacktoothEvent then
-      blip:Disable()
-      blip:SetAlpha(0.3)
-      blip.texture_Portrait:SetDesaturated(true)
-    else
-      blip:Enable()
-      blip:SetAlpha(1)
-      blip.texture_Portrait:SetDesaturated(false)
     end
   end
 end
