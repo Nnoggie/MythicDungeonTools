@@ -519,7 +519,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
 
   --remove encrypted clones ids
   if encryptedIds[blip.data.id] then occurence = "" end
-
+  if not L[data.name] then print("MDT: Could not find localization for "..data.name) end
   local text = L[data.name] ..
       " " ..
       occurence ..
@@ -527,6 +527,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
       "\n" ..
       string.format(L["Level %d %s"], data.level, L[data.creatureType]) ..
       "\n" .. string.format(L["%s HP"], MDT:FormatEnemyHealth(health)) .. "\n"
+
   local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
   text = text .. L["Forces"] .. ": " .. MDT:FormatEnemyForces(count)
   text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(count, data.health)
