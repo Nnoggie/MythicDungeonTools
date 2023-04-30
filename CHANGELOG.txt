@@ -1,4 +1,5 @@
-- v4.0.2.12
+- v4.0.3.0-alpha
+  - Added all Dragonflight Season 2 dungeons
 - v4.0.2.11
   - bugfixes
 - v4.0.2.10
