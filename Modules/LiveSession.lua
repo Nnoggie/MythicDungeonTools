@@ -205,7 +205,6 @@ function MDT:LiveSession_SendPreset(preset)
   local distribution = self:IsPlayerInGroup()
   if distribution then
     local db = self:GetDB()
-    preset.mdiEnabled = db.MDI.enabled
     preset.difficulty = db.currentDifficulty
     local export = MDT:TableToString(preset, false, 5)
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "ALERT")
@@ -229,31 +228,12 @@ function MDT:LiveSession_SendAffixWeek(week)
   end
 end
 
----Sends freehold selector updates
-function MDT:LiveSession_SendFreeholdSelector(value, week)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    value = value and "T:" or "F:"
-    local msg = value .. week
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.free, msg, distribution, nil, "ALERT")
-  end
-end
-
 ---sends boralus selector updates
 function MDT:LiveSession_SendBoralusSelector(faction)
   local distribution = self:IsPlayerInGroup()
   if distribution then
     local msg = faction .. ""
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.bora, msg, distribution, nil, "ALERT")
-  end
-end
-
----Sends MDI selector updates
-function MDT:LiveSession_SendMDI(action, data)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    local msg = action .. ":" .. data
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.mdi, msg, distribution, nil, "ALERT")
   end
 end
 

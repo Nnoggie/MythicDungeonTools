@@ -953,7 +953,6 @@ function MDT:MakeSidePanel(frame)
     if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls(_, _, _, true) end
     local preset = MDT:GetCurrentPreset()
     MDT:SetUniqueID(preset)
-    preset.mdiEnabled = db.MDI.enabled
     preset.difficulty = db.currentDifficulty
     preset.addonVersion = db.version
     local export = MDT:TableToString(preset, true, 5)
@@ -1116,25 +1115,6 @@ function MDT:MakeSidePanel(frame)
   else
     MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
   end
-
-  --MDI
-  frame.MDIButton = AceGUI:Create("Button")
-  frame.MDIButton:SetText("MDI")
-  frame.MDIButton:SetWidth(buttonWidth)
-  frame.MDIButton.frame:SetNormalFontObject(fontInstance)
-  frame.MDIButton.frame:SetHighlightFontObject(fontInstance)
-  frame.MDIButton.frame:SetDisabledFontObject(fontInstance)
-  frame.MDIButton:SetCallback("OnClick", function(widget, callbackName, value)
-    MDT:ToggleMDIMode()
-  end)
-  frame.MDIButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.MDIButton.frame, "ANCHOR_BOTTOMLEFT", frame.MDIButton.frame:GetWidth() * (-2),
-      frame.MDIButton.frame:GetHeight())
-    GameTooltip:AddLine(L["Open MDI override options"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.MDIButton.frame:SetScript("OnLeave", function()
-  end)
 
   --Settings cogwheel
   frame.settingsCogwheel = AceGUI:Create("Icon")
@@ -1397,150 +1377,6 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.ProgressBar:ClearAllPoints()
   frame.sidePanel.ProgressBar:SetPoint("TOP", frame.sidePanel.WidgetGroup.frame, "BOTTOM", -10, 5)
   MDT:SkinProgressBar(frame.sidePanel.ProgressBar)
-end
-
----ToggleMDIMode
----Enables display to override beguiling+freehold week
-function MDT:ToggleMDIMode()
-  db.MDI.enabled = not db.MDI.enabled
-  self:DisplayMDISelector()
-  if self.liveSessionActive then self:LiveSession_SendMDI("toggle", db.MDI.enabled and "1" or "0") end
-end
-
-function MDT:DisplayMDISelector()
-  local show = db.MDI.enabled
-  db = MDT:GetDB()
-  if not MDT.MDISelector then
-    MDT.MDISelector = AceGUI:Create("SimpleGroup")
-    MDT.MDISelector.frame:SetFrameStrata("HIGH")
-    MDT.MDISelector.frame:SetFrameLevel(50)
-    if not MDT.MDISelector.frame.SetBackdrop then
-      Mixin(MDT.MDISelector.frame, BackdropTemplateMixin)
-    end
-    MDT.MDISelector.frame:SetBackdropColor(unpack(MDT.BackdropColor))
-    --fix show hide
-    local frame = MDT.main_frame
-    local originalShow, originalHide = frame.Show, frame.Hide
-    local widget = MDT.MDISelector.frame
-    ---@diagnostic disable-next-line: duplicate-set-field
-    function frame:Hide(...)
-      widget:Hide()
-      ---@diagnostic disable-next-line: redundant-parameter
-      return originalHide(self, ...)
-    end
-
-    ---@diagnostic disable-next-line: duplicate-set-field
-    function frame:Show(...)
-      if db.MDI.enabled then widget:Show() end
-      ---@diagnostic disable-next-line: redundant-parameter
-      return originalShow(self, ...)
-    end
-
-    MDT.MDISelector:SetLayout("Flow")
-    MDT.MDISelector.frame.bg = MDT.MDISelector.frame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    MDT.MDISelector.frame.bg:SetAllPoints(MDT.MDISelector.frame)
-    MDT.MDISelector.frame.bg:SetColorTexture(unpack(MDT.BackdropColor))
-    MDT.MDISelector:SetWidth(145)
-    MDT.MDISelector:SetHeight(90)
-    MDT.MDISelector.frame:ClearAllPoints()
-    MDT.MDISelector.frame:SetPoint("BOTTOMRIGHT", MDT.main_frame, "BOTTOMRIGHT", 0, 0)
-
-    local label = AceGUI:Create("Label")
-    label:SetText(L["MDI Mode"])
-    MDT.MDISelector:AddChild(label)
-
-    --beguiling
-    MDT.MDISelector.BeguilingDropDown = AceGUI:Create("Dropdown")
-    MDT.MDISelector.BeguilingDropDown:SetLabel(L["Seasonal Affix:"])
-    local beguilingList = {
-      [1] = L["Beguiling 1 Void"],
-      [2] = L["Beguiling 2 Tides"],
-      [3] = L["Beguiling 3 Ench."],
-      [13] = L["Reaping"],
-      [14] = L["Awakened A"],
-      [15] = L["Awakened B"]
-    }
-    MDT.MDISelector.BeguilingDropDown:SetList(beguilingList)
-    MDT.MDISelector.BeguilingDropDown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-      local preset = self:GetCurrentPreset()
-      preset.mdi.beguiling = key
-      db.currentSeason = self:GetEffectivePresetSeason(preset)
-      self:UpdateMap()
-      if self.liveSessionActive and preset.uid == self.livePresetUID then
-        self:LiveSession_SendMDI("beguiling", key)
-      end
-    end)
-    MDT.MDISelector:AddChild(MDT.MDISelector.BeguilingDropDown)
-
-    --freehold
-    MDT.MDISelector.FreeholdDropDown = AceGUI:Create("Dropdown")
-    MDT.MDISelector.FreeholdDropDown:SetLabel(L["Freehold:"])
-    local freeholdList = { string.format("1. %s", L["Cutwater"]), string.format("2. %s", L["Blacktooth"]),
-      string.format("3. %s", L["Bilge Rats"]) }
-    MDT.MDISelector.FreeholdDropDown:SetList(freeholdList)
-    MDT.MDISelector.FreeholdDropDown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-      local preset = MDT:GetCurrentPreset()
-      preset.mdi.freehold = key
-      if preset.mdi.freeholdJoined then
-        MDT:DungeonEnemies_UpdateFreeholdCrew(preset.mdi.freehold)
-      end
-      MDT:DungeonEnemies_UpdateBlacktoothEvent()
-      MDT:UpdateProgressbar()
-      MDT:ReloadPullButtons()
-      if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
-        self:LiveSession_SendMDI("freehold", key)
-      end
-    end)
-    MDT.MDISelector:AddChild(MDT.MDISelector.FreeholdDropDown)
-
-    MDT.MDISelector.FreeholdCheck = AceGUI:Create("CheckBox")
-    MDT.MDISelector.FreeholdCheck:SetLabel(L["Join Crew"])
-    MDT.MDISelector.FreeholdCheck:SetCallback("OnValueChanged", function(widget, callbackName, value)
-      local preset = MDT:GetCurrentPreset()
-      preset.mdi.freeholdJoined = value
-      MDT:DungeonEnemies_UpdateFreeholdCrew()
-      MDT:ReloadPullButtons()
-      MDT:UpdateProgressbar()
-      if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
-        self:LiveSession_SendMDI("join", value and "1" or "0")
-      end
-    end)
-    MDT.MDISelector:AddChild(MDT.MDISelector.FreeholdCheck)
-  end
-  if show then
-    local preset = MDT:GetCurrentPreset()
-    preset.mdi = preset.mdi or {}
-    --beguiling
-    preset.mdi.beguiling = preset.mdi.beguiling or 1
-    MDT.MDISelector.BeguilingDropDown:SetValue(preset.mdi.beguiling)
-    db.currentSeason = MDT:GetEffectivePresetSeason(preset)
-    MDT:DungeonEnemies_UpdateSeasonalAffix()
-    MDT:DungeonEnemies_UpdateBoralusFaction(MDT:GetCurrentPreset().faction)
-    --freehold
-    preset.mdi.freehold = preset.mdi.freehold or 1
-    MDT.MDISelector.FreeholdDropDown:SetValue(preset.mdi.freehold)
-    preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
-    MDT.MDISelector.FreeholdCheck:SetValue(preset.mdi.freeholdJoined)
-    MDT:DungeonEnemies_UpdateFreeholdCrew()
-    MDT:DungeonEnemies_UpdateBlacktoothEvent()
-    MDT:UpdateProgressbar()
-    MDT:ReloadPullButtons()
-    MDT.MDISelector.frame:Show()
-    MDT:ToggleFreeholdSelector(false)
-  else
-    db.currentSeason = defaultSavedVars.global.currentSeason
-    MDT:DungeonEnemies_UpdateSeasonalAffix()
-    MDT:DungeonEnemies_UpdateBoralusFaction(MDT:GetCurrentPreset().faction)
-    MDT:UpdateFreeholdSelector(MDT:GetCurrentPreset().week)
-    MDT:DungeonEnemies_UpdateBlacktoothEvent()
-    MDT:UpdateProgressbar()
-    MDT:ReloadPullButtons()
-    MDT.MDISelector.frame:Hide()
-    MDT:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
-  end
-  MDT:POI_UpdateAll()
-  MDT:KillAllAnimatedLines()
-  MDT:DrawAllAnimatedLines()
 end
 
 function MDT:UpdatePresetDropDown()
@@ -2120,23 +1956,12 @@ end
 function MDT:GetEffectivePresetWeek(preset)
   preset = preset or self:GetCurrentPreset()
   local week
-  if db.MDI.enabled then
-    week = preset.mdi.beguiling or 1
-    if week == 14 then week = 1 end
-    if week == 15 then week = 3 end
-  else
-    week = preset.week
-  end
+  week = preset.week
   return week
 end
 
 function MDT:GetEffectivePresetSeason(preset)
   local season = db.currentSeason
-  if db.MDI.enabled then
-    local mdiWeek = preset.mdi.beguiling
-    season = (mdiWeek == 1 or mdiWeek == 2 or mdiWeek == 3) and 3 or mdiWeek == 13 and 2 or
-        (mdiWeek == 14 or mdiWeek == 15) and 4 or 4
-  end
   return season
 end
 
@@ -2529,24 +2354,6 @@ function MDT:EnsureDBTables()
     preset.faction       = preset.faction or (englishFaction and englishFaction == "Alliance") and 2 or 1
   end
 
-  if db.currentDungeonIdx == 16 and (not preset.freeholdCrewSelected) then
-    local week = preset.week
-    week = week % 3
-    if week == 0 then week = 3 end
-    preset.freeholdCrew = week
-    preset.freeholdCrewSelected = true
-  end
-
-  --MDI mode isn't needed in SL, disable it for anyone it's still on
-  --db.MDI = db.MDI or {}
-  --preset.mdi = preset.mdi or {}
-  --preset.mdiEnabled = preset.mdiEnabled or db.MDI.enabled
-  db.MDI = {}
-  preset.mdi = {}
-  preset.mdiEnabled = false
-  preset.mdi.freehold = preset.mdi.freehold or 1
-  preset.mdi.freeholdJoined = preset.mdi.freeholdJoined or false
-  preset.mdi.beguiling = preset.mdi.beguiling or 1
   preset.difficulty = preset.difficulty or db.currentDifficulty
 
   --make sure sublevel actually exists for the dungeon
@@ -2653,11 +2460,8 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if not framesInitialized then coroutine.yield() end
   --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
   frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
-  MDT:ToggleFreeholdSelector(db.currentDungeonIdx == 16)
   if not framesInitialized then coroutine.yield() end
   MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
-  if not framesInitialized then coroutine.yield() end
-  MDT:DisplayMDISelector()
   if not framesInitialized then coroutine.yield() end
   MDT:DrawAllPresetObjects()
   if not framesInitialized then coroutine.yield() end
@@ -3043,7 +2847,6 @@ end
 function MDT:ImportPreset(preset, fromLiveSession)
   --change dungeon to dungeon of the new preset
   self:UpdateToDungeon(preset.value.currentDungeonIdx, true)
-  local mdiEnabled = preset.mdiEnabled
   --search for uid
   local updateIndex
   local duplicatePreset
@@ -3060,7 +2863,6 @@ function MDT:ImportPreset(preset, fromLiveSession)
       self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()
       end)
     end
-    db.MDI.enabled = mdiEnabled
     db.presets[db.currentDungeonIdx][updateIndex] = preset
     db.currentPreset[db.currentDungeonIdx] = updateIndex
     self.liveUpdateFrameOpen = nil
@@ -3079,7 +2881,6 @@ function MDT:ImportPreset(preset, fromLiveSession)
       self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()
       end)
     end
-    db.MDI.enabled = mdiEnabled
     local name = preset.text
     local num = 2
     for k, v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -3673,8 +3474,6 @@ function MDT:UpdatePullButtonNPCData(idx)
   end
   frame.newPullButtons[idx]:SetNPCData(enemyTable)
 
-  if db.MDI.enabled and preset.mdi.beguiling == 13 then
-  end
   --display reaping icon
   local pullForces = MDT:CountForces(idx, false)
   local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or
@@ -3687,12 +3486,7 @@ function MDT:UpdatePullButtonNPCData(idx)
     oldPullForces = MDT:CountForces(idx - 1, false)
   end
   local oldPercent = oldPullForces / totalForcesMax
-  if (math.floor(currentPercent / 0.2) > math.floor(oldPercent / 0.2)) and oldPercent < 1 and db.MDI.enabled and
-      preset.mdi.beguiling == 13 then
-    frame.newPullButtons[idx]:ShowReapingIcon(true, currentPercent, oldPercent)
-  else
-    frame.newPullButtons[idx]:ShowReapingIcon(false, currentPercent, oldPercent)
-  end
+  frame.newPullButtons[idx]:ShowReapingIcon(false, currentPercent, oldPercent)
   --prideful icon
   if (math.floor(currentPercent / 0.2) > math.floor(oldPercent / 0.2)) and oldPercent < 1 and db.currentSeason == 5 then
     frame.newPullButtons[idx]:ShowPridefulIcon(true, currentPercent, oldPercent)
@@ -4839,9 +4633,7 @@ function initFrames()
     MDT:CreateDevPanel(MDT.main_frame)
   end
 
-  if not db.MDI.enabled then
-    db.currentSeason = defaultSavedVars.global.currentSeason
-  end
+  db.currentSeason = defaultSavedVars.global.currentSeason
 
   --ElvUI skinning
   local skinTooltip = function(tooltip)
