@@ -22,6 +22,13 @@ local candidates = {
       local ldb = LibStub("LibDBIcon-1.0")
       ldb.objects["DungeonTools"]:SetScript("OnClick", function() MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface") end)
     end
+  },
+  ["MDTGuide"] = {
+    name = "MDTGuide";
+    detected = false;
+    onDetect = function()
+
+    end
   }
 }
 
