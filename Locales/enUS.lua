@@ -2,6 +2,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Naraxas"] = "Naraxas"
 L["Vicious Hyena"] = "Vicious Hyena"
 L["Bonebolt Hunter"] = "Bonebolt Hunter"
 L["Cruel Bonecrusher"] = "Cruel Bonecrusher"
