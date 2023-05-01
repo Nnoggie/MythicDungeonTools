@@ -106,6 +106,7 @@ def update_count(match, dungeon_count_table):
         },  # Abstract Nullifier, Upper Karazhan
         115019: {"db_count": 3, "hardcoded_count": 6},  # Coldmist Widow, Lower Karazhan
         115020: {"db_count": 4, "hardcoded_count": 7},  # Arcanid, Lower Karazhan
+        45704: {"db_count": 4, "hardcoded_count": 0},  # Lurking Tempest, Vortex Pinnacle, cannot be killed
     }
     if info["id"] in unexplainable_count.keys():
         npc_name = pattern_npc_name.search(match.group()).group(1)
