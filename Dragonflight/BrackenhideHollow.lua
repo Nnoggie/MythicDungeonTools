@@ -749,93 +749,87 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [7] = {
-        ["x"] = 165.6;
-        ["y"] = -219.3;
+        ["x"] = 169.30811371379;
+        ["y"] = -222.89905925471;
         ["g"] = 5;
         ["sublevel"] = 1;
       };
       [8] = {
-        ["x"] = 169.7;
-        ["y"] = -219.3;
-        ["g"] = 5;
-        ["sublevel"] = 1;
-      };
-      [9] = {
         ["x"] = 192.6;
         ["y"] = -225.9;
         ["g"] = 9;
         ["sublevel"] = 1;
       };
-      [10] = {
+      [9] = {
         ["x"] = 188.9;
         ["y"] = -213.4;
         ["sublevel"] = 1;
       };
-      [11] = {
+      [10] = {
         ["x"] = 232.8;
         ["y"] = -242.5;
         ["g"] = 14;
         ["sublevel"] = 1;
       };
-      [12] = {
+      [11] = {
         ["x"] = 274.4;
         ["y"] = -192.2;
         ["g"] = 28;
         ["sublevel"] = 1;
       };
-      [13] = {
+      [12] = {
         ["x"] = 269.4;
         ["y"] = -188.9;
         ["g"] = 28;
         ["sublevel"] = 1;
       };
-      [14] = {
+      [13] = {
         ["x"] = 221.3;
         ["y"] = -157.5;
         ["g"] = 16;
         ["sublevel"] = 1;
       };
-      [15] = {
+      [14] = {
         ["x"] = 207.8;
         ["y"] = -175.1;
         ["sublevel"] = 1;
       };
-      [16] = {
+      [15] = {
         ["x"] = 198;
         ["y"] = -177.5;
         ["sublevel"] = 1;
       };
-      [17] = {
+      [16] = {
         ["x"] = 171.9;
         ["y"] = -146.4;
         ["g"] = 11;
         ["sublevel"] = 1;
       };
-      [18] = {
+      [17] = {
         ["x"] = 171.6;
         ["y"] = -151.7;
         ["g"] = 11;
         ["sublevel"] = 1;
       };
-      [19] = {
+      [18] = {
         ["x"] = 166.1;
         ["y"] = -119.6;
         ["g"] = 25;
         ["sublevel"] = 1;
       };
-      [20] = {
+      [19] = {
         ["x"] = 178.5;
         ["y"] = -119.4;
         ["g"] = 25;
         ["sublevel"] = 1;
       };
-      [21] = {
+      [20] = {
         ["x"] = 192.7;
         ["y"] = -87.4;
         ["g"] = 22;
         ["sublevel"] = 1;
       };
-      [22] = {
+      [21] = {
         ["x"] = 157;
         ["y"] = -97.1;
         ["sublevel"] = 1;
@@ -862,13 +856,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
           };
         };
       };
-      [23] = {
+      [22] = {
         ["x"] = 142.1;
         ["y"] = -103.9;
         ["g"] = 26;
         ["sublevel"] = 1;
       };
-      [24] = {
+      [23] = {
         ["x"] = 336.6;
         ["y"] = -303.7;
         ["sublevel"] = 1;
@@ -901,8 +895,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         };
       };
       [2] = {
-        ["x"] = 164.6;
-        ["y"] = -215.1;
+        ["x"] = 166.17903190187;
+        ["y"] = -212.20272486701;
         ["g"] = 5;
         ["sublevel"] = 1;
       };
@@ -1185,8 +1179,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
       [2] = {
-        ["x"] = 157.7;
-        ["y"] = -219.9;
+        ["x"] = 154.93077117942;
+        ["y"] = -222.67871207951;
         ["g"] = 5;
         ["sublevel"] = 1;
       };
@@ -1379,8 +1373,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["clones"] = {
       [1] = {
-        ["x"] = 160.7;
-        ["y"] = -223.8;
+        ["x"] = 161.45870063342;
+        ["y"] = -227.15247641138;
         ["g"] = 5;
         ["sublevel"] = 1;
       };
@@ -1442,7 +1436,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [9] = {
     ["name"] = "Fishface";
     ["id"] = 191926;
-    ["count"] = 30;
+    ["count"] = 25;
     ["health"] = 1716607;
     ["scale"] = 1;
     ["displayId"] = 107685;
@@ -2043,7 +2037,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [17] = {
     ["name"] = "Wild Lasher";
     ["id"] = 191243;
-    ["count"] = 0;
+    ["count"] = 1;
     ["health"] = 142768;
     ["scale"] = 0.8;
     ["displayId"] = 81393;
@@ -2620,7 +2614,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [23] = {
     ["name"] = "Decaying Slime";
     ["id"] = 199916;
-    ["count"] = 0;
+    ["count"] = 1;
     ["health"] = 142768;
     ["scale"] = 0.8;
     ["displayId"] = 104893;
@@ -2791,7 +2785,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [25] = {
     ["name"] = "Infected Bear";
     ["id"] = 189318;
-    ["count"] = 0;
+    ["count"] = 15;
     ["health"] = 940410;
     ["scale"] = 1;
     ["displayId"] = 68523;
@@ -2809,7 +2803,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [26] = {
     ["name"] = "Rageclaw";
     ["id"] = 187192;
-    ["count"] = 30;
+    ["count"] = 25;
     ["health"] = 1716607;
     ["scale"] = 1;
     ["displayId"] = 105554;
@@ -2897,7 +2891,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [28] = {
     ["name"] = "Fleshripper Vulture";
     ["id"] = 186246;
-    ["count"] = 3;
+    ["count"] = 2;
     ["health"] = 420638;
     ["scale"] = 1;
     ["displayId"] = 10827;
@@ -3122,7 +3116,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [32] = {
     ["name"] = "Gutstabber";
     ["id"] = 197857;
-    ["count"] = 0;
+    ["count"] = -1;
     ["health"] = 12345;
     ["scale"] = 1;
     ["displayId"] = 105704;
@@ -3561,7 +3555,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [38] = {
     ["name"] = "Witherling";
     ["id"] = 194273;
-    ["count"] = 0;
+    ["count"] = 1;
     ["health"] = 142768;
     ["scale"] = 0.8;
     ["displayId"] = 106071;
@@ -3667,7 +3661,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [41] = {
     ["name"] = "Wither Slasher";
     ["id"] = 194469;
-    ["count"] = 0;
+    ["count"] = 1;
     ["health"] = 142768;
     ["scale"] = 0.8;
     ["displayId"] = 108586;
