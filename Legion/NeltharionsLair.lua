@@ -1270,4 +1270,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
+  [25] = {
+    ["name"] = "Naraxas";
+    ["id"] = 91005;
+    ["count"] = 0;
+    ["health"] = 117360016;
+    ["scale"] = 1;
+    ["displayId"] = 62391;
+    ["creatureType"] = "Beast";
+    ["level"] = 72;
+    ["isBoss"] = true;
+    ["encounterID"] = 0;
+    ["spells"] = {
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 254.03279866085;
+        ["y"] = -233.25012225538;
+        ["sublevel"] = 1;
+      };
+    };
+  };
 };
