@@ -253,6 +253,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -418.36374174185;
         ["sublevel"] = 1;
       };
+      [11] = {
+        ["x"] = 464.22356229038;
+        ["y"] = -492.49972177314;
+        ["g"] = 7;
+        ["sublevel"] = 1;
+      };
+      [12] = {
+        ["x"] = 435.99812404913;
+        ["y"] = -434.08119099532;
+        ["g"] = 8;
+        ["sublevel"] = 1;
+      };
+      [13] = {
+        ["x"] = 361.96651564036;
+        ["y"] = -451.93710203094;
+        ["g"] = 9;
+        ["sublevel"] = 1;
+      };
     };
   };
   [4] = {
@@ -761,38 +779,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [12] = {
-    ["name"] = "Rockback Gnasher";
-    ["id"] = 91006;
-    ["count"] = 3;
-    ["health"] = 714145;
-    ["scale"] = 1;
-    ["displayId"] = 65050;
-    ["creatureType"] = "Beast";
-    ["level"] = 70;
-    ["spells"] = {
-    };
-    ["clones"] = {
-      [1] = {
-        ["x"] = 464.22356229038;
-        ["y"] = -492.49972177314;
-        ["g"] = 7;
-        ["sublevel"] = 1;
-      };
-      [2] = {
-        ["x"] = 435.99812404913;
-        ["y"] = -434.08119099532;
-        ["g"] = 8;
-        ["sublevel"] = 1;
-      };
-      [3] = {
-        ["x"] = 361.96651564036;
-        ["y"] = -451.93710203094;
-        ["g"] = 9;
-        ["sublevel"] = 1;
-      };
-    };
-  };
-  [13] = {
     ["name"] = "Drums of War";
     ["id"] = 92387;
     ["count"] = 0;
@@ -816,7 +802,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [14] = {
+  [13] = {
     ["name"] = "Blightshard Shaper";
     ["id"] = 90998;
     ["count"] = 4;
@@ -878,7 +864,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [15] = {
+  [14] = {
     ["name"] = "Burning Geode";
     ["id"] = 101437;
     ["count"] = 0;
@@ -904,7 +890,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [16] = {
+  [15] = {
     ["name"] = "Stoneclaw Grubmaster";
     ["id"] = 102404;
     ["count"] = 4;
@@ -943,7 +929,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [17] = {
+  [16] = {
     ["name"] = "Tarspitter Slug";
     ["id"] = 102430;
     ["count"] = 1;
@@ -1011,7 +997,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [18] = {
+  [17] = {
     ["name"] = "Understone Demolisher";
     ["id"] = 102253;
     ["count"] = 4;
@@ -1045,7 +1031,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [19] = {
+  [18] = {
     ["name"] = "Rockbound Trapper";
     ["id"] = 102232;
     ["count"] = 4;
@@ -1083,7 +1069,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [20] = {
+  [19] = {
     ["name"] = "Emberhusk Dominator";
     ["id"] = 113537;
     ["count"] = 10;
@@ -1119,7 +1105,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [21] = {
+  [20] = {
     ["name"] = "Rokmora";
     ["id"] = 91003;
     ["count"] = 0;
@@ -1140,7 +1126,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [22] = {
+  [21] = {
     ["name"] = "Ularogg Cragshaper";
     ["id"] = 91004;
     ["count"] = 0;
@@ -1161,7 +1147,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [23] = {
+  [22] = {
     ["name"] = "Dargrul";
     ["id"] = 91007;
     ["count"] = 0;
@@ -1182,7 +1168,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [24] = {
+  [23] = {
     ["name"] = "Naraxas";
     ["id"] = 91005;
     ["count"] = 0;
