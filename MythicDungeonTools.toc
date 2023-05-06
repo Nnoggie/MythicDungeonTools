@@ -17,6 +17,7 @@
 ## OptionalDeps: ElvUI, LibStub, Ace3
 ## SavedVariables: MythicDungeonToolsDB
 ## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\Nnoggie
+## AddonCompartmentFunc: MDT_OnAddonCompartmentClick
 
 BuildCheck.lua
 libs\load_libs.xml

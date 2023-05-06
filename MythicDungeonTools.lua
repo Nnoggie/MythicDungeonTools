@@ -62,6 +62,11 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   end,
 })
 
+-- Global for Addon Compartment
+MDT_OnAddonCompartmentClick = function()
+  MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface")
+end
+
 SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
 SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
 SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
