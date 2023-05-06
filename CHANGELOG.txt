@@ -1,3 +1,6 @@
+- v4.0.3.3
+  - Uldaman G33 fix
+  - add AddOn Compartment support
 - v4.0.3.2
   - Freehold count updates
 - v4.0.3.1
