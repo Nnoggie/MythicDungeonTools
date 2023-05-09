@@ -15,7 +15,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["BrackenhideHollow"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 750, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 723, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
 };
@@ -2716,7 +2716,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [24] = {
     ["name"] = "Skulking Gutstabber";
     ["id"] = 186242;
-    ["count"] = 5;
+    ["count"] = 4;
     ["health"] = 641557;
     ["scale"] = 1;
     ["displayId"] = 105704;
@@ -3003,7 +3003,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [29] = {
     ["name"] = "Gutchewer Bear";
     ["id"] = 186284;
-    ["count"] = 5;
+    ["count"] = 6;
     ["health"] = 788195;
     ["scale"] = 1;
     ["displayId"] = 11908;
