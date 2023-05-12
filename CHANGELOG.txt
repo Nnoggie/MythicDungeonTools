@@ -1,3 +1,6 @@
+- v4.0.3.7
+  - mapping updates by wotuu
+  - fixed data collection, use "/mdt dc" to start collecting spell data automatically while playing. Refer to discord to share your data for fast updates
 - v4.0.3.6
   - affix week update
 - v4.0.3.5
