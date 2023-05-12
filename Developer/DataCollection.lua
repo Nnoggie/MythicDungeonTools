@@ -5,14 +5,14 @@ local MDT = MDT
 
 -- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
 local dungeonsToTrack = {
-  [1] = 42,
-  [2] = 43,
-  [3] = 44,
-  [4] = 45,
-  [5] = 6,
-  [6] = 3,
-  [7] = 46,
-  [8] = 47,
+  [1] = 49,
+  [2] = 48,
+  [3] = 51,
+  [4] = 50,
+  [5] = 8,
+  [6] = 16,
+  [7] = 22,
+  [8] = 77,
 }
 
 MDT.DataCollection = {}
