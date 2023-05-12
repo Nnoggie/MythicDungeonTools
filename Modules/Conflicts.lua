@@ -23,13 +23,13 @@ local candidates = {
       ldb.objects["DungeonTools"]:SetScript("OnClick", function() MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface") end)
     end
   },
-  ["MDTGuide"] = {
-    name = "MDTGuide";
-    detected = false;
-    onDetect = function()
+  -- ["MDTGuide"] = {
+  --   name = "MDTGuide";
+  --   detected = false;
+  --   onDetect = function()
 
-    end
-  }
+  --   end
+  -- }
 }
 
 local conflictCheckFrame = CreateFrame("Frame")

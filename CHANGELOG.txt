@@ -1,8 +1,17 @@
-- v4.0.3.0-alpha3
- - mapping updates
-- v4.0.3.0-alpha2
-  - mapping updates
-- v4.0.3.0-alpha
+- v4.0.3.6
+  - affix week update
+- v4.0.3.5
+  - count updates brackenhide
+- v4.0.3.4
+  - Count Updates from hotfixes Vortex Pinnacle + Halls of Infusion
+- v4.0.3.3
+  - Uldaman G33 fix
+  - add AddOn Compartment support
+- v4.0.3.2
+  - Freehold count updates
+- v4.0.3.1
+  - fix compatibility with MDTGuide
+- v4.0.3.0
   - Added all Dragonflight Season 2 dungeons
 - v4.0.2.12
   - bugfixes
