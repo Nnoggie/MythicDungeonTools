@@ -481,6 +481,7 @@ local spellBlacklist = {
   [213405] = true, -- dh stuff
   [391191] = true, -- dh stuff
   [390181] = true, -- dh stuff
+  [228318] = true, -- enrage
   --[X]  = true,
 }
 local lastEnemyIdx
