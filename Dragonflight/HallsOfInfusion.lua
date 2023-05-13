@@ -56,11 +56,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Refti Defender";
     ["id"] = 190340;
     ["count"] = 5;
-    ["health"] = 715000;
+    ["health"] = 1086806;
     ["scale"] = 1;
     ["displayId"] = 105949;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [374339] = {
+      };
+      [393432] = {
+      };
+      [393444] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 162.9;
@@ -184,11 +196,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Ravager";
     ["id"] = 190348;
     ["count"] = 4;
-    ["health"] = 715000;
+    ["health"] = 889205;
     ["scale"] = 1;
     ["displayId"] = 102946;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374149] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 160.5;
@@ -244,11 +263,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Geomancer";
     ["id"] = 190345;
     ["count"] = 4;
-    ["health"] = 715000;
+    ["health"] = 988005;
     ["scale"] = 1;
     ["displayId"] = 102959;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [374073] = {
+      };
+      [374075] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 166.5;
@@ -340,12 +368,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Containment Apparatus";
     ["id"] = 190342;
     ["count"] = 5;
-    ["health"] = 715000;
+    ["health"] = 889205;
     ["scale"] = 1;
-    ["stealthDetect"] = true;
     ["displayId"] = 109168;
     ["creatureType"] = "Mechanical";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [374020] = {
+      };
+      [374045] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 163.5;
@@ -430,12 +466,37 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Watcher Irideus";
     ["id"] = 189719;
     ["count"] = 0;
-    ["health"] = 15741000;
+    ["health"] = 25652034;
     ["scale"] = 1.6;
     ["displayId"] = 106801;
     ["creatureType"] = "Giant";
     ["level"] = 70;
     ["isBoss"] = true;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [383840] = {
+      };
+      [383935] = {
+      };
+      [384014] = {
+      };
+      [384015] = {
+      };
+      [384351] = {
+      };
+      [384524] = {
+      };
+      [389056] = {
+      };
+      [389179] = {
+      };
+      [389181] = {
+      };
+      [389490] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 515.7;
@@ -448,11 +509,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Shocktrooper";
     ["id"] = 199037;
     ["count"] = 5;
-    ["health"] = 715000;
+    ["health"] = 988005;
     ["scale"] = 1;
     ["displayId"] = 102898;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [395690] = {
+      };
+      [395691] = {
+      };
+      [395694] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 576.8;
@@ -502,11 +575,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Curious Swoglet";
     ["id"] = 190366;
     ["count"] = 1;
-    ["health"] = 214525;
+    ["health"] = 296402;
     ["scale"] = 0.8;
     ["displayId"] = 102560;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["spells"] = {
+      [374389] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 652.2;
@@ -682,11 +759,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dazzling Dragonfly";
     ["id"] = 190362;
     ["count"] = 3;
-    ["health"] = 571229;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 100688;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374563] = {
+      };
+      [374578] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 649;
@@ -752,11 +838,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skulking Zealot";
     ["id"] = 190359;
     ["count"] = 3;
-    ["health"] = 715000;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 107114;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [374612] = {
+      };
+      [374615] = {
+      };
+      [374617] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 577;
@@ -810,12 +907,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Flamecaller Aymi";
     ["id"] = 190368;
     ["count"] = 25;
-    ["health"] = 1773743;
+    ["health"] = 2371212;
     ["scale"] = 1;
-    ["stealthDetect"] = true;
     ["displayId"] = 107117;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["spells"] = {
+      [374699] = {
+      };
+      [374706] = {
+      };
+      [374724] = {
+      };
+      [374735] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 529;
@@ -829,12 +935,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Squallbringer Cyraz";
     ["id"] = 190370;
     ["count"] = 25;
-    ["health"] = 1773743;
+    ["health"] = 2371212;
     ["scale"] = 1;
-    ["stealthDetect"] = true;
     ["displayId"] = 107118;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374823] = {
+      };
+      [374863] = {
+      };
+      [375079] = {
+      };
+      [375080] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 538;
@@ -848,7 +966,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gulping Goliath";
     ["id"] = 189722;
     ["count"] = 0;
-    ["health"] = 3797251;
+    ["health"] = 6906317;
     ["scale"] = 1.6;
     ["displayId"] = 110696;
     ["creatureType"] = "Dragonkin";
@@ -856,6 +974,35 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2507;
     ["instanceID"] = 1204;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [374389] = {
+      };
+      [375215] = {
+      };
+      [385181] = {
+      };
+      [385187] = {
+      };
+      [385442] = {
+      };
+      [385451] = {
+      };
+      [385531] = {
+      };
+      [385551] = {
+      };
+      [385555] = {
+      };
+      [385691] = {
+      };
+      [385743] = {
+      };
+      [388245] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 466.5;
@@ -868,11 +1015,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Icecaller";
     ["id"] = 190377;
     ["count"] = 5;
-    ["health"] = 643456;
+    ["health"] = 889205;
     ["scale"] = 1;
     ["displayId"] = 102900;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [375950] = {
+      };
+      [376171] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 322.7;
@@ -980,11 +1136,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Earthshaker";
     ["id"] = 190371;
     ["count"] = 4;
-    ["health"] = 643456;
+    ["health"] = 1185606;
     ["scale"] = 1;
     ["displayId"] = 102880;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["spells"] = {
+      [375384] = {
+      };
+      [408388] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 351.9;
@@ -1021,11 +1183,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Glacial Proto-Dragon";
     ["id"] = 190403;
     ["count"] = 15;
-    ["health"] = 1158396;
+    ["health"] = 1778409;
     ["scale"] = 1;
     ["displayId"] = 110962;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [375351] = {
+      };
+      [375353] = {
+      };
+      [391634] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 384.2;
@@ -1054,11 +1227,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Galesinger";
     ["id"] = 190373;
     ["count"] = 5;
-    ["health"] = 643456;
+    ["health"] = 889205;
     ["scale"] = 1;
     ["displayId"] = 102874;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [385036] = {
+      };
+      [385141] = {
+      };
+      [385168] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 354.4;
@@ -1095,7 +1279,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Khajin the Unyielding";
     ["id"] = 189727;
     ["count"] = 0;
-    ["health"] = 3711340;
+    ["health"] = 6906317;
     ["scale"] = 1.6;
     ["displayId"] = 107064;
     ["creatureType"] = "Humanoid";
@@ -1103,6 +1287,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2510;
     ["instanceID"] = 1204;
+    ["spells"] = {
+      [385963] = {
+      };
+      [386559] = {
+      };
+      [386743] = {
+      };
+      [386757] = {
+      };
+      [390111] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 234.5;
@@ -1115,11 +1311,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aqua Rager";
     ["id"] = 190407;
     ["count"] = 0;
-    ["health"] = 355147;
+    ["health"] = 494003;
     ["scale"] = 1;
     ["displayId"] = 102510;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [377341] = {
+      };
+      [377384] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 360;
@@ -1199,11 +1404,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infuser Sariya";
     ["id"] = 190405;
     ["count"] = 50;
-    ["health"] = 1686135;
+    ["health"] = 2964015;
     ["scale"] = 1;
     ["displayId"] = 107124;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["spells"] = {
+      [377402] = {
+      };
+      [388882] = {
+      };
+      [390290] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 358.5;
@@ -1216,7 +1429,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primal Tsunami";
     ["id"] = 189729;
     ["count"] = 0;
-    ["health"] = 4123711;
+    ["health"] = 7300963;
     ["scale"] = 1.6;
     ["displayId"] = 106934;
     ["creatureType"] = "Elemental";
@@ -1224,6 +1437,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2511;
     ["instanceID"] = 1204;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [387504] = {
+      };
+      [387559] = {
+      };
+      [387571] = {
+      };
+      [387585] = {
+      };
+      [387619] = {
+      };
+      [388424] = {
+      };
+      [389872] = {
+      };
+      [389875] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 359.5;
