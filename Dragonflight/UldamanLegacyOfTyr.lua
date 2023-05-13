@@ -57,11 +57,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scavenging Leaper";
     ["id"] = 184134;
     ["count"] = 1;
-    ["health"] = 286202;
+    ["health"] = 345802;
     ["scale"] = 0.8;
     ["displayId"] = 92697;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [369696] = {
+      };
+      [369697] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 696.2;
@@ -159,11 +168,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stonevault Geomancer";
     ["id"] = 184022;
     ["count"] = 5;
-    ["health"] = 644224;
+    ["health"] = 889205;
     ["scale"] = 1;
     ["displayId"] = 92697;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Silence"] = true;
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369674] = {
+      };
+      [369675] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 710.8;
@@ -219,11 +239,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hulking Berserker";
     ["id"] = 184020;
     ["count"] = 15;
-    ["health"] = 1073011;
+    ["health"] = 1482008;
     ["scale"] = 1;
     ["displayId"] = 92699;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["spells"] = {
+      [369806] = {
+      };
+      [369811] = {
+      };
+      [369818] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 695;
@@ -299,11 +327,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vicious Basilisk";
     ["id"] = 184023;
     ["count"] = 3;
-    ["health"] = 572543;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 103338;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369823] = {
+      };
+      [369826] = {
+      };
+      [369828] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 695.47922741543;
@@ -359,7 +399,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Baelog";
     ["id"] = 184581;
     ["count"] = 0;
-    ["health"] = 1787435;
+    ["health"] = 2959431;
     ["scale"] = 1.6;
     ["displayId"] = 105887;
     ["creatureType"] = "Humanoid";
@@ -367,6 +407,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2475;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [369563] = {
+      };
+      [369573] = {
+      };
+      [369603] = {
+      };
+      [375339] = {
+      };
+      [375924] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 629.0651781437;
@@ -380,7 +432,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Olaf";
     ["id"] = 184580;
     ["count"] = 0;
-    ["health"] = 1907986;
+    ["health"] = 3156727;
     ["scale"] = 1.6;
     ["displayId"] = 105883;
     ["creatureType"] = "Humanoid";
@@ -388,6 +440,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2475;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [369602] = {
+      };
+      [369603] = {
+      };
+      [369677] = {
+      };
+      [375339] = {
+      };
+      [375924] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 653.30257369008;
@@ -401,7 +465,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Eric \"The Swift\"";
     ["id"] = 184582;
     ["count"] = 0;
-    ["health"] = 1787435;
+    ["health"] = 2959431;
     ["scale"] = 1.6;
     ["displayId"] = 105884;
     ["creatureType"] = "Humanoid";
@@ -409,6 +473,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2475;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [369603] = {
+      };
+      [369781] = {
+      };
+      [369791] = {
+      };
+      [369792] = {
+      };
+      [375339] = {
+      };
+      [375924] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 680.3922276572;
@@ -422,11 +500,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Burly Rock-Thrower";
     ["id"] = 184019;
     ["count"] = 5;
-    ["health"] = 715048;
+    ["health"] = 988005;
     ["scale"] = 1;
     ["displayId"] = 765;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369853] = {
+      };
+      [369854] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 586.7;
@@ -452,7 +539,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bromach";
     ["id"] = 184018;
     ["count"] = 0;
-    ["health"] = 3572917;
+    ["health"] = 5918863;
     ["scale"] = 1.6;
     ["displayId"] = 107143;
     ["creatureType"] = "Humanoid";
@@ -460,6 +547,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2487;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [369605] = {
+      };
+      [369703] = {
+      };
+      [369754] = {
+      };
+      [382303] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 482;
@@ -472,11 +569,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthen Custodian";
     ["id"] = 184130;
     ["count"] = 4;
-    ["health"] = 715048;
+    ["health"] = 988005;
     ["scale"] = 1;
     ["displayId"] = 6025;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369409] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 420.35160211439;
@@ -678,11 +783,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Refti Custodian";
     ["id"] = 184319;
     ["count"] = 15;
-    ["health"] = 1286806;
+    ["health"] = 1778409;
     ["scale"] = 1;
     ["displayId"] = 106782;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [377723] = {
+      };
+      [377724] = {
+      };
+      [377732] = {
+      };
+      [377738] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 428.5;
@@ -706,7 +825,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sentinel Talondras";
     ["id"] = 184124;
     ["count"] = 0;
-    ["health"] = 4492735;
+    ["health"] = 6905340;
     ["scale"] = 1.6;
     ["displayId"] = 109735;
     ["creatureType"] = "Giant";
@@ -714,6 +833,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2484;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [372600] = {
+      };
+      [372623] = {
+      };
+      [372701] = {
+      };
+      [372718] = {
+      };
+      [372719] = {
+      };
+      [382071] = {
+      };
+      [386332] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 256.3;
@@ -726,11 +861,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthen Weaver";
     ["id"] = 186420;
     ["count"] = 5;
-    ["health"] = 644224;
+    ["health"] = 889205;
     ["scale"] = 1;
     ["displayId"] = 6026;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Silence"] = true;
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369399] = {
+      };
+      [369465] = {
+      };
+      [369466] = {
+      };
+      [373662] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 256.00125763494;
@@ -833,11 +983,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthen Warder";
     ["id"] = 184132;
     ["count"] = 5;
-    ["health"] = 644224;
+    ["health"] = 839804;
     ["scale"] = 1;
     ["displayId"] = 6009;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Silence"] = true;
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369365] = {
+      };
+      [369366] = {
+      };
+      [369400] = {
+      };
+      [373662] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 221.9;
@@ -905,11 +1070,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Runic Protector";
     ["id"] = 184107;
     ["count"] = 25;
-    ["health"] = 1147152;
+    ["health"] = 1580808;
     ["scale"] = 1;
     ["displayId"] = 108686;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["spells"] = {
+      [369327] = {
+      };
+      [369328] = {
+      };
+      [369335] = {
+      };
+      [369337] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 206.11745737728;
@@ -929,11 +1104,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skittering Crawler";
     ["id"] = 184303;
     ["count"] = 4;
-    ["health"] = 572543;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 84003;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369417] = {
+      };
+      [369419] = {
+      };
+      [369423] = {
+      };
+      [369424] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 139.3;
@@ -965,11 +1153,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cavern Seeker";
     ["id"] = 184301;
     ["count"] = 4;
-    ["health"] = 572649;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 57297;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [369411] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 94.2;
@@ -995,7 +1190,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Emberon";
     ["id"] = 184422;
     ["count"] = 0;
-    ["health"] = 2981424;
+    ["health"] = 4439147;
     ["scale"] = 1.6;
     ["displayId"] = 107816;
     ["creatureType"] = "Giant";
@@ -1003,6 +1198,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2476;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [368990] = {
+      };
+      [369006] = {
+      };
+      [369025] = {
+      };
+      [369026] = {
+      };
+      [369031] = {
+      };
+      [369033] = {
+      };
+      [369061] = {
+      };
+      [369110] = {
+      };
+      [369116] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 187.8;
@@ -1073,11 +1288,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ebonstone Golem";
     ["id"] = 184300;
     ["count"] = 15;
-    ["health"] = 1288534;
+    ["health"] = 1778409;
     ["scale"] = 1;
     ["displayId"] = 108689;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["spells"] = {
+      [381593] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 397.57484236532;
@@ -1104,9 +1323,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 2;
       };
       [5] = {
-        ["x"] = 516.47418605898;
-        ["y"] = -418.84772869545;
-        ["g"] = 32;
+        ["x"] = 507.94886693692;
+        ["y"] = -399.91653700023;
+        ["g"] = 33;
         ["sublevel"] = 2;
       };
     };
@@ -1115,11 +1334,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthen Guardian";
     ["id"] = 184131;
     ["count"] = 15;
-    ["health"] = 1145315;
+    ["health"] = 1580808;
     ["scale"] = 1;
     ["displayId"] = 6026;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["spells"] = {
+      [382573] = {
+      };
+      [382576] = {
+      };
+      [382578] = {
+      };
+      [382696] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 532.82644447972;
@@ -1128,9 +1357,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 2;
       };
       [2] = {
-        ["x"] = 507.99352099015;
-        ["y"] = -399.60398672785;
-        ["g"] = 33;
+        ["x"] = 515.26509476836;
+        ["y"] = -417.53220223478;
+        ["g"] = 32;
         ["sublevel"] = 2;
       };
     };
@@ -1139,11 +1368,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infinite Agent";
     ["id"] = 184335;
     ["count"] = 5;
-    ["health"] = 858652;
+    ["health"] = 1185606;
     ["scale"] = 1;
     ["displayId"] = 19058;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [377486] = {
+      };
+      [377500] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 479.6;
@@ -1168,11 +1406,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infinite Timereaver";
     ["id"] = 184331;
     ["count"] = 15;
-    ["health"] = 1145172;
+    ["health"] = 1580808;
     ["scale"] = 1;
     ["displayId"] = 106470;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["spells"] = {
+      [377510] = {
+      };
+      [377511] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 453.5;
@@ -1202,11 +1446,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infinite Whelp";
     ["id"] = 191311;
     ["count"] = 1;
-    ["health"] = 142809;
+    ["health"] = 197601;
     ["scale"] = 0.8;
     ["displayId"] = 101939;
     ["creatureType"] = "Dragonkin";
     ["level"] = 70;
+    ["spells"] = {
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 424.8;
@@ -1268,7 +1514,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Chrono-Lord Deios";
     ["id"] = 184125;
     ["count"] = 0;
-    ["health"] = 6559028;
+    ["health"] = 9864771;
     ["scale"] = 1.6;
     ["displayId"] = 106056;
     ["creatureType"] = "Dragonkin";
@@ -1276,6 +1522,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2479;
     ["instanceID"] = 1197;
+    ["spells"] = {
+      [375727] = {
+      };
+      [376049] = {
+      };
+      [376208] = {
+      };
+      [376209] = {
+      };
+      [376292] = {
+      };
+      [376319] = {
+      };
+      [377405] = {
+      };
+      [377561] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 344.2;

@@ -75,12 +75,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Warden";
     ["id"] = 193293;
     ["count"] = 10;
-    ["health"] = 1287500;
+    ["health"] = 1778409;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 111187;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["spells"] = {
+      [382708] = {
+      };
+      [384597] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 432;
@@ -188,11 +194,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Apex Blazewing";
     ["id"] = 193291;
     ["count"] = 15;
-    ["health"] = 1137989;
+    ["health"] = 1580808;
     ["scale"] = 1;
     ["displayId"] = 104578;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["spells"] = {
+      [381662] = {
+      };
+      [381663] = {
+      };
+      [381670] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 439.1;
@@ -222,11 +236,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Lavamancer";
     ["id"] = 193944;
     ["count"] = 15;
-    ["health"] = 993575;
+    ["health"] = 1383207;
     ["scale"] = 1;
     ["displayId"] = 108666;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["spells"] = {
+      [372213] = {
+      };
+      [382791] = {
+      };
+      [382795] = {
+      };
+      [383231] = {
+      };
+      [383651] = {
+      };
+      [383660] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 433.2;
@@ -255,11 +283,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Hunter";
     ["id"] = 189227;
     ["count"] = 5;
-    ["health"] = 858654;
+    ["health"] = 1185606;
     ["scale"] = 1;
     ["displayId"] = 108349;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [372561] = {
+      };
+      [372566] = {
+      };
+      [372570] = {
+      };
+      [372583] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 391.2;
@@ -337,11 +379,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tamed Phoenix";
     ["id"] = 189247;
     ["count"] = 1;
-    ["health"] = 286218;
+    ["health"] = 395202;
     ["scale"] = 1;
     ["displayId"] = 109230;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 385.3;
@@ -545,12 +593,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Overseer Lahar";
     ["id"] = 189235;
     ["count"] = 25;
-    ["health"] = 1717307;
+    ["health"] = 2371212;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 108366;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["spells"] = {
+      [372461] = {
+      };
+      [372472] = {
+      };
+      [373406] = {
+      };
+      [376186] = {
+      };
+      [383928] = {
+      };
+      [395427] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 324.2;
@@ -633,11 +695,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Trainee";
     ["id"] = 189266;
     ["count"] = 5;
-    ["health"] = 715545;
+    ["health"] = 988005;
     ["scale"] = 1;
     ["displayId"] = 108344;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [371875] = {
+      };
+      [372311] = {
+      };
+      [372372] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 360;
@@ -710,11 +784,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Bonetender";
     ["id"] = 189265;
     ["count"] = 5;
-    ["health"] = 858654;
+    ["health"] = 1185606;
     ["scale"] = 1;
     ["displayId"] = 108347;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [372223] = {
+      };
+      [372226] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 302.1;
@@ -757,7 +841,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Chargath, Bane of Scales";
     ["id"] = 189340;
     ["count"] = 0;
-    ["health"] = 5724360;
+    ["health"] = 7892268;
     ["scale"] = 1.6;
     ["displayId"] = 108248;
     ["creatureType"] = "Giant";
@@ -765,6 +849,44 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2490;
     ["instanceID"] = 1199;
+    ["spells"] = {
+      [373424] = {
+      };
+      [373733] = {
+      };
+      [373735] = {
+      };
+      [373742] = {
+      };
+      [373762] = {
+      };
+      [374655] = {
+      };
+      [374704] = {
+      };
+      [375055] = {
+      };
+      [375056] = {
+      };
+      [375057] = {
+      };
+      [375397] = {
+      };
+      [384019] = {
+      };
+      [388523] = {
+      };
+      [389059] = {
+      };
+      [396332] = {
+      };
+      [396424] = {
+      };
+      [396672] = {
+      };
+      [414585] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 366.6;
@@ -777,7 +899,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Warlord Sargha";
     ["id"] = 189901;
     ["count"] = 0;
-    ["health"] = 5724360;
+    ["health"] = 7892268;
     ["scale"] = 1.6;
     ["displayId"] = 107029;
     ["creatureType"] = "Humanoid";
@@ -785,6 +907,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2501;
     ["instanceID"] = 1199;
+    ["spells"] = {
+      [376780] = {
+      };
+      [376783] = {
+      };
+      [376784] = {
+      };
+      [377014] = {
+      };
+      [377017] = {
+      };
+      [377018] = {
+      };
+      [377204] = {
+      };
+      [377473] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 438.2;
@@ -797,11 +937,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Spinecrusher";
     ["id"] = 192787;
     ["count"] = 5;
-    ["health"] = 1001763;
+    ["health"] = 1383207;
     ["scale"] = 1;
     ["displayId"] = 108029;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [378847] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 498.3;
@@ -833,11 +981,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ore Elemental";
     ["id"] = 192781;
     ["count"] = 3;
-    ["health"] = 572436;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 109407;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [378149] = {
+      };
+      [378172] = {
+      };
+      [378202] = {
+      };
+      [378221] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 493.5;
@@ -975,11 +1137,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Plunderer";
     ["id"] = 192786;
     ["count"] = 5;
-    ["health"] = 930209;
+    ["health"] = 1284407;
     ["scale"] = 1;
     ["displayId"] = 108663;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [378827] = {
+      };
+      [378831] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 518.9;
@@ -1047,11 +1219,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Thaumaturge";
     ["id"] = 192788;
     ["count"] = 5;
-    ["health"] = 686922;
+    ["health"] = 948486;
     ["scale"] = 1;
     ["displayId"] = 107985;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [378281] = {
+      };
+      [378282] = {
+      };
+      [378818] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 512.8;
@@ -1113,7 +1297,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Magmatusk";
     ["id"] = 181861;
     ["count"] = 0;
-    ["health"] = 5008815;
+    ["health"] = 6905734;
     ["scale"] = 1.6;
     ["displayId"] = 102604;
     ["creatureType"] = "Beast";
@@ -1121,6 +1305,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2494;
     ["instanceID"] = 1199;
+    ["spells"] = {
+      [374365] = {
+      };
+      [374410] = {
+      };
+      [375251] = {
+      };
+      [375436] = {
+      };
+      [375439] = {
+      };
+      [375449] = {
+      };
+      [375455] = {
+      };
+      [375535] = {
+      };
+      [375890] = {
+      };
+      [391457] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 560.3;
@@ -1133,11 +1339,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Lavabearer";
     ["id"] = 189472;
     ["count"] = 15;
-    ["health"] = 1287981;
+    ["health"] = 1778409;
     ["scale"] = 1;
     ["displayId"] = 108665;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["spells"] = {
+      [372211] = {
+      };
+      [372213] = {
+      };
+      [379404] = {
+      };
+      [379406] = {
+      };
+      [379410] = {
+      };
+      [381329] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 332.6;
@@ -1235,11 +1455,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lava Flare";
     ["id"] = 189470;
     ["count"] = 3;
-    ["health"] = 572436;
+    ["health"] = 790404;
     ["scale"] = 1;
     ["displayId"] = 102505;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [372538] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 324.9;
@@ -1481,11 +1709,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Bonesplitter";
     ["id"] = 189467;
     ["count"] = 5;
-    ["health"] = 930209;
+    ["health"] = 1284407;
     ["scale"] = 1;
     ["displayId"] = 111189;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
+    ["spells"] = {
+      [372224] = {
+      };
+      [372225] = {
+      };
+      [372262] = {
+      };
+      [372266] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 405;
@@ -1547,11 +1788,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Irontorch";
     ["id"] = 189464;
     ["count"] = 5;
-    ["health"] = 1001763;
+    ["health"] = 1383207;
     ["scale"] = 1;
     ["displayId"] = 101960;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [372201] = {
+      };
+      [372202] = {
+      };
+      [372203] = {
+      };
+      [384161] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 367.9;
@@ -1689,7 +1944,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Irontorch Commander";
     ["id"] = 189466;
     ["count"] = 30;
-    ["health"] = 1860417;
+    ["health"] = 2568813;
     ["scale"] = 1;
     ["displayId"] = 111190;
     ["creatureType"] = "Giant";
@@ -1706,11 +1961,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Qalashi Blacksmith";
     ["id"] = 189471;
     ["count"] = 5;
-    ["health"] = 1001763;
+    ["health"] = 1383207;
     ["scale"] = 1;
     ["displayId"] = 109595;
     ["creatureType"] = "Giant";
     ["level"] = 70;
+    ["spells"] = {
+      [372971] = {
+      };
+      [384623] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 502.7;
@@ -1748,7 +2009,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forgemaster Gorek";
     ["id"] = 189478;
     ["count"] = 0;
-    ["health"] = 4174013;
+    ["health"] = 6905734;
     ["scale"] = 1.6;
     ["displayId"] = 107189;
     ["creatureType"] = "Giant";
@@ -1756,6 +2017,40 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2489;
     ["instanceID"] = 1199;
+    ["spells"] = {
+      [374533] = {
+      };
+      [374534] = {
+      };
+      [374535] = {
+      };
+      [374586] = {
+      };
+      [374635] = {
+      };
+      [374641] = {
+      };
+      [374812] = {
+      };
+      [374839] = {
+      };
+      [374842] = {
+      };
+      [374969] = {
+      };
+      [375046] = {
+      };
+      [375061] = {
+      };
+      [375291] = {
+      };
+      [375306] = {
+      };
+      [377995] = {
+      };
+      [392666] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 279.1;
@@ -1768,7 +2063,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forgewrought Monstrosity";
     ["id"] = 194816;
     ["count"] = 15;
-    ["health"] = 1144872;
+    ["health"] = 1580808;
     ["scale"] = 1;
     ["displayId"] = 108693;
     ["creatureType"] = "Elemental";
