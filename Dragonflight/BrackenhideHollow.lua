@@ -1561,8 +1561,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70;
     ["clones"] = {
       [1] = {
-        ["x"] = 139.1;
-        ["y"] = -83.8;
+        ["x"] = 131.1;
+        ["y"] = -89.9;
         ["sublevel"] = 1;
       };
     };
