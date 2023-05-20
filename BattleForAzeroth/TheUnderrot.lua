@@ -1393,6 +1393,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [265433] = {
       };
+      [265468] = {
+      };
       [265487] = {
       };
       [265523] = {
@@ -1746,7 +1748,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Elder Leaxa";
     ["id"] = 131318;
     ["count"] = 0;
-    ["health"] = 4735766;
+    ["health"] = 4742430;
     ["scale"] = 1;
     ["displayId"] = 82394;
     ["creatureType"] = "Humanoid";
@@ -1781,7 +1783,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cragmaw the Infested";
     ["id"] = 131817;
     ["count"] = 0;
-    ["health"] = 6906317;
+    ["health"] = 6916035;
     ["scale"] = 1;
     ["displayId"] = 78855;
     ["creatureType"] = "Beast";
@@ -1794,6 +1796,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["spells"] = {
       [260292] = {
+      };
+      [260312] = {
       };
       [260333] = {
       };
@@ -1814,7 +1818,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sporecaller Zancha";
     ["id"] = 131383;
     ["count"] = 0;
-    ["health"] = 6906317;
+    ["health"] = 6916035;
     ["scale"] = 1;
     ["displayId"] = 81977;
     ["creatureType"] = "Undead";
@@ -1851,7 +1855,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unbound Abomination";
     ["id"] = 133007;
     ["count"] = 0;
-    ["health"] = 7892933;
+    ["health"] = 7904040;
     ["scale"] = 1;
     ["displayId"] = 86632;
     ["creatureType"] = "Humanoid";

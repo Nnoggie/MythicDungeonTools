@@ -2578,6 +2578,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
     };
+    ["spells"] = {
+      [373872] = {
+      };
+    };
   };
   [20] = {
     ["name"] = "Infected Lasher";
