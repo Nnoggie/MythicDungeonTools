@@ -266,7 +266,7 @@ end
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
   [1] = { 6, 124, 9},
-  [2] = { 0, 0, 10},
+  [2] = { 134, 7, 10},
   [3] = { 0, 0, 9},
   [4] = { 0, 0, 10},
   [5] = { 0, 0, 9},
