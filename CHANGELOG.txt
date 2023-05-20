@@ -1,5 +1,7 @@
 - v4.0.3.12
   - fix error when toggling minimap button
+  - mapping updates
+  - added more spells / characteristics
 - v4.0.3.11
   - mapping updates
   - small fixes
