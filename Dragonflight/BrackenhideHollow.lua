@@ -25,13 +25,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vicious Hyena";
     ["id"] = 185691;
     ["count"] = 3;
-    ["health"] = 691604;
+    ["health"] = 691868;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 10270;
     ["creatureType"] = "Beast";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
       ["Stun"] = true;
     };
@@ -318,13 +319,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bonebolt Hunter";
     ["id"] = 185534;
     ["count"] = 5;
-    ["health"] = 790404;
+    ["health"] = 790706;
     ["scale"] = 1;
     ["displayId"] = 105689;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Incapacitate"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -527,12 +530,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cruel Bonecrusher";
     ["id"] = 186206;
     ["count"] = 5;
-    ["health"] = 1086806;
+    ["health"] = 1087222;
     ["scale"] = 1;
     ["displayId"] = 105688;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
       ["Stun"] = true;
     };
@@ -738,13 +742,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Claw Fighter";
     ["id"] = 185508;
     ["count"] = 5;
-    ["health"] = 889205;
+    ["health"] = 889545;
     ["scale"] = 1;
     ["displayId"] = 105631;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -931,12 +938,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bracken Warscourge";
     ["id"] = 185529;
     ["count"] = 15;
-    ["health"] = 1580808;
+    ["health"] = 1581412;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 105677;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [367481] = {
       };
@@ -1268,12 +1278,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Trickclaw Mystic";
     ["id"] = 185528;
     ["count"] = 5;
-    ["health"] = 839804;
+    ["health"] = 840125;
     ["scale"] = 1;
     ["displayId"] = 105636;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Fear"] = true;
       ["Stun"] = true;
     };
@@ -1479,7 +1491,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Decay Speaker";
     ["id"] = 186191;
     ["count"] = 15;
-    ["health"] = 1185606;
+    ["health"] = 1186059;
     ["scale"] = 1;
     ["displayId"] = 105637;
     ["creatureType"] = "Humanoid";
@@ -1571,7 +1583,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gashtooth";
     ["id"] = 186124;
     ["count"] = 0;
-    ["health"] = 3551520;
+    ["health"] = 3556818;
     ["scale"] = 1.6;
     ["displayId"] = 105695;
     ["creatureType"] = "Humanoid";
@@ -1579,7 +1591,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2471;
     ["instanceID"] = 1196;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [377996] = {
+      };
       [378020] = {
       };
       [378029] = {
@@ -1616,7 +1633,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rira Hackclaw";
     ["id"] = 186122;
     ["count"] = 0;
-    ["health"] = 3551520;
+    ["health"] = 3556818;
     ["scale"] = 1.6;
     ["displayId"] = 105696;
     ["creatureType"] = "Humanoid";
@@ -1661,7 +1678,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tricktotem";
     ["id"] = 186125;
     ["count"] = 0;
-    ["health"] = 3551520;
+    ["health"] = 3556818;
     ["scale"] = 1.6;
     ["displayId"] = 105697;
     ["creatureType"] = "Humanoid";
@@ -1696,12 +1713,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Decaying Slime";
     ["id"] = 189299;
     ["count"] = 1;
-    ["health"] = 197601;
+    ["health"] = 197676;
     ["scale"] = 0.8;
     ["displayId"] = 104893;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Fear"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -1836,7 +1854,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brackenhide Shaper";
     ["id"] = 186220;
     ["count"] = 5;
-    ["health"] = 632324;
+    ["health"] = 632566;
     ["scale"] = 1;
     ["displayId"] = 105700;
     ["creatureType"] = "Humanoid";
@@ -2016,12 +2034,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Decayed Elder";
     ["id"] = 189531;
     ["count"] = 5;
-    ["health"] = 988005;
+    ["health"] = 988383;
     ["scale"] = 1;
     ["displayId"] = 107352;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
       ["Stun"] = true;
     };
@@ -2141,12 +2160,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fetid Rotsinger";
     ["id"] = 186226;
     ["count"] = 15;
-    ["health"] = 1383207;
+    ["health"] = 1383736;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 105699;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [367510] = {
       };
@@ -2264,12 +2286,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wild Lasher";
     ["id"] = 191243;
     ["count"] = 0;
-    ["health"] = 197601;
+    ["health"] = 197676;
     ["scale"] = 0.8;
     ["displayId"] = 81393;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Fear"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -2387,12 +2411,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wilted Oak";
     ["id"] = 186229;
     ["count"] = 20;
-    ["health"] = 1976010;
+    ["health"] = 1976766;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 54677;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [373936] = {
       };
@@ -2521,11 +2548,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Monstrous Decay";
     ["id"] = 186227;
     ["count"] = 15;
-    ["health"] = 1284407;
+    ["health"] = 1284898;
     ["scale"] = 1;
     ["displayId"] = 71690;
     ["creatureType"] = "Aberration";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [373872] = {
+      };
+      [374569] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 409.8;
@@ -2578,21 +2614,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1;
       };
     };
-    ["spells"] = {
-      [373872] = {
-      };
-    };
   };
   [20] = {
     ["name"] = "Infected Lasher";
     ["id"] = 189363;
     ["count"] = 1;
-    ["health"] = 138321;
+    ["health"] = 138374;
     ["scale"] = 0.8;
     ["displayId"] = 81391;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
       ["Stun"] = true;
     };
@@ -2824,7 +2857,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Treemouth";
     ["id"] = 186120;
     ["count"] = 0;
-    ["health"] = 6905734;
+    ["health"] = 6224432;
     ["scale"] = 1.6;
     ["displayId"] = 106294;
     ["creatureType"] = "Elemental";
@@ -2832,6 +2865,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2473;
     ["instanceID"] = 1196;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [376231] = {
       };
@@ -2859,6 +2895,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
       [383875] = {
       };
+      [390968] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -2872,11 +2910,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stinkbreath";
     ["id"] = 187033;
     ["count"] = 25;
-    ["health"] = 2371212;
+    ["health"] = 2372119;
     ["scale"] = 1;
     ["displayId"] = 106038;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [385185] = {
       };
@@ -2923,7 +2964,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Decaying Slime";
     ["id"] = 199916;
     ["count"] = 0;
-    ["health"] = 197601;
+    ["health"] = 197676;
     ["scale"] = 0.8;
     ["displayId"] = 104893;
     ["creatureType"] = "Elemental";
@@ -3025,11 +3066,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skulking Gutstabber";
     ["id"] = 186242;
     ["count"] = 4;
-    ["health"] = 889205;
+    ["health"] = 889545;
     ["scale"] = 1;
     ["displayId"] = 105704;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Fear"] = true;
+    };
     ["spells"] = {
       [367481] = {
       };
@@ -3116,7 +3161,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infected Bear";
     ["id"] = 189318;
     ["count"] = 0;
-    ["health"] = 1580808;
+    ["health"] = 1581412;
     ["scale"] = 1;
     ["displayId"] = 68523;
     ["creatureType"] = "Beast";
@@ -3140,6 +3185,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 105554;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
+    ["spells"] = {
+      [385824] = {
+      };
+      [385827] = {
+      };
+      [385832] = {
+      };
+      [385833] = {
+      };
+      [385834] = {
+      };
+      [397099] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 473.5;
@@ -3152,12 +3214,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rotbow Stalker";
     ["id"] = 186208;
     ["count"] = 15;
-    ["health"] = 1284407;
+    ["health"] = 1284898;
     ["scale"] = 1;
     ["stealthDetect"] = true;
     ["displayId"] = 105690;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [367510] = {
       };
@@ -3246,15 +3311,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fleshripper Vulture";
     ["id"] = 186246;
     ["count"] = 3;
-    ["health"] = 592803;
+    ["health"] = 593030;
     ["scale"] = 1;
     ["displayId"] = 10827;
     ["creatureType"] = "Beast";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
     };
     ["spells"] = {
+      [384970] = {
+      };
       [385029] = {
       };
     };
@@ -3365,11 +3433,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gutchewer Bear";
     ["id"] = 186284;
     ["count"] = 6;
-    ["health"] = 1086806;
+    ["health"] = 1087222;
     ["scale"] = 1;
     ["displayId"] = 11908;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Fear"] = true;
+      ["Imprison"] = true;
+    };
     ["spells"] = {
       [372151] = {
       };
@@ -3439,7 +3512,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gutshot";
     ["id"] = 186116;
     ["count"] = 0;
-    ["health"] = 5524587;
+    ["health"] = 5532828;
     ["scale"] = 1.6;
     ["displayId"] = 109135;
     ["creatureType"] = "Humanoid";
@@ -3447,6 +3520,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2472;
     ["instanceID"] = 1196;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [382620] = {
       };
@@ -3492,11 +3568,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rotfang Hyena";
     ["id"] = 194745;
     ["count"] = 0;
-    ["health"] = 790404;
+    ["health"] = 658922;
     ["scale"] = 1;
     ["displayId"] = 109883;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [384148] = {
       };
@@ -3505,6 +3586,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [384531] = {
       };
       [384558] = {
+      };
+      [384575] = {
       };
       [384577] = {
       };
@@ -3537,6 +3620,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 105704;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
     ["spells"] = {
       [367481] = {
       };
@@ -3592,13 +3678,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wither Biter";
     ["id"] = 187231;
     ["count"] = 1;
-    ["health"] = 296402;
+    ["health"] = 296515;
     ["scale"] = 0.8;
     ["displayId"] = 106070;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
+      ["Sap"] = true;
       ["Stun"] = true;
     };
     ["spells"] = {
@@ -3744,13 +3832,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Filth Caller";
     ["id"] = 185656;
     ["count"] = 5;
-    ["health"] = 889205;
+    ["health"] = 889545;
     ["scale"] = 1;
     ["displayId"] = 108447;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Silence"] = true;
+      ["Fear"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [382474] = {
@@ -3821,7 +3913,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Witherling";
     ["id"] = 187238;
     ["count"] = 1;
-    ["health"] = 197601;
+    ["health"] = 197676;
     ["scale"] = 0.8;
     ["displayId"] = 106071;
     ["creatureType"] = "Humanoid";
@@ -3868,133 +3960,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [36] = {
-    ["name"] = "Vile Rothexer";
-    ["id"] = 187224;
-    ["count"] = 15;
-    ["health"] = 1383207;
-    ["scale"] = 1;
-    ["displayId"] = 106068;
-    ["creatureType"] = "Humanoid";
-    ["level"] = 70;
-    ["spells"] = {
-      [382802] = {
-      };
-      [383087] = {
-      };
-    };
-    ["clones"] = {
-      [2] = {
-        ["x"] = 554.6;
-        ["y"] = -230.2;
-        ["sublevel"] = 1;
-      };
-      [3] = {
-        ["x"] = 561.3;
-        ["y"] = -233.5;
-        ["sublevel"] = 1;
-      };
-      [4] = {
-        ["x"] = 554.1;
-        ["y"] = -237.1;
-        ["sublevel"] = 1;
-      };
-      [5] = {
-        ["x"] = 560.9;
-        ["y"] = -241.2;
-        ["sublevel"] = 1;
-      };
-      [6] = {
-        ["x"] = 620.1;
-        ["y"] = -273.3;
-        ["sublevel"] = 1;
-        ["patrol"] = {
-          [1] = {
-            ["x"] = 607.6;
-            ["y"] = -269.6;
-          };
-          [2] = {
-            ["x"] = 624.4;
-            ["y"] = -272.9;
-          };
-          [3] = {
-            ["x"] = 634.5;
-            ["y"] = -271.6;
-          };
-          [4] = {
-            ["x"] = 634.7;
-            ["y"] = -273.4;
-          };
-          [5] = {
-            ["x"] = 624.2;
-            ["y"] = -275;
-          };
-          [6] = {
-            ["x"] = 607.1;
-            ["y"] = -271.6;
-          };
-          [7] = {
-            ["x"] = 607.6;
-            ["y"] = -269.6;
-          };
-        };
-      };
-    };
-  };
-  [37] = {
-    ["name"] = "Disease Slasher";
-    ["id"] = 187315;
-    ["count"] = 5;
-    ["health"] = 889205;
-    ["scale"] = 1;
-    ["displayId"] = 106099;
-    ["creatureType"] = "Humanoid";
-    ["level"] = 70;
-    ["clones"] = {
-      [6] = {
-        ["x"] = 546;
-        ["y"] = -418.2;
-        ["g"] = 84;
-        ["sublevel"] = 1;
-      };
-      [7] = {
-        ["x"] = 554.8;
-        ["y"] = -424.2;
-        ["g"] = 84;
-        ["sublevel"] = 1;
-      };
-      [8] = {
-        ["x"] = 607.2;
-        ["y"] = -356.2;
-        ["g"] = 87;
-        ["sublevel"] = 1;
-      };
-      [9] = {
-        ["x"] = 599.2;
-        ["y"] = -354.7;
-        ["g"] = 87;
-        ["sublevel"] = 1;
-      };
-      [10] = {
-        ["x"] = 635.4;
-        ["y"] = -293.7;
-        ["g"] = 88;
-        ["sublevel"] = 1;
-      };
-      [11] = {
-        ["x"] = 618.33169555216;
-        ["y"] = -236.61314460191;
-        ["g"] = 91;
-        ["sublevel"] = 1;
-      };
-      [12] = {
-        ["x"] = 625.82087235229;
-        ["y"] = -243.79896029454;
-        ["g"] = 91;
-        ["sublevel"] = 1;
-      };
-    };
-  };
-  [38] = {
     ["name"] = "Witherling";
     ["id"] = 194273;
     ["count"] = 0;
@@ -4070,7 +4035,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [39] = {
+  [37] = {
     ["name"] = "Vile Rothexer";
     ["id"] = 194241;
     ["count"] = 15;
@@ -4097,7 +4062,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [40] = {
+  [38] = {
     ["name"] = "Bloodthirsty Cub";
     ["id"] = 194256;
     ["count"] = 0;
@@ -4114,15 +4079,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [41] = {
+  [39] = {
     ["name"] = "Wither Slasher";
     ["id"] = 194469;
     ["count"] = 0;
-    ["health"] = 296402;
+    ["health"] = 296515;
     ["scale"] = 0.8;
     ["displayId"] = 108586;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
+    ["spells"] = {
+      [367481] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 632.1;
@@ -4144,15 +4117,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [42] = {
+  [40] = {
     ["name"] = "Vile Rothexer";
     ["id"] = 194487;
     ["count"] = 15;
-    ["health"] = 1383207;
+    ["health"] = 1383736;
     ["scale"] = 1;
     ["displayId"] = 106068;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["spells"] = {
+      [382802] = {
+      };
+      [382883] = {
+      };
+      [382891] = {
+      };
+      [383087] = {
+      };
+    };
     ["clones"] = {
       [1] = {
         ["x"] = 635.2;
@@ -4162,11 +4145,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       };
     };
   };
-  [43] = {
+  [41] = {
     ["name"] = "Decatriarch Wratheye";
     ["id"] = 186121;
     ["count"] = 0;
-    ["health"] = 7892268;
+    ["health"] = 7904040;
     ["scale"] = 1.6;
     ["displayId"] = 106069;
     ["creatureType"] = "Humanoid";
@@ -4174,7 +4157,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 2474;
     ["instanceID"] = 1196;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
+      [373896] = {
+      };
       [373912] = {
       };
       [373915] = {
@@ -4203,4 +4191,3 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
 };
-

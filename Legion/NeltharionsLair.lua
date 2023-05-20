@@ -23,6 +23,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 34068;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
       [183401] = {
       };
@@ -171,6 +176,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65795;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
       [193941] = {
       };
@@ -200,7 +210,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65050;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+    };
     ["spells"] = {
+      [193639] = {
+      };
+      [202181] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -272,7 +290,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Incapacitate"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [183430] = {
@@ -320,6 +340,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64776;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
       [385005] = {
       };
@@ -354,6 +378,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64606;
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
     ["spells"] = {
       [226287] = {
       };
@@ -376,6 +405,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65783;
     ["creatureType"] = "Humanoid";
     ["level"] = 71;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [193505] = {
       };
@@ -451,6 +483,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["spells"] = {
+      [183526] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -475,7 +509,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
       ["Fear"] = true;
+      ["Stun"] = true;
     };
     ["spells"] = {
       [183088] = {
@@ -612,8 +648,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
       ["Fear"] = true;
+      ["Disorient"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [183633] = {
@@ -707,6 +747,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["spells"] = {
+      [202198] = {
+      };
+      [226347] = {
+      };
     };
     ["clones"] = {
       [1] = {
@@ -829,9 +873,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Silence"] = true;
       ["Fear"] = true;
       ["Imprison"] = true;
       ["Stun"] = true;
+      ["Slow"] = true;
     };
     ["spells"] = {
       [186269] = {
@@ -899,8 +945,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 33425;
     ["creatureType"] = "Elemental";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+    };
     ["spells"] = {
       [202075] = {
+      };
+      [202089] = {
       };
     };
     ["clones"] = {
@@ -974,6 +1025,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 66603;
     ["creatureType"] = "Beast";
     ["level"] = 70;
+    ["characteristics"] = {
+      ["Fear"] = true;
+    };
     ["spells"] = {
     };
     ["clones"] = {
@@ -1084,6 +1138,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid";
     ["level"] = 70;
     ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Silence"] = true;
       ["Fear"] = true;
       ["Stun"] = true;
     };
@@ -1152,13 +1208,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rokmora";
     ["id"] = 91003;
     ["count"] = 0;
-    ["health"] = 6905340;
+    ["health"] = 6916035;
     ["scale"] = 1;
     ["displayId"] = 62386;
     ["creatureType"] = "Humanoid";
     ["level"] = 72;
     ["isBoss"] = true;
     ["encounterID"] = 1662;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [187714] = {
       };
@@ -1179,13 +1238,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ularogg Cragshaper";
     ["id"] = 91004;
     ["count"] = 0;
-    ["health"] = 6214806;
+    ["health"] = 6224432;
     ["scale"] = 1;
     ["displayId"] = 62390;
     ["creatureType"] = "Humanoid";
     ["level"] = 72;
     ["isBoss"] = true;
     ["encounterID"] = 1665;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [193273] = {
       };
@@ -1214,7 +1276,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dargrul";
     ["id"] = 91007;
     ["count"] = 0;
-    ["health"] = 7891817;
+    ["health"] = 7904040;
     ["scale"] = 1;
     ["displayId"] = 62392;
     ["creatureType"] = "Humanoid";
@@ -1222,6 +1284,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true;
     ["encounterID"] = 1687;
     ["spells"] = {
+      [200338] = {
+      };
       [200404] = {
       };
       [200418] = {
@@ -1255,13 +1319,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Naraxas";
     ["id"] = 91005;
     ["count"] = 0;
-    ["health"] = 6905340;
+    ["health"] = 6916035;
     ["scale"] = 1;
     ["displayId"] = 62391;
     ["creatureType"] = "Beast";
     ["level"] = 72;
     ["isBoss"] = true;
     ["encounterID"] = 0;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+    };
     ["spells"] = {
       [188493] = {
       };
@@ -1272,6 +1339,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [199178] = {
       };
       [199246] = {
+      };
+      [199629] = {
       };
       [199705] = {
       };
