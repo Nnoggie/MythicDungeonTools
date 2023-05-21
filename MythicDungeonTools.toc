@@ -10,7 +10,7 @@
 ## Notes-frFR: Outil pour planifier et optimiser vos parcours de donjons Mythique+
 ## Notes-itIT: Strumento che permette di pianificare e ottimizzare le spedizioni Mitica+
 ## Notes-ptBR: Tool for planning and optimizing Mythic+ dungeon runs
-## Notes-ruRU: Инструмент для планирования и оптимизации прохождения подземелий мифик+
+## Notes-ruRU: Инструмент для планирования и оптимизации прохождения подземелий М+
 ## Notes-koKR: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-zhCN: 规划和优化大秘境地下城运行的工具
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
