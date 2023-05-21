@@ -2307,10 +2307,15 @@ function MDT:EnsureDBTables()
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[1] = {}
   end
 
+  --ensure the pulls table is not fully corrupted
+  if not preset.value.pulls or (type(preset.value.pulls) ~= "table") then
+    preset.value.pulls = {}
+  else
   --detect gaps in pull list and delete invalid pulls
-  for k, v in pairs(preset.value.pulls) do
-    if k == 0 or k > #preset.value.pulls then
-      preset.value.pulls[k] = nil
+    for k, v in pairs(preset.value.pulls) do
+      if k == 0 or k > #preset.value.pulls then
+        preset.value.pulls[k] = nil
+      end
     end
   end
 
