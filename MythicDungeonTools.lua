@@ -2566,6 +2566,16 @@ MDT.zoneIdToDungeonIdx = {
   [608] = 40,  --grimrail depot
   [609] = 40,  --grimrail depot
   [595] = 41,  --iron docks
+  [2082] = 49,  --halls of infusion
+  [2083] = 49,  --halls of infusion
+  [2096] = 48,  --brackenhide hollow
+  [2106] = 48,  --brackenhide hollow
+  [2071] = 51,  --uldaman
+  [2072] = 51,  --uldaman
+  [2080] = 50,  --neltharus
+  [2081] = 50,  --neltharus
+  [731] = 8,  --neltharion's lair
+  [325] = 77,  --vortex pinnacle
   --https://wowpedia.fandom.com/wiki/UiMapID
 }
 local lastUpdatedDungeonIdx
