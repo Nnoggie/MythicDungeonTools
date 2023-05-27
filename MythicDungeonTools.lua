@@ -2431,7 +2431,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if not framesInitialized then coroutine.yield() end
   MDT:DungeonEnemies_UpdateInspiring()
   if not framesInitialized then coroutine.yield() end
-
+  MDT:POI_UpdateAll()
   if not ignoreReloadPullButtons then
     MDT:ReloadPullButtons()
   end
