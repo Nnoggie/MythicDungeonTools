@@ -523,7 +523,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
   };
   [7] = {
-    ["name"] = "Eric "The Swift"";
+    ["name"] = "Eric \"The Swift\"";
     ["id"] = 184582;
     ["count"] = 0;
     ["health"] = 2964015;
