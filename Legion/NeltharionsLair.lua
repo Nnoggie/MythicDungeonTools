@@ -13,6 +13,32 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 220, teeming = 264, teemingEnabled = true }
 
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "DeathReleasePinTemplate";
+      ["type"] = "graveyard";
+      ["x"] = 750.96928284953;
+      ["y"] = -307.95645611601;
+      ["graveyardDescription"] = "";
+    };
+    [2] = {
+      ["template"] = "DeathReleasePinTemplate";
+      ["type"] = "graveyard";
+      ["x"] = 503.48942149286;
+      ["y"] = -483.62380076794;
+      ["graveyardDescription"] = "";
+    };
+    [3] = {
+      ["template"] = "DeathReleasePinTemplate";
+      ["type"] = "graveyard";
+      ["x"] = 371.3512388419;
+      ["y"] = -254.53547263744;
+      ["graveyardDescription"] = "";
+    };
+  };
+};
+
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Vileshard Crawler";

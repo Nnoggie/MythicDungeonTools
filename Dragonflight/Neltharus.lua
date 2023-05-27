@@ -32,40 +32,47 @@ MDT.mapPOIs[dungeonIndex] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 234.2;
+      ["y"] = -278;
       ["target"] = 2;
       ["direction"] = 1;
       ["connectionIndex"] = 1;
-      ["y"] = -278;
-      ["x"] = 234.2;
     };
     [2] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 379.6;
+      ["y"] = -277.5;
       ["target"] = 2;
       ["direction"] = 1;
       ["connectionIndex"] = 2;
-      ["y"] = -277.5;
-      ["x"] = 379.6;
+    };
+    [3] = {
+      ["template"] = "DeathReleasePinTemplate";
+      ["type"] = "graveyard";
+      ["x"] = 442.23127606642;
+      ["y"] = -144.47641811804;
+      ["graveyardDescription"] = "";
     };
   };
   [2] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 303.4;
+      ["y"] = -187.4;
       ["target"] = 1;
       ["direction"] = -1;
       ["connectionIndex"] = 1;
-      ["y"] = -187.4;
-      ["x"] = 303.4;
     };
     [2] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 481;
+      ["y"] = -207.8;
       ["target"] = 1;
       ["direction"] = -1;
       ["connectionIndex"] = 2;
-      ["y"] = -207.8;
-      ["x"] = 481;
     };
   };
 };

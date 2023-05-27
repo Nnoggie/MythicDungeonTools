@@ -31,22 +31,65 @@ MDT.mapPOIs[dungeonIndex] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 520.42017461898;
+      ["y"] = -453.54602154369;
       ["target"] = 2;
       ["direction"] = -2;
       ["connectionIndex"] = 1;
-      ["y"] = -453.5;
-      ["x"] = 523;
+    };
+    [2] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 423.57364285533;
+      ["y"] = -416.08008406292;
+      ["target"] = 2;
+      ["direction"] = -1;
+      ["connectionIndex"] = 2;
+    };
+    [3] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 241.31749415182;
+      ["y"] = -415.57223899948;
+      ["target"] = 2;
+      ["direction"] = -1;
+      ["connectionIndex"] = 3;
+    };
+    [4] = {
+      ["template"] = "DeathReleasePinTemplate";
+      ["type"] = "graveyard";
+      ["x"] = 89.031220888126;
+      ["y"] = -197.63354524897;
+      ["graveyardDescription"] = "";
     };
   };
   [2] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
+      ["x"] = 496.38083075806;
+      ["y"] = -437.36198118001;
       ["target"] = 1;
       ["direction"] = 2;
       ["connectionIndex"] = 1;
-      ["y"] = -439.2;
-      ["x"] = 491.6;
+    };
+    [2] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 424.0142420258;
+      ["y"] = -415.48603004197;
+      ["target"] = 1;
+      ["direction"] = 1;
+      ["connectionIndex"] = 2;
+    };
+    [3] = {
+      ["template"] = "MapLinkPinTemplate";
+      ["type"] = "mapLink";
+      ["x"] = 293.85983469091;
+      ["y"] = -417.51659374087;
+      ["target"] = 1;
+      ["direction"] = 1;
+      ["connectionIndex"] = 3;
     };
   };
 };
