@@ -4,14 +4,13 @@ local L = MDT.L
 local dungeonIndex = 77
 MDT.dungeonList[dungeonIndex] = L["The Vortex Pinnacle"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 70.370707774155;
+      verticalPan = 73.878552826966;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {

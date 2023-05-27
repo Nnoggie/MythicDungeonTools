@@ -3,14 +3,18 @@ local L = MDT.L
 local dungeonIndex = 49
 MDT.dungeonList[dungeonIndex] = L["Halls of Infusion"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 88.385347676574;
+      verticalPan = 67.058580683518;
+    };
+    [2] = {
+      zoomScale = 1.5999999046326;
+      horizontalPan = 97.178052776723;
+      verticalPan = 208.125;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
@@ -58,8 +62,8 @@ MDT.mapPOIs[dungeonIndex] = {
     [4] = {
       ["template"] = "DeathReleasePinTemplate";
       ["type"] = "graveyard";
-      ["x"] = 89.031220888126;
-      ["y"] = -197.63354524897;
+      ["x"] = 118.29131238343;
+      ["y"] = -197.73806702114;
       ["graveyardDescription"] = "";
     };
   };

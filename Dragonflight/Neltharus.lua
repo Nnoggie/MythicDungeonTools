@@ -4,14 +4,18 @@ local L = MDT.L
 local dungeonIndex = 50
 MDT.dungeonList[dungeonIndex] = L["Neltharus"]
 MDT.mapInfo[dungeonIndex] = {
-  --  viewportPositionOverrides =
-  --  {
-  --    [1] = {
-  --      zoomScale = 1.2999999523163;
-  --      horizontalPan = 102.41712541524;
-  --      verticalPan = 87.49594729527;
-  --    };
-  --  }
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 114.97134682804;
+      verticalPan = 79.372355302235;
+    };
+    [2] = {
+      zoomScale = 1.2999999523163;
+      horizontalPan = 9.6320178171683;
+      verticalPan = 94.339982247728;
+    };
+  }
 };
 
 MDT.dungeonMaps[dungeonIndex] = {
