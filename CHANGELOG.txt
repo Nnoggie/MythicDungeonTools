@@ -1,3 +1,6 @@
+- v4.0.3.16
+  - fixed an issue where map links and points of interests would not be shown
+  - cosmetic mapping updates
 - v4.0.3.15
   - mapping updates
   - affix week update
