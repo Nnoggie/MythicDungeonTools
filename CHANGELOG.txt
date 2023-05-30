@@ -1,3 +1,5 @@
+- v4.0.3.17
+  - fixed an issue regarding not being able to link Neltharion's Lair routes on Portuguese client
 - v4.0.3.16
   - fixed an issue where map links and points of interests would not be shown
   - cosmetic mapping updates
