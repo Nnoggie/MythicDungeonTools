@@ -359,7 +359,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   };
   [5] = {
     ["name"] = "Understone Drudge";
-    ["id"] = 105636;
+    ["id"] = 92350;
     ["count"] = 4;
     ["health"] = 988005;
     ["scale"] = 1;
@@ -376,20 +376,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     };
     ["clones"] = {
       [1] = {
-        ["x"] = 601.4470220737;
-        ["y"] = -234.31126503658;
-        ["g"] = 4;
-        ["sublevel"] = 1;
-      };
-      [2] = {
         ["x"] = 612.35614109241;
         ["y"] = -250.22037255515;
-        ["g"] = 4;
-        ["sublevel"] = 1;
-      };
-      [3] = {
-        ["x"] = 602.81067658127;
-        ["y"] = -252.94768157029;
         ["g"] = 4;
         ["sublevel"] = 1;
       };
@@ -1442,6 +1430,58 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 167.9018661998;
         ["y"] = -330.99649079515;
         ["g"] = 31;
+        ["sublevel"] = 1;
+      };
+    };
+  };
+  [26] = {
+    ["name"] = "Understone Drudge";
+    ["id"] = 105636;
+    ["count"] = 4;
+    ["health"] = 988005;
+    ["scale"] = 1;
+    ["displayId"] = 64776;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [385005] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 602.81067658127;
+        ["y"] = -252.94768157029;
+        ["g"] = 4;
+        ["sublevel"] = 1;
+      };
+    };
+  };
+  [27] = {
+    ["name"] = "Understone Drudge";
+    ["id"] = 105720;
+    ["count"] = 4;
+    ["health"] = 988005;
+    ["scale"] = 1;
+    ["displayId"] = 64776;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["characteristics"] = {
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+      [385005] = {
+      };
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 601.4470220737;
+        ["y"] = -234.31126503658;
+        ["g"] = 4;
         ["sublevel"] = 1;
       };
     };
