@@ -1,3 +1,6 @@
+- v4.0.4.0
+  - internal error handling
+  - mapping updates
 - v4.0.3.18
   - affix week update
 - v4.0.3.17
