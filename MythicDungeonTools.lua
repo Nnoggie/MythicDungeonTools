@@ -4806,14 +4806,13 @@ function initFrames()
   MDT:UpdateToDungeon(db.currentDungeonIdx)
   coroutine.yield()
 
-  --Maximize if needed
-  if db.maximized then MDT:Maximize() end
-
   if MDT:IsFrameOffScreen() then
     MDT:ResetMainFramePos()
   end
 
   framesInitialized = true
+  --Maximize if needed
+  if db.maximized then MDT:Maximize() end
   initSpinner:Hide()
   initSpinner.Anim:Stop()
 end
