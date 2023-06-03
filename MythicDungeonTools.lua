@@ -685,7 +685,6 @@ function MDT:MakeTopBottomTextures(frame)
   frame:SetMovable(true)
   if frame.topPanel == nil then
     frame.topPanel = CreateFrame("Frame", "MDTTopPanel", frame)
-    MDT:E()
     frame.topPanelTex = frame.topPanel:CreateTexture(nil, "BACKGROUND", nil, 0)
     frame.topPanelTex:SetAllPoints()
     frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
