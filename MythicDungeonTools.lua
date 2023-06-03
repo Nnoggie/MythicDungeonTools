@@ -402,6 +402,7 @@ function MDT:ShowInterfaceInternal(force)
     self.ShowConflictFrame()
     return
   end
+  MDT:DisplayErrors()
   if not framesInitialized then initFrames() end
   if not framesInitialized then return end
   if self.main_frame:IsShown() and not force then
@@ -423,8 +424,12 @@ function MDT:ShowInterfaceInternal(force)
 end
 
 function MDT:HideInterface()
-  self.main_frame:Hide()
-  self.main_frame.HelpButton:Hide()
+  if self.main_frame then
+    self.main_frame:Hide()
+    if self.main_frame.HelpButton then
+      self.main_frame.HelpButton:Hide()
+    end
+  end
 end
 
 function MDT:ToggleDataCollection()
@@ -4566,6 +4571,7 @@ function initFrames()
       module:OnInitialize()
     end
   end
+  MDT:RegisterErrorHandledFunctions()
 
   local initSpinner = CreateFrame("Button", "MDTInitSpinner", UIParent,"LoadingSpinnerTemplate")
   initSpinner.BackgroundFrame.Background:SetVertexColor(0,1,0,1)
@@ -4574,6 +4580,7 @@ function initFrames()
   initSpinner:SetSize(60, 60)
   initSpinner:Show()
   initSpinner.Anim:Play()
+  MDT.initSpinner = initSpinner
 
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
   main_frame:Hide()

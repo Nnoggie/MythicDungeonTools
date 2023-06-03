@@ -1,7 +1,12 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
-
+L["errorLabel1"] = "MDT has encountered errors."
+L["errorLabel2"] = "Please visist either GitHub or Discord and report the error message below."
+L["errorLabel3"] = "Press CTRL + C to copy!"
+L["Copy error"] = "Copy error"
+L["Error Message:"] = "Error Message:"
+L["MDT Error"] = "MDT Error"
 L["Naraxas"] = "Naraxas"
 L["Vicious Hyena"] = "Vicious Hyena"
 L["Bonebolt Hunter"] = "Bonebolt Hunter"
