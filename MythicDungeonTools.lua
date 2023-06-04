@@ -2311,15 +2311,6 @@ function MDT:EnsureDBTables()
     db.currentPreset[db.currentDungeonIdx] = 1
     preset = MDT:GetCurrentPreset()
   end
-  if preset.value == 0 then --<New Preset> as selected preset
-    db.presets[db.currentDungeonIdx] = {
-      [1] = { text = L["Default"], value = {}, objects = {},
-        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
-      [2] = { text = L["<New Preset>"], value = 0 },
-    }
-    db.currentPreset[db.currentDungeonIdx] = 1
-    preset = MDT:GetCurrentPreset()
-  end
   if preset.week and (preset.week < 1 or preset.week > 10) then preset.week = nil end
   preset.week = preset.week or MDT:GetCurrentAffixWeek()
   db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
