@@ -22,12 +22,14 @@ function MDT:DisplayErrors()
       editBox:HighlightText(0, slen(text))
       editBox:SetFocus()
       copyButton:SetDisabled(true)
-      MDT.errorFrame.copyHelperLabel.label:Show()
+      MDT.copyHelper:ClearAllPoints()
+      MDT.copyHelper:SetPoint("CENTER", MDT.errorFrame.frame, "CENTER")
+      MDT.copyHelper:Show()
   end
 
   local function stopCopyAction(copyButton)
     copyButton:SetDisabled(false)
-    MDT.errorFrame.copyHelperLabel.label:Hide()
+    if MDT.copyHelper then MDT.copyHelper:Hide() end
   end
 
   local errorBoxText = ""
@@ -115,13 +117,6 @@ function MDT:DisplayErrors()
 
     errorFrame:AddChild(errorFrame.errorBox)
     errorFrame:AddChild(errorFrame.errorBoxCopyButton)
-
-    errorFrame.copyHelperLabel = AceGUI:Create("Label")
-    errorFrame.copyHelperLabel:SetFontObject("GameFontNormalLarge")
-    errorFrame.copyHelperLabel.label:SetTextColor(1,1,0)
-    errorFrame.copyHelperLabel:SetText(L["errorLabel3"])
-    errorFrame.copyHelperLabel.label:Hide()
-    errorFrame:AddChild(errorFrame.copyHelperLabel)
   end
 
   for _, error in ipairs(caughtErrors) do
