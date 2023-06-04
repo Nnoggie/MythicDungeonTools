@@ -197,20 +197,6 @@ do
       end
       --fix db corruption
       do
-        -- this was responsible for overwriting the default preset on load
-        -- was this needed for anything?
-
-        -- for _, presets in pairs(db.presets) do
-        --   for presetIdx, preset in pairs(presets) do
-        --     if presetIdx == 1 then
-        --       if preset.text ~= "Default" then
-        --         preset.text = "Default"
-        --         preset.value = {}
-        --       end
-        --     end
-        --   end
-        -- end
-
         for k, v in pairs(db.currentPreset) do
           if v <= 0 then db.currentPreset[k] = 1 end
         end
@@ -223,7 +209,7 @@ do
   end
 
   local last = 0
-  function MDT.GROUP_ROSTER_UPDATE(self, addon)
+  function MDT.GROUP_ROSTER_UPDATE()
     --check not more than once per second (blizzard event spam)
     local now = GetTime()
     if last < now - 1 then
@@ -248,7 +234,7 @@ do
     end
   end
 
-  function MDT.PLAYER_ENTERING_WORLD(self, addon)
+  function MDT.PLAYER_ENTERING_WORLD()
     --initialize Blizzard_ChallengesUI
     C_Timer.After(1, function()
       LoadAddOn("Blizzard_ChallengesUI")
