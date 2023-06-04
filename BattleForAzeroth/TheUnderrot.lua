@@ -1495,6 +1495,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
       ["Silence"] = true;
+      ["Mind Control"] = true;
       ["Root"] = true;
       ["Fear"] = true;
       ["Banish"] = true;
