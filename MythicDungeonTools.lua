@@ -2311,6 +2311,17 @@ function MDT:EnsureDBTables()
     db.currentPreset[db.currentDungeonIdx] = 1
     preset = MDT:GetCurrentPreset()
   end
+  if preset.objects then
+    local isValid = true
+    for _,obj in pairs(preset.objects) do
+      if type(obj) ~= "table" then
+        isValid = false
+      end
+    end
+    if not isValid then
+      preset.objects = nil
+    end
+  end
   if preset.week and (preset.week < 1 or preset.week > 10) then preset.week = nil end
   preset.week = preset.week or MDT:GetCurrentAffixWeek()
   db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
