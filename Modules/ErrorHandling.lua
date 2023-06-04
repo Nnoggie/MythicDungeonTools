@@ -204,6 +204,7 @@ function MDT:RegisterErrorHandledFunctions()
     ["Async"] = true,
     ["RegisterErrorHandledFunctions"] = true,
     ["OnError"] = true,
+    ["DeepCopy"] = true,
   }
   for funcName,func in pairs(MDT) do
     if type(func) == "function" and not blacklisted[funcName] then
