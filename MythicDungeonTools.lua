@@ -2797,6 +2797,20 @@ function MDT:MakePresetImportFrame(frame)
   end)
   frame.presetImportFrame:AddChild(importButton)
   frame.presetImportFrame:AddChild(frame.presetImportLabel)
+  if db.devMode then
+    local inspectButton = AceGUI:Create("Button")
+    inspectButton:SetText("Inspect")
+    inspectButton:SetWidth(100)
+    inspectButton:SetCallback("OnClick", function()
+      local newPreset = MDT:StringToTable(importString, true)
+      if not ViragDevTool_AddData then
+        print("MDT: Install Virag Dev Tool to inspect route")
+      else
+        ViragDevTool_AddData(newPreset)
+      end
+    end)
+    frame.presetImportFrame:AddChild(inspectButton)
+  end
   frame.presetImportFrame:Hide()
 end
 
