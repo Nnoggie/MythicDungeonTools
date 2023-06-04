@@ -2234,17 +2234,23 @@ end
 function MDT:OpenNewPresetDialog()
   MDT:HideAllDialogs()
   local presetList = {}
+  local highestIndex = 1
   local countPresets = 0
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
     if v.text ~= L["<New Preset>"] then
       table.insert(presetList, k, v.text)
+      local indexNumber = tonumber(v.text:match("^"..L["defaultPresetName"].."%s*(%d+)$"))
+      if indexNumber and indexNumber > highestIndex then
+        highestIndex = indexNumber
+      end
       countPresets = countPresets + 1
     end
   end
+  local newIndex = math.max(highestIndex,countPresets-1)
   table.insert(presetList, 1, L["Empty"])
   MDT.main_frame.PresetCreationDropDown:SetList(presetList)
   MDT.main_frame.PresetCreationDropDown:SetValue(1)
-  MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"] .. " " .. countPresets + 1)
+  MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"] .. " " .. newIndex + 1)
   MDT.main_frame.presetCreationFrame:ClearAllPoints()
   MDT.main_frame.presetCreationFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
   MDT.main_frame.presetCreationFrame:SetStatusText("")
