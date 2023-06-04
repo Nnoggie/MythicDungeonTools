@@ -124,8 +124,8 @@ function MDT:DisplayErrors()
     errorFrame:AddChild(errorFrame.copyHelperLabel)
   end
 
-  for _, errorText in ipairs(caughtErrors) do
-    errorBoxText = errorBoxText..errorText.."\n"
+  for _, error in ipairs(caughtErrors) do
+    errorBoxText = errorBoxText..error.message.."\n"
   end
   --add diagnostics
   local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
@@ -144,23 +144,30 @@ function MDT:DisplayErrors()
   }
   local region = regions[regionId]
   errorBoxText = errorBoxText .."\n"..dateString.."\nMDT: "..addonVersion.."\nClient: "..gameVersion.." "..locale.."\nCharacter: "..name.."-"..realm.." ("..region..")".."\n\nRoute:\n"..presetExport
-  MDT.errorFrame.errorBox:SetText(errorBoxText)
+  errorBoxText = errorBoxText .."\n\nStacktraces\n\n"
+  for _, error in ipairs(caughtErrors) do
+    errorBoxText = errorBoxText..error.stackTrace.."\n"
+  end
 
+  MDT.errorFrame.errorBox:SetText(errorBoxText)
   MDT.errorFrame:Show()
 end
 
 local numError = 0
 local currentFunc = ""
+local addTrace = false
 local function onError(s)
   numError = numError + 1
   local e = currentFunc..": "..s
   -- return early on duplicate errors
-  for _,errorText in pairs(caughtErrors) do
-    if errorText == e then
+  for _,error in pairs(caughtErrors) do
+    if error.message == e then
+      addTrace = false
       return false
     end
   end
-  tinsert(caughtErrors,e)
+  tinsert(caughtErrors,{message = e})
+  addTrace = true
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer  = C_Timer.NewTimer(0.5, function()
     MDT:DisplayErrors()
@@ -193,7 +200,13 @@ function MDT:RegisterErrorHandledFunctions()
     if type(func) == "function" and not blacklisted[funcName] then
       MDT[funcName] = function(...)
         currentFunc = funcName
-        return select(2,xpcall(func, onError , ...))
+        local results = {xpcall(func, onError , ...)}
+        local ok = select(1,unpack(results))
+        if not ok and addTrace then
+          --add stackTrace to the latest error
+          caughtErrors[#caughtErrors].stackTrace = currentFunc.. ":\n"..debugstack()
+        end
+        return select(2,unpack(results))
       end
     end
   end
