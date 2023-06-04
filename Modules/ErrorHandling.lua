@@ -156,9 +156,10 @@ end
 local numError = 0
 local currentFunc = ""
 local addTrace = false
-local function onError(s)
+local function onError(msg, stackTrace, name)
   numError = numError + 1
-  local e = currentFunc..": "..s
+  local funcName = name or currentFunc
+  local e = funcName..": "..msg
   -- return early on duplicate errors
   for _,error in pairs(caughtErrors) do
     if error.message == e then
@@ -166,7 +167,8 @@ local function onError(s)
       return false
     end
   end
-  tinsert(caughtErrors,{message = e})
+  local stackTraceValue = stackTrace and name.. ":\n"..stackTrace
+  tinsert(caughtErrors,{message = e, stackTrace = stackTraceValue})
   addTrace = true
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer  = C_Timer.NewTimer(0.5, function()
@@ -177,6 +179,11 @@ local function onError(s)
     MDT:DisplayErrors()
   end
   return false
+end
+
+--accessible function for errors in coroutines
+function MDT:OnError(msg,stackTrace,name)
+  onError(msg, stackTrace, name)
 end
 
 function MDT:RegisterErrorHandledFunctions()
@@ -195,6 +202,8 @@ function MDT:RegisterErrorHandledFunctions()
     ["DrawAllHulls"] = true,
     ["ExportString"] = true,
     ["Async"] = true,
+    ["RegisterErrorHandledFunctions"] = true,
+    ["OnError"] = true,
   }
   for funcName,func in pairs(MDT) do
     if type(func) == "function" and not blacklisted[funcName] then

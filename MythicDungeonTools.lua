@@ -4553,7 +4553,7 @@ function MDT:CreateCoroutineHandler()
         if coroutine.status(func) ~= "dead" then
           local ok, msg = coroutine.resume(func)
           if not ok then
-            geterrorhandler()(msg .. '\n' .. debugstack(func))
+            MDT:OnError(msg,debugstack(func),name)
           end
         else
           coHandler:RemoveAction(name);
