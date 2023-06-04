@@ -214,6 +214,7 @@ function MDT:RegisterErrorHandledFunctions()
         if not ok and addTrace then
           --add stackTrace to the latest error
           caughtErrors[#caughtErrors].stackTrace = currentFunc.. ":\n"..debugstack()
+          return
         end
         return select(2,unpack(results))
       end
