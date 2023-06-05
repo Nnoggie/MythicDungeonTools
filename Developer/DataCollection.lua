@@ -20,7 +20,6 @@ local DC = MDT.DataCollection
 function DC:Init()
   print("MDT: Spell+Characteristics Tracking Init")
   db = MDT:GetDB()
-  vdt(db)
   db.dataCollection = db.dataCollection or {}
   db.dataCollectionCC = db.dataCollectionCC or {}
   db.dataCollectionGUID = db.dataCollectionGUID or {}
