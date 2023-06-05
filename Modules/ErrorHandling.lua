@@ -207,9 +207,11 @@ function MDT:RegisterErrorHandledFunctions()
         currentFunc = funcName
         local results = {xpcall(func, onError , ...)}
         local ok = select(1,unpack(results))
-        if not ok and addTrace then
-          --add stackTrace to the latest error
-          caughtErrors[#caughtErrors].stackTrace = currentFunc.. ":\n"..debugstack()
+        if not ok then
+          if addTrace then
+            --add stackTrace to the latest error
+            caughtErrors[#caughtErrors].stackTrace = currentFunc.. ":\n"..debugstack()
+          end
           return
         end
         return select(2,unpack(results))
