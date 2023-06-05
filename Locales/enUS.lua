@@ -1,6 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["copiedToClipboard"] = "copied!"
+L["Select all"] = "Select all"
 L["errorLabel1"] = "MDT has encountered errors."
 L["errorLabel2"] = "Please visist either GitHub or Discord and report the error message below."
 L["errorLabel3"] = "Press CTRL + C to copy!"

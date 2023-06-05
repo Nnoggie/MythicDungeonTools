@@ -22,14 +22,12 @@ function MDT:DisplayErrors()
       editBox:HighlightText(0, slen(text))
       editBox:SetFocus()
       copyButton:SetDisabled(true)
-      MDT.copyHelper:ClearAllPoints()
-      MDT.copyHelper:SetPoint("CENTER", MDT.errorFrame.frame, "CENTER")
-      MDT.copyHelper:Show()
+      MDT.copyHelper:SmartShow(MDT.errorFrame.frame,0,0)
   end
 
   local function stopCopyAction(copyButton)
     copyButton:SetDisabled(false)
-    if MDT.copyHelper then MDT.copyHelper:Hide() end
+    MDT.copyHelper:SmartHide()
   end
 
   local errorBoxText = ""
@@ -65,15 +63,16 @@ function MDT:DisplayErrors()
       end)
 
       editBox:SetWidth(400)
-      editBox.frame.obj.editbox:HookScript('OnEditFocusLost', function()
+      editBox.editbox:HookScript('OnEditFocusLost', function()
         stopCopyAction(copyButton)
       end);
-      editBox.frame.obj.editbox:SetScript('OnKeyUp', function(_, key)
-          --dont interfere with user manually ctrl+a selecting
-          if (IsControlKeyDown() and (key == 'A')) or key == "LCTRL" then
-              return
-          end
+      editBox.editbox:SetScript('OnKeyUp', function(_, key)
+        if (MDT.copyHelper:WasControlKeyDown() and key == 'C') then
+          MDT.copyHelper:SmartFadeOut()
           editBox:ClearFocus();
+        else
+          MDT.copyHelper:SmartHide()
+        end
       end);
       errorFrame[dest.name.."CopyButton"] = AceGUI:Create("Button")
       copyButton = errorFrame[dest.name.."CopyButton"]
@@ -100,11 +99,12 @@ function MDT:DisplayErrors()
       stopCopyAction(errorBoxCopyButton)
     end);
     errorBox.editBox:SetScript('OnKeyUp', function(_, key)
-        --dont interfere with user manually ctrl+a selecting
-        if (IsControlKeyDown() and (key == 'A')) or key == "LCTRL" then
-            return
-        end
+      if (MDT.copyHelper:WasControlKeyDown() and key == 'C') then
+        MDT.copyHelper:SmartFadeOut()
         errorBox:ClearFocus();
+      else
+        MDT.copyHelper:SmartHide()
+      end
     end);
 
     errorFrame.errorBoxCopyButton = AceGUI:Create("Button")

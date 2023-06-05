@@ -792,6 +792,43 @@ function MDT:MakeCopyHelper(frame)
   MDT.copyHelper.text:Show()
   MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont(), 20)
   MDT.copyHelper.text:SetTextColor(1,1,0)
+  function MDT.copyHelper:SmartFadeOut(seconds)
+    seconds = seconds or 0.3
+    MDT.copyHelper.isFading = true
+    MDT.copyHelper:SetAlpha(1)
+    MDT.copyHelper:Show()
+    UIFrameFadeOut(MDT.copyHelper, seconds, 1, 0)
+    MDT.copyHelper.text:SetText(L["copiedToClipboard"])
+    MDT.copyHelper.text:SetTextColor(1,1,1)
+    MDT.copyHelper:SetScript("OnUpdate", nil)
+    C_Timer.After(seconds,function()
+      MDT.copyHelper.text:SetText(L["errorLabel3"])
+      MDT.copyHelper.text:SetTextColor(1,1,0)
+      MDT.copyHelper:Hide()
+      MDT.copyHelper.isFading = false
+    end)
+  end
+  function MDT.copyHelper:SmartShow(anchorFrame,x,y)
+    MDT.copyHelper:ClearAllPoints()
+    MDT.copyHelper:SetPoint("CENTER", anchorFrame, "CENTER",x,y)
+    MDT.copyHelper:SetAlpha(1)
+    MDT.copyHelper:Show()
+    MDT.copyHelper:SetScript("OnUpdate", function()
+      if IsControlKeyDown() then
+        MDT.lastCtrlDown = GetTime()
+      end
+    end)
+  end
+  function MDT.copyHelper:SmartHide()
+    if not MDT.copyHelper.isFading then MDT.copyHelper:Hide() end
+  end
+  --ctrl+c works when ctrl was released up to 0.5s before the c key
+  function MDT.copyHelper:WasControlKeyDown()
+    if IsControlKeyDown() then return true end
+    if not MDT.lastCtrlDown then return false end
+    return (GetTime() - MDT.lastCtrlDown) < 0.5
+  end
+
 end
 
 function MDT:MakeSidePanel(frame)
@@ -979,6 +1016,7 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
     MDT.main_frame.ExportFrameEditbox:SetFocus()
     MDT.main_frame.ExportFrameEditbox:SetLabel(preset.text .. " " .. string.len(export))
+    MDT.copyHelper:SmartShow(MDT.main_frame,0,50)
     if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
   end)
   frame.sidePanelExportButton.frame:SetScript("OnEnter", function()
@@ -3852,16 +3890,45 @@ function MDT:MakeExportFrame(frame)
   frame.ExportFrame:SetCallback("OnClose", function(widget)
 
   end)
-
   frame.ExportFrameEditbox = AceGUI:Create("MultiLineEditBox")
   frame.ExportFrameEditbox:SetWidth(600)
   frame.ExportFrameEditbox:DisableButton(true)
   frame.ExportFrameEditbox:SetNumLines(20)
-  frame.ExportFrameEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
 
+  function frame.ExportFrameEditbox:SelectAll()
+    local text = frame.ExportFrameEditbox:GetText()
+    frame.ExportFrameEditbox:HighlightText(0, string.len(text))
+    frame.ExportFrameEditbox:SetFocus()
+  end
+
+  local selectAllButton
+  frame.ExportFrameEditbox.editBox:HookScript('OnEditFocusLost', function()
+    MDT.copyHelper:Hide()
+  end);
+
+  frame.ExportFrameEditbox.editBox:SetScript('OnKeyUp', function(_, key)
+      if (MDT.copyHelper:WasControlKeyDown() and key == 'A') then
+        return
+      end
+      if (MDT.copyHelper:WasControlKeyDown() and key == 'C') then
+        frame.ExportFrameEditbox:ClearFocus();
+        frame.ExportFrame:Hide()
+        MDT.copyHelper:SmartFadeOut()
+        return
+      end
+  end);
+
+  frame.ExportFrameSelectAllButton = AceGUI:Create("Button")
+  selectAllButton = frame.ExportFrameSelectAllButton
+  selectAllButton:SetText(L["Select all"])
+  selectAllButton:SetHeight(40)
+  selectAllButton:SetCallback("OnClick", function(widget, callbackName, value)
+    frame.ExportFrameEditbox:SelectAll()
+    MDT.copyHelper:SmartShow(frame,0,50)
   end)
+
   frame.ExportFrame:AddChild(frame.ExportFrameEditbox)
-  --frame.presetCreationFrame:SetStatusText("AceGUI-3.0 Example Container Frame")
+  frame.ExportFrame:AddChild(selectAllButton)
   frame.ExportFrame:Hide()
 end
 
