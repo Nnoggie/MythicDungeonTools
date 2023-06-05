@@ -197,20 +197,6 @@ do
       end
       --fix db corruption
       do
-        -- this was responsible for overwriting the default preset on load
-        -- was this needed for anything?
-
-        -- for _, presets in pairs(db.presets) do
-        --   for presetIdx, preset in pairs(presets) do
-        --     if presetIdx == 1 then
-        --       if preset.text ~= "Default" then
-        --         preset.text = "Default"
-        --         preset.value = {}
-        --       end
-        --     end
-        --   end
-        -- end
-
         for k, v in pairs(db.currentPreset) do
           if v <= 0 then db.currentPreset[k] = 1 end
         end
@@ -223,7 +209,7 @@ do
   end
 
   local last = 0
-  function MDT.GROUP_ROSTER_UPDATE(self, addon)
+  function MDT.GROUP_ROSTER_UPDATE()
     --check not more than once per second (blizzard event spam)
     local now = GetTime()
     if last < now - 1 then
@@ -248,7 +234,7 @@ do
     end
   end
 
-  function MDT.PLAYER_ENTERING_WORLD(self, addon)
+  function MDT.PLAYER_ENTERING_WORLD()
     --initialize Blizzard_ChallengesUI
     C_Timer.After(1, function()
       LoadAddOn("Blizzard_ChallengesUI")
@@ -267,8 +253,8 @@ end
 local affixWeeks = {
   [1] = { 6, 124, 9},
   [2] = { 134, 7, 10},
-  [3] = { 0, 0, 9},
-  [4] = { 0, 0, 10},
+  [3] = { 136, 123, 9},
+  [4] = { 135, 6, 10},
   [5] = { 0, 0, 9},
   [6] = { 0, 0, 10},
   [7] = { 0, 0, 9},
@@ -402,6 +388,7 @@ function MDT:ShowInterfaceInternal(force)
     self.ShowConflictFrame()
     return
   end
+  MDT:DisplayErrors()
   if not framesInitialized then initFrames() end
   if not framesInitialized then return end
   if self.main_frame:IsShown() and not force then
@@ -423,8 +410,12 @@ function MDT:ShowInterfaceInternal(force)
 end
 
 function MDT:HideInterface()
-  self.main_frame:Hide()
-  self.main_frame.HelpButton:Hide()
+  if self.main_frame then
+    self.main_frame:Hide()
+    if self.main_frame.HelpButton then
+      self.main_frame.HelpButton:Hide()
+    end
+  end
 end
 
 function MDT:ToggleDataCollection()
@@ -781,6 +772,64 @@ function MDT:MakeTopBottomTextures(frame)
   end)
 end
 
+function MDT:MakeCopyHelper(frame)
+  MDT.copyHelper = CreateFrame("Frame", "MDTCopyHelper", frame)
+  MDT.copyHelper:SetFrameStrata("TOOLTIP")
+  MDT.copyHelper:SetFrameLevel(200)
+  MDT.copyHelper:SetHeight(100)
+  MDT.copyHelper:SetWidth(300)
+  MDT.copyHelper.tex = MDT.copyHelper:CreateTexture(nil, "BACKGROUND", nil, 0)
+  MDT.copyHelper.tex:SetAllPoints()
+  MDT.copyHelper.tex:SetColorTexture(unpack(MDT.BackdropColor))
+  MDT.copyHelper.text = MDT.copyHelper:CreateFontString("MDT name")
+  MDT.copyHelper.text:SetFontObject("GameFontNormalMed3")
+  MDT.copyHelper.text:SetJustifyH("CENTER")
+  MDT.copyHelper.text:SetJustifyV("CENTER")
+  MDT.copyHelper.text:SetText(L["errorLabel3"])
+  MDT.copyHelper.text:ClearAllPoints()
+  MDT.copyHelper.text:SetPoint("CENTER", MDT.copyHelper, "CENTER")
+  MDT.copyHelper.text:Show()
+  MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont(), 20)
+  MDT.copyHelper.text:SetTextColor(1,1,0)
+  function MDT.copyHelper:SmartFadeOut(seconds)
+    seconds = seconds or 0.3
+    MDT.copyHelper.isFading = true
+    MDT.copyHelper:SetAlpha(1)
+    MDT.copyHelper:Show()
+    UIFrameFadeOut(MDT.copyHelper, seconds, 1, 0)
+    MDT.copyHelper.text:SetText(L["copiedToClipboard"])
+    MDT.copyHelper.text:SetTextColor(1,1,1)
+    MDT.copyHelper:SetScript("OnUpdate", nil)
+    C_Timer.After(seconds,function()
+      MDT.copyHelper.text:SetText(L["errorLabel3"])
+      MDT.copyHelper.text:SetTextColor(1,1,0)
+      MDT.copyHelper:Hide()
+      MDT.copyHelper.isFading = false
+    end)
+  end
+  function MDT.copyHelper:SmartShow(anchorFrame,x,y)
+    MDT.copyHelper:ClearAllPoints()
+    MDT.copyHelper:SetPoint("CENTER", anchorFrame, "CENTER",x,y)
+    MDT.copyHelper:SetAlpha(1)
+    MDT.copyHelper:Show()
+    MDT.copyHelper:SetScript("OnUpdate", function()
+      if IsControlKeyDown() then
+        MDT.lastCtrlDown = GetTime()
+      end
+    end)
+  end
+  function MDT.copyHelper:SmartHide()
+    if not MDT.copyHelper.isFading then MDT.copyHelper:Hide() end
+  end
+  --ctrl+c works when ctrl was released up to 0.5s before the c key
+  function MDT.copyHelper:WasControlKeyDown()
+    if IsControlKeyDown() then return true end
+    if not MDT.lastCtrlDown then return false end
+    return (GetTime() - MDT.lastCtrlDown) < 0.5
+  end
+
+end
+
 function MDT:MakeSidePanel(frame)
   MDT:UpdateAffixWeeks()
 
@@ -966,6 +1015,7 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
     MDT.main_frame.ExportFrameEditbox:SetFocus()
     MDT.main_frame.ExportFrameEditbox:SetLabel(preset.text .. " " .. string.len(export))
+    MDT.copyHelper:SmartShow(MDT.main_frame,0,50)
     if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
   end)
   frame.sidePanelExportButton.frame:SetScript("OnEnter", function()
@@ -2229,17 +2279,23 @@ end
 function MDT:OpenNewPresetDialog()
   MDT:HideAllDialogs()
   local presetList = {}
+  local highestIndex = 1
   local countPresets = 0
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
     if v.text ~= L["<New Preset>"] then
       table.insert(presetList, k, v.text)
+      local indexNumber = tonumber(v.text:match("^"..L["defaultPresetName"].."%s*(%d+)$"))
+      if indexNumber and indexNumber > highestIndex then
+        highestIndex = indexNumber
+      end
       countPresets = countPresets + 1
     end
   end
+  local newIndex = math.max(highestIndex,countPresets-1)
   table.insert(presetList, 1, L["Empty"])
   MDT.main_frame.PresetCreationDropDown:SetList(presetList)
   MDT.main_frame.PresetCreationDropDown:SetValue(1)
-  MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"] .. " " .. countPresets + 1)
+  MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"] .. " " .. newIndex + 1)
   MDT.main_frame.presetCreationFrame:ClearAllPoints()
   MDT.main_frame.presetCreationFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
   MDT.main_frame.presetCreationFrame:SetStatusText("")
@@ -2291,6 +2347,26 @@ function MDT:EnsureDBTables()
     db.selectedDungeonList = defaultSavedVars.global.selectedDungeonList
   end
   local preset = MDT:GetCurrentPreset()
+  if preset.value == 0 then --<New Preset> as selected preset
+    db.presets[db.currentDungeonIdx] = {
+      [1] = { text = L["Default"], value = {}, objects = {},
+        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [2] = { text = L["<New Preset>"], value = 0 },
+    }
+    db.currentPreset[db.currentDungeonIdx] = 1
+    preset = MDT:GetCurrentPreset()
+  end
+  if preset.objects then
+    local isValid = true
+    for _,obj in pairs(preset.objects) do
+      if type(obj) ~= "table" then
+        isValid = false
+      end
+    end
+    if not isValid then
+      preset.objects = nil
+    end
+  end
   if preset.week and (preset.week < 1 or preset.week > 10) then preset.week = nil end
   preset.week = preset.week or MDT:GetCurrentAffixWeek()
   db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
@@ -2431,7 +2507,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if not framesInitialized then coroutine.yield() end
   MDT:DungeonEnemies_UpdateInspiring()
   if not framesInitialized then coroutine.yield() end
-
+  MDT:POI_UpdateAll()
   if not ignoreReloadPullButtons then
     MDT:ReloadPullButtons()
   end
@@ -2490,6 +2566,7 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
   MDT:ZoomMapToDefault()
   --Colors the first pull in "Default" presets
   if db.currentPreset[db.currentDungeonIdx] == 1 then MDT:ColorPull() end
+  MDT:UpdateProgressbar()
 end
 
 function MDT:DeletePreset(index)
@@ -2566,6 +2643,16 @@ MDT.zoneIdToDungeonIdx = {
   [608] = 40,  --grimrail depot
   [609] = 40,  --grimrail depot
   [595] = 41,  --iron docks
+  [2082] = 49,  --halls of infusion
+  [2083] = 49,  --halls of infusion
+  [2096] = 48,  --brackenhide hollow
+  [2106] = 48,  --brackenhide hollow
+  [2071] = 51,  --uldaman
+  [2072] = 51,  --uldaman
+  [2080] = 50,  --neltharus
+  [2081] = 50,  --neltharus
+  [731] = 8,  --neltharion's lair
+  [325] = 77,  --vortex pinnacle
   --https://wowpedia.fandom.com/wiki/UiMapID
 }
 local lastUpdatedDungeonIdx
@@ -2775,6 +2862,20 @@ function MDT:MakePresetImportFrame(frame)
   end)
   frame.presetImportFrame:AddChild(importButton)
   frame.presetImportFrame:AddChild(frame.presetImportLabel)
+  if db.devMode then
+    local inspectButton = AceGUI:Create("Button")
+    inspectButton:SetText("Inspect")
+    inspectButton:SetWidth(100)
+    inspectButton:SetCallback("OnClick", function()
+      local newPreset = MDT:StringToTable(importString, true)
+      if not ViragDevTool_AddData then
+        print("MDT: Install Virag Dev Tool to inspect route")
+      else
+        ViragDevTool_AddData(newPreset)
+      end
+    end)
+    frame.presetImportFrame:AddChild(inspectButton)
+  end
   frame.presetImportFrame:Hide()
 end
 
@@ -3788,16 +3889,45 @@ function MDT:MakeExportFrame(frame)
   frame.ExportFrame:SetCallback("OnClose", function(widget)
 
   end)
-
   frame.ExportFrameEditbox = AceGUI:Create("MultiLineEditBox")
   frame.ExportFrameEditbox:SetWidth(600)
   frame.ExportFrameEditbox:DisableButton(true)
   frame.ExportFrameEditbox:SetNumLines(20)
-  frame.ExportFrameEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
 
+  function frame.ExportFrameEditbox:SelectAll()
+    local text = frame.ExportFrameEditbox:GetText()
+    frame.ExportFrameEditbox:HighlightText(0, string.len(text))
+    frame.ExportFrameEditbox:SetFocus()
+  end
+
+  local selectAllButton
+  frame.ExportFrameEditbox.editBox:HookScript('OnEditFocusLost', function()
+    MDT.copyHelper:Hide()
+  end);
+
+  frame.ExportFrameEditbox.editBox:SetScript('OnKeyUp', function(_, key)
+      if (MDT.copyHelper:WasControlKeyDown() and key == 'A') then
+        return
+      end
+      if (MDT.copyHelper:WasControlKeyDown() and key == 'C') then
+        frame.ExportFrameEditbox:ClearFocus();
+        frame.ExportFrame:Hide()
+        MDT.copyHelper:SmartFadeOut()
+        return
+      end
+  end);
+
+  frame.ExportFrameSelectAllButton = AceGUI:Create("Button")
+  selectAllButton = frame.ExportFrameSelectAllButton
+  selectAllButton:SetText(L["Select all"])
+  selectAllButton:SetHeight(40)
+  selectAllButton:SetCallback("OnClick", function(widget, callbackName, value)
+    frame.ExportFrameEditbox:SelectAll()
+    MDT.copyHelper:SmartShow(frame,0,50)
   end)
+
   frame.ExportFrame:AddChild(frame.ExportFrameEditbox)
-  --frame.presetCreationFrame:SetStatusText("AceGUI-3.0 Example Container Frame")
+  frame.ExportFrame:AddChild(selectAllButton)
   frame.ExportFrame:Hide()
 end
 
@@ -4531,7 +4661,7 @@ function MDT:CreateCoroutineHandler()
         if coroutine.status(func) ~= "dead" then
           local ok, msg = coroutine.resume(func)
           if not ok then
-            geterrorhandler()(msg .. '\n' .. debugstack(func))
+            MDT:OnError(msg,debugstack(func),name)
           end
         else
           coHandler:RemoveAction(name);
@@ -4555,6 +4685,7 @@ function initFrames()
       module:OnInitialize()
     end
   end
+  MDT:RegisterErrorHandledFunctions()
 
   local initSpinner = CreateFrame("Button", "MDTInitSpinner", UIParent,"LoadingSpinnerTemplate")
   initSpinner.BackgroundFrame.Background:SetVertexColor(0,1,0,1)
@@ -4563,6 +4694,7 @@ function initFrames()
   initSpinner:SetSize(60, 60)
   initSpinner:Show()
   initSpinner.Anim:Play()
+  MDT.initSpinner = initSpinner
 
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
   main_frame:Hide()
@@ -4611,6 +4743,7 @@ function initFrames()
   MDT:CheckCurrentZone(true)
   MDT:EnsureDBTables()
   MDT:MakeTopBottomTextures(main_frame)
+  MDT:MakeCopyHelper(main_frame)
   coroutine.yield()
   MDT:MakeMapTexture(main_frame)
   coroutine.yield()
@@ -4795,14 +4928,13 @@ function initFrames()
   MDT:UpdateToDungeon(db.currentDungeonIdx)
   coroutine.yield()
 
-  --Maximize if needed
-  if db.maximized then MDT:Maximize() end
-
   if MDT:IsFrameOffScreen() then
     MDT:ResetMainFramePos()
   end
 
   framesInitialized = true
+  --Maximize if needed
+  if db.maximized then MDT:Maximize() end
   initSpinner:Hide()
   initSpinner.Anim:Stop()
 end

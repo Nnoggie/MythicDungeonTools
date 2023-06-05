@@ -35,7 +35,9 @@
     "IsAltKeyDown",
     "WrapTextInColorCode",
     "tonumber",
-    "GetCursorPosition"
+    "GetCursorPosition",
+    "UIParent",
+    "GetAddOnMetadata"
   ],
   "Lua.diagnostics.disable": [
     "deprecated",

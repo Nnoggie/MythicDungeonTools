@@ -29,8 +29,8 @@ MDT.mapPOIs[dungeonIndex] = {
     [1] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "mapLink";
-      ["x"] = 313.99999540486;
-      ["y"] = -106.99817181006;
+      ["x"] = 304.9579623727;
+      ["y"] = -93.048208559019;
       ["target"] = 2;
       ["direction"] = -2;
       ["connectionIndex"] = 1;
@@ -42,14 +42,6 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -289.02272233371;
     };
     [3] = {
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "generalNote";
-      ["x"] = 392.23609464769;
-      ["y"] = -345.39869283311;
-      ["scale"] = 2;
-      ["text"] = "underrotMatronNote";
-    };
-    [4] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "generalNote";
       ["x"] = 356.40366885942;
@@ -67,7 +59,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [10] = true;
       };
     };
-    [5] = {
+    [4] = {
       ["template"] = "MapLinkPinTemplate";
       ["type"] = "generalNote";
       ["x"] = 397.59771146364;
@@ -85,7 +77,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [10] = true;
       };
     };
-    [6] = {
+    [5] = {
       ["template"] = "VignettePinTemplate";
       ["type"] = "nyalothaSpire";
       ["x"] = 420.96318081863;
@@ -102,7 +94,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [10] = true;
       };
     };
-    [7] = {
+    [6] = {
       ["template"] = "VignettePinTemplate";
       ["type"] = "nyalothaSpire";
       ["x"] = 388.05381306055;
@@ -119,7 +111,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [10] = true;
       };
     };
-    [8] = {
+    [7] = {
       ["template"] = "VignettePinTemplate";
       ["type"] = "nyalothaSpire";
       ["x"] = 633.47460185582;
@@ -142,7 +134,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [12] = true;
       };
     };
-    [9] = {
+    [8] = {
       ["template"] = "VignettePinTemplate";
       ["type"] = "nyalothaSpire";
       ["x"] = 476.43070789296;
@@ -165,7 +157,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [12] = true;
       };
     };
-    [10] = {
+    [9] = {
       ["template"] = "VignettePinTemplate";
       ["type"] = "nyalothaSpire";
       ["x"] = 420.66398356862;
@@ -182,7 +174,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [12] = true;
       };
     };
-    [11] = {
+    [10] = {
       ["template"] = "VignettePinTemplate";
       ["type"] = "nyalothaSpire";
       ["x"] = 387.98452582283;
@@ -1503,6 +1495,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true;
       ["Incapacitate"] = true;
       ["Silence"] = true;
+      ["Mind Control"] = true;
       ["Root"] = true;
       ["Fear"] = true;
       ["Banish"] = true;
