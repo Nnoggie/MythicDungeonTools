@@ -1,3 +1,7 @@
+- v4.0.4.1
+  - bugfixes + cosmetic change to route export
+  - fix nil errors
+  - better default route naming
 - v4.0.4.0
   - internal error handling
   - mapping updates
