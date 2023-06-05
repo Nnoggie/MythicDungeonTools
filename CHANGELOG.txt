@@ -1,5 +1,6 @@
 - v4.0.4.3
   - bugfix
+  - minor mapping updates freehold + uldaman
 - v4.0.4.2
   - bugfix
 - v4.0.4.1
