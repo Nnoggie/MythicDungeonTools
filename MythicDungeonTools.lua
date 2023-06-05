@@ -552,7 +552,6 @@ local oldScrollValues = {}
 ---StartScaling
 ---Stores values when we start scaling the frame
 function MDT:StartScaling()
-  MDT:Error()
   local f = self.main_frame
   oldScrollValues.oldScrollH = f.scrollFrame:GetHorizontalScroll()
   oldScrollValues.oldScrollV = f.scrollFrame:GetVerticalScroll()
