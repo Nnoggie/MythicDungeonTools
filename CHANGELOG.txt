@@ -1,3 +1,6 @@
+- v4.0.4.4
+  - mapping updates Neltharus, cosmetic updates Neltharus+Brackenhide
+  - affix week update
 - v4.0.4.3
   - bugfix
   - minor mapping updates freehold + uldaman
