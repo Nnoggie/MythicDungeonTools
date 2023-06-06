@@ -22,6 +22,7 @@ function MDT:ExportString(export)
     editBox:SetText(export)
     editBox:HighlightText(0, slen(export))
     editBox:SetFocus()
+    MDT.copyHelper:SmartShow(MDT.main_frame,0,50)
   end,"exportString")
 end
 
