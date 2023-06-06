@@ -127,12 +127,12 @@ end
 local defaultSavedVars = {
   global = {
     toolbarExpanded = true,
-    currentSeason = 8,
+    currentSeason = 10,
     scale = 1,
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
     enemyStyle = 1,
-    currentDungeonIdx = 42,
+    currentDungeonIdx = 49,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
