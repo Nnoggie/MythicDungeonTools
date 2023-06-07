@@ -1826,7 +1826,8 @@ local emissaryIds = { [155432] = true,[155433] = true,[155434] = true }
 function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
   local preset = MDT:GetCurrentPreset()
   local enemy = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-  local clone = enemy["clones"][cloneIdx]
+  local clone = enemy and enemy["clones"][cloneIdx]
+  if not clone then return false end
 
   local week = self:GetEffectivePresetWeek()
 
