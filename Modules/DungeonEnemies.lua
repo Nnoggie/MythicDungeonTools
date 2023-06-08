@@ -348,7 +348,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
   elseif button == "RightButton" then
     if db.devMode then
       if IsAltKeyDown() then
-        tremove(MDT.dungeonEnemies[db.currentDungeonIdx][self.enemyIdx].clones, self.cloneIdx)
+        MDT.dungeonEnemies[db.currentDungeonIdx][self.enemyIdx].clones[self.cloneIdx] = nil
         self:Hide()
       else
         self.devSelected = (not self.devSelected) or nil
