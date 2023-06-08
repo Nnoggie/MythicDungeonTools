@@ -1,3 +1,5 @@
+- v4.0.4.6
+  - brackenhide mapping updates
 - v4.0.4.5
   - bugfix
 - v4.0.4.4
