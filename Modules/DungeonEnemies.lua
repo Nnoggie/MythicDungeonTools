@@ -1362,6 +1362,10 @@ end
 function MDT:CleanEnemyData(dungeonIdx)
   local enemies = MDT.dungeonEnemies[dungeonIdx]
   ArrayRemove(enemies, function(t, i, j)
-    return #t[i].clones > 0
+    local countClones = 0
+    for _,_ in pairs(t[i].clones) do
+      countClones = countClones + 1
+    end
+    return countClones > 0
   end)
 end
