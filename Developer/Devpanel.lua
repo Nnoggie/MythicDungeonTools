@@ -446,6 +446,31 @@ function MDT:CreateDevPanel(frame)
     end)
     container:AddChild(cleanSpellDataButton)
 
+    local findCloneIssuesButton = AceGUI:Create("Button")
+    findCloneIssuesButton:SetText("Find Clone Issues")
+    findCloneIssuesButton:SetCallback("OnClick", function()
+      local cloneIssues = ""
+      for i=1,200  do
+          local enemies = MDT.dungeonEnemies[i]
+          if enemies then
+              for _,enemy in pairs(enemies) do
+                  local l = #enemy.clones
+                  local realLength = 0
+                  for _,_ in pairs(enemy.clones) do
+                      realLength = realLength + 1
+                  end
+                  if l~=realLength then
+                      local dungeonName = MDT.dungeonList[i]
+                      local enemyName = enemy.name
+                      cloneIssues = cloneIssues..dungeonName..": "..enemyName.."\n"
+                  end
+              end
+          end
+      end
+      MDT:ExportString(cloneIssues)
+    end)
+    container:AddChild(findCloneIssuesButton)
+
     local button3 = AceGUI:Create("Button")
     button3:SetText("Export to LUA")
     button3:SetCallback("OnClick", function()

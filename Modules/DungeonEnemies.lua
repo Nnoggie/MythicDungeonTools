@@ -13,30 +13,6 @@ function MDT:GetDungeonEnemyBlips()
   return blips
 end
 
-MDT.reapingStatic = {
-  ["148716"] = {
-    ["name"] = L["Risen Soul"],
-    ["iconTexture"] = "Interface\\Icons\\Ability_warlock_soulsiphon",
-    ["abilities"] = {},
-    ["npcId"] = 148716,
-    ["outline"] = { 1.02, 0, 2.04, 1 }
-  },
-  ["148893"] = {
-    ["name"] = L["Tormented Soul"],
-    ["iconTexture"] = "Interface\\Icons\\spell_shadow_soulleech_1",
-    ["abilities"] = {},
-    ["npcId"] = 148893,
-    ["outline"] = { 0, 2.04, 1.02, 1 }
-  },
-  ["148894"] = {
-    ["name"] = L["Lost Soul"],
-    ["iconTexture"] = "Interface\\Icons\\ability_warlock_improvedsoulleech",
-    ["abilities"] = {},
-    ["npcId"] = 148894,
-    ["outline"] = { 2.04, 0, 2.04, 1 }
-  },
-}
-
 --From http://wow.gamepedia.com/UI_coordinates
 function MDT:DoFramesOverlap(frameA, frameB, offset)
   if not frameA or not frameB then return end
@@ -372,7 +348,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
   elseif button == "RightButton" then
     if db.devMode then
       if IsAltKeyDown() then
-        tremove(MDT.dungeonEnemies[db.currentDungeonIdx][self.enemyIdx].clones, self.cloneIdx)
+        MDT.dungeonEnemies[db.currentDungeonIdx][self.enemyIdx].clones[self.cloneIdx] = nil
         self:Hide()
       else
         self.devSelected = (not self.devSelected) or nil
@@ -1362,6 +1338,10 @@ end
 function MDT:CleanEnemyData(dungeonIdx)
   local enemies = MDT.dungeonEnemies[dungeonIdx]
   ArrayRemove(enemies, function(t, i, j)
-    return #t[i].clones > 0
+    local countClones = 0
+    for _,_ in pairs(t[i].clones) do
+      countClones = countClones + 1
+    end
+    return countClones > 0
   end)
 end
