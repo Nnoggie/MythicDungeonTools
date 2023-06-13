@@ -251,12 +251,12 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 6, 124, 9},
+  [1] = { 124, 6, 9},
   [2] = { 134, 7, 10},
   [3] = { 136, 123, 9},
   [4] = { 135, 6, 10},
   [5] = { 3, 8, 9},
-  [6] = { 0, 0, 10},
+  [6] = { 124, 11, 10},
   [7] = { 0, 0, 9},
   [8] = { 0, 0, 10},
   [9] = { 0, 0, 9},
