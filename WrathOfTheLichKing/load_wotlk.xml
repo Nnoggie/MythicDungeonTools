@@ -13,4 +13,6 @@
   <Script file='Ulduar.lua'/>
   <Script file='UtgardeKeep.lua'/>
   <Script file='UtgardePinnacle.lua'/>
+  <Script file='TrialOfTheGrandCrusader.lua'/>
+  <Script file='IcecrownCitadel.lua'/>
 </Ui>
