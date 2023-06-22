@@ -8,7 +8,7 @@ local L = MDT.L
 -- Additional dungeon lists just need to be added to seasonList and dungeonSelectionToIndex.
 
 -- How to find the dungeon map files:
--- Add launch option "- console" to wow
+-- Add launch option "-console" to wow
 -- Unsync your Config.wtf from wow servers: SET synchronizeConfig "0"
 -- Add the following to the Config.wtf: SET ConsoleKey "F10" (or whatever key you want)
 -- Go to character selection screen and press your console key
