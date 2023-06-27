@@ -1,3 +1,5 @@
+- v4.0.4.13
+  - affix week update
 - v4.0.4.12
   - wotlk classic: maps added for togc+icc
 - v4.0.4.11
