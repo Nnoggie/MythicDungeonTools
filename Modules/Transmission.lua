@@ -24,25 +24,137 @@ local bit_band, bit_lshift, bit_rshift = bit.band, bit.lshift, bit.rshift
 
 --Based on code from WeakAuras2, all credit goes to the authors
 local bytetoB64 = {
-  [0] = "a", "b", "c", "d", "e", "f", "g", "h",
-  "i", "j", "k", "l", "m", "n", "o", "p",
-  "q", "r", "s", "t", "u", "v", "w", "x",
-  "y", "z", "A", "B", "C", "D", "E", "F",
-  "G", "H", "I", "J", "K", "L", "M", "N",
-  "O", "P", "Q", "R", "S", "T", "U", "V",
-  "W", "X", "Y", "Z", "0", "1", "2", "3",
-  "4", "5", "6", "7", "8", "9", "(", ")"
+  [0] = "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "(",
+  ")"
 }
 
 local B64tobyte = {
-  a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7,
-  i = 8, j = 9, k = 10, l = 11, m = 12, n = 13, o = 14, p = 15,
-  q = 16, r = 17, s = 18, t = 19, u = 20, v = 21, w = 22, x = 23,
-  y = 24, z = 25, A = 26, B = 27, C = 28, D = 29, E = 30, F = 31,
-  G = 32, H = 33, I = 34, J = 35, K = 36, L = 37, M = 38, N = 39,
-  O = 40, P = 41, Q = 42, R = 43, S = 44, T = 45, U = 46, V = 47,
-  W = 48, X = 49, Y = 50, Z = 51, ["0"] = 52, ["1"] = 53, ["2"] = 54, ["3"] = 55,
-  ["4"] = 56, ["5"] = 57, ["6"] = 58, ["7"] = 59, ["8"] = 60, ["9"] = 61, ["("] = 62, [")"] = 63
+  a = 0,
+  b = 1,
+  c = 2,
+  d = 3,
+  e = 4,
+  f = 5,
+  g = 6,
+  h = 7,
+  i = 8,
+  j = 9,
+  k = 10,
+  l = 11,
+  m = 12,
+  n = 13,
+  o = 14,
+  p = 15,
+  q = 16,
+  r = 17,
+  s = 18,
+  t = 19,
+  u = 20,
+  v = 21,
+  w = 22,
+  x = 23,
+  y = 24,
+  z = 25,
+  A = 26,
+  B = 27,
+  C = 28,
+  D = 29,
+  E = 30,
+  F = 31,
+  G = 32,
+  H = 33,
+  I = 34,
+  J = 35,
+  K = 36,
+  L = 37,
+  M = 38,
+  N = 39,
+  O = 40,
+  P = 41,
+  Q = 42,
+  R = 43,
+  S = 44,
+  T = 45,
+  U = 46,
+  V = 47,
+  W = 48,
+  X = 49,
+  Y = 50,
+  Z = 51,
+  ["0"] = 52,
+  ["1"] = 53,
+  ["2"] = 54,
+  ["3"] = 55,
+  ["4"] = 56,
+  ["5"] = 57,
+  ["6"] = 58,
+  ["7"] = 59,
+  ["8"] = 60,
+  ["9"] = 61,
+  ["("] = 62,
+  [")"] = 63
 }
 
 -- This code is based on the Encode7Bit algorithm from LibCompress
@@ -82,9 +194,9 @@ function MDT:TableToString(inTable, forChat, level)
   -- also this way, old versions will error out due to the "bad" encoding
   local encoded = "!"
   if (forChat) then
-    encoded = encoded .. LibDeflate:EncodeForPrint(compressed)
+    encoded = encoded..LibDeflate:EncodeForPrint(compressed)
   else
-    encoded = encoded .. LibDeflate:EncodeForWoWAddonChannel(compressed)
+    encoded = encoded..LibDeflate:EncodeForWoWAddonChannel(compressed)
   end
   return encoded
 end
@@ -114,12 +226,12 @@ function MDT:StringToTable(inString, fromChat)
     decompressed, errorMsg = Compresser:Decompress(decoded)
   end
   if not (decompressed) then
-    return "Error decompressing: " .. errorMsg
+    return "Error decompressing: "..errorMsg
   end
 
   local success, deserialized = Serializer:Deserialize(decompressed)
   if not (success) then
-    return "Error deserializing " .. deserialized
+    return "Error deserializing "..deserialized
   end
   return deserialized
 end
@@ -137,16 +249,16 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
     if (characterName and displayName) then
       characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      newMsg = newMsg .. remaining:sub(1, start - 1)
-      newMsg = "|cfff49d38|Hgarrmission:mdt-" .. characterName .. "|h[" .. displayName .. "]|h|r"
+      newMsg = newMsg..remaining:sub(1, start - 1)
+      newMsg = "|cfff49d38|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
       remaining = remaining:sub(finish + 1)
     elseif (characterNameLive and displayNameLive) then
       characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      newMsg = newMsg .. remaining:sub(1, startLive - 1)
-      newMsg = newMsg ..
-          "|Hgarrmission:mdtlive-" ..
-          characterNameLive .. "|h[" .. "|cFF00FF00Live Session: |cfff49d38" .. "" .. displayNameLive .. "]|h|r"
+      newMsg = newMsg..remaining:sub(1, startLive - 1)
+      newMsg = newMsg..
+          "|Hgarrmission:mdtlive-"..
+          characterNameLive.."|h[".."|cFF00FF00Live Session: |cfff49d38"..""..displayNameLive.."]|h|r"
       remaining = remaining:sub(finishLive + 1)
     else
       done = true
@@ -204,17 +316,17 @@ hooksecurefunc("SetItemRef", function(link, text)
   if (link and link:sub(0, 19) == "garrmission:mdtlive") then
     local sender = link:sub(21, string.len(link))
     local name, realm = string.match(sender, "(.*)+(.*)")
-    sender = name .. "-" .. realm
+    sender = name.."-"..realm
     --ignore importing the live preset when sender is player, open MDT only
     local playerName, playerRealm = UnitFullName("player")
-    playerName = playerName .. "-" .. playerRealm
+    playerName = playerName.."-"..playerRealm
     if sender == playerName then
-      MDT:Async(function() MDT:ShowInterfaceInternal(true) end,"showInterface")
+      MDT:Async(function() MDT:ShowInterfaceInternal(true) end, "showInterface")
     else
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
         MDT:LiveSession_Enable()
-      end,"showInterfaceLive")
+      end, "showInterfaceLive")
     end
     return
   elseif (link and link:sub(0, 15) == "garrmission:mdt") then
@@ -224,13 +336,13 @@ hooksecurefunc("SetItemRef", function(link, text)
       print(string.format(L["receiveErrorUpdate"], sender))
       return
     end
-    sender = name .. "-" .. realm
+    sender = name.."-"..realm
     local preset = MDT.transmissionCache[sender]
     if preset then
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
         MDT:OpenChatImportPresetDialog(sender, preset)
-      end,"showInterfaceChatImport")
+      end, "showInterfaceChatImport")
     end
     return
   end
@@ -249,7 +361,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     local _, r = UnitFullName("player")
     realm = r
   end
-  local fullName = name .. "-" .. realm
+  local fullName = name.."-"..realm
 
   --standard preset transmission
   --we cache the preset here already
@@ -279,7 +391,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.dataCollectionPrefixes.distribute then
     if sender == UnitFullName("player") then return end
     local package = MDT:StringToTable(message, false)
-    print("Received data package from " .. fullName)
+    print("Received data package from "..fullName)
     MDT.DataCollection:MergeReceiveData(package)
   end
 
@@ -411,7 +523,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --request preset
   if prefix == MDT.liveSessionPrefixes.reqPre then
     local playerName, playerRealm = UnitFullName("player")
-    playerName = playerName .. "-" .. playerRealm
+    playerName = playerName.."-"..playerRealm
     if playerName == message then
       MDT:SendToGroup(MDT:IsPlayerInGroup(), true, MDT:GetCurrentLivePreset())
     end
@@ -529,7 +641,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       end
     end
   end
-
 end
 
 ---MakeSendingStatusBar
@@ -571,7 +682,7 @@ end
 local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
   MDT.main_frame.SendingStatusBar:Show()
   MDT.main_frame.SendingStatusBar:SetValue(bytesSent / bytesToSend)
-  MDT.main_frame.SendingStatusBar.value:SetText(string.format(L["Sending: %.1f"], bytesSent / bytesToSend * 100) .. "%")
+  MDT.main_frame.SendingStatusBar.value:SetText(string.format(L["Sending: %.1f"], bytesSent / bytesToSend * 100).."%")
   --done sending
   if bytesSent == bytesToSend then
     local distribution = userArgs[1]
@@ -606,8 +717,8 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
 
       name = UnitFullName(name)
 
-      local fullName = name .. "+" .. realm
-      SendChatMessage(prefix .. fullName .. " - " .. dungeon .. ": " .. presetName .. "]", distribution)
+      local fullName = name.."+"..realm
+      SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
     end
   end
 end

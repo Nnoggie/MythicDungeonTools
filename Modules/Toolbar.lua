@@ -482,7 +482,8 @@ function MDT:OverrideScrollframeScripts()
           local currentPreset = MDT:GetCurrentPreset()
           currentPreset.objects[note.objectIndex].d[1] = x - xOffset
           currentPreset.objects[note.objectIndex].d[2] = y - yOffset
-          if MDT.liveSessionActive then MDT:LiveSession_SendNoteCommand("move", note.objectIndex, x - xOffset, y -
+          if MDT.liveSessionActive then
+            MDT:LiveSession_SendNoteCommand("move", note.objectIndex, x - xOffset, y -
               yOffset)
           end
           MDT:DrawAllPresetObjects()
@@ -567,8 +568,11 @@ function MDT:StartArrowDrawing()
   ---l: x1,y1,x2,y2,...
   ---t: triangleroation
   local arrowBrushSize = db.toolbar.brushSize + 8 --we want arrows to be thicker by default compared to lines
-  nobj = { d = { arrowBrushSize, 1, MDT:GetCurrentSubLevel(), true,
-    MDT:RGBToHex(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b) }, l = {} }
+  nobj = {
+    d = { arrowBrushSize, 1, MDT:GetCurrentSubLevel(), true,
+      MDT:RGBToHex(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b) },
+    l = {}
+  }
   nobj.l = { MDT:Round(startx, 1), MDT:Round(starty, 1) }
   nobj.t = {}
   local scale = MDT:GetScale()
@@ -632,8 +636,11 @@ function MDT:StartLineDrawing()
   ---new object
   ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
   ---l: x1,y1,x2,y2,...
-  nobj = { d = { db.toolbar.brushSize, 1.1, MDT:GetCurrentSubLevel(), true,
-    MDT:RGBToHex(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b), nil, true }, l = {} }
+  nobj = {
+    d = { db.toolbar.brushSize, 1.1, MDT:GetCurrentSubLevel(), true,
+      MDT:RGBToHex(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b), nil, true },
+    l = {}
+  }
   nobj.l = {}
 
   local scale = MDT:GetScale()
@@ -644,13 +651,13 @@ function MDT:StartLineDrawing()
     endx, endy = MDT:GetCursorPosition()
     if endx ~= startx and endy ~= starty then
       DrawLine(line, MDT.main_frame.mapPanelTile1, startx, starty, endx, endy, (db.toolbar.brushSize * 0.3) * 1.1 * scale
-        , 1.00, "TOPLEFT")
+      , 1.00, "TOPLEFT")
       line:SetDrawLayer(objectDrawLayer, drawLayer)
       line:Show()
       MDT:DrawCircle(startx, starty, (db.toolbar.brushSize * 0.3) * scale, db.toolbar.color, objectDrawLayer, drawLayer,
         true, nil, circle1, true)
       MDT:DrawCircle(endx, endy, (db.toolbar.brushSize * 0.3) * scale, db.toolbar.color, objectDrawLayer, drawLayer, true
-        , nil, circle2, true)
+      , nil, circle2, true)
       nobj.d[6] = drawLayer
     end
   end)
@@ -703,8 +710,11 @@ function MDT:StartPencilDrawing()
   ---new object
   ---d: size,lineFactor,sublevel,shown,colorstring,drawLayer,[smooth]
   ---l: x1,y1,x2,y2,...
-  nobj = { d = { db.toolbar.brushSize, 1.1, MDT:GetCurrentSubLevel(), true,
-    MDT:RGBToHex(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b), 0, true }, l = {} }
+  nobj = {
+    d = { db.toolbar.brushSize, 1.1, MDT:GetCurrentSubLevel(), true,
+      MDT:RGBToHex(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b), 0, true },
+    l = {}
+  }
   nobj.l = {}
 
   local lineIdx = 1

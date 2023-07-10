@@ -84,7 +84,6 @@ local function expand_polygon(poly, numCirclePoints)
       res[resIndex] = { cx, cy, r }
       resIndex = resIndex + 1
     end
-
   end
 
   return res
@@ -121,7 +120,7 @@ local frameIndex = 0
 local function getFontString()
   local size = tgetn(fontStringPool)
   if size == 0 then
-    local fsFrame = CreateFrame("Frame", "MDTFontStringContainerFrame" .. frameIndex, MDT.main_frame.mapPanelFrame)
+    local fsFrame = CreateFrame("Frame", "MDTFontStringContainerFrame"..frameIndex, MDT.main_frame.mapPanelFrame)
     frameIndex = frameIndex + 1
     fsFrame:SetFrameStrata("HIGH")
     fsFrame:SetFrameLevel(100)
@@ -226,7 +225,6 @@ function MDT:DrawHull(vertices, pullColor, pullIdx)
   --if true then return end
   local hull = convex_hull(vertices)
   if hull then
-
     -- expand_polygon: higher value = more points = more expensive = smoother outlines
     hull = expand_polygon(hull, 30)
 
@@ -281,7 +279,7 @@ function MDT:DrawAllHulls(pulls)
     end
   end
   local co = coroutine.create(func)
-  MDT.coHandler:AddAction("DrawAllHulls",co)
+  MDT.coHandler:AddAction("DrawAllHulls", co)
 end
 
 function MDT:FindClosestPull(x, y)
@@ -324,5 +322,4 @@ function MDT:FindClosestPull(x, y)
   if centerIndex then
     return centerIndex, centers[centerIndex][1], centers[centerIndex][2]
   end
-
 end

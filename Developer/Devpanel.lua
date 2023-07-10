@@ -22,7 +22,7 @@ function MDT:ToggleDevMode()
 end
 
 local function tshow(t, name, indent)
-  local cart -- a container
+  local cart    -- a container
   local autoref -- for self references
 
   --[[ counts the number of elements in a table
@@ -41,12 +41,12 @@ local function tshow(t, name, indent)
       local info = debug.getinfo(o, "S")
       -- info.name is nil because o is not a calling level
       if info.what == "C" then
-        return sformat("%q", so .. ", C function")
+        return sformat("%q", so..", C function")
       else
         -- the information is defined through lines
-        return sformat("%q", so .. ", defined in (" ..
-          info.linedefined .. "-" .. info.lastlinedefined ..
-          ")" .. info.source)
+        return sformat("%q", so..", defined in ("..
+          info.linedefined.."-"..info.lastlinedefined..
+          ")"..info.source)
       end
     elseif type(o) == "number" or type(o) == "boolean" then
       return so
@@ -60,30 +60,30 @@ local function tshow(t, name, indent)
     saved = saved or {}
     field = field or name
 
-    cart = cart .. indent .. field
+    cart = cart..indent..field
 
     if type(value) ~= "table" then
-      cart = cart .. " = " .. basicSerialize(value) .. ";\n"
+      cart = cart.." = "..basicSerialize(value)..";\n"
     else
       if saved[value] then
-        cart = cart .. " = {}; -- " .. saved[value]
-            .. " (self reference)\n"
-        autoref = autoref .. name .. " = " .. saved[value] .. ";\n"
+        cart = cart.." = {}; -- "..saved[value]
+            .." (self reference)\n"
+        autoref = autoref..name.." = "..saved[value]..";\n"
       else
         saved[value] = name
         --if tablecount(value) == 0 then
         if isemptytable(value) then
-          cart = cart .. " = {};\n"
+          cart = cart.." = {};\n"
         else
-          cart = cart .. " = {\n"
+          cart = cart.." = {\n"
           for k, v in pairs(value) do
             k = basicSerialize(k)
             local fname = sformat("%s[%s]", name, k)
             field = sformat("[%s]", k)
             -- three spaces between levels
-            addtocart(v, fname, indent .. "   ", saved, field)
+            addtocart(v, fname, indent.."   ", saved, field)
           end
-          cart = cart .. indent .. "};\n"
+          cart = cart..indent.."};\n"
         end
       end
     end
@@ -91,11 +91,11 @@ local function tshow(t, name, indent)
 
   name = name or "__unnamed__"
   if type(t) ~= "table" then
-    return name .. " = " .. basicSerialize(t)
+    return name.." = "..basicSerialize(t)
   end
   cart, autoref = "", ""
   addtocart(t, name, indent)
-  return cart .. autoref
+  return cart..autoref
 end
 
 function MDT:AddNPCFromUnit(unit)
@@ -108,7 +108,9 @@ function MDT:AddNPCFromUnit(unit)
   end
   local added
   for _, npcData in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-    if npcData.id == npcId then added = true; break end
+    if npcData.id == npcId then
+      added = true; break
+    end
   end
   if npcId and not added then
     local npcName = UnitName(unit)
@@ -149,13 +151,13 @@ function MDT:CreateDevPanel(frame)
 
   devPanel:SetTabs(
     {
-      { text = "POI/Zoom", value = "tab1" },
-      { text = "Enemy", value = "tab2" },
-      { text = "Infested", value = "tab3" },
-      { text = "Week", value = "tab4" },
+      { text = "POI/Zoom",  value = "tab1" },
+      { text = "Enemy",     value = "tab2" },
+      { text = "Infested",  value = "tab3" },
+      { text = "Week",      value = "tab4" },
       { text = "Corrupted", value = "tab5" },
       { text = "Manage DB", value = "tab6" },
-      { text = "Shrouded", value = "tab7" },
+      { text = "Shrouded",  value = "tab7" },
     }
   )
   devPanel:SetWidth(250)
@@ -212,8 +214,15 @@ function MDT:CreateDevPanel(frame)
           local c = tonumber(option3:GetText())
           if t and d then
             tinsert(links,
-              { x = posx, y = posy, target = t, direction = d, connectionIndex = c, template = "MapLinkPinTemplate",
-                type = "mapLink" })
+              {
+                x = posx,
+                y = posy,
+                target = t,
+                direction = d,
+                connectionIndex = c,
+                template = "MapLinkPinTemplate",
+                type = "mapLink"
+              })
             MDT:POI_UpdateAll()
           end
         end,
@@ -231,8 +240,15 @@ function MDT:CreateDevPanel(frame)
           local doorDescriptionText = option4:GetText()
           local lockpickableStatus = lockedCheckbox:GetValue() or nil
           tinsert(links,
-            { x = posx, y = posy, template = "MapLinkPinTemplate", type = "door", doorName = doorNameText,
-              doorDescription = doorDescriptionText, lockpick = lockpickableStatus })
+            {
+              x = posx,
+              y = posy,
+              template = "MapLinkPinTemplate",
+              type = "door",
+              doorName = doorNameText,
+              doorDescription = doorDescriptionText,
+              lockpick = lockpickableStatus
+            })
           MDT:POI_UpdateAll()
         end,
       },
@@ -247,8 +263,13 @@ function MDT:CreateDevPanel(frame)
           local posx, posy = 300, -200
           local graveyardDescriptionText = option5:GetText()
           tinsert(links,
-            { x = posx, y = posy, template = "DeathReleasePinTemplate", type = "graveyard",
-              graveyardDescription = graveyardDescriptionText })
+            {
+              x = posx,
+              y = posy,
+              template = "DeathReleasePinTemplate",
+              type = "graveyard",
+              graveyardDescription = graveyardDescriptionText
+            })
           MDT:POI_UpdateAll()
         end,
       },
@@ -337,8 +358,16 @@ function MDT:CreateDevPanel(frame)
           local value2 = MDTScrollFrame:GetHorizontalScroll() / MDT:GetScale()
           local value3 = MDTScrollFrame:GetVerticalScroll() / MDT:GetScale()
           tinsert(pois,
-            { x = posx, y = posy, template = "MapLinkPinTemplate", type = "zoom", index = index, value1 = value1,
-              value2 = value2, value3 = value3 })
+            {
+              x = posx,
+              y = posy,
+              template = "MapLinkPinTemplate",
+              type = "zoom",
+              index = index,
+              value1 = value1,
+              value2 = value2,
+              value3 = value3
+            })
           MDT:POI_UpdateAll()
         end,
       },
@@ -450,22 +479,22 @@ function MDT:CreateDevPanel(frame)
     findCloneIssuesButton:SetText("Find Clone Issues")
     findCloneIssuesButton:SetCallback("OnClick", function()
       local cloneIssues = ""
-      for i=1,200  do
-          local enemies = MDT.dungeonEnemies[i]
-          if enemies then
-              for _,enemy in pairs(enemies) do
-                  local l = #enemy.clones
-                  local realLength = 0
-                  for _,_ in pairs(enemy.clones) do
-                      realLength = realLength + 1
-                  end
-                  if l~=realLength then
-                      local dungeonName = MDT.dungeonList[i]
-                      local enemyName = enemy.name
-                      cloneIssues = cloneIssues..dungeonName..": "..enemyName.."\n"
-                  end
-              end
+      for i = 1, 200 do
+        local enemies = MDT.dungeonEnemies[i]
+        if enemies then
+          for _, enemy in pairs(enemies) do
+            local l = #enemy.clones
+            local realLength = 0
+            for _, _ in pairs(enemy.clones) do
+              realLength = realLength + 1
+            end
+            if l ~= realLength then
+              local dungeonName = MDT.dungeonList[i]
+              local enemyName = enemy.name
+              cloneIssues = cloneIssues..dungeonName..": "..enemyName.."\n"
+            end
           end
+        end
       end
       MDT:ExportString(cloneIssues)
     end)
@@ -818,7 +847,7 @@ function MDT:CreateDevPanel(frame)
   local function DrawGroup3(container)
     for i = 1, 12 do
       local infestedCheckbox = AceGUI:Create("CheckBox")
-      infestedCheckbox:SetLabel("Infested Week " .. i)
+      infestedCheckbox:SetLabel("Infested Week "..i)
       infestedCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
         local currentBlip = MDT:GetCurrentDevmodeBlip()
         local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
@@ -832,14 +861,12 @@ function MDT:CreateDevPanel(frame)
       end
       container:AddChild(infestedCheckbox)
     end
-
-
   end
 
   local function DrawGroup4(container)
     for i = 1, 12 do
       local weekCheckbox = AceGUI:Create("CheckBox")
-      weekCheckbox:SetLabel("Week " .. i)
+      weekCheckbox:SetLabel("Week "..i)
       weekCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
         local currentBlip = MDT:GetCurrentDevmodeBlip()
         local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
@@ -853,7 +880,6 @@ function MDT:CreateDevPanel(frame)
       end
       container:AddChild(weekCheckbox)
     end
-
   end
 
   local spireNames = {
@@ -895,7 +921,7 @@ function MDT:CreateDevPanel(frame)
 
     for i = 1, 12 do
       local weekCheckbox = AceGUI:Create("CheckBox")
-      weekCheckbox:SetLabel("Week " .. i)
+      weekCheckbox:SetLabel("Week "..i)
       weekCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
         if value then week[i] = true else week[i] = nil end
       end)
@@ -918,17 +944,24 @@ function MDT:CreateDevPanel(frame)
       local posx, posy = 300, -200
       local newWeek = MDT:DeepCopy(week)
       tinsert(pois,
-        { x = posx, y = posy, index = index, weeks = newWeek, tooltipText = spireNames[tooltipIndex],
-          template = "VignettePinTemplate", type = "nyalothaSpire", scale = scale, npcId = tooltipIdxToNpcId[
-              tooltipIndex] })
+        {
+          x = posx,
+          y = posy,
+          index = index,
+          weeks = newWeek,
+          tooltipText = spireNames[tooltipIndex],
+          template = "VignettePinTemplate",
+          type = "nyalothaSpire",
+          scale = scale,
+          npcId = tooltipIdxToNpcId[
+          tooltipIndex]
+        })
       newWeek = MDT:DeepCopy(week)
       MDT:POI_UpdateAll()
       --add associated NPC to the map
       MDT:AddCloneFromData(tooltipIdxToNpcId[tooltipIndex], newWeek)
     end)
     container:AddChild(createSpireButton)
-
-
   end
 
   local function DrawGroup6(container)
@@ -994,52 +1027,51 @@ function MDT:CreateDevPanel(frame)
   local shroudedEnemyData = {
     [1] = {
       ["clones"] = {
-      };
-      ["name"] = "Nathrezim Infiltrator";
+      },
+      ["name"] = "Nathrezim Infiltrator",
       ["characteristics"] = {
-        ["Taunt"] = true;
-      };
+        ["Taunt"] = true,
+      },
       ["spells"] = {
-        [373364] = {};
-        [373429] = {};
-        [373370] = {};
-        [373391] = {};
-      };
-      ["health"] = 999999;
-      ["count"] = 0;
-      ["displayId"] = 101016;
-      ["creatureType"] = "Demon";
-      ["level"] = 61;
-      ["id"] = 189878;
+        [373364] = {},
+        [373429] = {},
+        [373370] = {},
+        [373391] = {},
+      },
+      ["health"] = 999999,
+      ["count"] = 0,
+      ["displayId"] = 101016,
+      ["creatureType"] = "Demon",
+      ["level"] = 61,
+      ["id"] = 189878,
       ["scale"] = 1.2
     },
     [2] = {
       ["clones"] = {
-      };
-      ["name"] = "Zul'gamux";
+      },
+      ["name"] = "Zul'gamux",
       ["characteristics"] = {
-        ["Taunt"] = true;
-      };
+        ["Taunt"] = true,
+      },
       ["spells"] = {
-        [373509] = {};
-        [373724] = {};
-        [373513] = {};
-        [373552] = {};
-        [373570] = {};
-        [373607] = {};
-      };
-      ["health"] = 999999;
-      ["count"] = 0;
-      ["displayId"] = 101106;
-      ["creatureType"] = "Demon";
-      ["level"] = 61;
-      ["id"] = 190128;
+        [373509] = {},
+        [373724] = {},
+        [373513] = {},
+        [373552] = {},
+        [373570] = {},
+        [373607] = {},
+      },
+      ["health"] = 999999,
+      ["count"] = 0,
+      ["displayId"] = 101106,
+      ["creatureType"] = "Demon",
+      ["level"] = 61,
+      ["id"] = 190128,
       ["scale"] = 1.8
     },
   }
 
   local function DrawGroup7(container)
-
     local currentShroudedTypeEditBox = AceGUI:Create("EditBox")
     currentShroudedTypeEditBox:SetLabel("Shrouded Type: (number: 1 or 2)")
     currentShroudedTypeEditBox:SetText("1")
@@ -1116,7 +1148,6 @@ function MDT:CreateDevPanel(frame)
       end
     end)
     container:AddChild(unDisguiseButton)
-
   end
 
   -- Callback function for OnGroupSelected
@@ -1148,7 +1179,9 @@ function MDT:CreateDevPanel(frame)
     originalFunc(...)
     local selectedTab
     for k, v in pairs(devPanel.tabs) do
-      if v.selected == true then selectedTab = v.value; break end
+      if v.selected == true then
+        selectedTab = v.value; break
+      end
     end
     --currentEnemyIdx
     local currentBlip = MDT:GetCurrentDevmodeBlip()
@@ -1161,9 +1194,7 @@ function MDT:CreateDevPanel(frame)
     for _, v in ipairs(dungeonEnemyBlips) do
       v:DisplayPatrol(v.devSelected)
     end
-
   end
-
 end
 
 function MDT:AddCloneFromData(npcId, weeks)
@@ -1177,7 +1208,7 @@ function MDT:AddCloneFromData(npcId, weeks)
     end
   end
   if not data then
-    print("Could not find enemy with id " .. npcId)
+    print("Could not find enemy with id "..npcId)
     return
   end
   tinsert(data.clones, { x = x, y = y, sublevel = sublevel, week = weeks })
@@ -1197,8 +1228,14 @@ function MDT:AddCloneAtCursorPosition()
     cursorx = cursorx * (1 / scale)
     cursory = cursory * (1 / scale)
     tinsert(data.clones,
-      { x = cursorx, y = cursory, sublevel = MDT:GetCurrentSubLevel(), g = currentCloneGroup, teeming = currentTeeming,
-        scale = currentCloneScale })
+      {
+        x = cursorx,
+        y = cursory,
+        sublevel = MDT:GetCurrentSubLevel(),
+        g = currentCloneGroup,
+        teeming = currentTeeming,
+        scale = currentCloneScale
+      })
     print(string.format("MDT: Created clone %s %d at %d,%d", data.name, #data.clones, cursorx, cursory))
     MDT:UpdateMap()
   end

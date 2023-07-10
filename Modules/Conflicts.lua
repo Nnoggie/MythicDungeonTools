@@ -9,18 +9,18 @@ local L = MDT.L
 
 local candidates = {
   ["DungeonTools"] = {
-    name = "Dungeon Tools";
-    detected = false;
+    name = "Dungeon Tools",
+    detected = false,
     onDetect = function()
       SLASH_DUNGEONTOOLS1 = "/mplus"
       SLASH_DUNGEONTOOLS2 = "/mdt"
       SLASH_DUNGEONTOOLS3 = "/dungeontools"
       function SlashCmdList.DUNGEONTOOLS(cmd, editbox)
-        MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface")
+        MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
       end
 
       local ldb = LibStub("LibDBIcon-1.0")
-      ldb.objects["DungeonTools"]:SetScript("OnClick", function() MDT:Async(function() MDT:ShowInterfaceInternal() end,"showInterface") end)
+      ldb.objects["DungeonTools"]:SetScript("OnClick", function() MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface") end)
     end
   },
   -- ["MDTGuide"] = {
@@ -77,7 +77,7 @@ function MDT:ShowConflictFrame()
     -- add all conflicting addons to the text in red color
     for _, candidate in pairs(candidates) do
       if candidate.detected then
-        labelText = labelText .. "\n|cFFFF0000" .. candidate.name .. "|r"
+        labelText = labelText.."\n|cFFFF0000"..candidate.name.."|r"
       end
     end
 

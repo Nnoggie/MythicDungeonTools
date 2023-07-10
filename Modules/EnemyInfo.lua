@@ -21,16 +21,18 @@ local function CreateDispatcher(argCount)
     ]]
 
   local ARGS = {}
-  for i = 1, argCount do ARGS[i] = "arg" .. i end
+  for i = 1, argCount do ARGS[i] = "arg"..i end
   code = code:gsub("ARGS", tconcat(ARGS, ", "))
-  return assert(loadstring(code, "safecall Dispatcher[" .. argCount .. "]"))(xpcall, errorhandler)
+  return assert(loadstring(code, "safecall Dispatcher["..argCount.."]"))(xpcall, errorhandler)
 end
 
-local Dispatchers = setmetatable({}, { __index = function(self, argCount)
-  local dispatcher = CreateDispatcher(argCount)
-  rawset(self, argCount, dispatcher)
-  return dispatcher
-end })
+local Dispatchers = setmetatable({}, {
+  __index = function(self, argCount)
+    local dispatcher = CreateDispatcher(argCount)
+    rawset(self, argCount, dispatcher)
+    return dispatcher
+  end
+})
 Dispatchers[0] = function(func)
   return xpcall(func, errorhandler)
 end
@@ -116,7 +118,6 @@ local function MakeEnemeyInfoFrame()
 
   --EnemyInfo
   local function DrawGroup1(container)
-
     ---LEFT
     local leftContainer = AceGUI:Create("SimpleGroup")
     f.leftContainer = leftContainer
@@ -359,7 +360,7 @@ local function MakeEnemeyInfoFrame()
       SendChatMessage(string.format(L["MDT: Spells for %s:"], enemyName), distribution)
       for i, child in pairs(f.spellScroll.children) do
         local link = GetSpellLink(child.spellId)
-        SendChatMessage(i .. ". " .. link, distribution)
+        SendChatMessage(i..". "..link, distribution)
       end
     end)
     spellButtonsContainer:AddChild(sendSpellsButton)

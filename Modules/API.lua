@@ -10,7 +10,6 @@ do
   --- @param npcId number
   --- @return number | nil, number | nil, number | nil, number | nil
   function MDT:GetEnemyForces(npcId)
-
     local zoneId = C_Map.GetBestMapForUnit("player")
     local dungeonIdx = self.zoneIdToDungeonIdx[zoneId]
 
