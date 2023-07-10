@@ -22,8 +22,8 @@ function MDT:ExportString(export)
     editBox:SetText(export)
     editBox:HighlightText(0, slen(export))
     editBox:SetFocus()
-    MDT.copyHelper:SmartShow(MDT.main_frame,0,50)
-  end,"exportString")
+    MDT.copyHelper:SmartShow(MDT.main_frame, 0, 50)
+  end, "exportString")
 end
 
 --https://www.lua.org/pil/19.3.html
@@ -31,11 +31,13 @@ local function pairsByKeys(t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
   table.sort(a, f)
-  local i = 0 -- iterator variable
+  local i = 0             -- iterator variable
   local iter = function() -- iterator function
     i = i + 1
-    if a[i] == nil then return nil
-    else return a[i], t[a[i]]
+    if a[i] == nil then
+      return nil
+    else
+      return a[i], t[a[i]]
     end
   end
   return iter
@@ -44,7 +46,7 @@ end
 local function getIndent(indentCount)
   local indent = ""
   for i = 1, indentCount do
-    indent = indent .. "  " --indent with 2 spaces
+    indent = indent.."  " --indent with 2 spaces
   end
   return indent
 end
@@ -54,16 +56,14 @@ local function recursiveExport(obj, schema, indentCount)
   local actualObjectType = type(obj)
   if schema.type == "schemaArray" then
     if actualObjectType ~= "table" then
-      print("MDT recursiveExport: Error in " ..
-        schema.name ..
-        ": Expected table, got " .. actualObjectType .. " (field: " .. schema.name .. "; value: " .. tostring(obj) .. ")")
-      return "\"Error: Expected table, got " .. actualObjectType .. " (value: " .. tostring(obj) .. ")\";\n"
+      print("MDT recursiveExport: Error in "..schema.name..": Expected table, got "..actualObjectType.." (field: "..schema.name.."; value: "..tostring(obj)..")")
+      return "\"Error: Expected table, got "..actualObjectType.." (value: "..tostring(obj)..")\";\n"
     end
-    res = res .. "{\n"
+    res = res.."{\n"
     for _, field in ipairs(schema.fields) do
       if obj[field.name] then
-        res = res .. getIndent(indentCount + 1) .. "[\"" .. field.name .. "\"] = "
-        res = res .. recursiveExport(obj[field.name], field, indentCount + 1)
+        res = res..getIndent(indentCount + 1).."[\""..field.name.."\"] = "
+        res = res..recursiveExport(obj[field.name], field, indentCount + 1)
       end
     end
     --handle non schema fields
@@ -75,44 +75,41 @@ local function recursiveExport(obj, schema, indentCount)
         end
       end
       if not keyExists then
-        local valueType = type(value)
+        local valueType
+        valueType = type(value)
         if valueType == "table" then
           valueType = "array"
         end
-        print("MDT recursiveExport: Error: Non schema field " ..
-          key ..
-          " of type " .. valueType .. " in " .. (schema.name or
-              "unnamed schema") .. " (field: " .. key .. "; value: " .. tostring(value) .. ")")
-        res = res .. getIndent(indentCount + 1) .. "[\"" .. key .. "\"] = "
-        res = res .. recursiveExport(value, { type = valueType }, indentCount + 1)
+        print("MDT recursiveExport: Error: Non schema field "..key.." of type "..valueType.." in "..(schema.name or "unnamed schema").." (field: "..key.."; value: "..tostring(value)..")")
+        res = res..getIndent(indentCount + 1).."[\""..key.."\"] = "
+        res = res..recursiveExport(value, { type = valueType }, indentCount + 1)
       end
     end
-    return res .. getIndent(indentCount) .. "};\n"
+    return res..getIndent(indentCount).."};\n"
   elseif schema.type == "array" then
     if actualObjectType ~= "table" then
-      print("MDT recursiveExport: Error: Expected table, got " .. actualObjectType .. " (value: " .. tostring(obj) .. ")")
-      return "\"Error: Expected table, got " .. actualObjectType .. " (value: " .. tostring(obj) .. ")\";\n"
+      print("MDT recursiveExport: Error: Expected table, got "..actualObjectType.." (value: "..tostring(obj)..")")
+      return "\"Error: Expected table, got "..actualObjectType.." (value: "..tostring(obj)..")\";\n"
     end
-    res = res .. "{\n"
+    res = res.."{\n"
     for fieldName, value in pairsByKeys(obj) do
       local fieldNameType = type(fieldName)
       local maybeEscapedQuote = fieldNameType == "string" and "\"" or ""
-      res = res .. getIndent(indentCount + 1) .. "[" .. maybeEscapedQuote .. fieldName .. maybeEscapedQuote .. "] = "
-      res = res .. recursiveExport(value, schema.fields, indentCount + 1)
+      res = res..getIndent(indentCount + 1).."["..maybeEscapedQuote..fieldName..maybeEscapedQuote.."] = "
+      res = res..recursiveExport(value, schema.fields, indentCount + 1)
     end
-    return res .. getIndent(indentCount) .. "};\n"
+    return res..getIndent(indentCount).."};\n"
   elseif actualObjectType ~= schema.type then
-    print("MDT recursiveExport: Error: Expected " ..
-      schema.type .. ", got " .. actualObjectType .. " (field: " .. schema.name .. "; value: " .. tostring(obj) .. ")")
-    return "\"TYPEERROR: " ..
-        schema.type .. " expected, " .. actualObjectType .. " found" .. " (value: " .. tostring(obj) .. ")\";\n"
+    print("MDT recursiveExport: Error: Expected "..schema.type..", got "..actualObjectType.." (field: "..schema.name.."; value: "..tostring(obj)..")")
+    return "\"TYPEERROR: "..
+        schema.type.." expected, "..actualObjectType.." found".." (value: "..tostring(obj)..")\";\n"
   elseif schema.type == "string" then
     if obj == "\n" then
       return "\"\\n\";\n"
     end
-    return "\"" .. obj .. "\";\n"
+    return "\""..obj.."\";\n"
   else
-    return tostring(obj) .. ";\n"
+    return tostring(obj)..";\n"
   end
 end
 
@@ -121,7 +118,7 @@ function MDT:ExportLuaTable(obj, schema)
     print("MDT: ExportLuaTable: obj is nil")
     return
   end
-  return (schema.name or "local table") .. " = " .. recursiveExport(obj, schema, 0)
+  return (schema.name or "local table").." = "..recursiveExport(obj, schema, 0)
 end
 
 --- @param target "enemies" | "pois"
@@ -178,8 +175,7 @@ do
         local schema = MDT:GetSchema(targetIsEnemies and "enemies" or "pois")
         local export = MDT:ExportLuaTable(obj, schema)
         MDT:ExportString(export)
-      end,"exportIncrementally")
+      end, "exportIncrementally")
     end
   end
-
 end
