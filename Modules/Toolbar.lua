@@ -1176,5 +1176,13 @@ function MDT:DrawNote(x, y, text, objectIndex)
     GameTooltip:Hide()
   end)
 
+  -- Interface\AddOns\Blizzard_MapCanvas\MapCanvas_DataProviderBase.lua calls this function when a pin is clicked
+  -- to avoid lua error we create it here
+  note.GetMap = function()
+    return {
+      ProcessGlobalPinMouseActionHandlers = function(...) end,
+    }
+  end
+
   note:Show()
 end
