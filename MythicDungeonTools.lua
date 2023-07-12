@@ -3714,7 +3714,9 @@ function MDT:PickPullButton(idx, keepPicked)
     MDT:ClearPullButtonPicks()
   end
   local frame = MDT.main_frame.sidePanel
-  frame.newPullButtons[idx]:Pick()
+  if frame.newPullButtons[idx] then
+    frame.newPullButtons[idx]:Pick()
+  end
 end
 
 ---Creates a new pull in the current preset and calls ReloadPullButtons to reflect the change in the scrollframe
