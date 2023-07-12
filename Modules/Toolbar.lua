@@ -362,14 +362,15 @@ function MDT:DisableBrushPreview()
 end
 
 ---ToggleToolbarTooltip
-function MDT:ToggleToolbarTooltip(show, widget)
+function MDT:ToggleToolbarTooltip(show, widget, anchor)
   if not show then
     GameTooltip:Hide()
   else
+    anchor = anchor or "ANCHOR_BOTTOM"
     local yOffset = -1
     if widget.type == "EditBox" then yOffset = yOffset - 1 end
     if widget.type == "ColorPicker" then yOffset = yOffset - 3 end
-    GameTooltip:SetOwner(widget.frame, "ANCHOR_BOTTOM", 0, yOffset)
+    GameTooltip:SetOwner(widget.frame, anchor, 0, yOffset)
     GameTooltip:SetText(widget.tooltipText, 1, 1, 1, 1)
     GameTooltip:Show()
   end

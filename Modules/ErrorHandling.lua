@@ -11,7 +11,9 @@ local DESTINATIONS = {
   { name = "Discord", url = "https://discord.gg/tdxMPb3" },
 }
 
-function MDT:DisplayErrors()
+function MDT:DisplayErrors(force)
+  if not force and hasShown then return end
+  hasShown = true
   if #caughtErrors == 0 then return end
   if MDT.initSpinner then
     MDT.initSpinner:Hide()
@@ -117,6 +119,38 @@ function MDT:DisplayErrors()
 
     errorFrame:AddChild(errorFrame.errorBox)
     errorFrame:AddChild(errorFrame.errorBoxCopyButton)
+
+    --error button
+    local errorButton = AceGUI:Create("Icon")
+    errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0.25, 0.5)
+    errorButton:SetCallback("OnClick", function(widget, callbackName)
+      MDT:DisplayErrors("true")
+    end)
+    errorButton.tooltipText = L["encounteredErrors"]
+    errorButton:SetWidth(24)
+    errorButton:SetImageSize(20, 20)
+    errorButton:SetCallback("OnEnter", function(widget, callbackName)
+      MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
+    end)
+    errorButton:SetCallback("OnLeave", function()
+      MDT:ToggleToolbarTooltip(false)
+    end)
+
+    local errorButtonGroup = AceGUI:Create("SimpleGroup")
+    errorButtonGroup.frame:ClearAllPoints()
+    if not errorButtonGroup.frame.SetBackdrop then
+      Mixin(errorButtonGroup.frame, BackdropTemplateMixin)
+    end
+    errorButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
+    errorButtonGroup:SetWidth(40)
+    errorButtonGroup:SetHeight(40)
+    errorButtonGroup:SetPoint("LEFT", MDTVersion, "RIGHT", -5, -1)
+    errorButtonGroup:SetLayout("Flow")
+    errorButtonGroup.frame:SetFrameStrata("High")
+    errorButtonGroup.frame:SetFrameLevel(7)
+    errorButtonGroup.frame:ClearBackdrop()
+    errorButtonGroup:AddChild(errorButton)
+    MDT:FixAceGUIShowHide(errorButtonGroup, MDT.main_frame)
   end
 
   for _, error in ipairs(caughtErrors) do
@@ -167,11 +201,11 @@ local function onError(msg, stackTrace, name)
   addTrace = true
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
-    MDT:DisplayErrors()
+    MDT:DisplayErrors(true)
   end)
   --if spam erroring then show errors early otherwise risk error display never showing
   if numError > 100 then
-    MDT:DisplayErrors()
+    MDT:DisplayErrors(true)
   end
   return false
 end
@@ -201,20 +235,25 @@ function MDT:RegisterErrorHandledFunctions()
     ["OnError"] = true,
     ["DeepCopy"] = true,
   }
-  for funcName, func in pairs(MDT) do
-    if type(func) == "function" and not blacklisted[funcName] then
-      MDT[funcName] = function(...)
-        currentFunc = funcName
-        local results = { xpcall(func, onError, ...) }
-        local ok = select(1, unpack(results))
-        if not ok then
-          if addTrace then
-            --add stackTrace to the latest error
-            caughtErrors[#caughtErrors].stackTrace = currentFunc..":\n"..debugstack()
+  local tablesToAdd = {
+    MDT, MDTDungeonEnemyMixin
+  }
+  for k, table in pairs(tablesToAdd) do
+    for funcName, func in pairs(table) do
+      if type(func) == "function" and not blacklisted[funcName] then
+        table[funcName] = function(...)
+          currentFunc = funcName
+          local results = { xpcall(func, onError, ...) }
+          local ok = select(1, unpack(results))
+          if not ok then
+            if addTrace then
+              --add stackTrace to the latest error
+              caughtErrors[#caughtErrors].stackTrace = currentFunc..":\n"..debugstack()
+            end
+            return
           end
-          return
+          return select(2, unpack(results))
         end
-        return select(2, unpack(results))
       end
     end
   end
