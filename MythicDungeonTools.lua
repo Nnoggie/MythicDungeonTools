@@ -2382,10 +2382,23 @@ function MDT:EnsureDBTables()
   if not preset.value.pulls or (type(preset.value.pulls) ~= "table") then
     preset.value.pulls = {}
   else
-    --detect gaps in pull list and delete invalid pulls
-    for k, v in pairs(preset.value.pulls) do
-      if k == 0 or k > #preset.value.pulls then
-        preset.value.pulls[k] = nil
+    for pullIdx, pull in pairs(preset.value.pulls) do
+      --detect gaps in pull list and delete invalid pulls
+      if pullIdx == 0 or pullIdx > #preset.value.pulls then
+        preset.value.pulls[pullIdx] = nil
+      end
+      --fix wrong indexes of clones within pulls
+      for enemyIdx, clones in pairs(pull) do
+        local assignmentIdx = 1
+        if type(clones) == "table" then
+          for actualIndex, cloneIdx in pairs(clones) do
+            if actualIndex ~= assignmentIdx then
+              clones[assignmentIdx] = cloneIdx
+              clones[actualIndex] = nil
+            end
+            assignmentIdx = assignmentIdx + 1
+          end
+        end
       end
     end
   end
