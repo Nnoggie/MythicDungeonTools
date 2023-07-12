@@ -1136,7 +1136,10 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
   note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
   note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
-  note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(note.noteIdx, 0))
+  -- temporary fix for there not being enough textures in the atlas
+  -- should copy and fix the atlas instead
+  local idx = note.noteIdx % 25
+  note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
   note.Display.Icon:Show()
   note.tooltipText = text or ""
 
