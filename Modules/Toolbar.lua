@@ -923,11 +923,6 @@ end
 
 ---StartNoteDrawing
 function MDT:StartNoteDrawing()
-  --check if we have less than 25 notes
-  if notePoolCollection and notePoolCollection.pools.QuestPinTemplatenil.numActiveObjects > 24 then
-    MDT:UpdateSelectedToolbarTool()
-    return
-  end
   ---new object for storage
   ---x,y,sublevel,shown,text,n=true
   local x, y = MDT:GetCursorPosition()
@@ -1139,6 +1134,7 @@ function MDT:DrawNote(x, y, text, objectIndex)
   -- temporary fix for there not being enough textures in the atlas
   -- should copy and fix the atlas instead
   local idx = note.noteIdx % 25
+  if idx == 0 then idx = 1 end
   note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
   note.Display.Icon:Show()
   note.tooltipText = text or ""
