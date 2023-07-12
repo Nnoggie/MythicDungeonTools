@@ -174,7 +174,7 @@ local methods = {
           -- Add current pull to selection, if not already selected
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             if #MDT:GetSelection() == 1 then
-              MDT:SetSelectionToPull(self.index,true)
+              MDT:SetSelectionToPull(self.index, true)
             else
               tinsert(MDT:GetSelection(), self.index)
               self:Pick()
@@ -197,7 +197,6 @@ local methods = {
 
             EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           end
-
         else
           --normal click
           MDT:GetCurrentPreset().value.selection = { self.index }
@@ -408,7 +407,7 @@ local methods = {
     end
 
     tinsert(self.menu, {
-      text = L["Pull Drop Color"] .. ": ",
+      text = L["Pull Drop Color"]..": ",
       notCheckable = 1,
       hasColorSwatch = true,
       r = self.color.r,
@@ -653,7 +652,7 @@ local methods = {
     end
 
     tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Color"] .. ": ",
+      text = L["Pull Drop Color"]..": ",
       notCheckable = 1,
       hasColorSwatch = true,
       r = self.color.r,
@@ -921,7 +920,7 @@ local methods = {
 
 
           if scrollFrame.frame:IsMouseOver(scroll_hover.height, height - scroll_hover.offset, -dragdrop_overlap,
-            dragdrop_overlap) then
+                dragdrop_overlap) then
             self.top_hover = (self.top_hover or 0) + elapsed
             self.bottom_hover = 0
 
@@ -942,7 +941,7 @@ local methods = {
               self.top_hover = 0
             end
           elseif scrollFrame.frame:IsMouseOver(scroll_hover.offset - height, -scroll_hover.height, -dragdrop_overlap,
-            dragdrop_overlap) then
+                dragdrop_overlap) then
             self.bottom_hover = (self.bottom_hover or 0) + elapsed
             self.top_hover = 0
 
@@ -1016,7 +1015,6 @@ local methods = {
           sidePanel.newPullButtons[pullIdx].dragging = true
         end
       end
-
     end
 
     self.dragging = true
@@ -1185,7 +1183,7 @@ local methods = {
       end
       self.enemyPortraits[idx]:Show()
       self.enemyPortraits[idx].overlay:Show()
-      self.enemyPortraits[idx].fontString:SetText("x" .. data.quantity)
+      self.enemyPortraits[idx].fontString:SetText("x"..data.quantity)
       self.enemyPortraits[idx].fontString:Show()
     end
   end,
@@ -1196,14 +1194,14 @@ local methods = {
     if show then
       self.reapingIcon:Show()
       self.reapingIcon.overlay:Show()
-      perc = "|cFF00FF00" .. perc
+      perc = "|cFF00FF00"..perc
 
       local currentReaps = math.floor(currentPercent / 0.2)
       local oldReaps = math.floor(oldPercent / 0.2)
       local reapings = math.min(5, currentReaps - oldReaps)
 
       if reapings > 1 then
-        self.multiReapingFontString:SetText(reapings .. "x")
+        self.multiReapingFontString:SetText(reapings.."x")
         self.multiReapingFontString:Show()
       else
         self.multiReapingFontString:Hide()
@@ -1212,7 +1210,7 @@ local methods = {
       self.reapingIcon:Hide()
       self.reapingIcon.overlay:Hide()
       self.multiReapingFontString:Hide()
-      perc = "|cFFFFFFFF" .. perc
+      perc = "|cFFFFFFFF"..perc
     end
     local pullForces = MDT:CountForces(self.index, true)
     if pullForces > 0 then
@@ -1228,14 +1226,14 @@ local methods = {
     local perc = string.format("%.1f%%", currentPercent * 100)
     if show then
       self.pridefulIcon:Show()
-      perc = "|cFFFFFFFF" .. perc
+      perc = "|cFFFFFFFF"..perc
 
       local currentPrides = math.floor(currentPercent / 0.2)
       local oldPrides = math.floor(oldPercent / 0.2)
       local pridefuls = math.min(5, currentPrides - oldPrides)
 
       if pridefuls > 1 then
-        self.multiPridefulFontString:SetText(pridefuls .. "x")
+        self.multiPridefulFontString:SetText(pridefuls.."x")
         self.multiPridefulFontString:Show()
       else
         self.multiPridefulFontString:Hide()
@@ -1243,7 +1241,7 @@ local methods = {
     else
       self.pridefulIcon:Hide()
       self.multiPridefulFontString:Hide()
-      perc = "|cFFFFFFFF" .. perc
+      perc = "|cFFFFFFFF"..perc
     end
     local pullForces = MDT:CountForces(self.index, true)
     if pullForces > 0 then
@@ -1302,7 +1300,7 @@ local methods = {
 }
 --Constructor
 local function Constructor()
-  local name = "MDTPullButton" .. AceGUI:GetNextWidgetNum(Type);
+  local name = "MDTPullButton"..AceGUI:GetNextWidgetNum(Type);
   local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
   button:SetHeight(height);
   button:SetWidth(width);
@@ -1367,7 +1365,6 @@ local function Constructor()
     enemyPortraits[i].fontString:SetHeight(10)
     enemyPortraits[i].fontString:SetPoint("BOTTOM", enemyPortraits[i], "BOTTOM", 0, 0)
     enemyPortraits[i].fontString:Hide()
-
   end
 
   --reaping icon
