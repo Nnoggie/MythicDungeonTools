@@ -499,6 +499,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   lastEnemyIdx = enemyIdx
   if not enemyIdx then return end
   local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+  if not data then return end
   local f = MDT.EnemyInfoFrame
   f:SetTitle(L[data.name])
   f.model:SetDisplayInfo(data.displayId or 39490)
