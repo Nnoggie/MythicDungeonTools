@@ -170,6 +170,7 @@ function MDT:DisplayErrors(force)
     [3] = "Europe",
     [4] = "Taiwan",
     [5] = "China",
+    [72] = "PTR"
   }
   local region = regions[regionId]
   errorBoxText = errorBoxText.."\n"..dateString.."\nMDT: "..addonVersion.."\nClient: "..gameVersion.." "..locale.."\nCharacter: "..name.."-"..realm.." ("..region..")".."\n\nRoute:\n"..presetExport
