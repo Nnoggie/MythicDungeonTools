@@ -1097,6 +1097,16 @@ do
   })
 end
 
+local function POIButton_CalculateNumericTexCoords(index, color)
+  if index then
+    color = color or 0.5;
+    local iconIndex = index - 1;
+    local yOffset = color + floor(iconIndex / 8) * 0.125;
+    local xOffset = mod(iconIndex, 8) * 0.125;
+    return xOffset, xOffset + 0.125, yOffset, yOffset + 0.125;
+  end
+end
+
 ---DrawNote
 function MDT:DrawNote(x, y, text, objectIndex)
   if not notePoolCollection then
@@ -1125,7 +1135,7 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
   note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
   note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
-  note.Display.Icon:SetTexCoord(QuestPOI_CalculateNumericTexCoords(note.noteIdx, QUEST_POI_COLOR_BLACK))
+  note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(note.noteIdx, 0))
   note.Display.Icon:Show()
   note.tooltipText = text or ""
 
