@@ -792,10 +792,10 @@ local methods = {
     self.frame:SetScript("OnEnter", self.callbacks.OnEnter);
     self.frame:SetScript("OnLeave", self.callbacks.OnLeave);
     self.frame:EnableKeyboard(false);
-    self.frame:SetMovable(true);
-    self.frame:RegisterForDrag("LeftButton");
-    self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
-    self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
+    -- self.frame:SetMovable(true);
+    -- self.frame:RegisterForDrag("LeftButton");
+    -- self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
+    -- self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
     self:Enable();
 
     self:InitializeScrollHover()

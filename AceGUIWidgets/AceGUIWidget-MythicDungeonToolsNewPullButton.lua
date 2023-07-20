@@ -51,10 +51,10 @@ local methods = {
     self.frame:SetScript("OnClick", self.callbacks.OnClickNormal);
     self.frame:SetScript("OnKeyDown", self.callbacks.OnKeyDown);
     self.frame:EnableKeyboard(false);
-    self.frame:SetMovable(true);
-    self.frame:RegisterForDrag("LeftButton");
-    self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
-    self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
+    -- self.frame:SetMovable(true);
+    -- self.frame:RegisterForDrag("LeftButton");
+    -- self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
+    -- self.frame:SetScript("OnDragStop", self.callbacks.OnDragStop);
 
     self:Enable();
   end,
@@ -86,7 +86,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-  local name = "MDTNewPullButton" .. AceGUI:GetNextWidgetNum(Type);
+  local name = "MDTNewPullButton"..AceGUI:GetNextWidgetNum(Type);
   local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
   button:SetHeight(height);
   button:SetWidth(width);
