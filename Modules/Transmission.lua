@@ -296,6 +296,7 @@ MDT.dataCollectionPrefixes = {
   ["distribute"] = "MDTDataDist",
 }
 
+---@diagnostic disable-next-line: duplicate-set-field
 function MDTcommsObject:OnEnable()
   self:RegisterComm(presetCommPrefix)
   for _, prefix in pairs(MDT.liveSessionPrefixes) do
