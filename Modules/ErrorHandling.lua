@@ -10,6 +10,7 @@ local DESTINATIONS = {
   { name = "GitHub",  url = "https://github.com/Nnoggie/MythicDungeonTools/issues" },
   { name = "Discord", url = "https://discord.gg/tdxMPb3" },
 }
+local hasShown = false
 
 function MDT:DisplayErrors(force)
   if not force and hasShown then return end
