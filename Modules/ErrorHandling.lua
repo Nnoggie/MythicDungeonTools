@@ -122,7 +122,7 @@ function MDT:DisplayErrors(force)
 
     --error button
     local errorButton = AceGUI:Create("Icon")
-    errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0.25, 0.5)
+    errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.25, 0.5)
     errorButton:SetCallback("OnClick", function(widget, callbackName)
       MDT:DisplayErrors("true")
     end)
