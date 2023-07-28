@@ -105,11 +105,11 @@ local function recursiveExport(obj, schema, indentCount)
         schema.type.." expected, "..actualObjectType.." found".." (value: "..tostring(obj)..")\";\n"
   elseif schema.type == "string" then
     if obj == "\n" then
-      return "\"\\n\";\n"
+      return "\"\\n\",\n"
     end
-    return "\""..obj.."\";\n"
+    return "\""..obj.."\",\n"
   else
-    return tostring(obj)..";\n"
+    return tostring(obj)..",\n"
   end
 end
 
