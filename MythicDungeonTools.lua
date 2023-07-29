@@ -4628,6 +4628,9 @@ function MDT:CreateCoroutineHandler()
     if not name then
       name = string.format("NIL", coHandler.size + 1);
     end
+    if coHandler.update[name] then
+      name = name..MDT.U.GetUniqueId(11)
+    end
     if not coHandler.update[name] then
       coHandler.update[name] = func;
       coHandler.size = coHandler.size + 1
