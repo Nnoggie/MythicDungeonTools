@@ -1,3 +1,5 @@
+- v4.0.4.19
+  - ux improvements
 - v4.0.4.18
   - removed zealot in halls of infusion (exists in mythic but not m+)
 - v4.0.4.17
