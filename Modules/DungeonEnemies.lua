@@ -296,8 +296,11 @@ end
 
 function MDTDungeonEnemyMixin:OnClick(button, down)
   if button == "LeftButton" then
-    if IsShiftKeyDown() then
-      local newPullIdx = MDT:GetCurrentPull() + 1
+    if IsShiftKeyDown() and not self.selected then
+      local x, y = MDT:GetCursorPosition()
+      local newPullIdx = MDT:FindClosestPull(x, y)
+      newPullIdx = newPullIdx or MDT:GetCurrentPull()
+      newPullIdx = newPullIdx + 1
       MDT:PresetsAddPull(newPullIdx)
       MDT:GetCurrentPreset().value.selection = { newPullIdx }
       MDT:ReloadPullButtons()
@@ -305,6 +308,11 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
       local _
       MDT:ColorAllPulls(_, newPullIdx)
       --if MDT:GetPullsNum() == 2 then MDT:SetAutomaticColor(1) end
+    else
+      if self.selected then
+        local pIdx = MDT:FindPullOfBlip(self)
+        MDT:SetSelectionToPull(pIdx)
+      end
     end
     MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, not self.selected, IsControlKeyDown())
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())

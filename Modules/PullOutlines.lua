@@ -126,6 +126,21 @@ local function getFontString()
     fsFrame:SetFrameLevel(100)
     fsFrame:SetWidth(40)
     fsFrame:SetHeight(40)
+    local clickArea = CreateFrame("Button", "MDTFontString"..frameIndex.."ClickArea", fsFrame)
+    clickArea:SetAllPoints(fsFrame)
+    clickArea:SetFrameStrata("MEDIUM")
+    clickArea:SetScript("OnClick", function(self, button, down)
+      if button == "LeftButton" then
+        MDT:SetSelectionToPull(self:GetParent().pullIdx)
+      end
+    end)
+    clickArea:SetScript("OnEnter", function(self)
+      self:GetParent().fs:SetScale(1.7)
+    end)
+    clickArea:SetScript("OnLeave", function(self)
+      self:GetParent().fs:SetScale(1)
+    end)
+    fsFrame.clickArea = clickArea
     local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
     fs:SetPoint("CENTER", 0, 0)
     fs:SetJustifyH("CENTER")
@@ -186,6 +201,12 @@ function MDT:DrawHullFontString(hull, pullIdx)
   end
   if not center then return end
   local fsFrame = getFontString()
+  fsFrame.pullIdx = pullIdx
+  if MDT:GetCurrentPull() == pullIdx then
+    fsFrame.fs:SetTextColor(1, 1, 1, 1)
+  else
+    fsFrame.fs:SetTextColor(1, 1, 1, 0.5)
+  end
   fsFrame.fs:SetText(pullIdx)
   fsFrame:ClearAllPoints()
   fsFrame:SetSize(40, 40)
@@ -194,11 +215,12 @@ function MDT:DrawHullFontString(hull, pullIdx)
   tinsert(activeFontStrings, fsFrame)
 end
 
-function MDT:DrawHullCircle(x, y, size, color, layer, layerSublevel)
+function MDT:DrawHullCircle(x, y, size, color, alpha, layer, layerSublevel)
   local circle = getTexture()
   circle:SetDrawLayer(layer, layerSublevel)
   circle:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White")
-  circle:SetVertexColor(color.r, color.g, color.b, color.a)
+  local a = alpha ~= 1 and 0 or alpha
+  circle:SetVertexColor(color.r, color.g, color.b, a)
   circle:SetWidth(1.1 * size)
   circle:SetHeight(1.1 * size)
   circle:ClearAllPoints()
@@ -207,22 +229,24 @@ function MDT:DrawHullCircle(x, y, size, color, layer, layerSublevel)
   tinsert(activeTextures, circle)
 end
 
-function MDT:DrawHullLine(x, y, a, b, size, color, smooth, layer, layerSublevel, lineFactor)
+function MDT:DrawHullLine(x, y, a, b, size, color, alpha, smooth, layer, layerSublevel, lineFactor)
   local line = getTexture()
   line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
-  line:SetVertexColor(color.r, color.g, color.b, color.a)
+  line:SetVertexColor(color.r, color.g, color.b, alpha)
   DrawLine(line, MDT.main_frame.mapPanelTile1, x, y, a, b, size, lineFactor and lineFactor or 1.1, "TOPLEFT")
   line:SetDrawLayer(layer, layerSublevel)
   line:Show()
   line.coords = { x, y, a, b }
   tinsert(activeTextures, line)
   if smooth == true then
-    MDT:DrawHullCircle(x, y, size * 0.9, color, layer, layerSublevel)
+    MDT:DrawHullCircle(x, y, size * 0.9, color, alpha, layer, layerSublevel)
   end
 end
 
 function MDT:DrawHull(vertices, pullColor, pullIdx)
-  --if true then return end
+  local isCurrent = MDT:GetCurrentPull() == pullIdx
+  local sizeMultiplier = isCurrent and 1.4 or 0.8
+  local alpha = isCurrent and 1 or 0.5
   local hull = convex_hull(vertices)
   if hull then
     -- expand_polygon: higher value = more points = more expensive = smoother outlines
@@ -236,7 +260,7 @@ function MDT:DrawHull(vertices, pullColor, pullIdx)
       if i ~= #hull then b = hull[i + 1] end
       --layerSublevel go from -8 to 7
       --we rotate through the layerSublevel to avoid collisions
-      MDT:DrawHullLine(a[1], a[2], b[1], b[2], 3 * (MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor,
+      MDT:DrawHullLine(a[1], a[2], b[1], b[2], sizeMultiplier * 3 * (MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, alpha,
         true, "ARTWORK", pullIdx % 16 - 8, 1)
     end
   end
