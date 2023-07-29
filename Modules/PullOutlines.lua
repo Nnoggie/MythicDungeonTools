@@ -1,6 +1,8 @@
 local _, MDT = ...
 local twipe, tinsert, tremove, tgetn = table.wipe, table.insert, table.remove, table.getn
 
+local NONACTIVE_ALPHA = 0.5
+
 -- return true if a is more lower-left than b
 local function is_lower_left(a, b)
   if a[1] < b[1] then return true end
@@ -99,6 +101,7 @@ local function getTexture()
   else
     local tex = texturePool[size]
     tremove(texturePool, size)
+    tex.isCircle = nil
     tex:SetRotation(0)
     tex:SetTexCoord(0, 1, 0, 1)
     tex:ClearAllPoints()
@@ -136,9 +139,28 @@ local function getFontString()
     end)
     clickArea:SetScript("OnEnter", function(self)
       self:GetParent().fs:SetScale(1.7)
+      self:GetParent().fs:SetAlpha(1)
+      for _, tex in pairs(activeTextures) do
+        if tex.pullIdx == self:GetParent().pullIdx then
+          tex:SetAlpha(1)
+        end
+      end
     end)
     clickArea:SetScript("OnLeave", function(self)
       self:GetParent().fs:SetScale(1)
+      local isCurrentPull = MDT:GetCurrentPull() ~= self:GetParent().pullIdx
+      self:GetParent().fs:SetAlpha(isCurrentPull and NONACTIVE_ALPHA or 1)
+      for _, tex in pairs(activeTextures) do
+        if tex.pullIdx == self:GetParent().pullIdx then
+          if isCurrentPull then
+            if tex.isCircle then
+              tex:SetAlpha(0)
+            else
+              tex:SetAlpha(NONACTIVE_ALPHA)
+            end
+          end
+        end
+      end
     end)
     fsFrame.clickArea = clickArea
     local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
@@ -205,7 +227,7 @@ function MDT:DrawHullFontString(hull, pullIdx)
   if MDT:GetCurrentPull() == pullIdx then
     fsFrame.fs:SetTextColor(1, 1, 1, 1)
   else
-    fsFrame.fs:SetTextColor(1, 1, 1, 0.5)
+    fsFrame.fs:SetTextColor(1, 1, 1, NONACTIVE_ALPHA)
   end
   fsFrame.fs:SetText(pullIdx)
   fsFrame:ClearAllPoints()
@@ -215,7 +237,7 @@ function MDT:DrawHullFontString(hull, pullIdx)
   tinsert(activeFontStrings, fsFrame)
 end
 
-function MDT:DrawHullCircle(x, y, size, color, alpha, layer, layerSublevel)
+function MDT:DrawHullCircle(x, y, size, color, alpha, layer, layerSublevel, pullIdx)
   local circle = getTexture()
   circle:SetDrawLayer(layer, layerSublevel)
   circle:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White")
@@ -226,10 +248,12 @@ function MDT:DrawHullCircle(x, y, size, color, alpha, layer, layerSublevel)
   circle:ClearAllPoints()
   circle:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)
   circle:Show()
+  circle.pullIdx = pullIdx
+  circle.isCircle = true
   tinsert(activeTextures, circle)
 end
 
-function MDT:DrawHullLine(x, y, a, b, size, color, alpha, smooth, layer, layerSublevel, lineFactor)
+function MDT:DrawHullLine(x, y, a, b, size, color, alpha, smooth, layer, layerSublevel, lineFactor, pullIdx)
   local line = getTexture()
   line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
   line:SetVertexColor(color.r, color.g, color.b, alpha)
@@ -237,16 +261,17 @@ function MDT:DrawHullLine(x, y, a, b, size, color, alpha, smooth, layer, layerSu
   line:SetDrawLayer(layer, layerSublevel)
   line:Show()
   line.coords = { x, y, a, b }
+  line.pullIdx = pullIdx
   tinsert(activeTextures, line)
   if smooth == true then
-    MDT:DrawHullCircle(x, y, size * 0.9, color, alpha, layer, layerSublevel)
+    MDT:DrawHullCircle(x, y, size * 0.9, color, alpha, layer, layerSublevel, pullIdx)
   end
 end
 
 function MDT:DrawHull(vertices, pullColor, pullIdx)
   local isCurrent = MDT:GetCurrentPull() == pullIdx
   local sizeMultiplier = isCurrent and 1.4 or 0.8
-  local alpha = isCurrent and 1 or 0.5
+  local alpha = isCurrent and 1 or NONACTIVE_ALPHA
   local hull = convex_hull(vertices)
   if hull then
     -- expand_polygon: higher value = more points = more expensive = smoother outlines
@@ -261,7 +286,7 @@ function MDT:DrawHull(vertices, pullColor, pullIdx)
       --layerSublevel go from -8 to 7
       --we rotate through the layerSublevel to avoid collisions
       MDT:DrawHullLine(a[1], a[2], b[1], b[2], sizeMultiplier * 3 * (MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, alpha,
-        true, "ARTWORK", pullIdx % 16 - 8, 1)
+        true, "ARTWORK", pullIdx % 16 - 8, 1, pullIdx)
     end
   end
 end
