@@ -120,7 +120,7 @@ local function getGroupMembers(reversed, forceParty)
     if i == 0 and unit == 'party' then
       ret = 'player'
     elseif i <= numGroupMembers and i > 0 then
-      ret = unit .. i
+      ret = unit..i
     end
     i = i + (reversed and -1 or 1)
     return ret
@@ -135,9 +135,85 @@ U.GetGroupMembers = function()
     if name then
       local _, class = UnitClass(unit)
       local _, _, _, classHexString = GetClassColor(class)
-      local coloredName = "|c" .. classHexString .. name .. "|r"
+      local coloredName = "|c"..classHexString..name.."|r"
       tinsert(groupMembers, coloredName)
     end
   end
   return groupMembers
+end
+
+local bytetoB64 = {
+  [0] = "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "(",
+  ")"
+}
+
+---generates a unique random id
+U.GetUniqueId = function(length)
+  local s = {}
+  for i = 1, 11 do
+    tinsert(s, bytetoB64[math.random(0, 63)])
+  end
+  return table.concat(s)
 end
