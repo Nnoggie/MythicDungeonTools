@@ -3147,12 +3147,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
           [3] = true;
         };
       };
-      [4] = {
-        ["x"] = 340.82115788239;
-        ["y"] = -343.39725940808;
-        ["g"] = 70;
-        ["sublevel"] = 1;
-      };
       [8] = {
         ["x"] = 409.90550033856;
         ["y"] = -400.42291306931;
@@ -3206,12 +3200,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["infested"] = {
         };
       };
-      [10] = {
-        ["x"] = 343.37221837109;
-        ["y"] = -340.27929118217;
-        ["g"] = 70;
-        ["sublevel"] = 1;
-      };
       [11] = {
         ["x"] = 263.48379209555;
         ["y"] = -394.73195728908;
@@ -3232,12 +3220,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["infested"] = {
           [1] = true;
         };
-      };
-      [14] = {
-        ["x"] = 346.20670839968;
-        ["y"] = -338.01170889079;
-        ["g"] = 70;
-        ["sublevel"] = 1;
       };
       [15] = {
         ["x"] = 242.86446287352;
@@ -4285,6 +4267,50 @@ MDT.dungeonEnemies[dungeonIndex] = {
           [11] = true;
           [12] = true;
         };
+      };
+    };
+  };
+  [43] = {
+    ["name"] = "Freehold Deckhand";
+    ["id"] = 130521;
+    ["count"] = 1;
+    ["health"] = 197676;
+    ["scale"] = 0.6;
+    ["neutral"] = true;
+    ["displayId"] = 78623;
+    ["creatureType"] = "Humanoid";
+    ["level"] = 70;
+    ["reaping"] = 148716;
+    ["characteristics"] = {
+      ["Taunt"] = true;
+      ["Incapacitate"] = true;
+      ["Silence"] = true;
+      ["Root"] = true;
+      ["Fear"] = true;
+      ["Sap"] = true;
+      ["Stun"] = true;
+      ["Slow"] = true;
+    };
+    ["spells"] = {
+    };
+    ["clones"] = {
+      [1] = {
+        ["x"] = 340.82115788239;
+        ["y"] = -343.39725940808;
+        ["g"] = 70;
+        ["sublevel"] = 1;
+      };
+      [2] = {
+        ["x"] = 343.37221837109;
+        ["y"] = -340.27929118217;
+        ["g"] = 70;
+        ["sublevel"] = 1;
+      };
+      [3] = {
+        ["x"] = 346.20670839968;
+        ["y"] = -338.01170889079;
+        ["g"] = 70;
+        ["sublevel"] = 1;
       };
     };
   };
