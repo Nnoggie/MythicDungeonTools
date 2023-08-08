@@ -303,10 +303,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
       newPullIdx = newPullIdx + 1
       MDT:PresetsAddPull(newPullIdx)
       MDT:GetCurrentPreset().value.selection = { newPullIdx }
-      MDT:ReloadPullButtons()
       MDT:SetSelectionToPull(newPullIdx)
-      local _
-      MDT:ColorAllPulls(_, newPullIdx)
     end
     MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, not self.selected, IsControlKeyDown())
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
@@ -891,7 +888,7 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
         end
       end
     end
-    if not ignoreUpdates then self:UpdatePullButtonNPCData(pullIdx) end
+    -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pullIdx) end
   end
   if add then
     if blip then blip.selected = true end
@@ -918,7 +915,7 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
       end
     end
   end
-  if not ignoreUpdates then self:UpdatePullButtonNPCData(pull) end
+  -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pull) end
 end
 
 ---DungeonEnemies_UpdateBlipColors
@@ -1011,7 +1008,7 @@ function MDT:DungeonEnemies_UpdateSelected(pull, pulls, ignoreHulls)
       end
     end
   end
-  if not ignoreHulls then MDT:DrawAllHulls(pulls) end
+  -- if not ignoreHulls then MDT:DrawAllHulls(pulls) end
 end
 
 ---DungeonEnemies_SetPullColor

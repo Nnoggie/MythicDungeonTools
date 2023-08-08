@@ -286,11 +286,9 @@ local methods = {
         MDT:PresetsAddPull(self.index)
         MDT:ReloadPullButtons()
         MDT:SetSelectionToPull(self.index)
-        MDT:ColorAllPulls(_, self.index)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
-        MDT:DrawAllHulls()
       end
     })
 
@@ -301,11 +299,9 @@ local methods = {
         MDT:PresetsAddPull(self.index + 1)
         MDT:ReloadPullButtons()
         MDT:SetSelectionToPull(self.index + 1)
-        MDT:ColorAllPulls(_, self.index + 1)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
-        MDT:DrawAllHulls()
       end
     })
     if self.index ~= 1 then
@@ -316,11 +312,9 @@ local methods = {
           local newIndex = MDT:PresetsMergePulls(self.index, self.index - 1)
           MDT:ReloadPullButtons()
           MDT:SetSelectionToPull(newIndex)
-          MDT:ColorAllPulls(_, newIndex)
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
-          MDT:DrawAllHulls()
         end
       })
     end
@@ -332,11 +326,9 @@ local methods = {
           local newIndex = MDT:PresetsMergePulls(self.index, self.index + 1)
           MDT:ReloadPullButtons()
           MDT:SetSelectionToPull(newIndex)
-          MDT:ColorAllPulls(_, newIndex)
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
-          MDT:DrawAllHulls()
         end
       })
     end
@@ -367,8 +359,7 @@ local methods = {
           MDT.main_frame.toggleForceColorBlindMode:SetDisabled(false)
         end
         MDT:SetPresetColorPaletteInfo()
-        MDT:ColorAllPulls()
-        MDT:DrawAllHulls()
+        MDT:ReloadPullButtons()
       end
     })
     local function swatchFunc()
@@ -503,11 +494,9 @@ local methods = {
         MDT:ReloadPullButtons()
         MDT:SetSelectionToPull(self.index)
         --MDT:UpdateAutomaticColors(self.index)
-        MDT:ColorAllPulls(_, self.index)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
-        MDT:DrawAllHulls()
       end
     })
 
@@ -527,11 +516,9 @@ local methods = {
         MDT:ReloadPullButtons()
         MDT:SetSelectionToPull(self.index + 1)
         --MDT:UpdateAutomaticColors(self.index + 1)
-        MDT:ColorAllPulls(_, self.index + 1)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
-        MDT:DrawAllHulls()
       end
     })
     tinsert(self.multiselectMenu, {
@@ -552,11 +539,9 @@ local methods = {
         MDT:ReloadPullButtons()
         MDT:GetCurrentPreset().value.selection = { newIndex }
         MDT:SetSelectionToPull(newIndex)
-        MDT:ColorAllPulls(_, newIndex)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
-        MDT:DrawAllHulls()
       end
     })
     tinsert(self.multiselectMenu, {
@@ -1115,8 +1100,6 @@ local methods = {
 
     MDT:Hide_DropIndicator()
     --MDT:UpdateAutomaticColors(math.min(self.index, insertID))
-    MDT:ColorAllPulls(_, math.min(self.index, insertID))
-    MDT:DrawAllHulls()
     MDT.pullTooltip:Show()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())

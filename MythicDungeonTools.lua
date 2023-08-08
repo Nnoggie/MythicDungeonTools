@@ -1338,7 +1338,6 @@ function MDT:MakeSidePanel(frame)
       MDT:KillAllAnimatedLines()
       MDT:DrawAllAnimatedLines()
       MDT:ReloadPullButtons()
-      MDT:DrawAllHulls()
     else
       db.currentDifficulty = difficulty or db.currentDifficulty
     end
@@ -3204,8 +3203,7 @@ function MDT:MakeCustomColorFrame(frame)
       db.colorPaletteInfo.numberCustomColors = value
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ColorAllPulls()
-    MDT:DrawAllHulls()
+    MDT:ReloadPullButtons()
     frame.CustomColorFrame:ReleaseChildren()
     frame.CustomColorFrame:Release()
     MDT:MakeCustomColorFrame(frame)
@@ -3231,8 +3229,7 @@ function MDT:MakeCustomColorFrame(frame)
     ColorPicker[i]:SetCallback("OnValueConfirmed", function(widget, event, r, g, b)
       db.colorPaletteInfo.customPaletteValues[i] = { r, g, b }
       MDT:SetPresetColorPaletteInfo()
-      MDT:ColorAllPulls()
-      MDT:DrawAllHulls()
+      MDT:ReloadPullButtons()
     end)
     frame.CustomColorFrame:AddChild(ColorPicker[i])
   end
@@ -3269,8 +3266,7 @@ function MDT:MakeSettingsFrame(frame)
     frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
     if value == true then
       frame.toggleForceColorBlindMode:SetDisabled(false)
-      MDT:ColorAllPulls()
-      MDT:DrawAllHulls()
+      MDT:ReloadPullButtons()
       MDT.main_frame.settingsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconRnbw")
     else
       frame.toggleForceColorBlindMode:SetDisabled(true)
@@ -3286,8 +3282,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.toggleForceColorBlindMode:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.colorPaletteInfo.forceColorBlindMode = value
     MDT:SetPresetColorPaletteInfo()
-    MDT:ColorAllPulls()
-    MDT:DrawAllHulls()
+    MDT:ReloadPullButtons()
   end)
   frame.settingsFrame:AddChild(frame.toggleForceColorBlindMode)
 
@@ -3304,8 +3299,7 @@ function MDT:MakeSettingsFrame(frame)
       db.colorPaletteInfo.colorPaletteIdx = value
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ColorAllPulls()
-    MDT:DrawAllHulls()
+    MDT:ReloadPullButtons()
   end)
   frame.settingsFrame:AddChild(frame.PaletteSelectDropdown)
 
@@ -3322,8 +3316,7 @@ function MDT:MakeSettingsFrame(frame)
       frame.toggleForceColorBlindMode:SetDisabled(false)
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ColorAllPulls()
-    MDT:DrawAllHulls()
+    MDT:ReloadPullButtons()
   end)
   frame.settingsFrame:AddChild(frame.button)
 
@@ -3721,8 +3714,6 @@ function MDT:AddPull(index)
   MDT:PresetsAddPull(index)
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index)
-  MDT:ColorPull()
-  MDT:DrawAllHulls()
 end
 
 function MDT:SetAutomaticColor(index)
@@ -3759,8 +3750,6 @@ function MDT:ClearPull(index)
   MDT:EnsureDBTables()
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index)
-  MDT:ColorPull()
-  MDT:DrawAllHulls()
   --MDT:SetAutomaticColor(index)
 end
 
@@ -3769,8 +3758,6 @@ function MDT:MovePullUp(index)
   MDT:PresetsSwapPulls(index, index - 1)
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index - 1)
-  MDT:ColorAllPulls(_, index - 1)
-  MDT:DrawAllHulls()
   --MDT:UpdateAutomaticColors(index - 1)
 end
 
@@ -3779,8 +3766,6 @@ function MDT:MovePullDown(index)
   MDT:PresetsSwapPulls(index, index + 1)
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index + 1)
-  MDT:ColorAllPulls(_, index)
-  MDT:DrawAllHulls()
   --MDT:UpdateAutomaticColors(index)
 end
 
@@ -3797,8 +3782,6 @@ function MDT:DeletePull(index)
   if index > pullCount then index = pullCount end
   self:SetSelectionToPull(index)
   --self:UpdateAutomaticColors(index)
-  self:ColorAllPulls(_, index - 1)
-  MDT:DrawAllHulls()
 end
 
 function MDT:RenamePreset(renameText)
@@ -4683,9 +4666,9 @@ function MDT:CreateCoroutineHandler()
   MDT.coHandler = coHandler
 end
 
-function MDT:Async(func, name)
+function MDT:Async(func, name, singleton)
   local co = coroutine.create(func)
-  MDT.coHandler:AddAction(name, co)
+  MDT.coHandler:AddAction(name, co, singleton)
 end
 
 MDT:CreateCoroutineHandler()
