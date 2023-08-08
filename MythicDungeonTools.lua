@@ -2555,6 +2555,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT:DrawAllAnimatedLines()
     if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
+    MDT:FixDungeonDropDownList()
   end, "UpdateMap")
 end
 
@@ -2666,10 +2667,6 @@ function MDT:CheckCurrentZone(init)
   if dungeonIdx and (not lastUpdatedDungeonIdx or dungeonIdx ~= lastUpdatedDungeonIdx) then
     lastUpdatedDungeonIdx = dungeonIdx
     MDT:UpdateToDungeon(dungeonIdx, nil, init)
-    local dropDown = self.main_frame.DungeonSelectionGroup and self.main_frame.DungeonSelectionGroup.DungeonDropdown
-    if dropDown and (not dropDown.value) then
-      MDT:FixDungeonDropDownList()
-    end
   end
 end
 
