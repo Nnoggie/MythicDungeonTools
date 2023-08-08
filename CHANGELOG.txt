@@ -1,3 +1,5 @@
+- v4.0.4.22
+  - more bugfixes
 - v4.0.4.21
   - bugfixes + performance improvements
   - selecting an enemy will not select the pull that enemy is in anymore
