@@ -4243,14 +4243,18 @@ end
 
 ---Draws all Preset objects on the map canvas/sublevel
 function MDT:DrawAllPresetObjects()
-  self:ReleaseAllActiveTextures()
-  local scale = self:GetScale()
-  local currentPreset = self:GetCurrentPreset()
-  local currentSublevel = self:GetCurrentSubLevel()
-  currentPreset.objects = currentPreset.objects or {}
-  for objectIndex, obj in pairs(currentPreset.objects) do
-    self:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSublevel)
-  end
+  MDT:Async(function()
+    self:ReleaseAllActiveTextures()
+    coroutine.yield()
+    local scale = self:GetScale()
+    local currentPreset = self:GetCurrentPreset()
+    local currentSublevel = self:GetCurrentSubLevel()
+    currentPreset.objects = currentPreset.objects or {}
+    for objectIndex, obj in pairs(currentPreset.objects) do
+      self:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSublevel)
+      coroutine.yield()
+    end
+  end, "DrawAllPresetObjects")
 end
 
 ---Draws specific preset object
