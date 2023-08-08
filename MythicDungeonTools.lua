@@ -2561,6 +2561,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if not framesInitialized then coroutine.yield() end
   MDT:DrawAllAnimatedLines()
   if not framesInitialized then coroutine.yield() end
+  MDT:UpdateProgressbar()
 end
 
 ---Updates the map to the specified dungeon
