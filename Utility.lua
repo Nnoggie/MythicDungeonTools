@@ -103,7 +103,7 @@ U.TMEnd = function()
   for segmentIdx, data in ipairs(debugTimes) do
     if segmentIdx > 1 then
       local time = data.time - debugTimes[segmentIdx - 1].time
-      stepTimes[data.name] = time
+      stepTimes[segmentIdx] = MDT:Round(time, 1).."ms "..data.name
       total = total + time
     end
   end
