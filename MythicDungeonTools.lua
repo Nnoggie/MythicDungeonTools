@@ -3665,40 +3665,44 @@ end
 
 ---Reloads all pull buttons in the scroll frame
 function MDT:ReloadPullButtons()
-  local frame = MDT.main_frame.sidePanel
-  if not frame.pullButtonsScrollFrame then return end
-  local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
-  --store scroll value
-  local oldScrollValue = frame.pullButtonsScrollFrame.localstatus.scrollvalue
-  --first release all children of the scroll frame
-  frame.pullButtonsScrollFrame:ReleaseChildren()
-  local maxPulls = 0
-  for k, v in pairs(preset.value.pulls) do
-    maxPulls = maxPulls + 1
-  end
-  --add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
-  local idx = 0
-  for k, pull in ipairs(preset.value.pulls) do
-    idx = idx + 1
-    frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
-    frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
-    frame.newPullButtons[idx]:SetIndex(idx)
-    MDT:UpdatePullButtonNPCData(idx)
-    frame.newPullButtons[idx]:Initialize()
-    frame.newPullButtons[idx]:Enable()
-    frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
-  end
-  --add the "new pull" button
-  frame.newPullButton = AceGUI:Create("MDTNewPullButton")
-  frame.newPullButton:Initialize()
-  frame.newPullButton:Enable()
-  frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)
-  --set the scroll value back to the old value
-  frame.pullButtonsScrollFrame.scrollframe.obj:SetScroll(oldScrollValue)
-  frame.pullButtonsScrollFrame.scrollframe.obj:FixScroll()
-  if self:GetCurrentPreset().value.currentPull then
-    self:PickPullButton(self:GetCurrentPreset().value.currentPull)
-  end
+  MDT:Async(function()
+    local frame = MDT.main_frame.sidePanel
+    if not frame.pullButtonsScrollFrame then return end
+    local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+    --store scroll value
+    local oldScrollValue = frame.pullButtonsScrollFrame.localstatus.scrollvalue
+    --first release all children of the scroll frame
+    frame.pullButtonsScrollFrame:ReleaseChildren()
+    coroutine.yield()
+    local maxPulls = 0
+    for k, v in pairs(preset.value.pulls) do
+      maxPulls = maxPulls + 1
+    end
+    --add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
+    local idx = 0
+    for k, pull in ipairs(preset.value.pulls) do
+      idx = idx + 1
+      frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
+      frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
+      frame.newPullButtons[idx]:SetIndex(idx)
+      MDT:UpdatePullButtonNPCData(idx)
+      frame.newPullButtons[idx]:Initialize()
+      frame.newPullButtons[idx]:Enable()
+      frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
+      coroutine.yield()
+    end
+    --add the "new pull" button
+    frame.newPullButton = AceGUI:Create("MDTNewPullButton")
+    frame.newPullButton:Initialize()
+    frame.newPullButton:Enable()
+    frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)
+    --set the scroll value back to the old value
+    frame.pullButtonsScrollFrame.scrollframe.obj:SetScroll(oldScrollValue)
+    frame.pullButtonsScrollFrame.scrollframe.obj:FixScroll()
+    if self:GetCurrentPreset().value.currentPull then
+      self:PickPullButton(self:GetCurrentPreset().value.currentPull)
+    end
+  end, "ReloadPullButtons")
 end
 
 ---Deselects all pull buttons
