@@ -3685,6 +3685,8 @@ function MDT:ReloadPullButtons()
     if self:GetCurrentPreset().value.currentPull then
       self:PickPullButton(self:GetCurrentPreset().value.currentPull)
     end
+    MDT:ColorAllPulls(nil, 0)
+    MDT:DrawAllHulls(preset.value.pulls)
   end, "ReloadPullButtons", true)
 end
 
