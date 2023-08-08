@@ -3692,7 +3692,7 @@ function MDT:ReloadPullButtons()
     if self:GetCurrentPreset().value.currentPull then
       self:PickPullButton(self:GetCurrentPreset().value.currentPull)
     end
-  end, "ReloadPullButtons")
+  end, "ReloadPullButtons", true)
 end
 
 ---Deselects all pull buttons
@@ -4624,7 +4624,10 @@ function MDT:CreateCoroutineHandler()
   coHandler.update = {}
   coHandler.size = 0
 
-  function coHandler.AddAction(self, name, func)
+  function coHandler.AddAction(self, name, func, singleton)
+    if singleton then
+      coHandler.RemoveAction(self, name)
+    end
     if not name then
       name = string.format("NIL", coHandler.size + 1);
     end
