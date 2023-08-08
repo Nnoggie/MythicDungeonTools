@@ -916,7 +916,8 @@ function MDT:MakeSidePanel(frame)
       --Set affix dropdown to preset week
       --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek())
       --UpdateMap is called in SetAffixWeek, no need to call twice
-      MDT:UpdateMap()
+      -- im not sure why this was left in here, but it was causing the map to update twice when changing presets
+      -- MDT:UpdateMap()
       frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek() or 1)
     end
   end)
@@ -4938,7 +4939,7 @@ function initFrames()
   main_frame.sidePanel.affixDropdown:UpdateAffixList()
   main_frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or (MDT:GetCurrentAffixWeek() or 1))
   coroutine.yield()
-  MDT:UpdateToDungeon(db.currentDungeonIdx)
+  MDT:UpdateToDungeon(db.currentDungeonIdx, true)
   coroutine.yield()
 
   if MDT:IsFrameOffScreen() then
