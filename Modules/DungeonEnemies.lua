@@ -307,12 +307,6 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
       MDT:SetSelectionToPull(newPullIdx)
       local _
       MDT:ColorAllPulls(_, newPullIdx)
-      --if MDT:GetPullsNum() == 2 then MDT:SetAutomaticColor(1) end
-    else
-      if self.selected then
-        local pIdx = MDT:FindPullOfBlip(self)
-        MDT:SetSelectionToPull(pIdx)
-      end
     end
     MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, not self.selected, IsControlKeyDown())
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
