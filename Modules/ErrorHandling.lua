@@ -221,6 +221,9 @@ function MDT:RegisterErrorHandledFunctions()
   --register all functions except the ones that have to run as coroutines
   local blacklisted = {
     ["DungeonEnemies_UpdateSelected"] = true,
+    ["DungeonEnemies_UpdateEnemiesAsync"] = true,
+    ["ReloadPullButtons"] = true,
+    ["DrawAllPresetObjects"] = true,
     ["AddPull"] = true,
     ["ClearPull"] = true,
     ["ShowInterfaceInternal"] = true,
