@@ -2247,10 +2247,6 @@ function MDT:FormatEnemyHealth(amount)
   end
 end
 
-function MDT:UpdateDungeonEnemies()
-  MDT:DungeonEnemies_UpdateEnemies()
-end
-
 function MDT:HideAllDialogs()
   MDT.main_frame.presetCreationFrame:Hide()
   MDT.main_frame.presetImportFrame:Hide()
@@ -2465,7 +2461,7 @@ function MDT:GetTileFormat(dungeonIdx, sublevel)
   return mapInfo and mapInfo.tileFormat and mapInfo.tileFormat[sublevel] or 4
 end
 
-function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar)
+function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar, async)
   if not framesInitialized then coroutine.yield() end
   local mapName
   local frame = MDT.main_frame
@@ -2509,60 +2505,57 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     end
   end
   if not framesInitialized then coroutine.yield() end
-  MDT:UpdateDungeonEnemies()
-  if not framesInitialized then coroutine.yield() end
-  MDT:DungeonEnemies_UpdateTeeming()
-  if not framesInitialized then coroutine.yield() end
-  MDT:DungeonEnemies_UpdateSeasonalAffix()
-  if not framesInitialized then coroutine.yield() end
-  MDT:DungeonEnemies_UpdateInspiring()
-  if not framesInitialized then coroutine.yield() end
-  MDT:POI_UpdateAll()
-  if not ignoreReloadPullButtons then
-    MDT:ReloadPullButtons()
-  end
-  if not framesInitialized then coroutine.yield() end
-  --handle delete button disable/enable
-  local presetCount = 0
-  for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-    presetCount = presetCount + 1
-  end
-  if (db.currentPreset[db.currentDungeonIdx] == 1 or db.currentPreset[db.currentDungeonIdx] == presetCount) or
-      MDT.liveSessionActive then
-    MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-    MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-  else
-    MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-    MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-  end
-  if not framesInitialized then coroutine.yield() end
-  --live mode
-  local livePreset = MDT:GetCurrentLivePreset()
-  if MDT.liveSessionActive and preset ~= livePreset then
-    MDT.main_frame.liveReturnButton:Show()
-    MDT.main_frame.setLivePresetButton:Show()
-  else
-    MDT.main_frame.liveReturnButton:Hide()
-    MDT.main_frame.setLivePresetButton:Hide()
-  end
-  MDT:UpdatePresetDropdownTextColor()
-  if not framesInitialized then coroutine.yield() end
-
-  if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
-  MDT:UpdateDungeonDropDown()
-  if not framesInitialized then coroutine.yield() end
-  --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
-  frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
-  if not framesInitialized then coroutine.yield() end
-  MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
-  if not framesInitialized then coroutine.yield() end
-  MDT:DrawAllPresetObjects()
-  if not framesInitialized then coroutine.yield() end
-  MDT:KillAllAnimatedLines()
-  if not framesInitialized then coroutine.yield() end
-  MDT:DrawAllAnimatedLines()
-  if not framesInitialized then coroutine.yield() end
-  MDT:UpdateProgressbar()
+  MDT:Async(function()
+    MDT:DungeonEnemies_UpdateEnemiesAsync()
+    MDT:DungeonEnemies_UpdateTeeming()
+    MDT:DungeonEnemies_UpdateSeasonalAffix()
+    MDT:DungeonEnemies_UpdateInspiring()
+    MDT:POI_UpdateAll()
+    if not ignoreReloadPullButtons then
+      MDT:ReloadPullButtons()
+    end
+    if not framesInitialized then coroutine.yield() end
+    --handle delete button disable/enable
+    local presetCount = 0
+    for k, v in pairs(db.presets[db.currentDungeonIdx]) do
+      presetCount = presetCount + 1
+    end
+    if (db.currentPreset[db.currentDungeonIdx] == 1 or db.currentPreset[db.currentDungeonIdx] == presetCount) or
+        MDT.liveSessionActive then
+      MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
+      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
+    else
+      MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
+      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
+    end
+    if not framesInitialized then coroutine.yield() end
+    --live mode
+    local livePreset = MDT:GetCurrentLivePreset()
+    if MDT.liveSessionActive and preset ~= livePreset then
+      MDT.main_frame.liveReturnButton:Show()
+      MDT.main_frame.setLivePresetButton:Show()
+    else
+      MDT.main_frame.liveReturnButton:Hide()
+      MDT.main_frame.setLivePresetButton:Hide()
+    end
+    MDT:UpdatePresetDropdownTextColor()
+    if not framesInitialized then coroutine.yield() end
+    if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
+    MDT:UpdateDungeonDropDown()
+    if not framesInitialized then coroutine.yield() end
+    --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
+    frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
+    if not framesInitialized then coroutine.yield() end
+    MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
+    if not framesInitialized then coroutine.yield() end
+    MDT:DrawAllPresetObjects()
+    if not framesInitialized then coroutine.yield() end
+    MDT:KillAllAnimatedLines()
+    if not framesInitialized then coroutine.yield() end
+    MDT:DrawAllAnimatedLines()
+    if not framesInitialized then coroutine.yield() end
+    MDT:UpdateProgressbar()
+  end, "UpdateMap")
 end
 
 ---Updates the map to the specified dungeon

@@ -796,8 +796,9 @@ function MDT:DungeonEnemies_HideAllBlips()
   MDT.dungeonEnemies_framePools:ReleaseAll()
 end
 
-function MDT:DungeonEnemies_UpdateEnemies()
+function MDT:DungeonEnemies_UpdateEnemiesAsync()
   MDT.dungeonEnemies_framePools:ReleaseAll()
+  coroutine.yield()
   twipe(blips)
   if not db then db = MDT:GetDB() end
   local enemies = MDT.dungeonEnemies[db.currentDungeonIdx]
@@ -817,6 +818,7 @@ function MDT:DungeonEnemies_UpdateEnemies()
           blip:SetUp(data, clone)
           blip.enemyIdx = enemyIdx
           blip.cloneIdx = cloneIdx
+          coroutine.yield()
         end
       end
     end
@@ -832,6 +834,7 @@ function MDT:DungeonEnemies_UpdateEnemies()
               blip:SetUp(data, clone)
               blip.enemyIdx = enemyIdx
               blip.cloneIdx = cloneIdx
+              coroutine.yield()
             end
           end
         end
