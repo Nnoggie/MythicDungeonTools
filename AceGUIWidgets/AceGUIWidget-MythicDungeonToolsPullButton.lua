@@ -133,8 +133,7 @@ local methods = {
 
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             tinsert(MDT:GetSelection(), self.index)
-            local changed = MDT:SetMapSublevel(self.index)
-            MDT:SetSelectionToPull(MDT:GetSelection(), nil, not changed)
+            MDT:SetSelectionToPull(MDT:GetSelection())
           else
             MDT.U.iremove_if(MDT:GetSelection(), function(entry)
               return entry == self.index
@@ -158,9 +157,7 @@ local methods = {
               tinsert(selection, i)
             end
           end
-
-          local changed = MDT:SetMapSublevel(self.index)
-          MDT:SetSelectionToPull(selection, not changed)
+          MDT:SetSelectionToPull(selection)
           --print(#selection)
         elseif (mouseButton == "RightButton") then
           local maxPulls = #MDT:GetCurrentPreset().value.pulls
@@ -174,7 +171,7 @@ local methods = {
           -- Add current pull to selection, if not already selected
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             if #MDT:GetSelection() == 1 then
-              MDT:SetSelectionToPull(self.index, true)
+              MDT:SetSelectionToPull(self.index)
             else
               tinsert(MDT:GetSelection(), self.index)
               self:Pick()
@@ -192,16 +189,13 @@ local methods = {
           if #MDT:GetSelection() > 1 then
             EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           else
-            local changed = MDT:SetMapSublevel(self.index)
-            MDT:SetSelectionToPull(self.index, not changed)
-
+            MDT:SetSelectionToPull(self.index)
             EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           end
         else
           --normal click
           MDT:GetCurrentPreset().value.selection = { self.index }
-          local changed = MDT:SetMapSublevel(self.index)
-          MDT:SetSelectionToPull(self.index, not changed)
+          MDT:SetSelectionToPull(self.index)
         end
       end
     end
