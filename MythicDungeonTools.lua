@@ -1187,10 +1187,6 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
   settinggsCogwheel:SetCallback("OnClick", function(...)
-    if not MDT.main_frame.settingsFrame then
-      MDT:MakeSettingsFrame(MDT.main_frame)
-      MDT:MakeCustomColorFrame(MDT.main_frame.settingsFrame)
-    end
     self:OpenSettingsDialog()
   end)
 
@@ -2311,6 +2307,10 @@ function MDT:OpenClearPresetDialog()
 end
 
 function MDT:OpenSettingsDialog()
+  if not MDT.main_frame.settingsFrame then
+    MDT:MakeSettingsFrame(MDT.main_frame)
+    MDT:MakeCustomColorFrame(MDT.main_frame.settingsFrame)
+  end
   MDT:HideAllDialogs()
   MDT.main_frame.settingsFrame:ClearAllPoints()
   MDT.main_frame.settingsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)

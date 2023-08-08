@@ -344,22 +344,7 @@ local methods = {
       text = L["Pull Drop Color Settings"],
       notCheckable = 1,
       func = function()
-        MDT:OpenAutomaticColorsDialog()
-      end
-    })
-    tinsert(self.menu, {
-      text = L["Pull Drop Colorize Preset"],
-      notCheckable = 1,
-      func = function()
-        local db = MDT:GetDB()
-        if not db.colorPaletteInfo.autoColoring then
-          db.colorPaletteInfo.autoColoring = true
-          MDT.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-          MDT.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-          MDT.main_frame.toggleForceColorBlindMode:SetDisabled(false)
-        end
-        MDT:SetPresetColorPaletteInfo()
-        MDT:ReloadPullButtons()
+        MDT:OpenSettingsDialog()
       end
     })
     local function swatchFunc()
@@ -554,23 +539,7 @@ local methods = {
       text = L["Pull Drop Color Settings"],
       notCheckable = 1,
       func = function()
-        MDT:OpenAutomaticColorsDialog()
-      end
-    })
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Colorize Preset"],
-      notCheckable = 1,
-      func = function()
-        local db = MDT:GetDB()
-        if not db.colorPaletteInfo.autoColoring then
-          db.colorPaletteInfo.autoColoring = true
-          MDT.main_frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-          MDT.main_frame.AutomaticColorsCheckSidePanel:SetValue(db.colorPaletteInfo.autoColoring)
-          MDT.main_frame.toggleForceColorBlindMode:SetDisabled(false)
-        end
-        MDT:SetPresetColorPaletteInfo()
-        MDT:ColorAllPulls()
-        MDT:DrawAllHulls()
+        MDT:OpenSettingsDialog()
       end
     })
     local function swatchMultiFunc()
