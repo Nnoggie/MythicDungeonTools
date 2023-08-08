@@ -1,3 +1,9 @@
+- v4.0.4.21
+  - bugfixes + performance improvements
+  - selecting an enemy will not select the pull that enemy is in anymore
+  - added missing enemies in Neltharus
+  - removed wrongly placed enemy in Halls of Infusion
+  - the progress bar will now immediately update when a new route is selected
 - v4.0.4.20
   - ux improvements
 - v4.0.4.19
