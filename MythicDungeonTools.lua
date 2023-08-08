@@ -4936,8 +4936,6 @@ function initFrames()
   main_frame.sidePanel.affixDropdown:UpdateAffixList()
   main_frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or (MDT:GetCurrentAffixWeek() or 1))
   coroutine.yield()
-  MDT:UpdateToDungeon(db.currentDungeonIdx, true)
-  coroutine.yield()
 
   if MDT:IsFrameOffScreen() then
     MDT:ResetMainFramePos()
