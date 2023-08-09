@@ -297,7 +297,6 @@ end
 function MDTDungeonEnemyMixin:OnClick(button, down)
   if button == "LeftButton" then
     if IsShiftKeyDown() and not self.selected then
-      local x, y = MDT:GetCursorPosition()
       local newPullIdx = MDT:GetCurrentPull() + 1
       MDT:PresetsAddPull(newPullIdx)
       MDT:GetCurrentPreset().value.selection = { newPullIdx }
