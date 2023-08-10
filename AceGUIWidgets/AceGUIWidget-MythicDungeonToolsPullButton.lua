@@ -124,8 +124,8 @@ local methods = {
   ["Initialize"] = function(self)
     self.callbacks = {}
 
-    function self.callbacks.OnClickNormal(_, mouseButton)
-      if not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+    function self.callbacks.OnClickNormal(_, mouseButton, force)
+      if not force and not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
 
       if (IsControlKeyDown()) then
         if (mouseButton == "LeftButton") then
