@@ -2843,7 +2843,8 @@ function MDT:MakePresetImportFrame(frame)
   frame.presetImportBox = AceGUI:Create("EditBox")
   frame.presetImportBox:SetLabel(L["Import Preset"]..":")
   frame.presetImportBox:SetWidth(255)
-  frame.presetImportBox:SetCallback("OnTextChanged", function(widget, event, text) importString = text end)
+  frame.presetImportBox.OnTextChanged = function(widget, event, text) importString = text end
+  frame.presetImportBox:SetCallback("OnTextChanged", frame.presetImportBox.OnTextChanged)
   frame.presetImportBox:DisableButton(true)
   frame.presetImportFrame:AddChild(frame.presetImportBox)
 
@@ -2862,6 +2863,7 @@ function MDT:MakePresetImportFrame(frame)
       frame.presetImportLabel:SetText(L["Invalid import string"])
     end
   end)
+  frame.presetImportButton = importButton
   frame.presetImportFrame:AddChild(importButton)
   frame.presetImportFrame:AddChild(frame.presetImportLabel)
   if db.devMode then
