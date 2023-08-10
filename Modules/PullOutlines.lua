@@ -131,6 +131,7 @@ end
 
 function MDT:PullClickAreaOnEnter(pullIdx)
   local fsFrame = getFSFrameByPullIdx(pullIdx)
+  if not fsFrame then return end
   fsFrame.fs:SetScale(1.7)
   fsFrame.fs:SetAlpha(1)
   for _, tex in pairs(activeTextures) do
@@ -330,7 +331,8 @@ local function getPullVertices(p, blips)
 end
 
 function MDT:DrawAllHulls(pulls)
-  local func = function()
+  MDT:CancelAsync("DrawAllHulls")
+  MDT:Async(function()
     MDT:ReleaseHullTextures()
     MDT:ReleaseHullFontStrings()
     local preset = MDT:GetCurrentPreset()
@@ -344,9 +346,7 @@ function MDT:DrawAllHulls(pulls)
       MDT:DrawHullFontString(vertices, pullIdx)
       coroutine.yield()
     end
-  end
-  local co = coroutine.create(func)
-  MDT.coHandler:AddAction("DrawAllHulls", co, true)
+  end, "DrawAllHulls", true)
 end
 
 function MDT:FindClosestPull(x, y)
