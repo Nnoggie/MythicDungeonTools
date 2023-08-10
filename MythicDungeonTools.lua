@@ -1684,7 +1684,7 @@ function MDT:UpdatePullTooltip(tooltip)
   local frame = MDT.main_frame
   if not MouseIsOver(frame.sidePanel.pullButtonsScrollFrame.frame) then
     tooltip:Hide()
-  elseif MouseIsOver(frame.sidePanel.newPullButton.frame) then
+  elseif frame.sidePanel.newPullButton and MouseIsOver(frame.sidePanel.newPullButton.frame) then
     tooltip:Hide()
   else
     if frame.sidePanel.newPullButtons and tooltip.currentPull and frame.sidePanel.newPullButtons[tooltip.currentPull] then
