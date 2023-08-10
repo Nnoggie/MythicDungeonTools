@@ -22,6 +22,12 @@ local function testFunc()
   C_Timer.After(1.35, function()
     minimize:Click()
   end)
+  C_Timer.After(1.4, function()
+    maximize:Click()
+  end)
+  C_Timer.After(1.425, function()
+    minimize:Click()
+  end)
 end
 
 ---@type MDTTest
