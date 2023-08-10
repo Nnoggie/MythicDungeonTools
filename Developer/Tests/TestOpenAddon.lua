@@ -9,6 +9,7 @@ local function FireUnprotectedSlashCommand(command)
 end
 
 local function testFunc()
+  if addon.main_frame and addon.main_frame:IsShown() then return end
   FireUnprotectedSlashCommand("/mdt")
 end
 
