@@ -1,6 +1,7 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["updateNote"] = "Please update the addon to the latest version."
 L["encounteredErrors"] = "MDT has encountered errors.\nClick to view them."
 L["togc"] = "Trial of the Grand Crusader"
 L["togcFloor1"] = "The Argent Coliseum"
@@ -296,7 +297,7 @@ L["Primalist Shockcaster"] = "Primalist Shockcaster"
 L["Defier Draghar"] = "Defier Draghar"
 L["Bounty stacks \nafter this pull"] = "Bounty stacks \nafter this pull"
 L["AddOn Conflict"] = "AddOn Conflict"
-L["conflictPrompt"] = "MDT has detected that you have certain AddOns installed that are conflicting with MDT.\n\nPlease remove the following AddOns:\n\n"
+L["conflictPrompt"] = "MDT has detected that you have certain AddOns installed that are conflicting with MDT.\n\nPlease remove or update the following AddOns:\n\n"
 L["Middle-click to disable Minimap Button"] = "Middle-click to disable Minimap Button"
 L["MDT: Use /mdt minimap to show the minimap icon again"] = "MDT: Use /mdt minimap to show the minimap icon again"
 L["Iron Star"] = "Iron Star"
