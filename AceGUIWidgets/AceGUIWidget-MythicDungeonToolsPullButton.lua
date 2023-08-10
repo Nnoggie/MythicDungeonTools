@@ -133,7 +133,9 @@ local methods = {
 
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             tinsert(MDT:GetSelection(), self.index)
+            local changed = MDT:SetMapSublevel(self.index)
             MDT:SetSelectionToPull(MDT:GetSelection())
+            if changed then MDT:UpdateMap() end
           else
             MDT.U.iremove_if(MDT:GetSelection(), function(entry)
               return entry == self.index
@@ -157,8 +159,9 @@ local methods = {
               tinsert(selection, i)
             end
           end
+          local changed = MDT:SetMapSublevel(self.index)
           MDT:SetSelectionToPull(selection)
-          --print(#selection)
+          if changed then MDT:UpdateMap() end
         elseif (mouseButton == "RightButton") then
           local maxPulls = #MDT:GetCurrentPreset().value.pulls
           if maxPulls > 1 then
@@ -171,7 +174,9 @@ local methods = {
           -- Add current pull to selection, if not already selected
           if not MDT.U.contains(MDT:GetSelection(), self.index) then
             if #MDT:GetSelection() == 1 then
+              local changed = MDT:SetMapSublevel(self.index)
               MDT:SetSelectionToPull(self.index)
+              if changed then MDT:UpdateMap() end
             else
               tinsert(MDT:GetSelection(), self.index)
               self:Pick()
@@ -189,13 +194,16 @@ local methods = {
           if #MDT:GetSelection() > 1 then
             EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           else
+            local changed = MDT:SetMapSublevel(self.index)
             MDT:SetSelectionToPull(self.index)
             EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
           end
         else
           --normal click
           MDT:GetCurrentPreset().value.selection = { self.index }
+          local changed = MDT:SetMapSublevel(self.index)
           MDT:SetSelectionToPull(self.index)
+          if changed then MDT:UpdateMap() end
         end
       end
     end
