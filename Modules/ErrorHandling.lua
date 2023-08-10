@@ -155,7 +155,7 @@ function MDT:DisplayErrors(force)
   end
 
   for _, error in ipairs(caughtErrors) do
-    errorBoxText = errorBoxText..error.message.."\n"
+    errorBoxText = errorBoxText..error.count.."x: "..error.message.."\n"
   end
   --add diagnostics
   local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
@@ -199,12 +199,13 @@ local function onError(msg, stackTrace, name)
   -- return early on duplicate errors
   for _, error in pairs(caughtErrors) do
     if error.message == e then
+      error.count = error.count + 1
       addTrace = false
       return false
     end
   end
   local stackTraceValue = stackTrace and name..":\n"..stackTrace
-  tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue })
+  tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue, count = 1 })
   addTrace = true
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
