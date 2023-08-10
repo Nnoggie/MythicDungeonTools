@@ -171,13 +171,14 @@ local function getFontString()
     clickArea:SetScript("OnClick", function(self, button, down)
       if button == "LeftButton" then
         MDT:SetSelectionToPull(self:GetParent().pullIdx)
+        MDT:PullClickAreaOnEnter(self:GetParent().pullIdx)
       end
     end)
     clickArea:SetScript("OnEnter", function(self)
       MDT:PullClickAreaOnEnter(self:GetParent().pullIdx)
     end)
     clickArea:SetScript("OnLeave", function(self)
-      MDT:PullClickAreaOnLeave(self:GetParent().pullIdx)
+      MDT:PullClickAreaOnLeave()
     end)
     fsFrame.clickArea = clickArea
     local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
