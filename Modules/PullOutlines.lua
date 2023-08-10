@@ -328,7 +328,7 @@ function MDT:DrawAllHulls(pulls)
     end
   end
   local co = coroutine.create(func)
-  MDT.coHandler:AddAction("DrawAllHulls", co)
+  MDT.coHandler:AddAction("DrawAllHulls", co, true)
 end
 
 function MDT:FindClosestPull(x, y)

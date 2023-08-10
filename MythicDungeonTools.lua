@@ -482,6 +482,9 @@ function MDT:CreateMenu()
   resizer:EnableMouse()
   resizer:SetScript("OnMouseDown", function()
     self.main_frame:StartSizing("BOTTOMRIGHT")
+    self:CancelAsync("UpdateMap")
+    self:CancelAsync("ReloadPullButtons")
+    self:CancelAsync("DrawAllHulls")
     self:StartScaling()
     self:HideAllPresetObjects()
     self:ReleaseHullTextures()
@@ -2555,7 +2558,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
     MDT:FixDungeonDropDownList()
-  end, "UpdateMap")
+  end, "UpdateMap", true)
 end
 
 ---Updates the map to the specified dungeon
@@ -4669,6 +4672,10 @@ end
 function MDT:Async(func, name, singleton)
   local co = coroutine.create(func)
   MDT.coHandler:AddAction(name, co, singleton)
+end
+
+function MDT:CancelAsync(name)
+  MDT.coHandler:RemoveAction(name)
 end
 
 MDT:CreateCoroutineHandler()
