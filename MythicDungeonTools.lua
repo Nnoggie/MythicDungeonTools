@@ -100,6 +100,8 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     else
       MDT:HideMinimapButton()
     end
+  elseif rqst == "test" then
+    MDT.test:RunAllTests()
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
   end

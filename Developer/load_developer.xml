@@ -3,4 +3,5 @@
 	<Script file='DataCollection.lua'/>
 	<Script file='ExportLua.lua'/>
 	<Script file='Schema.lua'/>
+	<Include file='Tests\load_tests.xml'/>
 </Ui>
