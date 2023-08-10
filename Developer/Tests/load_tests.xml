@@ -5,4 +5,5 @@
 	<Script file='TestResize.lua'/>
 	<Script file='TestMaximize.lua'/>
 	<Script file='TestDelete.lua'/>
+	<Script file='TestPullButtons.lua'/>
 </Ui>
