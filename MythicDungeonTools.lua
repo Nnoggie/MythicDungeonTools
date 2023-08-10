@@ -101,7 +101,7 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
       MDT:HideMinimapButton()
     end
   elseif rqst == "test" then
-    MDT.test:RunAllTests()
+    MDT:OpenConfirmationFrame(450, 150, "MDT Test", "Run", "Run all tests?", MDT.test.RunAllTests)
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
   end
@@ -2245,17 +2245,20 @@ function MDT:FormatEnemyHealth(amount)
 end
 
 function MDT:HideAllDialogs()
-  MDT.main_frame.presetCreationFrame:Hide()
-  MDT.main_frame.presetImportFrame:Hide()
-  MDT.main_frame.ExportFrame:Hide()
-  MDT.main_frame.RenameFrame:Hide()
-  MDT.main_frame.ClearConfirmationFrame:Hide()
-  MDT.main_frame.DeleteConfirmationFrame:Hide()
-  if MDT.main_frame.settingsFrame then
-    MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
-    MDT.main_frame.settingsFrame:Hide()
+  if MDT.main_frame then
+    MDT.main_frame.presetCreationFrame:Hide()
+    MDT.main_frame.presetImportFrame:Hide()
+    MDT.main_frame.ExportFrame:Hide()
+    MDT.main_frame.RenameFrame:Hide()
+    MDT.main_frame.ClearConfirmationFrame:Hide()
+    MDT.main_frame.DeleteConfirmationFrame:Hide()
+    if MDT.main_frame.settingsFrame then
+      MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
+      MDT.main_frame.settingsFrame:Hide()
+    end
+    if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
   end
-  if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
+  if MDT.tempConfirmationFrame then MDT.tempConfirmationFrame:Hide() end
 end
 
 function MDT:OpenImportPresetDialog()
