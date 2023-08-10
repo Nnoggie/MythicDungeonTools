@@ -37,7 +37,10 @@
     "tonumber",
     "GetCursorPosition",
     "UIParent",
-    "GetAddOnMetadata"
+    "GetAddOnMetadata",
+    "ChatEdit_ActivateChat",
+    "ChatEdit_OnEnterPressed",
+    "ChatEdit_ChooseBoxForSend"
   ],
   "Lua.diagnostics.disable": [
     "deprecated",
