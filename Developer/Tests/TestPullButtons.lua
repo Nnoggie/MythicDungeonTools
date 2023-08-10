@@ -32,8 +32,8 @@ local function testFunc()
   C_Timer.After(1.5, function()
     local numPulls = MDT:GetPullsNum()
     for i = 1, numPulls do
-      local pullButton = sidepanel.newPullButtons[i].frame
       C_Timer.After(0.2 * i, function()
+        local pullButton = sidepanel.newPullButtons[i].frame
         local onEnter = pullButton:GetScript("OnEnter")
         local onLeave = pullButton:GetScript("OnLeave")
         local onClick = pullButton:GetScript("OnClick")
