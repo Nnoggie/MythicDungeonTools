@@ -223,6 +223,10 @@ function MDT:OnError(msg, stackTrace, name)
   onError(msg, stackTrace, name)
 end
 
+function MDT:GetErrors()
+  return caughtErrors
+end
+
 function MDT:RegisterErrorHandledFunctions()
   --register all functions except the ones that have to run as coroutines
   local blacklisted = {
