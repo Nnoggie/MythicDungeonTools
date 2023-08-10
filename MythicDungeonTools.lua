@@ -3526,6 +3526,7 @@ function MDT:SetSelectionToPull(pull, ignoreHulls)
       MDT:DungeonEnemies_UpdateSelected(pullIdx, nil, ignoreHulls)
     end
   end
+  MDT:PullClickAreaOnLeave()
 end
 
 ---Updates the portraits display of a button to show which and how many npcs are selected

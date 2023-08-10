@@ -225,6 +225,7 @@ local methods = {
       MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar, currentForces,
         teeming and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or
         MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
+      MDT:PullClickAreaOnEnter(self.index)
     end
 
     function self.callbacks.OnLeave()
@@ -237,6 +238,7 @@ local methods = {
       MDT.ProgressBarResetTimer = C_Timer.NewTimer(0.35, function()
         MDT:UpdateProgressbar()
       end)
+      MDT:PullClickAreaOnLeave()
     end
 
     function self.callbacks.OnDragStart()

@@ -120,6 +120,42 @@ end
 local activeFontStrings = {}
 local fontStringPool = {}
 local frameIndex = 0
+
+local getFSFrameByPullIdx = function(pullIdx)
+  for _, frame in pairs(activeFontStrings) do
+    if frame.pullIdx == pullIdx then
+      return frame
+    end
+  end
+end
+
+function MDT:PullClickAreaOnEnter(pullIdx)
+  local fsFrame = getFSFrameByPullIdx(pullIdx)
+  fsFrame.fs:SetScale(1.7)
+  fsFrame.fs:SetAlpha(1)
+  for _, tex in pairs(activeTextures) do
+    if tex.pullIdx == pullIdx then
+      tex:SetAlpha(1)
+    end
+  end
+end
+
+function MDT:PullClickAreaOnLeave()
+  for _, fsFrame in pairs(activeFontStrings) do
+    local isCurrentPull = fsFrame.pullIdx == MDT:GetCurrentPull()
+    fsFrame.fs:SetScale(1)
+    fsFrame.fs:SetAlpha(isCurrentPull and 1 or NONACTIVE_ALPHA)
+  end
+  for _, tex in pairs(activeTextures) do
+    local isCurrentPull = tex.pullIdx == MDT:GetCurrentPull()
+    if tex.isCircle then
+      tex:SetAlpha(isCurrentPull and 1 or 0)
+    else
+      tex:SetAlpha(isCurrentPull and 1 or NONACTIVE_ALPHA)
+    end
+  end
+end
+
 local function getFontString()
   local size = tgetn(fontStringPool)
   if size == 0 then
@@ -138,29 +174,10 @@ local function getFontString()
       end
     end)
     clickArea:SetScript("OnEnter", function(self)
-      self:GetParent().fs:SetScale(1.7)
-      self:GetParent().fs:SetAlpha(1)
-      for _, tex in pairs(activeTextures) do
-        if tex.pullIdx == self:GetParent().pullIdx then
-          tex:SetAlpha(1)
-        end
-      end
+      MDT:PullClickAreaOnEnter(self:GetParent().pullIdx)
     end)
     clickArea:SetScript("OnLeave", function(self)
-      self:GetParent().fs:SetScale(1)
-      local isCurrentPull = MDT:GetCurrentPull() ~= self:GetParent().pullIdx
-      self:GetParent().fs:SetAlpha(isCurrentPull and NONACTIVE_ALPHA or 1)
-      for _, tex in pairs(activeTextures) do
-        if tex.pullIdx == self:GetParent().pullIdx then
-          if isCurrentPull then
-            if tex.isCircle then
-              tex:SetAlpha(0)
-            else
-              tex:SetAlpha(NONACTIVE_ALPHA)
-            end
-          end
-        end
-      end
+      MDT:PullClickAreaOnLeave(self:GetParent().pullIdx)
     end)
     fsFrame.clickArea = clickArea
     local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
@@ -270,7 +287,7 @@ end
 
 function MDT:DrawHull(vertices, pullColor, pullIdx)
   local isCurrent = MDT:GetCurrentPull() == pullIdx
-  local sizeMultiplier = isCurrent and 1.4 or 0.8
+  local sizeMultiplier = 0.8
   local alpha = isCurrent and 1 or NONACTIVE_ALPHA
   local hull = convex_hull(vertices)
   if hull then
