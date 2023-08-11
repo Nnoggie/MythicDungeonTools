@@ -317,7 +317,7 @@ end
 
 function MDT:CleanEnemyInfoSpells()
   local blacklist = MDT:GetEnemyInfoSpellBlacklist()
-  for i = 1, 100 do
+  for i = 1, 200 do
     local enemies = MDT.dungeonEnemies[i]
     if enemies then
       for enemyIdx, enemy in pairs(enemies) do

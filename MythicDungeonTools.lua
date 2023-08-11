@@ -169,7 +169,7 @@ local defaultSavedVars = {
   },
 }
 do
-  for i = 1, 120 do
+  for i = 1, 200 do
     defaultSavedVars.global.presets[i] = {
       [1] = { text = L["Default"], value = {}, objects = {},
         colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
