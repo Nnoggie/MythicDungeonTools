@@ -2497,34 +2497,38 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
   end
   if not framesInitialized then coroutine.yield() end
-  local fileName = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
-  local path = "Interface\\WorldMap\\"..mapName.."\\"
-  local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx, preset.value.currentSublevel)
-  if not framesInitialized then coroutine.yield() end
-  for i = 1, 12 do
-    if tileFormat == 4 then
-      local texName = path..fileName..i
-      if frame["mapPanelTile"..i] then
-        frame["mapPanelTile"..i]:SetTexture(texName)
-        frame["mapPanelTile"..i]:Show()
-      end
-    else
-      if frame["mapPanelTile"..i] then
-        frame["mapPanelTile"..i]:Hide()
-      end
-    end
-  end
-  if not framesInitialized then coroutine.yield() end
-  for i = 1, 10 do
-    for j = 1, 15 do
-      if tileFormat == 15 then
-        local texName = path..fileName..((i - 1) * 15 + j)
-        frame["largeMapPanelTile"..i..j]:SetTexture(texName)
-        frame["largeMapPanelTile"..i..j]:Show()
+  local fileNameOrOverrideFunc = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
+  if type(fileNameOrOverrideFunc) == "string" then
+    local path = "Interface\\WorldMap\\"..mapName.."\\"
+    local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx, preset.value.currentSublevel)
+    if not framesInitialized then coroutine.yield() end
+    for i = 1, 12 do
+      if tileFormat == 4 then
+        local texName = path..fileNameOrOverrideFunc..i
+        if frame["mapPanelTile"..i] then
+          frame["mapPanelTile"..i]:SetTexture(texName)
+          frame["mapPanelTile"..i]:Show()
+        end
       else
-        frame["largeMapPanelTile"..i..j]:Hide()
+        if frame["mapPanelTile"..i] then
+          frame["mapPanelTile"..i]:Hide()
+        end
       end
     end
+    if not framesInitialized then coroutine.yield() end
+    for i = 1, 10 do
+      for j = 1, 15 do
+        if tileFormat == 15 then
+          local texName = path..fileNameOrOverrideFunc..((i - 1) * 15 + j)
+          frame["largeMapPanelTile"..i..j]:SetTexture(texName)
+          frame["largeMapPanelTile"..i..j]:Show()
+        else
+          frame["largeMapPanelTile"..i..j]:Hide()
+        end
+      end
+    end
+  elseif type(fileNameOrOverrideFunc) == "function" then
+    fileNameOrOverrideFunc(frame, preset.value.currentSublevel)
   end
   if not framesInitialized then coroutine.yield() end
   MDT:Async(function()
