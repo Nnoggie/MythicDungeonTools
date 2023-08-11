@@ -9,7 +9,6 @@ L["altKeyGroupsTip"] = "Hold ALT to show enemy group numbers on all enemies"
 L["ctrlKeyCountTip"] = "Hold CTRL to show enemy forces on all enemies"
 L["altKeyDownStatusText"] = "Showing enemy group numbers"
 L["ctrlKeyDownStatusText"] = "Showing enemy forces"
-
 L["updateNote"] = "Please update the addon to the latest version."
 L["encounteredErrors"] = "MDT has encountered errors.\nClick to view them."
 L["togc"] = "Trial of the Grand Crusader"
