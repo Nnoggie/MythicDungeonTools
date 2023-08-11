@@ -1,6 +1,9 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["DawnOfTheInfiniteLower"] = "Dawn of the Infinite: Lower"
+L["Dragonflight Season 3"] = "Dragonflight Season 3"
+
 L["hardResetButton"] = "Reset MDT"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\n|cFFFF0000Only do this if MDT is not loading at all and is in a broken state.|r\nThis will reload the UI!"
 L["You can choose from different color palettes in the automatic pull coloring settings menu."] = "You can choose from different color palettes in the settings menu."
