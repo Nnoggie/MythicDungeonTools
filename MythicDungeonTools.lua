@@ -4586,6 +4586,7 @@ end
 
 function MDT:UpdatePullButtonColor(pullIdx, r, g, b)
   local button = MDT:GetPullButton(pullIdx)
+  if not button then return end
 
   local function updateSwatch(t)
     for k, v in pairs(t) do
