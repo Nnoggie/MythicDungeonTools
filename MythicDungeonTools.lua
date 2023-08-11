@@ -1053,6 +1053,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
   frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
   frame.sidePanelDeleteButton:SetCallback("OnClick", function(widget, callbackName, value)
+    if not widget.frame:IsEnabled() then return end
     if IsShiftKeyDown() then
       --delete all profiles
       local numPresets = self:CountPresets()
@@ -2584,6 +2585,7 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
 end
 
 function MDT:DeletePreset(index)
+  if index == 1 then return end
   tremove(db.presets[db.currentDungeonIdx], index)
   db.currentPreset[db.currentDungeonIdx] = index - 1
   MDT:UpdatePresetDropDown()
