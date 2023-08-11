@@ -6,4 +6,5 @@
 	<Script file='TestMaximize.lua'/>
 	<Script file='TestDelete.lua'/>
 	<Script file='TestPullButtons.lua'/>
+	<Script file='TestSettings.lua'/>
 </Ui>
