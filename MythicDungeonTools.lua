@@ -2466,9 +2466,9 @@ function MDT:GetTileFormat(dungeonIdx, sublevel)
 end
 
 function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar, async)
-  self:CancelAsync("UpdateMap")
-  self:CancelAsync("ReloadPullButtons")
-  self:CancelAsync("DrawAllHulls")
+  MDT:CancelAsync("UpdateMap")
+  MDT:CancelAsync("ReloadPullButtons")
+  MDT:CancelAsync("DrawAllHulls")
   if not framesInitialized then coroutine.yield() end
   local mapName
   local frame = MDT.main_frame
