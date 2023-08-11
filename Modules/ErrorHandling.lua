@@ -118,8 +118,19 @@ function MDT:DisplayErrors(force)
       startCopyAction(errorFrame.errorBox, errorBoxCopyButton, errorBoxText)
     end)
 
+    errorFrame.hardResetButton = AceGUI:Create("Button")
+    local hardResetButton = errorFrame.hardResetButton
+    hardResetButton:SetText(L["hardResetButton"])
+    hardResetButton:SetHeight(40)
+    hardResetButton:SetCallback("OnClick", function(widget, callbackName, value)
+      MDT:Async(function()
+        MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], L["hardResetPrompt"], MDT.HardReset)
+      end, "hardReset")
+    end)
+
     errorFrame:AddChild(errorFrame.errorBox)
     errorFrame:AddChild(errorFrame.errorBoxCopyButton)
+    errorFrame:AddChild(errorFrame.hardResetButton)
 
     --error button
     local errorButton = AceGUI:Create("Icon")

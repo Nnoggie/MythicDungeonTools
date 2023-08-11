@@ -84,15 +84,13 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   elseif rqst == "dc" then
     MDT:ToggleDataCollection()
   elseif rqst == "hardreset" then
-    local prompt = L["hardResetPrompt"]
-    local func = function()
-      if not framesInitialized then
-        initFrames()
-      end
-      MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], prompt, MDT.HardReset)
+    if arg == "force" then
+      MDT:HardReset()
+    else
+      MDT:Async(function()
+        MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], L["hardResetPrompt"], MDT.HardReset)
+      end, "hardReset")
     end
-    local co = coroutine.create(func)
-    MDT.coHandler:AddAction("hardReset", co)
   elseif rqst == "minimap" then
     if db.minimap.hide then
       MDT:ShowMinimapButton()

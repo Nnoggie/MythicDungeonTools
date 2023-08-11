@@ -1,6 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["hardResetButton"] = "Reset MDT"
+L["hardResetPrompt"] = "Do you really want to reset all settings to default?\n|cFFFF0000Only do this if MDT is not loading at all and is in a broken state.|r\nThis will reload the UI!"
 L["updateNote"] = "Please update the addon to the latest version."
 L["encounteredErrors"] = "MDT has encountered errors.\nClick to view them."
 L["togc"] = "Trial of the Grand Crusader"
@@ -354,7 +356,6 @@ L["Borka the Brute"] = "Borka the Brute"
 L["Shady Dealer"] = "Shady Dealer"
 L["undoDrawing"] = "Undo Drawing"
 L["redoDrawing"] = "Redo Drawing"
-L["hardResetPrompt"] = "Do you really want to reset all settings to default?\nThis will reload the UI!"
 L["hardResetPromptTitle"] = "Delete ALL settings"
 L["Shrouded"] = "Shrouded"
 L["dropdownAssignPlayer"] = "Assign to Player"
