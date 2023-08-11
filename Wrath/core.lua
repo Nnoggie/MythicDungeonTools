@@ -2824,6 +2824,7 @@ function MDT:ValidateImportPreset(preset)
   if not preset.value.currentSublevel then return false end
   if not preset.value.pulls then return false end
   if type(preset.value.pulls) ~= "table" then return false end
+  if not MDT.dungeonList[preset.value.currentDungeonIdx] then return false end
   return true
 end
 
