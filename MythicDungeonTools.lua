@@ -659,11 +659,12 @@ local bottomTips = {
   [11] = L["You are using MDT. You rock!"],
   [12] = L["You can choose from different color palettes in the automatic pull coloring settings menu."],
   [13] = L["You can cycle through different floors by holding CTRL and using the mousewheel."],
-  [14] = L["You can cycle through dungeons by holding ALT and using the mousewheel."],
+  [14] = L["altKeyGroupsTip"],
   [15] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
   [16] = L["Expand the top toolbar to gain access to drawing and note features."],
   [17] = L["ConnectedTip"],
-  [18] = L["EfficiencyScoreTip"]
+  [18] = L["EfficiencyScoreTip"],
+  [19] = L["ctrlKeyCountTip"],
 }
 
 function MDT:UpdateBottomText()
@@ -754,6 +755,14 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:SetTextColor(1, 1, 1, 1)
   frame.bottomLeftPanelString:SetText(" v"..GetAddOnMetadata(AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
+
+  frame.statusString = frame.bottomPanel:CreateFontString("MDTStatusLabel")
+  frame.statusString:SetFontObject("GameFontNormalSmall")
+  frame.statusString:SetJustifyH("RIGHT")
+  frame.statusString:SetJustifyV("CENTER")
+  frame.statusString:SetPoint("RIGHT", frame.bottomPanel, "RIGHT", 0, 0)
+  frame.statusString:SetTextColor(1, 1, 1, 1)
+  frame.statusString:Hide()
 
   frame.bottomPanel:EnableMouse(true)
   frame.bottomPanel:RegisterForDrag("LeftButton")
@@ -2082,7 +2091,7 @@ function MDT:MakeMapTexture(frame)
     frame.scrollFrame:EnableMouseWheel(true)
     local lastModifiedScroll
     frame.scrollFrame:SetScript("OnMouseWheel", function(self, delta)
-      if IsControlKeyDown() then
+      if IsControlKeyDown() and IsShiftKeyDown() then
         if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.1 then
           lastModifiedScroll = GetTime()
           delta = delta * -1
@@ -2092,12 +2101,6 @@ function MDT:MakeMapTexture(frame)
             MDT:UpdateMap()
             MDT:ZoomMapToDefault()
           end
-        end
-      elseif IsAltKeyDown() then
-        if not lastModifiedScroll or lastModifiedScroll < GetTime() - 0.3 then
-          lastModifiedScroll = GetTime()
-          delta = delta * -1
-          MDT:ScrollToNextDungeon(delta)
         end
       else
         MDT:ZoomMap(delta)
@@ -4711,6 +4714,7 @@ function initFrames()
   MDT.initSpinner = initSpinner
 
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
+  MDT:SetUpModifiers(main_frame)
   main_frame:Hide()
   tinsert(UISpecialFrames, "MDTFrame")
 

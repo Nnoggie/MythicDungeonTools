@@ -3,6 +3,13 @@ local L = MDT.L
 L = L or {}
 L["hardResetButton"] = "Reset MDT"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\n|cFFFF0000Only do this if MDT is not loading at all and is in a broken state.|r\nThis will reload the UI!"
+L["You can choose from different color palettes in the automatic pull coloring settings menu."] = "You can choose from different color palettes in the settings menu."
+L["You can cycle through different floors by holding CTRL and using the mousewheel."] = "You can cycle through different floors by using SHIFT+CTRL+Mousewheel."
+L["altKeyGroupsTip"] = "Hold ALT to show enemy group numbers on all enemies"
+L["ctrlKeyCountTip"] = "Hold CTRL to show enemy forces on all enemies"
+L["altKeyDownStatusText"] = "Showing enemy group numbers"
+L["ctrlKeyDownStatusText"] = "Showing enemy forces"
+
 L["updateNote"] = "Please update the addon to the latest version."
 L["encounteredErrors"] = "MDT has encountered errors.\nClick to view them."
 L["togc"] = "Trial of the Grand Crusader"
@@ -1757,8 +1764,6 @@ L["You are using MDT. You rock!"] = "You are using MDT. You rock!"
 L[
 "You can always return to the current Live Session preset by clicking the 'Return to Live' button next to the preset-dropdown"
 ] = "You can always return to the current Live Session route by clicking the 'Return to Live' button next to the route-dropdown"
-L["You can choose from different color palettes in the automatic pull coloring settings menu."] = "You can choose from different color palettes in the automatic pull coloring settings menu."
-L["You can cycle through different floors by holding CTRL and using the mousewheel."] = "You can cycle through different floors by holding CTRL and using the mousewheel."
 L["You can cycle through dungeons by holding ALT and using the mousewheel."] = "You can cycle through dungeons by holding ALT and using the mousewheel."
 L["Zanazal the Wise"] = "Zanazal the Wise"
 L["Zanchuli Witch-Doctor"] = "Zanchuli Witch-Doctor"

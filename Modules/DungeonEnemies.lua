@@ -66,6 +66,46 @@ function MDTDungeonEnemyMixin:updateSizes(scale)
   end
 end
 
+function MDT:DisplayBlipModifierLabels(modifier)
+  for _, blip in pairs(blips) do
+    blip.textLocked = true
+    local text = (modifier == "alt" and blip.clone.g) or (modifier == "ctrl" and blip.data.count) or ""
+    blip.fontstring_Text1:SetText(text)
+    blip.fontstring_Text1:Show()
+  end
+end
+
+function MDT:HideAllBlipLabels()
+  for _, blip in pairs(blips) do
+    if not blip.textLocked then return end
+    blip.fontstring_Text1:Hide()
+    blip.textLocked = nil
+  end
+end
+
+function MDT:SetUpModifiers(frame)
+  if MDT:GetDB().devMode then return end
+  local ONUPDATE_INTERVAL = 0.1
+  local timeSinceLastUpdate = 0
+  frame:SetScript("OnUpdate", function(self, elapsed)
+    timeSinceLastUpdate = timeSinceLastUpdate + elapsed
+    if timeSinceLastUpdate >= ONUPDATE_INTERVAL then
+      timeSinceLastUpdate = 0
+      local modifier = (IsAltKeyDown() and "alt") or (IsControlKeyDown() and "ctrl")
+      local overMDT = MouseIsOver(frame) or MouseIsOver(frame.sidePanel) or MouseIsOver(frame.topPanel) or MouseIsOver(frame.bottomPanel)
+      if modifier and overMDT then
+        MDT:DisplayBlipModifierLabels(modifier)
+        local statusText = (modifier == "alt" and L["altKeyDownStatusText"]) or (modifier == "ctrl" and L["ctrlKeyDownStatusText"])
+        MDT.main_frame.statusString:SetText(statusText)
+        MDT.main_frame.statusString:Show()
+      else
+        MDT:HideAllBlipLabels()
+        MDT.main_frame.statusString:Hide()
+      end
+    end
+  end)
+end
+
 function MDTDungeonEnemyMixin:OnEnter()
   self:updateSizes(1.2)
   self:SetFrameLevel(self:GetFrameLevel() + 5)
@@ -96,15 +136,15 @@ function MDTDungeonEnemyMixin:OnEnter()
     end
   end
   if not db.devMode then
+    if self.textLocked then return end
     self.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and self.data.teemingCount or self.data.count)
-    if not self.clone.g then
-      self.fontstring_Text1:Show()
-      return
-    end
-    for _, blip in pairs(blips) do
-      if blip.clone.g == self.clone.g then
-        blip.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and blip.data.teemingCount or blip.data.count)
-        blip.fontstring_Text1:Show()
+    self.fontstring_Text1:Show()
+    if self.clone.g then
+      for _, blip in pairs(blips) do
+        if blip.clone.g == self.clone.g then
+          blip.fontstring_Text1:SetText(MDT:IsCurrentPresetTeeming() and blip.data.teemingCount or blip.data.count)
+          blip.fontstring_Text1:Show()
+        end
       end
     end
   end
@@ -136,10 +176,9 @@ function MDTDungeonEnemyMixin:OnLeave()
     end
   end
   if not db.devMode then
-    if not self.clone.g then
-      self.fontstring_Text1:Hide()
-      return
-    end
+    if self.textLocked then return end
+    self.fontstring_Text1:Hide()
+    if not self.clone.g then return end
     for _, blip in pairs(blips) do
       if blip.clone.g == self.clone.g then
         blip.fontstring_Text1:Hide()
