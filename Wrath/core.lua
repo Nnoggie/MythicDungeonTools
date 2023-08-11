@@ -97,6 +97,8 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     else
       MDT:HideMinimapButton()
     end
+  elseif rqst == "test" then
+    MDT:OpenConfirmationFrame(450, 150, "MDT Test", "Run", "Run all tests?", MDT.test.RunAllTests)
   else
     MDT:Async(function()
       MDT:ShowInterfaceInternal()
@@ -2245,6 +2247,10 @@ function MDT:OpenClearPresetDialog()
 end
 
 function MDT:OpenSettingsDialog()
+  if not MDT.main_frame.settingsFrame then
+    MDT:MakeSettingsFrame(MDT.main_frame)
+    MDT:MakeCustomColorFrame(MDT.main_frame.settingsFrame)
+  end
   MDT:HideAllDialogs()
   MDT.main_frame.settingsFrame:ClearAllPoints()
   MDT.main_frame.settingsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
@@ -2730,7 +2736,8 @@ function MDT:MakePresetImportFrame(frame)
   frame.presetImportBox = AceGUI:Create("EditBox")
   frame.presetImportBox:SetLabel(L["Import Preset"]..":")
   frame.presetImportBox:SetWidth(255)
-  frame.presetImportBox:SetCallback("OnTextChanged", function(widget, event, text) importString = text end)
+  frame.presetImportBox.OnTextChanged = function(widget, event, text) importString = text end
+  frame.presetImportBox:SetCallback("OnTextChanged", frame.presetImportBox.OnTextChanged)
   frame.presetImportBox:DisableButton(true)
   frame.presetImportFrame:AddChild(frame.presetImportBox)
 
@@ -2749,6 +2756,7 @@ function MDT:MakePresetImportFrame(frame)
       frame.presetImportLabel:SetText(L["Invalid import string"])
     end
   end)
+  frame.presetImportButton = importButton
   frame.presetImportFrame:AddChild(importButton)
   frame.presetImportFrame:AddChild(frame.presetImportLabel)
   frame.presetImportFrame:Hide()
