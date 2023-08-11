@@ -4070,7 +4070,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   end
   if MDT.main_frame then MDT:HideAllDialogs() end
   f:ClearAllPoints()
-  f:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+  f:SetPoint("CENTER", MDT.main_frame or UIParent, "CENTER", 0, 50)
   f.label:SetText(prompt)
   f:Show()
 end
