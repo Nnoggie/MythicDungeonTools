@@ -4784,8 +4784,6 @@ function initFrames()
   MDT:MakeChatPresetImportFrame(main_frame)
   coroutine.yield()
   MDT:MakeSendingStatusBar(main_frame)
-  -- MDT:MakeSettingsFrame(main_frame)
-  -- MDT:MakeCustomColorFrame(main_frame.settingsFrame)
   MDT:POI_CreateDropDown(main_frame)
 
   --devMode
