@@ -4697,7 +4697,10 @@ end
 
 MDT:CreateCoroutineHandler()
 
+local initStarted
 function initFrames()
+  if initStarted then return end
+  initStarted = true
   for _, module in pairs(MDT.modules) do
     if module.OnInitialize then
       module:OnInitialize()
