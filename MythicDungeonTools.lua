@@ -2513,6 +2513,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   end
   if not framesInitialized then coroutine.yield() end
   MDT:Async(function()
+    coroutine.yield()
     MDT:DungeonEnemies_UpdateEnemiesAsync()
     MDT:DungeonEnemies_UpdateTeeming()
     MDT:DungeonEnemies_UpdateSeasonalAffix()

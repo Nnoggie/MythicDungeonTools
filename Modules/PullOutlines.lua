@@ -22,8 +22,10 @@ local function is_left_of(a, b, c)
 end
 
 local function convex_hull(pts)
+  if not pts or #pts == 0 then return end
   local lower_left = 1
   for i = 2, #pts do
+    if not pts[i][1] or not pts[lower_left][1] then return end
     if is_lower_left(pts[i], pts[lower_left]) then lower_left = i end
   end
 
@@ -63,6 +65,7 @@ local function centroid(pts)
   local rx = 0
   local ry = 0
   for k, v in pairs(pts) do
+    if not v[1] or not v[2] then return end
     rx = rx + v[1]
     ry = ry + v[2]
   end
@@ -79,7 +82,7 @@ local function expand_polygon(poly, numCirclePoints)
     local y = poly[i][2]
     local r = poly[i][3] * 10
     local adjustedNumPoints = math.max(1, math.floor(numCirclePoints * poly[i][3]))
-
+    if not x or not y or not r then return end
     for j = 1, adjustedNumPoints do
       local cx = x + r * math.cos(2 * math.pi / adjustedNumPoints * j)
       local cy = y + r * math.sin(2 * math.pi / adjustedNumPoints * j)
@@ -226,6 +229,7 @@ function MDT:DrawHullFontString(hull, pullIdx)
   if hull and hull[#hull] then
     if #hull > 2 then
       center = centroid(hull)
+      if not center then return end
       center[1] = center[1]
       center[2] = center[2]
     elseif #hull == 2 then
@@ -237,6 +241,7 @@ function MDT:DrawHullFontString(hull, pullIdx)
     elseif #hull == 1 then
       local x1 = hull[1][1]
       local y1 = hull[1][2]
+      if not x1 or not y1 then return end
       center = { x1, y1 + 15 }
     end
   end
@@ -295,9 +300,8 @@ function MDT:DrawHull(vertices, pullColor, pullIdx)
   if hull then
     -- expand_polygon: higher value = more points = more expensive = smoother outlines
     hull = expand_polygon(hull, 30)
-
     hull = convex_hull(hull)
-
+    if not hull then return end
     for i = 1, #hull do
       local a = hull[i]
       local b = hull[1]
