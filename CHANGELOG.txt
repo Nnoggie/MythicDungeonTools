@@ -1,3 +1,6 @@
+- v4.0.4.27
+  - bugfixes
+  - classic compatibility
 - v4.0.4.26
   - bugfixes
   - clicking a pullbutton will once again select the apropriate sublevel
