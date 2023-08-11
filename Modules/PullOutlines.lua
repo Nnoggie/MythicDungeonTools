@@ -135,7 +135,7 @@ end
 function MDT:PullClickAreaOnEnter(pullIdx)
   local fsFrame = getFSFrameByPullIdx(pullIdx)
   if not fsFrame then return end
-  fsFrame.fs:SetScale(1.7)
+  fsFrame.fs:SetScale(1.25)
   fsFrame.fs:SetAlpha(1)
   for _, tex in pairs(activeTextures) do
     if tex.pullIdx == pullIdx then
