@@ -6,7 +6,7 @@
 
 Curseforge: https://www.curseforge.com/wow/addons/mythic-dungeon-tools
 
-![CurseforgeBadge](https://cf.way2muchnoise.eu/full_288981_downloads.svg)
+[![CurseforgeBadge](https://cf.way2muchnoise.eu/full_288981_downloads.svg)](https://www.curseforge.com/wow/addons/mythic-dungeon-tools)
 
 ## Description
 
