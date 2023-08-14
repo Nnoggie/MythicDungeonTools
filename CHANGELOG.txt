@@ -1,3 +1,5 @@
+- v4.0.4.29
+  - pulls draggable once again
 - v4.0.4.28
   - fixed an error when double clicking the minimap button (why would you do that, unintall windows 98 already)
 - v4.0.4.27
