@@ -11,4 +11,5 @@
     <Script file='UldamanLegacyOfTyr.lua'/>
     <Script file='TheVortexPinnacle.lua'/>
     <Script file='DawnOfTheInfiniteLower.lua'/>
+    <Script file='DawnOfTheInfiniteUpper.lua'/>
 </Ui>

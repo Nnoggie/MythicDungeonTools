@@ -1,3 +1,4 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 100
@@ -14,23 +15,23 @@ local function getSublevelMap(frame, sublevel)
   end
   for i = 1, 10 do
     for j = 1, 15 do
-      local texName = 'Interface\\AddOns\\MythicDungeonTools\\Textures\\Nnoggie'
+      local fileSuffix = (i - 1) * 15 + j
+      local texName = 'Interface\\AddOns\\'..addonName..'\\Dragonflight\\Textures\\DawnOfTheInfiniteLower\\'..sublevel..'_'..fileSuffix..".png"
       local tile = frame["largeMapPanelTile"..i..j]
       tile:SetTexture(texName)
-      tile:SetTexCoord(1 / i, 1, 1 / j, 1)
       tile:Show()
     end
   end
 end
 
-
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
   [1] = getSublevelMap,
+
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["dotiSublevel1"],
+  [1] = L["dotiLowerSublevel1"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 100, teeming = 1000, teemingEnabled = true }

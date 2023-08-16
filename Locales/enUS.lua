@@ -2,7 +2,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 L["DawnOfTheInfiniteLower"] = "Dawn of the Infinite: Lower"
-L["dotiSublevel1"] = "Sublevel 1"
+L["DawnOfTheInfiniteUpper"] = "Dawn of the Infinite: Upper"
+L["dotiLowerSublevel1"] = "Sublevel 1"
+L["dotiUpperSublevel1"] = "Sublevel 1"
 L["Dragonflight Season 3"] = "Dragonflight Season 3"
 
 L["hardResetButton"] = "Reset MDT"

@@ -35,7 +35,7 @@ if MDT:IsDragonflight() then
   tinsert(MDT.seasonList, L["Dragonflight Season 2"])
   tinsert(MDT.dungeonSelectionToIndex, { 49, 48, 51, 50, 8, 16, 22, 77 })
   tinsert(MDT.seasonList, L["Dragonflight Season 3"])
-  tinsert(MDT.dungeonSelectionToIndex, { 100 })
+  tinsert(MDT.dungeonSelectionToIndex, { 100, 101 })
 end
 
 if MDT:IsWrath() then
