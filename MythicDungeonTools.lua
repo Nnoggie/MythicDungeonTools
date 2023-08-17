@@ -80,6 +80,7 @@ BINDING_NAME_MDTREDODRAWING = L["redoDrawing"]
 
 ---@diagnostic disable-next-line: duplicate-set-field
 function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
+  cmd = cmd:lower()
   local rqst, arg = strsplit(' ', cmd)
   if rqst == "devmode" then
     MDT:ToggleDevMode()
