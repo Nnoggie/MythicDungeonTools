@@ -31,7 +31,14 @@ local candidates = {
 
     end,
     note = L["MDTGuideNote"]
-  }
+  },
+  ["MethodDungeonTools"] = {
+    name = "MethodDungeonTools",
+    detected = false,
+    onDetect = function()
+
+    end,
+  },
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
