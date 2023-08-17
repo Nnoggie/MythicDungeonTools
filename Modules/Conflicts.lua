@@ -29,7 +29,8 @@ local candidates = {
     detected = false,
     onDetect = function()
 
-    end
+    end,
+    note = L["MDTGuideNote"]
   }
 }
 
@@ -80,16 +81,17 @@ function MDT:ShowConflictFrame()
     conflictFrame:SetTitle(L["Addon Conflict"])
 
     conflictFrame.label = AceGUI:Create("Label")
-    conflictFrame.label:SetWidth(390)
+    conflictFrame.label:SetWidth(550)
+    conflictFrame.label:SetFontObject('GameFontNormalLarge')
     local labelText = L["conflictPrompt"]
     -- add all conflicting addons to the text in red color
     for _, candidate in pairs(candidates) do
       if candidate.detected then
-        local updateNote = ""
-        if candidate.version then
-          updateNote = " ("..L["updateNote"]..")"
+        local updateNote = "\n- |cFFFF0000"..candidate.name.."|r"
+        if candidate.note then
+          updateNote = updateNote.." "..candidate.note
         end
-        labelText = labelText.."\n|cFFFF0000"..candidate.name.."|r"..updateNote
+        labelText = labelText..updateNote
       end
     end
 
