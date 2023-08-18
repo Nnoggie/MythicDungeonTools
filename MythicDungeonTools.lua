@@ -4621,7 +4621,6 @@ function MDT:RegisterModule(modulename, module)
   MDT.modules[modulename] = module
 end
 
---- @type LibAsyncConfig
 local asyncConfig = {
   type = "everyFrame",
   maxTime = 40,
