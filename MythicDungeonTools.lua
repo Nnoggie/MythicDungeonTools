@@ -4621,82 +4621,24 @@ function MDT:RegisterModule(modulename, module)
   MDT.modules[modulename] = module
 end
 
--- credit to WeakAuras
-function MDT:CreateCoroutineHandler()
-  local coHandler = {}
-  coHandler.frame = CreateFrame("Frame")
-  coHandler.update = {}
-  coHandler.size = 0
-
-  function coHandler.AddAction(self, name, func, singleton)
-    if singleton then
-      coHandler.RemoveAction(self, name)
-    end
-    if not name then
-      name = string.format("NIL", coHandler.size + 1);
-    end
-    if coHandler.update[name] then
-      name = name..MDT.U.GetUniqueId(11)
-    end
-    if not coHandler.update[name] then
-      coHandler.update[name] = func;
-      coHandler.size = coHandler.size + 1
-      coHandler.frame:Show();
-    end
-  end
-
-  function coHandler.RemoveAction(self, name)
-    if coHandler.update[name] then
-      coHandler.update[name] = nil;
-      coHandler.size = coHandler.size - 1
-      if coHandler.size == 0 then
-        coHandler.frame:Hide();
-      end
-    end
-  end
-
-  -- Setup frame
-  coHandler.frame:Hide();
-  coHandler.frame:SetScript("OnUpdate", function(self, elapsed)
-    -- Start timing
-    local start = debugprofilestop();
-    local hasData = true;
-
-    -- Resume
-    while (debugprofilestop() - start < max(1, ((InCombatLockdown() and IsInInstance()) and 8 or 40) - (elapsed * 1000)) and hasData) do
-      -- Stop loop without data
-      hasData = false;
-
-      -- Resume all coroutines
-      for name, func in pairs(coHandler.update) do
-        -- Loop has data
-        hasData = true;
-
-        -- Resume or remove
-        if coroutine.status(func) ~= "dead" then
-          local ok, msg = coroutine.resume(func)
-          if not ok then
-            MDT:OnError(msg, debugstack(func), name)
-          end
-        else
-          coHandler:RemoveAction(name);
-        end
-      end
-    end
-  end);
-  MDT.coHandler = coHandler
-end
+--- @type LibAsyncConfig
+local asyncConfig = {
+  type = "everyFrame",
+  maxTime = 40,
+  maxTimeCombat = 8,
+  errorHandler = function(msg, stackTrace, name)
+    MDT:OnError(msg, stackTrace, name)
+  end,
+}
+MDT.asyncHandler = LibStub("LibAsync"):GetHandler(asyncConfig)
 
 function MDT:Async(func, name, singleton)
-  local co = coroutine.create(func)
-  MDT.coHandler:AddAction(name, co, singleton)
+  MDT.asyncHandler:Async(func, name, singleton)
 end
 
 function MDT:CancelAsync(name)
-  MDT.coHandler:RemoveAction(name)
+  MDT.asyncHandler:CancelAsync(name)
 end
-
-MDT:CreateCoroutineHandler()
 
 local initStarted
 function initFrames()

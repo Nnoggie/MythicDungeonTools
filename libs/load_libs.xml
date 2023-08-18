@@ -12,4 +12,5 @@
 	<Include file='LibDBIcon-1.0\lib.xml'/>
 	<Include file='AceConfig-3.0\AceConfig-3.0.xml'/>
 	<Script file='LibDeflate\LibDeflate.lua'/>
+	<Include file='LibAsync\LibAsync.xml'/>
 </Ui>
