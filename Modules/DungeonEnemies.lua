@@ -1051,6 +1051,7 @@ end
 ---Sets a custom color for a pull
 function MDT:DungeonEnemies_SetPullColor(pull, r, g, b)
   preset = MDT:GetCurrentPreset()
+  if not preset.value.pulls[pull] then return end
   preset.value.pulls[pull]["color"] = MDT:RGBToHex(r, g, b)
 end
 
