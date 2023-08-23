@@ -4468,7 +4468,7 @@ function MDT:IsPlayerInGroup()
 end
 
 function MDT:ResetMainFramePos(soft)
-  local func = function()
+  MDT:Async(function()
     --soft reset just redraws the window with existing coordinates from db
     local f = self.main_frame
     if not soft then
@@ -4484,9 +4484,7 @@ function MDT:ResetMainFramePos(soft)
     end
     f:ClearAllPoints()
     f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
-  end
-  local co = coroutine.create(func)
-  MDT.coHandler:AddAction("resetMainFramePos", co)
+  end, 'resetMainFramePos')
 end
 
 function MDT:DropIndicator()
