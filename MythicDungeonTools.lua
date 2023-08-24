@@ -2196,9 +2196,12 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
   local levelsTenBelow = math.min(level, 10)
   mult = round((1.08 ^ math.max(levelsTenBelow - 2, 0)) * mult, 2)
   -- the part of lvl 11 and above -  10% gain per level
-  local levelsElevenAbove = math.max(level - 10, 0)
+  local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-
+  --https://www.wowhead.com/news/mythic-high-keys-nerfed-for-rest-of-season-2-334624
+  --21 and above 8% per level
+  local levelsTwentyOneAbove = math.max(level - 20, 0)
+  mult = round((1.08 ^ levelsTwentyOneAbove) * mult, 2)
   return round(mult * baseHealth, 0)
 end
 
@@ -2212,8 +2215,12 @@ function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, 
   local levelsTenBelow = math.min(level, 10)
   mult = round((1.08 ^ math.max(levelsTenBelow - 2, 0)) * mult, 2)
   -- the part of lvl 11 and above -  10% gain per level
-  local levelsElevenAbove = math.max(level - 10, 0)
+  local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
+  --https://www.wowhead.com/news/mythic-high-keys-nerfed-for-rest-of-season-2-334624
+  --21 and above 8% per level
+  local levelsTwentyOneAbove = math.max(level - 20, 0)
+  mult = round((1.08 ^ levelsTwentyOneAbove) * mult, 2)
 
   local baseHealth = round(health / mult, 0)
   return baseHealth
