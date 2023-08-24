@@ -1,3 +1,6 @@
+- v4.1.0.2
+  - bugfixes
+  - mapping updates brackenhide g92 g93 halls g15
 - v4.1.0.1
   - bugfixes
   - use LibAsync
