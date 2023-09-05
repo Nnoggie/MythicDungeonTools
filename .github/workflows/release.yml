@@ -24,6 +24,7 @@ jobs:
       CF_API_KEY: ${{ secrets.CF_API_KEY }}
       GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}  # "GITHUB_TOKEN" is a secret always provided to the workflow
                                                  # for your own token, the name cannot start with "GITHUB_"
+      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
 
     # "steps" holds a list of all the steps needed to package and release our AddOn
     steps:
@@ -38,4 +39,4 @@ jobs:
       - name: Package and release
         uses: BigWigsMods/packager@v2
         with:
-          args: -w 0 -a 0
+          args: -w 0
