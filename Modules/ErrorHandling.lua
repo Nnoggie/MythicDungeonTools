@@ -10,6 +10,41 @@ local DESTINATIONS = {
   { name = "GitHub",  url = "https://github.com/Nnoggie/MythicDungeonTools/issues" },
   { name = "Discord", url = "https://discord.gg/tdxMPb3" },
 }
+
+local function getDiagnostics()
+  local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
+  local addonVersion = GetAddOnMetadata(AddonName, "Version")
+  local locale = GetLocale()
+  local dateString = date("%d/%m/%y %H:%M:%S")
+  local gameVersion = select(4, GetBuildInfo())
+  local name, realm = UnitFullName("player")
+  local regionId = GetCurrentRegion()
+  local regions = {
+    [1] = "US",
+    [2] = "Korea",
+    [3] = "Europe",
+    [4] = "Taiwan",
+    [5] = "China",
+    [72] = "PTR"
+  }
+  local region = regions[regionId]
+  local combatState = InCombatLockdown() and "In combat" or "Out of combat"
+  local mapID = C_Map.GetBestMapForUnit("player");
+  local zoneInfo = format("Zone: %s (%d)", C_Map.GetMapInfo(C_Map.GetMapInfo(mapID).parentMapID).name, mapID)
+  return {
+    presetExport = presetExport,
+    addonVersion = addonVersion,
+    locale = locale,
+    dateString = dateString,
+    gameVersion = gameVersion,
+    name = name,
+    realm = realm,
+    region = region,
+    combatState = combatState,
+    zoneInfo = zoneInfo
+  }
+end
+
 local hasShown = false
 
 function MDT:DisplayErrors(force)
@@ -169,28 +204,10 @@ function MDT:DisplayErrors(force)
     errorBoxText = errorBoxText..error.count.."x: "..error.message.."\n"
   end
   --add diagnostics
-  local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
-  local addonVersion = GetAddOnMetadata(AddonName, "Version")
-  local locale = GetLocale()
-  local dateString = date("%d/%m/%y %H:%M:%S")
-  local gameVersion = select(4, GetBuildInfo())
-  local name, realm = UnitFullName("player")
-  local regionId = GetCurrentRegion()
-  local regions = {
-    [1] = "US",
-    [2] = "Korea",
-    [3] = "Europe",
-    [4] = "Taiwan",
-    [5] = "China",
-    [72] = "PTR"
-  }
-  local region = regions[regionId]
-  local combatState = InCombatLockdown() and "In combat" or "Out of combat"
-  local mapID = C_Map.GetBestMapForUnit("player");
-  local zoneInfo = format("Zone: %s (%d)", C_Map.GetMapInfo(C_Map.GetMapInfo(mapID).parentMapID).name, mapID)
-  errorBoxText = errorBoxText.."\n"..dateString.."\nMDT: "..addonVersion.."\nClient: "..gameVersion.." "..locale.."\nCharacter: "..name.."-"..realm.." ("..region..")"
-  errorBoxText = errorBoxText.."\n"..combatState.."\n"..zoneInfo.."\n"
-  errorBoxText = errorBoxText.."\nRoute:\n"..presetExport
+  local diagnostics = getDiagnostics()
+  errorBoxText = errorBoxText.."\n"..diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\nCharacter: "..diagnostics.name.."-"..diagnostics.realm.." ("..diagnostics.region..")"
+  errorBoxText = errorBoxText.."\n"..diagnostics.combatState.."\n"..diagnostics.zoneInfo.."\n"
+  errorBoxText = errorBoxText.."\nRoute:\n"..diagnostics.presetExport
   errorBoxText = errorBoxText.."\nStacktraces\n\n"
   for _, error in ipairs(caughtErrors) do
     errorBoxText = errorBoxText..error.stackTrace.."\n"
@@ -218,6 +235,9 @@ local function onError(msg, stackTrace, name)
   local stackTraceValue = stackTrace and name..":\n"..stackTrace
   tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue, count = 1 })
   addTrace = true
+  local diagnostics = getDiagnostics()
+  local diagnosticString = diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\n"..diagnostics.region
+  MDT.WagoAnalytics:Error(e, diagnosticString)
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
     MDT:DisplayErrors(true)
