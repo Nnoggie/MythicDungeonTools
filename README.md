@@ -3,7 +3,7 @@
 ![Main Window](https://i.imgur.com/2rSkG5i.jpeg "Main Window")
 
 ## Download
-
+Wago: https://addons.wago.io/addons/mythic-dungeon-tools
 Curseforge: https://www.curseforge.com/wow/addons/mythic-dungeon-tools
 
 [![CurseforgeBadge](https://cf.way2muchnoise.eu/full_288981_downloads.svg)](https://www.curseforge.com/wow/addons/mythic-dungeon-tools)
