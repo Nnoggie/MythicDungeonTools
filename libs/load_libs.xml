@@ -13,5 +13,5 @@
 	<Include file='AceConfig-3.0\AceConfig-3.0.xml'/>
 	<Script file='LibDeflate\LibDeflate.lua'/>
 	<Include file='LibAsync\LibAsync.xml'/>
-  <Script file = 'WagoAnalyticsShim\Shim.lua'/>
+  <Script file = 'WagoAnalytics\Shim.lua'/>
 </Ui>
