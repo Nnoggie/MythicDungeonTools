@@ -237,7 +237,7 @@ local function onError(msg, stackTrace, name)
   addTrace = true
   local diagnostics = getDiagnostics()
   local diagnosticString = diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\n"..diagnostics.region
-  MDT.WagoAnalytics:Error(e..diagnosticString)
+  -- MDT.WagoAnalytics:Error(e..diagnosticString)
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
     MDT:DisplayErrors(true)
