@@ -35,7 +35,7 @@ if MDT:IsDragonflight() then
   tinsert(MDT.seasonList, L["Dragonflight Season 2"])
   tinsert(MDT.dungeonSelectionToIndex, { 49, 48, 51, 50, 8, 16, 22, 77 })
   tinsert(MDT.seasonList, L["Dragonflight Season 3"])
-  tinsert(MDT.dungeonSelectionToIndex, { 100, 101, 102, 103, 15 })
+  tinsert(MDT.dungeonSelectionToIndex, { 100, 101, 102, 103, 15, 104 })
 end
 
 if MDT:IsWrath() then
@@ -129,7 +129,6 @@ function MDT:CreateDungeonSelectDropdown(frame)
   group.SublevelDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
     MDT:UpdateMap()
-    MDT:ZoomMapToDefault()
   end)
   group:AddChild(group.SublevelDropdown)
 
