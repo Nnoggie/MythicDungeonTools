@@ -2102,7 +2102,6 @@ function MDT:MakeMapTexture(frame)
           if MDT.dungeonSubLevels[db.currentDungeonIdx][target] then
             MDT:SetCurrentSubLevel(target)
             MDT:UpdateMap()
-            MDT:ZoomMapToDefault()
           end
         end
       else
@@ -2583,6 +2582,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
     MDT:FixDungeonDropDownList()
+    MDT:ZoomMapToDefault()
   end, "UpdateMap", true)
 end
 
@@ -2607,7 +2607,6 @@ function MDT:DeletePreset(index)
   db.currentPreset[db.currentDungeonIdx] = index - 1
   MDT:UpdatePresetDropDown()
   MDT:UpdateMap()
-  MDT:ZoomMapToDefault()
 end
 
 MDT.zoneIdToDungeonIdx = {
@@ -2759,7 +2758,6 @@ function MDT:CreateNewPreset(name)
     MDT.main_frame.presetCreationFrame:Hide()
     MDT:UpdatePresetDropDown()
     MDT:UpdateMap()
-    MDT:ZoomMapToDefault()
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
   else
@@ -3517,7 +3515,6 @@ function MDT:SetMapSublevel(pull)
   end
 
   MDT:UpdateDungeonDropDown()
-  if shouldResetZoom then MDT:ZoomMapToDefault() end
   return shouldResetZoom
 end
 
