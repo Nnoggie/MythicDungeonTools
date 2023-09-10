@@ -17,11 +17,9 @@ MDT.mapInfo[dungeonIndex] = {
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "OvergrownOutpost",
   [1] = "OvergrownOutpost",
-  [2] = "OvergrownOutpost1_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["The Everbloom"],
-  [2] = L["The Overlook"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 100, teeming = 1000, teemingEnabled = true }
