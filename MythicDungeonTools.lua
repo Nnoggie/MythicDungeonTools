@@ -2532,6 +2532,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if not framesInitialized then coroutine.yield() end
   MDT:Async(function()
     coroutine.yield()
+    MDT:ZoomMapToDefault()
     MDT:DungeonEnemies_UpdateEnemiesAsync()
     MDT:DungeonEnemies_UpdateTeeming()
     MDT:DungeonEnemies_UpdateSeasonalAffix()
@@ -2582,7 +2583,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
     MDT:FixDungeonDropDownList()
-    MDT:ZoomMapToDefault()
   end, "UpdateMap", true)
 end
 
