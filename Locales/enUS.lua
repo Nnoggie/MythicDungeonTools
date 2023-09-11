@@ -1,8 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
-L["DawnOfTheInfiniteLower"] = "Dawn of the Infinite: Lower"
-L["DawnOfTheInfiniteUpper"] = "Dawn of the Infinite: Upper"
+L["DawnOfTheInfiniteLower"] = "DOTI: Galakrond's Fall"
+L["DawnOfTheInfiniteUpper"] = "DOTI: Murozond's Rise"
 L["dotiLowerSublevel1"] = "Sublevel 1"
 L["dotiUpperSublevel1"] = "Sublevel 1"
 L["Dragonflight Season 3"] = "Dragonflight Season 3"
