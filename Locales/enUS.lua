@@ -8,6 +8,7 @@ L["dotiUpperSublevel1"] = "Sublevel 1"
 L["Dragonflight Season 3"] = "Dragonflight Season 3"
 L["The Everbloom"] = "The Everbloom"
 L["The Overlook"] = "The Overlook"
+L["Throne of Tides"] = "Throne of Tides"
 
 L["hardResetButton"] = "Reset MDT"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\n|cFFFF0000Only do this if MDT is not loading at all and is in a broken state.|r\nThis will reload the UI!"
