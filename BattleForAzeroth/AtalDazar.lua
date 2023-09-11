@@ -3,38 +3,28 @@ local L = MDT.L
 local dungeonIndex = 15
 MDT.dungeonList[dungeonIndex] = L["Atal'Dazar"]
 
+MDT.mapInfo[dungeonIndex] = {
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163,
+      horizontalPan = 136.93725088026,
+      verticalPan = 71.585455597386,
+    },
+  }
+};
+
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "CityOfGold",
   [1] = "CityOfGold1_",
-  [2] = "CityOfGold2_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Atal'Dazar Sublevel"],
-  [2] = L["Sacrificial Pits"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 198, teeming = 237, teemingEnabled = true }
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 517.98001617239,
-      ["y"] = -210.32103688142,
-      ["target"] = 2,
-      ["direction"] = -1,
-      ["connectionIndex"] = 1,
-    },
-    [2] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 517.42667589569,
-      ["y"] = -329.12649940624,
-      ["target"] = 2,
-      ["direction"] = -1,
-      ["connectionIndex"] = 2,
-    },
-    [3] = {
       ["template"] = "MapLinkPinTemplate",
       ["type"] = "generalNote",
       ["x"] = 600.63207260699,
@@ -52,7 +42,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [8] = true,
       },
     },
-    [4] = {
+    [2] = {
       ["template"] = "MapLinkPinTemplate",
       ["type"] = "generalNote",
       ["x"] = 600.63207260699,
@@ -70,7 +60,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [8] = true,
       },
     },
-    [5] = {
+    [3] = {
       ["template"] = "VignettePinTemplate",
       ["type"] = "nyalothaSpire",
       ["x"] = 587.56733659681,
@@ -93,7 +83,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [12] = true,
       },
     },
-    [6] = {
+    [4] = {
       ["template"] = "VignettePinTemplate",
       ["type"] = "nyalothaSpire",
       ["x"] = 462.89828402862,
@@ -116,7 +106,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [12] = true,
       },
     },
-    [7] = {
+    [5] = {
       ["template"] = "VignettePinTemplate",
       ["type"] = "nyalothaSpire",
       ["x"] = 581.14504888138,
@@ -133,7 +123,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [10] = true,
       },
     },
-    [8] = {
+    [6] = {
       ["template"] = "VignettePinTemplate",
       ["type"] = "nyalothaSpire",
       ["x"] = 417.6415060524,
@@ -150,7 +140,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [10] = true,
       },
     },
-    [9] = {
+    [7] = {
       ["template"] = "VignettePinTemplate",
       ["type"] = "nyalothaSpire",
       ["x"] = 418.19472278238,
@@ -167,7 +157,7 @@ MDT.mapPOIs[dungeonIndex] = {
         [12] = true,
       },
     },
-    [10] = {
+    [8] = {
       ["template"] = "VignettePinTemplate",
       ["type"] = "nyalothaSpire",
       ["x"] = 580.99671668925,
@@ -183,26 +173,6 @@ MDT.mapPOIs[dungeonIndex] = {
         [11] = true,
         [12] = true,
       },
-    },
-  },
-  [2] = {
-    [1] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 587.10715642853,
-      ["y"] = -154.91903909324,
-      ["target"] = 1,
-      ["direction"] = 1,
-      ["connectionIndex"] = 1,
-    },
-    [2] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 587.10715642853,
-      ["y"] = -508.99905320816,
-      ["target"] = 1,
-      ["direction"] = 1,
-      ["connectionIndex"] = 2,
     },
   },
 };
@@ -1858,43 +1828,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 489.43807463015,
-        ["y"] = -334.61510501455,
-        ["sublevel"] = 2,
-        ["patrol"] = {
-          [1] = {
-            ["x"] = 489.43807463015,
-            ["y"] = -334.61510501455,
-          },
-          [2] = {
-            ["x"] = 482.37036673354,
-            ["y"] = -376.08020579747,
-          },
-          [3] = {
-            ["x"] = 412.37045932562,
-            ["y"] = -395.45516723723,
-          },
-          [4] = {
-            ["x"] = 363.62040406793,
-            ["y"] = -364.83021780455,
-          },
-          [5] = {
-            ["x"] = 362.99544943846,
-            ["y"] = -299.8301888311,
-          },
-          [6] = {
-            ["x"] = 411.74539740781,
-            ["y"] = -271.08023739724,
-          },
-          [7] = {
-            ["x"] = 466.12031255152,
-            ["y"] = -273.58021684761,
-          },
-          [8] = {
-            ["x"] = 489.43807463015,
-            ["y"] = -334.61510501455,
-          },
-        },
+        ["x"] = 501.0508484363,
+        ["y"] = -233.58465731868,
+        ["sublevel"] = 1,
       },
     },
   },
