@@ -63,9 +63,21 @@ function MDT:UpdateDungeonDropDown()
   dungeonDropdown:SetList(dungeonSelectionToNames[db.selectedDungeonList])
   dungeonDropdown:SetValue(indexToDungeonSelection[db.selectedDungeonList][currentDungeonIdx])
   dungeonDropdown:ClearFocus()
-  sublevelDropdown:SetList(MDT.dungeonSubLevels[currentDungeonIdx])
+  local sublevels = MDT.dungeonSubLevels[currentDungeonIdx]
+  sublevelDropdown:SetList(sublevels)
   sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
   sublevelDropdown:ClearFocus()
+  local group = MDT.main_frame.DungeonSelectionGroup
+  --dirty hack
+  if #sublevels == 1 then
+    group.children[2] = nil
+    group:SetHeight(25)
+    sublevelDropdown.frame:Hide()
+  else
+    group.children[2] = sublevelDropdown
+    group:SetHeight(50)
+    sublevelDropdown.frame:Show()
+  end
 end
 
 ---CreateDungeonSelectDropdown
