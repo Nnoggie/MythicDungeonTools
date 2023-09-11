@@ -1,12 +1,43 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 4
 MDT.dungeonList[dungeonIndex] = L["Darkheart Thicket"]
 
+MDT.mapInfo[dungeonIndex] = {
+  viewportPositionOverrides = {
+    [1] = {
+      zoomScale = 1.2999999523163,
+      horizontalPan = 67.260832446435,
+      verticalPan = 69.727395812053,
+    },
+  }
+};
+
+--TODO: add zoneIds
+
+local function getSublevelMap(frame, sublevel)
+  for i = 1, 12 do
+    if frame["mapPanelTile"..i] then
+      frame["mapPanelTile"..i]:Hide()
+    end
+  end
+  for i = 1, 10 do
+    for j = 1, 15 do
+      local fileSuffix = (i - 1) * 15 + j
+      local texName = 'Interface\\AddOns\\'..addonName..'\\Dragonflight\\Textures\\DarkheartThicket\\'..sublevel..'_'..fileSuffix..".png"
+      local tile = frame["largeMapPanelTile"..i..j]
+      tile:SetTexture(texName)
+      tile:Show()
+    end
+  end
+end
+
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "DarkheartThicket",
-  [1] = "DarkheartThicket",
+  [0] = "",
+  [1] = getSublevelMap,
 }
+
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Darkheart Thicket Sublevel"],
 }
