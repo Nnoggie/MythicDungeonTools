@@ -790,14 +790,14 @@ if __name__ == "__main__":
         & (mobHits.delta_post > GROUP_SEC_DELIMITER),
         "group",
     ] = 1
-    # Set their group number
-    mobHits["group"] = mobHits.group.cumsum()
-    # Set "single mob groups" to group 0
+    # Set "single mob groups" to group 1
     mobHits.loc[
         (mobHits.delta_pre > GROUP_SEC_DELIMITER)
         & (mobHits.delta_post > GROUP_SEC_DELIMITER),
         "group",
-    ] = 0
+    ] = 1
+    # Set their group number
+    mobHits["group"] = mobHits.group.cumsum()
     # Fill the remaning mobs with next seen group number
     mobHits.group.fillna(method="bfill", inplace=True)
 
