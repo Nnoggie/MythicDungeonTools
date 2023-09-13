@@ -583,11 +583,12 @@ def pick_mapping_style():
         """Select mapping style:
         [1] Old style (Using NPC position from CombatLog).
         [2] New style (Combined map, NPC's mapped in rows).
-        """
+        
+        Input: """
     )
-    if mapping_style == "1":
+    if mapping_style == "1" or mapping_style.lower() == "old":
         mapping_style = "old"
-    elif mapping_style == "2":
+    elif mapping_style == "2" or mapping_style.lower() == "new":
         mapping_style = "new"
     return mapping_style
 
