@@ -11,7 +11,7 @@ EXPANSIONS = ["Legion", "BattleForAzeroth", "Shadowlands", "Dragonflight"]
 # 2. Set the variable GAME_VERSION to the desired game version (eg. "9.2.7")
 #    Latest db files will be downloaded from the corresponding game version.
 #    If GAME_VERSION is set to None, the latest RETAIL db files will be downloaded.
-GAME_VERSION = "10.1.0"  # <--- Set this variable
+GAME_VERSION = "10.2.0"  # <--- Set this variable
 # 3. Run the script, it writes directly to the files automatically.
 
 # Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
