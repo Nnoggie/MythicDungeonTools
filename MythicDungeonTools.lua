@@ -365,6 +365,10 @@ function MDT:IsOnBetaServer()
     ["Broxigar"] = true,
     ["Lycanthoth"] = true,
     ["Nobundo"] = true,
+    ["Fyrakk"] = true,
+    ["Iridikron"] = true,
+    ["Raszageth"] = true,
+    ["Vyranoth"] = true,
   }
   return realms[realm]
 end
