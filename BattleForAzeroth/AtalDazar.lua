@@ -201,7 +201,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dazar'ai Honor Guard",
     ["id"] = 127799,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 988005,
     ["scale"] = 1,
     ["displayId"] = 81326,
     ["creatureType"] = "Humanoid",
@@ -221,13 +221,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
+      [253548] = {
       },
       [256138] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -285,7 +281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dazar'ai Juggernaut",
     ["id"] = 122971,
     ["count"] = 4,
-    ["health"] = 883769,
+    ["health"] = 1136206,
     ["scale"] = 1,
     ["displayId"] = 81325,
     ["creatureType"] = "Humanoid",
@@ -306,21 +302,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [253239] = {
       },
       [253279] = {
+      },
+      [253548] = {
       },
       [253654] = {
       },
       [253666] = {
       },
       [255824] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -418,7 +410,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dazar'ai Confessor",
     ["id"] = 122973,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 790404,
     ["scale"] = 1,
     ["displayId"] = 81330,
     ["creatureType"] = "Humanoid",
@@ -438,8 +430,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [253517] = {
       },
       [253526] = {
@@ -447,10 +437,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [253544] = {
       },
       [253548] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -528,7 +514,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dazar'ai Augur",
     ["id"] = 122972,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["displayId"] = 81336,
     ["creatureType"] = "Humanoid",
@@ -549,15 +535,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
+      [253548] = {
       },
       [253562] = {
       },
       [253583] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -624,7 +606,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dazar'ai Colossus",
     ["id"] = 122984,
     ["count"] = 6,
-    ["health"] = 1306442,
+    ["health"] = 1679609,
     ["scale"] = 1.2,
     ["stealthDetect"] = true,
     ["displayId"] = 80338,
@@ -635,15 +617,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [254958] = {
       },
       [254959] = {
       },
       [254974] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -685,7 +663,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gilded Priestess",
     ["id"] = 132126,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 988005,
     ["scale"] = 1,
     ["displayId"] = 82238,
     ["creatureType"] = "Humanoid",
@@ -704,17 +682,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [260666] = {
       },
       [260667] = {
       },
       [260668] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -757,7 +729,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Priestess Alun'za",
     ["id"] = 122967,
     ["count"] = 0,
-    ["health"] = 6916455,
+    ["health"] = 8892045,
     ["scale"] = 1,
     ["displayId"] = 80293,
     ["creatureType"] = "Humanoid",
@@ -769,8 +741,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [205276] = {
-      },
       [255575] = {
       },
       [255577] = {
@@ -785,8 +755,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [255836] = {
       },
-      [277564] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -800,7 +768,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadowblade Stalker",
     ["id"] = 122970,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["stealth"] = true,
     ["displayId"] = 84712,
@@ -823,10 +791,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [132951] = {
-      },
-      [209859] = {
-      },
       [252661] = {
       },
       [252666] = {
@@ -835,9 +799,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [252692] = {
       },
-      [277242] = {
+      [258653] = {
       },
-      [277564] = {
+      [427000] = {
       },
     },
     ["clones"] = {
@@ -961,7 +925,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Reanimated Honor Guard",
     ["id"] = 127757,
     ["count"] = 4,
-    ["health"] = 845345,
+    ["health"] = 1185606,
     ["scale"] = 1.2,
     ["displayId"] = 80376,
     ["creatureType"] = "Undead",
@@ -979,10 +943,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [132951] = {
-      },
-      [209859] = {
-      },
       [255620] = {
       },
       [255814] = {
@@ -991,7 +951,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [256960] = {
       },
-      [277564] = {
+      [258653] = {
       },
     },
     ["clones"] = {
@@ -1072,7 +1032,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Reanimation Totem",
     ["id"] = 127315,
     ["count"] = 0,
-    ["health"] = 153699,
+    ["health"] = 197601,
     ["scale"] = 0.6,
     ["displayId"] = 82388,
     ["creatureType"] = "Not specified",
@@ -1082,10 +1042,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [277242] = {
-      },
-      [277564] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1149,7 +1105,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zanchuli Witch-Doctor",
     ["id"] = 122969,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 790404,
     ["scale"] = 1,
     ["displayId"] = 80622,
     ["creatureType"] = "Humanoid",
@@ -1170,16 +1126,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [252781] = {
       },
       [252923] = {
         ["interruptible"] = true,
       },
-      [277242] = {
-      },
-      [277564] = {
+      [258653] = {
       },
     },
     ["clones"] = {
@@ -1253,7 +1205,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shieldbearer of Zul",
     ["id"] = 127879,
     ["count"] = 4,
-    ["health"] = 760810,
+    ["health"] = 1086806,
     ["scale"] = 1,
     ["stealthDetect"] = true,
     ["displayId"] = 80904,
@@ -1273,17 +1225,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [253721] = {
       },
       [258653] = {
       },
       [273185] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -1381,7 +1327,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vol'kaal",
     ["id"] = 122965,
     ["count"] = 0,
-    ["health"] = 4918368,
+    ["health"] = 6224432,
     ["scale"] = 1,
     ["displayId"] = 79453,
     ["creatureType"] = "Undead",
@@ -1420,7 +1366,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toxic Saurid",
     ["id"] = 128435,
     ["count"] = 1,
-    ["health"] = 153699,
+    ["health"] = 197601,
     ["scale"] = 0.6,
     ["displayId"] = 81323,
     ["creatureType"] = "Beast",
@@ -1438,17 +1384,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [251187] = {
       },
       [251188] = {
       },
       [255895] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -1704,7 +1644,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Feasting Skyscreamer",
     ["id"] = 128434,
     ["count"] = 4,
-    ["health"] = 753125,
+    ["health"] = 988005,
     ["scale"] = 1,
     ["displayId"] = 76913,
     ["creatureType"] = "Beast",
@@ -1725,13 +1665,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [209859] = {
-      },
       [255041] = {
-      },
-      [277242] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -1816,7 +1750,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rezan",
     ["id"] = 122963,
     ["count"] = 0,
-    ["health"] = 5379465,
+    ["health"] = 6916035,
     ["scale"] = 1,
     ["displayId"] = 78188,
     ["creatureType"] = "Undead",
@@ -1828,8 +1762,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [205276] = {
-      },
       [255371] = {
       },
       [255372] = {
@@ -1857,7 +1789,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dinomancer Kish'o",
     ["id"] = 129553,
     ["count"] = 10,
-    ["health"] = 1844388,
+    ["health"] = 2371212,
     ["scale"] = 1.2,
     ["displayId"] = 80709,
     ["creatureType"] = "Humanoid",
@@ -1869,8 +1801,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [256849] = {
       },
       [256864] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -1891,7 +1821,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "T'lonja",
     ["id"] = 128455,
     ["count"] = 6,
-    ["health"] = 1536990,
+    ["health"] = 1976010,
     ["scale"] = 1,
     ["displayId"] = 47659,
     ["creatureType"] = "Beast",
@@ -1902,8 +1832,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [255567] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -1919,7 +1847,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Monzumi",
     ["id"] = 129552,
     ["count"] = 6,
-    ["health"] = 1567730,
+    ["health"] = 2015530,
     ["scale"] = 1,
     ["displayId"] = 76483,
     ["creatureType"] = "Beast",
@@ -1929,8 +1857,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [256882] = {
       },
       [256884] = {
-      },
-      [277564] = {
       },
     },
     ["clones"] = {
@@ -1946,7 +1872,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Yazma",
     ["id"] = 122968,
     ["count"] = 0,
-    ["health"] = 5994261,
+    ["health"] = 7904040,
     ["scale"] = 1,
     ["displayId"] = 79568,
     ["creatureType"] = "Humanoid",
