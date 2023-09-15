@@ -57,23 +57,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Imprison"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [253548] = {
-      },
-      [256138] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -137,32 +122,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Disorient"] = true,
-      ["Imprison"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [253239] = {
-      },
-      [253279] = {
-      },
-      [253548] = {
-      },
-      [253654] = {
-      },
-      [253666] = {
-      },
-      [255824] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -266,27 +227,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Imprison"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [253517] = {
-      },
-      [253526] = {
-      },
-      [253544] = {
-      },
-      [253548] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -370,26 +312,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Disorient"] = true,
-      ["Imprison"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [253548] = {
-      },
-      [253562] = {
-      },
-      [253583] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -463,15 +387,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["reaping"] = 148894,
     ["characteristics"] = {
-      ["Taunt"] = true,
     },
     ["spells"] = {
-      [254958] = {
-      },
-      [254959] = {
-      },
-      [254974] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -519,24 +436,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Imprison"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [260666] = {
-      },
-      [260667] = {
-      },
-      [260668] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -587,23 +488,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2082,
     ["instanceID"] = 968,
     ["characteristics"] = {
-      ["Taunt"] = true,
     },
     ["spells"] = {
-      [255575] = {
-      },
-      [255577] = {
-      },
-      [255579] = {
-      },
-      [255581] = {
-      },
-      [255591] = {
-      },
-      [255835] = {
-      },
-      [255836] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -625,33 +511,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Knock"] = true,
-      ["Grip"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Disorient"] = true,
-      ["Repentance"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [252661] = {
-      },
-      [252666] = {
-      },
-      [252687] = {
-      },
-      [252692] = {
-      },
-      [258653] = {
-      },
-      [427000] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -781,27 +642,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148894,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Control Undead"] = true,
-      ["Silence"] = true,
-      ["Shackle Undead"] = true,
-      ["Root"] = true,
-      ["Disorient"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [255620] = {
-      },
-      [255814] = {
-      },
-      [256959] = {
-      },
-      [256960] = {
-      },
-      [258653] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -878,8 +720,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 70,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
     },
@@ -952,27 +792,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Disorient"] = true,
-      ["Imprison"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [252781] = {
-      },
-      [252923] = {
-        ["interruptible"] = true,
-      },
-      [258653] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1053,24 +874,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Control Undead"] = true,
-      ["Silence"] = true,
-      ["Shackle Undead"] = true,
-      ["Root"] = true,
-      ["Disorient"] = true,
-      ["Repentance"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [253721] = {
-      },
-      [258653] = {
-      },
-      [273185] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1176,23 +981,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2036,
     ["instanceID"] = 968,
     ["characteristics"] = {
-      ["Taunt"] = true,
     },
     ["spells"] = {
-      [250241] = {
-      },
-      [250258] = {
-      },
-      [250259] = {
-      },
-      [250368] = {
-      },
-      [250372] = {
-      },
-      [259572] = {
-      },
-      [259574] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1213,23 +1003,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Disorient"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [251187] = {
-      },
-      [251188] = {
-      },
-      [255895] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1491,22 +1266,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Incapacitate"] = true,
-      ["Silence"] = true,
-      ["Mind Control"] = true,
-      ["Polymorph"] = true,
-      ["Root"] = true,
-      ["Fear"] = true,
-      ["Disorient"] = true,
-      ["Imprison"] = true,
-      ["Sap"] = true,
-      ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
-      [255041] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1599,23 +1360,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2083,
     ["instanceID"] = 968,
     ["characteristics"] = {
-      ["Taunt"] = true,
     },
     ["spells"] = {
-      [255371] = {
-      },
-      [255372] = {
-      },
-      [255373] = {
-      },
-      [255421] = {
-      },
-      [255434] = {
-      },
-      [255445] = {
-      },
-      [257407] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1635,13 +1381,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
     ["reaping"] = 148894,
+    ["characteristics"] = {
+    },
     ["spells"] = {
-      [256846] = {
-      },
-      [256849] = {
-      },
-      [256864] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1668,11 +1410,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["reaping"] = 148894,
     ["characteristics"] = {
-      ["Taunt"] = true,
     },
     ["spells"] = {
-      [255567] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1693,11 +1432,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 71,
     ["reaping"] = 148894,
+    ["characteristics"] = {
+    },
     ["spells"] = {
-      [256882] = {
-      },
-      [256884] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1721,27 +1458,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2030,
     ["instanceID"] = 968,
     ["characteristics"] = {
-      ["Taunt"] = true,
     },
     ["spells"] = {
-      [249919] = {
-      },
-      [250022] = {
-      },
-      [250028] = {
-      },
-      [250050] = {
-      },
-      [250096] = {
-      },
-      [256577] = {
-      },
-      [257066] = {
-      },
-      [259187] = {
-      },
-      [259191] = {
-      },
     },
     ["clones"] = {
       [1] = {
