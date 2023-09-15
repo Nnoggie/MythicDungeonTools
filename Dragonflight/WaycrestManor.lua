@@ -43,7 +43,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soul Essence",
     ["id"] = 135240,
     ["count"] = 2,
-    ["health"] = 461097,
+    ["health"] = 592803,
     ["scale"] = 1,
     ["displayId"] = 84408,
     ["creatureType"] = "Elemental",
@@ -52,6 +52,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [267824] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -144,7 +146,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Maddened Survivalist",
     ["id"] = 131850,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 988005,
     ["scale"] = 1,
     ["displayId"] = 82094,
     ["creatureType"] = "Humanoid",
@@ -153,6 +155,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264520] = {
+      },
+      [264525] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -189,7 +195,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 135234,
     ["count"] = 3,
     ["teemingCount"] = 2,
-    ["health"] = 461097,
+    ["health"] = 494003,
     ["scale"] = 1,
     ["displayId"] = 30221,
     ["creatureType"] = "Beast",
@@ -198,6 +204,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265642] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -233,7 +241,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Crazed Marksman",
     ["id"] = 131849,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 790404,
     ["scale"] = 1,
     ["displayId"] = 82092,
     ["creatureType"] = "Humanoid",
@@ -242,6 +250,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264510] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -271,7 +281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Devouring Maggot",
     ["id"] = 134024,
     ["count"] = 1,
-    ["health"] = 153699,
+    ["health"] = 148201,
     ["scale"] = 0.7,
     ["displayId"] = 7572,
     ["creatureType"] = "Beast",
@@ -280,6 +290,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264153] = {
+      },
+      [278431] = {
+      },
+      [278444] = {
+      },
+      [278456] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -603,7 +621,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gorestained Piglet",
     ["id"] = 135048,
     ["count"] = 4,
-    ["health"] = 384248,
+    ["health"] = 494003,
     ["scale"] = 0.7,
     ["displayId"] = 84115,
     ["creatureType"] = "Beast",
@@ -612,6 +630,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265337] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -845,7 +865,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infected Peasant",
     ["id"] = 134041,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 790404,
     ["scale"] = 1,
     ["displayId"] = 83298,
     ["creatureType"] = "Humanoid",
@@ -854,6 +874,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264655] = {
+      },
+      [266008] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -911,7 +935,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Pallid Gorger",
     ["id"] = 137830,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["displayId"] = 85446,
     ["creatureType"] = "Aberration",
@@ -920,6 +944,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [271174] = {
+      },
+      [271175] = {
+      },
+      [271178] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1054,7 +1084,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Waycrest Reveler",
     ["id"] = 131847,
     ["count"] = 4,
-    ["health"] = 461097,
+    ["health"] = 592803,
     ["scale"] = 1,
     ["displayId"] = 25983,
     ["creatureType"] = "Humanoid",
@@ -1063,6 +1093,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265410] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1101,7 +1133,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Banquet Steward",
     ["id"] = 131586,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 1383207,
     ["scale"] = 1,
     ["displayId"] = 81344,
     ["creatureType"] = "Humanoid",
@@ -1110,6 +1142,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265391] = {
+      },
+      [265392] = {
+      },
+      [265393] = {
+      },
+      [265407] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1189,7 +1229,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Raal the Gluttonous",
     ["id"] = 131863,
     ["count"] = 0,
-    ["health"] = 5225766,
+    ["health"] = 6224432,
     ["scale"] = 1,
     ["displayId"] = 83656,
     ["creatureType"] = "Humanoid",
@@ -1213,7 +1253,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Runic Disciple",
     ["id"] = 131685,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["displayId"] = 78911,
     ["creatureType"] = "Humanoid",
@@ -1222,6 +1262,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264390] = {
+      },
+      [426541] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1301,7 +1345,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Enthralled Guard",
     ["id"] = 131585,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 988005,
     ["scale"] = 1,
     ["displayId"] = 76992,
     ["creatureType"] = "Humanoid",
@@ -1310,6 +1354,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265371] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1363,7 +1409,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Heartsbane Runeweaver",
     ["id"] = 131677,
     ["count"] = 6,
-    ["health"] = 1229590,
+    ["health"] = 1284407,
     ["scale"] = 1.2,
     ["displayId"] = 81999,
     ["creatureType"] = "Humanoid",
@@ -1372,6 +1418,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [263943] = {
+      },
+      [264105] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1412,7 +1462,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Thistle Acolyte",
     ["id"] = 135474,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["displayId"] = 84270,
     ["creatureType"] = "Humanoid",
@@ -1421,6 +1471,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264050] = {
+      },
+      [266036] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1447,7 +1501,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blight Toad",
     ["id"] = 135052,
     ["count"] = 1,
-    ["health"] = 153699,
+    ["health"] = 197601,
     ["scale"] = 0.7,
     ["displayId"] = 76785,
     ["creatureType"] = "Beast",
@@ -1456,6 +1510,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265352] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1540,7 +1596,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sister Solena",
     ["id"] = 131824,
     ["count"] = 0,
-    ["health"] = 1460141,
+    ["health"] = 1877210,
     ["scale"] = 1,
     ["displayId"] = 82071,
     ["creatureType"] = "Humanoid",
@@ -1565,7 +1621,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sister Malady",
     ["id"] = 131823,
     ["count"] = 0,
-    ["health"] = 1460141,
+    ["health"] = 1877210,
     ["scale"] = 1,
     ["displayId"] = 81999,
     ["creatureType"] = "Humanoid",
@@ -1576,6 +1632,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [261266] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1590,7 +1648,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sister Briar",
     ["id"] = 131825,
     ["count"] = 0,
-    ["health"] = 1460141,
+    ["health"] = 1877210,
     ["scale"] = 1,
     ["displayId"] = 81996,
     ["creatureType"] = "Humanoid",
@@ -1601,6 +1659,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [261265] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1646,7 +1706,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bewitched Captain",
     ["id"] = 131587,
     ["count"] = 5,
-    ["health"] = 1229592,
+    ["health"] = 1580808,
     ["scale"] = 1,
     ["displayId"] = 84078,
     ["creatureType"] = "Humanoid",
@@ -1655,6 +1715,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265368] = {
+      },
+      [265372] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1775,7 +1839,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dreadwing Raven",
     ["id"] = 135049,
     ["count"] = 2,
-    ["health"] = 461097,
+    ["health"] = 592803,
     ["scale"] = 0.8,
     ["displayId"] = 47534,
     ["creatureType"] = "Beast",
@@ -1784,6 +1848,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265346] = {
+      },
+      [265347] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1883,7 +1951,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soulbound Goliath",
     ["id"] = 131667,
     ["count"] = 0,
-    ["health"] = 5379465,
+    ["health"] = 6916035,
     ["scale"] = 1,
     ["displayId"] = 79398,
     ["creatureType"] = "Giant",
@@ -1907,7 +1975,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Matron Bryndle",
     ["id"] = 135329,
     ["count"] = 10,
-    ["health"] = 1844388,
+    ["health"] = 2371212,
     ["scale"] = 1.2,
     ["displayId"] = 84208,
     ["creatureType"] = "Undead",
@@ -1915,6 +1983,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [265741] = {
+      },
+      [265759] = {
+      },
+      [265760] = {
+      },
+      [265761] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1932,7 +2008,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Jagged Hound",
     ["id"] = 131669,
     ["count"] = 1,
-    ["health"] = 153699,
+    ["health"] = 197601,
     ["scale"] = 0.7,
     ["displayId"] = 79871,
     ["creatureType"] = "Aberration",
@@ -1941,6 +2017,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264140] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -2162,7 +2240,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Coven Thornshaper",
     ["id"] = 131666,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["displayId"] = 80939,
     ["creatureType"] = "Humanoid",
@@ -2171,6 +2249,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [264038] = {
+      },
+      [264050] = {
+      },
+      [278849] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -2233,7 +2317,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Thornguard",
     ["id"] = 131858,
     ["count"] = 4,
-    ["health"] = 768495,
+    ["health"] = 1086806,
     ["scale"] = 1,
     ["displayId"] = 80957,
     ["creatureType"] = "Aberration",
@@ -2242,6 +2326,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [257260] = {
+      },
+      [264150] = {
+      },
+      [264556] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -2275,7 +2365,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Faceless Maiden",
     ["id"] = 131821,
     ["count"] = 0,
-    ["health"] = 461097,
+    ["health"] = 790404,
     ["scale"] = 1,
     ["displayId"] = 82075,
     ["creatureType"] = "Humanoid",
