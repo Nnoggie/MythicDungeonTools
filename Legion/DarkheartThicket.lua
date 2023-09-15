@@ -54,6 +54,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64385,
     ["creatureType"] = "Beast",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 310.00335933817,
@@ -152,6 +156,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 67296,
     ["creatureType"] = "Humanoid",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 303.68757556511,
@@ -287,6 +295,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64536,
     ["creatureType"] = "Beast",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 277.37179478601,
@@ -329,6 +341,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 66633,
     ["creatureType"] = "Beast",
     ["level"] = 111,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 282.43371670328,
@@ -404,6 +420,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64539,
     ["creatureType"] = "Humanoid",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 226.5593828856,
@@ -567,6 +587,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64535,
     ["creatureType"] = "Beast",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 197.01388634712,
@@ -603,6 +627,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 69689,
     ["creatureType"] = "Humanoid",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 222.53641448834,
@@ -750,6 +778,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 69687,
     ["creatureType"] = "Elemental",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 209.29741683468,
@@ -860,6 +892,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 69688,
     ["creatureType"] = "Humanoid",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 248.33110579345,
@@ -902,6 +938,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 71636,
     ["creatureType"] = "Elemental",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 379.17747443888,
@@ -939,6 +979,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 47926,
     ["creatureType"] = "Elemental",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 423.48297168345,
@@ -1113,6 +1157,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 29278,
     ["creatureType"] = "Elemental",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 460.0701258476,
@@ -1237,6 +1285,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 66131,
     ["creatureType"] = "Demon",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 441.53853612648,
@@ -1312,6 +1364,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 66740,
     ["creatureType"] = "Demon",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 431.01221478003,
@@ -1361,6 +1417,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 12190,
     ["creatureType"] = "Demon",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 434.26066834568,
@@ -1409,6 +1469,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64486,
     ["creatureType"] = "Demon",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 441.53339546077,
@@ -1446,6 +1510,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 61828,
     ["creatureType"] = "Beast",
     ["level"] = 110,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 465.65797076734,
@@ -1514,6 +1582,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 112,
     ["isBoss"] = true,
     ["encounterID"] = 1654,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 204.55247082157,
@@ -1533,6 +1605,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 112,
     ["isBoss"] = true,
     ["encounterID"] = 1655,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 364.54813116981,
@@ -1552,6 +1628,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 112,
     ["isBoss"] = true,
     ["encounterID"] = 1657,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 681.70414915098,
@@ -1571,6 +1651,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 112,
     ["isBoss"] = true,
     ["encounterID"] = 1656,
+    ["characteristics"] = {
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 554.56865152516,
