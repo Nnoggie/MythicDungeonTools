@@ -630,7 +630,7 @@ def get_new_style_xy(sublevel, sublevel_group, group, group_counter):
 def print_progressbar(progress, total, size=60):
     x = int(size * progress / total)
     print(
-        f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total}", end="\r", flush=True
+        "\r", end=f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total} ", flush=True
     )
 
     if progress == total:
