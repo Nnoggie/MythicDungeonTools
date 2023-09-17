@@ -24,29 +24,34 @@ browser_headers = {
 }
 
 
-def get_npc_name(npc_id, language, ptr=False):
+def get_npc_name(npc_id, language):
     try:
-        if language == 'en':
-            language = ''
-        elif ptr and language != '':
-            return False
+        if language == "en":
+            language = ""
 
-        url = 'https://{}{}wowhead.com/tooltip/npc/{}'.format(ptr and 'ptr.' or '', language + ((language != '') and '.' or ''), str(npc_id))
-        req = urllib.request.Request(url, headers=browser_headers)
-        with urllib.request.urlopen(req) as response:
-            response = response.read().decode('unicode_escape')
-            result = re.search('"name":"(.*?)"', response)
-            return result.group(1)
-    except SocketError as e:
-        print('Error: {}\t Url: {}'.format(e, url))
-        if hasattr(e, 'code') and e.code == 404:
-            if ptr:
-                print(f'NPC {npc_id} fully doesn\'t exist')
+        url = f"https://{language + ((language != '') and '.' or '')}wowhead.com/npc={npc_id}"
+        with requests.get(url, headers=browser_headers, timeout=5) as r:
+            if r.status_code == 404:
+                print(f"NPC {npc_id} fully doesn't exist")
                 return False
-            return get_npc_name(npc_id, language, True)
-        else:
-            time.sleep(5)
-            return get_npc_name(npc_id, language)
+            r.raise_for_status()
+            # print(r.content)
+            result = re.search(r'"og:title" content="(.*)">', unescape(r.text))
+
+            if result:
+                print(
+                    f"Got {'en' if language == '' else language} name for {npc_id} - {result.group(1)}"
+                )
+                return result.group(1)
+            else:
+                print(
+                    f"Failed to get {'en' if language == '' else language} name for {npc_id} - error {r.status_code}"
+                )
+                return False
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}\t Url: {url}")
+        time.sleep(5)
+        return get_npc_name(npc_id, language)
 
 
 npc_list = {}
