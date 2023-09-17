@@ -961,6 +961,7 @@ function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b, pulls)
   local isInspiring = MDT:IsWeekInspiring(week)
   pulls = pulls or preset.value.pulls
   local p = pulls[pull]
+  if not p then return end
   for enemyIdx, clones in pairs(p) do
     if tonumber(enemyIdx) then
       for _, cloneIdx in pairs(clones) do
