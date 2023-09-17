@@ -116,7 +116,7 @@ def get_additional_boss_info(name, UiMapIDs):
     """
     boss = db["journalencounter"][
         (
-            (db["journalencounter"].Name_lang == name)
+            (db["journalencounter"].Name_lang.str.contains(name))
             & (db["journalencounter"].UiMapID.isin(UiMapIDs))
         )
     ]
