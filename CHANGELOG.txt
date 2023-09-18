@@ -1,3 +1,4 @@
+- v4.1.0.7
 - v4.1.0.6
   - disable WagoAnalytics for now
 - v4.1.0.5
