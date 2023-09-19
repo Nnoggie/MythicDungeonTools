@@ -897,7 +897,7 @@ function MDT:FindPullOfBlip(blip)
   end
 end
 
-function MDT:GetBlip(enemyIdx, cloneIdx, preset)
+function MDT:GetBlip(enemyIdx, cloneIdx)
   for blipIdx, blip in pairs(blips) do
     if blip.enemyIdx == enemyIdx and blip.cloneIdx == cloneIdx then
       return blip
