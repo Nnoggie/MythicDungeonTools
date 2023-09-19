@@ -344,8 +344,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [253583] = {
       },
-      [317898] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -715,8 +713,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [255814] = {
       },
       [258653] = {
-      },
-      [317898] = {
       },
     },
     ["clones"] = {
@@ -1098,8 +1094,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [255895] = {
       },
-      [317898] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1364,8 +1358,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [255041] = {
-      },
-      [317898] = {
       },
     },
     ["clones"] = {
