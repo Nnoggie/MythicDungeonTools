@@ -661,23 +661,49 @@ local function blipDevModeSetup(blip)
     xOffset = x - nx
     yOffset = y - ny
   end)
+  local moveGroup
   blip:SetScript("OnDragStart", function()
     if not db.devModeBlipsMovable then return end
+    if IsShiftKeyDown() then
+      moveGroup = true
+    end
     blip:StartMoving()
   end)
   blip:SetScript("OnDragStop", function()
     if not db.devModeBlipsMovable then return end
+    if IsShiftKeyDown() then
+      moveGroup = true
+    end
     local x, y = MDT:GetCursorPosition()
     local scale = MDT:GetScale()
     x = x * (1 / scale)
     y = y * (1 / scale)
     x = x - xOffset
     y = y - yOffset
+    local deltaX = x - MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x
+    local deltaY = y - MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y
+    if moveGroup then
+      for enemyIdx, data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+        for cloneIdx, clone in pairs(data.clones) do
+          if clone.g == blip.clone.g then
+            clone.x = clone.x + deltaX
+            clone.y = clone.y + deltaY
+            --move blip
+            local cloneBlip = MDT:GetBlip(enemyIdx, cloneIdx)
+            if cloneBlip then
+              cloneBlip:ClearAllPoints()
+              cloneBlip:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", clone.x * scale, clone.y * scale)
+            end
+          end
+        end
+      end
+    end
     blip:StopMovingOrSizing()
     blip:ClearAllPoints()
     blip:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x * scale, y * scale)
     MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x = x
     MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y = y
+    moveGroup = nil
   end)
   blip:SetScript("OnMouseWheel", function(self, delta)
     if not db.devModeBlipsScrollable then return end
