@@ -10,24 +10,41 @@ from web_scraper import *
 request_wowtools = True
 toggle_door_mapping = False
 GROUP_SEC_DELIMITER = 5
-# How to use:
+
+# GETTING PROPER COMBAT LOG FILE
 # 1. Have Advanced Combat Logging Enabled!
-# 2. Delete or rename your current WoWCombatLog.txt file to start from fresh.
-# 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
-# 4. Copy the resulting WoWCombatLog.txt file to the directory of this file.
-# 5. Run this script.
-# 6. Open the .lua file for the given dungeon and paste what has been added to your clipboard.
+# 2. Run the dungeon on +2
+# 3. Run this script, choose the correct log file and mapping style
+# 4. Open the .lua file for the given dungeon and paste what has been added to your clipboard.
 
+# CSV FILE SETUP
+# Setup:
+# 1. Download and install wow.export from this link: https://www.kruithne.net/wow.export/
+# 2. Download DBC2CSV from this link: https://github.com/Marlamin/DBC2CSV/releases
+# 3. Download the zipped repo from this link: https://github.com/wowdev/WoWDBDefs all you need from it is the folder "definitions"
 
-# Importing files from wow.tools; If the file is available in the directory it is read otherwise it is downloaded first
-#   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
-#       Which means it contains minimap coordinate points for the borders of the in-game map
-#   map: contains UiMapIDs and their associated dungeons
-#   criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
-#   criteriatree: contains information about which criteria from the above list is triggered when count is
-#        attributed in a mythic dungeon as well as the amount of count attributed
-#   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
+# GETTING UPDATED CSV FILES:
+# 1. Replace the folder "definitions" in the DBC2CSV directory with the one obtained in the setup zip. I have only done this once initially, don't think it needs to be done every time.
+# 2. Run wow.export.exe, choose what to access I usually do by CDN, but all that matters is you pick the right build after selecting region
+# 3. Locate the raw client files export page and export the following files
+#       criteria.db2
+#       criteriatree.db2
+#       journalencounter.db2
+#       map.db2
+#       uimapassignment.db2
+# 4. Find the exported files, they'll be somewhere in the wow.export folder all contained in the folder "dbfilesclient", move them to the directory of your DBC2CSV executable
+# 5. Locate your hotfix cache file "DBCache.bin" and move it to the save directory of your DBC2CSV executable. For retail the hotfix file is located here:
+#       C:\Program Files (x86)\World of Warcraft\_retail_\Cache\ADB\enUS
+# 6. Generate the csv files. Highlight all the db2 files + hotfix file and drag them on top of the DBC2CSV.exe
+# 7. Move the resulting .csv files to python\wowdb_files
 
+# uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
+#     Which means it contains minimap coordinate points for the borders of the in-game map
+# map: contains UiMapIDs and their associated dungeons
+# criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
+# criteriatree: contains information about which criteria from the above list is triggered when count is
+#      attributed in a mythic dungeon as well as the amount of count attributed
+# journalencounter: contains the encounterID and instanceID for bosses which MDT stores
 
 def get_map_extent(UiMapID):
     """Returns map extent in minimap coordinates xmin, xmax, ymin, ymax.
@@ -583,7 +600,7 @@ def pick_mapping_style():
         """Select mapping style:
         [1] Old style (Using NPC position from CombatLog).
         [2] New style (Combined map, NPC's mapped in rows).
-        
+
         Input: """
     )
     if mapping_style == "1" or mapping_style.lower() == "old":
