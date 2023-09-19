@@ -68,6 +68,8 @@ L["Timeline Marauder"] = "Timeline Marauder"
 L["Infinite Saboteur"] = "Infinite Saboteur"
 L["Chronaxie"] = "Chronaxie"
 
+L["Stinging Swarm"] = "Stinging Swarm"
+L["Latosius"] = "Latosius"
 -------
 L["hardResetButton"] = "Reset MDT"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\n|cFFFF0000Only do this if MDT is not loading at all and is in a broken state.|r\nThis will reload the UI!"
