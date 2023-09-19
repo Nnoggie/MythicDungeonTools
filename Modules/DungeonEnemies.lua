@@ -649,6 +649,7 @@ local function blipDevModeSetup(blip)
       WrapTextInColorCode((blip.clone.scale or ""), "ffffffff"))
     if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g % 5 + 1])) end
   end
+  blip.UpdateBlipText = updateBlipText
 
   local xOffset, yOffset
   blip:SetScript("OnMouseDown", function()
@@ -750,9 +751,23 @@ local function blipDevModeSetup(blip)
         end
         blip.clone.g = maxGroup
       else
-        blip.clone.g = blip.clone.g + delta
+        local blipGroup = blip.clone.g
+        if IsShiftKeyDown() then
+          --change group of all connected blips
+          for enemyIdx, data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+            for cloneIdx, clone in pairs(data.clones) do
+              if clone.g == blipGroup then
+                clone.g = blipGroup + delta
+                local cloneBlip = MDT:GetBlip(enemyIdx, cloneIdx)
+                cloneBlip.UpdateBlipText()
+              end
+            end
+          end
+        else
+          blip.clone.g = blip.clone.g + delta
+          updateBlipText()
+        end
       end
-      updateBlipText()
     end
   end)
   updateBlipText()
