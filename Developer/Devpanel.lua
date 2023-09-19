@@ -1,10 +1,8 @@
 local AceGUI = LibStub("AceGUI-3.0")
 local MDT = MDT
 local db
-local tonumber, tinsert, slen, pairs, ipairs, tostring, next, type, sformat = tonumber, table.insert, string.len, pairs,
-    ipairs, tostring, next, type, string.format
-local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName, UnitGUID, UnitCreatureType,
-    UnitHealthMax, UnitLevel
+local tonumber, tinsert, pairs, ipairs = tonumber, table.insert, pairs, ipairs
+local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel
 
 --[[
 How to map (OUTDATED - use python script instead):
@@ -19,83 +17,6 @@ function MDT:ToggleDevMode()
   db = MDT:GetDB()
   db.devMode = not db.devMode
   ReloadUI()
-end
-
-local function tshow(t, name, indent)
-  local cart    -- a container
-  local autoref -- for self references
-
-  --[[ counts the number of elements in a table
-    local function tablecount(t)
-       local n = 0
-       for _, _ in pairs(t) do n = n+1 end
-       return n
-    end
-    ]]
-  -- (RiciLake) returns true if the table is empty
-  local function isemptytable(table) return next(table) == nil end
-
-  local function basicSerialize(o)
-    local so = tostring(o)
-    if type(o) == "function" then
-      local info = debug.getinfo(o, "S")
-      -- info.name is nil because o is not a calling level
-      if info.what == "C" then
-        return sformat("%q", so..", C function")
-      else
-        -- the information is defined through lines
-        return sformat("%q", so..", defined in ("..
-          info.linedefined.."-"..info.lastlinedefined..
-          ")"..info.source)
-      end
-    elseif type(o) == "number" or type(o) == "boolean" then
-      return so
-    else
-      return sformat("%q", so)
-    end
-  end
-
-  local function addtocart(value, name, indent, saved, field)
-    indent = indent or ""
-    saved = saved or {}
-    field = field or name
-
-    cart = cart..indent..field
-
-    if type(value) ~= "table" then
-      cart = cart.." = "..basicSerialize(value)..";\n"
-    else
-      if saved[value] then
-        cart = cart.." = {}; -- "..saved[value]
-            .." (self reference)\n"
-        autoref = autoref..name.." = "..saved[value]..";\n"
-      else
-        saved[value] = name
-        --if tablecount(value) == 0 then
-        if isemptytable(value) then
-          cart = cart.." = {};\n"
-        else
-          cart = cart.." = {\n"
-          for k, v in pairs(value) do
-            k = basicSerialize(k)
-            local fname = sformat("%s[%s]", name, k)
-            field = sformat("[%s]", k)
-            -- three spaces between levels
-            addtocart(v, fname, indent.."   ", saved, field)
-          end
-          cart = cart..indent.."};\n"
-        end
-      end
-    end
-  end
-
-  name = name or "__unnamed__"
-  if type(t) ~= "table" then
-    return name.." = "..basicSerialize(t)
-  end
-  cart, autoref = "", ""
-  addtocart(t, name, indent)
-  return cart..autoref
 end
 
 function MDT:AddNPCFromUnit(unit)
