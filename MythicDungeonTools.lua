@@ -3028,7 +3028,7 @@ function MDT:ImportPreset(preset, fromLiveSession)
     if fromLiveSession then
       if duplicatePreset then duplicatePreset.uid = nil end
     else
-      preset.uid = nil
+      -- preset.uid = nil
     end
     local countPresets = 0
     for k, v in pairs(db.presets[db.currentDungeonIdx]) do

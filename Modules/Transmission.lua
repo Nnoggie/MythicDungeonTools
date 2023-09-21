@@ -342,7 +342,7 @@ hooksecurefunc("SetItemRef", function(link, text)
     if preset then
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
-        MDT:OpenChatImportPresetDialog(sender, preset)
+        MDT:ImportPreset(CopyTable(preset))
       end, "showInterfaceChatImport")
     end
     return
