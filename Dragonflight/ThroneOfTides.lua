@@ -6,7 +6,11 @@ MDT.dungeonList[dungeonIndex] = L["Throne of Tides"]
 MDT.mapInfo[dungeonIndex] = {
 
 };
--- TODO: ZoneIds
+
+local zones = { 322, 323 }
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 local function getSublevelMap(frame, sublevel)
   for i = 1, 12 do
