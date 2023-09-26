@@ -3,11 +3,6 @@ local L = MDT.L
 local dungeonIndex = 1
 MDT.dungeonList[dungeonIndex] = L["Black Rook Hold"]
 
-local zones = { 751, 752, 753, 754, 755, 756 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
-
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "BlackRookHoldDungeon",
   [1] = "BlackRookHoldDungeon1_",
