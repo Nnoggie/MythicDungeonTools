@@ -15,7 +15,6 @@ MDT.mapInfo[dungeonIndex] = {
 };
 
 local zones = { 733 }
--- add zones to MDT.zoneIdToDungeonIdx
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
