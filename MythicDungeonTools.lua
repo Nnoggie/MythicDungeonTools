@@ -2689,7 +2689,6 @@ MDT.zoneIdToDungeonIdx = {
   [2081] = 50,  --neltharus
   [731] = 8,    --neltharion's lair
   [325] = 77,   --vortex pinnacle
-  [733] = 4,    --dht
   --https://wowpedia.fandom.com/wiki/UiMapID
 }
 local lastUpdatedDungeonIdx

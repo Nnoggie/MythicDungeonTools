@@ -14,7 +14,11 @@ MDT.mapInfo[dungeonIndex] = {
   }
 };
 
---TODO: add zoneIds
+local zones = { 733 }
+-- add zones to MDT.zoneIdToDungeonIdx
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
 
 local function getSublevelMap(frame, sublevel)
   for i = 1, 12 do
