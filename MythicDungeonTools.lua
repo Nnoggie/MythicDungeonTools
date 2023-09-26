@@ -2397,6 +2397,11 @@ function MDT:EnsureDBTables()
   if #db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls == 0 then
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[1] = {}
   end
+  --ensure that there exists a map for the current sublevel
+  local sublevel = MDT:GetCurrentSubLevel()
+  if not MDT.dungeonMaps[db.currentDungeonIdx][sublevel] then
+    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
+  end
 
   --ensure the pulls table is not fully corrupted
   if not preset.value.pulls or (type(preset.value.pulls) ~= "table") then
