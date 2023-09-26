@@ -1001,6 +1001,10 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanelImportButton.frame:SetHighlightFontObject(fontInstance)
   frame.sidePanelImportButton.frame:SetDisabledFontObject(fontInstance)
   frame.sidePanelImportButton:SetCallback("OnClick", function(widget, callbackName, value)
+    if InCombatLockdown() then
+      print('MDT: '..L["Cannot import while in combat"])
+      return
+    end
     MDT:OpenImportPresetDialog()
   end)
   frame.sidePanelImportButton.frame:SetScript("OnEnter", function()
@@ -1020,6 +1024,10 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
   frame.sidePanelExportButton.frame:SetDisabledFontObject(fontInstance)
   frame.sidePanelExportButton:SetCallback("OnClick", function(widget, callbackName, value)
+    if InCombatLockdown() then
+      print('MDT: '..L["Cannot export while in combat"])
+      return
+    end
     if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls(_, _, _, true) end
     local preset = MDT:GetCurrentPreset()
     MDT:SetUniqueID(preset)
@@ -2863,20 +2871,71 @@ function MDT:MakePresetImportFrame(frame)
 
   local importString = ""
   frame.presetImportBox = AceGUI:Create("EditBox")
-  frame.presetImportBox:SetLabel(L["Import Preset"]..":")
-  frame.presetImportBox:SetWidth(255)
-  frame.presetImportBox.OnTextChanged = function(widget, event, text) importString = text end
-  frame.presetImportBox:SetCallback("OnTextChanged", frame.presetImportBox.OnTextChanged)
-  frame.presetImportBox:DisableButton(true)
+  local editbox = frame.presetImportBox
+  editbox:SetLabel(L["Import Preset"]..":")
+  editbox:SetWidth(255)
+  editbox.OnTextChanged = function(widget, event, text) importString = text end
+  editbox:SetCallback("OnTextChanged", editbox.OnTextChanged)
+  editbox:DisableButton(true)
+  local IMPORT_EXPORT_EDIT_MAX_BYTES = 0 --1024000*4 -- 0 appears to be "no limit"
+
+  local pasteBuffer, pasteCharCount, isPasting = {}, 0, false
+
+  local function clearBuffer(self)
+    self:SetScript('OnUpdate', nil)
+    editbox.editbox:SetMaxBytes(IMPORT_EXPORT_EDIT_MAX_BYTES)
+    isPasting = false
+    if InCombatLockdown() then
+      print('MDT: '..L["Cannot import while in combat"])
+      MDT:HideAllDialogs()
+      return
+    end
+    if pasteCharCount > 10 then
+      local pasteString = strtrim(table.concat(pasteBuffer))
+      editbox:SetText(string.sub(pasteString, 1, 2000));
+      local newPreset = MDT:StringToTable(pasteString, true)
+      if MDT:ValidateImportPreset(newPreset) then
+        MDT.main_frame.presetImportFrame:Hide()
+        MDT:ImportPreset(newPreset)
+        if db.colorPaletteInfo.forceColorBlindMode then
+          MDT:ColorAllPulls()
+        end
+      else
+        frame.presetImportLabel:SetText(L["Invalid import string"])
+      end
+    end
+  end
+  editbox.editbox:SetScript('OnChar', function(self, c)
+    if not isPasting then
+      if editbox.editbox:GetMaxBytes() ~= 1 then -- ensure this for performance!
+        editbox.editbox:SetMaxBytes(1)
+      end
+      pasteBuffer, pasteCharCount, isPasting = {}, 0, true
+      self:SetScript('OnUpdate', clearBuffer) -- clearBuffer on next frame
+    end
+    pasteCharCount = pasteCharCount + 1
+    pasteBuffer[pasteCharCount] = c
+  end)
+  editbox.editbox:SetScript('OnKeyDown', function(_, key)
+    -- have to use OnKeyDown here as OnKeyUp does not fire, AceGUI issue
+    if key == "ESCAPE" then
+      frame.presetImportFrame:Hide()
+    end
+  end);
   frame.presetImportFrame:AddChild(frame.presetImportBox)
 
   local importButton = AceGUI:Create("Button")
   importButton:SetText(L["Import"])
   importButton:SetWidth(100)
   importButton:SetCallback("OnClick", function()
+    if InCombatLockdown() then
+      print('MDT: '..L["Cannot import while in combat"])
+      MDT:HideAllDialogs()
+      return
+    end
     local newPreset = MDT:StringToTable(importString, true)
     if MDT:ValidateImportPreset(newPreset) then
-      MDT.main_frame.presetImportFrame:Hide()
+      MDT:HideAllDialogs()
       MDT:ImportPreset(newPreset)
       if db.colorPaletteInfo.forceColorBlindMode then
         MDT:ColorAllPulls()

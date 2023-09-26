@@ -1,6 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["Cannot import while in combat"] = "Cannot import while in combat"
+L["Cannot export while in combat"] = "Cannot export while in combat"
 L["hardResetButton"] = "Reset MDT"
 L["hardResetPrompt"] = "Do you really want to reset all settings to default?\n|cFFFF0000Only do this if MDT is not loading at all and is in a broken state.|r\nThis will reload the UI!"
 L["You can choose from different color palettes in the automatic pull coloring settings menu."] = "You can choose from different color palettes in the settings menu."
