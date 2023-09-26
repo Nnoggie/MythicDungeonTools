@@ -17,6 +17,11 @@ MDT.mapInfo[dungeonIndex] = {
   }
 };
 
+local zones = { 2082, 2083 }
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
+
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "HallsOfInfusion",
   [1] = "HallsOfInfusion_A",

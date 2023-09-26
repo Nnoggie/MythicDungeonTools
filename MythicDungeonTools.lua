@@ -2613,77 +2613,11 @@ function MDT:DeletePreset(index)
   MDT:UpdateMap()
 end
 
-MDT.zoneIdToDungeonIdx = {
-  [936] = 16,  --fh
-  [1004] = 17, --kr
-  [1039] = 18, --shrine
-  [1040] = 18, --shrine
-  [1162] = 19, --siege
-  [1038] = 20, --temple
-  [1043] = 20, --temple
-  [1010] = 21, --motherlode
-  [1041] = 22, --underrot
-  [1042] = 22, --underrot
-  [974] = 23,  --toldagor
-  [975] = 23,  --toldagor
-  [976] = 23,  --toldagor
-  [977] = 23,  --toldagor
-  [978] = 23,  --toldagor
-  [979] = 23,  --toldagor
-  [980] = 23,  --toldagor
-  [1490] = 25, --lower mecha
-  [1491] = 26, --upper mecha
-  [1493] = 26, --upper mecha
-  [1494] = 26, --upper mecha
-  [1497] = 26, --upper mecha
-  [1663] = 30, --halls of atonement
-  [1664] = 30, --halls of atonement
-  [1665] = 30, --halls of atonement
-  [1666] = 35, --necrotic wake
-  [1667] = 35, --necrotic wake
-  [1668] = 35, --necrotic wake
-  [1669] = 31, --mists of tirna scithe
-  [1674] = 32, --plaguefall
-  [1675] = 33, --sanguine depths
-  [1676] = 33, --sanguine depths
-  [1677] = 29, --de other side
-  [1678] = 29, --de other side
-  [1679] = 29, --de other side
-  [1680] = 29, --de other side
-  [1683] = 36, --theater of pain
-  [1684] = 36, --theater of pain
-  [1685] = 36, --theater of pain
-  [1686] = 36, --theater of pain
-  [1687] = 36, --theater of pain
-  [1692] = 34, --spires of ascension
-  [1693] = 34, --spires of ascension
-  [1694] = 34, --spires of ascension
-  [1695] = 34, --spires of ascension
-  [1697] = 32, --plaguefall
-  [1989] = 37, --tazavesh streets
-  [1990] = 37, --tazavesh streets
-  [1991] = 37, --tazavesh streets
-  [1992] = 37, --tazavesh streets
-  [1993] = 38, --tazavesh gambit
-  [1995] = 38, --tazavesh gambit
-  [1996] = 38, --tazavesh gambit
-  [606] = 40,  --grimrail depot
-  [607] = 40,  --grimrail depot
-  [608] = 40,  --grimrail depot
-  [609] = 40,  --grimrail depot
-  [595] = 41,  --iron docks
-  [2082] = 49, --halls of infusion
-  [2083] = 49, --halls of infusion
-  [2096] = 48, --brackenhide hollow
-  [2106] = 48, --brackenhide hollow
-  [2071] = 51, --uldaman
-  [2072] = 51, --uldaman
-  [2080] = 50, --neltharus
-  [2081] = 50, --neltharus
-  [731] = 8,   --neltharion's lair
-  [325] = 77,  --vortex pinnacle
-  --https://wowpedia.fandom.com/wiki/UiMapID
-}
+--contains zoneIds to auto swap to corresponding dungeon when opening the AddOn
+--ids are added in each dungeon file
+--https://wowpedia.fandom.com/wiki/UiMapID
+MDT.zoneIdToDungeonIdx = {}
+
 local lastUpdatedDungeonIdx
 function MDT:CheckCurrentZone(init)
   local zoneId = C_Map.GetBestMapForUnit("player")

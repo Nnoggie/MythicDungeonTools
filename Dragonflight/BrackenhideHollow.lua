@@ -7,6 +7,11 @@ MDT.mapInfo[dungeonIndex] = {
   }
 };
 
+local zones = { 2096, 2106 }
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
+
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "BrackenHideHollow",
   [1] = "BrackenHideHollow",
