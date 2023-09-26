@@ -2505,14 +2505,14 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
   end
   if not framesInitialized then coroutine.yield() end
-  local fileNameOrOverrideFunc = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
-  if type(fileNameOrOverrideFunc) == "string" then
+  local textureInfo = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
+  if type(textureInfo) == "string" then --textures from blizzard files
     local path = "Interface\\WorldMap\\"..mapName.."\\"
     local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx, preset.value.currentSublevel)
     if not framesInitialized then coroutine.yield() end
     for i = 1, 12 do
       if tileFormat == 4 then
-        local texName = path..fileNameOrOverrideFunc..i
+        local texName = path..textureInfo..i
         if frame["mapPanelTile"..i] then
           frame["mapPanelTile"..i]:SetTexture(texName)
           frame["mapPanelTile"..i]:Show()
@@ -2527,7 +2527,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     for i = 1, 10 do
       for j = 1, 15 do
         if tileFormat == 15 then
-          local texName = path..fileNameOrOverrideFunc..((i - 1) * 15 + j)
+          local texName = path..textureInfo..((i - 1) * 15 + j)
           frame["largeMapPanelTile"..i..j]:SetTexture(texName)
           frame["largeMapPanelTile"..i..j]:Show()
         else
@@ -2535,8 +2535,22 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
         end
       end
     end
-  elseif type(fileNameOrOverrideFunc) == "function" then
-    fileNameOrOverrideFunc(frame, preset.value.currentSublevel)
+  elseif type(textureInfo) == "table" then --textures from custom files
+    local sublevel = preset.value.currentSublevel
+    for i = 1, 12 do
+      if frame["mapPanelTile"..i] then
+        frame["mapPanelTile"..i]:Hide()
+      end
+    end
+    for i = 1, 10 do
+      for j = 1, 15 do
+        local fileSuffix = (i - 1) * 15 + j
+        local texName = 'Interface\\AddOns\\'..AddonName..'\\Textures\\Upscaled\\'..textureInfo.customTextures..'\\'..sublevel..'_'..fileSuffix..".png"
+        local tile = frame["largeMapPanelTile"..i..j]
+        tile:SetTexture(texName)
+        tile:Show()
+      end
+    end
   end
   if not framesInitialized then coroutine.yield() end
   MDT:Async(function()

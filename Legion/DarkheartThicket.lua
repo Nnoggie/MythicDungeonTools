@@ -19,26 +19,9 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-local function getSublevelMap(frame, sublevel)
-  for i = 1, 12 do
-    if frame["mapPanelTile"..i] then
-      frame["mapPanelTile"..i]:Hide()
-    end
-  end
-  for i = 1, 10 do
-    for j = 1, 15 do
-      local fileSuffix = (i - 1) * 15 + j
-      local texName = 'Interface\\AddOns\\'..addonName..'\\Textures\\Upscaled\\DarkheartThicket\\'..sublevel..'_'..fileSuffix..".png"
-      local tile = frame["largeMapPanelTile"..i..j]
-      tile:SetTexture(texName)
-      tile:Show()
-    end
-  end
-end
-
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = getSublevelMap,
+  [1] = { customTextures = 'DarkheartThicket' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
