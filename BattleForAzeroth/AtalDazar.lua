@@ -14,6 +14,11 @@ MDT.mapInfo[dungeonIndex] = {
   }
 };
 
+local zones = { 934, 935 }
+for _, zone in ipairs(zones) do
+  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
+end
+
 local function getSublevelMap(frame, sublevel)
   for i = 1, 12 do
     if frame["mapPanelTile"..i] then

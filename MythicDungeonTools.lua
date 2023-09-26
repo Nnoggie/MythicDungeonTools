@@ -2614,8 +2614,6 @@ function MDT:DeletePreset(index)
 end
 
 MDT.zoneIdToDungeonIdx = {
-  [934] = 15,  --atal
-  [935] = 15,  --atal
   [936] = 16,  --fh
   [1004] = 17, --kr
   [1039] = 18, --shrine
