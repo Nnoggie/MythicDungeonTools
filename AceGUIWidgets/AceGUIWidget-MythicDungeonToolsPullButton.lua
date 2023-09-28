@@ -452,7 +452,6 @@ local methods = {
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
-          MDT:DrawAllHulls()
         end
       })
       tinsert(self.menu, {
