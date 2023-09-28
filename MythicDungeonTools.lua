@@ -2562,7 +2562,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT:DungeonEnemies_UpdateInspiring()
     MDT:POI_UpdateAll()
     if not ignoreReloadPullButtons then
-      MDT:ReloadPullButtons()
+      MDT:ReloadPullButtons(true)
     end
     if not framesInitialized then coroutine.yield() end
     --handle delete button disable/enable
@@ -3625,7 +3625,7 @@ function MDT:UpdatePullButtonNPCData(idx)
 end
 
 ---Reloads all pull buttons in the scroll frame
-function MDT:ReloadPullButtons()
+function MDT:ReloadPullButtons(force)
   MDT:Async(function()
     local frame = MDT.main_frame.sidePanel
     if not frame.pullButtonsScrollFrame then return end
@@ -3664,7 +3664,7 @@ function MDT:ReloadPullButtons()
       self:PickPullButton(self:GetCurrentPreset().value.currentPull)
     end
     MDT:ColorAllPulls(nil, 0)
-    MDT:DrawAllHulls(preset.value.pulls)
+    MDT:DrawAllHulls(preset.value.pulls, force)
   end, "ReloadPullButtons", true)
 end
 
