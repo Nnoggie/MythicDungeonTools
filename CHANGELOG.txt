@@ -1,2 +1,4 @@
 - v4.2.0.0
-  - patch 10.2 Release
+  - Season 3 dungeons
+  - improved pull outlines performance
+
