@@ -655,7 +655,7 @@ end
 function MDT:MakeSendingStatusBar(f)
   f.SendingStatusBar = CreateFrame("StatusBar", nil, f)
   local statusbar = f.SendingStatusBar
-  -- statusbar:SetMinMaxValues(0, 1)
+  statusbar:SetMinMaxValues(0, 1)
   statusbar:SetPoint("LEFT", f.bottomPanel, "LEFT", 5, 0)
   statusbar:SetWidth(200)
   statusbar:SetHeight(20)
