@@ -6,9 +6,9 @@ MDT.dungeonList[dungeonIndex] = L["The Everbloom"]
 MDT.mapInfo[dungeonIndex] = {
   viewportPositionOverrides = {
     [1] = {
-      zoomScale = 1.5999999046326,
-      horizontalPan = 228.4558682649,
-      verticalPan = 33.964536915655,
+      zoomScale = 1.8999998569489,
+      horizontalPan = 304.20210274759,
+      verticalPan = 88.878914962537,
     },
   }
 };
