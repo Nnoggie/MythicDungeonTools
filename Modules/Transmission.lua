@@ -768,6 +768,12 @@ end
 function MDT:SetThrottleValues()
   if not _G.ChatThrottleLib then return end
   --4000/16000 is fine but we go safe with 2000/10000
-  _G.ChatThrottleLib.MAX_CPS = 2000
-  _G.ChatThrottleLib.BURST = 10000
+  --PTR/Beta   needs lower values
+  if MDT:IsOnBetaServer() then
+    _G.ChatThrottleLib.MAX_CPS = 300
+    _G.ChatThrottleLib.BURST = 2000
+  else
+    _G.ChatThrottleLib.MAX_CPS = 2000
+    _G.ChatThrottleLib.BURST = 10000
+  end
 end
