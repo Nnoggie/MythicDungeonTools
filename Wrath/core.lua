@@ -217,9 +217,6 @@ do
         end
       end
       eventFrame:UnregisterEvent("ADDON_LOADED")
-    elseif addon == "Blizzard_ChallengesUI" then
-      eventFrame:UnregisterEvent("ADDON_LOADED")
-      MDT:UpdateAffixWeeks()
     end
   end
 
@@ -267,74 +264,6 @@ local affixWeeks = {
   [11] = { 11, 3, 9, 132 },
   [12] = { 123, 4, 10, 132 },
 }
-
-function MDT:UpdateAffixWeeks()
-  -- TODO: Fix this at some point
-  if true then return end
-  -- The idea is to know the season start date: season_start
-  -- Then from current time calculate which week in the affix rotation is live
-  -- By doing this weekly you can populate the entire affix weeks rotation
-  if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-    eventFrame:RegisterEvent("ADDON_LOADED")
-    LoadAddOn("Blizzard_ChallengesUI")
-    return
-  end
-  -- copied from MDT:GetCurrentAffixWeek not sure if necessary
-  C_MythicPlus.RequestCurrentAffixes()
-  C_MythicPlus.RequestMapInfo()
-  C_MythicPlus.RequestRewards()
-
-  -- Save current weeks affixes to db
-  local current_affixes = C_MythicPlus.GetCurrentAffixes()
-  -- retry after 5 if Blizzard not ready yet
-  if not current_affixes then
-    C_Timer.After(5, function()
-      MDT:UpdateAffixWeeks()
-    end)
-    return
-  end
-
-  local season_start = { -- Edit this at the start of the season - IMPORTANT: This is North America launch in PST time
-    ["year"] = 2022,
-    ["month"] = 8,
-    ["day"] = 2,
-    ["hour"] = 8 -- You'll never need to change this
-  }
-
-  -- Find current week index
-  local hour = 3600
-  local one_week = 604800
-  local offset = time() - time(date("!*t")) + 7 * hour                                                         -- offset between na and utc
-  local utc_na_season_start = time(season_start) + offset                                                      -- na regional season start time in utc time
-  local utc_region_week_start = GetServerTime() - (one_week - C_DateAndTime.GetSecondsUntilWeeklyReset()) + 20 -- players regional weekly start time in utc
-  if utc_na_season_start > utc_region_week_start then return end                                               -- if the season has not started yet return
-  -- 20 second buffer because GetSecondsUntilWeeklyReset is not precise
-  local region_offset = (utc_region_week_start - utc_na_season_start) % one_week                               -- difference between na reset time and players regional reset time
-  local elapsed_season = utc_region_week_start - (utc_na_season_start + region_offset)                         -- total time since season start
-  local current_week_idx = math.floor(elapsed_season / one_week) % #affixWeeks + 1                             -- weekly affix rotation index of current week for player
-
-  db.knownAffixWeeks[current_week_idx] = {}
-  for k, idx in pairs({ 2, 3, 1, 4 }) do
-    tinsert(db.knownAffixWeeks[current_week_idx], current_affixes[idx]["id"])
-  end
-
-  -- return if no seasonal affix is found
-  if not db.knownAffixWeeks[current_week_idx][4] then return end
-
-  -- Replace affixWeeks with data from db
-  for week_idx, known_affixes in pairs(db.knownAffixWeeks) do
-    -- ensure seasonal affix from db matches current week
-    if known_affixes[4] == db.knownAffixWeeks[current_week_idx][4] then
-      affixWeeks[week_idx] = known_affixes
-    end
-  end
-
-  local sidepanel = MDT.main_frame.sidePanel
-  if not sidepanel then return end -- sidepanel not ready yet, will handle setting these itself anyway
-  local dropdown = sidepanel.affixDropdown
-  dropdown:UpdateAffixList()
-  dropdown:SetValue(MDT:GetCurrentPreset().week)
-end
 
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
@@ -790,8 +719,6 @@ function MDT:MakeCopyHelper(frame)
 end
 
 function MDT:MakeSidePanel(frame)
-  MDT:UpdateAffixWeeks()
-
   if frame.sidePanel == nil then
     frame.sidePanel = CreateFrame("Frame", "MDTSidePanel", frame)
     frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND", nil, 0)
