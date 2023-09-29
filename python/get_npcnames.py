@@ -17,31 +17,34 @@ import requests
 # 3. Run this script
 # 4. Open the generated lua files and copy the contents to https://www.curseforge.com/wow/addons/mythic-dungeon-tools/localization
 
-# wowhead is picky
-browser_headers = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36",
-}
+
+def create_session():
+    session = requests.Session()
+    # wowhead is picky
+    session.headers.update(
+        {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36",
+        }
+    )
+
+    return session
 
 
-def get_npc_name(npc_id, language):
+def get_npc_name(npc_id, language, session):
     try:
         if language == "en":
             language = ""
 
         url = f"https://{language + ((language != '') and '.' or '')}wowhead.com/npc={npc_id}"
-        with requests.get(url, headers=browser_headers, timeout=5) as r:
+        with session.get(url) as r:
             if r.status_code == 404:
                 print(f"NPC {npc_id} fully doesn't exist")
                 return False
             r.raise_for_status()
-            # print(r.content)
             result = re.search(r'"og:title" content="(.*)">', unescape(r.text))
-
+            time.sleep(2)
             if result:
-                print(
-                    f"Got {'en' if language == '' else language} name for {npc_id} - {result.group(1)}"
-                )
                 return result.group(1)
             else:
                 print(
@@ -68,17 +71,16 @@ languages = {
 expansions = ["Legion", "BattleForAzeroth", "Shadowlands", "Dragonflight"]
 
 
-def get_npc_names_localized(npc_id):
-    name = get_npc_name(npc_id, "en")
+def get_npc_names_localized(npc_id, session):
+    name = get_npc_name(npc_id, "en", session)
     if not name:
-        print(f"Failed to get EN name for {npc_id}")
         return
     if name in npc_list:
         print(f"{name} is already in list, skipping ID {npc_id}")
         return
     npc_list[name] = {"enUS": name}
     for lang in languages:
-        npc_list[name][lang] = get_npc_name(npc_id, languages[lang])
+        npc_list[name][lang] = get_npc_name(npc_id, languages[lang], session)
 
 
 def collect_mdt_npcids():
@@ -91,7 +93,7 @@ def collect_mdt_npcids():
             f = open("{}\\{}".format(expansion, filename))
             line = f.readline()
             while line:
-                npc_id = re.search('\["id"\] = (\d*)', line)
+                npc_id = re.search(r'\["id"\] = (\d*)', line)
                 if npc_id:
                     npc_id = int(npc_id.group(1))
                     if npc_id > 100000000:
@@ -107,13 +109,13 @@ total_ids = 0
 lock = threading.Lock()
 
 
-def get_npc_names(ids):
+def get_npc_names(ids, session):
     for id in ids:
-        get_npc_names_localized(id)
+        get_npc_names_localized(id, session)
         lock.acquire()
         global finished_ids
         finished_ids = finished_ids + 1
-        print(f"Finished {finished_ids}/{total_ids}")
+        print(f"Finished {finished_ids}/{total_ids} NPCs")
         lock.release()
 
 
@@ -121,9 +123,9 @@ def write_to_lua(dst, src):
     file = f"{dst}.lua"
     with open(file, "w", encoding="UTF-8") as out:
         for npc in npc_list:
-            npc_name_localized = re.match("\[?([^\]]*)", str(npc_list[npc][src])).group(
-                1
-            )
+            npc_name_localized = re.match(
+                r"\[?([^\]]*)", str(npc_list[npc][src])
+            ).group(1)
             out.write(f'\tL["{npc}"] = "{npc_name_localized}"\n')
 
 
@@ -144,12 +146,23 @@ if __name__ == "__main__":
     nthreads = 5  # 100
     chunks = list(split_list(ids, nthreads))
     threads = []
+    start = time.perf_counter()
+    print(f"Starting {nthreads} threads")
     for i in range(0, nthreads):
-        t = threading.Thread(target=get_npc_names, args=(chunks[i],))
+        session = create_session()
+        t = threading.Thread(
+            target=get_npc_names,
+            args=(
+                chunks[i],
+                session,
+            ),
+        )
         threads.append(t)
         t.start()
     for _, t in enumerate(threads):
         t.join()
+    end = time.perf_counter()
+    print(f"Finished in {round(end - start, 2)} second(s)")
 
     for lang in languages:
         write_to_lua(lang, lang)
