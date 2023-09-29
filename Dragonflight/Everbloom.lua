@@ -27,7 +27,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["The Everbloom"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 294, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 316, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -1303,7 +1303,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [6] = {
     ["name"] = "Gnarlroot",
     ["id"] = 81984,
-    ["count"] = 15,
+    ["count"] = 25,
     ["health"] = 2766414,
     ["scale"] = 1,
     ["displayId"] = 58575,
@@ -1561,7 +1561,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [13] = {
     ["name"] = "Hapless Assistant",
     ["id"] = 212981,
-    ["count"] = 0,
+    ["count"] = 3,
     ["health"] = 592803,
     ["scale"] = 0.8,
     ["displayId"] = 109997,
