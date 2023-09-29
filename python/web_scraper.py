@@ -21,7 +21,7 @@ def get_displayid_and_creaturetype(npcId):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
     }
-    url = f"https://www.wowhead.com/npc={npcId}"
+    url = f"https://ptr2.wowhead.com/npc={npcId}"
     with requests.get(url, headers=headers) as r:
         time.sleep(1)
         if r.status_code == 200:
