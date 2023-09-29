@@ -131,7 +131,7 @@ function MDT:TestExport(target, dungeonIndex)
     if dungeonName and dungeonName ~= "-" then
       print(dungeonName)
       local export = MDT:ExportLuaTable(dataToExport[i], schema)
-      if dungeonIndex then
+      if dungeonIndex and export then
         MDT:ExportString(export)
       end
       -- see results in chat frame, we don't need to show the data in the export frame
@@ -174,7 +174,9 @@ do
         local obj = targetIsEnemies and MDT.dungeonEnemies[dungeonIndex] or MDT.mapPOIs[dungeonIndex]
         local schema = MDT:GetSchema(targetIsEnemies and "enemies" or "pois")
         local export = MDT:ExportLuaTable(obj, schema)
-        MDT:ExportString(export)
+        if export then
+          MDT:ExportString(export)
+        end
       end, "exportIncrementally")
     end
   end

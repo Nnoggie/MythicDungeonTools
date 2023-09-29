@@ -206,7 +206,7 @@ end
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
   local timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool = CombatLogGetCurrentEventInfo()
   --enemy spells
-  if trackedEvents[subevent] then
+  if trackedEvents[subevent] and sourceGUID then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", sourceGUID)
     id = tonumber(id)
     --dungeon
@@ -226,7 +226,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
     end
   end
   --characteristics
-  if subevent == "SPELL_AURA_APPLIED" then
+  if subevent == "SPELL_AURA_APPLIED" and destGUID then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", destGUID)
     id = tonumber(id) or 0
 

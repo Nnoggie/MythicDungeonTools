@@ -181,7 +181,7 @@ local function getFontString()
       MDT:PullClickAreaOnLeave()
     end)
     fsFrame.clickArea = clickArea
-    local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
+    local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil)
     fs:SetPoint("CENTER", 0, 0)
     fs:SetJustifyH("CENTER")
     fs:SetJustifyV("MIDDLE")

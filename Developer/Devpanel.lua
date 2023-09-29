@@ -1030,7 +1030,9 @@ function MDT:CreateDevPanel(frame)
         -- 3. add the clone from this blip to the shrouded enemy, make sure to deep copy clone data
         local clone = MDT:DeepCopy(currentBlip.clone)
         clone.shrouded = true
-        tinsert(shroudedEnemy.clones, clone)
+        if shroudedEnemy and shroudedEnemy.clones then
+          tinsert(shroudedEnemy.clones, clone)
+        end
 
         -- 4. add disguised tag to original enemy
         currentBlip.clone.disguised = true

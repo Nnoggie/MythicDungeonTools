@@ -588,6 +588,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   if data.spells then
     for spellId, spellData in pairs(data.spells) do
       if MDT:GetDB().devMode or not spellBlacklist[spellId] then
+        ---@diagnostic disable-next-line: param-type-mismatch
         local spellButton = AceGUI:Create("MDTSpellButton")
         spellButton:SetSpell(spellId, spellData)
         spellButton:Initialize()
@@ -601,6 +602,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   f.powerScroll:ReleaseChildren()
   if data.powers then
     for powerSpellId, powerData in pairs(data.powers) do
+      ---@diagnostic disable-next-line: param-type-mismatch
       local powerButton = AceGUI:Create("MDTPowerButton")
       powerButton:SetSpell(powerSpellId, powerData)
       powerButton:Initialize()

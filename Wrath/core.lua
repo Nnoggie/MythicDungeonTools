@@ -188,6 +188,7 @@ do
   function MDT.ADDON_LOADED(self, addon)
     if addon == "MythicDungeonTools" then
       db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
+      ---@diagnostic disable-next-line: param-type-mismatch
       minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
       if not db.minimap.hide then
         minimapIcon:Show("MythicDungeonTools")
@@ -352,6 +353,7 @@ function MDT:CreateMenu()
   self.main_frame.maximizeButton = CreateFrame("Button", "MDTMaximizeButton", self.main_frame,
     "MaximizeMinimizeButtonFrameTemplate")
   self.main_frame.maximizeButton:ClearAllPoints()
+  ---@diagnostic disable-next-line: param-type-mismatch
   self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
   self.main_frame.maximizeButton:SetFrameLevel(4)
   db.maximized = db.maximized or false
@@ -378,6 +380,7 @@ function MDT:CreateMenu()
     "UIPanelCloseButton")
   local setLivePresetButton = self.main_frame.setLivePresetButton
   setLivePresetButton:ClearAllPoints()
+  ---@diagnostic disable-next-line: param-type-mismatch
   setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
   setLivePresetButton.Icon = setLivePresetButton:CreateTexture(nil, "OVERLAY", nil, 0)
   setLivePresetButton.Icon:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
@@ -574,7 +577,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString:ClearAllPoints()
     frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 10, 0)
     frame.topPanelString:Show()
-    frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
+    frame.topPanelString:SetFont(frame.topPanelString:GetFont() or '', 20, '')
     frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "ARTWORK", nil, 7)
     frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\Nnoggie")
     frame.topPanelLogo:SetWidth(24)
@@ -621,7 +624,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomPanel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT")
 
   frame.bottomPanelString = frame.bottomPanel:CreateFontString("MDTMid")
-  frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
+  frame.bottomPanelString:SetFontObject(GameFontNormalSmall)
   frame.bottomPanelString:SetJustifyH("CENTER")
   frame.bottomPanelString:SetJustifyV("CENTER")
   frame.bottomPanelString:SetPoint("CENTER", frame.bottomPanel, "CENTER", 0, 0)
@@ -629,7 +632,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomPanelString:Show()
 
   frame.bottomLeftPanelString = frame.bottomPanel:CreateFontString("MDTVersion")
-  frame.bottomLeftPanelString:SetFontObject("GameFontNormalSmall")
+  frame.bottomLeftPanelString:SetFontObject(GameFontNormalSmall)
   frame.bottomLeftPanelString:SetJustifyH("LEFT")
   frame.bottomLeftPanelString:SetJustifyV("CENTER")
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
@@ -675,7 +678,7 @@ function MDT:MakeCopyHelper(frame)
   MDT.copyHelper.text:ClearAllPoints()
   MDT.copyHelper.text:SetPoint("CENTER", MDT.copyHelper, "CENTER")
   MDT.copyHelper.text:Show()
-  MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont(), 20)
+  MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont() or '', 20, '')
   MDT.copyHelper.text:SetTextColor(1, 1, 0)
   function MDT.copyHelper:SmartFadeOut(seconds)
     seconds = seconds or 0.3
@@ -3479,6 +3482,7 @@ function MDT:ReloadPullButtons()
     local idx = 0
     for k, pull in ipairs(preset.value.pulls) do
       idx = idx + 1
+      ---@diagnostic disable-next-line: param-type-mismatch
       frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
       frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
       frame.newPullButtons[idx]:SetIndex(idx)
@@ -3489,6 +3493,7 @@ function MDT:ReloadPullButtons()
       coroutine.yield()
     end
     --add the "new pull" button
+    ---@diagnostic disable-next-line: param-type-mismatch
     frame.newPullButton = AceGUI:Create("MDTNewPullButton")
     frame.newPullButton:Initialize()
     frame.newPullButton:Enable()
@@ -4562,10 +4567,11 @@ function initFrames()
       end
       self:SetFacing(PI * 2 / 360 * self.fac)
     end)
+    ---@diagnostic disable-next-line: param-type-mismatch
     tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 7, -7)
     tooltip.String = tooltip:CreateFontString("MDTToolTipString")
-    tooltip.String:SetFontObject("GameFontNormalSmall")
-    tooltip.String:SetFont(tooltip.String:GetFont(), 10, "")
+    tooltip.String:SetFontObject(GameFontNormalSmall)
+    tooltip.String:SetFont(tooltip.String:GetFont() or '', 10, '')
     tooltip.String:SetTextColor(1, 1, 1, 1)
     tooltip.String:SetJustifyH("LEFT")
     --tooltip.String:SetJustifyV("CENTER")
@@ -4573,6 +4579,7 @@ function initFrames()
     tooltip.String:SetHeight(90)
     tooltip.String:SetWidth(175)
     tooltip.String:SetText(" ")
+    ---@diagnostic disable-next-line: param-type-mismatch
     tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
     tooltip.String:Show()
     skinTooltip(tooltip)
@@ -4604,22 +4611,25 @@ function initFrames()
     end
 
     MDT.pullTooltip.Model:SetSize(110, 110)
+    ---@diagnostic disable-next-line: param-type-mismatch
     MDT.pullTooltip.Model:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 7, -7)
 
     MDT.pullTooltip.topString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
-    MDT.pullTooltip.topString:SetFontObject("GameFontNormalSmall")
-    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont(), 10, "")
+    MDT.pullTooltip.topString:SetFontObject(GameFontNormalSmall)
+    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont() or '', 10, '')
     MDT.pullTooltip.topString:SetTextColor(1, 1, 1, 1)
     MDT.pullTooltip.topString:SetJustifyH("LEFT")
     MDT.pullTooltip.topString:SetJustifyV("TOP")
     MDT.pullTooltip.topString:SetHeight(110)
     MDT.pullTooltip.topString:SetWidth(130)
+    ---@diagnostic disable-next-line: param-type-mismatch
     MDT.pullTooltip.topString:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 110, -7)
     MDT.pullTooltip.topString:Hide()
 
     local heading = MDT.pullTooltip:CreateTexture(nil, "OVERLAY", nil, 0)
     heading:SetHeight(8)
     heading:SetPoint("LEFT", 12, -30)
+    ---@diagnostic disable-next-line: param-type-mismatch
     heading:SetPoint("RIGHT", MDT.pullTooltip, "RIGHT", -12, -30)
     heading:SetTexture("Interface\\Tooltips\\UI-Tooltip-Border")
     heading:SetTexCoord(0.81, 0.94, 0.5, 1)
@@ -4627,8 +4637,8 @@ function initFrames()
 
     MDT.pullTooltip.botString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
     local botString = MDT.pullTooltip.botString
-    botString:SetFontObject("GameFontNormalSmall")
-    botString:SetFont(MDT.pullTooltip.topString:GetFont(), 10, "")
+    botString:SetFontObject(GameFontNormalSmall)
+    botString:SetFont(MDT.pullTooltip.topString:GetFont() or '', 10, '')
     botString:SetTextColor(1, 1, 1, 1)
     botString:SetJustifyH("TOP")
     botString:SetJustifyV("TOP")
