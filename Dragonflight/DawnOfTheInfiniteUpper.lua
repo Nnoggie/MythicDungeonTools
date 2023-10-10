@@ -25,13 +25,14 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 320, teeming = 1000, teemingEna
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
-    [1] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "generalNote",
-      ["x"] = 190.55769429672,
-      ["y"] = -416.07924421356,
-      ["text"] = "dawnPortalNote", --,
-    },
+    -- [1] = {
+    --   ["template"] = "MapLinkPinTemplate",
+    --   ["type"] = "generalNote",
+    --   ["x"] = 190.55769429672,
+    --   ["y"] = -416.07924421356,
+    --   ["text"] = "dawnPortalNote", --,
+    -- },
+    -- TODO: need research on how the spawning works exactly
   },
 };
 
