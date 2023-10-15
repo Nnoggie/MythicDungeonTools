@@ -35,6 +35,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 112579,
     ["creatureType"] = "Dragonkin",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [412012] = {
+      },
+      [412044] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 145.59723585048,
@@ -131,6 +141,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 112575,
     ["creatureType"] = "Dragonkin",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [411994] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 152.60221924465,
@@ -199,6 +217,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 112577,
     ["creatureType"] = "Dragonkin",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [412063] = {
+      },
+      [412065] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 214.03741382287,
@@ -263,6 +290,33 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2521,
     ["instanceID"] = 1209,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [401420] = {
+      },
+      [401421] = {
+      },
+      [401794] = {
+      },
+      [405970] = {
+      },
+      [413013] = {
+      },
+      [413041] = {
+      },
+      [413105] = {
+      },
+      [413107] = {
+      },
+      [413142] = {
+      },
+      [416716] = {
+      },
+      [418420] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 320.55935696136,
@@ -282,8 +336,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93213,
     ["creatureType"] = "Aberration",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [413529] = {
+      },
+      [413532] = {
       },
       [413544] = {
       },
@@ -320,6 +379,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 41677,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [413487] = {
       },
@@ -372,6 +435,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [413473] = {
@@ -423,6 +488,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 113072,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [415435] = {
+      },
+      [415436] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 638.35100089692,
@@ -470,6 +544,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 78855,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [415437] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 680.6538847977,
@@ -559,6 +642,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 113073,
     ["creatureType"] = "Elemental",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [413219] = {
+      },
+      [415554] = {
+      },
+      [415769] = {
+      },
+      [415770] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 678.3150696462,
@@ -588,6 +684,37 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2528,
     ["instanceID"] = 1209,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [403910] = {
+      },
+      [403912] = {
+      },
+      [404141] = {
+      },
+      [404650] = {
+      },
+      [405431] = {
+      },
+      [405448] = {
+      },
+      [405478] = {
+      },
+      [405671] = {
+      },
+      [405672] = {
+      },
+      [405696] = {
+      },
+      [413329] = {
+      },
+      [413332] = {
+      },
+      [415359] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 678.41841935863,
@@ -607,6 +734,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 113582,
     ["creatureType"] = "Dragonkin",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [413621] = {
+      },
+      [413622] = {
+      },
+      [413623] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 162.86725936616,
@@ -626,6 +764,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95785,
     ["creatureType"] = "Aberration",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [412695] = {
+      },
+      [412699] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 482.4527735089,
@@ -841,6 +990,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 112683,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
+    ["spells"] = {
+      [412695] = {
+      },
+      [412806] = {
+      },
+      [412810] = {
+      },
+      [416267] = {
+      },
+      [417404] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 475.42648509659,
@@ -884,6 +1051,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2535,
     ["instanceID"] = 1209,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [406886] = {
+      },
+      [407057] = {
+      },
+      [407147] = {
+      },
+      [407159] = {
+      },
+      [407406] = {
+      },
+      [407413] = {
+      },
+      [407714] = {
+      },
+      [415097] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 533.59702426232,
@@ -906,6 +1094,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2535,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [406886] = {
+      },
+      [407057] = {
+      },
+      [407147] = {
+      },
+      [407159] = {
+      },
+      [407406] = {
+      },
+      [407413] = {
+      },
+      [407714] = {
+      },
+      [407978] = {
+      },
+      [415114] = {
+      },
+      [415254] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 543.84940259799,
@@ -928,6 +1141,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2535,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [408141] = {
+      },
+      [408177] = {
+      },
+      [413590] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 543.78561585166,
@@ -950,6 +1174,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2535,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [5760] = {
+      },
+      [45524] = {
+      },
+      [406886] = {
+      },
+      [407057] = {
+      },
+      [407147] = {
+      },
+      [407406] = {
+      },
+      [407413] = {
+      },
+      [407714] = {
+      },
+      [408029] = {
+      },
+      [418348] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 553.04029934269,
@@ -969,6 +1218,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73034,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [411958] = {
+      },
+      [412285] = {
+      },
+      [416254] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 465.3728373522,
@@ -1019,6 +1280,45 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2537,
     ["instanceID"] = 1209,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [409261] = {
+      },
+      [409266] = {
+      },
+      [409268] = {
+      },
+      [409456] = {
+      },
+      [409558] = {
+      },
+      [409584] = {
+      },
+      [409635] = {
+      },
+      [409879] = {
+      },
+      [409884] = {
+      },
+      [414177] = {
+      },
+      [414184] = {
+      },
+      [414300] = {
+      },
+      [414376] = {
+      },
+      [414483] = {
+      },
+      [414535] = {
+      },
+      [414583] = {
+      },
+      [414604] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 572.57847521301,
@@ -1038,6 +1338,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 112234,
     ["creatureType"] = "Dragonkin",
     ["level"] = 72,
+    ["spells"] = {
+      [414178] = {
+      },
+      [414293] = {
+      },
+      [414330] = {
+      },
+      [414333] = {
+      },
+      [414353] = {
+      },
+      [414496] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 552.23186920639,
@@ -1057,6 +1371,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73034,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["spells"] = {
+      [416256] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 569.96750481706,

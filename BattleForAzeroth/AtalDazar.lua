@@ -45,6 +45,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
     },
     ["spells"] = {
       [253548] = {
@@ -114,6 +116,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
     },
     ["spells"] = {
       [253239] = {
@@ -232,6 +236,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Disorient"] = true,
     },
     ["spells"] = {
       [253517] = {
@@ -324,6 +329,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
     },
     ["spells"] = {
       [253548] = {
@@ -458,8 +465,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Root"] = true,
     },
     ["spells"] = {
+      [260666] = {
+      },
+      [260667] = {
+      },
+      [260668] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -503,7 +517,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Priestess Alun'za",
     ["id"] = 122967,
     ["count"] = 0,
-    ["health"] = 8892045,
+    ["health"] = 8886395,
     ["scale"] = 1,
     ["displayId"] = 80293,
     ["creatureType"] = "Humanoid",
@@ -551,6 +565,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Disorient"] = true,
     },
     ["spells"] = {
       [252661] = {
@@ -696,9 +711,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148894,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
     },
     ["spells"] = {
       [255814] = {
+      },
+      [256959] = {
+      },
+      [256960] = {
       },
       [258653] = {
       },
@@ -780,6 +801,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
     },
     ["spells"] = {
+      [258653] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -850,6 +873,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [252781] = {
@@ -938,6 +964,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [253721] = {
@@ -1042,7 +1071,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vol'kaal",
     ["id"] = 122965,
     ["count"] = 0,
-    ["health"] = 6224432,
+    ["health"] = 6220477,
     ["scale"] = 1,
     ["displayId"] = 79453,
     ["creatureType"] = "Undead",
@@ -1051,8 +1080,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2036,
     ["instanceID"] = 968,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
+      [250241] = {
+      },
+      [250258] = {
+      },
+      [250259] = {
+      },
+      [250368] = {
+      },
+      [250372] = {
+      },
+      [259572] = {
+      },
+      [259574] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1074,6 +1118,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Root"] = true,
     },
     ["spells"] = {
       [251187] = {
@@ -1343,6 +1388,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
     },
     ["spells"] = {
       [255041] = {
@@ -1437,7 +1485,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rezan",
     ["id"] = 122963,
     ["count"] = 0,
-    ["health"] = 6916035,
+    ["health"] = 6911641,
     ["scale"] = 1,
     ["displayId"] = 78188,
     ["creatureType"] = "Undead",
@@ -1446,8 +1494,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2083,
     ["instanceID"] = 968,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
+      [255371] = {
+      },
+      [255372] = {
+      },
+      [255373] = {
+      },
+      [255421] = {
+      },
+      [255434] = {
+      },
+      [255445] = {
+      },
+      [257407] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1551,7 +1614,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Yazma",
     ["id"] = 122968,
     ["count"] = 0,
-    ["health"] = 7904040,
+    ["health"] = 7899018,
     ["scale"] = 1,
     ["displayId"] = 79568,
     ["creatureType"] = "Humanoid",

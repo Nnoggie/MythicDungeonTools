@@ -37,6 +37,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [76807] = {
@@ -148,11 +151,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vicious Snap Dragon",
     ["id"] = 212681,
     ["count"] = 3,
-    ["health"] = 642203,
+    ["health"] = 592803,
     ["scale"] = 1,
     ["displayId"] = 103357,
     ["creatureType"] = "Beast",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [426659] = {
       },
@@ -346,6 +354,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -640,6 +652,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 32311,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+    },
     ["spells"] = {
       [427292] = {
       },
@@ -760,6 +775,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 91648,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [75992] = {
       },
@@ -815,7 +835,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lady Naz'jar",
     ["id"] = 40586,
     ["count"] = 0,
-    ["health"] = 5434028,
+    ["health"] = 5426574,
     ["scale"] = 1,
     ["displayId"] = 34342,
     ["creatureType"] = "Humanoid",
@@ -823,6 +843,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 101,
     ["instanceID"] = 65,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [75683] = {
       },
@@ -853,11 +876,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Deep Sea Murloc",
     ["id"] = 213607,
     ["count"] = 0,
-    ["health"] = 118561,
+    ["health"] = 98801,
     ["scale"] = 1,
     ["displayId"] = 31539,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [428096] = {
       },
@@ -927,11 +954,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Naz'jar Frost Witch",
     ["id"] = 44404,
     ["count"] = 0,
-    ["health"] = 494003,
+    ["health"] = 411669,
     ["scale"] = 1,
     ["displayId"] = 37388,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+    },
     ["spells"] = {
       [428103] = {
       },
@@ -959,7 +990,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Naz'jar Honor Guard",
     ["id"] = 40633,
     ["count"] = 0,
-    ["health"] = 592803,
+    ["health"] = 494003,
     ["scale"] = 1,
     ["displayId"] = 32348,
     ["creatureType"] = "Humanoid",
@@ -986,7 +1017,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Commander Ulthok",
     ["id"] = 40765,
     ["count"] = 0,
-    ["health"] = 6916035,
+    ["health"] = 6906548,
     ["scale"] = 1,
     ["displayId"] = 33792,
     ["creatureType"] = "Aberration",
@@ -1025,7 +1056,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bubbling Ooze",
     ["id"] = 213219,
     ["count"] = 0,
-    ["health"] = 9880050,
+    ["health"] = 8233375,
     ["scale"] = 1,
     ["displayId"] = 33012,
     ["creatureType"] = "Aberration",
@@ -1069,6 +1100,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 31674,
     ["creatureType"] = "Aberration",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [76590] = {
       },
@@ -1159,6 +1193,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 31994,
     ["creatureType"] = "Aberration",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [426905] = {
       },
@@ -1308,6 +1347,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 90742,
     ["creatureType"] = "Aberration",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [426783] = {
       },
@@ -1349,7 +1395,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Erunak Stonespeaker",
     ["id"] = 40825,
     ["count"] = 0,
-    ["health"] = 6224432,
+    ["health"] = 6215893,
     ["scale"] = 1,
     ["displayId"] = 30408,
     ["creatureType"] = "Humanoid",
@@ -1388,7 +1434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mindbender Ghur'sha",
     ["id"] = 40788,
     ["count"] = 0,
-    ["health"] = 6224432,
+    ["health"] = 6215893,
     ["scale"] = 1,
     ["displayId"] = 32259,
     ["creatureType"] = "Aberration",
@@ -1416,7 +1462,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormflurry Totem",
     ["id"] = 214117,
     ["count"] = 0,
-    ["health"] = 296402,
+    ["health"] = 247002,
     ["scale"] = 1,
     ["displayId"] = 19071,
     ["creatureType"] = "Uncategorized",
@@ -1440,6 +1486,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 32121,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [429176] = {
       },
@@ -1526,6 +1579,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 31982,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [76516] = {
       },
@@ -1588,6 +1645,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 33845,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [76363] = {
       },
@@ -1800,7 +1863,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ink of Ozumat",
     ["id"] = 213770,
     ["count"] = 0,
-    ["health"] = 6916035,
+    ["health"] = 6906548,
     ["scale"] = 1,
     ["displayId"] = 91695,
     ["creatureType"] = "Elemental",
@@ -1841,11 +1904,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sludge",
     ["id"] = 213942,
     ["count"] = 0,
-    ["health"] = 197601,
+    ["health"] = 164668,
     ["scale"] = 1,
     ["displayId"] = 91837,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [428403] = {
       },
@@ -1870,11 +1938,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Splotch",
     ["id"] = 213806,
     ["count"] = 0,
-    ["health"] = 138321,
+    ["health"] = 115268,
     ["scale"] = 1,
     ["displayId"] = 102373,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [428526] = {
       },
@@ -1893,7 +1966,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ozumat",
     ["id"] = 44566,
     ["count"] = 0,
-    ["health"] = 51376260,
+    ["health"] = 39465988,
     ["scale"] = 1,
     ["displayId"] = 34135,
     ["creatureType"] = "Aberration",

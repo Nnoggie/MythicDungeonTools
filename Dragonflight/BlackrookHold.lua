@@ -68,6 +68,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65786,
     ["creatureType"] = "Undead",
     ["level"] = 71,
+    ["spells"] = {
+      [200099] = {
+      },
+      [200105] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 28.029388680305,
@@ -142,6 +148,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65785,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+    },
+    ["spells"] = {
+      [200084] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 37.071813085473,
@@ -231,6 +244,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65787,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+    },
+    ["spells"] = {
+      [199663] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 45.440316837202,
@@ -292,6 +312,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65833,
     ["creatureType"] = "Undead",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [196916] = {
+      },
+      [225732] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 40.841486615626,
@@ -325,7 +354,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Amalgam of Souls",
     ["id"] = 98542,
     ["count"] = 0,
-    ["health"] = 6916035,
+    ["health"] = 6904734,
     ["scale"] = 1,
     ["displayId"] = 65837,
     ["creatureType"] = "Undead",
@@ -333,6 +362,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1518,
     ["instanceID"] = 740,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [194956] = {
+      },
+      [194966] = {
+      },
+      [195254] = {
+      },
+      [196078] = {
+      },
+      [196587] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 202.90884016209,
@@ -352,6 +396,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 35688,
     ["creatureType"] = "Beast",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+      [225909] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 375.84390263111,
@@ -497,6 +549,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 42742,
     ["creatureType"] = "Beast",
     ["level"] = 70,
+    ["spells"] = {
+      [225909] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 458.44306390563,
@@ -516,6 +572,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65762,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [200261] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 476.7604578623,
@@ -556,6 +619,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65950,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [200291] = {
+      },
+      [200325] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 488.61901677434,
@@ -636,6 +711,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65743,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+      [193633] = {
+      },
+      [200343] = {
+      },
+      [200344] = {
+      },
+      [200345] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 474.6317540886,
@@ -704,6 +794,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65718,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+    },
+    ["spells"] = {
+      [200248] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 490.07100488837,
@@ -730,6 +828,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 67018,
     ["creatureType"] = "Aberration",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+    },
+    ["spells"] = {
+      [200256] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 496.67033866089,
@@ -756,6 +862,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64620,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+      [225962] = {
+      },
+      [225963] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 558.55520276312,
@@ -775,6 +891,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65954,
     ["creatureType"] = "Undead",
     ["level"] = 71,
+    ["spells"] = {
+      [200261] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 653.48156198557,
@@ -789,7 +909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Illysanna Ravencrest",
     ["id"] = 98696,
     ["count"] = 0,
-    ["health"] = 6125631,
+    ["health"] = 6115622,
     ["scale"] = 1,
     ["displayId"] = 65951,
     ["creatureType"] = "Demon",
@@ -797,6 +917,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1653,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [197394] = {
+      },
+      [197418] = {
+      },
+      [197478] = {
+      },
+      [197484] = {
+      },
+      [197521] = {
+      },
+      [197546] = {
+      },
+      [197622] = {
+      },
+      [197696] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 717.1516379541,
@@ -811,11 +952,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wyrmtongue Trickster",
     ["id"] = 98900,
     ["count"] = 3,
-    ["health"] = 395202,
+    ["health"] = 494003,
     ["scale"] = 1,
     ["displayId"] = 64483,
     ["creatureType"] = "Demon",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 150.16942030985,
@@ -919,6 +1067,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 64476,
     ["creatureType"] = "Demon",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [200784] = {
+      },
+      [200913] = {
+      },
+      [200914] = {
+      },
+      [201062] = {
+      },
+      [201070] = {
+      },
+      [201175] = {
+      },
+      [201176] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 98.494291444064,
@@ -1008,6 +1178,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 63994,
     ["creatureType"] = "Demon",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [8599] = {
+      },
+      [201139] = {
+      },
+      [201141] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 85.847007952208,
@@ -1041,6 +1225,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65054,
     ["creatureType"] = "Demon",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+      [204896] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 74.468094073501,
@@ -1067,6 +1260,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 5047,
     ["creatureType"] = "Demon",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [203163] = {
+      },
+      [227913] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 326.1808449242,
@@ -1102,7 +1304,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Smashspite the Hateful",
     ["id"] = 98949,
     ["count"] = 0,
-    ["health"] = 6916035,
+    ["health"] = 6904734,
     ["scale"] = 1,
     ["displayId"] = 65304,
     ["creatureType"] = "Demon",
@@ -1110,6 +1312,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1664,
     ["instanceID"] = 740,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [198073] = {
+      },
+      [198079] = {
+      },
+      [198080] = {
+      },
+      [198245] = {
+      },
+      [224188] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 499.11113630325,
@@ -1129,6 +1346,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 67478,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+      [214001] = {
+      },
+      [214002] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 638.29845089302,
@@ -1176,6 +1403,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 67488,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Disorient"] = true,
+    },
+    ["spells"] = {
+      [214003] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 646.10792866531,
@@ -1232,7 +1468,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kur'talos Ravencrest",
     ["id"] = 98965,
     ["count"] = 0,
-    ["health"] = 2371212,
+    ["health"] = 2367337,
     ["scale"] = 1,
     ["displayId"] = 66853,
     ["creatureType"] = "Undead",
@@ -1240,6 +1476,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1672,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [198635] = {
+      },
+      [198641] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 751.14019969485,
@@ -1254,7 +1499,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dantalionax",
     ["id"] = 98970,
     ["count"] = 0,
-    ["health"] = 17784090,
+    ["health"] = 17755031,
     ["scale"] = 1,
     ["displayId"] = 66281,
     ["creatureType"] = "Humanoid",
@@ -1262,6 +1507,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1672,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [198820] = {
+      },
+      [198833] = {
+      },
+      [199143] = {
+      },
+      [199193] = {
+      },
+      [201733] = {
+      },
+      [202019] = {
+      },
+      [241672] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 772.93764350282,
@@ -1276,7 +1540,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stinging Swarm",
     ["id"] = 101008,
     ["count"] = 0,
-    ["health"] = 444602,
+    ["health"] = 370502,
     ["scale"] = 1,
     ["displayId"] = 32542,
     ["creatureType"] = "Uncategorized",

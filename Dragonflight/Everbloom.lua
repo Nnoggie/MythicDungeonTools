@@ -36,11 +36,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Everbloom Cultivator",
     ["id"] = 81985,
     ["count"] = 3,
-    ["health"] = 790404,
+    ["health"] = 789896,
     ["scale"] = 1,
     ["displayId"] = 58429,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [165213] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 585.47786862137,
@@ -120,11 +128,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Everbloom Naturalist",
     ["id"] = 81819,
     ["count"] = 5,
-    ["health"] = 889205,
+    ["health"] = 888633,
     ["scale"] = 1,
     ["displayId"] = 57021,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [164965] = {
+      },
+      [164973] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 581.43353824274,
@@ -364,13 +384,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dreadpetal",
     ["id"] = 81864,
     ["count"] = 2,
-    ["health"] = 395202,
+    ["health"] = 394948,
     ["scale"] = 0.7,
     ["displayId"] = 25328,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [164885] = {
+      },
+      [164886] = {
       },
     },
     ["clones"] = {
@@ -866,11 +894,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rockspine Stinger",
     ["id"] = 82039,
     ["count"] = 3,
-    ["health"] = 592803,
+    ["health"] = 592422,
     ["scale"] = 0.8,
     ["displayId"] = 56044,
     ["creatureType"] = "Beast",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [165123] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 543.03967505764,
@@ -1129,11 +1167,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Everbloom Mender",
     ["id"] = 81820,
     ["count"] = 5,
-    ["health"] = 889205,
+    ["health"] = 888633,
     ["scale"] = 1,
     ["displayId"] = 57964,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [164887] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 531.69350296627,
@@ -1304,7 +1353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gnarlroot",
     ["id"] = 81984,
     ["count"] = 25,
-    ["health"] = 2766414,
+    ["health"] = 2764635,
     ["scale"] = 1,
     ["displayId"] = 58575,
     ["creatureType"] = "Elemental",
@@ -1380,7 +1429,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Witherbark",
     ["id"] = 81522,
     ["count"] = 0,
-    ["health"] = 14820075,
+    ["health"] = 14784946,
     ["scale"] = 1,
     ["displayId"] = 56613,
     ["creatureType"] = "Elemental",
@@ -1388,6 +1437,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1214,
     ["instanceID"] = 556,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [164275] = {
+      },
+      [164357] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 441.47308226918,
@@ -1400,11 +1458,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Melded Berserker",
     ["id"] = 86372,
     ["count"] = 5,
-    ["health"] = 988005,
+    ["health"] = 987370,
     ["scale"] = 1,
     ["displayId"] = 59535,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [38166] = {
+      },
+      [172578] = {
+      },
+      [172579] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 569.39250128251,
@@ -1464,11 +1536,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Twisted Abomination",
     ["id"] = 84767,
     ["count"] = 8,
-    ["health"] = 1383207,
+    ["health"] = 1382317,
     ["scale"] = 1.2,
     ["displayId"] = 59768,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [169445] = {
+      },
+      [169657] = {
+      },
+      [169658] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 589.70328921657,
@@ -1499,7 +1582,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthshaper Telu",
     ["id"] = 83893,
     ["count"] = 0,
-    ["health"] = 3161616,
+    ["health"] = 3154122,
     ["scale"] = 1,
     ["displayId"] = 58016,
     ["creatureType"] = "Humanoid",
@@ -1507,6 +1590,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1207,
     ["instanceID"] = 556,
+    ["spells"] = {
+      [168040] = {
+      },
+      [427459] = {
+      },
+      [427508] = {
+      },
+      [427509] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 534.14169845595,
@@ -1520,7 +1613,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dulhu",
     ["id"] = 83894,
     ["count"] = 0,
-    ["health"] = 4742424,
+    ["health"] = 4731183,
     ["scale"] = 1,
     ["displayId"] = 59767,
     ["creatureType"] = "Elemental",
@@ -1528,6 +1621,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1207,
     ["instanceID"] = 556,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [427510] = {
+      },
+      [427512] = {
+      },
+      [427513] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 550.68687898407,
@@ -1541,7 +1645,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Life Warden Gola",
     ["id"] = 83892,
     ["count"] = 0,
-    ["health"] = 3161616,
+    ["health"] = 3154122,
     ["scale"] = 1,
     ["displayId"] = 57022,
     ["creatureType"] = "Humanoid",
@@ -1549,6 +1653,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1207,
     ["instanceID"] = 556,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [168082] = {
+      },
+      [168092] = {
+      },
+      [427498] = {
+      },
+      [427500] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 546.38925729712,
@@ -1562,11 +1679,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hapless Assistant",
     ["id"] = 212981,
     ["count"] = 3,
-    ["health"] = 592803,
+    ["health"] = 592422,
     ["scale"] = 0.8,
     ["displayId"] = 109997,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [427245] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 482.72902169412,
@@ -1676,11 +1801,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infested Icecaller",
     ["id"] = 84989,
     ["count"] = 5,
-    ["health"] = 1580808,
+    ["health"] = 1579791,
     ["scale"] = 1,
     ["displayId"] = 58602,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
+    ["spells"] = {
+      [169840] = {
+      },
+      [426845] = {
+      },
+      [426849] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 479.23515599221,
@@ -1734,11 +1867,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Putrid Pyromancer",
     ["id"] = 84957,
     ["count"] = 5,
-    ["health"] = 1580808,
+    ["health"] = 1579791,
     ["scale"] = 1,
     ["displayId"] = 58590,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
+    ["spells"] = {
+      [169839] = {
+      },
+      [427223] = {
+      },
+      [427225] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 491.04826982195,
@@ -1758,11 +1899,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Addled Arcanomancer",
     ["id"] = 84990,
     ["count"] = 5,
-    ["health"] = 1580808,
+    ["health"] = 1579791,
     ["scale"] = 1,
     ["displayId"] = 58603,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
+    ["spells"] = {
+      [169841] = {
+      },
+      [426974] = {
+      },
+      [426982] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 479.29075930038,
@@ -1824,7 +1973,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Archmage Sol",
     ["id"] = 82682,
     ["count"] = 0,
-    ["health"] = 6916035,
+    ["health"] = 6899642,
     ["scale"] = 1,
     ["displayId"] = 57193,
     ["creatureType"] = "Humanoid",
@@ -1832,6 +1981,41 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1208,
     ["instanceID"] = 556,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [166475] = {
+      },
+      [166476] = {
+      },
+      [166477] = {
+      },
+      [426991] = {
+      },
+      [427858] = {
+      },
+      [427863] = {
+      },
+      [427885] = {
+      },
+      [427899] = {
+      },
+      [427919] = {
+      },
+      [427922] = {
+      },
+      [428082] = {
+      },
+      [428084] = {
+      },
+      [428139] = {
+      },
+      [428148] = {
+      },
+      [428177] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 468.26399886255,
@@ -1844,7 +2028,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Yalnu",
     ["id"] = 83846,
     ["count"] = 0,
-    ["health"] = 13832070,
+    ["health"] = 31541219,
     ["scale"] = 1,
     ["displayId"] = 57231,
     ["creatureType"] = "Giant",
@@ -1852,6 +2036,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 1210,
     ["instanceID"] = 556,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [169179] = {
+      },
+      [169613] = {
+      },
+      [428823] = {
+      },
+      [428834] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 365.77092592772,
@@ -1865,11 +2062,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gnarled Ancient",
     ["id"] = 84400,
     ["count"] = 0,
-    ["health"] = 1383207,
+    ["health"] = 658246,
     ["scale"] = 1.4,
     ["displayId"] = 54675,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [169929] = {
+      },
+      [169930] = {
+      },
+      [428948] = {
+      },
+      [428951] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 347.74834868099,
