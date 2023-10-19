@@ -537,7 +537,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
       occurence..
       group..
       "\n"..
-      string.format(L["Level %d %s"], data.level, L[data.creatureType])..
+      string.format(L["Level %d %s"], data.level, L[data.creatureType]).." "..data.id..
       "\n"..string.format(L["%s HP"], MDT:FormatEnemyHealth(health)).."\n"
 
   local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
