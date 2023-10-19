@@ -1806,6 +1806,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [35] = {
     ["name"] = "Alliance Knight",
     ["id"] = 208165,
+    ["displayId"] = 113860,
     ["count"] = 5,
     ["health"] = 988005,
     ["scale"] = 1,
