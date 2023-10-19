@@ -118,27 +118,41 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2,
       },
       [6] = {
+        ["x"] = 416.86351539045,
+        ["y"] = -279.10311601508,
+        ["g"] = 6,
+        ["sublevel"] = 1,
+        ["scale"] = 1.2,
+      },
+      [7] = {
+        ["x"] = 422.66842350228,
+        ["y"] = -288.57862027309,
+        ["g"] = 6,
+        ["sublevel"] = 1,
+        ["scale"] = 1.2,
+      },
+      [8] = {
         ["x"] = 527.57237035928,
         ["y"] = -216.18867610245,
         ["g"] = 11,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [7] = {
+      [9] = {
         ["x"] = 562.2294615296,
         ["y"] = -196.7297462473,
         ["g"] = 12,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [8] = {
+      [10] = {
         ["x"] = 608.38817927785,
         ["y"] = -159.84289476676,
         ["g"] = 17,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [9] = {
+      [11] = {
         ["x"] = 618.45953451039,
         ["y"] = -176.41371969511,
         ["g"] = 17,
@@ -391,41 +405,48 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.2,
       },
       [4] = {
+        ["x"] = 450.63800325466,
+        ["y"] = -272.92285550542,
+        ["g"] = 7,
+        ["sublevel"] = 1,
+        ["scale"] = 1.2,
+      },
+      [5] = {
         ["x"] = 554.75534424885,
         ["y"] = -190.43843047342,
         ["g"] = 12,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [5] = {
+      [6] = {
         ["x"] = 548.20055198318,
         ["y"] = -161.02901265288,
         ["g"] = 14,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [6] = {
+      [7] = {
         ["x"] = 538.88996942319,
         ["y"] = -154.07521472157,
         ["g"] = 14,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [7] = {
+      [8] = {
         ["x"] = 626.01566299944,
         ["y"] = -183.07162303974,
         ["g"] = 17,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [8] = {
+      [9] = {
         ["x"] = 599.61157678343,
         ["y"] = -223.04030840885,
         ["g"] = 15,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [9] = {
+      [10] = {
         ["x"] = 599.47419203943,
         ["y"] = -235.46841017315,
         ["g"] = 15,
@@ -464,6 +485,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 609.30731787136,
         ["y"] = -170.64353397443,
         ["g"] = 17,
+        ["sublevel"] = 1,
+        ["scale"] = 1.6,
+      },
+      [3] = {
+        ["x"] = 475.03628263067,
+        ["y"] = -241.21240027509,
+        ["g"] = 8,
+        ["sublevel"] = 1,
+        ["scale"] = 1.6,
+      },
+      [4] = {
+        ["x"] = 482.79264921544,
+        ["y"] = -253.89195101098,
+        ["g"] = 8,
         ["sublevel"] = 1,
         ["scale"] = 1.6,
       },
@@ -557,93 +592,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [6] = {
-    ["name"] = "Naz'jar Invader",
-    ["id"] = 40584,
-    ["count"] = 0,
-    ["health"] = 988005,
-    ["scale"] = 1,
-    ["displayId"] = 37370,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 70,
-    ["characteristics"] = {
-      ["Taunt"] = true,
-    },
-    ["spells"] = {
-      [76807] = {
-      },
-      [426618] = {
-      },
-    },
-    ["clones"] = {
-      [6] = {
-        ["x"] = 416.86351539045,
-        ["y"] = -279.10311601508,
-        ["g"] = 6,
-        ["sublevel"] = 1,
-        ["scale"] = 1.2,
-      },
-      [7] = {
-        ["x"] = 422.66842350228,
-        ["y"] = -288.57862027309,
-        ["g"] = 6,
-        ["sublevel"] = 1,
-        ["scale"] = 1.2,
-      },
-    },
-  },
-  [7] = {
-    ["name"] = "Naz'jar Tempest Witch",
-    ["id"] = 214209,
-    ["count"] = 0,
-    ["health"] = 889205,
-    ["scale"] = 1,
-    ["displayId"] = 91648,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 70,
-    ["spells"] = {
-      [75992] = {
-      },
-      [426768] = {
-      },
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 443.7796417691,
-        ["y"] = -261.3937905309,
-        ["g"] = 7,
-        ["sublevel"] = 1,
-        ["scale"] = 1.2,
-      },
-    },
-  },
-  [8] = {
-    ["name"] = "Naz'jar Oracle",
-    ["id"] = 41139,
-    ["count"] = 0,
-    ["health"] = 592803,
-    ["scale"] = 1,
-    ["displayId"] = 37387,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 70,
-    ["spells"] = {
-      [76813] = {
-      },
-      [76820] = {
-      },
-      [426731] = {
-      },
-    },
-    ["clones"] = {
-      [4] = {
-        ["x"] = 450.63800325466,
-        ["y"] = -272.92285550542,
-        ["g"] = 7,
-        ["sublevel"] = 1,
-        ["scale"] = 1.2,
-      },
-    },
-  },
-  [9] = {
     ["name"] = "Deep Murloc Drudge",
     ["id"] = 39960,
     ["count"] = 1,
@@ -734,39 +682,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [10] = {
-    ["name"] = "Naz'jar Sentinel",
-    ["id"] = 214140,
-    ["count"] = 0,
-    ["health"] = 1580808,
-    ["scale"] = 1,
-    ["displayId"] = 84028,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 71,
-    ["spells"] = {
-      [426741] = {
-      },
-      [428542] = {
-      },
-    },
-    ["clones"] = {
-      [3] = {
-        ["x"] = 475.03628263067,
-        ["y"] = -241.21240027509,
-        ["g"] = 8,
-        ["sublevel"] = 1,
-        ["scale"] = 1.6,
-      },
-      [4] = {
-        ["x"] = 482.79264921544,
-        ["y"] = -253.89195101098,
-        ["g"] = 8,
-        ["sublevel"] = 1,
-        ["scale"] = 1.6,
-      },
-    },
-  },
-  [11] = {
+  [7] = {
     ["name"] = "Naz'jar Tempest Witch",
     ["id"] = 40634,
     ["count"] = 5,
@@ -788,41 +704,48 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
+        ["x"] = 443.7796417691,
+        ["y"] = -261.3937905309,
+        ["g"] = 7,
+        ["sublevel"] = 1,
+        ["scale"] = 1.2,
+      },
+      [2] = {
         ["x"] = 530.12488539094,
         ["y"] = -205.76730750067,
         ["g"] = 11,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [2] = {
+      [3] = {
         ["x"] = 538.33366851804,
         ["y"] = -217.66207900578,
         ["g"] = 11,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [3] = {
+      [4] = {
         ["x"] = 564.94765648399,
         ["y"] = -207.14318147729,
         ["g"] = 12,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [4] = {
+      [5] = {
         ["x"] = 549.84899994977,
         ["y"] = -150.67225342215,
         ["g"] = 14,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [5] = {
+      [6] = {
         ["x"] = 606.35882026319,
         ["y"] = -150.07794164135,
         ["g"] = 17,
         ["sublevel"] = 1,
         ["scale"] = 1.2,
       },
-      [6] = {
+      [7] = {
         ["x"] = 591.34718782614,
         ["y"] = -228.95844142287,
         ["g"] = 15,
@@ -831,7 +754,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [12] = {
+  [8] = {
     ["name"] = "Lady Naz'jar",
     ["id"] = 40586,
     ["count"] = 0,
@@ -872,7 +795,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [13] = {
+  [9] = {
     ["name"] = "Deep Sea Murloc",
     ["id"] = 213607,
     ["count"] = 0,
@@ -950,7 +873,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [14] = {
+  [10] = {
     ["name"] = "Naz'jar Frost Witch",
     ["id"] = 44404,
     ["count"] = 0,
@@ -986,7 +909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [15] = {
+  [11] = {
     ["name"] = "Naz'jar Honor Guard",
     ["id"] = 40633,
     ["count"] = 0,
@@ -1013,7 +936,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [16] = {
+  [12] = {
     ["name"] = "Commander Ulthok",
     ["id"] = 40765,
     ["count"] = 0,
@@ -1052,7 +975,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [17] = {
+  [13] = {
     ["name"] = "Bubbling Ooze",
     ["id"] = 213219,
     ["count"] = 0,
@@ -1091,7 +1014,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [18] = {
+  [14] = {
     ["name"] = "Faceless Watcher",
     ["id"] = 40936,
     ["count"] = 8,
@@ -1184,7 +1107,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [19] = {
+  [15] = {
     ["name"] = "Minion of Ghur'sha",
     ["id"] = 212778,
     ["count"] = 3,
@@ -1338,7 +1261,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [20] = {
+  [16] = {
     ["name"] = "Faceless Seer",
     ["id"] = 212775,
     ["count"] = 5,
@@ -1391,7 +1314,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [21] = {
+  [17] = {
     ["name"] = "Erunak Stonespeaker",
     ["id"] = 40825,
     ["count"] = 0,
@@ -1430,7 +1353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [22] = {
+  [18] = {
     ["name"] = "Mindbender Ghur'sha",
     ["id"] = 40788,
     ["count"] = 0,
@@ -1458,7 +1381,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [23] = {
+  [19] = {
     ["name"] = "Stormflurry Totem",
     ["id"] = 214117,
     ["count"] = 0,
@@ -1477,7 +1400,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [24] = {
+  [20] = {
     ["name"] = "Gilgoblin Aquamage",
     ["id"] = 40943,
     ["count"] = 3,
@@ -1570,7 +1493,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [25] = {
+  [21] = {
     ["name"] = "Gilgoblin Hunter",
     ["id"] = 40935,
     ["count"] = 3,
@@ -1636,7 +1559,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [26] = {
+  [22] = {
     ["name"] = "Unstable Corruption",
     ["id"] = 40923,
     ["count"] = 0,
@@ -1730,7 +1653,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [27] = {
+  [23] = {
     ["name"] = "Tainted Sentry",
     ["id"] = 40925,
     ["count"] = 7,
@@ -1859,7 +1782,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [28] = {
+  [24] = {
     ["name"] = "Ink of Ozumat",
     ["id"] = 213770,
     ["count"] = 0,
@@ -1900,7 +1823,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [29] = {
+  [25] = {
     ["name"] = "Sludge",
     ["id"] = 213942,
     ["count"] = 0,
@@ -1934,7 +1857,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [30] = {
+  [26] = {
     ["name"] = "Splotch",
     ["id"] = 213806,
     ["count"] = 0,
@@ -1962,7 +1885,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [31] = {
+  [27] = {
     ["name"] = "Ozumat",
     ["id"] = 44566,
     ["count"] = 0,
