@@ -21,7 +21,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Throne of Tides"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 400, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 430, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -150,7 +150,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [2] = {
     ["name"] = "Vicious Snap Dragon",
     ["id"] = 212681,
-    ["count"] = 3,
+    ["count"] = 4,
     ["health"] = 592803,
     ["scale"] = 1,
     ["displayId"] = 103357,
@@ -437,7 +437,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [4] = {
     ["name"] = "Naz'jar Sentinel",
     ["id"] = 40577,
-    ["count"] = 0,
+    ["count"] = 10,
     ["health"] = 1580808,
     ["scale"] = 1,
     ["displayId"] = 32568,
@@ -472,7 +472,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [5] = {
     ["name"] = "Naz'jar Ravager",
     ["id"] = 212673,
-    ["count"] = 20,
+    ["count"] = 25,
     ["health"] = 2766414,
     ["scale"] = 1,
     ["displayId"] = 91794,
@@ -646,7 +646,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [9] = {
     ["name"] = "Deep Murloc Drudge",
     ["id"] = 39960,
-    ["count"] = 0,
+    ["count"] = 1,
     ["health"] = 296402,
     ["scale"] = 1,
     ["displayId"] = 32311,
@@ -1480,7 +1480,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [24] = {
     ["name"] = "Gilgoblin Aquamage",
     ["id"] = 40943,
-    ["count"] = 2,
+    ["count"] = 3,
     ["health"] = 592803,
     ["scale"] = 1,
     ["displayId"] = 32121,
@@ -1573,7 +1573,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [25] = {
     ["name"] = "Gilgoblin Hunter",
     ["id"] = 40935,
-    ["count"] = 2,
+    ["count"] = 3,
     ["health"] = 691604,
     ["scale"] = 1,
     ["displayId"] = 31982,
