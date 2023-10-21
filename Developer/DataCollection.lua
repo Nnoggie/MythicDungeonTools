@@ -18,7 +18,6 @@ local dungeonsToTrack = {
 MDT.DataCollection = {}
 local DC = MDT.DataCollection
 function DC:Init()
-  print("MDT: Spell+Characteristics Tracking Init")
   db = MDT:GetDB()
   db.dataCollection = db.dataCollection or {}
   db.dataCollectionCC = db.dataCollectionCC or {}
@@ -293,7 +292,6 @@ end
 
 ---Distribute collected data to party/raid
 function DC:DistributeData()
-  print("MDT: Distributing collected data to group members")
   local distribution = MDT:IsPlayerInGroup()
   if not distribution then return end
   db = MDT:GetDB()
@@ -366,7 +364,6 @@ function MDT:CleanEnemyInfoSpells()
 end
 
 function DC:InitHealthTrack()
-  print("MDT: Health Tracking Init")
   db = MDT:GetDB()
   if not db.healthTrackVersion or db.healthTrackVersion < 2 then
     db.healthTrackVersion = 2
