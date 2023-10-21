@@ -93,8 +93,12 @@ local trackedEvents = {
 }
 local characteristicsSpells = {
   ["Slow"] = {
-    [3409] = true,  --Crippling Poison
-    [45524] = true, --Chains of Ice
+    [3409] = true,   --Crippling Poison
+    [45524] = true,  --Chains of Ice
+    [273977] = true, --Grip of the Dead
+    [317898] = true, --Blinding Sleet (Slow)
+    [370898] = true, --Permeating Chill
+    [6343] = true,   --Thunderclap
   },
   ["Stun"] = {
     [1833] = true,   --Cheap Shot
@@ -102,7 +106,8 @@ local characteristicsSpells = {
     [179057] = true, --Chaos Nova
     [119381] = true, --Leg Sweep
     [30283] = true,  --Shadowfury
-    [108194] = true, --Asphyxiate
+    [221562] = true, --Asphyxiate
+    [132168] = true, --Shockwave
   },
   ["Sap"] = {
     [6770] = true,
@@ -113,13 +118,18 @@ local characteristicsSpells = {
   ["Incapacitate"] = {
     [1776] = true,   --Gouge
     [115078] = true, --Paralysis
+    [3355] = true,   --Freezing Trap
+    [99] = true,     --Incapacitating Roar
   },
   ["Repentance"] = {
     [20066] = true,
   },
   ["Disorient"] = {
-    [2094] = true,  --Blind
-    [31661] = true, --Dragon's breath
+    [2094] = true,   --Blind
+    [31661] = true,  --Dragon's breath
+    [207167] = true, --Blinding Sleet
+    [105421] = true, --Blinding Light
+    [33786] = true,  --Cyclone
   },
   ["Banish"] = {
     [710] = true, --Banish
@@ -128,13 +138,15 @@ local characteristicsSpells = {
     [118699] = true, --Fear
     [8122] = true,   --Psychich Scream
     [5246] = true,   --Intimidating Shout
+    [316593] = true, --Intimidating Shout (Menace)
     [207685] = true, --Sigil of Misery
+    [5484] = true,   --Howl of Terror
   },
   ["Root"] = {
     [122] = true,    --Frost Nova
     [339] = true,    --Entangling Roots
-    [102359] = true, --Mass Root
-    [117526] = true, --Binding Shot
+    [102359] = true, --Mass Entanglement
+    [355689] = true, --Landslide
   },
   ["Polymorph"] = {
     [161354] = true,
@@ -173,18 +185,35 @@ local characteristicsSpells = {
   ["Silence"] = {
     [15487] = true,  --Silence
     [204490] = true, --Sigil of Silence
+    [81261] = true,  --Solar Beam
   },
   ["Taunt"] = {
     [56222] = true,  --Dark Command
     [355] = true,    --Taunt
     [185245] = true, --Torment
     [116189] = true, --Provoke
+    [6795] = true,   --Growl
   },
   ["Control Undead"] = {
     [111673] = true,
   },
   ["Subjugate Demon"] = {
     [1098] = true,
+  },
+  ["Sleep Walk"] = {
+    [360806] = true,
+  },
+  ["Scare Beast"] = {
+    [1513] = true,
+  },
+  ["Hibernate"] = {
+    [2637] = true,
+  },
+  ["Turn Evil"] = {
+    [10326] = true,
+  },
+  ["Mind Soothe"] = {
+    [453] = true,
   },
 }
 local cmsTimeStamp
@@ -238,11 +267,14 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
         if enemy.id == id then
           for characteristic, spells in pairs(characteristicsSpells) do
             if spells[spellId] then
+              -- return early if already present
+              if enemy.characteristics and enemy.characteristics[characteristic] then return end
               db.dataCollectionCC[i] = db.dataCollectionCC[i] or {}
               db.dataCollectionCC[i][id] = db.dataCollectionCC[i][id] or {}
               db.dataCollectionCC[i][id][characteristic] = true
               enemy.characteristics = enemy.characteristics or {}
               enemy.characteristics[characteristic] = true
+              print("MDT: Added "..characteristic.." to "..enemy.name)
             end
           end
           break

@@ -2,6 +2,12 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Sleep Walk"] = "Sleep Walk"
+L["Scare Beast"] = "Scare Beast"
+L["Hibernate"] = "Hibernate"
+L["Turn Evil"] = "Turn Evil"
+L["Mind Soothe"] = "Mind Soothe"
+
 L["Unstable Corruption"] = "Unstable Corruption"
 L["Bubbling Ooze"] = "Bubbling Ooze"
 L["Naz'jar Invader"] = "Naz'jar Invader"

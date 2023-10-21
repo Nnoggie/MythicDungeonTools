@@ -418,6 +418,11 @@ local characteristics = {
   ["Enslave Demon"] = "Interface\\ICONS\\spell_shadow_enslavedemon",
   ["Slow"] = "Interface\\ICONS\\ability_rogue_trip",
   ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
+  ["Sleep Walk"] = "Interface\\ICONS\\ability_xavius_dreamsimulacrum",
+  ["Scare Beast"] = "Interface\\ICONS\\ability_druid_cower",
+  ["Hibernate"] = "Interface\\ICONS\\spell_nature_sleep",
+  ["Turn Evil"] = "Interface\\ICONS\\ability_paladin_turnevil",
+  ["Mind Soothe"] = "Interface\\ICONS\\spell_holy_mindsooth",
 }
 local spellBlacklist = {
   [277564] = true, --Regenerative Blood
