@@ -274,7 +274,6 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
               db.dataCollectionCC[i][id][characteristic] = true
               enemy.characteristics = enemy.characteristics or {}
               enemy.characteristics[characteristic] = true
-              print("MDT: Added "..characteristic.." to "..enemy.name)
             end
           end
           break
