@@ -21,7 +21,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["dotiUpperSublevel1"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 320, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 335, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -753,7 +753,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [13] = {
     ["name"] = "Infinite Riftmage",
     ["id"] = 208698,
-    ["count"] = 6,
+    ["count"] = 5,
     ["health"] = 1284407,
     ["scale"] = 1,
     ["displayId"] = 110868,
