@@ -341,6 +341,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Control"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
@@ -478,6 +479,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["reaping"] = 148893,
     ["characteristics"] = {
       ["Root"] = true,
+      ["Disorient"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [260666] = {

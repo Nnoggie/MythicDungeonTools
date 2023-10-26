@@ -35,6 +35,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65812,
     ["creatureType"] = "Undead",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Control Undead"] = true,
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 45.782804798449,
@@ -239,7 +242,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ghostly Councilor",
     ["id"] = 98370,
     ["count"] = 4,
-    ["health"] = 988005,
+    ["health"] = 889205,
     ["scale"] = 1,
     ["displayId"] = 65787,
     ["creatureType"] = "Undead",
@@ -307,7 +310,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lady Velandras Ravencrest",
     ["id"] = 98538,
     ["count"] = 10,
-    ["health"] = 1565000,
+    ["health"] = 2371212,
     ["scale"] = 1,
     ["displayId"] = 65833,
     ["creatureType"] = "Undead",
@@ -354,7 +357,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Amalgam of Souls",
     ["id"] = 98542,
     ["count"] = 0,
-    ["health"] = 6904734,
+    ["health"] = 6911641,
     ["scale"] = 1,
     ["displayId"] = 65837,
     ["creatureType"] = "Undead",
@@ -715,6 +718,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [193633] = {
@@ -797,6 +801,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Root"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [200248] = {
@@ -831,6 +836,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Root"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [200256] = {
@@ -863,6 +869,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 70,
     ["characteristics"] = {
+      ["Control Undead"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
     },
@@ -870,6 +877,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [225962] = {
       },
       [225963] = {
+      },
+      [391889] = {
       },
     },
     ["clones"] = {
@@ -891,6 +900,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 65954,
     ["creatureType"] = "Undead",
     ["level"] = 71,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [200261] = {
       },
@@ -909,7 +921,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Illysanna Ravencrest",
     ["id"] = 98696,
     ["count"] = 0,
-    ["health"] = 6115622,
+    ["health"] = 6516690,
     ["scale"] = 1,
     ["displayId"] = 65951,
     ["creatureType"] = "Demon",
@@ -961,6 +973,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
     },
@@ -1072,6 +1086,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [200784] = {
@@ -1229,6 +1244,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [204896] = {
@@ -1262,6 +1278,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [203163] = {
@@ -1304,7 +1321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Smashspite the Hateful",
     ["id"] = 98949,
     ["count"] = 0,
-    ["health"] = 6904734,
+    ["health"] = 6911641,
     ["scale"] = 1,
     ["displayId"] = 65304,
     ["creatureType"] = "Demon",
@@ -1314,6 +1331,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 740,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [198073] = {
@@ -1347,8 +1365,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 70,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Control Undead"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [214001] = {
@@ -1407,6 +1429,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [214003] = {
@@ -1468,7 +1492,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kur'talos Ravencrest",
     ["id"] = 98965,
     ["count"] = 0,
-    ["health"] = 2367337,
+    ["health"] = 2369705,
     ["scale"] = 1,
     ["displayId"] = 66853,
     ["creatureType"] = "Undead",
@@ -1478,6 +1502,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [198635] = {
@@ -1499,7 +1524,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dantalionax",
     ["id"] = 98970,
     ["count"] = 0,
-    ["health"] = 17755031,
+    ["health"] = 17772791,
     ["scale"] = 1,
     ["displayId"] = 66281,
     ["creatureType"] = "Humanoid",
@@ -1509,6 +1534,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [198820] = {
@@ -1545,6 +1571,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 32542,
     ["creatureType"] = "Uncategorized",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Slow"] = true,
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 760.40713568123,

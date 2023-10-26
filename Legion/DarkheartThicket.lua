@@ -145,9 +145,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 110,
     ["characteristics"] = {
+      ["Stun"] = true,
     },
     ["spells"] = {
       [200684] = {
+      },
+      [200686] = {
       },
     },
     ["clones"] = {
@@ -295,9 +298,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 110,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [200630] = {
+      },
+      [200631] = {
       },
     },
     ["clones"] = {
@@ -434,6 +440,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Silence"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [200642] = {
@@ -616,6 +623,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Control"] = true,
+      ["Root"] = true,
+      ["Sap"] = true,
     },
     ["spells"] = {
       [198723] = {
@@ -772,6 +781,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 110,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [201123] = {
@@ -940,6 +950,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110,
     ["characteristics"] = {
       ["Silence"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [204243] = {
@@ -1314,6 +1325,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 110,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [201837] = {
@@ -1399,6 +1412,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 110,
     ["characteristics"] = {
+      ["Stun"] = true,
     },
     ["spells"] = {
       [201517] = {
@@ -1457,6 +1471,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 110,
     ["characteristics"] = {
       ["Silence"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [201399] = {
@@ -1521,6 +1537,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [201885] = {
       },
+      [201902] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1560,6 +1578,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 110,
     ["characteristics"] = {
+      ["Slow"] = true,
     },
     ["spells"] = {
       [201361] = {
@@ -1649,6 +1668,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [198379] = {
       },
+      [198386] = {
+      },
       [198408] = {
       },
       [212464] = {
@@ -1667,7 +1688,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Oakheart",
     ["id"] = 103344,
     ["count"] = 0,
-    ["health"] = 5312729,
+    ["health"] = 6906548,
     ["scale"] = 1,
     ["displayId"] = 68127,
     ["creatureType"] = "Elemental",
@@ -1689,6 +1710,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [204666] = {
       },
       [204667] = {
+      },
+      [212786] = {
       },
     },
     ["clones"] = {
@@ -1726,6 +1749,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [200238] = {
       },
       [200289] = {
+      },
+      [200329] = {
       },
       [200359] = {
       },
@@ -1767,6 +1792,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [199460] = {
       },
       [218587] = {
+      },
+      [220855] = {
       },
     },
     ["clones"] = {

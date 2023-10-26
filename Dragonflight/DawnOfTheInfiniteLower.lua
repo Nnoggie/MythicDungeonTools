@@ -38,6 +38,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [412012] = {
@@ -144,6 +145,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [411994] = {
@@ -219,6 +221,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [412063] = {
@@ -292,6 +295,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [401420] = {
@@ -331,18 +335,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Timestream Anomaly",
     ["id"] = 199749,
     ["count"] = 12,
-    ["health"] = 1264646,
+    ["health"] = 1263833,
     ["scale"] = 1,
     ["displayId"] = 93213,
     ["creatureType"] = "Aberration",
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [413529] = {
       },
       [413532] = {
+      },
+      [413536] = {
       },
       [413544] = {
       },
@@ -374,14 +381,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Temporal Fusion",
     ["id"] = 206068,
     ["count"] = 2,
-    ["health"] = 622443,
+    ["health"] = 622043,
     ["scale"] = 1,
     ["displayId"] = 41677,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [413487] = {
@@ -428,7 +437,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Temporal Deviation",
     ["id"] = 206063,
     ["count"] = 0,
-    ["health"] = 217361,
+    ["health"] = 217221,
     ["scale"] = 1,
     ["displayId"] = 88582,
     ["creatureType"] = "Aberration",
@@ -437,6 +446,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [413473] = {
@@ -490,6 +500,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [415435] = {
@@ -545,12 +556,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 70,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [415437] = {
+      },
+      [415438] = {
+      },
+      [415439] = {
       },
     },
     ["clones"] = {
@@ -644,6 +661,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [413219] = {
@@ -686,6 +704,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [403910] = {
@@ -712,6 +731,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [413332] = {
       },
+      [414032] = {
+      },
       [415359] = {
       },
     },
@@ -736,8 +757,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
+      [413618] = {
+      },
       [413621] = {
       },
       [413622] = {
@@ -768,6 +792,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [412695] = {
@@ -1053,6 +1078,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [406886] = {
@@ -1096,6 +1122,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [406886] = {
@@ -1113,6 +1140,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [407714] = {
       },
       [407978] = {
+      },
+      [408008] = {
       },
       [415114] = {
       },
@@ -1143,6 +1172,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [408141] = {
@@ -1176,6 +1206,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [5760] = {
@@ -1187,6 +1218,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [407057] = {
       },
       [407147] = {
+      },
+      [407159] = {
       },
       [407406] = {
       },
@@ -1221,6 +1254,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [411958] = {
@@ -1282,6 +1316,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [409261] = {
@@ -1289,6 +1324,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [409266] = {
       },
       [409268] = {
+      },
+      [409287] = {
       },
       [409456] = {
       },
@@ -1371,6 +1408,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 73034,
     ["creatureType"] = "Elemental",
     ["level"] = 70,
+    ["characteristics"] = {
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [416256] = {
       },
