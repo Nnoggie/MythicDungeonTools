@@ -425,6 +425,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["reaping"] = 148894,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [254958] = {
@@ -481,6 +482,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Root"] = true,
       ["Disorient"] = true,
       ["Slow"] = true,
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [260666] = {
@@ -584,6 +586,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
       ["Slow"] = true,
       ["Mind Soothe"] = true,
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [252661] = {
@@ -1563,6 +1566,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["reaping"] = 148894,
     ["characteristics"] = {
       ["Mind Soothe"] = true,
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [256846] = {
@@ -1598,6 +1602,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["reaping"] = 148894,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [255567] = {
