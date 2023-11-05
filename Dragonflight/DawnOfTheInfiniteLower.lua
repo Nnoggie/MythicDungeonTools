@@ -247,6 +247,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [412063] = {
@@ -320,6 +321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [401420] = {
@@ -814,6 +816,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [413618] = {
@@ -1385,6 +1388,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [409261] = {
@@ -1443,6 +1447,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 112234,
     ["creatureType"] = "Dragonkin",
     ["level"] = 72,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Mind Soothe"] = true,
+    },
     ["spells"] = {
       [414178] = {
       },
