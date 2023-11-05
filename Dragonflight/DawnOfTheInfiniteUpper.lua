@@ -315,7 +315,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [412136] = {
@@ -349,7 +348,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical",
     ["level"] = 71,
     ["characteristics"] = {
-      ["Slow"] = true,
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [412128] = {
@@ -384,7 +383,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [412215] = {
@@ -470,6 +468,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 2962109,
     ["scale"] = 1,
     ["displayId"] = 113584,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["creatureType"] = "Dragonkin",
     ["level"] = 71,
     ["spells"] = {
@@ -545,6 +546,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 2172213,
     ["scale"] = 1,
     ["displayId"] = 113583,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["creatureType"] = "Dragonkin",
     ["level"] = 71,
     ["spells"] = {
@@ -919,7 +923,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [413529] = {
@@ -1134,6 +1137,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 197474,
     ["scale"] = 1,
     ["displayId"] = 1762,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
     ["spells"] = {
@@ -1170,6 +1178,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Root"] = true,
+      ["Taunt"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1198,6 +1207,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Root"] = true,
+      ["Taunt"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1260,6 +1270,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 197601,
     ["scale"] = 1,
     ["displayId"] = 91293,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+    },
     ["creatureType"] = "Mechanical",
     ["level"] = 70,
     ["clones"] = {
@@ -1291,6 +1305,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1,
     ["displayId"] = 91402,
     ["creatureType"] = "Mechanical",
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+    },
     ["level"] = 70,
     ["clones"] = {
       [1] = {
@@ -1309,6 +1327,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1,
     ["displayId"] = 90548,
     ["creatureType"] = "Mechanical",
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+    },
     ["level"] = 70,
     ["clones"] = {
       [1] = {
@@ -1428,6 +1450,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Taunt"] = true,
     },
     ["spells"] = {
     },
@@ -1447,6 +1470,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 1579791,
     ["scale"] = 1,
     ["displayId"] = 113859,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
     ["spells"] = {
@@ -1564,6 +1590,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 15,
     ["health"] = 2962109,
     ["scale"] = 1,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["displayId"] = 113771,
     ["creatureType"] = "Dragonkin",
     ["level"] = 71,
@@ -1803,6 +1832,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 206070,
     ["count"] = 6,
     ["health"] = 1263833,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["scale"] = 1,
     ["displayId"] = 90738,
     ["creatureType"] = "Aberration",
@@ -1834,6 +1866,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 987370,
     ["scale"] = 1,
     ["displayId"] = 113860,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
     ["spells"] = {
