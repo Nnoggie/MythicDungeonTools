@@ -559,8 +559,7 @@ function DC:InitHealthTrack()
   end
 
   function MDT:CompleteCharacteristics()
-    local dungeons = { 100 } --S3 dungeons
-    -- local dungeons = { 100, 101, 102, 103, 15, 104, 4, 105 } --S3 dungeons
+    local dungeonIdx = MDT:GetDB().currentDungeonIdx
 
     local function handleEnemy(enemy)
       if enemy.characteristics then
@@ -582,11 +581,9 @@ function DC:InitHealthTrack()
       end
     end
 
-    for _, dungeonIdx in pairs(dungeons) do
-      local enemies = MDT.dungeonEnemies[dungeonIdx]
-      for enemyIdx, enemy in pairs(enemies) do
-        handleEnemy(enemy)
-      end
+    local enemies = MDT.dungeonEnemies[dungeonIdx]
+    for enemyIdx, enemy in pairs(enemies) do
+      handleEnemy(enemy)
     end
   end
 end
