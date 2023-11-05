@@ -563,7 +563,7 @@ function DC:InitHealthTrack()
 
     local function handleEnemy(enemy)
       enemy.characteristics = enemy.characteristics or {}
-      enemy.characteristicsp["Taunt"] = true
+      enemy.characteristics["Taunt"] = true
       for characteristic, _ in pairs(enemy.characteristics) do
         if characteristic ~= "Taunt" then
           -- add all apropriate characteristics
