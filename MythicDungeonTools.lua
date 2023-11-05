@@ -299,7 +299,13 @@ function MDT:IsOnBetaServer()
   return realms[realm]
 end
 
-function MDT:GetNumDungeons() return #MDT.dungeonList - 1 end
+function MDT:GetNumDungeons()
+  local count = 0
+  for _, _ in pairs(MDT.dungeonList) do
+    count = count + 1
+  end
+  return count
+end
 
 function MDT:GetDungeonName(idx) return MDT.dungeonList[idx] end
 

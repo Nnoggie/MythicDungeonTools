@@ -35,7 +35,7 @@ do
       end
     end
 
-    for i = 1, self:GetNumDungeons() do
+    for i, _ in pairs(MDT.dungeonList) do
       if dungeonCountCache[i] and dungeonCountCache[i][npcId] then
         local cached = dungeonCountCache[i][npcId]
         return cached.count, cached.maxCountNormal, cached.maxCountTeeming, cached.teemingCount
