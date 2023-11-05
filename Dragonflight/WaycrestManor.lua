@@ -1159,6 +1159,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Stun"] = true,
       ["Taunt"] = true,
     },
     ["spells"] = {
