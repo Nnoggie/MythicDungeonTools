@@ -1278,7 +1278,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [203163] = {
@@ -1331,7 +1330,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 740,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [198073] = {
@@ -1502,7 +1500,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [198635] = {
@@ -1534,7 +1531,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [198820] = {
@@ -1572,7 +1568,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Uncategorized",
     ["level"] = 70,
     ["characteristics"] = {
-      ["Slow"] = true,
+      ["Taunt"] = true,
     },
     ["clones"] = {
       [1] = {
