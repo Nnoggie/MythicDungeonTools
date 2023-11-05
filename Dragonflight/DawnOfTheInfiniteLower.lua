@@ -223,7 +223,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [412063] = {
@@ -297,7 +296,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [401420] = {
@@ -344,7 +342,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [413529] = {
@@ -502,7 +499,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["characteristics"] = {
       ["Stun"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [415435] = {
@@ -663,7 +659,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [413219] = {
@@ -706,7 +701,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [403910] = {
@@ -759,7 +753,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 71,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [413618] = {
@@ -1080,7 +1073,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [406886] = {
@@ -1124,7 +1116,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [406886] = {
@@ -1176,7 +1167,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [408141] = {
@@ -1210,7 +1200,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [5760] = {
@@ -1320,7 +1309,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1209,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [409261] = {
