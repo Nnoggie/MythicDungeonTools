@@ -564,8 +564,11 @@ function DC:InitHealthTrack()
     local function handleEnemy(enemy)
       enemy.characteristics = enemy.characteristics or {}
       enemy.characteristics["Taunt"] = true
+      if enemy.creatureType == "Humanoid" or enemy.creatureType == "Dragonkin" then
+        enemy.characteristics["Mind Soothe"] = true
+      end
       for characteristic, _ in pairs(enemy.characteristics) do
-        if characteristic ~= "Taunt" then
+        if characteristic ~= "Taunt" and characteristic ~= "Mind Soothe" then
           -- add all apropriate characteristics
           for ch, chdata in pairs(characteristicsData) do
             if chdata["creatureTypes"] then
