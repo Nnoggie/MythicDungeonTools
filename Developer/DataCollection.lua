@@ -90,129 +90,243 @@ local trackedEvents = {
   ["SPELL_AURA_REMOVED"] = true,
   ["SPELL_AURA_APPLIED"] = true,
 }
-local characteristicsSpells = {
+
+local characteristicsData = {
   ["Slow"] = {
-    [3409] = true,   --Crippling Poison
-    [45524] = true,  --Chains of Ice
-    [273977] = true, --Grip of the Dead
-    [317898] = true, --Blinding Sleet (Slow)
-    [370898] = true, --Permeating Chill
-    [6343] = true,   --Thunderclap
+    ["spells"] = {
+      [3409] = true,   --Crippling Poison
+      [45524] = true,  --Chains of Ice
+      [273977] = true, --Grip of the Dead
+      [317898] = true, --Blinding Sleet (Slow)
+      [370898] = true, --Permeating Chill
+      [6343] = true,   --Thunderclap
+    }
   },
   ["Stun"] = {
-    [1833] = true,   --Cheap Shot
-    [408] = true,    --Kidney Shot
-    [179057] = true, --Chaos Nova
-    [119381] = true, --Leg Sweep
-    [30283] = true,  --Shadowfury
-    [221562] = true, --Asphyxiate
-    [132168] = true, --Shockwave
+    ["spells"] = {
+      [1833] = true,   --Cheap Shot
+      [408] = true,    --Kidney Shot
+      [179057] = true, --Chaos Nova
+      [119381] = true, --Leg Sweep
+      [30283] = true,  --Shadowfury
+      [221562] = true, --Asphyxiate
+      [132168] = true, --Shockwave
+    }
   },
   ["Sap"] = {
-    [6770] = true,
+    ["creatureTypes"] = {
+      ["Humanoid"] = true,
+      ["Beast"] = true,
+      ["Demon"] = true,
+      ["Dragonkin"] = true,
+    },
+    ["spells"] = {
+      [6770] = true,
+    }
   },
   ["Imprison"] = {
-    [217832] = true,
+    ["creatureTypes"] = {
+      ["Humanoid"] = true,
+      ["Beast"] = true,
+      ["Demon"] = true,
+    },
+    ["spells"] = {
+      [217832] = true,
+    }
   },
   ["Incapacitate"] = {
-    [1776] = true,   --Gouge
-    [115078] = true, --Paralysis
-    [3355] = true,   --Freezing Trap
-    [99] = true,     --Incapacitating Roar
+    ["spells"] = {
+      [1776] = true,   --Gouge
+      [115078] = true, --Paralysis
+      [3355] = true,   --Freezing Trap
+      [99] = true,     --Incapacitating Roar
+    }
   },
   ["Repentance"] = {
-    [20066] = true,
+    ["creatureTypes"] = {
+      ["Humanoid"] = true,
+      ["Demon"] = true,
+      ["Undead"] = true,
+      ["Dragonkin"] = true,
+      ["Giant"] = true,
+    },
+    ["spells"] = {
+      [20066] = true,
+    }
   },
   ["Disorient"] = {
-    [2094] = true,   --Blind
-    [31661] = true,  --Dragon's breath
-    [207167] = true, --Blinding Sleet
-    [105421] = true, --Blinding Light
-    [33786] = true,  --Cyclone
+    ["spells"] = {
+      [2094] = true,   --Blind
+      [31661] = true,  --Dragon's breath
+      [207167] = true, --Blinding Sleet
+      [105421] = true, --Blinding Light
+      [33786] = true,  --Cyclone
+    }
   },
   ["Banish"] = {
-    [710] = true, --Banish
+    ["creatureTypes"] = {
+      ["Demon"] = true,
+      ["Aberration"] = true,
+      ["Elemental"] = true,
+      ["Undead"] = true, -- with talent
+    },
+    ["spells"] = {
+      [710] = true, --Banish
+    }
   },
   ["Fear"] = {
-    [118699] = true, --Fear
-    [8122] = true,   --Psychich Scream
-    [5246] = true,   --Intimidating Shout
-    [316593] = true, --Intimidating Shout (Menace)
-    [207685] = true, --Sigil of Misery
-    [5484] = true,   --Howl of Terror
+    ["spells"] = {
+      [118699] = true, --Fear
+      [8122] = true,   --Psychich Scream
+      [5246] = true,   --Intimidating Shout
+      [316593] = true, --Intimidating Shout (Menace)
+      [207685] = true, --Sigil of Misery
+      [5484] = true,   --Howl of Terror
+    }
   },
   ["Root"] = {
-    [122] = true,    --Frost Nova
-    [339] = true,    --Entangling Roots
-    [102359] = true, --Mass Entanglement
-    [355689] = true, --Landslide
+    ["spells"] = {
+      [122] = true,    --Frost Nova
+      [339] = true,    --Entangling Roots
+      [102359] = true, --Mass Entanglement
+      [355689] = true, --Landslide
+    }
   },
   ["Polymorph"] = {
-    [161354] = true,
-    [126819] = true,
-    [61780] = true,
-    [118] = true,
-    [277787] = true,
-    [277792] = true,
-    [161355] = true,
-    [161372] = true,
-    [61721] = true,
-    [61305] = true,
-    [28271] = true,
-    [28272] = true,
-    [33786] = true,
-    [20066] = true,
-    [5782] = true,
-    [51514] = true,
-    [277778] = true,
-    [277784] = true,
-    [269352] = true,
-    [211004] = true,
-    [211010] = true,
-    [211015] = true,
-    [210873] = true,
+    ["creatureTypes"] = {
+      ["Beast"] = true,
+      ["Humanoid"] = true,
+      ["Critter"] = true,
+    },
+    ["spells"] = {
+      [161354] = true,
+      [126819] = true,
+      [61780] = true,
+      [118] = true,
+      [277787] = true,
+      [277792] = true,
+      [161355] = true,
+      [161372] = true,
+      [61721] = true,
+      [61305] = true,
+      [28271] = true,
+      [28272] = true,
+      [33786] = true,
+      [20066] = true,
+      [5782] = true,
+      [51514] = true,
+      [277778] = true,
+      [277784] = true,
+      [269352] = true,
+      [211004] = true,
+      [211010] = true,
+      [211015] = true,
+      [210873] = true,
+      [383121] = true,
+    }
   },
   ["Shackle Undead"] = {
-    [9484] = true,
+    ["creatureTypes"] = {
+      ["Undead"] = true,
+    },
+    ["spells"] = {
+      [9484] = true,
+    }
   },
   ["Mind Control"] = {
-    [605] = true,
-    [205364] = true,
+    ["creatureTypes"] = {
+      ["Abberation"] = true,
+      ["Beast"] = true,
+      ["Critter"] = true,
+      ["Dragonkin"] = true,
+      ["Elemental"] = true,
+      ["Giant"] = true,
+      ["Humanoid"] = true,
+    },
+    ["spells"] = {
+      [605] = true,
+      [205364] = true,
+    }
   },
-  ["Grip"] = {},
-  ["Knock"] = {},
+  ["Grip"] = {
+    ["displacement"] = true,
+  },
+  ["Knock"] = {
+    ["displacement"] = true,
+  },
   ["Silence"] = {
-    [15487] = true,  --Silence
-    [204490] = true, --Sigil of Silence
-    [81261] = true,  --Solar Beam
+    ["spells"] = {
+      [15487] = true,  --Silence
+      [204490] = true, --Sigil of Silence
+      [81261] = true,  --Solar Beam
+    }
   },
   ["Taunt"] = {
-    [56222] = true,  --Dark Command
-    [355] = true,    --Taunt
-    [185245] = true, --Torment
-    [116189] = true, --Provoke
-    [6795] = true,   --Growl
+    ["global"] = true,
+    ["spells"] = {
+      [56222] = true,  --Dark Command
+      [355] = true,    --Taunt
+      [185245] = true, --Torment
+      [116189] = true, --Provoke
+      [6795] = true,   --Growl
+    }
   },
   ["Control Undead"] = {
-    [111673] = true,
+    ["creatureTypes"] = {
+      ["Undead"] = true,
+    },
+    ["spells"] = {
+      [111673] = true,
+    }
   },
   ["Subjugate Demon"] = {
-    [1098] = true,
+    ["creatureTypes"] = {
+      ["Demon"] = true,
+    },
+    ["spells"] = {
+      [1098] = true,
+    }
   },
   ["Sleep Walk"] = {
-    [360806] = true,
+    ["spells"] = {
+      [360806] = true,
+    }
   },
   ["Scare Beast"] = {
-    [1513] = true,
+    ["creatureTypes"] = {
+      ["Beast"] = true,
+    },
+    ["spells"] = {
+      [1513] = true,
+    }
   },
   ["Hibernate"] = {
-    [2637] = true,
+    ["creatureTypes"] = {
+      ["Beast"] = true,
+      ["Dragonkin"] = true,
+    },
+    ["spells"] = {
+      [2637] = true,
+    }
   },
   ["Turn Evil"] = {
-    [10326] = true,
+    ["creatureTypes"] = {
+      ["Undead"] = true,
+      ["Abberation"] = true,
+      ["Demon"] = true,
+    },
+    ["spells"] = {
+      [10326] = true,
+    }
   },
   ["Mind Soothe"] = {
-    [453] = true,
+    ["creatureTypes"] = {
+      ["Humanoid"] = true,
+      ["Dragonkin"] = true,
+    },
+    ["spells"] = {
+      [453] = true,
+    }
   },
 }
 local cmsTimeStamp
@@ -264,13 +378,14 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
       --enemy
       for enemyIdx, enemy in pairs(enemies) do
         if enemy.id == id then
-          for characteristic, spells in pairs(characteristicsSpells) do
-            if spells[spellId] then
+          for characteristic, data in pairs(characteristicsData) do
+            local spells = data.spells
+            if spells and spells[spellId] then
               -- return early if already present
-              if enemy.characteristics and enemy.characteristics[characteristic] then return end
               db.dataCollectionCC[i] = db.dataCollectionCC[i] or {}
               db.dataCollectionCC[i][id] = db.dataCollectionCC[i][id] or {}
               db.dataCollectionCC[i][id][characteristic] = true
+              if enemy.characteristics and enemy.characteristics[characteristic] then return end
               enemy.characteristics = enemy.characteristics or {}
               enemy.characteristics[characteristic] = true
             end
@@ -440,6 +555,38 @@ function DC:InitHealthTrack()
         end
       end
       print("MDT HPTRACK: Processed "..numEnemyHealthChanged.." enemies")
+    end
+  end
+
+  function MDT:CompleteCharacteristics()
+    local dungeons = { 100 } --S3 dungeons
+    -- local dungeons = { 100, 101, 102, 103, 15, 104, 4, 105 } --S3 dungeons
+
+    local function handleEnemy(enemy)
+      if enemy.characteristics then
+        for characteristic, _ in pairs(enemy.characteristics) do
+          if characteristic ~= "Taunt" then
+            -- add all apropriate characteristics
+            for ch, chdata in pairs(characteristicsData) do
+              if chdata["creatureTypes"] then
+                if chdata["creatureTypes"][enemy.creatureType] then
+                  enemy.characteristics[ch] = true
+                end
+              else
+                enemy.characteristics[ch] = true
+              end
+            end
+            return
+          end
+        end
+      end
+    end
+
+    for _, dungeonIdx in pairs(dungeons) do
+      local enemies = MDT.dungeonEnemies[dungeonIdx]
+      for enemyIdx, enemy in pairs(enemies) do
+        handleEnemy(enemy)
+      end
     end
   end
 end
