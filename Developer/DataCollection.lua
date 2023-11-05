@@ -562,21 +562,21 @@ function DC:InitHealthTrack()
     local dungeonIdx = MDT:GetDB().currentDungeonIdx
 
     local function handleEnemy(enemy)
-      if enemy.characteristics then
-        for characteristic, _ in pairs(enemy.characteristics) do
-          if characteristic ~= "Taunt" then
-            -- add all apropriate characteristics
-            for ch, chdata in pairs(characteristicsData) do
-              if chdata["creatureTypes"] then
-                if chdata["creatureTypes"][enemy.creatureType] then
-                  enemy.characteristics[ch] = true
-                end
-              else
+      enemy.characteristics = enemy.characteristics or {}
+      enemy.characteristicsp["Taunt"] = true
+      for characteristic, _ in pairs(enemy.characteristics) do
+        if characteristic ~= "Taunt" then
+          -- add all apropriate characteristics
+          for ch, chdata in pairs(characteristicsData) do
+            if chdata["creatureTypes"] then
+              if chdata["creatureTypes"][enemy.creatureType] then
                 enemy.characteristics[ch] = true
               end
+            else
+              enemy.characteristics[ch] = true
             end
-            return
           end
+          return
         end
       end
     end
