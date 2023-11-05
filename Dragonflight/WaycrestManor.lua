@@ -37,6 +37,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
@@ -157,6 +158,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
       ["Fear"] = true,
     },
@@ -213,6 +215,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
     },
     ["spells"] = {
@@ -264,6 +267,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
       ["Fear"] = true,
     },
@@ -309,6 +313,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
@@ -792,6 +797,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -871,6 +877,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["reaping"] = 148716,
     ["characteristics"] = {
       ["Root"] = true,
+      ["Taunt"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
     },
@@ -1052,6 +1059,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [265391] = {
@@ -1151,6 +1159,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [264390] = {
@@ -1272,6 +1281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
@@ -1410,6 +1420,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
@@ -1461,6 +1472,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
     },
     ["spells"] = {
@@ -1699,6 +1711,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148894,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
     },
@@ -1856,6 +1869,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
       [264027] = {
@@ -1910,6 +1924,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
     },
     ["spells"] = {
     },
@@ -2037,6 +2052,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["reaping"] = 148716,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [264140] = {
@@ -2330,6 +2346,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
     },
@@ -2383,6 +2400,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [256921] = {
@@ -2559,6 +2578,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148893,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Fear"] = true,
     },
     ["spells"] = {
@@ -2729,6 +2749,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 70,
     ["reaping"] = 148716,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
     },
     ["spells"] = {
