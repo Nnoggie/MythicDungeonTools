@@ -1847,7 +1847,7 @@ function MDT:IsCurrentPresetFortified()
 end
 
 function MDT:IsCurrentPresetTyrannical()
-  return not MDT:IsCurrentPresetFortified()
+  return affixWeeks[self:GetCurrentPreset().week][3] == 9
 end
 
 function MDT:IsCurrentPresetThundering()
@@ -2117,6 +2117,9 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
   local fortified = MDT:IsCurrentPresetFortified()
   local tyrannical = MDT:IsCurrentPresetTyrannical()
   local thundering = MDT:IsCurrentPresetThundering()
+  vdt(fortified)
+  vdt(tyrannical)
+  vdt(thundering)
   local mult = 1
   if boss == false and fortified == true and (not ignoreFortified) then mult = 1.2 end
   if boss == true and tyrannical == true then mult = 1.3 end
