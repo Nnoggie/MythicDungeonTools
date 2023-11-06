@@ -499,14 +499,17 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.poiAssignment then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local sublevel, poiIdx, value = unpack(MDT:StringToTable(message, false))
-      preset.value.poiAssignments = preset.value.poiAssignments or {}
-      preset.value.poiAssignments[sublevel] = preset.value.poiAssignments[sublevel] or {}
-      preset.value.poiAssignments[sublevel][poiIdx] = value
-      MDT:UpdateMap()
-      if sender ~= UnitFullName("player") and MDT:GetCurrentSubLevel() == sublevel then
-        local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
-        if poiFrame then UIFrameFlash(poiFrame, 0.5, 1, 1, true, 1, 0); end
+      local deserialized = MDT:StringToTable(message, false)
+      if deserialized and type(deserialized) == "table" then
+        local sublevel, poiIdx, value = unpack(deserialized)
+        preset.value.poiAssignments = preset.value.poiAssignments or {}
+        preset.value.poiAssignments[sublevel] = preset.value.poiAssignments[sublevel] or {}
+        preset.value.poiAssignments[sublevel][poiIdx] = value
+        MDT:UpdateMap()
+        if sender ~= UnitFullName("player") and MDT:GetCurrentSubLevel() == sublevel then
+          local poiFrame = MDT:POI_GetFrameForPOI(poiIdx)
+          if poiFrame then UIFrameFlash(poiFrame, 0.5, 1, 1, true, 1, 0); end
+        end
       end
     end
   end
@@ -579,10 +582,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
       local changedObjects = MDT:StringToTable(message, false)
-      for objIdx, obj in pairs(changedObjects) do
-        preset.objects[objIdx] = obj
+      if changedObjects and type(changedObjects) == "table" then
+        for objIdx, obj in pairs(changedObjects) do
+          preset.objects[objIdx] = obj
+        end
+        if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
       end
-      if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
     end
   end
 
@@ -650,7 +655,7 @@ end
 function MDT:MakeSendingStatusBar(f)
   f.SendingStatusBar = CreateFrame("StatusBar", nil, f)
   local statusbar = f.SendingStatusBar
-  -- statusbar:SetMinMaxValues(0, 1)
+  statusbar:SetMinMaxValues(0, 1)
   statusbar:SetPoint("LEFT", f.bottomPanel, "LEFT", 5, 0)
   statusbar:SetWidth(200)
   statusbar:SetHeight(20)
@@ -661,12 +666,12 @@ function MDT:MakeSendingStatusBar(f)
 
   statusbar.bg = statusbar:CreateTexture(nil, "BACKGROUND", nil, 0)
   statusbar.bg:SetTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
-  statusbar.bg:SetAllPoints(true)
+  statusbar.bg:SetAllPoints()
   statusbar.bg:SetVertexColor(0.26, 0.42, 1)
 
   statusbar.value = statusbar:CreateFontString(nil, "OVERLAY")
   statusbar.value:SetPoint("CENTER", statusbar, "CENTER", 0, 0)
-  statusbar.value:SetFontObject("GameFontNormalSmall")
+  statusbar.value:SetFontObject(GameFontNormalSmall)
   statusbar.value:SetJustifyH("CENTER")
   statusbar.value:SetJustifyV("CENTER")
   statusbar.value:SetShadowOffset(1, -1)
@@ -716,6 +721,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       --without respect for case (due to us sending it here, without respect for case). The fix is to subsequently call
       --GetUnitName(name) on the name, in order to get the correct case.
 
+      ---@diagnostic disable-next-line: param-type-mismatch
       name = UnitFullName(name)
 
       local fullName = name.."+"..realm
@@ -762,6 +768,12 @@ end
 function MDT:SetThrottleValues()
   if not _G.ChatThrottleLib then return end
   --4000/16000 is fine but we go safe with 2000/10000
-  _G.ChatThrottleLib.MAX_CPS = 2000
-  _G.ChatThrottleLib.BURST = 10000
+  --PTR/Beta   needs lower values
+  if MDT:IsOnBetaServer() then
+    _G.ChatThrottleLib.MAX_CPS = 300
+    _G.ChatThrottleLib.BURST = 2000
+  else
+    _G.ChatThrottleLib.MAX_CPS = 2000
+    _G.ChatThrottleLib.BURST = 10000
+  end
 end

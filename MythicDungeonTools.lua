@@ -134,12 +134,12 @@ end
 local defaultSavedVars = {
   global = {
     toolbarExpanded = true,
-    currentSeason = 10,
+    currentSeason = 11, -- not really used for anything anymore
     scale = 1,
     nonFullscreenScale = 1.3,
     enemyForcesFormat = 2,
     enemyStyle = 1,
-    currentDungeonIdx = 49,
+    currentDungeonIdx = 100,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -164,12 +164,12 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 6,
+    selectedDungeonList = 7,
     knownAffixWeeks = {},
   },
 }
 do
-  for i = 1, 120 do
+  for i = 1, 200 do
     defaultSavedVars.global.presets[i] = {
       [1] = { text = L["Default"], value = {}, objects = {},
         colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
@@ -194,6 +194,7 @@ do
   function MDT.ADDON_LOADED(self, addon)
     if addon == "MythicDungeonTools" then
       db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
+      ---@diagnostic disable-next-line: param-type-mismatch
       minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
       if not db.minimap.hide then
         minimapIcon:Show("MythicDungeonTools")
@@ -209,9 +210,6 @@ do
         end
       end
       eventFrame:UnregisterEvent("ADDON_LOADED")
-    elseif addon == "Blizzard_ChallengesUI" then
-      eventFrame:UnregisterEvent("ADDON_LOADED")
-      MDT:UpdateAffixWeeks()
     end
   end
 
@@ -258,89 +256,17 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 124, 6, 9 },
-  [2] = { 134, 7, 10 },
-  [3] = { 136, 123, 9 },
-  [4] = { 135, 6, 10 },
-  [5] = { 3, 8, 9 },
-  [6] = { 124, 11, 10 },
-  [7] = { 135, 7, 9 },
-  [8] = { 136, 8, 10 },
-  [9] = { 134, 11, 9 },
-  [10] = { 3, 123, 10 },
+  [1] = { 0, 0, 0 },
+  [2] = { 0, 0, 0 },
+  [3] = { 0, 0, 0 },
+  [4] = { 0, 0, 0 },
+  [5] = { 0, 0, 0 },
+  [6] = { 0, 0, 0 },
+  [7] = { 0, 0, 0 },
+  [8] = { 0, 0, 0 },
+  [9] = { 0, 0, 0 },
+  [10] = { 0, 0, 0 },
 }
-
-function MDT:UpdateAffixWeeks()
-  -- TODO: Fix this at some point
-  if true then return end
-  -- The idea is to know the season start date: season_start
-  -- Then from current time calculate which week in the affix rotation is live
-  -- By doing this weekly you can populate the entire affix weeks rotation
-  if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-    eventFrame:RegisterEvent("ADDON_LOADED")
-    LoadAddOn("Blizzard_ChallengesUI")
-    return
-  end
-  -- copied from MDT:GetCurrentAffixWeek not sure if necessary
-  C_MythicPlus.RequestCurrentAffixes()
-  C_MythicPlus.RequestMapInfo()
-  C_MythicPlus.RequestRewards()
-
-  -- Save current weeks affixes to db
-  local current_affixes = C_MythicPlus.GetCurrentAffixes()
-  -- retry after 5 if Blizzard not ready yet
-  if not current_affixes then
-    C_Timer.After(5, function()
-      MDT:UpdateAffixWeeks()
-    end)
-    return
-  end
-
-  local season_start = {
-    -- Edit this at the start of the season - IMPORTANT: This is North America launch in PST time
-    ["year"] = 2022,
-    ["month"] = 8,
-    ["day"] = 2,
-    ["hour"] = 8 -- You'll never need to change this
-  }
-
-  -- Find current week index
-  local hour = 3600
-  local one_week = 604800
-  local offset = time() - time(date("!*t")) + 7 * hour           -- offset between na and utc
-  local utc_na_season_start = time(season_start) + offset        -- na regional season start time in utc time
-  local utc_region_week_start = GetServerTime() - (one_week - C_DateAndTime.GetSecondsUntilWeeklyReset()) +
-      20                                                         -- players regional weekly start time in utc
-  if utc_na_season_start > utc_region_week_start then return end -- if the season has not started yet return
-  -- 20 second buffer because GetSecondsUntilWeeklyReset is not precise
-  local region_offset = (utc_region_week_start - utc_na_season_start) %
-      one_week                                                                         -- difference between na reset time and players regional reset time
-  local elapsed_season = utc_region_week_start - (utc_na_season_start + region_offset) -- total time since season start
-  local current_week_idx = math.floor(elapsed_season / one_week) % #affixWeeks +
-      1                                                                                -- weekly affix rotation index of current week for player
-
-  db.knownAffixWeeks[current_week_idx] = {}
-  for k, idx in pairs({ 2, 3, 1, 4 }) do
-    tinsert(db.knownAffixWeeks[current_week_idx], current_affixes[idx]["id"])
-  end
-
-  -- return if no seasonal affix is found
-  if not db.knownAffixWeeks[current_week_idx][4] then return end
-
-  -- Replace affixWeeks with data from db
-  for week_idx, known_affixes in pairs(db.knownAffixWeeks) do
-    -- ensure seasonal affix from db matches current week
-    if known_affixes[4] == db.knownAffixWeeks[current_week_idx][4] then
-      affixWeeks[week_idx] = known_affixes
-    end
-  end
-
-  local sidepanel = MDT.main_frame.sidePanel
-  if not sidepanel then return end -- sidepanel not ready yet, will handle setting these itself anyway
-  local dropdown = sidepanel.affixDropdown
-  dropdown:UpdateAffixList()
-  dropdown:SetValue(MDT:GetCurrentPreset().week)
-end
 
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
@@ -365,11 +291,21 @@ function MDT:IsOnBetaServer()
     ["Broxigar"] = true,
     ["Lycanthoth"] = true,
     ["Nobundo"] = true,
+    ["Fyrakk"] = true,
+    ["Iridikron"] = true,
+    ["Raszageth"] = true,
+    ["Vyranoth"] = true,
   }
   return realms[realm]
 end
 
-function MDT:GetNumDungeons() return #MDT.dungeonList - 1 end
+function MDT:GetNumDungeons()
+  local count = 0
+  for _, _ in pairs(MDT.dungeonList) do
+    count = count + 1
+  end
+  return count
+end
 
 function MDT:GetDungeonName(idx) return MDT.dungeonList[idx] end
 
@@ -443,6 +379,7 @@ function MDT:CreateMenu()
   self.main_frame.maximizeButton = CreateFrame("Button", "MDTMaximizeButton", self.main_frame,
     "MaximizeMinimizeButtonFrameTemplate")
   self.main_frame.maximizeButton:ClearAllPoints()
+  ---@diagnostic disable-next-line: param-type-mismatch
   self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
   self.main_frame.maximizeButton:SetFrameLevel(4)
   db.maximized = db.maximized or false
@@ -469,6 +406,7 @@ function MDT:CreateMenu()
     "UIPanelCloseButton")
   local setLivePresetButton = self.main_frame.setLivePresetButton
   setLivePresetButton:ClearAllPoints()
+  ---@diagnostic disable-next-line: param-type-mismatch
   setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
   setLivePresetButton.Icon = setLivePresetButton:CreateTexture(nil, "OVERLAY", nil, 0)
   setLivePresetButton.Icon:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
@@ -686,7 +624,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString = frame.topPanel:CreateFontString("MDT name")
     --use default font if ElvUI is enabled
     --if IsAddOnLoaded("ElvUI") then
-    frame.topPanelString:SetFontObject("GameFontNormalMed3")
+    frame.topPanelString:SetFontObject(GameFontNormalMed3)
     frame.topPanelString:SetTextColor(1, 1, 1, 1)
     frame.topPanelString:SetJustifyH("CENTER")
     frame.topPanelString:SetJustifyV("CENTER")
@@ -696,7 +634,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString:ClearAllPoints()
     frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 10, 0)
     frame.topPanelString:Show()
-    frame.topPanelString:SetFont(frame.topPanelString:GetFont(), 20)
+    frame.topPanelString:SetFont(frame.topPanelString:GetFont() or '', 20, '')
     frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "ARTWORK", nil, 7)
     frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\Nnoggie")
     frame.topPanelLogo:SetWidth(24)
@@ -743,7 +681,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomPanel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT")
 
   frame.bottomPanelString = frame.bottomPanel:CreateFontString("MDTMid")
-  frame.bottomPanelString:SetFontObject("GameFontNormalSmall")
+  frame.bottomPanelString:SetFontObject(GameFontNormalSmall)
   frame.bottomPanelString:SetJustifyH("CENTER")
   frame.bottomPanelString:SetJustifyV("CENTER")
   frame.bottomPanelString:SetPoint("CENTER", frame.bottomPanel, "CENTER", 0, 0)
@@ -751,7 +689,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomPanelString:Show()
 
   frame.bottomLeftPanelString = frame.bottomPanel:CreateFontString("MDTVersion")
-  frame.bottomLeftPanelString:SetFontObject("GameFontNormalSmall")
+  frame.bottomLeftPanelString:SetFontObject(GameFontNormalSmall)
   frame.bottomLeftPanelString:SetJustifyH("LEFT")
   frame.bottomLeftPanelString:SetJustifyV("CENTER")
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
@@ -760,7 +698,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:Show()
 
   frame.statusString = frame.bottomPanel:CreateFontString("MDTStatusLabel")
-  frame.statusString:SetFontObject("GameFontNormalSmall")
+  frame.statusString:SetFontObject(GameFontNormalSmall)
   frame.statusString:SetJustifyH("RIGHT")
   frame.statusString:SetJustifyV("CENTER")
   frame.statusString:SetPoint("RIGHT", frame.bottomPanel, "RIGHT", 0, 0)
@@ -798,14 +736,14 @@ function MDT:MakeCopyHelper(frame)
   MDT.copyHelper.tex:SetAllPoints()
   MDT.copyHelper.tex:SetColorTexture(unpack(MDT.BackdropColor))
   MDT.copyHelper.text = MDT.copyHelper:CreateFontString("MDT name")
-  MDT.copyHelper.text:SetFontObject("GameFontNormalMed3")
+  MDT.copyHelper.text:SetFontObject(GameFontNormalMed3)
   MDT.copyHelper.text:SetJustifyH("CENTER")
   MDT.copyHelper.text:SetJustifyV("CENTER")
   MDT.copyHelper.text:SetText(L["errorLabel3"])
   MDT.copyHelper.text:ClearAllPoints()
   MDT.copyHelper.text:SetPoint("CENTER", MDT.copyHelper, "CENTER")
   MDT.copyHelper.text:Show()
-  MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont(), 20)
+  MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont() or '', 20, '')
   MDT.copyHelper.text:SetTextColor(1, 1, 0)
   function MDT.copyHelper:SmartFadeOut(seconds)
     seconds = seconds or 0.3
@@ -849,8 +787,6 @@ function MDT:MakeCopyHelper(frame)
 end
 
 function MDT:MakeSidePanel(frame)
-  MDT:UpdateAffixWeeks()
-
   if frame.sidePanel == nil then
     frame.sidePanel = CreateFrame("Frame", "MDTSidePanel", frame)
     frame.sidePanelTex = frame.sidePanel:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -1925,7 +1861,7 @@ function MDT:IsCurrentPresetFortified()
 end
 
 function MDT:IsCurrentPresetTyrannical()
-  return not MDT:IsCurrentPresetFortified()
+  return affixWeeks[self:GetCurrentPreset().week][3] == 9
 end
 
 function MDT:IsCurrentPresetThundering()
@@ -2110,7 +2046,6 @@ function MDT:MakeMapTexture(frame)
           if MDT.dungeonSubLevels[db.currentDungeonIdx][target] then
             MDT:SetCurrentSubLevel(target)
             MDT:UpdateMap()
-            MDT:ZoomMapToDefault()
           end
         end
       else
@@ -2402,6 +2337,11 @@ function MDT:EnsureDBTables()
   if #db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls == 0 then
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[1] = {}
   end
+  --ensure that there exists a map for the current sublevel
+  local sublevel = MDT:GetCurrentSubLevel()
+  if not MDT.dungeonMaps[db.currentDungeonIdx][sublevel] then
+    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
+  end
 
   --ensure the pulls table is not fully corrupted
   if not preset.value.pulls or (type(preset.value.pulls) ~= "table") then
@@ -2505,45 +2445,64 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
   end
   if not framesInitialized then coroutine.yield() end
-  local fileName = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
-  local path = "Interface\\WorldMap\\"..mapName.."\\"
-  local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx, preset.value.currentSublevel)
-  if not framesInitialized then coroutine.yield() end
-  for i = 1, 12 do
-    if tileFormat == 4 then
-      local texName = path..fileName..i
-      if frame["mapPanelTile"..i] then
-        frame["mapPanelTile"..i]:SetTexture(texName)
-        frame["mapPanelTile"..i]:Show()
+  local textureInfo = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
+  if type(textureInfo) == "string" then --textures from blizzard files
+    local path = "Interface\\WorldMap\\"..mapName.."\\"
+    local tileFormat = MDT:GetTileFormat(db.currentDungeonIdx, preset.value.currentSublevel)
+    if not framesInitialized then coroutine.yield() end
+    for i = 1, 12 do
+      if tileFormat == 4 then
+        local texName = path..textureInfo..i
+        if frame["mapPanelTile"..i] then
+          frame["mapPanelTile"..i]:SetTexture(texName)
+          frame["mapPanelTile"..i]:Show()
+        end
+      else
+        if frame["mapPanelTile"..i] then
+          frame["mapPanelTile"..i]:Hide()
+        end
       end
-    else
+    end
+    if not framesInitialized then coroutine.yield() end
+    for i = 1, 10 do
+      for j = 1, 15 do
+        if tileFormat == 15 then
+          local texName = path..textureInfo..((i - 1) * 15 + j)
+          frame["largeMapPanelTile"..i..j]:SetTexture(texName)
+          frame["largeMapPanelTile"..i..j]:Show()
+        else
+          frame["largeMapPanelTile"..i..j]:Hide()
+        end
+      end
+    end
+  elseif type(textureInfo) == "table" then --textures from custom files
+    local sublevel = preset.value.currentSublevel
+    for i = 1, 12 do
       if frame["mapPanelTile"..i] then
         frame["mapPanelTile"..i]:Hide()
       end
     end
-  end
-  if not framesInitialized then coroutine.yield() end
-  for i = 1, 10 do
-    for j = 1, 15 do
-      if tileFormat == 15 then
-        local texName = path..fileName..((i - 1) * 15 + j)
-        frame["largeMapPanelTile"..i..j]:SetTexture(texName)
-        frame["largeMapPanelTile"..i..j]:Show()
-      else
-        frame["largeMapPanelTile"..i..j]:Hide()
+    for i = 1, 10 do
+      for j = 1, 15 do
+        local fileSuffix = (i - 1) * 15 + j
+        local texName = 'Interface\\AddOns\\'..AddonName..'\\Textures\\Upscaled\\'..textureInfo.customTextures..'\\'..sublevel..'_'..fileSuffix..".png"
+        local tile = frame["largeMapPanelTile"..i..j]
+        tile:SetTexture(texName)
+        tile:Show()
       end
     end
   end
   if not framesInitialized then coroutine.yield() end
   MDT:Async(function()
     coroutine.yield()
+    if not db.devMode then MDT:ZoomMapToDefault() end
     MDT:DungeonEnemies_UpdateEnemiesAsync()
     MDT:DungeonEnemies_UpdateTeeming()
     MDT:DungeonEnemies_UpdateSeasonalAffix()
     MDT:DungeonEnemies_UpdateInspiring()
     MDT:POI_UpdateAll()
     if not ignoreReloadPullButtons then
-      MDT:ReloadPullButtons()
+      MDT:ReloadPullButtons(true)
     end
     if not framesInitialized then coroutine.yield() end
     --handle delete button disable/enable
@@ -2611,87 +2570,13 @@ function MDT:DeletePreset(index)
   db.currentPreset[db.currentDungeonIdx] = index - 1
   MDT:UpdatePresetDropDown()
   MDT:UpdateMap()
-  MDT:ZoomMapToDefault()
 end
 
-MDT.zoneIdToDungeonIdx = {
-  [934] = 15,  --atal
-  [935] = 15,  --atal
-  [936] = 16,  --fh
-  [1004] = 17, --kr
-  [1039] = 18, --shrine
-  [1040] = 18, --shrine
-  [1162] = 19, --siege
-  [1038] = 20, --temple
-  [1043] = 20, --temple
-  [1010] = 21, --motherlode
-  [1041] = 22, --underrot
-  [1042] = 22, --underrot
-  [974] = 23,  --toldagor
-  [975] = 23,  --toldagor
-  [976] = 23,  --toldagor
-  [977] = 23,  --toldagor
-  [978] = 23,  --toldagor
-  [979] = 23,  --toldagor
-  [980] = 23,  --toldagor
-  [1015] = 24, --wcm
-  [1016] = 24, --wcm
-  [1017] = 24, --wcm
-  [1018] = 24, --wcm
-  [1029] = 24, --wcm
-  [1490] = 25, --lower mecha
-  [1491] = 26, --upper mecha
-  [1493] = 26, --upper mecha
-  [1494] = 26, --upper mecha
-  [1497] = 26, --upper mecha
-  [1663] = 30, --halls of atonement
-  [1664] = 30, --halls of atonement
-  [1665] = 30, --halls of atonement
-  [1666] = 35, --necrotic wake
-  [1667] = 35, --necrotic wake
-  [1668] = 35, --necrotic wake
-  [1669] = 31, --mists of tirna scithe
-  [1674] = 32, --plaguefall
-  [1675] = 33, --sanguine depths
-  [1676] = 33, --sanguine depths
-  [1677] = 29, --de other side
-  [1678] = 29, --de other side
-  [1679] = 29, --de other side
-  [1680] = 29, --de other side
-  [1683] = 36, --theater of pain
-  [1684] = 36, --theater of pain
-  [1685] = 36, --theater of pain
-  [1686] = 36, --theater of pain
-  [1687] = 36, --theater of pain
-  [1692] = 34, --spires of ascension
-  [1693] = 34, --spires of ascension
-  [1694] = 34, --spires of ascension
-  [1695] = 34, --spires of ascension
-  [1697] = 32, --plaguefall
-  [1989] = 37, --tazavesh streets
-  [1990] = 37, --tazavesh streets
-  [1991] = 37, --tazavesh streets
-  [1992] = 37, --tazavesh streets
-  [1993] = 38, --tazavesh gambit
-  [1995] = 38, --tazavesh gambit
-  [1996] = 38, --tazavesh gambit
-  [606] = 40,  --grimrail depot
-  [607] = 40,  --grimrail depot
-  [608] = 40,  --grimrail depot
-  [609] = 40,  --grimrail depot
-  [595] = 41,  --iron docks
-  [2082] = 49, --halls of infusion
-  [2083] = 49, --halls of infusion
-  [2096] = 48, --brackenhide hollow
-  [2106] = 48, --brackenhide hollow
-  [2071] = 51, --uldaman
-  [2072] = 51, --uldaman
-  [2080] = 50, --neltharus
-  [2081] = 50, --neltharus
-  [731] = 8,   --neltharion's lair
-  [325] = 77,  --vortex pinnacle
-  --https://wowpedia.fandom.com/wiki/UiMapID
-}
+--contains zoneIds to auto swap to corresponding dungeon when opening the AddOn
+--ids are added in each dungeon file
+--https://wowpedia.fandom.com/wiki/UiMapID
+MDT.zoneIdToDungeonIdx = {}
+
 local lastUpdatedDungeonIdx
 function MDT:CheckCurrentZone(init)
   local zoneId = C_Map.GetBestMapForUnit("player")
@@ -2763,7 +2648,6 @@ function MDT:CreateNewPreset(name)
     MDT.main_frame.presetCreationFrame:Hide()
     MDT:UpdatePresetDropDown()
     MDT:UpdateMap()
-    MDT:ZoomMapToDefault()
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
   else
@@ -3573,7 +3457,6 @@ function MDT:SetMapSublevel(pull)
   end
 
   MDT:UpdateDungeonDropDown()
-  if shouldResetZoom then MDT:ZoomMapToDefault() end
   return shouldResetZoom
 end
 
@@ -3734,7 +3617,7 @@ function MDT:UpdatePullButtonNPCData(idx)
 end
 
 ---Reloads all pull buttons in the scroll frame
-function MDT:ReloadPullButtons()
+function MDT:ReloadPullButtons(force)
   MDT:Async(function()
     local frame = MDT.main_frame.sidePanel
     if not frame.pullButtonsScrollFrame then return end
@@ -3752,6 +3635,7 @@ function MDT:ReloadPullButtons()
     local idx = 0
     for k, pull in ipairs(preset.value.pulls) do
       idx = idx + 1
+      ---@diagnostic disable-next-line: param-type-mismatch
       frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
       frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
       frame.newPullButtons[idx]:SetIndex(idx)
@@ -3762,6 +3646,7 @@ function MDT:ReloadPullButtons()
       coroutine.yield()
     end
     --add the "new pull" button
+    ---@diagnostic disable-next-line: param-type-mismatch
     frame.newPullButton = AceGUI:Create("MDTNewPullButton")
     frame.newPullButton:Initialize()
     frame.newPullButton:Enable()
@@ -3773,7 +3658,7 @@ function MDT:ReloadPullButtons()
       self:PickPullButton(self:GetCurrentPreset().value.currentPull)
     end
     MDT:ColorAllPulls(nil, 0)
-    MDT:DrawAllHulls(preset.value.pulls)
+    MDT:DrawAllHulls(preset.value.pulls, force)
   end, "ReloadPullButtons", true)
 end
 
@@ -4851,10 +4736,11 @@ function initFrames()
       end
       self:SetFacing(PI * 2 / 360 * self.fac)
     end)
+    ---@diagnostic disable-next-line: param-type-mismatch
     tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 7, -7)
     tooltip.String = tooltip:CreateFontString("MDTToolTipString")
-    tooltip.String:SetFontObject("GameFontNormalSmall")
-    tooltip.String:SetFont(tooltip.String:GetFont(), 10, "")
+    tooltip.String:SetFontObject(GameFontNormalSmall)
+    tooltip.String:SetFont(tooltip.String:GetFont() or '', 10, '')
     tooltip.String:SetTextColor(1, 1, 1, 1)
     tooltip.String:SetJustifyH("LEFT")
     --tooltip.String:SetJustifyV("CENTER")
@@ -4862,6 +4748,7 @@ function initFrames()
     tooltip.String:SetHeight(90)
     tooltip.String:SetWidth(175)
     tooltip.String:SetText(" ")
+    ---@diagnostic disable-next-line: param-type-mismatch
     tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
     tooltip.String:Show()
     skinTooltip(tooltip)
@@ -4893,22 +4780,25 @@ function initFrames()
     end
 
     MDT.pullTooltip.Model:SetSize(110, 110)
+    ---@diagnostic disable-next-line: param-type-mismatch
     MDT.pullTooltip.Model:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 7, -7)
 
     MDT.pullTooltip.topString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
-    MDT.pullTooltip.topString:SetFontObject("GameFontNormalSmall")
-    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont(), 10, "")
+    MDT.pullTooltip.topString:SetFontObject(GameFontNormalSmall)
+    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont() or '', 10, '')
     MDT.pullTooltip.topString:SetTextColor(1, 1, 1, 1)
     MDT.pullTooltip.topString:SetJustifyH("LEFT")
     MDT.pullTooltip.topString:SetJustifyV("TOP")
     MDT.pullTooltip.topString:SetHeight(110)
     MDT.pullTooltip.topString:SetWidth(130)
+    ---@diagnostic disable-next-line: param-type-mismatch
     MDT.pullTooltip.topString:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 110, -7)
     MDT.pullTooltip.topString:Hide()
 
     local heading = MDT.pullTooltip:CreateTexture(nil, "OVERLAY", nil, 0)
     heading:SetHeight(8)
     heading:SetPoint("LEFT", 12, -30)
+    ---@diagnostic disable-next-line: param-type-mismatch
     heading:SetPoint("RIGHT", MDT.pullTooltip, "RIGHT", -12, -30)
     heading:SetTexture("Interface\\Tooltips\\UI-Tooltip-Border")
     heading:SetTexCoord(0.81, 0.94, 0.5, 1)
@@ -4916,8 +4806,8 @@ function initFrames()
 
     MDT.pullTooltip.botString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
     local botString = MDT.pullTooltip.botString
-    botString:SetFontObject("GameFontNormalSmall")
-    botString:SetFont(MDT.pullTooltip.topString:GetFont(), 10, "")
+    botString:SetFontObject(GameFontNormalSmall)
+    botString:SetFont(MDT.pullTooltip.topString:GetFont() or '', 10, '')
     botString:SetTextColor(1, 1, 1, 1)
     botString:SetJustifyH("TOP")
     botString:SetJustifyV("TOP")

@@ -1,101 +1,23 @@
 local AceGUI = LibStub("AceGUI-3.0")
 local MDT = MDT
 local db
-local tonumber, tinsert, slen, pairs, ipairs, tostring, next, type, sformat = tonumber, table.insert, string.len, pairs,
-    ipairs, tostring, next, type, string.format
-local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName, UnitGUID, UnitCreatureType,
-    UnitHealthMax, UnitLevel
+local tonumber, tinsert, pairs, ipairs = tonumber, table.insert, pairs, ipairs
+local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel
 
 --[[
-How to map (OUTDATED - use python script instead):
-1. /mdt devmode
-2. Install Plater Mod that adds NPCs on Nameplate Added event
-    Tov0UTniu0)f)KJuIvstI7sL2dBnQtTsnlsK8uvzMaxNGggqaol7f(231XwZUR9XjKGZ1W5Cpx4A6m6okzgL886DXINzwRuFebgbLe(TfOKtgZpPK5ucLCdDZS5lMphp(seUC1Yz53KViNswGcict(UtEW4PKBXDPKCCgxw1KHnSkWQybiw8fHaq1lR18G0OJfPEqvoowuRLHhfDGhCided6Z7yhunWkJ4kCu8Pyr7aD9DOEB2E)dot1EKxARkdot8jqlWqC8gFS3kW1)xozYeP2dUqSGBeO6Nahm0d9N7Lx6JugotflowlfXIppiFzACABJrBkQVT)X1VJuhf0YapKMp2hCERcVbsMKmUrXrdS3vPCzei83BG7nkJdR5H1yYrha6KyXOpY7Dj2Bz)sJgAq2V9TzVTIgM)Huxd8RCdgDD1bWLMm9sswwNSVNuaUe(NBNtatfo9vMltjlHTGJd6qpXgg3H16oCnTx3xF9J7kcuYNAAsdmfkdIWpC0zQTTqUI59TWkM9hsrxGZOGwK9SDixhJ3TbRSuEPfcAUPwJpc9c4Ta)kcXbd)m48yBiDZQPtNI)4WecmI0(0rjgBttQVJa9p)
-3. Call MDT:AddNPCFromUnit("mouseover") with macro to add untargetable units
-4. Use Keybinds to add NPCs and patrolpaths to the map
+  Bind macros:
+  1. Add clone
+  /run MDT:AddCloneAtCursorPosition()
+  2. Add patrol point to clone
+  /run MDT:AddPatrolPointAtCursorPosition()
+  3. Add untargetable unit if needed
+  /run MDT:AddNPCFromUnit("mouseover")
 ]]
 
 function MDT:ToggleDevMode()
   db = MDT:GetDB()
   db.devMode = not db.devMode
   ReloadUI()
-end
-
-local function tshow(t, name, indent)
-  local cart    -- a container
-  local autoref -- for self references
-
-  --[[ counts the number of elements in a table
-    local function tablecount(t)
-       local n = 0
-       for _, _ in pairs(t) do n = n+1 end
-       return n
-    end
-    ]]
-  -- (RiciLake) returns true if the table is empty
-  local function isemptytable(table) return next(table) == nil end
-
-  local function basicSerialize(o)
-    local so = tostring(o)
-    if type(o) == "function" then
-      local info = debug.getinfo(o, "S")
-      -- info.name is nil because o is not a calling level
-      if info.what == "C" then
-        return sformat("%q", so..", C function")
-      else
-        -- the information is defined through lines
-        return sformat("%q", so..", defined in ("..
-          info.linedefined.."-"..info.lastlinedefined..
-          ")"..info.source)
-      end
-    elseif type(o) == "number" or type(o) == "boolean" then
-      return so
-    else
-      return sformat("%q", so)
-    end
-  end
-
-  local function addtocart(value, name, indent, saved, field)
-    indent = indent or ""
-    saved = saved or {}
-    field = field or name
-
-    cart = cart..indent..field
-
-    if type(value) ~= "table" then
-      cart = cart.." = "..basicSerialize(value)..";\n"
-    else
-      if saved[value] then
-        cart = cart.." = {}; -- "..saved[value]
-            .." (self reference)\n"
-        autoref = autoref..name.." = "..saved[value]..";\n"
-      else
-        saved[value] = name
-        --if tablecount(value) == 0 then
-        if isemptytable(value) then
-          cart = cart.." = {};\n"
-        else
-          cart = cart.." = {\n"
-          for k, v in pairs(value) do
-            k = basicSerialize(k)
-            local fname = sformat("%s[%s]", name, k)
-            field = sformat("[%s]", k)
-            -- three spaces between levels
-            addtocart(v, fname, indent.."   ", saved, field)
-          end
-          cart = cart..indent.."};\n"
-        end
-      end
-    end
-  end
-
-  name = name or "__unnamed__"
-  if type(t) ~= "table" then
-    return name.." = "..basicSerialize(t)
-  end
-  cart, autoref = "", ""
-  addtocart(t, name, indent)
-  return cart..autoref
 end
 
 function MDT:AddNPCFromUnit(unit)
@@ -1108,7 +1030,9 @@ function MDT:CreateDevPanel(frame)
         -- 3. add the clone from this blip to the shrouded enemy, make sure to deep copy clone data
         local clone = MDT:DeepCopy(currentBlip.clone)
         clone.shrouded = true
-        tinsert(shroudedEnemy.clones, clone)
+        if shroudedEnemy and shroudedEnemy.clones then
+          tinsert(shroudedEnemy.clones, clone)
+        end
 
         -- 4. add disguised tag to original enemy
         currentBlip.clone.disguised = true

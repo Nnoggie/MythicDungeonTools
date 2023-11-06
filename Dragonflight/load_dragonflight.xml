@@ -10,4 +10,10 @@
     <Script file='Neltharus.lua'/>
     <Script file='UldamanLegacyOfTyr.lua'/>
     <Script file='TheVortexPinnacle.lua'/>
+    <Script file='DawnOfTheInfiniteLower.lua'/>
+    <Script file='DawnOfTheInfiniteUpper.lua'/>
+    <Script file='WaycrestManor.lua'/>
+    <Script file='BlackrookHold.lua'/>
+    <Script file='Everbloom.lua'/>
+    <Script file='ThroneOfTides.lua'/>
 </Ui>

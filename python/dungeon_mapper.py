@@ -10,24 +10,41 @@ from web_scraper import *
 request_wowtools = True
 toggle_door_mapping = False
 GROUP_SEC_DELIMITER = 5
-# How to use:
+
+# GETTING PROPER COMBAT LOG FILE
 # 1. Have Advanced Combat Logging Enabled!
-# 2. Delete or rename your current WoWCombatLog.txt file to start from fresh.
-# 3. Run the dungeon on +2 with inspiring tagging all mobs where they spawn.
-# 4. Copy the resulting WoWCombatLog.txt file to the directory of this file.
-# 5. Run this script.
-# 6. Open the .lua file for the given dungeon and paste what has been added to your clipboard.
+# 2. Run the dungeon on +2
+# 3. Run this script, choose the correct log file and mapping style
+# 4. Open the .lua file for the given dungeon and paste what has been added to your clipboard.
 
+# CSV FILE SETUP
+# Setup:
+# 1. Download and install wow.export from this link: https://www.kruithne.net/wow.export/
+# 2. Download DBC2CSV from this link: https://github.com/Marlamin/DBC2CSV/releases
+# 3. Download the zipped repo from this link: https://github.com/wowdev/WoWDBDefs all you need from it is the folder "definitions"
 
-# Importing files from wow.tools; If the file is available in the directory it is read otherwise it is downloaded first
-#   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
-#       Which means it contains minimap coordinate points for the borders of the in-game map
-#   map: contains UiMapIDs and their associated dungeons
-#   criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
-#   criteriatree: contains information about which criteria from the above list is triggered when count is
-#        attributed in a mythic dungeon as well as the amount of count attributed
-#   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
+# GETTING UPDATED CSV FILES:
+# 1. Replace the folder "definitions" in the DBC2CSV directory with the one obtained in the setup zip. I have only done this once initially, don't think it needs to be done every time.
+# 2. Run wow.export.exe, choose what to access I usually do by CDN, but all that matters is you pick the right build after selecting region
+# 3. Locate the raw client files export page and export the following files
+#       criteria.db2
+#       criteriatree.db2
+#       journalencounter.db2
+#       map.db2
+#       uimapassignment.db2
+# 4. Find the exported files, they'll be somewhere in the wow.export folder all contained in the folder "dbfilesclient", move them to the directory of your DBC2CSV executable
+# 5. Locate your hotfix cache file "DBCache.bin" and move it to the save directory of your DBC2CSV executable. For retail the hotfix file is located here:
+#       C:\Program Files (x86)\World of Warcraft\_retail_\Cache\ADB\enUS
+# 6. Generate the csv files. Highlight all the db2 files + hotfix file and drag them on top of the DBC2CSV.exe
+# 7. Move the resulting .csv files to python\wowdb_files
 
+# uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
+#     Which means it contains minimap coordinate points for the borders of the in-game map
+# map: contains UiMapIDs and their associated dungeons
+# criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
+# criteriatree: contains information about which criteria from the above list is triggered when count is
+#      attributed in a mythic dungeon as well as the amount of count attributed
+# journalencounter: contains the encounterID and instanceID for bosses which MDT stores
 
 def get_map_extent(UiMapID):
     """Returns map extent in minimap coordinates xmin, xmax, ymin, ymax.
@@ -116,7 +133,7 @@ def get_additional_boss_info(name, UiMapIDs):
     """
     boss = db["journalencounter"][
         (
-            (db["journalencounter"].Name_lang == name)
+            (db["journalencounter"].Name_lang.str.contains(name))
             & (db["journalencounter"].UiMapID.isin(UiMapIDs))
         )
     ]
@@ -571,10 +588,66 @@ def pick_log_to_map():
     return file_path
 
 
+def pick_mapping_style():
+    """Asks the user to select the mapping style
+
+    Returns:
+        str: The mapping style
+
+    """
+    # Prompt the user to select the mapping style [1] Old style [2] New style
+    mapping_style = input(
+        """Select mapping style:
+        [1] Old style (Using NPC position from CombatLog).
+        [2] New style (Combined map, NPC's mapped in rows).
+
+        Input: """
+    )
+    if mapping_style == "1" or mapping_style.lower() == "old":
+        mapping_style = "old"
+    elif mapping_style == "2" or mapping_style.lower() == "new":
+        mapping_style = "new"
+    return mapping_style
+
+
+def get_new_style_xy(sublevel, sublevel_group, group, group_counter):
+    """Calculates the x and y coordinates for a new style map that combines all sublevels into one.
+
+    MDT width and height at scale = 1
+    WIDTH = 840
+    HEIGHT = 555
+    Heigh is negative
+    0,0 is top left corner
+
+    Args:
+        sublevel (int): Original sublevel of the npc.
+        sublevel_group (int): Sublevel group of the npc.
+        group (int): Group id of the npc.
+        group_counter (dict): Dictionary containing the number of npcs mapped per group so far.
+    """
+    min_x, max_y, max_x, min_y = 20, -80, 720, -535
+    group_height = min(15, (max_y - min_y) // group_counter["max_sublevel_height"])
+    group_spacing = min(
+        10,
+        (max_x - min_x)
+        // (group_counter["max_group_width"] * group_counter["num_sublevels"]),
+    )
+    if group not in group_counter:
+        group_counter[group] = 0
+    x = (
+        min_x
+        + group_spacing * group_counter[group]
+        + (sublevel - 1) * group_spacing * group_counter["max_group_width"]
+    )
+    y = max_y - group_height * sublevel_group
+    group_counter[group] += 1
+    return x, y, group_counter
+
+
 def print_progressbar(progress, total, size=60):
     x = int(size * progress / total)
     print(
-        f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total}", end="\r", flush=True
+        "\r", end=f" Mapping: |{u'█'*x}{u'▁'*(size-x)}| {progress}/{total} ", flush=True
     )
 
     if progress == total:
@@ -628,6 +701,7 @@ if __name__ == "__main__":
     ]
 
     combatlog_file_path = pick_log_to_map()
+    mapping_style = pick_mapping_style()
 
     CL = pd.read_csv(
         combatlog_file_path,
@@ -790,15 +864,17 @@ if __name__ == "__main__":
         & (mobHits.delta_post > GROUP_SEC_DELIMITER),
         "group",
     ] = 1
-    # Set their group number
-    mobHits["group"] = mobHits.group.cumsum()
-    # Set "single mob groups" to group 0
+    # Set "single mob groups" to group 1
     mobHits.loc[
         (mobHits.delta_pre > GROUP_SEC_DELIMITER)
         & (mobHits.delta_post > GROUP_SEC_DELIMITER),
         "group",
-    ] = 0
+    ] = 1
+    # Set their group number
+    mobHits["sublevel_group"] = mobHits.groupby("sublevel")["group"].cumsum()
+    mobHits["group"] = mobHits.group.cumsum()
     # Fill the remaning mobs with next seen group number
+    mobHits.sublevel_group.fillna(method="bfill", inplace=True)
     mobHits.group.fillna(method="bfill", inplace=True)
 
     # Create mapPOIs from WORLD_MARKER_PLACED
@@ -834,6 +910,13 @@ if __name__ == "__main__":
 
     table_output += "MDT.dungeonEnemies[dungeonIndex] = {\n"
     # Mapping dungeon enemies
+    max_group_width = mobHits.groupby("group")["sublevel"].count().max()
+    max_sublevel_height = mobHits.sublevel_group.max()
+    group_counter = {
+        "max_group_width": max_group_width + 2,
+        "max_sublevel_height": max_sublevel_height,
+        "num_sublevels": len(mobHits.sublevel.unique()),
+    }
     for unique_npc_index, unique_npcID in enumerate(mobHits.npcID.unique()):
         unique_npc_index += 1  # Lua is stupid
         table_output += f'  [{unique_npc_index}] = {{\n    ["clones"] = {{\n'
@@ -842,9 +925,17 @@ if __name__ == "__main__":
         ):
             npc_index += 1  # Lua is stupid
             table_output += f"      [{npc_index}] = {{\n"
-            table_output += f'        ["x"] = {npc.MDTx};\n'
-            table_output += f'        ["y"] = {npc.MDTy};\n'
-            table_output += f'        ["sublevel"] = {npc.sublevel};\n'
+            if mapping_style == "old":
+                table_output += f'        ["x"] = {npc.MDTx};\n'
+                table_output += f'        ["y"] = {npc.MDTy};\n'
+                table_output += f'        ["sublevel"] = {npc.sublevel};\n'
+            elif mapping_style == "new":
+                x, y, group_counter = get_new_style_xy(
+                    npc.sublevel, npc.sublevel_group, npc.group, group_counter
+                )
+                table_output += f'        ["x"] = {x};\n'
+                table_output += f'        ["y"] = {y};\n'
+                table_output += f'        ["sublevel"] = {1};\n'
             if npc.group != 0:
                 table_output += f'        ["g"] = {int(npc.group)};\n'
             if npc.destGUID in inspiring_GUID_list:

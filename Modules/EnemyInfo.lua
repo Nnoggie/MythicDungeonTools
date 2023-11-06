@@ -418,6 +418,11 @@ local characteristics = {
   ["Enslave Demon"] = "Interface\\ICONS\\spell_shadow_enslavedemon",
   ["Slow"] = "Interface\\ICONS\\ability_rogue_trip",
   ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
+  ["Sleep Walk"] = "Interface\\ICONS\\ability_xavius_dreamsimulacrum",
+  ["Scare Beast"] = "Interface\\ICONS\\ability_druid_cower",
+  ["Hibernate"] = "Interface\\ICONS\\spell_nature_sleep",
+  ["Turn Evil"] = "Interface\\ICONS\\ability_paladin_turnevil",
+  ["Mind Soothe"] = "Interface\\ICONS\\spell_holy_mindsooth",
 }
 local spellBlacklist = {
   [277564] = true, --Regenerative Blood
@@ -483,6 +488,8 @@ local spellBlacklist = {
   [391191] = true, -- dh stuff
   [390181] = true, -- dh stuff
   [228318] = true, -- enrage
+  [374557] = true, -- brittle
+  [387096] = true, -- pyrogenics
   --[X]  = true,
 }
 local lastEnemyIdx
@@ -588,6 +595,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   if data.spells then
     for spellId, spellData in pairs(data.spells) do
       if MDT:GetDB().devMode or not spellBlacklist[spellId] then
+        ---@diagnostic disable-next-line: param-type-mismatch
         local spellButton = AceGUI:Create("MDTSpellButton")
         spellButton:SetSpell(spellId, spellData)
         spellButton:Initialize()
@@ -601,6 +609,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   f.powerScroll:ReleaseChildren()
   if data.powers then
     for powerSpellId, powerData in pairs(data.powers) do
+      ---@diagnostic disable-next-line: param-type-mismatch
       local powerButton = AceGUI:Create("MDTPowerButton")
       powerButton:SetSpell(powerSpellId, powerData)
       powerButton:Initialize()

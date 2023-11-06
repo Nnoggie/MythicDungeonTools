@@ -7,21 +7,14 @@ from web_scraper import *
 
 EXPANSIONS = ["Legion", "BattleForAzeroth", "Shadowlands", "Dragonflight"]
 # How to use:
+# 0. Make sure to have updated csv files. refer to dungeon_mapper.py for instructions.
 # 1. Update the list "EXPANSIONS" above to include all expansions. Use name of MDT expansion dungeon folders.
 # 2. Set the variable GAME_VERSION to the desired game version (eg. "9.2.7")
 #    Latest db files will be downloaded from the corresponding game version.
 #    If GAME_VERSION is set to None, the latest RETAIL db files will be downloaded.
-GAME_VERSION = "10.1.0"  # <--- Set this variable
+GAME_VERSION = "10.2.0"  # <--- Set this variable
 # 3. Run the script, it writes directly to the files automatically.
 
-# Importing files from wow.tools. If the file is available in the directory it is read otherwise it is downloaded first
-#   uimapassignment: contains information about the extent of a UiMapID on its base minimap file.
-#       Which means it contains minimap coordinate points for the borders of the in-game map
-#   map: contains UiMapIDs and their associated dungeons
-#   criteria: contains information about which criteria a given npc triggers when dying in a mythic dungeon
-#   criteriatree: contains information about which criteria from the above list is triggered when count is
-#        attributed in a mythic dungeon as well as the amount of count attributed
-#   journalencounter: contains the encounterID and instanceID for bosses which MDT stores
 wowtools_files = ["criteria", "criteriatree", "journalencounter"]
 db = load_db_files(wowtools_files, GAME_VERSION)
 
@@ -106,7 +99,10 @@ def update_count(match, dungeon_count_table):
         },  # Abstract Nullifier, Upper Karazhan
         115019: {"db_count": 3, "hardcoded_count": 6},  # Coldmist Widow, Lower Karazhan
         115020: {"db_count": 4, "hardcoded_count": 7},  # Arcanid, Lower Karazhan
-        45704: {"db_count": 3, "hardcoded_count": 0},  # Lurking Tempest, Vortex Pinnacle, cannot be killed
+        45704: {
+            "db_count": 3,
+            "hardcoded_count": 0,
+        },  # Lurking Tempest, Vortex Pinnacle, cannot be killed
     }
     if info["id"] in unexplainable_count.keys():
         npc_name = pattern_npc_name.search(match.group()).group(1)
@@ -309,7 +305,7 @@ if __name__ == "__main__":
     )
     pattern_dungeonTotalCount = re.compile(r"MDT\.dungeonTotalCount\[dungeonIndex\] .*")
     pattern_count_value = re.compile(r"normal = (\d+)")
-    pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)";')
+    pattern_npc_name = re.compile(r'\[\"name\"\] = "([^\n]+)"(;|,)')
 
     # Make sure initial working directory is MythicDungeonTools
     while os.getcwd().__contains__("MythicDungeonTools") and not os.getcwd().endswith(

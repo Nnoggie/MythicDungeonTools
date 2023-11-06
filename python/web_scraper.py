@@ -21,30 +21,17 @@ def get_displayid_and_creaturetype(npcId):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
     }
-    url = f"https://wow.tools/db/creature_api.php?id={npcId}"
-    creatureType_dict = {
-        1: "Beast",
-        2: "Dragonkin",
-        3: "Demon",
-        4: "Elemental",
-        5: "Giant",
-        6: "Undead",
-        7: "Humanoid",
-        8: "Critter",
-        9: "Mechanical",
-        10: "Not specified",
-        11: "Totem",
-        12: "Non-combat Pet",
-        13: "Gas Cloud",
-        14: "Wild Pet",
-        15: "Aberration",
-    }
+    url = f"https://ptr2.wowhead.com/npc={npcId}"
     with requests.get(url, headers=headers) as r:
         time.sleep(1)
-        json = r.json()
-    displayID = json["CreatureDisplayInfoID[0]"]
-    creatureType = int(json["CreatureType"])
-    return displayID, creatureType_dict[creatureType]
+        if r.status_code == 200:
+            response = r.text
+            displayID = re.search(
+                r'data-mv-display-id="(.*)">View', str(response)
+            ).group(1)
+            creature_type = re.search(r"\]Type: ([^\[]*)\[", str(response)).group(1)
+
+    return displayID, creature_type
 
 
 def get_current_file_versions():

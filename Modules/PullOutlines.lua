@@ -110,13 +110,9 @@ local function getTexture()
     tex:ClearAllPoints()
     tex.coords = nil
     tex.points = nil
+    tex.pullIdx = nil
     return tex
   end
-end
-
-local function releaseTexture(tex)
-  tex:Hide()
-  tinsert(texturePool, tex)
 end
 
 --make a pool for fontStrings
@@ -185,12 +181,12 @@ local function getFontString()
       MDT:PullClickAreaOnLeave()
     end)
     fsFrame.clickArea = clickArea
-    local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil, 0)
+    local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil)
     fs:SetPoint("CENTER", 0, 0)
     fs:SetJustifyH("CENTER")
     fs:SetJustifyV("MIDDLE")
     fs:SetTextColor(1, 1, 1, 1)
-    local font = MDT:IsWrath() and "GameFontNormalMed3" or "GameFontNormalMed3Outline"
+    local font = MDT:IsWrath() and GameFontNormalMed3 or GameFontNormalMed3Outline
     fs:SetFontObject(font)
     fsFrame.fs = fs
     return fsFrame
@@ -202,25 +198,26 @@ local function getFontString()
   end
 end
 
-local function releaseFontString(fsFrame)
-  fsFrame:Hide()
-  tinsert(fontStringPool, fsFrame)
-end
+local previousPulls
 
-function MDT:ReleaseHullFontStrings()
-  for k, fsFrame in pairs(activeFontStrings) do
-    releaseFontString(fsFrame)
+function MDT:ReleaseHullTextures(pullsToRelease)
+  for i = #activeTextures, 1, -1 do
+    local tex = activeTextures[i]
+    if not pullsToRelease or pullsToRelease[tex.pullIdx] then
+      tex:Hide()
+      tinsert(texturePool, tex)
+      tremove(activeTextures, i)
+    end
   end
-  twipe(activeFontStrings)
-end
-
----ReleaseAllActiveTextures
-function MDT:ReleaseHullTextures()
-  for k, tex in pairs(activeTextures) do
-    releaseTexture(tex)
+  for i = #activeFontStrings, 1, -1 do
+    local fsFrame = activeFontStrings[i]
+    if not pullsToRelease or pullsToRelease[fsFrame.pullIdx] then
+      fsFrame:Hide()
+      tinsert(fontStringPool, fsFrame)
+      tremove(activeFontStrings, i)
+    end
   end
-  twipe(activeTextures)
-  MDT:ReleaseHullFontStrings()
+  if not pullsToRelease then previousPulls = nil end
 end
 
 function MDT:DrawHullFontString(hull, pullIdx)
@@ -334,17 +331,112 @@ local function getPullVertices(p, blips)
   return vertices
 end
 
-function MDT:DrawAllHulls(pulls)
+local function getPullsToDraw(newPulls)
+  local changedPulls = {}
+  local removedPulls = {}
+
+  if not previousPulls then
+    previousPulls = CopyTable(newPulls)
+    return newPulls, removedPulls
+  end
+
+  for pullIdx, pull in pairs(newPulls) do
+    --pull additions
+    if not previousPulls[pullIdx] then
+      changedPulls[pullIdx] = pull
+    else
+      --enemy or clone additions to existing pulls
+      local changed = false
+      for enemyIdx, clones in pairs(pull) do
+        if type(enemyIdx) == "number" then
+          if not previousPulls[pullIdx][enemyIdx] then
+            changed = true
+            break
+          else
+            for _, cloneIdx in pairs(clones) do
+              local found = false
+              for _, previousCloneIdx in pairs(previousPulls[pullIdx][enemyIdx]) do
+                if cloneIdx == previousCloneIdx then
+                  found = true
+                  break
+                end
+              end
+              if not found then
+                changed = true
+                break
+              end
+            end
+          end
+        end
+      end
+      if changed then
+        changedPulls[pullIdx] = pull
+      end
+      --sublevel stuff
+    end
+  end
+
+
+  for pullIdx, pull in pairs(previousPulls) do
+    --removed pulls
+    if not newPulls[pullIdx] then
+      removedPulls[pullIdx] = true
+    else
+      --enemy and clone removal from existing pulls
+      for enemyIdx, clones in pairs(pull) do
+        if type(enemyIdx) == "number" then
+          if newPulls[pullIdx][enemyIdx] then
+            for _, cloneIdx in pairs(clones) do
+              local found = false
+              for _, newCloneIdx in pairs(newPulls[pullIdx][enemyIdx]) do
+                if cloneIdx == newCloneIdx then
+                  found = true
+                  break
+                end
+              end
+              if not found then
+                changedPulls[pullIdx] = newPulls[pullIdx]
+                break
+              end
+            end
+          else
+            changedPulls[pullIdx] = newPulls[pullIdx]
+          end
+        end
+      end
+    end
+  end
+
+  previousPulls = CopyTable(newPulls)
+  return changedPulls, removedPulls
+end
+
+function MDT:DrawAllHulls(pulls, force)
   MDT:CancelAsync("DrawAllHulls")
   MDT:Async(function()
-    MDT:ReleaseHullTextures()
-    MDT:ReleaseHullFontStrings()
+    --get changed/removed pulls, release those textures, q them up for redraw
     local preset = MDT:GetCurrentPreset()
+    pulls = pulls or preset.value.pulls
+    local pullsToDraw, removedPulls
+    if force then
+      pullsToDraw = pulls
+      MDT:ReleaseHullTextures()
+    else
+      pullsToDraw, removedPulls = getPullsToDraw(pulls)
+      local pullsToRelease = {}
+      for pullIdx, _ in pairs(pullsToDraw) do
+        pullsToRelease[pullIdx] = true
+      end
+      for pullIdx, _ in pairs(removedPulls) do
+        pullsToRelease[pullIdx] = true
+      end
+      MDT:ReleaseHullTextures(pullsToRelease)
+    end
+
     local blips = MDT:GetDungeonEnemyBlips()
     local vertices
-    pulls = pulls or preset.value.pulls
-    for pullIdx, p in pairs(pulls) do
-      local r, g, b = MDT:DungeonEnemies_GetPullColor(pullIdx, pulls)
+    for pullIdx, p in pairs(pullsToDraw) do
+      local r, g, b = MDT:DungeonEnemies_GetPullColor(pullIdx, pullsToDraw)
       vertices = getPullVertices(p, blips)
       MDT:DrawHull(vertices, { r = r, g = g, b = b, a = 1 }, pullIdx)
       MDT:DrawHullFontString(vertices, pullIdx)

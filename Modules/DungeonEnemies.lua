@@ -537,7 +537,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
       occurence..
       group..
       "\n"..
-      string.format(L["Level %d %s"], data.level, L[data.creatureType])..
+      string.format(L["Level %d %s"], data.level, L[data.creatureType]).." "..data.id..
       "\n"..string.format(L["%s HP"], MDT:FormatEnemyHealth(health)).."\n"
 
   local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
@@ -649,6 +649,7 @@ local function blipDevModeSetup(blip)
       WrapTextInColorCode((blip.clone.scale or ""), "ffffffff"))
     if blip.clone.g then blip.fontstring_Text1:SetTextColor(unpack(groupColors[blip.clone.g % 5 + 1])) end
   end
+  blip.UpdateBlipText = updateBlipText
 
   local xOffset, yOffset
   blip:SetScript("OnMouseDown", function()
@@ -661,23 +662,49 @@ local function blipDevModeSetup(blip)
     xOffset = x - nx
     yOffset = y - ny
   end)
+  local moveGroup
   blip:SetScript("OnDragStart", function()
     if not db.devModeBlipsMovable then return end
+    if IsShiftKeyDown() then
+      moveGroup = true
+    end
     blip:StartMoving()
   end)
   blip:SetScript("OnDragStop", function()
     if not db.devModeBlipsMovable then return end
+    if IsShiftKeyDown() then
+      moveGroup = true
+    end
     local x, y = MDT:GetCursorPosition()
     local scale = MDT:GetScale()
     x = x * (1 / scale)
     y = y * (1 / scale)
     x = x - xOffset
     y = y - yOffset
+    local deltaX = x - MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x
+    local deltaY = y - MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y
+    if moveGroup then
+      for enemyIdx, data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+        for cloneIdx, clone in pairs(data.clones) do
+          if clone.g == blip.clone.g then
+            clone.x = clone.x + deltaX
+            clone.y = clone.y + deltaY
+            --move blip
+            local cloneBlip = MDT:GetBlip(enemyIdx, cloneIdx)
+            if cloneBlip then
+              cloneBlip:ClearAllPoints()
+              cloneBlip:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", clone.x * scale, clone.y * scale)
+            end
+          end
+        end
+      end
+    end
     blip:StopMovingOrSizing()
     blip:ClearAllPoints()
     blip:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x * scale, y * scale)
     MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].x = x
     MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].y = y
+    moveGroup = nil
   end)
   blip:SetScript("OnMouseWheel", function(self, delta)
     if not db.devModeBlipsScrollable then return end
@@ -724,9 +751,23 @@ local function blipDevModeSetup(blip)
         end
         blip.clone.g = maxGroup
       else
-        blip.clone.g = blip.clone.g + delta
+        local blipGroup = blip.clone.g
+        if IsShiftKeyDown() then
+          --change group of all connected blips
+          for enemyIdx, data in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+            for cloneIdx, clone in pairs(data.clones) do
+              if clone.g == blipGroup then
+                clone.g = blipGroup + delta
+                local cloneBlip = MDT:GetBlip(enemyIdx, cloneIdx)
+                cloneBlip.UpdateBlipText()
+              end
+            end
+          end
+        else
+          blip.clone.g = blip.clone.g + delta
+          updateBlipText()
+        end
       end
-      updateBlipText()
     end
   end)
   updateBlipText()
@@ -897,7 +938,7 @@ function MDT:FindPullOfBlip(blip)
   end
 end
 
-function MDT:GetBlip(enemyIdx, cloneIdx, preset)
+function MDT:GetBlip(enemyIdx, cloneIdx)
   for blipIdx, blip in pairs(blips) do
     if blip.enemyIdx == enemyIdx and blip.cloneIdx == cloneIdx then
       return blip
@@ -961,6 +1002,7 @@ function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b, pulls)
   local isInspiring = MDT:IsWeekInspiring(week)
   pulls = pulls or preset.value.pulls
   local p = pulls[pull]
+  if not p then return end
   for enemyIdx, clones in pairs(p) do
     if tonumber(enemyIdx) then
       for _, cloneIdx in pairs(clones) do
