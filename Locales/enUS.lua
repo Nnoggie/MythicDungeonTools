@@ -2,6 +2,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Open an issue on GitHub"] = "Open an issue on GitHub"
+L["Provide feedback in Discord"] = "Provide feedback in Discord"
+
 L["Sleep Walk"] = "Sleep Walk"
 L["Scare Beast"] = "Scare Beast"
 L["Hibernate"] = "Hibernate"

@@ -6,10 +6,6 @@ local tinsert, slen = table.insert, string.len
 -- handle most mdt errors internally and provide an easy way for users to report these errors
 
 local caughtErrors = {}
-local DESTINATIONS = {
-  { name = "GitHub",  url = "https://github.com/Nnoggie/MythicDungeonTools/issues" },
-  { name = "Discord", url = "https://discord.gg/tdxMPb3" },
-}
 
 local function getDiagnostics()
   local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
@@ -89,7 +85,7 @@ function MDT:DisplayErrors(force)
     errorFrame.label:SetText(L["errorLabel1"].."\n"..L["errorLabel2"])
     errorFrame:AddChild(errorFrame.label)
 
-    for _, dest in ipairs(DESTINATIONS) do
+    for _, dest in ipairs(MDT.externalLinks) do
       errorFrame[dest.name.."EditBox"] = AceGUI:Create("EditBox")
       local editBox = errorFrame[dest.name.."EditBox"]
       local copyButton

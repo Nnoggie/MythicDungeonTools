@@ -13,6 +13,20 @@ local tinsert, tremove, CreateFrame, tonumber, max, min, abs, pairs, ipairs, Get
 local sizex = 840
 local sizey = 555
 local framesInitialized, initFrames
+MDT.externalLinks = {
+  {
+    name = "GitHub",
+    tooltip = L["Open an issue on GitHub"],
+    url = "https://github.com/Nnoggie/MythicDungeonTools/issues",
+    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.75, 1 }
+  },
+  {
+    name = "Discord",
+    tooltip = L["Provide feedback in Discord"],
+    url = "https://discord.gg/tdxMPb3",
+    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, .75, 0.75, 1 }
+  },
+}
 
 local mythicColor = "|cFFFFFFFF"
 MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0.9 }
@@ -703,7 +717,6 @@ function MDT:MakeTopBottomTextures(frame)
     Mixin(externalButtonGroup.frame, BackdropTemplateMixin)
   end
   externalButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
-  externalButtonGroup:SetWidth(40)
   externalButtonGroup:SetHeight(40)
   externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", -5, -1)
   externalButtonGroup:SetLayout("Flow")
@@ -711,6 +724,24 @@ function MDT:MakeTopBottomTextures(frame)
   externalButtonGroup.frame:SetFrameLevel(7)
   externalButtonGroup.frame:ClearBackdrop()
   frame.externalButtonGroup = externalButtonGroup
+
+  for _, dest in ipairs(MDT.externalLinks) do
+    local button = AceGUI:Create("Icon")
+    button:SetImage(unpack(dest.texture))
+    button:SetCallback("OnClick", function(widget, callbackName)
+      MDT:ExportString(dest.url)
+    end)
+    button.tooltipText = dest.tooltip
+    button:SetWidth(24)
+    button:SetImageSize(20, 20)
+    button:SetCallback("OnEnter", function(widget, callbackName)
+      MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
+    end)
+    button:SetCallback("OnLeave", function()
+      MDT:ToggleToolbarTooltip(false)
+    end)
+    externalButtonGroup:AddChild(button)
+  end
 
   frame.statusString = frame.bottomPanel:CreateFontString("MDTStatusLabel")
   frame.statusString:SetFontObject(GameFontNormalSmall)
@@ -3852,7 +3883,7 @@ end
 ---Creates the frame used to export presets to a string which can be uploaded to text sharing websites like pastebin
 function MDT:MakeExportFrame(frame)
   frame.ExportFrame = AceGUI:Create("Frame")
-  frame.ExportFrame:SetTitle(L["Preset Export"])
+  frame.ExportFrame:SetTitle(L["Export"])
   frame.ExportFrame:SetWidth(600)
   frame.ExportFrame:SetHeight(400)
   frame.ExportFrame:EnableResize(false)
