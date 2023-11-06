@@ -61,7 +61,6 @@ L["dotiLowerSublevel1"] = "Sublevel 1"
 L["dotiUpperSublevel1"] = "Sublevel 1"
 L["Dragonflight Season 3"] = "Dragonflight Season 3"
 L["The Everbloom"] = "The Everbloom"
-L["The Overlook"] = "The Overlook"
 L["Throne of Tides"] = "Throne of Tides"
 L['dawnPortalNote'] = 'Infinite Riftmage 2 and 4 need to be defeated for the portals to activate.\nTemporal Deviations will keep respawning but give no count.'
 L["Temporal Fusion"] = "Temporal Fusion"
