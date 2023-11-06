@@ -183,21 +183,9 @@ function MDT:DisplayErrors(force)
       MDT:ToggleToolbarTooltip(false)
     end)
 
-    local errorButtonGroup = AceGUI:Create("SimpleGroup")
-    errorButtonGroup.frame:ClearAllPoints()
-    if not errorButtonGroup.frame.SetBackdrop then
-      Mixin(errorButtonGroup.frame, BackdropTemplateMixin)
-    end
-    errorButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
-    errorButtonGroup:SetWidth(40)
-    errorButtonGroup:SetHeight(40)
-    errorButtonGroup:SetPoint("LEFT", MDT.main_frame.bottomLeftPanelString, "RIGHT", -5, -1)
-    errorButtonGroup:SetLayout("Flow")
-    errorButtonGroup.frame:SetFrameStrata("High")
-    errorButtonGroup.frame:SetFrameLevel(7)
-    errorButtonGroup.frame:ClearBackdrop()
-    errorButtonGroup:AddChild(errorButton)
-    MDT:FixAceGUIShowHide(errorButtonGroup, MDT.main_frame)
+    local externalButtonGroup = MDT.main_frame.externalButtonGroup
+    externalButtonGroup:AddChild(errorButton)
+    MDT:FixAceGUIShowHide(externalButtonGroup, MDT.main_frame)
   end
 
   for _, error in ipairs(caughtErrors) do

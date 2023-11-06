@@ -697,6 +697,21 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:SetText(" v"..GetAddOnMetadata(AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
 
+  local externalButtonGroup = AceGUI:Create("SimpleGroup")
+  externalButtonGroup.frame:ClearAllPoints()
+  if not externalButtonGroup.frame.SetBackdrop then
+    Mixin(externalButtonGroup.frame, BackdropTemplateMixin)
+  end
+  externalButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
+  externalButtonGroup:SetWidth(40)
+  externalButtonGroup:SetHeight(40)
+  externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", -5, -1)
+  externalButtonGroup:SetLayout("Flow")
+  externalButtonGroup.frame:SetFrameStrata("High")
+  externalButtonGroup.frame:SetFrameLevel(7)
+  externalButtonGroup.frame:ClearBackdrop()
+  frame.externalButtonGroup = externalButtonGroup
+
   frame.statusString = frame.bottomPanel:CreateFontString("MDTStatusLabel")
   frame.statusString:SetFontObject(GameFontNormalSmall)
   frame.statusString:SetJustifyH("RIGHT")
