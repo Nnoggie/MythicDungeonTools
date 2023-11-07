@@ -185,8 +185,12 @@ local defaultSavedVars = {
 do
   for i = 1, 200 do
     defaultSavedVars.global.presets[i] = {
-      [1] = { text = L["Default"], value = {}, objects = {},
-        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [1] = {
+        text = L["Default"],
+        value = {},
+        objects = {},
+        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 }
+      },
       [2] = { text = L["<New Preset>"], value = 0 },
     }
     defaultSavedVars.global.currentPreset[i] = 1
@@ -712,6 +716,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:Show()
 
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
+  MDT:FixAceGUIShowHide(externalButtonGroup, frame)
   externalButtonGroup.frame:ClearAllPoints()
   if not externalButtonGroup.frame.SetBackdrop then
     Mixin(externalButtonGroup.frame, BackdropTemplateMixin)
@@ -2352,8 +2357,12 @@ function MDT:EnsureDBTables()
   local preset = MDT:GetCurrentPreset()
   if preset.value == 0 then --<New Preset> as selected preset
     db.presets[db.currentDungeonIdx] = {
-      [1] = { text = L["Default"], value = {}, objects = {},
-        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 } },
+      [1] = {
+        text = L["Default"],
+        value = {},
+        objects = {},
+        colorPaletteInfo = { autoColoring = true, colorPaletteIdx = 4 }
+      },
       [2] = { text = L["<New Preset>"], value = 0 },
     }
     db.currentPreset[db.currentDungeonIdx] = 1
@@ -4087,20 +4096,36 @@ function MDT:CreateTutorialButton(parent)
   local helpPlate = {
     FramePos = { x = 0, y = 0 },
     FrameSize = { width = sizex, height = sizey },
-    [1] = { ButtonPos = { x = 160, y = 0 }, HighLightBox = { x = 0, y = 0, width = 170, height = 40 },
-      ToolTipDir = "RIGHT", ToolTipText = L["helpPlateDungeonSelect"] },
-    [2] = { ButtonPos = { x = 205, y = -210 * scale },
-      HighLightBox = { x = 0, y = -58, width = (sizex - 6) * scale * 0.84, height = (sizey * scale * 0.82) - 58 }, ToolTipDir = "RIGHT",
-      ToolTipText = string.format(L["helpPlateNPC"], "\n", "\n") },
-    [3] = { ButtonPos = { x = 800 * scale, y = 0 * scale },
-      HighLightBox = { x = 703 * scale, y = 30, width = 210, height = 105 }, ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlatePresets"] },
-    [4] = { ButtonPos = { x = 800 * scale, y = -87 * scale },
-      HighLightBox = { x = 703 * scale, y = 30 - 105, width = 210, height = 95 }, ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlateDungeon"] },
-    [5] = { ButtonPos = { x = 800 * scale, y = -(115 + 102 * scale) },
+    [1] = {
+      ButtonPos = { x = 160, y = 0 },
+      HighLightBox = { x = 0, y = 0, width = 170, height = 40 },
+      ToolTipDir = "RIGHT",
+      ToolTipText = L["helpPlateDungeonSelect"]
+    },
+    [2] = {
+      ButtonPos = { x = 205, y = -210 * scale },
+      HighLightBox = { x = 0, y = -58, width = (sizex - 6) * scale * 0.84, height = (sizey * scale * 0.82) - 58 },
+      ToolTipDir = "RIGHT",
+      ToolTipText = string.format(L["helpPlateNPC"], "\n", "\n")
+    },
+    [3] = {
+      ButtonPos = { x = 800 * scale, y = 0 * scale },
+      HighLightBox = { x = 703 * scale, y = 30, width = 210, height = 105 },
+      ToolTipDir = "LEFT",
+      ToolTipText = L["helpPlatePresets"]
+    },
+    [4] = {
+      ButtonPos = { x = 800 * scale, y = -87 * scale },
+      HighLightBox = { x = 703 * scale, y = 30 - 105, width = 210, height = 95 },
+      ToolTipDir = "LEFT",
+      ToolTipText = L["helpPlateDungeon"]
+    },
+    [5] = {
+      ButtonPos = { x = 800 * scale, y = -(115 + 102 * scale) },
       HighLightBox = { x = 703 * scale, y = (30 - (105 + 102)), width = 210, height = (sidePanelHeight - 30) },
-      ToolTipDir = "LEFT", ToolTipText = string.format(L["helpPlatePulls"], "\n") },
+      ToolTipDir = "LEFT",
+      ToolTipText = string.format(L["helpPlatePulls"], "\n")
+    },
   }
   if not parent.HelpButton then
     parent.HelpButton = CreateFrame("Button", "MDTMainHelpPlateButton", parent, "MainHelpPlateButton")
