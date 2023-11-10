@@ -27,7 +27,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["The Everbloom"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 316, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 300, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -142,7 +142,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [2] = {
     ["name"] = "Everbloom Naturalist",
     ["id"] = 81819,
-    ["count"] = 5,
+    ["count"] = 4,
     ["health"] = 888633,
     ["scale"] = 1,
     ["displayId"] = 57021,
@@ -411,7 +411,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [3] = {
     ["name"] = "Dreadpetal",
     ["id"] = 81864,
-    ["count"] = 2,
+    ["count"] = 1,
     ["health"] = 394948,
     ["scale"] = 0.7,
     ["displayId"] = 25328,
@@ -1216,7 +1216,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [5] = {
     ["name"] = "Everbloom Mender",
     ["id"] = 81820,
-    ["count"] = 5,
+    ["count"] = 4,
     ["health"] = 888633,
     ["scale"] = 1,
     ["displayId"] = 57964,

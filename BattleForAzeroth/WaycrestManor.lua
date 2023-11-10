@@ -34,7 +34,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [5] = L["The Rupture"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 303, teeming = 363, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 305, teeming = 363, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -376,7 +376,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Soul Essence",
     ["id"] = 135240,
-    ["count"] = 2,
+    ["count"] = 1,
     ["health"] = 461097,
     ["scale"] = 1,
     ["displayId"] = 84408,
@@ -1278,7 +1278,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [7] = {
     ["name"] = "Infected Peasant",
     ["id"] = 134041,
-    ["count"] = 4,
+    ["count"] = 3,
     ["health"] = 768495,
     ["scale"] = 1,
     ["displayId"] = 83298,
@@ -2379,7 +2379,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [21] = {
     ["name"] = "Bewitched Captain",
     ["id"] = 131587,
-    ["count"] = 5,
+    ["count"] = 6,
     ["health"] = 1229592,
     ["scale"] = 1,
     ["displayId"] = 84078,
@@ -3493,7 +3493,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [35] = {
     ["name"] = "Gloom Horror",
     ["id"] = 139269,
-    ["count"] = 4,
+    ["count"] = 2,
     ["health"] = 768494,
     ["scale"] = 1,
     ["displayId"] = 86207,
