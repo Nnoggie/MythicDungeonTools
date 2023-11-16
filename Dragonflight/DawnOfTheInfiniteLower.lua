@@ -818,6 +818,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 20,
     ["health"] = 2964015,
     ["scale"] = 1,
+    ["stealthDetect"] = true,
     ["displayId"] = 113582,
     ["creatureType"] = "Dragonkin",
     ["level"] = 71,
