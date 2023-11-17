@@ -1567,6 +1567,7 @@ L["Shift-Click to delete all presets for this dungeon"] = "Shift-Click to delete
 L["Shiprat"] = "Shiprat"
 L["Shock Bot"] = "Shock Bot"
 L["Shortcut"] = "Shortcut"
+L["Use forces count"] = "Use forces count"
 L["Shrieking Terror"] = "Shrieking Terror"
 L["Shrine of the Storm"] = "Shrine of the Storm"
 L["Shrine of the Storm Sublevel"] = "Shrine of the Storm"
