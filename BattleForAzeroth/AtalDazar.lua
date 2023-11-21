@@ -28,7 +28,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Atal'Dazar Sublevel"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 198, teeming = 237, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 225, teeming = 237, teemingEnabled = true }
 MDT.mapPOIs[dungeonIndex] = {
 
 };
@@ -1728,7 +1728,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [18] = {
     ["name"] = "T'lonja",
     ["id"] = 128455,
-    ["count"] = 6,
+    ["count"] = 8,
     ["health"] = 1976010,
     ["scale"] = 1,
     ["displayId"] = 47659,
@@ -1755,7 +1755,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [19] = {
     ["name"] = "Monzumi",
     ["id"] = 129552,
-    ["count"] = 6,
+    ["count"] = 8,
     ["health"] = 2015530,
     ["scale"] = 1,
     ["displayId"] = 76483,
