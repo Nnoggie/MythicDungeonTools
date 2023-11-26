@@ -457,6 +457,7 @@ function MDT:CreateMenu()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
     self:CreateTutorialButton(self.main_frame)
+    self:UpdateBottomText()
     self.main_frame:SetScript("OnSizeChanged", function()
     end)
   end)
@@ -628,6 +629,10 @@ local bottomTips = {
 
 function MDT:UpdateBottomText()
   local f = self.main_frame.bottomPanelString
+  if db.scale < 1 then
+    f:SetText("")
+    return
+  end
   f:SetText(bottomTips[math.random(#bottomTips)])
 end
 
@@ -723,7 +728,7 @@ function MDT:MakeTopBottomTextures(frame)
   end
   externalButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
   externalButtonGroup:SetHeight(40)
-  externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", -5, -1)
+  externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", 0, 0)
   externalButtonGroup:SetLayout("Flow")
   externalButtonGroup.frame:SetFrameStrata("High")
   externalButtonGroup.frame:SetFrameLevel(7)
