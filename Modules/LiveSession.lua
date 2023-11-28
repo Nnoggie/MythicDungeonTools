@@ -10,7 +10,7 @@ function MDT:LiveSession_Enable()
   if self.liveSessionActive then return end
   self.main_frame.LiveSessionButton:SetText(L["*Live*"])
   self.main_frame.LiveSessionButton.text:SetTextColor(0, 1, 0)
-  self.main_frame.LinkToChatButton:SetDisabled(true)
+  --self.main_frame.LinkToChatButton:SetDisabled(true)
   self.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
   self.main_frame.sidePanelDeleteButton:SetDisabled(true)
   self.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
@@ -40,7 +40,7 @@ function MDT:LiveSession_Disable()
   local widget = MDT.main_frame.LiveSessionButton
   widget.text:SetTextColor(widget.normalTextColor.r, widget.normalTextColor.g, widget.normalTextColor.b)
   widget.text:SetText(L["Live"])
-  MDT.main_frame.LinkToChatButton:SetDisabled(false)
+  --MDT.main_frame.LinkToChatButton:SetDisabled(false)
   self.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
   local db = MDT:GetDB()
   if db.presets[db.currentDungeonIdx][1] == MDT:GetCurrentPreset() then
