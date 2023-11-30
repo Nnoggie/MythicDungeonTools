@@ -1,4 +1,4 @@
-local MDT = MDT
+local AddonName, MDT = ...
 local L = MDT.L
 local Compresser = LibStub:GetLibrary("LibCompress")
 local Encoder = Compresser:GetAddonEncodeTable()
@@ -250,6 +250,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
       characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       newMsg = newMsg..remaining:sub(1, start - 1)
+      local texture = "|TInterface\\AddOns\\"..AddonName.."\\Textures\\NnoggieMinimap:12|t"
       newMsg = "|cffe6cc80|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
       remaining = remaining:sub(finish + 1)
     elseif (characterNameLive and displayNameLive) then
