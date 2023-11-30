@@ -738,7 +738,23 @@ function MDT:SetUniqueID(preset)
     for i = 1, 11 do
       tinsert(s, bytetoB64[math.random(0, 63)])
     end
-    preset.uid = table.concat(s)
+    local newUid = table.concat(s)
+    -- collision check
+    local inUse = false
+    local presets = MDT:GetDB().presets
+    for _, dungeon in pairs(presets) do
+      for _, pres in pairs(dungeon) do
+        if pres.uid and pres.uid == newUid then
+          inUse = true
+          break
+        end
+      end
+    end
+    if not inUse then
+      preset.uid = newUid
+    else
+      MDT:SetUniqueID(preset)
+    end
   end
 end
 
