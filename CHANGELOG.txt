@@ -1,3 +1,6 @@
+- v4.2.0.11
+  - overhauled and re-enabled share button
+  - live mode will stay temporarily disabled until a future update
 - v4.2.0.10
   - temporarily disabled share and live buttons - they will be back soon
 - v4.2.0.8
