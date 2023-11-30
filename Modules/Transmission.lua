@@ -250,7 +250,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
       characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       newMsg = newMsg..remaining:sub(1, start - 1)
-      newMsg = "|cfff49d38|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
+      newMsg = "|cffe6cc80|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
       remaining = remaining:sub(finish + 1)
     elseif (characterNameLive and displayNameLive) then
       characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
@@ -258,7 +258,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
       newMsg = newMsg..remaining:sub(1, startLive - 1)
       newMsg = newMsg..
           "|Hgarrmission:mdtlive-"..
-          characterNameLive.."|h[".."|cFF00FF00Live Session: |cfff49d38"..""..displayNameLive.."]|h|r"
+          characterNameLive.."|h[".."|cFF00FF00Live Session: |cffe6cc80"..""..displayNameLive.."]|h|r"
       remaining = remaining:sub(finishLive + 1)
     else
       done = true
