@@ -238,8 +238,8 @@ do
     if last < now - 1 then
       if not MDT.main_frame then return end
       local inGroup = UnitInRaid("player") or IsInGroup()
-      --MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
-      --MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
+      MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
+      MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
       if inGroup then
         MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
         if MDT.liveSessionActive then
@@ -1082,8 +1082,6 @@ function MDT:MakeSidePanel(frame)
   end)
 
   frame.LinkToChatButton = AceGUI:Create("Button")
-  frame.LinkToChatButton:SetDisabled(true)
-  frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
   frame.LinkToChatButton:SetText(L["Share"])
   frame.LinkToChatButton:SetWidth(buttonWidth)
   frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
@@ -1093,9 +1091,9 @@ function MDT:MakeSidePanel(frame)
     local distribution = MDT:IsPlayerInGroup()
     if not distribution then return end
     local callback = function()
-      --frame.LinkToChatButton:SetDisabled(true)
+      frame.LinkToChatButton:SetDisabled(true)
       frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
-      --frame.LiveSessionButton:SetDisabled(true)
+      frame.LiveSessionButton:SetDisabled(true)
       frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
       frame.LinkToChatButton:SetText("...")
       frame.LiveSessionButton:SetText("...")
@@ -1119,9 +1117,9 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
   local inGroup = UnitInRaid("player") or IsInGroup()
-  --MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
+  MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
   if inGroup then
-    --MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
+    MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
   else
     MDT.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
   end
@@ -1147,8 +1145,6 @@ function MDT:MakeSidePanel(frame)
   end)
 
   frame.LiveSessionButton = AceGUI:Create("Button")
-  frame.LiveSessionButton:SetDisabled(true)
-  frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
   frame.LiveSessionButton:SetText(L["Live"])
   frame.LiveSessionButton:SetWidth(buttonWidth)
   frame.LiveSessionButton.frame:SetNormalFontObject(fontInstance)
@@ -1185,9 +1181,9 @@ function MDT:MakeSidePanel(frame)
   frame.LiveSessionButton.frame:SetScript("OnLeave", function()
     GameTooltip:Hide()
   end)
-  --MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
+  MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
   if inGroup then
-    --MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
+    MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
   else
     MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
   end

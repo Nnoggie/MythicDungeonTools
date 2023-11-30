@@ -700,11 +700,11 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     else
       MDT.main_frame.LiveSessionButton:SetText(L["Live"])
       MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
-      --MDT.main_frame.LinkToChatButton:SetDisabled(false)
+      MDT.main_frame.LinkToChatButton:SetDisabled(false)
       MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
     end
     MDT.main_frame.LinkToChatButton:SetText(L["Share"])
-    --MDT.main_frame.LiveSessionButton:SetDisabled(false)
+    MDT.main_frame.LiveSessionButton:SetDisabled(false)
     MDT.main_frame.SendingStatusBar:Hide()
     --output chat link
     if not silent then
