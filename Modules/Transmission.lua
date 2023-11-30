@@ -244,7 +244,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
   local remaining = msg
   local done
   repeat
-    local start, finish, characterName, displayName = remaining:find("%[MythicDungeonTools: ([^%s]+) %- ([^%]]+)%]")
+    local start, finish, characterName, displayName = remaining:find("%[MDT_v2: ([^%s]+) %- ([^%]]+)%]")
     local startLive, finishLive, characterNameLive, displayNameLive = remaining:find("%[MDTLive: ([^%s]+) %- ([^%]]+)%]")
     if (characterName and displayName) then
       characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
@@ -270,6 +270,11 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
 end
 
 local presetCommPrefix = "MDTPreset"
+
+MDT.presetPrefixes = {
+  ["request"] = "MDTPresetReq",
+  ["preset"] = "MDTPresetDist",
+}
 
 MDT.liveSessionPrefixes = {
   ["enabled"] = "MDTLiveEnabled",
@@ -299,6 +304,9 @@ MDT.dataCollectionPrefixes = {
 ---@diagnostic disable-next-line: duplicate-set-field
 function MDTcommsObject:OnEnable()
   self:RegisterComm(presetCommPrefix)
+  for _, prefix in pairs(MDT.presetPrefixes) do
+    self:RegisterComm(prefix)
+  end
   for _, prefix in pairs(MDT.liveSessionPrefixes) do
     self:RegisterComm(prefix)
   end
@@ -314,14 +322,15 @@ end
 
 --handle preset chat link clicks
 hooksecurefunc("SetItemRef", function(link, text)
+  --TODO: HANDLE LIVE SESSION LINKS
   if (link and link:sub(0, 19) == "garrmission:mdtlive") then
-    local sender = link:sub(21, string.len(link))
-    local name, realm = string.match(sender, "(.*)+(.*)")
-    sender = name.."-"..realm
+    local senderInfo = link:sub(21, string.len(link))
+    local name, realm = string.match(senderInfo, "(.*)+(.*)")
+    senderInfo = name.."-"..realm
     --ignore importing the live preset when sender is player, open MDT only
     local playerName, playerRealm = UnitFullName("player")
     playerName = playerName.."-"..playerRealm
-    if sender == playerName then
+    if senderInfo == playerName then
       MDT:Async(function() MDT:ShowInterfaceInternal(true) end, "showInterface")
     else
       MDT:Async(function()
@@ -331,20 +340,15 @@ hooksecurefunc("SetItemRef", function(link, text)
     end
     return
   elseif (link and link:sub(0, 15) == "garrmission:mdt") then
-    local sender = link:sub(17, string.len(link))
-    local name, realm = string.match(sender, "(.*)+(.*)")
+    local senderInfo = link:sub(17, string.len(link))
+    local name, realm, presetUid = string.match(senderInfo, "(.*)+(.*)+(.*)")
     if (not name) or (not realm) then
-      print(string.format(L["receiveErrorUpdate"], sender))
+      print(string.format(L["receiveErrorUpdate"], senderInfo))
       return
     end
-    sender = name.."-"..realm
-    local preset = MDT.transmissionCache[sender]
-    if preset then
-      MDT:Async(function()
-        MDT:ShowInterfaceInternal(true)
-        MDT:ImportPreset(CopyTable(preset))
-      end, "showInterfaceChatImport")
-    end
+    local sender = name.."-"..realm
+    MDT:RequestPreset(sender, presetUid)
+    MDT:ShowSpinner(5)
     return
   end
 end)
@@ -363,6 +367,23 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     realm = r
   end
   local fullName = name.."-"..realm
+
+  --standard request preset
+  if prefix == MDT.presetPrefixes.request then
+    local presetUid = message
+    MDT:SendPresetToPlayer(fullName, presetUid)
+  end
+
+  if prefix == MDT.presetPrefixes.preset then
+    MDT:Async(function()
+      MDT:ShowInterfaceInternal(true)
+      MDT:HideSpinner()
+      local preset = MDT:StringToTable(message, false)
+      if MDT:ValidateImportPreset(preset) then
+        MDT:ImportPreset(preset, true)
+      end
+    end, "ReceivePreset")
+  end
 
   --standard preset transmission
   --we cache the preset here already
@@ -726,6 +747,58 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
 
       local fullName = name.."+"..realm
       SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+    end
+  end
+end
+
+function MDT:ShareRouteLink()
+  local distribution = MDT:IsPlayerInGroup()
+  if not distribution then return end
+  local preset = MDT:GetCurrentPreset()
+  MDT:SetUniqueID(preset)
+  local prefix = "[MDT_v2: "
+  local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
+  local presetName = preset.text
+  local name, realm = UnitFullName("player")
+
+  --UnitFullName("player") will always return a players name with a capitalised first letter, regardless of whether
+  --or not that is actually the case, while UnitFullName("Nnoggie") will return the player name with case respected.
+  --This causes a subtle bug for (the few) players who's name does not begin with a capital, where chat links do not
+  --work, because line 243 in OnCommReceived respects the case of the name, but here in the sending code we do not.
+  --As a result, the entry in MDT.transmissionCache is indexed with case respected, but read on line 225 of this file
+  --without respect for case (due to us sending it here, without respect for case). The fix is to subsequently call
+  --GetUnitName(name) on the name, in order to get the correct case.
+
+  ---@diagnostic disable-next-line: param-type-mismatch
+  name = UnitFullName(name)
+
+  local senderInfo = name.."+"..realm.."+"..preset.uid
+  SendChatMessage(prefix..senderInfo.." - "..dungeon..": "..presetName.."]", distribution)
+end
+
+function MDT:RequestPreset(sender, presetUid)
+  MDTcommsObject:SendCommMessage(MDT.presetPrefixes.request, presetUid, "WHISPER", sender, "ALERT")
+end
+
+function MDT:SendPresetToPlayer(fullName, presetUid)
+  local preset = MDT:GetPresetByUid(presetUid)
+  if preset then
+    MDT:SetThrottleValues()
+    --gotta encode difficulty into preset
+    local db = MDT:GetDB()
+    preset.difficulty = db.currentDifficulty
+    local export = MDT:TableToString(preset, false, 5)
+    MDTcommsObject:SendCommMessage(MDT.presetPrefixes.preset, export, "WHISPER", fullName, "BULK")
+  end
+end
+
+function MDT:GetPresetByUid(presetUid)
+  local db = MDT:GetDB()
+  for _, dungeon in pairs(db.presets) do
+    for _, preset in pairs(dungeon) do
+      if preset.uid == presetUid then
+        return preset
+      end
     end
   end
 end

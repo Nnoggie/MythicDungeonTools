@@ -389,7 +389,7 @@ function MDT:CreateMenu()
   -- Close button
   self.main_frame.closeButton = CreateFrame("Button", "MDTCloseButton", self.main_frame, "UIPanelCloseButton")
   self.main_frame.closeButton:ClearAllPoints()
-  self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", 0, 0)
+  self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -1, -4)
   self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
   self.main_frame.closeButton:SetFrameLevel(4)
 
@@ -873,7 +873,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
   frame.sidePanel.WidgetGroup:SetWidth(245)
   frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight() + (frame.topPanel:GetHeight() * 2) - 31)
-  frame.sidePanel.WidgetGroup:SetPoint("TOP", frame.sidePanel, "TOP", 3, -1)
+  frame.sidePanel.WidgetGroup:SetPoint("TOP", frame.sidePanel, "TOP", 3, 5)
   frame.sidePanel.WidgetGroup:SetLayout("Flow")
 
   frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
@@ -930,6 +930,25 @@ function MDT:MakeSidePanel(frame)
   end)
   MDT:UpdatePresetDropDown()
   frame.sidePanel.WidgetGroup:AddChild(dropdown)
+
+  --Settings cogwheel
+  frame.settingsCogwheel = AceGUI:Create("Icon")
+  local settinggsCogwheel = frame.settingsCogwheel
+  settinggsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
+  settinggsCogwheel:SetImageSize(25, 25)
+  settinggsCogwheel:SetWidth(30)
+  settinggsCogwheel:SetCallback("OnEnter", function(...)
+    GameTooltip:SetOwner(settinggsCogwheel.frame, "ANCHOR_CURSOR")
+    GameTooltip:AddLine(L["openSettingsTooltip"], 1, 1, 1)
+    GameTooltip:Show()
+  end)
+  settinggsCogwheel:SetCallback("OnLeave", function(...)
+    GameTooltip:Hide()
+  end)
+  settinggsCogwheel:SetCallback("OnClick", function(...)
+    self:OpenSettingsDialog()
+  end)
+  frame.sidePanel.WidgetGroup:AddChild(frame.settingsCogwheel)
 
   ---new profile,rename,export,delete
   local buttonWidth = 75
@@ -1091,13 +1110,7 @@ function MDT:MakeSidePanel(frame)
     local distribution = MDT:IsPlayerInGroup()
     if not distribution then return end
     local callback = function()
-      frame.LinkToChatButton:SetDisabled(true)
-      frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
-      frame.LiveSessionButton:SetDisabled(true)
-      frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
-      frame.LinkToChatButton:SetText("...")
-      frame.LiveSessionButton:SetText("...")
-      MDT:SendToGroup(distribution)
+      MDT:ShareRouteLink()
     end
     local presetSize = self:GetPresetSize(false, 5)
     if presetSize > 25000 then
@@ -1188,33 +1201,14 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
   end
 
-  --Settings cogwheel
-  frame.settingsCogwheel = AceGUI:Create("Icon")
-  local settinggsCogwheel = frame.settingsCogwheel
-  settinggsCogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\helpIconGrey")
-  settinggsCogwheel:SetImageSize(25, 25)
-  settinggsCogwheel:SetWidth(30)
-  settinggsCogwheel:SetCallback("OnEnter", function(...)
-    GameTooltip:SetOwner(settinggsCogwheel.frame, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(L["openSettingsTooltip"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  settinggsCogwheel:SetCallback("OnLeave", function(...)
-    GameTooltip:Hide()
-  end)
-  settinggsCogwheel:SetCallback("OnClick", function(...)
-    self:OpenSettingsDialog()
-  end)
-
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.ClearPresetButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
+  -- frame.sidePanel.WidgetGroup:AddChild(frame.ClearPresetButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.settingsCogwheel)
+  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
+  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
+  -- frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 
   --Week Dropdown (Infested / Affixes)
   local function makeAffixString(week, affixes, longText)
@@ -4667,6 +4661,23 @@ function MDT:CancelAsync(name)
   MDT.asyncHandler:CancelAsync(name)
 end
 
+function MDT:ShowSpinner(timeout)
+  if not MDT.initSpinner then return end
+  MDT.initSpinner:Show()
+  MDT.initSpinner.Anim:Play()
+  if timeout then
+    C_Timer.After(timeout, function()
+      MDT:HideSpinner()
+    end)
+  end
+end
+
+function MDT:HideSpinner()
+  if not MDT.initSpinner then return end
+  MDT.initSpinner:Hide()
+  MDT.initSpinner.Anim:Stop()
+end
+
 local initStarted
 function initFrames()
   if initStarted then return end
@@ -4682,6 +4693,7 @@ function initFrames()
   initSpinner.BackgroundFrame.Background:SetVertexColor(0, 1, 0, 1)
   initSpinner.AnimFrame.Circle:SetVertexColor(0, 1, 0, 1)
   initSpinner:SetPoint("CENTER", UIParent, "CENTER", 0, 150)
+  initSpinner:SetFrameStrata("DIALOG")
   initSpinner:SetSize(60, 60)
   initSpinner:Show()
   initSpinner.Anim:Play()
