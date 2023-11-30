@@ -955,6 +955,10 @@ function MDT:MakeSidePanel(frame)
   end)
   frame.sidePanel.WidgetGroup:AddChild(frame.settingsCogwheel)
 
+  local function anchorTooltip(anchorFrame)
+    GameTooltip:SetOwner(anchorFrame, "ANCHOR_BOTTOMLEFT", -7, anchorFrame:GetHeight() + 3)
+  end
+
   ---new profile,rename,export,delete
   local buttonWidth = 75
   frame.sidePanelNewButton = AceGUI:Create("Button")
@@ -973,8 +977,7 @@ function MDT:MakeSidePanel(frame)
     MDT:OpenNewPresetDialog()
   end)
   frame.sidePanelNewButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanelNewButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.sidePanelNewButton.frame:GetWidth() * (-0), frame.sidePanelNewButton.frame:GetHeight())
+    anchorTooltip(frame.sidePanelNewButton.frame)
     GameTooltip:AddLine(L["Create a new preset"], 1, 1, 1)
     GameTooltip:Show()
   end)
@@ -1001,8 +1004,7 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.RenameFrame.Editbox:SetFocus()
   end)
   frame.sidePanelRenameButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanelRenameButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.sidePanelRenameButton.frame:GetWidth() * (-1), frame.sidePanelRenameButton.frame:GetHeight())
+    anchorTooltip(frame.sidePanelNewButton.frame)
     GameTooltip:AddLine(L["Rename the preset"], 1, 1, 1)
     GameTooltip:Show()
   end)
@@ -1024,8 +1026,7 @@ function MDT:MakeSidePanel(frame)
     MDT:OpenImportPresetDialog()
   end)
   frame.sidePanelImportButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanelImportButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.sidePanelImportButton.frame:GetWidth() * (-1), frame.sidePanelImportButton.frame:GetHeight())
+    anchorTooltip(frame.LinkToChatButton.frame)
     GameTooltip:AddLine(L["Import a preset from a text string"], 1, 1, 1)
     GameTooltip:Show()
   end)
@@ -1062,8 +1063,7 @@ function MDT:MakeSidePanel(frame)
     if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
   end)
   frame.sidePanelExportButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanelExportButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.sidePanelExportButton.frame:GetWidth() * (-2), frame.sidePanelExportButton.frame:GetHeight())
+    anchorTooltip(frame.LinkToChatButton.frame)
     GameTooltip:AddLine(L["Export the preset as a text string"], 1, 1, 1)
     GameTooltip:AddLine(L["stringShareExternalWebsite"], 1, 1, 1, 1)
     GameTooltip:Show()
@@ -1076,8 +1076,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanelDeleteButton:SetText(L["Delete"])
   frame.sidePanelDeleteButton:SetWidth(buttonWidth)
   frame.sidePanelDeleteButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanelDeleteButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.sidePanelDeleteButton.frame:GetWidth() * (-2), frame.sidePanelDeleteButton.frame:GetHeight())
+    anchorTooltip(frame.sidePanelNewButton.frame)
     GameTooltip:AddLine(L["Delete this preset"], 1, 1, 1)
     GameTooltip:AddLine(L["Shift-Click to delete all presets for this dungeon"], 1, 1, 1)
     GameTooltip:Show()
@@ -1126,8 +1125,7 @@ function MDT:MakeSidePanel(frame)
     end
   end)
   frame.LinkToChatButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanelDeleteButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.LinkToChatButton.frame:GetWidth() * (-2), -frame.LinkToChatButton.frame:GetHeight())
+    anchorTooltip(frame.LinkToChatButton.frame)
     GameTooltip:AddLine(L["Share the preset with your party members"], 1, 1, 1)
     GameTooltip:Show()
   end)
@@ -1158,8 +1156,7 @@ function MDT:MakeSidePanel(frame)
     end
   end)
   frame.LiveSessionButton.frame:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(frame.LiveSessionButton.frame, "ANCHOR_BOTTOMLEFT",
-      frame.LiveSessionButton.frame:GetWidth() * (-1), frame.LiveSessionButton.frame:GetHeight())
+    anchorTooltip(frame.LinkToChatButton.frame)
     GameTooltip:AddLine(L["Start or join the current |cFF00FF00Live Session|r"], 1, 1, 1)
     GameTooltip:AddLine(L[
     "Clicking this button will attempt to join the ongoing Live Session of your group or create a new one if none is found"
