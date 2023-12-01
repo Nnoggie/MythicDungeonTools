@@ -1114,7 +1114,13 @@ function MDT:MakeSidePanel(frame)
     local distribution = MDT:IsPlayerInGroup()
     if not distribution then return end
     local callback = function()
-      MDT:ShareRouteLink()
+      frame.LinkToChatButton:SetDisabled(true)
+      frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
+      frame.LiveSessionButton:SetDisabled(true)
+      frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
+      frame.LinkToChatButton:SetText("...")
+      frame.LiveSessionButton:SetText("...")
+      MDT:SendToGroup(distribution)
     end
     local presetSize = self:GetPresetSize(false, 5)
     if presetSize > 25000 then
