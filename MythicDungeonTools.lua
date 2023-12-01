@@ -1124,7 +1124,6 @@ function MDT:MakeSidePanel(frame)
     end
     local presetSize = self:GetPresetSize(false, 5)
     if presetSize > 3500 then
-      -- local timeToSend = string.format(1 + math.max(presetSize - 2550, 0) / 255, "%.2f")
       local timeToSend = 1 + math.max(presetSize - 2550, 0) / 255
       local prompt = string.format(L["LargePresetWarning"], timeToSend, "\n", "\n", "\n")
       MDT:OpenConfirmationFrame(450, 150, L["Sharing large preset"], "Share", prompt, callback)
