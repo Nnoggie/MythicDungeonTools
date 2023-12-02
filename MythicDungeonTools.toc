@@ -1,7 +1,7 @@
 ## Interface: 100200
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 4.3.1.0
+## Version: 4.3.1.1
 ## X-Curse-Project-ID: 288981
 ## X-Wago-ID: rN4VrAKD
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
