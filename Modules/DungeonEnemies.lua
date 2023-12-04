@@ -1069,6 +1069,7 @@ function MDT:DungeonEnemies_UpdateSelected(pull, pulls, ignoreHulls)
                     blip.texture_SelectedHighlight:Hide()
                   else
                     if blip.clone.inspiring and isInspiring then
+                      ---@diagnostic disable-next-line: param-type-mismatch
                       SetPortraitToTexture(blip.texture_Portrait, 135946);
                     end
                     blip.texture_Portrait:SetVertexColor(r, g, b, 1)
@@ -1243,6 +1244,7 @@ function MDT:DungeonEnemies_UpdateInspiring(week)
   local isInspiring = MDT:IsWeekInspiring(week)
   for _, blip in pairs(blips) do
     if blip.clone.inspiring and isInspiring then
+      ---@diagnostic disable-next-line: param-type-mismatch
       SetPortraitToTexture(blip.texture_Portrait, 135946);
       blip.texture_Indicator:SetVertexColor(1, 1, 0, 1)
       blip.texture_Indicator:SetScale(1.15)
