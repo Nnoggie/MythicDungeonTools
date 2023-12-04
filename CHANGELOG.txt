@@ -1,3 +1,5 @@
+- v4.3.1.2
+  - added option to display enemy forces count instead of percent in sidebar
 - v4.3.1.1
   - portuguese translation fix
 - v4.3.1.0
