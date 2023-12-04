@@ -658,7 +658,7 @@ function MDT:MakeSendingStatusBar(f)
   f.SendingStatusBar = CreateFrame("StatusBar", nil, f)
   local statusbar = f.SendingStatusBar
   statusbar:SetMinMaxValues(0, 1)
-  statusbar:SetPoint("LEFT", f.bottomPanel, "LEFT", 100, 0)
+  statusbar:SetPoint("CENTER", MDT.main_frame.bottomPanel, "CENTER", 0, 0)
   statusbar:SetWidth(200)
   statusbar:SetHeight(20)
   statusbar:SetStatusBarTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
@@ -679,6 +679,14 @@ function MDT:MakeSendingStatusBar(f)
   statusbar.value:SetShadowOffset(1, -1)
   statusbar.value:SetTextColor(1, 1, 1)
   statusbar:Hide()
+
+  --hooks to show/hide the bottom text
+  statusbar:HookScript("OnShow", function(self)
+    MDT.main_frame.bottomPanelString:Hide()
+  end)
+  statusbar:HookScript("OnHide", function(self)
+    MDT.main_frame.bottomPanelString:Show()
+  end)
 
   if IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
