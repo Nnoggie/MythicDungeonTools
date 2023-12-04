@@ -3257,6 +3257,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame:SetHeight(220)
   frame.settingsFrame:EnableResize(false)
   frame.settingsFrame:SetLayout("Flow")
+  MDT:FixAceGUIShowHide(frame.settingsFrame)
 
   frame.minimapCheckbox = AceGUI:Create("CheckBox")
   frame.minimapCheckbox:SetLabel(L["Enable Minimap Button"])
