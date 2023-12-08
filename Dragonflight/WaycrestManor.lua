@@ -1555,6 +1555,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1,
         ["teeming"] = true,
       },
+      [6] = {
+        ["x"] = 735.61604589195,
+        ["y"] = -86.188333616023,
+        ["sublevel"] = 1,
+        ["scale"] = 1.6,
+      },
     },
   },
   [15] = {
