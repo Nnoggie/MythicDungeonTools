@@ -1,3 +1,6 @@
+- v4.3.1.3
+  - added the ability to press enter key to confirm creating / renaming a route
+  - added missing witch in waycrest manor
 - v4.3.1.2
   - added option to display enemy forces count instead of percent in sidebar
   - wrath classic fixes
