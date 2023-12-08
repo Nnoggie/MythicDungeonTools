@@ -3870,6 +3870,9 @@ function MDT:MakeRenameFrame(frame)
     end
     frame.RenameFrame:DoLayout()
   end)
+  frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(widget, event, text)
+    MDT:RenamePreset(renameText)
+  end)
   frame.RenameFrame.Editbox:DisableButton(true)
 
   frame.RenameFrame:AddChild(frame.RenameFrame.Editbox)
