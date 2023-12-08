@@ -2907,7 +2907,6 @@ function MDT:MakePresetCreationFrame(frame)
     end
   end)
 
-
   frame.PresetCreationEditbox = AceGUI:Create("EditBox")
   frame.PresetCreationEditbox:SetLabel(L["Preset Name"]..":")
   frame.PresetCreationEditbox:SetWidth(255)
@@ -2923,6 +2922,10 @@ function MDT:MakePresetCreationFrame(frame)
       frame.presetCreationCreateButton.text:SetTextColor(0.5, 0.5, 0.5)
     end
     frame.presetCreationFrame:DoLayout()
+  end)
+  frame.PresetCreationEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
+    local name = frame.PresetCreationEditbox:GetText()
+    MDT:CreateNewPreset(name)
   end)
   frame.presetCreationFrame:AddChild(frame.PresetCreationEditbox)
 
