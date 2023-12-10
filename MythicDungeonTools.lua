@@ -2022,12 +2022,22 @@ end
 
 function MDT:SetLivePreset()
   local preset = self:GetCurrentPreset()
-  self:SetUniqueID(preset)
-  self.livePresetUID = preset.uid
-  self:LiveSession_SendPreset(preset)
-  self:UpdatePresetDropdownTextColor()
-  self.main_frame.setLivePresetButton:Hide()
-  self.main_frame.liveReturnButton:Hide()
+  local callback = function()
+    self:SetUniqueID(preset)
+    self.livePresetUID = preset.uid
+    self:LiveSession_SendPreset(preset)
+    self:UpdatePresetDropdownTextColor()
+    self.main_frame.setLivePresetButton:Hide()
+    self.main_frame.liveReturnButton:Hide()
+  end
+  local presetSize = self:GetPresetSize(false, 5)
+  if presetSize > 3500 then
+    local timeToSend = 1 + math.max(presetSize - 2550, 0) / 255
+    local prompt = string.format(L["LargePresetWarning"], timeToSend, "\n", "\n", "\n")
+    MDT:OpenConfirmationFrame(450, 150, L["Sharing large preset"], "Share", prompt, callback)
+  else
+    callback()
+  end
 end
 
 ---Returns if the current week has an affix week set that includes the teeming affix
