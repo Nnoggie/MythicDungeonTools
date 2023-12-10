@@ -192,11 +192,12 @@ local function setUpMouseHandlers(self)
 
   end)
   local tempPulls
+  local targetPull
   self:SetScript("OnDragStart", function()
     local x, y, scale
     preset = MDT:GetCurrentPreset()
     tempPulls = MDT:DeepCopy(preset.value.pulls)
-    local targetPull
+    targetPull = nil
     local _, _, _, blipX, blipY = self:GetPoint()
     self:SetScript("OnUpdate", function()
       local nx, ny = MDT:GetCursorPosition()
@@ -224,6 +225,7 @@ local function setUpMouseHandlers(self)
     self:SetScript("OnUpdate", nil)
     preset.value.pulls = tempPulls
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull(), tempPulls)
+    MDT:SetSelectionToPull(targetPull)
     MDT:ReloadPullButtons()
     MDT:UpdateProgressbar()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
