@@ -1123,14 +1123,7 @@ function MDT:MakeSidePanel(frame)
       frame.LiveSessionButton:SetText("...")
       MDT:SendToGroup(distribution)
     end
-    local presetSize = self:GetPresetSize(false, 5)
-    if presetSize > 3500 then
-      local timeToSend = 1 + math.max(presetSize - 2550, 0) / 255
-      local prompt = string.format(L["LargePresetWarning"], timeToSend, "\n", "\n", "\n")
-      MDT:OpenConfirmationFrame(450, 150, L["Sharing large preset"], "Share", prompt, callback)
-    else
-      callback()
-    end
+    MDT:CheckPresetSize(callback)
   end)
   frame.LinkToChatButton.frame:SetScript("OnEnter", function()
     anchorTooltip(frame.LinkToChatButton.frame)
@@ -2030,6 +2023,10 @@ function MDT:SetLivePreset()
     self.main_frame.setLivePresetButton:Hide()
     self.main_frame.liveReturnButton:Hide()
   end
+  MDT:CheckPresetSize(callback)
+end
+
+function MDT:CheckPresetSize(callback)
   local presetSize = self:GetPresetSize(false, 5)
   if presetSize > 3500 then
     local timeToSend = 1 + math.max(presetSize - 2550, 0) / 255
