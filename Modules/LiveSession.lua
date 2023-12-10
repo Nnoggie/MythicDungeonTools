@@ -238,13 +238,13 @@ function MDT:LiveSession_SendBoralusSelector(faction)
 end
 
 do
-  local timer
+  local colorTimer
   ---LiveSession_QueueColorUpdate
   ---Disgusting workaround for shitty colorpicker
   ---Only send an update once a color of a pull has not changed for 0.2 seconds
   function MDT:LiveSession_QueueColorUpdate()
-    if timer then timer:Cancel() end
-    timer = C_Timer.NewTimer(0.2, function()
+    if colorTimer then colorTimer:Cancel() end
+    colorTimer = C_Timer.NewTimer(0.2, function()
       self:LiveSession_SendPulls(self:GetPulls())
     end)
   end
