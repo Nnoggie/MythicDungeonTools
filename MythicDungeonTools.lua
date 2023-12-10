@@ -1197,7 +1197,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
-  -- frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
+  frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 
   --Week Dropdown (Infested / Affixes)
   local function makeAffixString(week, affixes, longText)
