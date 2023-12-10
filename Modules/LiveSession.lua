@@ -23,15 +23,22 @@ function MDT:LiveSession_Enable()
   self:UpdatePresetDropdownTextColor()
   self:SetThrottleValues()
   timer = C_Timer.NewTimer(2, function()
-    self.liveSessionRequested = false
-    local distribution = self:IsPlayerInGroup()
-    local preset = self:GetCurrentPreset()
-    local prefix = "[MDTLive: "
-    local dungeon = self:GetDungeonName(preset.value.currentDungeonIdx)
-    local presetName = preset.text
-    local name, realm = UnitFullName("player")
-    local fullName = name.."+"..realm
-    SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+    local callback = function()
+      self.liveSessionRequested = false
+      local distribution = self:IsPlayerInGroup()
+      local preset = self:GetCurrentPreset()
+      local prefix = "[MDTLive: "
+      local dungeon = self:GetDungeonName(preset.value.currentDungeonIdx)
+      local presetName = preset.text
+      local name, realm = UnitFullName("player")
+      local fullName = name.."+"..realm
+      SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+    end
+    local cancelCallback = function()
+      MDT:LiveSession_Disable()
+    end
+    local fireCancelOnClose = true
+    MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
   end)
 end
 

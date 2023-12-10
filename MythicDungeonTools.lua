@@ -2026,12 +2026,12 @@ function MDT:SetLivePreset()
   MDT:CheckPresetSize(callback)
 end
 
-function MDT:CheckPresetSize(callback)
+function MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
   local presetSize = self:GetPresetSize(false, 5)
   if presetSize > 3500 then
     local timeToSend = 1 + math.max(presetSize - 2550, 0) / 255
     local prompt = string.format(L["LargePresetWarning"], timeToSend, "\n", "\n", "\n")
-    MDT:OpenConfirmationFrame(450, 150, L["Sharing large preset"], "Share", prompt, callback)
+    MDT:OpenConfirmationFrame(450, 150, L["Sharing large preset"], "Share", prompt, callback, nil, cancelCallback, fireCancelOnClose)
   else
     callback()
   end
@@ -4033,7 +4033,7 @@ function MDT:MakeClearConfirmationFrame(frame)
 end
 
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
-function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2)
+function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2, fireCancelOnClose)
   local f
   if MDT.main_frame then
     f = MDT.main_frame.ConfirmationFrame
@@ -4091,6 +4091,14 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   else
     f.CancelButton:SetCallback("OnClick", function()
       if MDT.main_frame then MDT:HideAllDialogs() else f:Hide() end
+    end)
+  end
+  if fireCancelOnClose and callback2 then
+    f:SetCallback("OnClose", function(widget)
+      callback2()
+    end)
+  else
+    f:SetCallback("OnClose", function(widget)
     end)
   end
   if MDT.main_frame then MDT:HideAllDialogs() end
