@@ -704,6 +704,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     local distribution = userArgs[1]
     local preset = userArgs[2]
     local silent = userArgs[3]
+    local fromLiveSession = userArgs[4]
     --restore "Send" and "Live" button
     if MDT.liveSessionActive then
       MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
@@ -717,7 +718,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     MDT.main_frame.LiveSessionButton:SetDisabled(false)
     MDT.main_frame.SendingStatusBar:Hide()
     --output chat link
-    if not silent then
+    if not silent and preset then
       local prefix = "[MDT_v2: "
       local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
       local presetName = preset.text
@@ -738,9 +739,11 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
     end
     numActiveTransmissions = numActiveTransmissions - 1
-    MDT:RestoreThrottleValues()
+    if not fromLiveSession then MDT:RestoreThrottleValues() end
   end
 end
+
+MDT.displaySendingProgress = displaySendingProgress
 
 function MDT:GetPresetByUid(presetUid)
   local db = MDT:GetDB()
