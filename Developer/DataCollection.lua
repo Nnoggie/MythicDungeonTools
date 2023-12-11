@@ -98,7 +98,6 @@ local characteristicsData = {
       [45524] = true,  --Chains of Ice
       [273977] = true, --Grip of the Dead
       [317898] = true, --Blinding Sleet (Slow)
-      [370898] = true, --Permeating Chill
       [6343] = true,   --Thunderclap
     }
   },
