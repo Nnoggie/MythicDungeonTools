@@ -1,3 +1,6 @@
+- v4.3.1.5 (2023-12-12)
+  - updated health values
+  - adding enemies to a pull via the drag and drop method on the map will now also select the targeted pull
 - v4.3.1.4 (2023-12-10)
   - re-enabled live mode within new blizzard restrictions
 - v4.3.1.3
