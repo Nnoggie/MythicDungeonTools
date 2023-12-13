@@ -2917,7 +2917,7 @@ function MDT:MakePresetCreationFrame(frame)
   frame.PresetCreationEditbox = AceGUI:Create("EditBox")
   frame.PresetCreationEditbox:SetLabel(L["Preset Name"]..":")
   frame.PresetCreationEditbox:SetWidth(255)
-  frame.PresetCreationEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
+  frame.PresetCreationEditbox:SetCallback("OnTextChanged", function(widget, event, text)
     --check if name is valid, block button if so, unblock if valid
     if MDT:SanitizePresetName(text) then
       frame.presetCreationLabel:SetText(nil)
@@ -2932,7 +2932,9 @@ function MDT:MakePresetCreationFrame(frame)
   end)
   frame.PresetCreationEditbox:SetCallback("OnEnterPressed", function(widget, event, text)
     local name = frame.PresetCreationEditbox:GetText()
-    MDT:CreateNewPreset(name)
+    if MDT:SanitizePresetName(name) then
+      MDT:CreateNewPreset(name)
+    end
   end)
   frame.presetCreationFrame:AddChild(frame.PresetCreationEditbox)
 
@@ -3878,7 +3880,9 @@ function MDT:MakeRenameFrame(frame)
     frame.RenameFrame:DoLayout()
   end)
   frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(widget, event, text)
-    MDT:RenamePreset(renameText)
+    if MDT:SanitizePresetName(renameText) then
+      MDT:RenamePreset(renameText)
+    end
   end)
   frame.RenameFrame.Editbox:DisableButton(true)
 
