@@ -1,3 +1,5 @@
+- v4.3.1.6 (2023-12-13)
+  - fixed various route creation / renaming editbox bugs
 - v4.3.1.5 (2023-12-12)
   - updated health values
   - adding enemies to a pull via the drag and drop method on the map will now also select the targeted pull
