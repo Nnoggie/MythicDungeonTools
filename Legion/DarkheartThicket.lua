@@ -1094,7 +1094,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Grip"] = true,
       ["Mind Control"] = true,
       ["Root"] = true,
-      ["Fear"] = true,
       ["Banish"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
