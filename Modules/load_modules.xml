@@ -12,5 +12,6 @@
 	<Script file='DungeonSelect.lua'/>
 	<Script file='Conflicts.lua'/>
 	<Script file='ErrorHandling.lua'/>
+	<Script file='VersionCheck.lua'/>
 </Ui>
 
