@@ -86,6 +86,7 @@ local currentTab = "tab1"
 local function MakeEnemeyInfoFrame()
   --frame
   local f = AceGUI:Create("Frame")
+  MDT.enemyInfoFrame = f
   f:SetTitle(L["Enemy Info"])
   f:EnableResize(false)
   f.frame:SetMovable(false)
