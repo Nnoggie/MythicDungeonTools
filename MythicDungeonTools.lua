@@ -692,6 +692,30 @@ function MDT:MakeTopBottomTextures(frame)
   ---@diagnostic disable-next-line: redundant-parameter
   frame.bottomLeftPanelString:SetText(" v"..C_AddOns.GetAddOnMetadata(AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
+  --add clickarea
+  frame.bottomLeftPanelString.clickArea = CreateFrame("Button", "MDTBottomLeftPanelClickArea", frame)
+  local clickArea = frame.bottomLeftPanelString.clickArea
+  clickArea:Show()
+  clickArea:SetHeight(frame.bottomPanel:GetHeight())
+  clickArea:SetWidth(50)
+  clickArea:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
+  clickArea:SetFrameStrata("HIGH")
+  clickArea:SetFrameLevel(5)
+  clickArea:SetScript("OnClick", function(self, button, down)
+    MDT:ToggleVersionCheckFrame()
+  end)
+  clickArea.tooltipText = "Open changelog / version check"
+  clickArea:SetScript("OnEnter", function()
+    local widget = {
+      frame = clickArea,
+      tooltipText = clickArea.tooltipText,
+      type = "button",
+    }
+    MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
+  end)
+  clickArea:SetScript("OnLeave", function()
+    MDT:ToggleToolbarTooltip(false)
+  end)
 
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
   MDT:FixAceGUIShowHide(externalButtonGroup, frame)
