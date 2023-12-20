@@ -1,3 +1,5 @@
+- v4.3.1.8 (2023-12-20)
+  - removed fear on nightmare dweller
 - v4.3.1.7 (2023-12-13)
   - fixed various route creation / renaming editbox bugs
 - v4.3.1.5 (2023-12-12)
