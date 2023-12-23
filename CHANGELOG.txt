@@ -1,3 +1,5 @@
+- v4.3.2.0 (2023-12-23)
+  - VOTI Rise: G2 replaced wrongly placed magus with vanguard
 - v4.3.1.8 (2023-12-20)
   - removed fear on nightmare dweller
 - v4.3.1.7 (2023-12-13)
