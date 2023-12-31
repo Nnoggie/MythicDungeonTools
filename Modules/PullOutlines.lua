@@ -336,7 +336,6 @@ local function getPullsToDraw(newPulls)
   local removedPulls = {}
 
   if not previousPulls then
-    previousPulls = CopyTable(newPulls)
     return newPulls, removedPulls
   end
 
@@ -407,7 +406,6 @@ local function getPullsToDraw(newPulls)
     end
   end
 
-  previousPulls = CopyTable(newPulls)
   return changedPulls, removedPulls
 end
 
@@ -442,6 +440,7 @@ function MDT:DrawAllHulls(pulls, force)
       MDT:DrawHullFontString(vertices, pullIdx)
       coroutine.yield()
     end
+    previousPulls = CopyTable(pulls)
   end, "DrawAllHulls", true)
 end
 
