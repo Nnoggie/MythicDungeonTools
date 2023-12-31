@@ -1,3 +1,5 @@
+- v4.3.2.2 (2024-01-01)
+  - fixed an issue where pull outlines could persist after a pull was deleted
 - v4.3.2.1 (2023-12-29)
   - VOTI Fakll: Remove Timestream Leech 12, move Timestream Leech 3 and remove its group link
 - v4.3.2.0 (2023-12-23)
