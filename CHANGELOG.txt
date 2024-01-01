@@ -1,3 +1,5 @@
+- v4.3.2.3 (2024-01-02)
+  - locale string fixes
 - v4.3.2.2 (2024-01-01)
   - fixed an issue where pull outlines could persist after a pull was deleted
 - v4.3.2.1 (2023-12-29)
