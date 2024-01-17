@@ -1,4 +1,6 @@
-- v4.3.2.6 (2024-01-11)
+- v4.3.3.0 (2024-01-17)
+  - Patch 10.2.5 update
+- v4.3.2.6 (2024-01-14)
   - DOTI: Galakrond's Fall: Unlinked Timeslicer 4 and added patrol path
 - v4.3.2.5 (2024-01-11)
   - settings frame should no longer erroneously persist after closing it
