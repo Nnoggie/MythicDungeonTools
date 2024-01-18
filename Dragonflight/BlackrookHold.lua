@@ -394,6 +394,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [194966] = {
+      },
+      [196883] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 208.54400632493,
