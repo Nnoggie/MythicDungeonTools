@@ -1,3 +1,5 @@
+- v4.3.3.1 (2024-01-18)
+  - add missing spells for Lord Etheldrin Ravencrest
 - v4.3.3.0 (2024-01-17)
   - Patch 10.2.5 update
 - v4.3.2.6 (2024-01-14)
