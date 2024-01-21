@@ -956,7 +956,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
   settinggsCogwheel:SetCallback("OnClick", function(...)
-    self:OpenSettingsDialog()
+    self:ToggleSettingsDialog()
   end)
   frame.sidePanel.WidgetGroup:AddChild(frame.settingsCogwheel)
 
@@ -2319,19 +2319,23 @@ function MDT:OpenClearPresetDialog()
   MDT.main_frame.ClearConfirmationFrame:Show()
 end
 
-function MDT:OpenSettingsDialog()
+function MDT:ToggleSettingsDialog()
   if not MDT.main_frame.settingsFrame then
     MDT:MakeSettingsFrame(MDT.main_frame)
     MDT:MakeCustomColorFrame(MDT.main_frame.settingsFrame)
   end
-  MDT:HideAllDialogs()
-  MDT.main_frame.settingsFrame:ClearAllPoints()
-  MDT.main_frame.settingsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  MDT.main_frame.settingsFrame:SetStatusText("")
-  MDT.main_frame.settingsFrame:Show()
-  MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
-  if db.colorPaletteInfo.colorPaletteIdx == 6 then
-    MDT:OpenCustomColorsDialog()
+  if MDT.main_frame.settingsFrame:IsShown() then
+    MDT.main_frame.settingsFrame:Hide()
+  else
+    MDT:HideAllDialogs()
+    MDT.main_frame.settingsFrame:ClearAllPoints()
+    MDT.main_frame.settingsFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+    MDT.main_frame.settingsFrame:SetStatusText("")
+    MDT.main_frame.settingsFrame:Show()
+    MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
+    if db.colorPaletteInfo.colorPaletteIdx == 6 then
+      MDT:OpenCustomColorsDialog()
+    end
   end
 end
 

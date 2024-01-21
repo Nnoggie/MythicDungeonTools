@@ -354,7 +354,7 @@ local methods = {
       text = L["Pull Drop Color Settings"],
       notCheckable = 1,
       func = function()
-        MDT:OpenSettingsDialog()
+        MDT:ToggleSettingsDialog()
       end
     })
     local function swatchFunc()
@@ -548,7 +548,7 @@ local methods = {
       text = L["Pull Drop Color Settings"],
       notCheckable = 1,
       func = function()
-        MDT:OpenSettingsDialog()
+        MDT:ToggleSettingsDialog()
       end
     })
     local function swatchMultiFunc()
@@ -1152,13 +1152,13 @@ local methods = {
     local progressText
     if db.useForcesCount then
       progressText = string.format("%3d", currentForces)
-      else
+    else
       progressText = string.format("%.1f%%", currentPercent * 100)
     end
     if show then
       self.reapingIcon:Show()
       self.reapingIcon.overlay:Show()
-      progressText = "|cFF00FF00".. progressText
+      progressText = "|cFF00FF00"..progressText
 
       local currentReaps = math.floor(currentPercent / 0.2)
       local oldReaps = math.floor(oldPercent / 0.2)
@@ -1174,7 +1174,7 @@ local methods = {
       self.reapingIcon:Hide()
       self.reapingIcon.overlay:Hide()
       self.multiReapingFontString:Hide()
-      progressText = "|cFFFFFFFF".. progressText
+      progressText = "|cFFFFFFFF"..progressText
     end
     local pullForces = MDT:CountForces(self.index, true)
     if pullForces > 0 then
@@ -1199,7 +1199,7 @@ local methods = {
     end
     if show then
       self.pridefulIcon:Show()
-      progressText = "|cFFFFFFFF".. progressText
+      progressText = "|cFFFFFFFF"..progressText
 
       local currentPrides = math.floor(currentPercent / 0.2)
       local oldPrides = math.floor(oldPercent / 0.2)
@@ -1214,7 +1214,7 @@ local methods = {
     else
       self.pridefulIcon:Hide()
       self.multiPridefulFontString:Hide()
-      progressText = "|cFFFFFFFF".. progressText
+      progressText = "|cFFFFFFFF"..progressText
     end
     local pullForces = MDT:CountForces(self.index, true)
     if pullForces > 0 then
