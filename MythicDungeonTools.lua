@@ -3837,6 +3837,7 @@ function MDT:DeletePull(index)
   if #pulls == 1 then return end
   self:PresetsDeletePull(index)
   self:ReloadPullButtons()
+  MDT:UpdateProgressbar()
   local pullCount = 0
   for k, v in pairs(pulls) do
     pullCount = pullCount + 1
