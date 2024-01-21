@@ -4,7 +4,7 @@ L = L or {}
 
 L["Open an issue on GitHub"] = "Open an issue on GitHub"
 L["Provide feedback in Discord"] = "Provide feedback in Discord"
-
+L["Enable Compartment Button"] = "Enable Compartment Button"
 L["Sleep Walk"] = "Sleep Walk"
 L["Scare Beast"] = "Scare Beast"
 L["Hibernate"] = "Hibernate"

@@ -63,7 +63,11 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
         minimapIcon:Lock("MythicDungeonTools")
       end
     elseif (buttonPressed == 'MiddleButton') then
-      MDT:HideMinimapButton()
+      if db.minimap.hide then
+        MDT:ShowMinimapButton()
+      else
+        MDT:HideMinimapButton()
+      end
     else
       MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
     end
@@ -76,11 +80,6 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
     tooltip:AddLine(L["Middle-click to disable Minimap Button"])
   end,
 })
-
--- Global for Addon Compartment
-MDT_OnAddonCompartmentClick = function()
-  MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
-end
 
 SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
 SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
@@ -164,6 +163,7 @@ local defaultSavedVars = {
     tooltipInCorner = false,
     minimap = {
       hide = false,
+      compartmentHide = false,
     },
     toolbar = {
       color = { r = 1, g = 1, b = 1, a = 1 },
@@ -221,6 +221,10 @@ do
       if db.newDataCollectionActive or MDT:IsOnBetaServer() then
         MDT.DataCollection:Init()
         MDT.DataCollection:InitHealthTrack()
+      end
+      --compartment
+      if not db.minimap.compartmentHide then
+        minimapIcon:AddButtonToCompartment("MythicDungeonTools")
       end
       --fix db corruption
       do
@@ -3271,7 +3275,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame = AceGUI:Create("Frame")
   frame.settingsFrame:SetTitle(L["Settings"])
   frame.settingsFrame:SetWidth(240)
-  frame.settingsFrame:SetHeight(250)
+  frame.settingsFrame:SetHeight(270)
   frame.settingsFrame:EnableResize(false)
   frame.settingsFrame:SetLayout("Flow")
   frame.settingsFrame.statustext:GetParent():Hide()
@@ -3289,6 +3293,19 @@ function MDT:MakeSettingsFrame(frame)
     end
   end)
   frame.settingsFrame:AddChild(frame.minimapCheckbox)
+
+  frame.compartmentCheckbox = AceGUI:Create("CheckBox")
+  frame.compartmentCheckbox:SetLabel(L["Enable Compartment Button"])
+  frame.compartmentCheckbox:SetValue(not db.minimap.compartmentHide)
+  frame.compartmentCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.minimap.compartmentHide = not value
+    if not db.minimap.compartmentHide then
+      minimapIcon:AddButtonToCompartment("MythicDungeonTools")
+    else
+      minimapIcon:RemoveButtonFromCompartment("MythicDungeonTools")
+    end
+  end)
+  frame.settingsFrame:AddChild(frame.compartmentCheckbox)
 
   frame.forcesCheckbox = AceGUI:Create("CheckBox")
   frame.forcesCheckbox:SetLabel(L["Use forces count"])
