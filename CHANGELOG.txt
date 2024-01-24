@@ -1,3 +1,6 @@
+- v4.3.3.3 (2024-01-24)
+  - deleting a pull will refresh the enemy forces progress bar
+  - added stealth detect to Faceless Watcher in Throne of the Tides
 - v4.3.3.2 (2024-01-21)
   - better addon compartment support
 - v4.3.3.1 (2024-01-18)
