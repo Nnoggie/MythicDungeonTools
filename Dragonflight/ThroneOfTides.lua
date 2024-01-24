@@ -1130,6 +1130,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 8,
     ["health"] = 2369800,
     ["scale"] = 1,
+    ["stealthDetect"] = true,
     ["displayId"] = 31674,
     ["creatureType"] = "Aberration",
     ["level"] = 71,
