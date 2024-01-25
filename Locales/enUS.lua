@@ -1,7 +1,7 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
-
+L["chatNoninteractiveWarning"]  = "Chat frame is currently set to noninteractive, you will not be able to click on MDT routes."
 L["Open an issue on GitHub"] = "Open an issue on GitHub"
 L["Provide feedback in Discord"] = "Provide feedback in Discord"
 L["Enable Compartment Button"] = "Enable Compartment Button"

@@ -237,7 +237,23 @@ function MDT:StringToTable(inString, fromChat)
   return deserialized
 end
 
-local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
+local checkChatframeInteractive
+do
+  local lastPrintTime = 0
+  checkChatframeInteractive = function(chatFrame)
+    if chatFrame and chatFrame.isUninteractable then
+      local currentTime = GetTime()
+      if currentTime - lastPrintTime >= 5 * 60 then
+        C_Timer.After(0.2, function()
+          print("MDT: |cFFFF0000Warning!|r "..L["chatNoninteractiveWarning"])
+        end)
+        lastPrintTime = currentTime
+      end
+    end
+  end
+end
+
+local function filterFunc(chatFrame, event, msg, player, l, cs, t, flag, channelId, ...)
   if flag == "GM" or flag == "DEV" or (event == "CHAT_MSG_CHANNEL" and type(channelId) == "number" and channelId > 0) then
     return
   end
@@ -254,6 +270,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
       local texture = "|TInterface\\AddOns\\"..AddonName.."\\Textures\\NnoggieMinimap:12|t"
       newMsg = "|cffe6cc80|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
       remaining = remaining:sub(finish + 1)
+      checkChatframeInteractive(chatFrame)
     elseif (characterNameLive and displayNameLive) then
       characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
@@ -262,6 +279,7 @@ local function filterFunc(_, event, msg, player, l, cs, t, flag, channelId, ...)
           "|Hgarrmission:mdtlive-"..
           characterNameLive.."|h[".."|cFF00FF00Live Session: |cffe6cc80"..""..displayNameLive.."]|h|r"
       remaining = remaining:sub(finishLive + 1)
+      checkChatframeInteractive(chatFrame)
     else
       done = true
     end
