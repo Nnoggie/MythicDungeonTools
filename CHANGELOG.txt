@@ -1,3 +1,9 @@
+- v4.3.3.5 (2024-01-28)
+  - Darkheart Thicket: Replace Poisoner with Ruiner in G5
+  - Clicking an enemy will now deselect the currently selected Tool
+  - Fixed an issue where pull outlines would not properly update when deleting multiple pulls at once
+  - MDT will now only automatically swap dungeon based on zone while no keystone is active
+  - Add "G" letter to the group number indicator when holding the ALT key
 - v4.3.3.4 (2024-01-25)
   - Darkheart Thicket: removed various wrong characteristics
   - added a warning for when a route is shared and the user has their chat set to noninteractive
