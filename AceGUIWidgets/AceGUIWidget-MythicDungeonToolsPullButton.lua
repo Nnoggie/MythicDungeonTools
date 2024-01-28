@@ -718,7 +718,7 @@ local methods = {
             --MDT:AddPull(1) --we handle not deleting all pulls in MDT:DeletePull() instead
             MDT:SetSelectionToPull(1)
           end
-          MDT:DrawAllHulls()
+          MDT:ReloadPullButtons()
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
