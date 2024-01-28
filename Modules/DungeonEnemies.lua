@@ -336,6 +336,8 @@ local function setUpMouseHandlersAwakened(self, clone, scale, riftOffsets)
 end
 
 function MDTDungeonEnemyMixin:OnClick(button, down)
+  --always deselect toolbar tool
+  MDT:UpdateSelectedToolbarTool()
   if button == "LeftButton" then
     if IsShiftKeyDown() and not self.selected then
       local newPullIdx = MDT:GetCurrentPull() + 1
