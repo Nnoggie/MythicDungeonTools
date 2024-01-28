@@ -69,7 +69,7 @@ end
 function MDT:DisplayBlipModifierLabels(modifier)
   for _, blip in pairs(blips) do
     blip.textLocked = true
-    local text = (modifier == "alt" and blip.clone.g) or (modifier == "ctrl" and blip.data.count) or ""
+    local text = (modifier == "alt" and "G"..blip.clone.g) or (modifier == "ctrl" and blip.data.count) or ""
     blip.fontstring_Text1:SetText(text)
     blip.fontstring_Text1:Show()
   end
