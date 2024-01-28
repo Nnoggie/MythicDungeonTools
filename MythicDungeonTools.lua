@@ -2637,6 +2637,7 @@ MDT.zoneIdToDungeonIdx = {}
 
 local lastUpdatedDungeonIdx
 function MDT:CheckCurrentZone(init)
+  if C_ChallengeMode.IsChallengeModeActive() then return end
   local zoneId = C_Map.GetBestMapForUnit("player")
   local dungeonIdx = MDT.zoneIdToDungeonIdx[zoneId]
   if dungeonIdx and (not lastUpdatedDungeonIdx or dungeonIdx ~= lastUpdatedDungeonIdx) then
