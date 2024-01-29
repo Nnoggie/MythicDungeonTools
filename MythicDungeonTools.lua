@@ -3280,7 +3280,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame = AceGUI:Create("Frame")
   frame.settingsFrame:SetTitle(L["Settings"])
   frame.settingsFrame:SetWidth(240)
-  frame.settingsFrame:SetHeight(270)
+  frame.settingsFrame:SetHeight(350)
   frame.settingsFrame:EnableResize(false)
   frame.settingsFrame:SetLayout("Flow")
   frame.settingsFrame.statustext:GetParent():Hide()
@@ -3378,6 +3378,31 @@ function MDT:MakeSettingsFrame(frame)
     MDT:ReloadPullButtons()
   end)
   frame.settingsFrame:AddChild(frame.button)
+
+  frame.localeHeading = AceGUI:Create("Heading")
+  frame.localeHeading:SetText(L["Language"])
+  frame.localeHeading:SetFullWidth(true)
+  frame.settingsFrame:AddChild(frame.localeHeading)
+
+  frame.localeButton = AceGUI:Create("Button")
+  frame.localeButton:SetText(L["Change Language"])
+  local slashToFire = _G.SlashCmdList["ADDONLOCALE"]
+  if not slashToFire then
+    frame.localeButton:SetDisabled(true)
+  else
+    frame.localeButton:SetCallback("OnClick", function(widget, callbackName)
+      slashToFire("")
+    end)
+  end
+  frame.settingsFrame:AddChild(frame.localeButton)
+
+  frame.localeLabel = AceGUI:Create("Label")
+  if not slashToFire then
+    frame.localeLabel:SetText("|cff808080" .. L["localeButtonTooltip1"] .. "|r")
+  else
+    frame.localeLabel:SetText(L["localeButtonTooltip2"] )
+  end
+  frame.settingsFrame:AddChild(frame.localeLabel)
 
   frame.settingsFrame:Hide()
 end

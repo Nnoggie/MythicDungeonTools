@@ -1,4 +1,4 @@
-if not (GetLocale() == "esES") then
+if not ((GAME_LOCALE or GetLocale()) == "esES") then
   return
 end
 local addonName, MDT = ...

@@ -1,4 +1,4 @@
-if not (GetLocale() == "ruRU") then
+if not ((GAME_LOCALE or GetLocale()) == "ruRU") then
   return
 end
 local addonName, MDT = ...
