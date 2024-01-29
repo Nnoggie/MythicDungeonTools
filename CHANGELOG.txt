@@ -1,5 +1,5 @@
 - v4.3.3.7 (2024-01-29)
-  - add AddonLocale support
+  - Add AddonLocale support: Install the AddOn "AddonLocale" and use the MDT settings dialog to change the MDT language
 - v4.3.3.6 (2024-01-28)
   - nil error fix
 - v4.3.3.5 (2024-01-28)
