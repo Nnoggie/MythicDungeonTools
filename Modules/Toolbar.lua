@@ -114,7 +114,7 @@ function MDT:initToolbar(frame)
   local colorPicker = AceGUI:Create("ColorPicker")
   --colorPicker:SetHasAlpha(true)
   colorPicker:SetColor(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b, db.toolbar.color.a)
-  colorPicker:SetCallback("OnValueConfirmed", function(widget, callbackName, r, g, b, a)
+  colorPicker:SetCallback("OnValueChanged", function(widget, callbackName, r, g, b, a)
     db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b, db.toolbar.color.a = r, g, b, a
     colorPicker:SetColor(r, g, b, a)
   end)
