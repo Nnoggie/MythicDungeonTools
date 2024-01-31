@@ -3267,7 +3267,7 @@ function MDT:MakeCustomColorFrame(frame)
     ColorPicker[i]:SetLabel(" "..i)
     ColorPicker[i]:SetRelativeWidth(0.25)
     ColorPicker[i]:SetHeight(15)
-    ColorPicker[i]:SetCallback("OnValueConfirmed", function(widget, event, r, g, b)
+    ColorPicker[i]:SetCallback("OnValueChanged", function(widget, event, r, g, b)
       db.colorPaletteInfo.customPaletteValues[i] = { r, g, b }
       MDT:SetPresetColorPaletteInfo()
       MDT:ReloadPullButtons()
