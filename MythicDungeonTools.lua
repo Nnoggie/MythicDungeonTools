@@ -3361,7 +3361,7 @@ function MDT:MakeSettingsFrame(frame)
       db.colorPaletteInfo.colorPaletteIdx = value
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons()
+    MDT:ReloadPullButtons(true)
   end)
   frame.settingsFrame:AddChild(frame.PaletteSelectDropdown)
 
@@ -3376,7 +3376,7 @@ function MDT:MakeSettingsFrame(frame)
       frame.toggleForceColorBlindMode:SetDisabled(false)
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons()
+    MDT:ReloadPullButtons(true)
   end)
   frame.settingsFrame:AddChild(frame.button)
 

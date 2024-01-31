@@ -368,7 +368,7 @@ local methods = {
       MDT:DungeonEnemies_SetPullColor(self.index, r, g, b)
       MDT:UpdatePullButtonColor(self.index, r, g, b)
       MDT:DungeonEnemies_UpdateBlipColors(self.index, r, g, b)
-      MDT:DrawAllHulls()
+      MDT:DrawAllHulls(nil, true)
       CloseDropDownMenus()
       if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
         MDT:LiveSession_QueueColorUpdate()
@@ -380,7 +380,7 @@ local methods = {
       MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
       MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
       MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:DrawAllHulls()
+      MDT:DrawAllHulls(nil, true)
       if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
         MDT:LiveSession_QueueColorUpdate()
       end
@@ -415,7 +415,7 @@ local methods = {
         MDT:DungeonEnemies_SetPullColor(self.index, r, g, b)
         MDT:UpdatePullButtonColor(self.index, r, g, b)
         MDT:DungeonEnemies_UpdateBlipColors(self.index, r, g, b)
-        MDT:DrawAllHulls()
+        MDT:DrawAllHulls(nil, true)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
@@ -569,7 +569,7 @@ local methods = {
         MDT:UpdatePullButtonColor(pullIdx, r, g, b)
         MDT:DungeonEnemies_UpdateBlipColors(pullIdx, r, g, b)
       end
-      MDT:DrawAllHulls()
+      MDT:DrawAllHulls(nil, true)
 
       L_CloseDropDownMenus()
       if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
@@ -602,7 +602,7 @@ local methods = {
       MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
       MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
       MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:DrawAllHulls()
+      MDT:DrawAllHulls(nil, true)
       if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
         MDT:LiveSession_QueueColorUpdate()
       end
@@ -646,7 +646,7 @@ local methods = {
           MDT:DungeonEnemies_UpdateBlipColors(pullIdx, r, g, b)
           L_CloseDropDownMenus()
         end
-        MDT:DrawAllHulls()
+        MDT:DrawAllHulls(nil, true)
         if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
           MDT:LiveSession_SendPulls(MDT:GetPulls())
         end
@@ -1295,6 +1295,7 @@ local function Constructor()
   --["heartofazeroth-list-item-selected"] = {356, 82, 0.779297, 0.953125, 0.653809, 0.693848, false, false},
   pickedGlow:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\HeartOfAzerothSelection")
   pickedGlow:SetTexCoord(0, 0.697265625, 0, 0.625)
+---@diagnostic disable-next-line: param-type-mismatch
   pickedGlow:SetAllPoints(button)
   pickedGlow:Hide()
 
