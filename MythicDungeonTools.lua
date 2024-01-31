@@ -2340,11 +2340,11 @@ function MDT:ToggleSettingsDialog()
   end
 end
 
-function MDT:OpenCustomColorsDialog(frame)
+function MDT:OpenCustomColorsDialog()
   MDT:HideAllDialogs()
   MDT.main_frame.settingsFrame:Show() --Not the prettiest way to handle this, but it works.
   MDT.main_frame.settingsFrame.CustomColorFrame:ClearAllPoints()
-  MDT.main_frame.settingsFrame.CustomColorFrame:SetPoint("CENTER", 264, -7)
+  MDT.main_frame.settingsFrame.CustomColorFrame:SetPoint("TOPLEFT", MDT.main_frame.settingsFrame.frame, "TOPRIGHT", 1, 0)
   MDT.main_frame.settingsFrame.CustomColorFrame:SetStatusText("")
   MDT.main_frame.settingsFrame.CustomColorFrame:Show()
 end
