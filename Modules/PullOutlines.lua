@@ -234,6 +234,7 @@ function MDT:DrawHullFontString(hull, pullIdx)
       local y1 = hull[1][2]
       local x2 = hull[2][1]
       local y2 = hull[2][2]
+      if not x1 or not y1 or not x2 or not y2 then return end
       center = { (x1 + x2) / 2, (y1 + y2) / 2 }
     elseif #hull == 1 then
       local x1 = hull[1][1]
