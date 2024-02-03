@@ -3335,7 +3335,7 @@ function MDT:MakeSettingsFrame(frame)
     MDT:SetPresetColorPaletteInfo()
     if value == true then
       frame.toggleForceColorBlindMode:SetDisabled(false)
-      MDT:ReloadPullButtons()
+      MDT:ReloadPullButtons(true)
     else
       frame.toggleForceColorBlindMode:SetDisabled(true)
     end
@@ -3350,7 +3350,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.toggleForceColorBlindMode:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.colorPaletteInfo.forceColorBlindMode = value
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons()
+    MDT:ReloadPullButtons(true)
   end)
   frame.settingsFrame:AddChild(frame.toggleForceColorBlindMode)
 
