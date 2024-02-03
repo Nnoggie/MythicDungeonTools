@@ -3333,11 +3333,9 @@ function MDT:MakeSettingsFrame(frame)
   frame.AutomaticColorsCheck:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.colorPaletteInfo.autoColoring = value
     MDT:SetPresetColorPaletteInfo()
-    if value == true then
-      frame.toggleForceColorBlindMode:SetDisabled(false)
+    frame.toggleForceColorBlindMode:SetDisabled(not value)
+    if value then
       MDT:ReloadPullButtons(true)
-    else
-      frame.toggleForceColorBlindMode:SetDisabled(true)
     end
   end)
   frame.settingsFrame:AddChild(frame.AutomaticColorsCheck)
