@@ -359,11 +359,13 @@ hooksecurefunc("SetItemRef", function(link, text)
     end
     sender = name.."-"..realm
     local preset = MDT.transmissionCache[sender]
-    if preset then
+    if preset and type(preset) == "table" then
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
         MDT:ImportPreset(CopyTable(preset))
       end, "showInterfaceChatImport")
+    else
+      print(string.format(L["receiveErrorUpdate"], sender))
     end
     return
   end
