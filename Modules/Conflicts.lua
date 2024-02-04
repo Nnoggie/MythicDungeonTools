@@ -39,6 +39,13 @@ local candidates = {
 
     end,
   },
+  ["WeakAurasUpdater"] = { --hijack acecomm
+    name = "WeakAurasUpdater",
+    detected = false,
+    onDetect = function()
+
+    end,
+  },
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
