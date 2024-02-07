@@ -1551,7 +1551,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Grip"] = true,
       ["Shackle Undead"] = true,
       ["Root"] = true,
-      ["Fear"] = true,
       ["Banish"] = true,
       ["Disorient"] = true,
       ["Repentance"] = true,
