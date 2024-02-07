@@ -1,6 +1,7 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["Toggle MDT"] = "Toggle MDT"
 L["Language"] = "Language"
 L["Change Language"] = "Change Language"
 L["localeButtonTooltip1"] = "Requires the \"AddonLocale\" AddOn"
