@@ -1153,7 +1153,7 @@ local methods = {
     if db.useForcesCount then
       progressText = string.format("%3d", currentForces)
     else
-      progressText = string.format("%.1f%%", currentPercent * 100)
+      progressText = string.format("%.2f%%", currentPercent * 100)
     end
     if show then
       self.reapingIcon:Show()
@@ -1195,7 +1195,7 @@ local methods = {
     if db.useForcesCount then
       progressText = string.format("%3d", currentForces)
     else
-      progressText = string.format("%.1f%%", currentPercent * 100)
+      progressText = string.format("%.2f%%", currentPercent * 100)
     end
     if show then
       self.pridefulIcon:Show()
