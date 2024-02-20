@@ -251,7 +251,11 @@ function MDT:DrawHullFontString(hull, pullIdx)
   else
     fsFrame.fs:SetTextColor(1, 1, 1, NONACTIVE_ALPHA)
   end
-  fsFrame.fs:SetText(pullIdx)
+  local pullForces = MDT:CountForces(pullIdx, true)
+  local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[MDT:GetDB().currentDungeonIdx].teeming or
+      MDT.dungeonTotalCount[MDT:GetDB().currentDungeonIdx].normal
+  local percent =  string.format("%.2f%%", pullForces / totalForcesMax * 100)
+  fsFrame.fs:SetText(pullIdx.."\n "..percent.."")
   fsFrame:ClearAllPoints()
   fsFrame:SetSize(40, 40)
   fsFrame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", center[1], center[2])
