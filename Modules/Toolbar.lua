@@ -1120,23 +1120,31 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note:ClearAllPoints()
   note:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)
   note:SetSize(12 * scale, 12 * scale)
-  note.NormalTexture:SetSize(15 * scale, 15 * scale)
-  note.PushedTexture:SetSize(15 * scale, 15 * scale)
-  note.HighlightTexture:SetSize(15 * scale, 15 * scale)
-  note.Display.Icon:SetSize(16 * scale, 16 * scale)
-  note.NormalTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.HighlightTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.Display.Icon:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
-  note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
-  note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
-  -- temporary fix for there not being enough textures in the atlas
-  -- should copy and fix the atlas instead
   local idx = note.noteIdx % 25
   if idx == 0 then idx = 1 end
-  note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
-  note.Display.Icon:Show()
+  if MDT:IsWrath() then
+    note.Texture:SetSize(15 * scale, 15 * scale)
+    note.Texture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.Texture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
+    note.Number:SetSize(16 * scale, 16 * scale)
+    note.Number:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.Number:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
+    note.Number:Show()
+  else
+    note.NormalTexture:SetSize(15 * scale, 15 * scale)
+    note.NormalTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
+    note.HighlightTexture:SetSize(15 * scale, 15 * scale)
+    note.HighlightTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
+    note.Display.Icon:SetSize(16 * scale, 16 * scale)
+    note.Display.Icon:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+    note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
+    note.Display.Icon:Show()
+  end
+  note.PushedTexture:SetSize(15 * scale, 15 * scale)
+  note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+  note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
   note.tooltipText = text or ""
 
   note:RegisterForClicks("AnyUp")
