@@ -7,6 +7,7 @@
   <Script file='ShadowfangKeep.lua'/>
   <Script file='BlackfathomDeeps.lua'/>
   <Script file='Gnomeregan.lua'/>
+  <Script file='SOD-Gnomeregan.lua'/>
   <Script file='RazorfenKraul.lua'/>
   <Script file='RazorfenDowns.lua'/>
   <Script file='ScarletMonasteryGraveyard.lua'/>
@@ -25,5 +26,4 @@
   <Script file='DiremaulEast.lua'/>
   <Script file='DiremaulNorth.lua'/>
   <Script file='DiremaulWest.lua'/>
-  <Script file='SOD-Gnomeregan.lua'
 </Ui>
