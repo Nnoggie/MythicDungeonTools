@@ -4,7 +4,7 @@
 ## Version: 4.3.4.5
 ## X-Curse-Project-ID: 288981
 ## X-Wago-ID: rN4VrAKD
-## Notes: Tool for planning and optimizing Mythic+ dungeon runs (Era), private edit by Prephmage
+## Notes: Tool for planning and optimizing Mythic+ dungeon runs (Era)
 ## OptionalDeps: ElvUI, LibStub, Ace3, WagoAnalytics
 ## SavedVariables: MythicDungeonToolsDB
 
