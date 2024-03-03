@@ -1,0 +1,21 @@
+## Interface: 30403
+## Title: Mythic Dungeon Tools
+## Author: Nnoggie
+## Version: 4.3.4.5
+## X-Curse-Project-ID: 288981
+## X-Wago-ID: rN4VrAKD
+## Notes: Tool for planning and optimizing Mythic+ dungeon runs (Era), private edit by Prephmage
+## OptionalDeps: ElvUI, LibStub, Ace3, WagoAnalytics
+## SavedVariables: MythicDungeonToolsDB
+
+BuildCheck.lua
+libs\load_libs.xml
+init.lua
+locales.xml
+AceGUIWidgets\load_widgets.xml
+Utility.lua
+MythicDungeonTools_Vanilla.lua
+Modules\load_modules.xml
+Developer\load_developer.xml
+Classic\load_classic.xml
+

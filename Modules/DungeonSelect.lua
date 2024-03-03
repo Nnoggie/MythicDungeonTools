@@ -38,6 +38,12 @@ if MDT:IsDragonflight() then
   tinsert(MDT.dungeonSelectionToIndex, { 100, 101, 102, 103, 15, 104, 4, 105 })
 end
 
+if MDT:IsVanilla() then
+  tinsert(MDT.seasonList, L["Vanilla"])
+  tinsert(MDT.dungeonSelectionToIndex,
+    { 70, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524 })
+end
+
 if MDT:IsWrath() then
   tinsert(MDT.seasonList, L["Wrath of the Lich King"])
   tinsert(MDT.dungeonSelectionToIndex,
