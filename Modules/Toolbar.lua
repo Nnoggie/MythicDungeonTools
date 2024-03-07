@@ -1122,7 +1122,7 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note:SetSize(12 * scale, 12 * scale)
   local idx = note.noteIdx % 25
   if idx == 0 then idx = 1 end
-  if MDT:IsWrath() then
+  if MDT:IsWrath() or MDT:IsVanilla() then
     note.Texture:SetSize(15 * scale, 15 * scale)
     note.Texture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
     note.Texture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
@@ -1146,6 +1146,22 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
   note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
   note.tooltipText = text or ""
+
+  note:RegisterForClicks("AnyUp")
+  --click
+  function note:OpenEditBox()
+    if not noteEditbox then noteEditbox = makeNoteEditbox() end
+    if noteEditbox.frame:IsShown() and noteEditbox.noteIdx == note.noteIdx then
+      noteEditbox.frame:Hide()
+    else
+      noteEditbox.noteIdx = note.noteIdx
+      noteEditbox:ClearAllPoints()
+      noteEditbox.frame:SetPoint("TOPLEFT", note, "TOPRIGHT")
+      noteEditbox.frame:Show()
+      noteEditbox.multiBox:SetText(note.tooltipText)
+      noteEditbox.multiBox.button:Enable()
+    end
+  end
 
   note:RegisterForClicks("AnyUp")
   --click
