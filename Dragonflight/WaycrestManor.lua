@@ -1896,6 +1896,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
     },
     ["clones"] = {
+      [1] = {
+        ["x"] = 66.425776874058,
+        ["y"] = -121.31033447229,
+        ["sublevel"] = 1,
+        ["scale"] = 1.6,
+      },
     },
   },
   [21] = {
