@@ -1,3 +1,5 @@
+- v4.3.4.7 (2024-03-07)
+  - WCM: adjust witches for the adjusted static configuration
 - v4.3.4.6 (2024-02-25)
   - fix note error
 - v4.3.4.5 (2024-02-20)
