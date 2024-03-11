@@ -1212,6 +1212,18 @@ function MDT:MakeSidePanel(frame)
         ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9, 0, 0).."  "
       end
     end
+    --date
+    local currentWeek = MDT:GetCurrentAffixWeek()
+    if not longText and week ~= currentWeek then
+      local deltaWeeks = week - currentWeek
+      if deltaWeeks < 0 then deltaWeeks = deltaWeeks + 12 end
+      local secondsInOneWeek = 604800
+      local now = time()
+      local secondsToReset = C_DateAndTime.GetSecondsUntilWeeklyReset()
+      local reset = now + secondsToReset + (secondsInOneWeek * (deltaWeeks - 1))
+      local monthDay = date("%b %d", reset)
+      ret = ret.." "..monthDay
+    end
     return ret
   end
 
