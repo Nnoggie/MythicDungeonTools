@@ -1216,7 +1216,7 @@ function MDT:MakeSidePanel(frame)
     local currentWeek = MDT:GetCurrentAffixWeek()
     if not longText and week ~= currentWeek then
       local deltaWeeks = week - currentWeek
-      if deltaWeeks < 0 then deltaWeeks = deltaWeeks + 12 end
+      if deltaWeeks < 0 then deltaWeeks = deltaWeeks + #affixWeeks end
       local secondsInOneWeek = 604800
       local now = time()
       local secondsToReset = C_DateAndTime.GetSecondsUntilWeeklyReset()
