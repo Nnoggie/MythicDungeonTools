@@ -13,4 +13,11 @@
 	<Script file='LibDeflate\LibDeflate.lua'/>
 	<Include file='LibAsync\LibAsync.xml'/>
   <Script file = 'WagoAnalytics\Shim.lua'/>
+	<Include file="LibSharedMedia-3.0\lib.xml"/>
+	<Include file="AceDBOptions-3.0\AceDBOptions-3.0.xml"/>
+	<Include file="AceLocale-3.0\AceLocale-3.0.xml"/>
+	<Include file="AceTimer-3.0\AceTimer-3.0.xml"/>
+	<Include file="AceEvent-3.0\AceEvent-3.0.xml"/>
+	<Include file="AceConsole-3.0\AceConsole-3.0.xml"/>
+	<Include file="LibDFramework-1.0\load.xml"/>
 </Ui>
