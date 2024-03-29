@@ -3,8 +3,8 @@ local L = MDT.L
 local dungeonIndex = 43
 MDT.dungeonList[dungeonIndex] = L["TheNokhudOffensive"]
 MDT.mapInfo[dungeonIndex] = {};
+
 local zones = { 2093 }
--- add zones to MDT.zoneIdToDungeonIdx
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
