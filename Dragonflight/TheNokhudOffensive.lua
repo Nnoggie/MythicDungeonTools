@@ -20,50 +20,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 520, teeming = 1000, teemingEnabled = true }
 
-MDT.mapPOIs[dungeonIndex] = {
-  [1] = {
-    [1] = {
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "zoom";
-      ["x"] = 584.76644744465;
-      ["y"] = -262.88213425998;
-      ["index"] = 4;
-      ["value1"] = 8.2000017166138;
-      ["value2"] = 568.19426018705;
-      ["value3"] = 248.71834312246;
-    };
-    [2] = {
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "zoom";
-      ["x"] = 503.13067910415;
-      ["y"] = -427.26538483192;
-      ["index"] = 4;
-      ["value1"] = 9.1000022888184;
-      ["value2"] = 420.42599273345;
-      ["value3"] = 397.30275368747;
-    };
-    [3] = {
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "zoom";
-      ["x"] = 343.3009998415;
-      ["y"] = -364.1670206858;
-      ["index"] = 4;
-      ["value1"] = 7.9000015258789;
-      ["value2"] = 243.94547136942;
-      ["value3"] = 333.29417946386;
-    };
-    [4] = {
-      ["template"] = "MapLinkPinTemplate";
-      ["type"] = "zoom";
-      ["x"] = 344.26202230623;
-      ["y"] = -249.00150159943;
-      ["index"] = 4;
-      ["value1"] = 8.5000019073486;
-      ["value2"] = 261.85479563384;
-      ["value3"] = 192.07595205558;
-    };
-  };
-};
+MDT.mapPOIs[dungeonIndex] = {};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
