@@ -1,6 +1,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["Dragonflight Season 4"] = "Dragonflight Season 4"
+
 L["Toggle MDT"] = "Toggle MDT"
 L["Language"] = "Language"
 L["Change Language"] = "Change Language"
