@@ -2,20 +2,7 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 49
 MDT.dungeonList[dungeonIndex] = L["Halls of Infusion"]
-MDT.mapInfo[dungeonIndex] = {
-  viewportPositionOverrides = {
-    [1] = {
-      zoomScale = 1.2999999523163,
-      horizontalPan = 88.385347676574,
-      verticalPan = 67.058580683518,
-    },
-    [2] = {
-      zoomScale = 1.5999999046326,
-      horizontalPan = 97.178052776723,
-      verticalPan = 208.125,
-    },
-  }
-};
+MDT.mapInfo[dungeonIndex] = {};
 
 local zones = { 2082, 2083 }
 for _, zone in ipairs(zones) do
@@ -23,14 +10,12 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "HallsOfInfusion",
-  [1] = "HallsOfInfusion_A",
-  [2] = "HallsOfInfusion_B",
+  [0] = "",
+  [1] = { customTextures = 'HallsofInfusion' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["Infuser's Rotunda"],
-  [2] = L["Infusion Chamber"],
+  [1] = L["Halls of Infusion"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 435, teeming = 1000, teemingEnabled = true }

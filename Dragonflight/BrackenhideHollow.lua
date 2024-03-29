@@ -13,8 +13,8 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "BrackenHideHollow",
-  [1] = "BrackenHideHollow",
+  [0] = "",
+  [1] = { customTextures = 'BrackenhideHollow' },
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["BrackenhideHollow"],

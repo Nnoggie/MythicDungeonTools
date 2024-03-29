@@ -2,55 +2,23 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 42
 MDT.dungeonList[dungeonIndex] = L["RubyLifePools"]
-MDT.mapInfo[dungeonIndex] = {
-    viewportPositionOverrides = {
-        [1] = {
-            zoomScale = 1.2999999523163,
-            horizontalPan = 72.700189938081,
-            verticalPan = 5.2851517049499,
-        },
-    }
-};
+MDT.mapInfo[dungeonIndex] = {};
+
 local zones = { 2094, 2095 }
--- add zones to MDT.zoneIdToDungeonIdx
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-    [0] = "RubyLifePools",
-    [1] = "RubyLifePools_A",
-    [2] = "RubyLifePools_B",
-}
-MDT.dungeonSubLevels[dungeonIndex] = {
-    [1] = L["Infusion Chambers"],
-    [2] = L["Ruby Overlook"],
+  [0] = "",
+  [1] = { customTextures = 'RubyLifePools' },
 }
 
-MDT.mapPOIs[dungeonIndex] = {
-    [1] = {
-        [1] = {
-            ["template"] = "MapLinkPinTemplate",
-            ["type"] = "mapLink",
-            ["x"] = 567.73755225206,
-            ["y"] = -257.14167551054,
-            ["target"] = 2,
-            ["direction"] = 1,
-            ["connectionIndex"] = 1,
-        },
-    },
-    [2] = {
-        [1] = {
-            ["template"] = "MapLinkPinTemplate",
-            ["type"] = "mapLink",
-            ["x"] = 421.382992211,
-            ["y"] = -310.821569174,
-            ["target"] = 1,
-            ["direction"] = -1,
-            ["connectionIndex"] = 1,
-        },
-    },
-};
+MDT.dungeonSubLevels[dungeonIndex] = {
+    [1] = L["RubyLifePools"],
+}
+
+MDT.mapPOIs[dungeonIndex] = {};
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 660, teeming = 1000, teemingEnabled = true }
 

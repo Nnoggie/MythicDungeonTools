@@ -3,15 +3,7 @@ local L = MDT.L
 
 local dungeonIndex = 51
 MDT.dungeonList[dungeonIndex] = L["Uldaman: Legacy of Tyr"]
-MDT.mapInfo[dungeonIndex] = {
-  viewportPositionOverrides = {
-    [2] = {
-      zoomScale = 1.2999999523163,
-      horizontalPan = 98.38115384186,
-      verticalPan = 102.66985686533,
-    },
-  }
-};
+MDT.mapInfo[dungeonIndex] = {};
 
 local zones = { 2071, 2072 }
 for _, zone in ipairs(zones) do
@@ -19,14 +11,12 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "Uldaman_Upres",
-  [1] = "Uldaman_upres_A",
-  [2] = "Uldaman_upres_B",
+  [0] = "",
+  [1] = { customTextures = 'Uldaman' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["Hall of the Keepers"],
-  [2] = L["The Vault of Tyr"],
+  [1] = L["Uldaman: Legacy of Tyr"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 575, teeming = 1000, teemingEnabled = true }

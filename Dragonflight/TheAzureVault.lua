@@ -1,52 +1,24 @@
 local MDT = MDT
 local L = MDT.L
+
 local dungeonIndex = 44
 MDT.dungeonList[dungeonIndex] = L["TheAzureVault"]
-MDT.mapInfo[dungeonIndex] = {
-  viewportPositionOverrides = {
-    [1] = {
-      zoomScale = 1.5999999046326;
-      horizontalPan = 161.93562594348;
-      verticalPan = 86.334611786945;
-    };
-    [2] = {
-      zoomScale = 1.2999999523163;
-      horizontalPan = 111.62481573922;
-      verticalPan = 43.260061835168;
-    };
-    [3] = {
-      zoomScale = 1.2999999523163;
-      horizontalPan = 175.58851375619;
-      verticalPan = 72.986299199317;
-    };
-    [4] = {
-      zoomScale = 1.2999999523163;
-      horizontalPan = 193.84607431532;
-      verticalPan = 107.4168929664;
-    };
-  }
-};
+MDT.mapInfo[dungeonIndex] = {};
+
 local zones = { 2073, 2074, 2075, 2076, 2077 }
--- add zones to MDT.zoneIdToDungeonIdx
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "ArcaneNexus",
-  [1] = "ArcaneNexus_A",
-  [2] = "ArcaneNexus_B",
-  [3] = "ArcaneNexus_C",
-  [4] = "ArcaneNexus_D",
-  [5] = "ArcaneNexus_E",
+  [0] = "",
+  [1] = { customTextures = 'AzureVault' },
 }
+
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["TheArcaneConservatory"],
-  [2] = L["UpperChamber"],
-  [3] = L["MausoleumOfLegends"],
-  [4] = L["LowerChamber"],
-  [5] = L["CrystalChamber"],
+  [1] = L["TheAzureVault"],
 }
+
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {

@@ -3,20 +3,7 @@ local L = MDT.L
 
 local dungeonIndex = 50
 MDT.dungeonList[dungeonIndex] = L["Neltharus"]
-MDT.mapInfo[dungeonIndex] = {
-  viewportPositionOverrides = {
-    [1] = {
-      zoomScale = 1.2999999523163,
-      horizontalPan = 114.97134682804,
-      verticalPan = 79.372355302235,
-    },
-    [2] = {
-      zoomScale = 1.2999999523163,
-      horizontalPan = 9.6320178171683,
-      verticalPan = 94.339982247728,
-    },
-  }
-};
+MDT.mapInfo[dungeonIndex] = {};
 
 local zones = { 2080, 2081 }
 for _, zone in ipairs(zones) do
@@ -24,14 +11,12 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "neltharus",
-  [1] = "neltharus_A",
-  [2] = "neltharus_B",
+  [0] = "",
+  [1] = { customTextures = 'Neltharus' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["The Burning Cauldron"],
-  [2] = L["Chamber of Flames"],
+  [1] = L["Neltharus"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 525, teeming = 1000, teemingEnabled = true }
@@ -39,49 +24,11 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 525, teeming = 1000, teemingEna
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 234.2,
-      ["y"] = -278,
-      ["target"] = 2,
-      ["direction"] = 1,
-      ["connectionIndex"] = 1,
-    },
-    [2] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 379.6,
-      ["y"] = -277.5,
-      ["target"] = 2,
-      ["direction"] = 1,
-      ["connectionIndex"] = 2,
-    },
-    [3] = {
       ["template"] = "DeathReleasePinTemplate",
       ["type"] = "graveyard",
       ["x"] = 442.23127606642,
       ["y"] = -144.47641811804,
       ["graveyardDescription"] = "",
-    },
-  },
-  [2] = {
-    [1] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 303.4,
-      ["y"] = -187.4,
-      ["target"] = 1,
-      ["direction"] = -1,
-      ["connectionIndex"] = 1,
-    },
-    [2] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "mapLink",
-      ["x"] = 481,
-      ["y"] = -207.8,
-      ["target"] = 1,
-      ["direction"] = -1,
-      ["connectionIndex"] = 2,
     },
   },
 };

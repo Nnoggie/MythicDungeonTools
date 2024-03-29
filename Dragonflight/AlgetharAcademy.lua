@@ -2,75 +2,24 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 45
 MDT.dungeonList[dungeonIndex] = L["AlgetharAcademy"]
-MDT.mapInfo[dungeonIndex] = {
-    viewportPositionOverrides = {
-        [2] = {
-            zoomScale = 1.2999999523163,
-            horizontalPan = 105.88442288912,
-            verticalPan = 109.93207491361,
-        },
-    }
-};
+MDT.mapInfo[dungeonIndex] = {};
+
 local zones = { 2097, 2098, 2099 }
--- add zones to MDT.zoneIdToDungeonIdx
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-    [0] = "DragonAcademy",
-    [1] = "DragonAcademy_A",
-    [2] = "DragonAcademy_B",
+  [0] = "",
+  [1] = { customTextures = 'AlgetharAcademy' },
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
     [1] = L["AlgetharAcademy"],
-    [2] = L["ThePitch"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 450, teeming = 1000, teemingEnabled = true }
 
-MDT.mapPOIs[dungeonIndex] = {
-    [1] = {
-        [1] = {
-            ["template"] = "MapLinkPinTemplate",
-            ["type"] = "mapLink",
-            ["x"] = 367.30845290308,
-            ["y"] = -43.589625785557,
-            ["target"] = 2,
-            ["direction"] = 2,
-            ["connectionIndex"] = 1,
-        },
-        [2] = {
-            ["template"] = "MapLinkPinTemplate",
-            ["type"] = "mapLink",
-            ["x"] = 505.79059111917,
-            ["y"] = -156.69082396831,
-            ["target"] = 2,
-            ["direction"] = 1,
-            ["connectionIndex"] = 2,
-        },
-    },
-    [2] = {
-        [1] = {
-            ["template"] = "MapLinkPinTemplate",
-            ["type"] = "mapLink",
-            ["x"] = 408.97514495426,
-            ["y"] = -486.53834385367,
-            ["target"] = 1,
-            ["direction"] = -2,
-            ["connectionIndex"] = 1,
-        },
-        [2] = {
-            ["template"] = "MapLinkPinTemplate",
-            ["type"] = "mapLink",
-            ["x"] = 465.15396478348,
-            ["y"] = -511.73569924869,
-            ["target"] = 1,
-            ["direction"] = -1,
-            ["connectionIndex"] = 2,
-        },
-    },
-};
+MDT.mapPOIs[dungeonIndex] = {};
 
 MDT.dungeonEnemies[dungeonIndex] = {
     [1] = {

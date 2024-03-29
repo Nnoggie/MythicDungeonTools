@@ -1,5 +1,6 @@
 local MDT = MDT
 local L = MDT.L
+
 local dungeonIndex = 43
 MDT.dungeonList[dungeonIndex] = L["TheNokhudOffensive"]
 MDT.mapInfo[dungeonIndex] = {};
