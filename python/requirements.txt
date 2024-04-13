@@ -1,7 +1,7 @@
 ##### To install packages in new environment use pip install -r python/requirements.txt #####
 certifi==2023.7.22
 charset-normalizer==2.1.0
-idna==3.3
+idna==3.7
 numpy==1.23.1
 pandas==1.4.3
 pyperclip==1.8.2
