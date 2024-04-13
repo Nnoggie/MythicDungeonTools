@@ -3212,7 +3212,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [27] = {
-    ["name"] = "Rotbow Stalker",
+    ["name"] = "Rotbow Ranger",
     ["id"] = 186208,
     ["count"] = 15,
     ["health"] = 1284898,
