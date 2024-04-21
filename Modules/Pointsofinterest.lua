@@ -595,6 +595,81 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "brackenhideCage" then
+    local assignment = MDT:POI_GetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx)
+
+    local function setAssigned()
+      frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Alliance-Workshop-Minimap-small")
+      frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Alliance-Workshop-Minimap-small")
+    end
+
+    local function setUnassigned()
+      frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
+      frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
+    end
+
+    if assignment then
+      setAssigned()
+    else
+      setUnassigned()
+    end
+
+    frame:SetSize(10, 10)
+    frame.Texture:SetSize(20, 20)
+    frame.HighlightTexture:SetSize(20, 20)
+
+    frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+    frame.playerAssignmentString:ClearAllPoints()
+    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
+    frame.playerAssignmentString:SetJustifyV("CENTER")
+    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), 9, "OUTLINE", "")
+    frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
+    frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
+    frame.playerAssignmentString:SetText(assignment)
+    frame.playerAssignmentString:Show()
+
+    frame:SetScript("OnClick", function()
+      local menu = {
+        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
+      }
+      local group = MDT.U.GetGroupMembers()
+      for _, player in pairs(group) do
+        table.insert(menu, {
+          text = player,
+          func = function()
+            frame.playerAssignmentString:SetText(player)
+            setAssigned()
+            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
+          end,
+          checked = player == frame.playerAssignmentString:GetText()
+        })
+      end
+      table.insert(menu, {
+        text = L["dropdownClear"],
+        func = function()
+          frame.playerAssignmentString:SetText()
+          setUnassigned()
+          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+        end,
+        notCheckable = true
+      })
+
+      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+    end)
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(GameTooltip, L["brackenhideCage"].." "..poi.cageIndex)
+      GameTooltip:AddLine("Click to assign player", 1, 1, 1)
+      GameTooltip:AddTexture(646379)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
 
   if type == "textFrame" then
     frame:SetSize(18, 18)

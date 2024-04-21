@@ -79,6 +79,10 @@ local schemas = {
             type = "number"
           },
           {
+            name = "cageIndex",
+            type = "number"
+          },
+          {
             name = "textAnchor",
             type = "string"
           },

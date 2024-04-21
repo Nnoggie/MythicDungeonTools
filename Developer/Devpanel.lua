@@ -309,12 +309,26 @@ function MDT:CreateDevPanel(frame)
         end,
       },
       [11] = {
+        text = "Brackenhide Cage",
+        func = function()
+          if not MDT.mapPOIs[db.currentDungeonIdx] then MDT.mapPOIs[db.currentDungeonIdx] = {} end
+          if not MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] then
+            MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()] = {}
+          end
+          local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+          local cageIndex = tonumber(option1:GetText())
+          local posx, posy = 400, -250
+          tinsert(pois, { x = posx, y = posy, template = "MapLinkPinTemplate", type = "brackenhideCage", cageIndex = cageIndex })
+          MDT:POI_UpdateAll()
+        end,
+      },
+      [12] = {
         text = "Export Zoom Settings",
         func = function()
           MDT:ExportCurrentZoomPanSettings()
         end,
       },
-      [12] = {
+      [13] = {
         text = "Export to LUA",
         func = function()
           local export = MDT:ExportLuaTable(MDT.mapPOIs[db.currentDungeonIdx], MDT:GetSchema("pois"))
