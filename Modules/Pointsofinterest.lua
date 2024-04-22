@@ -85,6 +85,8 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:Show()
     frame.Texture:SetVertexColor(1, 1, 1, 1)
     frame.HighlightTexture:SetVertexColor(1, 1, 1, 1)
+    frame.Texture:SetDesaturated(false)
+    frame.HighlightTexture:SetDesaturated(false)
   end
   if frame.textString then frame.textString:Hide() end
   if type == "mapLink" then
