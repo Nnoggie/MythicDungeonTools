@@ -627,6 +627,7 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
     frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
     frame.playerAssignmentString:SetText(assignment)
+    frame.playerAssignmentString:SetScale(1)
     frame.playerAssignmentString:Show()
 
     frame:SetScript("OnClick", function()
@@ -643,6 +644,18 @@ local function POI_SetOptions(frame, type, poi)
             MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
           end,
           checked = player == frame.playerAssignmentString:GetText()
+        })
+      end
+      local classStrings = MDT.U.GetClassColoredClassNames()
+      for _, classString in pairs(classStrings) do
+        table.insert(menu, {
+          text = classString,
+          func = function()
+            frame.playerAssignmentString:SetText(classString)
+            setAssigned()
+            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, classString)
+          end,
+          checked = classString == frame.playerAssignmentString:GetText()
         })
       end
       table.insert(menu, {
