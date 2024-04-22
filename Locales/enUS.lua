@@ -2,6 +2,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["neltharusChain"] = "Burning Chain"
 L["brackenhideCage"]  = "Meat Storage"
 L["Dragonflight Season 4"] = "Dragonflight Season 4"
 L["Rotbow Ranger"] = "Rotbow Ranger"

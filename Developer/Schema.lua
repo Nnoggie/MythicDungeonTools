@@ -83,6 +83,10 @@ local schemas = {
             type = "number"
           },
           {
+            name = "chainIndex",
+            type = "number"
+          },
+          {
             name = "textAnchor",
             type = "string"
           },

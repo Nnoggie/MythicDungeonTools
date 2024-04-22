@@ -670,6 +670,134 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "neltharusChain" then
+    local assignment = MDT:POI_GetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx)
+    frame.HighlightTexture:SetAtlas("QuestObjective")
+    frame.Texture:SetAtlas("QuestObjective")
+
+    local function setAssigned()
+      frame.Texture:SetDesaturated(false)
+      frame.HighlightTexture:SetDesaturated(false)
+    end
+
+    local function setUnassigned()
+      frame.Texture:SetDesaturated(true)
+      frame.HighlightTexture:SetDesaturated(true)
+    end
+
+    if assignment then
+      setAssigned()
+    else
+      setUnassigned()
+    end
+
+    frame:SetSize(6, 6)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+    frame.playerAssignmentString:ClearAllPoints()
+    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
+    frame.playerAssignmentString:SetJustifyV("CENTER")
+    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), 6, "OUTLINE", "")
+    frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
+    frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
+    frame.playerAssignmentString:SetText(assignment)
+    frame.playerAssignmentString:SetScale(1)
+    frame.playerAssignmentString:Show()
+
+    frame:SetScript("OnClick", function()
+      local menu = {
+        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
+      }
+      local group = MDT.U.GetGroupMembers()
+      for _, player in pairs(group) do
+        table.insert(menu, {
+          text = player,
+          func = function()
+            frame.playerAssignmentString:SetText(player)
+            setAssigned()
+            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
+          end,
+          checked = player == frame.playerAssignmentString:GetText()
+        })
+      end
+      local classStrings = MDT.U.GetClassColoredClassNames()
+      for _, classString in pairs(classStrings) do
+        table.insert(menu, {
+          text = classString,
+          func = function()
+            frame.playerAssignmentString:SetText(classString)
+            setAssigned()
+            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, classString)
+          end,
+          checked = classString == frame.playerAssignmentString:GetText()
+        })
+      end
+      table.insert(menu, {
+        text = L["dropdownClear"],
+        func = function()
+          frame.playerAssignmentString:SetText()
+          setUnassigned()
+          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+        end,
+        notCheckable = true
+      })
+
+      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+    end)
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(GameTooltip, L["neltharusChain"].." "..poi.chainIndex)
+      GameTooltip:AddLine("Click to assign player", 1, 1, 1)
+      GameTooltip:AddTexture(133035)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "neltharusFood" then
+    frame.HighlightTexture:SetAtlas("MajorFactions_MapIcons_Niffen64")
+    frame.Texture:SetAtlas("MajorFactions_MapIcons_Niffen64")
+
+    frame:SetSize(6, 6)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(383376)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "neltharusShield" then
+    frame.HighlightTexture:SetAtlas("Repair")
+    frame.Texture:SetAtlas("Repair")
+
+    frame:SetSize(6, 6)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(377172)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
 
   if type == "textFrame" then
     frame:SetSize(18, 18)
