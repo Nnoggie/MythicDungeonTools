@@ -597,15 +597,17 @@ local function POI_SetOptions(frame, type, poi)
   end
   if type == "brackenhideCage" then
     local assignment = MDT:POI_GetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx)
+    frame.HighlightTexture:SetAtlas("vignettelootelite-locked")
+    frame.Texture:SetAtlas("vignettelootelite-locked")
 
     local function setAssigned()
-      frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Alliance-Workshop-Minimap-small")
-      frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Alliance-Workshop-Minimap-small")
+      frame.Texture:SetDesaturated(false)
+      frame.HighlightTexture:SetDesaturated(false)
     end
 
     local function setUnassigned()
-      frame.HighlightTexture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
-      frame.Texture:SetAtlas("Warfronts-BaseMapIcons-Empty-Workshop-Minimap-small")
+      frame.Texture:SetDesaturated(true)
+      frame.HighlightTexture:SetDesaturated(true)
     end
 
     if assignment then
@@ -614,9 +616,9 @@ local function POI_SetOptions(frame, type, poi)
       setUnassigned()
     end
 
-    frame:SetSize(10, 10)
-    frame.Texture:SetSize(20, 20)
-    frame.HighlightTexture:SetSize(20, 20)
+    frame:SetSize(4, 4)
+    frame.Texture:SetSize(8, 8)
+    frame.HighlightTexture:SetSize(8, 8)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
