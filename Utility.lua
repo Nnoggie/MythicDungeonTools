@@ -142,6 +142,18 @@ U.GetGroupMembers = function()
   return groupMembers
 end
 
+U.GetClassColoredClassNames = function()
+  local res = {}
+  for class, localizedClass in pairs(LOCALIZED_CLASS_NAMES_MALE) do
+    if class ~= "Adventurer" then
+      local _, _, _, classHexString = GetClassColor(class)
+      local coloredName = "|c"..classHexString..localizedClass.."|r"
+      tinsert(res, coloredName)
+    end
+  end
+  return res
+end
+
 local bytetoB64 = {
   [0] = "a",
   "b",
