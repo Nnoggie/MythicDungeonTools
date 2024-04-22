@@ -556,7 +556,9 @@ function DC:InitHealthTrack()
       print("MDT HPTRACK: Processed "..numEnemyHealthChanged.." enemies")
     end
   end
+end
 
+do
   function MDT:CompleteCharacteristics()
     local dungeonIdx = MDT:GetDB().currentDungeonIdx
 
