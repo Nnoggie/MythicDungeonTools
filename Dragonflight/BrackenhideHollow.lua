@@ -93,6 +93,72 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -517.53682311324,
       ["graveyardDescription"] = "",
     },
+    [10] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 180.4793232459,
+      ["y"] = -27.619276155185,
+    },
+    [11] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 394.75541698158,
+      ["y"] = -347.18041008767,
+    },
+    [12] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 684.7420177216,
+      ["y"] = -442.8435533566,
+    },
+    [13] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 722.47488312314,
+      ["y"] = -364.44171920595,
+    },
+    [14] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 643.15406258509,
+      ["y"] = -224.6883944552,
+    },
+    [15] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 108.82148036608,
+      ["y"] = -189.520032362,
+    },
+    [16] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 155.24768300646,
+      ["y"] = -106.08739195342,
+    },
+    [17] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 204.36529653945,
+      ["y"] = -126.94557611833,
+    },
+    [18] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 456.88626967948,
+      ["y"] = -381.64059917777,
+    },
+    [19] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 378.86269714218,
+      ["y"] = -216.4852116281,
+    },
+    [20] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "brackenhideCauldron",
+      ["x"] = 462.13348989507,
+      ["y"] = -320.3265412902,
+    },
   },
 };
 

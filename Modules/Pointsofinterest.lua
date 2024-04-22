@@ -815,6 +815,25 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "brackenhideCauldron" then
+    frame.HighlightTexture:SetAtlas("MajorFactions_MapIcons_Niffen64")
+    frame.Texture:SetAtlas("MajorFactions_MapIcons_Niffen64")
+
+    frame:SetSize(4, 4)
+    frame.Texture:SetSize(8, 8)
+    frame.HighlightTexture:SetSize(8, 8)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(374288)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
 
   if type == "textFrame" then
     frame:SetSize(18, 18)
