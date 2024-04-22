@@ -5,14 +5,14 @@ local MDT = MDT
 
 -- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
 local dungeonsToTrack = {
-  [1] = 100,
-  [2] = 101,
-  [3] = 102,
-  [4] = 103,
-  [5] = 15,
-  [6] = 104,
-  [7] = 4,
-  [8] = 105,
+  [1] = 42,
+  [2] = 43,
+  [3] = 44,
+  [4] = 45,
+  [5] = 49,
+  [6] = 48,
+  [7] = 51,
+  [8] = 50,
 }
 
 MDT.DataCollection = {}
@@ -556,7 +556,9 @@ function DC:InitHealthTrack()
       print("MDT HPTRACK: Processed "..numEnemyHealthChanged.." enemies")
     end
   end
+end
 
+do
   function MDT:CompleteCharacteristics()
     local dungeonIdx = MDT:GetDB().currentDungeonIdx
 
