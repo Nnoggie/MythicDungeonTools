@@ -75,6 +75,7 @@ local function POI_SetOptions(frame, type, poi)
   frame:SetMovable(false)
   frame:SetScript("OnMouseDown", nil)
   frame:SetScript("OnMouseUp", nil)
+  frame:SetScript("OnClick", nil)
   frame.weeks = poi.weeks
   frame:SetFrameLevel(4)
   frame.defaultSublevel = nil
