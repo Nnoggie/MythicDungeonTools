@@ -162,10 +162,7 @@ MDT.mapPOIs[dungeonIndex] = {
   },
 };
 
--- [19:19:30] MDT HPTRACK: Missing: Rageclaw id: 187192
 -- [19:19:30] MDT HPTRACK: Missing: Fishface id: 191926
--- [19:19:30] MDT HPTRACK: Missing: Skulking Gutstabber id: 186242
--- [19:19:30] MDT HPTRACK: Missing: Gutstabber id: 197857
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Vicious Hyena",
@@ -411,6 +408,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [368299] = {
       },
       [382620] = {
+      },
+      [387796] = {
       },
     },
     ["clones"] = {
@@ -1958,6 +1957,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [367503] = {
       },
       [367504] = {
+      },
+      [368081] = {
       },
       [382435] = {
       },
@@ -3567,7 +3568,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skulking Gutstabber",
     ["id"] = 186242,
     ["count"] = 4,
-    ["health"] = 889545,
+    ["health"] = 6041710,
     ["scale"] = 1,
     ["stealth"] = true,
     ["displayId"] = 105704,
@@ -3698,7 +3699,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rageclaw",
     ["id"] = 187192,
     ["count"] = 30,
-    ["health"] = 2371212,
+    ["health"] = 16111226,
     ["scale"] = 1.7,
     ["stealthDetect"] = true,
     ["displayId"] = 105554,
@@ -4369,7 +4370,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gutstabber",
     ["id"] = 197857,
     ["count"] = 0,
-    ["health"] = 988005,
+    ["health"] = 6041710,
     ["scale"] = 1,
     ["displayId"] = 105704,
     ["creatureType"] = "Humanoid",
@@ -4841,6 +4842,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [382883] = {
       },
+      [382891] = {
+      },
       [383087] = {
       },
     },
@@ -5138,6 +5141,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [373917] = {
       },
       [373942] = {
+      },
+      [373944] = {
       },
       [373960] = {
       },
