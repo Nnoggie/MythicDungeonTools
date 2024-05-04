@@ -25,8 +25,15 @@ MDT.mapPOIs[dungeonIndex] = {
     [1] = {
       ["template"] = "DeathReleasePinTemplate",
       ["type"] = "graveyard",
-      ["x"] = 118.29131238343,
-      ["y"] = -197.73806702114,
+      ["x"] = 92.58352304854,
+      ["y"] = -139.94619140298,
+      ["graveyardDescription"] = "",
+    },
+    [2] = {
+      ["template"] = "DeathReleasePinTemplate",
+      ["type"] = "graveyard",
+      ["x"] = 372.38013796843,
+      ["y"] = -338.89090077278,
       ["graveyardDescription"] = "",
     },
   },
