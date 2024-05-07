@@ -46,7 +46,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 126.82807502331,
       ["y"] = -197.80800969612,
       ["cageIndex"] = 2,
-      ["textAnchor"] = "TOP",
+      ["textAnchor"] = "CENTER",
       ["textAnchorTo"] = "BOTTOM",
     },
     [4] = {
