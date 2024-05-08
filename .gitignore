@@ -2,6 +2,7 @@
 libs/*
 .vscode/
 !libs/LibDeflate
+!libs/load_libs.xml
 venv
 python/combatLogReader/__pycache__
 python/__pycache__
