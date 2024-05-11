@@ -1,3 +1,6 @@
+- v4.4.0.7 (2024-05-11)
+  - mapping updates
+  - localization updates
 - v4.4.0.6 (2024-05-08)
   - 10.2.7 update
 - v4.4.0.5 (2024-04-28)
