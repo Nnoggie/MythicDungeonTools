@@ -1,3 +1,4 @@
+---@format disable
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
