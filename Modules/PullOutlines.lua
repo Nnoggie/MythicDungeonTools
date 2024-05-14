@@ -186,7 +186,7 @@ local function getFontString()
     fs:SetJustifyH("CENTER")
     fs:SetJustifyV("MIDDLE")
     fs:SetTextColor(1, 1, 1, 1)
-    local font = MDT:IsWrath() and GameFontNormalMed3 or GameFontNormalMed3Outline
+    local font = GameFontNormalMed3Outline
     fs:SetFontObject(font)
     fsFrame.fs = fs
     return fsFrame
