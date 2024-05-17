@@ -4792,6 +4792,7 @@ function initFrames()
   MDT.initSpinner = initSpinner
 
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
+  main_frame:SetToplevel(true)
   MDT:SetUpModifiers(main_frame)
   main_frame:Hide()
   tinsert(UISpecialFrames, "MDTFrame")
