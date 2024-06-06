@@ -824,7 +824,7 @@ function MDT:HideAllPresetObjects()
   end
   --notes
   if notePoolCollection then
-    local notes = notePoolCollection.pools.QuestPinTemplatenil.activeObjects
+    local _, notes = notePoolCollection:GetPool("QuestPinTemplate"):EnumerateActive()
     for note, _ in pairs(notes) do
       note:Hide()
     end
@@ -1115,7 +1115,7 @@ function MDT:DrawNote(x, y, text, objectIndex)
   -- FramePoolCollection_GetPoolKey is concatenating the sixth argument of CreatePool ("specialization").
   -- This naive approach is just using toString on any value, even nil, which results in "nil" as a string.
   -- Because of this our pool key is "QuestPinTemplatenil" instead of "QuestPinTemplate".
-  note.noteIdx = notePoolCollection.pools.QuestPinTemplatenil.numActiveObjects
+  note.noteIdx = notePoolCollection:GetPool("QuestPinTemplate"):GetNumActive()
   note.objectIndex = objectIndex
   note:ClearAllPoints()
   note:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)
