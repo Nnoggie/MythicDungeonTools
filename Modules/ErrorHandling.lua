@@ -10,7 +10,7 @@ local caughtErrors = {}
 local function getDiagnostics()
   local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
   ---@diagnostic disable-next-line: redundant-parameter
-  local addonVersion = GetAddOnMetadata(AddonName, "Version")
+  local addonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
   local locale = GetLocale()
   local dateString = date("%d/%m/%y %H:%M:%S")
   local gameVersion = select(4, GetBuildInfo())

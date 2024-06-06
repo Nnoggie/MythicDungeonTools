@@ -708,7 +708,7 @@ function MDT:MakeSendingStatusBar(f)
     MDT.main_frame.bottomPanelString:Show()
   end)
 
-  if IsAddOnLoaded("ElvUI") and ElvUI then
+  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     statusbar:SetStatusBarTexture(E.media.normTex)
   end

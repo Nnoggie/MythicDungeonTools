@@ -18,7 +18,7 @@ local methods = {
         if DEFAULT_CHAT_FRAME.editBox and DEFAULT_CHAT_FRAME.editBox:IsVisible() then
           local old = DEFAULT_CHAT_FRAME.editBox:GetText()
           local link = GetSpellLink(self.spellId) or ""
-          DEFAULT_CHAT_FRAME.editBox:SetText(old .. link)
+          DEFAULT_CHAT_FRAME.editBox:SetText(old..link)
         end
       else
 
@@ -64,7 +64,7 @@ local methods = {
     self.spellId = spellId
     local name, _, icon = GetSpellInfo(spellId)
     self.icon:SetTexture(icon)
-    if IsAddOnLoaded("AddOnSkins") then
+    if C_AddOns.IsAddOnLoaded("AddOnSkins") then
       if AddOnSkins then
         local AS = unpack(AddOnSkins)
         AS:SkinTexture(self.icon)
@@ -120,7 +120,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-  local name = "MDTPowerButton" .. AceGUI:GetNextWidgetNum(Type);
+  local name = "MDTPowerButton"..AceGUI:GetNextWidgetNum(Type);
   local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
   button:SetHeight(height);
   button:SetWidth(width);

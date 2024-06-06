@@ -269,7 +269,7 @@ do
   function MDT.PLAYER_ENTERING_WORLD()
     --initialize Blizzard_ChallengesUI
     C_Timer.After(1, function()
-      LoadAddOn("Blizzard_ChallengesUI")
+      C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
       C_MythicPlus.RequestCurrentAffixes()
       C_MythicPlus.RequestMapInfo()
       C_MythicPlus.RequestRewards()
@@ -496,7 +496,7 @@ end
 
 function MDT:SkinMenuButtons()
   --attempt to skin close button for ElvUI
-  if IsAddOnLoaded("ElvUI") and ElvUI then
+  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     local S
     if E then S = E:GetModule("Skins") end
@@ -584,7 +584,7 @@ function MDT:SkinProgressBar(progressBar)
   if not bar then return end
   bar.Icon:Hide()
   bar.IconBG:Hide()
-  if IsAddOnLoaded("ElvUI") and ElvUI then
+  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     if bar.BarFrame then bar.BarFrame:Hide() end
     if bar.BarFrame2 then bar.BarFrame2:Hide() end
@@ -659,7 +659,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.topPanelString = frame.topPanel:CreateFontString("MDT name")
     --use default font if ElvUI is enabled
-    --if IsAddOnLoaded("ElvUI") then
+    --if C_AddOns.IsAddOnLoaded("ElvUI") then
     frame.topPanelString:SetFontObject(GameFontNormalMed3)
     frame.topPanelString:SetTextColor(1, 1, 1, 1)
     frame.topPanelString:SetJustifyH("CENTER")
@@ -731,7 +731,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
   frame.bottomLeftPanelString:SetTextColor(1, 1, 1, 1)
   ---@diagnostic disable-next-line: redundant-parameter
-  frame.bottomLeftPanelString:SetText(" v"..GetAddOnMetadata(AddonName, "Version"))
+  frame.bottomLeftPanelString:SetText(" v"..C_AddOns.GetAddOnMetadata(AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
 
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
@@ -4520,8 +4520,8 @@ function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
 end
 
 function MDT:GetCurrentAffixWeek()
-  if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-    LoadAddOn("Blizzard_ChallengesUI")
+  if not C_AddOns.IsAddOnLoaded("Blizzard_ChallengesUI") then
+    C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
   end
   C_MythicPlus.RequestCurrentAffixes()
   C_MythicPlus.RequestMapInfo()
@@ -4831,7 +4831,7 @@ function initFrames()
   main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
 
   ---@diagnostic disable-next-line: redundant-parameter
-  local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
+  local version = C_AddOns.GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
   db.version = tonumber(version)
   -- Set frame position
   main_frame:ClearAllPoints()
@@ -4882,7 +4882,7 @@ function initFrames()
 
   --ElvUI skinning
   local skinTooltip = function(tooltip)
-    if IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
+    if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
       if not tooltip.SetBackdrop then
         Mixin(tooltip, BackdropTemplateMixin)
       end
