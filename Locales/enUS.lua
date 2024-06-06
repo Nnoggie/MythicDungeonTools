@@ -2,6 +2,7 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["The War Within Season 1"] = "The War Within Season 1"
 
 L["Click to assign player"] = "Click to assign player"
 L["neltharusChain"] = "Burning Chain"

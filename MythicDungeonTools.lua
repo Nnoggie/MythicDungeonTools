@@ -156,7 +156,7 @@ local defaultSavedVars = {
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
     enemyStyle = 1,
-    currentDungeonIdx = 42,
+    currentDungeonIdx = 31,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -182,7 +182,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 8,
+    selectedDungeonList = 9,
     knownAffixWeeks = {},
   },
 }
