@@ -1112,9 +1112,6 @@ function MDT:DrawNote(x, y, text, objectIndex)
   local scale = MDT:GetScale()
   --setup
   local note = notePoolCollection:Acquire("QuestPinTemplate")
-  -- FramePoolCollection_GetPoolKey is concatenating the sixth argument of CreatePool ("specialization").
-  -- This naive approach is just using toString on any value, even nil, which results in "nil" as a string.
-  -- Because of this our pool key is "QuestPinTemplatenil" instead of "QuestPinTemplate".
   note.noteIdx = notePoolCollection:GetPool("QuestPinTemplate"):GetNumActive()
   note.objectIndex = objectIndex
   note:ClearAllPoints()
