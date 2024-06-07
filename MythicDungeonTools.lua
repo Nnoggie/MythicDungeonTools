@@ -354,6 +354,10 @@ function MDT:ShowInterface(force)
 end
 
 function MDT:ShowInterfaceInternal(force)
+  if not self:IsCompatibleVersion() then
+    self:ShowFallbackWindow()
+    return
+  end
   if self:CheckAddonConflicts() then
     self.ShowConflictFrame()
     return
