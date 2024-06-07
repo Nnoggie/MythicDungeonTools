@@ -99,12 +99,6 @@ local methods = {
     local spellInfo = C_Spell.GetSpellInfo(spellId)
     self.icon:SetTexture(C_Spell.GetSpellTexture(spellId))
     self.title:SetText(spellInfo.name)
-    if C_AddOns.IsAddOnLoaded("AddOnSkins") then
-      if AddOnSkins then
-        local AS = unpack(AddOnSkins)
-        AS:SkinTexture(self.icon)
-      end
-    end
     if spellData.interruptible then
       self.interruptible = true
       self.interruptibleIcon:Show()

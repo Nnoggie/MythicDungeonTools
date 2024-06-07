@@ -569,12 +569,6 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
         GameTooltip:Hide()
       end)
       f.characteristicsContainer:AddChild(icon)
-      if C_AddOns.IsAddOnLoaded("AddOnSkins") then
-        if AddOnSkins then
-          local AS = unpack(AddOnSkins)
-          AS:SkinTexture(icon.image)
-        end
-      end
     end
   end
 
