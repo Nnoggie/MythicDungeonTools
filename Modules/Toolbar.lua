@@ -55,17 +55,12 @@ function MDT:initToolbar(frame)
   frame.toolbar.widgetGroup = AceGUI:Create("SimpleGroup")
   frame.toolbar.widgetGroup.frame:ClearAllPoints()
   frame.toolbar.widgetGroup.frame:SetAllPoints(frame.toolbar)
+  frame.toolbar.widgetGroup.frame:SetParent(frame.toolbar)
   if not frame.toolbar.widgetGroup.frame.SetBackdrop then
     Mixin(frame.toolbar.widgetGroup.frame, BackdropTemplateMixin)
   end
   frame.toolbar.widgetGroup.frame:SetBackdropColor(0, 0, 0, 0)
-  --frame.toolbar.widgetGroup:SetWidth(350)
-  --frame.toolbar.widgetGroup:SetHeight(15)
-  --frame.toolbar.widgetGroup:SetPoint("TOP",frame.toolbar,"TOP",0,0)
-
   frame.toolbar.widgetGroup:SetLayout("Flow")
-  frame.toolbar.widgetGroup.frame:SetFrameStrata("High")
-  frame.toolbar.widgetGroup.frame:SetFrameLevel(7)
 
   MDT:FixAceGUIShowHide(frame.toolbar.widgetGroup, frame.toolbar)
 
@@ -1011,9 +1006,10 @@ end
 
 local function makeNoteEditbox()
   local editbox = AceGUI:Create("SimpleGroup")
+  editbox.frame:SetParent(MDT.main_frame)
   editbox:SetWidth(240)
   editbox:SetHeight(120)
-  editbox.frame:SetFrameStrata("HIGH")
+  editbox.frame:SetFrameStrata("DIALOG")
   editbox.frame:SetFrameLevel(50)
   if not editbox.frame.SetBackdrop then
     Mixin(editbox.frame, BackdropTemplateMixin)

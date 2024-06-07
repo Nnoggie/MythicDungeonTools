@@ -84,8 +84,9 @@ end)
 
 local currentTab = "tab1"
 local function MakeEnemeyInfoFrame()
-  --frame
   local f = AceGUI:Create("Frame")
+  f.frame:SetParent(MDT.main_frame)
+  f.frame:SetFrameStrata("DIALOG")
   MDT.enemyInfoFrame = f
   f:SetTitle(L["Enemy Info"])
   f:EnableResize(false)
@@ -105,7 +106,6 @@ local function MakeEnemeyInfoFrame()
     return originalHide(self, ...);
   end
 
-  --tabGroup
   f.tabGroup = AceGUI:Create("TabGroup")
   local tabGroup = f.tabGroup
   tabGroup:SetTabs(

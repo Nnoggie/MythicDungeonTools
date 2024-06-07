@@ -56,6 +56,7 @@ function MDT:ToggleBoralusSelector(show)
   db = MDT:GetDB()
   if not selectorGroup then
     selectorGroup = AceGUI:Create("SimpleGroup")
+    selectorGroup.frame:SetParent(MDT.main_frame)
     selectorGroup.frame:SetFrameStrata("HIGH")
     selectorGroup.frame:SetFrameLevel(50)
     if not selectorGroup.frame.SetBackdrop then

@@ -84,6 +84,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
   db = MDT:GetDB()
   --Simple Group to hold both dropdowns
   frame.DungeonSelectionGroup = AceGUI:Create("SimpleGroup")
+  frame.DungeonSelectionGroup.frame:SetParent(frame)
   local group = frame.DungeonSelectionGroup
   group.frame:Hide()
   if not group.frame.SetBackdrop then
@@ -99,6 +100,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
   MDT:FixAceGUIShowHide(group)
 
   group.DungeonDropdown = AceGUI:Create("Dropdown")
+  group.DungeonDropdown.pullout.frame:SetParent(group.DungeonDropdown.frame)
   group.DungeonDropdown.text:SetJustifyH("LEFT")
   group.DungeonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     if (seasonListActive) then
@@ -135,6 +137,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
 
   --sublevel select
   group.SublevelDropdown = AceGUI:Create("Dropdown")
+  group.SublevelDropdown.pullout.frame:SetParent(group.SublevelDropdown.frame)
   group.SublevelDropdown.text:SetJustifyH("LEFT")
   group.SublevelDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key

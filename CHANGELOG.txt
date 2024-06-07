@@ -1,3 +1,2 @@
-- v4.4.1.0 (2024-05-14)
-  - remove Wotlk Classic support
-  - mapping updates
+- v4.4.1.1 (2024-06-07)
+  - Improved main window behavior alongside other addons - frame level will dynamically raise and lower within the "HIGH" frame strata

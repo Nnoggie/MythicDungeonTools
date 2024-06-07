@@ -735,6 +735,7 @@ function MDT:MakeTopBottomTextures(frame)
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
   MDT:FixAceGUIShowHide(externalButtonGroup, frame)
   externalButtonGroup.frame:ClearAllPoints()
+  externalButtonGroup.frame:SetParent(frame.bottomPanel)
   if not externalButtonGroup.frame.SetBackdrop then
     Mixin(externalButtonGroup.frame, BackdropTemplateMixin)
   end
@@ -883,6 +884,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanelString:Hide()
 
   frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
+  frame.sidePanel.WidgetGroup.frame:SetParent(frame.sidePanel)
   frame.sidePanel.WidgetGroup:SetWidth(245)
   frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight() + (frame.topPanel:GetHeight() * 2) - 31)
   frame.sidePanel.WidgetGroup:SetPoint("TOP", frame.sidePanel, "TOP", 3, 5)
@@ -910,6 +912,7 @@ function MDT:MakeSidePanel(frame)
 
   --preset selection
   frame.sidePanel.WidgetGroup.PresetDropDown = AceGUI:Create("Dropdown")
+  frame.sidePanel.WidgetGroup.PresetDropDown.pullout.frame:SetParent(frame.sidePanel.WidgetGroup.PresetDropDown.frame)
   local dropdown = frame.sidePanel.WidgetGroup.PresetDropDown
   dropdown.frame:SetWidth(170)
   dropdown.text:SetJustifyH("LEFT")
@@ -1226,6 +1229,7 @@ function MDT:MakeSidePanel(frame)
   end
 
   frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
+  frame.sidePanel.affixDropdown.pullout.frame:SetParent(frame.sidePanel.affixDropdown.frame)
   local affixDropdown = frame.sidePanel.affixDropdown
   affixDropdown.text:SetJustifyH("LEFT")
   affixDropdown:SetLabel(L["Affixes"])
@@ -2739,6 +2743,8 @@ end
 
 function MDT:MakeChatPresetImportFrame(frame)
   frame.chatPresetImportFrame = AceGUI:Create("Frame")
+  frame.chatPresetImportFrame.frame:SetParent(frame)
+  frame.chatPresetImportFrame.frame:SetFrameStrata("DIALOG")
   local chatImport = frame.chatPresetImportFrame
   chatImport:SetTitle(L["Import Preset"])
   chatImport:SetWidth(400)
@@ -2800,6 +2806,8 @@ end
 
 function MDT:MakePresetImportFrame(frame)
   frame.presetImportFrame = AceGUI:Create("Frame")
+  frame.presetImportFrame.frame:SetParent(frame)
+  frame.presetImportFrame.frame:SetFrameStrata("DIALOG")
   frame.presetImportFrame:SetTitle(L["Import Preset"])
   frame.presetImportFrame:SetWidth(400)
   frame.presetImportFrame:SetHeight(200)
@@ -2916,6 +2924,8 @@ end
 
 function MDT:MakePresetCreationFrame(frame)
   frame.presetCreationFrame = AceGUI:Create("Frame")
+  frame.presetCreationFrame.frame:SetParent(frame)
+  frame.presetCreationFrame.frame:SetFrameStrata("DIALOG")
   frame.presetCreationFrame:SetTitle(L["New Preset"])
   frame.presetCreationFrame:SetWidth(400)
   frame.presetCreationFrame:SetHeight(200)
@@ -3224,21 +3234,27 @@ end
 ---creates frame housing settings for user customized color palette
 function MDT:MakeCustomColorFrame(frame)
   --Base frame for custom palette setup
-  frame.CustomColorFrame = AceGUI:Create("Frame")
-  frame.CustomColorFrame:SetTitle(L["Custom Color Palette"])
-  frame.CustomColorFrame:SetWidth(290)
-  frame.CustomColorFrame:SetHeight(220)
-  frame.CustomColorFrame:EnableResize(false)
-  frame.CustomColorFrame:SetLayout("Flow")
-  frame.CustomColorFrame.statustext:GetParent():Hide()
-  frame:AddChild(frame.CustomColorFrame)
+  if not frame.CustomColorFrame then
+    frame.CustomColorFrame = AceGUI:Create("Frame")
+    frame.CustomColorFrame.frame:SetParent(frame.frame)
+    frame.CustomColorFrame.frame:SetFrameStrata("DIALOG")
+    frame.CustomColorFrame:SetTitle(L["Custom Color Palette"])
+    frame.CustomColorFrame:SetWidth(290)
+    frame.CustomColorFrame:SetHeight(220)
+    frame.CustomColorFrame:EnableResize(false)
+    frame.CustomColorFrame:SetLayout("Flow")
+    frame.CustomColorFrame.statustext:GetParent():Hide()
+    frame:AddChild(frame.CustomColorFrame)
+    --Slider to adjust number of different colors and remake the frame OnMouseUp
+    frame.CustomColorFrame.ColorSlider = AceGUI:Create("Slider")
+    frame.CustomColorFrame.ColorSlider:SetSliderValues(2, 20, 1)
+    frame.CustomColorFrame.ColorSlider:SetLabel(L["Choose number of colors"])
+    frame.CustomColorFrame.ColorSlider:SetRelativeWidth(1)
+    frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
+    frame.CustomColorFrame.ColorPicker = {}
+  end
 
-  --Slider to adjust number of different colors and remake the frame OnMouseUp
-  frame.CustomColorFrame.ColorSlider = AceGUI:Create("Slider")
-  frame.CustomColorFrame.ColorSlider:SetSliderValues(2, 20, 1)
   frame.CustomColorFrame.ColorSlider:SetValue(db.colorPaletteInfo.numberCustomColors)
-  frame.CustomColorFrame.ColorSlider:SetLabel(L["Choose number of colors"])
-  frame.CustomColorFrame.ColorSlider:SetRelativeWidth(1)
   frame.CustomColorFrame.ColorSlider:SetCallback("OnMouseUp", function(event, callbackName, value)
     if value > 20 then
       db.colorPaletteInfo.numberCustomColors = 20
@@ -3254,35 +3270,37 @@ function MDT:MakeCustomColorFrame(frame)
     MDT:MakeCustomColorFrame(frame)
     MDT:OpenCustomColorsDialog()
   end)
-  frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
 
   --Loop to create as many colorpickers as requested limited by db.colorPaletteInfo.numberCustomColors
-  local ColorPicker = {}
+  frame.CustomColorFrame:ReleaseChildren()
+
   for i = 1, db.colorPaletteInfo.numberCustomColors do
-    ColorPicker[i] = AceGUI:Create("ColorPicker")
+    frame.CustomColorFrame.ColorPicker[i] = frame.CustomColorFrame.ColorPicker[i] or AceGUI:Create("ColorPicker")
     if db.colorPaletteInfo.customPaletteValues[i] then
-      ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
+      frame.CustomColorFrame.ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
         db.colorPaletteInfo.customPaletteValues[i][2], db.colorPaletteInfo.customPaletteValues[i][3])
     else
       db.colorPaletteInfo.customPaletteValues[i] = { 1, 1, 1 }
-      ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
+      frame.CustomColorFrame.ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
         db.colorPaletteInfo.customPaletteValues[i][2], db.colorPaletteInfo.customPaletteValues[i][3])
     end
-    ColorPicker[i]:SetLabel(" "..i)
-    ColorPicker[i]:SetRelativeWidth(0.25)
-    ColorPicker[i]:SetHeight(15)
-    ColorPicker[i]:SetCallback("OnValueChanged", function(widget, event, r, g, b)
+    frame.CustomColorFrame.ColorPicker[i]:SetLabel(" "..i)
+    frame.CustomColorFrame.ColorPicker[i]:SetRelativeWidth(0.25)
+    frame.CustomColorFrame.ColorPicker[i]:SetHeight(15)
+    frame.CustomColorFrame.ColorPicker[i]:SetCallback("OnValueChanged", function(widget, event, r, g, b)
       db.colorPaletteInfo.customPaletteValues[i] = { r, g, b }
       MDT:SetPresetColorPaletteInfo()
       MDT:ReloadPullButtons()
     end)
-    frame.CustomColorFrame:AddChild(ColorPicker[i])
+    frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorPicker[i])
   end
   frame.CustomColorFrame:Hide()
 end
 
 function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame = AceGUI:Create("Frame")
+  frame.settingsFrame.frame:SetParent(frame)
+  frame.settingsFrame.frame:SetFrameStrata("DIALOG")
   frame.settingsFrame:SetTitle(L["Settings"])
   local frameWidth = 300
   frame.settingsFrame:SetWidth(frameWidth)
@@ -3426,7 +3444,7 @@ function MDT:MakePullSelectionButtons(frame)
   frame.PullButtonScrollGroup:SetPoint("TOPLEFT", frame.WidgetGroup.frame, "BOTTOMLEFT", -4, -32)
   frame.PullButtonScrollGroup:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 30)
   frame.PullButtonScrollGroup:SetLayout("Fill")
-  frame.PullButtonScrollGroup.frame:SetFrameStrata(mainFrameStrata)
+  frame.PullButtonScrollGroup.frame:SetParent(frame)
   if not frame.PullButtonScrollGroup.frame.SetBackdrop then
     Mixin(frame.PullButtonScrollGroup.frame, BackdropTemplateMixin)
   end
@@ -3915,6 +3933,8 @@ end
 
 function MDT:MakeRenameFrame(frame)
   frame.RenameFrame = AceGUI:Create("Frame")
+  frame.RenameFrame.frame:SetParent(frame)
+  frame.RenameFrame.frame:SetFrameStrata("DIALOG")
   frame.RenameFrame:SetTitle(L["Rename Preset"])
   frame.RenameFrame:SetWidth(350)
   frame.RenameFrame:SetHeight(150)
@@ -3970,6 +3990,8 @@ end
 ---Creates the frame used to export presets to a string which can be uploaded to text sharing websites like pastebin
 function MDT:MakeExportFrame(frame)
   frame.ExportFrame = AceGUI:Create("Frame")
+  frame.ExportFrame.frame:SetParent(frame)
+  frame.ExportFrame.frame:SetFrameStrata("DIALOG")
   frame.ExportFrame:SetTitle(L["Export"])
   frame.ExportFrame:SetWidth(600)
   frame.ExportFrame:SetHeight(400)
@@ -4024,6 +4046,8 @@ end
 ---Creates the delete confirmation dialog that pops up when a user wants to delete a preset
 function MDT:MakeDeleteConfirmationFrame(frame)
   frame.DeleteConfirmationFrame = AceGUI:Create("Frame")
+  frame.DeleteConfirmationFrame.frame:SetParent(frame)
+  frame.DeleteConfirmationFrame.frame:SetFrameStrata("DIALOG")
   frame.DeleteConfirmationFrame:SetTitle(L["Delete Preset"])
   frame.DeleteConfirmationFrame:SetWidth(250)
   frame.DeleteConfirmationFrame:SetHeight(120)
@@ -4062,6 +4086,8 @@ end
 ---Creates the clear confirmation dialog that pops up when a user wants to clear a preset
 function MDT:MakeClearConfirmationFrame(frame)
   frame.ClearConfirmationFrame = AceGUI:Create("Frame")
+  frame.ClearConfirmationFrame.frame:SetParent(frame)
+  frame.ClearConfirmationFrame.frame:SetFrameStrata("DIALOG")
   frame.ClearConfirmationFrame:SetTitle(L["Reset Preset"])
   frame.ClearConfirmationFrame:SetWidth(250)
   frame.ClearConfirmationFrame:SetHeight(120)
@@ -4112,6 +4138,8 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   if not f then
     if MDT.main_frame then
       MDT.main_frame.ConfirmationFrame = AceGUI:Create("Frame")
+      MDT.main_frame.ConfirmationFrame.frame:SetParent(MDT.main_frame)
+      MDT.main_frame.ConfirmationFrame.frame:SetFrameStrata("DIALOG")
       f = MDT.main_frame.ConfirmationFrame
     else
       MDT.tempConfirmationFrame = AceGUI:Create("Frame")
@@ -4720,6 +4748,7 @@ function initFrames()
   MDT.initSpinner = initSpinner
 
   local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
+  main_frame:SetToplevel(true)
   MDT:SetUpModifiers(main_frame)
   main_frame:Hide()
   tinsert(UISpecialFrames, "MDTFrame")
