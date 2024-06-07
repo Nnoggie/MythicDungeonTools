@@ -1,6 +1,6 @@
 local addonName, MDT = ...;
 
-function MDT:IsDragonflight()
+function MDT:IsCompatibleVersion()
   local gameVersion = select(4, GetBuildInfo())
-  return gameVersion >= 100000 and gameVersion < 110000
+  return gameVersion >= 110000
 end
