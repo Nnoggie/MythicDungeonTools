@@ -17,7 +17,7 @@ local methods = {
       elseif (IsShiftKeyDown()) then
         if DEFAULT_CHAT_FRAME.editBox and DEFAULT_CHAT_FRAME.editBox:IsVisible() then
           local old = DEFAULT_CHAT_FRAME.editBox:GetText()
-          local link = GetSpellLink(self.spellId) or ""
+          local link = C_Spell.GetSpellLink(self.spellId) or ""
           DEFAULT_CHAT_FRAME.editBox:SetText(old..link)
         end
       else
@@ -96,15 +96,15 @@ local methods = {
   end,
   ["SetSpell"] = function(self, spellId, spellData)
     self.spellId = spellId
-    local name, _, icon = GetSpellInfo(spellId)
-    self.icon:SetTexture(icon)
+    local spellInfo = C_Spell.GetSpellInfo(spellId)
+    self.icon:SetTexture(C_Spell.GetSpellTexture(spellId))
+    self.title:SetText(spellInfo.name)
     if C_AddOns.IsAddOnLoaded("AddOnSkins") then
       if AddOnSkins then
         local AS = unpack(AddOnSkins)
         AS:SkinTexture(self.icon)
       end
     end
-    self.title:SetText(name);
     if spellData.interruptible then
       self.interruptible = true
       self.interruptibleIcon:Show()
