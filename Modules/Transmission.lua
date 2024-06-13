@@ -507,7 +507,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
           MDT:DungeonEnemies_UpdateTeeming()
           MDT:DungeonEnemies_UpdateInspiring()
           MDT:DungeonEnemies_UpdateSeasonalAffix()
-          MDT:DungeonEnemies_UpdateBoralusFaction(preset.faction)
           MDT:POI_UpdateAll()
           MDT:UpdateProgressbar()
           MDT:ReloadPullButtons()
@@ -652,20 +651,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       if MDT:ValidateImportPreset(preset) then
         MDT.livePresetUID = preset.uid
         MDT:ImportPreset(preset, true)
-      end
-    end
-  end
-
-  --Siege of Boralus
-  if prefix == MDT.liveSessionPrefixes.bora then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local faction = tonumber(message)
-      preset.faction = faction
-      if preset == MDT:GetCurrentPreset() then
-        MDT:UpdateBoralusSelector()
-        MDT:ReloadPullButtons()
-        MDT:UpdateProgressbar()
       end
     end
   end

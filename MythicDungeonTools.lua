@@ -2603,8 +2603,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
     if not framesInitialized then coroutine.yield() end
-    MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
-    if not framesInitialized then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not framesInitialized then coroutine.yield() end
     MDT:KillAllAnimatedLines()

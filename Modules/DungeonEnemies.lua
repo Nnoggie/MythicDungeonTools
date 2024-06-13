@@ -1183,36 +1183,6 @@ function MDT:DungeonEnemies_UpdateSeasonalAffix()
   end
 end
 
-function MDT:DungeonEnemies_UpdateBoralusFaction(faction)
-  preset = MDT:GetCurrentPreset()
-  local teeming = MDT:IsPresetTeeming(preset)
-  for _, blip in pairs(blips) do
-    if blip.clone.faction then
-      --handle beguiling npcs here
-      if emissaryIds[blip.data.id] then
-        local week
-        week = preset.week
-        local weekData = blip.clone.week
-        if weekData and not weekData[week] then
-          blip:Hide()
-        elseif weekData and weekData[week] then
-          if blip.clone.faction == faction then
-            blip:Show()
-          else
-            blip:Hide()
-          end
-        end
-      else
-        if blip.clone.faction == faction and ((teeming and blip.clone.teeming) or (not blip.clone.teeming)) then
-          blip:Show()
-        else
-          blip:Hide()
-        end
-      end
-    end
-  end
-end
-
 function MDT:DungeonEnemies_UpdateReaping()
   for _, blip in pairs(blips) do
     if blip.data.reaping then
