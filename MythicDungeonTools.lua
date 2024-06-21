@@ -4656,19 +4656,7 @@ end
 function MDT:UpdatePullButtonColor(pullIdx, r, g, b)
   local button = MDT:GetPullButton(pullIdx)
   if not button then return end
-
-  local function updateSwatch(t)
-    for k, v in pairs(t) do
-      if v.hasColorSwatch then
-        v.r, v.g, v.b = r, g, b
-        return
-      end
-    end
-  end
-
   button.color.r, button.color.g, button.color.b = r, g, b
-  updateSwatch(button.menu)
-  updateSwatch(button.multiselectMenu)
   button:UpdateColor()
 end
 

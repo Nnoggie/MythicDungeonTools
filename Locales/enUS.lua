@@ -2,7 +2,8 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
-
+L["Close"] = "Close"
+L["Pull Drop Clear Pulls"] = "Clear Pulls"
 L["The War Within Season 1"] = "The War Within Season 1"
 L["incompatibleVersionError"] = "This version of World of Warcraft is not compatible with Mythic Dungeon Tools."
 L["Click to assign player"] = "Click to assign player"

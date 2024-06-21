@@ -65,6 +65,42 @@ local function POI_SetDevOptions(frame, poi)
   frame:SetScript("OnClick", nil)
 end
 
+local createPlayerAssignmentContextMenu = function(frame)
+  MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+    rootDescription:CreateTitle(L["dropdownAssignPlayer"])
+
+    local group = MDT.U.GetGroupMembers()
+    for _, player in pairs(group) do
+      local function IsSelected(p)
+        return frame.playerAssignmentString:GetText() == p
+      end
+      local function SetSelected(p)
+        frame.playerAssignmentString:SetText(p)
+        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
+      end
+      rootDescription:CreateRadio(player, IsSelected, SetSelected, player)
+    end
+
+    local classStrings = MDT.U.GetClassColoredClassNames()
+
+    for _, classString in pairs(classStrings) do
+      local function IsSelected(p)
+        return frame.playerAssignmentString:GetText() == p
+      end
+      local function SetSelected(p)
+        frame.playerAssignmentString:SetText(p)
+        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
+      end
+      rootDescription:CreateRadio(classString, IsSelected, SetSelected, classString)
+    end
+
+    rootDescription:CreateButton(L["dropdownClear"], function()
+      frame.playerAssignmentString:SetText()
+      MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+    end)
+  end)
+end
+
 local function POI_SetOptions(frame, type, poi)
   frame.teeming = nil
   frame.isSpire = nil
@@ -500,31 +536,9 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:Show()
 
     frame:SetScript("OnClick", function()
-      local menu = {
-        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
-      }
-      local group = MDT.U.GetGroupMembers()
-      for _, player in pairs(group) do
-        table.insert(menu, {
-          text = player,
-          func = function()
-            frame.playerAssignmentString:SetText(player)
-            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
-          end,
-          checked = player == frame.playerAssignmentString:GetText()
-        })
-      end
-      table.insert(menu, {
-        text = L["dropdownClear"],
-        func = function()
-          frame.playerAssignmentString:SetText()
-          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
-        end,
-        notCheckable = true
-      })
-
-      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+      createPlayerAssignmentContextMenu(frame)
     end)
+
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip_SetTitle(GameTooltip, botOptions[poi.botType].text.." "..poi.botTypeIndex)
@@ -559,30 +573,7 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:Show()
 
     frame:SetScript("OnClick", function()
-      local menu = {
-        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
-      }
-      local group = MDT.U.GetGroupMembers()
-      for _, player in pairs(group) do
-        table.insert(menu, {
-          text = player,
-          func = function()
-            frame.playerAssignmentString:SetText(player)
-            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
-          end,
-          checked = player == frame.playerAssignmentString:GetText()
-        })
-      end
-      table.insert(menu, {
-        text = L["dropdownClear"],
-        func = function()
-          frame.playerAssignmentString:SetText()
-          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
-        end,
-        notCheckable = true
-      })
-
-      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+      createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
@@ -635,44 +626,7 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:Show()
 
     frame:SetScript("OnClick", function()
-      local menu = {
-        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
-      }
-      local group = MDT.U.GetGroupMembers()
-      for _, player in pairs(group) do
-        table.insert(menu, {
-          text = player,
-          func = function()
-            frame.playerAssignmentString:SetText(player)
-            setAssigned()
-            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
-          end,
-          checked = player == frame.playerAssignmentString:GetText()
-        })
-      end
-      local classStrings = MDT.U.GetClassColoredClassNames()
-      for _, classString in pairs(classStrings) do
-        table.insert(menu, {
-          text = classString,
-          func = function()
-            frame.playerAssignmentString:SetText(classString)
-            setAssigned()
-            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, classString)
-          end,
-          checked = classString == frame.playerAssignmentString:GetText()
-        })
-      end
-      table.insert(menu, {
-        text = L["dropdownClear"],
-        func = function()
-          frame.playerAssignmentString:SetText()
-          setUnassigned()
-          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
-        end,
-        notCheckable = true
-      })
-
-      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+      createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
@@ -725,44 +679,7 @@ local function POI_SetOptions(frame, type, poi)
     frame.playerAssignmentString:Show()
 
     frame:SetScript("OnClick", function()
-      local menu = {
-        { text = L["dropdownAssignPlayer"], isTitle = true, notCheckable = true },
-      }
-      local group = MDT.U.GetGroupMembers()
-      for _, player in pairs(group) do
-        table.insert(menu, {
-          text = player,
-          func = function()
-            frame.playerAssignmentString:SetText(player)
-            setAssigned()
-            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, player)
-          end,
-          checked = player == frame.playerAssignmentString:GetText()
-        })
-      end
-      local classStrings = MDT.U.GetClassColoredClassNames()
-      for _, classString in pairs(classStrings) do
-        table.insert(menu, {
-          text = classString,
-          func = function()
-            frame.playerAssignmentString:SetText(classString)
-            setAssigned()
-            MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, classString)
-          end,
-          checked = classString == frame.playerAssignmentString:GetText()
-        })
-      end
-      table.insert(menu, {
-        text = L["dropdownClear"],
-        func = function()
-          frame.playerAssignmentString:SetText()
-          setUnassigned()
-          MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
-        end,
-        notCheckable = true
-      })
-
-      EasyMenu(menu, MDT.main_frame.poiDropDown, "cursor", 0, -15, "MENU")
+      createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")

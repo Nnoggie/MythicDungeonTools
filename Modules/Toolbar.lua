@@ -1049,43 +1049,18 @@ local function makeNoteEditbox()
   return editbox
 end
 
-local noteDropDown = CreateFrame("frame", "MDTNoteDropDown", nil, "UIDropDownMenuTemplate")
 local currentNote
-local noteMenu = {}
-do
-  tinsert(noteMenu, {
-    text = L["Edit"],
-    notCheckable = 1,
-    func = function()
+
+local function openContextMenu()
+  MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+    rootDescription:CreateButton(L["Edit"], function()
       currentNote:OpenEditBox()
-    end
-  })
-  tinsert(noteMenu, {
-    text = " ",
-    notClickable = 1,
-    notCheckable = 1,
-    func = nil
-  })
-  tinsert(noteMenu, {
-    text = L["Delete"],
-    notCheckable = 1,
-    func = function()
+    end)
+    rootDescription:CreateButton(L["Delete"], function()
       deleteNoteObj(currentNote)
-    end
-  })
-  tinsert(noteMenu, {
-    text = " ",
-    notClickable = 1,
-    notCheckable = 1,
-    func = nil
-  })
-  tinsert(noteMenu, {
-    text = L["Close"],
-    notCheckable = 1,
-    func = function()
-      noteDropDown:Hide()
-    end
-  })
+    end)
+    rootDescription:CreateButton(L["Close"], function() end)
+  end)
 end
 
 local function POIButton_CalculateNumericTexCoords(index, color)
@@ -1150,7 +1125,7 @@ function MDT:DrawNote(x, y, text, objectIndex)
       self:OpenEditBox()
     elseif button == "RightButton" then
       currentNote = note
-      EasyMenu(noteMenu, noteDropDown, "cursor", 0, -15, "MENU")
+      openContextMenu()
       if noteEditbox and noteEditbox.frame:IsShown() then
         noteEditbox.frame:Hide()
       end
