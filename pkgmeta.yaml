@@ -1,7 +1,6 @@
 manual-changelog: CHANGELOG.txt
 ignore:
   - README.md
-  - python
   - pkgmeta.yaml
 enable-nolib-creation: no
 externals:

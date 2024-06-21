@@ -1,11 +1,5 @@
 .idea/
-libs/*
 .vscode/
+libs/*
 !libs/LibDeflate
 !libs/load_libs.xml
-venv
-python/combatLogReader/__pycache__
-python/__pycache__
-wowdb_files
-MythicDungeonTools.iml
-DBC2CSV
