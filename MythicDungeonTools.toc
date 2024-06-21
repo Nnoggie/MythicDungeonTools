@@ -32,3 +32,4 @@ Legion\load_legion.xml
 BattleForAzeroth\load_bfa.xml
 Shadowlands\load_shadowlands.xml
 Dragonflight\load_dragonflight.xml
+TheWarWithin\load_thewarwithin.xml
