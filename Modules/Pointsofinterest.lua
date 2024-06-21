@@ -6,11 +6,10 @@ local tinsert, slen, pairs, tremove, twipe = table.insert, string.len, pairs, ta
 local points = {}
 
 function MDT:POI_CreateFramePools()
-  MDT.poi_framePools = MDT.poi_framePools or CreateFramePoolCollection()
-  MDT.poi_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "MapLinkPinTemplate")
-  MDT.poi_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "DeathReleasePinTemplate")
-  MDT.poi_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "VignettePinTemplate")
-  MDT.poi_framePools:CreatePool("Frame", MDT.main_frame.mapPanelFrame, "MDTAnimatedLineTemplate")
+  MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "MapLinkPinTemplate")
+  MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "DeathReleasePinTemplate")
+  MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "VignettePinTemplate")
+  MDT.CreateFramePool("Frame", MDT.main_frame.mapPanelFrame, "MDTAnimatedLineTemplate")
 end
 
 local function formatPoiString(formattedText)
@@ -916,10 +915,9 @@ end
 function MDT:POI_UpdateAll()
   twipe(points)
   db = MDT:GetDB()
-  local framePools = MDT.poi_framePools
-  framePools:GetPool("MapLinkPinTemplate"):ReleaseAll()
-  framePools:GetPool("DeathReleasePinTemplate"):ReleaseAll()
-  framePools:GetPool("VignettePinTemplate"):ReleaseAll()
+  MDT.GetFramePool("MapLinkPinTemplate"):ReleaseAll()
+  MDT.GetFramePool("DeathReleasePinTemplate"):ReleaseAll()
+  MDT.GetFramePool("VignettePinTemplate"):ReleaseAll()
   if not MDT.mapPOIs[db.currentDungeonIdx] then return end
   local currentSublevel = MDT:GetCurrentSubLevel()
   local pois = MDT.mapPOIs[db.currentDungeonIdx][currentSublevel]
@@ -934,7 +932,7 @@ function MDT:POI_UpdateAll()
         and (not poi.season or poi.season == db.currentSeason)
         and (not poi.difficulty or poi.difficulty <= db.currentDifficulty)
     then
-      local poiFrame = framePools:Acquire(poi.template)
+      local poiFrame = MDT.GetFramePool(poi.template):Acquire()
       if poiFrame.playerAssignmentString then poiFrame.playerAssignmentString:Hide() end
       poiFrame.poiIdx = poiIdx
       POI_SetOptions(poiFrame, poi.type, poi)
@@ -1018,7 +1016,7 @@ local function animateLine(self, elapsed)
 end
 
 local function createAnimatedLine(parent)
-  local animatedLine = MDT.poi_framePools:Acquire("MDTAnimatedLineTemplate")
+  local animatedLine = MDT.GetFramePool("MDTAnimatedLineTemplate"):Acquire()
   animatedLine:Show()
   animatedLine.phase = 0
   animatedLine.frames = {}
@@ -1056,9 +1054,9 @@ function MDT:ShowAnimatedLine(parent, frame1, frame2, sizeX, sizeY, gap, color, 
 end
 
 function MDT:KillAllAnimatedLines()
-  local linePool = self.poi_framePools:GetPool("MDTAnimatedLineTemplate")
-  local _, activeLines = linePool:EnumerateActive()
-  for animatedLine, _ in pairs(activeLines) do
+  local linePool = MDT.GetFramePool("MDTAnimatedLineTemplate")
+  local activeLines = linePool.active
+  for _, animatedLine in pairs(activeLines) do
     animatedLine:SetScript("onUpdate", nil)
     for i = 1, #animatedLine.frames do
       animatedLine.frames[i]:ClearAllPoints()
@@ -1084,8 +1082,8 @@ function MDT:DrawAllAnimatedLines()
       MDT:HideAnimatedLine(blip.animatedLine)
     elseif blip.data.corrupted and blip.selected then
       local connectedFrame
-      local _, active = MDT.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
-      for poiFrame, _ in pairs(active) do
+      local active = MDT.GetFramePool("VignettePinTemplate").active
+      for _, poiFrame in pairs(active) do
         if poiFrame.spireIndex and poiFrame.npcId and poiFrame.npcId == blip.data.id then
           connectedFrame = poiFrame
           break
@@ -1100,8 +1098,8 @@ function MDT:DrawAllAnimatedLines()
     end
   end
   --draw lines from active spires to doors when their associated npc is dragged into other sublevel
-  local _, activeSpires = MDT.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
-  for poiFrame, _ in pairs(activeSpires) do
+  local activeSpires = MDT.GetFramePool("VignettePinTemplate").active
+  for _, poiFrame in pairs(activeSpires) do
     if poiFrame.spireIndex and poiFrame.npcId and not poiFrame.isSpire and not poiFrame.animatedLine then
       local connectedDoor = MDT:FindConnectedDoor(poiFrame.npcId, 1)
       if connectedDoor then
@@ -1126,8 +1124,8 @@ function MDT:FindConnectedDoor(npcId, numConnection)
   local connection = riftOffsets and riftOffsets[npcId] and riftOffsets[npcId].connections and
       riftOffsets[npcId].connections[numConnection or #riftOffsets[npcId].connections] or nil
   if connection then
-    local _, activeDoors = MDT.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
-    for poiFrame, _ in pairs(activeDoors) do
+    local activeDoors = MDT.GetFramePool("MapLinkPinTemplate").active
+    for _, poiFrame in pairs(activeDoors) do
       if poiFrame.poi and poiFrame.poi.connectionIndex == connection.connectionIndex then
         return poiFrame, riftOffsets[npcId].connections
       end

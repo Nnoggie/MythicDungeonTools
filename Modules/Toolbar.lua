@@ -278,7 +278,7 @@ end
 ---TexturePool
 local activeTextures = {}
 local texturePool = {}
-local notePoolCollection
+local noteFramePool
 local function getTexture()
   local size = tgetn(texturePool)
   if size == 0 then
@@ -306,7 +306,7 @@ function MDT:ReleaseAllActiveTextures()
     releaseTexture(tex)
   end
   twipe(activeTextures)
-  if notePoolCollection then notePoolCollection:ReleaseAll() end
+  if noteFramePool then noteFramePool:ReleaseAll() end
 end
 
 ---CreateBrushPreview
@@ -448,9 +448,9 @@ function MDT:OverrideScrollframeScripts()
     end
   end)
   --make notes draggable
-  if notePoolCollection then
+  if noteFramePool then
     if currentTool == "mover" then
-      for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
+      for _, note in pairs(noteFramePool.active) do
         note:SetMovable(true)
         note:RegisterForDrag("LeftButton")
         local xOffset, yOffset
@@ -486,7 +486,7 @@ function MDT:OverrideScrollframeScripts()
         end)
       end
     else
-      for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
+      for _, note in pairs(noteFramePool.active) do
         note:SetMovable(false)
         note:RegisterForDrag()
       end
@@ -502,8 +502,8 @@ function MDT:RestoreScrollframeScripts()
   frame.scrollFrame:SetScript("OnMouseDown", MDT.OnMouseDown)
   frame.scrollFrame:SetScript("OnMouseUp", MDT.OnMouseUp)
   --make notes not draggable
-  if notePoolCollection then
-    for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
+  if noteFramePool then
+    for _, note in pairs(noteFramePool.active) do
       note:SetMovable(false)
       note:RegisterForDrag()
     end
@@ -818,9 +818,8 @@ function MDT:HideAllPresetObjects()
     tex:Hide()
   end
   --notes
-  if notePoolCollection then
-    local _, notes = notePoolCollection:GetPool("QuestPinTemplate"):EnumerateActive()
-    for note, _ in pairs(notes) do
+  if noteFramePool then
+    for _, note in pairs(noteFramePool.active) do
       note:Hide()
     end
   end
@@ -1020,7 +1019,7 @@ local function makeNoteEditbox()
   editbox.multiBox:SetLabel(L["Note Text:"])
 
   editbox.multiBox:SetCallback("OnEnterPressed", function(widget, callbackName, text)
-    for note, _ in pairs(notePoolCollection.pools.QuestPinTemplatenil.activeObjects) do
+    for _, note in pairs(noteFramePool.active) do
       if note.noteIdx == editbox.noteIdx then
         note.tooltipText = text
         updateNoteObjText(text, note)
@@ -1101,14 +1100,13 @@ end
 
 ---DrawNote
 function MDT:DrawNote(x, y, text, objectIndex)
-  if not notePoolCollection then
-    notePoolCollection = CreateFramePoolCollection()
-    notePoolCollection:CreatePool("Button", MDT.main_frame.mapPanelFrame, "QuestPinTemplate")
+  if not noteFramePool then
+    noteFramePool = MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "QuestPinTemplate")
   end
   local scale = MDT:GetScale()
   --setup
-  local note = notePoolCollection:Acquire("QuestPinTemplate")
-  note.noteIdx = notePoolCollection:GetPool("QuestPinTemplate"):GetNumActive()
+  local note = noteFramePool:Acquire()
+  note.noteIdx = #noteFramePool.active
   note.objectIndex = objectIndex
   note:ClearAllPoints()
   note:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)

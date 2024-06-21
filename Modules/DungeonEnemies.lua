@@ -117,8 +117,8 @@ function MDTDungeonEnemyMixin:OnEnter()
     --self.texture_DragRight:Show()
     --self.texture_DragUp:Show()
     if not self.selected then
-      local _, active = MDT.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
-      for poiFrame, _ in pairs(active) do
+      local active = MDT.GetFramePool("VignettePinTemplate").active
+      for _, poiFrame in pairs(active) do
         if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
           poiFrame.HighlightTexture:Show()
           self.spireFrame = poiFrame
@@ -164,8 +164,8 @@ function MDTDungeonEnemyMixin:OnLeave()
     self.texture_DragLeft:Hide()
     self.texture_DragRight:Hide()
     self.texture_DragUp:Hide()
-    local _, active = MDT.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
-    for poiFrame, _ in pairs(active) do
+    local active = MDT.GetFramePool("VignettePinTemplate").active
+    for _, poiFrame in pairs(active) do
       if poiFrame.spireIndex and poiFrame.npcId == self.data.id then
         poiFrame.HighlightTexture:Hide()
         break
@@ -253,10 +253,10 @@ local function setUpMouseHandlersAwakened(self, clone, scale, riftOffsets)
   self:SetScript("OnDragStart", function()
     self:StartMoving()
     MDT.draggedBlip = self
-    local _, activeDoors = MDT.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
+    local activeDoors = MDT.GetFramePool("MapLinkPinTemplate").active
     riftOffsets = MDT:GetRiftOffsets()
     self:SetScript("OnUpdate", function()
-      for poiFrame, _ in pairs(activeDoors) do
+      for _, poiFrame in pairs(activeDoors) do
         if MDT:DoFramesOverlap(self, poiFrame, -10) then
           poiFrame.HighlightTexture:Show()
         else
@@ -296,8 +296,8 @@ local function setUpMouseHandlersAwakened(self, clone, scale, riftOffsets)
     self:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", self.adjustedX * scale, self.adjustedY * scale)
     --dragged ontop of door
     --find doors,check overlap,break,swap sublevel,change poi sublevel
-    local _, active = MDT.poi_framePools:GetPool("MapLinkPinTemplate"):EnumerateActive()
-    for poiFrame, _ in pairs(active) do
+    local active = MDT.GetFramePool("MapLinkPinTemplate").active
+    for _, poiFrame in pairs(active) do
       if MDT:DoFramesOverlap(self, poiFrame, -10) then
         riftOffsets[self.data.id].sublevel = poiFrame.target
         riftOffsets[self.data.id].homeSublevel = self.clone.sublevel or 1
@@ -354,8 +354,8 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
     end
     if self.data.corrupted then
       local connectedFrame
-      local _, active = MDT.poi_framePools:GetPool("VignettePinTemplate"):EnumerateActive()
-      for poiFrame, _ in pairs(active) do
+      local active = MDT.GetFramePool("VignettePinTemplate").active
+      for _, poiFrame in pairs(active) do
         if poiFrame.spireIndex and poiFrame.npcId and poiFrame.npcId == self.data.id then
           if self.selected then
             poiFrame.Texture:SetAtlas("poi-rift1")
@@ -871,11 +871,11 @@ end
 ---DungeonEnemies_HideAllBlips
 ---Used to hide blips during scaling changes to the map
 function MDT:DungeonEnemies_HideAllBlips()
-  MDT.dungeonEnemies_framePools:ReleaseAll()
+  MDT.dungeonEnemies_framePool:ReleaseAll()
 end
 
 function MDT:DungeonEnemies_UpdateEnemiesAsync()
-  MDT.dungeonEnemies_framePools:ReleaseAll()
+  MDT.dungeonEnemies_framePool:ReleaseAll()
   coroutine.yield()
   twipe(blips)
   if not db then db = MDT:GetDB() end
@@ -892,7 +892,7 @@ function MDT:DungeonEnemies_UpdateEnemiesAsync()
       if clone.sublevel == currentSublevel or (not clone.sublevel) then
         --skip rifts that were dragged to another sublevel
         if not (data.corrupted and riftOffsets and riftOffsets[data.id] and riftOffsets[data.id].sublevel) then
-          local blip = MDT.dungeonEnemies_framePools:Acquire("MDTDungeonEnemyTemplate")
+          local blip = MDT.dungeonEnemies_framePool:Acquire()
           blip:SetUp(data, clone)
           blip.enemyIdx = enemyIdx
           blip.cloneIdx = cloneIdx
@@ -908,7 +908,7 @@ function MDT:DungeonEnemies_UpdateEnemiesAsync()
         for enemyIdx, data in pairs(enemies) do
           if data.id == npcId then
             for cloneIdx, clone in pairs(data["clones"]) do
-              local blip = MDT.dungeonEnemies_framePools:Acquire("MDTDungeonEnemyTemplate")
+              local blip = MDT.dungeonEnemies_framePool:Acquire("MDTDungeonEnemyTemplate")
               blip:SetUp(data, clone)
               blip.enemyIdx = enemyIdx
               blip.cloneIdx = cloneIdx
@@ -923,8 +923,7 @@ end
 
 function MDT:DungeonEnemies_CreateFramePools()
   db = self:GetDB()
-  MDT.dungeonEnemies_framePools = MDT.dungeonEnemies_framePools or CreateFramePoolCollection()
-  MDT.dungeonEnemies_framePools:CreatePool("Button", MDT.main_frame.mapPanelFrame, "MDTDungeonEnemyTemplate");
+  MDT.dungeonEnemies_framePool = MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "MDTDungeonEnemyTemplate")
 end
 
 function MDT:FindPullOfBlip(blip)
