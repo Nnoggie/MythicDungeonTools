@@ -17,8 +17,8 @@ local methods = {
       elseif (IsShiftKeyDown()) then
         if DEFAULT_CHAT_FRAME.editBox and DEFAULT_CHAT_FRAME.editBox:IsVisible() then
           local old = DEFAULT_CHAT_FRAME.editBox:GetText()
-          local link = GetSpellLink(self.spellId) or ""
-          DEFAULT_CHAT_FRAME.editBox:SetText(old .. link)
+          local link = C_Spell.GetSpellLink(self.spellId) or ""
+          DEFAULT_CHAT_FRAME.editBox:SetText(old..link)
         end
       else
 
@@ -30,7 +30,7 @@ local methods = {
       GameTooltip:SetSpellByID(self.spellId)
       if self.interruptible then
         local interruptible = CreateTextureMarkup("Interface\\EncounterJournal\\UI-EJ-Icons", 64, 64, 32, 32, 0.75, 0.88
-          , 0, 0.5, 0, 0) .. "Interruptible"
+        , 0, 0.5, 0, 0).."Interruptible"
         GameTooltip:AddLine(interruptible)
       end
       GameTooltip:Show()
@@ -96,15 +96,9 @@ local methods = {
   end,
   ["SetSpell"] = function(self, spellId, spellData)
     self.spellId = spellId
-    local name, _, icon = GetSpellInfo(spellId)
-    self.icon:SetTexture(icon)
-    if IsAddOnLoaded("AddOnSkins") then
-      if AddOnSkins then
-        local AS = unpack(AddOnSkins)
-        AS:SkinTexture(self.icon)
-      end
-    end
-    self.title:SetText(name);
+    local spellInfo = C_Spell.GetSpellInfo(spellId)
+    self.icon:SetTexture(C_Spell.GetSpellTexture(spellId))
+    self.title:SetText(spellInfo.name)
     if spellData.interruptible then
       self.interruptible = true
       self.interruptibleIcon:Show()
@@ -139,7 +133,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-  local name = "MDTSpellButton" .. AceGUI:GetNextWidgetNum(Type);
+  local name = "MDTSpellButton"..AceGUI:GetNextWidgetNum(Type);
   local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
   button:SetHeight(height);
   button:SetWidth(width);

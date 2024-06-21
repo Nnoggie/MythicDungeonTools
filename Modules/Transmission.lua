@@ -507,7 +507,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
           MDT:DungeonEnemies_UpdateTeeming()
           MDT:DungeonEnemies_UpdateInspiring()
           MDT:DungeonEnemies_UpdateSeasonalAffix()
-          MDT:DungeonEnemies_UpdateBoralusFaction(preset.faction)
           MDT:POI_UpdateAll()
           MDT:UpdateProgressbar()
           MDT:ReloadPullButtons()
@@ -655,20 +654,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       end
     end
   end
-
-  --Siege of Boralus
-  if prefix == MDT.liveSessionPrefixes.bora then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local faction = tonumber(message)
-      preset.faction = faction
-      if preset == MDT:GetCurrentPreset() then
-        MDT:UpdateBoralusSelector()
-        MDT:ReloadPullButtons()
-        MDT:UpdateProgressbar()
-      end
-    end
-  end
 end
 
 ---MakeSendingStatusBar
@@ -708,7 +693,7 @@ function MDT:MakeSendingStatusBar(f)
     MDT.main_frame.bottomPanelString:Show()
   end)
 
-  if IsAddOnLoaded("ElvUI") and ElvUI then
+  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     statusbar:SetStatusBarTexture(E.media.normTex)
   end

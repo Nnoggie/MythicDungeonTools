@@ -10,7 +10,7 @@ local caughtErrors = {}
 local function getDiagnostics()
   local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
   ---@diagnostic disable-next-line: redundant-parameter
-  local addonVersion = GetAddOnMetadata(AddonName, "Version")
+  local addonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
   local locale = GetLocale()
   local dateString = date("%d/%m/%y %H:%M:%S")
   local gameVersion = select(4, GetBuildInfo())
@@ -163,26 +163,27 @@ function MDT:DisplayErrors(force)
     errorFrame:AddChild(errorFrame.errorBox)
     errorFrame:AddChild(errorFrame.errorBoxCopyButton)
     errorFrame:AddChild(errorFrame.hardResetButton)
+    if MDT.main_frame then
+      --error button
+      local errorButton = AceGUI:Create("Icon")
+      errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.25, 0.5)
+      errorButton:SetCallback("OnClick", function(widget, callbackName)
+        MDT:DisplayErrors("true")
+      end)
+      errorButton.tooltipText = L["encounteredErrors"]
+      errorButton:SetWidth(24)
+      errorButton:SetImageSize(20, 20)
+      errorButton:SetCallback("OnEnter", function(widget, callbackName)
+        MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
+      end)
+      errorButton:SetCallback("OnLeave", function()
+        MDT:ToggleToolbarTooltip(false)
+      end)
 
-    --error button
-    local errorButton = AceGUI:Create("Icon")
-    errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.25, 0.5)
-    errorButton:SetCallback("OnClick", function(widget, callbackName)
-      MDT:DisplayErrors("true")
-    end)
-    errorButton.tooltipText = L["encounteredErrors"]
-    errorButton:SetWidth(24)
-    errorButton:SetImageSize(20, 20)
-    errorButton:SetCallback("OnEnter", function(widget, callbackName)
-      MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
-    end)
-    errorButton:SetCallback("OnLeave", function()
-      MDT:ToggleToolbarTooltip(false)
-    end)
-
-    local externalButtonGroup = MDT.main_frame.externalButtonGroup
-    externalButtonGroup:AddChild(errorButton)
-    MDT:FixAceGUIShowHide(externalButtonGroup, MDT.main_frame)
+      local externalButtonGroup = MDT.main_frame.externalButtonGroup
+      externalButtonGroup:AddChild(errorButton)
+      MDT:FixAceGUIShowHide(externalButtonGroup, MDT.main_frame)
+    end
   end
 
   for _, error in ipairs(caughtErrors) do

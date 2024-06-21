@@ -2,9 +2,7 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 31
 MDT.dungeonList[dungeonIndex] = L["Mists of Tirna Scithe"]
-MDT.mapInfo[dungeonIndex] = {
-
-};
+MDT.mapInfo[dungeonIndex] = {};
 
 local zones = { 1669 }
 for _, zone in ipairs(zones) do
@@ -14,8 +12,8 @@ end
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 260, teeming = 1000, teemingEnabled = true }
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "MistsOfTirneScithe",
-  [1] = "MistsOfTirneScithe",
+  [0] = "",
+  [1] = { customTextures = 'MistsOfTirneScithe' },
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Mists of Tirna Scithe"],

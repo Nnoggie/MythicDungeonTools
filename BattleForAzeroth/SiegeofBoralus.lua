@@ -2,16 +2,7 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 19
 MDT.dungeonList[dungeonIndex] = L["Siege of Boralus"]
-MDT.mapInfo[dungeonIndex] = {
-  viewportPositionOverrides =
-  {
-    [2] = {
-      zoomScale = 4.2999997138977,
-      horizontalPan = 499.11205542634,
-      verticalPan = 38.703272826513,
-    },
-  },
-};
+MDT.mapInfo[dungeonIndex] = {};
 
 local zones = { 1162 }
 for _, zone in ipairs(zones) do
@@ -21,110 +12,12 @@ end
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "SiegeOfBoralus",
   [1] = "SiegeOfBoralus",
-  [2] = "SiegeOfBoralus",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Siege of Boralus Sublevel"],
-  [2] = L["Siege of Boralus (Upstairs)"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 319, teeming = 383, teemingEnabled = true }
-
-local selectorGroup
-local AceGUI = LibStub("AceGUI-3.0")
-local db
-local function fixBoralusShowHide(widget, frame, isFrame)
-  frame = frame or MDT.main_frame
-  local originalShow, originalHide = frame.Show, frame.Hide
-  if not isFrame then
-    widget = widget.frame
-  end
-  function frame:Show(...)
-    if db.currentDungeonIdx == 19 then
-      widget:Show()
-    end
-    return originalShow(self, ...);
-  end
-
-  function frame:Hide(...)
-    widget:Hide()
-    return originalHide(self, ...);
-  end
-end
-
-function MDT:ToggleBoralusSelector(show)
-  db = MDT:GetDB()
-  if not selectorGroup then
-    selectorGroup = AceGUI:Create("SimpleGroup")
-    selectorGroup.frame:SetParent(MDT.main_frame)
-    selectorGroup.frame:SetFrameStrata("HIGH")
-    selectorGroup.frame:SetFrameLevel(50)
-    if not selectorGroup.frame.SetBackdrop then
-      Mixin(selectorGroup.frame, BackdropTemplateMixin)
-    end
-    selectorGroup.frame:SetBackdropColor(unpack(MDT.BackdropColor))
-    fixBoralusShowHide(selectorGroup)
-    selectorGroup:SetLayout("Flow")
-    selectorGroup.frame.bg = selectorGroup.frame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    selectorGroup.frame.bg:SetAllPoints(selectorGroup.frame)
-    selectorGroup.frame.bg:SetColorTexture(unpack(MDT.BackdropColor))
-    selectorGroup:SetWidth(120)
-    selectorGroup:SetHeight(120)
-    selectorGroup.frame:SetPoint("TOPRIGHT", MDT.main_frame, "TOPRIGHT", 0, 0)
-
-    local label = AceGUI:Create("Label")
-    label:SetText("  Faction:")
-    selectorGroup:AddChild(label)
-
-    selectorGroup.check1 = AceGUI:Create("CheckBox")
-    selectorGroup.check2 = AceGUI:Create("CheckBox")
-    local check1 = selectorGroup.check1
-    local check2 = selectorGroup.check2
-
-    check1:SetLabel("Horde")
-    selectorGroup:AddChild(check1)
-    check1:SetCallback("OnValueChanged", function(widget, callbackName, value)
-      if value then
-        MDT:GetCurrentPreset().faction = 1
-        MDT:UpdateBoralusSelector()
-        MDT:ReloadPullButtons()
-        MDT:UpdateProgressbar()
-      end
-      if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-        MDT:LiveSession_SendBoralusSelector(1)
-      end
-      check1:SetValue(true)
-    end)
-
-    check2:SetLabel("Alliance")
-    selectorGroup:AddChild(check2)
-    check2:SetCallback("OnValueChanged", function(widget, callbackName, value)
-      if value then
-        MDT:GetCurrentPreset().faction = 2
-        MDT:UpdateBoralusSelector()
-        MDT:ReloadPullButtons()
-        MDT:UpdateProgressbar()
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendBoralusSelector(2)
-        end
-      end
-      check2:SetValue(true)
-    end)
-  end
-  if show then
-    selectorGroup.frame:Show()
-    MDT:UpdateBoralusSelector()
-  else
-    selectorGroup.frame:Hide()
-  end
-end
-
-function MDT:UpdateBoralusSelector()
-  selectorGroup.check1:SetValue(MDT:GetCurrentPreset().faction == 1)
-  selectorGroup.check2:SetValue(MDT:GetCurrentPreset().faction == 2)
-  MDT:DungeonEnemies_UpdateSeasonalAffix()
-  MDT:DungeonEnemies_UpdateBoralusFaction(MDT:GetCurrentPreset().faction)
-end
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -440,28 +333,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 587.98214466641,
         ["y"] = -88.220507692615,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [7] = {
         ["x"] = 584.58759124865,
         ["y"] = -98.31241038307,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [8] = {
         ["x"] = 627.7808287114,
         ["y"] = -94.042993851526,
         ["g"] = 74,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [9] = {
         ["x"] = 623.57019967025,
         ["y"] = -106.28007102039,
         ["g"] = 75,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
     },
@@ -568,112 +461,112 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 589.89241286915,
         ["y"] = -99.545943130245,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [10] = {
         ["x"] = 591.68189914226,
         ["y"] = -96.141952005365,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [11] = {
         ["x"] = 592.5610358643,
         ["y"] = -93.284769448871,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [12] = {
         ["x"] = 593.33027931706,
         ["y"] = -90.317684191023,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [13] = {
         ["x"] = 629.096593417,
         ["y"] = -99.17465536839,
         ["g"] = 74,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [14] = {
         ["x"] = 633.04406433183,
         ["y"] = -97.332530885476,
         ["g"] = 74,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [15] = {
         ["x"] = 635.93882814964,
         ["y"] = -95.490406402562,
         ["g"] = 74,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [16] = {
         ["x"] = 622.78073710961,
         ["y"] = -111.14854770824,
         ["g"] = 75,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [17] = {
         ["x"] = 625.28075270657,
         ["y"] = -110.62222804079,
         ["g"] = 75,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [18] = {
         ["x"] = 627.91239621856,
         ["y"] = -109.43800031877,
         ["g"] = 75,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [19] = {
         ["x"] = 617.64905949405,
         ["y"] = -94.04310015081,
         ["g"] = 76,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [20] = {
         ["x"] = 614.49113019567,
         ["y"] = -95.358893672589,
         ["g"] = 76,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [21] = {
         ["x"] = 610.93843008907,
         ["y"] = -95.227322225992,
         ["g"] = 76,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [22] = {
         ["x"] = 604.75415689155,
         ["y"] = -104.96435185962,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [23] = {
         ["x"] = 604.49099141099,
         ["y"] = -109.43810856084,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [24] = {
         ["x"] = 603.4383407824,
         ["y"] = -113.1223744672,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
     },
@@ -747,21 +640,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 581.68174368838,
         ["y"] = -91.196816197011,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [5] = {
         ["x"] = 613.96478086303,
         ["y"] = -91.148313793261,
         ["g"] = 76,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
       [6] = {
         ["x"] = 599.49091504232,
         ["y"] = -110.35918209598,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 1,
       },
     },
@@ -1503,14 +1396,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 601.25835863159,
         ["y"] = -81.41203802658,
         ["g"] = 49,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [3] = {
         ["x"] = 605.44071825455,
         ["y"] = -78.881963201472,
         ["g"] = 49,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["infested"] = {
           [2] = true,
@@ -1558,7 +1451,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 621.1124097053,
         ["y"] = -101.7233227299,
         ["g"] = 67,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["patrol"] = {
           [1] = {
@@ -1626,7 +1519,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 624.10209520559,
         ["y"] = -97.702713636003,
         ["g"] = 67,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
     },
@@ -1680,7 +1573,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [4] = {
         ["x"] = 620.53354910339,
         ["y"] = -84.116425391151,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["patrol"] = {
           [1] = {
@@ -1707,7 +1600,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [5] = {
         ["x"] = 569.86996550556,
         ["y"] = -87.414128133822,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["patrol"] = {
           [1] = {
@@ -1755,7 +1648,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [7] = {
         ["x"] = 597.70059471696,
         ["y"] = -86.343198168183,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["teeming"] = true,
         ["patrol"] = {
@@ -2059,7 +1952,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 617.93414560563,
         ["y"] = -77.353710214649,
         ["g"] = 48,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [5] = {
@@ -2076,7 +1969,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 595.45836111139,
         ["y"] = -103.06566560425,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["infested"] = {
           [2] = true,
@@ -2086,7 +1979,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 600.98309032554,
         ["y"] = -90.686818211602,
         ["g"] = 65,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
     },
@@ -3800,7 +3693,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 582.83184305457,
         ["y"] = -88.264351294156,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [3] = {
@@ -3826,25 +3719,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1] = {
         ["x"] = 624.14510461474,
         ["y"] = -114.74007442758,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [2] = {
         ["x"] = 633.10342590036,
         ["y"] = -112.0502018098,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [3] = {
         ["x"] = 635.8684261482,
         ["y"] = -104.6270537696,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [4] = {
         ["x"] = 643.91349274231,
         ["y"] = -108.18081779719,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [5] = {
@@ -3862,13 +3755,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [7] = {
         ["x"] = 588.38221337161,
         ["y"] = -103.04576615629,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [8] = {
         ["x"] = 590.9242170708,
         ["y"] = -108.25354459495,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
     },
@@ -3888,14 +3781,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 629.52555847793,
         ["y"] = -85.663335851963,
         ["g"] = 47,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [2] = {
         ["x"] = 625.42493453893,
         ["y"] = -81.779556146624,
         ["g"] = 47,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["infested"] = {
           [2] = true,
@@ -3905,35 +3798,35 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 615.12758440249,
         ["y"] = -72.572034403379,
         ["g"] = 48,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [4] = {
         ["x"] = 581.02611535183,
         ["y"] = -96.247365730931,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [5] = {
         ["x"] = 587.86302689718,
         ["y"] = -88.068913172767,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [6] = {
         ["x"] = 590.76348531235,
         ["y"] = -90.924130579403,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [7] = {
         ["x"] = 590.55293510429,
         ["y"] = -97.69760669614,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [8] = {
@@ -4094,56 +3987,56 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 614.3855565192,
         ["y"] = -108.03210652236,
         ["g"] = 63,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [31] = {
         ["x"] = 609.38558572733,
         ["y"] = -108.03211510542,
         ["g"] = 63,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [32] = {
         ["x"] = 616.18556282708,
         ["y"] = -104.33210976861,
         ["g"] = 63,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [33] = {
         ["x"] = 614.58555054436,
         ["y"] = -100.83211562309,
         ["g"] = 63,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [34] = {
         ["x"] = 608.48555682419,
         ["y"] = -102.0321141063,
         ["g"] = 63,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [35] = {
         ["x"] = 600.01391255356,
         ["y"] = -100.17678467374,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [36] = {
         ["x"] = 603.52167696453,
         ["y"] = -87.597628085377,
         ["g"] = 65,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [37] = {
         ["x"] = 606.41424102749,
         ["y"] = -86.523244614334,
         ["g"] = 65,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["infested"] = {
           [3] = true,
@@ -4153,14 +4046,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 616.21534781615,
         ["y"] = -87.123302211282,
         ["g"] = 66,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [39] = {
         ["x"] = 618.60970268002,
         ["y"] = -88.954287637858,
         ["g"] = 66,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
     },
@@ -4180,21 +4073,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 629.63617920356,
         ["y"] = -80.366791089008,
         ["g"] = 47,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [2] = {
         ["x"] = 612.23283393871,
         ["y"] = -76.892462466845,
         ["g"] = 48,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [3] = {
         ["x"] = 585.70685223225,
         ["y"] = -97.482252471429,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["infested"] = {
           [2] = true,
@@ -4262,7 +4155,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 612.11166982222,
         ["y"] = -104.17900417954,
         ["g"] = 63,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
         ["infested"] = {
         },
@@ -4271,7 +4164,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 595.56948328715,
         ["y"] = -99.287883561659,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["faction"] = 2,
       },
       [10] = {
@@ -4533,7 +4426,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 586.57229468789,
         ["y"] = -92.958555214125,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["week"] = {
           [2] = true,
           [5] = true,
@@ -4545,7 +4438,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 632.20577486188,
         ["y"] = -91.814153758152,
         ["g"] = 74,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["week"] = {
           [3] = true,
           [6] = true,
@@ -4717,7 +4610,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 600.13085253536,
         ["y"] = -104.33869054805,
         ["g"] = 64,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["week"] = {
           [2] = true,
           [3] = true,
@@ -4865,7 +4758,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 632.74911628192,
         ["y"] = -92.10122188565,
         ["g"] = 74,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["week"] = {
           [2] = true,
           [5] = true,
@@ -4877,7 +4770,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 586.71705255714,
         ["y"] = -93.286352517427,
         ["g"] = 50,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["week"] = {
           [3] = true,
           [6] = true,
@@ -4889,7 +4782,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 617.42410492582,
         ["y"] = -98.209666835254,
         ["g"] = 76,
-        ["sublevel"] = 2,
+        ["sublevel"] = 1,
         ["week"] = {
           [3] = true,
           [6] = true,

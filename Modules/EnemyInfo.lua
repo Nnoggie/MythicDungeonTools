@@ -511,9 +511,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   local f = MDT.EnemyInfoFrame
   f:SetTitle(L[data.name])
   f.model:SetDisplayInfo(data.displayId or 39490)
-  if MDT:IsDragonflight() then
-    f.model:ResetModel()
-  end
+  f.model:ResetModel()
   if data.modelPosition then
     f.model:SetPosition(unpack(data.modelPosition))
   else
@@ -569,12 +567,6 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
         GameTooltip:Hide()
       end)
       f.characteristicsContainer:AddChild(icon)
-      if IsAddOnLoaded("AddOnSkins") then
-        if AddOnSkins then
-          local AS = unpack(AddOnSkins)
-          AS:SkinTexture(icon.image)
-        end
-      end
     end
   end
 

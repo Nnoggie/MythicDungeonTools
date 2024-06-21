@@ -51,7 +51,7 @@ conflictCheckFrame:SetScript("OnEvent", function(self, event, ...)
     if candidate then
       if candidate.version then
         ---@diagnostic disable-next-line: redundant-parameter
-        local version = GetAddOnMetadata(addonName, "Version"):gsub("%.", "")
+        local version = C_AddOns.GetAddOnMetadata(addonName, "Version"):gsub("%.", "")
         local versionNum = tonumber(version)
         candidate.detected = versionNum <= candidate.version
       else

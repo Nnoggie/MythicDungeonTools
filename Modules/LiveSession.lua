@@ -239,15 +239,6 @@ function MDT:LiveSession_SendAffixWeek(week)
   end
 end
 
----sends boralus selector updates
-function MDT:LiveSession_SendBoralusSelector(faction)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    local msg = faction..""
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.bora, msg, distribution, nil, "ALERT")
-  end
-end
-
 do
   local colorTimer
   ---LiveSession_QueueColorUpdate

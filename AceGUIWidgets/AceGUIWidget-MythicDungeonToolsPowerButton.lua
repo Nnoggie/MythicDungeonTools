@@ -17,8 +17,8 @@ local methods = {
       elseif (IsShiftKeyDown()) then
         if DEFAULT_CHAT_FRAME.editBox and DEFAULT_CHAT_FRAME.editBox:IsVisible() then
           local old = DEFAULT_CHAT_FRAME.editBox:GetText()
-          local link = GetSpellLink(self.spellId) or ""
-          DEFAULT_CHAT_FRAME.editBox:SetText(old .. link)
+          local link = C_Spell.GetSpellLink(self.spellId) or ""
+          DEFAULT_CHAT_FRAME.editBox:SetText(old..link)
         end
       else
 
@@ -62,15 +62,9 @@ local methods = {
   end,
   ["SetSpell"] = function(self, spellId, spellData)
     self.spellId = spellId
-    local name, _, icon = GetSpellInfo(spellId)
-    self.icon:SetTexture(icon)
-    if IsAddOnLoaded("AddOnSkins") then
-      if AddOnSkins then
-        local AS = unpack(AddOnSkins)
-        AS:SkinTexture(self.icon)
-      end
-    end
-    self.title:SetText(name);
+    local spellInfo = C_Spell.GetSpellInfo(spellId)
+    self.icon:SetTexture(C_Spell.GetSpellTexture(spellId))
+    self.title:SetText(spellInfo.name)
 
     local offset = 0
     if spellData.tank then
@@ -120,7 +114,7 @@ local methods = {
 
 --Constructor
 local function Constructor()
-  local name = "MDTPowerButton" .. AceGUI:GetNextWidgetNum(Type);
+  local name = "MDTPowerButton"..AceGUI:GetNextWidgetNum(Type);
   local button = CreateFrame("BUTTON", name, UIParent, "OptionsListButtonTemplate");
   button:SetHeight(height);
   button:SetWidth(width);

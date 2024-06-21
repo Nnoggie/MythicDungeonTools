@@ -156,7 +156,7 @@ local defaultSavedVars = {
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
     enemyStyle = 1,
-    currentDungeonIdx = 42,
+    currentDungeonIdx = 31,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -182,7 +182,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 8,
+    selectedDungeonList = 9,
     knownAffixWeeks = {},
   },
 }
@@ -269,7 +269,7 @@ do
   function MDT.PLAYER_ENTERING_WORLD()
     --initialize Blizzard_ChallengesUI
     C_Timer.After(1, function()
-      LoadAddOn("Blizzard_ChallengesUI")
+      C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
       C_MythicPlus.RequestCurrentAffixes()
       C_MythicPlus.RequestMapInfo()
       C_MythicPlus.RequestRewards()
@@ -354,6 +354,10 @@ function MDT:ShowInterface(force)
 end
 
 function MDT:ShowInterfaceInternal(force)
+  if not self:IsCompatibleVersion() then
+    self:ShowFallbackWindow()
+    return
+  end
   if self:CheckAddonConflicts() then
     self.ShowConflictFrame()
     return
@@ -365,7 +369,6 @@ function MDT:ShowInterfaceInternal(force)
     MDT:HideInterface()
   else
     self.main_frame:Show()
-    self.main_frame.HelpButton:Show()
     self:CheckCurrentZone()
     --edge case if user closed MDT window while in the process of dragging a corrupted blip
     if self.draggedBlip then
@@ -382,9 +385,6 @@ end
 function MDT:HideInterface()
   if self.main_frame then
     self.main_frame:Hide()
-    if self.main_frame.HelpButton then
-      self.main_frame.HelpButton:Hide()
-    end
   end
 end
 
@@ -469,7 +469,6 @@ function MDT:CreateMenu()
     self.main_frame:StopMovingOrSizing()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
-    self:CreateTutorialButton(self.main_frame)
     self:UpdateBottomText()
     self.main_frame:SetScript("OnSizeChanged", function()
     end)
@@ -496,7 +495,7 @@ end
 
 function MDT:SkinMenuButtons()
   --attempt to skin close button for ElvUI
-  if IsAddOnLoaded("ElvUI") and ElvUI then
+  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     local S
     if E then S = E:GetModule("Skins") end
@@ -534,7 +533,6 @@ function MDT:StartScaling()
   oldScrollValues.oldScrollV = f.scrollFrame:GetVerticalScroll()
   oldScrollValues.oldSizeX = f.scrollFrame:GetWidth()
   oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
-  HelpPlate_Hide(true)
   self:DungeonEnemies_HideAllBlips()
   self:POI_HideAllPoints()
   self:KillAllAnimatedLines()
@@ -584,7 +582,7 @@ function MDT:SkinProgressBar(progressBar)
   if not bar then return end
   bar.Icon:Hide()
   bar.IconBG:Hide()
-  if IsAddOnLoaded("ElvUI") and ElvUI then
+  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
     local E, L, V, P, G = unpack(ElvUI)
     if bar.BarFrame then bar.BarFrame:Hide() end
     if bar.BarFrame2 then bar.BarFrame2:Hide() end
@@ -659,7 +657,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.topPanelString = frame.topPanel:CreateFontString("MDT name")
     --use default font if ElvUI is enabled
-    --if IsAddOnLoaded("ElvUI") then
+    --if C_AddOns.IsAddOnLoaded("ElvUI") then
     frame.topPanelString:SetFontObject(GameFontNormalMed3)
     frame.topPanelString:SetTextColor(1, 1, 1, 1)
     frame.topPanelString:SetJustifyH("CENTER")
@@ -731,7 +729,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
   frame.bottomLeftPanelString:SetTextColor(1, 1, 1, 1)
   ---@diagnostic disable-next-line: redundant-parameter
-  frame.bottomLeftPanelString:SetText(" v"..GetAddOnMetadata(AddonName, "Version"))
+  frame.bottomLeftPanelString:SetText(" v"..C_AddOns.GetAddOnMetadata(AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
 
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
@@ -1430,7 +1428,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
 
   --progress bar
-  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioTrackerProgressBarTemplate")
+  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioProgressBarTemplate")
   frame.sidePanel.ProgressBar:Show()
   frame.sidePanel.ProgressBar:ClearAllPoints()
   frame.sidePanel.ProgressBar:SetPoint("TOP", frame.sidePanel.WidgetGroup.frame, "BOTTOM", -10, 5)
@@ -2604,8 +2602,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
-    if not framesInitialized then coroutine.yield() end
-    MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
     if not framesInitialized then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not framesInitialized then coroutine.yield() end
@@ -4208,76 +4204,6 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   f:Show()
 end
 
----Creates the tutorial button and sets up the help plate frames
-function MDT:CreateTutorialButton(parent)
-  local scale = self:GetScale()
-  local sidePanelHeight = MDT.main_frame.sidePanel.PullButtonScrollGroup.frame:GetHeight()
-  local helpPlate = {
-    FramePos = { x = 0, y = 0 },
-    FrameSize = { width = sizex, height = sizey },
-    [1] = {
-      ButtonPos = { x = 160, y = 0 },
-      HighLightBox = { x = 0, y = 0, width = 170, height = 40 },
-      ToolTipDir = "RIGHT",
-      ToolTipText = L["helpPlateDungeonSelect"]
-    },
-    [2] = {
-      ButtonPos = { x = 205, y = -210 * scale },
-      HighLightBox = { x = 0, y = -58, width = (sizex - 6) * scale * 0.84, height = (sizey * scale * 0.82) - 58 },
-      ToolTipDir = "RIGHT",
-      ToolTipText = string.format(L["helpPlateNPC"], "\n", "\n")
-    },
-    [3] = {
-      ButtonPos = { x = 800 * scale, y = 0 * scale },
-      HighLightBox = { x = 703 * scale, y = 30, width = 210, height = 105 },
-      ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlatePresets"]
-    },
-    [4] = {
-      ButtonPos = { x = 800 * scale, y = -87 * scale },
-      HighLightBox = { x = 703 * scale, y = 30 - 105, width = 210, height = 95 },
-      ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlateDungeon"]
-    },
-    [5] = {
-      ButtonPos = { x = 800 * scale, y = -(115 + 102 * scale) },
-      HighLightBox = { x = 703 * scale, y = (30 - (105 + 102)), width = 210, height = (sidePanelHeight - 30) },
-      ToolTipDir = "LEFT",
-      ToolTipText = string.format(L["helpPlatePulls"], "\n")
-    },
-  }
-  if not parent.HelpButton then
-    parent.HelpButton = CreateFrame("Button", "MDTMainHelpPlateButton", parent, "MainHelpPlateButton")
-    parent.HelpButton:ClearAllPoints()
-    parent.HelpButton:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, 48)
-    parent.HelpButton:SetScale(0.8)
-    parent.HelpButton:SetFrameStrata(mainFrameStrata)
-    parent.HelpButton:SetFrameLevel(6)
-    parent.HelpButton:Hide()
-    --hook to make button hide
-    local originalHide = parent.Hide
-    function parent:Hide(...)
-      parent.HelpButton:Hide()
-      return originalHide(self, ...)
-    end
-
-    local function TutorialButtonOnHide(self)
-      HelpPlate_Hide(true)
-    end
-
-    parent.HelpButton:SetScript("OnHide", TutorialButtonOnHide)
-  end
-  local function TutorialButtonOnClick(self)
-    if not HelpPlate_IsShowing(helpPlate) then
-      HelpPlate_Show(helpPlate, MDT.main_frame, self)
-    else
-      HelpPlate_Hide(true)
-    end
-  end
-
-  parent.HelpButton:SetScript("OnClick", TutorialButtonOnClick)
-end
-
 function MDT:Round(number, decimals)
   return (("%%.%df"):format(decimals)):format(number)
 end
@@ -4548,8 +4474,8 @@ function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
 end
 
 function MDT:GetCurrentAffixWeek()
-  if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-    LoadAddOn("Blizzard_ChallengesUI")
+  if not C_AddOns.IsAddOnLoaded("Blizzard_ChallengesUI") then
+    C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
   end
   C_MythicPlus.RequestCurrentAffixes()
   C_MythicPlus.RequestMapInfo()
@@ -4860,7 +4786,7 @@ function initFrames()
   main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
 
   ---@diagnostic disable-next-line: redundant-parameter
-  local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
+  local version = C_AddOns.GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
   db.version = tonumber(version)
   -- Set frame position
   main_frame:ClearAllPoints()
@@ -4895,7 +4821,6 @@ function initFrames()
   coroutine.yield()
   MDT:MakeClearConfirmationFrame(main_frame)
   coroutine.yield()
-  MDT:CreateTutorialButton(main_frame)
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
   coroutine.yield()
@@ -4911,7 +4836,7 @@ function initFrames()
 
   --ElvUI skinning
   local skinTooltip = function(tooltip)
-    if IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
+    if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
       if not tooltip.SetBackdrop then
         Mixin(tooltip, BackdropTemplateMixin)
       end
