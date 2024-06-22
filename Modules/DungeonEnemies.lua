@@ -490,7 +490,6 @@ local encryptedIds = { [185685] = true, [185683] = true, [185680] = true }
 local ranOnce
 function MDT:DisplayBlipTooltip(blip, shown)
   if not ranOnce then
-    --fix elvui skinning
     MDT.tooltip:ClearAllPoints()
     MDT.tooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT")
     MDT.tooltip:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT")

@@ -447,8 +447,6 @@ function MDT:CreateMenu()
   setLivePresetButton:SetFrameLevel(4)
   setLivePresetButton.tooltip = L["Make this preset the live preset"]
 
-  self:SkinMenuButtons()
-
   --Resize Handle
   self.main_frame.resizer = CreateFrame("BUTTON", nil, self.main_frame.sidePanel)
   local resizer = self.main_frame.resizer
@@ -491,25 +489,6 @@ function MDT:CreateMenu()
   highlight:SetPoint("BOTTOMLEFT", resizer, 0, 6)
   highlight:SetPoint("TOPRIGHT", resizer, -6, 0)
   resizer:SetHighlightTexture(highlight)
-end
-
-function MDT:SkinMenuButtons()
-  --attempt to skin close button for ElvUI
-  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
-    local E, L, V, P, G = unpack(ElvUI)
-    local S
-    if E then S = E:GetModule("Skins") end
-    if S then
-      S:HandleCloseButton(self.main_frame.closeButton)
-      S:HandleMaxMinFrame(self.main_frame.maximizeButton)
-      S:HandleButton(self.main_frame.liveReturnButton)
-      self.main_frame.liveReturnButton:Size(26)
-      --self.main_frame.liveReturnButton.Icon:SetVertexColor(0,1,1,1)
-      S:HandleButton(self.main_frame.setLivePresetButton)
-      self.main_frame.setLivePresetButton:Size(26)
-      self.main_frame.setLivePresetButton.Icon:SetVertexColor(1, .82, 0, 0.8)
-    end
-  end
 end
 
 ---GetDefaultMapPanelSize
@@ -582,26 +561,6 @@ function MDT:SkinProgressBar(progressBar)
   if not bar then return end
   bar.Icon:Hide()
   bar.IconBG:Hide()
-  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
-    local E, L, V, P, G = unpack(ElvUI)
-    if bar.BarFrame then bar.BarFrame:Hide() end
-    if bar.BarFrame2 then bar.BarFrame2:Hide() end
-    if bar.BarFrame3 then bar.BarFrame3:Hide() end
-    if bar.BarGlow then bar.BarGlow:Hide() end
-    if bar.Sheen then bar.Sheen:Hide() end
-    if bar.IconBG then bar.IconBG:SetAlpha(0) end
-    if bar.BorderLeft then bar.BorderLeft:SetAlpha(0) end
-    if bar.BorderRight then bar.BorderRight:SetAlpha(0) end
-    if bar.BorderMid then bar.BorderMid:SetAlpha(0) end
-    bar:Height(18)
-    bar:StripTextures()
-    bar:CreateBackdrop("Transparent")
-    bar:SetStatusBarTexture(E.media.normTex)
-    local label = bar.Label
-    if not label then return end
-    label:ClearAllPoints()
-    label:SetPoint("CENTER", bar, "CENTER")
-  end
 end
 
 function MDT:IsFrameOffScreen()
@@ -656,8 +615,6 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
     frame.topPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.topPanelString = frame.topPanel:CreateFontString("MDT name")
-    --use default font if ElvUI is enabled
-    --if C_AddOns.IsAddOnLoaded("ElvUI") then
     frame.topPanelString:SetFontObject(GameFontNormalMed3)
     frame.topPanelString:SetTextColor(1, 1, 1, 1)
     frame.topPanelString:SetJustifyH("CENTER")
@@ -1670,15 +1627,6 @@ end
 ---
 function MDT:ActivatePullTooltip(pull)
   local pullTooltip = MDT.pullTooltip
-  --[[
-    if not pullTooltip.ranOnce then
-        --fix elvui skinning
-        pullTooltip:SetPoint("TOPRIGHT",UIParent,"BOTTOMRIGHT")
-        pullTooltip:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT")
-        pullTooltip:Show()
-        pullTooltip.ranOnce = true
-    end
-    ]]
   pullTooltip.currentPull = pull
   pullTooltip:Show()
 end
@@ -4822,24 +4770,6 @@ function initFrames()
 
   db.currentSeason = defaultSavedVars.global.currentSeason
 
-  --ElvUI skinning
-  local skinTooltip = function(tooltip)
-    if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
-      if not tooltip.SetBackdrop then
-        Mixin(tooltip, BackdropTemplateMixin)
-      end
-      tooltip:HookScript("OnShow", function(self) --ignore updates
-        if self:IsForbidden() then return end
-        self:ClearBackdrop()
-        self:CreateBackdrop('Transparent')
-        local r, g, b = self:GetBackdropColor()
-        self:SetBackdropColor(r, g, b, ElvUI[1].Tooltip.db.colorAlpha)
-      end)
-      if tooltip.String then tooltip.String:SetFont(tooltip.String:GetFont(), 11, "") end
-      if tooltip.topString then tooltip.topString:SetFont(tooltip.topString:GetFont(), 11, "") end
-      if tooltip.botString then tooltip.botString:SetFont(tooltip.botString:GetFont(), 11, "") end
-    end
-  end
   --tooltip new
   do
     MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
@@ -4874,7 +4804,6 @@ function initFrames()
     ---@diagnostic disable-next-line: param-type-mismatch
     tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
     tooltip.String:Show()
-    skinTooltip(tooltip)
   end
 
   --pullTooltip
@@ -4938,7 +4867,6 @@ function initFrames()
     botString:SetWidth(250)
     botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
     botString:Hide()
-    skinTooltip(pullTT)
   end
 
   coroutine.yield()

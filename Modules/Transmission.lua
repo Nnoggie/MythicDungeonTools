@@ -692,11 +692,6 @@ function MDT:MakeSendingStatusBar(f)
   statusbar:HookScript("OnHide", function(self)
     MDT.main_frame.bottomPanelString:Show()
   end)
-
-  if C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI then
-    local E, L, V, P, G = unpack(ElvUI)
-    statusbar:SetStatusBarTexture(E.media.normTex)
-  end
 end
 
 --callback for SendCommMessage
