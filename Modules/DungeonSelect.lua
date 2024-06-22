@@ -39,7 +39,7 @@ do
   tinsert(MDT.seasonList, L["Dragonflight Season 4"])
   tinsert(MDT.dungeonSelectionToIndex, { 42, 43, 44, 45, 49, 48, 51, 50 })
   tinsert(MDT.seasonList, L["The War Within Season 1"])
-  tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110 })
+  tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
 end
 
 local seasonList = MDT.seasonList
