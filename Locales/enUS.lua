@@ -2,12 +2,12 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+
 L["The Stonevault"] = "The Stonevault"
 L["The Dawnbreaker"] = "The Dawnbreaker"
 L["Grim Batol"] = "Grim Batol"
 L["ArasKara"] = "Aras-Kara"
 L["CityOfThreads"] = "City of Threads"
-
 L["Close"] = "Close"
 L["Pull Drop Clear Pulls"] = "Clear Pulls"
 L["The War Within Season 1"] = "The War Within Season 1"
