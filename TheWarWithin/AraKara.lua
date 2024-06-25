@@ -2,7 +2,7 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 113
-MDT.dungeonList[dungeonIndex] = L["ArasKara"]
+MDT.dungeonList[dungeonIndex] = L["AraKara"]
 MDT.mapInfo[dungeonIndex] = {};
 
 local zones = { 0 } -- TODO
@@ -12,11 +12,11 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'ArasKara' },
+  [1] = { customTextures = 'AraKara' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["ArasKara"],
+  [1] = L["AraKara"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 520, teeming = 1000, teemingEnabled = true }

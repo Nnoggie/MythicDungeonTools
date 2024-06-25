@@ -2,6 +2,6 @@
     <Script file='TheStonevault.lua'/>
     <Script file='TheDawnbreaker.lua'/>
     <Script file='GrimBatol.lua'/>
-    <Script file='ArasKara.lua'/>
+    <Script file='AraKara.lua'/>
     <Script file='CityOfThreads.lua'/>
 </Ui>
