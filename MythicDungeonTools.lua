@@ -2183,9 +2183,8 @@ function MDT:FormatEnemyHealth(amount)
   if not amount then return "" end
 
   if self:GetLocaleIndex() == 9 then
-    if amount < 1e3 then
-      return 0
-    elseif amount >= 1e16 then
+    -- KR
+    if amount >= 1e16 then
       return string.format("%.3f경", amount / 1e16)
     elseif amount >= 1e12 then
       return string.format("%.3f조", amount / 1e12)
@@ -2193,11 +2192,21 @@ function MDT:FormatEnemyHealth(amount)
       return string.format("%.2f억", amount / 1e8)
     elseif amount >= 1e4 then
       return string.format("%.1f만", amount / 1e4)
+    else
+      return amount
+    end
+  elseif self:GetLocaleIndex() == 10 or self:GetLocaleIndex() == 11 then
+    -- zh_TW ZH_CN
+    if amount >= 1e8 then
+      return string.format("%.2f亿", amount / 1e8)
+    elseif amount >= 1e4 then
+      return string.format("%d万", math.floor(amount / 1e4))
+    else
+      return amount -- 返回原数值
     end
   else
-    if amount < 1e3 then
-      return 0
-    elseif amount >= 1e12 then
+    -- 其他语言格式化
+    if amount >= 1e12 then
       return string.format("%.3ft", amount / 1e12)
     elseif amount >= 1e9 then
       return string.format("%.3fb", amount / 1e9)
@@ -2205,6 +2214,8 @@ function MDT:FormatEnemyHealth(amount)
       return string.format("%.2fm", amount / 1e6)
     elseif amount >= 1e3 then
       return string.format("%.1fk", amount / 1e3)
+    else
+      return amount -- 返回原数值
     end
   end
 end
