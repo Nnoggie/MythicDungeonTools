@@ -614,7 +614,7 @@ end
 
 function MDT:GetEfficiencyScoreString(count, health)
   local totalCount = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-  local score = 2.5 * (count / totalCount) * 300 / (health / 500000)
+  local score = 2.5 * (count / totalCount) * 5000 / (health / 500000)
   local formattedScore = MDT:Round(score, 1)
   local value = score / 10
   --https://stackoverflow.com/a/7947812/17380548
