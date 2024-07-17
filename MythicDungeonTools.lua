@@ -1851,18 +1851,18 @@ end
 
 function MDT:IsCurrentPresetFortified()
   local currentWeek = self:GetCurrentPreset().week
-  return affixWeeks[currentWeek][1] == 10 or 
-         affixWeeks[currentWeek][2] == 10 or 
-         affixWeeks[currentWeek][3] == 10 or 
-         affixWeeks[currentWeek][4] == 10
+  return affixWeeks[currentWeek][1] == 10 or
+      affixWeeks[currentWeek][2] == 10 or
+      affixWeeks[currentWeek][3] == 10 or
+      affixWeeks[currentWeek][4] == 10
 end
 
 function MDT:IsCurrentPresetTyrannical()
   local currentWeek = self:GetCurrentPreset().week
-  return affixWeeks[currentWeek][1] == 9 or 
-         affixWeeks[currentWeek][2] == 9 or 
-         affixWeeks[currentWeek][3] == 9 or 
-         affixWeeks[currentWeek][4] == 9
+  return affixWeeks[currentWeek][1] == 9 or
+      affixWeeks[currentWeek][2] == 9 or
+      affixWeeks[currentWeek][3] == 9 or
+      affixWeeks[currentWeek][4] == 9
 end
 
 function MDT:IsCurrentPresetThundering()
@@ -2172,11 +2172,11 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
   -- Levels 10 and below - 10% gain per level
   local levelsTenBelow = math.min(level, 10)
   mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
-  
+
   -- Levels 11 to 20 - 10% gain per level
   local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-  
+
   -- Levels 21 and above - 10% gain per level
   local levelsTwentyOneAbove = math.max(level - 20, 0)
   mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
@@ -2210,11 +2210,11 @@ function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, 
   -- Levels 10 and below - 8% gain per level
   local levelsTenBelow = math.min(level, 10)
   mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
-  
+
   -- Levels 11 to 20 - 10% gain per level
   local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-  
+
   -- Levels 21 and above - 8% gain per level
   local levelsTwentyOneAbove = math.max(level - 20, 0)
   mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
