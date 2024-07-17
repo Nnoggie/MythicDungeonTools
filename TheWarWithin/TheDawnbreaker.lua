@@ -28,7 +28,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Curseblade",
     ["id"] = 213894,
     ["count"] = 5,
-    ["health"] = 14734599,
+    ["health"] = 19132421,
     ["scale"] = 1.5,
     ["displayId"] = 115528,
     ["creatureType"] = "Humanoid",
@@ -39,7 +39,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [2] = {
-        ["x"] = 158.22469568843,
+        ["x"] = 169.43693250001,
         ["y"] = -42.718673085752,
         ["g"] = 1,
         ["sublevel"] = 1,
@@ -47,30 +47,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [3] = {
         ["x"] = 197.33512494343,
         ["y"] = -34.225105516939,
-        ["g"] = 2,
+        ["g"] = 1,
         ["sublevel"] = 1,
       },
       [4] = {
         ["x"] = 196.24873217594,
         ["y"] = -64.644292843331,
-        ["g"] = 2,
+        ["g"] = 1,
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 211.55715331174,
-        ["y"] = -259.01127842493,
+        ["x"] = 200.34491650016,
+        ["y"] = -237.52117260759,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 255.50700542431,
-        ["y"] = -268.88771090072,
+        ["x"] = 287.27495498193,
+        ["y"] = -268.88768563524,
         ["g"] = 4,
         ["sublevel"] = 1,
       },
       [7] = {
-        ["x"] = 291.55570621499,
-        ["y"] = -269.38151115943,
+        ["x"] = 307.90691542766,
+        ["y"] = -232.47456393524,
         ["g"] = 4,
         ["sublevel"] = 1,
       },
@@ -98,7 +98,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Shadowmage",
     ["id"] = 213892,
     ["count"] = 5,
-    ["health"] = 12629657,
+    ["health"] = 16399218,
     ["scale"] = 1.5,
     ["displayId"] = 115523,
     ["creatureType"] = "Humanoid",
@@ -111,20 +111,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [2] = {
-        ["x"] = 158.22469568843,
-        ["y"] = -54.076506337689,
+        ["x"] = 169.43695776549,
+        ["y"] = -58.748294835867,
         ["g"] = 1,
         ["sublevel"] = 1,
       },
       [3] = {
         ["x"] = 196.84130218938,
         ["y"] = -49.335917235865,
-        ["g"] = 2,
+        ["g"] = 1,
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 212.54472712283,
-        ["y"] = -216.04908024248,
+        ["x"] = 239.17370427936,
+        ["y"] = -237.53918605982,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
@@ -152,7 +152,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Ritualist",
     ["id"] = 214761,
     ["count"] = 12,
-    ["health"] = 23856018,
+    ["health"] = 30976301,
     ["scale"] = 2.5,
     ["displayId"] = 115526,
     ["creatureType"] = "Humanoid",
@@ -169,12 +169,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [2] = {
         ["x"] = 216.69280094254,
         ["y"] = -49.632230550126,
-        ["g"] = 2,
+        ["g"] = 1,
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 273.77825594901,
-        ["y"] = -268.88768419438,
+        ["x"] = 297.137097378,
+        ["y"] = -249.73344736065,
         ["g"] = 4,
         ["sublevel"] = 1,
       },
@@ -184,7 +184,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Commander",
     ["id"] = 214762,
     ["count"] = 12,
-    ["health"] = 26662608,
+    ["health"] = 34620572,
     ["scale"] = 2.5,
     ["displayId"] = 115535,
     ["creatureType"] = "Humanoid",
@@ -197,8 +197,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 211.48000709208,
-        ["y"] = -237.28157283433,
+        ["x"] = 219.42200711422,
+        ["y"] = -238.21599117111,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
@@ -208,7 +208,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sureki Webmage",
     ["id"] = 210966,
     ["count"] = 12,
-    ["health"] = 28065903,
+    ["health"] = 36442707,
     ["scale"] = 1.7,
     ["displayId"] = 117315,
     ["creatureType"] = "Humanoid",
@@ -255,7 +255,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Darkcaster",
     ["id"] = 213893,
     ["count"] = 5,
-    ["health"] = 13331304,
+    ["health"] = 17310286,
     ["scale"] = 1.2,
     ["displayId"] = 115520,
     ["creatureType"] = "Humanoid",
@@ -276,13 +276,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [3] = {
         ["x"] = 770.92113162812,
         ["y"] = -129.91617429126,
-        ["g"] = 8,
+        ["g"] = 49,
         ["sublevel"] = 1,
       },
       [4] = {
         ["x"] = 770.85255723143,
         ["y"] = -142.2702339858,
-        ["g"] = 8,
+        ["g"] = 49,
         ["sublevel"] = 1,
       },
       [5] = {
@@ -513,7 +513,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Shadowalker",
     ["id"] = 213895,
     ["count"] = 3,
-    ["health"] = 14032951,
+    ["health"] = 18221353,
     ["scale"] = 1.2,
     ["displayId"] = 115530,
     ["creatureType"] = "Humanoid",
@@ -755,17 +755,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Manifested Shadow",
     ["id"] = 211341,
     ["count"] = 16,
-    ["health"] = 18242837,
+    ["health"] = 23687760,
     ["scale"] = 1.3,
     ["displayId"] = 117518,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["spells"] = {
+      [431304] = {
+      },
+      [431305] = {
+      },
       [432565] = {
       },
       [432606] = {
       },
       [453345] = {
+      },
+      [463455] = {
       },
     },
     ["clones"] = {
@@ -925,7 +931,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Tactician",
     ["id"] = 213934,
     ["count"] = 10,
-    ["health"] = 23856018,
+    ["health"] = 30976301,
     ["scale"] = 1.4,
     ["displayId"] = 115534,
     ["creatureType"] = "Humanoid",
@@ -1111,7 +1117,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ascendant Viscoxria",
     ["id"] = 211261,
     ["count"] = 25,
-    ["health"] = 39993914,
+    ["health"] = 51930859,
     ["scale"] = 3,
     ["displayId"] = 115760,
     ["creatureType"] = "Humanoid",
@@ -1138,7 +1144,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Deathscreamer Ikentak",
     ["id"] = 211263,
     ["count"] = 25,
-    ["health"] = 37888970,
+    ["health"] = 49197655,
     ["scale"] = 3,
     ["displayId"] = 115759,
     ["creatureType"] = "Humanoid",
@@ -1169,7 +1175,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ixkreten The Unbreakable",
     ["id"] = 211262,
     ["count"] = 25,
-    ["health"] = 46308741,
+    ["health"] = 60130467,
     ["scale"] = 3,
     ["displayId"] = 119262,
     ["creatureType"] = "Humanoid",
@@ -1198,7 +1204,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nightfall Dark Architect",
     ["id"] = 213885,
     ["count"] = 20,
-    ["health"] = 39292264,
+    ["health"] = 51019789,
     ["scale"] = 3,
     ["displayId"] = 120116,
     ["creatureType"] = "Humanoid",
@@ -1229,7 +1235,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Speaker Shadowcrown",
     ["id"] = 211087,
     ["count"] = 0,
-    ["health"] = 98045674,
+    ["health"] = 127376353,
     ["scale"] = 2.5,
     ["displayId"] = 114311,
     ["creatureType"] = "Humanoid",
@@ -1248,6 +1254,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [451026] = {
       },
+      [451032] = {
+      },
       [453140] = {
       },
       [453141] = {
@@ -1255,8 +1263,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [453173] = {
       },
       [453212] = {
-      },
-      [453214] = {
       },
       [453310] = {
       },
@@ -1275,7 +1281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Anubikkaj",
     ["id"] = 211089,
     ["count"] = 0,
-    ["health"] = 98045674,
+    ["health"] = 127376353,
     ["scale"] = 2,
     ["displayId"] = 114315,
     ["creatureType"] = "Humanoid",
@@ -1319,7 +1325,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rashanan",
     ["id"] = 213937,
     ["count"] = 0,
-    ["health"] = 2521174473,
+    ["health"] = 3275391932,
     ["scale"] = 2.5,
     ["displayId"] = 118404,
     ["creatureType"] = "Humanoid",
@@ -1350,8 +1356,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [435793] = {
       },
-      [438956] = {
-      },
       [438957] = {
       },
       [448213] = {
@@ -1363,6 +1367,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [448888] = {
       },
       [449734] = {
+      },
+      [463428] = {
       },
     },
     ["clones"] = {

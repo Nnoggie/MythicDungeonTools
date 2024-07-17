@@ -1850,11 +1850,19 @@ function MDT:IsCurrentPresetTeeming()
 end
 
 function MDT:IsCurrentPresetFortified()
-  return affixWeeks[self:GetCurrentPreset().week][3] == 10
+  local currentWeek = self:GetCurrentPreset().week
+  return affixWeeks[currentWeek][1] == 10 or
+      affixWeeks[currentWeek][2] == 10 or
+      affixWeeks[currentWeek][3] == 10 or
+      affixWeeks[currentWeek][4] == 10
 end
 
 function MDT:IsCurrentPresetTyrannical()
-  return affixWeeks[self:GetCurrentPreset().week][3] == 9
+  local currentWeek = self:GetCurrentPreset().week
+  return affixWeeks[currentWeek][1] == 9 or
+      affixWeeks[currentWeek][2] == 9 or
+      affixWeeks[currentWeek][3] == 9 or
+      affixWeeks[currentWeek][4] == 9
 end
 
 function MDT:IsCurrentPresetThundering()
@@ -2139,38 +2147,75 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
   local tyrannical = MDT:IsCurrentPresetTyrannical()
   local thundering = MDT:IsCurrentPresetThundering()
   local mult = 1
-  if boss == false and fortified == true and (not ignoreFortified) then mult = 1.2 end
-  if boss == true and tyrannical == true then mult = 1.3 end
+
+  -- Adjust multipliers based on level and affixes
+  if level < 10 then
+    -- For levels below 10, apply fortified if not a boss and not ignoring fortified
+    if boss == false and fortified == true and (not ignoreFortified) then mult = mult * 1.2 end
+    -- Apply tyrannical if it is a boss
+    if boss == true and tyrannical == true then mult = mult * 1.3 end
+  elseif level < 12 then
+    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
+    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
+    if boss == false then mult = mult * 1.2 end
+    if boss == true then mult = mult * 1.3 end
+  else
+    -- For levels 12 and above, apply an additional 20% health increase
+    -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 20%
+    if boss == false then mult = mult * 1.2 * 1.2 end
+    if boss == true then mult = mult * 1.3 * 1.2 end
+  end
+
+
   if thundering == true then mult = mult * 1.05 end
 
-  -- https://www.wowhead.com/news/impact-of-new-mythic-scaling-in-dragonflight-10-scaling-starting-at-keystone-11-329269
-  -- the part of lvl 10 and below -  8% gain per level
+  -- Levels 10 and below - 10% gain per level
   local levelsTenBelow = math.min(level, 10)
-  mult = round((1.1 ^ math.max(levelsTenBelow - 2, 0)) * mult, 2)
-  -- the part of lvl 11 and above -  10% gain per level
+  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
+
+  -- Levels 11 to 20 - 10% gain per level
   local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-  --https://www.wowhead.com/news/mythic-high-keys-nerfed-for-rest-of-season-2-334624
-  --21 and above 8% per level
+
+  -- Levels 21 and above - 10% gain per level
   local levelsTwentyOneAbove = math.max(level - 20, 0)
   mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
+
   return round(mult * baseHealth, 0)
 end
 
 function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, thundering)
   local mult = 1
-  if boss == false and fortified == true then mult = 1.2 end
-  if boss == true and tyrannical == true then mult = 1.3 end
+
+  -- Adjust multipliers based on level and affixes
+  if level < 10 then
+    -- For levels below 10, apply fortified if not a boss
+    if boss == false and fortified == true then mult = mult * 1.2 end
+    -- Apply tyrannical if it is a boss
+    if boss == true and tyrannical == true then mult = mult * 1.3 end
+  elseif level < 12 then
+    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
+    if boss == false then mult = mult * 1.2 end
+    if boss == true then mult = mult * 1.3 end
+  else
+    -- For levels 12 and above, apply an additional 20% health increase
+    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
+    if boss == false then mult = mult * 1.2 * 1.2 end
+    if boss == true then mult = mult * 1.3 * 1.2 end
+  end
+
+  -- Apply thundering multiplier if present
   if thundering then mult = mult * 1.05 end
 
-  -- the part of lvl 10 and below -  8% gain per level
+  -- Levels 10 and below - 8% gain per level
   local levelsTenBelow = math.min(level, 10)
-  mult = round((1.1 ^ math.max(levelsTenBelow - 2, 0)) * mult, 2)
-  -- the part of lvl 11 and above -  10% gain per level
+  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
+
+  -- Levels 11 to 20 - 10% gain per level
   local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-  --https://www.wowhead.com/news/mythic-high-keys-nerfed-for-rest-of-season-2-334624
-  --21 and above 8% per level
+
+  -- Levels 21 and above - 8% gain per level
   local levelsTwentyOneAbove = math.max(level - 20, 0)
   mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
 
