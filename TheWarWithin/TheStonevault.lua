@@ -1252,7 +1252,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [23] = {
-    ["name"] = "vent-stalker",
+    ["name"] = "Vent Stalker",
     ["id"] = 214049,
     ["count"] = 0,
     ["health"] = 90983109,
