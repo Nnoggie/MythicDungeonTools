@@ -5,6 +5,10 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+--NEEDS TRANSLATION
+L["incompatibleVersionError"] = "This version of World of Warcraft is not compatible with Mythic Dungeon Tools."
+
+
 -- MDT
 L["The War Within Season 1"] = "地心之战 S1"
 L["Retired Lord Vul'azak"] = "退休的尊将瓦拉扎克"
@@ -121,17 +125,11 @@ L["Ascendant Viscoxria"] = "扬升者维斯可里亚"
 L["Deathscreamer Ikentak"] = "死亡尖啸者艾肯塔克"
 L["Ixkreten The Unbreakable"] = "坚不可摧的伊克斯雷腾"
 L["Nightfall Dark Architect"] = "夜幕黑暗建筑师"
-L["AraKaraCityofEchoes"] = "艾拉-卡拉 回响之城"
 L["AraKara"] = "艾拉-卡拉 回响之城"
-L["GrimBatol"] = "格瑞姆巴托"
 L["Grim Batol"] = "格瑞姆巴托"
-L["CityofThreads"] = "千丝之城"
 L["CityOfThreads"] = "千丝之城"
-L["TheDawnbreaker"] = "破晨号"
 L["The Dawnbreaker"] = "破晨号"
-L["Dawnbreaker"] = "破晨号"
 L["The Stonevault"] = "矶石宝库"
-L["TheStonevault"] = "矶石宝库"
 L["Warwithin Season 1"] = "地心之战S1"
 L[" >Battle for Azeroth"] = "> 争霸艾泽拉斯"
 L[" >Legion"] = "> 军团再临"
