@@ -5,11 +5,8 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
---NEEDS TRANSLATION
-L["incompatibleVersionError"] = "This version of World of Warcraft is not compatible with Mythic Dungeon Tools."
-
-
 -- MDT
+L["incompatibleVersionError"] = "此Mythic Dungeon Tools(MDT)与你当前魔兽世界版本不兼容。"
 L["The War Within Season 1"] = "地心之战 S1"
 L["Retired Lord Vul'azak"] = "退休的尊将瓦拉扎克"
 L["Mutated Hatchling"] = "变异幼崽"
