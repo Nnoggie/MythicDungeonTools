@@ -19,7 +19,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AraKara"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 503, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 485, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -28,11 +28,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Starved Crawler",
     ["id"] = 216336,
     ["count"] = 1,
-    ["health"] = 4664666,
+    ["health"] = 4661372,
     ["scale"] = 1.2,
     ["displayId"] = 120876,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [434083] = {
       },
@@ -240,11 +244,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Jabbing Flyer",
     ["id"] = 216341,
     ["count"] = 2,
-    ["health"] = 4373125,
+    ["health"] = 4370036,
     ["scale"] = 1.2,
     ["displayId"] = 120841,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [438599] = {
       },
@@ -480,15 +488,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Trilling Attendant",
     ["id"] = 216293,
     ["count"] = 4,
-    ["health"] = 14577083,
+    ["health"] = 14566787,
     ["scale"] = 1.4,
     ["displayId"] = 116588,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [434786] = {
+        ["interruptible"] = true,
       },
       [434793] = {
+        ["interruptible"] = true,
       },
       [434796] = {
       },
@@ -547,11 +562,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Engorged Crawler",
     ["id"] = 214840,
     ["count"] = 4,
-    ["health"] = 17492500,
+    ["health"] = 17480145,
     ["scale"] = 1.2,
     ["displayId"] = 117840,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [438618] = {
       },
@@ -713,7 +732,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Atik",
     ["id"] = 217533,
     ["count"] = 12,
-    ["health"] = 29154165,
+    ["health"] = 29133574,
     ["scale"] = 2.5,
     ["displayId"] = 117119,
     ["creatureType"] = "Humanoid",
@@ -722,6 +741,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [434824] = {
       },
       [436322] = {
+        ["interruptible"] = true,
       },
       [438825] = {
       },
@@ -747,13 +767,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nakt",
     ["id"] = 218324,
     ["count"] = 12,
-    ["health"] = 29154165,
+    ["health"] = 29133574,
     ["scale"] = 2.5,
     ["displayId"] = 117119,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["spells"] = {
       [434786] = {
+        ["interruptible"] = true,
       },
       [434824] = {
       },
@@ -779,7 +800,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ixin",
     ["id"] = 217531,
     ["count"] = 12,
-    ["health"] = 29154165,
+    ["health"] = 29133574,
     ["scale"] = 2.5,
     ["displayId"] = 117119,
     ["creatureType"] = "Humanoid",
@@ -788,6 +809,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [434786] = {
       },
       [434802] = {
+        ["interruptible"] = true,
       },
       [434824] = {
       },
@@ -807,11 +829,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloodworker",
     ["id"] = 216337,
     ["count"] = 1,
-    ["health"] = 3644271,
+    ["health"] = 3641697,
     ["scale"] = 0.8,
     ["displayId"] = 120862,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [453583] = {
       },
@@ -1083,11 +1109,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloodstained Assistant",
     ["id"] = 216333,
     ["count"] = 7,
-    ["health"] = 16399218,
+    ["health"] = 16387636,
     ["scale"] = 1.2,
     ["displayId"] = 119391,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [433002] = {
       },
@@ -1171,15 +1201,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloodstained Webmage",
     ["id"] = 223253,
     ["count"] = 7,
-    ["health"] = 16399218,
+    ["health"] = 16387636,
     ["scale"] = 1.2,
     ["displayId"] = 117870,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [434786] = {
+        ["interruptible"] = true,
       },
       [448248] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1261,7 +1298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hulking Bloodguard",
     ["id"] = 216338,
     ["count"] = 20,
-    ["health"] = 29154165,
+    ["health"] = 29133574,
     ["scale"] = 1.5,
     ["displayId"] = 120855,
     ["creatureType"] = "Humanoid",
@@ -1313,11 +1350,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sentry Stagshell",
     ["id"] = 216340,
     ["count"] = 7,
-    ["health"] = 7288541,
+    ["health"] = 7283393,
     ["scale"] = 1.2,
     ["displayId"] = 116485,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [432967] = {
       },
@@ -1359,13 +1401,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blood Overseer",
     ["id"] = 216364,
     ["count"] = 14,
-    ["health"] = 32798436,
+    ["health"] = 32775271,
     ["scale"] = 1.3,
     ["displayId"] = 115772,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["spells"] = {
       [433841] = {
+        ["interruptible"] = true,
       },
       [433843] = {
       },
@@ -1429,11 +1472,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Winged Carrier",
     ["id"] = 216365,
     ["count"] = 3,
-    ["health"] = 12754948,
+    ["health"] = 12745939,
     ["scale"] = 1,
     ["displayId"] = 116349,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [433656] = {
       },
@@ -1507,11 +1554,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nerubian Hauler",
     ["id"] = 217039,
     ["count"] = 35,
-    ["health"] = 44905444,
+    ["health"] = 58267148,
     ["scale"] = 2,
     ["displayId"] = 120861,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["spells"] = {
+      [434252] = {
+      },
+      [434254] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 298.5483120353,
@@ -1524,11 +1577,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Reinforced Drone",
     ["id"] = 216363,
     ["count"] = 3,
-    ["health"] = 14577083,
+    ["health"] = 14566787,
     ["scale"] = 0.8,
     ["displayId"] = 120860,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [433656] = {
       },
@@ -1672,14 +1730,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Avanoxx",
     ["id"] = 213179,
     ["count"] = 0,
-    ["health"] = 109179731,
+    ["health"] = 109250902,
     ["scale"] = 2,
     ["displayId"] = 119793,
     ["creatureType"] = "Beast",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
     ["spells"] = {
       [438471] = {
       },
@@ -1701,6 +1759,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [439200] = {
       },
+      [446794] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1714,15 +1774,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Anubzekt",
     ["id"] = 215405,
     ["count"] = 0,
-    ["health"] = 127376353,
+    ["health"] = 127459387,
     ["scale"] = 1.8,
     ["displayId"] = 115723,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
+      [433443] = {
+      },
       [433731] = {
       },
       [433740] = {
@@ -1754,16 +1819,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloodstained Webmage",
     ["id"] = 220599,
     ["count"] = 0,
-    ["health"] = 127376353,
+    ["health"] = 7283393,
     ["scale"] = 1.1,
     ["displayId"] = 117870,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [442210] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1778,20 +1848,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kikatal The Harvester",
     ["id"] = 215407,
     ["count"] = 0,
-    ["health"] = 145572975,
+    ["health"] = 145667870,
     ["scale"] = 1.8,
     ["displayId"] = 117473,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [432117] = {
       },
       [432119] = {
       },
       [432130] = {
+      },
+      [432132] = {
       },
       [432227] = {
       },

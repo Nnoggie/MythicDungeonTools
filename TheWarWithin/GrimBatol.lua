@@ -33,6 +33,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119878,
     ["creatureType"] = "Dragonkin",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [451364] = {
       },
@@ -143,10 +148,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119892,
     ["creatureType"] = "Dragonkin",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Incapacitate"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [451261] = {
+        ["interruptible"] = true,
       },
       [451871] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -321,6 +334,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119893,
     ["creatureType"] = "Dragonkin",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [451378] = {
       },
@@ -381,12 +397,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 31584,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [76151] = {
       },
       [76369] = {
+        ["interruptible"] = true,
       },
       [76711] = {
+        ["interruptible"] = true,
       },
       [451761] = {
       },
@@ -511,6 +534,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 38667,
     ["creatureType"] = "Giant",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [451965] = {
       },
@@ -547,6 +573,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119898,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [451033] = {
       },
@@ -595,10 +627,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119897,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [76369] = {
+        ["interruptible"] = true,
       },
       [451224] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -697,6 +736,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 34353,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [451241] = {
       },
@@ -779,6 +824,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 91122,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [451387] = {
       },
@@ -833,6 +881,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119810,
     ["creatureType"] = "Dragonkin",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [456718] = {
       },
@@ -1112,10 +1164,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 118920,
     ["creatureType"] = "Dragonkin",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [447261] = {
       },
@@ -1146,10 +1201,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 33429,
     ["creatureType"] = "Giant",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [447395] = {
       },
@@ -1190,10 +1248,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 31792,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [76303] = {
       },
@@ -1220,10 +1281,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 31795,
     ["creatureType"] = "Dragonkin",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [75328] = {
       },
@@ -1250,10 +1314,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 119801,
     ["creatureType"] = "Aberration",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [448057] = {
       },
@@ -1292,15 +1359,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Invoked Shadowflame Spirit",
     ["id"] = 40357,
     ["count"] = 0,
-    ["health"] = 2277669,
+    ["health"] = 2099610,
     ["scale"] = 1,
     ["displayId"] = 116017,
     ["creatureType"] = "Elemental",
-    ["isBoss"] = true,
-    ["encounterID"] = 2483,
-    ["instanceID"] = 0,
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
+      [75238] = {
+      },
       [82850] = {
       },
     },
@@ -1363,14 +1433,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mutated Hatchling",
     ["id"] = 39388,
     ["count"] = 0,
-    ["health"] = 1000000,
+    ["health"] = 3036892,
     ["scale"] = 1,
     ["displayId"] = 119810,
     ["creatureType"] = "Dragonkin",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [456718] = {
       },

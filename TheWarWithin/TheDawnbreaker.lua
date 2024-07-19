@@ -33,6 +33,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 115528,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [431493] = {
       },
@@ -103,10 +108,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 115523,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [431303] = {
+        ["interruptible"] = true,
       },
       [431309] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -164,6 +176,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [432448] = {
       },
+      [432454] = {
+      },
     },
     ["clones"] = {
       [2] = {
@@ -193,6 +207,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [431491] = {
       },
       [450756] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -219,6 +234,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [451107] = {
       },
       [451113] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -260,8 +276,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 115520,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [431333] = {
+        ["interruptible"] = true,
       },
       [432520] = {
       },
@@ -518,6 +540,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 115530,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [431637] = {
       },
@@ -1149,6 +1175,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 115759,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [427192] = {
       },
@@ -1180,6 +1209,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 119262,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [427192] = {
       },
@@ -1239,10 +1271,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2.5,
     ["displayId"] = 114311,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [426734] = {
       },
@@ -1263,6 +1298,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [453173] = {
       },
       [453212] = {
+      },
+      [453214] = {
       },
       [453310] = {
       },
@@ -1285,10 +1322,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 114315,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [426787] = {
       },
@@ -1307,6 +1347,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427007] = {
       },
       [427192] = {
+      },
+      [427378] = {
       },
       [452127] = {
       },
@@ -1329,10 +1371,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2.5,
     ["displayId"] = 118404,
     ["creatureType"] = "Humanoid",
+    ["level"] = 80,
     ["isBoss"] = true,
     ["encounterID"] = 2579,
     ["instanceID"] = 0,
-    ["level"] = 80,
     ["spells"] = {
       [434089] = {
       },

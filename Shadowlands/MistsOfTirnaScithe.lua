@@ -32,6 +32,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 86207,
     ["creatureType"] = "Aberration",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [322967] = {
       },
@@ -234,6 +241,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95618,
     ["creatureType"] = "Elemental",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [300155] = {
       },
@@ -281,6 +291,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95612,
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [322557] = {
       },
@@ -361,14 +377,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95613,
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Incapacitate"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [322767] = {
+        ["interruptible"] = true,
       },
       [322938] = {
+        ["interruptible"] = true,
       },
       [322939] = {
       },
       [326319] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -477,10 +502,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1.2,
     ["displayId"] = 95497,
     ["creatureType"] = "Humanoid",
+    ["level"] = 60,
     ["isBoss"] = true,
     ["encounterID"] = 2581,
     ["instanceID"] = 0,
-    ["level"] = 60,
     ["spells"] = {
       [321005] = {
       },
@@ -489,6 +514,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [321010] = {
       },
       [323057] = {
+        ["interruptible"] = true,
       },
       [323138] = {
       },
@@ -517,10 +543,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1.2,
     ["displayId"] = 95564,
     ["creatureType"] = "Elemental",
+    ["level"] = 60,
     ["isBoss"] = true,
     ["encounterID"] = 2581,
     ["instanceID"] = 0,
-    ["level"] = 60,
     ["spells"] = {
       [321772] = {
       },
@@ -551,8 +577,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
     ["spells"] = {
-      [324859] = {
-      },
       [463236] = {
       },
       [463247] = {
@@ -686,6 +710,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 93762,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [324986] = {
       },
@@ -766,6 +794,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95198,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [325223] = {
       },
@@ -917,9 +948,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95908,
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Slow"] = true,
+    },
     ["spells"] = {
-      [324859] = {
-      },
       [324914] = {
       },
     },
@@ -1003,8 +1035,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95051,
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [324776] = {
+      },
+      [324859] = {
       },
     },
     ["clones"] = {
@@ -1097,12 +1135,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1.3,
     ["displayId"] = 96451,
     ["creatureType"] = "Humanoid",
+    ["level"] = 60,
     ["isBoss"] = true,
     ["encounterID"] = 2581,
     ["instanceID"] = 0,
-    ["level"] = 60,
     ["spells"] = {
       [321828] = {
+        ["interruptible"] = true,
       },
       [321834] = {
       },
@@ -1136,8 +1175,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60,
     ["spells"] = {
       [326046] = {
+        ["interruptible"] = true,
       },
       [340544] = {
+        ["interruptible"] = true,
       },
       [460092] = {
       },
@@ -1196,6 +1237,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94205,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Incapacitate"] = true,
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [325413] = {
       },
@@ -1293,6 +1339,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94197,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [326021] = {
       },
@@ -1378,6 +1429,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94208,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [326018] = {
       },
@@ -1541,6 +1596,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95692,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [326090] = {
       },
@@ -1644,10 +1703,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1.4,
     ["displayId"] = 95809,
     ["creatureType"] = "Beast",
+    ["level"] = 60,
     ["isBoss"] = true,
     ["encounterID"] = 2581,
     ["instanceID"] = 0,
-    ["level"] = 60,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [322450] = {
       },
@@ -1675,6 +1737,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [463602] = {
       },
+      [463603] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1688,11 +1752,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mistveil Gorgegullet",
     ["id"] = 173720,
     ["count"] = 16,
-    ["health"] = 494804,
+    ["health"] = 54664060,
     ["scale"] = 1.4,
     ["displayId"] = 98502,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["spells"] = {
+      [340300] = {
+      },
+      [340304] = {
+      },
+      [340305] = {
+      },
+      [340311] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 494.99898013798,
@@ -1710,6 +1784,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 95198,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [325223] = {
       },
