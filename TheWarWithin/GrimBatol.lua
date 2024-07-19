@@ -728,7 +728,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [9] = {
-    ["name"] = "Twilight Decapitator",
+    ["name"] = "Twilight Flamerender",
     ["id"] = 224240,
     ["count"] = 5,
     ["health"] = 16399218,
