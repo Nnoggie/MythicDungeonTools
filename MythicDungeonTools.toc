@@ -19,8 +19,8 @@
 ## SavedVariables: MythicDungeonToolsDB
 ## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\Nnoggie
 
-BuildCheck.lua
 libs\load_libs.xml
+BuildCheck.lua
 init.lua
 locales.xml
 AceGUIWidgets\load_widgets.xml
