@@ -312,16 +312,13 @@ MDT.dungeonList = {
 
 function MDT:IsOnBetaServer()
   local realm = GetRealmName()
+  local regionID = GetCurrentRegion()
+  if regionID <= 5 then return false end
   local realms = {
-    ["Anasterian"] = true,
-    ["Benedictus"] = true,
-    ["Broxigar"] = true,
-    ["Lycanthoth"] = true,
-    ["Nobundo"] = true,
-    ["Fyrakk"] = true,
-    ["Iridikron"] = true,
-    ["Raszageth"] = true,
-    ["Vyranoth"] = true,
+    ["These Go To Eleven"] = true,
+    ["Turnips Delight"] = true,
+    ["Alleria"] = true,
+    ["Khadgar"] = true,
   }
   return realms[realm]
 end
