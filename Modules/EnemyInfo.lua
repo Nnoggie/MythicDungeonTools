@@ -491,6 +491,12 @@ local spellBlacklist = {
   [228318] = true, -- enrage
   [374557] = true, -- brittle
   [387096] = true, -- pyrogenics
+  [317898] = true, -- Blinding Sleet
+  [454782] = true, -- Radiant Focus
+  [462597] = true, -- [DNT] In RP Combat
+  [434481] = true, -- Bombardments
+  [257069] = true, -- Watertight Shell
+  [324859] = true, -- Bramblethorn Entanglement
   --[X]  = true,
 }
 local lastEnemyIdx
