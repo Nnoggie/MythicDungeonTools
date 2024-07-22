@@ -156,7 +156,7 @@ local defaultSavedVars = {
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
     enemyStyle = 1,
-    currentDungeonIdx = 42,
+    currentDungeonIdx = 31,
     currentDifficulty = 10,
     xoffset = -80,
     yoffset = -100,
@@ -182,7 +182,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    selectedDungeonList = 8,
+    selectedDungeonList = 9,
     knownAffixWeeks = {},
   },
 }
@@ -269,7 +269,7 @@ do
   function MDT.PLAYER_ENTERING_WORLD()
     --initialize Blizzard_ChallengesUI
     C_Timer.After(1, function()
-      LoadAddOn("Blizzard_ChallengesUI")
+      C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
       C_MythicPlus.RequestCurrentAffixes()
       C_MythicPlus.RequestMapInfo()
       C_MythicPlus.RequestRewards()
@@ -283,16 +283,16 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 136, 8, 10 },
-  [2] = { 134, 11, 9 },
-  [3] = { 3, 123, 10 },
-  [4] = { 124, 6, 9 },
-  [5] = { 134, 7, 10 },
-  [6] = { 136, 123, 9 },
-  [7] = { 135, 6, 10 },
-  [8] = { 3, 8, 9 },
-  [9] = { 124, 11, 10 },
-  [10] = { 135, 7, 9 },
+  [1] = { 10 },
+  [2] = { 9 },
+  [3] = { 10 },
+  [4] = { 9 },
+  [5] = { 10 },
+  [6] = { 9 },
+  [7] = { 10 },
+  [8] = { 9 },
+  [9] = { 10 },
+  [10] = { 9 },
 }
 
 MDT.mapInfo = {}
@@ -312,16 +312,13 @@ MDT.dungeonList = {
 
 function MDT:IsOnBetaServer()
   local realm = GetRealmName()
+  local regionID = GetCurrentRegion()
+  if regionID <= 5 then return false end
   local realms = {
-    ["Anasterian"] = true,
-    ["Benedictus"] = true,
-    ["Broxigar"] = true,
-    ["Lycanthoth"] = true,
-    ["Nobundo"] = true,
-    ["Fyrakk"] = true,
-    ["Iridikron"] = true,
-    ["Raszageth"] = true,
-    ["Vyranoth"] = true,
+    ["These Go To Eleven"] = true,
+    ["Turnips Delight"] = true,
+    ["Alleria"] = true,
+    ["Khadgar"] = true,
   }
   return realms[realm]
 end
@@ -354,6 +351,10 @@ function MDT:ShowInterface(force)
 end
 
 function MDT:ShowInterfaceInternal(force)
+  if not self:IsCompatibleVersion() then
+    self:ShowFallbackWindow()
+    return
+  end
   if self:CheckAddonConflicts() then
     self.ShowConflictFrame()
     return
@@ -365,7 +366,6 @@ function MDT:ShowInterfaceInternal(force)
     MDT:HideInterface()
   else
     self.main_frame:Show()
-    self.main_frame.HelpButton:Show()
     self:CheckCurrentZone()
     --edge case if user closed MDT window while in the process of dragging a corrupted blip
     if self.draggedBlip then
@@ -382,9 +382,6 @@ end
 function MDT:HideInterface()
   if self.main_frame then
     self.main_frame:Hide()
-    if self.main_frame.HelpButton then
-      self.main_frame.HelpButton:Hide()
-    end
   end
 end
 
@@ -447,8 +444,6 @@ function MDT:CreateMenu()
   setLivePresetButton:SetFrameLevel(4)
   setLivePresetButton.tooltip = L["Make this preset the live preset"]
 
-  self:SkinMenuButtons()
-
   --Resize Handle
   self.main_frame.resizer = CreateFrame("BUTTON", nil, self.main_frame.sidePanel)
   local resizer = self.main_frame.resizer
@@ -469,7 +464,6 @@ function MDT:CreateMenu()
     self.main_frame:StopMovingOrSizing()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
-    self:CreateTutorialButton(self.main_frame)
     self:UpdateBottomText()
     self.main_frame:SetScript("OnSizeChanged", function()
     end)
@@ -494,25 +488,6 @@ function MDT:CreateMenu()
   resizer:SetHighlightTexture(highlight)
 end
 
-function MDT:SkinMenuButtons()
-  --attempt to skin close button for ElvUI
-  if IsAddOnLoaded("ElvUI") and ElvUI then
-    local E, L, V, P, G = unpack(ElvUI)
-    local S
-    if E then S = E:GetModule("Skins") end
-    if S then
-      S:HandleCloseButton(self.main_frame.closeButton)
-      S:HandleMaxMinFrame(self.main_frame.maximizeButton)
-      S:HandleButton(self.main_frame.liveReturnButton)
-      self.main_frame.liveReturnButton:Size(26)
-      --self.main_frame.liveReturnButton.Icon:SetVertexColor(0,1,1,1)
-      S:HandleButton(self.main_frame.setLivePresetButton)
-      self.main_frame.setLivePresetButton:Size(26)
-      self.main_frame.setLivePresetButton.Icon:SetVertexColor(1, .82, 0, 0.8)
-    end
-  end
-end
-
 ---GetDefaultMapPanelSize
 function MDT:GetDefaultMapPanelSize()
   return sizex, sizey
@@ -534,7 +509,6 @@ function MDT:StartScaling()
   oldScrollValues.oldScrollV = f.scrollFrame:GetVerticalScroll()
   oldScrollValues.oldSizeX = f.scrollFrame:GetWidth()
   oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
-  HelpPlate_Hide(true)
   self:DungeonEnemies_HideAllBlips()
   self:POI_HideAllPoints()
   self:KillAllAnimatedLines()
@@ -584,26 +558,6 @@ function MDT:SkinProgressBar(progressBar)
   if not bar then return end
   bar.Icon:Hide()
   bar.IconBG:Hide()
-  if IsAddOnLoaded("ElvUI") and ElvUI then
-    local E, L, V, P, G = unpack(ElvUI)
-    if bar.BarFrame then bar.BarFrame:Hide() end
-    if bar.BarFrame2 then bar.BarFrame2:Hide() end
-    if bar.BarFrame3 then bar.BarFrame3:Hide() end
-    if bar.BarGlow then bar.BarGlow:Hide() end
-    if bar.Sheen then bar.Sheen:Hide() end
-    if bar.IconBG then bar.IconBG:SetAlpha(0) end
-    if bar.BorderLeft then bar.BorderLeft:SetAlpha(0) end
-    if bar.BorderRight then bar.BorderRight:SetAlpha(0) end
-    if bar.BorderMid then bar.BorderMid:SetAlpha(0) end
-    bar:Height(18)
-    bar:StripTextures()
-    bar:CreateBackdrop("Transparent")
-    bar:SetStatusBarTexture(E.media.normTex)
-    local label = bar.Label
-    if not label then return end
-    label:ClearAllPoints()
-    label:SetPoint("CENTER", bar, "CENTER")
-  end
 end
 
 function MDT:IsFrameOffScreen()
@@ -658,8 +612,6 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
     frame.topPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.topPanelString = frame.topPanel:CreateFontString("MDT name")
-    --use default font if ElvUI is enabled
-    --if IsAddOnLoaded("ElvUI") then
     frame.topPanelString:SetFontObject(GameFontNormalMed3)
     frame.topPanelString:SetTextColor(1, 1, 1, 1)
     frame.topPanelString:SetJustifyH("CENTER")
@@ -731,7 +683,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
   frame.bottomLeftPanelString:SetTextColor(1, 1, 1, 1)
   ---@diagnostic disable-next-line: redundant-parameter
-  frame.bottomLeftPanelString:SetText(" v"..GetAddOnMetadata(AddonName, "Version"))
+  frame.bottomLeftPanelString:SetText(" v"..C_AddOns.GetAddOnMetadata(AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
 
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
@@ -1430,7 +1382,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
 
   --progress bar
-  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioTrackerProgressBarTemplate")
+  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioProgressBarTemplate")
   frame.sidePanel.ProgressBar:Show()
   frame.sidePanel.ProgressBar:ClearAllPoints()
   frame.sidePanel.ProgressBar:SetPoint("TOP", frame.sidePanel.WidgetGroup.frame, "BOTTOM", -10, 5)
@@ -1672,15 +1624,6 @@ end
 ---
 function MDT:ActivatePullTooltip(pull)
   local pullTooltip = MDT.pullTooltip
-  --[[
-    if not pullTooltip.ranOnce then
-        --fix elvui skinning
-        pullTooltip:SetPoint("TOPRIGHT",UIParent,"BOTTOMRIGHT")
-        pullTooltip:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT")
-        pullTooltip:Show()
-        pullTooltip.ranOnce = true
-    end
-    ]]
   pullTooltip.currentPull = pull
   pullTooltip:Show()
 end
@@ -1904,11 +1847,19 @@ function MDT:IsCurrentPresetTeeming()
 end
 
 function MDT:IsCurrentPresetFortified()
-  return affixWeeks[self:GetCurrentPreset().week][3] == 10
+  local currentWeek = self:GetCurrentPreset().week
+  return affixWeeks[currentWeek][1] == 10 or
+      affixWeeks[currentWeek][2] == 10 or
+      affixWeeks[currentWeek][3] == 10 or
+      affixWeeks[currentWeek][4] == 10
 end
 
 function MDT:IsCurrentPresetTyrannical()
-  return affixWeeks[self:GetCurrentPreset().week][3] == 9
+  local currentWeek = self:GetCurrentPreset().week
+  return affixWeeks[currentWeek][1] == 9 or
+      affixWeeks[currentWeek][2] == 9 or
+      affixWeeks[currentWeek][3] == 9 or
+      affixWeeks[currentWeek][4] == 9
 end
 
 function MDT:IsCurrentPresetThundering()
@@ -2193,40 +2144,77 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
   local tyrannical = MDT:IsCurrentPresetTyrannical()
   local thundering = MDT:IsCurrentPresetThundering()
   local mult = 1
-  if boss == false and fortified == true and (not ignoreFortified) then mult = 1.2 end
-  if boss == true and tyrannical == true then mult = 1.3 end
+
+  -- Adjust multipliers based on level and affixes
+  if level >= 4 and level < 10 then
+    -- For levels below 10, apply fortified if not a boss and not ignoring fortified
+    if boss == false and fortified == true and (not ignoreFortified) then mult = mult * 1.2 end
+    -- Apply tyrannical if it is a boss
+    if boss == true and tyrannical == true then mult = mult * 1.3 end
+  elseif level >= 10 and level < 12 then
+    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
+    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
+    if boss == false then mult = mult * 1.2 end
+    if boss == true then mult = mult * 1.3 end
+  elseif level >= 12 then
+    -- For levels 12 and above, apply an additional 20% health increase
+    -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 20%
+    if boss == false then mult = mult * 1.2 * 1.2 end
+    if boss == true then mult = mult * 1.3 * 1.2 end
+  end
+
+
   if thundering == true then mult = mult * 1.05 end
 
-  -- https://www.wowhead.com/news/impact-of-new-mythic-scaling-in-dragonflight-10-scaling-starting-at-keystone-11-329269
-  -- the part of lvl 10 and below -  8% gain per level
+  -- Levels 10 and below - 10% gain per level
   local levelsTenBelow = math.min(level, 10)
-  mult = round((1.08 ^ math.max(levelsTenBelow - 2, 0)) * mult, 2)
-  -- the part of lvl 11 and above -  10% gain per level
+  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
+
+  -- Levels 11 to 20 - 10% gain per level
   local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-  --https://www.wowhead.com/news/mythic-high-keys-nerfed-for-rest-of-season-2-334624
-  --21 and above 8% per level
+
+  -- Levels 21 and above - 10% gain per level
   local levelsTwentyOneAbove = math.max(level - 20, 0)
-  mult = round((1.08 ^ levelsTwentyOneAbove) * mult, 2)
+  mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
+
   return round(mult * baseHealth, 0)
 end
 
 function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, thundering)
   local mult = 1
-  if boss == false and fortified == true then mult = 1.2 end
-  if boss == true and tyrannical == true then mult = 1.3 end
+
+  -- Adjust multipliers based on level and affixes
+  if level >= 4 and level < 10 then
+    -- For levels below 10, apply fortified if not a boss
+    if boss == false and fortified == true then mult = mult * 1.2 end
+    -- Apply tyrannical if it is a boss
+    if boss == true and tyrannical == true then mult = mult * 1.3 end
+  elseif level >= 10 and level < 12 then
+    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
+    if boss == false then mult = mult * 1.2 end
+    if boss == true then mult = mult * 1.3 end
+  elseif level >= 12 then
+    -- For levels 12 and above, apply an additional 20% health increase
+    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
+    if boss == false then mult = mult * 1.2 * 1.2 end
+    if boss == true then mult = mult * 1.3 * 1.2 end
+  end
+
+  -- Apply thundering multiplier if present
   if thundering then mult = mult * 1.05 end
 
-  -- the part of lvl 10 and below -  8% gain per level
+  -- Levels 10 and below - 8% gain per level
   local levelsTenBelow = math.min(level, 10)
-  mult = round((1.08 ^ math.max(levelsTenBelow - 2, 0)) * mult, 2)
-  -- the part of lvl 11 and above -  10% gain per level
+  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
+
+  -- Levels 11 to 20 - 10% gain per level
   local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
   mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-  --https://www.wowhead.com/news/mythic-high-keys-nerfed-for-rest-of-season-2-334624
-  --21 and above 8% per level
+
+  -- Levels 21 and above - 8% gain per level
   local levelsTwentyOneAbove = math.max(level - 20, 0)
-  mult = round((1.08 ^ levelsTwentyOneAbove) * mult, 2)
+  mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
 
   local baseHealth = round(health / mult, 0)
   return baseHealth
@@ -2237,9 +2225,8 @@ function MDT:FormatEnemyHealth(amount)
   if not amount then return "" end
 
   if self:GetLocaleIndex() == 9 then
-    if amount < 1e3 then
-      return 0
-    elseif amount >= 1e16 then
+    -- KR
+    if amount >= 1e16 then
       return string.format("%.3f경", amount / 1e16)
     elseif amount >= 1e12 then
       return string.format("%.3f조", amount / 1e12)
@@ -2247,11 +2234,21 @@ function MDT:FormatEnemyHealth(amount)
       return string.format("%.2f억", amount / 1e8)
     elseif amount >= 1e4 then
       return string.format("%.1f만", amount / 1e4)
+    else
+      return amount
+    end
+  elseif self:GetLocaleIndex() == 10 or self:GetLocaleIndex() == 11 then
+    -- zh_TW ZH_CN
+    if amount >= 1e8 then
+      return string.format("%.2f亿", amount / 1e8)
+    elseif amount >= 1e4 then
+      return string.format("%d万", math.floor(amount / 1e4))
+    else
+      return amount -- 返回原数值
     end
   else
-    if amount < 1e3 then
-      return 0
-    elseif amount >= 1e12 then
+    -- 其他语言格式化
+    if amount >= 1e12 then
       return string.format("%.3ft", amount / 1e12)
     elseif amount >= 1e9 then
       return string.format("%.3fb", amount / 1e9)
@@ -2259,6 +2256,8 @@ function MDT:FormatEnemyHealth(amount)
       return string.format("%.2fm", amount / 1e6)
     elseif amount >= 1e3 then
       return string.format("%.1fk", amount / 1e3)
+    else
+      return amount -- 返回原数值
     end
   end
 end
@@ -2604,8 +2603,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
     frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
-    if not framesInitialized then coroutine.yield() end
-    MDT:ToggleBoralusSelector(db.currentDungeonIdx == 19)
     if not framesInitialized then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not framesInitialized then coroutine.yield() end
@@ -4208,76 +4205,6 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   f:Show()
 end
 
----Creates the tutorial button and sets up the help plate frames
-function MDT:CreateTutorialButton(parent)
-  local scale = self:GetScale()
-  local sidePanelHeight = MDT.main_frame.sidePanel.PullButtonScrollGroup.frame:GetHeight()
-  local helpPlate = {
-    FramePos = { x = 0, y = 0 },
-    FrameSize = { width = sizex, height = sizey },
-    [1] = {
-      ButtonPos = { x = 160, y = 0 },
-      HighLightBox = { x = 0, y = 0, width = 170, height = 40 },
-      ToolTipDir = "RIGHT",
-      ToolTipText = L["helpPlateDungeonSelect"]
-    },
-    [2] = {
-      ButtonPos = { x = 205, y = -210 * scale },
-      HighLightBox = { x = 0, y = -58, width = (sizex - 6) * scale * 0.84, height = (sizey * scale * 0.82) - 58 },
-      ToolTipDir = "RIGHT",
-      ToolTipText = string.format(L["helpPlateNPC"], "\n", "\n")
-    },
-    [3] = {
-      ButtonPos = { x = 800 * scale, y = 0 * scale },
-      HighLightBox = { x = 703 * scale, y = 30, width = 210, height = 105 },
-      ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlatePresets"]
-    },
-    [4] = {
-      ButtonPos = { x = 800 * scale, y = -87 * scale },
-      HighLightBox = { x = 703 * scale, y = 30 - 105, width = 210, height = 95 },
-      ToolTipDir = "LEFT",
-      ToolTipText = L["helpPlateDungeon"]
-    },
-    [5] = {
-      ButtonPos = { x = 800 * scale, y = -(115 + 102 * scale) },
-      HighLightBox = { x = 703 * scale, y = (30 - (105 + 102)), width = 210, height = (sidePanelHeight - 30) },
-      ToolTipDir = "LEFT",
-      ToolTipText = string.format(L["helpPlatePulls"], "\n")
-    },
-  }
-  if not parent.HelpButton then
-    parent.HelpButton = CreateFrame("Button", "MDTMainHelpPlateButton", parent, "MainHelpPlateButton")
-    parent.HelpButton:ClearAllPoints()
-    parent.HelpButton:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, 48)
-    parent.HelpButton:SetScale(0.8)
-    parent.HelpButton:SetFrameStrata(mainFrameStrata)
-    parent.HelpButton:SetFrameLevel(6)
-    parent.HelpButton:Hide()
-    --hook to make button hide
-    local originalHide = parent.Hide
-    function parent:Hide(...)
-      parent.HelpButton:Hide()
-      return originalHide(self, ...)
-    end
-
-    local function TutorialButtonOnHide(self)
-      HelpPlate_Hide(true)
-    end
-
-    parent.HelpButton:SetScript("OnHide", TutorialButtonOnHide)
-  end
-  local function TutorialButtonOnClick(self)
-    if not HelpPlate_IsShowing(helpPlate) then
-      HelpPlate_Show(helpPlate, MDT.main_frame, self)
-    else
-      HelpPlate_Hide(true)
-    end
-  end
-
-  parent.HelpButton:SetScript("OnClick", TutorialButtonOnClick)
-end
-
 function MDT:Round(number, decimals)
   return (("%%.%df"):format(decimals)):format(number)
 end
@@ -4548,8 +4475,8 @@ function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
 end
 
 function MDT:GetCurrentAffixWeek()
-  if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-    LoadAddOn("Blizzard_ChallengesUI")
+  if not C_AddOns.IsAddOnLoaded("Blizzard_ChallengesUI") then
+    C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
   end
   C_MythicPlus.RequestCurrentAffixes()
   C_MythicPlus.RequestMapInfo()
@@ -4730,19 +4657,7 @@ end
 function MDT:UpdatePullButtonColor(pullIdx, r, g, b)
   local button = MDT:GetPullButton(pullIdx)
   if not button then return end
-
-  local function updateSwatch(t)
-    for k, v in pairs(t) do
-      if v.hasColorSwatch then
-        v.r, v.g, v.b = r, g, b
-        return
-      end
-    end
-  end
-
   button.color.r, button.color.g, button.color.b = r, g, b
-  updateSwatch(button.menu)
-  updateSwatch(button.multiselectMenu)
   button:UpdateColor()
 end
 
@@ -4860,7 +4775,7 @@ function initFrames()
   main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
 
   ---@diagnostic disable-next-line: redundant-parameter
-  local version = GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
+  local version = C_AddOns.GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
   db.version = tonumber(version)
   -- Set frame position
   main_frame:ClearAllPoints()
@@ -4895,7 +4810,6 @@ function initFrames()
   coroutine.yield()
   MDT:MakeClearConfirmationFrame(main_frame)
   coroutine.yield()
-  MDT:CreateTutorialButton(main_frame)
   MDT:POI_CreateFramePools()
   MDT:MakeChatPresetImportFrame(main_frame)
   coroutine.yield()
@@ -4909,24 +4823,6 @@ function initFrames()
 
   db.currentSeason = defaultSavedVars.global.currentSeason
 
-  --ElvUI skinning
-  local skinTooltip = function(tooltip)
-    if IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1].Tooltip then
-      if not tooltip.SetBackdrop then
-        Mixin(tooltip, BackdropTemplateMixin)
-      end
-      tooltip:HookScript("OnShow", function(self) --ignore updates
-        if self:IsForbidden() then return end
-        self:ClearBackdrop()
-        self:CreateBackdrop('Transparent')
-        local r, g, b = self:GetBackdropColor()
-        self:SetBackdropColor(r, g, b, ElvUI[1].Tooltip.db.colorAlpha)
-      end)
-      if tooltip.String then tooltip.String:SetFont(tooltip.String:GetFont(), 11, "") end
-      if tooltip.topString then tooltip.topString:SetFont(tooltip.topString:GetFont(), 11, "") end
-      if tooltip.botString then tooltip.botString:SetFont(tooltip.botString:GetFont(), 11, "") end
-    end
-  end
   --tooltip new
   do
     MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
@@ -4961,7 +4857,6 @@ function initFrames()
     ---@diagnostic disable-next-line: param-type-mismatch
     tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
     tooltip.String:Show()
-    skinTooltip(tooltip)
   end
 
   --pullTooltip
@@ -5025,7 +4920,6 @@ function initFrames()
     botString:SetWidth(250)
     botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
     botString:Hide()
-    skinTooltip(pullTT)
   end
 
   coroutine.yield()

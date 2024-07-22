@@ -20,7 +20,7 @@ local methods = {
 
       else
         if (mouseButton == "RightButton") then
-          --L_EasyMenu
+
         else
           --normal click?
           MDT:AddPull()

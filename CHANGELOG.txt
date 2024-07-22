@@ -1,2 +1,2 @@
-- v4.4.1.1 (2024-06-07)
-  - Improved main window behavior alongside other addons - frame level will dynamically raise and lower within the "HIGH" frame strata
+## v5.0.0 (2024-07-22)
+  - War Within Update

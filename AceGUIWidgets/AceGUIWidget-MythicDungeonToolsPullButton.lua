@@ -124,6 +124,224 @@ local methods = {
   ["Initialize"] = function(self)
     self.callbacks = {}
 
+    local buttonSelf = self --needed for scope issue within new context menu
+    local function openSingleContextMenu()
+      MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+        if buttonSelf.index ~= 1 then
+          rootDescription:CreateButton(L["Pull Drop Move up"], function()
+            MDT:MovePullUp(buttonSelf.index)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+              MDT:LiveSession_SendPulls(MDT:GetPulls())
+            end
+          end)
+        end
+
+        if buttonSelf.index < buttonSelf.maxPulls then
+          rootDescription:CreateButton(L["Pull Drop Move down"], function()
+            MDT:MovePullDown(buttonSelf.index)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+              MDT:LiveSession_SendPulls(MDT:GetPulls())
+            end
+          end)
+        end
+
+        rootDescription:CreateButton(L["Pull Drop Insert before"], function()
+          MDT:PresetsAddPull(self.index)
+          MDT:ReloadPullButtons()
+          MDT:SetSelectionToPull(self.index)
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        rootDescription:CreateButton(L["Pull Drop Insert after"], function()
+          MDT:PresetsAddPull(buttonSelf.index + 1)
+          MDT:ReloadPullButtons()
+          MDT:SetSelectionToPull(buttonSelf.index + 1)
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        if buttonSelf.index ~= 1 then
+          rootDescription:CreateButton(L["Pull Drop Merge up"], function()
+            local newIndex = MDT:PresetsMergePulls(buttonSelf.index, buttonSelf.index - 1)
+            MDT:ReloadPullButtons()
+            MDT:SetSelectionToPull(newIndex)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+              MDT:LiveSession_SendPulls(MDT:GetPulls())
+            end
+          end)
+        end
+
+        if buttonSelf.index < buttonSelf.maxPulls then
+          rootDescription:CreateButton(L["Pull Drop Merge down"], function()
+            local newIndex = MDT:PresetsMergePulls(buttonSelf.index, buttonSelf.index + 1)
+            MDT:ReloadPullButtons()
+            MDT:SetSelectionToPull(newIndex)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+              MDT:LiveSession_SendPulls(MDT:GetPulls())
+            end
+          end)
+        end
+
+        if buttonSelf.index ~= 1 or buttonSelf.index < buttonSelf.maxPulls then
+          rootDescription:CreateDivider()
+        end
+
+
+        rootDescription:CreateButton(L["Pull Drop Clear Pull"], function()
+          MDT:ClearPull(buttonSelf.index)
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+        rootDescription:CreateButton(L["Pull Drop Reset Preset"], function()
+          MDT:OpenClearPresetDialog()
+        end)
+
+        if buttonSelf.maxPulls > 1 then
+          rootDescription:CreateButton(L["Pull Drop Delete"], function()
+            MDT:DeletePull(buttonSelf.index)
+            MDT:ColorAllPulls(_, buttonSelf.index)
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+              MDT:LiveSession_SendPulls(MDT:GetPulls())
+            end
+          end)
+        end
+
+        rootDescription:CreateButton(L["Close"], function()
+
+        end)
+      end)
+    end
+
+    local function openMultiContextMenu()
+      MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+        rootDescription:CreateButton(L["Pull Drop Insert before"], function()
+          MDT.U.do_if(MDT:GetSelection(), {
+            condition = function(entry)
+              return entry >= self.index
+            end,
+            update = function(t, key)
+              t[key] = t[key] + 1
+            end
+          })
+          MDT:PresetsAddPull(self.index)
+          MDT:ReloadPullButtons()
+          MDT:SetSelectionToPull(self.index)
+          --MDT:UpdateAutomaticColors(self.index)
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        rootDescription:CreateButton(L["Pull Drop Insert after"], function()
+          MDT.U.do_if(MDT:GetSelection(), {
+            condition = function(entry)
+              return entry > self.index
+            end,
+            update = function(t, key)
+              t[key] = t[key] + 1
+            end
+          })
+          MDT:PresetsAddPull(self.index + 1)
+          MDT:ReloadPullButtons()
+          MDT:SetSelectionToPull(self.index + 1)
+          --MDT:UpdateAutomaticColors(self.index + 1)
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        rootDescription:CreateButton(L["Pull Drop Merge"], function()
+          local selected_pulls = MDT.U.copy(MDT:GetSelection())
+          -- Assure, that the destination is always the last selected_pull, to copy it's options at last
+          MDT.U.iremove_if(selected_pulls, function(pullIdx)
+            return pullIdx == self.index
+          end)
+
+          if not MDT.U.contains(selected_pulls, self.index) then
+            tinsert(selected_pulls, self.index)
+          end
+
+          local newIndex = MDT:PresetsMergePulls(selected_pulls, self.index)
+          MDT:ReloadPullButtons()
+          MDT:GetCurrentPreset().value.selection = { newIndex }
+          MDT:SetSelectionToPull(newIndex)
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        rootDescription:CreateDivider()
+
+        rootDescription:CreateButton(L["Pull Drop Clear Pulls"], function()
+          if not MDT.U.contains(MDT:GetSelection(), self.index) then
+            tinsert(MDT:GetSelection(), self.index)
+            self:Pick()
+          end
+
+          for _, pullIdx in ipairs(MDT:GetSelection()) do
+            MDT:ClearPull(pullIdx)
+          end
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        rootDescription:CreateButton(L["Pull Drop Reset Preset"], function()
+          MDT:OpenClearPresetDialog()
+        end)
+
+        if self.maxPulls > 1 then
+          rootDescription:CreateButton(L["Pull Drop Delete"], function()
+            local addPull = false
+            local button = MDT:GetFirstNotSelectedPullButton(self.index, "UP")
+            if not button then
+              button = MDT:GetFirstNotSelectedPullButton(self.index, "DOWN")
+              if not button then
+                addPull = true
+                button = 1
+              end
+            end
+
+            local removed_pulls = {}
+            for _, pullIdx in pairs(MDT.GetSelection()) do
+              local offset = MDT.U.count_if(removed_pulls, function(entry)
+                return entry < pullIdx
+              end)
+
+              MDT:DeletePull(pullIdx - offset)
+              tinsert(removed_pulls, pullIdx)
+            end
+
+            MDT.GetCurrentPreset().value.selection = {}
+
+            if not addPull then
+              local offset = MDT.U.count_if(removed_pulls, function(entry)
+                return entry < button
+              end)
+              MDT:SetSelectionToPull(button - offset)
+            else
+              --MDT:AddPull(1) --we handle not deleting all pulls in MDT:DeletePull() instead
+              MDT:SetSelectionToPull(1)
+            end
+            MDT:ReloadPullButtons()
+            if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+              MDT:LiveSession_SendPulls(MDT:GetPulls())
+            end
+          end)
+        end
+
+        rootDescription:CreateDivider()
+
+        rootDescription:CreateButton(L["Pull Drop Close"], function()
+
+        end)
+      end)
+    end
+
     function self.callbacks.OnClickNormal(_, mouseButton, force)
       if not force and not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
 
@@ -192,11 +410,11 @@ local methods = {
           end
 
           if #MDT:GetSelection() > 1 then
-            EasyMenu(self.multiselectMenu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
+            openMultiContextMenu()
           else
             local changed = MDT:SetMapSublevel(self.index)
             MDT:SetSelectionToPull(self.index)
-            EasyMenu(self.menu, MDT.main_frame.sidePanel.optionsDropDown, "cursor", 0, -15, "MENU")
+            openSingleContextMenu()
           end
         else
           --normal click
@@ -262,482 +480,6 @@ local methods = {
         --
       end
     end
-
-    -- Normal Dropdown menu
-    self.menu = {}
-    if self.index ~= 1 then
-      tinsert(self.menu, {
-        text = L["Pull Drop Move up"],
-        notCheckable = 1,
-        func = function()
-          MDT:MovePullUp(self.index)
-          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-            MDT:LiveSession_SendPulls(MDT:GetPulls())
-          end
-        end
-      })
-    end
-    if self.index < self.maxPulls then
-      tinsert(self.menu, {
-        text = L["Pull Drop Move down"],
-        notCheckable = 1,
-        func = function()
-          MDT:MovePullDown(self.index)
-          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-            MDT:LiveSession_SendPulls(MDT:GetPulls())
-          end
-        end
-      })
-    end
-    tinsert(self.menu, {
-      text = L["Pull Drop Insert before"],
-      notCheckable = 1,
-      func = function()
-        MDT:PresetsAddPull(self.index)
-        MDT:ReloadPullButtons()
-        MDT:SetSelectionToPull(self.index)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-
-    tinsert(self.menu, {
-      text = L["Pull Drop Insert after"],
-      notCheckable = 1,
-      func = function()
-        MDT:PresetsAddPull(self.index + 1)
-        MDT:ReloadPullButtons()
-        MDT:SetSelectionToPull(self.index + 1)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    if self.index ~= 1 then
-      tinsert(self.menu, {
-        text = L["Pull Drop Merge up"],
-        notCheckable = 1,
-        func = function()
-          local newIndex = MDT:PresetsMergePulls(self.index, self.index - 1)
-          MDT:ReloadPullButtons()
-          MDT:SetSelectionToPull(newIndex)
-          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-            MDT:LiveSession_SendPulls(MDT:GetPulls())
-          end
-        end
-      })
-    end
-    if self.index < self.maxPulls then
-      tinsert(self.menu, {
-        text = L["Pull Drop Merge down"],
-        notCheckable = 1,
-        func = function()
-          local newIndex = MDT:PresetsMergePulls(self.index, self.index + 1)
-          MDT:ReloadPullButtons()
-          MDT:SetSelectionToPull(newIndex)
-          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-            MDT:LiveSession_SendPulls(MDT:GetPulls())
-          end
-        end
-      })
-    end
-    if self.index ~= 1 or self.index < self.maxPulls then
-      tinsert(self.menu, {
-        text = " ",
-        notClickable = 1,
-        notCheckable = 1,
-        func = nil
-      })
-    end
-    tinsert(self.menu, {
-      text = L["Pull Drop Color Settings"],
-      notCheckable = 1,
-      func = function()
-        MDT:ToggleSettingsDialog()
-      end
-    })
-    local function swatchFunc()
-      local r, g, b = ColorPickerFrame:GetColorRGB()
-      local colorHex = MDT:RGBToHex(r, g, b)
-      if colorHex == "228b22" then
-        r, g, b = 2 * r, 2 * g, 2 * b
-        ColorPickerFrame:SetColorRGB(r, g, b)
-      end
-
-      MDT:DungeonEnemies_SetPullColor(self.index, r, g, b)
-      MDT:UpdatePullButtonColor(self.index, r, g, b)
-      MDT:DungeonEnemies_UpdateBlipColors(self.index, r, g, b)
-      MDT:DrawAllHulls(nil, true)
-      CloseDropDownMenus()
-      if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-        MDT:LiveSession_QueueColorUpdate()
-      end
-    end
-
-    local function cancelFunc()
-      self:RevertColor()
-      MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:DrawAllHulls(nil, true)
-      if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-        MDT:LiveSession_QueueColorUpdate()
-      end
-    end
-
-    tinsert(self.menu, {
-      text = L["Pull Drop Color"]..": ",
-      notCheckable = 1,
-      hasColorSwatch = true,
-      r = self.color.r or 0,
-      g = self.color.g or 0,
-      b = self.color.b or 0,
-      func = function()
-        ColorPickerFrame.func = swatchFunc
-        ColorPickerFrame.opacityFunc = nil
-        ColorPickerFrame.cancelFunc = cancelFunc
-        ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
-        ColorPickerFrame.hasOpacity = false
-        ColorPickerFrame.previousValues = { self.color.r, self.color.g, self.color.b }
-        ColorPickerFrame:Hide() -- Need to run the OnShow
-        ColorPickerFrame:Show()
-        CloseDropDownMenus()
-      end,
-      swatchFunc = swatchFunc,
-      cancelFunc = cancelFunc,
-    })
-    tinsert(self.menu, {
-      text = L["Pull Drop Reset Color"],
-      notCheckable = 1,
-      func = function()
-        local r, g, b = 34 / 255, 139 / 255, 34 / 255
-        MDT:DungeonEnemies_SetPullColor(self.index, r, g, b)
-        MDT:UpdatePullButtonColor(self.index, r, g, b)
-        MDT:DungeonEnemies_UpdateBlipColors(self.index, r, g, b)
-        MDT:DrawAllHulls(nil, true)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    tinsert(self.menu, {
-      text = " ",
-      notClickable = 1,
-      notCheckable = 1,
-      func = nil
-    })
-    tinsert(self.menu, {
-      text = L["Pull Drop Clear Pull"],
-      notCheckable = 1,
-      func = function()
-        MDT:ClearPull(self.index)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    tinsert(self.menu, {
-      text = L["Pull Drop Reset Preset"],
-      notCheckable = 1,
-      func = function() MDT:OpenClearPresetDialog() end
-    })
-    if self.maxPulls > 1 then
-      tinsert(self.menu, {
-        text = L["Pull Drop Delete"],
-        notCheckable = 1,
-        func = function()
-          MDT:DeletePull(self.index)
-          MDT:ColorAllPulls(_, self.index)
-          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-            MDT:LiveSession_SendPulls(MDT:GetPulls())
-          end
-        end
-      })
-      tinsert(self.menu, {
-        text = " ",
-        notClickable = 1,
-        notCheckable = 1,
-        func = nil
-      })
-    end
-
-    tinsert(self.menu, {
-      text = L["Pull Drop Close"],
-      notCheckable = 1,
-      --func = MDT.main_frame.sidePanel.optionsDropDown:Hide()
-      func = nil
-    })
-
-
-    -- Multiselect drop down menu
-    self.multiselectMenu = {}
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Insert before"],
-      notCheckable = 1,
-      func = function()
-        MDT.U.do_if(MDT:GetSelection(), {
-          condition = function(entry)
-            return entry >= self.index
-          end,
-          update = function(t, key)
-            t[key] = t[key] + 1
-          end
-        })
-        MDT:PresetsAddPull(self.index)
-        MDT:ReloadPullButtons()
-        MDT:SetSelectionToPull(self.index)
-        --MDT:UpdateAutomaticColors(self.index)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Insert after"],
-      notCheckable = 1,
-      func = function()
-        MDT.U.do_if(MDT:GetSelection(), {
-          condition = function(entry)
-            return entry > self.index
-          end,
-          update = function(t, key)
-            t[key] = t[key] + 1
-          end
-        })
-        MDT:PresetsAddPull(self.index + 1)
-        MDT:ReloadPullButtons()
-        MDT:SetSelectionToPull(self.index + 1)
-        --MDT:UpdateAutomaticColors(self.index + 1)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Merge"],
-      notCheckable = 1,
-      func = function()
-        local selected_pulls = MDT.U.copy(MDT:GetSelection())
-        -- Assure, that the destination is always the last selected_pull, to copy it's options at last
-        MDT.U.iremove_if(selected_pulls, function(pullIdx)
-          return pullIdx == self.index
-        end)
-
-        if not MDT.U.contains(selected_pulls, self.index) then
-          tinsert(selected_pulls, self.index)
-        end
-
-        local newIndex = MDT:PresetsMergePulls(selected_pulls, self.index)
-        MDT:ReloadPullButtons()
-        MDT:GetCurrentPreset().value.selection = { newIndex }
-        MDT:SetSelectionToPull(newIndex)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    tinsert(self.multiselectMenu, {
-      text = " ",
-      notClickable = 1,
-      notCheckable = 1,
-      func = nil
-    })
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Color Settings"],
-      notCheckable = 1,
-      func = function()
-        MDT:ToggleSettingsDialog()
-      end
-    })
-    local function swatchMultiFunc()
-      local r, g, b = ColorPickerFrame:GetColorRGB()
-      local colorHex = MDT:RGBToHex(r, g, b)
-      if colorHex == "228b22" then
-        r, g, b = 2 * r, 2 * g, 2 * b
-        ColorPickerFrame:SetColorRGB(r, g, b)
-      end
-
-      if not MDT.U.contains(MDT:GetSelection(), self.index) then
-        tinsert(MDT:GetSelection(), self.index)
-        self:Pick()
-      end
-
-      for _, pullIdx in ipairs(MDT:GetSelection()) do
-        MDT:DungeonEnemies_SetPullColor(pullIdx, r, g, b)
-        MDT:UpdatePullButtonColor(pullIdx, r, g, b)
-        MDT:DungeonEnemies_UpdateBlipColors(pullIdx, r, g, b)
-      end
-      MDT:DrawAllHulls(nil, true)
-
-      L_CloseDropDownMenus()
-      if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-        MDT:LiveSession_QueueColorUpdate()
-      end
-    end
-
-    local function cancelMultiFunc()
-      if not MDT.U.contains(MDT:GetSelection(), self.index) then
-        tinsert(MDT:GetSelection(), self.index)
-        self:Pick()
-      end
-
-      for _, pullIdx in ipairs(MDT:GetSelection()) do
-        local button = MDT:GetPullButton(pullIdx)
-        if button then
-          button:RevertColor()
-          local color = {
-            r = button.color.r,
-            g = button.color.g,
-            b = button.color.b
-          }
-          MDT:DungeonEnemies_SetPullColor(pullIdx, color.r, color.g, color.b)
-          MDT:UpdatePullButtonColor(pullIdx, color.r, color.g, color.b)
-          MDT:DungeonEnemies_UpdateBlipColors(pullIdx, color.r, color.g, color.b)
-        end
-      end
-
-      self:RevertColor()
-      MDT:DungeonEnemies_SetPullColor(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:UpdatePullButtonColor(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:DungeonEnemies_UpdateBlipColors(self.index, self.color.r, self.color.g, self.color.b)
-      MDT:DrawAllHulls(nil, true)
-      if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-        MDT:LiveSession_QueueColorUpdate()
-      end
-    end
-
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Color"]..": ",
-      notCheckable = 1,
-      hasColorSwatch = true,
-      r = self.color.r,
-      g = self.color.g,
-      b = self.color.b,
-      func = function()
-        ColorPickerFrame.func = swatchMultiFunc
-        ColorPickerFrame.opacityFunc = nil
-        ColorPickerFrame.cancelFunc = cancelMultiFunc
-        ColorPickerFrame:SetColorRGB(self.color.r, self.color.g, self.color.b)
-        ColorPickerFrame.hasOpacity = false
-        ColorPickerFrame.previousValues = { self.color.r, self.color.g, self.color.b }
-        ColorPickerFrame:Hide() -- Need to run the OnShow
-        ColorPickerFrame:Show()
-        L_CloseDropDownMenus()
-      end,
-      swatchFunc = swatchMultiFunc,
-      cancelFunc = cancelMultiFunc
-    })
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Reset Color"],
-      notCheckable = 1,
-      func = function()
-        local r, g, b = 34 / 255, 139 / 255, 34 / 255
-
-        if not MDT.U.contains(MDT:GetSelection(), self.index) then
-          tinsert(MDT:GetSelection(), self.index)
-          self:Pick()
-        end
-
-        for _, pullIdx in ipairs(MDT:GetSelection()) do
-          MDT:DungeonEnemies_SetPullColor(pullIdx, r, g, b)
-          MDT:UpdatePullButtonColor(pullIdx, r, g, b)
-          MDT:DungeonEnemies_UpdateBlipColors(pullIdx, r, g, b)
-          L_CloseDropDownMenus()
-        end
-        MDT:DrawAllHulls(nil, true)
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    if self.index ~= 1 or self.index < self.maxPulls then
-      tinsert(self.multiselectMenu, {
-        text = " ",
-        notClickable = 1,
-        notCheckable = 1,
-        func = nil
-      })
-    end
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Clear"],
-      notCheckable = 1,
-      func = function()
-        if not MDT.U.contains(MDT:GetSelection(), self.index) then
-          tinsert(MDT:GetSelection(), self.index)
-          self:Pick()
-        end
-
-        for _, pullIdx in ipairs(MDT:GetSelection()) do
-          MDT:ClearPull(pullIdx)
-        end
-        if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-          MDT:LiveSession_SendPulls(MDT:GetPulls())
-        end
-      end
-    })
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Reset Preset"],
-      notCheckable = 1,
-      func = function() MDT:OpenClearPresetDialog() end
-    })
-    if self.maxPulls > 1 then
-      tinsert(self.multiselectMenu, {
-        text = L["Pull Drop Delete"],
-        notCheckable = 1,
-        func = function()
-          local addPull = false
-          local button = MDT:GetFirstNotSelectedPullButton(self.index, "UP")
-          if not button then
-            button = MDT:GetFirstNotSelectedPullButton(self.index, "DOWN")
-            if not button then
-              addPull = true
-              button = 1
-            end
-          end
-
-          local removed_pulls = {}
-          for _, pullIdx in pairs(MDT.GetSelection()) do
-            local offset = MDT.U.count_if(removed_pulls, function(entry)
-              return entry < pullIdx
-            end)
-
-            MDT:DeletePull(pullIdx - offset)
-            tinsert(removed_pulls, pullIdx)
-          end
-
-          MDT.GetCurrentPreset().value.selection = {}
-
-          if not addPull then
-            local offset = MDT.U.count_if(removed_pulls, function(entry)
-              return entry < button
-            end)
-            MDT:SetSelectionToPull(button - offset)
-          else
-            --MDT:AddPull(1) --we handle not deleting all pulls in MDT:DeletePull() instead
-            MDT:SetSelectionToPull(1)
-          end
-          MDT:ReloadPullButtons()
-          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-            MDT:LiveSession_SendPulls(MDT:GetPulls())
-          end
-        end
-      })
-    end
-    tinsert(self.multiselectMenu, {
-      text = " ",
-      notClickable = 1,
-      notCheckable = 1,
-      func = nil
-    })
-
-    tinsert(self.multiselectMenu, {
-      text = L["Pull Drop Close"],
-      notCheckable = 1,
-      func = MDT.main_frame.sidePanel.optionsDropDown:Hide()
-    })
-
 
     --Set pullNumber
     self.pullNumber:SetText(self.index)
@@ -1295,7 +1037,7 @@ local function Constructor()
   --["heartofazeroth-list-item-selected"] = {356, 82, 0.779297, 0.953125, 0.653809, 0.693848, false, false},
   pickedGlow:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\HeartOfAzerothSelection")
   pickedGlow:SetTexCoord(0, 0.697265625, 0, 0.625)
----@diagnostic disable-next-line: param-type-mismatch
+  ---@diagnostic disable-next-line: param-type-mismatch
   pickedGlow:SetAllPoints(button)
   pickedGlow:Hide()
 

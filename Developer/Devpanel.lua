@@ -645,7 +645,6 @@ function MDT:CreateDevPanel(frame)
         if not data.clones[currentBlip.cloneIdx].patrol then
           currentBlip.patrolActive = false
         end
-        currentBlip:ShowBlipPatrol(false)
         MDT:UpdateMap()
       end
     end)

@@ -1,4 +1,5 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='FramePools.lua'/>
 	<Include file='DungeonEnemies.xml'/>
 	<Script file='PullOutlines.lua'/>
 	<Script file='EnemyInfo.lua'/>
