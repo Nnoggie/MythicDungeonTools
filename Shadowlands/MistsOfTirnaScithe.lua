@@ -298,6 +298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Sleep Walk"] = true,
     },
     ["spells"] = {
       [322767] = {
@@ -639,6 +640,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 60,
     ["characteristics"] = {
+      ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
@@ -723,6 +725,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 60,
     ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -877,10 +881,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
       [324914] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -964,11 +973,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 60,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
       [324776] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1065,6 +1078,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2402,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [321828] = {
         ["interruptible"] = true,
@@ -1099,6 +1115,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 94190,
     ["creatureType"] = "Beast",
     ["level"] = 60,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [326046] = {
         ["interruptible"] = true,
@@ -1167,6 +1186,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Incapacitate"] = true,
       ["Disorient"] = true,
       ["Slow"] = true,
+      ["Sleep Walk"] = true,
     },
     ["spells"] = {
       [325413] = {
@@ -1524,6 +1544,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 60,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1711,6 +1732,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 60,
     ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1746,7 +1769,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mistveil Matriarch",
     ["id"] = 173655,
     ["count"] = 16,
-    ["health"] = 494804,
+    ["health"] = 54664060,
     ["scale"] = 1.4,
     ["displayId"] = 98569,
     ["creatureType"] = "Dragonkin",

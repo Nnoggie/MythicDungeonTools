@@ -35,9 +35,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Sleep Walk"] = true,
     },
     ["spells"] = {
       [443427] = {
@@ -192,6 +195,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -337,6 +341,32 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -172.60348929333,
         ["g"] = 8,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 412.45071573533,
+            ["y"] = -172.60348929333,
+          },
+          [2] = {
+            ["x"] = 397.21685044009,
+            ["y"] = -192.03888688542,
+          },
+          [3] = {
+            ["x"] = 412.45071573533,
+            ["y"] = -172.60348929333,
+          },
+          [4] = {
+            ["x"] = 424.57807442444,
+            ["y"] = -150.34556869342,
+          },
+          [5] = {
+            ["x"] = 429.26855725028,
+            ["y"] = -138.35872980499,
+          },
+          [6] = {
+            ["x"] = 424.57807442444,
+            ["y"] = -150.34556869342,
+          },
+        },
       },
       [3] = {
         ["x"] = 429.20949667903,
@@ -345,10 +375,40 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 426.72006091148,
-        ["y"] = -241.97201570499,
+        ["x"] = 428.2835459159,
+        ["y"] = -249.52893405992,
         ["g"] = 21,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 428.54414992713,
+            ["y"] = -253.95884068713,
+          },
+          [2] = {
+            ["x"] = 436.30430930164,
+            ["y"] = -245.19790547487,
+          },
+          [3] = {
+            ["x"] = 432.65615908294,
+            ["y"] = -235.03515560209,
+          },
+          [4] = {
+            ["x"] = 423.79629020334,
+            ["y"] = -230.08405485871,
+          },
+          [5] = {
+            ["x"] = 415.97880955607,
+            ["y"] = -236.33805050157,
+          },
+          [6] = {
+            ["x"] = 415.4576293462,
+            ["y"] = -241.81031754851,
+          },
+          [7] = {
+            ["x"] = 418.32405096899,
+            ["y"] = -248.06429928507,
+          },
+        },
       },
       [5] = {
         ["x"] = 475.85495883165,
@@ -451,7 +511,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 219984,
     ["count"] = 16,
     ["health"] = 27332030,
-    ["scale"] = 1,
+    ["scale"] = 1.8,
     ["displayId"] = 119732,
     ["creatureType"] = "Uncategorized",
     ["level"] = 80,
@@ -475,8 +535,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 544.72526625835,
-        ["y"] = -281.47404996168,
+        ["x"] = 546.21057551008,
+        ["y"] = -279.41542988887,
         ["sublevel"] = 1,
       },
     },
@@ -613,6 +673,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Slow"] = true,
     },
@@ -692,7 +753,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1011,6 +1074,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1046,7 +1110,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1269,6 +1336,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1455,14 +1524,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [8] = {
-        ["x"] = 82.198855069056,
-        ["y"] = -359.32099406889,
+        ["x"] = 80.21843364451,
+        ["y"] = -355.55818913474,
         ["g"] = 45,
         ["sublevel"] = 1,
       },
       [9] = {
-        ["x"] = 72.621364859046,
-        ["y"] = -375.8197066438,
+        ["x"] = 79.948979087556,
+        ["y"] = -378.19623560459,
         ["g"] = 45,
         ["sublevel"] = 1,
       },
@@ -1477,6 +1546,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 118827,
     ["creatureType"] = "Demon",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [443427] = {
         ["interruptible"] = true,
@@ -1533,7 +1605,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 216619,
     ["count"] = 0,
     ["health"] = 127376353,
-    ["scale"] = 0.8,
+    ["scale"] = 1.2,
     ["displayId"] = 116692,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
@@ -1571,8 +1643,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 501.51353309986,
-        ["y"] = -234.55441686399,
+        ["x"] = 504.97935481258,
+        ["y"] = -235.04948518216,
         ["sublevel"] = 1,
       },
     },
@@ -1601,6 +1673,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [439637] = {
       },
+      [439686] = {
+      },
+      [439687] = {
+      },
       [439692] = {
       },
       [439696] = {
@@ -1618,6 +1694,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [441286] = {
       },
       [441381] = {
+      },
+      [441391] = {
       },
     },
     ["clones"] = {
@@ -1765,7 +1843,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ravenous Scarab",
     ["id"] = 219198,
     ["count"] = 0,
-    ["health"] = 2799480,
+    ["health"] = 3036892,
     ["scale"] = 1.5,
     ["displayId"] = 116480,
     ["creatureType"] = "Beast",
@@ -1797,7 +1875,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1842,6 +1922,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1947,7 +2028,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 220423,
     ["count"] = 20,
     ["health"] = 32798436,
-    ["scale"] = 1.5,
+    ["scale"] = 2.1,
     ["displayId"] = 120885,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
@@ -1961,9 +2042,43 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 635.3252110857,
-        ["y"] = -333.71496690078,
+        ["x"] = 606.11356453925,
+        ["y"] = -333.21987216065,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 606.11356453925,
+            ["y"] = -333.21987216065,
+          },
+          [2] = {
+            ["x"] = 583.3776216858,
+            ["y"] = -343.2553960812,
+          },
+          [3] = {
+            ["x"] = 606.11356453925,
+            ["y"] = -333.21987216065,
+          },
+          [4] = {
+            ["x"] = 619.02534132222,
+            ["y"] = -318.4999985254,
+          },
+          [5] = {
+            ["x"] = 639.32491263877,
+            ["y"] = -306.61740769862,
+          },
+          [6] = {
+            ["x"] = 667.05085221341,
+            ["y"] = -311.07341889161,
+          },
+          [7] = {
+            ["x"] = 639.32491263877,
+            ["y"] = -306.61740769862,
+          },
+          [8] = {
+            ["x"] = 619.02534132222,
+            ["y"] = -318.4999985254,
+          },
+        },
       },
     },
   },
