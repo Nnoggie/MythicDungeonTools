@@ -19,7 +19,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AraKara"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 489, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 503, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -1966,8 +1966,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["isBoss"] = true,
-    ["encounterID"] = 2579,
-    ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Incapacitate"] = true,
