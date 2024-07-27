@@ -1423,7 +1423,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [22] = {
     ["name"] = "Cursedheart Invader",
-    ["id"] = 212403,
+    ["id"] = 212389,
     ["count"] = 5,
     ["health"] = 18221353,
     ["scale"] = 1,
