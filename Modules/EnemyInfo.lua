@@ -588,18 +588,28 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   end
   f.spellScrollContainer:SetLayout("Fill")
 
-  --spells
+  -- Spells
   f.spellScroll:ReleaseChildren()
   if data.spells then
-    for spellId, spellData in pairs(data.spells) do
+    -- Create a table to store spell IDs
+    local spellIds = {}
+    -- Insert all spell IDs into the table
+    for spellId in pairs(data.spells) do
       if MDT:GetDB().devMode or not spellBlacklist[spellId] then
-        ---@diagnostic disable-next-line: param-type-mismatch
-        local spellButton = AceGUI:Create("MDTSpellButton")
-        spellButton:SetSpell(spellId, spellData)
-        spellButton:Initialize()
-        spellButton:Enable()
-        f.spellScroll:AddChild(spellButton)
+        table.insert(spellIds, spellId)
       end
+    end
+    -- Sort the spell IDs
+    table.sort(spellIds)     -- Sort in numerical order
+
+    -- Create spell buttons in sorted order
+    for _, spellId in ipairs(spellIds) do
+      local spellData = data.spells[spellId]
+      local spellButton = AceGUI:Create("MDTSpellButton")
+      spellButton:SetSpell(spellId, spellData)
+      spellButton:Initialize()
+      spellButton:Enable()
+      f.spellScroll:AddChild(spellButton)
     end
   end
 

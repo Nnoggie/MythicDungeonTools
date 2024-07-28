@@ -1423,7 +1423,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [22] = {
     ["name"] = "Cursedheart Invader",
-    ["id"] = 212389,
+    ["id"] = 212403,
     ["count"] = 5,
     ["health"] = 18221353,
     ["scale"] = 1,
@@ -1445,13 +1445,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [13] = {
+      [1] = {
         ["x"] = 375.06181728957,
         ["y"] = -238.69731441309,
         ["g"] = 14,
         ["sublevel"] = 1,
       },
-      [14] = {
+      [2] = {
         ["x"] = 386.56521576495,
         ["y"] = -256.75399969814,
         ["g"] = 14,
