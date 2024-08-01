@@ -6,6 +6,7 @@ local L = MDT.L
 L = L or {}
 
 -- MDT
+L["Imbued Iron Bar"] = "灌魔铁锭"
 L["incompatibleVersionError"] = "此Mythic Dungeon Tools(MDT)与你当前魔兽世界版本不兼容。"
 L["The War Within Season 1"] = "地心之战第一赛季"
 L["Retired Lord Vul'azak"] = "退休的尊将瓦拉扎克"
@@ -89,7 +90,7 @@ L["Covert Webmancer"] = "隐秘网士"
 L["Sureki Conscript"] = "苏雷吉役兵"
 L["Royal Venomshell"] = "皇家毒壳者"
 L["Assistant Unnaturaler"] = "掠行助理"
-L["Unstable Test Subject"] = "Unstable Test Subject"
+L["Unstable Test Subject"] = "不稳定的测试对象"
 L["Sureki Unnaturaler"] = "苏雷吉反自然者"
 L["Elder Shadeweaver"] = "长者织影"
 L["Hulking Warshell"] = "魁梧的战甲尉"
