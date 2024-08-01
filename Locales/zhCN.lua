@@ -6,7 +6,6 @@ local L = MDT.L
 L = L or {}
 
 -- MDT
-L["Imbued Iron Bar"] = "灌魔铁锭"
 L["incompatibleVersionError"] = "此Mythic Dungeon Tools(MDT)与你当前魔兽世界版本不兼容。"
 L["The War Within Season 1"] = "地心之战第一赛季"
 L["Retired Lord Vul'azak"] = "退休的尊将瓦拉扎克"

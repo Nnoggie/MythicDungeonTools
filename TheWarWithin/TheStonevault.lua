@@ -1634,26 +1634,4 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [26] = {
-    ["name"] = "Imbued Iron Bar",
-    ["id"] = 229507,
-    ["count"] = 0,
-    ["health"] = 1399740,
-    ["scale"] = 1.5,
-    ["displayId"] = 42109,
-    ["iconTexture"] = 618979,
-    ["creatureType"] = "Uncategorized",
-    ["level"] = 80,
-    ["spells"] = {
-      [462500] = {
-      },
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 240.70527516595,
-        ["y"] = -306.29388505658,
-        ["sublevel"] = 1,
-      },
-    },
-  },
 };
