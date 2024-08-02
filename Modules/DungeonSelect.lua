@@ -184,3 +184,15 @@ function MDT:FixDungeonDropDownList()
     end
   end
 end
+
+function MDT:CheckSeenDungeonLists()
+  db = MDT:GetDB()
+  local defaultSavedVars = MDT:GetDefaultSavedVariables().global
+  local latestSeason = defaultSavedVars.selectedDungeonList
+  local latestDungeon = defaultSavedVars.currentDungeonIdx
+  if latestSeason > db.latestSeenDungeonList then
+    db.latestSeenDungeonList = latestSeason
+    db.selectedDungeonList = latestSeason
+    db.currentDungeonIdx = latestDungeon
+  end
+end
