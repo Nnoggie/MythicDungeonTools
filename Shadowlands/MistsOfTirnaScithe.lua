@@ -9,7 +9,7 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 260, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 290, teeming = 1000, teemingEnabled = true }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
@@ -1109,7 +1109,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [16] = {
     ["name"] = "Spinemaw Staghorn",
     ["id"] = 167111,
-    ["count"] = 5,
+    ["count"] = 7,
     ["health"] = 29154165,
     ["scale"] = 1,
     ["displayId"] = 94190,
