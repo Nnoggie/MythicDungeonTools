@@ -97,6 +97,8 @@ local methods = {
   ["SetSpell"] = function(self, spellId, spellData)
     self.spellId = spellId
     local spellInfo = C_Spell.GetSpellInfo(spellId)
+    --spell sometimes only exists on beta / ptr - guard against that here
+    if not spellInfo then return end
     self.icon:SetTexture(C_Spell.GetSpellTexture(spellId))
     self.title:SetText(spellInfo.name)
     if spellData.interruptible then
