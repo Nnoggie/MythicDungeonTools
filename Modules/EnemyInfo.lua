@@ -360,7 +360,7 @@ local function MakeEnemeyInfoFrame()
       local enemyName = f.enemyDropDown.text:GetText()
       SendChatMessage(string.format(L["MDT: Spells for %s:"], enemyName), distribution)
       for i, child in pairs(f.spellScroll.children) do
-        local link = GetSpellLink(child.spellId)
+        local link = C_Spell.GetSpellLink(child.spellId)
         SendChatMessage(i..". "..link, distribution)
       end
     end)
@@ -600,7 +600,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
       end
     end
     -- Sort the spell IDs
-    table.sort(spellIds)     -- Sort in numerical order
+    table.sort(spellIds) -- Sort in numerical order
 
     -- Create spell buttons in sorted order
     for _, spellId in ipairs(spellIds) do
