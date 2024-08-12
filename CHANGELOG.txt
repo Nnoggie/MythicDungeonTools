@@ -1,3 +1,2 @@
-## 5.0.3 (2024-08-11)
-  - count updates
-  - small bug fixes in the enemy info screen
+## 5.0.4 (2024-08-11)
+  - Fixed NPC name localization
