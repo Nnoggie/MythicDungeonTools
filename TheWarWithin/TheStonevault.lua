@@ -1466,7 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [21] = {
-    ["name"] = "High Speaker Eirich",
+    ["name"] = "Void Speaker Eirich",
     ["id"] = 213119,
     ["count"] = 0,
     ["health"] = 145572975,
