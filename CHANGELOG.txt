@@ -1,2 +1,4 @@
-## 5.0.4 (2024-08-11)
-  - Fixed NPC name localization
+## 5.0.5 (2024-08-19)
+  - Mapping updates
+  - Characteristics updates
+  - Fixed NPC names
