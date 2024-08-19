@@ -45,6 +45,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -238,6 +240,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
@@ -358,6 +361,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -424,6 +428,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Incapacitate"] = true,
+      ["Silence"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -538,6 +544,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 84134,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [257170] = {
       },
@@ -643,6 +652,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -714,6 +725,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -811,6 +824,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -865,6 +881,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 84067,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [275826] = {
       },
@@ -931,7 +950,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 86436,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
+      [272140] = {
+      },
       [272418] = {
       },
       [272421] = {
@@ -1056,6 +1080,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Silence"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -1272,6 +1298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -1320,6 +1347,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 80319,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Disorient"] = true,
+      ["Slow"] = true,
+    },
     ["spells"] = {
       [272588] = {
         ["interruptible"] = true,
@@ -1350,6 +1382,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1395,6 +1429,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1426,6 +1462,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
@@ -1499,6 +1537,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
+      ["Disorient"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1557,6 +1597,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Disorient"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1889,7 +1930,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hadal Darkfathom",
     ["id"] = 128651,
     ["count"] = 0,
-    ["health"] = 127376353,
+    ["health"] = 145572975,
     ["scale"] = 1.5,
     ["displayId"] = 67541,
     ["creatureType"] = "Giant",
@@ -1902,6 +1943,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [257862] = {
+      },
+      [257868] = {
       },
       [257882] = {
       },
@@ -1936,6 +1979,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [269484] = {
       },
       [269984] = {
+      },
+      [270187] = {
       },
       [270484] = {
       },

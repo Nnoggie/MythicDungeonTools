@@ -36,6 +36,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -370,8 +371,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [427382] = {
       },
       [452811] = {
@@ -647,6 +646,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -695,14 +695,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [423766] = {
       },
       [427361] = {
@@ -898,8 +897,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [429109] = {
         ["interruptible"] = true,
       },
@@ -1361,6 +1358,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [445409] = {
       },
+      [464980] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1374,7 +1373,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Speaker Brokk",
     ["id"] = 213217,
     ["count"] = 0,
-    ["health"] = 90983109,
+    ["health"] = 81884799,
     ["scale"] = 2,
     ["displayId"] = 115818,
     ["creatureType"] = "Humanoid",
@@ -1382,6 +1381,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2590,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [428161] = {
       },
@@ -1426,7 +1428,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Speaker Dorlita",
     ["id"] = 213216,
     ["count"] = 0,
-    ["health"] = 109179731,
+    ["health"] = 98261758,
     ["scale"] = 2,
     ["displayId"] = 116916,
     ["creatureType"] = "Humanoid",
@@ -1434,6 +1436,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2590,
     ["instanceID"] = 0,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [428120] = {
       },
@@ -1461,7 +1466,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [21] = {
-    ["name"] = "High Speaker Eirich",
+    ["name"] = "Void Speaker Eirich",
     ["id"] = 213119,
     ["count"] = 0,
     ["health"] = 145572975,
@@ -1612,7 +1617,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Crystal Shard",
     ["id"] = 214443,
     ["count"] = 0,
-    ["health"] = 1399740,
+    ["health"] = 1119792,
     ["scale"] = 1,
     ["displayId"] = 37518,
     ["creatureType"] = "Uncategorized",

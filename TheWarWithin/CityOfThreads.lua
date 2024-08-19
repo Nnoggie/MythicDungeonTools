@@ -36,6 +36,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Incapacitate"] = true,
+      ["Polymorph"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
@@ -194,6 +195,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Uncategorized",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -601,6 +604,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -641,7 +645,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -685,6 +691,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
       ["Slow"] = true,
@@ -707,7 +714,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [3] = {
         ["x"] = 146.57597672434,
         ["y"] = -399.53654549824,
-        ["g"] = 38,
+        ["g"] = 40,
         ["sublevel"] = 1,
       },
       [4] = {
@@ -765,6 +772,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Polymorph"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
@@ -1085,6 +1093,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -1320,6 +1330,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 120890,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [434133] = {
       },
@@ -1342,7 +1355,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Assistant Unnaturaler",
     ["id"] = 216342,
     ["count"] = 3,
-    ["health"] = 10932812,
+    ["health"] = 7288541,
     ["scale"] = 1,
     ["displayId"] = 120891,
     ["creatureType"] = "Humanoid",
@@ -1683,31 +1696,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [439621] = {
       },
-      [439637] = {
-      },
-      [439686] = {
-      },
-      [439687] = {
-      },
       [439692] = {
-      },
-      [439696] = {
       },
       [439697] = {
       },
       [440049] = {
       },
-      [440419] = {
-      },
-      [440434] = {
-      },
-      [440437] = {
-      },
-      [441286] = {
+      [440107] = {
       },
       [441381] = {
-      },
-      [441391] = {
       },
     },
     ["clones"] = {
@@ -1810,7 +1807,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Coaglamation",
     ["id"] = 216320,
     ["count"] = 0,
-    ["health"] = 127376353,
+    ["health"] = 145572975,
     ["scale"] = 1.5,
     ["displayId"] = 117254,
     ["creatureType"] = "Elemental",
@@ -1867,6 +1864,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [450042] = {
       },
       [450047] = {
+      },
+      [450055] = {
       },
     },
     ["clones"] = {
@@ -1933,6 +1932,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -1995,7 +1996,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Root"] = true,
       ["Disorient"] = true,
+      ["Stun"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {

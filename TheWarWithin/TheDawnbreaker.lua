@@ -110,6 +110,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -235,6 +236,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 117315,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [451104] = {
       },
@@ -294,6 +298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
       },
       [432520] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -800,8 +805,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [431303] = {
-      },
       [431304] = {
       },
       [431305] = {
@@ -811,8 +814,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [432606] = {
       },
       [453345] = {
-      },
-      [463455] = {
       },
     },
     ["clones"] = {
@@ -1215,8 +1216,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 99.687439449535,
-        ["y"] = -158.28303459268,
+        ["x"] = 265.79740691883,
+        ["y"] = -438.31001373705,
         ["sublevel"] = 1,
       },
     },
@@ -1247,8 +1248,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 265.1379157076,
-        ["y"] = -437.19698887139,
+        ["x"] = 99.027899797701,
+        ["y"] = -158.07770182773,
         ["sublevel"] = 1,
       },
     },
@@ -1303,14 +1304,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [425264] = {
-      },
-      [425489] = {
-      },
-      [426712] = {
-      },
-      [426715] = {
-      },
       [426734] = {
       },
       [426735] = {
@@ -1319,11 +1312,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [428086] = {
       },
-      [445996] = {
-      },
       [451026] = {
-      },
-      [451032] = {
       },
       [453140] = {
       },
@@ -1414,8 +1403,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [434089] = {
-      },
-      [434090] = {
       },
       [434093] = {
       },
