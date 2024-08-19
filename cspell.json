@@ -1,0 +1,6 @@
+{
+  "version": "0.2",
+  "language": "en-US",
+  "ignorePaths": ["**/libs"],
+  "words": ["copytocompress", "Desaturated", "detalhes", "npcid", "onclick", "redx", "tiptac", "tremove", "Unserializable", "Unserialize", "Virag", "xoffset", "yoffset", "tinsert", "InCombatLockdown", "hooksecurefunc", "debugstack", "tostringall", "strupper", "strsplit", "strsub", "strlen", "strtrim"]
+}
