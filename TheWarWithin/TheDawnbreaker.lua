@@ -19,7 +19,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["The Dawnbreaker"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = {normal = 430, teeming = 1000, teemingEnabled = true}
+MDT.dungeonTotalCount[dungeonIndex] = {normal = 460, teeming = 1000, teemingEnabled = true}
 
 MDT.mapPOIs[dungeonIndex] = {}
 
@@ -581,7 +581,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [7] = {
     ["name"] = "Nightfall Shadowalker",
     ["id"] = 213895,
-    ["count"] = 3,
+    ["count"] = 5,
     ["health"] = 18221353,
     ["scale"] = 1.2,
     ["displayId"] = 115530,
