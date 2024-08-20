@@ -513,6 +513,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Dragonkin",
     ["level"] = 70,
     ["isBoss"] = true,
+    ["encounterID"] = 115,
+    ["instanceID"] = 68,
     ["characteristics"] = {
       ["Taunt"] = true,
     },
@@ -1014,6 +1016,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 70,
     ["isBoss"] = true,
+    ["encounterID"] = 116,
+    ["instanceID"] = 68,
     ["characteristics"] = {
       ["Taunt"] = true,
     },
@@ -1345,6 +1349,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 70,
     ["isBoss"] = true,
+    ["encounterID"] = 114,
+    ["instanceID"] = 68,
     ["characteristics"] = {
       ["Taunt"] = true,
     },
