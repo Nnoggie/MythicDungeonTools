@@ -58,7 +58,8 @@
     "GetRealmName",
     "bit",
     "LibStub",
-    "vdt"
+    "vdt",
+    "GAME_LOCALE"
   ],
   "diagnostics.disable": []
 }
