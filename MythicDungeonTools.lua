@@ -2155,17 +2155,17 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
     -- For levels below 10, apply fortified if not a boss and not ignoring fortified
     if boss == false and fortified == true and (not ignoreFortified) then mult = mult * 1.2 end
     -- Apply tyrannical if it is a boss
-    if boss == true and tyrannical == true then mult = mult * 1.3 end
+    if boss == true and tyrannical == true then mult = mult * 1.25 end
   elseif level >= 10 and level < 12 then
     -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
     -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
     if boss == false then mult = mult * 1.2 end
-    if boss == true then mult = mult * 1.3 end
+    if boss == true then mult = mult * 1.25 end
   elseif level >= 12 then
     -- For levels 12 and above, apply an additional 20% health increase
     -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 20%
     if boss == false then mult = mult * 1.2 * 1.2 end
-    if boss == true then mult = mult * 1.3 * 1.2 end
+    if boss == true then mult = mult * 1.25 * 1.2 end
   end
 
 
@@ -2194,16 +2194,16 @@ function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, 
     -- For levels below 10, apply fortified if not a boss
     if boss == false and fortified == true then mult = mult * 1.2 end
     -- Apply tyrannical if it is a boss
-    if boss == true and tyrannical == true then mult = mult * 1.3 end
+    if boss == true and tyrannical == true then mult = mult * 1.25 end
   elseif level >= 10 and level < 12 then
     -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
     if boss == false then mult = mult * 1.2 end
-    if boss == true then mult = mult * 1.3 end
+    if boss == true then mult = mult * 1.25 end
   elseif level >= 12 then
     -- For levels 12 and above, apply an additional 20% health increase
     -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
     if boss == false then mult = mult * 1.2 * 1.2 end
-    if boss == true then mult = mult * 1.3 * 1.2 end
+    if boss == true then mult = mult * 1.25 * 1.2 end
   end
 
   -- Apply thundering multiplier if present
