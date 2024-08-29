@@ -739,7 +739,6 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
     end
     numActiveTransmissions = numActiveTransmissions - 1
-    if not fromLiveSession then MDT:RestoreThrottleValues() end
   end
 end
 
@@ -790,7 +789,6 @@ end
 ---SendToGroup
 ---Send current preset to group/raid
 function MDT:SendToGroup(distribution, silent, preset)
-  MDT:SetThrottleValues()
   preset = preset or MDT:GetCurrentPreset()
   --set unique id
   MDT:SetUniqueID(preset)
@@ -809,28 +807,4 @@ function MDT:GetPresetSize(forChat, level)
   local preset = MDT:GetCurrentPreset()
   local export = MDT:TableToString(preset, forChat, level)
   return string.len(export)
-end
-
-do
-  local defaultCPS = _G.ChatThrottleLib.MAX_CPS
-  local defaultBurst = _G.ChatThrottleLib.BURST
-
-  function MDT:SetThrottleValues()
-    if not _G.ChatThrottleLib then return end
-    --10.2 added throttle restrictions for PARTY and RAID
-    --10 messages burst, 1 message per second all per prefix
-    --255 characters per message
-    if numActiveTransmissions ~= 0 then return end
-    defaultCPS = _G.ChatThrottleLib.MAX_CPS
-    defaultBurst = _G.ChatThrottleLib.BURST
-    _G.ChatThrottleLib.MAX_CPS = 255
-    _G.ChatThrottleLib.BURST = 2550
-  end
-
-  function MDT:RestoreThrottleValues()
-    if not _G.ChatThrottleLib then return end
-    if numActiveTransmissions ~= 0 then return end
-    _G.ChatThrottleLib.MAX_CPS = defaultCPS
-    _G.ChatThrottleLib.BURST = defaultBurst
-  end
 end

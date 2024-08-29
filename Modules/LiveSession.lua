@@ -21,7 +21,6 @@ function MDT:LiveSession_Enable()
   self:SetUniqueID(self:GetCurrentPreset())
   self.livePresetUID = self:GetCurrentPreset().uid
   self:UpdatePresetDropdownTextColor()
-  self:SetThrottleValues()
   timer = C_Timer.NewTimer(2, function()
     local callback = function()
       self.liveSessionRequested = false
@@ -65,7 +64,6 @@ function MDT:LiveSession_Disable()
   if timer then timer:Cancel() end
   self.liveSessionRequested = false
   self.main_frame.SendingStatusBar:Hide()
-  self:RestoreThrottleValues()
   if self.main_frame.LoadingSpinner then
     self.main_frame.LoadingSpinner:Hide()
     self.main_frame.LoadingSpinner.Anim:Stop()
