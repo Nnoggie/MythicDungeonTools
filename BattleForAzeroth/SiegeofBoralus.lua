@@ -13,21 +13,21 @@ MDT.mapInfo[dungeonIndex] = {
   }
 }
 
-local zones = {1162}
+local zones = { 1162 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = {customTextures = "SiegeOfBoralus"}
+  [1] = { customTextures = "SiegeOfBoralus" }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Siege of Boralus Sublevel"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = {normal = 494, teeming = 319, teemingEnabled = true}
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 494, teeming = 319, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {}
 

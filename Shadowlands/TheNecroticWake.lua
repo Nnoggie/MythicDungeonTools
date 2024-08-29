@@ -4,7 +4,7 @@ local dungeonIndex = 35
 MDT.dungeonList[dungeonIndex] = L["The Necrotic Wake"]
 MDT.mapInfo[dungeonIndex] = {}
 
-local zones = {1666, 1667, 1668}
+local zones = { 1666, 1667, 1668 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
@@ -13,14 +13,14 @@ MDT.scaleMultiplier[dungeonIndex] = 1.3
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = {customTextures = "NecroticWake"}
+  [1] = { customTextures = "NecroticWake" }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TheNecroticWakeFloor1"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = {normal = 332, teeming = 1000, teemingEnabled = true}
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 332, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {}
 
