@@ -1,7 +1,6 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='LibStub\LibStub.lua'/>
 	<Include file='AceAddon-3.0\AceAddon-3.0.xml'/>
-	<Script file='CallbackHandler-1.0\CallbackHandler-1.0.lua'/>
 	<Include file='AceDB-3.0\AceDB-3.0.xml'/>
 	<Include file='AceGUI-3.0\AceGUI-3.0.xml'/>
 	<Script file='AceComm-3.0\ChatThrottleLib.lua'/>
@@ -10,7 +9,6 @@
 	<Script file='LibCompress\LibCompress.lua'/>
 	<Script file='LibDataBroker-1.1\LibDataBroker-1.1.lua'/>
 	<Include file='LibDBIcon-1.0\lib.xml'/>
-	<Include file='AceConfig-3.0\AceConfig-3.0.xml'/>
 	<Script file='LibDeflate\LibDeflate.lua'/>
 	<Include file='LibAsync\LibAsync.xml'/>
   <Script file = 'WagoAnalytics\Shim.lua'/>

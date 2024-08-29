@@ -6,11 +6,9 @@ enable-nolib-creation: no
 externals:
   libs/AceAddon-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceAddon-3.0
   libs/AceComm-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceComm-3.0
-  libs/AceConfig-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceConfig-3.0
   libs/AceDB-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceDB-3.0
   libs/AceGUI-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceGUI-3.0
   libs/AceSerializer-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceSerializer-3.0
-  libs/CallbackHandler-1.0: https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0
   libs/LibCompress: https://repos.curseforge.com/wow/libcompress/trunk
   libs/LibDataBroker-1.1: https://github.com/tekkub/libdatabroker-1-1
   libs/LibDBIcon-1.0: https://repos.curseforge.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
