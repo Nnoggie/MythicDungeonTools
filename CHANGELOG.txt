@@ -1,2 +1,2 @@
-## 5.0.7 (2024-08-26)
-  - Count and mapping updates
+## 5.0.8 (2024-09-07)
+  - Background changes
