@@ -1013,8 +1013,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 160.85304358806,
-        ["y"] = -371.84352368957,
+        ["x"] = 131.74278522917,
+        ["y"] = -366.91716295949,
         ["sublevel"] = 1,
       },
       [6] = {
@@ -1399,7 +1399,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 211089,
     ["count"] = 0,
     ["health"] = 208859018,
-    ["scale"] = 2,
+    ["scale"] = 1.7,
     ["displayId"] = 114315,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
@@ -1438,8 +1438,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 280.34501167208,
-        ["y"] = -313.78687970194,
+        ["x"] = 173.30886633597,
+        ["y"] = -369.76812667996,
         ["sublevel"] = 1,
       },
     },
