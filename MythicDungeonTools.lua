@@ -288,16 +288,16 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 10 },
-  [2] = { 9 },
-  [3] = { 10 },
-  [4] = { 9 },
-  [5] = { 10 },
-  [6] = { 9 },
-  [7] = { 10 },
-  [8] = { 9 },
-  [9] = { 10 },
-  [10] = { 9 },
+  [1] = { 9,148},
+  [2] = { 10 },
+  [3] = { 9 },
+  [4] = { 10 },
+  [5] = { 9 },
+  [6] = { 10 },
+  [7] = { 9 },
+  [8] = { 10 },
+  [9] = { 9 },
+  [10] = { 10 },
 }
 
 MDT.mapInfo = {}
@@ -4530,6 +4530,12 @@ function MDT:PrintCurrentAffixes()
     [130] = L["Encrypted"],
     [131] = L["Shrouded"],
     [132] = L["Thundering"],
+    [147] = L["Xal'atath's Guile"],
+    [148] = L["Xal'atath's Bargain: Ascendant"],
+    [152] = L["Challenger's Peril"],
+    [158] = L["Xal'atath's Bargain: Voidbound"],
+    [159] = L["Xal'atath's Bargain: Oblivion"],
+    [160] = L["Xal'atath's Bargain: Devour"],
   }
   local affixIds = C_MythicPlus.GetCurrentAffixes()
   for idx, data in ipairs(affixIds) do
