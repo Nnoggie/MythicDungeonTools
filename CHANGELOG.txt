@@ -1,3 +1,2 @@
-## 5.0.11 (2024-09-21)
-  - Fix AddOn not loading
-  - Mapping changes
+## 5.0.12 (2024-09-21)
+  - Fix lua error on load
