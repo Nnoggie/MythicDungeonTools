@@ -1,6 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='LibStub\LibStub.lua'/>
 	<Include file='AceAddon-3.0\AceAddon-3.0.xml'/>
+  <Script file='CallbackHandler-1.0\CallbackHandler-1.0.lua'/>
 	<Include file='AceDB-3.0\AceDB-3.0.xml'/>
 	<Include file='AceGUI-3.0\AceGUI-3.0.xml'/>
 	<Script file='AceComm-3.0\ChatThrottleLib.lua'/>
