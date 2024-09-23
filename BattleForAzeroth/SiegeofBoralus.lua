@@ -13,7 +13,7 @@ MDT.mapInfo[dungeonIndex] = {
   }
 }
 
-local zones = { 1162 }
+local zones = { 895, 1162 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end

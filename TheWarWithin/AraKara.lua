@@ -5,7 +5,7 @@ local dungeonIndex = 113
 MDT.dungeonList[dungeonIndex] = L["AraKara"]
 MDT.mapInfo[dungeonIndex] = {}
 
-local zones = { 0 } -- TODO
+local zones = { 2216, 2357 } -- TODO remove 2216 WHEN ARAKARA IS GONE FROM ROTATION
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end

@@ -5,7 +5,7 @@ local dungeonIndex = 112
 MDT.dungeonList[dungeonIndex] = L["Grim Batol"]
 MDT.mapInfo[dungeonIndex] = {}
 
-local zones = { 0 } -- TODO
+local zones = { 241, 293 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
