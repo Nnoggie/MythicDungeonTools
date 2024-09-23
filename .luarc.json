@@ -59,7 +59,8 @@
     "bit",
     "LibStub",
     "vdt",
-    "GAME_LOCALE"
+    "GAME_LOCALE",
+    "DevTool"
   ],
   "diagnostics.disable": []
 }
