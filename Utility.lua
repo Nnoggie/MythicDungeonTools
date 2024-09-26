@@ -107,8 +107,8 @@ U.TMEnd = function()
       total = total + time
     end
   end
-  ViragDevTool_AddData(stepTimes)
-  ViragDevTool_AddData(total)
+  DevTool:AddData(stepTimes)
+  DevTool:AddData(total)
 end
 
 local function getGroupMembers(reversed, forceParty)

@@ -181,8 +181,8 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    currentDungeonIdx = 42,
-    selectedDungeonList = 8,
+    currentDungeonIdx = 31,
+    selectedDungeonList = 9,
     latestSeenDungeonList = 0,
     knownAffixWeeks = {},
   },
@@ -288,7 +288,7 @@ end
 --https://www.wowhead.com/affixes
 --lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
 local affixWeeks = {
-  [1] = { 9,148},
+  [1] = { 9, 148 },
   [2] = { 10 },
   [3] = { 9 },
   [4] = { 10 },

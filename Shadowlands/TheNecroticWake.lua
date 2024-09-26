@@ -4,7 +4,7 @@ local dungeonIndex = 35
 MDT.dungeonList[dungeonIndex] = L["The Necrotic Wake"]
 MDT.mapInfo[dungeonIndex] = {}
 
-local zones = { 1666, 1667, 1668 }
+local zones = { 1533, 1666, 1667, 1668 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
