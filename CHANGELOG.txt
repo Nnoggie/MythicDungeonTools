@@ -1,3 +1,2 @@
-## 5.0.13 (2024-09-23)
-  - Add automatic switching based on zone to new dungeons
-  - Update default dungeon and dungeon list
+## 5.0.14 (2024-09-23)
+  - Mapping updates Siege of Boralus
