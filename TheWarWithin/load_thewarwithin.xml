@@ -4,4 +4,7 @@
     <Script file='GrimBatol.lua'/>
     <Script file='AraKara.lua'/>
     <Script file='CityOfThreads.lua'/>
+    <Script file='MistsOfTirnaScithe.lua'/>
+    <Script file='SiegeofBoralus.lua'/>
+    <Script file='TheNecroticWake.lua'/>
 </Ui>

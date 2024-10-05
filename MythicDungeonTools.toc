@@ -1,7 +1,7 @@
 ## Interface: 110002
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 5.0.15
+## Version: 5.1.0
 ## X-Curse-Project-ID: 288981
 ## X-Wago-ID: rN4VrAKD
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
@@ -28,8 +28,4 @@ Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
 Developer\load_developer.xml
-Legion\load_legion.xml
-BattleForAzeroth\load_bfa.xml
-Shadowlands\load_shadowlands.xml
-Dragonflight\load_dragonflight.xml
 TheWarWithin\load_thewarwithin.xml
