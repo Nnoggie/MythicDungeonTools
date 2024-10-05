@@ -77,6 +77,9 @@ local createPlayerAssignmentContextMenu = function(frame)
       local function SetSelected(p)
         frame.playerAssignmentString:SetText(p)
         MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
+        if frame.setAssigned then
+          frame.setAssigned()
+        end
       end
       rootDescription:CreateRadio(player, IsSelected, SetSelected, player)
     end
@@ -90,6 +93,9 @@ local createPlayerAssignmentContextMenu = function(frame)
       local function SetSelected(p)
         frame.playerAssignmentString:SetText(p)
         MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
+        if frame.setAssigned then
+          frame.setAssigned()
+        end
       end
       rootDescription:CreateRadio(classString, IsSelected, SetSelected, classString)
     end
@@ -97,6 +103,9 @@ local createPlayerAssignmentContextMenu = function(frame)
     rootDescription:CreateButton(L["dropdownClear"], function()
       frame.playerAssignmentString:SetText()
       MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+      if frame.setUnassigned then
+        frame.setUnassigned()
+      end
     end)
   end)
 end
@@ -743,6 +752,73 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip:SetSpellByID(374288)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "nwItem" then
+    local assignment = MDT:POI_GetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx)
+    local itemInfo = {
+      [1] = {
+        name = L["Bloody Javelin"],
+        texture = 3054897,
+      },
+      [2] = {
+        name = L["Discharged Anima"],
+        texture = 3528288,
+      },
+      [3] = {
+        name = L["Discarded Shield"],
+        texture = 3155390,
+      }
+    }
+    frame.Texture:SetTexture(itemInfo[poi.itemType].texture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame.setAssigned = function()
+      frame.Texture:SetDesaturated(false)
+      frame.HighlightTexture:SetDesaturated(false)
+    end
+
+    frame.setUnassigned = function()
+      frame.Texture:SetDesaturated(true)
+      frame.HighlightTexture:SetDesaturated(true)
+    end
+
+    if assignment then
+      frame.setAssigned()
+    else
+      frame.setUnassigned()
+    end
+
+    frame:SetSize(16, 16)
+    frame.Texture:SetSize(16, 16)
+    frame.HighlightTexture:SetSize(16, 16)
+
+    frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
+    frame.playerAssignmentString:ClearAllPoints()
+    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
+    frame.playerAssignmentString:SetJustifyV("MIDDLE")
+    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), 10, "OUTLINE", "")
+    frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
+    frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
+    frame.playerAssignmentString:SetText(assignment)
+    frame.playerAssignmentString:SetScale(1)
+    frame.playerAssignmentString:Show()
+
+    frame:SetScript("OnClick", function()
+      createPlayerAssignmentContextMenu(frame)
+    end)
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(GameTooltip, itemInfo[poi.itemType].name.." "..poi.itemIndex)
+      GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
+      GameTooltip:AddTexture(itemInfo[poi.itemType].texture)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)

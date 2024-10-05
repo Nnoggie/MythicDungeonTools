@@ -60,7 +60,8 @@
     "LibStub",
     "vdt",
     "GAME_LOCALE",
-    "DevTool"
+    "DevTool",
+    "MenuUtil"
   ],
   "diagnostics.disable": []
 }

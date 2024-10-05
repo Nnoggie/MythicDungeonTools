@@ -83,6 +83,14 @@ local schemas = {
             type = "number"
           },
           {
+            name = "itemType",
+            type = "number"
+          },
+          {
+            name = "itemIndex",
+            type = "number"
+          },
+          {
             name = "chainIndex",
             type = "number"
           },

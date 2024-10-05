@@ -3,6 +3,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Bloody Javelin"] = "Bloody Javelin"
+L["Discharged Anima"] = "Discharged Anima"
+L["Discarded Shield"] = "Discarded Shield"
 L["incompatibleVersionError"] = "This version of World of Warcraft is not compatible with Mythic Dungeon Tools."
 L["AraKara"] = "Ara-Kara"
 L["Grim Batol"] = "Grim Batol"
