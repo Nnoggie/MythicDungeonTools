@@ -2558,7 +2558,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     for i = 1, 10 do
       for j = 1, 15 do
         local fileSuffix = (i - 1) * 15 + j
-        local texName = 'Interface\\AddOns\\'..AddonName..'\\Textures\\Upscaled\\'..textureInfo.customTextures..'\\'..sublevel..'_'..fileSuffix..".png"
+        local texName = textureInfo.customTextures..'\\'..sublevel..'_'..fileSuffix..".png"
         local tile = frame["largeMapPanelTile"..i..j]
         tile:SetTexture(texName)
         tile:Show()

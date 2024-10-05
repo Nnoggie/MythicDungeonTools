@@ -1,3 +1,4 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 31
@@ -13,7 +14,7 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 290, teeming = 1000, teemingEna
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = "MistsOfTirneScithe" }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\MistsOfTirnaScithe' }
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Mists of Tirna Scithe"]

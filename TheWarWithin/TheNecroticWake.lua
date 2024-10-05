@@ -1,3 +1,4 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 35
@@ -13,7 +14,7 @@ MDT.scaleMultiplier[dungeonIndex] = 1.3
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = "NecroticWake" }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\NecroticWake' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {

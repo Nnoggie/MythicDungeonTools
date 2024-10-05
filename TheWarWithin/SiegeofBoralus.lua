@@ -1,3 +1,4 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 19
@@ -20,7 +21,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = "SiegeOfBoralus" }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\SiegeOfBoralus' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {

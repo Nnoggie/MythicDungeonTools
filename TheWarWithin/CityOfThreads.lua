@@ -1,3 +1,4 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 
@@ -12,7 +13,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = "CityOfThreads" }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\CityOfThreads' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
