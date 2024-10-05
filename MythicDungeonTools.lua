@@ -2412,8 +2412,6 @@ function MDT:EnsureDBTables()
   end
   --ensure that there exists a map for the current sublevel
   local sublevel = MDT:GetCurrentSubLevel()
-  vdt(MDT:GetDB())
-  vdt(db.currentDungeonIdx)
   if not MDT.dungeonMaps[db.currentDungeonIdx][sublevel] then
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
   end
