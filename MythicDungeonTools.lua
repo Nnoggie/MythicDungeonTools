@@ -182,7 +182,7 @@ local defaultSavedVars = {
       numberCustomColors = 12,
     },
     currentDungeonIdx = 31,
-    selectedDungeonList = 9,
+    selectedDungeonList = 1,
     latestSeenDungeonList = 0,
     knownAffixWeeks = {},
   },
