@@ -1,2 +1,2 @@
-## 5.0.15 (2024-09-29)
-  - Mapping updates Ara Kara G46
+## 5.1.0 (2024-10-05)
+  - Removed Legacy Dungeons. Old dungeons are available via the MDT Legacy Addon.
