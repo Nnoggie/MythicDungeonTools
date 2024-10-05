@@ -1,4 +1,4 @@
-## Interface: 110002, 110000
+## Interface: 110002
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
 ## Version: 5.0.15
