@@ -1,3 +1,4 @@
-## 5.1.0 (2024-10-05)
-  - Removed Legacy Dungeons. Old dungeons are available via the MDT Legacy Addon.
-  - Added assignable Necrotic Wake weapons
+## 5.1.1 (2024-10-07)
+  - Added intractable items to Mists of Tirna Scithe and Stonevault
+  - Fixed a few missing boss groupings
+  - Added a few missing NPCs in Siege of Boralus and increased size of first boss
