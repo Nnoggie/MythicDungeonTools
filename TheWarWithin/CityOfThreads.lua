@@ -636,7 +636,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Imprison"] = true,
       ["Sap"] = true,
       ["Stun"] = true,
-      ["Slow"] = true,
       ["Sleep Walk"] = true,
       ["Mind Soothe"] = true,
     },

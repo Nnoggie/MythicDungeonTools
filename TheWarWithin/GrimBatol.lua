@@ -310,7 +310,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -369,7 +368,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -639,7 +637,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [451965] = {
@@ -970,7 +967,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1353,7 +1349,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [451391] = {
@@ -1406,7 +1401,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1445,7 +1439,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
     },
     ["spells"] = {
       [447395] = {
@@ -1493,7 +1486,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1529,7 +1521,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["characteristics"] = {
       ["Taunt"] = true,
-      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
