@@ -61,7 +61,8 @@
     "vdt",
     "GAME_LOCALE",
     "DevTool",
-    "MenuUtil"
+    "MenuUtil",
+        "GameTooltip_SetTitle"
   ],
   "diagnostics.disable": []
 }

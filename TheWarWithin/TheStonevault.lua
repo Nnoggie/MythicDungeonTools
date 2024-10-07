@@ -22,7 +22,16 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 489, teeming = 1000, teemingEnabled = true }
 
-MDT.mapPOIs[dungeonIndex] = {}
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "stonevaultItem",
+      ["x"] = 247.47244222345,
+      ["y"] = -307.41345271418,
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {

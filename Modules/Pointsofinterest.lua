@@ -827,6 +827,30 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "stonevaultItem" then
+    local itemTexture = 3528441
+    local itemDescription = L["imbuedIronBarDescription"]
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(12, 12)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(462500)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
 
   if type == "textFrame" then
     frame:SetSize(18, 18)
