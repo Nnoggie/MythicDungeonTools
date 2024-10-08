@@ -851,7 +851,31 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "cityOfThreadsItem" then
+    local itemTexture = 135888
+    local itemSpellId = 448305
+    local itemDescription = L["stolenPowerDescription"]
 
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(12, 12)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
   if type == "mistsItem" then
     local itemInfo = {
       [1] = {
@@ -909,7 +933,6 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
-
   if type == "dungeonEntrance" then
     frame.HighlightTexture:SetAtlas("Dungeon")
     frame.Texture:SetAtlas("Dungeon")

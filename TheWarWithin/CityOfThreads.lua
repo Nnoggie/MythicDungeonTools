@@ -30,6 +30,30 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 320.77680262201,
       ["y"] = -83.954249381602,
     },
+    [2] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "cityOfThreadsItem",
+      ["x"] = 502.76705118943,
+      ["y"] = -118.51498924243,
+    },
+    [3] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "cityOfThreadsItem",
+      ["x"] = 435.54496374703,
+      ["y"] = -259.54267223567,
+    },
+    [4] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "cityOfThreadsItem",
+      ["x"] = 326.12725031554,
+      ["y"] = -143.49639416954,
+    },
+    [5] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "cityOfThreadsItem",
+      ["x"] = 430.16808643823,
+      ["y"] = -167.16077396436,
+    },
   },
 };
 
