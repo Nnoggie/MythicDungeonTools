@@ -3,6 +3,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["araKaraItemDescription"] = "Usable by Khaz Algar Tailors (25)"
 L["stolenPowerDescription"] = "Usable by Rogues, Priests, and Khaz Algar Engineers (25)"
 L["Dungeon Entrance"] = "Dungeon Entrance"
 L["Bloody Javelin"] = "Bloody Javelin"
