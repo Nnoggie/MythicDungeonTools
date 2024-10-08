@@ -910,6 +910,26 @@ local function POI_SetOptions(frame, type, poi)
     end)
   end
 
+  if type == "dungeonEntrance" then
+    frame.HighlightTexture:SetAtlas("Dungeon")
+    frame.Texture:SetAtlas("Dungeon")
+
+    frame:SetSize(32, 32)
+    frame.Texture:SetSize(32, 32)
+    frame.HighlightTexture:SetSize(32, 32)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(GameTooltip, L["Dungeon Entrance"])
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+
   if type == "textFrame" then
     frame:SetSize(18, 18)
     frame.Texture:SetTexture(nil)

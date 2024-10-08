@@ -30,6 +30,12 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 247.47244222345,
       ["y"] = -307.41345271418,
     },
+    [2] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "dungeonEntrance",
+      ["x"] = 420.12609193429,
+      ["y"] = -67.862389219205,
+    },
   },
 };
 
