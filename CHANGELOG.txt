@@ -1,4 +1,4 @@
-## 5.1.1 (2024-10-07)
-  - Added intractable items to Mists of Tirna Scithe and Stonevault
-  - Fixed a few missing boss groupings
-  - Added a few missing NPCs in Siege of Boralus and increased size of first boss
+## 5.1.2 (2024-10-08)
+  - Added intractable items to Ara Kara and City of Threads
+  - Added dungeon entrance location to all WWI S1 Dungeons
+  - Added missing stealth detection flags to enemies in all WWI S1 Dungeons
