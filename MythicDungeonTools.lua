@@ -2622,6 +2622,7 @@ end
 
 ---Updates the map to the specified dungeon
 function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
+  if dungeonIdx == db.currentDungeonIdx then return end
   db.currentDungeonIdx = dungeonIdx
   if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
