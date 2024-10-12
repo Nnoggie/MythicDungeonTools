@@ -3,7 +3,10 @@ local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 31
 MDT.dungeonList[dungeonIndex] = L["Mists of Tirna Scithe"]
-MDT.mapInfo[dungeonIndex] = {}
+MDT.mapInfo[dungeonIndex] = {
+  teleportId = 354464,
+  shortName = L["mistsShortName"]
+}
 
 local zones = { 1565, 1669 }
 for _, zone in ipairs(zones) do

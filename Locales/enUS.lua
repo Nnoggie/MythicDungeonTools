@@ -3,6 +3,15 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["araKaraShortName"] = "ARAK"
+L["siegeOfBoralusShortName"] = "SIEGE"
+L["cityOfThreadsShortName"] = "COT"
+L["dawnBreakerShortName"] = "DAWN"
+L["stoneVaultShortName"] = "SV"
+L["mistsShortName"] = "MISTS"
+L["necroticWakeShortName"] = "NW"
+L["grimBatolShortName"] = "GB"
+L["Dungeon Teleport on Right Click"] = "Dungeon Teleport on Right Click"
 L["araKaraItemDescription"] = "Usable by Khaz Algar Tailors (25)"
 L["stolenPowerDescription"] = "Usable by Rogues, Priests, and Khaz Algar Engineers (25)"
 L["Dungeon Entrance"] = "Dungeon Entrance"

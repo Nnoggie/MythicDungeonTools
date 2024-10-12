@@ -36,6 +36,9 @@ end
 local indexToDungeonSelection = {}
 local dungeonSelectionToNames = {}
 
+local dungeonButtons = {}
+local BUTTON_SIZE = 40
+
 function MDT:UpdateDungeonDropDown()
   local dungeonDropdown = MDT.main_frame.DungeonSelectionGroup.DungeonDropdown
   local sublevelDropdown = MDT.main_frame.DungeonSelectionGroup.SublevelDropdown
@@ -60,6 +63,58 @@ function MDT:UpdateDungeonDropDown()
     group:SetHeight(50)
     sublevelDropdown.frame:Show()
   end
+
+
+  -- TODO: don't think we can do any of this during combat, need to find a solution for that
+  -- if InCombatLockdown() then q up creation and return
+
+  local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
+  for idx, dungeonIdx in ipairs(currentList) do
+    local button = dungeonButtons[dungeonIdx]
+    if not button then
+      dungeonButtons[dungeonIdx] = CreateFrame("Button", "MDTDungeonButton"..idx, MDT.main_frame, "SecureActionButtonTemplate")
+      button = dungeonButtons[dungeonIdx]
+      button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
+      button:ClearAllPoints()
+      button:SetPoint("TOPLEFT", MDT.main_frame, "TOPLEFT", (idx - 1) * (BUTTON_SIZE - 1), 0)
+      button.texture = button:CreateTexture()
+      button.texture:SetAllPoints(button)
+      button.texture:Show()
+      button.highlightTexture = button:CreateTexture()
+      button:SetHighlightTexture(button.highlightTexture)
+      button.highlightTexture:SetAtlas("bags-innerglow")
+      button.shortText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+      button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
+      button.shortText:SetFont(button.shortText:GetFont(), 11, "OUTLINE")
+      button.shortText:SetTextColor(1, 1, 1)
+      button:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+      end)
+    end
+    local mapInfo = MDT.mapInfo[dungeonIdx]
+    button.texture:SetTexture(C_Spell.GetSpellTexture(mapInfo.teleportId))
+    button.shortText:SetText(mapInfo.shortName)
+    button:SetAttribute("type1", "macro")
+    button:SetAttribute("macrotext1", "/run MDT:UpdateToDungeon("..dungeonIdx..")")
+    button:SetAttribute("type2", db.enableDungeonTeleport and "spell" or nil)
+    button:SetAttribute("spell2", mapInfo.teleportId)
+    button:SetAttribute("unit", "player")
+    button:RegisterForClicks("LeftButtonUp", "LeftButtonDown", "RightButtonUp", "RightButtonDown")
+    button:Show()
+    button:SetFrameStrata("HIGH")
+    button:SetFrameLevel(50)
+    button:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(dungeonButtons[currentList[1]], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[currentList[1]]:GetWidth(), 0) -- dungeonButtons[1]:GetWidth() + 3
+      GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
+      GameTooltip:Show()
+    end)
+  end
+
+  -- for idx, dungeonIdx in pairs(dungeonButtons) do
+  --   if not tContains(currentList, idx) then
+  --     dungeonIdx:Hide()
+  --   end
+  -- end
 end
 
 ---CreateDungeonSelectDropdown
@@ -79,7 +134,7 @@ function MDT:CreateDungeonSelectDropdown(frame)
   group.frame:SetFrameLevel(50)
   group:SetWidth(204) --idk ace added weird margin on left
   group:SetHeight(50)
-  group:SetPoint("TOPLEFT", frame.topPanel, "BOTTOMLEFT", 0, 2)
+  group:SetPoint("TOPRIGHT", frame.topPanel, "BOTTOMRIGHT", 0, 2)
   group:SetLayout("List")
   MDT:FixAceGUIShowHide(group)
 
