@@ -766,14 +766,17 @@ local function POI_SetOptions(frame, type, poi)
       [1] = {
         name = L["Bloody Javelin"],
         texture = 3054897,
+        spellId = 328351,
       },
       [2] = {
         name = L["Discharged Anima"],
         texture = 3528288,
+        spellId = 328406,
       },
       [3] = {
         name = L["Discarded Shield"],
         texture = 3155390,
+        spellId = 325189,
       }
     }
     frame.Texture:SetTexture(itemInfo[poi.itemType].texture)
@@ -816,7 +819,8 @@ local function POI_SetOptions(frame, type, poi)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, itemInfo[poi.itemType].name.." "..poi.itemIndex)
+      GameTooltip:SetSpellByID(itemInfo[poi.itemType].spellId)
+      GameTooltip:AddLine(" ")
       GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
       GameTooltip:AddTexture(itemInfo[poi.itemType].texture)
       GameTooltip:Show()
