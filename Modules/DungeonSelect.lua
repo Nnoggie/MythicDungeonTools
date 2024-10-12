@@ -145,15 +145,6 @@ function MDT:CreateDungeonSelectDropdown(frame)
   MDT:UpdateDungeonDropDown()
 end
 
-function MDT:ScrollToNextDungeon(delta)
-  local dungeonDropdown = MDT.main_frame.DungeonSelectionGroup.DungeonDropdown
-  local currentValue = dungeonDropdown:GetValue()
-  local target = currentValue + delta
-  if dungeonSelectionToIndex[db.selectedDungeonList][target] then
-    dungeonDropdown:Fire("OnValueChanged", target)
-  end
-end
-
 function MDT:FixDungeonDropDownList()
   local valueToSet = indexToDungeonSelection[db.selectedDungeonList][db.currentDungeonIdx]
   if not valueToSet then
