@@ -1,4 +1,2 @@
-## 5.1.2 (2024-10-08)
-  - Added intractable items to Ara Kara and City of Threads
-  - Added dungeon entrance location to all WWI S1 Dungeons
-  - Added missing stealth detection flags to enemies in all WWI S1 Dungeons
+## 5.1.3 (2024-10-13)
+  - Replace Darkcaster with Shadowmage G17
