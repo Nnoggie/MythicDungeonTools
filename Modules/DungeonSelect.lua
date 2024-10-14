@@ -34,6 +34,16 @@ end
 local dungeonButtons = {}
 local BUTTON_SIZE = 40
 
+function MDT:UpdateDungeonSelectHighlight()
+  for _, button in ipairs(dungeonButtons) do
+    if button.dungeonIdx == db.currentDungeonIdx then
+      button.selectedTexture:Show()
+    else
+      button.selectedTexture:Hide()
+    end
+  end
+end
+
 function MDT:UpdateDungeonDropDown()
   local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
   for idx, dungeonIdx in ipairs(currentList) do
@@ -50,6 +60,9 @@ function MDT:UpdateDungeonDropDown()
       button.highlightTexture = button:CreateTexture()
       button:SetHighlightTexture(button.highlightTexture)
       button.highlightTexture:SetAtlas("bags-innerglow")
+      button.selectedTexture = button:CreateTexture()
+      button.selectedTexture:SetAllPoints(button)
+      button.selectedTexture:SetAtlas("bags-glow-artifact")
       button.shortText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
       button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
       button.shortText:SetFont(button.shortText:GetFont(), 11, "OUTLINE")
@@ -59,10 +72,12 @@ function MDT:UpdateDungeonDropDown()
       end)
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
+    button.dungeonIdx = dungeonIdx
     button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId))
     button.shortText:SetText(mapInfo.shortName)
     button:SetScript("OnClick", function(self, button)
       MDT:UpdateToDungeon(dungeonIdx)
+      MDT:UpdateDungeonSelectHighlight()
     end)
     button:RegisterForClicks("AnyDown", "AnyUp")
     button:Show()
@@ -74,6 +89,7 @@ function MDT:UpdateDungeonDropDown()
       GameTooltip:Show()
     end)
   end
+  MDT:UpdateDungeonSelectHighlight()
   for idx = #currentList + 1, #dungeonButtons do
     dungeonButtons[idx]:Hide()
   end
