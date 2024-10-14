@@ -4,7 +4,10 @@ local L = MDT.L
 
 local dungeonIndex = 114
 MDT.dungeonList[dungeonIndex] = L["CityOfThreads"]
-MDT.mapInfo[dungeonIndex] = {}
+MDT.mapInfo[dungeonIndex] = {
+  teleportId = 445416,
+  shortName = L["cityOfThreadsShortName"]
+}
 
 local zones = { 2343 }
 for _, zone in ipairs(zones) do

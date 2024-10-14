@@ -4,6 +4,8 @@ local L = MDT.L
 local dungeonIndex = 19
 MDT.dungeonList[dungeonIndex] = L["Siege of Boralus"]
 
+local englishFaction = UnitFactionGroup("player")
+
 MDT.mapInfo[dungeonIndex] = {
   viewportPositionOverrides = {
     [2] = {
@@ -11,7 +13,9 @@ MDT.mapInfo[dungeonIndex] = {
       horizontalPan = 499.11205542634,
       verticalPan = 38.703272826513
     }
-  }
+  },
+  teleportId = englishFaction == "Horde" and 464256 or 445418,
+  shortName = L["siegeOfBoralusShortName"]
 }
 
 local zones = { 895, 1162 }

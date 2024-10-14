@@ -1,6 +1,6 @@
 local MDT = MDT
 local L = MDT.L
-local sizex, sizey = 350, 33
+local sizex, sizey = 33, 420
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local toolbarTools = {}
@@ -26,10 +26,10 @@ function MDT:initToolbar(frame)
   frame.toolbar.toggleButton:SetFrameStrata("HIGH")
   frame.toolbar.toggleButton:SetFrameLevel(6)
 
-  frame.toolbar.toggleButton:SetPoint("TOP", frame, "TOP")
-  frame.toolbar.toggleButton:SetSize(32, 11)
+  frame.toolbar.toggleButton:SetPoint("LEFT", frame, "LEFT")
+  frame.toolbar.toggleButton:SetSize(11, 32)
   frame.toolbar.toggleButton:SetNormalTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\arrows")
-  frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0, 1, 0.7, 1)
+  frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0.7, 1, 0, 1)
 
   frame.toolbar:Hide()
   frame.toolbar:SetScript("OnHide", function()
@@ -40,21 +40,22 @@ function MDT:initToolbar(frame)
     if frame.toolbar:IsShown() then
       frame.toolbar:Hide()
       frame.toolbar.toggleButton:ClearAllPoints()
-      frame.toolbar.toggleButton:SetPoint("TOP", frame, "TOP")
-      frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0, 1, 0.7, 1)
+      frame.toolbar.toggleButton:SetPoint("LEFT", frame, "LEFT")
+      frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0.7, 1, 0, 1)
       db.toolbarExpanded = false
     else
       frame.toolbar:Show()
       frame.toolbar.toggleButton:ClearAllPoints()
-      frame.toolbar.toggleButton:SetPoint("TOP", frame.toolbar, "BOTTOM")
-      frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0, 1, 0.05, 0.35)
+      frame.toolbar.toggleButton:SetPoint("LEFT", frame.toolbar, "RIGHT")
+      frame.toolbar.toggleButton:GetNormalTexture():SetTexCoord(0, 0.3, 0, 1)
       db.toolbarExpanded = true
     end
   end)
 
   frame.toolbar.widgetGroup = AceGUI:Create("SimpleGroup")
   frame.toolbar.widgetGroup.frame:ClearAllPoints()
-  frame.toolbar.widgetGroup.frame:SetAllPoints(frame.toolbar)
+  frame.toolbar.widgetGroup.frame:SetPoint("TOPLEFT", frame.toolbar, "TOPLEFT", 2, 0)
+  frame.toolbar.widgetGroup.frame:SetPoint("BOTTOMRIGHT", frame.toolbar, "BOTTOMRIGHT", 0, 0)
   frame.toolbar.widgetGroup.frame:SetParent(frame.toolbar)
   if not frame.toolbar.widgetGroup.frame.SetBackdrop then
     Mixin(frame.toolbar.widgetGroup.frame, BackdropTemplateMixin)
@@ -87,7 +88,7 @@ function MDT:initToolbar(frame)
 
   ---back
   local back = AceGUI:Create("Icon")
-  back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, 0.75, 0.55, 0.8)
+  back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, 0.75, 0.5, 0.75)
   back:SetCallback("OnClick", function(widget, callbackName)
     self:PresetObjectStepBack()
   end)
@@ -98,7 +99,7 @@ function MDT:initToolbar(frame)
 
   ---forward
   local forward = AceGUI:Create("Icon")
-  forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0.55, 0.8)
+  forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0.5, 0.75)
   forward:SetCallback("OnClick", function(widget, callbackName)
     self:PresetObjectStepForward()
   end)
@@ -268,7 +269,7 @@ function MDT:initToolbar(frame)
 
   frame.toolbar:SetSize(sizex, sizey)
   frame.toolbar:ClearAllPoints()
-  frame.toolbar:SetPoint("TOP", frame, "TOP", 0, 0)
+  frame.toolbar:SetPoint("LEFT", frame, "LEFT", 0, 0)
 
   MDT:CreateBrushPreview(frame)
   MDT:UpdateSelectedToolbarTool()

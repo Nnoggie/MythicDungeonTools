@@ -2616,12 +2616,12 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT:DrawAllAnimatedLines()
     if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
-    MDT:FixDungeonDropDownList()
   end, "UpdateMap", true)
 end
 
 ---Updates the map to the specified dungeon
 function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
+  if dungeonIdx == db.currentDungeonIdx then return end
   db.currentDungeonIdx = dungeonIdx
   if not db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel then
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
@@ -4778,7 +4778,7 @@ function initFrames()
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  main_frame:SetResizeBounds(sizex * 0.75, sizey * 0.75, sizex * fullscreenScale, sizey * fullscreenScale)
+  main_frame:SetResizeBounds(sizex * 0.9, sizey * 0.9, sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
   main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -4809,8 +4809,7 @@ function initFrames()
   MDT:MakePresetImportFrame(main_frame)
   coroutine.yield()
   MDT:DungeonEnemies_CreateFramePools()
-  --MDT:UpdateDungeonEnemies(main_frame)
-  MDT:CreateDungeonSelectDropdown(main_frame)
+  MDT:CreateSeasonDropdown(main_frame)
   coroutine.yield()
   MDT:MakePullSelectionButtons(main_frame.sidePanel)
   coroutine.yield()
