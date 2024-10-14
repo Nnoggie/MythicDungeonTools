@@ -2616,7 +2616,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT:DrawAllAnimatedLines()
     if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
-    MDT:FixDungeonDropDownList()
   end, "UpdateMap", true)
 end
 
@@ -4810,8 +4809,7 @@ function initFrames()
   MDT:MakePresetImportFrame(main_frame)
   coroutine.yield()
   MDT:DungeonEnemies_CreateFramePools()
-  --MDT:UpdateDungeonEnemies(main_frame)
-  MDT:CreateDungeonSelectDropdown(main_frame)
+  MDT:CreateSeasonDropdown(main_frame)
   coroutine.yield()
   MDT:MakePullSelectionButtons(main_frame.sidePanel)
   coroutine.yield()
