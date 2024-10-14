@@ -1252,7 +1252,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
 
-  frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
+  -- frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
 
   --affix not current week warning
   frame.sidePanel.affixWeekWarning = AceGUI:Create("Icon")
