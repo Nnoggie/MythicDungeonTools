@@ -1476,7 +1476,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [14] = {
-    ["name"] = "Assistant Unnaturaler",
+    ["name"] = "Skittering Assistant",
     ["id"] = 216342,
     ["count"] = 3,
     ["health"] = 7956534,
