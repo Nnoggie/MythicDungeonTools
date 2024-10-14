@@ -1,2 +1,4 @@
-## 5.1.5 (2024-10-15)
+## 5.1.6 (2024-10-15)
   - New dungeon selection interface
+  - Renamed Assistant Unnaturaler to Skittering Assistant
+  - Removed the Affix dropdown
