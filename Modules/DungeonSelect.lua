@@ -64,16 +64,12 @@ function MDT:UpdateDungeonDropDown()
     sublevelDropdown.frame:Show()
   end
 
-
-  -- TODO: don't think we can do any of this during combat, need to find a solution for that
-  -- if InCombatLockdown() then q up creation and return
-
   local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
   for idx, dungeonIdx in ipairs(currentList) do
-    local button = dungeonButtons[dungeonIdx]
+    local button = dungeonButtons[idx]
     if not button then
-      dungeonButtons[dungeonIdx] = CreateFrame("Button", "MDTDungeonButton"..idx, MDT.main_frame, "SecureActionButtonTemplate")
-      button = dungeonButtons[dungeonIdx]
+      dungeonButtons[idx] = CreateFrame("Button", "MDTDungeonButton"..idx, MDT.main_frame)
+      button = dungeonButtons[idx]
       button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
       button:ClearAllPoints()
       button:SetPoint("TOPLEFT", MDT.main_frame, "TOPLEFT", (idx - 1) * (BUTTON_SIZE - 1), 0)
@@ -94,27 +90,22 @@ function MDT:UpdateDungeonDropDown()
     local mapInfo = MDT.mapInfo[dungeonIdx]
     button.texture:SetTexture(C_Spell.GetSpellTexture(mapInfo.teleportId))
     button.shortText:SetText(mapInfo.shortName)
-    button:SetAttribute("type1", "macro")
-    button:SetAttribute("macrotext1", "/run MDT:UpdateToDungeon("..dungeonIdx..")")
-    button:SetAttribute("type2", db.enableDungeonTeleport and "spell" or nil)
-    button:SetAttribute("spell2", mapInfo.teleportId)
-    button:SetAttribute("unit", "player")
-    button:RegisterForClicks("LeftButtonUp", "LeftButtonDown", "RightButtonUp", "RightButtonDown")
+    button:SetScript("OnClick", function(self, button)
+      MDT:UpdateToDungeon(dungeonIdx)
+    end)
+    button:RegisterForClicks("AnyDown", "AnyUp")
     button:Show()
     button:SetFrameStrata("HIGH")
     button:SetFrameLevel(50)
     button:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(dungeonButtons[currentList[1]], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[currentList[1]]:GetWidth(), 0) -- dungeonButtons[1]:GetWidth() + 3
+      GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
       GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
       GameTooltip:Show()
     end)
   end
-
-  -- for idx, dungeonIdx in pairs(dungeonButtons) do
-  --   if not tContains(currentList, idx) then
-  --     dungeonIdx:Hide()
-  --   end
-  -- end
+  for idx = #currentList + 1, #dungeonButtons do
+    dungeonButtons[idx]:Hide()
+  end
 end
 
 ---CreateDungeonSelectDropdown
