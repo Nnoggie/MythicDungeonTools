@@ -118,16 +118,15 @@ function MDT:initToolbar(frame)
   tinsert(widgets, colorPicker)
 
   local sizeIndicator
-  ---minus
-  local minus = AceGUI:Create("Icon")
-  minus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, 0.25, 0.5, 0.75)
-  minus:SetCallback("OnClick", function(widget, callbackName)
-    db.toolbar.brushSize = db.toolbar.brushSize - 1
-    if db.toolbar.brushSize < 1 then db.toolbar.brushSize = 1 end
+  ---plus
+  local plus = AceGUI:Create("Icon")
+  plus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.5, 0.75)
+  plus:SetCallback("OnClick", function(widget, callbackName)
+    db.toolbar.brushSize = db.toolbar.brushSize + 1
     sizeIndicator:SetText(db.toolbar.brushSize)
   end)
-  minus.tooltipText = L["Decrease Brush Size"]
-  tinsert(widgets, minus)
+  plus.tooltipText = L["Increase Brush Size"]
+  tinsert(widgets, plus)
 
   ---sizeIndicator
   sizeIndicator = AceGUI:Create("EditBox")
@@ -160,15 +159,17 @@ function MDT:initToolbar(frame)
   sizeIndicator.tooltipText = L["Brush Size"]
   tinsert(widgets, sizeIndicator)
 
-  ---plus
-  local plus = AceGUI:Create("Icon")
-  plus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.5, 0.75)
-  plus:SetCallback("OnClick", function(widget, callbackName)
-    db.toolbar.brushSize = db.toolbar.brushSize + 1
+
+  ---minus
+  local minus = AceGUI:Create("Icon")
+  minus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, 0.25, 0.5, 0.75)
+  minus:SetCallback("OnClick", function(widget, callbackName)
+    db.toolbar.brushSize = db.toolbar.brushSize - 1
+    if db.toolbar.brushSize < 1 then db.toolbar.brushSize = 1 end
     sizeIndicator:SetText(db.toolbar.brushSize)
   end)
-  plus.tooltipText = L["Increase Brush Size"]
-  tinsert(widgets, plus)
+  minus.tooltipText = L["Decrease Brush Size"]
+  tinsert(widgets, minus)
 
   ---pencil
   local pencil = AceGUI:Create("Icon")
