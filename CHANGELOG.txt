@@ -1,4 +1,5 @@
 ## 5.1.6 (2024-10-15)
+  - Ara-Kara: Mapping updates in first boss area
   - New dungeon selection interface
   - Renamed Assistant Unnaturaler to Skittering Assistant
   - Removed the Affix dropdown
