@@ -77,6 +77,47 @@ function MDT:UpdateDungeonDropDown()
   for idx = #currentList + 1, #dungeonButtons do
     dungeonButtons[idx]:Hide()
   end
+
+  local currentDungeonIdx = db.currentDungeonIdx
+  local sublevels = MDT.dungeonSubLevels[currentDungeonIdx]
+  local sublevelDropdown = MDT.main_frame.sublevelSelectionGroup.sublevelDropdown
+  sublevelDropdown:SetList(sublevels)
+  sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
+  sublevelDropdown:ClearFocus()
+  if #sublevels == 1 then
+    sublevelDropdown.frame:Hide()
+  else
+    sublevelDropdown.frame:Show()
+  end
+end
+
+--for old maps that need it
+function MDT:CreateSublevelDropdown(frame)
+  db = MDT:GetDB()
+  frame.sublevelSelectionGroup = AceGUI:Create("SimpleGroup")
+  frame.sublevelSelectionGroup.frame:SetParent(frame)
+  local group = frame.sublevelSelectionGroup
+  group.frame:Hide()
+  if not group.frame.SetBackdrop then
+    Mixin(group.frame, BackdropTemplateMixin)
+  end
+  group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
+  group.frame:SetFrameStrata("HIGH")
+  group.frame:SetFrameLevel(50)
+  group:SetWidth(204) --idk ace added weird margin on left
+  group:SetHeight(50)
+  group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, -68)
+  group:SetLayout("List")
+  MDT:FixAceGUIShowHide(group)
+
+  group.sublevelDropdown = AceGUI:Create("Dropdown")
+  group.sublevelDropdown.pullout.frame:SetParent(group.sublevelDropdown.frame)
+  group.sublevelDropdown.text:SetJustifyH("LEFT")
+  group.sublevelDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
+    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
+    MDT:UpdateMap()
+  end)
+  group:AddChild(group.sublevelDropdown)
 end
 
 function MDT:CreateSeasonDropdown(frame)
