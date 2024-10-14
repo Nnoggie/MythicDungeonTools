@@ -1,2 +1,2 @@
-## 5.1.4 (2024-10-14)
-  - Replace Darkcaster with Shadowmage G17
+## 5.1.5 (2024-10-15)
+  - New dungeon selection interface
