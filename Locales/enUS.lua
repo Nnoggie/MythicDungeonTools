@@ -1127,7 +1127,7 @@ L["Etherdiver"] = "Etherdiver"
 L["Executioner Varruth"] = "Executioner Varruth"
 L["Executor Tarvold"] = "Executor Tarvold"
 L["Expand the top toolbar to gain access to drawing and note features."] =
-  "Expand the top toolbar to gain access to drawing and note features."
+  "Expand the side toolbar to gain access to drawing and note features."
 L["Experimental Sludge"] = "Experimental Sludge"
 L["Expert Technician"] = "Expert Technician"
 L["Explosive"] = "Explosive"
