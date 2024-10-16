@@ -1,5 +1,2 @@
-## 5.1.6 (2024-10-15)
-  - Ara-Kara: Mapping updates in first boss area
-  - New dungeon selection interface
-  - Renamed Assistant Unnaturaler to Skittering Assistant
-  - Removed the Affix dropdown
+## 5.1.7 (2024-10-16)
+  - Necrotic Wake Skeletal Monstrosity: Increased enemy forces from 20 to 24
