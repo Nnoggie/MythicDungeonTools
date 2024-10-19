@@ -1,2 +1,3 @@
-## 5.1.7 (2024-10-16)
-  - Necrotic Wake Skeletal Monstrosity: Increased enemy forces from 20 to 24
+## 5.1.8 (2024-10-16)
+  - Siege of Boralus: Added missing enemies G36
+  - Fix Xalatath's Guile HP scaling
