@@ -357,8 +357,16 @@ hooksecurefunc("SetItemRef", function(link, text)
       print(string.format(L["receiveErrorUpdate"], sender))
       return
     end
+    local displayName = text:gsub("%[", ""):gsub("%]", "")
+    -- remove color espace sequences
+    displayName = displayName:gsub("|c%x%x%x%x%x%x%x%x", "")
+    displayName = displayName:gsub("|r", "")
+    vdt(displayName)
     sender = name.."-"..realm
-    local preset = MDT.transmissionCache[sender]
+    vdt(sender)
+    local preset = MDT.transmissionCache[sender][displayName]
+    --something is still not quite right with displayName
+    vdt(preset or "no")
     if preset and type(preset) == "table" then
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
@@ -391,7 +399,11 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     local preset = MDT:StringToTable(message, false)
-    MDT.transmissionCache[fullName] = preset
+    local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
+    local presetName = preset.text
+    local displayName = dungeon..": "..presetName
+    MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
+    MDT.transmissionCache[fullName][displayName] = preset
     --live session preset
     if MDT.liveSessionActive and MDT.liveSessionAcceptingPreset and preset.uid == MDT.livePresetUID then
       if MDT:ValidateImportPreset(preset) then
