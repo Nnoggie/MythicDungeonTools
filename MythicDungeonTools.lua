@@ -2162,10 +2162,10 @@ function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
     if boss == false then mult = mult * 1.2 end
     if boss == true then mult = mult * 1.25 end
   elseif level >= 12 then
-    -- For levels 12 and above, apply an additional 20% health increase
-    -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 20%
-    if boss == false then mult = mult * 1.2 * 1.2 end
-    if boss == true then mult = mult * 1.25 * 1.2 end
+    -- For levels 12 and above, apply an additional 10% health increase
+    -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 10%
+    if boss == false then mult = mult * 1.2 * 1.1 end
+    if boss == true then mult = mult * 1.25 * 1.1 end
   end
 
 
@@ -2200,10 +2200,10 @@ function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, 
     if boss == false then mult = mult * 1.2 end
     if boss == true then mult = mult * 1.25 end
   elseif level >= 12 then
-    -- For levels 12 and above, apply an additional 20% health increase
+    -- For levels 12 and above, apply an additional 10% health increase
     -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
-    if boss == false then mult = mult * 1.2 * 1.2 end
-    if boss == true then mult = mult * 1.25 * 1.2 end
+    if boss == false then mult = mult * 1.2 * 1.1 end
+    if boss == true then mult = mult * 1.25 * 1.1 end
   end
 
   -- Apply thundering multiplier if present
