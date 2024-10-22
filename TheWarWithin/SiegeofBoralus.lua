@@ -349,6 +349,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [10] = {
         ["x"] = 732.18266203007,
         ["y"] = -276.63364455167,
+        ["g"] = 49,
         ["sublevel"] = 1,
       },
       [11] = {
@@ -613,6 +614,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -643,6 +645,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [4] = {
         ["x"] = 727.05914341708,
         ["y"] = -285.73307413136,
+        ["g"] = 49,
         ["sublevel"] = 1,
         ["patrol"] = {
           [1] = {
@@ -1013,6 +1016,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1095,6 +1099,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1229,6 +1234,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -2126,26 +2132,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [32] = {
         ["x"] = 317.71192357736,
         ["y"] = -230.07291450627,
+        ["g"] = 29,
         ["sublevel"] = 1,
       },
       [33] = {
         ["x"] = 319.43010617788,
         ["y"] = -241.6493382827,
+        ["g"] = 29,
         ["sublevel"] = 1,
       },
       [34] = {
         ["x"] = 369.83834662197,
         ["y"] = -218.21621314032,
+        ["g"] = 29,
         ["sublevel"] = 1,
       },
       [35] = {
         ["x"] = 362.67417000256,
         ["y"] = -211.18679873201,
+        ["g"] = 29,
         ["sublevel"] = 1,
       },
       [36] = {
         ["x"] = 371.07501097629,
         ["y"] = -227.9512629476,
+        ["g"] = 29,
         ["sublevel"] = 1,
       },
       [37] = {
@@ -2272,6 +2283,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [12] = {
         ["x"] = 721.51516158075,
         ["y"] = -276.20409264196,
+        ["g"] = 49,
         ["sublevel"] = 1,
       },
     },
@@ -2308,6 +2320,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [280389] = {
       },
       [463182] = {
+      },
+      [471578] = {
       },
     },
     ["clones"] = {
