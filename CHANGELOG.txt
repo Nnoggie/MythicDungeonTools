@@ -1,4 +1,2 @@
-## 5.1.9 (2024-10-20)
-  - Siege of Boralus: Added missing enemies G36
-  - Fix Xalatath's Guile HP scaling
-  - CN Localization fix
+## 5.2.0 (2024-10-23)
+  - Patch 10.0.5 Update
