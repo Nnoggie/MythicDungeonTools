@@ -357,16 +357,10 @@ hooksecurefunc("SetItemRef", function(link, text)
       print(string.format(L["receiveErrorUpdate"], sender))
       return
     end
-    local displayName = text:gsub("%[", ""):gsub("%]", "")
-    -- remove color espace sequences
-    displayName = displayName:gsub("|c%x%x%x%x%x%x%x%x", "")
-    displayName = displayName:gsub("|r", "")
-    vdt(displayName)
+    -- to get the displayName (name of the preset) we need to get everything between the starting and closing brackets
+    local displayName = text:match("%[(.-)%]")
     sender = name.."-"..realm
-    vdt(sender)
     local preset = MDT.transmissionCache[sender][displayName]
-    --something is still not quite right with displayName
-    vdt(preset or "no")
     if preset and type(preset) == "table" then
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
