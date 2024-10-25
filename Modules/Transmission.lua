@@ -653,7 +653,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.preset then
     if MDT.liveSessionActive then
       local preset = MDT:StringToTable(message, false)
-      MDT.transmissionCache[fullName] = preset
+      local displayName = MDT:GetDungeonName(preset.value.currentDungeonIdx)..": "..preset.text
+      MDT.transmissionCache[fullName][displayName] = preset
       if MDT:ValidateImportPreset(preset) then
         MDT.livePresetUID = preset.uid
         MDT:ImportPreset(preset, true)
