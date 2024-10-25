@@ -1,2 +1,2 @@
-## 5.2.0 (2024-10-23)
-  - Patch 10.0.5 Update
+## 5.2.1 (2024-10-25)
+  - Fixed an issue where only the latest route could be imported when multiple routes where linked by the same player in game
