@@ -44,6 +44,22 @@ function MDT:UpdateDungeonSelectHighlight()
   end
 end
 
+local formatTime = function(time)
+  if time then
+    local timeMin = math.floor(time / 60)
+    local timeSec = math.floor(time - (timeMin * 60))
+    if timeMin < 10 then
+      ---@diagnostic disable-next-line: cast-local-type
+      timeMin = ("0%d"):format(timeMin)
+    end
+    if timeSec < 10 then
+      ---@diagnostic disable-next-line: cast-local-type
+      timeSec = ("0%d"):format(timeSec)
+    end
+    return ("%s:%s"):format(timeMin, timeSec)
+  end
+end
+
 function MDT:UpdateDungeonDropDown()
   local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
   for idx, dungeonIdx in ipairs(currentList) do
@@ -84,8 +100,15 @@ function MDT:UpdateDungeonDropDown()
     button:SetFrameStrata("HIGH")
     button:SetFrameLevel(50)
     button:SetScript("OnEnter", function()
+      local timer
+      if mapInfo.mapID then
+        timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID))
+      end
       GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
       GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
+      if timer then
+        GameTooltip:AddLine(L["Timer"]..": "..formatTime(timer), 1, 1, 1)
+      end
       GameTooltip:Show()
     end)
   end
