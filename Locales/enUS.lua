@@ -162,6 +162,7 @@ L["mechagonWorkshopShortName"] = "WORK"
 L["Operation: Floodgate"] = "Operation: Floodgate"
 L["operationFloodgateShortName"] = "FLOOD"
 
+L["Insert Text"] = "Insert Text"
 L["Timer"] = "Timer"
 L["Skittering Assistant"] = "Skittering Assistant"
 L["theaterOfPainShortName"] = "TOP"

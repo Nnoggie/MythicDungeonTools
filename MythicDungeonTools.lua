@@ -4174,7 +4174,7 @@ function MDT:StorePresetObject(obj, ignoreScale, preset)
   --adjust scale
   if not ignoreScale then
     local scale = self:GetScale()
-    if obj.n then
+    if obj.n or obj.fs then
       obj.d[1] = obj.d[1] * (1 / scale)
       obj.d[2] = obj.d[2] * (1 / scale)
     else
@@ -4257,6 +4257,11 @@ function MDT:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSub
       local y = obj.d[2] * scale
       local text = obj.d[5]
       self:DrawNote(x, y, text, objectIndex)
+    elseif obj.fs then
+      local x = obj.d[1] * scale
+      local y = obj.d[2] * scale
+      local text = obj.d[5]
+      self:DrawText(x, y, text, objectIndex)
     else
       obj.d[1] = obj.d[1] or 5
       color.r, color.g, color.b = self:HexToRGB(obj.d[5])
