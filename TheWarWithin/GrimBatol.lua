@@ -6,7 +6,8 @@ local dungeonIndex = 112
 MDT.dungeonList[dungeonIndex] = L["Grim Batol"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445424,
-  shortName = L["grimBatolShortName"]
+  shortName = L["grimBatolShortName"],
+  mapID = 507
 }
 
 local zones = { 241, 293 }

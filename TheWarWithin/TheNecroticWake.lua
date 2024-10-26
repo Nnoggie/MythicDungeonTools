@@ -5,7 +5,8 @@ local dungeonIndex = 35
 MDT.dungeonList[dungeonIndex] = L["The Necrotic Wake"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 354462,
-  shortName = L["necroticWakeShortName"]
+  shortName = L["necroticWakeShortName"],
+  mapID = 376
 }
 local zones = { 1533, 1666, 1667, 1668 }
 for _, zone in ipairs(zones) do

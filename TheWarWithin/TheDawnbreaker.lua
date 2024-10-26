@@ -6,7 +6,8 @@ local dungeonIndex = 111
 MDT.dungeonList[dungeonIndex] = L["The Dawnbreaker"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445414,
-  shortName = L["dawnBreakerShortName"]
+  shortName = L["dawnBreakerShortName"],
+  mapID = 505
 }
 
 local zones = { 2215, 2215, 2359 } -- TODO remove 2215 WHEN DAWNBREAKER IS GONE FROM ROTATION

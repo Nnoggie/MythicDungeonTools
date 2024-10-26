@@ -6,7 +6,8 @@ local dungeonIndex = 110
 MDT.dungeonList[dungeonIndex] = L["The Stonevault"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445269,
-  shortName = L["stoneVaultShortName"]
+  shortName = L["stoneVaultShortName"],
+  mapID = 501
 }
 
 local zones = { 2214, 2341 }

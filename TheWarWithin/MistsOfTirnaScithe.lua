@@ -5,7 +5,8 @@ local dungeonIndex = 31
 MDT.dungeonList[dungeonIndex] = L["Mists of Tirna Scithe"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 354464,
-  shortName = L["mistsShortName"]
+  shortName = L["mistsShortName"],
+  mapID = 375
 }
 
 local zones = { 1565, 1669 }
