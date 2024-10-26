@@ -3,6 +3,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Insert Text"] = "Insert Text"
 L["Timer"] = "Timer"
 L["Skittering Assistant"] = "Skittering Assistant"
 L["theaterOfPainShortName"] = "TOP"

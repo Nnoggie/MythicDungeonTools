@@ -201,6 +201,16 @@ function MDT:initToolbar(frame)
   arrow.tooltipText = L["Drawing: Arrow"]
   tinsert(widgets, arrow)
 
+  ---text
+  local text = AceGUI:Create("Icon")
+  text:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0, 0.25)
+  toolbarTools["text"] = text
+  text:SetCallback("OnClick", function(widget, callbackName)
+    if currentTool == "text" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("text") end
+  end)
+  text.tooltipText = L["Insert Text"]
+  tinsert(widgets, text)
+
   ---note
   local note = AceGUI:Create("Icon")
   note:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0, 0.25)
@@ -280,7 +290,7 @@ end
 ---TexturePool
 local activeTextures = {}
 local texturePool = {}
-local noteFramePool
+local noteFramePool, textFrameFramePool
 local function getTexture()
   local size = tgetn(texturePool)
   if size == 0 then
@@ -309,6 +319,7 @@ function MDT:ReleaseAllActiveTextures()
   end
   twipe(activeTextures)
   if noteFramePool then noteFramePool:ReleaseAll() end
+  if textFrameFramePool then textFrameFramePool:ReleaseAll() end
 end
 
 ---CreateBrushPreview
@@ -436,6 +447,7 @@ function MDT:OverrideScrollframeScripts()
       if currentTool == "mover" then MDT:StopMovingObject() end
       if currentTool == "eraser" then MDT:StopEraserDrawing() end
       if currentTool == "note" then MDT:StartNoteDrawing() end
+      if currentTool == "text" then MDT:StartTextDrawing() end
     end
     if button == "RightButton" then
       local scrollFrame = MDT.main_frame.scrollFrame
@@ -825,6 +837,12 @@ function MDT:HideAllPresetObjects()
       note:Hide()
     end
   end
+  --text frames
+  if textFrameFramePool then
+    for _, textFrame in pairs(textFrameFramePool.active) do
+      textFrame:Hide()
+    end
+  end
 end
 
 ---StopMovingDrawing
@@ -933,6 +951,21 @@ function MDT:StartNoteDrawing()
   end
 end
 
+function MDT:StartTextDrawing()
+  ---new object for storage
+  ---x,y,sublevel,shown,text,fs=true
+  local x, y = MDT:GetCursorPosition()
+  nobj = { d = { x, y, MDT:GetCurrentSubLevel(), true, "this is \124cFFFF0000red and \124cFF00FF00this is green\124r back to red\124r back to white" } }
+  nobj.fs = true
+  MDT:StorePresetObject(nobj)
+  if self.liveSessionActive then self:LiveSession_SendObject(nobj) end
+  MDT:DrawAllPresetObjects()
+
+  if not IsShiftKeyDown() then
+    MDT:UpdateSelectedToolbarTool()
+  end
+end
+
 ---DrawCircle
 function MDT:DrawCircle(x, y, size, color, layer, layerSublevel, isOwn, objectIndex, tex, noinsert, extrax, extray)
   local circle = tex or getTexture()
@@ -989,7 +1022,7 @@ function MDT:DrawTriangle(x, y, rotation, size, color, layer, layerSublevel, isO
   tinsert(activeTextures, triangle)
 end
 
-local noteEditbox
+local textFrameMenu
 
 --store text in nobj
 local function updateNoteObjText(text, note)
@@ -1108,16 +1141,16 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note:RegisterForClicks("AnyUp")
   --click
   function note:OpenEditBox()
-    if not noteEditbox then noteEditbox = makeNoteEditbox() end
-    if noteEditbox.frame:IsShown() and noteEditbox.noteIdx == note.noteIdx then
-      noteEditbox.frame:Hide()
+    if not textFrameMenu then textFrameMenu = makeNoteEditbox() end
+    if textFrameMenu.frame:IsShown() and textFrameMenu.noteIdx == note.noteIdx then
+      textFrameMenu.frame:Hide()
     else
-      noteEditbox.noteIdx = note.noteIdx
-      noteEditbox:ClearAllPoints()
-      noteEditbox.frame:SetPoint("TOPLEFT", note, "TOPRIGHT")
-      noteEditbox.frame:Show()
-      noteEditbox.multiBox:SetText(note.tooltipText)
-      noteEditbox.multiBox.button:Enable()
+      textFrameMenu.noteIdx = note.noteIdx
+      textFrameMenu:ClearAllPoints()
+      textFrameMenu.frame:SetPoint("TOPLEFT", note, "TOPRIGHT")
+      textFrameMenu.frame:Show()
+      textFrameMenu.multiBox:SetText(note.tooltipText)
+      textFrameMenu.multiBox.button:Enable()
     end
   end
 
@@ -1128,8 +1161,8 @@ function MDT:DrawNote(x, y, text, objectIndex)
     elseif button == "RightButton" then
       currentNote = note
       openContextMenu()
-      if noteEditbox and noteEditbox.frame:IsShown() then
-        noteEditbox.frame:Hide()
+      if textFrameMenu and textFrameMenu.frame:IsShown() then
+        textFrameMenu.frame:Hide()
       end
     end
   end)
@@ -1151,4 +1184,164 @@ function MDT:DrawNote(x, y, text, objectIndex)
   end
 
   note:Show()
+end
+
+local function updateTextFrameObjText(text, obj)
+  local currentPreset = MDT:GetCurrentPreset()
+  currentPreset.objects[obj.objIndex].d[5] = text
+  if MDT.liveSessionActive then MDT:LiveSession_SendNoteCommand("text", obj.objIndex, text) end
+end
+
+
+local function makeTextFrameMenu()
+  -- The editbox should ideally directly replace the text frame, maybe it can just BE the text frame instead?
+  local editbox = AceGUI:Create("SimpleGroup")
+  editbox.frame:SetParent(MDT.main_frame)
+  editbox:SetWidth(240)
+  editbox:SetHeight(120)
+  editbox.frame:SetFrameStrata("DIALOG")
+  editbox.frame:SetFrameLevel(50)
+  if not editbox.frame.SetBackdrop then
+    Mixin(editbox.frame, BackdropTemplateMixin)
+  end
+  editbox.frame:SetBackdropColor(unpack(MDT.BackdropColor))
+  editbox:SetLayout("Flow")
+  editbox.multiBox = AceGUI:Create("MultiLineEditBox")
+  editbox.multiBox:SetLabel(L["Note Text:"])
+
+  editbox.multiBox:SetCallback("OnEnterPressed", function(widget, callbackName, text)
+    for _, textFrame in pairs(textFrameFramePool.active) do
+      if textFrame.objIndex == editbox.objIndex then
+        -- unescape pipe characters for colors and icons
+        -- icons will probably be replaced with a {icon:1234} syntax
+        text = text:gsub("||c", "|c")
+        text = text:gsub("||r", "|r")
+        text = text:gsub("||T", "|T")
+        text = text:gsub("||t", "|t")
+        textFrame.fontString:SetText(text)
+        textFrame.text = text
+        updateTextFrameObjText(text, textFrame)
+        break
+      end
+    end
+    editbox.frame:Hide()
+  end)
+
+  editbox.multiBox:SetWidth(240)
+  editbox.multiBox:SetHeight(120)
+  editbox.multiBox.label:Hide()
+  --[[ hiding the scrollbar messes up the whole editbox
+    editbox.multiBox.scrollBar:Hide()
+    editbox.multiBox.scrollBar:ClearAllPoints()
+    editbox.multiBox.scrollBar:SetPoint("BOTTOM", editbox.multiBox.button, "TOP", 0, 16)
+    editbox.multiBox.scrollBar.ScrollUpButton:SetPoint("BOTTOM", editbox.multiBox.scrollBar, "TOP",0,3)
+    ]]
+  editbox.frame:Hide()
+  editbox:AddChild(editbox.multiBox)
+  MDT:FixAceGUIShowHide(editbox, nil, nil, true)
+  editbox.frame:SetScript("OnShow", function()
+    hooksecurefunc(MDT, "MouseDownHook", function() editbox.frame:Hide() end)
+    hooksecurefunc(MDT, "ZoomMap", function() editbox.frame:Hide() end)
+  end)
+
+  return editbox
+end
+
+function MDT:DrawText(x, y, text, objIndex)
+  if not textFrameFramePool then
+    textFrameFramePool = MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "BackdropTemplate")
+  end
+  --setup
+  local textFrame = textFrameFramePool:Acquire()
+  if not textFrame.background then
+    textFrame.background = textFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+    textFrame.background:SetAllPoints()
+    textFrame.background:SetDrawLayer("BACKGROUND", -5)
+    textFrame.background:SetColorTexture(unpack(MDT.BackdropColor))
+    textFrame:SetMovable(true)
+    textFrame:RegisterForDrag("LeftButton")
+
+    textFrame.fontString = textFrame.fontString or textFrame:CreateFontString(nil, "OVERLAY")
+    textFrame.fontString:SetJustifyH("LEFT")
+    textFrame.fontString:SetJustifyV("TOP")
+    textFrame.fontString:SetAllPoints()
+    textFrame.fontString:SetWordWrap(true)
+    textFrame.fontString:SetTextColor(1, 1, 1, 1)
+    local font = GameFontNormalMed3Outline
+    textFrame.fontString:SetFontObject(font)
+    textFrame.fontString:Show()
+
+    local xOffset, yOffset
+
+    textFrame:SetScript("OnMouseDown", function()
+      local currentPreset = MDT:GetCurrentPreset()
+      local oldX, oldY = MDT:GetCursorPosition()
+      local currentScale = MDT:GetScale()
+      oldX = oldX * (1 / currentScale)
+      oldY = oldY * (1 / currentScale)
+      local nx = currentPreset.objects[textFrame.objIndex].d[1]
+      local ny = currentPreset.objects[textFrame.objIndex].d[2]
+      xOffset = oldX - nx
+      yOffset = oldY - ny
+    end)
+    textFrame:SetScript("OnDragStart", function()
+      textFrame:StartMoving()
+    end)
+    textFrame:SetScript("OnDragStop", function()
+      textFrame:StopMovingOrSizing()
+      local newX, newY = MDT:GetCursorPosition()
+      local currentScale = MDT:GetScale()
+      newX = newX * (1 / currentScale)
+      newY = newY * (1 / currentScale)
+      local currentPreset = MDT:GetCurrentPreset()
+      currentPreset.objects[textFrame.objIndex].d[1] = newX - xOffset
+      currentPreset.objects[textFrame.objIndex].d[2] = newY - yOffset
+      if MDT.liveSessionActive then
+        MDT:LiveSession_SendNoteCommand("move", textFrame.objIndex, newX - xOffset, newY -
+          yOffset)
+      end
+      MDT:DrawAllPresetObjects()
+    end)
+
+    textFrame:RegisterForClicks("AnyUp")
+    function textFrame:OpenEditBox()
+      if not textFrameMenu then textFrameMenu = makeTextFrameMenu() end
+      if textFrameMenu.frame:IsShown() and textFrameMenu.objIndex == textFrame.objIndex then
+        textFrameMenu.frame:Hide()
+      else
+        textFrameMenu.objIndex = textFrame.objIndex
+        textFrameMenu:ClearAllPoints()
+        textFrameMenu.frame:SetPoint("TOPLEFT", textFrame, "TOPRIGHT", 2, 17)
+        textFrameMenu.frame:Show()
+        textFrameMenu.multiBox:SetText(textFrame.text)
+        textFrameMenu.multiBox.button:Enable()
+      end
+    end
+
+    textFrame:SetScript("OnClick", function(self, button, down)
+      CloseDropDownMenus()
+      self:OpenEditBox()
+    end)
+  end
+
+  textFrame:ClearAllPoints()
+  textFrame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)
+  textFrame:SetSize(150, 150)
+  textFrame.objIndex = objIndex
+  textFrame.fontString:SetText(text)
+  textFrame.text = text
+
+
+  -- textFrame:SetScript("OnEnter", function()
+  --   GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+  --   GameTooltip:AddLine(textFrame.tooltipText, 1, 1, 1, 1)
+  --   GameTooltip:Show()
+  -- end)
+  -- textFrame:SetScript("OnLeave", function()
+  --   GameTooltip:Hide()
+  -- end)
+
+
+
+  textFrame:Show()
 end
