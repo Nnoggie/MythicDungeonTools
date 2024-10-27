@@ -1,2 +1,6 @@
-## 5.2.1 (2024-10-25)
+## 5.2.1 (2024-10-27)
   - Fixed an issue where only the latest route could be imported when multiple routes where linked by the same player in game
+  - Updates many Health values
+  - Dawnbreaker G42: Replaced Darkcaster with Shadowmage
+  - Added dungeon timers to the dungeon list Tooltips
+  - Removed force loading of Blizzard AddOns
