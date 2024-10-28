@@ -4483,7 +4483,7 @@ function MDT:GetCurrentAffixWeek()
   C_MythicPlus.RequestMapInfo()
   C_MythicPlus.RequestRewards()
   local affixIds = C_MythicPlus.GetCurrentAffixes() --table
-  if not affixIds then return end
+  if not affixIds then return 1 end
   if not affixIds[1] then return 1 end
   for week, affixes in ipairs(affixWeeks) do
     if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
