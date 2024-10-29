@@ -1,2 +1,2 @@
-## 5.2.2 (2024-10-29)
-  - Fixed nil error
+## 5.2.3 (2024-10-29)
+  - Trigger error reporting on failed route transmission
