@@ -107,7 +107,7 @@ function MDT:UpdateDungeonDropDown()
       GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
       GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
       if timer then
-        GameTooltip:AddLine(L["Timer"]..": "..formatTime(timer + 90), 1, 1, 1)
+        GameTooltip:AddLine(L["Timer"]..": "..formatTime(timer), 1, 1, 1)
       end
       GameTooltip:Show()
     end)
