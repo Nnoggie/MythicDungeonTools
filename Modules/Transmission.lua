@@ -354,7 +354,11 @@ hooksecurefunc("SetItemRef", function(link, text)
     local sender = link:sub(17, string.len(link))
     local name, realm = string.match(sender, "(.*)+(.*)")
     if (not name) or (not realm) then
-      print(string.format(L["receiveErrorUpdate"], sender))
+      local msg = "\nsender: "..sender
+      local escapedText = text:gsub("|", "||")
+      msg = msg.."\nfull text: "..escapedText
+      local cache = MDT.U.TableToString(MDT.transmissionCache)
+      MDT:OnError(msg, cache, "MDT failed to import preset from chat link")
       return
     end
     -- to get the displayName (name of the preset) we need to get everything between the starting and closing brackets
@@ -367,7 +371,12 @@ hooksecurefunc("SetItemRef", function(link, text)
         MDT:ImportPreset(CopyTable(preset))
       end, "showInterfaceChatImport")
     else
-      print(string.format(L["receiveErrorUpdate"], sender))
+      local msg = "\nparsed displayName: "..displayName
+      msg = msg.."\nsender: "..sender
+      local escapedText = text:gsub("|", "||")
+      msg = msg.."\nfull text: "..escapedText
+      local cache = MDT.U.TableToString(MDT.transmissionCache)
+      MDT:OnError(msg, cache, "MDT failed to import preset from chat link")
     end
     return
   end
