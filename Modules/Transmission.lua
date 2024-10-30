@@ -402,7 +402,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     local preset = MDT:StringToTable(message, false)
-    local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
+    local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     local presetName = preset.text
     local displayName = dungeon..": "..presetName
     MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
@@ -662,7 +662,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.preset then
     if MDT.liveSessionActive then
       local preset = MDT:StringToTable(message, false)
-      local displayName = MDT:GetDungeonName(preset.value.currentDungeonIdx)..": "..preset.text
+      local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
+      local displayName = dungeon..": "..preset.text
       MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
       MDT.transmissionCache[fullName][displayName] = preset
       if MDT:ValidateImportPreset(preset) then
@@ -737,7 +738,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     --output chat link
     if not silent and preset then
       local prefix = "[MDT_v2: "
-      local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
+      local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
       local presetName = preset.text
       local name, realm = UnitFullName("player")
 

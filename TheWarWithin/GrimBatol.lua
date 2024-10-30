@@ -7,6 +7,7 @@ MDT.dungeonList[dungeonIndex] = L["Grim Batol"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445424,
   shortName = L["grimBatolShortName"],
+  englishName = "Grim Batol",
   mapID = 507
 }
 

@@ -7,6 +7,7 @@ MDT.dungeonList[dungeonIndex] = L["CityOfThreads"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445416,
   shortName = L["cityOfThreadsShortName"],
+  englishName = "City of Threads",
   mapID = 502
 }
 

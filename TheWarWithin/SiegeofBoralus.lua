@@ -16,6 +16,7 @@ MDT.mapInfo[dungeonIndex] = {
   },
   teleportId = englishFaction == "Horde" and 464256 or 445418,
   shortName = L["siegeOfBoralusShortName"],
+  englishName = "Siege of Boralus",
   mapID = 353
 }
 

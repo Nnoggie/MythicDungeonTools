@@ -332,7 +332,13 @@ function MDT:GetNumDungeons()
   return count
 end
 
-function MDT:GetDungeonName(idx) return MDT.dungeonList[idx] end
+function MDT:GetDungeonName(idx, forceEnglish)
+  -- don't fail hard for legacy dungeons
+  if forceEnglish and MDT.mapInfo[idx].englishName then
+    return MDT.mapInfo[idx].englishName
+  end
+  return MDT.dungeonList[idx]
+end
 
 function MDT:GetDungeonSublevels()
   return MDT.dungeonSubLevels

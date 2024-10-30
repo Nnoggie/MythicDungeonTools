@@ -7,6 +7,7 @@ MDT.dungeonList[dungeonIndex] = L["AraKara"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445417,
   shortName = L["araKaraShortName"],
+  englishName = "Ara-Kara",
   mapID = 503
 }
 

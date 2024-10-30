@@ -7,6 +7,7 @@ MDT.dungeonList[dungeonIndex] = L["The Stonevault"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 445269,
   shortName = L["stoneVaultShortName"],
+  englishName = "The Stonevault",
   mapID = 501
 }
 

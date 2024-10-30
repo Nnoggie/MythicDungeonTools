@@ -6,6 +6,7 @@ MDT.dungeonList[dungeonIndex] = L["Mists of Tirna Scithe"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 354464,
   shortName = L["mistsShortName"],
+  englishName = "Mists of Tirna Scithe",
   mapID = 375
 }
 
