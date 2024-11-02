@@ -70,7 +70,7 @@ MDT.mapPOIs[dungeonIndex] = {
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
-    ["name"] = "Starved Crawler",
+    ["name"] = "Ravenous Crawler",
     ["id"] = 216336,
     ["count"] = 1,
     ["health"] = 5092182,
