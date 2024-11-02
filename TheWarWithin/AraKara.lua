@@ -1682,6 +1682,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [465012] = {
       },
+      [432868] = {
+      },
     },
     ["clones"] = {
       [1] = {
