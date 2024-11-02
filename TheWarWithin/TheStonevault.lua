@@ -77,9 +77,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [426283] = {
         ["interruptible"] = true,
       },
-      [426308] = {
-        ["interruptible"] = true,
-      },
+      [426308] = {},
       [427300] = {
       },
     },
@@ -1704,9 +1702,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [426283] = {
         ["interruptible"] = true,
       },
-      [426308] = {
-        ["interruptible"] = true,
-      },
+      [426308] = {},
       [452811] = {
       },
     },
