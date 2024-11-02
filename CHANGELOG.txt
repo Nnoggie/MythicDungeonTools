@@ -1,3 +1,2 @@
-## 5.2.4 (2024-10-30)
-  - Fix route sharing between clients with different client languages
-  - Add 90s to each dungeon timer to account for Challenger's Peril
+## 5.2.5 (2024-11-02)
+  - Minor Mapping updates
