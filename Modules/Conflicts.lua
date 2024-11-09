@@ -39,6 +39,13 @@ local candidates = {
 
     end,
   },
+  ["SimpleChat"] = {
+    name = "SimpleChat",
+    detected = false,
+    onDetect = function()
+
+    end,
+  },
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
