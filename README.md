@@ -1,8 +1,11 @@
 ## Mythic Dungeon Tools
 
-![Main Window](https://i.imgur.com/2rSkG5i.jpeg "Main Window")
+![Main Window](https://i.imgur.com/cmRBpgU.png "Logo")
+
+![Main Window](https://imgur.com/XPO5B8C.png "Main Window")
 
 ## Download
+
 Wago: https://addons.wago.io/addons/mythic-dungeon-tools
 
 Curseforge: https://www.curseforge.com/wow/addons/mythic-dungeon-tools
