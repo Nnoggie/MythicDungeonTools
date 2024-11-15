@@ -57,7 +57,7 @@ end
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   type = "data source",
   text = "Mythic Dungeon Tools",
-  icon = "Interface\\AddOns\\"..AddonName.."\\Textures\\NnoggieMinimap",
+  icon = "Interface\\AddOns\\"..AddonName.."\\Textures\\MDTMinimap",
   OnClick = function(button, buttonPressed)
     if buttonPressed == "RightButton" then
       if db.minimap.lock then
@@ -631,10 +631,10 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString:Show()
     frame.topPanelString:SetFont(frame.topPanelString:GetFont() or '', 20, '')
     frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "ARTWORK", nil, 7)
-    frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\Nnoggie")
-    frame.topPanelLogo:SetWidth(24)
-    frame.topPanelLogo:SetHeight(24)
-    frame.topPanelLogo:SetPoint("RIGHT", frame.topPanelString, "LEFT", -5, 0)
+    frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\MDTFull")
+    frame.topPanelLogo:SetWidth(30)
+    frame.topPanelLogo:SetHeight(30)
+    frame.topPanelLogo:SetPoint("RIGHT", frame.topPanelString, "LEFT", -5, -1)
     frame.topPanelLogo:Show()
   end
 

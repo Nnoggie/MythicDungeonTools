@@ -17,7 +17,7 @@
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
 ## OptionalDeps: !!AddonLocale, LibStub, Ace3, WagoAnalytics
 ## SavedVariables: MythicDungeonToolsDB
-## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\Nnoggie
+## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\MDTFull
 
 libs\load_libs.xml
 BuildCheck.lua
