@@ -1,2 +1,2 @@
-## 5.2.6 (2024-11-15)
-  - Logo update
+## 5.2.7 (2024-11-19)
+  - Show correct dungeon timer if player is currently in a key
