@@ -21,7 +21,9 @@ MDT.dungeonSelectionToIndex = {}
 
 do
   tinsert(MDT.seasonList, L["The War Within Season 1"])
+  tinsert(MDT.seasonList, L["The War Within Season 2"])
   tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
+  tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
 end
 
 local seasonList = MDT.seasonList

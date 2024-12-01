@@ -7,4 +7,12 @@
     <Script file='MistsOfTirnaScithe.lua'/>
     <Script file='SiegeofBoralus.lua'/>
     <Script file='TheNecroticWake.lua'/>
+    <Script file='PrioryOfTheSacredFlame.lua'/>
+    <Script file='CinderbrewMeadery.lua'/>
+    <Script file='DarkflameCleft.lua'/>
+    <Script file='TheRookery.lua'/>
+    <Script file='OperationFloodgate.lua'/>
+    <Script file='TheMotherlode.lua'/>
+    <Script file='TheaterOfPain.lua'/>
+    <Script file='MechagonWorkshop.lua'/>
 </Ui>
