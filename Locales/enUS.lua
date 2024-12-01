@@ -3,6 +3,19 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["The War Within Season 2"] = "War Within Season 2"
+L["Priory of the Sacred Flame"] = "Priory of the Sacred Flame"
+L["prioryShortName"] = "PRIO"
+L["Cinderbrew Meadery"] = "Cinderbrew Meadery"
+L["cinderbrewShortName"] = "MEAD"
+L["Darkflame Cleft"] = "Darkflame Cleft"
+L["darkflameShortName"] = "DFC"
+L["The Rookery"] = "The Rookery"
+L["rookeryShortname"] = "ROOK"
+L["mechagonWorkshopShortName"] = "WORK"
+L["Operation: Floodgate"] = "Operation: Floodgate"
+L["operationFloodgateShortName"] = "FLOOD"
+
 L["Timer"] = "Timer"
 L["Skittering Assistant"] = "Skittering Assistant"
 L["theaterOfPainShortName"] = "TOP"
