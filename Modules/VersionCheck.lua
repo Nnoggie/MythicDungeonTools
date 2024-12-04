@@ -2,8 +2,8 @@ local AddonName, MDT = ...
 local L = MDT.L
 
 local changeLog = {
-  [0] = {
-    tag = "v4.3.5.0",
+  [1] = {
+    tag = "4.3.5.0",
     date = "2024-03-15",
     notes = {
       "fix an issue with affix week dates",
@@ -11,8 +11,8 @@ local changeLog = {
       "fix a third issue that is very long very long very long very long very long very long very long very long very long very long very long very long very long",
     }
   },
-  [1] = {
-    tag = "v4.3.4.9",
+  [2] = {
+    tag = "4.3.4.9",
     date = "2024-03-12",
     notes = {
       "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
@@ -122,7 +122,7 @@ local function createVersionCheckFrame()
   --create the changelog from the changelog table
   local text = ""
   for i, v in ipairs(changeLog) do
-    text = text..v.tag.." ("..v.date..")\n"
+    text = text.."v"..v.tag.." ("..v.date..")\n"
     for _, note in ipairs(v.notes) do
       text = text.."  - "..note.."\n"
     end
