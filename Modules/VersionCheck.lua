@@ -1,5 +1,4 @@
 local AddonName, MDT = ...
-local DF = _G["DetailsFramework"];
 local L = MDT.L
 
 local changeLog = {
@@ -23,27 +22,44 @@ local changeLog = {
 }
 
 local function createVersionCheckFrame()
-  local panelOptions = {
-    DontRightClickClose = true,
-    NoTUISpecialFrame = false,
-    NoCloseButton = false,
-    NoScripts = true, -- not movable
-    -- NoTitleBar = true,
-  }
   local width, height = 500, 300
-  local title = "Version Check / Change Log"
-  local f = DF:CreateSimplePanel(MDT.main_frame, width, height, title, nil, panelOptions);
-  f:Hide();
-  MDT.main_frame:HookScript("OnHide", function()
-    f.Close:Click()
-  end)
+  local titleText = "Version Check / Change Log"
+
+  local f = CreateFrame("frame", "MDT_VersionCheckFrame", MDT.main_frame, "BackdropTemplate")
+  f:SetSize(width, height)
   f:ClearAllPoints()
   f:SetPoint("BOTTOMLEFT", MDT.main_frame, "BOTTOMLEFT", 0, 0)
+  f:SetFrameStrata("HIGH")
+  f:SetFrameLevel(50)
+  f.bgTex = f:CreateTexture(nil, "BACKGROUND", nil, 0)
+  f.bgTex:SetAllPoints()
+  f.bgTex:SetDrawLayer("BORDER", -5)
+  f.bgTex:SetColorTexture(unpack(MDT.BackdropColor))
+  f:Hide()
+
+  MDT.main_frame:HookScript("OnHide", function()
+    f:Hide()
+  end)
+
+  local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+  title:SetPoint("TOP", f, "TOP", 0, -5)
+  title:SetText(titleText)
+  --bigger font size
+  title:SetFontObject("GameFontNormal")
+  ---@diagnostic disable-next-line: param-type-mismatch
+  title:SetFont(title:GetFont(), 12);
+  title:SetTextColor(1, 1, 1)
+
+  local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+  close:SetPoint("TOPRIGHT", f, "TOPRIGHT")
+  close:SetScript("OnClick", function()
+    f:Hide()
+  end)
 
   local scrollFrame = CreateFrame("scrollframe", nil, f, "BackdropTemplate")
-  scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -30)
-  scrollFrame:SetWidth(width-30)
-  scrollFrame:SetHeight(height-35)
+  scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -40)
+  scrollFrame:SetWidth(width - 30)
+  scrollFrame:SetHeight(height - 45)
   scrollFrame:SetBackdrop({
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     tile = true,
@@ -53,7 +69,7 @@ local function createVersionCheckFrame()
   scrollFrame:SetBackdropColor(.1, .1, .1, .3)
 
   local contentFrame = CreateFrame("frame", nil, scrollFrame, "BackdropTemplate")
-  contentFrame:SetSize(width-10, 1000)
+  contentFrame:SetSize(width - 10, 1000)
   ---@diagnostic disable-next-line: param-type-mismatch
   scrollFrame:SetScrollChild(contentFrame)
 
@@ -72,7 +88,7 @@ local function createVersionCheckFrame()
 
   slider:SetThumbTexture(slider.thumb)
   slider:SetOrientation("VERTICAL");
-  slider:SetSize(16, height-35)
+  slider:SetSize(16, height - 45)
   slider:SetPoint("TOPLEFT", scrollFrame, "TOPRIGHT")
   slider:SetMinMaxValues(0, 1000)
   slider:SetValue(0)
@@ -97,8 +113,8 @@ local function createVersionCheckFrame()
   --text box
   local textBox = contentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
   textBox:SetPoint("TOPLEFT", contentFrame, "TOPLEFT")
-  textBox:SetJustifyH("left")
-  textBox:SetJustifyV("top")
+  textBox:SetJustifyH("LEFT")
+  textBox:SetJustifyV("TOP")
   textBox:SetTextColor(1, 1, 1)
   textBox:SetWidth(450)
   textBox:SetHeight(2500)
@@ -106,24 +122,13 @@ local function createVersionCheckFrame()
   --create the changelog from the changelog table
   local text = ""
   for i, v in ipairs(changeLog) do
-    text = text .. v.tag .. " (" .. v.date .. ")\n"
+    text = text..v.tag.." ("..v.date..")\n"
     for _, note in ipairs(v.notes) do
-      text = text .. "  - " .. note .. "\n"
+      text = text.."  - "..note.."\n"
     end
-    text = text .. "\n"
+    text = text.."\n"
   end
   textBox:SetText(text)
-
-  -- textBox:SetText([[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae eros non est semper bibendum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla nec ornare magna, sed pharetra tortor. Pellentesque commodo ligula ac tempor vestibulum. Phasellus eu iaculis metus, eget lobortis lorem. Maecenas a dictum lacus. In placerat molestie tortor sed venenatis. Sed suscipit tincidunt vulputate. Vivamus hendrerit neque sed mi euismod sodales. Maecenas euismod pharetra ex, ut dignissim lorem viverra sed. Nullam non turpis at tellus ultricies semper vitae non risus. Curabitur ac convallis purus, at suscipit justo. Quisque eleifend nibh non lorem auctor vehicula. Curabitur ullamcorper, dolor eu dictum pulvinar, elit massa maximus velit, sit amet semper felis mauris a diam. Praesent molestie scelerisque risus sed mollis.
-
-  -- Suspendisse tempor quam erat, ut posuere dui rhoncus non. Phasellus non urna sed odio auctor convallis. Pellentesque eget tortor et lectus porttitor mollis ut sit amet felis. Integer tortor tellus, imperdiet nec porta vitae, tempor ac libero. Vestibulum suscipit feugiat pretium. Ut euismod justo non sapien maximus euismod. Vestibulum fringilla libero a eros ultricies, eu ornare urna bibendum. Etiam tempor tempor arcu eu vestibulum. Nunc congue pharetra diam, at vulputate nisi venenatis non. Praesent convallis scelerisque semper. Fusce dapibus nec diam eu placerat. Curabitur tristique sit amet purus quis facilisis. Nullam commodo varius arcu quis finibus. Donec scelerisque urna sit amet mauris ultrices, quis molestie mi molestie. Nulla nisl nulla, maximus a blandit ac, mattis eget augue. Praesent quis laoreet libero.
-
-  -- Pellentesque nec porttitor arcu. Sed a tempor magna, sit amet ornare velit. Nulla sagittis sem iaculis turpis cursus, et commodo lectus lacinia. Nunc malesuada ipsum eu est viverra efficitur. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque blandit vel ante a pharetra. Morbi at libero rhoncus magna finibus eleifend non eu diam. Nam ac dictum sapien. Nullam consectetur elit sed porttitor laoreet. Sed lorem magna, sollicitudin sed est sit amet, imperdiet posuere nulla. Nulla quis lorem vel mi rhoncus sagittis. Mauris fermentum tristique lectus, sed suscipit dolor tempus a. Duis placerat lacus est, in feugiat metus pharetra vitae.
-
-  -- Quisque lobortis facilisis ullamcorper. Vestibulum a turpis sed diam euismod gravida. Duis rhoncus bibendum mauris sit amet venenatis. Sed vitae euismod arcu, et euismod purus. Vestibulum vehicula posuere ligula, at auctor purus malesuada in. In eget eleifend felis, et mollis justo. Mauris quis ligula porttitor, congue justo vitae, congue nulla. Nulla hendrerit consequat ex, quis efficitur augue pretium fermentum. Mauris a orci iaculis, bibendum velit ut, lacinia diam. Nulla facilisi.
-
-  -- Ut pellentesque aliquet commodo. Fusce mattis lacus vitae dolor laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat volutpat. Curabitur venenatis purus a neque bibendum ultricies. Quisque egestas interdum elit, quis sagittis velit vestibulum ac. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In sem leo, imperdiet a hendrerit vitae, commodo volutpat velit.]])
-
 
   return f
 end
