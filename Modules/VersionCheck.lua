@@ -51,7 +51,7 @@ local function createVersionCheckFrame()
   title:SetTextColor(1, 1, 1)
 
   local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
-  close:SetPoint("TOPRIGHT", f, "TOPRIGHT")
+  close:SetPoint("TOPRIGHT", f, "TOPRIGHT", -2, -2)
   close:SetScript("OnClick", function()
     f:Hide()
   end)
