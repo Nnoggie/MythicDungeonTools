@@ -1,4 +1,4 @@
-## Interface: 	110005
+## Interface: 110007
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
 ## Version: 5.2.7
