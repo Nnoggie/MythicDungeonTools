@@ -1,2 +1,2 @@
-## 5.2.7 (2024-11-19)
-  - Show correct dungeon timer if player is currently in a key
+## 5.2.8 (2024-12-18)
+  - Patch 11.0.7 update
