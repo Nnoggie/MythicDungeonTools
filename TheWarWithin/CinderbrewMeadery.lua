@@ -17,8 +17,8 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\CinderbrewMeadery' }
+  [0] = "CinderbrewMeadery",
+  [1] = "Cinderbrew_Meadery",
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
