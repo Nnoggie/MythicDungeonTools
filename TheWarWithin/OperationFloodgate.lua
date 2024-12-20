@@ -4,13 +4,13 @@ local L = MDT.L
 local dungeonIndex = 119
 MDT.dungeonList[dungeonIndex] = L["Operation: Floodgate"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 0, --TODO
+  teleportId = 1216786,
   shortName = L["operationFloodgateShortName"],
   englishName = "Operation: Floodgate",
-  mapID = 1 -- TODO
+  mapID = 525
 };
 
-local zones = {}  --TODO
+local zones = {} --TODO
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end

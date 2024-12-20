@@ -4,7 +4,7 @@ local L = MDT.L
 local dungeonIndex = 120
 MDT.dungeonList[dungeonIndex] = L["The MOTHERLODE!!"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 0, -- TODO
+  teleportId = 467555, -- TODO there is also https://www.wowhead.com/ptr-2/spell=467553/path-of-the-azerite-refinery
   shortName = L["motherlodeShortName"],
   englishName = "The MOTHERLODE!!",
   mapID = 247

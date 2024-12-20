@@ -5,8 +5,8 @@ local L = MDT.L
 local dungeonIndex = 115
 MDT.dungeonList[dungeonIndex] = L["Priory of the Sacred Flame"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 0,                   --TODO
-  shortName = L["prioryShortName"], --TODO
+  teleportId = 0, --TODO
+  shortName = L["prioryShortName"],
   englishName = "Priory of the Sacred Flame",
   mapID = 499
 }

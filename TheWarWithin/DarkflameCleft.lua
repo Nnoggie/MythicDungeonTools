@@ -5,8 +5,8 @@ local L = MDT.L
 local dungeonIndex = 117
 MDT.dungeonList[dungeonIndex] = L["Darkflame Cleft"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 0,                      --TODO
-  shortName = L["darkflameShortName"], --TODO
+  teleportId = 0, --TODO
+  shortName = L["darkflameShortName"],
   englishName = "Darkflame Cleft",
   mapID = 506
 }
