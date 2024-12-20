@@ -104,7 +104,7 @@ function MDT:UpdateDungeonDropDown()
     button:SetScript("OnEnter", function()
       local timer
       if mapInfo.mapID then
-        timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID))
+        timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID)) or 0
         -- we want to always show the correct timer including the Challenger's Peril affix
         -- add 90s if we are not currently in a key
         local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
