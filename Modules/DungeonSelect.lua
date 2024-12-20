@@ -91,7 +91,7 @@ function MDT:UpdateDungeonDropDown()
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
     button.dungeonIdx = dungeonIdx
-    button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId))
+    button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId) or 134400)
     button.shortText:SetText(mapInfo.shortName)
     button:SetScript("OnClick", function(self, button)
       MDT:UpdateToDungeon(dungeonIdx)
