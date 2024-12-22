@@ -1296,7 +1296,6 @@ function MDT:MakeSidePanel(frame)
     if (difficulty >= 10 and db.currentDifficulty < 10) or (difficulty < 10 and db.currentDifficulty >= 10) then
       db.currentDifficulty = difficulty or db.currentDifficulty
       MDT:DungeonEnemies_UpdateSeasonalAffix()
-      frame.sidePanel.difficultyWarning:Toggle(difficulty)
       MDT:POI_UpdateAll()
       MDT:KillAllAnimatedLines()
       MDT:DrawAllAnimatedLines()
@@ -1336,52 +1335,6 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
-
-  --dungeon level below 10 warning
-  frame.sidePanel.difficultyWarning = AceGUI:Create("Icon")
-  local difficultyWarning = frame.sidePanel.difficultyWarning
-  difficultyWarning:SetImage("Interface\\DialogFrame\\UI-Dialog-Icon-AlertNew")
-  difficultyWarning:SetImageSize(25, 25)
-  difficultyWarning:SetWidth(30)
-  difficultyWarning:SetCallback("OnEnter", function(...)
-    GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(L["The selected dungeon level is below 10"], 1, 1, 1)
-    GameTooltip:AddLine(L["Enemies related to seasonal affixes are currently hidden"], 1, 1, 1)
-    GameTooltip:AddLine(L["Click to set dungeon level to 10"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  difficultyWarning:SetCallback("OnLeave", function(...)
-    GameTooltip:Hide()
-  end)
-  difficultyWarning:SetCallback("OnClick", function(...)
-    frame.sidePanel.DifficultySlider:SetValue(10)
-    db.currentDifficulty = 10
-    MDT:GetCurrentPreset().difficulty = db.currentDifficulty
-    MDT:DungeonEnemies_UpdateSeasonalAffix()
-    MDT:POI_UpdateAll()
-    MDT:UpdateProgressbar()
-    MDT:ReloadPullButtons()
-    difficultyWarning:Toggle(db.currentDifficulty)
-    if MDT.liveSessionActive then
-      local livePreset = MDT:GetCurrentLivePreset()
-      local shouldUpdate = livePreset == MDT:GetCurrentPreset()
-      if shouldUpdate then MDT:LiveSession_SendDifficulty() end
-    end
-    MDT:KillAllAnimatedLines()
-    MDT:DrawAllAnimatedLines()
-  end)
-  function difficultyWarning:Toggle(difficulty)
-    if difficulty < 10 then
-      self.image:Show()
-      self:SetDisabled(false)
-    else
-      self.image:Hide()
-      self:SetDisabled(true)
-    end
-  end
-
-  difficultyWarning:Toggle(db.currentDifficulty)
-  frame.sidePanel.WidgetGroup:AddChild(difficultyWarning)
 
   frame.sidePanel.middleLine = AceGUI:Create("Heading")
   frame.sidePanel.middleLine:SetWidth(240)
@@ -2474,7 +2427,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if preset.difficulty then
     db.currentDifficulty = preset.difficulty
     frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
-    frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
   end
   if not framesInitialized then coroutine.yield() end
   local textureInfo = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
