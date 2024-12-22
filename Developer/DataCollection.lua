@@ -494,13 +494,9 @@ function DC:InitHealthTrack()
     local level, activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
     local fortified
     local tyrannical
-    local thundering
     for k, v in pairs(activeAffixIDs) do
       if v == 10 then
         fortified = true
-      end
-      if v == 132 then
-        thundering = true
       end
       if v == 9 then
         tyrannical = true
@@ -526,7 +522,6 @@ function DC:InitHealthTrack()
             ["name"] = UnitName(unit),
             ["level"] = level,
             ["fortified"] = fortified,
-            ["thundering"] = thundering,
             ["tyrannical"] = tyrannical
           }
         end
@@ -543,8 +538,7 @@ function DC:InitHealthTrack()
         if tracked then
           local isBoss = enemy.isBoss and true or false
           local baseHealth = MDT:ReverseCalcEnemyHealth(tracked.health, tracked.level, isBoss, tracked.fortified,
-            tracked.tyrannical,
-            tracked.thundering)
+            tracked.tyrannical)
           if baseHealth ~= enemy.health then
             numEnemyHealthChanged = numEnemyHealthChanged + 1
           end

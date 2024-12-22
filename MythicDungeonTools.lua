@@ -1869,10 +1869,6 @@ function MDT:IsCurrentPresetTyrannical()
       affixWeeks[currentWeek][4] == 9
 end
 
-function MDT:IsCurrentPresetThundering()
-  return affixWeeks[self:GetCurrentPreset().week][4] == 132
-end
-
 function MDT:MouseDownHook()
 
 end
@@ -2146,85 +2142,46 @@ local function round(number, decimals)
   return tonumber((("%%.%df"):format(decimals)):format(number))
 end
 
-function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
-  local fortified = MDT:IsCurrentPresetFortified()
-  local tyrannical = MDT:IsCurrentPresetTyrannical()
-  local thundering = MDT:IsCurrentPresetThundering()
-  local mult = 1
+do
+  local fortMult = 1.2
+  local tyrMult = 1.25
+  local scalingNormal = 1.1
+  local scalingExtra = 1.12 -- Xalatath's Guile
+  local extraScalingLevel = 13
 
-  -- Adjust multipliers based on level and affixes
-  if level >= 4 and level < 10 then
-    -- For levels below 10, apply fortified if not a boss and not ignoring fortified
-    if boss == false and fortified == true and (not ignoreFortified) then mult = mult * 1.2 end
-    -- Apply tyrannical if it is a boss
-    if boss == true and tyrannical == true then mult = mult * 1.25 end
-  elseif level >= 10 and level < 12 then
-    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
-    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
-    if boss == false then mult = mult * 1.2 end
-    if boss == true then mult = mult * 1.25 end
-  elseif level >= 12 then
-    -- For levels 12 and above, apply an additional 10% health increase
-    -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 10%
-    if boss == false then mult = mult * 1.2 * 1.1 end
-    if boss == true then mult = mult * 1.25 * 1.1 end
+  local getFortTyrMult = function(level, boss, fortified, tyrannical, ignoreFortified)
+    local mult = 1
+    if level >= 4 then
+      if not boss and (fortified and not ignoreFortified) then mult = mult * fortMult end
+      if boss and tyrannical then mult = mult * tyrMult end
+    end
+    return mult
   end
 
-
-  if thundering == true then mult = mult * 1.05 end
-
-  -- Levels 10 and below - 10% gain per level
-  local levelsTenBelow = math.min(level, 10)
-  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
-
-  -- Levels 11 to 20 - 10% gain per level
-  local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
-  mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-
-  -- Levels 21 and above - 10% gain per level
-  local levelsTwentyOneAbove = math.max(level - 20, 0)
-  mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
-
-  return round(mult * baseHealth, 0)
-end
-
-function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, thundering)
-  local mult = 1
-
-  -- Adjust multipliers based on level and affixes
-  if level >= 4 and level < 10 then
-    -- For levels below 10, apply fortified if not a boss
-    if boss == false and fortified == true then mult = mult * 1.2 end
-    -- Apply tyrannical if it is a boss
-    if boss == true and tyrannical == true then mult = mult * 1.25 end
-  elseif level >= 10 and level < 12 then
-    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
-    if boss == false then mult = mult * 1.2 end
-    if boss == true then mult = mult * 1.25 end
-  elseif level >= 12 then
-    -- For levels 12 and above, apply an additional 10% health increase
-    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
-    if boss == false then mult = mult * 1.2 * 1.1 end
-    if boss == true then mult = mult * 1.25 * 1.1 end
+  local function getScaling(mult, level)
+    local scaling = mult * (scalingNormal ^ math.min(level - 1, extraScalingLevel - 2)) * (scalingExtra ^ math.max(0, level - extraScalingLevel + 1))
+    return round(scaling, 2) --not sure if this additional rounding is needed, but it was in the original code
   end
 
-  -- Apply thundering multiplier if present
-  if thundering then mult = mult * 1.05 end
+  function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
+    local fortified = true --fort and tyr are always present in 10 and above, we don't really care for lower levels
+    local tyrannical = true
+    local mult = 1
 
-  -- Levels 10 and below - 8% gain per level
-  local levelsTenBelow = math.min(level, 10)
-  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
+    mult = getFortTyrMult(level, boss, fortified, tyrannical, ignoreFortified)
+    mult = getScaling(mult, level)
 
-  -- Levels 11 to 20 - 10% gain per level
-  local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
-  mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
+    return round(mult * baseHealth, 0)
+  end
 
-  -- Levels 21 and above - 8% gain per level
-  local levelsTwentyOneAbove = math.max(level - 20, 0)
-  mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
+  function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical)
+    local mult = 1
+    mult = getFortTyrMult(level, boss, fortified, tyrannical, false)
+    mult = getScaling(mult, level)
 
-  local baseHealth = round(health / mult, 0)
-  return baseHealth
+    local baseHealth = round(health / mult, 0)
+    return baseHealth
+  end
 end
 
 function MDT:FormatEnemyHealth(amount)
