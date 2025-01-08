@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Operation: Floodgate"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 442, teeming = 192, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 470, teeming = 192, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
