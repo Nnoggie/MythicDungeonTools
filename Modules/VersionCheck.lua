@@ -67,10 +67,20 @@ local function createVersionCheckFrame()
     tileSize = 16,
     insets = { left = 1, right = 1, top = 0, bottom = 1 },
   })
-  scrollFrame:SetBackdropColor(.1, .1, .1, .3)
+  scrollFrame:SetBackdropColor(1, 0, 0, 1)
+
+  vdt(scrollFrame, "scrollframe")
 
   local contentFrame = CreateFrame("frame", nil, scrollFrame, "BackdropTemplate")
-  contentFrame:SetSize(width - 10, 1000)
+  contentFrame:SetBackdrop({
+    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+    tile = true,
+    tileSize = 16,
+    insets = { left = 1, right = 1, top = 0, bottom = 1 },
+  })
+  contentFrame:SetBackdropColor(0, 1, 0, 1)
+
+  contentFrame:SetSize(width - 10, height - 45)
   ---@diagnostic disable-next-line: param-type-mismatch
   scrollFrame:SetScrollChild(contentFrame)
 
@@ -91,7 +101,7 @@ local function createVersionCheckFrame()
   slider:SetOrientation("VERTICAL");
   slider:SetSize(16, height - 45)
   slider:SetPoint("TOPLEFT", scrollFrame, "TOPRIGHT")
-  slider:SetMinMaxValues(0, 1000)
+  slider:SetMinMaxValues(0, 1)
   slider:SetValue(0)
   slider:SetScript("OnValueChanged", function(self)
     scrollFrame:SetVerticalScroll(self:GetValue())
@@ -103,8 +113,8 @@ local function createVersionCheckFrame()
     if (IsShiftKeyDown() and (delta > 0)) then
       slider:SetValue(0)
     elseif (IsShiftKeyDown() and (delta < 0)) then
-      slider:SetValue(2000)
-    elseif ((delta < 0) and (current < 2000)) then
+      slider:SetValue(1)
+    elseif ((delta < 0) and (current < 1)) then
       slider:SetValue(current + 20)
     elseif ((delta > 0) and (current > 1)) then
       slider:SetValue(current - 20)
