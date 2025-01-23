@@ -1459,6 +1459,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [439991] = {
       },
+      [440147] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1657,7 +1659,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [23] = {
     ["name"] = "Brew Drop",
-    ["id"] = 210267,
+    ["id"] = 219301,
     ["count"] = 0,
     ["health"] = 9728047,
     ["scale"] = 1.5,
