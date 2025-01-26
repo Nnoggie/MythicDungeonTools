@@ -2,6 +2,16 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["Interruptible"] = "Interruptible"
+L["Magic"] = "Magic"
+L["Poison"] = "Poison"
+L["Disease"] = "Disease"
+L["Curse"] = "Curse"
+L["Bleed"] = "Bleed"
+L["Enrage"] = "Enrage"
+
+L["Azerite Footbomb"] = "Azerite Footbomb"
+L["B.O.O.M.B.A."] = "B.O.O.M.B.A."
 L["Ravenous Cinderbee"] = "Ravenous Cinderbee"
 L["Menial Laborer"] = "Menial Laborer"
 L["Rank Overseer"] = "Rank Overseer"

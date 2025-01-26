@@ -18,7 +18,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\PrioryOfTheSacredFlame' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\PrioryOfTheSacredFlame' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -54,6 +54,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427360] = {
       },
       [429099] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -356,6 +357,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427609] = {
       },
       [427621] = {
+        ["bleed"] = true,
       },
       [444296] = {
       },
@@ -421,6 +423,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427359] = {
       },
       [429099] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -513,6 +516,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [429099] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -703,6 +707,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [427346] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [427356] = {
         ["interruptible"] = true,
@@ -714,8 +719,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [428916] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [429099] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -929,8 +936,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [427583] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [444431] = {
+        ["magic"] = true,
       },
       [448385] = {
       },
@@ -974,6 +983,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
       },
       [429099] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1115,12 +1125,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427629] = {
       },
       [429099] = {
+        ["magic"] = true,
       },
       [444449] = {
       },
       [453458] = {
       },
       [453461] = {
+        ["bleed"] = true,
       },
       [462859] = {
       },
@@ -1351,6 +1363,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427894] = {
       },
       [427897] = {
+        ["magic"] = true,
       },
       [427898] = {
       },
@@ -1412,6 +1425,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [429091] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [464240] = {
       },
@@ -1515,8 +1529,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [429099] = {
+        ["magic"] = true,
       },
       [435148] = {
+        ["magic"] = true,
       },
       [435156] = {
       },
@@ -1606,6 +1622,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
       },
       [429099] = {
+        ["magic"] = true,
       },
       [435156] = {
       },
@@ -1676,6 +1693,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [424423] = {
       },
       [424426] = {
+        ["bleed"] = true,
       },
       [424621] = {
       },
@@ -1767,8 +1785,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [427359] = {
       },
       [427635] = {
+        ["bleed"] = true,
       },
       [429099] = {
+        ["magic"] = true,
       },
       [446776] = {
       },
@@ -1882,10 +1902,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [429099] = {
+        ["magic"] = true,
       },
       [444722] = {
       },
       [444728] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1956,10 +1978,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [424419] = {
         ["interruptible"] = true,
+        ["enrage"] = true,
       },
       [447270] = {
       },
       [447272] = {
+        ["bleed"] = true,
       },
       [447439] = {
       },
@@ -2063,6 +2087,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [428169] = {
       },
       [428170] = {
+        ["magic"] = true,
       },
       [444546] = {
       },
@@ -2073,6 +2098,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [451605] = {
       },
       [451606] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -2144,6 +2170,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 41.32161417462,
         ["y"] = -253.25656608907,
         ["g"] = 66,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [26] = {
+    ["name"] = "Priory of the Sacred Flame",
+    ["id"] = 555555,
+    ["count"] = 0,
+    ["health"] = 10000,
+    ["scale"] = 2,
+    ["displayId"] = 121006,
+    ["creatureType"] = "Humanoid",
+    ["level"] = 80,
+    ["spells"] = {
+      [435093] = {
+      },
+      [435088] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 200,
+        ["y"] = -200,
         ["sublevel"] = 1,
       },
     },

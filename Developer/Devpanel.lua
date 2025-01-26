@@ -9,7 +9,7 @@ local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName,
   1. Add clone
   /run MDT:AddCloneAtCursorPosition()
   2. Add patrol point to clone
-  /run MDT:AddPatrolPointAtCursorPosition()
+  /run MDT:AddPatrolWaypointAtCursorPosition()
   3. Add untargetable unit if needed
   /run MDT:AddNPCFromUnit("mouseover")
 ]]
