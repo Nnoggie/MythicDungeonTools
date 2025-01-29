@@ -101,8 +101,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [437733] = {
       },
       [437956] = {
+        ["magic"] = true,
       },
       [441408] = {
+        ["enrage"] = true,
       },
       [453909] = {
         ["interruptible"] = true,
@@ -245,8 +247,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [434505] = {
       },
       [434773] = {
+        ["bleed"] = true,
       },
       [441408] = {
+        ["enrage"] = true,
       },
     },
     ["clones"] = {
@@ -377,6 +381,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [434758] = {
       },
       [441408] = {
+        ["enrage"] = true,
       },
       [463218] = {
       },
@@ -700,6 +705,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [441351] = {
       },
       [441353] = {
+        ["enrage"] = true,
       },
       [456891] = {
       },
@@ -1066,6 +1072,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [441627] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1131,6 +1138,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [441214] = {
+        ["enrage"] = true,
       },
       [441242] = {
       },
@@ -1363,6 +1371,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [439467] = {
       },
       [439468] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -1452,6 +1461,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [439202] = {
       },
       [439325] = {
+        ["magic"] = true,
       },
       [439365] = {
       },
@@ -1543,6 +1553,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [436637] = {
       },
       [436640] = {
+        ["magic"] = true,
       },
       [436644] = {
       },
@@ -1605,6 +1616,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [438997] = {
       },
       [439005] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1634,6 +1646,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [441627] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
     },
     ["clones"] = {

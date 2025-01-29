@@ -33,11 +33,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shreddinator 3000",
     ["id"] = 230740,
     ["count"] = 10,
-    ["health"] = 57223802,
+    ["health"] = 40480612,
     ["scale"] = 1.6,
     ["displayId"] = 122881,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [465754] = {
       },
@@ -86,17 +89,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Soldier",
     ["id"] = 228144,
     ["count"] = 3,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 122752,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
       [462737] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -256,12 +262,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechadrone Sniper",
     ["id"] = 229069,
     ["count"] = 5,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 121763,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Silence"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -392,12 +400,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Loaderbot",
     ["id"] = 231014,
     ["count"] = 2,
-    ["health"] = 22889521,
+    ["health"] = 16192245,
     ["scale"] = 1.5,
     ["displayId"] = 121696,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -493,12 +502,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Contractor",
     ["id"] = 229250,
     ["count"] = 2,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 122082,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
@@ -693,12 +705,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Hyena",
     ["id"] = 229252,
     ["count"] = 5,
-    ["health"] = 22889521,
+    ["health"] = 16192245,
     ["scale"] = 1.5,
     ["displayId"] = 121293,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
@@ -707,6 +721,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
       },
       [463061] = {
+        ["enrage"] = true,
       },
       [469771] = {
       },
@@ -808,13 +823,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Demolitionist",
     ["id"] = 229212,
     ["count"] = 7,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 124724,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Incapacitate"] = true,
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
@@ -865,7 +882,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Bloodwarper",
     ["id"] = 230748,
     ["count"] = 12,
-    ["health"] = 45779042,
+    ["health"] = 32384489,
     ["scale"] = 2,
     ["displayId"] = 126383,
     ["creatureType"] = "Humanoid",
@@ -910,13 +927,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Inspector",
     ["id"] = 231385,
     ["count"] = 5,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 124177,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Incapacitate"] = true,
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
@@ -991,12 +1010,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Surveyor",
     ["id"] = 229686,
     ["count"] = 7,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 122080,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
@@ -1068,12 +1089,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Electrician",
     ["id"] = 231312,
     ["count"] = 7,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 124181,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Incapacitate"] = true,
+      ["Silence"] = true,
+      ["Polymorph"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
@@ -1082,6 +1107,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
       },
       [469799] = {
+        ["magic"] = true,
       },
       [469800] = {
       },
@@ -1147,12 +1173,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bombshell Crab",
     ["id"] = 231497,
     ["count"] = 3,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.2,
     ["displayId"] = 120779,
     ["creatureType"] = "Beast",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Silence"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1248,13 +1276,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Diver",
     ["id"] = 231496,
     ["count"] = 5,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.6,
     ["displayId"] = 122887,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Incapacitate"] = true,
+      ["Silence"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [468631] = {
@@ -1319,7 +1352,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Architect",
     ["id"] = 229251,
     ["count"] = 10,
-    ["health"] = 37195472,
+    ["health"] = 26312398,
     ["scale"] = 2,
     ["displayId"] = 122097,
     ["creatureType"] = "Humanoid",
@@ -1380,18 +1413,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Disturbed Kelp",
     ["id"] = 231223,
     ["count"] = 7,
-    ["health"] = 28611901,
+    ["health"] = 20240306,
     ["scale"] = 1.5,
     ["displayId"] = 102553,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Incapacitate"] = true,
+      ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
       [471733] = {
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [471736] = {
       },
@@ -1441,12 +1479,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bubbles",
     ["id"] = 231197,
     ["count"] = 20,
-    ["health"] = 85835704,
+    ["health"] = 60720918,
     ["scale"] = 2,
     ["displayId"] = 124782,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
+      [465487] = {
+      },
       [469721] = {
       },
       [469811] = {
@@ -1471,13 +1514,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Jumpstarter",
     ["id"] = 231325,
     ["count"] = 12,
-    ["health"] = 45779042,
+    ["health"] = 32384489,
     ["scale"] = 1.7,
     ["displayId"] = 122517,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["spells"] = {
       [465604] = {
+        ["magic"] = true,
       },
       [465666] = {
       },
@@ -1517,7 +1561,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Big M.O.M.M.A.",
     ["id"] = 226398,
     ["count"] = 0,
-    ["health"] = 314508650,
+    ["health"] = 222175625,
     ["scale"] = 1.5,
     ["displayId"] = 122867,
     ["creatureType"] = "Humanoid",
@@ -1564,7 +1608,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bront",
     ["id"] = 226402,
     ["count"] = 0,
-    ["health"] = 128662630,
+    ["health"] = 90890029,
     ["scale"] = 2,
     ["displayId"] = 122215,
     ["creatureType"] = "Humanoid",
@@ -1572,6 +1616,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2650,
     ["instanceID"] = 1298,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [459779] = {
       },
@@ -1597,7 +1644,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Keeza Quickfuse",
     ["id"] = 226403,
     ["count"] = 0,
-    ["health"] = 100070935,
+    ["health"] = 70692245,
     ["scale"] = 2,
     ["displayId"] = 123036,
     ["creatureType"] = "Humanoid",
@@ -1605,10 +1652,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2650,
     ["instanceID"] = 1298,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [460602] = {
       },
+      [460814] = {
+      },
       [460867] = {
+      },
+      [461994] = {
       },
       [472755] = {
       },
@@ -1617,6 +1671,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [473690] = {
       },
       [473713] = {
+        ["magic"] = true,
       },
       [473719] = {
       },
@@ -1638,7 +1693,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Swampface",
     ["id"] = 226396,
     ["count"] = 0,
-    ["health"] = 200141868,
+    ["health"] = 141384489,
     ["scale"] = 2,
     ["displayId"] = 124283,
     ["creatureType"] = "Humanoid",
@@ -1646,6 +1701,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2650,
     ["instanceID"] = 1298,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [469478] = {
       },
@@ -1684,7 +1742,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Geezle Gigazap",
     ["id"] = 226404,
     ["count"] = 0,
-    ["health"] = 228733564,
+    ["health"] = 161582273,
     ["scale"] = 2,
     ["displayId"] = 122475,
     ["creatureType"] = "Humanoid",
@@ -1732,13 +1790,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Mechadrone",
     ["id"] = 228424,
     ["count"] = 0,
-    ["health"] = 7092636,
+    ["health"] = 20240305,
     ["scale"] = 1.5,
     ["displayId"] = 125461,
     ["creatureType"] = "Mechanical",
     ["level"] = 81,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [460393] = {
+      },
+      [472452] = {
+      },
+      [472454] = {
+      },
+      [1214780] = {
+      },
+      [1214801] = {
       },
     },
     ["clones"] = {
