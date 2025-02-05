@@ -34,7 +34,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tasting Room Attendant",
     ["id"] = 214920,
     ["count"] = 3,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 121037,
     ["creatureType"] = "Humanoid",
@@ -45,6 +45,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
     },
     ["spells"] = {
+      [434695] = {
+      },
       [434706] = {
       },
       [434707] = {
@@ -81,7 +83,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Pyromaniac",
     ["id"] = 218671,
     ["count"] = 5,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 119013,
     ["creatureType"] = "Humanoid",
@@ -90,6 +92,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -232,7 +236,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Patron",
     ["id"] = 214668,
     ["count"] = 3,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 119026,
     ["creatureType"] = "Humanoid",
@@ -368,7 +372,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hired Muscle",
     ["id"] = 210269,
     ["count"] = 10,
-    ["health"] = 45779042,
+    ["health"] = 85582321,
     ["scale"] = 1.5,
     ["displayId"] = 118999,
     ["creatureType"] = "Humanoid",
@@ -386,6 +390,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [463218] = {
       },
       [463220] = {
+      },
+      [463223] = {
       },
     },
     ["clones"] = {
@@ -419,11 +425,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Chef Chewie",
     ["id"] = 214697,
     ["count"] = 15,
-    ["health"] = 85835704,
+    ["health"] = 160466851,
     ["scale"] = 2,
     ["displayId"] = 121036,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [434743] = {
       },
@@ -451,12 +460,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Worker Bee",
     ["id"] = 210265,
     ["count"] = 5,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 121054,
     ["creatureType"] = "Beast",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Silence"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
     },
@@ -561,11 +571,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Royal Jelly Purveyor",
     ["id"] = 220141,
     ["count"] = 7,
-    ["health"] = 28611901,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 118378,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Silence"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [440687] = {
       },
@@ -635,13 +650,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Honey Harvester",
     ["id"] = 220946,
     ["count"] = 10,
-    ["health"] = 45779042,
+    ["health"] = 85582321,
     ["scale"] = 1.8,
     ["displayId"] = 108585,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [442589] = {
+        ["magic"] = true,
       },
       [442995] = {
       },
@@ -687,14 +706,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bee Wrangler",
     ["id"] = 210264,
     ["count"] = 5,
-    ["health"] = 27181306,
+    ["health"] = 50814503,
     ["scale"] = 1.5,
     ["displayId"] = 118076,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Silence"] = true,
       ["Fear"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -771,13 +792,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bee-let",
     ["id"] = 218865,
     ["count"] = 1,
-    ["health"] = 5722380,
+    ["health"] = 10697790,
     ["scale"] = 1,
     ["displayId"] = 121060,
     ["creatureType"] = "Beast",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [441397] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1057,7 +1083,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Flavor Scientist",
     ["id"] = 214673,
     ["count"] = 7,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 119436,
     ["creatureType"] = "Humanoid",
@@ -1065,6 +1091,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1124,7 +1151,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Taste Tester",
     ["id"] = 220060,
     ["count"] = 5,
-    ["health"] = 28611901,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 118003,
     ["creatureType"] = "Humanoid",
@@ -1134,6 +1161,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1240,11 +1269,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Careless Hopgoblin",
     ["id"] = 223423,
     ["count"] = 10,
-    ["health"] = 54362613,
+    ["health"] = 101629006,
     ["scale"] = 1.8,
     ["displayId"] = 121087,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [448619] = {
       },
@@ -1296,7 +1328,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brew Drop",
     ["id"] = 210270,
     ["count"] = 1,
-    ["health"] = 9728047,
+    ["health"] = 18186243,
     ["scale"] = 1.2,
     ["displayId"] = 117828,
     ["creatureType"] = "Elemental",
@@ -1360,7 +1392,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Yes Man",
     ["id"] = 219588,
     ["count"] = 3,
-    ["health"] = 28611901,
+    ["health"] = 53488950,
     ["scale"] = 2,
     ["displayId"] = 121109,
     ["creatureType"] = "Humanoid",
@@ -1369,6 +1401,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [439403] = {
       },
       [439467] = {
+        ["enrage"] = true,
       },
       [439468] = {
         ["bleed"] = true,
@@ -1405,11 +1438,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brewmaster Aldryr",
     ["id"] = 210271,
     ["count"] = 0,
-    ["health"] = 171550173,
+    ["health"] = 321078014,
     ["scale"] = 2,
     ["displayId"] = 116429,
     ["creatureType"] = "Humanoid",
-    ["level"] = 80,
+    ["level"] = 82,
     ["isBoss"] = true,
     ["encounterID"] = 2586,
     ["instanceID"] = 1272,
@@ -1444,11 +1477,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "I'pa",
     ["id"] = 210267,
     ["count"] = 0,
-    ["health"] = 171550173,
+    ["health"] = 321078014,
     ["scale"] = 1.5,
     ["displayId"] = 117177,
     ["creatureType"] = "Humanoid",
-    ["level"] = 80,
+    ["level"] = 82,
     ["isBoss"] = true,
     ["encounterID"] = 2586,
     ["instanceID"] = 1272,
@@ -1471,6 +1504,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [440147] = {
       },
+      [442108] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1485,7 +1520,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Benk Buzzbee",
     ["id"] = 218002,
     ["count"] = 0,
-    ["health"] = 180127682,
+    ["health"] = 337131916,
     ["scale"] = 1.9,
     ["displayId"] = 120557,
     ["iconTexture"] = 5633719,
@@ -1526,7 +1561,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Goldie Baronbottom",
     ["id"] = 214661,
     ["count"] = 0,
-    ["health"] = 228733564,
+    ["health"] = 428104019,
     ["scale"] = 2,
     ["displayId"] = 118000,
     ["creatureType"] = "Humanoid",
@@ -1602,7 +1637,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cooking Pot",
     ["id"] = 219415,
     ["count"] = 0,
-    ["health"] = 5722380,
+    ["health"] = 7151950,
     ["scale"] = 1.6,
     ["displayId"] = 117811,
     ["iconTexture"] = 623777,
@@ -1631,7 +1666,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Flavor Scientist",
     ["id"] = 222964,
     ["count"] = 0,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 119436,
     ["creatureType"] = "Humanoid",
@@ -1639,6 +1674,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1647,6 +1683,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [441627] = {
         ["interruptible"] = true,
         ["magic"] = true,
+      },
+      [447046] = {
+      },
+      [447060] = {
+      },
+      [447135] = {
+      },
+      [447136] = {
       },
     },
     ["clones"] = {
@@ -1674,14 +1718,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brew Drop",
     ["id"] = 219301,
     ["count"] = 0,
-    ["health"] = 9728047,
+    ["health"] = 9806309,
     ["scale"] = 1.5,
     ["displayId"] = 117828,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Incapacitate"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+    },
+    ["spells"] = {
+      [440082] = {
+      },
+      [440087] = {
+      },
+      [440104] = {
+      },
+      [441171] = {
+      },
+      [441179] = {
+      },
+      [442122] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1702,13 +1763,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ravenous Cinderbee",
     ["id"] = 218016,
     ["count"] = 0,
-    ["health"] = 9728047,
+    ["health"] = 17829652,
     ["scale"] = 2,
     ["displayId"] = 120631,
     ["creatureType"] = "Beast",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1717,6 +1780,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [438975] = {
       },
       [439418] = {
+      },
+      [443983] = {
       },
     },
     ["clones"] = {
