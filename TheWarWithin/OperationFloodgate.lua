@@ -10,14 +10,14 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 525
 };
 
-local zones = {} --TODO
+local zones = { 2214, 2387, 2388 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\OperationFloodgate' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\OperationFloodgate' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -33,7 +33,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shreddinator 3000",
     ["id"] = 230740,
     ["count"] = 10,
-    ["health"] = 40480612,
+    ["health"] = 106977901,
     ["scale"] = 1.6,
     ["displayId"] = 122881,
     ["creatureType"] = "Mechanical",
@@ -89,7 +89,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Soldier",
     ["id"] = 228144,
     ["count"] = 3,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 122752,
     ["creatureType"] = "Humanoid",
@@ -98,6 +98,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -262,7 +263,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechadrone Sniper",
     ["id"] = 229069,
     ["count"] = 5,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 121763,
     ["creatureType"] = "Mechanical",
@@ -400,7 +401,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Loaderbot",
     ["id"] = 231014,
     ["count"] = 2,
-    ["health"] = 16192245,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 121696,
     ["creatureType"] = "Mechanical",
@@ -502,7 +503,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Contractor",
     ["id"] = 229250,
     ["count"] = 2,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 122082,
     ["creatureType"] = "Humanoid",
@@ -512,6 +513,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -705,7 +707,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Hyena",
     ["id"] = 229252,
     ["count"] = 5,
-    ["health"] = 16192245,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 121293,
     ["creatureType"] = "Humanoid",
@@ -727,6 +729,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
+      [1] = {
+        ["x"] = 169.21256702933,
+        ["y"] = -35.555267753651,
+        ["g"] = 59,
+        ["sublevel"] = 1,
+      },
       [2] = {
         ["x"] = 149.79471390358,
         ["y"] = -111.76026652182,
@@ -817,13 +825,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 31,
         ["sublevel"] = 1,
       },
+      [17] = {
+        ["x"] = 157.44049301131,
+        ["y"] = -45.063419225593,
+        ["g"] = 59,
+        ["sublevel"] = 1,
+      },
+      [18] = {
+        ["x"] = 176.90969799954,
+        ["y"] = -46.874537673272,
+        ["g"] = 59,
+        ["sublevel"] = 1,
+      },
+      [19] = {
+        ["x"] = 164.23211373064,
+        ["y"] = -54.571668643479,
+        ["g"] = 59,
+        ["sublevel"] = 1,
+      },
     },
   },
   [7] = {
     ["name"] = "Darkfuse Demolitionist",
     ["id"] = 229212,
     ["count"] = 7,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 124724,
     ["creatureType"] = "Humanoid",
@@ -833,6 +859,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -882,7 +909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Bloodwarper",
     ["id"] = 230748,
     ["count"] = 12,
-    ["health"] = 32384489,
+    ["health"] = 85582321,
     ["scale"] = 2,
     ["displayId"] = 126383,
     ["creatureType"] = "Humanoid",
@@ -927,7 +954,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Inspector",
     ["id"] = 231385,
     ["count"] = 5,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 124177,
     ["creatureType"] = "Humanoid",
@@ -940,6 +967,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
     },
     ["spells"] = {
+      [465681] = {
+      },
       [465682] = {
       },
     },
@@ -1010,12 +1039,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Surveyor",
     ["id"] = 229686,
     ["count"] = 7,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 122080,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
@@ -1089,7 +1119,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Electrician",
     ["id"] = 231312,
     ["count"] = 7,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 124181,
     ["creatureType"] = "Humanoid",
@@ -1100,7 +1130,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Polymorph"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [465595] = {
@@ -1173,7 +1205,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bombshell Crab",
     ["id"] = 231497,
     ["count"] = 3,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.2,
     ["displayId"] = 120779,
     ["creatureType"] = "Beast",
@@ -1181,6 +1213,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1276,7 +1310,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Diver",
     ["id"] = 231496,
     ["count"] = 5,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.6,
     ["displayId"] = 122887,
     ["creatureType"] = "Humanoid",
@@ -1287,10 +1321,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
       [468631] = {
+        ["interruptible"] = true,
       },
       [468726] = {
       },
@@ -1352,17 +1388,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Architect",
     ["id"] = 229251,
     ["count"] = 10,
-    ["health"] = 26312398,
+    ["health"] = 69535636,
     ["scale"] = 2,
     ["displayId"] = 122097,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [465408] = {
       },
       [1213803] = {
       },
       [1213805] = {
+      },
+      [1216894] = {
       },
     },
     ["clones"] = {
@@ -1413,7 +1454,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Disturbed Kelp",
     ["id"] = 231223,
     ["count"] = 7,
-    ["health"] = 20240306,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 102553,
     ["creatureType"] = "Elemental",
@@ -1479,7 +1520,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bubbles",
     ["id"] = 231197,
     ["count"] = 20,
-    ["health"] = 60720918,
+    ["health"] = 160466851,
     ["scale"] = 2,
     ["displayId"] = 124782,
     ["creatureType"] = "Beast",
@@ -1498,6 +1539,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [469818] = {
       },
+      [469819] = {
+      },
       [1217496] = {
       },
     },
@@ -1514,16 +1557,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Jumpstarter",
     ["id"] = 231325,
     ["count"] = 12,
-    ["health"] = 32384489,
+    ["health"] = 85582321,
     ["scale"] = 1.7,
     ["displayId"] = 122517,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [465604] = {
         ["magic"] = true,
       },
       [465666] = {
+      },
+      [1216607] = {
       },
       [1216610] = {
       },
@@ -1561,7 +1609,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Big M.O.M.M.A.",
     ["id"] = 226398,
     ["count"] = 0,
-    ["health"] = 222175625,
+    ["health"] = 588643027,
     ["scale"] = 1.5,
     ["displayId"] = 122867,
     ["creatureType"] = "Humanoid",
@@ -1608,7 +1656,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bront",
     ["id"] = 226402,
     ["count"] = 0,
-    ["health"] = 90890029,
+    ["health"] = 240808512,
     ["scale"] = 2,
     ["displayId"] = 122215,
     ["creatureType"] = "Humanoid",
@@ -1644,7 +1692,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Keeza Quickfuse",
     ["id"] = 226403,
     ["count"] = 0,
-    ["health"] = 70692245,
+    ["health"] = 187295509,
     ["scale"] = 2,
     ["displayId"] = 123036,
     ["creatureType"] = "Humanoid",
@@ -1663,6 +1711,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [460867] = {
       },
       [461994] = {
+      },
+      [470090] = {
       },
       [472755] = {
       },
@@ -1693,7 +1743,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Swampface",
     ["id"] = 226396,
     ["count"] = 0,
-    ["health"] = 141384489,
+    ["health"] = 374591017,
     ["scale"] = 2,
     ["displayId"] = 124283,
     ["creatureType"] = "Humanoid",
@@ -1742,7 +1792,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Geezle Gigazap",
     ["id"] = 226404,
     ["count"] = 0,
-    ["health"] = 161582273,
+    ["health"] = 428104019,
     ["scale"] = 2,
     ["displayId"] = 122475,
     ["creatureType"] = "Humanoid",
@@ -1750,6 +1800,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2650,
     ["instanceID"] = 1298,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [465462] = {
       },
@@ -1790,7 +1843,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Darkfuse Mechadrone",
     ["id"] = 228424,
     ["count"] = 0,
-    ["health"] = 20240305,
+    ["health"] = 53488955,
     ["scale"] = 1.5,
     ["displayId"] = 125461,
     ["creatureType"] = "Mechanical",
@@ -1833,6 +1886,158 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 76.5443217543,
         ["y"] = -304.98372831297,
         ["g"] = 26,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [24] = {
+    ["name"] = "Undercrawler",
+    ["id"] = 231380,
+    ["count"] = 0,
+    ["health"] = 53488950,
+    ["scale"] = 1.3,
+    ["displayId"] = 112449,
+    ["creatureType"] = "Beast",
+    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Stun"] = true,
+    },
+    ["spells"] = {
+      [465813] = {
+        ["poison"] = true,
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 292.03298905166,
+        ["y"] = -10.342571502045,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 300.94508952478,
+        ["y"] = -31.343075241227,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 131.63247926564,
+        ["y"] = -112.07347546839,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 117.14377654907,
+        ["y"] = -89.887666268097,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 360.73513952509,
+        ["y"] = -57.288178052122,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 389.71260258634,
+        ["y"] = -125.20396156754,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 407.82339527935,
+        ["y"] = -102.56536051208,
+        ["sublevel"] = 1,
+      },
+      [8] = {
+        ["x"] = 415.0678200971,
+        ["y"] = -195.83638118921,
+        ["sublevel"] = 1,
+      },
+      [9] = {
+        ["x"] = 421.40663671803,
+        ["y"] = -170.93394329037,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [25] = {
+    ["name"] = "Waterworks Crocolisk",
+    ["id"] = 227145,
+    ["count"] = 1,
+    ["health"] = 53488950,
+    ["scale"] = 1.3,
+    ["displayId"] = 75850,
+    ["creatureType"] = "Beast",
+    ["level"] = 80,
+    ["spells"] = {
+      [465820] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 290.86509110898,
+        ["y"] = -22.948754783961,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 288.55345750598,
+        ["y"] = -36.347417416891,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 371.14881874827,
+        ["y"] = -81.737845326419,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 379.75155791529,
+        ["y"] = -55.476958402631,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 384.27910916963,
+        ["y"] = -98.49039712962,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 395.1458198557,
+        ["y"] = -79.021094195442,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 393.78754563416,
+        ["y"] = -155.08692622452,
+        ["sublevel"] = 1,
+      },
+      [8] = {
+        ["x"] = 412.80394652399,
+        ["y"] = -142.40929298266,
+        ["sublevel"] = 1,
+      },
+      [9] = {
+        ["x"] = 371.60187009001,
+        ["y"] = -200.36402234608,
+        ["sublevel"] = 1,
+      },
+      [10] = {
+        ["x"] = 397.40974478027,
+        ["y"] = -208.51384722551,
+        ["sublevel"] = 1,
+      },
+      [11] = {
+        ["x"] = 406.46508976513,
+        ["y"] = -237.49136050894,
+        ["sublevel"] = 1,
+      },
+      [12] = {
+        ["x"] = 420.9537924817,
+        ["y"] = -243.83017712987,
+        ["sublevel"] = 1,
+      },
+      [13] = {
+        ["x"] = 393.78750549623,
+        ["y"] = -254.6967041673,
+        ["sublevel"] = 1,
+      },
+      [14] = {
+        ["x"] = 411.44559203679,
+        ["y"] = -260.58272893307,
         ["sublevel"] = 1,
       },
     },

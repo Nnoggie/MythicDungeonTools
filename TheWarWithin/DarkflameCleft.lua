@@ -34,7 +34,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Menial Laborer",
     ["id"] = 210810,
     ["count"] = 1,
-    ["health"] = 5722380,
+    ["health"] = 10697790,
     ["scale"] = 0.8,
     ["displayId"] = 114696,
     ["creatureType"] = "Humanoid",
@@ -43,7 +43,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [425565] = {
@@ -57,61 +59,62 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 189.55120772741,
-        ["y"] = -394.55755642672,
+        ["x"] = 191.51055448569,
+        ["y"] = -380.28232981568,
+        ["g"] = 1,
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 184.45985969599,
-        ["y"] = -370.78490015574,
+        ["x"] = 190.89770684275,
+        ["y"] = -366.0264811936,
         ["g"] = 1,
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 180.41706310354,
-        ["y"] = -377.66567789835,
+        ["x"] = 186.8549102503,
+        ["y"] = -372.90725893621,
         ["g"] = 1,
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 188.26559465985,
-        ["y"] = -377.33791062591,
+        ["x"] = 194.70344180661,
+        ["y"] = -372.57949166377,
         ["g"] = 1,
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 209.28125144987,
-        ["y"] = -362.89091981151,
+        ["x"] = 205.64245380043,
+        ["y"] = -357.57269397744,
         ["g"] = 2,
         ["sublevel"] = 1,
       },
       [7] = {
-        ["x"] = 205.24833834058,
-        ["y"] = -370.49250012223,
+        ["x"] = 201.60954069114,
+        ["y"] = -365.17427428816,
         ["g"] = 2,
         ["sublevel"] = 1,
       },
       [8] = {
-        ["x"] = 212.95076540057,
-        ["y"] = -370.85578171513,
+        ["x"] = 209.31196775113,
+        ["y"] = -365.53755588106,
         ["g"] = 2,
         ["sublevel"] = 1,
       },
       [9] = {
-        ["x"] = 197.14301957487,
-        ["y"] = -343.27165544738,
+        ["x"] = 194.06402879736,
+        ["y"] = -341.59224240044,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
       [10] = {
-        ["x"] = 204.99155113119,
-        ["y"] = -343.45332129043,
+        ["x"] = 201.91256035368,
+        ["y"] = -341.77390824349,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
       [11] = {
-        ["x"] = 200.90338024829,
-        ["y"] = -350.62639594439,
+        ["x"] = 197.82438947078,
+        ["y"] = -348.94698289745,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
@@ -193,27 +196,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 7,
         ["sublevel"] = 1,
       },
-      [25] = {
-        ["x"] = 219.76849628052,
-        ["y"] = -200.06218121196,
-        ["g"] = 12,
-        ["sublevel"] = 1,
-      },
       [26] = {
-        ["x"] = 200.15931543283,
-        ["y"] = -200.43194889902,
+        ["x"] = 211.25721069524,
+        ["y"] = -194.53123508683,
         ["g"] = 12,
         ["sublevel"] = 1,
       },
       [27] = {
-        ["x"] = 205.76941703876,
-        ["y"] = -194.74593764823,
+        ["x"] = 196.81242803057,
+        ["y"] = -194.50385898726,
         ["g"] = 12,
         ["sublevel"] = 1,
       },
       [28] = {
-        ["x"] = 213.63170719825,
-        ["y"] = -194.26047877422,
+        ["x"] = 204.19055432209,
+        ["y"] = -194.62360003869,
         ["g"] = 12,
         ["sublevel"] = 1,
       },
@@ -295,7 +292,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rank Overseer",
     ["id"] = 211121,
     ["count"] = 10,
-    ["health"] = 45779042,
+    ["health"] = 85582321,
     ["scale"] = 1.5,
     ["displayId"] = 114091,
     ["creatureType"] = "Humanoid",
@@ -338,7 +335,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lowly Moleherd",
     ["id"] = 210818,
     ["count"] = 5,
-    ["health"] = 27181306,
+    ["health"] = 50814503,
     ["scale"] = 1.5,
     ["displayId"] = 114721,
     ["creatureType"] = "Humanoid",
@@ -346,6 +343,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Incapacitate"] = true,
+      ["Silence"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
     },
@@ -388,7 +386,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Pack Mole",
     ["id"] = 211977,
     ["count"] = 3,
-    ["health"] = 30042496,
+    ["health"] = 56163397,
     ["scale"] = 1.5,
     ["displayId"] = 112394,
     ["creatureType"] = "Beast",
@@ -400,13 +398,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
     },
     ["spells"] = {
-      [425561] = {
-      },
       [425704] = {
         ["enrage"] = true,
-      },
-      [427929] = {
-        ["disease"] = true,
       },
     },
     ["clones"] = {
@@ -482,7 +475,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Royal Wicklighter",
     ["id"] = 210812,
     ["count"] = 6,
-    ["health"] = 25750712,
+    ["health"] = 48140056,
     ["scale"] = 1.5,
     ["displayId"] = 114709,
     ["creatureType"] = "Humanoid",
@@ -491,6 +484,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -503,6 +497,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
+      [1] = {
+        ["x"] = 197.07087836509,
+        ["y"] = -204.61806832563,
+        ["g"] = 12,
+        ["sublevel"] = 1,
+      },
       [2] = {
         ["x"] = 194.56163004213,
         ["y"] = -274.84704228369,
@@ -528,8 +528,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 307.04652363542,
-        ["y"] = -150.66033177099,
+        ["x"] = 377.62760864201,
+        ["y"] = -69.420376267683,
         ["g"] = 21,
         ["sublevel"] = 1,
       },
@@ -539,13 +539,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kobold Taskworker",
     ["id"] = 212383,
     ["count"] = 4,
-    ["health"] = 28611901,
+    ["health"] = 53488950,
     ["scale"] = 1.5,
     ["displayId"] = 114757,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [426883] = {
@@ -583,27 +584,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [9] = {
-        ["x"] = 344.62344002615,
-        ["y"] = -104.46999549228,
+        ["x"] = 344.44432604103,
+        ["y"] = -107.87366256984,
         ["g"] = 18,
         ["sublevel"] = 1,
       },
       [10] = {
         ["x"] = 344.80639040364,
-        ["y"] = -118.97853629378,
+        ["y"] = -121.48648570189,
         ["g"] = 18,
         ["sublevel"] = 1,
       },
       [11] = {
-        ["x"] = 358.38372135853,
-        ["y"] = -119.26963099934,
+        ["x"] = 356.77148235378,
+        ["y"] = -121.06102758575,
         ["g"] = 18,
-        ["sublevel"] = 1,
-      },
-      [12] = {
-        ["x"] = 315.67615314408,
-        ["y"] = -113.44737939444,
-        ["g"] = 15,
         ["sublevel"] = 1,
       },
     },
@@ -612,7 +607,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 220815,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -629,8 +624,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 313.1239855231,
-        ["y"] = -138.00026366604,
+        ["x"] = 370.00081782824,
+        ["y"] = -82.377323972187,
         ["g"] = 21,
         ["sublevel"] = 1,
       },
@@ -641,21 +636,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 321.09797760083,
-        ["y"] = -150.35488989808,
+        ["x"] = 384.2447581675,
+        ["y"] = -82.639954602464,
         ["g"] = 21,
         ["sublevel"] = 1,
       },
-      [5] = {
-        ["x"] = 397.14762749588,
-        ["y"] = -155.67372218253,
-        ["g"] = 19,
-        ["sublevel"] = 1,
-      },
-      [6] = {
-        ["x"] = 301.86285663252,
-        ["y"] = -113.90207617676,
-        ["g"] = 15,
+      [4] = {
+        ["x"] = 356.83122706189,
+        ["y"] = -107.61722583522,
+        ["g"] = 18,
         ["sublevel"] = 1,
       },
     },
@@ -663,12 +652,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [8] = {
     ["name"] = "Wandering Candle",
     ["id"] = 208450,
-    ["count"] = 12,
-    ["health"] = 45779042,
+    ["count"] = 15,
+    ["health"] = 85582321,
     ["scale"] = 1.7,
     ["displayId"] = 114467,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [430171] = {
       },
@@ -679,33 +671,65 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 341.2513804276,
+        ["x"] = 350.65617164586,
         ["y"] = -149.37888562116,
         ["g"] = 20,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 358.31170389152,
-        ["y"] = -104.30520948945,
-        ["g"] = 18,
+        ["x"] = 396.86915704415,
+        ["y"] = -154.01452375706,
+        ["g"] = 19,
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 367.0650415262,
-        ["y"] = -83.169610633201,
+        ["x"] = 322.99663609099,
+        ["y"] = -106.636893578,
         ["g"] = 17,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 322.45920694254,
+            ["y"] = -117.5644742747,
+          },
+          [2] = {
+            ["x"] = 330.10182731071,
+            ["y"] = -129.6453090474,
+          },
+          [3] = {
+            ["x"] = 349.44894725884,
+            ["y"] = -135.19866607643,
+          },
+          [4] = {
+            ["x"] = 368.43779079613,
+            ["y"] = -129.6453090474,
+          },
+          [5] = {
+            ["x"] = 369.87089643952,
+            ["y"] = -117.1055087222,
+          },
+          [6] = {
+            ["x"] = 369.33349635543,
+            ["y"] = -100.08722904111,
+          },
+          [7] = {
+            ["x"] = 354.82315155027,
+            ["y"] = -89.517963507746,
+          },
+          [8] = {
+            ["x"] = 335.65517465162,
+            ["y"] = -89.697096869109,
+          },
+          [9] = {
+            ["x"] = 327.95213978127,
+            ["y"] = -99.01238043233,
+          },
+        },
       },
       [4] = {
         ["x"] = 350.04534095035,
         ["y"] = -229.29361090496,
         ["g"] = 22,
-        ["sublevel"] = 1,
-      },
-      [5] = {
-        ["x"] = 356.91468487711,
-        ["y"] = -148.99518188417,
-        ["g"] = 20,
         ["sublevel"] = 1,
       },
     },
@@ -714,7 +738,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kobold Flametender",
     ["id"] = 213913,
     ["count"] = 1,
-    ["health"] = 5722380,
+    ["health"] = 10697790,
     ["scale"] = 1.2,
     ["displayId"] = 118173,
     ["creatureType"] = "Humanoid",
@@ -722,7 +746,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [428563] = {
@@ -826,7 +852,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sootsnout",
     ["id"] = 212412,
     ["count"] = 15,
-    ["health"] = 85835704,
+    ["health"] = 160466851,
     ["scale"] = 1.5,
     ["displayId"] = 114736,
     ["creatureType"] = "Humanoid",
@@ -860,7 +886,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Torchsnarl",
     ["id"] = 212411,
     ["count"] = 15,
-    ["health"] = 85835704,
+    ["health"] = 160466851,
     ["scale"] = 2,
     ["displayId"] = 114705,
     ["creatureType"] = "Humanoid",
@@ -892,7 +918,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skittering Darkness",
     ["id"] = 208457,
     ["count"] = 1,
-    ["health"] = 5722380,
+    ["health"] = 10697790,
     ["scale"] = 0.8,
     ["displayId"] = 92318,
     ["creatureType"] = "Aberration",
@@ -1236,8 +1262,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [13] = {
     ["name"] = "Shuffling Horror",
     ["id"] = 208456,
-    ["count"] = 5,
-    ["health"] = 28611901,
+    ["count"] = 3,
+    ["health"] = 48140056,
     ["scale"] = 1.6,
     ["displayId"] = 92318,
     ["creatureType"] = "Aberration",
@@ -1290,8 +1316,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [14] = {
     ["name"] = "Corridor Creeper",
     ["id"] = 210539,
-    ["count"] = 10,
-    ["health"] = 42917853,
+    ["count"] = 7,
+    ["health"] = 72210083,
     ["scale"] = 1.7,
     ["displayId"] = 92709,
     ["creatureType"] = "Beast",
@@ -1359,11 +1385,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -65.779454362596,
         ["sublevel"] = 1,
       },
-      [11] = {
-        ["x"] = 142.59250697661,
-        ["y"] = -64.631678911728,
-        ["sublevel"] = 1,
-      },
       [12] = {
         ["x"] = 144.78856969423,
         ["y"] = -163.45436838394,
@@ -1375,7 +1396,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 211228,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -1383,6 +1404,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1402,7 +1425,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223770,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -1410,6 +1433,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1429,7 +1453,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223772,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -1437,6 +1461,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1456,11 +1481,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223773,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Silence"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [424322] = {
         ["interruptible"] = true,
@@ -1479,7 +1509,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223774,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -1487,6 +1517,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1506,13 +1537,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223775,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Silence"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1532,7 +1566,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223776,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -1540,6 +1574,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1559,7 +1594,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Fiend",
     ["id"] = 223777,
     ["count"] = 7,
-    ["health"] = 22889521,
+    ["health"] = 42791160,
     ["scale"] = 1.5,
     ["displayId"] = 118916,
     ["creatureType"] = "Elemental",
@@ -1567,6 +1602,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1586,7 +1622,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ol' Waxbeard",
     ["id"] = 210153,
     ["count"] = 0,
-    ["health"] = 142958477,
+    ["health"] = 267565012,
     ["scale"] = 2,
     ["displayId"] = 114171,
     ["creatureType"] = "Humanoid",
@@ -1623,7 +1659,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazikon",
     ["id"] = 208743,
     ["count"] = 0,
-    ["health"] = 200141868,
+    ["health"] = 374591017,
     ["scale"] = 2,
     ["displayId"] = 115888,
     ["creatureType"] = "Elemental",
@@ -1668,7 +1704,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Candle King",
     ["id"] = 208745,
     ["count"] = 0,
-    ["health"] = 200141868,
+    ["health"] = 374591017,
     ["scale"] = 2,
     ["displayId"] = 114508,
     ["creatureType"] = "Humanoid",
@@ -1676,12 +1712,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2569,
     ["instanceID"] = 1210,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [420659] = {
       },
       [421146] = {
       },
       [421277] = {
+      },
+      [421282] = {
       },
       [422648] = {
       },
@@ -1703,7 +1744,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Darkness",
     ["id"] = 208747,
     ["count"] = 0,
-    ["health"] = 643313148,
+    ["health"] = 1083638299,
     ["scale"] = 2,
     ["displayId"] = 117773,
     ["creatureType"] = "Humanoid",
