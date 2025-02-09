@@ -18,7 +18,47 @@ local changeLog = {
       "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
       "nil error fix",
     }
-  }
+  },
+  [3] = {
+    tag = "4.3.4.9",
+    date = "2024-03-12",
+    notes = {
+      "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
+      "nil error fix",
+    }
+  },
+  [4] = {
+    tag = "4.3.4.9",
+    date = "2024-03-12",
+    notes = {
+      "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
+      "nil error fix",
+    }
+  },
+  [5] = {
+    tag = "4.3.4.9",
+    date = "2024-03-12",
+    notes = {
+      "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
+      "nil error fix",
+    }
+  },
+  [6] = {
+    tag = "4.3.4.9",
+    date = "2024-03-12",
+    notes = {
+      "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
+      "nil error fix",
+    }
+  },
+  [7] = {
+    tag = "4.3.4.9",
+    date = "2024-03-12",
+    notes = {
+      "Add AddonLocale support: Install the AddOn \"AddonLocale\" and use the MDT settings dialog to change the MDT language",
+      "nil error fix",
+    }
+  },
 }
 
 local function createVersionCheckFrame()
@@ -61,15 +101,6 @@ local function createVersionCheckFrame()
   scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -40)
   scrollFrame:SetWidth(width - 30)
   scrollFrame:SetHeight(height - 45)
-  scrollFrame:SetBackdrop({
-    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-    tile = true,
-    tileSize = 16,
-    insets = { left = 1, right = 1, top = 0, bottom = 1 },
-  })
-  scrollFrame:SetBackdropColor(1, 0, 0, 1)
-
-  vdt(scrollFrame, "scrollframe")
 
   local contentFrame = CreateFrame("frame", nil, scrollFrame, "BackdropTemplate")
   contentFrame:SetBackdrop({
@@ -78,9 +109,37 @@ local function createVersionCheckFrame()
     tileSize = 16,
     insets = { left = 1, right = 1, top = 0, bottom = 1 },
   })
-  contentFrame:SetBackdropColor(0, 1, 0, 1)
+  contentFrame:SetBackdropColor(0.267, 0.267, 0.267, 1)
 
-  contentFrame:SetSize(width - 10, height - 45)
+  --text box
+  local textBox = contentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+  textBox:SetPoint("TOPLEFT", contentFrame, "TOPLEFT")
+  textBox:SetPoint("BOTTOMRIGHT", contentFrame, "BOTTOMRIGHT")
+  textBox:SetJustifyH("LEFT")
+  textBox:SetJustifyV("TOP")
+  textBox:SetTextColor(1, 1, 1)
+  textBox:SetWidth(450)
+
+  local contentHeight = 0
+  local lineHeight = 30
+
+  --create the changelog from the changelog table
+  local text = ""
+  for i, v in ipairs(changeLog) do
+    contentHeight = contentHeight + lineHeight
+    text = text.."v"..v.tag.." ("..v.date..")\n"
+    for _, note in ipairs(v.notes) do
+      contentHeight = contentHeight + lineHeight
+      text = text.."  - "..note.."\n"
+    end
+    text = text.."\n"
+  end
+  textBox:SetText(text)
+
+  contentFrame:SetSize(width - 10, contentHeight)
+  -- this is the trick
+  local sliderHeight = math.max(1, contentHeight - height)
+
   ---@diagnostic disable-next-line: param-type-mismatch
   scrollFrame:SetScrollChild(contentFrame)
 
@@ -101,7 +160,8 @@ local function createVersionCheckFrame()
   slider:SetOrientation("VERTICAL");
   slider:SetSize(16, height - 45)
   slider:SetPoint("TOPLEFT", scrollFrame, "TOPRIGHT")
-  slider:SetMinMaxValues(0, 1)
+  slider:SetMinMaxValues(0, sliderHeight)
+  slider:SetValueStep(1)
   slider:SetValue(0)
   slider:SetScript("OnValueChanged", function(self)
     scrollFrame:SetVerticalScroll(self:GetValue())
@@ -113,33 +173,13 @@ local function createVersionCheckFrame()
     if (IsShiftKeyDown() and (delta > 0)) then
       slider:SetValue(0)
     elseif (IsShiftKeyDown() and (delta < 0)) then
-      slider:SetValue(1)
-    elseif ((delta < 0) and (current < 1)) then
+      slider:SetValue(sliderHeight)
+    elseif ((delta < 0) and (current < sliderHeight)) then
       slider:SetValue(current + 20)
-    elseif ((delta > 0) and (current > 1)) then
+    elseif ((delta > 0) and (current > 0)) then
       slider:SetValue(current - 20)
     end
   end)
-
-  --text box
-  local textBox = contentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-  textBox:SetPoint("TOPLEFT", contentFrame, "TOPLEFT")
-  textBox:SetJustifyH("LEFT")
-  textBox:SetJustifyV("TOP")
-  textBox:SetTextColor(1, 1, 1)
-  textBox:SetWidth(450)
-  textBox:SetHeight(2500)
-
-  --create the changelog from the changelog table
-  local text = ""
-  for i, v in ipairs(changeLog) do
-    text = text.."v"..v.tag.." ("..v.date..")\n"
-    for _, note in ipairs(v.notes) do
-      text = text.."  - "..note.."\n"
-    end
-    text = text.."\n"
-  end
-  textBox:SetText(text)
 
   return f
 end
