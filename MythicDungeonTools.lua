@@ -703,6 +703,7 @@ function MDT:MakeTopBottomTextures(frame)
   clickArea:SetFrameLevel(5)
   clickArea:SetScript("OnClick", function(self, button, down)
     MDT:ToggleVersionCheckFrame()
+    MDT:ToggleToolbarTooltip(false)
   end)
   clickArea.tooltipText = "Open changelog / version check"
   clickArea:SetScript("OnEnter", function()

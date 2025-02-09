@@ -100,7 +100,8 @@ local function createVersionCheckFrame()
   local scrollFrame = CreateFrame("scrollframe", nil, f, "BackdropTemplate")
   scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -40)
   scrollFrame:SetWidth(width - 30)
-  scrollFrame:SetHeight(height - 45)
+  local scrollHeight = height - 70
+  scrollFrame:SetHeight(scrollHeight)
 
   local contentFrame = CreateFrame("frame", nil, scrollFrame, "BackdropTemplate")
   contentFrame:SetBackdrop({
@@ -138,7 +139,7 @@ local function createVersionCheckFrame()
 
   contentFrame:SetSize(width - 10, contentHeight)
   -- this is the trick
-  local sliderHeight = math.max(1, contentHeight - height)
+  local sliderHeight = math.max(1, contentHeight - scrollHeight)
 
   ---@diagnostic disable-next-line: param-type-mismatch
   scrollFrame:SetScrollChild(contentFrame)
@@ -158,7 +159,7 @@ local function createVersionCheckFrame()
 
   slider:SetThumbTexture(slider.thumb)
   slider:SetOrientation("VERTICAL");
-  slider:SetSize(16, height - 45)
+  slider:SetSize(16, scrollHeight + 1)
   slider:SetPoint("TOPLEFT", scrollFrame, "TOPRIGHT")
   slider:SetMinMaxValues(0, sliderHeight)
   slider:SetValueStep(1)
@@ -180,6 +181,21 @@ local function createVersionCheckFrame()
       slider:SetValue(current - 20)
     end
   end)
+
+  -- Text here to notify of new version / uptodate
+  -- also show who in the group has which version with class color? idk maybe too much
+  -- maybe a report versions button instead, which has the player's versions in the tooltip aswell
+  local currentVersionText = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+  currentVersionText:SetPoint("BOTTOMLEFT", f, "BOTTOMLEFT", 10, 7)
+  currentVersionText:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -10, 30)
+  currentVersionText:SetJustifyH("LEFT")
+  currentVersionText:SetJustifyV("BOTTOM")
+  currentVersionText:SetTextColor(1, 1, 1)
+  currentVersionText:SetText("MDT is out of date!")
+  -- uptodate: nothing, nothing, report versions?
+  -- outofdate: Text, button to download on wago?, report versions?
+  -- maybe this shouldn't be a fontstring?
+  -- colors? yellow patch outofdate, red minor / major outofdate
 
   return f
 end
