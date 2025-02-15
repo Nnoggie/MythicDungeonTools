@@ -569,11 +569,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [463247] = {
       },
-      [463248] = {
-      },
-      [463256] = {
-      },
-      [463257] = {
+      [324737] = {
+        ["name"] = "Enraged",
+        ["description"] = "At 25% health, becomes Enraged, increasing damage done by 50%.",
+        ["onlyOnClones"] = {1, 2} -- Only the first two defenders in the maze have this ability
       },
     },
     ["clones"] = {
