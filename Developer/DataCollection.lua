@@ -346,14 +346,14 @@ end
 
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
   local timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool = CombatLogGetCurrentEventInfo()
-  --enemy spells
-  if trackedEvents[subevent] and sourceGUID then
+  -- enemy spells: only collect in Mythic+ Challenge Mode
+  if trackedEvents[subevent] and sourceGUID and C_ChallengeMode.IsChallengeModeActive() then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", sourceGUID)
     id = tonumber(id)
     --dungeon
     for _, i in pairs(dungeonsToTrack) do
       local enemies = MDT.dungeonEnemies[i]
-      --enemy
+      -- enemy
       for enemyIdx, enemy in pairs(enemies) do
         if id and spellId and enemy.id == id then
           db.dataCollection[i] = db.dataCollection[i] or {}
@@ -366,7 +366,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
       end
     end
   end
-  --characteristics
+  -- characteristics (always collect)
   if subevent == "SPELL_AURA_APPLIED" and destGUID then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", destGUID)
     id = tonumber(id) or 0
@@ -374,13 +374,12 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
     --dungeon
     for _, i in pairs(dungeonsToTrack) do
       local enemies = MDT.dungeonEnemies[i]
-      --enemy
+      -- enemy
       for enemyIdx, enemy in pairs(enemies) do
         if enemy.id == id then
           for characteristic, data in pairs(characteristicsData) do
             local spells = data.spells
             if spells and spells[spellId] then
-              -- return early if already present
               db.dataCollectionCC[i] = db.dataCollectionCC[i] or {}
               db.dataCollectionCC[i][id] = db.dataCollectionCC[i][id] or {}
               db.dataCollectionCC[i][id][characteristic] = true

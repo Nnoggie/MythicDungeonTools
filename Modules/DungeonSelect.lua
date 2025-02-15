@@ -81,7 +81,6 @@ function MDT:UpdateDungeonDropDown()
       button.selectedTexture = button:CreateTexture()
       button.selectedTexture:SetAllPoints(button)
       button.selectedTexture:SetAtlas("bags-glow-artifact")
-      button.selectedTexture:SetDrawLayer("OVERLAY")
       button.shortText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
       button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
       button.shortText:SetFont(button.shortText:GetFont(), 11, "OUTLINE")
@@ -110,7 +109,7 @@ function MDT:UpdateDungeonDropDown()
         -- add 90s if we are not currently in a key
         local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
         if timer and (not activeKeystoneLevel or activeKeystoneLevel < 7) then
-          timer = timer + 90
+          timer = timer + 0
         end
       end
       GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)

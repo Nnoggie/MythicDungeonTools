@@ -906,6 +906,147 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "prioryItem" then
+    local itemTexture = 523893
+    local itemSpellId = 435088
+    local itemDescription = L["prioryItemDescription"]
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(12, 12)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "brewItemA" then
+    local itemTexture = 4548850
+    local itemSpellId = 439698
+    local itemDescription = L["brewItemADescription"]
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(16, 16)
+    frame.Texture:SetSize(16, 16)
+    frame.HighlightTexture:SetSize(16, 16)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "brewItemB" then
+    local itemTexture = 451169
+    local itemSpellId = 439005
+    local itemDescription = L["brewItemBDescription"]
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(16, 16)
+    frame.Texture:SetSize(16, 16)
+    frame.HighlightTexture:SetSize(16, 16)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "motherlodeItem" then
+    local itemTexture = 310733
+    local itemSpellId = 257481
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(12, 12)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "workshopItem" then
+    local itemTexture = 1405803
+    local itemSpellId = 282943
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(12, 12)
+    frame.Texture:SetSize(12, 12)
+    frame.HighlightTexture:SetSize(12, 12)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
+  if type == "floodgateItem" then
+    local itemTexture = 986484
+    local itemSpellId = 464294
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(20, 20)
+    frame.Texture:SetSize(20, 20)
+    frame.HighlightTexture:SetSize(20, 20)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
   if type == "mistsItem" then
     local itemInfo = {
       [1] = {
