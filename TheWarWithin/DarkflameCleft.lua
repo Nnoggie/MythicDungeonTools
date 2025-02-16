@@ -38,25 +38,18 @@ MDT.mapPOIs[dungeonIndex] = {
     [2] = {
       ["template"] = "MapLinkPinTemplate",
       ["type"] = "generalNote",
-      ["x"] = 509.31351009711,
-      ["y"] = -460.41458486596,
-      ["text"] = "darkflamePatrolBug",
-    },
-    [3] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "generalNote",
       ["x"] = 196.00099380441,
       ["y"] = -439.3556004923,
       ["text"] = "darkflameSpawns",
     },
-    [4] = {
+    [3] = {
       ["template"] = "MapLinkPinTemplate",
       ["type"] = "generalNote",
       ["x"] = 189.73103611103,
       ["y"] = -233.34462517655,
       ["text"] = "darkflameDespawns",
     },
-    [5] = {
+    [4] = {
       ["template"] = "MapLinkPinTemplate",
       ["type"] = "generalNote",
       ["x"] = 189.73103611103,
