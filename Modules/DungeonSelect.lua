@@ -106,12 +106,13 @@ function MDT:UpdateDungeonDropDown()
       local timer
       if mapInfo.mapID then
         timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID))
+        -- TODO: this is completely gone in S2
         -- we want to always show the correct timer including the Challenger's Peril affix
         -- add 90s if we are not currently in a key
-        local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
-        if timer and (not activeKeystoneLevel or activeKeystoneLevel < 7) then
-          timer = timer + 0
-        end
+        -- local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
+        -- if timer and (not activeKeystoneLevel or activeKeystoneLevel < 7) then
+        --   timer = timer + 90
+        -- end
       end
       GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
       GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
