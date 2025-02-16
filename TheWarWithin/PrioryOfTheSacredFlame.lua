@@ -58,7 +58,7 @@ MDT.mapPOIs[dungeonIndex] = {
       ["type"] = "generalNote",
       ["x"] = 518.45294071181,
       ["y"] = -311.27045421487,
-      ["text"] = "priory1bossnote",
+      ["text"] = "priory1BossNote",
     },
   },
 };
