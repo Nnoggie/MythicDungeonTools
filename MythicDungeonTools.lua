@@ -1296,7 +1296,6 @@ function MDT:MakeSidePanel(frame)
     if (difficulty >= 10 and db.currentDifficulty < 10) or (difficulty < 10 and db.currentDifficulty >= 10) then
       db.currentDifficulty = difficulty or db.currentDifficulty
       MDT:DungeonEnemies_UpdateSeasonalAffix()
-      frame.sidePanel.difficultyWarning:Toggle(difficulty)
       MDT:POI_UpdateAll()
       MDT:KillAllAnimatedLines()
       MDT:DrawAllAnimatedLines()
@@ -1336,52 +1335,6 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
-
-  --dungeon level below 10 warning
-  frame.sidePanel.difficultyWarning = AceGUI:Create("Icon")
-  local difficultyWarning = frame.sidePanel.difficultyWarning
-  difficultyWarning:SetImage("Interface\\DialogFrame\\UI-Dialog-Icon-AlertNew")
-  difficultyWarning:SetImageSize(25, 25)
-  difficultyWarning:SetWidth(30)
-  difficultyWarning:SetCallback("OnEnter", function(...)
-    GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(L["The selected dungeon level is below 10"], 1, 1, 1)
-    GameTooltip:AddLine(L["Enemies related to seasonal affixes are currently hidden"], 1, 1, 1)
-    GameTooltip:AddLine(L["Click to set dungeon level to 10"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  difficultyWarning:SetCallback("OnLeave", function(...)
-    GameTooltip:Hide()
-  end)
-  difficultyWarning:SetCallback("OnClick", function(...)
-    frame.sidePanel.DifficultySlider:SetValue(10)
-    db.currentDifficulty = 10
-    MDT:GetCurrentPreset().difficulty = db.currentDifficulty
-    MDT:DungeonEnemies_UpdateSeasonalAffix()
-    MDT:POI_UpdateAll()
-    MDT:UpdateProgressbar()
-    MDT:ReloadPullButtons()
-    difficultyWarning:Toggle(db.currentDifficulty)
-    if MDT.liveSessionActive then
-      local livePreset = MDT:GetCurrentLivePreset()
-      local shouldUpdate = livePreset == MDT:GetCurrentPreset()
-      if shouldUpdate then MDT:LiveSession_SendDifficulty() end
-    end
-    MDT:KillAllAnimatedLines()
-    MDT:DrawAllAnimatedLines()
-  end)
-  function difficultyWarning:Toggle(difficulty)
-    if difficulty < 10 then
-      self.image:Show()
-      self:SetDisabled(false)
-    else
-      self.image:Hide()
-      self:SetDisabled(true)
-    end
-  end
-
-  difficultyWarning:Toggle(db.currentDifficulty)
-  frame.sidePanel.WidgetGroup:AddChild(difficultyWarning)
 
   frame.sidePanel.middleLine = AceGUI:Create("Heading")
   frame.sidePanel.middleLine:SetWidth(240)
@@ -1869,10 +1822,6 @@ function MDT:IsCurrentPresetTyrannical()
       affixWeeks[currentWeek][4] == 9
 end
 
-function MDT:IsCurrentPresetThundering()
-  return affixWeeks[self:GetCurrentPreset().week][4] == 132
-end
-
 function MDT:MouseDownHook()
 
 end
@@ -2146,85 +2095,46 @@ local function round(number, decimals)
   return tonumber((("%%.%df"):format(decimals)):format(number))
 end
 
-function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
-  local fortified = MDT:IsCurrentPresetFortified()
-  local tyrannical = MDT:IsCurrentPresetTyrannical()
-  local thundering = MDT:IsCurrentPresetThundering()
-  local mult = 1
+do
+  local fortMult = 1.2
+  local tyrMult = 1.25
+  local scalingNormal = 1.07
+  local scalingExtra = 1.1 -- Xalatath's Guile
+  local extraScalingLevel = 11
 
-  -- Adjust multipliers based on level and affixes
-  if level >= 4 and level < 10 then
-    -- For levels below 10, apply fortified if not a boss and not ignoring fortified
-    if boss == false and fortified == true and (not ignoreFortified) then mult = mult * 1.2 end
-    -- Apply tyrannical if it is a boss
-    if boss == true and tyrannical == true then mult = mult * 1.25 end
-  elseif level >= 10 and level < 12 then
-    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
-    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
-    if boss == false then mult = mult * 1.2 end
-    if boss == true then mult = mult * 1.25 end
-  elseif level >= 12 then
-    -- For levels 12 and above, apply an additional 10% health increase
-    -- Xal'atath's Guile:Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 10%
-    if boss == false then mult = mult * 1.2 * 1.1 end
-    if boss == true then mult = mult * 1.25 * 1.1 end
+  local getFortTyrMult = function(level, boss, fortified, tyrannical, ignoreFortified)
+    local mult = 1
+    if level >= 4 then
+      if not boss and (fortified and not ignoreFortified) then mult = mult * fortMult end
+      if boss and tyrannical then mult = mult * tyrMult end
+    end
+    return mult
   end
 
-
-  if thundering == true then mult = mult * 1.05 end
-
-  -- Levels 10 and below - 10% gain per level
-  local levelsTenBelow = math.min(level, 10)
-  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
-
-  -- Levels 11 to 20 - 10% gain per level
-  local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
-  mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
-
-  -- Levels 21 and above - 10% gain per level
-  local levelsTwentyOneAbove = math.max(level - 20, 0)
-  mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
-
-  return round(mult * baseHealth, 0)
-end
-
-function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical, thundering)
-  local mult = 1
-
-  -- Adjust multipliers based on level and affixes
-  if level >= 4 and level < 10 then
-    -- For levels below 10, apply fortified if not a boss
-    if boss == false and fortified == true then mult = mult * 1.2 end
-    -- Apply tyrannical if it is a boss
-    if boss == true and tyrannical == true then mult = mult * 1.25 end
-  elseif level >= 10 and level < 12 then
-    -- For levels 10 and above but below 12, apply fixed multipliers regardless of affixes
-    if boss == false then mult = mult * 1.2 end
-    if boss == true then mult = mult * 1.25 end
-  elseif level >= 12 then
-    -- For levels 12 and above, apply an additional 10% health increase
-    -- Source: https://www.wowhead.com/blue-tracker/topic/us/affix-system-updates-in-the-war-within-1882601
-    if boss == false then mult = mult * 1.2 * 1.1 end
-    if boss == true then mult = mult * 1.25 * 1.1 end
+  local function getScaling(mult, level)
+    local scaling = mult * (scalingNormal ^ math.min(level - 1, extraScalingLevel - 2)) * (scalingExtra ^ math.max(0, level - extraScalingLevel + 1))
+    return round(scaling, 2) --not sure if this additional rounding is needed, but it was in the original code
   end
 
-  -- Apply thundering multiplier if present
-  if thundering then mult = mult * 1.05 end
+  function MDT:CalculateEnemyHealth(boss, baseHealth, level, ignoreFortified)
+    local fortified = true --fort and tyr are always present in 10 and above, we don't really care for lower levels
+    local tyrannical = true
+    local mult = 1
 
-  -- Levels 10 and below - 8% gain per level
-  local levelsTenBelow = math.min(level, 10)
-  mult = round((1.1 ^ math.max(levelsTenBelow - 1, 0)) * mult, 2)
+    mult = getFortTyrMult(level, boss, fortified, tyrannical, ignoreFortified)
+    mult = getScaling(mult, level)
 
-  -- Levels 11 to 20 - 10% gain per level
-  local levelsElevenAbove = math.max(math.min(level, 20) - 10, 0)
-  mult = round((1.1 ^ levelsElevenAbove) * mult, 2)
+    return round(mult * baseHealth, 0)
+  end
 
-  -- Levels 21 and above - 8% gain per level
-  local levelsTwentyOneAbove = math.max(level - 20, 0)
-  mult = round((1.1 ^ levelsTwentyOneAbove) * mult, 2)
+  function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical)
+    local mult = 1
+    mult = getFortTyrMult(level, boss, fortified, tyrannical, false)
+    mult = getScaling(mult, level)
 
-  local baseHealth = round(health / mult, 0)
-  return baseHealth
+    local baseHealth = round(health / mult, 0)
+    return baseHealth
+  end
 end
 
 function MDT:FormatEnemyHealth(amount)
@@ -2245,16 +2155,16 @@ function MDT:FormatEnemyHealth(amount)
       return amount
     end
   elseif self:GetLocaleIndex() == 10 or self:GetLocaleIndex() == 11 then
-    -- zh_TW ZH_CN
+
     if amount >= 1e8 then
       return string.format("%.2f亿", amount / 1e8)
     elseif amount >= 1e4 then
       return string.format("%d万", math.floor(amount / 1e4))
     else
-      return amount -- 返回原数值
+      return amount
     end
   else
-    -- 其他语言格式化
+
     if amount >= 1e12 then
       return string.format("%.3ft", amount / 1e12)
     elseif amount >= 1e9 then
@@ -2264,7 +2174,7 @@ function MDT:FormatEnemyHealth(amount)
     elseif amount >= 1e3 then
       return string.format("%.1fk", amount / 1e3)
     else
-      return amount -- 返回原数值
+      return amount
     end
   end
 end
@@ -2517,7 +2427,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   if preset.difficulty then
     db.currentDifficulty = preset.difficulty
     frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
-    frame.sidePanel.difficultyWarning:Toggle(db.currentDifficulty)
   end
   if not framesInitialized then coroutine.yield() end
   local textureInfo = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]

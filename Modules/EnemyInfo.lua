@@ -496,6 +496,9 @@ local spellBlacklist = {
   [434481] = true, -- Bombardments
   [257069] = true, -- Watertight Shell
   [324859] = true, -- Bramblethorn Entanglement
+  [427359] = true, -- Defend
+  [429099] = true, -- Overwhelmed
+  [472765] = true, -- Consumed Void
   --[X]  = true,
 }
 local lastEnemyIdx

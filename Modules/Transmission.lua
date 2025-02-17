@@ -488,7 +488,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         MDT:ReloadPullButtons()
         if updateSeasonal then
           MDT:DungeonEnemies_UpdateSeasonalAffix()
-          MDT.main_frame.sidePanel.difficultyWarning:Toggle(difficulty)
           MDT:POI_UpdateAll()
           MDT:KillAllAnimatedLines()
           MDT:DrawAllAnimatedLines()

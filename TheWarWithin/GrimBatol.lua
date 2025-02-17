@@ -390,6 +390,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [451378] = {
       },
       [451379] = {
+        ["enrage"] = true,
       },
     },
     ["clones"] = {
@@ -714,6 +715,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [451033] = {
       },
       [451040] = {
+        ["enrage"] = true,
       },
     },
     ["clones"] = {
@@ -783,6 +785,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [451224] = {
         ["interruptible"] = true,
+        ["curse"] = true,
       },
     },
     ["clones"] = {
@@ -1426,6 +1429,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [447261] = {
       },
       [447268] = {
+        ["bleed"] = true,
       },
       [448847] = {
       },
@@ -1515,6 +1519,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [448013] = {
       },
       [450095] = {
+        ["curse"] = true,
       },
     },
     ["clones"] = {
