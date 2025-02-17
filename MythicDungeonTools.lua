@@ -2098,9 +2098,9 @@ end
 do
   local fortMult = 1.2
   local tyrMult = 1.25
-  local scalingNormal = 1.1
-  local scalingExtra = 1.12 -- Xalatath's Guile
-  local extraScalingLevel = 13
+  local scalingNormal = 1.07
+  local scalingExtra = 1.1 -- Xalatath's Guile
+  local extraScalingLevel = 11
 
   local getFortTyrMult = function(level, boss, fortified, tyrannical, ignoreFortified)
     local mult = 1
@@ -2155,16 +2155,16 @@ function MDT:FormatEnemyHealth(amount)
       return amount
     end
   elseif self:GetLocaleIndex() == 10 or self:GetLocaleIndex() == 11 then
-    -- zh_TW ZH_CN
+
     if amount >= 1e8 then
       return string.format("%.2f亿", amount / 1e8)
     elseif amount >= 1e4 then
       return string.format("%d万", math.floor(amount / 1e4))
     else
-      return amount -- 返回原数值
+      return amount
     end
   else
-    -- 其他语言格式化
+
     if amount >= 1e12 then
       return string.format("%.3ft", amount / 1e12)
     elseif amount >= 1e9 then
@@ -2174,7 +2174,7 @@ function MDT:FormatEnemyHealth(amount)
     elseif amount >= 1e3 then
       return string.format("%.1fk", amount / 1e3)
     else
-      return amount -- 返回原数值
+      return amount
     end
   end
 end

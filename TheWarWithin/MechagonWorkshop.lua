@@ -1,4 +1,4 @@
-local addonName = ...
+﻿local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 122
@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\MechagonWorkshop' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\MechagonWorkshop' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -26,14 +26,47 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 374, teeming = 192, teemingEnabled = true }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "dungeonEntrance",
+      ["x"] = 320.68410669953,
+      ["y"] = -349.24385119888,
+    },
+    [2] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "workshopItem",
+      ["x"] = 98.193462499647,
+      ["y"] = -455.70770892846,
+    },
+    [3] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "workshopItem",
+      ["x"] = 132.29894488081,
+      ["y"] = -512.89471024924,
+    },
+    [4] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "workshopItem",
+      ["x"] = 152.76226438678,
+      ["y"] = -394.51146083004,
+    },
+    [5] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "workshopItem",
+      ["x"] = 219.28911627986,
+      ["y"] = -479.66203674945,
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Blastatron X-80",
     ["id"] = 151476,
     ["count"] = 20,
-    ["health"] = 71433266,
+    ["health"] = 121869247,
     ["scale"] = 2.5,
     ["displayId"] = 90712,
     ["creatureType"] = "Mechanical",
@@ -45,9 +78,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [293986] = {
       },
       [295169] = {
-      },
-      [295183] = {
-        ["magic"] = true,
       },
       [473436] = {
       },
@@ -67,7 +97,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defense Bot Mk I",
     ["id"] = 151649,
     ["count"] = 5,
-    ["health"] = 30001972,
+    ["health"] = 51185084,
     ["scale"] = 2,
     ["displayId"] = 91349,
     ["creatureType"] = "Mechanical",
@@ -110,7 +140,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Tinkerer",
     ["id"] = 144294,
     ["count"] = 6,
-    ["health"] = 28573306,
+    ["health"] = 48747699,
     ["scale"] = 2,
     ["displayId"] = 91170,
     ["creatureType"] = "Humanoid",
@@ -126,10 +156,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Imprison"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [293827] = {
-        ["interruptible"] = true,
       },
       [293854] = {
       },
@@ -151,8 +181,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 23,
       },
       [5] = {
-        ["x"] = 149.94638981524,
-        ["y"] = -168.74972183428,
+        ["x"] = 127.10679574193,
+        ["y"] = -186.68698673305,
         ["g"] = 24,
       },
       [6] = {
@@ -160,13 +190,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -128.92230457847,
         ["g"] = 22,
       },
+      [7] = {
+        ["x"] = 157.60470743929,
+        ["y"] = -172.9687205987,
+        ["g"] = 24,
+        ["sublevel"] = 1,
+      },
     },
   },
   [4] = {
     ["name"] = "Workshop Defender",
     ["id"] = 144299,
     ["count"] = 4,
-    ["health"] = 25715976,
+    ["health"] = 43872929,
     ["scale"] = 2,
     ["displayId"] = 91183,
     ["creatureType"] = "Humanoid",
@@ -181,8 +217,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [293724] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -201,9 +240,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 23,
       },
       [4] = {
-        ["x"] = 135.95350408855,
-        ["y"] = -180.72516214191,
+        ["x"] = 142.21215017433,
+        ["y"] = -180.05906548264,
         ["g"] = 24,
+      },
+      [6] = {
+        ["x"] = 91.860426510642,
+        ["y"] = -194.01701828115,
+        ["g"] = 25,
+        ["sublevel"] = 1,
       },
     },
   },
@@ -211,7 +256,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mechagon Mechanic",
     ["id"] = 144295,
     ["count"] = 4,
-    ["health"] = 28573306,
+    ["health"] = 48747699,
     ["scale"] = 2,
     ["displayId"] = 91171,
     ["creatureType"] = "Humanoid",
@@ -226,10 +271,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Imprison"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [293729] = {
-        ["interruptible"] = true,
       },
       [293930] = {
         ["magic"] = true,
@@ -242,14 +287,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 22,
       },
       [2] = {
-        ["x"] = 126.02899118717,
-        ["y"] = -166.03290880106,
+        ["x"] = 128.23424740722,
+        ["y"] = -169.50147634119,
         ["g"] = 24,
+        ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 121.71179355356,
-        ["y"] = -191.44420030292,
+        ["x"] = 144.55528071468,
+        ["y"] = -161.899348381,
         ["g"] = 24,
+        ["sublevel"] = 1,
       },
       [6] = {
         ["x"] = 367.32507299992,
@@ -262,7 +309,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Head Machinist Sparkflux",
     ["id"] = 144248,
     ["count"] = 0,
-    ["health"] = 199987431,
+    ["health"] = 292321485,
     ["scale"] = 2,
     ["displayId"] = 23397,
     ["creatureType"] = "Mechanical",
@@ -276,6 +323,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [285440] = {
       },
+      [285443] = {
+      },
       [285454] = {
       },
       [285460] = {
@@ -285,11 +334,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [294853] = {
       },
+      [294954] = {
+      },
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 316.89015248406,
-        ["y"] = -158.60498265259,
+        ["x"] = 318.7758432615,
+        ["y"] = -161.66923335281,
+        ["g"] = 30,
         ["sublevel"] = 1,
       },
     },
@@ -298,7 +350,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spider Tank",
     ["id"] = 144296,
     ["count"] = 12,
-    ["health"] = 45717290,
+    ["health"] = 77996318,
     ["scale"] = 2.5,
     ["displayId"] = 90710,
     ["creatureType"] = "Mechanical",
@@ -318,13 +370,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 255.44539021688,
-        ["y"] = -119.72613721386,
+        ["x"] = 262.33539531435,
+        ["y"] = -123.86017008194,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 255.44539021688,
+            ["y"] = -119.72613721386,
+          },
+          [2] = {
+            ["x"] = 280.82607421903,
+            ["y"] = -135.06454852639,
+          },
+          [3] = {
+            ["x"] = 255.44539021688,
+            ["y"] = -119.72613721386,
+          },
+          [4] = {
+            ["x"] = 236.73010866683,
+            ["y"] = -101.99250915374,
+          },
+        },
       },
       [2] = {
-        ["x"] = 215.95079729818,
-        ["y"] = -92.89566134796,
+        ["x"] = 219.05133126474,
+        ["y"] = -90.139689118575,
         ["sublevel"] = 1,
       },
     },
@@ -333,8 +403,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defense Bot Mk III",
     ["id"] = 144298,
     ["count"] = 10,
-    ["health"] = 50289020,
+    ["health"] = 85795952,
     ["scale"] = 2,
+    ["stealthDetect"] = true,
     ["displayId"] = 90855,
     ["creatureType"] = "Mechanical",
     ["level"] = 81,
@@ -361,25 +432,69 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 133.79641688773,
-        ["y"] = -258.45140887272,
+        ["x"] = 131.24350621135,
+        ["y"] = -256.46578308657,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 133.79641688773,
+            ["y"] = -258.45140887272,
+          },
+          [2] = {
+            ["x"] = 120.84591740925,
+            ["y"] = -276.31016191973,
+          },
+          [3] = {
+            ["x"] = 133.79641688773,
+            ["y"] = -258.45140887272,
+          },
+          [4] = {
+            ["x"] = 136.24017934967,
+            ["y"] = -222.88304922669,
+          },
+        },
       },
       [3] = {
-        ["x"] = 151.24781908599,
-        ["y"] = -231.47170304853,
+        ["x"] = 149.82953874082,
+        ["y"] = -240.26511082193,
+        ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 151.24781908599,
+            ["y"] = -231.47170304853,
+          },
+          [2] = {
+            ["x"] = 148.46500842956,
+            ["y"] = -247.33277073468,
+          },
+          [3] = {
+            ["x"] = 141.22068155776,
+            ["y"] = -272.68798824544,
+          },
+          [4] = {
+            ["x"] = 148.46500842956,
+            ["y"] = -247.33277073468,
+          },
+          [5] = {
+            ["x"] = 151.24781908599,
+            ["y"] = -231.47170304853,
+          },
+          [6] = {
+            ["x"] = 145.74842870398,
+            ["y"] = -201.60278901185,
+          },
+        },
+      },
+      [6] = {
+        ["x"] = 74.273634119287,
+        ["y"] = -194.1667770636,
+        ["g"] = 25,
         ["sublevel"] = 1,
       },
-      [4] = {
-        ["x"] = 110.54255941563,
-        ["y"] = -176.11195795111,
-        ["g"] = 24,
-        ["sublevel"] = 1,
-      },
-      [5] = {
-        ["x"] = 140.23901580416,
-        ["y"] = -153.66886546266,
-        ["g"] = 24,
+      [7] = {
+        ["x"] = 83.554994705765,
+        ["y"] = -210.33532486232,
+        ["g"] = 25,
         ["sublevel"] = 1,
       },
     },
@@ -388,7 +503,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aerial Unit R-21/X",
     ["id"] = 150396,
     ["count"] = 0,
-    ["health"] = 137134239,
+    ["health"] = 233857188,
     ["scale"] = 2,
     ["displayId"] = 90547,
     ["creatureType"] = "Mechanical",
@@ -408,14 +523,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [291878] = {
       },
+      [291915] = {
+      },
       [291928] = {
+      },
+      [1226680] = {
       },
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 54.921427502934,
-        ["y"] = -225.64891267312,
-        ["g"] = 25,
+        ["x"] = 37.49349530417,
+        ["y"] = -240.89835455805,
+        ["g"] = 27,
         ["sublevel"] = 1,
       },
     },
@@ -424,13 +543,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Junkyard D.0.G.",
     ["id"] = 151773,
     ["count"] = 7,
-    ["health"] = 28573306,
+    ["health"] = 48747699,
     ["scale"] = 1.5,
     ["displayId"] = 90511,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Root"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
@@ -457,10 +577,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 719.39811970779,
-        ["y"] = -358.70134851437,
+        ["x"] = 717.13449099954,
+        ["y"] = -358.70139748734,
         ["g"] = 15,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 719.8509238062,
+            ["y"] = -359.15412812629,
+          },
+          [2] = {
+            ["x"] = 700.39402538854,
+            ["y"] = -348.30084178053,
+          },
+          [3] = {
+            ["x"] = 667.3416279346,
+            ["y"] = -329.73717152965,
+          },
+          [4] = {
+            ["x"] = 658.73908465947,
+            ["y"] = -349.20637651788,
+          },
+          [5] = {
+            ["x"] = 667.79457895192,
+            ["y"] = -378.63653707646,
+          },
+          [6] = {
+            ["x"] = 691.7913351945,
+            ["y"] = -373.20327967937,
+          },
+        },
       },
       [4] = {
         ["x"] = 661.81134599866,
@@ -469,9 +615,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 670.17406209968,
-        ["y"] = -328.53187655207,
-        ["g"] = 17,
+        ["x"] = 658.03974381844,
+        ["y"] = -371.99797406879,
+        ["g"] = 16,
         ["sublevel"] = 1,
       },
       [6] = {
@@ -510,7 +656,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Waste Processing Unit",
     ["id"] = 144293,
     ["count"] = 10,
-    ["health"] = 45717290,
+    ["health"] = 77996318,
     ["scale"] = 2,
     ["displayId"] = 92177,
     ["creatureType"] = "Mechanical",
@@ -541,10 +687,32 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 765.4666511604,
-        ["y"] = -441.31777365149,
+        ["x"] = 758.48019817611,
+        ["y"] = -435.04787833295,
         ["g"] = 13,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 765.4666511604,
+            ["y"] = -441.31777365149,
+          },
+          [2] = {
+            ["x"] = 746.40755514484,
+            ["y"] = -425.21820195135,
+          },
+          [3] = {
+            ["x"] = 731.53892424071,
+            ["y"] = -418.59001568978,
+          },
+          [4] = {
+            ["x"] = 746.40755514484,
+            ["y"] = -425.21820195135,
+          },
+          [5] = {
+            ["x"] = 765.4666511604,
+            ["y"] = -441.31777365149,
+          },
+        },
       },
     },
   },
@@ -552,14 +720,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Living Waste",
     ["id"] = 144301,
     ["count"] = 1,
-    ["health"] = 14286654,
+    ["health"] = 24373849,
     ["scale"] = 0.9,
-    ["displayId"] = 92217,
+    ["displayId"] = 111780,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -596,6 +765,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -471.65315061597,
         ["g"] = 7,
         ["sublevel"] = 1,
+        ["patrol"] = {
+        },
       },
       [6] = {
         ["x"] = 675.07136274989,
@@ -681,13 +852,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 14,
         ["sublevel"] = 1,
       },
+      [20] = {
+        ["x"] = 619.34789257681,
+        ["y"] = -473.17533951455,
+        ["g"] = 7,
+        ["sublevel"] = 1,
+      },
     },
   },
   [13] = {
     ["name"] = "Omega Buster",
     ["id"] = 144249,
     ["count"] = 0,
-    ["health"] = 171417798,
+    ["health"] = 292321485,
     ["scale"] = 2,
     ["displayId"] = 90998,
     ["creatureType"] = "Mechanical",
@@ -710,9 +887,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 57.255059848105,
-        ["y"] = -171.64039525721,
-        ["g"] = 25,
+        ["x"] = 36.37785616317,
+        ["y"] = -199.05308925988,
+        ["g"] = 27,
         ["sublevel"] = 1,
       },
     },
@@ -721,9 +898,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bomb Tonk",
     ["id"] = 151657,
     ["count"] = 4,
-    ["health"] = 21429979,
+    ["health"] = 29248619,
     ["scale"] = 1.5,
-    ["displayId"] = 21209,
+    ["displayId"] = 82724,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
@@ -734,7 +911,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [301088] = {
-        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -780,9 +956,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rocket Tonk",
     ["id"] = 151659,
     ["count"] = 4,
-    ["health"] = 21429979,
+    ["health"] = 36560774,
     ["scale"] = 1.5,
-    ["displayId"] = 91228,
+    ["displayId"] = 28573,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
@@ -840,9 +1016,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Strider Tonk",
     ["id"] = 151658,
     ["count"] = 4,
-    ["health"] = 21429979,
+    ["health"] = 36560774,
     ["scale"] = 1.5,
-    ["displayId"] = 91229,
+    ["displayId"] = 6569,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
@@ -920,7 +1096,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Platinum Pummeler",
     ["id"] = 144244,
     ["count"] = 0,
-    ["health"] = 171417798,
+    ["health"] = 292321485,
     ["scale"] = 2,
     ["displayId"] = 91216,
     ["creatureType"] = "Mechanical",
@@ -949,8 +1125,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 97.497601758237,
-        ["y"] = -512.84528780816,
+        ["x"] = 103.76755945162,
+        ["y"] = -518.66731525964,
         ["g"] = 26,
         ["sublevel"] = 1,
       },
@@ -960,7 +1136,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gnomercy 4.U.",
     ["id"] = 145185,
     ["count"] = 0,
-    ["health"] = 137134239,
+    ["health"] = 233857188,
     ["scale"] = 2,
     ["displayId"] = 91879,
     ["creatureType"] = "Mechanical",
@@ -995,8 +1171,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 82.991252333297,
-        ["y"] = -467.2471648686,
+        ["x"] = 80.304179508208,
+        ["y"] = -485.60901688071,
         ["g"] = 26,
         ["sublevel"] = 1,
       },
@@ -1006,7 +1182,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "K.U.-J.0.",
     ["id"] = 144246,
     ["count"] = 0,
-    ["health"] = 179988689,
+    ["health"] = 306937559,
     ["scale"] = 2,
     ["displayId"] = 90775,
     ["creatureType"] = "Mechanical",
@@ -1048,7 +1224,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "G.U.A.R.D.",
     ["id"] = 144303,
     ["count"] = 5,
-    ["health"] = 28573306,
+    ["health"] = 48747699,
     ["scale"] = 2,
     ["displayId"] = 68856,
     ["creatureType"] = "Mechanical",
@@ -1082,7 +1258,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Metal Gunk",
     ["id"] = 236033,
     ["count"] = 7,
-    ["health"] = 31430637,
+    ["health"] = 53622468,
     ["scale"] = 1.5,
     ["displayId"] = 90423,
     ["creatureType"] = "Elemental",
@@ -1112,8 +1288,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 622.76097924413,
-        ["y"] = -462.63730521202,
+        ["x"] = 620.58765648884,
+        ["y"] = -463.18064079814,
         ["g"] = 7,
         ["sublevel"] = 1,
       },
@@ -1135,16 +1311,49 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 11,
         ["sublevel"] = 1,
       },
-      [6] = {
-        ["x"] = 751.18566795007,
-        ["y"] = -423.52974298375,
-        ["g"] = 12,
-        ["sublevel"] = 1,
-      },
       [7] = {
         ["x"] = 741.79944530028,
         ["y"] = -402.03935322954,
         ["g"] = 14,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [22] = {
+    ["name"] = "Inconspicuous Plant",
+    ["id"] = 152033,
+    ["count"] = 0,
+    ["health"] = 51185084,
+    ["scale"] = 2,
+    ["displayId"] = 91336,
+    ["creatureType"] = "Mechanical",
+    ["level"] = 80,
+    ["spells"] = {
+      [294855] = {
+      },
+      [294860] = {
+      },
+      [294863] = {
+      },
+      [294869] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 287.94353712392,
+        ["y"] = -162.12136936563,
+        ["g"] = 30,
+      },
+      [2] = {
+        ["x"] = 334.67386450967,
+        ["y"] = -185.37464105046,
+        ["g"] = 30,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 303.44234964814,
+        ["y"] = -188.41521190958,
+        ["g"] = 30,
         ["sublevel"] = 1,
       },
     },
