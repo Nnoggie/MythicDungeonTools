@@ -4554,6 +4554,7 @@ end
 function MDT:ResetMainFramePos(soft)
   MDT:Async(function()
     --soft reset just redraws the window with existing coordinates from db
+    if not framesInitialized then initFrames() end
     local f = self.main_frame
     if not soft then
       db.nonFullscreenScale = defaultSavedVars.global.nonFullscreenScale
