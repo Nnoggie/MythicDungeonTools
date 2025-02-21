@@ -220,6 +220,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [293683] = {
+      },
       [293724] = {
       },
     },
@@ -1156,6 +1158,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [283640] = {
       },
+      [285150] = {
+      },
       [285152] = {
       },
       [285377] = {
@@ -1323,11 +1327,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Inconspicuous Plant",
     ["id"] = 152033,
     ["count"] = 0,
-    ["health"] = 51185084,
+    ["health"] = 8124616,
     ["scale"] = 2,
     ["displayId"] = 91336,
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [294855] = {
       },

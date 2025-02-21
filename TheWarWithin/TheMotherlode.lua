@@ -95,7 +95,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Off-Duty Laborer",
     ["id"] = 130436,
     ["count"] = 1,
-    ["health"] = 19476031,
+    ["health"] = 48690078,
     ["scale"] = 0.5,
     ["displayId"] = 81226,
     ["creatureType"] = "Humanoid",
@@ -629,6 +629,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [267354] = {
@@ -826,6 +827,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1217283] = {
       },
+      [1227275] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -979,7 +982,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venture Co. Earthshaper",
     ["id"] = 130661,
     ["count"] = 6,
-    ["health"] = 48690078,
+    ["health"] = 43821070,
     ["scale"] = 0.7,
     ["displayId"] = 81333,
     ["creatureType"] = "Humanoid",
@@ -1619,6 +1622,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Incapacitate"] = true,
       ["Root"] = true,
       ["Fear"] = true,
+      ["Banish"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {
@@ -1849,6 +1853,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [268846] = {
@@ -1938,6 +1943,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [262268] = {
@@ -2475,7 +2481,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mogul Razdunk",
     ["id"] = 129232,
     ["count"] = 0,
-    ["health"] = 312041597,
+    ["health"] = 341295496,
     ["scale"] = 1.5,
     ["displayId"] = 127820,
     ["creatureType"] = "Mechanical",
@@ -2523,7 +2529,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Crawler Mine",
     ["id"] = 133482,
     ["count"] = 1,
-    ["health"] = 3408305,
+    ["health"] = 14607024,
     ["scale"] = 0.5,
     ["displayId"] = 127835,
     ["creatureType"] = "Mechanical",
