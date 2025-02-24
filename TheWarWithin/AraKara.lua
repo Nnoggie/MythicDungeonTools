@@ -350,6 +350,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [438599] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -742,6 +743,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [438618] = {
+        ["poison"] = true,
       },
       [438622] = {
       },
@@ -985,6 +987,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [436322] = {
         ["interruptible"] = true,
+        ["poison"] = true,
       },
       [438825] = {
       },
@@ -1548,6 +1551,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [448248] = {
         ["interruptible"] = true,
+        ["poison"] = true,
       },
     },
     ["clones"] = {
@@ -1868,6 +1872,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [433841] = {
+        ["poison"] = true,
       },
       [433843] = {
       },
@@ -2482,6 +2487,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [439680] = {
       },
       [461487] = {
+        ["poison"] = true,
       },
       [461507] = {
       },

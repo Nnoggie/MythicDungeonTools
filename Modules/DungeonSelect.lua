@@ -21,7 +21,9 @@ MDT.dungeonSelectionToIndex = {}
 
 do
   tinsert(MDT.seasonList, L["The War Within Season 1"])
+  tinsert(MDT.seasonList, L["The War Within Season 2"])
   tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
+  tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
 end
 
 local seasonList = MDT.seasonList
@@ -79,6 +81,7 @@ function MDT:UpdateDungeonDropDown()
       button.selectedTexture = button:CreateTexture()
       button.selectedTexture:SetAllPoints(button)
       button.selectedTexture:SetAtlas("bags-glow-artifact")
+      button.selectedTexture:SetDrawLayer("OVERLAY")
       button.shortText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
       button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
       button.shortText:SetFont(button.shortText:GetFont(), 11, "OUTLINE")
@@ -89,7 +92,7 @@ function MDT:UpdateDungeonDropDown()
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
     button.dungeonIdx = dungeonIdx
-    button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId))
+    button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId) or 134400)
     button.shortText:SetText(mapInfo.shortName)
     button:SetScript("OnClick", function(self, button)
       MDT:UpdateToDungeon(dungeonIdx)
@@ -103,12 +106,13 @@ function MDT:UpdateDungeonDropDown()
       local timer
       if mapInfo.mapID then
         timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID))
+        -- TODO: this is completely gone in S2
         -- we want to always show the correct timer including the Challenger's Peril affix
         -- add 90s if we are not currently in a key
-        local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
-        if not activeKeystoneLevel or activeKeystoneLevel < 7 then
-          timer = timer + 90
-        end
+        -- local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
+        -- if timer and (not activeKeystoneLevel or activeKeystoneLevel < 7) then
+        --   timer = timer + 90
+        -- end
       end
       GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
       GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)

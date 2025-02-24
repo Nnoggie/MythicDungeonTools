@@ -5,14 +5,14 @@ local MDT = MDT
 
 -- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
 local dungeonsToTrack = {
-  [1] = 31,
-  [2] = 35,
-  [3] = 19,
-  [4] = 110,
-  [5] = 111,
-  [6] = 112,
-  [7] = 113,
-  [8] = 114,
+  [1] = 115,
+  [2] = 116,
+  [3] = 117,
+  [4] = 118,
+  [5] = 119,
+  [6] = 120,
+  [7] = 121,
+  [8] = 122,
 }
 
 MDT.DataCollection = {}
@@ -346,14 +346,14 @@ end
 
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
   local timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool = CombatLogGetCurrentEventInfo()
-  --enemy spells
-  if trackedEvents[subevent] and sourceGUID then
+  -- enemy spells: only collect in Mythic+ Challenge Mode
+  if trackedEvents[subevent] and sourceGUID and C_ChallengeMode.IsChallengeModeActive() then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", sourceGUID)
     id = tonumber(id)
     --dungeon
     for _, i in pairs(dungeonsToTrack) do
       local enemies = MDT.dungeonEnemies[i]
-      --enemy
+      -- enemy
       for enemyIdx, enemy in pairs(enemies) do
         if id and spellId and enemy.id == id then
           db.dataCollection[i] = db.dataCollection[i] or {}
@@ -366,7 +366,7 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
       end
     end
   end
-  --characteristics
+  -- characteristics (always collect)
   if subevent == "SPELL_AURA_APPLIED" and destGUID then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", destGUID)
     id = tonumber(id) or 0
@@ -374,13 +374,12 @@ function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
     --dungeon
     for _, i in pairs(dungeonsToTrack) do
       local enemies = MDT.dungeonEnemies[i]
-      --enemy
+      -- enemy
       for enemyIdx, enemy in pairs(enemies) do
         if enemy.id == id then
           for characteristic, data in pairs(characteristicsData) do
             local spells = data.spells
             if spells and spells[spellId] then
-              -- return early if already present
               db.dataCollectionCC[i] = db.dataCollectionCC[i] or {}
               db.dataCollectionCC[i][id] = db.dataCollectionCC[i][id] or {}
               db.dataCollectionCC[i][id][characteristic] = true
@@ -494,13 +493,9 @@ function DC:InitHealthTrack()
     local level, activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
     local fortified
     local tyrannical
-    local thundering
     for k, v in pairs(activeAffixIDs) do
       if v == 10 then
         fortified = true
-      end
-      if v == 132 then
-        thundering = true
       end
       if v == 9 then
         tyrannical = true
@@ -526,7 +521,6 @@ function DC:InitHealthTrack()
             ["name"] = UnitName(unit),
             ["level"] = level,
             ["fortified"] = fortified,
-            ["thundering"] = thundering,
             ["tyrannical"] = tyrannical
           }
         end
@@ -543,8 +537,7 @@ function DC:InitHealthTrack()
         if tracked then
           local isBoss = enemy.isBoss and true or false
           local baseHealth = MDT:ReverseCalcEnemyHealth(tracked.health, tracked.level, isBoss, tracked.fortified,
-            tracked.tyrannical,
-            tracked.thundering)
+            tracked.tyrannical)
           if baseHealth ~= enemy.health then
             numEnemyHealthChanged = numEnemyHealthChanged + 1
           end
