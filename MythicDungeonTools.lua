@@ -181,9 +181,9 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    currentDungeonIdx = 31,
+    currentDungeonIdx = 31, -- set this one every new season
+    latestDungeonSeen = 0,
     selectedDungeonList = 1,
-    latestSeenDungeonList = 0,
     knownAffixWeeks = {},
   },
 }
@@ -2155,7 +2155,6 @@ function MDT:FormatEnemyHealth(amount)
       return amount
     end
   elseif self:GetLocaleIndex() == 10 or self:GetLocaleIndex() == 11 then
-
     if amount >= 1e8 then
       return string.format("%.2f亿", amount / 1e8)
     elseif amount >= 1e4 then
@@ -2164,7 +2163,6 @@ function MDT:FormatEnemyHealth(amount)
       return amount
     end
   else
-
     if amount >= 1e12 then
       return string.format("%.3ft", amount / 1e12)
     elseif amount >= 1e9 then

@@ -212,11 +212,19 @@ end
 function MDT:CheckSeenDungeonLists()
   db = MDT:GetDB()
   local defaultSavedVars = MDT:GetDefaultSavedVariables().global
-  local latestSeason = defaultSavedVars.selectedDungeonList
   local latestDungeon = defaultSavedVars.currentDungeonIdx
-  if latestSeason > db.latestSeenDungeonList then
-    db.latestSeenDungeonList = latestSeason
-    db.selectedDungeonList = latestSeason
-    db.currentDungeonIdx = latestDungeon
+  local latestSeen = db.latestDungeonSeen
+  if latestSeen ~= latestDungeon then
+    -- find list
+    for listIndex, list in pairs(MDT.dungeonSelectionToIndex) do
+      for _, dngIdx in pairs(list) do
+        if dngIdx == latestDungeon then
+          db.latestDungeonSeen = latestDungeon
+          db.currentDungeonIdx = latestDungeon
+          db.selectedDungeonList = listIndex
+          return
+        end
+      end
+    end
   end
 end
