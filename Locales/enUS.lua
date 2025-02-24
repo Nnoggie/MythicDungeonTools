@@ -108,7 +108,7 @@ L["Void Ascendant"] = "Void Ascendant"
 L["Radiating Voidstone"] = "Radiating Voidstone"
 L["Kyrioss"] = "Kyrioss"
 L["Stormguard Gorren"] = "Stormguard Gorren"
-L["Skardyn Monstrosity"] = "Skardyn Monstrosity"
+L["Voidstone Monstrosity"] = "Voidstone Monstrosity"
 
 
 L["Shreddinator 3000"] = "Shreddinator 3000"

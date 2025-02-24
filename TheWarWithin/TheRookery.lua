@@ -1442,7 +1442,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [15] = {
-    ["name"] = "Skardyn Monstrosity",
+    ["name"] = "Voidstone Monstrosity",
     ["id"] = 207207,
     ["count"] = 0,
     ["health"] = 390080433,
