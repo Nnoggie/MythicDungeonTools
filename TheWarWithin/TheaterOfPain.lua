@@ -1,4 +1,4 @@
-﻿local addonName = ...
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 121
@@ -1351,6 +1351,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
+      [330592] = {
+      },
       [330608] = {
         ["disease"] = true,
       },
@@ -1487,7 +1489,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [318406] = {
       },
+      [322795] = {
+      },
       [323515] = {
+      },
+      [332859] = {
       },
     },
     ["clones"] = {
@@ -1559,6 +1565,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [317605] = {
+      },
+      [336995] = {
       },
       [337037] = {
       },
@@ -1828,13 +1836,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Deathwalker",
     ["id"] = 166524,
     ["count"] = 0,
-    ["health"] = 3249846,
+    ["health"] = 4874770,
     ["scale"] = 1.6,
     ["displayId"] = 96337,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
       ["Silence"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
     },
     ["spells"] = {
       [324589] = {

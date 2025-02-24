@@ -1,4 +1,4 @@
-﻿local addonName = ...
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 122
@@ -520,6 +520,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [291613] = {
       },
       [291626] = {
+      },
+      [296331] = {
       },
       [291865] = {
       },
