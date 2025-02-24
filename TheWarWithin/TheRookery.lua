@@ -1,4 +1,4 @@
-﻿local addonName = ...
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 
@@ -43,7 +43,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Quartermaster Koratite",
     ["id"] = 209801,
     ["count"] = 20,
-    ["health"] = 77996318,
+    ["health"] = 77952395,
     ["scale"] = 2,
     ["displayId"] = 114849,
     ["creatureType"] = "Humanoid",
@@ -73,7 +73,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cursed Thunderer",
     ["id"] = 207198,
     ["count"] = 10,
-    ["health"] = 43872929,
+    ["health"] = 43848222,
     ["scale"] = 1.5,
     ["displayId"] = 118407,
     ["creatureType"] = "Humanoid",
@@ -164,7 +164,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cursed Rookguard",
     ["id"] = 207197,
     ["count"] = 10,
-    ["health"] = 51185084,
+    ["health"] = 51156260,
     ["scale"] = 1.5,
     ["displayId"] = 118393,
     ["creatureType"] = "Humanoid",
@@ -324,7 +324,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Voidrider",
     ["id"] = 212786,
     ["count"] = 25,
-    ["health"] = 87745857,
+    ["health"] = 87696445,
     ["scale"] = 1.5,
     ["displayId"] = 117707,
     ["creatureType"] = "Elemental",
@@ -428,7 +428,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unruly Stormrook",
     ["id"] = 207186,
     ["count"] = 12,
-    ["health"] = 53622468,
+    ["health"] = 53592272,
     ["scale"] = 1.5,
     ["displayId"] = 117707,
     ["creatureType"] = "Elemental",
@@ -443,7 +443,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [427616] = {
-        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -477,7 +476,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Cursed Rooktender",
     ["id"] = 207199,
     ["count"] = 10,
-    ["health"] = 36560774,
+    ["health"] = 36540186,
     ["scale"] = 1.5,
     ["displayId"] = 114851,
     ["creatureType"] = "Humanoid",
@@ -533,7 +532,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Void-Cursed Crusher",
     ["id"] = 214419,
     ["count"] = 15,
-    ["health"] = 58497238,
+    ["health"] = 58464296,
     ["scale"] = 1.5,
     ["displayId"] = 117972,
     ["creatureType"] = "Aberration",
@@ -560,6 +559,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 63.79404989058,
         ["y"] = -129.48773174911,
         ["g"] = 14,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 293.16513086734,
+        ["y"] = -346.55038272979,
+        ["g"] = 35,
         ["sublevel"] = 1,
       },
       [3] = {
@@ -648,6 +653,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 30,
         ["sublevel"] = 1,
       },
+      [18] = {
+        ["x"] = 293.16513086734,
+        ["y"] = -370.73429246875,
+        ["g"] = 35,
+        ["sublevel"] = 1,
+      },
       [19] = {
         ["x"] = 652.55839265014,
         ["y"] = -532.34188520682,
@@ -666,7 +677,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupted Oracle",
     ["id"] = 214439,
     ["count"] = 12,
-    ["health"] = 38998159,
+    ["health"] = 38976198,
     ["scale"] = 1.5,
     ["displayId"] = 119838,
     ["creatureType"] = "Humanoid",
@@ -714,12 +725,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 16,
         ["sublevel"] = 1,
       },
-      [5] = {
-        ["x"] = 142.72814651362,
-        ["y"] = -205.17474276315,
-        ["g"] = 19,
-        ["sublevel"] = 1,
-      },
       [7] = {
         ["x"] = 154.47296651572,
         ["y"] = -252.17080119867,
@@ -732,7 +737,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Coalescing Void Diffuser",
     ["id"] = 214421,
     ["count"] = 25,
-    ["health"] = 73121548,
+    ["health"] = 73080370,
     ["scale"] = 1.5,
     ["displayId"] = 117974,
     ["creatureType"] = "Aberration",
@@ -747,6 +752,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [430812] = {
       },
       [430814] = {
+      },
+      [430834] = {
       },
       [452932] = {
       },
@@ -788,7 +795,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Afflicted Civilian",
     ["id"] = 219066,
     ["count"] = 1,
-    ["health"] = 9749540,
+    ["health"] = 9744049,
     ["scale"] = 1,
     ["displayId"] = 121686,
     ["creatureType"] = "Humanoid",
@@ -1234,7 +1241,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Void Ascendant",
     ["id"] = 212793,
     ["count"] = 22,
-    ["health"] = 82871088,
+    ["health"] = 82824420,
     ["scale"] = 2,
     ["displayId"] = 118418,
     ["creatureType"] = "Humanoid",
@@ -1262,8 +1269,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 279.61108820295,
-        ["y"] = -363.11262834715,
+        ["x"] = 272.68976235246,
+        ["y"] = -359.04127250423,
+        ["g"] = 35,
         ["sublevel"] = 1,
       },
       [4] = {
@@ -1290,7 +1298,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Radiating Voidstone",
     ["id"] = 212739,
     ["count"] = 25,
-    ["health"] = 107244937,
+    ["health"] = 107184544,
     ["scale"] = 2,
     ["displayId"] = 114860,
     ["creatureType"] = "Aberration",
@@ -1338,7 +1346,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kyrioss",
     ["id"] = 209230,
     ["count"] = 0,
-    ["health"] = 341041732,
+    ["health"] = 341320379,
     ["scale"] = 2,
     ["displayId"] = 114856,
     ["creatureType"] = "Elemental",
@@ -1347,6 +1355,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2567,
     ["instanceID"] = 0,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -1355,6 +1364,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [419871] = {
       },
       [444034] = {
+      },
+      [474017] = {
       },
       [474018] = {
       },
@@ -1383,7 +1394,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormguard Gorren",
     ["id"] = 207205,
     ["count"] = 0,
-    ["health"] = 341041732,
+    ["health"] = 341320379,
     ["scale"] = 2,
     ["displayId"] = 114403,
     ["creatureType"] = "Humanoid",
@@ -1400,6 +1411,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [424737] = {
       },
       [424739] = {
+      },
+      [424797] = {
       },
       [424958] = {
       },
@@ -1432,7 +1445,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skardyn Monstrosity",
     ["id"] = 207207,
     ["count"] = 0,
-    ["health"] = 389761980,
+    ["health"] = 390080433,
     ["scale"] = 2,
     ["displayId"] = 114324,
     ["creatureType"] = "Aberration",
@@ -1448,6 +1461,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [181089] = {
       },
       [423305] = {
+      },
+      [423393] = {
       },
       [423839] = {
       },
@@ -1486,7 +1501,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormrider Vokmar",
     ["id"] = 211260,
     ["count"] = 0,
-    ["health"] = 101557699,
+    ["health"] = 101500521,
     ["scale"] = 3.3,
     ["displayId"] = 116266,
     ["creatureType"] = "Humanoid",
