@@ -88,6 +88,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Imprison"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [430109] = {
@@ -171,6 +172,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
@@ -807,6 +809,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [443847] = {
@@ -1249,6 +1252,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [430238] = {
@@ -1442,7 +1446,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [15] = {
-    ["name"] = "Voidstone Monstrosity",
+    ["name"] = "Skardyn Monstrosity",
     ["id"] = 207207,
     ["count"] = 0,
     ["health"] = 390080433,
@@ -1461,6 +1465,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [181089] = {
       },
       [423305] = {
+      },
+      [423356] = {
       },
       [423393] = {
       },
@@ -1534,7 +1540,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Voidstone Awakened",
     ["id"] = 213741,
     ["count"] = 0,
-    ["health"] = 24345042,
+    ["health"] = 24360126,
     ["scale"] = 2,
     ["displayId"] = 114860,
     ["creatureType"] = "Humanoid",

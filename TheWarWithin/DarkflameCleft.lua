@@ -60,8 +60,6 @@ MDT.mapPOIs[dungeonIndex] = {
 };
 
 
-
-
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Menial Laborer",
@@ -79,6 +77,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -388,6 +387,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -441,6 +441,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [425704] = {
@@ -481,7 +482,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [7] = {
         ["x"] = 181.75704586048,
         ["y"] = -153.69507364785,
-        ["g"] = 13,
+        ["g"] = 12,
         ["sublevel"] = 1,
       },
       [8] = {
@@ -503,6 +504,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Polymorph"] = true,
       ["Root"] = true,
@@ -510,6 +512,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -570,11 +573,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -646,7 +651,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -781,6 +788,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -955,9 +963,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Silence"] = true,
+      ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [422393] = {
@@ -1305,6 +1315,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [422541] = {
@@ -1464,6 +1475,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1493,6 +1505,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1522,6 +1535,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1548,10 +1562,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1581,6 +1597,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1611,6 +1628,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1636,10 +1654,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1669,6 +1689,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [424322] = {
@@ -1915,6 +1936,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Root"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1994,10 +2016,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
+      ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [427176] = {
