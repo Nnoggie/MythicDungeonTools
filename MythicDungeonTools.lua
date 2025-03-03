@@ -2919,7 +2919,9 @@ end
 
 function MDT:ImportPreset(preset, fromLiveSession)
   --change dungeon to dungeon of the new preset
-  self:UpdateToDungeon(preset.value.currentDungeonIdx, true)
+  MDT:SetDungeonList(nil, preset.value.currentDungeonIdx)
+  MDT:UpdateDungeonDropDown()
+  MDT:UpdateToDungeon(preset.value.currentDungeonIdx, true)
   --search for uid
   local updateIndex
   local duplicatePreset

@@ -169,6 +169,27 @@ function MDT:CreateSublevelDropdown(frame)
   group:AddChild(group.sublevelDropdown)
 end
 
+function MDT:SetDungeonList(key, dungeonIdx)
+  if dungeonIdx then
+    -- find an index, first one should be the correct one
+    for listIdx, list in ipairs(MDT.dungeonSelectionToIndex) do
+      for _, dIdx in ipairs(list) do
+        if dungeonIdx == dIdx and key == nil then
+          key = listIdx
+          break
+        end
+      end
+    end
+  end
+  if not key then return end
+  -- make sure we don't go out of bounds
+  -- this probably happens if dropdown is being spammed (?)
+  local index = math.min(#dungeonSelectionToIndex, key)
+  db.selectedDungeonList = index
+  local dropdown = MDT.main_frame.seasonSelectionGroup.seasonDropdown
+  dropdown:SetValue(index)
+end
+
 function MDT:CreateSeasonDropdown(frame)
   if #seasonList == 1 then
     -- no dropdown needed
@@ -195,10 +216,7 @@ function MDT:CreateSeasonDropdown(frame)
   group.seasonDropdown.pullout.frame:SetParent(group.seasonDropdown.frame)
   group.seasonDropdown.text:SetJustifyH("LEFT")
   group.seasonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-    -- make sure we don't go out of bounds
-    -- this probably happens if dropdown is being spammed (?)
-    local index = math.min(#dungeonSelectionToIndex, key)
-    db.selectedDungeonList = index
+    MDT:SetDungeonList(key)
     MDT:UpdateDungeonDropDown()
     local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
     MDT:UpdateToDungeon(currentList[1])
