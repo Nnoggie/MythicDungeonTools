@@ -181,7 +181,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    currentDungeonIdx = 31, -- set this one every new season
+    currentDungeonIdx = 115, -- set this one every new season
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
     knownAffixWeeks = {},
