@@ -1,2 +1,3 @@
-## 5.3.0 (2025-02-25)
-  - TWW S2 update
+## 5.3.1 (2025-03-03)
+  - Mapping Updates
+  - Importing a route will properly swap season list
