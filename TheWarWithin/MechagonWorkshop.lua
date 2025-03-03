@@ -215,6 +215,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Polymorph"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
       ["Mind Soothe"] = true,
@@ -521,8 +522,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [291626] = {
       },
-      [296331] = {
-      },
       [291865] = {
       },
       [291878] = {
@@ -530,6 +529,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [291915] = {
       },
       [291928] = {
+      },
+      [296331] = {
       },
       [1226680] = {
       },
@@ -1335,6 +1336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Stun"] = true,
     },
     ["spells"] = {

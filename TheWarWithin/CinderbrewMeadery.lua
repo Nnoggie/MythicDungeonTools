@@ -70,7 +70,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [434695] = {
@@ -196,12 +199,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -349,7 +354,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [434505] = {
@@ -571,8 +579,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [441410] = {
@@ -681,9 +691,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -871,8 +884,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
+      ["Mind Soothe"] = true,
     },
     ["spells"] = {
       [441119] = {
@@ -955,9 +971,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
+      ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [441397] = {
@@ -1278,6 +1297,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1378,6 +1398,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
@@ -1612,9 +1633,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [441179] = {
@@ -1678,6 +1701,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Incapacitate"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [439403] = {
@@ -1901,6 +1925,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [441434] = {
@@ -1955,6 +1980,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [440082] = {
@@ -1999,6 +2025,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [438971] = {
@@ -2044,7 +2071,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [441410] = {
@@ -2084,6 +2113,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Silence"] = true,
       ["Fear"] = true,
       ["Stun"] = true,
+      ["Slow"] = true,
     },
     ["spells"] = {
       [441397] = {
