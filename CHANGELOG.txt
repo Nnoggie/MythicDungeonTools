@@ -1,3 +1,2 @@
-## 5.3.1 (2025-03-03)
-  - Mapping Updates
-  - Importing a route will properly swap season list
+## 5.3.2 (2025-03-03)
+  - Mapping Updates Darkflame Cleft
