@@ -1,2 +1,2 @@
-## 5.3.2 (2025-03-03)
-  - Mapping Updates Darkflame Cleft
+## 5.3.3 (2025-03-09)
+  - Fix nil error on rookery boss name
