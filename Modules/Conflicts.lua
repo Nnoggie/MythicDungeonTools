@@ -42,23 +42,8 @@ local candidates = {
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
-conflictCheckFrame:RegisterEvent("ADDON_LOADED")
 conflictCheckFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 conflictCheckFrame:SetScript("OnEvent", function(self, event, ...)
-  if event == "ADDON_LOADED" then
-    local addonName = ...
-    local candidate = candidates[addonName]
-    if candidate then
-      if candidate.version then
-        ---@diagnostic disable-next-line: redundant-parameter
-        local version = C_AddOns.GetAddOnMetadata(addonName, "Version"):gsub("%.", "")
-        local versionNum = tonumber(version)
-        candidate.detected = versionNum <= candidate.version
-      else
-        candidate.detected = true
-      end
-    end
-  end
   if event == "PLAYER_ENTERING_WORLD" then
     -- fire onDetect for all candidates that have been detected
     for _, candidate in pairs(candidates) do
@@ -72,6 +57,22 @@ conflictCheckFrame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function MDT:CheckAddonConflicts()
+  for i = 1, C_AddOns.GetNumAddOns() do
+    local name = C_AddOns.GetAddOnInfo(i)
+    local loaded = C_AddOns.IsAddOnLoaded(i)
+    local candidate = candidates[name]
+    if loaded and candidate then
+      if candidate.version then
+        ---@diagnostic disable-next-line: redundant-parameter
+        local version = C_AddOns.GetAddOnMetadata(i, "Version"):gsub("%.", "")
+        local versionNum = tonumber(version)
+        candidate.detected = versionNum <= candidate.version
+      else
+        candidate.detected = true
+      end
+    end
+  end
+
   for _, candidate in pairs(candidates) do
     if candidate.detected then
       return true
