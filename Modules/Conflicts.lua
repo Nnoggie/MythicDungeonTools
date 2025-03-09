@@ -39,6 +39,13 @@ local candidates = {
 
     end,
   },
+  ["ChatCopyPaste"] = {
+    name = "ChatCopyPaste",
+    detected = false,
+    onDetect = function()
+
+    end,
+  },
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
