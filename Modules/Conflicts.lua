@@ -41,6 +41,7 @@ local candidates = {
   },
   ["ChatCopyPaste"] = {
     name = "ChatCopyPaste",
+    version = 122, --latest version that causes issues
     detected = false,
     onDetect = function()
 
