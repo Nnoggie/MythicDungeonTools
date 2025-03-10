@@ -170,6 +170,7 @@ function MDT:CreateSublevelDropdown(frame)
 end
 
 function MDT:SetDungeonList(key, dungeonIdx)
+  db = MDT:GetDB()
   if dungeonIdx then
     -- find an index, first one should be the correct one
     for listIdx, list in ipairs(MDT.dungeonSelectionToIndex) do
