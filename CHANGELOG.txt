@@ -1,2 +1,2 @@
-## 5.3.3 (2025-03-09)
-  - Fix nil error on rookery boss name
+## 5.3.4 (2025-03-10)
+  - Fix nil error
