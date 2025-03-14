@@ -18,6 +18,17 @@
 ## OptionalDeps: !!AddonLocale, LibStub, Ace3, WagoAnalytics
 ## SavedVariables: MythicDungeonToolsDB
 ## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\MDTFull
+## Category-enUS: Mythic+ Dungeons
+## Category-deDE: Mythic+ Dungeons
+## Category-esES: Mythic+ Dungeons
+## Category-esMX: Mythic+ Dungeons
+## Category-frFR: Donjons Mythique+
+## Category-itIT: Mythic+ Dungeons
+## Category-koKR: Mythic+ Dungeons
+## Category-ptBR: Mythic+ Dungeons
+## Category-ruRU: Подземелья М+
+## Category-zhCN: Mythic+ Dungeons
+## Category-zhTW: Mythic+ Dungeons
 
 libs\load_libs.xml
 BuildCheck.lua
