@@ -3,6 +3,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["rookItemDescription"] = "" --ToDo"After kill |cFFFF0000Kyrioss|r and loot |cFF00FF00Stormrook Feather|r \nUse it on nearby |cFF00FF00Chained Stormrook|r to gain this buff for 5 minutes."
 L["brewItemADescription"] = "Usable by Gnomes, Mechagnomes, Goblins or Khaz Algar Engineers (25)"
 L["brewItemBDescription"] = "Usable by Khaz Algar Alchemists (25) or Khaz Algar Cooks (25)"
 L["Voidstone Awakened"] = "Voidstone Awakened"
