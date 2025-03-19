@@ -666,6 +666,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 92177,
     ["creatureType"] = "Mechanical",
     ["level"] = 81,
+    ["stealthDetect"] = true,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Stun"] = true,
