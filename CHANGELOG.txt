@@ -1,2 +1,2 @@
-## 5.3.6 (2025-03-12)
-  - Rookery Updates first boss room (everything was rotated by 90 degrees counter clockwise)
+## 5.3.7 (2025-03-24)
+  - Minor mapping updates
