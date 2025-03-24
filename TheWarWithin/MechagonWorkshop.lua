@@ -160,6 +160,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [293827] = {
+        ["interruptible"] = true
       },
       [293854] = {
       },
@@ -278,6 +279,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [293729] = {
+        ["interruptible"] = true
       },
       [293930] = {
         ["magic"] = true,
@@ -916,6 +918,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [301088] = {
+        ["interruptible"] = true
       },
     },
     ["clones"] = {
