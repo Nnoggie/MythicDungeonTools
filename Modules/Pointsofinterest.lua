@@ -931,6 +931,31 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "rookItem" then
+    local itemTexture = 237587
+    local itemSpellId = 434696
+    local itemDescription = L["rookItemDescription"]
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(16, 16)
+    frame.Texture:SetSize(16, 16)
+    frame.HighlightTexture:SetSize(16, 16)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
   if type == "brewItemA" then
     local itemTexture = 4548850
     local itemSpellId = 439698

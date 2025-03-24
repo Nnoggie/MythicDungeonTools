@@ -35,8 +35,16 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 772.56443910914,
       ["y"] = -173.23866427385,
     },
+    [2] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "rookItem",
+      ["x"] = 420.61427161837,
+      ["y"] = -172.67749506966,
+    },
   },
 };
+
+
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -49,6 +57,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Taunt"] = true,
       ["Slow"] = true,
     },
     ["spells"] = {
@@ -723,6 +732,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Silence"] = true,
+      ["Polymorph"] = true,
+      ["Root"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Imprison"] = true,
@@ -1424,8 +1435,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 396.15242836474,
-        ["y"] = -170.93059513852,
+        ["x"] = 370.17717307284,
+        ["y"] = -173.61764374331,
         ["sublevel"] = 1,
       },
     },
@@ -1581,6 +1592,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 114860,
     ["creatureType"] = "Humanoid",
     ["level"] = 81,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [429028] = {
       },
