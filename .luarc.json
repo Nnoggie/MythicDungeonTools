@@ -62,7 +62,9 @@
     "GAME_LOCALE",
     "DevTool",
     "MenuUtil",
-        "GameTooltip_SetTitle"
+        "GameTooltip_SetTitle",
+        "WrapTextInColor",
+        "ICON_LIST"
   ],
   "diagnostics.disable": []
 }

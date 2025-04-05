@@ -114,6 +114,11 @@
                         <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
+                <Texture name="$parent_OverlayIcon" hidden="false" parentKey="texture_OverlayIcon">
+                  <Anchors>
+                      <Anchor point="CENTER"/>
+                  </Anchors>
+                </Texture>
                 <FontString name="$parent_Text1" hidden="true" parentKey="fontstring_Text1">
                     <Color r="1" g="1" b="1" a="1"/>
                     <Anchors>

@@ -487,7 +487,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
         MDT:ReloadPullButtons()
         if updateSeasonal then
-          MDT:DungeonEnemies_UpdateSeasonalAffix()
           MDT:POI_UpdateAll()
           MDT:KillAllAnimatedLines()
           MDT:DrawAllAnimatedLines()
@@ -518,9 +517,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
             MDT.main_frame.sidePanel.affixWeekWarning.image:Show()
             MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
           end
-          MDT:DungeonEnemies_UpdateTeeming()
-          MDT:DungeonEnemies_UpdateInspiring()
-          MDT:DungeonEnemies_UpdateSeasonalAffix()
           MDT:POI_UpdateAll()
           MDT:UpdateProgressbar()
           MDT:ReloadPullButtons()
