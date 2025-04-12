@@ -244,7 +244,7 @@ local function POI_SetOptions(frame, type, poi)
         end
         local sublevelName = MDT:GetSublevelName(nil, connections[#connections].target)
         local npcName = MDT:GetNPCNameById(frame.npcId)
-        GameTooltip:AddLine("\n"..string.format(L["%s is in sublevel: %s"], npcName, sublevelName), 1, 1, 1)
+        GameTooltip:AddLine("\n" .. string.format(L["%s is in sublevel: %s"], npcName, sublevelName), 1, 1, 1)
         GameTooltip:AddLine(string.format(L["Click to go to %s"], sublevelName), 1, 1, 1)
       end
       GameTooltip:Show()
@@ -290,9 +290,9 @@ local function POI_SetOptions(frame, type, poi)
       if poi.formattedDoorDescription then
         doorDescription = formatPoiString(poi.formattedDoorDescription)
       end
-      GameTooltip:AddLine(doorName..
-        (slen(doorDescription) > 0 and "\n"..doorDescription or "")..
-        (poi.lockpick and "\n|cFF32CD32"..L["Locked"] or ""), 1, 1, 1, 1)
+      GameTooltip:AddLine(doorName ..
+        (slen(doorDescription) > 0 and "\n" .. doorDescription or "") ..
+        (poi.lockpick and "\n|cFF32CD32" .. L["Locked"] or ""), 1, 1, 1, 1)
       GameTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
@@ -306,8 +306,8 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetScript("OnEnter", function()
       local text = poi.graveyardDescription and L[poi.graveyardDescription] or ""
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(L["Graveyard"]..
-        (slen(text) > 0 and "\n"..text or
+      GameTooltip:AddLine(L["Graveyard"] ..
+        (slen(text) > 0 and "\n" .. text or
           ""), 1, 1, 1, 1)
       GameTooltip:Show()
     end)
@@ -550,7 +550,7 @@ local function POI_SetOptions(frame, type, poi)
 
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, botOptions[poi.botType].text.." "..poi.botTypeIndex)
+      GameTooltip_SetTitle(GameTooltip, botOptions[poi.botType].text .. " " .. poi.botTypeIndex)
       GameTooltip:AddTexture(botOptions[poi.botType].textureId)
       GameTooltip:SetSpellByID(botOptions[poi.botType].spellId)
       GameTooltip:Show()
@@ -586,7 +586,7 @@ local function POI_SetOptions(frame, type, poi)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["ironDocksIronStar"].." "..poi.starIndex)
+      GameTooltip_SetTitle(GameTooltip, L["ironDocksIronStar"] .. " " .. poi.starIndex)
       GameTooltip:AddTexture(450907)
       GameTooltip:SetSpellByID(167299)
       GameTooltip:Show()
@@ -639,7 +639,7 @@ local function POI_SetOptions(frame, type, poi)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["brackenhideCage"].." "..poi.cageIndex)
+      GameTooltip_SetTitle(GameTooltip, L["brackenhideCage"] .. " " .. poi.cageIndex)
       GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
       GameTooltip:AddTexture(646379)
       GameTooltip:Show()
@@ -692,7 +692,7 @@ local function POI_SetOptions(frame, type, poi)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["neltharusChain"].." "..poi.chainIndex)
+      GameTooltip_SetTitle(GameTooltip, L["neltharusChain"] .. " " .. poi.chainIndex)
       GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
       GameTooltip:AddTexture(133035)
       GameTooltip:Show()
@@ -931,6 +931,30 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "dfcItem" then
+    local itemTexture = 2061718
+    local itemSpellId = 420307
+
+    frame.Texture:SetTexture(itemTexture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(8, 8)
+    frame.Texture:SetSize(8, 8)
+    frame.HighlightTexture:SetSize(8, 8)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip:SetSpellByID(itemSpellId)
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(itemDescription, 1, 1, 1)
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
   if type == "rookItem" then
     local itemTexture = 237587
     local itemSpellId = 434696
@@ -1098,7 +1122,7 @@ local function POI_SetOptions(frame, type, poi)
       },
       [5] = {
         name = L["Depleted Anima Seed"],
-        description = L["depletedAnimaSeedDescription"].."\n\n"..L["overgrownRootsDescription"],
+        description = L["depletedAnimaSeedDescription"] .. "\n\n" .. L["overgrownRootsDescription"],
         texture = 4554354,
         size = 10,
       },
@@ -1168,9 +1192,9 @@ local function POI_SetOptions(frame, type, poi)
   if type == "worldMarker" then
     frame:SetSize(18, 18)
     frame.Texture:SetSize(18, 18)
-    frame.Texture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]]..poi.index..[[.blp]])
+    frame.Texture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
     frame.HighlightTexture:SetSize(18, 18)
-    frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]]..poi.index..[[.blp]])
+    frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]] .. poi.index .. [[.blp]])
   end
 
   if type == "zoom" then
@@ -1195,7 +1219,7 @@ local function POI_SetOptions(frame, type, poi)
     end)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(L["Zoom"].." "..(shouldZoomIn() and L["zoomIn"] or L["zoomOut"]), 1, 1, 1, 1)
+      GameTooltip:AddLine(L["Zoom"] .. " " .. (shouldZoomIn() and L["zoomIn"] or L["zoomOut"]), 1, 1, 1, 1)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
