@@ -3,6 +3,12 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Okay"] = "Okay"
+L["Warning"] = "Warning"
+L["assignmentWarning"] = "MDT will NOT automatically set target markers on enemies in the game world."
+L["Set Target Marker"] = "Set Target Marker"
+L["Open Enemy Info"] = "Open Enemy Info"
+L["None"] = "None"
 L["rookItemDescription"] = "After defeating |cFFFF0000Kyrioss|r loot |cFF00FF00Stormrook Feather|r \nUse it on a nearby |cFF00FF00Chained Stormrook|r to gain this buff for 5 minutes."
 L["brewItemADescription"] = "Usable by Gnomes, Mechagnomes, Goblins or Khaz Algar Engineers (25)"
 L["brewItemBDescription"] = "Usable by Khaz Algar Alchemists (25) or Khaz Algar Cooks (25)"

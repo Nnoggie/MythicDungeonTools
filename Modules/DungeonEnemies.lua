@@ -58,6 +58,7 @@ local defaultSizes = {
   ["texture_DragRight"] = 8,
   ["texture_DragUp"] = 8,
   ["shrouded_Indicator"] = 20,
+  ["texture_OverlayIcon"] = 12,
 }
 
 function MDTDungeonEnemyMixin:updateSizes(scale)
@@ -335,6 +336,50 @@ local function setUpMouseHandlersAwakened(self, clone, scale, riftOffsets)
   end)
 end
 
+local iconColors = {
+  { 1,   .92, 0,    1 },
+  { .98, .57, 0,    1 },
+  { .83, .22, .9,   1 },
+  { .04, .95, 0,    1 },
+  { .7,  .82, .875, 1 },
+  { 0,   .71, 1,    1 },
+  { 1,   .24, .168, 1 },
+  { .98, .98, .98,  1 },
+}
+
+local createEnemyContextMenu = function(frame)
+  MDT:GetCurrentPreset().value.enemyAssignments = MDT:GetCurrentPreset().value.enemyAssignments or {}
+  local assignments = MDT:GetCurrentPreset().value.enemyAssignments
+  MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+    rootDescription:CreateTitle(L[frame.data.name])
+
+    local function IsSelected(data)
+      local assignment = assignments[data.enemyIdx] and assignments[data.enemyIdx][data.cloneIdx]
+      return assignment and assignment == data.index or false
+    end
+    local function SetSelected(data)
+      assignments[data.enemyIdx] = assignments[data.enemyIdx] or {}
+      assignments[data.enemyIdx][data.cloneIdx] = data.index ~= 0 and data.index or nil
+      frame:SetUp(frame.data, frame.clone)
+      if not db.hasSeenAssignmentWarning then
+        MDT:OpenConfirmationFrame(450, 150, L["Warning"], L["Okay"], L["assignmentWarning"])
+        db.hasSeenAssignmentWarning = true
+      end
+    end
+    local submenu = rootDescription:CreateButton(L["Set Target Marker"], function() end);
+    for i = 1, 8 do
+      local iconPath = ICON_LIST[i].."16:16:|t"
+      local color = CreateColor(unpack(iconColors[i]))
+      local iconName = WrapTextInColor(_G["RAID_TARGET_"..i], color)
+      submenu:CreateRadio(iconPath.." "..iconName, IsSelected, SetSelected, { enemyIdx = frame.enemyIdx, cloneIdx = frame.cloneIdx, index = i })
+    end
+    submenu:CreateRadio(L["None"], IsSelected, SetSelected, { enemyIdx = frame.enemyIdx, cloneIdx = frame.cloneIdx, index = 0 })
+    rootDescription:CreateButton(L["Open Enemy Info"], function()
+      MDT:ShowEnemyInfoFrame(frame)
+    end)
+  end)
+end
+
 function MDTDungeonEnemyMixin:OnClick(button, down)
   --always deselect toolbar tool
   MDT:UpdateSelectedToolbarTool()
@@ -408,7 +453,7 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
       end
       MDT:UpdateMap()
     else
-      MDT:ShowEnemyInfoFrame(self)
+      createEnemyContextMenu(self)
     end
   end
 end
@@ -806,7 +851,6 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
   self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), textScale, "OUTLINE", "")
   self.fontstring_Text1:SetText((clone.isBoss and data.count == 0 and "") or data.count)
   self.texture_MouseHighlight:SetAlpha(0.4)
-  self.texture_SelectedHighlight:SetVertexColor(unpack(selectedGreen))
   if data.isBoss then self.texture_Dragon:Show() else self.texture_Dragon:Hide() end
   self.texture_Background:SetVertexColor(1, 1, 1, 1)
   if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
@@ -830,7 +874,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
     self:SetMovable(true)
     self.animatedLine = nil
     setUpMouseHandlersAwakened(self, clone, scale, riftOffsets)
-    self:Hide() --hide by default, DungeonEnemies_UpdateSeasonalAffix handles showing
+    self:Hide()
   else
     setUpMouseHandlers(self)
   end
@@ -852,6 +896,18 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
   end
   self.texture_Indicator:Hide()
   self.shrouded_Indicator:Hide()
+  local assignments = MDT:GetCurrentPreset().value.enemyAssignments
+  local assignment = assignments and assignments[self.enemyIdx] and assignments[self.enemyIdx][self.cloneIdx]
+  if assignment then
+    self.texture_OverlayIcon:Show()
+    if assignment >= 1 and assignment <= 8 then
+      self.texture_OverlayIcon:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcon_"..assignment)
+    else
+      --TODO: other pre set icons, sheep, sap etc they will have specific indexes
+    end
+  else
+    self.texture_OverlayIcon:Hide()
+  end
   if db.devMode then blipDevModeSetup(self) end
 end
 
@@ -892,9 +948,9 @@ function MDT:DungeonEnemies_UpdateEnemiesAsync()
         --skip rifts that were dragged to another sublevel
         if not (data.corrupted and riftOffsets and riftOffsets[data.id] and riftOffsets[data.id].sublevel) then
           local blip = MDT.dungeonEnemies_framePool:Acquire()
-          blip:SetUp(data, clone)
           blip.enemyIdx = enemyIdx
           blip.cloneIdx = cloneIdx
+          blip:SetUp(data, clone)
           coroutine.yield()
         end
       end
@@ -1110,121 +1166,6 @@ function MDT:DungeonEnemies_GetPullColor(pull, pulls)
     MDT:DungeonEnemies_SetPullColor(pull, r, g, b)
   end
   return r, g, b
-end
-
----DungeonEnemies_UpdateTeeming
----Updates visibility state of teeming blips
-function MDT:DungeonEnemies_UpdateTeeming()
-  preset = MDT:GetCurrentPreset()
-  local teeming = MDT:IsPresetTeeming(preset)
-  for _, blip in pairs(blips) do
-    if teeming then
-      if blip.clone.negativeTeeming then
-        blip:Hide()
-      else
-        blip:Show()
-      end
-    else
-      if blip.clone.teeming then
-        blip:Hide()
-      else
-        blip:Show()
-      end
-    end
-  end
-end
-
----Updates visibility state and appearance of enemies related to the current seasonal affix
-function MDT:DungeonEnemies_UpdateSeasonalAffix()
-  --hide all beguiling and corrupted blips first
-  local week = self:GetEffectivePresetWeek()
-  for _, blip in pairs(blips) do
-    if blip.data.corrupted then blip:Hide() end
-    if emissaryIds[blip.data.id] then blip:Hide() end
-    if tormentedIds[blip.data.id] then blip:Hide() end
-    if encryptedIds[blip.data.id] then blip:Hide() end
-    if (db.currentSeason == 7 and db.currentDifficulty >= 10 and encryptedIds[blip.data.id]) then
-      blip:Show()
-    elseif (db.currentSeason == 6 and tormentedIds[blip.data.id])
-        or (db.currentSeason == 4 and blip.data.corrupted)
-        or (db.currentSeason == 3 and emissaryIds[blip.data.id]) then
-      local weekData = blip.clone.week
-      if weekData and (not weekData[week] or db.currentDifficulty < 10) then
-        blip:Hide()
-      elseif weekData and weekData[week] then
-        blip:Show()
-      elseif not weekData and blip.data.corrupted then
-        blip:Show()
-      end
-    end
-    if (db.currentSeason == 8) then
-      if db.currentDifficulty >= 10 then
-        if blip.clone.shrouded then
-          blip.shrouded_Indicator:SetVertexColor(1, 0, 1, 1)
-          blip.shrouded_Indicator:SetScale(1.15)
-          blip.shrouded_Indicator:Show()
-          blip:Show()
-        elseif blip.clone.disguised then
-          blip.shrouded_Indicator:Hide()
-          blip:Hide()
-        end
-      else
-        if blip.clone.shrouded then
-          blip.shrouded_Indicator:Hide()
-          blip:Hide()
-        elseif blip.clone.disguised then
-          blip.shrouded_Indicator:Show()
-          blip:Show()
-        end
-      end
-    end
-  end
-end
-
-function MDT:DungeonEnemies_UpdateReaping()
-  for _, blip in pairs(blips) do
-    if blip.data.reaping then
-      blip.texture_Reaping:Show()
-    else
-      blip.texture_Reaping:Hide()
-    end
-
-    if db.currentDifficulty < 10 then
-      blip.texture_Reaping:Hide()
-    end
-  end
-end
-
----DungeonEnemies_UpdateInfested
----Updates which blips should display infested state based on preset.week
-function MDT:DungeonEnemies_UpdateInfested(week)
-  week = preset.week % 3
-  if week == 0 then week = 3 end
-  for _, blip in pairs(blips) do
-    if blip.clone.infested and blip.clone.infested[week] then
-      blip.texture_Indicator:Show()
-    else
-      blip.texture_Indicator:Hide()
-    end
-  end
-end
-
----DungeonEnemies_UpdateInspiring
----Updates which blips should display inspiring state based on preset.week
-function MDT:DungeonEnemies_UpdateInspiring(week)
-  week = week or preset.week
-  local isInspiring = MDT:IsWeekInspiring(week)
-  for _, blip in pairs(blips) do
-    if blip.clone.inspiring and isInspiring then
-      ---@diagnostic disable-next-line: param-type-mismatch
-      SetPortraitToTexture(blip.texture_Portrait, 135946);
-      blip.texture_Indicator:SetVertexColor(1, 1, 0, 1)
-      blip.texture_Indicator:SetScale(1.15)
-      blip.texture_Indicator:Show()
-    else
-      blip.texture_Indicator:Hide()
-    end
-  end
 end
 
 function MDT:IsNPCInPulls(poi)
