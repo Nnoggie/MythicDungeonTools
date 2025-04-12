@@ -4084,7 +4084,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   f:SetTitle(title)
   f.OkayButton:SetText(buttonText)
   f.OkayButton:SetCallback("OnClick", function()
-    callback()
+    if callback then callback() end
     MDT:HideAllDialogs()
   end)
   if buttonText2 then

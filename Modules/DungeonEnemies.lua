@@ -361,6 +361,10 @@ local createEnemyContextMenu = function(frame)
       assignments[data.enemyIdx] = assignments[data.enemyIdx] or {}
       assignments[data.enemyIdx][data.cloneIdx] = data.index ~= 0 and data.index or nil
       frame:SetUp(frame.data, frame.clone)
+      if not db.hasSeenAssignmentWarning then
+        MDT:OpenConfirmationFrame(450, 150, L["Warning"], L["Okay"], L["assignmentWarning"])
+        db.hasSeenAssignmentWarning = true
+      end
     end
     local submenu = rootDescription:CreateButton(L["Set Target Marker"], function() end);
     for i = 1, 8 do

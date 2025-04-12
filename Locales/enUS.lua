@@ -3,6 +3,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["Okay"] = "Okay"
+L["Warning"] = "Warning"
+L["assignmentWarning"] = "MDT will NOT automatically set target markers on enemies in the game world."
 L["Set Target Marker"] = "Set Target Marker"
 L["Open Enemy Info"] = "Open Enemy Info"
 L["None"] = "None"
