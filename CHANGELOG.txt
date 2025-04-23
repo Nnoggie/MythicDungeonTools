@@ -1,3 +1,2 @@
-## 5.4.0 (2025-04-12)
-  - New Feature: Target Marker assignments for enemies in MDT only (Not auto marking enemies in the gameworld)
-  - DFC: Added candle positions
+## 5.4.1 (2025-04-23)
+  - Patch 11.1.5 update
