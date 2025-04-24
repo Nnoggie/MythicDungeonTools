@@ -1623,6 +1623,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 63372008,
     ["scale"] = 2,
     ["displayId"] = 122097,
+    ["stealthDetect"] = true,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
