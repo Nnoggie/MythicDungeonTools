@@ -604,8 +604,8 @@ function MDT:DisplayBlipTooltip(blip, shown)
 
   -- if this mob grants a bonus buff, show it in the tooltip ad-hoc
   if blip.data.bonusSpell then
-    local name, _, icon = GetSpellInfo(blip.data.bonusSpell)
-    local bonusDesc = GetSpellDescription(blip.data.bonusSpell)
+    local name, _, icon = C_Spell.GetSpellInfo(blip.data.bonusSpell)
+    local bonusDesc = C_Spell.GetSpellDescription(blip.data.bonusSpell)
     local bonusIcon = tooltip.bonusIcon or tooltip:CreateTexture(nil, "OVERLAY", nil, 0);
     bonusIcon:SetWidth(54);
     bonusIcon:SetHeight(54);
