@@ -1083,6 +1083,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 529.72836202331,
         ["y"] = -272.4218561968,
         ["sublevel"] = 1,
+        ["constrained"] = {
+          ["index"] = 1,
+          ["amount"] = 2,
+        },
       },
     },
   },
@@ -2187,6 +2191,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 540.3596657693,
         ["y"] = -286.69619870486,
         ["sublevel"] = 1,
+        ["constrained"] = {
+          ["index"] = 1,
+          ["amount"] = 2,
+        },
       },
     },
   },
@@ -2249,6 +2257,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 530.53433620569,
         ["y"] = -299.57159119063,
         ["sublevel"] = 1,
+        ["constrained"] = {
+          ["index"] = 1,
+          ["amount"] = 2,
+        },
       },
     },
   },

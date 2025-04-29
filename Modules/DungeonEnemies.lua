@@ -1010,6 +1010,24 @@ function MDT:GetBlip(enemyIdx, cloneIdx)
   end
 end
 
+local function isCloneConstrained(clone)
+  if not clone.constrained then return false end
+  local amount = 0
+  local data = MDT.dungeonEnemies[db.currentDungeonIdx]
+  for enemyIdx, enemy in pairs(data) do
+    for cloneIdx, c in pairs(enemy.clones) do
+      if c.constrained and c.constrained.index == clone.constrained.index and MDT:IsCloneInPulls(enemyIdx, cloneIdx) then
+        amount = amount + 1
+      end
+    end
+  end
+  if amount >= clone.constrained.amount then
+    print(L["MDT: Cannot add enemy - you are trying to add too many enemies of the same kind"])
+    return true
+  end
+  return false
+end
+
 ---DungeonEnemies_AddOrRemoveBlipToCurrentPull
 ---Adds or removes an enemy clone and all it's linked npcs to the currently selected pull
 function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGrouped, pulls, pull, ignoreUpdates)
@@ -1032,6 +1050,7 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
     -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pullIdx) end
   end
   if add then
+    if isCloneConstrained(blip.clone) then return end
     if blip then blip.selected = true end
     local found = false
     for _, v in pairs(pulls[pull][enemyIdx]) do
