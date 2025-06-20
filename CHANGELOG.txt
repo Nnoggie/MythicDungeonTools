@@ -1,4 +1,2 @@
-## 5.4.2 (2025-04-29)
-  - Added constrained enemy check: Only 2 out of the 3 Priory Minibosses may be added to a route.
-  - Mechagon Workshop: Adjusted Junkyard D.0.G. positions
-  - Floodgate: Added missing stealth detect flag to Venture Co. Architects
+## 5.4.3 (2025-06-20)
+  - Patch 11.1.7 Update
