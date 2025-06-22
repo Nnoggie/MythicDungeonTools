@@ -47,6 +47,14 @@ local candidates = {
 
     end,
   },
+  ["MDT_Legacy"] = { -- we dont want to have old versions of this messing with map versions
+    name = "MDT_Legacy",
+    version = 112,
+    detected = false,
+    onDetect = function()
+
+    end,
+  },
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
