@@ -3,6 +3,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["The War Within Season 3"] = "War Within Season 3"
 L["MDT: Cannot add enemy - you are trying to add too many enemies of the same kind"] = "MDT: Cannot add enemy - you are trying to add too many enemies of the same kind"
 L["Clear all Markers"] = "Clear all Markers"
 L["Okay"] = "Okay"
