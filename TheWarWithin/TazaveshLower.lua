@@ -1,19 +1,9 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 37
 MDT.dungeonList[dungeonIndex] = L["TazaveshLower"]
 MDT.mapInfo[dungeonIndex] = {
-  tileFormat = {
-    [1] = 15,
-  },
-  viewportPositionOverrides =
-  {
-    [1] = {
-      zoomScale = 1.5999999046326,
-      horizontalPan = 211.38175492652,
-      verticalPan = 55.476971331488,
-    },
-  },
   teleportId = 367416,
   shortName = L["tazaveshLowerShortName"],
   englishName = "Tazavesh: Streets of Wonder",
@@ -26,17 +16,12 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "Brokerdungeonstormheim",
-  [1] = "Brokerdungeon_a",
-  [2] = "Brokerdungeon_d",
-  [3] = "Brokerdungeon_c",
-  [4] = "Brokerdungeon_b",
+  [0] = "",
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\TazaveshLower' }
 }
+
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["TazaveshFloor1"],
-  [2] = L["TazaveshFloor4"],
-  [3] = L["TazaveshFloor3"],
-  [4] = L["TazaveshFloor2"],
+  [1] = L["TazaveshLower"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 290, teeming = 1000, teemingEnabled = true }
