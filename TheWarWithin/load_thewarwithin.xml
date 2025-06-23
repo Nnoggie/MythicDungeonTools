@@ -18,4 +18,5 @@
     <Script file='TazaveshLower.lua'/>
     <Script file='TazaveshUpper.lua'/>
     <Script file='HallsOfAtonement.lua'/>
+    <Script file='EcoDomeAldani.lua'/>
 </Ui>
