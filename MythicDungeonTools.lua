@@ -1218,16 +1218,6 @@ function MDT:MakeSidePanel(frame)
 
   function affixDropdown:SetAffixWeek(key, ignoreReloadPullButtons, ignoreUpdateProgressBar)
     affixDropdown:SetValue(key)
-    if not MDT:GetCurrentAffixWeek() then
-      frame.sidePanel.affixWeekWarning.image:Hide()
-      frame.sidePanel.affixWeekWarning:SetDisabled(true)
-    elseif MDT:GetCurrentAffixWeek() == key then
-      frame.sidePanel.affixWeekWarning.image:Hide()
-      frame.sidePanel.affixWeekWarning:SetDisabled(true)
-    else
-      frame.sidePanel.affixWeekWarning.image:Show()
-      frame.sidePanel.affixWeekWarning:SetDisabled(false)
-    end
     MDT:GetCurrentPreset().week = key
     local teeming = MDT:IsPresetTeeming(MDT:GetCurrentPreset())
     MDT:GetCurrentPreset().value.teeming = teeming
@@ -1255,32 +1245,6 @@ function MDT:MakeSidePanel(frame)
   end)
 
   -- frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
-
-  --affix not current week warning
-  frame.sidePanel.affixWeekWarning = AceGUI:Create("Icon")
-  local affixWeekWarning = frame.sidePanel.affixWeekWarning
-  affixWeekWarning:SetImage("Interface\\DialogFrame\\UI-Dialog-Icon-AlertNew")
-  affixWeekWarning:SetImageSize(25, 25)
-  affixWeekWarning:SetWidth(30)
-  affixWeekWarning:SetCallback("OnEnter", function(...)
-    GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(L["The selected affixes are not the ones of the current week"], 1, 1, 1)
-    GameTooltip:AddLine(L["Click to switch to current week"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  affixWeekWarning:SetCallback("OnLeave", function(...)
-    GameTooltip:Hide()
-  end)
-  affixWeekWarning:SetCallback("OnClick", function(...)
-    if not MDT:GetCurrentAffixWeek() then return end
-    affixDropdown:SetAffixWeek(MDT:GetCurrentAffixWeek())
-    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-      MDT:LiveSession_SendAffixWeek(MDT:GetCurrentAffixWeek())
-    end
-  end)
-  affixWeekWarning.image:Hide()
-  affixWeekWarning:SetDisabled(true)
-  frame.sidePanel.WidgetGroup:AddChild(affixWeekWarning)
 
   --difficulty slider
   frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
