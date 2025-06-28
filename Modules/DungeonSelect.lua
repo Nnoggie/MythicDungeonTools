@@ -149,25 +149,32 @@ function MDT:CreateSublevelDropdown(frame)
   frame.sublevelSelectionGroup.frame:SetParent(frame)
   local group = frame.sublevelSelectionGroup
   group.frame:Hide()
+  ---@diagnostic disable-next-line: undefined-field
   if not group.frame.SetBackdrop then
     Mixin(group.frame, BackdropTemplateMixin)
   end
+  ---@diagnostic disable-next-line: undefined-field
   group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
   group.frame:SetFrameStrata("HIGH")
   group.frame:SetFrameLevel(50)
   group:SetWidth(204) --idk ace added weird margin on left
   group:SetHeight(50)
   group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, -68)
+  ---@diagnostic disable-next-line: undefined-field
   group:SetLayout("List")
   MDT:FixAceGUIShowHide(group)
 
+  ---@diagnostic disable-next-line: inject-field
   group.sublevelDropdown = AceGUI:Create("Dropdown")
+  ---@diagnostic disable-next-line: undefined-field
   group.sublevelDropdown.pullout.frame:SetParent(group.sublevelDropdown.frame)
+  ---@diagnostic disable-next-line: undefined-field
   group.sublevelDropdown.text:SetJustifyH("LEFT")
   group.sublevelDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
     MDT:UpdateMap()
   end)
+  ---@diagnostic disable-next-line: undefined-field
   group:AddChild(group.sublevelDropdown)
 end
 
@@ -203,20 +210,26 @@ function MDT:CreateSeasonDropdown(frame)
   frame.seasonSelectionGroup.frame:SetParent(frame)
   local group = frame.seasonSelectionGroup
   group.frame:Hide()
+  ---@diagnostic disable-next-line: undefined-field
   if not group.frame.SetBackdrop then
     Mixin(group.frame, BackdropTemplateMixin)
   end
+  ---@diagnostic disable-next-line: undefined-field
   group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
   group.frame:SetFrameStrata("HIGH")
   group.frame:SetFrameLevel(50)
   group:SetWidth(204) --idk ace added weird margin on left
   group:SetHeight(50)
   group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, 0)
+  ---@diagnostic disable-next-line: undefined-field
   group:SetLayout("List")
   MDT:FixAceGUIShowHide(group)
 
+  ---@diagnostic disable-next-line: inject-field
   group.seasonDropdown = AceGUI:Create("Dropdown")
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown.pullout.frame:SetParent(group.seasonDropdown.frame)
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown.text:SetJustifyH("LEFT")
   group.seasonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     MDT:SetDungeonList(key)
@@ -224,9 +237,12 @@ function MDT:CreateSeasonDropdown(frame)
     local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
     MDT:UpdateToDungeon(currentList[1])
   end)
+  ---@diagnostic disable-next-line: undefined-field
   group:AddChild(group.seasonDropdown)
 
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown:SetList(seasonList)
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown:SetValue(db.selectedDungeonList)
 end
 
