@@ -507,16 +507,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         if preset == MDT:GetCurrentPreset() then
           local affixDropdown = MDT.main_frame.sidePanel.affixDropdown
           affixDropdown:SetValue(week)
-          if not MDT:GetCurrentAffixWeek() then
-            MDT.main_frame.sidePanel.affixWeekWarning.image:Hide()
-            MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
-          elseif MDT:GetCurrentAffixWeek() == week then
-            MDT.main_frame.sidePanel.affixWeekWarning.image:Hide()
-            MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(true)
-          else
-            MDT.main_frame.sidePanel.affixWeekWarning.image:Show()
-            MDT.main_frame.sidePanel.affixWeekWarning:SetDisabled(false)
-          end
           MDT:POI_UpdateAll()
           MDT:UpdateProgressbar()
           MDT:ReloadPullButtons()
