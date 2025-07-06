@@ -1218,28 +1218,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [9] = {
-    ["name"] = "Sureki Militant",
-    ["id"] = 213932,
-    ["count"] = 12,
-    ["health"] = 144205623,
-    ["scale"] = 1.8,
-    ["stealthDetect"] = true,
-    ["displayId"] = 121335,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 80,
-    ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Mind Soothe"] = true,
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 241.96303160412,
-        ["y"] = -519.92889092056,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [10] = {
     ["name"] = "Nightfall Tactician",
     ["id"] = 213934,
     ["count"] = 10,
@@ -1398,7 +1376,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [11] = {
+  [10] = {
     ["name"] = "Ascendant Viscoxria",
     ["id"] = 211261,
     ["count"] = 25,
@@ -1431,7 +1409,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [12] = {
+  [11] = {
     ["name"] = "Deathscreamer Ikentak",
     ["id"] = 211263,
     ["count"] = 25,
@@ -1466,7 +1444,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [13] = {
+  [12] = {
     ["name"] = "Ixkreten The Unbreakable",
     ["id"] = 211262,
     ["count"] = 25,
@@ -1501,7 +1479,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [14] = {
+  [13] = {
     ["name"] = "Nightfall Dark Architect",
     ["id"] = 213885,
     ["count"] = 30,
@@ -1536,7 +1514,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [15] = {
+  [14] = {
     ["name"] = "Speaker Shadowcrown",
     ["id"] = 211087,
     ["count"] = 0,
@@ -1591,7 +1569,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [16] = {
+  [15] = {
     ["name"] = "Anubikkaj",
     ["id"] = 211089,
     ["count"] = 0,
@@ -1639,7 +1617,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [17] = {
+  [16] = {
     ["name"] = "Rashanan",
     ["id"] = 213937,
     ["count"] = 0,
@@ -1695,7 +1673,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [18] = {
+  [17] = {
     ["name"] = "Unstable Darkness",
     ["id"] = 213905,
     ["count"] = 1,
@@ -1984,7 +1962,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [19] = {
+  [18] = {
     ["name"] = "Animated Shadow",
     ["id"] = 224616,
     ["count"] = 0,
