@@ -450,7 +450,7 @@ function MDT:CreateDevPanel(frame)
           for _, enemy in pairs(enemies) do
             if not MDT.L[enemy.name] then
               dungeonIssues = dungeonIssues or ("--- "..MDT.dungeonList[i]).."\n"
-              dungeonIssues = dungeonIssues..enemy.name.."\n"
+              dungeonIssues = dungeonIssues..("L[\"%s\"] = \"%s\"\n"):format(enemy.name, enemy.name)
             end
           end
           if dungeonIssues then
