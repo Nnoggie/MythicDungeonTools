@@ -51,23 +51,8 @@ MDT.mapPOIs[dungeonIndex] = {
       ["x"] = 824.30833534041,
       ["y"] = -284.74388416373,
     },
-    [2] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "textFrame",
-      ["x"] = 358.37563273029,
-      ["y"] = -274.37049609865,
-      ["text"] = "",
-    },
-    [3] = {
-      ["template"] = "MapLinkPinTemplate",
-      ["type"] = "generalNote",
-      ["x"] = 300,
-      ["y"] = -200,
-      ["text"] = "仅供测试使用",
-    },
   },
 };
-
 
 
 MDT.dungeonEnemies[dungeonIndex] = {
@@ -236,6 +221,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Incapacitate"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -594,9 +580,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
+      ["Imprison"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
@@ -702,6 +690,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
@@ -852,6 +841,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
@@ -994,8 +984,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [23] = {
-        ["x"] = 319.64702955964,
-        ["y"] = -142.30863332529,
+        ["x"] = 319.96957813944,
+        ["y"] = -137.63178219437,
         ["g"] = 35,
         ["sublevel"] = 1,
       },
@@ -1003,12 +993,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 268.21100636372,
         ["y"] = -132.96527088275,
         ["g"] = 36,
-        ["sublevel"] = 1,
-      },
-      [25] = {
-        ["x"] = 303.46214876121,
-        ["y"] = -162.16961486105,
-        ["g"] = 40,
         ["sublevel"] = 1,
       },
       [26] = {
@@ -1072,7 +1056,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Imprison"] = true,
       ["Stun"] = true,
@@ -1089,6 +1075,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
+      [1] = {
+        ["x"] = 305.39197472994,
+        ["y"] = -160.71448264005,
+        ["g"] = 40,
+        ["sublevel"] = 1,
+      },
       [2] = {
         ["x"] = 602.43924803965,
         ["y"] = -259.79856588611,
@@ -1120,8 +1112,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [7] = {
-        ["x"] = 320.42807374751,
-        ["y"] = -153.58699092378,
+        ["x"] = 320.91188801086,
+        ["y"] = -154.87715942393,
         ["g"] = 35,
         ["sublevel"] = 1,
       },
@@ -1190,6 +1182,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1226436] = {
       },
       [1226492] = {
+      },
+      [1248699] = {
+      },
+      [1248701] = {
       },
       [1248702] = {
       },
@@ -1276,7 +1272,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
+      ["Incapacitate"] = true,
       ["Silence"] = true,
+      ["Fear"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
     },
@@ -1300,14 +1298,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 331.50888579446,
-        ["y"] = -153.19947593888,
+        ["x"] = 334.08913673132,
+        ["y"] = -154.97342427701,
         ["g"] = 35,
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 331.06564930699,
-        ["y"] = -142.11713823238,
+        ["x"] = 335.09739467197,
+        ["y"] = -139.69808412832,
         ["g"] = 35,
         ["sublevel"] = 1,
       },
@@ -1619,6 +1617,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2675,
     ["instanceID"] = 1303,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
     ["spells"] = {
       [1217232] = {
       },
@@ -1744,6 +1745,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["characteristics"] = {
       ["Incapacitate"] = true,
+      ["Fear"] = true,
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
@@ -1913,6 +1915,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1227144] = {
       },
+      [1227148] = {
+      },
       [1227900] = {
       },
       [1227918] = {
@@ -2027,6 +2031,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [4] = {
         ["x"] = 346.78173641202,
         ["y"] = -162.73254869903,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [28] = {
+    ["name"] = "ecoDomeAldaniShortName",
+    ["id"] = 8888888,
+    ["count"] = 0,
+    ["health"] = 10000,
+    ["scale"] = 0.6,
+    ["creatureType"] = "Not specified",
+    ["level"] = 80,
+    ["spells"] = {
+      [1239141] = {
+      },
+      [1239148] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 327.48598769039,
+        ["y"] = -146.5227262386,
         ["sublevel"] = 1,
       },
     },
