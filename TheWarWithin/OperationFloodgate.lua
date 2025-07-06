@@ -1757,44 +1757,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [16] = {
-    ["name"] = "Bubbles",
-    ["id"] = 231197,
-    ["count"] = 0,
-    ["health"] = 146160741,
-    ["scale"] = 3,
-    ["stealthDetect"] = true,
-    ["displayId"] = 124782,
-    ["creatureType"] = "Beast",
-    ["level"] = 81,
-    ["characteristics"] = {
-      ["Taunt"] = true,
-    },
-    ["spells"] = {
-      [465487] = {
-      },
-      [469721] = {
-      },
-      [469811] = {
-      },
-      [469816] = {
-      },
-      [469818] = {
-      },
-      [469819] = {
-      },
-      [1217496] = {
-      },
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 300.79776617511,
-        ["y"] = -504.43665077738,
-        ["g"] = 48,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [17] = {
     ["name"] = "Darkfuse Jumpstarter",
     ["id"] = 231325,
     ["count"] = 12,
@@ -1847,7 +1809,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [18] = {
+  [17] = {
     ["name"] = "Big M.O.M.M.A.",
     ["id"] = 226398,
     ["count"] = 0,
@@ -1897,7 +1859,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [19] = {
+  [18] = {
     ["name"] = "Bront",
     ["id"] = 226402,
     ["count"] = 0,
@@ -1933,7 +1895,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [20] = {
+  [19] = {
     ["name"] = "Keeza Quickfuse",
     ["id"] = 226403,
     ["count"] = 0,
@@ -1984,7 +1946,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [21] = {
+  [20] = {
     ["name"] = "Swampface",
     ["id"] = 226396,
     ["count"] = 0,
@@ -2035,7 +1997,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [22] = {
+  [21] = {
     ["name"] = "Geezle Gigazap",
     ["id"] = 226404,
     ["count"] = 0,
@@ -2087,7 +2049,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [23] = {
+  [22] = {
     ["name"] = "Darkfuse Mechadrone",
     ["id"] = 228424,
     ["count"] = 0,
@@ -2139,7 +2101,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [24] = {
+  [23] = {
     ["name"] = "Undercrawler",
     ["id"] = 231380,
     ["count"] = 1,
@@ -2211,7 +2173,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [25] = {
+  [24] = {
     ["name"] = "Waterworks Crocolisk",
     ["id"] = 227145,
     ["count"] = 1,
@@ -2305,7 +2267,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [26] = {
+  [25] = {
     ["name"] = "Scaffolding",
     ["id"] = 231176,
     ["count"] = 0,
@@ -2356,7 +2318,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [27] = {
+  [26] = {
     ["name"] = "Leaping Spark",
     ["id"] = 232690,
     ["count"] = 0,
@@ -2391,7 +2353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [28] = {
+  [27] = {
     ["name"] = "Ticking Time Bomb",
     ["id"] = 234528,
     ["count"] = 0,
