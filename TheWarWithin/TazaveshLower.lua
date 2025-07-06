@@ -5,6 +5,7 @@ local dungeonIndex = 37
 MDT.dungeonList[dungeonIndex] = L["TazaveshLower"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 367416,
+  -- iconId = 4181531, --TODO: this is a texture, not an icon, looks weird ingame
   shortName = L["tazaveshLowerShortName"],
   englishName = "Tazavesh: Streets of Wonder",
   mapID = 391
