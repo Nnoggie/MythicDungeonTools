@@ -3213,7 +3213,9 @@ function MDT:MakeSettingsFrame(frame)
       minimapIcon:RemoveButtonFromCompartment("MythicDungeonTools")
     end
   end)
-  frame.settingsFrame:AddChild(frame.compartmentCheckbox)
+  if MDT:IsRetail() then
+    frame.settingsFrame:AddChild(frame.compartmentCheckbox)
+  end
 
   frame.forcesCheckbox = AceGUI:Create("CheckBox")
   frame.forcesCheckbox:SetLabel(L["Use forces count"])
