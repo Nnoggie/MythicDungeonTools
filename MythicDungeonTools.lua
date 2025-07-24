@@ -405,6 +405,7 @@ function MDT:CreateMenu()
   self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -1, -4)
   self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
   self.main_frame.closeButton:SetFrameLevel(4)
+  self.main_frame.closeButton:SetSize(24, 24)
 
   --Maximize Button
   self.main_frame.maximizeButton = CreateFrame("Button", "MDTMaximizeButton", self.main_frame,
@@ -417,6 +418,7 @@ function MDT:CreateMenu()
   if not db.maximized then self.main_frame.maximizeButton:Minimize() end
   self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
   self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
+  self.main_frame.maximizeButton:SetSize(24, 24)
 
   --return to live preset
   self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "UIPanelCloseButton")
