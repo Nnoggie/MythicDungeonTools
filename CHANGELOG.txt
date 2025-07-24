@@ -1,2 +1,2 @@
-## 5.5.0 (2025-??-??)
-  - Patch 11.2.0 Update
+## 5.5.0 (2025-25-07)
+  - Patch 11.2.0 + MOP Classic Update
