@@ -1,7 +1,7 @@
-## Interface: 110107
+## Interface: 110200, 50500
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 5.4.3
+## Version: 5.5.0
 ## X-Curse-Project-ID: 288981
 ## X-Wago-ID: rN4VrAKD
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
@@ -28,4 +28,5 @@ Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
 Developer\load_developer.xml
-TheWarWithin\load_thewarwithin.xml
+TheWarWithin\load_thewarwithin.xml [AllowLoadGameType mainline]
+MistsOfPandaria\load_mop.xml [AllowLoadGameType mists]

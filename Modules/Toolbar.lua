@@ -1090,19 +1090,33 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note:SetSize(12 * scale, 12 * scale)
   local idx = note.noteIdx % 25
   if idx == 0 then idx = 1 end
-  note.NormalTexture:SetSize(15 * scale, 15 * scale)
-  note.NormalTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.NormalTexture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
-  note.HighlightTexture:SetSize(15 * scale, 15 * scale)
-  note.HighlightTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.HighlightTexture:SetTexCoord(0.625, 0.750, 0.375, 0.5)
-  note.Display.Icon:SetSize(16 * scale, 16 * scale)
-  note.Display.Icon:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.Display.Icon:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
-  note.Display.Icon:Show()
-  note.PushedTexture:SetSize(15 * scale, 15 * scale)
-  note.PushedTexture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
-  note.PushedTexture:SetTexCoord(0.375, 0.500, 0.375, 0.5)
+
+  --for some reason the templates are differing between classic and retail
+  local texture, highlight, number, pushed
+  if MDT:IsMop() then
+    texture = note.Texture
+    highlight = note.Highlight
+    number = note.Number
+    pushed = note.PushedTexture
+  else
+    texture = note.NormalTexture
+    highlight = note.HighlightTexture
+    number = note.Display.Icon
+    pushed = note.PushedTexture
+  end
+  texture:SetSize(15 * scale, 15 * scale)
+  texture:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+  texture:SetTexCoord(0.500, 0.625, 0.375, 0.5)
+  highlight:SetSize(15 * scale, 15 * scale)
+  highlight:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+  highlight:SetTexCoord(0.625, 0.750, 0.375, 0.5)
+  number:SetSize(16 * scale, 16 * scale)
+  number:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+  number:SetTexCoord(POIButton_CalculateNumericTexCoords(idx, 0))
+  number:Show()
+  pushed:SetSize(15 * scale, 15 * scale)
+  pushed:SetTexture("Interface/WorldMap/UI-QuestPoi-NumberIcons")
+  pushed:SetTexCoord(0.375, 0.500, 0.375, 0.5)
   note.tooltipText = text or ""
 
   note:RegisterForClicks("AnyUp")

@@ -414,9 +414,10 @@ function MDT:CreateDevPanel(frame)
     local findCloneIssuesButton = AceGUI:Create("Button")
     findCloneIssuesButton:SetText("Find Clone Issues")
     findCloneIssuesButton:SetCallback("OnClick", function()
-      local cloneIssues = ""
+      local issues = ""
       for i = 1, 200 do
         local enemies = MDT.dungeonEnemies[i]
+        local dungeonIssues
         if enemies then
           for _, enemy in pairs(enemies) do
             local l = #enemy.clones
@@ -425,16 +426,41 @@ function MDT:CreateDevPanel(frame)
               realLength = realLength + 1
             end
             if l ~= realLength then
-              local dungeonName = MDT.dungeonList[i]
-              local enemyName = enemy.name
-              cloneIssues = cloneIssues..dungeonName..": "..enemyName.."\n"
+              dungeonIssues = dungeonIssues or ("--- "..MDT.dungeonList[i]).."\n"
+              dungeonIssues = dungeonIssues..enemy.name.."\n"
             end
+          end
+          if dungeonIssues then
+            issues = issues..dungeonIssues.."\n"
           end
         end
       end
-      MDT:ExportString(cloneIssues)
+      MDT:ExportString(issues)
     end)
     container:AddChild(findCloneIssuesButton)
+
+    local findMissingLocaleButton = AceGUI:Create("Button")
+    findMissingLocaleButton:SetText("Find Missing Localizations")
+    findMissingLocaleButton:SetCallback("OnClick", function()
+      local issues = ""
+      for i = 1, 200 do
+        local enemies = MDT.dungeonEnemies[i]
+        local dungeonIssues
+        if enemies then
+          for _, enemy in pairs(enemies) do
+            if not MDT.L[enemy.name] then
+              dungeonIssues = dungeonIssues or ("--- "..MDT.dungeonList[i]).."\n"
+              dungeonIssues = dungeonIssues..("L[\"%s\"] = \"%s\"\n"):format(enemy.name, enemy.name)
+            end
+          end
+          if dungeonIssues then
+            issues = issues..dungeonIssues.."\n"
+          end
+        end
+      end
+      MDT:ExportString(issues)
+    end)
+    container:AddChild(findMissingLocaleButton)
 
     local button3 = AceGUI:Create("Button")
     button3:SetText("Export to LUA")

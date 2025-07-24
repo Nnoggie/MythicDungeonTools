@@ -20,10 +20,18 @@ MDT.seasonList = {}
 MDT.dungeonSelectionToIndex = {}
 
 do
-  tinsert(MDT.seasonList, L["The War Within Season 1"])
-  tinsert(MDT.seasonList, L["The War Within Season 2"])
-  tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
-  tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
+  if MDT:IsRetail() then
+    tinsert(MDT.seasonList, L["The War Within Season 1"])
+    tinsert(MDT.seasonList, L["The War Within Season 2"])
+    tinsert(MDT.seasonList, L["The War Within Season 3"])
+    tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
+    tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
+    tinsert(MDT.dungeonSelectionToIndex, { 123, 30, 37, 38, 113, 111, 115, 119 })
+  end
+  if MDT:IsMop() then
+    tinsert(MDT.seasonList, L["MoP Challenge Mode"])
+    tinsert(MDT.dungeonSelectionToIndex, { 130, 131, 132, 133, 134, 135, 136, 137, 138 })
+  end
 end
 
 local seasonList = MDT.seasonList
@@ -84,7 +92,7 @@ function MDT:UpdateDungeonDropDown()
       button.selectedTexture:SetDrawLayer("OVERLAY")
       button.shortText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
       button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
-      button.shortText:SetFont(button.shortText:GetFont(), 11, "OUTLINE")
+      button.shortText:SetFont(button.shortText:GetFont(), 9, "OUTLINE")
       button.shortText:SetTextColor(1, 1, 1)
       button:SetScript("OnLeave", function()
         GameTooltip:Hide()
@@ -92,7 +100,7 @@ function MDT:UpdateDungeonDropDown()
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
     button.dungeonIdx = dungeonIdx
-    button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId) or 134400)
+    button.texture:SetTexture(mapInfo.iconId or (mapInfo.teleportId and C_Spell.GetSpellTexture(mapInfo.teleportId)) or 134400)
     button.shortText:SetText(mapInfo.shortName)
     button:SetScript("OnClick", function(self, button)
       MDT:UpdateToDungeon(dungeonIdx)
@@ -147,25 +155,32 @@ function MDT:CreateSublevelDropdown(frame)
   frame.sublevelSelectionGroup.frame:SetParent(frame)
   local group = frame.sublevelSelectionGroup
   group.frame:Hide()
+  ---@diagnostic disable-next-line: undefined-field
   if not group.frame.SetBackdrop then
     Mixin(group.frame, BackdropTemplateMixin)
   end
+  ---@diagnostic disable-next-line: undefined-field
   group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
   group.frame:SetFrameStrata("HIGH")
   group.frame:SetFrameLevel(50)
   group:SetWidth(204) --idk ace added weird margin on left
   group:SetHeight(50)
   group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, -68)
+  ---@diagnostic disable-next-line: undefined-field
   group:SetLayout("List")
   MDT:FixAceGUIShowHide(group)
 
+  ---@diagnostic disable-next-line: inject-field
   group.sublevelDropdown = AceGUI:Create("Dropdown")
+  ---@diagnostic disable-next-line: undefined-field
   group.sublevelDropdown.pullout.frame:SetParent(group.sublevelDropdown.frame)
+  ---@diagnostic disable-next-line: undefined-field
   group.sublevelDropdown.text:SetJustifyH("LEFT")
   group.sublevelDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
     MDT:UpdateMap()
   end)
+  ---@diagnostic disable-next-line: undefined-field
   group:AddChild(group.sublevelDropdown)
 end
 
@@ -187,8 +202,8 @@ function MDT:SetDungeonList(key, dungeonIdx)
   -- this probably happens if dropdown is being spammed (?)
   local index = math.min(#dungeonSelectionToIndex, key)
   db.selectedDungeonList = index
-  local dropdown = MDT.main_frame.seasonSelectionGroup.seasonDropdown
-  dropdown:SetValue(index)
+  local dropdown = MDT.main_frame.seasonSelectionGroup and MDT.main_frame.seasonSelectionGroup.seasonDropdown
+  if dropdown then dropdown:SetValue(index) end
 end
 
 function MDT:CreateSeasonDropdown(frame)
@@ -201,20 +216,26 @@ function MDT:CreateSeasonDropdown(frame)
   frame.seasonSelectionGroup.frame:SetParent(frame)
   local group = frame.seasonSelectionGroup
   group.frame:Hide()
+  ---@diagnostic disable-next-line: undefined-field
   if not group.frame.SetBackdrop then
     Mixin(group.frame, BackdropTemplateMixin)
   end
+  ---@diagnostic disable-next-line: undefined-field
   group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
   group.frame:SetFrameStrata("HIGH")
   group.frame:SetFrameLevel(50)
   group:SetWidth(204) --idk ace added weird margin on left
   group:SetHeight(50)
   group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, 0)
+  ---@diagnostic disable-next-line: undefined-field
   group:SetLayout("List")
   MDT:FixAceGUIShowHide(group)
 
+  ---@diagnostic disable-next-line: inject-field
   group.seasonDropdown = AceGUI:Create("Dropdown")
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown.pullout.frame:SetParent(group.seasonDropdown.frame)
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown.text:SetJustifyH("LEFT")
   group.seasonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
     MDT:SetDungeonList(key)
@@ -222,9 +243,12 @@ function MDT:CreateSeasonDropdown(frame)
     local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
     MDT:UpdateToDungeon(currentList[1])
   end)
+  ---@diagnostic disable-next-line: undefined-field
   group:AddChild(group.seasonDropdown)
 
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown:SetList(seasonList)
+  ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown:SetValue(db.selectedDungeonList)
 end
 

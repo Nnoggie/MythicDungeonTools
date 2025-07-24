@@ -5,14 +5,14 @@ local MDT = MDT
 
 -- CHANGE HERE TO DEFINE WHICH DUNGEONS TO TRACK FOR DATA COLLECTION
 local dungeonsToTrack = {
-  [1] = 115,
-  [2] = 116,
-  [3] = 117,
-  [4] = 118,
-  [5] = 119,
-  [6] = 120,
-  [7] = 121,
-  [8] = 122,
+  [1] = 113,
+  [2] = 30,
+  [3] = 119,
+  [4] = 115,
+  [5] = 37,
+  [6] = 38,
+  [7] = 111,
+  [8] = 123,
 }
 
 MDT.DataCollection = {}
@@ -347,7 +347,7 @@ end
 function DC.COMBAT_LOG_EVENT_UNFILTERED(self, ...)
   local timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool = CombatLogGetCurrentEventInfo()
   -- enemy spells: only collect in Mythic+ Challenge Mode
-  if trackedEvents[subevent] and sourceGUID and C_ChallengeMode.IsChallengeModeActive() then
+  if trackedEvents[subevent] and sourceGUID then
     local unitType, _, serverId, instanceId, zoneId, id, spawnUid = strsplit("-", sourceGUID)
     id = tonumber(id)
     --dungeon
