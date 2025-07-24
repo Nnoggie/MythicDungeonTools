@@ -202,8 +202,8 @@ function MDT:SetDungeonList(key, dungeonIdx)
   -- this probably happens if dropdown is being spammed (?)
   local index = math.min(#dungeonSelectionToIndex, key)
   db.selectedDungeonList = index
-  local dropdown = MDT.main_frame.seasonSelectionGroup.seasonDropdown
-  dropdown:SetValue(index)
+  local dropdown = MDT.main_frame.seasonSelectionGroup and MDT.main_frame.seasonSelectionGroup.seasonDropdown
+  if dropdown then dropdown:SetValue(index) end
 end
 
 function MDT:CreateSeasonDropdown(frame)
