@@ -181,7 +181,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    currentDungeonIdx = 123, -- set this one every new season
+    currentDungeonIdx = MDT:IsMop() and 130 or 123, -- set this one every new season
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
     knownAffixWeeks = {},
