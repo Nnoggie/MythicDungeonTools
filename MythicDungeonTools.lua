@@ -1298,8 +1298,9 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.DifficultySlider:SetCallback("OnLeave", function()
     GameTooltip:Hide()
   end)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
-
+  if MDT:IsRetail() then
+    frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
+  end
   frame.sidePanel.middleLine = AceGUI:Create("Heading")
   frame.sidePanel.middleLine:SetWidth(240)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.middleLine)
