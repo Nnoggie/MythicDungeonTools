@@ -92,7 +92,7 @@ function MDT:UpdateDungeonDropDown()
       button.selectedTexture:SetDrawLayer("OVERLAY")
       button.shortText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
       button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
-      button.shortText:SetFont(button.shortText:GetFont(), 11, "OUTLINE")
+      button.shortText:SetFont(button.shortText:GetFont(), 9, "OUTLINE")
       button.shortText:SetTextColor(1, 1, 1)
       button:SetScript("OnLeave", function()
         GameTooltip:Hide()
@@ -100,7 +100,7 @@ function MDT:UpdateDungeonDropDown()
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
     button.dungeonIdx = dungeonIdx
-    button.texture:SetTexture(mapInfo.iconId or C_Spell.GetSpellTexture(mapInfo.teleportId) or 134400)
+    button.texture:SetTexture(mapInfo.iconId or (mapInfo.teleportId and C_Spell.GetSpellTexture(mapInfo.teleportId)) or 134400)
     button.shortText:SetText(mapInfo.shortName)
     button:SetScript("OnClick", function(self, button)
       MDT:UpdateToDungeon(dungeonIdx)
