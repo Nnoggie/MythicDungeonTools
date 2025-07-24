@@ -2,10 +2,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 137
-MDT.dungeonList[dungeonIndex] = L["StormstoutBrewery"]
+MDT.dungeonList[dungeonIndex] = L["Stormstout Brewery"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["stormstoutBreweryShortName"],
-  englishName = L["Stormstout Brewery"],
+  iconId = 603795,
+  shortName = L["stormstoutBreweryShortName"],
+  englishName = "Stormstout Brewery",
   mapID = 961,
 };
 
@@ -15,17 +16,17 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "stormstout_brewery",
-  [1] = "Grain Cellar",
-  [2] = "Stormstout Brewhall",
-  [3] = "The Great Wheel",
-  [4] = "The Tasting Room",
+  [0] = "StormstoutBrewery",
+  [1] = "StormstoutBrewery1_",
+  [2] = "StormstoutBrewery2_",
+  [3] = "StormstoutBrewery3_",
+  [4] = "StormstoutBrewery4_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["GrainCellar"],
-  [2] = L["StormstoutBrewhall"],
-  [3] = L["TheGreatWheel"],
-  [4] = L["TheTastingRoom"],
+  [1] = L["Grain Cellar"],
+  [2] = L["Stormstout Brewhall"],
+  [3] = L["The Great Wheel"],
+  [4] = L["The Tasting Room"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 25, teeming = 1000, teemingEnabled = true }

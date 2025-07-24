@@ -4,8 +4,9 @@ local L = MDT.L
 local dungeonIndex = 134
 MDT.dungeonList[dungeonIndex] = L["Scholomance"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["scholomanceShortName"],
-  englishName = L["Scholomance"],
+  iconId = 135974,
+  shortName = L["scholomanceShortName"],
+  englishName = "Scholomance",
   mapID = 1007,
 };
 
@@ -15,17 +16,17 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "scholomance",
-  [1] = "The Reliquary",
-  [2] = "Chamber of Summoning",
-  [3] = "The Upper Study",
-  [4] = "Headmaster's Study",
+  [0] = "Scholomance",
+  [1] = "Scholomance1_",
+  [2] = "Scholomance2_",
+  [3] = "Scholomance3_",
+  [4] = "Scholomance4_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["TheReliquary"],
-  [2] = L["ChamberOfSummoning"],
-  [3] = L["TheUpperStudy"],
-  [4] = L["HeadmastersStudy"],
+  [1] = L["The Reliquary"],
+  [2] = L["Chamber of Summoning"],
+  [3] = L["The Upper Study"],
+  [4] = L["Headmaster\'s Study"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 35, teeming = 1000, teemingEnabled = true }

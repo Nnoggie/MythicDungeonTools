@@ -2,10 +2,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 138
-MDT.dungeonList[dungeonIndex] = L["TempleOfTheJadeSerpent"]
+MDT.dungeonList[dungeonIndex] = L["Temple of the Jade Serpent"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["templeOfTheJadeSerpentShortName"],
-  englishName = L["Temple of the Jade Serpent"],
+  iconId = 603529,
+  shortName = L["templeOfTheJadeSerpentShortName"],
+  englishName = "Temple of the Jade Serpent",
   mapID = 960,
 };
 
@@ -15,11 +16,11 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "templeofthejadeserpent",
-  [1] = "Temple of the Jade Serpent",
+  [0] = "EastTemple",
+  [1] = "EastTemple1_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["TempleOfTheJadeSerpent"],
+  [1] = L["Temple of the Jade Serpent"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 45, teeming = 1000, teemingEnabled = true }

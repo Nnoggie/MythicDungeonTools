@@ -2,10 +2,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 133
-MDT.dungeonList[dungeonIndex] = L["ScarletMonastery"]
+MDT.dungeonList[dungeonIndex] = L["Scarlet Monastery"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["scarletMonasteryShortName"],
-  englishName = L["Scarlet Monastery"],
+  iconId = 135955,
+  shortName = L["scarletMonasteryShortName"],
+  englishName = "Scarlet Monastery",
   mapID = 1004,
 };
 
@@ -15,13 +16,13 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "scarlet_monastery",
-  [1] = "Forlorn Cloister",
-  [2] = "Crusaders' Chapel",
+  [0] = "ScarletMonestaryDK",
+  [1] = "ScarletMonestaryDK1_",
+  [2] = "ScarletMonestaryDK2_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["ForlornCloister"],
-  [2] = L["CrusadersChapel"],
+  [1] = L["Forlorn Cloister"],
+  [2] = L["Crusaders\' Chapel"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 40, teeming = 1000, teemingEnabled = true }

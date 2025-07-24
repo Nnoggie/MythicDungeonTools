@@ -2,10 +2,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 130
-MDT.dungeonList[dungeonIndex] = L["GateOfTheSettingSun"]
+MDT.dungeonList[dungeonIndex] = L["Gate of the Setting Sun"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["gateOfTheSettingSunShortName"],
-  englishName = L["Gate of the Setting Sun"],
+  iconId = 603962,
+  shortName = L["gateOfTheSettingSunShortName"],
+  englishName = "Gate of the Setting Sun",
   mapID = 962,
 };
 
@@ -15,13 +16,13 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "gate_of_the_setting_sun",
-  [1] = "Gate of the Setting Sun",
-  [2] = "Gate Watch Tower",
+  [0] = "TheGreatWall",
+  [1] = "TheGreatWall1_",
+  [2] = "TheGreatWall2_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["GateOfTheSettingSun"],
-  [2] = L["GateWatchTower"],
+  [1] = L["Gate of the Setting Sun"],
+  [2] = L["Gate Watch Tower"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 25, teeming = 1000, teemingEnabled = true }

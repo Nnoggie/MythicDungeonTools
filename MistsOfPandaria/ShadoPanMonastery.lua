@@ -3,10 +3,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 135
-MDT.dungeonList[dungeonIndex] = L["ShadoPanMonastery"]
+MDT.dungeonList[dungeonIndex] = L["Shado-Pan Monastery"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["shadoPanMonasteryShortName"],
-  englishName = L["Shado-Pan Monastery"],
+  iconId = 603795,
+  shortName = L["shadoPanMonasteryShortName"],
+  englishName = "Shado-Pan Monastery",
   mapID = 959,
 };
 
@@ -20,7 +21,7 @@ MDT.dungeonMaps[dungeonIndex] = {
   [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\MistsOfPandaria\\Textures\\ShadoPanMonastery' },
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["ShadoPanMonastery"],
+  [1] = L["Shado-Pan Monastery"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 32, teeming = 1000, teemingEnabled = true }

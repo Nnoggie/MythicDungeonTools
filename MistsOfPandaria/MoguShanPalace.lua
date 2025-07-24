@@ -2,10 +2,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 131
-MDT.dungeonList[dungeonIndex] = L["MogushanPalace"]
+MDT.dungeonList[dungeonIndex] = L["Mogu\'shan Palace"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["mogushanPalaceShortName"],
-  englishName = L["Mogu\'shan Palace"],
+  iconId = 603795,
+  shortName = L["mogushanPalaceShortName"],
+  englishName = "Mogu\'shan Palace",
   mapID = 994,
 };
 
@@ -15,15 +16,15 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "mogu_shan_palace",
-  [1] = "The Crimson Assembly Hall",
-  [2] = "Vaults of Kings Past",
-  [3] = "Throne of Ancient Conquerors",
+  [0] = "MogushanPalace",
+  [1] = "MogushanPalace1_",
+  [2] = "MogushanPalace2_",
+  [3] = "MogushanPalace3_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["TheCrimsonAssemblyHall"],
-  [2] = L["VaultsOfKingsPast"],
-  [3] = L["ThroneOfAncientConquerors"],
+  [1] = L["The Crimson Assembly Hall"],
+  [2] = L["Vaults of Kings Past"],
+  [3] = L["Throne of Ancient Conquerors"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 20, teeming = 1000, teemingEnabled = true }

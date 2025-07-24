@@ -3,10 +3,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 136
-MDT.dungeonList[dungeonIndex] = L["SiegeOfNiuzaoTemple"]
+MDT.dungeonList[dungeonIndex] = L["Siege of Niuzao Temple"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["siegeOfNiuzaoTempleShortName"],
-  englishName = L["Siege of Niuzao Temple"],
+  iconId = 615986,
+  shortName = L["siegeOfNiuzaoTempleShortName"],
+  englishName = "Siege of Niuzao Temple",
   mapID = 1011,
 };
 
@@ -17,10 +18,10 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\MistsOfPandaria\\Textures\\SiegeOfNiuzaoTemple' },
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\MistsOfPandaria\\Textures\\SiegeOfNiuzao' },
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["SiegeOfNiuzaoTemple"],
+  [1] = L["Siege of Niuzao Temple"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 65, teeming = 1000, teemingEnabled = true }

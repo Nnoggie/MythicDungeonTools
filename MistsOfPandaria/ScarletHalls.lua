@@ -2,10 +2,11 @@ local MDT = MDT
 local L = MDT.L
 
 local dungeonIndex = 132
-MDT.dungeonList[dungeonIndex] = L["ScarletHalls"]
+MDT.dungeonList[dungeonIndex] = L["Scarlet Halls"]
 MDT.mapInfo[dungeonIndex] = {
-  shortname = L["scarletHallsShortName"],
-  englishName = L["Scarlet Halls"],
+  iconId = 133154,
+  shortName = L["scarletHallsShortName"],
+  englishName = "Scarlet Halls",
   mapID = 1001,
 };
 
@@ -15,12 +16,12 @@ for _, zone in ipairs(zones) do
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "scarlet_halls_mop",
-  [1] = "Training Grounds",
-  [2] = "Athenaeum",
+  [0] = "ScarletHalls",
+  [1] = "ScarletHalls1_",
+  [2] = "ScarletHalls2_",
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["TrainingGrounds"],
+  [1] = L["Training Grounds"],
   [2] = L["Athenaeum"],
 }
 
