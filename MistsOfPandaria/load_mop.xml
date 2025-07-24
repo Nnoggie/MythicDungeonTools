@@ -1,0 +1,11 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file='GateOfTheSettingSun.lua'/>
+    <Script file='MoguShanPalace.lua'/>
+    <Script file='ScarletHalls.lua'/>
+    <Script file='ScarletMonastery.lua'/>
+    <Script file='Scholomance.lua'/>
+    <Script file='ShadoPanMonastery.lua'/>
+    <Script file='SiegeOfNiuzaoTemple.lua'/>
+    <Script file='StormstoutBrewery.lua'/>
+    <Script file='TempleOfTheJadeSerpent.lua'/>
+</Ui>
