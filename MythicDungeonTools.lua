@@ -563,8 +563,8 @@ end
 function MDT:SkinProgressBar(progressBar)
   local bar = progressBar and progressBar.Bar
   if not bar then return end
-  bar.Icon:Hide()
-  bar.IconBG:Hide()
+  if bar.Icon then bar.Icon:Hide() end
+  if bar.IconBG then bar.IconBG:Hide() end
 end
 
 function MDT:IsFrameOffScreen()
@@ -1158,6 +1158,7 @@ function MDT:MakeSidePanel(frame)
   local function makeAffixString(week, affixes, longText)
     local ret
     local sep = ""
+    if not MDT:IsRetail() then return "" end
     for _, affixID in ipairs(affixes) do
       local name, _, filedataid = C_ChallengeMode.GetAffixInfo(affixID)
       name = name or L["Unknown"]
