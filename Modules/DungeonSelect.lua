@@ -20,12 +20,18 @@ MDT.seasonList = {}
 MDT.dungeonSelectionToIndex = {}
 
 do
-  tinsert(MDT.seasonList, L["The War Within Season 1"])
-  tinsert(MDT.seasonList, L["The War Within Season 2"])
-  tinsert(MDT.seasonList, L["The War Within Season 3"])
-  tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
-  tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
-  tinsert(MDT.dungeonSelectionToIndex, { 123, 30, 37, 38, 113, 111, 115, 119 })
+  if MDT:IsRetail() then
+    tinsert(MDT.seasonList, L["The War Within Season 1"])
+    tinsert(MDT.seasonList, L["The War Within Season 2"])
+    tinsert(MDT.seasonList, L["The War Within Season 3"])
+    tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
+    tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
+    tinsert(MDT.dungeonSelectionToIndex, { 123, 30, 37, 38, 113, 111, 115, 119 })
+  end
+  if MDT:IsMop() then
+    tinsert(MDT.seasonList, L["MoP Challenge Mode"])
+    tinsert(MDT.dungeonSelectionToIndex, { 130, 131, 132, 133, 134, 135, 136, 137, 138 })
+  end
 end
 
 local seasonList = MDT.seasonList

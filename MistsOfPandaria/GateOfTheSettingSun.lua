@@ -1,12 +1,12 @@
 local MDT = MDT
 local L = MDT.L
 
-local dungeonIndex = 0
+local dungeonIndex = 130
 MDT.dungeonList[dungeonIndex] = L["GateOfTheSettingSun"]
 MDT.mapInfo[dungeonIndex] = {
-    shortname = L["gateOfTheSettingSunShortName"],
-    englishName = L["Gate of the Setting Sun"],
-    mapID = 962,
+  shortname = L["gateOfTheSettingSunShortName"],
+  englishName = L["Gate of the Setting Sun"],
+  mapID = 962,
 };
 
 local zones = { 437, 438 }

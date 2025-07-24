@@ -1,12 +1,12 @@
 local MDT = MDT
 local L = MDT.L
 
-local dungeonIndex = 0
+local dungeonIndex = 133
 MDT.dungeonList[dungeonIndex] = L["ScarletMonastery"]
 MDT.mapInfo[dungeonIndex] = {
-    shortname = L["scarletMonasteryShortName"],
-    englishName = L["Scarlet Monastery"],
-    mapID = 1004,
+  shortname = L["scarletMonasteryShortName"],
+  englishName = L["Scarlet Monastery"],
+  mapID = 1004,
 };
 
 local zones = { 435, 436 }

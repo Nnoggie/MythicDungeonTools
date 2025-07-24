@@ -1,12 +1,13 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 
-local dungeonIndex = 0
+local dungeonIndex = 136
 MDT.dungeonList[dungeonIndex] = L["SiegeOfNiuzaoTemple"]
 MDT.mapInfo[dungeonIndex] = {
-    shortname = L["siegeOfNiuzaoTempleShortName"],
-    englishName = L["Siege of Niuzao Temple"],
-    mapID = 1011,
+  shortname = L["siegeOfNiuzaoTempleShortName"],
+  englishName = L["Siege of Niuzao Temple"],
+  mapID = 1011,
 };
 
 local zones = { 457, 458, 459 }

@@ -1,12 +1,13 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 
-local dungeonIndex = 0
+local dungeonIndex = 135
 MDT.dungeonList[dungeonIndex] = L["ShadoPanMonastery"]
 MDT.mapInfo[dungeonIndex] = {
-    shortname = L["shadoPanMonasteryShortName"],
-    englishName = L["Shado-Pan Monastery"],
-    mapID = 959,
+  shortname = L["shadoPanMonasteryShortName"],
+  englishName = L["Shado-Pan Monastery"],
+  mapID = 959,
 };
 
 local zones = { 443, 444, 445, 446 }

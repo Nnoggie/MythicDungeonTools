@@ -1,7 +1,7 @@
 local MDT = MDT
 local L = MDT.L
 
-local dungeonIndex = 47
+local dungeonIndex = 138
 MDT.dungeonList[dungeonIndex] = L["TempleOfTheJadeSerpent"]
 MDT.mapInfo[dungeonIndex] = {
   shortname = L["templeOfTheJadeSerpentShortName"],

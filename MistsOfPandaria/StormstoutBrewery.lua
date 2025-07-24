@@ -1,12 +1,12 @@
 local MDT = MDT
 local L = MDT.L
 
-local dungeonIndex = 0
+local dungeonIndex = 137
 MDT.dungeonList[dungeonIndex] = L["StormstoutBrewery"]
 MDT.mapInfo[dungeonIndex] = {
-    shortname = L["stormstoutBreweryShortName"],
-    englishName = L["Stormstout Brewery"],
-    mapID = 961,
+  shortname = L["stormstoutBreweryShortName"],
+  englishName = L["Stormstout Brewery"],
+  mapID = 961,
 };
 
 local zones = { 439, 440, 441, 442 }

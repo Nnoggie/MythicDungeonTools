@@ -2863,6 +2863,7 @@ L["Forgemaster Gorek"] = "Forgemaster Gorek"
 L["Forgewrought Monstrosity"] = "Forgewrought Monstrosity"
 L["Neltharus"] = "Neltharus"
 
+L["MoP Challenge Mode"] = "MoP Challenge Mode"
 L["Gate of the Setting Sun"] = "Gate of the Setting Sun"
 L["Gate Watch Tower"] = "Gate Watch Tower"
 L["Krik\'thik Infiltrator"] = "Krik\'thik Infiltrator"
