@@ -22,19 +22,30 @@ MDT.dungeonMaps[dungeonIndex] = {
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Halls of Atonement"],
 }
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 273, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 575, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["template"] = "MapLinkPinTemplate",
+      ["type"] = "textFrame",
+      ["x"] = 357.68710131642,
+      ["y"] = -253.2025611896,
+      ["text"] = "",
+    },
+  },
 };
+
+
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Depraved Darkblade",
     ["id"] = 165515,
     ["count"] = 4,
-    ["health"] = 165195,
+    ["health"] = 80204883,
     ["scale"] = 1.4,
-    ["displayId"] = 93074,
+    ["displayId"] = 93032,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
@@ -51,6 +62,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [1235060] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -149,25 +166,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 3,
         ["sublevel"] = 1,
       },
-      [17] = {
-        ["x"] = 116.03736093921,
-        ["y"] = -405.48340284299,
-        ["g"] = 69,
-        ["sublevel"] = 1,
-      },
-      [18] = {
-        ["x"] = 94.764556678754,
-        ["y"] = -405.80079216519,
-        ["g"] = 69,
-        ["sublevel"] = 1,
-      },
     },
   },
   [2] = {
     ["name"] = "Depraved Houndmaster",
     ["id"] = 164562,
-    ["count"] = 4,
-    ["health"] = 148676,
+    ["count"] = 5,
+    ["health"] = 72184395,
     ["scale"] = 1.4,
     ["displayId"] = 97001,
     ["creatureType"] = "Humanoid",
@@ -186,6 +191,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [325535] = {
+      },
+      [326450] = {
+        ["interruptible"] = true,
+        ["enrage"] = true,
+      },
+      [329299] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -194,6 +210,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 2,
         ["sublevel"] = 1,
         ["inspiring"] = true,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 748.90397574844,
+            ["y"] = -314.36115382238,
+          },
+          [2] = {
+            ["x"] = 702.76637665524,
+            ["y"] = -236.63814024877,
+          },
+          [3] = {
+            ["x"] = 748.90397574844,
+            ["y"] = -314.36115382238,
+          },
+          [4] = {
+            ["x"] = 715.76476286546,
+            ["y"] = -367.12175249834,
+          },
+        },
       },
       [2] = {
         ["x"] = 642.12948338989,
@@ -212,6 +246,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -168.61842497655,
         ["g"] = 11,
         ["sublevel"] = 1,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 654.5776368751,
+            ["y"] = -168.61842497655,
+          },
+          [2] = {
+            ["x"] = 680.76925955296,
+            ["y"] = -198.14295854263,
+          },
+          [3] = {
+            ["x"] = 654.5776368751,
+            ["y"] = -168.61842497655,
+          },
+          [4] = {
+            ["x"] = 634.77495757233,
+            ["y"] = -146.64939062626,
+          },
+          [5] = {
+            ["x"] = 654.5776368751,
+            ["y"] = -168.61842497655,
+          },
+        },
       },
       [5] = {
         ["x"] = 586.81861914227,
@@ -219,6 +275,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 16,
         ["sublevel"] = 1,
         ["inspiring"] = true,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 586.81861914227,
+            ["y"] = -232.08454757204,
+          },
+          [2] = {
+            ["x"] = 545.28613151502,
+            ["y"] = -252.13622432393,
+          },
+          [3] = {
+            ["x"] = 586.81861914227,
+            ["y"] = -232.08454757204,
+          },
+          [4] = {
+            ["x"] = 643.27387161787,
+            ["y"] = -246.13692810434,
+          },
+          [5] = {
+            ["x"] = 586.81861914227,
+            ["y"] = -232.08454757204,
+          },
+        },
       },
       [6] = {
         ["x"] = 573.96682573244,
@@ -226,6 +304,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 20,
         ["sublevel"] = 1,
         ["inspiring"] = true,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 573.96682573244,
+            ["y"] = -372.36913537777,
+          },
+          [2] = {
+            ["x"] = 604.27865962787,
+            ["y"] = -382.61980989384,
+          },
+          [3] = {
+            ["x"] = 638.27452924732,
+            ["y"] = -371.6211713037,
+          },
+          [4] = {
+            ["x"] = 604.27865962787,
+            ["y"] = -382.61980989384,
+          },
+          [5] = {
+            ["x"] = 573.96682573244,
+            ["y"] = -372.36913537777,
+          },
+          [6] = {
+            ["x"] = 548.28583298414,
+            ["y"] = -360.12264916787,
+          },
+          [7] = {
+            ["x"] = 573.96682573244,
+            ["y"] = -372.36913537777,
+          },
+        },
       },
       [7] = {
         ["x"] = 632.56927438659,
@@ -233,6 +341,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 22,
         ["sublevel"] = 1,
         ["inspiring"] = true,
+        ["patrol"] = {
+          [1] = {
+            ["x"] = 632.56927438659,
+            ["y"] = -411.24119978935,
+          },
+          [2] = {
+            ["x"] = 646.77348150291,
+            ["y"] = -403.11724928074,
+          },
+          [3] = {
+            ["x"] = 632.56927438659,
+            ["y"] = -411.24119978935,
+          },
+          [4] = {
+            ["x"] = 601.2791564468,
+            ["y"] = -433.11349026169,
+          },
+          [5] = {
+            ["x"] = 632.56927438659,
+            ["y"] = -411.24119978935,
+          },
+        },
       },
       [8] = {
         ["x"] = 664.15428258606,
@@ -264,7 +394,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vicious Gargon",
     ["id"] = 164563,
     ["count"] = 4,
-    ["health"] = 181715,
+    ["health"] = 88225372,
     ["scale"] = 1.4,
     ["displayId"] = 93163,
     ["creatureType"] = "Beast",
@@ -282,6 +412,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1235070] = {
+      },
+      [1237602] = {
+        ["bleed"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -416,8 +553,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [4] = {
     ["name"] = "Depraved Obliterator",
     ["id"] = 165414,
-    ["count"] = 4,
-    ["health"] = 148676,
+    ["count"] = 5,
+    ["health"] = 76194639,
     ["scale"] = 1.4,
     ["displayId"] = 93680,
     ["creatureType"] = "Humanoid",
@@ -436,6 +573,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [325876] = {
+        ["magic"] = true,
+      },
+      [325879] = {
+      },
+      [338003] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -577,8 +725,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [24] = {
-        ["x"] = 115.72633380793,
-        ["y"] = -386.07403145397,
+        ["x"] = 116.76741950512,
+        ["y"] = -386.44243434201,
         ["g"] = 69,
         ["sublevel"] = 1,
       },
@@ -588,7 +736,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toiling Groundskeeper",
     ["id"] = 165415,
     ["count"] = 2,
-    ["health"] = 99117,
+    ["health"] = 48122930,
     ["scale"] = 1,
     ["displayId"] = 93814,
     ["creatureType"] = "Humanoid",
@@ -607,6 +755,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [1235121] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -870,8 +1023,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [6] = {
     ["name"] = "Depraved Collector",
     ["id"] = 165529,
-    ["count"] = 4,
-    ["health"] = 165195,
+    ["count"] = 5,
+    ["health"] = 80204883,
     ["scale"] = 1.4,
     ["displayId"] = 94573,
     ["creatureType"] = "Humanoid",
@@ -890,6 +1043,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [325700] = {
+        ["interruptible"] = true,
+      },
+      [325701] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -911,9 +1073,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 96.675148949042,
-        ["y"] = -386.75595958046,
+        ["x"] = 95.714137777502,
+        ["y"] = -387.14037025533,
         ["g"] = 69,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 547.46950201252,
+        ["y"] = -300.00962589636,
+        ["g"] = 75,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 551.78712110317,
+        ["y"] = -312.7352815458,
+        ["g"] = 75,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 545.19707346526,
+        ["y"] = -324.77925956497,
+        ["g"] = 75,
         ["sublevel"] = 1,
       },
     },
@@ -921,14 +1101,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [7] = {
     ["name"] = "Shard of Halkias",
     ["id"] = 164557,
-    ["count"] = 10,
-    ["health"] = 396468,
+    ["count"] = 15,
+    ["health"] = 192491720,
     ["scale"] = 2,
     ["displayId"] = 94868,
     ["creatureType"] = "Elemental",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [325509] = {
+      },
+      [326409] = {
+      },
+      [326426] = {
+      },
+      [326438] = {
+      },
+      [326440] = {
+      },
+      [326441] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -955,7 +1149,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Halkias",
     ["id"] = 165408,
     ["count"] = 0,
-    ["health"] = 1152735,
+    ["health"] = 561836504,
     ["scale"] = 1.6,
     ["displayId"] = 98764,
     ["creatureType"] = "Elemental",
@@ -965,6 +1159,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1185,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [322711] = {
+      },
+      [322936] = {
+      },
+      [322943] = {
+      },
+      [322945] = {
+      },
+      [322977] = {
+        ["magic"] = true,
+      },
+      [323001] = {
+      },
+      [324044] = {
+      },
+      [339235] = {
+      },
+      [339237] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -977,14 +1193,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [9] = {
     ["name"] = "Stoneborn Reaver",
     ["id"] = 167612,
-    ["count"] = 6,
-    ["health"] = 264312,
+    ["count"] = 8,
+    ["health"] = 128327813,
     ["scale"] = 1.4,
     ["displayId"] = 93829,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [1235762] = {
+        ["magic"] = true,
+      },
+      [1235766] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1059,7 +1282,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stonefiend Anklebiter",
     ["id"] = 167610,
     ["count"] = 1,
-    ["health"] = 49559,
+    ["health"] = 24061465,
     ["scale"] = 0.8,
     ["displayId"] = 94765,
     ["creatureType"] = "Humanoid",
@@ -1077,6 +1300,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [326879] = {
+      },
+      [1235245] = {
+        ["bleed"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1306,8 +1536,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [11] = {
     ["name"] = "Stoneborn Eviscerator",
     ["id"] = 167611,
-    ["count"] = 4,
-    ["health"] = 165195,
+    ["count"] = 6,
+    ["health"] = 80204883,
     ["scale"] = 1.4,
     ["displayId"] = 94724,
     ["creatureType"] = "Humanoid",
@@ -1326,6 +1556,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [326638] = {
+      },
+      [1235257] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1417,14 +1654,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [12] = {
     ["name"] = "Stoneborn Slasher",
     ["id"] = 167607,
-    ["count"] = 7,
-    ["health"] = 330390,
+    ["count"] = 10,
+    ["health"] = 160409767,
     ["scale"] = 1.7,
-    ["displayId"] = 95707,
+    ["displayId"] = 95706,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [326997] = {
+      },
+      [1235326] = {
+      },
+      [1235808] = {
+      },
+      [1235809] = {
+      },
+      [1237071] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1576,7 +1825,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Echelon",
     ["id"] = 164185,
     ["count"] = 0,
-    ["health"] = 1152735,
+    ["health"] = 481574146,
     ["scale"] = 1.8,
     ["displayId"] = 96260,
     ["creatureType"] = "Humanoid",
@@ -1587,10 +1836,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [319592] = {
+      },
+      [319603] = {
+      },
+      [319702] = {
+      },
+      [319703] = {
+      },
+      [319733] = {
+      },
+      [319941] = {
+      },
+      [326389] = {
+      },
+      [328206] = {
+      },
+      [344874] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 302.29575711516,
+        ["x"] = 282.5627831144,
         ["y"] = -310.63473917066,
+        ["g"] = 71,
         ["sublevel"] = 1,
       },
     },
@@ -1599,9 +1869,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "High Adjudicator Aleez",
     ["id"] = 165410,
     ["count"] = 0,
-    ["health"] = 1152735,
-    ["scale"] = 1.8,
-    ["displayId"] = 94503,
+    ["health"] = 561836504,
+    ["scale"] = 1.5,
+    ["displayId"] = 131310,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["isBoss"] = true,
@@ -1610,10 +1880,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [323538] = {
+        ["interruptible"] = true,
+      },
+      [329340] = {
+      },
+      [1236512] = {
+      },
+      [1236513] = {
+        ["magic"] = true,
+      },
+      [1236514] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 105.84331242681,
-        ["y"] = -306.10551401261,
+        ["x"] = 107.60519957816,
+        ["y"] = -307.33882930148,
+        ["g"] = 73,
         ["sublevel"] = 1,
       },
     },
@@ -1622,7 +1908,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tormented Soul",
     ["id"] = 167892,
     ["count"] = 0,
-    ["health"] = 33039,
+    ["health"] = 24061465,
     ["scale"] = 1,
     ["displayId"] = 90426,
     ["creatureType"] = "Undead",
@@ -1790,19 +2076,35 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [16] = {
     ["name"] = "Inquisitor Sigar",
     ["id"] = 167876,
-    ["count"] = 20,
-    ["health"] = 495585,
-    ["scale"] = 2,
-    ["displayId"] = 93070,
+    ["count"] = 35,
+    ["health"] = 240614650,
+    ["scale"] = 1.7,
+    ["displayId"] = 131309,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [326794] = {
+      },
+      [326806] = {
+      },
+      [326829] = {
+        ["interruptible"] = true,
+      },
+      [326847] = {
+      },
+      [1236614] = {
+      },
+      [1236615] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 106.88459505079,
-        ["y"] = -111.50923761352,
+        ["x"] = 108.20483238956,
+        ["y"] = -117.40342563249,
+        ["g"] = 74,
         ["sublevel"] = 1,
       },
     },
@@ -1811,9 +2113,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lord Chamberlain",
     ["id"] = 164218,
     ["count"] = 0,
-    ["health"] = 1317412,
-    ["scale"] = 1.8,
-    ["displayId"] = 95103,
+    ["health"] = 642098861,
+    ["scale"] = 1.5,
+    ["displayId"] = 131311,
     ["creatureType"] = "Humanoid",
     ["level"] = 80,
     ["isBoss"] = true,
@@ -1822,10 +2124,338 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [323142] = {
+      },
+      [323143] = {
+      },
+      [323236] = {
+      },
+      [323392] = {
+      },
+      [323393] = {
+      },
+      [323414] = {
+      },
+      [323437] = {
+      },
+      [328791] = {
+      },
+      [329104] = {
+      },
+      [329113] = {
+      },
+      [329262] = {
+      },
+      [335338] = {
+      },
+      [335345] = {
+      },
+      [1236964] = {
+      },
+      [1236973] = {
+      },
+      [1237634] = {
+      },
+      [1237642] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 106.87117139792,
-        ["y"] = -75.34894104302,
+        ["x"] = 109.8804863577,
+        ["y"] = -76.483172153053,
+        ["g"] = 72,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [18] = {
+    ["name"] = "Undying Stonefiend",
+    ["id"] = 164363,
+    ["count"] = 0,
+    ["health"] = 13367481,
+    ["scale"] = 1.3,
+    ["displayId"] = 93854,
+    ["creatureType"] = "Humanoid",
+    ["level"] = 80,
+    ["characteristics"] = {
+      ["Silence"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
+    ["spells"] = {
+      [319724] = {
+      },
+      [328124] = {
+      },
+      [328125] = {
+      },
+      [328322] = {
+        ["interruptible"] = true,
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 262.4922065065,
+        ["y"] = -343.48206515896,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 279.99091739865,
+        ["y"] = -342.99291557099,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 297.98869933875,
+        ["y"] = -342.992835532,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 280.49078760451,
+        ["y"] = -276.00126357947,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 297.98859262009,
+        ["y"] = -276.00134361846,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 263.49295951345,
+        ["y"] = -276.00126357947,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [19] = {
+    ["name"] = "Sinstone Statue",
+    ["id"] = 165737,
+    ["count"] = 0,
+    ["health"] = 13367481,
+    ["scale"] = 1.3,
+    ["displayId"] = 96853,
+    ["creatureType"] = "Not specified",
+    ["level"] = 80,
+    ["spells"] = {
+      [323126] = {
+      },
+      [329258] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 129.32144646189,
+        ["y"] = -58.353948939924,
+        ["g"] = 72,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 116.6899697992,
+        ["y"] = -51.656561776436,
+        ["g"] = 72,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 102.27380804554,
+        ["y"] = -51.715932745586,
+        ["g"] = 72,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 87.833962478767,
+        ["y"] = -59.450554958876,
+        ["g"] = 72,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [20] = {
+    ["name"] = "Ghastly Parishioner",
+    ["id"] = 165913,
+    ["count"] = 0,
+    ["health"] = 1336748072,
+    ["scale"] = 1.3,
+    ["displayId"] = 99386,
+    ["creatureType"] = "Undead",
+    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [323650] = {
+      },
+      [323852] = {
+      },
+      [323853] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 106.13571391308,
+        ["y"] = -332.68376455233,
+        ["g"] = 73,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [21] = {
+    ["name"] = "Empty Anima Vessel",
+    ["id"] = 166034,
+    ["count"] = 0,
+    ["health"] = 10000,
+    ["scale"] = 1.3,
+    ["displayId"] = 96296,
+    ["creatureType"] = "Not specified",
+    ["level"] = 80,
+    ["spells"] = {
+      [323749] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 124.0743517101,
+        ["y"] = -288.72678794204,
+        ["g"] = 73,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 123.01056914395,
+        ["y"] = -322.46234179909,
+        ["g"] = 73,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 90.719495895846,
+        ["y"] = -319.52890830269,
+        ["g"] = 73,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 89.457551366593,
+        ["y"] = -289.44232059118,
+        ["g"] = 73,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [22] = {
+    ["name"] = "Anima Fountain",
+    ["id"] = 166497,
+    ["count"] = 0,
+    ["health"] = 10000,
+    ["scale"] = 1,
+    ["displayId"] = 1126,
+    ["creatureType"] = "Not specified",
+    ["level"] = 80,
+    ["spells"] = {
+      [338012] = {
+      },
+      [338013] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 106.1121684791,
+        ["y"] = -276.02352068133,
+        ["g"] = 73,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [23] = {
+    ["name"] = "Depraved Darkblade",
+    ["id"] = 167615,
+    ["count"] = 4,
+    ["health"] = 80204883,
+    ["scale"] = 1.4,
+    ["displayId"] = 93074,
+    ["creatureType"] = "Humanoid",
+    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Silence"] = true,
+      ["Mind Control"] = true,
+      ["Fear"] = true,
+      ["Stun"] = true,
+      ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [1235060] = {
+        ["magic"] = true,
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 116.84197623781,
+        ["y"] = -410.59980887923,
+        ["g"] = 69,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 95.289032211715,
+        ["y"] = -411.08424414435,
+        ["g"] = 69,
+        ["sublevel"] = 1,
+      },
+    },
+  },
+  [24] = {
+    ["name"] = "Manifestation of Envy",
+    ["id"] = 167898,
+    ["count"] = 0,
+    ["health"] = 32081953,
+    ["scale"] = 1,
+    ["displayId"] = 94281,
+    ["creatureType"] = "Aberration",
+    ["level"] = 80,
+    ["characteristics"] = {
+      ["Taunt"] = true,
+      ["Incapacitate"] = true,
+      ["Root"] = true,
+      ["Fear"] = true,
+      ["Disorient"] = true,
+      ["Stun"] = true,
+      ["Slow"] = true,
+    },
+    ["spells"] = {
+      [326849] = {
+      },
+      [326891] = {
+      },
+      [340446] = {
+      },
+    },
+    ["clones"] = {
+      [1] = {
+        ["x"] = 112.01849527772,
+        ["y"] = -106.04727835192,
+        ["g"] = 74,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 119.42311690514,
+        ["y"] = -112.68649675992,
+        ["g"] = 74,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 103.49166877519,
+        ["y"] = -106.03125600886,
+        ["g"] = 74,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 97.012635319742,
+        ["y"] = -112.54618512904,
+        ["g"] = 74,
         ["sublevel"] = 1,
       },
     },

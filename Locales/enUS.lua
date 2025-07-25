@@ -2,6 +2,33 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+--- ITEMDesc
+L["EDAItem1Description"] = "" --"Usable by |T4620672:15:15|t Khaz Algar Enchanting (25) \nAfter 4s Channeled , stuns up to 5 enemies within 15 yards for 12 seconds."
+L["EDAItem2Description"] = "" --If no additional notes are needed, this can be deleted.
+L["EDAItem3Description"] = "" --If no additional notes are needed, this can be deleted.
+L["eda2BossNote"] = ""--As long as the enemies in G23 are killed, Boss 2 will spawn.
+
+--- STREET
+L["Smuggled Creature"] = "Smuggled Creature"
+L["Unruly Patron"] = "Unruly Patron"
+L["Bazaar Strongarm"] = "Bazaar Strongarm"
+L["Unruly Patron"] = "Unruly Patron"
+L["Bazaar Overseer"] = "Bazaar Overseer"
+L["Cartel Lackey"] = "Cartel Lackey"
+
+--- GMBT
+L["Titanic Defense Turret"] = "Titanic Defense Turret"
+L["Hourglass Cannon"] = "Hourglass Cannon"
+L["Corsair Brute"] = "Corsair Brute"
+L["So' Cartel Assassin"] = "So' Cartel Assassin"
+L["Progenitor Relic"] = "Progenitor Relic"
+L["Invigorating Fish Stick"] = "Invigorating Fish Stick"
+L["Wandering Pulsar"] = "Wandering Pulsar"
+L["Vault Purifier"] = "Vault Purifier"
+
+--creatureType
+L["Totem"] = "Totem"
+
 
 L["ecoDomeAldaniShortName"] = "EDA"
 L["Eco-Dome Al'dani"] = "Eco-Dome Al'dani"
