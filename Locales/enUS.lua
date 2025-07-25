@@ -7,7 +7,11 @@ L["EDAItem1Description"] = "" --"Usable by |T4620672:15:15|t Khaz Algar Enchanti
 L["EDAItem2Description"] = "" --If no additional notes are needed, this can be deleted.
 L["EDAItem3Description"] = "" --If no additional notes are needed, this can be deleted.
 L["eda2BossNote"] = ""--As long as the enemies in G23 are killed, Boss 2 will spawn.
-
+L["streetBazaarEventNote1"] = ""--Bazaar Event first wave enemies
+L["streetBazaarEventNote2"] = ""--Bazaar Event second wave enemies
+L["streetBazaarEventNote3"] = ""--Bazaar Event third (final) wave enemies
+L["streetOasisBossNote1"] = ""--Myza's Oasis boss encounter first wave enemies
+L["streetOasisBossNote2"] = ""--Myza's Oasis boss encounter second wave enemies
 --- STREET
 L["Smuggled Creature"] = "Smuggled Creature"
 L["Unruly Patron"] = "Unruly Patron"
