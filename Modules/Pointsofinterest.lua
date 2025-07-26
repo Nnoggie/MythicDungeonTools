@@ -909,7 +909,6 @@ local function POI_SetOptions(frame, type, poi)
   if type == "EDAItem2" then
     local itemTexture = 4037124
     local itemSpellId = 1236971
-    local itemDescription = L["EDAItem2Description"]
 
     frame.Texture:SetTexture(itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
@@ -921,8 +920,6 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
@@ -935,7 +932,6 @@ local function POI_SetOptions(frame, type, poi)
   if type == "EDAItem3" then
     local itemTexture = 6891021
     local itemSpellId = 1239229
-    local itemDescription = L["EDAItem3Description"]
 
     frame.Texture:SetTexture(itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
@@ -947,8 +943,6 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
