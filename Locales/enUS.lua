@@ -2,6 +2,39 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+--- ITEMDesc
+L["Ghastly Parishioner"] = "Ghastly Parishioner"
+L["Empty Anima Vessel"] = "Empty Anima Vessel"
+L["Anima Fountain"] = "Anima Fountain"
+L["Sinstone Statue"] = "Sinstone Statue"
+L["EDAItem1Description"] = "Usable by |T4620672:15:15|t Khaz Algar Enchanting (25)"
+L["eda2BossNote"] = "Defeating G23 is required to spawn the boss"
+L["streetBazaarEventNote1"] = "Bazaar Event first wave"
+L["streetBazaarEventNote2"] = "Bazaar Event second wave"
+L["streetBazaarEventNote3"] = "Bazaar Event third wave"
+L["streetOasisBossNote1"] = "Myza's Oasis first wave"
+L["streetOasisBossNote2"] = "Myza's Oasis second wave"
+--- STREET
+L["Smuggled Creature"] = "Smuggled Creature"
+L["Unruly Patron"] = "Unruly Patron"
+L["Bazaar Strongarm"] = "Bazaar Strongarm"
+L["Unruly Patron"] = "Unruly Patron"
+L["Bazaar Overseer"] = "Bazaar Overseer"
+L["Cartel Lackey"] = "Cartel Lackey"
+
+--- GMBT
+L["Titanic Defense Turret"] = "Titanic Defense Turret"
+L["Hourglass Cannon"] = "Hourglass Cannon"
+L["Corsair Brute"] = "Corsair Brute"
+L["So' Cartel Assassin"] = "So' Cartel Assassin"
+L["Progenitor Relic"] = "Progenitor Relic"
+L["Invigorating Fish Stick"] = "Invigorating Fish Stick"
+L["Wandering Pulsar"] = "Wandering Pulsar"
+L["Vault Purifier"] = "Vault Purifier"
+
+--creatureType
+L["Totem"] = "Totem"
+
 
 L["ecoDomeAldaniShortName"] = "EDA"
 L["Eco-Dome Al'dani"] = "Eco-Dome Al'dani"
@@ -24,7 +57,7 @@ L["priory1BossNote"] = "The mini-boss you decide to fight together with the boss
 L["Oppressive Banner"] = "Oppressive Banner"
 L["Lost Soul"] = "Lost Soul"
 L["Deathwalker"] = "Deathwalker"
-L["prioryItemDescription"] = "Usable by Priests or |cFFF48CBAPaladin|r"
+L["prioryItemDescription"] = "Usable by Priests or |cFFF48CBAPaladins|r"
 L["Menial Laborer"] = "Menial Laborer"
 L["Dynamite Mine Cart"] = "Dynamite Mine Cart"
 L["Wriggling Darkspawn"] = "Wriggling Darkspawn"

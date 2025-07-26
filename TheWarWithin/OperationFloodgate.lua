@@ -651,6 +651,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Incapacitate"] = true,
       ["Silence"] = true,
+      ["Polymorph"] = true,
       ["Fear"] = true,
       ["Disorient"] = true,
       ["Imprison"] = true,
@@ -2271,11 +2272,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scaffolding",
     ["id"] = 231176,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 12031357,
     ["scale"] = 1,
     ["displayId"] = 124689,
     ["creatureType"] = "Not specified",
     ["level"] = 80,
+    ["characteristics"] = {
+      ["Stun"] = true,
+    },
     ["spells"] = {
       [465420] = {
       },
@@ -2365,6 +2369,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 80,
     ["spells"] = {
       [460781] = {
+      },
+      [460814] = {
+      },
+      [461994] = {
       },
     },
     ["clones"] = {

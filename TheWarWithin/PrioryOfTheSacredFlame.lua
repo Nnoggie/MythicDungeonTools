@@ -63,12 +63,13 @@ MDT.mapPOIs[dungeonIndex] = {
   },
 };
 
+
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Arathi Footman",
     ["id"] = 206705,
     ["count"] = 3,
-    ["health"] = 104148506,
+    ["health"] = 88229948,
     ["scale"] = 1,
     ["displayId"] = 120023,
     ["creatureType"] = "Humanoid",
@@ -89,7 +90,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [427342] = {
       },
+      [427359] = {
+      },
       [427360] = {
+      },
+      [429099] = {
       },
     },
     ["clones"] = {
@@ -368,8 +373,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [2] = {
     ["name"] = "Arathi Knight",
     ["id"] = 206696,
-    ["count"] = 18,
-    ["health"] = 128182776,
+    ["count"] = 25,
+    ["health"] = 128334470,
     ["scale"] = 1,
     ["stealthDetect"] = true,
     ["displayId"] = 120988,
@@ -379,6 +384,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
+      [427359] = {
+      },
       [427609] = {
       },
       [427621] = {
@@ -597,7 +604,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arathi Neophyte",
     ["id"] = 212838,
     ["count"] = 1,
-    ["health"] = 40057118,
+    ["health"] = 40104522,
     ["scale"] = 0.8,
     ["displayId"] = 121017,
     ["creatureType"] = "Humanoid",
@@ -608,6 +615,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
     },
     ["spells"] = {
+      [429099] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -664,7 +673,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ardent Paladin",
     ["id"] = 206704,
     ["count"] = 14,
-    ["health"] = 128182776,
+    ["health"] = 128334470,
     ["scale"] = 1,
     ["displayId"] = 121023,
     ["creatureType"] = "Humanoid",
@@ -765,7 +774,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Devout Priest",
     ["id"] = 206697,
     ["count"] = 6,
-    ["health"] = 68097100,
+    ["health"] = 68177687,
     ["scale"] = 1,
     ["displayId"] = 120847,
     ["creatureType"] = "Humanoid",
@@ -787,6 +796,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [427357] = {
         ["interruptible"] = true,
+      },
+      [427359] = {
+      },
+      [428916] = {
       },
     },
     ["clones"] = {
@@ -1040,7 +1053,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Elaena Emberlanz",
     ["id"] = 239833,
     ["count"] = 50,
-    ["health"] = 216308435,
+    ["health"] = 216564418,
     ["scale"] = 1.7,
     ["stealthDetect"] = true,
     ["displayId"] = 118872,
@@ -1053,6 +1066,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [424431] = {
       },
       [424432] = {
+      },
+      [427359] = {
       },
       [448385] = {
       },
@@ -1076,7 +1091,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fanatical Conjuror",
     ["id"] = 206698,
     ["count"] = 6,
-    ["health"] = 72102812,
+    ["health"] = 72188139,
     ["scale"] = 1,
     ["displayId"] = 121005,
     ["creatureType"] = "Humanoid",
@@ -1094,6 +1109,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [427359] = {
+      },
       [427469] = {
         ["interruptible"] = true,
       },
@@ -1224,8 +1241,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [9] = {
     ["name"] = "Fervent Sharpshooter",
     ["id"] = 206694,
-    ["count"] = 5,
-    ["health"] = 80114235,
+    ["count"] = 6,
+    ["health"] = 80209044,
     ["scale"] = 1,
     ["displayId"] = 120987,
     ["creatureType"] = "Humanoid",
@@ -1244,6 +1261,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [427359] = {
+      },
       [427629] = {
       },
       [453458] = {
@@ -1590,7 +1609,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forge Master Damian",
     ["id"] = 212831,
     ["count"] = 50,
-    ["health"] = 192274164,
+    ["health"] = 192501705,
     ["scale"] = 1.7,
     ["stealthDetect"] = true,
     ["displayId"] = 118874,
@@ -1600,6 +1619,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
+      [427359] = {
+      },
       [427894] = {
       },
       [427897] = {
@@ -1626,7 +1647,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Guard Captain Suleyman",
     ["id"] = 212826,
     ["count"] = 50,
-    ["health"] = 224319859,
+    ["health"] = 224585323,
     ["scale"] = 1.7,
     ["stealthDetect"] = true,
     ["displayId"] = 118876,
@@ -1636,6 +1657,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
+      [427359] = {
+      },
       [448485] = {
       },
       [448492] = {
@@ -1813,6 +1836,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [428151] = {
       },
+      [429091] = {
+      },
       [464240] = {
       },
     },
@@ -1828,7 +1853,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lightspawn",
     ["id"] = 206710,
     ["count"] = 18,
-    ["health"] = 128182776,
+    ["health"] = 128334470,
     ["scale"] = 1,
     ["stealthDetect"] = true,
     ["displayId"] = 120878,
@@ -1904,13 +1929,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Risen Footman",
     ["id"] = 212835,
     ["count"] = 4,
-    ["health"] = 58428093,
+    ["health"] = 96250853,
     ["scale"] = 1,
     ["displayId"] = 116189,
     ["creatureType"] = "Undead",
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,
+      ["Incapacitate"] = true,
       ["Silence"] = true,
       ["Root"] = true,
       ["Fear"] = true,
@@ -2086,7 +2112,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Risen Mage",
     ["id"] = 221760,
     ["count"] = 6,
-    ["health"] = 43821070,
+    ["health"] = 72188139,
     ["scale"] = 1,
     ["displayId"] = 116171,
     ["creatureType"] = "Undead",
@@ -2149,7 +2175,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sergeant Shaynemail",
     ["id"] = 239836,
     ["count"] = 50,
-    ["health"] = 216308435,
+    ["health"] = 216564418,
     ["scale"] = 1.7,
     ["stealthDetect"] = true,
     ["displayId"] = 118870,
@@ -2185,7 +2211,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sir Braunpyke",
     ["id"] = 217658,
     ["count"] = 50,
-    ["health"] = 146070234,
+    ["health"] = 216564418,
     ["scale"] = 1.4,
     ["displayId"] = 116186,
     ["creatureType"] = "Undead",
@@ -2249,7 +2275,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "War Lynx",
     ["id"] = 206699,
     ["count"] = 6,
-    ["health"] = 64091388,
+    ["health"] = 64167235,
     ["scale"] = 1,
     ["displayId"] = 121012,
     ["creatureType"] = "Beast",
@@ -2262,6 +2288,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
     },
     ["spells"] = {
+      [427359] = {
+      },
       [427635] = {
         ["bleed"] = true,
       },
@@ -2365,7 +2393,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zealous Templar",
     ["id"] = 207949,
     ["count"] = 10,
-    ["health"] = 104148506,
+    ["health"] = 104271757,
     ["scale"] = 1,
     ["displayId"] = 121024,
     ["creatureType"] = "Humanoid",
@@ -2444,7 +2472,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Captain Dailcry",
     ["id"] = 207946,
     ["count"] = 0,
-    ["health"] = 722011721,
+    ["health"] = 721474883,
     ["scale"] = 1.5,
     ["displayId"] = 118879,
     ["creatureType"] = "Humanoid",
@@ -2489,7 +2517,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Baron Braunpyke",
     ["id"] = 207939,
     ["count"] = 0,
-    ["health"] = 341295496,
+    ["health"] = 561147131,
     ["scale"] = 2,
     ["displayId"] = 118878,
     ["creatureType"] = "Humanoid",
@@ -2538,7 +2566,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Prioress Murrpray",
     ["id"] = 207940,
     ["count"] = 0,
-    ["health"] = 390051996,
+    ["health"] = 561147131,
     ["scale"] = 2,
     ["displayId"] = 118877,
     ["creatureType"] = "Humanoid",
@@ -2572,6 +2600,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [428170] = {
         ["magic"] = true,
       },
+      [429091] = {
+      },
       [444546] = {
       },
       [444608] = {
@@ -2582,6 +2612,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [451606] = {
         ["magic"] = true,
+      },
+      [1242783] = {
       },
     },
     ["clones"] = {
@@ -2597,7 +2629,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arathi Neophyte",
     ["id"] = 211140,
     ["count"] = 0,
-    ["health"] = 64920111,
+    ["health"] = 106945392,
     ["scale"] = 1.5,
     ["displayId"] = 115544,
     ["creatureType"] = "Humanoid",
