@@ -3,6 +3,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 --- ITEMDesc
+L["Support MDT on Patreon"] = "Support MDT on Patreon"
 L["Ghastly Parishioner"] = "Ghastly Parishioner"
 L["Empty Anima Vessel"] = "Empty Anima Vessel"
 L["Anima Fountain"] = "Anima Fountain"

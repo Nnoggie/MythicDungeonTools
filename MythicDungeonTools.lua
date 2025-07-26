@@ -26,6 +26,12 @@ MDT.externalLinks = {
     url = "https://discord.gg/tdxMPb3",
     texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, .75, 0.75, 1 }
   },
+  {
+    name = "Patreon",
+    tooltip = L["Support MDT on Patreon"],
+    url = "https://www.patreon.com/nnoggie",
+    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, .25, 0.25, 0.5 }
+  },
 }
 
 BINDING_HEADER_MDT = "Mythic Dungeon Tools (MDT)"
