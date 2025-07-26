@@ -1835,7 +1835,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 216338,
     ["count"] = 30,
     ["health"] = 128327813,
-    ["scale"] = 1.5,
+    ["scale"] = 1.8,
     ["stealthDetect"] = true,
     ["displayId"] = 120856,
     ["creatureType"] = "Humanoid",
@@ -1944,8 +1944,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 296.74523186827,
-        ["y"] = -429.56706287532,
+        ["x"] = 299.22754218693,
+        ["y"] = -426.83649595769,
         ["g"] = 63,
         ["sublevel"] = 1,
         ["patrol"] = {
@@ -2316,36 +2316,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [15] = {
-    ["name"] = "Nerubian Hauler",
-    ["id"] = 217039,
-    ["count"] = 60,
-    ["health"] = 63652272,
-    ["scale"] = 5,
-    ["stealthDetect"] = true,
-    ["displayId"] = 120861,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 81,
-    ["characteristics"] = {
-      ["Taunt"] = true,
-      ["Mind Soothe"] = true,
-    },
-    ["spells"] = {
-      [453161] = {
-      },
-      [1241693] = {
-      },
-      [1241694] = {
-      },
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 483.33768644519,
-        ["y"] = -483.85299079191,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [16] = {
     ["name"] = "Reinforced Drone",
     ["id"] = 216363,
     ["count"] = 5,
@@ -2515,7 +2485,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [17] = {
+  [16] = {
     ["name"] = "Avanoxx",
     ["id"] = 213179,
     ["count"] = 0,
@@ -2561,7 +2531,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [18] = {
+  [17] = {
     ["name"] = "Anubzekt",
     ["id"] = 215405,
     ["count"] = 0,
@@ -2606,7 +2576,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [19] = {
+  [18] = {
     ["name"] = "Bloodstained Webmage",
     ["id"] = 220599,
     ["count"] = 0,
@@ -2651,7 +2621,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [20] = {
+  [19] = {
     ["name"] = "Kikatal The Harvester",
     ["id"] = 215407,
     ["count"] = 0,
@@ -2693,7 +2663,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [21] = {
+  [20] = {
     ["name"] = "Bloodworker",
     ["id"] = 215826,
     ["count"] = 0,
@@ -2725,7 +2695,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [22] = {
+  [21] = {
     ["name"] = "Black Blood",
     ["id"] = 215968,
     ["count"] = 0,
@@ -2762,7 +2732,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [23] = {
+  [22] = {
     ["name"] = "Starved Crawler",
     ["id"] = 218961,
     ["count"] = 0,
