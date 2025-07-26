@@ -3,6 +3,10 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 --- ITEMDesc
+L["Ghastly Parishioner"] = "Ghastly Parishioner"
+L["Empty Anima Vessel"] = "Empty Anima Vessel"
+L["Anima Fountain"] = "Anima Fountain"
+L["Sinstone Statue"] = "Sinstone Statue"
 L["EDAItem1Description"] = "Usable by |T4620672:15:15|t Khaz Algar Enchanting (25)"
 L["eda2BossNote"] = "Defeating G23 is required to spawn the boss"
 L["streetBazaarEventNote1"] = "Bazaar Event first wave"
