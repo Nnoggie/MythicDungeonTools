@@ -1,4 +1,4 @@
--- Made by Nnoggie, 2017-2024
+-- Made by Nnoggie, 2017-2025
 local AddonName, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
