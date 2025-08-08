@@ -43,7 +43,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Murkbrine Shorerunner",
     ["id"] = 178163,
     ["count"] = 1,
-    ["health"] = 12797397,
+    ["health"] = 14170621,
     ["scale"] = 0.8,
     ["displayId"] = 101786,
     ["creatureType"] = "Humanoid",
@@ -60,6 +60,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [355147] = {
       },
     },
@@ -790,7 +792,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Murkbrine Shellcrusher",
     ["id"] = 178139,
     ["count"] = 3,
-    ["health"] = 71985357,
+    ["health"] = 79709738,
     ["scale"] = 1.5,
     ["displayId"] = 101785,
     ["creatureType"] = "Humanoid",
@@ -808,6 +810,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [355048] = {
       },
       [355057] = {
@@ -920,7 +924,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Murkbrine Fishmancer",
     ["id"] = 178142,
     ["count"] = 2,
-    ["health"] = 55988611,
+    ["health"] = 61996463,
     ["scale"] = 1.4,
     ["displayId"] = 101789,
     ["creatureType"] = "Humanoid",
@@ -938,10 +942,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [355147] = {
       },
       [355225] = {
-        ["interruptible"] = true,
       },
       [355234] = {
       },
@@ -1091,7 +1096,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Coastwalker Goliath",
     ["id"] = 178165,
     ["count"] = 18,
-    ["health"] = 159967461,
+    ["health"] = 177132752,
     ["scale"] = 3,
     ["displayId"] = 101790,
     ["creatureType"] = "Giant",
@@ -1238,7 +1243,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Murkbrine Scalebinder",
     ["id"] = 178141,
     ["count"] = 2,
-    ["health"] = 55988611,
+    ["health"] = 61996463,
     ["scale"] = 1.4,
     ["displayId"] = 101788,
     ["creatureType"] = "Humanoid",
@@ -1257,6 +1262,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [355132] = {
       },
       [355147] = {
@@ -1353,7 +1360,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormforged Guardian",
     ["id"] = 178171,
     ["count"] = 10,
-    ["health"] = 115176569,
+    ["health"] = 127535578,
     ["scale"] = 2,
     ["displayId"] = 67358,
     ["creatureType"] = "Elemental",
@@ -1405,7 +1412,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hylbrande",
     ["id"] = 175663,
     ["count"] = 0,
-    ["health"] = 480446458,
+    ["health"] = 531299398,
     ["scale"] = 1.8,
     ["displayId"] = 100546,
     ["creatureType"] = "Mechanical",
@@ -1421,8 +1428,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [346766] = {
       },
-      [346828] = {
-      },
       [346876] = {
       },
       [346877] = {
@@ -1436,8 +1441,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [347097] = {
       },
       [353312] = {
-      },
-      [356796] = {
       },
     },
     ["clones"] = {
@@ -1454,7 +1457,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Burly Deckhand",
     ["id"] = 180015,
     ["count"] = 5,
-    ["health"] = 96107171,
+    ["health"] = 106279651,
     ["scale"] = 1.5,
     ["displayId"] = 101457,
     ["creatureType"] = "Humanoid",
@@ -1472,6 +1475,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [356133] = {
         ["enrage"] = true,
       },
@@ -1531,7 +1536,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hourglass Tidesage",
     ["id"] = 179388,
     ["count"] = 4,
-    ["health"] = 72080378,
+    ["health"] = 79709738,
     ["scale"] = 1.5,
     ["displayId"] = 101468,
     ["creatureType"] = "Humanoid",
@@ -1549,10 +1554,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [356260] = {
       },
       [356843] = {
-        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1613,7 +1619,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Drunk Pirate",
     ["id"] = 179399,
     ["count"] = 0,
-    ["health"] = 16017862,
+    ["health"] = 17713275,
     ["scale"] = 1,
     ["displayId"] = 101469,
     ["creatureType"] = "Humanoid",
@@ -1641,7 +1647,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corsair Officer",
     ["id"] = 179386,
     ["count"] = 5,
-    ["health"] = 80089309,
+    ["health"] = 88566376,
     ["scale"] = 1.5,
     ["displayId"] = 101464,
     ["creatureType"] = "Humanoid",
@@ -1659,6 +1665,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [317898] = {
+      },
       [368661] = {
       },
     },
@@ -1698,7 +1706,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Timecap'n Hooktail",
     ["id"] = 175546,
     ["count"] = 0,
-    ["health"] = 560520868,
+    ["health"] = 619849298,
     ["scale"] = 1.5,
     ["displayId"] = 100063,
     ["creatureType"] = "Dragonkin",
@@ -1739,7 +1747,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Adorned Starseer",
     ["id"] = 180429,
     ["count"] = 12,
-    ["health"] = 120133963,
+    ["health"] = 132849564,
     ["scale"] = 2.5,
     ["displayId"] = 101668,
     ["creatureType"] = "Humanoid",
@@ -1787,7 +1795,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Devoted Accomplice",
     ["id"] = 180432,
     ["count"] = 5,
-    ["health"] = 88098240,
+    ["health"] = 97423014,
     ["scale"] = 2,
     ["displayId"] = 101670,
     ["creatureType"] = "Humanoid",
@@ -1856,7 +1864,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Focused Ritualist",
     ["id"] = 180431,
     ["count"] = 4,
-    ["health"] = 80089309,
+    ["health"] = 88566376,
     ["scale"] = 2,
     ["displayId"] = 101669,
     ["creatureType"] = "Humanoid",
@@ -1874,10 +1882,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [354297] = {
-        ["interruptible"] = true,
       },
       [357260] = {
-        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1913,7 +1919,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "So'leah",
     ["id"] = 177269,
     ["count"] = 0,
-    ["health"] = 476442737,
+    ["health"] = 526871903,
     ["scale"] = 2,
     ["displayId"] = 100737,
     ["creatureType"] = "Humanoid",
@@ -2015,7 +2021,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vault Purifier",
     ["id"] = 176551,
     ["count"] = 0,
-    ["health"] = 16017862,
+    ["health"] = 17713275,
     ["scale"] = 2,
     ["displayId"] = 100495,
     ["creatureType"] = "Humanoid",
@@ -2034,16 +2040,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [181113] = {
       },
+      [317898] = {
+      },
       [346980] = {
       },
       [347015] = {
       },
-      [347958] = {
-      },
       [352347] = {
-        ["interruptible"] = true,
-      },
-      [355071] = {
       },
     },
     ["clones"] = {
@@ -2065,7 +2068,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corsair Brute",
     ["id"] = 177500,
     ["count"] = 0,
-    ["health"] = 15016745,
+    ["health"] = 16606195,
     ["scale"] = 2,
     ["displayId"] = 81324,
     ["creatureType"] = "Humanoid",
@@ -2103,7 +2106,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "So' Cartel Assassin",
     ["id"] = 177716,
     ["count"] = 0,
-    ["health"] = 23359381,
+    ["health"] = 25831859,
     ["scale"] = 2,
     ["displayId"] = 101153,
     ["creatureType"] = "Humanoid",
@@ -2116,7 +2119,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [351119] = {
-        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -2164,7 +2166,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wandering Pulsar",
     ["id"] = 180433,
     ["count"] = 0,
-    ["health"] = 11532861,
+    ["health"] = 12753558,
     ["scale"] = 1.3,
     ["displayId"] = 101671,
     ["creatureType"] = "Elemental",
@@ -2204,7 +2206,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Invigorating Fish Stick",
     ["id"] = 179733,
     ["count"] = 0,
-    ["health"] = 5758829,
+    ["health"] = 8856638,
     ["scale"] = 1,
     ["displayId"] = 102085,
     ["creatureType"] = "Totem",
