@@ -198,6 +198,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [326450] = {
         ["enrage"] = true,
+        ["interruptible"] = true,
       },
       [329299] = {
       },
