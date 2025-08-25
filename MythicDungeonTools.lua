@@ -180,6 +180,8 @@ local defaultSavedVars = {
     presets = {},
     currentPreset = {},
     newDataCollectionActive = false,
+    fadeOutDuringCombat = false,
+    fadeOutAlpha = 0.5,
     colorPaletteInfo = {
       autoColoring = true,
       forceColorBlindMode = false,
@@ -247,6 +249,8 @@ do
           if v <= 0 then db.currentPreset[k] = 1 end
         end
       end
+      -- Initialize fade frame for combat transparency
+      MDT:InitializeFadeFrame()
       eventFrame:UnregisterEvent("ADDON_LOADED")
     end
   end
@@ -390,6 +394,22 @@ function MDT:ShowInterfaceInternal(force)
     end
     MDT:UpdateBottomText()
   end
+end
+
+function MDT:InitializeFadeFrame()
+  if self.fadeFrame then return end
+  self.fadeFrame = CreateFrame("Frame")
+  self.fadeFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+  self.fadeFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+  self.fadeFrame:SetScript("OnEvent", function(self, event)
+    if not MDT or not MDT.main_frame or not db then return end
+    if not db.fadeOutDuringCombat then return end
+    if event == "PLAYER_REGEN_DISABLED" then
+      MDT.main_frame:SetAlpha(db.fadeOutAlpha or 0.5)
+    elseif event == "PLAYER_REGEN_ENABLED" then
+      MDT.main_frame:SetAlpha(1)
+    end
+  end)
 end
 
 function MDT:HideInterface()
@@ -3189,7 +3209,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame:SetTitle(L["Settings"])
   local frameWidth = 300
   frame.settingsFrame:SetWidth(frameWidth)
-  frame.settingsFrame:SetHeight(350)
+  frame.settingsFrame:SetHeight(400)
   frame.settingsFrame:EnableResize(false)
   frame.settingsFrame:SetLayout("Flow")
   frame.settingsFrame.statustext:GetParent():Hide()
@@ -3234,6 +3254,31 @@ function MDT:MakeSettingsFrame(frame)
     MDT:ReloadPullButtons()
   end)
   frame.settingsFrame:AddChild(frame.forcesCheckbox)
+
+  -- Initialize database values if they don't exist
+  if db.fadeOutDuringCombat == nil then db.fadeOutDuringCombat = false end
+  if db.fadeOutAlpha == nil then db.fadeOutAlpha = 0.5 end
+
+  frame.fadeOutCheckbox = AceGUI:Create("CheckBox")
+  frame.fadeOutCheckbox:SetLabel(L["Make window transparent in combat"])
+  frame.fadeOutCheckbox:SetWidth(frameWidth - 10)
+  frame.fadeOutCheckbox:SetValue(db.fadeOutDuringCombat)
+  frame.fadeOutCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.fadeOutDuringCombat = value
+    frame.fadeOutAlphaSlider:SetDisabled(not value)
+  end)
+  frame.settingsFrame:AddChild(frame.fadeOutCheckbox)
+
+  frame.fadeOutAlphaSlider = AceGUI:Create("Slider")
+  frame.fadeOutAlphaSlider:SetLabel(L["Combat Transparency"])
+  frame.fadeOutAlphaSlider:SetWidth(frameWidth - 10)
+  frame.fadeOutAlphaSlider:SetSliderValues(0.1, 1.0, 0.1)
+  frame.fadeOutAlphaSlider:SetValue(db.fadeOutAlpha)
+  frame.fadeOutAlphaSlider:SetDisabled(not db.fadeOutDuringCombat)
+  frame.fadeOutAlphaSlider:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.fadeOutAlpha = value
+  end)
+  frame.settingsFrame:AddChild(frame.fadeOutAlphaSlider)
 
   frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
   frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
