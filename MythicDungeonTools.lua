@@ -4236,6 +4236,11 @@ function MDT:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSub
     else
       obj.d[1] = obj.d[1] or 5
       color.r, color.g, color.b = self:HexToRGB(obj.d[5])
+      --check if color is valid
+      if not color.r or not color.g or not color.b then
+        color.r, color.g, color.b = 1, 1, 1
+        obj.d[5] = "ffffff"
+      end
       --lines
       local x1, y1, x2, y2
       local lastx, lasty
