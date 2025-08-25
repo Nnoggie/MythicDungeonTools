@@ -1,2 +1,3 @@
-## 5.5.4 (2025-08-19)
-  - S3 Mapping Updates
+## 5.5.5 (2025-08-25)
+  - fixed an issue where importing Floodgate / Priory routes would set the dungeon list to Season 2 instead of Season 3. Users may have to re-select the season 3 from the dropdown menu once
+
