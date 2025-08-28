@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\HallsOfAtonement' }
+  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\HallsOfAtonement' }
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Halls of Atonement"],
@@ -41,7 +41,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Depraved Darkblade",
     ["id"] = 165515,
     ["count"] = 4,
-    ["health"] = 93035873,
+    ["health"] = 92758701,
     ["scale"] = 1.4,
     ["displayId"] = 93032,
     ["creatureType"] = "Humanoid",
@@ -66,8 +66,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [1235060] = {
         ["magic"] = true,
       },
@@ -169,7 +167,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Depraved Houndmaster",
     ["id"] = 164562,
     ["count"] = 5,
-    ["health"] = 83732286,
+    ["health"] = 83482831,
     ["scale"] = 1.4,
     ["displayId"] = 97001,
     ["creatureType"] = "Humanoid",
@@ -197,8 +195,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [325535] = {
       },
       [326450] = {
-        ["enrage"] = true,
         ["interruptible"] = true,
+        ["enrage"] = true,
       },
       [329299] = {
       },
@@ -388,7 +386,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vicious Gargon",
     ["id"] = 164563,
     ["count"] = 4,
-    ["health"] = 102339460,
+    ["health"] = 102034571,
     ["scale"] = 1.4,
     ["displayId"] = 93163,
     ["creatureType"] = "Beast",
@@ -413,8 +411,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Hibernate"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [1235070] = {
       },
     },
@@ -540,7 +536,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Depraved Obliterator",
     ["id"] = 165414,
     ["count"] = 5,
-    ["health"] = 88384080,
+    ["health"] = 88120767,
     ["scale"] = 1.4,
     ["displayId"] = 93680,
     ["creatureType"] = "Humanoid",
@@ -565,8 +561,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [325876] = {
         ["magic"] = true,
       },
@@ -739,7 +733,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toiling Groundskeeper",
     ["id"] = 165415,
     ["count"] = 2,
-    ["health"] = 55821524,
+    ["health"] = 55655221,
     ["scale"] = 0.9,
     ["displayId"] = 93814,
     ["creatureType"] = "Humanoid",
@@ -764,8 +758,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [1235121] = {
       },
     },
@@ -1152,7 +1144,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Depraved Collector",
     ["id"] = 165529,
     ["count"] = 5,
-    ["health"] = 93035873,
+    ["health"] = 92758701,
     ["scale"] = 1.4,
     ["displayId"] = 94573,
     ["creatureType"] = "Humanoid",
@@ -1177,8 +1169,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [325701] = {
         ["interruptible"] = true,
       },
@@ -1244,7 +1234,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shard of Halkias",
     ["id"] = 164557,
     ["count"] = 15,
-    ["health"] = 223286095,
+    ["health"] = 222620883,
     ["scale"] = 2,
     ["displayId"] = 94868,
     ["creatureType"] = "Elemental",
@@ -1260,6 +1250,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [326426] = {
       },
       [326438] = {
+      },
+      [326440] = {
       },
       [326441] = {
       },
@@ -1289,7 +1281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Halkias",
     ["id"] = 165408,
     ["count"] = 0,
-    ["health"] = 651717793,
+    ["health"] = 649631734,
     ["scale"] = 1.6,
     ["displayId"] = 98764,
     ["creatureType"] = "Elemental",
@@ -1313,6 +1305,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [339235] = {
       },
+      [339237] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1326,7 +1320,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stoneborn Reaver",
     ["id"] = 167612,
     ["count"] = 8,
-    ["health"] = 148857397,
+    ["health"] = 148413922,
     ["scale"] = 1.4,
     ["displayId"] = 93829,
     ["creatureType"] = "Humanoid",
@@ -1443,7 +1437,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stonefiend Anklebiter",
     ["id"] = 167610,
     ["count"] = 1,
-    ["health"] = 27910762,
+    ["health"] = 27827610,
     ["scale"] = 0.8,
     ["displayId"] = 94765,
     ["creatureType"] = "Humanoid",
@@ -1843,7 +1837,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stoneborn Eviscerator",
     ["id"] = 167611,
     ["count"] = 6,
-    ["health"] = 93035873,
+    ["health"] = 92758701,
     ["scale"] = 1.4,
     ["displayId"] = 94724,
     ["creatureType"] = "Humanoid",
@@ -1868,8 +1862,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [326638] = {
       },
     },
@@ -1986,7 +1978,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stoneborn Slasher",
     ["id"] = 167607,
     ["count"] = 10,
-    ["health"] = 186071746,
+    ["health"] = 185517402,
     ["scale"] = 1.7,
     ["displayId"] = 95706,
     ["creatureType"] = "Humanoid",
@@ -2157,7 +2149,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Echelon",
     ["id"] = 164185,
     ["count"] = 0,
-    ["health"] = 558615251,
+    ["health"] = 556827200,
     ["scale"] = 1.8,
     ["displayId"] = 96260,
     ["creatureType"] = "Humanoid",
@@ -2173,6 +2165,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [319592] = {
       },
       [319603] = {
+      },
+      [319702] = {
       },
       [319703] = {
       },
@@ -2200,7 +2194,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "High Adjudicator Aleez",
     ["id"] = 165410,
     ["count"] = 0,
-    ["health"] = 651717793,
+    ["health"] = 649631734,
     ["scale"] = 1.5,
     ["displayId"] = 131310,
     ["creatureType"] = "Humanoid",
@@ -2242,7 +2236,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tormented Soul",
     ["id"] = 167892,
     ["count"] = 0,
-    ["health"] = 27910762,
+    ["health"] = 27827610,
     ["scale"] = 1,
     ["displayId"] = 90426,
     ["creatureType"] = "Undead",
@@ -2417,7 +2411,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Inquisitor Sigar",
     ["id"] = 167876,
     ["count"] = 35,
-    ["health"] = 279107619,
+    ["health"] = 278276103,
     ["scale"] = 1.7,
     ["displayId"] = 131309,
     ["creatureType"] = "Humanoid",
@@ -2456,7 +2450,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lord Chamberlain",
     ["id"] = 164218,
     ["count"] = 0,
-    ["health"] = 744820335,
+    ["health"] = 742436267,
     ["scale"] = 1.5,
     ["displayId"] = 131311,
     ["creatureType"] = "Humanoid",
@@ -2513,7 +2507,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Undying Stonefiend",
     ["id"] = 164363,
     ["count"] = 0,
-    ["health"] = 15505979,
+    ["health"] = 15459785,
     ["scale"] = 1.3,
     ["displayId"] = 93854,
     ["creatureType"] = "Humanoid",
@@ -2538,8 +2532,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
-      [317898] = {
-      },
       [319724] = {
       },
       [328124] = {
@@ -2593,7 +2585,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sinstone Statue",
     ["id"] = 165737,
     ["count"] = 0,
-    ["health"] = 15505979,
+    ["health"] = 15459785,
     ["scale"] = 1.3,
     ["displayId"] = 96853,
     ["creatureType"] = "Not specified",
@@ -2638,7 +2630,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ghastly Parishioner",
     ["id"] = 165913,
     ["count"] = 0,
-    ["health"] = 1550597901,
+    ["health"] = 1545978473,
     ["scale"] = 1.3,
     ["displayId"] = 99386,
     ["creatureType"] = "Undead",
@@ -2737,7 +2729,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Depraved Darkblade",
     ["id"] = 167615,
     ["count"] = 4,
-    ["health"] = 93035873,
+    ["health"] = 92758701,
     ["scale"] = 1.4,
     ["displayId"] = 93074,
     ["creatureType"] = "Humanoid",
@@ -2785,7 +2777,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Manifestation of Envy",
     ["id"] = 167898,
     ["count"] = 0,
-    ["health"] = 37214349,
+    ["health"] = 37103480,
     ["scale"] = 1,
     ["displayId"] = 94281,
     ["creatureType"] = "Aberration",
