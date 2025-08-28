@@ -399,17 +399,30 @@ end
 function MDT:InitializeFadeFrame()
   if self.fadeFrame then return end
   self.fadeFrame = CreateFrame("Frame")
-  self.fadeFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-  self.fadeFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
   self.fadeFrame:SetScript("OnEvent", function(self, event)
     if not MDT or not MDT.main_frame or not db then return end
-    if not db.fadeOutDuringCombat then return end
     if event == "PLAYER_REGEN_DISABLED" then
       MDT.main_frame:SetAlpha(db.fadeOutAlpha or 0.5)
     elseif event == "PLAYER_REGEN_ENABLED" then
       MDT.main_frame:SetAlpha(1)
     end
   end)
+  self:UpdateFadeEventRegistration()
+end
+
+function MDT:UpdateFadeEventRegistration()
+  if not self.fadeFrame then return end
+  
+  if db and db.fadeOutDuringCombat then
+    self.fadeFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+    self.fadeFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+  else
+    self.fadeFrame:UnregisterEvent("PLAYER_REGEN_DISABLED")
+    self.fadeFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    if self.main_frame then
+      self.main_frame:SetAlpha(1)
+    end
+  end
 end
 
 function MDT:HideInterface()
@@ -3266,6 +3279,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.fadeOutCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.fadeOutDuringCombat = value
     frame.fadeOutAlphaSlider:SetDisabled(not value)
+    MDT:UpdateFadeEventRegistration()
   end)
   frame.settingsFrame:AddChild(frame.fadeOutCheckbox)
 
