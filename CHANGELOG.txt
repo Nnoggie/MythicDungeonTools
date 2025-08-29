@@ -1,3 +1,4 @@
-## 5.5.6 (2025-08-25)
-  - fixed an issue where importing Floodgate / Priory routes would set the dungeon list to Season 2 instead of Season 3. Users may have to re-select the season 3 from the dropdown menu once
+## 5.5.7 (2025-08-29)
+  - Dawnbreaker: Added missing enemy at G14
+  - New feature available in settings: Make MDT window transparent during combat
 
