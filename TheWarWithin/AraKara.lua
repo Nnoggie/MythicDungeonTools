@@ -18,7 +18,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\AraKara' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\AraKara' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -533,19 +533,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [30] = {
         ["x"] = 615.77496189645,
         ["y"] = -258.08656396672,
-        ["g"] = 13,
+        ["g"] = 84,
         ["sublevel"] = 1,
       },
       [31] = {
-        ["x"] = 618.79993561777,
-        ["y"] = -266.14792036802,
-        ["g"] = 13,
+        ["x"] = 614.90765397452,
+        ["y"] = -266.70396742067,
+        ["g"] = 84,
         ["sublevel"] = 1,
       },
       [32] = {
         ["x"] = 618.20915749901,
         ["y"] = -275.61888582927,
-        ["g"] = 13,
+        ["g"] = 84,
         ["sublevel"] = 1,
       },
       [33] = {
@@ -677,13 +677,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [54] = {
         ["x"] = 621.38249703337,
         ["y"] = -260.72000570276,
-        ["g"] = 13,
+        ["g"] = 84,
         ["sublevel"] = 1,
       },
       [55] = {
         ["x"] = 622.74592505663,
         ["y"] = -269.58249401506,
-        ["g"] = 13,
+        ["g"] = 84,
         ["sublevel"] = 1,
       },
       [56] = {
@@ -1070,8 +1070,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [17] = {
-        ["x"] = 606.74896040408,
-        ["y"] = -262.87101632113,
+        ["x"] = 590.62383450369,
+        ["y"] = -258.14470386996,
         ["g"] = 13,
         ["sublevel"] = 1,
         ["patrol"] = {
@@ -1114,8 +1114,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
       },
       [18] = {
-        ["x"] = 609.81318630277,
-        ["y"] = -271.11696355016,
+        ["x"] = 599.80449843937,
+        ["y"] = -259.71811828409,
         ["g"] = 13,
         ["sublevel"] = 1,
       },
