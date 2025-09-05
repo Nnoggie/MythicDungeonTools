@@ -25,7 +25,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\EcoDomeAldani' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\EcoDomeAldani' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -450,14 +450,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 589.65990632613,
-        ["y"] = -357.76435502916,
+        ["x"] = 583.34126218459,
+        ["y"] = -353.02536288413,
         ["g"] = 12,
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 595.92833744459,
-        ["y"] = -349.60969265934,
+        ["x"] = 590.5575098098,
+        ["y"] = -358.77175016566,
         ["g"] = 12,
         ["sublevel"] = 1,
       },
@@ -587,9 +587,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 586.84765340313,
-        ["y"] = -348.88311988737,
-        ["g"] = 12,
+        ["x"] = 594.42996852418,
+        ["y"] = -346.6715962456,
         ["sublevel"] = 1,
       },
       [4] = {
