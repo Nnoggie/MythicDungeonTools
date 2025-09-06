@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\TazaveshUpper' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\TazaveshUpper' }
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TazaveshUpper"]
@@ -1261,6 +1261,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["id"] = 178141,
     ["count"] = 2,
     ["health"] = 65051506,
+    ["iconTexture"] = 136043,
     ["scale"] = 1.4,
     ["displayId"] = 101788,
     ["creatureType"] = "Humanoid",
