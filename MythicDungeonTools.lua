@@ -343,8 +343,7 @@ function MDT:GetNumDungeons()
 end
 
 function MDT:GetDungeonName(idx, forceEnglish)
-  -- don't fail hard for legacy dungeons
-  if forceEnglish and MDT.mapInfo[idx].englishName then
+  if forceEnglish and MDT.mapInfo[idx] and MDT.mapInfo[idx].englishName then
     return MDT.mapInfo[idx].englishName
   end
   return MDT.dungeonList[idx]
@@ -412,7 +411,6 @@ end
 
 function MDT:UpdateFadeEventRegistration()
   if not self.fadeFrame then return end
-  
   if db and db.fadeOutDuringCombat then
     self.fadeFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
     self.fadeFrame:RegisterEvent("PLAYER_REGEN_ENABLED")

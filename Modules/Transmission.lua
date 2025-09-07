@@ -364,12 +364,15 @@ hooksecurefunc("SetItemRef", function(link, text)
     -- to get the displayName (name of the preset) we need to get everything between the starting and closing brackets
     local displayName = text:match("%[(.-)%]")
     sender = name.."-"..realm
-    local preset = MDT.transmissionCache[sender][displayName]
+    local preset = MDT.transmissionCache[sender] and MDT.transmissionCache[sender][displayName]
     if preset and type(preset) == "table" then
       MDT:Async(function()
         MDT:ShowInterfaceInternal(true)
         MDT:ImportPreset(CopyTable(preset))
       end, "showInterfaceChatImport")
+    elseif preset == 0 then --special marker for old dungeon preset
+      local msg = L["WARNING_OLD_DUNGEON_IMPORT"]
+      print("|cFFFF0000MDT:|r "..msg)
     else
       local msg = "\nparsed displayName: "..displayName
       msg = msg.."\nsender: "..sender
@@ -402,8 +405,18 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     local preset = MDT:StringToTable(message, false)
-    local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     local presetName = preset.text
+    local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
+    if not dungeon then
+      -- check if it's dungeon that has been in MDT before but is not in the current version
+      local knownDungeon = MDT.knownDungeons[preset.value.currentDungeonIdx]
+      if knownDungeon then
+        local displayName = knownDungeon..": "..presetName
+        MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
+        MDT.transmissionCache[fullName][displayName] = 0 --special marker for old dungeon preset
+      end
+      return
+    end
     local displayName = dungeon..": "..presetName
     MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
     MDT.transmissionCache[fullName][displayName] = preset
