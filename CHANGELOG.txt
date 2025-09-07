@@ -1,3 +1,5 @@
-## 5.5.8 (2025-09-01)
-  - Ara Kara: Split up G13
+## 5.5.9 (2025-09-07)
+  - Show a warning when trying to import a route from an old dungeon that is no longer supported instead of erroring
+  - Gambit: Scalebinders now have a special icon
+  - Eco Dome: Unlink Overcharged Sentinel 3 from G12
 
