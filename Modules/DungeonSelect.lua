@@ -313,19 +313,6 @@ function MDT:CreateSeasonDropdown(frame)
   ---@diagnostic disable-next-line: undefined-field
   group:AddChild(group.seasonDropdown)
 
-  --make sure that the season list matches with the current dungeon index
-  --dungeon index might have been auto changed by MDT:CheckCurrentZone(true)
-  local function getSelectedDungeonList()
-    for listIndex, list in pairs(MDT.dungeonSelectionToIndex) do
-      for _, dngIdx in pairs(list) do
-        if dngIdx == db.currentDungeonIdx then
-          return listIndex
-        end
-      end
-    end
-  end
-  db.selectedDungeonList = getSelectedDungeonList() or 1
-
   ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown:SetList(seasonList)
   ---@diagnostic disable-next-line: undefined-field
