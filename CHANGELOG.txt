@@ -1,3 +1,2 @@
-## 5.6.0 (2025-09-08)
-  - properly set the current season list to the correct season
+## 5.6.1 (2025-09-09)
 
