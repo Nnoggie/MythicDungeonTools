@@ -1870,6 +1870,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 1.7,
     ["displayId"] = 95706,
     ["creatureType"] = "Humanoid",
+    ["stealthDetect"] = true,
     ["level"] = 80,
     ["characteristics"] = {
       ["Taunt"] = true,

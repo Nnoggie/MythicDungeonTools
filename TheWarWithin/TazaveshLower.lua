@@ -18,7 +18,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\TazaveshLower' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\TazaveshLower' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -505,6 +505,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["scale"] = 2,
     ["displayId"] = 101639,
     ["creatureType"] = "Beast",
+    ["stealthDetect"] = true,
     ["level"] = 81,
     ["characteristics"] = {
       ["Taunt"] = true,
