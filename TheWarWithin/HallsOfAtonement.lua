@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\HallsOfAtonement' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\HallsOfAtonement' }
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Halls of Atonement"],
@@ -156,9 +156,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [16] = {
-        ["x"] = 707.5498431884,
-        ["y"] = -375.09303529279,
+        ["x"] = 710.33310308806,
+        ["y"] = -375.71152962803,
         ["g"] = 3,
+        ["sublevel"] = 1,
+      },
+      [17] = {
+        ["x"] = 623.22144148942,
+        ["y"] = -139.77588695182,
+        ["g"] = 12,
         ["sublevel"] = 1,
       },
     },
@@ -595,12 +601,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 8,
         ["sublevel"] = 1,
       },
-      [5] = {
-        ["x"] = 623.96074643364,
-        ["y"] = -140.40313239609,
-        ["g"] = 12,
-        ["sublevel"] = 1,
-      },
       [7] = {
         ["x"] = 530.57975096278,
         ["y"] = -215.52215963812,
@@ -632,14 +632,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [12] = {
-        ["x"] = 706.77046491645,
-        ["y"] = -386.8557774543,
-        ["g"] = 3,
-        ["sublevel"] = 1,
-      },
-      [13] = {
-        ["x"] = 696.62339559246,
-        ["y"] = -380.41509203394,
+        ["x"] = 703.05942812286,
+        ["y"] = -385.61877108828,
         ["g"] = 3,
         ["sublevel"] = 1,
       },
@@ -1214,12 +1208,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 545.19707346526,
         ["y"] = -324.77925956497,
         ["g"] = 75,
-        ["sublevel"] = 1,
-      },
-      [8] = {
-        ["x"] = 628.30055790211,
-        ["y"] = -457.19088288258,
-        ["g"] = 25,
         ["sublevel"] = 1,
       },
       [9] = {
@@ -1977,7 +1965,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [12] = {
     ["name"] = "Stoneborn Slasher",
     ["id"] = 167607,
-    ["count"] = 10,
+    ["count"] = 15,
     ["health"] = 185517402,
     ["scale"] = 1.7,
     ["displayId"] = 95706,
@@ -2038,11 +2026,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [8] = {
         ["x"] = 561.60836549246,
         ["y"] = -209.2379984889,
-        ["sublevel"] = 1,
-      },
-      [9] = {
-        ["x"] = 471.00959550266,
-        ["y"] = -383.43165009467,
         ["sublevel"] = 1,
       },
       [10] = {
