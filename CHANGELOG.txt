@@ -1,2 +1,3 @@
-## 5.6.1 (2025-09-09)
+## 5.6.2 (2025-09-09)
 
+- Added a new slash command "/ff" to start the M+ abandon vote
