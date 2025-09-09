@@ -93,7 +93,6 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
 SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
 SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
-SLASH_MDTFF1 = "/ff"
 
 BINDING_NAME_MDTTOGGLE = L["Toggle Window"]
 BINDING_NAME_MDTNPC = L["New NPC at Cursor Position"]
@@ -129,10 +128,6 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
   end
-end
-
-function SlashCmdList.MDTFF(cmd, editbox)
-  C_PartyInfo.StartInstanceAbandonVote()
 end
 
 --MDT.WagoAnalytics = LibStub("WagoAnalytics"):Register("rN4VrAKD")
@@ -642,7 +637,6 @@ local bottomTips = {
   [17] = L["ConnectedTip"],
   [18] = L["EfficiencyScoreTip"],
   [19] = L["ctrlKeyCountTip"],
-  [20] = L["ffAbandonTip"],
 }
 
 function MDT:UpdateBottomText()

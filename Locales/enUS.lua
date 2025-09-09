@@ -33,7 +33,6 @@ L["Progenitor Relic"] = "Progenitor Relic"
 L["Invigorating Fish Stick"] = "Invigorating Fish Stick"
 L["Wandering Pulsar"] = "Wandering Pulsar"
 L["Vault Purifier"] = "Vault Purifier"
-L["ffAbandonTip"] = "Use the /ff slash command to start the M+ abandon vote"
 
 --creatureType
 L["Totem"] = "Totem"
