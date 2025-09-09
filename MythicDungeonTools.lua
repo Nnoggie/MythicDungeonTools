@@ -93,6 +93,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
 SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
 SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
+SLASH_MDTFF1 = "/ff"
 
 BINDING_NAME_MDTTOGGLE = L["Toggle Window"]
 BINDING_NAME_MDTNPC = L["New NPC at Cursor Position"]
@@ -100,7 +101,6 @@ BINDING_NAME_MDTWAYPOINT = L["New Patrol Waypoint at Cursor Position"]
 BINDING_NAME_MDTUNDODRAWING = L["undoDrawing"]
 BINDING_NAME_MDTREDODRAWING = L["redoDrawing"]
 
----@diagnostic disable-next-line: duplicate-set-field
 function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   cmd = cmd:lower()
   local rqst, arg = strsplit(' ', cmd)
@@ -129,6 +129,10 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
   end
+end
+
+function SlashCmdList.MDTFF(cmd, editbox)
+  C_PartyInfo.StartInstanceAbandonVote()
 end
 
 --MDT.WagoAnalytics = LibStub("WagoAnalytics"):Register("rN4VrAKD")
