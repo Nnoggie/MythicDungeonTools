@@ -22,7 +22,7 @@ MDT.dungeonMaps[dungeonIndex] = {
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Halls of Atonement"],
 }
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 518, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 466, teeming = 1000, teemingEnabled = true }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
