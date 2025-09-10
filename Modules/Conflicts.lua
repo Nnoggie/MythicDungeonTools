@@ -62,6 +62,13 @@ local candidates = {
 
     end,
   },
+  ["PetJournalEnhanced"] = {
+    name = "PetJournalEnhanced",
+    detected = false,
+    onDetect = function()
+
+    end,
+  },
 }
 
 local conflictCheckFrame = CreateFrame("Frame")
