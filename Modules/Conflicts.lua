@@ -57,6 +57,7 @@ local candidates = {
   },
   ["WowauditInviteTool"] = {
     name = "WowauditInviteTool",
+    version = 117,
     detected = false,
     onDetect = function()
 
