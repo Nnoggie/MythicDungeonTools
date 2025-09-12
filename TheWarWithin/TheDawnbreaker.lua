@@ -18,7 +18,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\Dawnbreaker' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\Dawnbreaker' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -720,14 +720,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 371.5669721032,
-        ["y"] = -171.78754020887,
+        ["x"] = 370.5953300006,
+        ["y"] = -180.33792844264,
         ["g"] = 49,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 371.49841136352,
-        ["y"] = -183.51027364591,
+        ["x"] = 370.52676926092,
+        ["y"] = -192.06066187968,
         ["g"] = 49,
         ["sublevel"] = 1,
       },
@@ -981,14 +981,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 371.45571303614,
-        ["y"] = -141.37273470441,
+        ["x"] = 371.65003700887,
+        ["y"] = -154.19829481611,
         ["g"] = 8,
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 371.54068607073,
-        ["y"] = -152.73893040299,
+        ["x"] = 371.73501004346,
+        ["y"] = -165.56449051469,
         ["g"] = 8,
         ["sublevel"] = 1,
       },
@@ -1206,6 +1206,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 269.30778738513,
         ["y"] = -406.91566965668,
         ["g"] = 68,
+        ["sublevel"] = 1,
+      },
+      [41] = {
+        ["x"] = 348.15209526513,
+        ["y"] = -155.31005230627,
+        ["g"] = 71,
+        ["sublevel"] = 1,
+      },
+      [42] = {
+        ["x"] = 348.34644147681,
+        ["y"] = -166.19233933225,
+        ["g"] = 71,
         ["sublevel"] = 1,
       },
     },
