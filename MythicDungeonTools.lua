@@ -2706,10 +2706,10 @@ function MDT:MakePresetImportFrame(frame)
     inspectButton:SetWidth(100)
     inspectButton:SetCallback("OnClick", function()
       local newPreset = MDT:StringToTable(importString, true)
-      if not ViragDevTool_AddData then
-        print("MDT: Install Virag Dev Tool to inspect route")
+      if not DevTool and not DevTool.AddData then
+        print("MDT: Install Dev Tool to inspect route")
       else
-        ViragDevTool_AddData(newPreset)
+        DevTool:AddData(newPreset)
       end
     end)
     frame.presetImportFrame:AddChild(inspectButton)

@@ -772,7 +772,7 @@ function MDT:CreateDevPanel(frame)
     local vdtDbButton = AceGUI:Create("Button")
     vdtDbButton:SetText("VDT DB")
     vdtDbButton:SetCallback("OnClick", function()
-      ViragDevTool_AddData(db)
+      DevTool:AddData(db)
     end)
     container:AddChild(vdtDbButton)
 
