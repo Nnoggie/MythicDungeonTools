@@ -594,6 +594,10 @@ function MDT:DisplayBlipTooltip(blip, shown)
       string.format(L["Level %d %s"], data.level, L[data.creatureType]).." "..data.id..
       "\n"..string.format(L["%s HP"], MDT:FormatEnemyHealth(health)).."\n"
 
+  if db.devMode then
+    text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"].."\n\n"..text
+  end
+
   local count = MDT:IsCurrentPresetTeeming() and data.teemingCount or data.count
   text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count)
   text = text.."\n"..L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health)
@@ -717,10 +721,14 @@ local function blipDevModeSetup(blip)
     yOffset = y - ny
   end)
   local moveGroup
+  local movePatrol
   blip:SetScript("OnDragStart", function()
     if not db.devModeBlipsMovable then return end
     if IsShiftKeyDown() then
       moveGroup = true
+    end
+    if not IsControlKeyDown() then
+      movePatrol = true
     end
     blip:StartMoving()
   end)
@@ -728,6 +736,9 @@ local function blipDevModeSetup(blip)
     if not db.devModeBlipsMovable then return end
     if IsShiftKeyDown() then
       moveGroup = true
+    end
+    if not IsControlKeyDown() then
+      movePatrol = true
     end
     local x, y = MDT:GetCursorPosition()
     local scale = MDT:GetScale()
@@ -753,6 +764,18 @@ local function blipDevModeSetup(blip)
         end
       end
     end
+
+    if movePatrol and blip.clone.patrol then
+      for patrolIdx, waypoint in pairs(blip.clone.patrol) do
+        waypoint.x = waypoint.x + deltaX
+        waypoint.y = waypoint.y + deltaY
+        MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].patrol[patrolIdx].x = waypoint.x
+        MDT.dungeonEnemies[db.currentDungeonIdx][blip.enemyIdx].clones[blip.cloneIdx].patrol[patrolIdx].y = waypoint.y
+      end
+      blip:DisplayPatrol(true)
+      movePatrol = nil
+    end
+
     blip:StopMovingOrSizing()
     blip:ClearAllPoints()
     blip:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x * scale, y * scale)

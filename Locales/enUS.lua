@@ -16,6 +16,8 @@ L["streetBazaarEventNote2"] = "Bazaar Event second wave"
 L["streetBazaarEventNote3"] = "Bazaar Event third wave"
 L["streetOasisBossNote1"] = "Myza's Oasis first wave"
 L["streetOasisBossNote2"] = "Myza's Oasis second wave"
+L["devModeShiftDragHint"] = "Shift+Drag to drag the whole group"
+L["devModeCtrlDragHint"] = "Ctrl+Drag to not move patrol pat"
 --- STREET
 L["Smuggled Creature"] = "Smuggled Creature"
 L["Unruly Patron"] = "Unruly Patron"
