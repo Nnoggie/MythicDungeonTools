@@ -3504,7 +3504,6 @@ function MDT:UpdatePullButtonNPCData(idx)
       end
     end
   end
-  vdt(enemyTable)
   frame.newPullButtons[idx]:SetNPCData(enemyTable)
 
   local pullForces = MDT:CountForces(idx, false)
