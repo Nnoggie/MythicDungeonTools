@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Mechagon - Workshop"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 374, teeming = 192, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 374 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

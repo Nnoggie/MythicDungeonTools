@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Siege of Niuzao Temple"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 65, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 65 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

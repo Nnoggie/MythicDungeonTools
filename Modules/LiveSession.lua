@@ -250,15 +250,6 @@ do
   end
 end
 
----Sends Corrupted NPC Offset Positions
-function MDT:LiveSession_SendCorruptedPositions(offsets)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    local export = MDT:TableToString(offsets, false, 5)
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.corrupted, export, distribution, nil, "ALERT")
-  end
-end
-
 ---Sends current difficulty
 function MDT:LiveSession_SendDifficulty()
   local distribution = self:IsPlayerInGroup()

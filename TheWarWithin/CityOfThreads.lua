@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["CityOfThreads"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 742, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 742 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

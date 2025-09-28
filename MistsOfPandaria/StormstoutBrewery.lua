@@ -29,7 +29,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [4] = L["The Tasting Room"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 25, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 25 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

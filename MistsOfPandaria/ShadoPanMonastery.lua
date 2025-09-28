@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Shado-Pan Monastery"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 32, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 32 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

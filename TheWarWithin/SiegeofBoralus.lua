@@ -34,7 +34,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Siege of Boralus Sublevel"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 494, teeming = 319, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 494 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

@@ -5,7 +5,7 @@ local MDT = MDT
 do
   local dungeonCountCache = {}
 
-  --- Usage: local count, maxCountNormal, maxCountTeeming, teemingCount = MDT:GetEnemyForces(npcId)
+  --- Usage: local count, maxCountNormal = MDT:GetEnemyForces(npcId)
   --- Prefers to find the npc in the current dungeon of the player
   --- @param npcId number
   --- @return number | nil, number | nil, number | nil, number | nil
@@ -15,7 +15,7 @@ do
 
     if dungeonIdx and dungeonCountCache[dungeonIdx] and dungeonCountCache[dungeonIdx][npcId] then
       local cached = dungeonCountCache[dungeonIdx][npcId]
-      return cached.count, cached.maxCountNormal, cached.maxCountTeeming, cached.teemingCount
+      return cached.count, cached.maxCountNormal
     end
 
     if dungeonIdx then
@@ -26,11 +26,9 @@ do
           dungeonCountCache[dungeonIdx][npcId] = {
             count = e.count,
             maxCountNormal = self.dungeonTotalCount[dungeonIdx].normal,
-            maxCountTeeming = self.dungeonTotalCount[dungeonIdx].teeming,
-            teemingCount = e.teemingCount
           }
           local cached = dungeonCountCache[dungeonIdx][npcId]
-          return cached.count, cached.maxCountNormal, cached.maxCountTeeming, cached.teemingCount
+          return cached.count, cached.maxCountNormal
         end
       end
     end
@@ -38,7 +36,7 @@ do
     for i, _ in pairs(MDT.dungeonList) do
       if dungeonCountCache[i] and dungeonCountCache[i][npcId] then
         local cached = dungeonCountCache[i][npcId]
-        return cached.count, cached.maxCountNormal, cached.maxCountTeeming, cached.teemingCount
+        return cached.count, cached.maxCountNormal
       end
 
       local data = self.dungeonEnemies[i]
@@ -49,11 +47,9 @@ do
             dungeonCountCache[i][npcId] = {
               count = e.count,
               maxCountNormal = self.dungeonTotalCount[i].normal,
-              maxCountTeeming = self.dungeonTotalCount[i].teeming,
-              teemingCount = e.teemingCount or e.count,
             }
             local cached = dungeonCountCache[i][npcId]
-            return cached.count, cached.maxCountNormal, cached.maxCountTeeming, cached.teemingCount
+            return cached.count, cached.maxCountNormal
           end
         end
       end

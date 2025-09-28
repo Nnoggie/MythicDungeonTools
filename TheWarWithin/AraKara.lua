@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AraKara"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 800, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 800 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

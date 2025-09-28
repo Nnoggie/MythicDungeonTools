@@ -306,7 +306,6 @@ MDT.liveSessionPrefixes = {
   ["free"] = "MDTLiveFree",
   ["bora"] = "MDTLiveBora",
   ["reqPre"] = "MDTLiveReqPre",
-  ["corrupted"] = "MDTLiveCor",
   ["difficulty"] = "MDTLiveLvl",
   ["poiAssignment"] = "MDTPOIAssignment",
 }
@@ -465,21 +464,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       if preset == MDT:GetCurrentPreset() then
         MDT:ReloadPullButtons()
         MDT:SetSelectionToPull(MDT:GetCurrentPull())
-        MDT:POI_UpdateAll() --for corrupted spires
         MDT:UpdateProgressbar()
-      end
-    end
-  end
-
-  --corrupted
-  if prefix == MDT.liveSessionPrefixes.corrupted then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local offsets = MDT:StringToTable(message, false)
-      --only reposition if no blip is currently moving
-      if not MDT.draggedBlip then
-        preset.value.riftOffsets = offsets
-        MDT:UpdateMap()
       end
     end
   end
@@ -490,20 +475,11 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local db = MDT:GetDB()
       local difficulty = tonumber(message)
       if difficulty and difficulty ~= db.currentDifficulty then
-        local updateSeasonal
-        if ((difficulty >= 10 and db.currentDifficulty < 10) or (difficulty < 10 and db.currentDifficulty >= 10)) then
-          updateSeasonal = true
-        end
         db.currentDifficulty = difficulty
         MDT.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
         MDT:UpdateProgressbar()
         if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
         MDT:ReloadPullButtons()
-        if updateSeasonal then
-          MDT:POI_UpdateAll()
-          MDT:KillAllAnimatedLines()
-          MDT:DrawAllAnimatedLines()
-        end
       end
     end
   end
@@ -515,16 +491,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local week = tonumber(message)
       if preset.week ~= week then
         preset.week = week
-        local teeming = MDT:IsPresetTeeming(preset)
-        preset.value.teeming = teeming
         if preset == MDT:GetCurrentPreset() then
           local affixDropdown = MDT.main_frame.sidePanel.affixDropdown
           affixDropdown:SetValue(week)
           MDT:POI_UpdateAll()
           MDT:UpdateProgressbar()
           MDT:ReloadPullButtons()
-          MDT:KillAllAnimatedLines()
-          MDT:DrawAllAnimatedLines()
         end
       end
     end

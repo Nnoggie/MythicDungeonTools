@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [2] = L["Crusaders\' Chapel"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 40, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 40 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

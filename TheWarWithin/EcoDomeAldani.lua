@@ -32,7 +32,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Eco-Dome Al'dani"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 555, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 555 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
