@@ -137,13 +137,6 @@ local schemas = {
             }
           },
           {
-            name = "weeks",
-            type = "array",
-            fields = {
-              type = "boolean"
-            }
-          },
-          {
             name = "value1",
             type = "number"
           },
@@ -228,35 +221,6 @@ local schemas = {
         {
           name = "instanceID",
           type = "number"
-        },
-        {
-          name = "bonusSpell",
-          type = "number"
-        },
-        {
-          name = "badCreatureModel",
-          type = "boolean"
-        },
-        {
-          name = "modelPosition",
-          type = "array",
-          fields = {
-            type = "number"
-          }
-        },
-        {
-          name = "include",
-          type = "schemaArray",
-          fields = {
-            {
-              name = "level",
-              type = "number",
-            },
-            {
-              name = "affix",
-              type = "number",
-            },
-          },
         },
         {
           name = "powers",

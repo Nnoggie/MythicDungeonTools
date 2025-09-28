@@ -117,7 +117,6 @@ local function POI_SetOptions(frame, type, poi)
   frame:SetScript("OnMouseDown", nil)
   frame:SetScript("OnMouseUp", nil)
   frame:SetScript("OnClick", nil)
-  frame.weeks = poi.weeks
   frame:SetFrameLevel(4)
   frame.defaultSublevel = nil
   frame.animatedLine = nil
@@ -1223,21 +1222,16 @@ function MDT:POI_UpdateAll()
   local scale = MDT:GetScale()
   local week = MDT:GetEffectivePresetWeek(preset)
   for poiIdx, poi in pairs(pois) do
-    if ((not poi.weeks) or poi.weeks[week])
-        and (not poi.season or poi.season == db.currentSeason)
-        and (not poi.difficulty or poi.difficulty <= db.currentDifficulty)
-    then
-      local poiFrame = MDT.GetFramePool(poi.template):Acquire()
-      if poiFrame.playerAssignmentString then poiFrame.playerAssignmentString:Hide() end
-      poiFrame.poiIdx = poiIdx
-      POI_SetOptions(poiFrame, poi.type, poi)
-      poiFrame.x = poi.x
-      poiFrame.y = poi.y
-      poiFrame:ClearAllPoints()
-      poiFrame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", poi.x * scale, poi.y * scale)
-      if not poiFrame.defaultHidden or db.devMode then poiFrame:Show() end
-      tinsert(points, poiFrame)
-    end
+    local poiFrame = MDT.GetFramePool(poi.template):Acquire()
+    if poiFrame.playerAssignmentString then poiFrame.playerAssignmentString:Hide() end
+    poiFrame.poiIdx = poiIdx
+    POI_SetOptions(poiFrame, poi.type, poi)
+    poiFrame.x = poi.x
+    poiFrame.y = poi.y
+    poiFrame:ClearAllPoints()
+    poiFrame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", poi.x * scale, poi.y * scale)
+    if not poiFrame.defaultHidden or db.devMode then poiFrame:Show() end
+    tinsert(points, poiFrame)
   end
 end
 

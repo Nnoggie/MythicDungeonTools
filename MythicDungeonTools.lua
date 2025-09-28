@@ -1698,32 +1698,6 @@ function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
   local enemy = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
   local clone = enemy and enemy["clones"][cloneIdx]
   if not clone then return false end
-  local week = self:GetEffectivePresetWeek()
-
-  --filter enemies out that have filters and conditions are not met
-  local include = clone.include or enemy.include
-  if include then
-    local pass = {}
-    if include.affix then
-      local affixIncluded = false
-      for _, value in pairs(affixWeeks[week]) do
-        if value == include.affix then
-          affixIncluded = true
-        end
-      end
-      tinsert(pass, affixIncluded)
-    end
-    if include.level then
-      local levelIncluded = db.currentDifficulty >= include.level
-      tinsert(pass, levelIncluded)
-    end
-    --TODO: week
-    local shouldInclude = true
-    for _, v in pairs(pass) do
-      shouldInclude = shouldInclude and v
-    end
-    if not shouldInclude then return false end
-  end
   return true
 end
 

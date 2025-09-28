@@ -370,17 +370,8 @@ function MDT:DisplayBlipTooltip(blip, shown)
   local tooltip = MDT.tooltip
   local data = blip.data
   if shown then
-    --- for some creatures (e.g. encrypted relics) it shows no model; prefer displayId then
-    if data.badCreatureModel then
-      tooltip.Model:SetDisplayInfo(data.displayId)
-    else
-      tooltip.Model:SetCreature(data.id)
-    end
-    if data.modelPosition then
-      tooltip.Model:SetPosition(unpack(data.modelPosition))
-    else
-      tooltip.Model:SetPosition(0, 0, 0)
-    end
+    tooltip.Model:SetCreature(data.id)
+    tooltip.Model:SetPosition(0, 0, 0)
     tooltip.String:Show()
     tooltip:Show()
   else
@@ -412,38 +403,6 @@ function MDT:DisplayBlipTooltip(blip, shown)
   text = text.."\n"..L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health)
   text = text.."\n\n["..L["Right click for more info"].."]"
   tooltip.String:SetText(text)
-
-  -- if this mob grants a bonus buff, show it in the tooltip ad-hoc
-  if blip.data.bonusSpell then
-    local name, _, icon = C_Spell.GetSpellInfo(blip.data.bonusSpell)
-    local bonusDesc = C_Spell.GetSpellDescription(blip.data.bonusSpell)
-    local bonusIcon = tooltip.bonusIcon or tooltip:CreateTexture(nil, "OVERLAY", nil, 0);
-    bonusIcon:SetWidth(54);
-    bonusIcon:SetHeight(54);
-    bonusIcon:SetTexture(icon)
-    bonusIcon:SetPoint("TOPLEFT", tooltip.Model, "BOTTOMLEFT", 8, -8);
-    tooltip.bonusIcon = bonusIcon
-
-    local bonusString = tooltip.bonusString or tooltip:CreateFontString("MDTToolTipString")
-    bonusString:SetFontObject("GameFontNormalSmall")
-    bonusString:SetFont(tooltip.String:GetFont(), 10, "")
-    bonusString:SetTextColor(1, 1, 1, 1)
-    bonusString:SetJustifyH("LEFT")
-    bonusString:SetWidth(tooltip:GetWidth())
-    bonusString:SetHeight(60)
-    bonusString:SetWidth(200)
-    bonusString:SetText(bonusDesc and bonusDesc or name)
-    bonusString:SetPoint("TOPLEFT", tooltip.bonusIcon, "TOPRIGHT", 8, 3)
-    tooltip.bonusString = bonusString
-
-    tooltip.bonusString:Show()
-    tooltip.bonusIcon:Show()
-    tooltip.mySizes = { x = 290, y = 180 }
-  elseif tooltip.bonusIcon then
-    tooltip.bonusIcon:Hide()
-    tooltip.bonusString:Hide()
-    tooltip.mySizes = { x = 290, y = 120 }
-  end
 
   tooltip:ClearAllPoints()
   if db.tooltipInCorner then
@@ -956,7 +915,6 @@ function MDT:IsNPCInPulls(poi)
   local data = self.dungeonEnemies[db.currentDungeonIdx]
   for enemyIdx, enemy in pairs(data) do
     if enemy.id == poi.npcId then
-      local included = false
       for cloneIdx, clone in pairs(enemy.clones) do
         if clone.week[week] then
           return MDT:IsCloneInPulls(enemyIdx, cloneIdx)

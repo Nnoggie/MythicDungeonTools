@@ -823,25 +823,6 @@ function MDT:CreateDevPanel(frame)
   end
 end
 
-function MDT:AddCloneFromData(npcId, weeks)
-  local sublevel = MDT:GetCurrentSubLevel()
-  local x, y = 320, -200
-  local data
-  for _, enemyData in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-    if enemyData.id == npcId then
-      data = enemyData
-      break
-    end
-  end
-  if not data then
-    print("Could not find enemy with id "..npcId)
-    return
-  end
-  tinsert(data.clones, { x = x, y = y, sublevel = sublevel, week = weeks })
-  print(string.format("MDT: Created clone %s %d at %d,%d", data.name, #data.clones, x, y))
-  MDT:UpdateMap()
-end
-
 ---AddCloneAtCursorPosition
 ---Adds a clone at the cursor position to the dungeon enemy table
 ---bound to hotkey and used to add new npcs to the map
