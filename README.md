@@ -22,7 +22,6 @@ Mythic Dungeon Tools is a Mythic+ Dungeon Planner AddOn which helps you perfectl
 - NPC positions for all dungeons
 - Patrol paths for all patroling NPCs
 - Enemy forces for every npc and dungeon
-- Features specific to seasonal affixes
 - Detailed enemy info including crowd control and casted spells
 - Toolbar with drawing and note tools
 - Route management including export/import via paste strings

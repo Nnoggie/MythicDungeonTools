@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [2] = L["Athenaeum"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 50, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 50 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["The Dawnbreaker"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 460, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 460 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

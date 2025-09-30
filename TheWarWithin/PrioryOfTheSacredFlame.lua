@@ -18,14 +18,14 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\PrioryOfTheSacredFlame' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\PrioryOfTheSacredFlame' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Priory of the Sacred Flame"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 960, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 960 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

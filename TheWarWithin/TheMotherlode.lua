@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["The MOTHERLODE!!"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 457, teeming = 460, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 457 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -1542,7 +1542,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 83286,
     ["creatureType"] = "Humanoid",
     ["level"] = 81,
-    ["reaping"] = 148894,
     ["characteristics"] = {
       ["Taunt"] = true,
     },

@@ -291,7 +291,7 @@ end
 
 --affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
 --https://www.wowhead.com/affixes
---lvl 4 affix, lvl 7 affix, tyrannical/fortified, seasonal affix
+--lvl 4 affix, lvl 7 affix, tyrannical/fortified affix
 local affixWeeks = {
   [1] = { 9, 148 },
   [2] = { 10 },
@@ -382,14 +382,6 @@ function MDT:ShowInterfaceInternal(force)
   else
     self.main_frame:Show()
     self:CheckCurrentZone()
-    --edge case if user closed MDT window while in the process of dragging a corrupted blip
-    if self.draggedBlip then
-      if MDT.liveSessionActive then
-        MDT:LiveSession_SendCorruptedPositions(MDT:GetRiftOffsets())
-      end
-      self:UpdateMap()
-      self.draggedBlip = nil
-    end
     MDT:UpdateBottomText()
   end
 end
@@ -556,7 +548,6 @@ function MDT:StartScaling()
   oldScrollValues.oldSizeY = f.scrollFrame:GetHeight()
   self:DungeonEnemies_HideAllBlips()
   self:POI_HideAllPoints()
-  self:KillAllAnimatedLines()
 end
 
 ---SetScale
@@ -1192,7 +1183,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 
-  --Week Dropdown (Infested / Affixes)
+  --Week Dropdown
   local function makeAffixString(week, affixes, longText)
     local ret
     local sep = ""
@@ -1258,9 +1249,6 @@ function MDT:MakeSidePanel(frame)
   function affixDropdown:SetAffixWeek(key, ignoreReloadPullButtons, ignoreUpdateProgressBar)
     affixDropdown:SetValue(key)
     MDT:GetCurrentPreset().week = key
-    local teeming = MDT:IsPresetTeeming(MDT:GetCurrentPreset())
-    MDT:GetCurrentPreset().value.teeming = teeming
-
     if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
     MDT:UpdateMap(nil, ignoreReloadPullButtons, ignoreUpdateProgressBar)
   end
@@ -1299,8 +1287,6 @@ function MDT:MakeSidePanel(frame)
     if (difficulty >= 10 and db.currentDifficulty < 10) or (difficulty < 10 and db.currentDifficulty >= 10) then
       db.currentDifficulty = difficulty or db.currentDifficulty
       MDT:POI_UpdateAll()
-      MDT:KillAllAnimatedLines()
-      MDT:DrawAllAnimatedLines()
       MDT:ReloadPullButtons()
     else
       db.currentDifficulty = difficulty or db.currentDifficulty
@@ -1378,8 +1364,7 @@ end
 ---FormatEnemyForces
 function MDT:FormatEnemyForces(forces, forcesmax, progressbar)
   if not forcesmax then
-    forcesmax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming
-        or MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+    forcesmax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
   end
   if db.enemyForcesFormat == 1 then
     if progressbar then return forces.."/"..forcesmax end
@@ -1413,12 +1398,9 @@ end
 ---UpdateProgressbar
 ---Update the progressbar on the sidepanel with the correct values
 function MDT:UpdateProgressbar()
-  local teeming = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
   MDT:EnsureDBTables()
   local grandTotal = MDT:CountForces()
-  MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar, grandTotal,
-    teeming == true and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or
-    MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
+  MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar, grandTotal, MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
 end
 
 function MDT:OnPan(cursorX, cursorY)
@@ -1603,18 +1585,6 @@ function MDT:UpdatePullTooltip(tooltip)
     if frame.sidePanel.newPullButtons and tooltip.currentPull and frame.sidePanel.newPullButtons[tooltip.currentPull] then
       local showData
 
-      local shroudedIcon = frame.sidePanel.newPullButtons[tooltip.currentPull].shroudedIcon
-      local shroudedCounter = frame.sidePanel.newPullButtons[tooltip.currentPull].shroudedCounter
-      if MouseIsOver(shroudedIcon) and shroudedIcon:IsShown() then
-        tooltip.topString:SetText("\n\n\n\n"..L["Bounty stacks \nafter this pull"]..": "..shroudedCounter:GetText())
-        local shroudedDisplayId = 101016
-        if (not tooltip.modelNpcId or (tooltip.modelNpcId ~= shroudedDisplayId)) then
-          tooltip.Model:SetDisplayInfo(shroudedDisplayId)
-          tooltip.modelNpcId = shroudedDisplayId
-        end
-        showData = true
-      end
-
       --enemy portraits
       for k, v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
         if MouseIsOver(v) then
@@ -1632,8 +1602,8 @@ function MDT:UpdatePullTooltip(tooltip)
             local health = MDT:CalculateEnemyHealth(boss, v.enemyData.baseHealth, db.currentDifficulty, v.enemyData.ignoreFortified)
             text = text..string.format(L["%s HP"], MDT:FormatEnemyHealth(health))..newLine
 
-            local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-            local count = MDT:IsCurrentPresetTeeming() and v.enemyData.teemingCount or v.enemyData.count
+            local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+            local count = v.enemyData.count
             text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count, totalForcesMax, false)
 
             tooltip.topString:SetText(text)
@@ -1660,8 +1630,7 @@ function MDT:UpdatePullTooltip(tooltip)
       end
       local pullForces = MDT:CountForces(tooltip.currentPull, true)
       local totalForces = MDT:CountForces(tooltip.currentPull, false)
-      local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or
-          MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+      local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
 
       local text = L["Forces"]..": "..MDT:FormatEnemyForces(pullForces, totalForcesMax, false)
       text = text.."\n"..L["Total"]..": "..MDT:FormatEnemyForces(totalForces, totalForcesMax, true)
@@ -1680,7 +1649,6 @@ function MDT:CountForces(currentPull, currentOnly)
   --count up to and including the currently selected pull
   currentPull = currentPull or 1000
   local preset = self:GetCurrentPreset()
-  local teeming = self:IsCurrentPresetTeeming()
   local pullCurrent = 0
   for pullIdx, pull in pairs(preset.value.pulls) do
     if not currentOnly or (currentOnly and pullIdx == currentPull) then
@@ -1689,9 +1657,7 @@ function MDT:CountForces(currentPull, currentOnly)
           if tonumber(enemyIdx) then
             for k, v in pairs(clones) do
               if MDT:IsCloneIncluded(enemyIdx, v) then
-                local count = teeming
-                    and self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].teemingCount
-                    or self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                local count = self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
                 pullCurrent = pullCurrent + count
               end
             end
@@ -1727,86 +1693,12 @@ function MDT:SumCurrentPullHealth(currentPull)
   return totalHealth
 end
 
-local emissaryIds = { [155432] = true, [155433] = true, [155434] = true }
-
 ---Checks if the specified clone is part of the current map configuration
 function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
-  local preset = MDT:GetCurrentPreset()
   local enemy = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
   local clone = enemy and enemy["clones"][cloneIdx]
   if not clone then return false end
-
-  local week = self:GetEffectivePresetWeek()
-
-  if db.currentSeason ~= 3 then
-    if emissaryIds[enemy.id] then return false end
-  elseif db.currentSeason ~= 4 then
-    if enemy.corrupted then return false end
-  end
-
-  --shrouded
-  local shroudedActive = db.currentSeason == 8 and db.currentDifficulty >= 10
-  if shroudedActive then
-    if clone.disguised then return false end
-  else
-    if clone.shrouded then return false end
-  end
-
-
-  --filter enemies out that have filters and conditions are not met
-  local include = clone.include or enemy.include
-  if include then
-    local pass = {}
-    if include.affix then
-      local affixIncluded = false
-      for _, value in pairs(affixWeeks[week]) do
-        if value == include.affix then
-          affixIncluded = true
-        end
-      end
-      tinsert(pass, affixIncluded)
-    end
-    if include.level then
-      local levelIncluded = db.currentDifficulty >= include.level
-      tinsert(pass, levelIncluded)
-    end
-    --TODO: week
-    local shouldInclude = true
-    for _, v in pairs(pass) do
-      shouldInclude = shouldInclude and v
-    end
-    if not shouldInclude then return false end
-  end
-
-  --beguiling weekly configuration
-  local weekData = clone.week
-  if weekData then
-    if weekData[week] and not (clone.faction and clone.faction ~= preset.faction) and db.currentDifficulty >= 10 then
-      return true
-    else
-      return false
-    end
-  end
-
-  week = week % 3
-  if week == 0 then week = 3 end
-  local isBlacktoothWeek = week == 2
-
-  if not clone.blacktoothEvent or isBlacktoothWeek then
-    if not (clone.faction and clone.faction ~= preset.faction) then
-      if MDT:IsCurrentPresetTeeming() or ((clone.teeming and clone.teeming == false) or (not clone.teeming)) then
-        if not (MDT:IsCurrentPresetTeeming() and clone.negativeTeeming) then
-          return true
-        end
-      end
-    end
-  end
-end
-
----Returns true if the current preset has teeming turned on, false otherwise
-function MDT:IsCurrentPresetTeeming()
-  --return self:GetCurrentPreset().week
-  return db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.teeming
+  return true
 end
 
 function MDT:IsCurrentPresetFortified()
@@ -1960,32 +1852,6 @@ function MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
   else
     callback()
   end
-end
-
----Returns if the current week has an affix week set that includes the teeming affix
-function MDT:IsWeekTeeming(week)
-  if not week then week = MDT:GetCurrentAffixWeek() or 1 end
-  return affixWeeks[week][1] == 5
-end
-
----Returns if the current week has an affix weeks set that includes the inspiring affix
-function MDT:IsWeekInspiring(week)
-  if not week then week = MDT:GetCurrentAffixWeek() or 1 end
-  return affixWeeks[week][1] == 122 or affixWeeks[week][2] == 122
-end
-
----Returns if the preset is set to a week which contains the teeming affix
-function MDT:IsPresetTeeming(preset)
-  return MDT:IsWeekTeeming(preset.week)
-end
-
-function MDT:GetRiftOffsets()
-  local week = self:GetEffectivePresetWeek()
-  local preset = self:GetCurrentPreset()
-  preset.value.riftOffsets = preset.value.riftOffsets or {}
-  local riftOffsets = preset.value.riftOffsets
-  riftOffsets[week] = riftOffsets[week] or {}
-  return riftOffsets[week]
 end
 
 function MDT:MakeMapTexture(frame)
@@ -2392,11 +2258,6 @@ function MDT:EnsureDBTables()
 
   MDT:GetCurrentPreset().week = MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek()
 
-  if db.currentDungeonIdx == 19 then
-    local englishFaction = UnitFactionGroup("player")
-    preset.faction       = preset.faction or (englishFaction and englishFaction == "Alliance") and 2 or 1
-  end
-
   preset.difficulty = preset.difficulty or db.currentDifficulty
 
   --make sure sublevel actually exists for the dungeon
@@ -2406,8 +2267,6 @@ function MDT:EnsureDBTables()
     maxSublevel = maxSublevel + 1
   end
   if preset.value.currentSublevel > maxSublevel then preset.value.currentSublevel = maxSublevel end
-  --make sure teeeming flag is set
-  preset.value.teeming = MDT:IsWeekTeeming(preset.week)
 end
 
 function MDT:GetTileFormat(dungeonIdx, sublevel)
@@ -2521,10 +2380,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not framesInitialized then coroutine.yield() end
-    MDT:KillAllAnimatedLines()
-    if not framesInitialized then coroutine.yield() end
-    MDT:DrawAllAnimatedLines()
-    if not framesInitialized then coroutine.yield() end
     MDT:UpdateProgressbar()
   end, "UpdateMap", true)
 end
@@ -2590,7 +2445,6 @@ function MDT:ClearPreset(preset, silent)
   if preset == self:GetCurrentPreset() then silent = false end
   table.wipe(preset.value.pulls)
   preset.value.currentPull = 1
-  table.wipe(preset.value.riftOffsets)
   --MDT:DeleteAllPresetObjects()
   self:EnsureDBTables()
   if not silent then
@@ -2826,10 +2680,10 @@ function MDT:MakePresetImportFrame(frame)
     inspectButton:SetWidth(100)
     inspectButton:SetCallback("OnClick", function()
       local newPreset = MDT:StringToTable(importString, true)
-      if not ViragDevTool_AddData then
-        print("MDT: Install Virag Dev Tool to inspect route")
+      if not DevTool and not DevTool.AddData then
+        print("MDT: Install Dev Tool to inspect route")
       else
-        ViragDevTool_AddData(newPreset)
+        DevTool:AddData(newPreset)
       end
     end)
     frame.presetImportFrame:AddChild(inspectButton)
@@ -3609,7 +3463,6 @@ function MDT:UpdatePullButtonNPCData(idx)
                 enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
                 enemyTable[enemyTableIdx].npcId = npcId
                 enemyTable[enemyTableIdx].count = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                enemyTable[enemyTableIdx].teemingCount = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["teemingCount"]
                 enemyTable[enemyTableIdx].displayId = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
                 enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
                 enemyTable[enemyTableIdx].name = name
@@ -3627,75 +3480,8 @@ function MDT:UpdatePullButtonNPCData(idx)
   end
   frame.newPullButtons[idx]:SetNPCData(enemyTable)
 
-  --display reaping icon
   local pullForces = MDT:CountForces(idx, false)
-  local totalForcesMax = MDT:IsCurrentPresetTeeming() and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or
-      MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-  local currentPercent = pullForces / totalForcesMax
-  local oldPullForces
-  if idx == 1 then
-    oldPullForces = 0
-  else
-    oldPullForces = MDT:CountForces(idx - 1, false)
-  end
-  local oldPercent = oldPullForces / totalForcesMax
-  frame.newPullButtons[idx]:ShowReapingIcon(false, pullForces, oldPullForces, totalForcesMax)
-  --prideful icon
-  if (math.floor(currentPercent / 0.2) > math.floor(oldPercent / 0.2)) and oldPercent < 1 and db.currentSeason == 5 then
-    frame.newPullButtons[idx]:ShowPridefulIcon(true, pullForces, oldPullForces, totalForcesMax)
-  else
-    frame.newPullButtons[idx]:ShowPridefulIcon(false, pullForces, oldPullForces, totalForcesMax)
-  end
-  --shrouded icon
-  --count amount of shrouded in this pull
-  local shroudedCount = 0
-  if preset.value.pulls[idx] then
-    for enemyIdx, clones in pairs(preset.value.pulls[idx]) do
-      if tonumber(enemyIdx) then
-        if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
-          for k, cloneIdx in pairs(clones) do
-            local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
-            if cloneData and cloneData.shrouded then
-              -- count zul'gamux as 3
-              if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id == 190128 then
-                shroudedCount = shroudedCount + 3
-              else
-                shroudedCount = shroudedCount + 1
-              end
-            end
-          end
-        end
-      end
-    end
-  end
-  if shroudedCount > 0 then
-    -- count amount of shrouded in all previous pulls
-    local shroudedCountAllPrevious = 1 -- get one buff stack for free
-    for i = 1, idx - 1 do
-      if preset.value.pulls[i] then
-        for enemyIdx, clones in pairs(preset.value.pulls[i]) do
-          if tonumber(enemyIdx) then
-            if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
-              for k, cloneIdx in pairs(clones) do
-                local cloneData = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx]
-                if cloneData and cloneData.shrouded then
-                  -- count zul'gamux as 3
-                  if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx].id == 190128 then
-                    shroudedCountAllPrevious = shroudedCountAllPrevious + 3
-                  else
-                    shroudedCountAllPrevious = shroudedCountAllPrevious + 1
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    frame.newPullButtons[idx]:ShowShroudedIcon(true, shroudedCountAllPrevious + shroudedCount)
-  else
-    frame.newPullButtons[idx]:ShowShroudedIcon(false)
-  end
+  local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
 
   --count per health
   if pullForces > 0 then

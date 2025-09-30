@@ -22,7 +22,7 @@ MDT.dungeonMaps[dungeonIndex] = {
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Halls of Atonement"],
 }
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 466, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 466 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -207,7 +207,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -314.36115382238,
         ["g"] = 2,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
         ["patrol"] = {
           [1] = {
             ["x"] = 748.90397574844,
@@ -272,7 +271,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -232.08454757204,
         ["g"] = 16,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
         ["patrol"] = {
           [1] = {
             ["x"] = 586.81861914227,
@@ -301,7 +299,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -372.36913537777,
         ["g"] = 20,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
         ["patrol"] = {
           [1] = {
             ["x"] = 573.96682573244,
@@ -338,7 +335,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -411.24119978935,
         ["g"] = 22,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
         ["patrol"] = {
           [1] = {
             ["x"] = 632.56927438659,
@@ -504,7 +500,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -302.69969140376,
         ["g"] = 56,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [18] = {
         ["x"] = 582.08685004359,

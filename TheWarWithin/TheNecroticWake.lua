@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TheNecroticWakeFloor1"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 332, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 332 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -194,7 +194,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -201.24914620776,
         ["g"] = 1,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [5] = {
         ["x"] = 611.65323888146,
@@ -373,7 +372,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -383.66499459998,
         ["g"] = 31,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
     },
   },
@@ -462,7 +460,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -258.50166629656,
         ["g"] = 10,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
         ["patrol"] = {
           [1] = {
             ["x"] = 488.54533062372,
@@ -620,7 +617,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -203.14888806781,
         ["g"] = 7,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [4] = {
         ["x"] = 553.01145209288,
@@ -915,7 +911,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -410.23941793798,
         ["g"] = 17,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [4] = {
         ["x"] = 418.03664986124,
@@ -1076,14 +1071,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -426.10817403343,
         ["g"] = 14,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [2] = {
         ["x"] = 239.05809523587,
         ["y"] = -295.1255092448,
         ["g"] = 19,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [3] = {
         ["x"] = 294.7399686657,
@@ -1155,7 +1148,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -258.53486044461,
         ["g"] = 25,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [4] = {
         ["x"] = 276.2452369159,
@@ -1832,7 +1824,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -400.11387963808,
         ["g"] = 30,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [4] = {
         ["x"] = 651.06681583353,

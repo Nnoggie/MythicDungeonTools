@@ -447,10 +447,7 @@ local methods = {
       if MDT.ProgressBarResetTimer then MDT.ProgressBarResetTimer:Cancel() end
       local currentForces = MDT:CountForces(self.index)
       local db = MDT:GetDB()
-      local teeming = MDT:IsCurrentPresetTeeming()
-      MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar, currentForces,
-        teeming and MDT.dungeonTotalCount[db.currentDungeonIdx].teeming or
-        MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
+      MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar, currentForces, MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
       MDT:PullClickAreaOnEnter(self.index)
     end
 
@@ -884,98 +881,6 @@ local methods = {
       self.enemyPortraits[idx].fontString:Show()
     end
   end,
-  ["ShowReapingIcon"] = function(self, show, currentForces, oldForces, totalForcesMax)
-    local db = MDT:GetDB()
-    --compute percentage
-    local currentPercent = currentForces / totalForcesMax
-    local oldPercent = oldForces / totalForcesMax
-    --set percentage here
-    self.percentageFontString:Show()
-    local progressText
-    if db.useForcesCount then
-      progressText = string.format("%3d", currentForces)
-    else
-      progressText = string.format("%.2f%%", currentPercent * 100)
-    end
-    if show then
-      self.reapingIcon:Show()
-      self.reapingIcon.overlay:Show()
-      progressText = "|cFF00FF00"..progressText
-
-      local currentReaps = math.floor(currentPercent / 0.2)
-      local oldReaps = math.floor(oldPercent / 0.2)
-      local reapings = math.min(5, currentReaps - oldReaps)
-
-      if reapings > 1 then
-        self.multiReapingFontString:SetText(reapings.."x")
-        self.multiReapingFontString:Show()
-      else
-        self.multiReapingFontString:Hide()
-      end
-    else
-      self.reapingIcon:Hide()
-      self.reapingIcon.overlay:Hide()
-      self.multiReapingFontString:Hide()
-      progressText = "|cFFFFFFFF"..progressText
-    end
-    local pullForces = MDT:CountForces(self.index, true)
-    if pullForces > 0 then
-      self.percentageFontString:SetText(progressText)
-      self.percentageFontString:Show()
-    else
-      self.percentageFontString:Hide()
-    end
-  end,
-  ["ShowPridefulIcon"] = function(self, show, currentForces, oldForces, totalForcesMax)
-    local db = MDT:GetDB()
-    --compute percentage
-    local currentPercent = currentForces / totalForcesMax
-    local oldPercent = oldForces / totalForcesMax
-    --set percentage here
-    self.percentageFontString:Show()
-    local progressText
-    if db.useForcesCount then
-      progressText = string.format("%3d", currentForces)
-    else
-      progressText = string.format("%.2f%%", currentPercent * 100)
-    end
-    if show then
-      self.pridefulIcon:Show()
-      progressText = "|cFFFFFFFF"..progressText
-
-      local currentPrides = math.floor(currentPercent / 0.2)
-      local oldPrides = math.floor(oldPercent / 0.2)
-      local pridefuls = math.min(5, currentPrides - oldPrides)
-
-      if pridefuls > 1 then
-        self.multiPridefulFontString:SetText(pridefuls.."x")
-        self.multiPridefulFontString:Show()
-      else
-        self.multiPridefulFontString:Hide()
-      end
-    else
-      self.pridefulIcon:Hide()
-      self.multiPridefulFontString:Hide()
-      progressText = "|cFFFFFFFF"..progressText
-    end
-    local pullForces = MDT:CountForces(self.index, true)
-    if pullForces > 0 then
-      self.percentageFontString:SetText(progressText)
-      self.percentageFontString:Show()
-    else
-      self.percentageFontString:Hide()
-    end
-  end,
-  ["ShowShroudedIcon"] = function(self, show, amountShrouded)
-    if show then
-      self.shroudedIcon:Show()
-      self.shroudedCounter:SetText(amountShrouded)
-      self.shroudedCounter:Show()
-    else
-      self.shroudedIcon:Hide()
-      self.shroudedCounter:Hide()
-    end
-  end,
   ["ShowCountPerHealth"] = function(self, show, count, health)
     if show then
       local text = "1.2"
@@ -1083,20 +988,6 @@ local function Constructor()
     enemyPortraits[i].fontString:Hide()
   end
 
-  --reaping icon
-  local reapingIcon = button:CreateTexture(nil, "BACKGROUND", nil, 2)
-  reapingIcon:SetSize(height - 2, height - 2)
-  reapingIcon:SetPoint("RIGHT", button, "RIGHT", -10, 0)
-  reapingIcon:SetAlpha(1)
-  SetPortraitToTexture(reapingIcon, "Interface\\Icons\\ability_racial_embraceoftheloa_bwonsomdi")
-  reapingIcon:Hide()
-  reapingIcon.overlay = button:CreateTexture(nil, "BACKGROUND", nil, 1)
-  reapingIcon.overlay:SetTexture("Interface\\Addons\\MythicDungeonTools\\Textures\\Circle_White")
-  reapingIcon.overlay:SetVertexColor(0.7, 0.7, 0.7)
-  reapingIcon.overlay:SetPoint("CENTER", reapingIcon, "CENTER")
-  reapingIcon.overlay:SetSize(height + 1, height + 1)
-  reapingIcon.overlay:Hide()
-
   --pull percentage
   local percentageFontString = button:CreateFontString(nil, "BACKGROUND", nil)
   percentageFontString:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE", "")
@@ -1105,49 +996,6 @@ local function Constructor()
   percentageFontString:SetHeight(10)
   percentageFontString:SetPoint("RIGHT", button, "RIGHT", 2, 0)
   percentageFontString:Hide()
-
-  --multiple reaping wave indicator
-  local multiReapingFontString = button:CreateFontString(nil, "BACKGROUND", nil)
-  multiReapingFontString:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE", "")
-  multiReapingFontString:SetTextColor(1, 1, 1, 1);
-  multiReapingFontString:SetWidth(50)
-  multiReapingFontString:SetHeight(10)
-  multiReapingFontString:SetPoint("RIGHT", button, "RIGHT", 1, -12)
-  multiReapingFontString:Hide()
-
-  --prideful icon
-  local pridefulIcon = button:CreateTexture(nil, "BACKGROUND", nil, 2)
-  pridefulIcon:SetSize(height - 5, height - 5)
-  pridefulIcon:SetPoint("RIGHT", button, "RIGHT", -10, 0)
-  pridefulIcon:SetAlpha(1)
-  SetPortraitToTexture(pridefulIcon, "Interface\\Icons\\spell_animarevendreth_buff")
-  pridefulIcon:Hide()
-
-  --multiple prideful wave indicator
-  local multiPridefulFontString = button:CreateFontString(nil, "BACKGROUND", nil)
-  multiPridefulFontString:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE", "")
-  multiPridefulFontString:SetTextColor(1, 1, 1, 1);
-  multiPridefulFontString:SetWidth(50)
-  multiPridefulFontString:SetHeight(10)
-  multiPridefulFontString:SetPoint("RIGHT", button, "RIGHT", 1, -12)
-  multiPridefulFontString:Hide()
-
-  --shrouded icon
-  local shroudedIcon = button:CreateTexture(nil, "BACKGROUND", nil, 2)
-  shroudedIcon:SetSize(height - 5, height - 5)
-  shroudedIcon:SetPoint("RIGHT", button, "RIGHT", -10, 0)
-  shroudedIcon:SetAlpha(1)
-  SetPortraitToTexture(shroudedIcon, "Interface\\Icons\\spell_shadow_nethercloak")
-  shroudedIcon:Hide()
-
-  --shrouded counter
-  local shroudedCounter = button:CreateFontString(nil, "BACKGROUND", nil)
-  shroudedCounter:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE", "")
-  shroudedCounter:SetTextColor(1, 1, 1, 1);
-  shroudedCounter:SetWidth(50)
-  shroudedCounter:SetHeight(10)
-  shroudedCounter:SetPoint("RIGHT", button, "RIGHT", 1, -12)
-  shroudedCounter:Hide()
 
   --count per health indicator
   local countPerHealthFontString = button:CreateFontString(nil, "BACKGROUND", nil)
@@ -1167,13 +1015,7 @@ local function Constructor()
     pullNumber = pullNumber,
     background = background,
     enemyPortraits = enemyPortraits,
-    reapingIcon = reapingIcon,
     percentageFontString = percentageFontString,
-    multiReapingFontString = multiReapingFontString,
-    pridefulIcon = pridefulIcon,
-    multiPridefulFontString = multiPridefulFontString,
-    shroudedIcon = shroudedIcon,
-    shroudedCounter = shroudedCounter,
     color = color,
     type = Type,
     countPerHealthFontString = countPerHealthFontString,

@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Cinderbrew Meadery"]
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 587, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 587 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

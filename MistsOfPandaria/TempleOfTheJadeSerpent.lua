@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Temple of the Jade Serpent"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 45, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 45 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

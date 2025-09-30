@@ -27,7 +27,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [3] = L["Throne of Ancient Conquerors"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 20, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 20 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

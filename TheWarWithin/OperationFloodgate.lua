@@ -17,14 +17,14 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\' .. addonName .. '\\TheWarWithin\\Textures\\OperationFloodgate' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\TheWarWithin\\Textures\\OperationFloodgate' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Operation: Floodgate"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 470, teeming = 192, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 470 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

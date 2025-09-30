@@ -25,7 +25,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [2] = L["Gate Watch Tower"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 25, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 25 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 

@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Theater of Pain"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 271, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 271 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -126,7 +126,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -239.3665622171,
         ["g"] = 1,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
     },
   },
@@ -351,7 +350,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -457.65910233664,
         ["g"] = 3,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [3] = {
         ["x"] = 773.59977885262,
@@ -462,7 +460,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -476.75803717074,
         ["g"] = 4,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
         ["patrol"] = {
           [1] = {
             ["x"] = 762.48772992385,
@@ -614,7 +611,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -248.81809458404,
         ["g"] = 6,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [5] = {
         ["x"] = 591.94945623555,
@@ -657,7 +653,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -206.35022437757,
         ["g"] = 8,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [12] = {
         ["x"] = 584.97815272361,
@@ -829,7 +824,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -123.47307847901,
         ["g"] = 11,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [4] = {
         ["x"] = 390.11550269902,
@@ -949,7 +943,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -28.669264024298,
         ["g"] = 16,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [6] = {
         ["x"] = 471.71959848747,
@@ -1130,7 +1123,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -346.73014988254,
         ["g"] = 21,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [2] = {
         ["x"] = 486.1305233889,
@@ -1263,7 +1255,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -390.3861889978,
         ["g"] = 24,
         ["sublevel"] = 1,
-        ["inspiring"] = true,
       },
       [3] = {
         ["x"] = 195.52362104312,
