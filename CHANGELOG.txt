@@ -1,5 +1,4 @@
-## 5.6.5 (2025-09-12)
+## 5.6.6 (2025-09-12)
 
-- Dawnbreaker: Added 2 missing Nightfall Shadowwalkers
 
 
