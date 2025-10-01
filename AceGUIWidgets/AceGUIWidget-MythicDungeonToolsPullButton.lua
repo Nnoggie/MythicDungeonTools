@@ -880,6 +880,7 @@ local methods = {
       self.enemyPortraits[idx].fontString:SetText("x"..data.quantity)
       self.enemyPortraits[idx].fontString:Show()
     end
+    self:UpdateCountText()
   end,
   ["ShowCountPerHealth"] = function(self, show, count, health)
     if show then
@@ -916,7 +917,27 @@ local methods = {
       g = self.colorBackup.g,
       b = self.colorBackup.b
     }
-  end
+  end,
+  ["UpdateCountText"] = function(self)
+    local db = MDT:GetDB()
+    local currentForces = MDT:CountForces(self.index)
+    local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+    local currentPercent = currentForces / totalForcesMax
+    local progressText
+    if db.useForcesCount then
+      progressText = string.format("%3d", currentForces)
+    else
+      progressText = string.format("%.2f%%", currentPercent * 100)
+    end
+    local pullForces = MDT:CountForces(self.index, true)
+    if pullForces > 0 then
+      self.percentageFontString:SetText(progressText)
+      self.percentageFontString:Show()
+    else
+      self.percentageFontString:Hide()
+    end
+  end,
+
 }
 --Constructor
 local function Constructor()
