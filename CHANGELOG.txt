@@ -1,4 +1,6 @@
-## 5.6.6 (2025-09-12)
+## 5.6.7 (2025-10-01)
+
+- fixed a visual bug where count text on pull buttons would not show
 
 
 
