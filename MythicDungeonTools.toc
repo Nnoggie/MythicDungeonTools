@@ -1,4 +1,4 @@
-## Interface: 110205, 50500
+## Interface: 110205, 50502
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
 ## Version: 5.7.1
