@@ -1,15 +1,15 @@
 local addonName = ...
 local MDT = MDT
 local L = MDT.L
-local dungeonIndex = 140
+local dungeonIndex = 150
 MDT.dungeonList[dungeonIndex] = L["MurderRow"]
 MDT.mapInfo[dungeonIndex] = {
   teleportId = 1216786, -- FIXME
   shortName = L["MurderRowShortName"],
   englishName = "Murder Row",
-  mapID = 12345 -- FIXME
+  mapID = 12345                    -- FIXME
 };
-local zones = { 2214, 2387, 2388 }
+local zones = { 2214, 2387, 2388 } -- FIXME
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
