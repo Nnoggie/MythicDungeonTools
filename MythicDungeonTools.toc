@@ -28,5 +28,5 @@ Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
 Developer\load_developer.xml
-TheWarWithin\load_thewarwithin.xml [AllowLoadGameType mainline]
+Midnight\load_midnight.xml [AllowLoadGameType mainline]
 MistsOfPandaria\load_mop.xml [AllowLoadGameType mists]

@@ -2,7 +2,13 @@
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
---- ITEMDesc
+
+
+--MIDNIGHT
+L["Midnight Season 1"] = "Midnight Season 1"
+L["MurderRow"] = "Murder Row"
+L["MurderRowShortName"] = "MURD"
+
 L["WARNING_OLD_DUNGEON_IMPORT"] = "This route is from a dungeon that is not available in the current version of MDT. Install MDT Legacy to import this route."
 L["Support MDT on Patreon"] = "Support MDT on Patreon"
 L["Ghastly Parishioner"] = "Ghastly Parishioner"
@@ -18,15 +24,12 @@ L["streetOasisBossNote1"] = "Myza's Oasis first wave"
 L["streetOasisBossNote2"] = "Myza's Oasis second wave"
 L["devModeShiftDragHint"] = "Shift+Drag to drag the whole group"
 L["devModeCtrlDragHint"] = "Ctrl+Drag to not move patrol pat"
---- STREET
 L["Smuggled Creature"] = "Smuggled Creature"
 L["Unruly Patron"] = "Unruly Patron"
 L["Bazaar Strongarm"] = "Bazaar Strongarm"
 L["Unruly Patron"] = "Unruly Patron"
 L["Bazaar Overseer"] = "Bazaar Overseer"
 L["Cartel Lackey"] = "Cartel Lackey"
-
---- GMBT
 L["Titanic Defense Turret"] = "Titanic Defense Turret"
 L["Hourglass Cannon"] = "Hourglass Cannon"
 L["Corsair Brute"] = "Corsair Brute"
@@ -35,11 +38,7 @@ L["Progenitor Relic"] = "Progenitor Relic"
 L["Invigorating Fish Stick"] = "Invigorating Fish Stick"
 L["Wandering Pulsar"] = "Wandering Pulsar"
 L["Vault Purifier"] = "Vault Purifier"
-
---creatureType
 L["Totem"] = "Totem"
-
-
 L["ecoDomeAldaniShortName"] = "EDA"
 L["Eco-Dome Al'dani"] = "Eco-Dome Al'dani"
 L["The War Within Season 3"] = "War Within Season 3"
