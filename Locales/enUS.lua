@@ -16,7 +16,8 @@ L["WindrunnerSpire"] "Windrunner Spire"
 L["WindrunnerSpireShortName"] "WIND"
 L["MagistersTerraceShortName"] "MAGI"
 L["MagistersTerrace"] = "Magister's Terrace"
-
+L["MaisaraCaverns"] ="Maisara Caverns"
+L["MaisaraCavernsShortName"] = "CAVNS"
 
 L["WARNING_OLD_DUNGEON_IMPORT"] = "This route is from a dungeon that is not available in the current version of MDT. Install MDT Legacy to import this route."
 L["Support MDT on Patreon"] = "Support MDT on Patreon"
