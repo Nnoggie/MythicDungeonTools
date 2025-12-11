@@ -1,26 +1,26 @@
 local addonName = ...
 local MDT = MDT
 local L = MDT.L
-local dungeonIndex = 160
-MDT.dungeonList[dungeonIndex] = L["MurderRow"]
+local dungeonIndex = 150
+MDT.dungeonList[dungeonIndex] = L["PitOfSaron"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 1216786, -- FIXME
-  shortName = L["MurderRowShortName"],
-  englishName = "Murder Row",
-  mapID = 12345                    -- FIXME
+  teleportId = 1254555,
+  shortName = L["PitOfSaronShortName"],
+  englishName = "Pit of Saron",
+  mapID = 556
 };
-local zones = { 2214, 2387, 2388 } -- FIXME
+local zones = { 184 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\MurderRow' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\PitOfSaron' }
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
-  [1] = L["MurderRow"],
+  [1] = L["PitOfSaron"],
 }
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 470 }
