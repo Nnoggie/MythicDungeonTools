@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file='MurderRow.lua'/>
     <Script file='AlgetharAcademy.lua'/>
+    <Script file='SeatoftheTriumvirate.lua'/>
 </Ui>
