@@ -22,7 +22,7 @@ MDT.dungeonSelectionToIndex = {}
 do
   if MDT:IsRetail() then
     tinsert(MDT.seasonList, L["Midnight Season 1"])
-    tinsert(MDT.dungeonSelectionToIndex, { 45, 11, 150, 151 })
+    tinsert(MDT.dungeonSelectionToIndex, { 45, 11, 150, 151, 152 })
   end
   if MDT:IsMop() then
     tinsert(MDT.seasonList, L["MoP Challenge Mode"])
