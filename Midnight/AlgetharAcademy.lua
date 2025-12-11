@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Dragonflight\\Textures\\AlgetharAcademy' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\AlgetharAcademy' }
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AlgetharAcademy"],
