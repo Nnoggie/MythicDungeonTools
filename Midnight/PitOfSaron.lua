@@ -28,21 +28,30 @@ MDT.dungeonTotalCount[dungeonIndex] = { normal = 470 }
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["template"] = "MapLinkPinTemplate",
       ["type"] = "dungeonEntrance",
       ["x"] = 822.00553571743,
       ["y"] = -111.94358107728,
       ["sizeMult"] = 1.5,
     },
     [2] = {
-      ["template"] = "MapLinkPinTemplate",
       ["type"] = "genericItem",
       ["x"] = 795.63831666907,
       ["y"] = -144.50366473795,
       ["info"] = {
-        name = "Name of the item", -- all of these strings should obviously localized: L["..."]
+        name = "Item without spellId", -- all of these strings should obviously localized: L["..."]
         description = "This item does xyz...".."\n\n".."More description text.",
         texture = 134413,
+        size = 50,
+      },
+    },
+    [3] = {
+      ["type"] = "genericItem",
+      ["x"] = 735.63831666907,
+      ["y"] = -144.50366473795,
+      ["info"] = {
+        description = "Item with spellId...".."\n\n".."More description text.",
+        spellId = 1239141,
+        texture = 6891020,
         size = 50,
       },
     },

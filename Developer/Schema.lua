@@ -169,6 +169,10 @@ local schemas = {
                 type = "number",
               },
               {
+                name = "spellId",
+                type = "number",
+              },
+              {
                 name = "size",
                 type = "number",
               },

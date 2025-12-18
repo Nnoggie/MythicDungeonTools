@@ -1125,9 +1125,10 @@ local function POI_SetOptions(frame, type, poi)
         GameTooltip:SetSpellByID(info.spellId)
       else
         GameTooltip_SetTitle(GameTooltip, info.name)
-        GameTooltip:AddLine(info.description, 1, 1, 1, true)
         GameTooltip:AddTexture(info.texture)
       end
+      GameTooltip:AddLine(" ", 1, 1, 1, true)
+      GameTooltip:AddLine(info.description, 1, 1, 1, true)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
@@ -1245,9 +1246,8 @@ function MDT:POI_UpdateAll()
   if not pois then return end
   local preset = MDT:GetCurrentPreset()
   local scale = MDT:GetScale()
-  local week = MDT:GetEffectivePresetWeek(preset)
   for poiIdx, poi in pairs(pois) do
-    local poiFrame = MDT.GetFramePool(poi.template):Acquire()
+    local poiFrame = MDT.GetFramePool(poi.template or "MapLinkPinTemplate"):Acquire()
     if poiFrame.playerAssignmentString then poiFrame.playerAssignmentString:Hide() end
     poiFrame.poiIdx = poiIdx
     POI_SetOptions(poiFrame, poi.type, poi)
