@@ -1,4 +1,4 @@
-## Interface: 120000, 50502
+## Interface: 120001, 120000, 50502
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
 ## Version: 5.8.0
