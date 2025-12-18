@@ -705,7 +705,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       name = UnitFullName(name)
 
       local fullName = name.."+"..realm
-      SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+      C_ChatInfo.SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
     end
     numActiveTransmissions = numActiveTransmissions - 1
   end
