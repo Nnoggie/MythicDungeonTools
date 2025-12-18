@@ -3,6 +3,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
+L["exampleItemNameNoSpellId"] = "Example Item (No Spell ID)"
+L["exampleItemDescriptionNoSpellId"] = "A sample item with no associated spell ID.%s%sNew lines supported"
+L["exampleItemDescriptionWithSpellId"] = "A sample item that references a spell ID."
 
 --MIDNIGHT
 L["Midnight Season 1"] = "Midnight Season 1"

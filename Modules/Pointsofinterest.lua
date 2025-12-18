@@ -1119,16 +1119,31 @@ local function POI_SetOptions(frame, type, poi)
     frame.Texture:SetSize(info.size, info.size)
     frame.HighlightTexture:SetSize(info.size, info.size)
 
+    local formattedDescription
+    if info.description then
+      local localizedDescription = L[info.description]
+      -- count literal "%s" occurrences
+      local _, count = localizedDescription:gsub("%%s", "")
+      -- build args (one "\n" per "%s")
+      local args = {}
+      for i = 1, count do
+        args[i] = "\n"
+      end
+      formattedDescription = string.format(localizedDescription, unpack(args))
+    end
+
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       if info.spellId then
         GameTooltip:SetSpellByID(info.spellId)
       else
-        GameTooltip_SetTitle(GameTooltip, info.name)
+        GameTooltip_SetTitle(GameTooltip, L[info.name])
         GameTooltip:AddTexture(info.texture)
       end
-      GameTooltip:AddLine(" ", 1, 1, 1, true)
-      GameTooltip:AddLine(info.description, 1, 1, 1, true)
+      if formattedDescription then
+        GameTooltip:AddLine(" ", 1, 1, 1, true)
+        GameTooltip:AddLine(formattedDescription, 1, 1, 1, true)
+      end
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
