@@ -107,8 +107,6 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     MDT:ToggleDevMode()
   elseif rqst == "reset" then
     MDT:ResetMainFramePos()
-  elseif rqst == "dc" then
-    MDT:ToggleDataCollection()
   elseif rqst == "hardreset" then
     if arg == "force" then
       MDT:HardReset()
@@ -178,7 +176,6 @@ local defaultSavedVars = {
     },
     presets = {},
     currentPreset = {},
-    newDataCollectionActive = false,
     fadeOutDuringCombat = false,
     fadeOutAlpha = 0.5,
     colorPaletteInfo = {
@@ -233,10 +230,6 @@ do
       minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
       if not db.minimap.hide then
         minimapIcon:Show("MythicDungeonTools")
-      end
-      if db.newDataCollectionActive or MDT:IsOnBetaServer() then
-        MDT.DataCollection:Init()
-        MDT.DataCollection:InitHealthTrack()
       end
       --compartment
       if not db.minimap.compartmentHide then
@@ -418,12 +411,6 @@ function MDT:HideInterface()
   if self.main_frame then
     self.main_frame:Hide()
   end
-end
-
-function MDT:ToggleDataCollection()
-  db.newDataCollectionActive = not db.newDataCollectionActive
-  print(string.format("%sMDT|r: DataCollection %s. Reload Interface!", mythicColor,
-    db.newDataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
 end
 
 function MDT:CreateMenu()
