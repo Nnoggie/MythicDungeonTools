@@ -1,3 +1,4 @@
+local addonName = ...
 local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 11
@@ -17,8 +18,8 @@ end
 
 
 MDT.dungeonMaps[dungeonIndex] = {
-  [0] = "ArgusDungeon",
-  [1] = "ArgusDungeon",
+  [0] = "",
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\SeatOfTheTriumvirate' }
 }
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Seat of the Triumvirate Sublevel"],
