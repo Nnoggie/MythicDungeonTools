@@ -1110,14 +1110,40 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "genericItem" then
+    local info = poi.info
+    frame.Texture:SetTexture(info.texture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(info.size, info.size)
+    frame.Texture:SetSize(info.size, info.size)
+    frame.HighlightTexture:SetSize(info.size, info.size)
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      if info.spellId then
+        GameTooltip:SetSpellByID(info.spellId)
+      else
+        GameTooltip_SetTitle(GameTooltip, info.name)
+        GameTooltip:AddLine(info.description, 1, 1, 1, true)
+        GameTooltip:AddTexture(info.texture)
+      end
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
   if type == "dungeonEntrance" then
     frame.HighlightTexture:SetAtlas("Dungeon")
     frame.Texture:SetAtlas("Dungeon")
-
-    frame:SetSize(32, 32)
-    frame.Texture:SetSize(32, 32)
-    frame.HighlightTexture:SetSize(32, 32)
-
+    local sizeMult = poi.sizeMult or 1
+    local size = 32 * sizeMult
+    frame:SetSize(size, size)
+    frame.Texture:SetSize(size, size)
+    frame.HighlightTexture:SetSize(size, size)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip_SetTitle(GameTooltip, L["Dungeon Entrance"])
