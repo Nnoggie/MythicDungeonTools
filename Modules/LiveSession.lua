@@ -31,7 +31,7 @@ function MDT:LiveSession_Enable()
       local presetName = preset.text
       local name, realm = UnitFullName("player")
       local fullName = name.."+"..realm
-      SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+      C_ChatInfo.SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
     end
     local cancelCallback = function()
       MDT:LiveSession_Disable()

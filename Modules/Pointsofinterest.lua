@@ -904,7 +904,6 @@ local function POI_SetOptions(frame, type, poi)
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip:SetSpellByID(itemSpellId)
       GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
       GameTooltip:Show()
       frame.HighlightTexture:Show()
     end)
@@ -1111,14 +1110,56 @@ local function POI_SetOptions(frame, type, poi)
       frame.HighlightTexture:Hide()
     end)
   end
+  if type == "genericItem" then
+    local info = poi.info
+    frame.Texture:SetTexture(info.texture)
+    frame.HighlightTexture:SetAtlas("bags-innerglow")
+
+    frame:SetSize(info.size, info.size)
+    frame.Texture:SetSize(info.size, info.size)
+    frame.HighlightTexture:SetSize(info.size, info.size)
+
+    local formattedDescription
+    if info.description then
+      local localizedDescription = L[info.description]
+      -- count literal "%s" occurrences
+      local _, count = localizedDescription:gsub("%%s", "")
+      -- build args (one "\n" per "%s")
+      local args = {}
+      for i = 1, count do
+        args[i] = "\n"
+      end
+      formattedDescription = string.format(localizedDescription, unpack(args))
+    end
+
+    frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      if info.spellId then
+        GameTooltip:SetSpellByID(info.spellId)
+      else
+        GameTooltip_SetTitle(GameTooltip, L[info.name])
+        GameTooltip:AddTexture(info.texture)
+      end
+      if formattedDescription then
+        GameTooltip:AddLine(" ", 1, 1, 1, true)
+        GameTooltip:AddLine(formattedDescription, 1, 1, 1, true)
+      end
+      GameTooltip:Show()
+      frame.HighlightTexture:Show()
+    end)
+    frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+      frame.HighlightTexture:Hide()
+    end)
+  end
   if type == "dungeonEntrance" then
     frame.HighlightTexture:SetAtlas("Dungeon")
     frame.Texture:SetAtlas("Dungeon")
-
-    frame:SetSize(32, 32)
-    frame.Texture:SetSize(32, 32)
-    frame.HighlightTexture:SetSize(32, 32)
-
+    local sizeMult = poi.sizeMult or 1
+    local size = 32 * sizeMult
+    frame:SetSize(size, size)
+    frame.Texture:SetSize(size, size)
+    frame.HighlightTexture:SetSize(size, size)
     frame:SetScript("OnEnter", function()
       GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       GameTooltip_SetTitle(GameTooltip, L["Dungeon Entrance"])
@@ -1220,9 +1261,8 @@ function MDT:POI_UpdateAll()
   if not pois then return end
   local preset = MDT:GetCurrentPreset()
   local scale = MDT:GetScale()
-  local week = MDT:GetEffectivePresetWeek(preset)
   for poiIdx, poi in pairs(pois) do
-    local poiFrame = MDT.GetFramePool(poi.template):Acquire()
+    local poiFrame = MDT.GetFramePool(poi.template or "MapLinkPinTemplate"):Acquire()
     if poiFrame.playerAssignmentString then poiFrame.playerAssignmentString:Hide() end
     poiFrame.poiIdx = poiIdx
     POI_SetOptions(poiFrame, poi.type, poi)

@@ -350,10 +350,10 @@ local function MakeEnemeyInfoFrame()
       local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
       if not distribution then return end
       local enemyName = f.enemyDropDown.text:GetText()
-      SendChatMessage(string.format(L["MDT: Spells for %s:"], enemyName), distribution)
+      C_ChatInfo.SendChatMessage(string.format(L["MDT: Spells for %s:"], enemyName), distribution)
       for i, child in pairs(f.spellScroll.children) do
         local link = C_Spell.GetSpellLink(child.spellId)
-        SendChatMessage(i..". "..link, distribution)
+        C_ChatInfo.SendChatMessage(i..". "..link, distribution)
       end
     end)
     spellButtonsContainer:AddChild(sendSpellsButton)

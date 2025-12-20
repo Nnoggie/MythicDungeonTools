@@ -62,11 +62,20 @@
                 </Texture>
             </Layer>
             <Layer level="BORDER">
-                <Texture name="$parent_Portrait" hidden="false" parentKey="texture_Portrait">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
+              <Texture name="$parent_Portrait" hidden="false" parentKey="texture_Portrait">
+              <Anchors>
+                  <Anchor point="CENTER"/>
+              </Anchors>
+              </Texture>
+              <MaskTexture parentKey="mask_PortraitMask" file="Interface\CHARACTERFRAME\TempPortraitAlphaMask">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.texture_Portrait" x="0" y="0"/>
+                    <Anchor point="BOTTOMRIGHT" relativeKey="$parent.texture_Portrait" x="0" y="0"/>
+                </Anchors>
+                <MaskedTextures>
+                  <MaskedTexture childKey="texture_Portrait"/> \
+                </MaskedTextures>
+              </MaskTexture>
             </Layer>
 
             <Layer level="ARTWORK">
