@@ -3260,6 +3260,17 @@ function MDT:PresetsAddPull(index, data, preset)
   self:EnsureDBTables()
 end
 
+function MDT:PresetLustPull(index)
+  local preset = self:GetCurrentPreset()
+  local currentLustVal = preset.value.pulls[index]["lust"]
+  if currentLustVal then
+    preset.value.pulls[index]["lust"] = nil
+  else
+    preset.value.pulls[index]["lust"] = true
+  end
+  self:EnsureDBTables()
+end
+
 ---Merges a list of pulls and inserts them at a specified destination.
 ---
 ---@param pulls table List of all pull indices, that shall be merged (and deleted). If pulls
@@ -3521,6 +3532,7 @@ function MDT:ReloadPullButtons(force)
     end
     MDT:ColorAllPulls(nil, 0)
     MDT:DrawAllHulls(preset.value.pulls, force)
+    MDT:UpdateLustIcons()
   end, "ReloadPullButtons", true)
 end
 
@@ -4390,6 +4402,16 @@ function MDT:UpdatePullButtonColor(pullIdx, r, g, b)
   if not button then return end
   button.color.r, button.color.g, button.color.b = r, g, b
   button:UpdateColor()
+end
+
+function MDT:UpdateLustIcons()
+  local preset = self:GetCurrentPreset()
+  for pullIdx, pull in pairs(preset.value.pulls) do
+    local button = MDT:GetPullButton(pullIdx)
+    if button then
+      button:UpdateLustIcon(pull.lust)
+    end
+  end
 end
 
 --/run MDT:ResetDataCache();

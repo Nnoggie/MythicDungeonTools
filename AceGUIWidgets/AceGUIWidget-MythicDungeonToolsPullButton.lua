@@ -114,6 +114,14 @@ local function GetDropTarget()
   return id, button, pos
 end
 
+local function GetBloodlustText(index)
+  local pullHasLust = MDT:GetCurrentPreset().value.pulls[index].lust
+  if pullHasLust then
+    return L["Pull Drop Bloodlust Remove"]
+  end
+  return L["Pull Drop Bloodlust"]
+end
+
 --Methods
 local methods = {
   ["OnAcquire"] = function(self)
@@ -126,6 +134,16 @@ local methods = {
     local buttonSelf = self --needed for scope issue within new context menu
     local function openSingleContextMenu()
       MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+        rootDescription:CreateButton(GetBloodlustText(buttonSelf.index), function()
+          MDT:PresetLustPull(buttonSelf.index);
+          MDT:ReloadPullButtons()
+          if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+            MDT:LiveSession_SendPulls(MDT:GetPulls())
+          end
+        end)
+
+        rootDescription:CreateDivider()
+
         if buttonSelf.index ~= 1 then
           rootDescription:CreateButton(L["Pull Drop Move up"], function()
             MDT:MovePullUp(buttonSelf.index)
@@ -936,7 +954,15 @@ local methods = {
       self.percentageFontString:Hide()
     end
   end,
-
+  ["UpdateLustIcon"] = function(self, show)
+    if (show) then
+      self.lustIcon:Show()
+      self.lustOverlay:Show()
+    else
+      self.lustIcon:Hide()
+      self.lustOverlay:Hide()
+    end
+  end,
 }
 --Constructor
 local function Constructor()
@@ -1026,6 +1052,20 @@ local function Constructor()
   countPerHealthFontString:SetPoint("RIGHT", button, "RIGHT", -28, 0)
   countPerHealthFontString:Hide()
 
+  local lustIcon = button:CreateTexture(nil, "BACKGROUND", nil, 2)
+  lustIcon:SetSize(portraitSize, portraitSize)
+  lustIcon:SetTexture(136012)
+  -- this is such a hack, but only way I could come up with to match circle like enemyPortraits
+  lustIcon:SetMask("Interface/Garrison/Portraits/EnemyPortrait_159")
+  lustIcon:SetPoint("RIGHT", percentageFontString, "LEFT")
+  lustIcon:Hide()
+
+  local lustOverlay = button:CreateTexture(nil, "BACKGROUND", nil, 1)
+  lustOverlay:SetTexture("Interface\\Addons\\MythicDungeonTools\\Textures\\Circle_White")
+  lustOverlay:SetVertexColor(0.7, 0.7, 0.7)
+  lustOverlay:SetPoint("CENTER", lustIcon, "CENTER")
+  lustOverlay:SetSize(portraitSize + 3, portraitSize + 3)
+  lustOverlay:Hide()
 
   --custom colors
   local color = {}
@@ -1039,6 +1079,8 @@ local function Constructor()
     color = color,
     type = Type,
     countPerHealthFontString = countPerHealthFontString,
+    lustIcon = lustIcon,
+    lustOverlay = lustOverlay,
   }
   for method, func in pairs(methods) do
     widget[method] = func
