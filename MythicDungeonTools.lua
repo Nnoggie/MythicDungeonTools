@@ -4456,6 +4456,13 @@ function initFrames()
   MDT:RegisterErrorHandledFunctions()
   MDT:CheckSeenDungeonLists()
 
+  -- request spell info for all teleports, so icons are instantly working
+  for _, mapInfo in pairs(MDT.mapInfo) do
+    if mapInfo.teleportId then
+      C_Spell.RequestLoadSpellData(mapInfo.teleportId)
+    end
+  end
+
   local initSpinner = CreateFrame("Button", "MDTInitSpinner", UIParent, "LoadingSpinnerTemplate")
   initSpinner.BackgroundFrame.Background:SetVertexColor(0, 1, 0, 1)
   initSpinner.AnimFrame.Circle:SetVertexColor(0, 1, 0, 1)
