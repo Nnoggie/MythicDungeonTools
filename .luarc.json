@@ -75,7 +75,8 @@
     "CreateTexturePool",
     "CloseDropDownMenus",
     "GetAddOnMetadata",
-    "LOCALIZED_CLASS_NAMES_MALE"
+    "LOCALIZED_CLASS_NAMES_MALE",
+        "C_Secrets"
   ],
   "diagnostics.disable": ["invisible"]
 }
