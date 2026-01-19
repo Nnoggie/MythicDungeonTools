@@ -310,18 +310,10 @@ MDT.liveSessionPrefixes = {
   ["poiAssignment"] = "MDTPOIAssignment",
 }
 
-MDT.dataCollectionPrefixes = {
-  ["request"] = "MDTDataReq",
-  ["distribute"] = "MDTDataDist",
-}
-
 ---@diagnostic disable-next-line: duplicate-set-field
 function MDTcommsObject:OnEnable()
   self:RegisterComm(presetCommPrefix)
   for _, prefix in pairs(MDT.liveSessionPrefixes) do
-    self:RegisterComm(prefix)
-  end
-  for _, prefix in pairs(MDT.dataCollectionPrefixes) do
     self:RegisterComm(prefix)
   end
   MDT.transmissionCache = {}
@@ -432,17 +424,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         MDT.liveSessionRequested = false
       end
     end
-  end
-
-  if prefix == MDT.dataCollectionPrefixes.request then
-    MDT.DataCollection:DistributeData()
-  end
-
-  if prefix == MDT.dataCollectionPrefixes.distribute then
-    if sender == UnitFullName("player") then return end
-    local package = MDT:StringToTable(message, false)
-    print("Received data package from "..fullName)
-    MDT.DataCollection:MergeReceiveData(package)
   end
 
   if prefix == MDT.liveSessionPrefixes.enabled then
@@ -724,7 +705,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       name = UnitFullName(name)
 
       local fullName = name.."+"..realm
-      SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+      C_ChatInfo.SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
     end
     numActiveTransmissions = numActiveTransmissions - 1
   end

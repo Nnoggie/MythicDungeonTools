@@ -1,0 +1,11 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <!-- <Script file='MurderRow.lua'/> -->
+    <Script file='AlgetharAcademy.lua'/>
+    <Script file='MagistersTerrace.lua'/>
+    <Script file='MaisaraCaverns.lua'/>
+    <Script file='NexusPointXenas.lua'/>
+    <Script file='PitOfSaron.lua'/>
+    <Script file='SeatoftheTriumvirate.lua'/>
+    <Script file='Skyreach.lua'/>
+    <Script file='WindrunnerSpire.lua'/>
+</Ui>

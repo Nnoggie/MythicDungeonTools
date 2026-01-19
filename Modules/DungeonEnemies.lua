@@ -55,6 +55,7 @@ local defaultSizes = {
   ["texture_DragRight"] = 8,
   ["texture_DragUp"] = 8,
   ["texture_OverlayIcon"] = 12,
+  ["mask_PortraitMask"] = 20,
 }
 
 function MDTDungeonEnemyMixin:updateSizes(scale)
@@ -655,7 +656,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
     self.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
   else
     if data.iconTexture then
-      SetPortraitToTexture(self.texture_Portrait, data.iconTexture);
+      self.texture_Portrait:SetTexture(data.iconTexture);
     else
       SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait, data.displayId or 39490)
     end

@@ -64,7 +64,18 @@
     "MenuUtil",
     "GameTooltip_SetTitle",
     "WrapTextInColor",
-    "ICON_LIST"
+    "ICON_LIST",
+    "MouseIsOver",
+    "DrawLine",
+    "errorhandler",
+    "ChatFrame_AddMessageEventFilter",
+    "UIFrameFlash",
+    "MDTMapPanelFrame",
+    "MDTScrollFrame",
+    "CreateTexturePool",
+    "CloseDropDownMenus",
+    "GetAddOnMetadata",
+    "LOCALIZED_CLASS_NAMES_MALE"
   ],
   "diagnostics.disable": ["invisible"]
 }

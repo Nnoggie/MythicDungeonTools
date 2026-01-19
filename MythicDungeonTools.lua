@@ -107,8 +107,6 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     MDT:ToggleDevMode()
   elseif rqst == "reset" then
     MDT:ResetMainFramePos()
-  elseif rqst == "dc" then
-    MDT:ToggleDataCollection()
   elseif rqst == "hardreset" then
     if arg == "force" then
       MDT:HardReset()
@@ -178,7 +176,6 @@ local defaultSavedVars = {
     },
     presets = {},
     currentPreset = {},
-    newDataCollectionActive = false,
     fadeOutDuringCombat = false,
     fadeOutAlpha = 0.5,
     colorPaletteInfo = {
@@ -188,7 +185,7 @@ local defaultSavedVars = {
       customPaletteValues = {},
       numberCustomColors = 12,
     },
-    currentDungeonIdx = MDT:IsMop() and 130 or 123, -- set this one every new season
+    currentDungeonIdx = MDT:IsMop() and 130 or 150, -- set this one every new season
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
     knownAffixWeeks = {},
@@ -233,10 +230,6 @@ do
       minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
       if not db.minimap.hide then
         minimapIcon:Show("MythicDungeonTools")
-      end
-      if db.newDataCollectionActive or MDT:IsOnBetaServer() then
-        MDT.DataCollection:Init()
-        MDT.DataCollection:InitHealthTrack()
       end
       --compartment
       if not db.minimap.compartmentHide then
@@ -418,12 +411,6 @@ function MDT:HideInterface()
   if self.main_frame then
     self.main_frame:Hide()
   end
-end
-
-function MDT:ToggleDataCollection()
-  db.newDataCollectionActive = not db.newDataCollectionActive
-  print(string.format("%sMDT|r: DataCollection %s. Reload Interface!", mythicColor,
-    db.newDataCollectionActive and "|cFF00FF00Enabled|r" or "|cFFFF0000Disabled|r"))
 end
 
 function MDT:CreateMenu()
@@ -4468,6 +4455,13 @@ function initFrames()
   end
   MDT:RegisterErrorHandledFunctions()
   MDT:CheckSeenDungeonLists()
+
+  -- request spell info for all teleports, so icons are instantly working
+  for _, mapInfo in pairs(MDT.mapInfo) do
+    if mapInfo.teleportId then
+      C_Spell.RequestLoadSpellData(mapInfo.teleportId)
+    end
+  end
 
   local initSpinner = CreateFrame("Button", "MDTInitSpinner", UIParent, "LoadingSpinnerTemplate")
   initSpinner.BackgroundFrame.Background:SetVertexColor(0, 1, 0, 1)

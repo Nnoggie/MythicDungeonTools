@@ -21,12 +21,8 @@ MDT.dungeonSelectionToIndex = {}
 
 do
   if MDT:IsRetail() then
-    tinsert(MDT.seasonList, L["The War Within Season 3"])
-    tinsert(MDT.seasonList, L["The War Within Season 2"])
-    tinsert(MDT.seasonList, L["The War Within Season 1"])
-    tinsert(MDT.dungeonSelectionToIndex, { 123, 30, 37, 38, 113, 111, 115, 119 })
-    tinsert(MDT.dungeonSelectionToIndex, { 115, 116, 117, 118, 119, 120, 121, 122 })
-    tinsert(MDT.dungeonSelectionToIndex, { 31, 35, 19, 110, 111, 112, 113, 114 })
+    tinsert(MDT.seasonList, L["Midnight Season 1"])
+    tinsert(MDT.dungeonSelectionToIndex, { 45, 11, 150, 151, 152, 153, 154, 155 })
   end
   if MDT:IsMop() then
     tinsert(MDT.seasonList, L["MoP Challenge Mode"])
@@ -204,14 +200,24 @@ function MDT:UpdateDungeonDropDown()
 
   local currentDungeonIdx = db.currentDungeonIdx
   local sublevels = MDT.dungeonSubLevels[currentDungeonIdx]
-  local sublevelDropdown = MDT.main_frame.sublevelSelectionGroup.sublevelDropdown
+  local sublevelGroup = MDT.main_frame.sublevelSelectionGroup
+  local sublevelDropdown = sublevelGroup.sublevelDropdown
+
   sublevelDropdown:SetList(sublevels)
   sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
   sublevelDropdown:ClearFocus()
+
   if #sublevels == 1 then
+    -- Close and hide the pullout frame
+    if sublevelDropdown.pullout then
+      sublevelDropdown.pullout:Close()
+      sublevelDropdown.pullout.frame:Hide()
+    end
     sublevelDropdown.frame:Hide()
+    sublevelGroup.frame:Hide()
   else
     sublevelDropdown.frame:Show()
+    sublevelGroup.frame:Show()
   end
 end
 
@@ -235,7 +241,7 @@ function MDT:CreateSublevelDropdown(frame)
   group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, -68)
   ---@diagnostic disable-next-line: undefined-field
   group:SetLayout("List")
-  MDT:FixAceGUIShowHide(group)
+  -- MDT:FixAceGUIShowHide(group)
 
   ---@diagnostic disable-next-line: inject-field
   group.sublevelDropdown = AceGUI:Create("Dropdown")

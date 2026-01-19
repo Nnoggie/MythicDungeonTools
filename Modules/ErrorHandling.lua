@@ -22,9 +22,10 @@ local function getDiagnostics()
     [3] = "Europe",
     [4] = "Taiwan",
     [5] = "China",
-    [72] = "PTR"
+    [72] = "PTR",
+    [90] = "BETA",
   }
-  local region = regions[regionId]
+  local region = regions[regionId] or "UNKNOWN"
   local combatState = InCombatLockdown() and "In combat" or "Out of combat"
   local mapID = C_Map.GetBestMapForUnit("player");
   local zoneInfo = format("Zone: %s (%d)", C_Map.GetMapInfo(C_Map.GetMapInfo(mapID or 0).parentMapID).name, mapID)
