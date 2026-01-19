@@ -33,28 +33,28 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -514.34915476101,
       ["sizeMult"] = 1.5,
     },
-    [2] = {
-      ["type"] = "genericItem",
-      ["x"] = 55.58682134539,
-      ["y"] = -148.95573410031,
-      ["info"] = {
-        ["name"] = "exampleItemNameNoSpellId",
-        ["description"] = "exampleItemDescriptionNoSpellId",
-        ["texture"] = 134413,
-        ["size"] = 20,
-      },
-    },
-    [3] = {
-      ["type"] = "genericItem",
-      ["x"] = 57.420674751037,
-      ["y"] = -200.19238413255,
-      ["info"] = {
-        ["description"] = "exampleItemDescriptionWithSpellId",
-        ["texture"] = 6891020,
-        ["spellId"] = 1239141,
-        ["size"] = 20,
-      },
-    },
+    -- [2] = {
+    --   ["type"] = "genericItem",
+    --   ["x"] = 55.58682134539,
+    --   ["y"] = -148.95573410031,
+    --   ["info"] = {
+    --     ["name"] = "exampleItemNameNoSpellId",
+    --     ["description"] = "exampleItemDescriptionNoSpellId",
+    --     ["texture"] = 134413,
+    --     ["size"] = 20,
+    --   },
+    -- },
+    -- [3] = {
+    --   ["type"] = "genericItem",
+    --   ["x"] = 57.420674751037,
+    --   ["y"] = -200.19238413255,
+    --   ["info"] = {
+    --     ["description"] = "exampleItemDescriptionWithSpellId",
+    --     ["texture"] = 6891020,
+    --     ["spellId"] = 1239141,
+    --     ["size"] = 20,
+    --   },
+    -- },
   },
 };
 
