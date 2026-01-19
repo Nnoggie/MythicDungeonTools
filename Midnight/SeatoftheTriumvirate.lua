@@ -43,7 +43,7 @@ MDT.mapPOIs[dungeonIndex] = {
         ["description"] = "seatItemA",
         ["texture"] = 6891020,
         ["spellId"] = 244300,
-        ["size"] = 25,
+        ["size"] = 12,
       },
     },
   },
