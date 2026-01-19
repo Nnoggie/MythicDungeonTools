@@ -200,14 +200,24 @@ function MDT:UpdateDungeonDropDown()
 
   local currentDungeonIdx = db.currentDungeonIdx
   local sublevels = MDT.dungeonSubLevels[currentDungeonIdx]
-  local sublevelDropdown = MDT.main_frame.sublevelSelectionGroup.sublevelDropdown
+  local sublevelGroup = MDT.main_frame.sublevelSelectionGroup
+  local sublevelDropdown = sublevelGroup.sublevelDropdown
+
   sublevelDropdown:SetList(sublevels)
   sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
   sublevelDropdown:ClearFocus()
+
   if #sublevels == 1 then
+    -- Close and hide the pullout frame
+    if sublevelDropdown.pullout then
+      sublevelDropdown.pullout:Close()
+      sublevelDropdown.pullout.frame:Hide()
+    end
     sublevelDropdown.frame:Hide()
+    sublevelGroup.frame:Hide()
   else
     sublevelDropdown.frame:Show()
+    sublevelGroup.frame:Show()
   end
 end
 
@@ -231,7 +241,7 @@ function MDT:CreateSublevelDropdown(frame)
   group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, -68)
   ---@diagnostic disable-next-line: undefined-field
   group:SetLayout("List")
-  MDT:FixAceGUIShowHide(group)
+  -- MDT:FixAceGUIShowHide(group)
 
   ---@diagnostic disable-next-line: inject-field
   group.sublevelDropdown = AceGUI:Create("Dropdown")
