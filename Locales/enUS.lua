@@ -180,7 +180,7 @@ L["[DNT] Conduit Stalker"] = "[DNT] Conduit Stalker"
 
 
 
-L["seatItemA"] = "" --TODO Most enemies will gain this BUFF when stepping into the Void area (the black water at the edge of the map)
+L["seatItemA"] = "Most enemies gain this buff when stepping into the Void area"
 
 
 
