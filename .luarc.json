@@ -76,7 +76,8 @@
     "CloseDropDownMenus",
     "GetAddOnMetadata",
     "LOCALIZED_CLASS_NAMES_MALE",
-        "C_Secrets"
+        "C_Secrets",
+        "ChatFrameUtil"
   ],
   "diagnostics.disable": ["invisible"]
 }

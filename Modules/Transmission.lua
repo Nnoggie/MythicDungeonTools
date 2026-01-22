@@ -317,6 +317,7 @@ function MDTcommsObject:OnEnable()
     self:RegisterComm(prefix)
   end
   MDT.transmissionCache = {}
+  local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter or ChatFrameUtil.AddMessageEventFilter
   ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterFunc)
   ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterFunc)
   ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filterFunc)
