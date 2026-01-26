@@ -3,3 +3,5 @@
 libs/*
 !libs/LibDeflate
 !libs/load_libs.xml
+
+Locales/zhCN.lua
