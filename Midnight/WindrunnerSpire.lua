@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["WindrunnerSpire"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 603 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 591 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
