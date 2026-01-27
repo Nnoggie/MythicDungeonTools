@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["NexusPointXenas"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 525 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 572 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

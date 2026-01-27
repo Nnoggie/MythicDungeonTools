@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["PitOfSaron"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 611 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 627 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
