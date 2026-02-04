@@ -1,6 +1,9 @@
+## 6.0.4 (2026-02-04)
+
+- Pre-patch warning dialog for legacy maps, with copyable download links and date gating
+
 ## 6.0.3 (2026-01-27)
 
 - Mapping Update
-
 
 
