@@ -88,6 +88,7 @@ function MDT:SetupPrePatchWarning()
   end
 
   MDT:HideAllDialogs()
+  MDT:FixAceGUIShowHide(MDT.prePatchWarningFrame, MDT.main_frame, nil, true)
   MDT.prePatchWarningFrame:ClearAllPoints()
   MDT.prePatchWarningFrame.frame:SetParent(MDT.main_frame)
   MDT.prePatchWarningFrame.frame:SetFrameStrata("DIALOG")
