@@ -189,7 +189,7 @@ local defaultSavedVars = {
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
     knownAffixWeeks = {},
-    prePatchWarningShown = false,
+    prePatchWarningSeenFor = 0,
   },
 }
 do

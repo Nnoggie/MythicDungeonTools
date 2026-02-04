@@ -2,8 +2,8 @@ local AddonName, MDT = ...
 local AceGUI = LibStub("AceGUI-3.0")
 local L = MDT.L
 
--- March 3, 2026 00:00:00 UTC
-local MIDNIGHT_RELEASE_TIMESTAMP = 1772492435
+local PREPATCH_RELEASE_TIMESTAMP = 1768950035
+local MIDNIGHT_RELEASE_TIMESTAMP = 1772406035
 local LEGACY_DOWNLOAD_LINKS = {
   { name = "Wago",       url = "https://addons.wago.io/addons/mythic-dungeon-tools-mdt-legacy" },
   { name = "CurseForge", url = "https://legacy.curseforge.com/wow/addons/mythic-dungeon-tools-mdt-legacy" },
@@ -45,8 +45,10 @@ end
 function MDT:SetupPrePatchWarning()
   local db = MDT:GetDB()
   if not db then return end
-  if db.prePatchWarningShown then return end
-  if time() >= MIDNIGHT_RELEASE_TIMESTAMP then return end
+  if db.prePatchWarningSeenFor == PREPATCH_RELEASE_TIMESTAMP then return end
+  local now = time()
+  if now < PREPATCH_RELEASE_TIMESTAMP then return end
+  if now >= MIDNIGHT_RELEASE_TIMESTAMP then return end
   if not MDT.main_frame then return end
 
   if not MDT.prePatchWarningFrame then
@@ -94,5 +96,5 @@ function MDT:SetupPrePatchWarning()
   MDT.prePatchWarningFrame.frame:SetFrameStrata("DIALOG")
   MDT.prePatchWarningFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
   MDT.prePatchWarningFrame:Show()
-  db.prePatchWarningShown = true
+  db.prePatchWarningSeenFor = PREPATCH_RELEASE_TIMESTAMP
 end
