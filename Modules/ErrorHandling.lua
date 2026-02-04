@@ -58,6 +58,9 @@ function MDT:DisplayErrors(force)
     editBox:HighlightText(0, slen(text))
     editBox:SetFocus()
     copyButton:SetDisabled(true)
+    if not MDT.copyHelper then
+      MDT:MakeCopyHelper(MDT.errorFrame.frame)
+    end
     MDT.copyHelper:SmartShow(MDT.errorFrame.frame, 0, 0)
   end
 
@@ -201,6 +204,10 @@ function MDT:DisplayErrors(force)
   end
 
   MDT.errorFrame.errorBox:SetText(errorBoxText)
+  if MDT.main_frame then
+    MDT.errorFrame.frame:SetParent(MDT.main_frame)
+  end
+  MDT.errorFrame.frame:SetFrameStrata("DIALOG")
   MDT.errorFrame:Show()
 end
 
