@@ -11,6 +11,7 @@
 	<Script file='API.lua'/>
 	<Script file='DungeonSelect.lua'/>
 	<Script file='Conflicts.lua'/>
+	<Script file='PrePatchWarning.lua'/>
 	<Script file='ErrorHandling.lua'/>
 </Ui>
 

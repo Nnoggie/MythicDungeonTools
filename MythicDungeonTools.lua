@@ -189,6 +189,7 @@ local defaultSavedVars = {
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
     knownAffixWeeks = {},
+    prePatchWarningShown = false,
   },
 }
 do
@@ -811,6 +812,8 @@ function MDT:MakeCopyHelper(frame)
   function MDT.copyHelper:SmartShow(anchorFrame, x, y)
     MDT.copyHelper:ClearAllPoints()
     MDT.copyHelper:SetPoint("CENTER", anchorFrame, "CENTER", x, y)
+    MDT.copyHelper:SetFrameStrata("TOOLTIP")
+    MDT.copyHelper:SetFrameLevel(200)
     MDT.copyHelper:SetAlpha(1)
     MDT.copyHelper:Show()
     MDT.copyHelper:SetScript("OnUpdate", function()
@@ -4562,6 +4565,7 @@ function initFrames()
   coroutine.yield()
   MDT:MakeSendingStatusBar(main_frame)
   MDT:POI_CreateDropDown(main_frame)
+  MDT:SetupPrePatchWarning()
 
   --devMode
   if db.devMode and MDT.CreateDevPanel then
