@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["PitOfSaron"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 637 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 643 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -703,6 +703,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 75103,
     ["creatureType"] = "Undead",
     ["level"] = 90,
+    ["spells"] = {
+      [1258459] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 359.45548876245,
@@ -1637,8 +1641,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2658,
     ["instanceID"] = 0,
     ["spells"] = {
-      [460553] = {
-      },
       [1264027] = {
       },
       [1264246] = {
@@ -1680,8 +1682,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1264336] = {
       },
-      [1264349] = {
-      },
       [1264453] = {
       },
       [1264461] = {
@@ -1700,7 +1700,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forgemaster Garfrost",
     ["id"] = 252635,
     ["count"] = 0,
-    ["health"] = 12657041,
+    ["health"] = 11865977,
     ["scale"] = 2,
     ["displayId"] = 137504,
     ["creatureType"] = "Undead",
@@ -1709,8 +1709,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2658,
     ["instanceID"] = 0,
     ["spells"] = {
-      [1261295] = {
-      },
       [1261299] = {
       },
       [1261315] = {
@@ -1730,8 +1728,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1262029] = {
       },
       [1272433] = {
-      },
-      [1275687] = {
       },
     },
     ["clones"] = {
@@ -1758,13 +1754,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1262582] = {
       },
+      [1262596] = {
+      },
       [1263406] = {
       },
       [1263671] = {
-      },
-      [1263691] = {
-      },
-      [1263701] = {
       },
       [1263756] = {
       },
@@ -1821,7 +1815,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rotling",
     ["id"] = 254684,
     ["count"] = 0,
-    ["health"] = 201958,
+    ["health"] = 316426,
     ["scale"] = 1.5,
     ["displayId"] = 138343,
     ["creatureType"] = "Undead",
@@ -1845,7 +1839,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scourge Plaguespreader",
     ["id"] = 254691,
     ["count"] = 0,
-    ["health"] = 974593,
+    ["health"] = 949278,
     ["scale"] = 1.5,
     ["displayId"] = 138341,
     ["creatureType"] = "Undead",
@@ -1881,7 +1875,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shade of Krick",
     ["id"] = 255037,
     ["count"] = 0,
-    ["health"] = 341740,
+    ["health"] = 367054,
     ["scale"] = 1.5,
     ["displayId"] = 138601,
     ["creatureType"] = "Undead",

@@ -92,7 +92,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupted Manafiend",
     ["id"] = 196045,
     ["count"] = 5,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 1,
     ["displayId"] = 107525,
     ["creatureType"] = "Elemental",
@@ -116,6 +116,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [387523] = {
       },
       [388862] = {
+        ["interruptible"] = true,
       },
       [388863] = {
       },
@@ -206,7 +207,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spellbound Battleaxe",
     ["id"] = 196577,
     ["count"] = 5,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1,
     ["displayId"] = 23926,
     ["creatureType"] = "Elemental",
@@ -323,7 +324,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Ravager",
     ["id"] = 196671,
     ["count"] = 15,
-    ["health"] = 3313848,
+    ["health"] = 3645228,
     ["scale"] = 1,
     ["displayId"] = 110795,
     ["creatureType"] = "Beast",
@@ -455,7 +456,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Forager",
     ["id"] = 196694,
     ["count"] = 4,
-    ["health"] = 1104616,
+    ["health"] = 1215076,
     ["scale"] = 1,
     ["displayId"] = 62384,
     ["creatureType"] = "Elemental",
@@ -600,7 +601,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unruly Textbook",
     ["id"] = 196044,
     ["count"] = 4,
-    ["health"] = 1104616,
+    ["health"] = 1215076,
     ["scale"] = 1,
     ["displayId"] = 109308,
     ["creatureType"] = "Elemental",
@@ -622,6 +623,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [387523] = {
       },
       [388392] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -659,7 +661,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vexamus",
     ["id"] = 194181,
     ["count"] = 0,
-    ["health"] = 10068114,
+    ["health"] = 11074911,
     ["scale"] = 1,
     ["displayId"] = 109099,
     ["creatureType"] = "Elemental",
@@ -671,8 +673,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [132466] = {
-      },
       [385958] = {
       },
       [386173] = {
@@ -705,7 +705,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Guardian Sentry",
     ["id"] = 192680,
     ["count"] = 18,
-    ["health"] = 4142310,
+    ["health"] = 4556535,
     ["scale"] = 1,
     ["displayId"] = 26385,
     ["creatureType"] = "Elemental",
@@ -714,8 +714,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [132466] = {
-      },
       [377912] = {
       },
       [377991] = {
@@ -738,7 +736,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Territorial Eagle",
     ["id"] = 192329,
     ["count"] = 2,
-    ["health"] = 690385,
+    ["health"] = 759423,
     ["scale"] = 1,
     ["displayId"] = 34918,
     ["creatureType"] = "Beast",
@@ -887,7 +885,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Alpha Eagle",
     ["id"] = 192333,
     ["count"] = 15,
-    ["health"] = 2071155,
+    ["health"] = 2278268,
     ["scale"] = 1,
     ["displayId"] = 101438,
     ["creatureType"] = "Beast",
@@ -899,6 +897,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [377383] = {
       },
       [377389] = {
+        ["interruptible"] = true,
       },
       [1276632] = {
       },
@@ -931,7 +930,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Crawth",
     ["id"] = 191736,
     ["count"] = 0,
-    ["health"] = 14383020,
+    ["health"] = 15821301,
     ["scale"] = 1,
     ["displayId"] = 110805,
     ["creatureType"] = "Beast",
@@ -973,7 +972,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aggravated Skitterfly",
     ["id"] = 197406,
     ["count"] = 4,
-    ["health"] = 1104616,
+    ["health"] = 1215076,
     ["scale"] = 1,
     ["displayId"] = 103762,
     ["creatureType"] = "Beast",
@@ -1169,7 +1168,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vile Lasher",
     ["id"] = 197219,
     ["count"] = 9,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1,
     ["displayId"] = 104635,
     ["creatureType"] = "Elemental",
@@ -1215,7 +1214,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hungry Lasher",
     ["id"] = 197398,
     ["count"] = 2,
-    ["health"] = 690385,
+    ["health"] = 759423,
     ["scale"] = 1,
     ["displayId"] = 104474,
     ["creatureType"] = "Elemental",
@@ -1410,7 +1409,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Overgrown Ancient",
     ["id"] = 196482,
     ["count"] = 0,
-    ["health"] = 8629812,
+    ["health"] = 9492781,
     ["scale"] = 1,
     ["displayId"] = 109194,
     ["creatureType"] = "Elemental",
@@ -1450,7 +1449,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Algeth'ar Echoknight",
     ["id"] = 196200,
     ["count"] = 15,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1,
     ["displayId"] = 109104,
     ["creatureType"] = "Dragonkin",
@@ -1474,6 +1473,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [1270349] = {
+      },
       [1270356] = {
       },
     },
@@ -1519,7 +1520,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spectral Invoker",
     ["id"] = 196202,
     ["count"] = 5,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1,
     ["displayId"] = 109105,
     ["creatureType"] = "Dragonkin",
@@ -1544,6 +1545,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [1279627] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1668,7 +1670,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Echo of Doragosa",
     ["id"] = 190609,
     ["count"] = 0,
-    ["health"] = 12944718,
+    ["health"] = 14239171,
     ["scale"] = 1,
     ["displayId"] = 108925,
     ["creatureType"] = "Dragonkin",

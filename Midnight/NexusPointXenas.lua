@@ -291,6 +291,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1277451] = {
       },
+      [1278882] = {
+      },
       [1285445] = {
       },
       [1285450] = {
@@ -652,6 +654,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 90,
     ["spells"] = {
+      [1252218] = {
+      },
       [1281636] = {
       },
     },
@@ -1274,6 +1278,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1257613] = {
       },
+      [1271511] = {
+      },
       [1282791] = {
       },
     },
@@ -1290,7 +1296,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Smudge",
     ["id"] = 248769,
     ["count"] = 0,
-    ["health"] = 197950,
+    ["health"] = 151885,
     ["scale"] = 1,
     ["displayId"] = 141002,
     ["creatureType"] = "Elemental",
@@ -1344,6 +1350,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1282665] = {
       },
+      [1282678] = {
+      },
+      [1282679] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1357,7 +1367,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wretched Supplicant",
     ["id"] = 251031,
     ["count"] = 0,
-    ["health"] = 303769,
+    ["health"] = 326286,
     ["scale"] = 1.2,
     ["displayId"] = 137240,
     ["creatureType"] = "Aberration",
@@ -1380,12 +1390,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fractured Image",
     ["id"] = 251568,
     ["count"] = 0,
-    ["health"] = 142370,
+    ["health"] = 120838,
     ["scale"] = 1,
     ["displayId"] = 136110,
     ["creatureType"] = "Humanoid",
     ["level"] = 92,
     ["spells"] = {
+      [1255310] = {
+      },
+      [1255533] = {
+      },
       [1257601] = {
       },
       [1269220] = {
@@ -1516,7 +1530,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Broken Pipe",
     ["id"] = 254459,
     ["count"] = 0,
-    ["health"] = 132410,
+    ["health"] = 150698,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
@@ -1539,12 +1553,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corespark Pylon",
     ["id"] = 254485,
     ["count"] = 0,
-    ["health"] = 145651,
+    ["health"] = 268941,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
+      [1262084] = {
+      },
       [1262088] = {
       },
       [1262630] = {
@@ -1562,13 +1578,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fractured Image",
     ["id"] = 255179,
     ["count"] = 0,
-    ["health"] = 1771986,
+    ["health"] = 113415,
     ["scale"] = 1,
     ["displayId"] = 140945,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["spells"] = {
       [1264429] = {
+      },
+      [1265984] = {
       },
     },
     ["clones"] = {
@@ -1590,7 +1608,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Battery",
     ["id"] = 259569,
     ["count"] = 0,
-    ["health"] = 227827,
+    ["health"] = 268941,
     ["scale"] = 1,
     ["displayId"] = 137629,
     ["creatureType"] = "Not specified",
