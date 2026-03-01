@@ -1,5 +1,6 @@
 .idea/
 .vscode/
+AGENTS.local.md
 libs/*
 !libs/LibDeflate
 !libs/load_libs.xml

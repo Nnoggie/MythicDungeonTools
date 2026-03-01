@@ -3,6 +3,7 @@ ignore:
   - README.md
   - pkgmeta.yaml
   - cspell.json
+  - AGENTS.md
 enable-nolib-creation: no
 externals:
   libs/AceAddon-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceAddon-3.0

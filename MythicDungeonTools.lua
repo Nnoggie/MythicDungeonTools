@@ -1093,7 +1093,7 @@ function MDT:MakeSidePanel(frame)
   frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
   frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
   frame.LinkToChatButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if C_Secrets.ShouldAurasBeSecret() then
+    if C_Secrets and C_Secrets.ShouldAurasBeSecret() then
       print('MDT: '..L["Cannot share routes right now due to blizzard restrictions."])
       return
     end
@@ -1135,7 +1135,7 @@ function MDT:MakeSidePanel(frame)
   local c1, c2, c3 = frame.LiveSessionButton.text:GetTextColor()
   frame.LiveSessionButton.normalTextColor = { r = c1, g = c2, b = c3, }
   frame.LiveSessionButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if C_Secrets.ShouldAurasBeSecret() then
+    if C_Secrets and C_Secrets.ShouldAurasBeSecret() then
       print('MDT: '..L["Cannot share routes right now due to blizzard restrictions."])
       return
     end
