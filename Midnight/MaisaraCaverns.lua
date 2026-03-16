@@ -2763,7 +2763,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1259731] = {
       },
-    },
+          [1259713] = {},
+},
     ["clones"] = {
       [1] = {
         ["x"] = 214.84910933009,

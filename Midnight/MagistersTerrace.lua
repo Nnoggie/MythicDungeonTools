@@ -145,7 +145,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [2] = {
     ["name"] = "Animated Codex",
-    ["id"] = 251917,
+    ["id"] = 234089,
     ["count"] = 2,
     ["health"] = 10000,
     ["scale"] = 0.7,
@@ -353,6 +353,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1255434] = {
       },
+      [1248229] = {},
     },
     ["clones"] = {
       [1] = {
@@ -2115,6 +2116,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1227020] = {
       },
+      [1248229] = {},
     },
     ["clones"] = {
       [1] = {

@@ -800,7 +800,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1281637] = {
       },
-    },
+          [1264295] = {},
+},
     ["clones"] = {
       [1] = {
         ["x"] = 634.36005781442,
@@ -1467,6 +1468,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 137629,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
+    ["spells"] = {
+      [1257126] = {},
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 282.09104891881,
