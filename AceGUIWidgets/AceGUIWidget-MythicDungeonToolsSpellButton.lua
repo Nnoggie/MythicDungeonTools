@@ -2,6 +2,57 @@ local Type, Version = "MDTSpellButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local L = MDT.L
 local width, height = 248, 32
+local tooltipIconSize = 12
+local statusIconScale = 0.504
+local firstStatusIconOffsetX = 36
+local firstStatusIconOffsetY = -1
+local statusIconSpacingX = 1
+local statusOrder = {
+  "interruptible",
+  "magic",
+  "poison",
+  "disease",
+  "curse",
+  "bleed",
+  "enrage",
+}
+local statusAtlases = {
+  interruptible = "icons_16x16_interrupt",
+  magic = "icons_16x16_magic",
+  poison = "icons_16x16_poison",
+  disease = "icons_16x16_disease",
+  curse = "icons_16x16_curse",
+  bleed = "icons_16x16_bleed",
+  enrage = "icons_16x16_enrage",
+}
+local statusLabels = {
+  interruptible = L["Interruptible"],
+  magic = L["Magic"],
+  poison = L["Poison"],
+  disease = L["Disease"],
+  curse = L["Curse"],
+  bleed = L["Bleed"],
+  enrage = L["Enrage"],
+}
+
+local function AddTooltipStatusLine(tooltip, statusKey)
+  local label = statusLabels[statusKey]
+  local atlas = statusAtlases[statusKey]
+  if CreateAtlasMarkup and atlas then
+    tooltip:AddLine(CreateAtlasMarkup(atlas, tooltipIconSize, tooltipIconSize)..label)
+    return
+  end
+
+  tooltip:AddLine(label)
+end
+
+local function CreateStatusIcon(parent, atlas)
+  local texture = parent:CreateTexture(nil, "OVERLAY", nil, 0)
+  texture:SetSize(height * statusIconScale, height * statusIconScale)
+  texture:SetAtlas(atlas)
+  texture:Hide()
+  return texture
+end
 
 local methods = {
   ["OnAcquire"] = function(self)
@@ -29,61 +80,10 @@ local methods = {
       GameTooltip:ClearLines()
       GameTooltip:SetSpellByID(self.spellId)
 
-      if self.interruptible then
-        local interruptible = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24,
-          0.75, 0.875, 0, 0.5, 0, 0
-        )..L["Interruptible"]
-        GameTooltip:AddLine(interruptible)
-      end
-      if self.magic then
-        local magic = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24,
-          0.875, 1.0, 0, 0.5, 0, 0
-        )..L["Magic"]
-        GameTooltip:AddLine(magic)
-      end
-      if self.poison then
-        local poison = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24,
-          0.125, 0.25, 0.5, 1.0, 0, 0
-        )..L["Poison"]
-        GameTooltip:AddLine(poison)
-      end
-      if self.disease then
-        local disease = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24, 
-          0.25, 0.375, 0.5, 1.0, 0, 0
-        )..L["Disease"]
-        GameTooltip:AddLine(disease)
-      end
-      if self.curse then
-        local curse = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24, 
-          0, 0.125, 0.5, 1.0, 0, 0
-        )..L["Curse"]
-        GameTooltip:AddLine(curse)
-      end
-      if self.bleed then
-        local bleed = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24,
-          0.625, 0.75, 0.5, 1.0, 0, 0
-        )..L["Bleed"]
-        GameTooltip:AddLine(bleed)
-      end
-      if self.enrage then
-        local enrage = CreateTextureMarkup(
-          "Interface\\EncounterJournal\\UI-EJ-Icons", 256, 64,
-          24, 24,   
-          0.375, 0.5, 0.5, 1.0, 0, 0
-        )..L["Enrage"]
-        GameTooltip:AddLine(enrage)
+      for _, statusKey in ipairs(statusOrder) do
+        if self[statusKey] then
+          AddTooltipStatusLine(GameTooltip, statusKey)
+        end
       end
 
       GameTooltip:Show()
@@ -189,44 +189,24 @@ local methods = {
     self.bleed         = spellData.bleed         or false
     self.enrage        = spellData.enrage        or false
 
-    self.interruptibleIcon:Hide()
-    self.magicIcon:Hide()
-    self.poisonIcon:Hide()
-    self.diseaseIcon:Hide()
-    self.curseIcon:Hide()
-    self.bleedIcon:Hide()
-    self.enrageIcon:Hide()
+    for _, statusKey in ipairs(statusOrder) do
+      self[statusKey.."Icon"]:Hide()
+    end
 
     local iconsToShow = {}
-    if self.interruptible then
-      table.insert(iconsToShow, self.interruptibleIcon)
-    end
-    if self.magic then
-      table.insert(iconsToShow, self.magicIcon)
-    end
-    if self.poison then
-      table.insert(iconsToShow, self.poisonIcon)
-    end
-    if self.disease then
-      table.insert(iconsToShow, self.diseaseIcon)
-    end
-    if self.curse then
-      table.insert(iconsToShow, self.curseIcon)
-    end
-    if self.bleed then
-      table.insert(iconsToShow, self.bleedIcon)
-    end
-    if self.enrage then
-      table.insert(iconsToShow, self.enrageIcon)
+    for _, statusKey in ipairs(statusOrder) do
+      if self[statusKey] then
+        table.insert(iconsToShow, self[statusKey.."Icon"])
+      end
     end
 
     local prevIcon
     for i, iconFrame in ipairs(iconsToShow) do
       iconFrame:ClearAllPoints()
       if i == 1 then
-        iconFrame:SetPoint("BOTTOMLEFT", self.frame, "BOTTOMLEFT", 33, -3)
+        iconFrame:SetPoint("BOTTOMLEFT", self.frame, "BOTTOMLEFT", firstStatusIconOffsetX, firstStatusIconOffsetY)
       else
-        iconFrame:SetPoint("LEFT", prevIcon, "RIGHT", -7, 0)
+        iconFrame:SetPoint("LEFT", prevIcon, "RIGHT", statusIconSpacingX, 0)
       end
       iconFrame:Show()
       prevIcon = iconFrame
@@ -293,54 +273,26 @@ local function Constructor()
   title:SetPoint("LEFT", icon, "RIGHT", 2, 0)
   title:SetPoint("RIGHT", button, "RIGHT", -2, 0)
 
-  local interruptibleIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local interruptibleIcon = CreateStatusIcon(button, statusAtlases.interruptible)
   button.interruptibleIcon = interruptibleIcon
-  interruptibleIcon:SetSize(height * 0.7, height * 0.7)
-  interruptibleIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  interruptibleIcon:SetTexCoord(0.75, 0, 0.75, 0.5, 0.875, 0, 0.875, 0.5)
-  interruptibleIcon:Hide()
 
-  local magicIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local magicIcon = CreateStatusIcon(button, statusAtlases.magic)
   button.magicIcon = magicIcon
-  magicIcon:SetSize(height * 0.7, height * 0.7)
-  magicIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  magicIcon:SetTexCoord(0.875, 1.0, 0, 0.5)
-  magicIcon:Hide()
 
-  local poisonIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local poisonIcon = CreateStatusIcon(button, statusAtlases.poison)
   button.poisonIcon = poisonIcon
-  poisonIcon:SetSize(height * 0.7, height * 0.7)
-  poisonIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  poisonIcon:SetTexCoord(0.125, 0.25, 0.5, 1.0)
-  poisonIcon:Hide()
 
-  local diseaseIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local diseaseIcon = CreateStatusIcon(button, statusAtlases.disease)
   button.diseaseIcon = diseaseIcon
-  diseaseIcon:SetSize(height * 0.7, height * 0.7)
-  diseaseIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  diseaseIcon:SetTexCoord(0.25, 0.375, 0.5, 1.0)
-  diseaseIcon:Hide()
 
-  local curseIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local curseIcon = CreateStatusIcon(button, statusAtlases.curse)
   button.curseIcon = curseIcon
-  curseIcon:SetSize(height * 0.7, height * 0.7)
-  curseIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  curseIcon:SetTexCoord(0, 0.125, 0.5, 1.0)
-  curseIcon:Hide()
 
-  local bleedIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local bleedIcon = CreateStatusIcon(button, statusAtlases.bleed)
   button.bleedIcon = bleedIcon
-  bleedIcon:SetSize(height * 0.7, height * 0.7)
-  bleedIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  bleedIcon:SetTexCoord(0.625, 0.75, 0.5, 1.0)
-  bleedIcon:Hide()
 
-  local enrageIcon = button:CreateTexture(nil, "OVERLAY", nil, 0)
+  local enrageIcon = CreateStatusIcon(button, statusAtlases.enrage)
   button.enrageIcon = enrageIcon
-  enrageIcon:SetSize(height * 0.7, height * 0.7)
-  enrageIcon:SetTexture("Interface\\EncounterJournal\\UI-EJ-Icons")
-  enrageIcon:SetTexCoord(0.375, 0.5, 0.5, 1.0)
-  enrageIcon:Hide()
 
   button.description = {}
 

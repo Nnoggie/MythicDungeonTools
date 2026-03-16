@@ -284,6 +284,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1249815] = {
+        ["magic"] = true,
       },
       [1249818] = {
       },
@@ -294,6 +295,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1278882] = {
       },
       [1285445] = {
+        ["interruptible"] = true,
       },
       [1285450] = {
       },
@@ -501,6 +503,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1257124] = {
       },
       [1269283] = {
+        ["interruptible"] = true,
       },
       [1282950] = {
       },
@@ -567,6 +570,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1271094] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -657,6 +661,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1252218] = {
       },
       [1281636] = {
+        ["curse"] = true,
       },
     },
     ["clones"] = {
@@ -793,6 +798,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1252218] = {
       },
       [1258681] = {
+        ["interruptible"] = true,
       },
       [1258684] = {
       },
@@ -1070,8 +1076,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1263892] = {
+        ["interruptible"] = true,
       },
       [1277557] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1124,6 +1132,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1263783] = {
+        ["magic"] = true,
       },
       [1263785] = {
       },
@@ -1375,6 +1384,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 91,
     ["spells"] = {
       [1282722] = {
+        ["interruptible"] = true,
       },
       [1282723] = {
       },
@@ -1402,6 +1412,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1255533] = {
       },
       [1257601] = {
+        ["interruptible"] = true,
       },
       [1269220] = {
       },

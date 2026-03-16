@@ -68,8 +68,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [468962] = {
+        ["interruptible"] = true,
       },
       [468966] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
       },
       [1245046] = {
       },
@@ -146,7 +149,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [2] = {
     ["name"] = "Animated Codex",
     ["id"] = 234089,
-    ["count"] = 2,
+    ["count"] = 0,
     ["health"] = 10000,
     ["scale"] = 0.7,
     ["displayId"] = 125911,
@@ -256,6 +259,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 91,
     ["spells"] = {
       [1254294] = {
+        ["interruptible"] = true,
       },
       [1254301] = {
       },
@@ -351,9 +355,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 90,
     ["spells"] = {
-      [1255434] = {
+      [1248229] = {
       },
-      [1248229] = {},
+      [1255434] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -875,6 +881,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1248229] = {
       },
       [1248327] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1071,10 +1078,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1245068] = {
+        ["magic"] = true,
       },
       [1248229] = {
       },
       [1264693] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1200,6 +1209,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [474496] = {
       },
       [1214038] = {
+        ["magic"] = true,
       },
       [1214081] = {
       },
@@ -1246,6 +1256,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1246446] = {
       },
       [1248689] = {
+        ["magic"] = true,
       },
       [1271317] = {
       },
@@ -1325,6 +1336,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1280119] = {
       },
       [1284627] = {
+        ["magic"] = true,
       },
       [1284633] = {
       },
@@ -1662,6 +1674,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1282053] = {
       },
       [1282055] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1717,6 +1730,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1253224] = {
       },
       [1265561] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1835,8 +1849,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1254306] = {
+        ["magic"] = true,
       },
       [1255187] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -2116,7 +2133,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1227020] = {
       },
-      [1248229] = {},
+      [1248229] = {
+      },
     },
     ["clones"] = {
       [1] = {
