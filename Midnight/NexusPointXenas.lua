@@ -284,6 +284,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1249815] = {
+        ["magic"] = true,
       },
       [1249818] = {
       },
@@ -291,7 +292,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1277451] = {
       },
+      [1278882] = {
+      },
       [1285445] = {
+        ["interruptible"] = true,
       },
       [1285450] = {
       },
@@ -499,6 +503,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1257124] = {
       },
       [1269283] = {
+        ["interruptible"] = true,
       },
       [1282950] = {
       },
@@ -565,6 +570,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1271094] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -652,7 +658,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 90,
     ["spells"] = {
+      [1252218] = {
+      },
       [1281636] = {
+        ["curse"] = true,
       },
     },
     ["clones"] = {
@@ -789,6 +798,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1252218] = {
       },
       [1258681] = {
+        ["interruptible"] = true,
       },
       [1258684] = {
       },
@@ -796,6 +806,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1281637] = {
       },
+      [1264295] = {},
     },
     ["clones"] = {
       [1] = {
@@ -956,97 +967,97 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [2] = {
+      [1] = {
         ["x"] = 409.15652072169,
         ["y"] = -272.33034074797,
         ["g"] = 44,
         ["sublevel"] = 1,
       },
-      [3] = {
+      [2] = {
         ["x"] = 407.16645509899,
         ["y"] = -283.27549085524,
         ["g"] = 44,
         ["sublevel"] = 1,
       },
-      [4] = {
+      [3] = {
         ["x"] = 449.95197760416,
         ["y"] = -271.33532394864,
         ["g"] = 43,
         ["sublevel"] = 1,
       },
-      [5] = {
+      [4] = {
         ["x"] = 449.45450072679,
         ["y"] = -284.76796385158,
         ["g"] = 43,
         ["sublevel"] = 1,
       },
-      [10] = {
+      [5] = {
         ["x"] = 348.71616838937,
         ["y"] = -152.95319719395,
         ["g"] = 58,
         ["sublevel"] = 1,
       },
-      [11] = {
+      [6] = {
         ["x"] = 354.38449306883,
         ["y"] = -154.95235361602,
         ["g"] = 58,
         ["sublevel"] = 1,
       },
-      [12] = {
+      [7] = {
         ["x"] = 345.60025345424,
         ["y"] = -159.28202319553,
         ["g"] = 58,
         ["sublevel"] = 1,
       },
-      [13] = {
+      [8] = {
         ["x"] = 352.93840958328,
         ["y"] = -160.57812437647,
         ["g"] = 58,
         ["sublevel"] = 1,
       },
-      [14] = {
+      [9] = {
         ["x"] = 396.18409755766,
         ["y"] = -166.97110472802,
         ["g"] = 56,
         ["sublevel"] = 1,
       },
-      [15] = {
+      [10] = {
         ["x"] = 399.4256766287,
         ["y"] = -173.62454156485,
         ["g"] = 56,
         ["sublevel"] = 1,
       },
-      [21] = {
+      [11] = {
         ["x"] = 496.71749200189,
         ["y"] = -166.36166816854,
         ["g"] = 48,
         ["sublevel"] = 1,
       },
-      [22] = {
+      [12] = {
         ["x"] = 502.09957050866,
         ["y"] = -172.60309843834,
         ["g"] = 48,
         ["sublevel"] = 1,
       },
-      [23] = {
+      [13] = {
         ["x"] = 474.56541453658,
         ["y"] = -171.93418180368,
         ["g"] = 49,
         ["sublevel"] = 1,
       },
-      [24] = {
+      [14] = {
         ["x"] = 469.55466021773,
         ["y"] = -165.26190995729,
         ["g"] = 49,
         ["sublevel"] = 1,
       },
-      [25] = {
+      [15] = {
         ["x"] = 387.26628286148,
         ["y"] = -151.24997316383,
         ["g"] = 55,
         ["sublevel"] = 1,
       },
-      [26] = {
+      [16] = {
         ["x"] = 380.11785415627,
         ["y"] = -149.20759140566,
         ["g"] = 55,
@@ -1065,8 +1076,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1263892] = {
+        ["interruptible"] = true,
       },
       [1277557] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1119,6 +1132,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1263783] = {
+        ["magic"] = true,
       },
       [1263785] = {
       },
@@ -1274,6 +1288,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1257613] = {
       },
+      [1271511] = {
+      },
       [1282791] = {
       },
     },
@@ -1290,7 +1306,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Smudge",
     ["id"] = 248769,
     ["count"] = 0,
-    ["health"] = 197950,
+    ["health"] = 151885,
     ["scale"] = 1,
     ["displayId"] = 141002,
     ["creatureType"] = "Elemental",
@@ -1300,11 +1316,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 282.11639963109,
-        ["y"] = -74.116646593649,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 282.11639963109,
+      --   ["y"] = -74.116646593649,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [21] = {
@@ -1321,11 +1337,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 324.14694630317,
-        ["y"] = -91.56997938897,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 324.14694630317,
+      --   ["y"] = -91.56997938897,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [22] = {
@@ -1344,49 +1360,59 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1282665] = {
       },
+      [1282678] = {
+      },
+      [1282679] = {
+      },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 323.04205576769,
-        ["y"] = -74.759504493297,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 323.04205576769,
+      --   ["y"] = -74.759504493297,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [23] = {
     ["name"] = "Wretched Supplicant",
     ["id"] = 251031,
     ["count"] = 0,
-    ["health"] = 303769,
+    ["health"] = 326286,
     ["scale"] = 1.2,
     ["displayId"] = 137240,
     ["creatureType"] = "Aberration",
     ["level"] = 91,
     ["spells"] = {
       [1282722] = {
+        ["interruptible"] = true,
       },
       [1282723] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 342.88502644753,
-        ["y"] = -74.707057191973,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 342.88502644753,
+      --   ["y"] = -74.707057191973,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [24] = {
     ["name"] = "Fractured Image",
     ["id"] = 251568,
     ["count"] = 0,
-    ["health"] = 142370,
+    ["health"] = 120838,
     ["scale"] = 1,
     ["displayId"] = 136110,
     ["creatureType"] = "Humanoid",
     ["level"] = 92,
     ["spells"] = {
+      [1255310] = {
+      },
+      [1255533] = {
+      },
       [1257601] = {
+        ["interruptible"] = true,
       },
       [1269220] = {
       },
@@ -1420,11 +1446,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 90,
     ["clones"] = {
-      [1] = {
-        ["x"] = 294.0934817393,
-        ["y"] = -74.812209301489,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 294.0934817393,
+      --   ["y"] = -74.812209301489,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [26] = {
@@ -1437,11 +1463,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Aberration",
     ["level"] = 90,
     ["clones"] = {
-      [1] = {
-        ["x"] = 307.80890715829,
-        ["y"] = -74.864384163372,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 307.80890715829,
+      --   ["y"] = -74.864384163372,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [27] = {
@@ -1453,12 +1479,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 137629,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
+    ["spells"] = {
+      [1257126] = {},
+    },
     ["clones"] = {
-      [1] = {
-        ["x"] = 282.09104891881,
-        ["y"] = -88.061339025583,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 282.09104891881,
+      --   ["y"] = -88.061339025583,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [28] = {
@@ -1471,11 +1500,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["clones"] = {
-      [1] = {
-        ["x"] = 308.9537079689,
-        ["y"] = -90.15107733232,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 308.9537079689,
+      --   ["y"] = -90.15107733232,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [29] = {
@@ -1516,7 +1545,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Broken Pipe",
     ["id"] = 254459,
     ["count"] = 0,
-    ["health"] = 132410,
+    ["health"] = 150698,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
@@ -1528,47 +1557,51 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 339.4225445404,
-        ["y"] = -90.674822970825,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 339.4225445404,
+      --   ["y"] = -90.674822970825,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [31] = {
     ["name"] = "Corespark Pylon",
     ["id"] = 254485,
     ["count"] = 0,
-    ["health"] = 145651,
+    ["health"] = 268941,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
+      [1262084] = {
+      },
       [1262088] = {
       },
       [1262630] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 351.907576893,
-        ["y"] = -89.758365986504,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 351.907576893,
+      --   ["y"] = -89.758365986504,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [32] = {
     ["name"] = "Fractured Image",
     ["id"] = 255179,
     ["count"] = 0,
-    ["health"] = 1771986,
+    ["health"] = 113415,
     ["scale"] = 1,
     ["displayId"] = 140945,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["spells"] = {
       [1264429] = {
+      },
+      [1265984] = {
       },
     },
     ["clones"] = {
@@ -1590,7 +1623,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mana Battery",
     ["id"] = 259569,
     ["count"] = 0,
-    ["health"] = 227827,
+    ["health"] = 268941,
     ["scale"] = 1,
     ["displayId"] = 137629,
     ["creatureType"] = "Not specified",
@@ -1600,11 +1633,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 293.93148432953,
-        ["y"] = -87.663600060854,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 293.93148432953,
+      --   ["y"] = -87.663600060854,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [34] = {

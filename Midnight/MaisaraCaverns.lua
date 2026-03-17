@@ -55,13 +55,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Frenzied Berserker",
     ["id"] = 248684,
     ["count"] = 5,
-    ["health"] = 1587886,
+    ["health"] = 1746672,
     ["scale"] = 0.8,
     ["displayId"] = 131683,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
       [1255765] = {
+        ["enrage"] = true,
       },
       [1255966] = {
       },
@@ -249,7 +250,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Keen Headhunter",
     ["id"] = 242964,
     ["count"] = 7,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 0.8,
     ["displayId"] = 131701,
     ["creatureType"] = "Humanoid",
@@ -260,6 +261,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1255966] = {
       },
       [1266381] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -380,7 +382,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dread Souleater",
     ["id"] = 248686,
     ["count"] = 15,
-    ["health"] = 2071155,
+    ["health"] = 2278268,
     ["scale"] = 1,
     ["displayId"] = 130882,
     ["creatureType"] = "Humanoid",
@@ -423,19 +425,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 27,
         ["sublevel"] = 1,
       },
-      [7] = {
+      [6] = {
         ["x"] = 218.24510711272,
         ["y"] = -366.68181284608,
         ["g"] = 37,
         ["sublevel"] = 1,
       },
-      [8] = {
+      [7] = {
         ["x"] = 225.31493198983,
         ["y"] = -368.25284805545,
         ["g"] = 37,
         ["sublevel"] = 1,
       },
-      [9] = {
+      [8] = {
         ["x"] = 279.8572929323,
         ["y"] = -323.89999307413,
         ["sublevel"] = 1,
@@ -446,15 +448,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ritual Hexxer",
     ["id"] = 248685,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 0.9,
     ["displayId"] = 131690,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
       [1256008] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [1256015] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -572,7 +577,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hexbound Eagle",
     ["id"] = 249020,
     ["count"] = 3,
-    ["health"] = 1311732,
+    ["health"] = 1442903,
     ["scale"] = 0.8,
     ["displayId"] = 142403,
     ["creatureType"] = "Beast",
@@ -652,7 +657,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hex Guardian",
     ["id"] = 253302,
     ["count"] = 15,
-    ["health"] = 2209232,
+    ["health"] = 2430152,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Undead",
@@ -663,8 +668,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1258482] = {
       },
       [1258806] = {
-      },
-      [1258823] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -704,7 +708,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Warding Mask",
     ["id"] = 249002,
     ["count"] = 2,
-    ["health"] = 414231,
+    ["health"] = 455654,
     ["scale"] = 0.7,
     ["displayId"] = 169,
     ["creatureType"] = "Undead",
@@ -942,7 +946,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bramblemaw Bear",
     ["id"] = 249022,
     ["count"] = 5,
-    ["health"] = 1449809,
+    ["health"] = 1594787,
     ["scale"] = 0.8,
     ["displayId"] = 71577,
     ["creatureType"] = "Beast",
@@ -1071,7 +1075,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mire Laborer",
     ["id"] = 248693,
     ["count"] = 1,
-    ["health"] = 897501,
+    ["health"] = 987249,
     ["scale"] = 0.6,
     ["displayId"] = 130872,
     ["creatureType"] = "Humanoid",
@@ -1284,7 +1288,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hulking Juggernaut",
     ["id"] = 248678,
     ["count"] = 15,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1,
     ["displayId"] = 100959,
     ["creatureType"] = "Beast",
@@ -1324,13 +1328,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Umbral Shadowbinder",
     ["id"] = 254740,
     ["count"] = 5,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 0.9,
     ["displayId"] = 131719,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
       [1263292] = {
+        ["interruptible"] = true,
       },
       [1263336] = {
       },
@@ -1361,71 +1366,71 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 17,
         ["sublevel"] = 1,
       },
-      [6] = {
+      [5] = {
         ["x"] = 354.72936088738,
         ["y"] = -334.04839036985,
         ["g"] = 25,
         ["sublevel"] = 1,
       },
-      [7] = {
+      [6] = {
         ["x"] = 328.05700109229,
         ["y"] = -348.05704920737,
         ["g"] = 31,
         ["sublevel"] = 1,
       },
-      [8] = {
+      [7] = {
         ["x"] = 322.82009685805,
         ["y"] = -351.98472738305,
         ["g"] = 31,
         ["sublevel"] = 1,
       },
-      [9] = {
+      [8] = {
         ["x"] = 329.88986625682,
         ["y"] = -355.91238822175,
         ["g"] = 31,
         ["sublevel"] = 1,
       },
-      [10] = {
+      [9] = {
         ["x"] = 196.53873266315,
         ["y"] = -333.71555908555,
         ["g"] = 39,
         ["sublevel"] = 1,
       },
-      [11] = {
+      [10] = {
         ["x"] = 193.58701657856,
         ["y"] = -311.66101587754,
         ["g"] = 40,
         ["sublevel"] = 1,
       },
-      [12] = {
+      [11] = {
         ["x"] = 265.24302444657,
         ["y"] = -328.03001302947,
         ["sublevel"] = 1,
       },
-      [13] = {
+      [12] = {
         ["x"] = 260.27101858678,
         ["y"] = -273.50747550372,
         ["g"] = 51,
         ["sublevel"] = 1,
       },
-      [14] = {
+      [13] = {
         ["x"] = 521.52728690011,
         ["y"] = -537.27958845942,
         ["g"] = 67,
         ["sublevel"] = 1,
       },
-      [15] = {
+      [14] = {
         ["x"] = 647.20478886411,
         ["y"] = -544.01508676105,
         ["g"] = 73,
         ["sublevel"] = 1,
       },
-      [16] = {
+      [15] = {
         ["x"] = 707.48616942921,
         ["y"] = -482.76971276304,
         ["sublevel"] = 1,
       },
-      [17] = {
+      [16] = {
         ["x"] = 603.50078141825,
         ["y"] = -306.05435196458,
         ["g"] = 82,
@@ -1437,7 +1442,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Restless Gnarldin",
     ["id"] = 249030,
     ["count"] = 15,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1.6,
     ["displayId"] = 124058,
     ["creatureType"] = "Undead",
@@ -1492,13 +1497,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Reanimated Warrior",
     ["id"] = 248692,
     ["count"] = 2,
-    ["health"] = 1449809,
+    ["health"] = 1594787,
     ["scale"] = 1,
     ["displayId"] = 125076,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [1257716] = {
+        ["interruptible"] = true,
       },
       [1257914] = {
       },
@@ -1738,13 +1744,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grim Skirmisher",
     ["id"] = 248690,
     ["count"] = 2,
-    ["health"] = 828462,
+    ["health"] = 911307,
     ["scale"] = 1,
     ["displayId"] = 125075,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [1270079] = {
+        ["magic"] = true,
       },
       [1270085] = {
       },
@@ -2020,13 +2027,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tormented Shade",
     ["id"] = 249036,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1,
     ["displayId"] = 131722,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [1259255] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -2186,7 +2195,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rokh'zal",
     ["id"] = 253683,
     ["count"] = 10,
-    ["health"] = 3451925,
+    ["health"] = 3797113,
     ["scale"] = 2,
     ["displayId"] = 138664,
     ["creatureType"] = "Humanoid",
@@ -2210,7 +2219,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bound Defender",
     ["id"] = 249025,
     ["count"] = 15,
-    ["health"] = 2347309,
+    ["health"] = 2582037,
     ["scale"] = 1.5,
     ["displayId"] = 125072,
     ["creatureType"] = "Undead",
@@ -2266,7 +2275,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hollow Soulrender",
     ["id"] = 249024,
     ["count"] = 15,
-    ["health"] = 2071155,
+    ["health"] = 2278268,
     ["scale"] = 1.6,
     ["displayId"] = 125074,
     ["creatureType"] = "Undead",
@@ -2275,8 +2284,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1259677] = {
       },
       [1264327] = {
+        ["interruptible"] = true,
       },
       [1271623] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -2304,7 +2315,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Muro'jin",
     ["id"] = 247570,
     ["count"] = 0,
-    ["health"] = 7766831,
+    ["health"] = 8543503,
     ["scale"] = 1,
     ["displayId"] = 130699,
     ["creatureType"] = "Humanoid",
@@ -2313,8 +2324,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2658,
     ["instanceID"] = 0,
     ["spells"] = {
-      [1243741] = {
-      },
       [1243752] = {
       },
       [1249789] = {
@@ -2324,6 +2333,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1260648] = {
       },
       [1260709] = {
+        ["magic"] = true,
       },
       [1260731] = {
       },
@@ -2332,6 +2342,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1266485] = {
       },
       [1266488] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -2347,7 +2358,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nekraxx",
     ["id"] = 247572,
     ["count"] = 0,
-    ["health"] = 7766831,
+    ["health"] = 8543503,
     ["scale"] = 1,
     ["displayId"] = 130705,
     ["creatureType"] = "Beast",
@@ -2359,6 +2370,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1243900] = {
       },
       [1246666] = {
+        ["disease"] = true,
       },
       [1249478] = {
       },
@@ -2388,7 +2400,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vordaza",
     ["id"] = 248595,
     ["count"] = 0,
-    ["health"] = 9205133,
+    ["health"] = 9113070,
     ["scale"] = 1,
     ["displayId"] = 131548,
     ["creatureType"] = "Humanoid",
@@ -2398,14 +2410,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["spells"] = {
       [1250708] = {
+        ["interruptible"] = true,
       },
       [1251204] = {
       },
       [1251554] = {
       },
       [1251567] = {
-      },
-      [1251568] = {
       },
       [1251598] = {
       },
@@ -2445,7 +2456,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rak'tul",
     ["id"] = 248605,
     ["count"] = 0,
-    ["health"] = 12225567,
+    ["health"] = 13448107,
     ["scale"] = 1,
     ["displayId"] = 131550,
     ["creatureType"] = "Undead",
@@ -2461,6 +2472,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1251023] = {
       },
       [1251024] = {
+      },
+      [1252675] = {
       },
       [1252676] = {
       },
@@ -2478,6 +2491,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1259810] = {
       },
+      [1266188] = {
+      },
       [1279517] = {
       },
     },
@@ -2494,7 +2509,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unstable Phantom",
     ["id"] = 250443,
     ["count"] = 0,
-    ["health"] = 1150642,
+    ["health"] = 1265704,
     ["scale"] = 1,
     ["displayId"] = 140143,
     ["creatureType"] = "Undead",
@@ -2516,7 +2531,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Soulbind Totem",
     ["id"] = 251047,
     ["count"] = 0,
-    ["health"] = 230128,
+    ["health"] = 253141,
     ["scale"] = 1,
     ["displayId"] = 137911,
     ["creatureType"] = "Not specified",
@@ -2540,51 +2555,53 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lost Soul",
     ["id"] = 251639,
     ["count"] = 0,
-    ["health"] = 190011,
+    ["health"] = 166685,
     ["scale"] = 1,
     ["displayId"] = 140143,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [1254175] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 278.11750690901,
-        ["y"] = -39.366988750855,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 278.11750690901,
+      --   ["y"] = -39.366988750855,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [26] = {
     ["name"] = "Malignant Soul",
     ["id"] = 251674,
     ["count"] = 0,
-    ["health"] = 1150642,
+    ["health"] = 1265704,
     ["scale"] = 1,
     ["displayId"] = 137163,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
       [1254010] = {
+        ["interruptible"] = true,
       },
       [1254043] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 228.06626554545,
-        ["y"] = -41.433940808825,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 228.06626554545,
+      --   ["y"] = -41.433940808825,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [27] = {
     ["name"] = "Potatoad",
     ["id"] = 252886,
     ["count"] = 0,
-    ["health"] = 276154,
+    ["health"] = 303769,
     ["scale"] = 1,
     ["displayId"] = 138434,
     ["creatureType"] = "Humanoid",
@@ -2594,18 +2611,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 260.13665364475,
-        ["y"] = -41.700505600458,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 260.13665364475,
+      --   ["y"] = -41.700505600458,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [28] = {
     ["name"] = "Zil'jan",
     ["id"] = 253458,
     ["count"] = 7,
-    ["health"] = 552308,
+    ["health"] = 607538,
     ["scale"] = 1,
     ["displayId"] = 131679,
     ["creatureType"] = "Humanoid",
@@ -2631,13 +2648,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gloomwing Bat",
     ["id"] = 253473,
     ["count"] = 5,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1,
     ["displayId"] = 114972,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
       [1259182] = {
+        ["interruptible"] = true,
       },
       [1259183] = {
       },
@@ -2757,30 +2775,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lost Soul",
     ["id"] = 253647,
     ["count"] = 0,
-    ["health"] = 190011,
+    ["health"] = 125892,
     ["scale"] = 1,
     ["displayId"] = 140110,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
-      [1259713] = {
-      },
       [1259731] = {
+        ["magic"] = true,
       },
+      [1259713] = {},
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 214.84910933009,
-        ["y"] = -41.378685716489,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 214.84910933009,
+      --   ["y"] = -41.378685716489,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
   [31] = {
     ["name"] = "Death's Grasp",
     ["id"] = 253701,
     ["count"] = 0,
-    ["health"] = 207116,
+    ["health"] = 227827,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
@@ -2802,7 +2820,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rokh'zal",
     ["id"] = 254233,
     ["count"] = 0,
-    ["health"] = 3590002,
+    ["health"] = 3948997,
     ["scale"] = 1,
     ["displayId"] = 138234,
     ["creatureType"] = "Humanoid",

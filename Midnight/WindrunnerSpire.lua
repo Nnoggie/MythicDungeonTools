@@ -42,15 +42,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Restless Steward",
     ["id"] = 232070,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1.2,
     ["displayId"] = 136509,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [1216135] = {
+        ["interruptible"] = true,
       },
       [1216298] = {
+        ["magic"] = true,
       },
       [1253700] = {
       },
@@ -98,13 +100,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dutiful Groundskeeper",
     ["id"] = 232071,
     ["count"] = 4,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1.2,
     ["displayId"] = 136510,
     ["creatureType"] = "Undead",
     ["level"] = 90,
-    ["spells"] = {
-    },
     ["clones"] = {
       [1] = {
         ["x"] = 81.588474263503,
@@ -260,7 +260,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spellguard Magus",
     ["id"] = 232113,
     ["count"] = 15,
-    ["health"] = 1933078,
+    ["health"] = 2126383,
     ["scale"] = 1.6,
     ["displayId"] = 136511,
     ["creatureType"] = "Undead",
@@ -294,7 +294,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Windrunner Soldier",
     ["id"] = 232116,
     ["count"] = 5,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1.2,
     ["displayId"] = 139554,
     ["creatureType"] = "Undead",
@@ -394,7 +394,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fervent Apothecary",
     ["id"] = 232173,
     ["count"] = 5,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1.2,
     ["displayId"] = 124490,
     ["creatureType"] = "Undead",
@@ -438,21 +438,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 40,
         ["sublevel"] = 1,
       },
+      [6] = {
+        ["x"] = 308.08441736509,
+        ["y"] = -454.72059444475,
+        ["g"] = 41,
+        ["sublevel"] = 1,
+      },
     },
   },
   [6] = {
     ["name"] = "Ardent Cutthroat",
     ["id"] = 232171,
     ["count"] = 6,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 1.2,
     ["displayId"] = 124494,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [473794] = {
+        ["interruptible"] = true,
       },
       [473795] = {
+        ["poison"] = true,
       },
       [473864] = {
       },
@@ -514,13 +522,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 40,
         ["sublevel"] = 1,
       },
+      [10] = {
+        ["x"] = 297.50716525509,
+        ["y"] = -454.2397952094,
+        ["g"] = 41,
+        ["sublevel"] = 1,
+      },
     },
   },
   [7] = {
     ["name"] = "Zealous Reaver",
     ["id"] = 232232,
     ["count"] = 4,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1.2,
     ["displayId"] = 114147,
     ["creatureType"] = "Undead",
@@ -572,15 +586,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Devoted Woebringer",
     ["id"] = 232175,
     ["count"] = 15,
-    ["health"] = 1933078,
+    ["health"] = 2126383,
     ["scale"] = 1.6,
     ["displayId"] = 140702,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [473657] = {
+        ["interruptible"] = true,
       },
       [473663] = {
+        ["interruptible"] = true,
       },
       [473668] = {
       },
@@ -600,23 +617,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 38,
         ["sublevel"] = 1,
       },
-      [3] = {
-        ["x"] = 304.99442597654,
-        ["y"] = -444.73022923841,
-        ["g"] = 41,
-        ["sublevel"] = 1,
-      },
     },
   },
   [9] = {
     ["name"] = "Flesh Behemoth",
     ["id"] = 232176,
     ["count"] = 20,
-    ["health"] = 3590002,
+    ["health"] = 3948997,
     ["scale"] = 1.2,
     ["displayId"] = 140689,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [473776] = {
       },
@@ -640,7 +652,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Territorial Dragonhawk",
     ["id"] = 232056,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1.2,
     ["displayId"] = 140630,
     ["creatureType"] = "Beast",
@@ -649,6 +661,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216848] = {
       },
       [1216860] = {
+        ["magic"] = true,
       },
       [1266745] = {
       },
@@ -690,7 +703,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spindleweb Hatchling",
     ["id"] = 234673,
     ["count"] = 1,
-    ["health"] = 276154,
+    ["health"] = 303769,
     ["scale"] = 0.8,
     ["displayId"] = 140631,
     ["creatureType"] = "Beast",
@@ -931,7 +944,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Creeping Spindleweb",
     ["id"] = 232067,
     ["count"] = 7,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 1.2,
     ["displayId"] = 140652,
     ["creatureType"] = "Beast",
@@ -940,6 +953,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216822] = {
       },
       [1216825] = {
+        ["poison"] = true,
       },
       [1216834] = {
       },
@@ -969,13 +983,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Apex Lynx",
     ["id"] = 232063,
     ["count"] = 15,
-    ["health"] = 2347309,
+    ["health"] = 2582037,
     ["scale"] = 1,
     ["displayId"] = 131955,
     ["creatureType"] = "Beast",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [1216985] = {
+        ["bleed"] = true,
       },
       [1217010] = {
       },
@@ -995,7 +1011,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Pesty Lashling",
     ["id"] = 238099,
     ["count"] = 1,
-    ["health"] = 348575,
+    ["health"] = 303769,
     ["scale"] = 0.7,
     ["displayId"] = 140667,
     ["creatureType"] = "Elemental",
@@ -1251,13 +1267,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloated Lasher",
     ["id"] = 236894,
     ["count"] = 17,
-    ["health"] = 3037694,
+    ["health"] = 3341459,
     ["scale"] = 1,
     ["displayId"] = 112489,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [1216819] = {
+        ["interruptible"] = true,
       },
       [1216963] = {
       },
@@ -1272,8 +1290,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [16] = {
     ["name"] = "Scouting Trapper",
-    ["id"] = 250883,
-    ["count"] = 2,
+    ["id"] = 238049,
+    ["count"] = 5,
     ["health"] = 1380770,
     ["scale"] = 1,
     ["displayId"] = 18830,
@@ -1303,7 +1321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Swiftshot Archer",
     ["id"] = 232119,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1.2,
     ["displayId"] = 139552,
     ["creatureType"] = "Undead",
@@ -1359,11 +1377,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Phalanx Breaker",
     ["id"] = 232122,
     ["count"] = 15,
-    ["health"] = 2209232,
+    ["health"] = 2430152,
     ["scale"] = 1.6,
     ["displayId"] = 140454,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [471643] = {
       },
@@ -1403,13 +1422,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Loyal Worg",
     ["id"] = 232283,
     ["count"] = 5,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 1.2,
     ["displayId"] = 70180,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
       [1253739] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -1449,7 +1469,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lingering Marauder",
     ["id"] = 232147,
     ["count"] = 6,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1.2,
     ["displayId"] = 136066,
     ["creatureType"] = "Undead",
@@ -1491,13 +1511,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spectral Axethrower",
     ["id"] = 232148,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 1.2,
     ["displayId"] = 142686,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
       [468659] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -1513,19 +1534,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 59,
         ["sublevel"] = 1,
       },
-      [4] = {
+      [3] = {
         ["x"] = 529.50210822684,
         ["y"] = -450.37085823448,
         ["g"] = 59,
         ["sublevel"] = 1,
       },
-      [5] = {
+      [4] = {
         ["x"] = 569.79189229997,
         ["y"] = -450.17263202135,
         ["g"] = 60,
         ["sublevel"] = 1,
       },
-      [6] = {
+      [5] = {
         ["x"] = 569.08281915749,
         ["y"] = -438.71000660708,
         ["g"] = 60,
@@ -1537,15 +1558,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Phantasmal Mystic",
     ["id"] = 232146,
     ["count"] = 15,
-    ["health"] = 2209232,
+    ["health"] = 2430152,
     ["scale"] = 1.6,
     ["displayId"] = 136067,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [1216459] = {
+        ["enrage"] = true,
       },
       [1216592] = {
+        ["interruptible"] = true,
       },
       [1270618] = {
       },
@@ -1569,7 +1593,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Emberdawn",
     ["id"] = 231606,
     ["count"] = 0,
-    ["health"] = 10591656,
+    ["health"] = 11650806,
     ["scale"] = 2,
     ["displayId"] = 123453,
     ["creatureType"] = "Beast",
@@ -1610,7 +1634,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kalis",
     ["id"] = 231626,
     ["count"] = 0,
-    ["health"] = 7191510,
+    ["health"] = 7910651,
     ["scale"] = 2,
     ["displayId"] = 125201,
     ["creatureType"] = "Undead",
@@ -1620,6 +1644,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["spells"] = {
       [472724] = {
+        ["interruptible"] = true,
       },
       [472736] = {
       },
@@ -1643,7 +1668,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Latch",
     ["id"] = 231629,
     ["count"] = 0,
-    ["health"] = 8342152,
+    ["health"] = 9176355,
     ["scale"] = 2,
     ["displayId"] = 124335,
     ["creatureType"] = "Undead",
@@ -1684,7 +1709,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Commander Kroluk",
     ["id"] = 231631,
     ["count"] = 0,
-    ["health"] = 8629812,
+    ["health"] = 9492781,
     ["scale"] = 2,
     ["displayId"] = 122981,
     ["creatureType"] = "Undead",
@@ -1742,7 +1767,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Restless Heart",
     ["id"] = 231636,
     ["count"] = 0,
-    ["health"] = 11506417,
+    ["health"] = 12657041,
     ["scale"] = 2.1,
     ["displayId"] = 125199,
     ["creatureType"] = "Aberration",
@@ -1757,15 +1782,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [472556] = {
       },
-      [472634] = {
-      },
       [472662] = {
       },
       [472672] = {
       },
       [474528] = {
-      },
-      [734277] = {
       },
       [1216042] = {
       },
@@ -1790,7 +1811,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Flaming Updraft",
     ["id"] = 232118,
     ["count"] = 0,
-    ["health"] = 230128,
+    ["health"] = 253141,
     ["scale"] = 1.3,
     ["displayId"] = 100728,
     ["creatureType"] = "Not specified",
@@ -1830,11 +1851,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Phalanx Breaker",
     ["id"] = 232121,
     ["count"] = 0,
-    ["health"] = 321676,
+    ["health"] = 157503,
     ["scale"] = 1.2,
     ["displayId"] = 88968,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["stealthDetect"] = true,
     ["spells"] = {
       [1282478] = {
       },
@@ -1870,7 +1892,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Haunting Grunt",
     ["id"] = 232446,
     ["count"] = 0,
-    ["health"] = 264648,
+    ["health"] = 131251,
     ["scale"] = 1.2,
     ["displayId"] = 141117,
     ["creatureType"] = "Humanoid",
@@ -1910,7 +1932,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 55,
         ["sublevel"] = 1,
       },
-      [7] = {
+      [6] = {
         ["x"] = 478.91455126166,
         ["y"] = -470.5335498914,
         ["g"] = 56,
@@ -1920,9 +1942,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [31] = {
     ["name"] = "Scouting Trapper",
-    ["id"] = 238049,
-    ["count"] = 5,
-    ["health"] = 1380770,
+    ["id"] = 250883,
+    ["count"] = 2,
+    ["health"] = 1518845,
     ["scale"] = 1,
     ["displayId"] = 139555,
     ["creatureType"] = "Undead",
@@ -1930,13 +1952,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1219224] = {
       },
+      [1219266] = {},
     },
     ["clones"] = {
-      [1] = {
-        ["x"] = 682.94915039465,
-        ["y"] = -53.837441606865,
-        ["sublevel"] = 1,
-      },
+      -- [1] = {
+      --   ["x"] = 682.94915039465,
+      --   ["y"] = -53.837441606865,
+      --   ["sublevel"] = 1,
+      -- },
     },
   },
 };

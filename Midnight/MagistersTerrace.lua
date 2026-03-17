@@ -61,11 +61,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Magister",
     ["id"] = 232369,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 0.8,
     ["displayId"] = 138454,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [468962] = {
+        ["interruptible"] = true,
+      },
+      [468966] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
+      [1245046] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 392.2556101612,
@@ -137,8 +148,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [2] = {
     ["name"] = "Animated Codex",
-    ["id"] = 251917,
-    ["count"] = 2,
+    ["id"] = 234089,
+    ["count"] = 0,
     ["health"] = 10000,
     ["scale"] = 0.7,
     ["displayId"] = 125911,
@@ -241,11 +252,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazing Pyromancer",
     ["id"] = 251861,
     ["count"] = 12,
-    ["health"] = 2209232,
+    ["health"] = 2430152,
     ["scale"] = 1.1,
     ["displayId"] = 138460,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["spells"] = {
+      [1254294] = {
+        ["interruptible"] = true,
+      },
+      [1254301] = {
+      },
+      [1254336] = {
+      },
+      [1254338] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 216.07318814414,
@@ -283,11 +305,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Runed Spellbreaker",
     ["id"] = 240973,
     ["count"] = 12,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1.1,
     ["displayId"] = 127769,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["spells"] = {
+      [1244907] = {
+      },
+      [1283901] = {
+      },
+      [1283905] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 504.22147086947,
@@ -319,11 +349,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Voidling",
     ["id"] = 234069,
     ["count"] = 1,
-    ["health"] = 552308,
+    ["health"] = 607538,
     ["scale"] = 0.5,
     ["displayId"] = 127714,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [1248229] = {
+      },
+      [1255434] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 743.15710290331,
@@ -679,17 +716,41 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 53,
         ["sublevel"] = 1,
       },
+      [60] = {
+        ["x"] = 343.3561862872,
+        ["y"] = -502.08366150818,
+        ["g"] = 49,
+        ["sublevel"] = 1,
+      },
+      [61] = {
+        ["x"] = 342.85120237439,
+        ["y"] = -496.78091140985,
+        ["g"] = 49,
+        ["sublevel"] = 1,
+      },
+      [62] = {
+        ["x"] = 343.35621518471,
+        ["y"] = -491.98326081436,
+        ["g"] = 49,
+        ["sublevel"] = 1,
+      },
     },
   },
   [6] = {
     ["name"] = "Hollowsoul Shredder",
     ["id"] = 234065,
     ["count"] = 5,
-    ["health"] = 1311732,
+    ["health"] = 1442903,
     ["scale"] = 0.8,
     ["displayId"] = 60660,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [1227020] = {
+      },
+      [1248229] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 752.41319347894,
@@ -829,11 +890,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dreaded Voidwalker",
     ["id"] = 234064,
     ["count"] = 7,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 0.8,
     ["displayId"] = 93869,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [1248229] = {
+      },
+      [1248327] = {
+        ["interruptible"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 779.82168166237,
@@ -925,11 +993,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadowrift Voidcaller",
     ["id"] = 234068,
     ["count"] = 12,
-    ["health"] = 2209232,
+    ["health"] = 2430152,
     ["scale"] = 1.1,
     ["displayId"] = 138102,
     ["creatureType"] = "Aberration",
     ["level"] = 91,
+    ["spells"] = {
+      [1217087] = {
+      },
+      [1255462] = {
+      },
+      [1265977] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 652.93192661608,
@@ -961,11 +1037,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Devouring Tyrant",
     ["id"] = 234066,
     ["count"] = 12,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1.1,
     ["displayId"] = 136220,
     ["creatureType"] = "Aberration",
     ["level"] = 91,
+    ["spells"] = {
+      [1248138] = {
+      },
+      [1248219] = {
+      },
+      [1248229] = {
+      },
+      [1264687] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 545.19789271667,
@@ -1003,11 +1089,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Void Infuser",
     ["id"] = 249086,
     ["count"] = 7,
-    ["health"] = 1242693,
+    ["health"] = 1366961,
     ["scale"] = 0.8,
     ["displayId"] = 92689,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [1245068] = {
+        ["magic"] = true,
+      },
+      [1248229] = {
+      },
+      [1264693] = {
+        ["interruptible"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 663.44483562755,
@@ -1117,7 +1213,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcanotron Custos",
     ["id"] = 231861,
     ["count"] = 0,
-    ["health"] = 11506416,
+    ["health"] = 12657041,
     ["scale"] = 1,
     ["displayId"] = 131334,
     ["creatureType"] = "Mechanical",
@@ -1125,6 +1221,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2659,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [474345] = {
+      },
+      [474496] = {
+      },
+      [1214038] = {
+        ["magic"] = true,
+      },
+      [1214081] = {
+      },
+      [1243905] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 465.49905207401,
@@ -1137,7 +1246,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Seranel Sunlash",
     ["id"] = 231863,
     ["count"] = 0,
-    ["health"] = 10068114,
+    ["health"] = 11074911,
     ["scale"] = 2,
     ["displayId"] = 127739,
     ["creatureType"] = "Not specified",
@@ -1145,6 +1254,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2659,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [1224903] = {
+      },
+      [1225015] = {
+      },
+      [1225135] = {
+      },
+      [1225193] = {
+      },
+      [1225201] = {
+      },
+      [1225205] = {
+      },
+      [1225792] = {
+      },
+      [1225796] = {
+      },
+      [1246446] = {
+      },
+      [1248689] = {
+        ["magic"] = true,
+      },
+      [1271317] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 732.42835364524,
@@ -1157,7 +1291,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gemellus",
     ["id"] = 231864,
     ["count"] = 0,
-    ["health"] = 15821322,
+    ["health"] = 17403431,
     ["scale"] = 1.5,
     ["displayId"] = 131317,
     ["creatureType"] = "Not specified",
@@ -1165,6 +1299,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2659,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [1223847] = {
+      },
+      [1223936] = {
+      },
+      [1224104] = {
+      },
+      [1224299] = {
+      },
+      [1224401] = {
+      },
+      [1253707] = {
+      },
+      [1253709] = {
+      },
+      [1284954] = {
+      },
+      [1284958] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 517.02759858588,
@@ -1178,7 +1332,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Degentrius",
     ["id"] = 231865,
     ["count"] = 0,
-    ["health"] = 11506416,
+    ["health"] = 12657041,
     ["scale"] = 2,
     ["displayId"] = 132031,
     ["creatureType"] = "Aberration",
@@ -1186,6 +1340,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2659,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [1215087] = {
+      },
+      [1215897] = {
+      },
+      [1269631] = {
+      },
+      [1271066] = {
+      },
+      [1280113] = {
+      },
+      [1280119] = {
+      },
+      [1284627] = {
+        ["magic"] = true,
+      },
+      [1284633] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 70.870766944128,
@@ -1198,11 +1371,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brightscale Wyrm",
     ["id"] = 232106,
     ["count"] = 1,
-    ["health"] = 276154,
+    ["health"] = 303769,
     ["scale"] = 0.4,
     ["displayId"] = 16217,
     ["creatureType"] = "Beast",
     ["level"] = 90,
+    ["spells"] = {
+      [467068] = {
+      },
+      [1254595] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 395.18636846935,
@@ -1498,11 +1677,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Sentry",
     ["id"] = 234062,
     ["count"] = 16,
-    ["health"] = 3313848,
+    ["health"] = 3645228,
     ["scale"] = 1.1,
     ["displayId"] = 137562,
     ["creatureType"] = "Mechanical",
     ["level"] = 91,
+    ["spells"] = {
+      [473258] = {
+      },
+      [1282050] = {
+      },
+      [1282051] = {
+      },
+      [1282053] = {
+      },
+      [1282055] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 67.984201112357,
@@ -1528,7 +1720,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vigilant Librarian",
     ["id"] = 234067,
     ["count"] = 0,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 1,
     ["displayId"] = 138458,
     ["creatureType"] = "Humanoid",
@@ -1545,11 +1737,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sunblade Enforcer",
     ["id"] = 234124,
     ["count"] = 5,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 0.8,
     ["displayId"] = 138453,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [1252910] = {
+      },
+      [1253224] = {
+      },
+      [1265561] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 73.998164307486,
@@ -1659,11 +1860,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lightward Healer",
     ["id"] = 234486,
     ["count"] = 5,
-    ["health"] = 1173655,
+    ["health"] = 1291018,
     ["scale"] = 0.8,
     ["displayId"] = 138455,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [1254306] = {
+        ["magic"] = true,
+      },
+      [1255187] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 114.55880105846,
@@ -1743,7 +1953,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Gemellus",
     ["id"] = 239636,
     ["count"] = 0,
-    ["health"] = 15821322,
+    ["health"] = 17403431,
     ["scale"] = 1.5,
     ["displayId"] = 141672,
     ["creatureType"] = "Not specified",
@@ -1751,6 +1961,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2659,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [1223936] = {
+      },
+      [1224104] = {
+      },
+      [1224299] = {
+      },
+      [1224401] = {
+      },
+      [1253707] = {
+      },
+      [1253709] = {
+      },
+      [1284954] = {
+      },
+      [1284958] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 517.79280644284,
@@ -1836,7 +2064,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Celestial Drifter",
     ["id"] = 241397,
     ["count"] = 0,
-    ["health"] = 1656924,
+    ["health"] = 1822614,
     ["scale"] = 1.5,
     ["displayId"] = 98834,
     ["creatureType"] = "Not specified",
@@ -1844,6 +2072,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2659,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [1248015] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 495.1868605737,
@@ -1857,11 +2089,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unstable Voidling",
     ["id"] = 255376,
     ["count"] = 0,
-    ["health"] = 207116,
+    ["health"] = 227827,
     ["scale"] = 0.4,
     ["displayId"] = 127714,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [1248229] = {
+      },
+      [1264951] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 656.41724553825,
@@ -1905,11 +2143,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hollowsoul Shredder",
     ["id"] = 257447,
     ["count"] = 5,
-    ["health"] = 1311732,
+    ["health"] = 1442903,
     ["scale"] = 1,
     ["displayId"] = 60660,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [1227020] = {
+      },
+      [1248229] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 369.64612543978,
@@ -1929,11 +2173,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spellwoven Familiar",
     ["id"] = 259387,
     ["count"] = 0,
-    ["health"] = 966539,
+    ["health"] = 1063192,
     ["scale"] = 0.8,
     ["displayId"] = 141476,
     ["creatureType"] = "Elemental",
     ["level"] = 90,
+    ["spells"] = {
+      [1279994] = {
+      },
+      [1279995] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 385.36063399249,

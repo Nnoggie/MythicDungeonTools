@@ -92,7 +92,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupted Manafiend",
     ["id"] = 196045,
     ["count"] = 5,
-    ["health"] = 1380770,
+    ["health"] = 1518845,
     ["scale"] = 1,
     ["displayId"] = 107525,
     ["creatureType"] = "Elemental",
@@ -116,6 +116,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [387523] = {
       },
       [388862] = {
+        ["interruptible"] = true,
       },
       [388863] = {
       },
@@ -206,7 +207,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spellbound Battleaxe",
     ["id"] = 196577,
     ["count"] = 5,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1,
     ["displayId"] = 23926,
     ["creatureType"] = "Elemental",
@@ -323,7 +324,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Ravager",
     ["id"] = 196671,
     ["count"] = 15,
-    ["health"] = 3313848,
+    ["health"] = 3645228,
     ["scale"] = 1,
     ["displayId"] = 110795,
     ["creatureType"] = "Beast",
@@ -455,7 +456,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Arcane Forager",
     ["id"] = 196694,
     ["count"] = 4,
-    ["health"] = 1104616,
+    ["health"] = 1215076,
     ["scale"] = 1,
     ["displayId"] = 62384,
     ["creatureType"] = "Elemental",
@@ -600,7 +601,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unruly Textbook",
     ["id"] = 196044,
     ["count"] = 4,
-    ["health"] = 1104616,
+    ["health"] = 1215076,
     ["scale"] = 1,
     ["displayId"] = 109308,
     ["creatureType"] = "Elemental",
@@ -622,6 +623,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [387523] = {
       },
       [388392] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -659,7 +662,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vexamus",
     ["id"] = 194181,
     ["count"] = 0,
-    ["health"] = 10068114,
+    ["health"] = 11074911,
     ["scale"] = 1,
     ["displayId"] = 109099,
     ["creatureType"] = "Elemental",
@@ -671,8 +674,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [132466] = {
-      },
       [385958] = {
       },
       [386173] = {
@@ -705,7 +706,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Guardian Sentry",
     ["id"] = 192680,
     ["count"] = 18,
-    ["health"] = 4142310,
+    ["health"] = 4556535,
     ["scale"] = 1,
     ["displayId"] = 26385,
     ["creatureType"] = "Elemental",
@@ -714,8 +715,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
     },
     ["spells"] = {
-      [132466] = {
-      },
       [377912] = {
       },
       [377991] = {
@@ -738,7 +737,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Territorial Eagle",
     ["id"] = 192329,
     ["count"] = 2,
-    ["health"] = 690385,
+    ["health"] = 759423,
     ["scale"] = 1,
     ["displayId"] = 34918,
     ["creatureType"] = "Beast",
@@ -764,8 +763,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [377344] = {
+        ["bleed"] = true,
       },
       [377389] = {
+        ["enrage"] = true,
       },
     },
     ["clones"] = {
@@ -887,7 +888,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Alpha Eagle",
     ["id"] = 192333,
     ["count"] = 15,
-    ["health"] = 2071155,
+    ["health"] = 2278268,
     ["scale"] = 1,
     ["displayId"] = 101438,
     ["creatureType"] = "Beast",
@@ -899,6 +900,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [377383] = {
       },
       [377389] = {
+        ["interruptible"] = true,
+        ["enrage"] = true,
       },
       [1276632] = {
       },
@@ -931,7 +934,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Crawth",
     ["id"] = 191736,
     ["count"] = 0,
-    ["health"] = 14383020,
+    ["health"] = 15821301,
     ["scale"] = 1,
     ["displayId"] = 110805,
     ["creatureType"] = "Beast",
@@ -973,7 +976,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aggravated Skitterfly",
     ["id"] = 197406,
     ["count"] = 4,
-    ["health"] = 1104616,
+    ["health"] = 1215076,
     ["scale"] = 1,
     ["displayId"] = 103762,
     ["creatureType"] = "Beast",
@@ -998,6 +1001,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [390938] = {
+        ["enrage"] = true,
       },
       [390942] = {
       },
@@ -1169,7 +1173,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Vile Lasher",
     ["id"] = 197219,
     ["count"] = 9,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1,
     ["displayId"] = 104635,
     ["creatureType"] = "Elemental",
@@ -1215,7 +1219,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hungry Lasher",
     ["id"] = 197398,
     ["count"] = 2,
-    ["health"] = 690385,
+    ["health"] = 759423,
     ["scale"] = 1,
     ["displayId"] = 104474,
     ["creatureType"] = "Elemental",
@@ -1410,7 +1414,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Overgrown Ancient",
     ["id"] = 196482,
     ["count"] = 0,
-    ["health"] = 8629812,
+    ["health"] = 9492781,
     ["scale"] = 1,
     ["displayId"] = 109194,
     ["creatureType"] = "Elemental",
@@ -1435,6 +1439,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [390297] = {
       },
       [396716] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -1450,11 +1455,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Algeth'ar Echoknight",
     ["id"] = 196200,
     ["count"] = 15,
-    ["health"] = 2485386,
+    ["health"] = 2733921,
     ["scale"] = 1,
     ["displayId"] = 109104,
     ["creatureType"] = "Dragonkin",
-    ["level"] = 90,
+    ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Incapacitate"] = true,
@@ -1474,42 +1479,58 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Mind Soothe"] = true,
     },
     ["spells"] = {
+      [1270349] = {
+      },
       [1270356] = {
       },
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 536.25203196244,
-        ["y"] = -471.28635342428,
+        ["x"] = 539.54432641929,
+        ["y"] = -477.87082608053,
         ["g"] = 29,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [2] = {
-        ["x"] = 512.18459679436,
-        ["y"] = -498.45669470054,
+        ["x"] = 521.51251253097,
+        ["y"] = -506.68730005303,
         ["g"] = 34,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [3] = {
-        ["x"] = 501.87754149643,
-        ["y"] = -513.6354333171,
+        ["x"] = 514.49786794732,
+        ["y"] = -521.31736167927,
         ["g"] = 34,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [4] = {
-        ["x"] = 509.2627017357,
-        ["y"] = -447.56332655087,
+        ["x"] = 509.81155311219,
+        ["y"] = -452.50166651088,
         ["g"] = 28,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [5] = {
-        ["x"] = 484.94817641583,
-        ["y"] = -550.30224614461,
+        ["x"] = 482.7531196822,
+        ["y"] = -532.74353613717,
         ["g"] = 33,
+        ["sublevel"] = 1,
+        ["scale"] = 2.1,
+      },
+      [6] = {
+        ["x"] = 559.59399155615,
+        ["y"] = -411.12420015317,
+        ["g"] = 38,
+        ["sublevel"] = 1,
+        ["scale"] = 2.1,
+      },
+      [7] = {
+        ["x"] = 576.34402830637,
+        ["y"] = -425.27511806148,
+        ["g"] = 38,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
@@ -1519,7 +1540,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spectral Invoker",
     ["id"] = 196202,
     ["count"] = 5,
-    ["health"] = 1518847,
+    ["health"] = 1670730,
     ["scale"] = 1,
     ["displayId"] = 109105,
     ["creatureType"] = "Dragonkin",
@@ -1544,6 +1565,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [1279627] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1555,15 +1577,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2.1,
       },
       [2] = {
-        ["x"] = 478.79461565721,
-        ["y"] = -461.23747493822,
+        ["x"] = 474.37611697455,
+        ["y"] = -445.72922013657,
         ["g"] = 31,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [3] = {
-        ["x"] = 518.81718375246,
-        ["y"] = -471.10174680197,
+        ["x"] = 522.65821332835,
+        ["y"] = -475.49139523947,
         ["g"] = 29,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
@@ -1621,44 +1643,51 @@ MDT.dungeonEnemies[dungeonIndex] = {
         },
       },
       [6] = {
-        ["x"] = 465.75897750714,
-        ["y"] = -453.43212879961,
+        ["x"] = 459.6943158859,
+        ["y"] = -459.49679042085,
         ["g"] = 31,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [7] = {
-        ["x"] = 450.46129144347,
-        ["y"] = -524.36490371373,
+        ["x"] = 443.81901386396,
+        ["y"] = -526.96406079822,
         ["g"] = 32,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [8] = {
-        ["x"] = 459.87657693,
-        ["y"] = -510.92607021567,
+        ["x"] = 450.92395789364,
+        ["y"] = -512.94763428744,
         ["g"] = 32,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [9] = {
-        ["x"] = 471.55108200703,
-        ["y"] = -536.97407860549,
+        ["x"] = 477.03820068263,
+        ["y"] = -547.39958083763,
         ["g"] = 33,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [10] = {
-        ["x"] = 490.8133467737,
-        ["y"] = -533.34961893228,
+        ["x"] = 494.1055249731,
+        ["y"] = -544.87248967726,
         ["g"] = 33,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
       [11] = {
-        ["x"] = 527.06598975982,
-        ["y"] = -426.05987809577,
+        ["x"] = 525.33320307312,
+        ["y"] = -427.21505647271,
         ["g"] = 27,
+        ["sublevel"] = 1,
+        ["scale"] = 2.1,
+      },
+      [12] = {
+        ["x"] = 435.03780454746,
+        ["y"] = -514.75200589379,
+        ["g"] = 32,
         ["sublevel"] = 1,
         ["scale"] = 2.1,
       },
@@ -1668,7 +1697,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Echo of Doragosa",
     ["id"] = 190609,
     ["count"] = 0,
-    ["health"] = 12944718,
+    ["health"] = 14239171,
     ["scale"] = 1,
     ["displayId"] = 108925,
     ["creatureType"] = "Dragonkin",
@@ -1686,6 +1715,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [374343] = {
       },
       [374350] = {
+        ["magic"] = true,
       },
       [374352] = {
       },

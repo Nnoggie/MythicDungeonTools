@@ -2,6 +2,21 @@ local Type, Version = "MDTPowerButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 
 local width, height = 248, 32
+local roleIconScale = 0.32
+local roleAtlases = {
+  tank = "icons_16x16_tank",
+  dps = "icons_16x16_damage",
+  healer = "icons_16x16_heal",
+}
+
+local function CreateRoleIcon(parent, atlas)
+  local texture = parent:CreateTexture(nil, "OVERLAY", nil, 0)
+  texture:SetWidth(height * roleIconScale)
+  texture:SetHeight(height * roleIconScale)
+  texture:SetAtlas(atlas)
+  texture:Hide()
+  return texture
+end
 
 local methods = {
   ["OnAcquire"] = function(self)
@@ -137,27 +152,15 @@ local function Constructor()
   icon:SetHeight(height);
   icon:SetPoint("LEFT", button, "LEFT");
 
-  local tankIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
-  tankIcon:SetWidth(height * 0.4);
-  tankIcon:SetHeight(height * 0.4);
-  tankIcon:SetTexture("Interface/LFGFrame/RoleIcons")
-  tankIcon:SetAtlas("roleicon-tiny-tank")
+  local tankIcon = CreateRoleIcon(button, roleAtlases.tank)
   tankIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT", 0, 2);
   tankIcon:Hide()
 
-  local dpsIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
-  dpsIcon:SetWidth(height * 0.4);
-  dpsIcon:SetHeight(height * 0.4);
-  dpsIcon:SetTexture("Interface/LFGFrame/RoleIcons")
-  dpsIcon:SetAtlas("roleicon-tiny-dps")
+  local dpsIcon = CreateRoleIcon(button, roleAtlases.dps)
   dpsIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT", 16, 2);
   dpsIcon:Hide()
 
-  local healerIcon = button:CreateTexture(nil, "OVERLAY", nil, 0);
-  healerIcon:SetWidth(height * 0.4);
-  healerIcon:SetHeight(height * 0.4);
-  healerIcon:SetTexture("Interface/LFGFrame/RoleIcons")
-  healerIcon:SetAtlas("roleicon-tiny-healer")
+  local healerIcon = CreateRoleIcon(button, roleAtlases.healer)
   healerIcon:SetPoint("BOTTOMLEFT", button.icon, "BOTTOMRIGHT", 32, 2);
   healerIcon:Hide()
 
