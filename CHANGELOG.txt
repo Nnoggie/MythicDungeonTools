@@ -1,3 +1,5 @@
-## 6.0.7 (2026-02-11)
+## 6.0.8 (2026-03-17)
 
-- Fix MoP compatibility by guarding `C_Secrets` usage when sharing routes.
+- Update Midnight dungeon data across multiple maps, including Magisters' Terrace, Windrunner Spire, Pit of Saron, Skyreach, and Seat of the Triumvirate.
+- Fix enemy clone counts and stealth detection in Windrunner Spire.
+- Add missing Voidlings and correct the Scouting Trapper NPC id.
