@@ -1290,8 +1290,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [16] = {
     ["name"] = "Scouting Trapper",
-    ["id"] = 250883,
-    ["count"] = 2,
+    ["id"] = 238049,
+    ["count"] = 5,
     ["health"] = 1380770,
     ["scale"] = 1,
     ["displayId"] = 18830,
@@ -1942,8 +1942,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [31] = {
     ["name"] = "Scouting Trapper",
-    ["id"] = 238049,
-    ["count"] = 5,
+    ["id"] = 250883,
+    ["count"] = 2,
     ["health"] = 1518845,
     ["scale"] = 1,
     ["displayId"] = 139555,
