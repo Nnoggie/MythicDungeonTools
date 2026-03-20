@@ -431,12 +431,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 37,
         ["sublevel"] = 1,
       },
-      [7] = {
-        ["x"] = 225.31493198983,
-        ["y"] = -368.25284805545,
-        ["g"] = 37,
-        ["sublevel"] = 1,
-      },
       [8] = {
         ["x"] = 279.8572929323,
         ["y"] = -323.89999307413,
@@ -455,8 +449,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1256008] = {
-        ["magic"] = true,
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [1256015] = {
         ["interruptible"] = true,
@@ -569,6 +563,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 748.00717460603,
         ["y"] = -302.91625462821,
         ["g"] = 87,
+        ["sublevel"] = 1,
+      },
+      [19] = {
+        ["x"] = 226.91507899816,
+        ["y"] = -365.99813823655,
+        ["g"] = 37,
         ["sublevel"] = 1,
       },
     },
@@ -2034,8 +2034,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1259255] = {
-        ["magic"] = true,
         ["interruptible"] = true,
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -2552,73 +2552,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [25] = {
-    ["name"] = "Lost Soul",
-    ["id"] = 251639,
-    ["count"] = 0,
-    ["health"] = 166685,
-    ["scale"] = 1,
-    ["displayId"] = 140143,
-    ["creatureType"] = "Undead",
-    ["level"] = 90,
-    ["spells"] = {
-      [1254175] = {
-        ["magic"] = true,
-      },
-    },
-    ["clones"] = {
-      -- [1] = {
-      --   ["x"] = 278.11750690901,
-      --   ["y"] = -39.366988750855,
-      --   ["sublevel"] = 1,
-      -- },
-    },
-  },
-  [26] = {
-    ["name"] = "Malignant Soul",
-    ["id"] = 251674,
-    ["count"] = 0,
-    ["health"] = 1265704,
-    ["scale"] = 1,
-    ["displayId"] = 137163,
-    ["creatureType"] = "Undead",
-    ["level"] = 91,
-    ["spells"] = {
-      [1254010] = {
-        ["interruptible"] = true,
-      },
-      [1254043] = {
-      },
-    },
-    ["clones"] = {
-      -- [1] = {
-      --   ["x"] = 228.06626554545,
-      --   ["y"] = -41.433940808825,
-      --   ["sublevel"] = 1,
-      -- },
-    },
-  },
-  [27] = {
-    ["name"] = "Potatoad",
-    ["id"] = 252886,
-    ["count"] = 0,
-    ["health"] = 303769,
-    ["scale"] = 1,
-    ["displayId"] = 138434,
-    ["creatureType"] = "Humanoid",
-    ["level"] = 91,
-    ["spells"] = {
-      [1257164] = {
-      },
-    },
-    ["clones"] = {
-      -- [1] = {
-      --   ["x"] = 260.13665364475,
-      --   ["y"] = -41.700505600458,
-      --   ["sublevel"] = 1,
-      -- },
-    },
-  },
-  [28] = {
     ["name"] = "Zil'jan",
     ["id"] = 253458,
     ["count"] = 7,
@@ -2644,7 +2577,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [29] = {
+  [26] = {
     ["name"] = "Gloomwing Bat",
     ["id"] = 253473,
     ["count"] = 5,
@@ -2771,30 +2704,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [30] = {
-    ["name"] = "Lost Soul",
-    ["id"] = 253647,
-    ["count"] = 0,
-    ["health"] = 125892,
-    ["scale"] = 1,
-    ["displayId"] = 140110,
-    ["creatureType"] = "Undead",
-    ["level"] = 90,
-    ["spells"] = {
-      [1259731] = {
-        ["magic"] = true,
-      },
-      [1259713] = {},
-    },
-    ["clones"] = {
-      -- [1] = {
-      --   ["x"] = 214.84910933009,
-      --   ["y"] = -41.378685716489,
-      --   ["sublevel"] = 1,
-      -- },
-    },
-  },
-  [31] = {
+  [27] = {
     ["name"] = "Death's Grasp",
     ["id"] = 253701,
     ["count"] = 0,
@@ -2816,7 +2726,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [32] = {
+  [28] = {
     ["name"] = "Rokh'zal",
     ["id"] = 254233,
     ["count"] = 0,
