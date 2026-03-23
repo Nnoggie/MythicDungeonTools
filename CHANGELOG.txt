@@ -1,5 +1,4 @@
-## 6.0.8 (2026-03-17)
+## 6.0.9 (2026-03-23)
 
-- Update Midnight dungeon data across multiple maps, including Magisters' Terrace, Windrunner Spire, Pit of Saron, Skyreach, and Seat of the Triumvirate.
-- Fix enemy clone counts and stealth detection in Windrunner Spire.
-- Add missing Voidlings and correct the Scouting Trapper NPC id.
+- Update Midnight enemy data in Maisara Caverns and Pit of Saron, including clone placement and count fixes.
+- Remove incorrect interrupt flags from affected Midnight abilities in Algethar Academy, Magisters' Terrace, and Nexus Point Xenas.
