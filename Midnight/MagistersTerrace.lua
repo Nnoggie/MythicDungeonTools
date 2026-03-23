@@ -1870,7 +1870,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["magic"] = true,
       },
       [1255187] = {
-        ["interruptible"] = true,
         ["magic"] = true,
       },
     },
