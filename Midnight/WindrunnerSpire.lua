@@ -1890,7 +1890,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   },
   [30] = {
     ["name"] = "Haunting Grunt",
-    ["id"] = 232446,
+    ["id"] = 258868,
     ["count"] = 0,
     ["health"] = 131251,
     ["scale"] = 1.2,
