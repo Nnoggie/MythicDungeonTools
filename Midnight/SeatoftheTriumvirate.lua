@@ -49,8 +49,6 @@ MDT.mapPOIs[dungeonIndex] = {
   },
 };
 
-
-
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Merciless Subjugator",
@@ -629,8 +627,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1262526] = {
-        ["magic"] = true,
         ["interruptible"] = true,
+        ["magic"] = true,
       },
       [1262527] = {
       },
@@ -1199,7 +1197,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [35] = {
         ["x"] = 198.10054263123,
         ["y"] = -245.22750351261,
-        ["g"] = 29,
+        ["g"] = 30,
         ["sublevel"] = 1,
       },
       [36] = {
