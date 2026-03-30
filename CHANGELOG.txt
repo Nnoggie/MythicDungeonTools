@@ -1,4 +1,5 @@
-## 6.0.9 (2026-03-23)
+## 6.0.10 (2026-03-30)
 
-- Update Midnight enemy data in Maisara Caverns and Pit of Saron, including clone placement and count fixes.
-- Remove incorrect interrupt flags from affected Midnight abilities in Algethar Academy, Magisters' Terrace, and Nexus Point Xenas.
+- Update Midnight enemy counts and totals in Windrunner Spire, Magisters' Terrace, and Nexus Point Xenas.
+- Fix Midnight clone grouping and add missing spell data in Pit of Saron and Seat of the Triumvirate.
+- Adjust enemy efficiency score calculations in dungeon tooltips.
