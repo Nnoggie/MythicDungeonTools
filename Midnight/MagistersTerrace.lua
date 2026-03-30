@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["MagistersTerrace"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 597 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 585 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {

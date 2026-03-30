@@ -59,8 +59,6 @@ MDT.mapPOIs[dungeonIndex] = {
 };
 
 
-
-
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Deathwhisper Necrolyte",
@@ -130,6 +128,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["spells"] = {
+      [1258450] = {
+      },
       [1258451] = {
       },
     },
@@ -449,12 +449,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 424.8470312004,
         ["y"] = -422.35397885049,
         ["g"] = 38,
-        ["sublevel"] = 1,
-      },
-      [4] = {
-        ["x"] = 372.83917041066,
-        ["y"] = -413.12480695251,
-        ["g"] = 53,
         ["sublevel"] = 1,
       },
       [5] = {
@@ -1549,6 +1543,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 492.8252277449,
         ["y"] = -376.42002905457,
         ["g"] = 42,
+        ["sublevel"] = 1,
+      },
+      [21] = {
+        ["x"] = 374.70144148404,
+        ["y"] = -413.19479754505,
+        ["g"] = 53,
         ["sublevel"] = 1,
       },
     },
