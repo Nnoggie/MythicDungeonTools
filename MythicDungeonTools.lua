@@ -54,7 +54,7 @@ end
 
 function MDT:ShowMinimapButton()
   db.minimap.hide = false
-  minimapIcon:Show("MythicDungeonTools")
+  minimapIcon:Refresh("MythicDungeonTools", db.minimap)
   -- update the checkbox in settings
   if MDT.main_frame and MDT.main_frame.minimapCheckbox then MDT.main_frame.minimapCheckbox:SetValue(true) end
 end
@@ -229,9 +229,7 @@ do
       if not db then return end
       ---@diagnostic disable-next-line: param-type-mismatch
       minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
-      if not db.minimap.hide then
-        minimapIcon:Show("MythicDungeonTools")
-      end
+      if not db.minimap.hide then MDT:ShowMinimapButton() end
       --compartment
       if not db.minimap.compartmentHide then
         minimapIcon:AddButtonToCompartment("MythicDungeonTools")
@@ -277,6 +275,9 @@ do
   function MDT.PLAYER_ENTERING_WORLD()
     --initialize Blizzard_ChallengesUI
     C_Timer.After(1, function()
+      if db and not db.minimap.hide then
+        minimapIcon:Refresh("MythicDungeonTools", db.minimap)
+      end
       if db.loadOnStartUp and db.devMode then MDT:Async(function() MDT:ShowInterfaceInternal(true) end, "showInterface") end
     end)
     eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
@@ -3086,7 +3087,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.minimapCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.minimap.hide = not value
     if not db.minimap.hide then
-      minimapIcon:Show("MythicDungeonTools")
+      minimapIcon:Refresh("MythicDungeonTools", db.minimap)
     else
       minimapIcon:Hide("MythicDungeonTools")
     end
