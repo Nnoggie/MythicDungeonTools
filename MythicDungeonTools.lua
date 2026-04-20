@@ -36,6 +36,7 @@ MDT.externalLinks = {
 
 BINDING_HEADER_MDT = "Mythic Dungeon Tools (MDT)"
 BINDING_NAME_MDTTOGGLE = L["Toggle MDT"]
+_G["BINDING_NAME_CLICK MDTFocusMarkerButton:LeftButton"] = L["MDT Set Focus Macro"]
 
 local mythicColor = "|cFFFFFFFF"
 MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0.9 }
@@ -178,6 +179,12 @@ local defaultSavedVars = {
     currentPreset = {},
     fadeOutDuringCombat = false,
     fadeOutAlpha = 0.5,
+    focusMarker = {
+      announceReadyCheck = false,
+      useMacro = false,
+      suppressNotifications = false,
+      assignments = {},
+    },
     colorPaletteInfo = {
       autoColoring = true,
       forceColorBlindMode = false,
@@ -255,8 +262,14 @@ do
       local inGroup = UnitInRaid("player") or IsInGroup()
       MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
       MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
+      if MDT.main_frame.FocusMarkerButton then
+        MDT.main_frame.FocusMarkerButton:SetDisabled(false)
+      end
       if inGroup then
         MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
+        if MDT.main_frame.FocusMarkerButton then
+          MDT.main_frame.FocusMarkerButton.text:SetTextColor(1, 0.8196, 0)
+        end
         if MDT.liveSessionActive then
           MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
           MDT.main_frame.LiveSessionButton.text:SetTextColor(0, 1, 0)
@@ -267,6 +280,9 @@ do
       else
         MDT.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
         MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
+        if MDT.main_frame.FocusMarkerButton then
+          MDT.main_frame.FocusMarkerButton.text:SetTextColor(1, 0.8196, 0)
+        end
       end
       last = now
     end
@@ -1174,6 +1190,25 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
   end
 
+  frame.FocusMarkerButton = AceGUI:Create("Button")
+  frame.FocusMarkerButton:SetText(L["Marks"])
+  frame.FocusMarkerButton:SetWidth(buttonWidth)
+  frame.FocusMarkerButton.frame:SetNormalFontObject(fontInstance)
+  frame.FocusMarkerButton.frame:SetHighlightFontObject(fontInstance)
+  frame.FocusMarkerButton.frame:SetDisabledFontObject(fontInstance)
+  frame.FocusMarkerButton:SetCallback("OnClick", function()
+    MDT:FocusMarker_OpenAssignments()
+  end)
+  frame.FocusMarkerButton.frame:SetScript("OnEnter", function()
+    anchorTooltip(frame.FocusMarkerButton.frame)
+    GameTooltip:AddLine(L["Focus Marker Assignments"], 1, 1, 1)
+    GameTooltip:AddLine(L["focusMarkerAssignmentsTooltip"], 1, 1, 1, 1)
+    GameTooltip:Show()
+  end)
+  frame.FocusMarkerButton.frame:SetScript("OnLeave", function()
+    GameTooltip:Hide()
+  end)
+
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
@@ -1181,6 +1216,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
+  frame.sidePanel.WidgetGroup:AddChild(frame.FocusMarkerButton)
 
   --Week Dropdown
   local function makeAffixString(week, affixes, longText)
@@ -2057,6 +2093,7 @@ function MDT:HideAllDialogs()
       MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
       MDT.main_frame.settingsFrame:Hide()
     end
+    if MDT.main_frame.FocusMarkerAssignmentsFrame then MDT.main_frame.FocusMarkerAssignmentsFrame:Hide() end
     if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
   end
   if MDT.tempConfirmationFrame then MDT.tempConfirmationFrame:Hide() end
@@ -3145,6 +3182,33 @@ function MDT:MakeSettingsFrame(frame)
     db.fadeOutAlpha = value
   end)
   frame.settingsFrame:AddChild(frame.fadeOutAlphaSlider)
+
+  if db.focusMarker == nil then db.focusMarker = {} end
+  if db.focusMarker.announceReadyCheck == nil then db.focusMarker.announceReadyCheck = false end
+  if db.focusMarker.useMacro == nil then db.focusMarker.useMacro = false end
+  if db.focusMarker.suppressNotifications == nil then db.focusMarker.suppressNotifications = false end
+  if type(db.focusMarker.assignments) ~= "table" then db.focusMarker.assignments = {} end
+
+  frame.focusMarkerAnnounceCheckbox = AceGUI:Create("CheckBox")
+  frame.focusMarkerAnnounceCheckbox:SetLabel(L["Announce focus marker on ready check"])
+  frame.focusMarkerAnnounceCheckbox:SetWidth(frameWidth - 10)
+  frame.focusMarkerAnnounceCheckbox:SetValue(db.focusMarker.announceReadyCheck)
+  frame.focusMarkerAnnounceCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.focusMarker.announceReadyCheck = value
+  end)
+  frame.settingsFrame:AddChild(frame.focusMarkerAnnounceCheckbox)
+
+  frame.focusMarkerMacroCheckbox = AceGUI:Create("CheckBox")
+  frame.focusMarkerMacroCheckbox:SetLabel(L["Use macro instead of keybind"])
+  frame.focusMarkerMacroCheckbox:SetWidth(frameWidth - 10)
+  frame.focusMarkerMacroCheckbox:SetValue(db.focusMarker.useMacro)
+  frame.focusMarkerMacroCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.focusMarker.useMacro = value
+    if MDT.FocusMarker_RefreshAction then
+      MDT:FocusMarker_RefreshAction()
+    end
+  end)
+  frame.settingsFrame:AddChild(frame.focusMarkerMacroCheckbox)
 
   frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
   frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])

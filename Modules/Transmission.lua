@@ -308,6 +308,7 @@ MDT.liveSessionPrefixes = {
   ["reqPre"] = "MDTLiveReqPre",
   ["difficulty"] = "MDTLiveLvl",
   ["poiAssignment"] = "MDTPOIAssignment",
+  ["focusMarkerAssignment"] = "MDTFocusMark",
 }
 
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -499,6 +500,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
           if poiFrame then UIFrameFlash(poiFrame, 0.5, 1, 1, true, 1, 0); end
         end
       end
+    end
+  end
+
+  if prefix == MDT.liveSessionPrefixes.focusMarkerAssignment then
+    if MDT.FocusMarker_OnCommReceived then
+      MDT:FocusMarker_OnCommReceived(message, fullName)
     end
   end
 
