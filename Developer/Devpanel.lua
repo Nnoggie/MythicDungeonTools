@@ -329,6 +329,32 @@ function MDT:CreateDevPanel(frame)
           MDT:ExportString(export)
         end,
       },
+      [14] = {
+        text = "Export Current Zone ID",
+        func = function()
+          local currentZoneId = C_Map.GetBestMapForUnit("player")
+          if not currentZoneId then
+            print("MDT DevMode: Unable to determine current zone ID")
+            return
+          end
+          local zones, includedZones = {}, {}
+          local function addZone(zoneId)
+            zoneId = tonumber(zoneId)
+            if zoneId and not includedZones[zoneId] then
+              tinsert(zones, zoneId)
+              includedZones[zoneId] = true
+            end
+          end
+          for zoneId, dungeonIdx in pairs(MDT.zoneIdToDungeonIdx) do
+            if dungeonIdx == db.currentDungeonIdx then
+              addZone(zoneId)
+            end
+          end
+          addZone(currentZoneId)
+          table.sort(zones)
+          MDT:ExportString(("local zones = { %s }"):format(table.concat(zones, ", ")))
+        end,
+      },
     }
     for buttonIdx, buttonData in ipairs(buttons) do
       local button = AceGUI:Create("Button")
