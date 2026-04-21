@@ -965,9 +965,6 @@ function MDT:FocusMarker_OpenAssignments()
 
   addCheckbox(frame, L["Announce focus marker on ready check"], settings.announceReadyCheck, function(value)
     settings.announceReadyCheck = value
-    if MDT.main_frame and MDT.main_frame.focusMarkerAnnounceCheckbox then
-      MDT.main_frame.focusMarkerAnnounceCheckbox:SetValue(value)
-    end
   end)
 
   local macroIcon
@@ -977,9 +974,6 @@ function MDT:FocusMarker_OpenAssignments()
   macroCheckbox:SetValue(settings.useMacro)
   macroCheckbox:SetCallback("OnValueChanged", function(_, _, value)
     settings.useMacro = value
-    if MDT.main_frame and MDT.main_frame.focusMarkerMacroCheckbox then
-      MDT.main_frame.focusMarkerMacroCheckbox:SetValue(value)
-    end
     if macroIcon then
       macroIcon:SetShown(value)
     end

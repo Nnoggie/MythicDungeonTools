@@ -3111,7 +3111,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame:SetTitle(L["Settings"])
   local frameWidth = 300
   frame.settingsFrame:SetWidth(frameWidth)
-  frame.settingsFrame:SetHeight(400)
+  frame.settingsFrame:SetHeight(420)
   frame.settingsFrame:EnableResize(false)
   frame.settingsFrame:SetLayout("Flow")
   frame.settingsFrame.statustext:GetParent():Hide()
@@ -3182,33 +3182,6 @@ function MDT:MakeSettingsFrame(frame)
     db.fadeOutAlpha = value
   end)
   frame.settingsFrame:AddChild(frame.fadeOutAlphaSlider)
-
-  if db.focusMarker == nil then db.focusMarker = {} end
-  if db.focusMarker.announceReadyCheck == nil then db.focusMarker.announceReadyCheck = false end
-  if db.focusMarker.useMacro == nil then db.focusMarker.useMacro = false end
-  if db.focusMarker.suppressNotifications == nil then db.focusMarker.suppressNotifications = false end
-  if type(db.focusMarker.assignments) ~= "table" then db.focusMarker.assignments = {} end
-
-  frame.focusMarkerAnnounceCheckbox = AceGUI:Create("CheckBox")
-  frame.focusMarkerAnnounceCheckbox:SetLabel(L["Announce focus marker on ready check"])
-  frame.focusMarkerAnnounceCheckbox:SetWidth(frameWidth - 10)
-  frame.focusMarkerAnnounceCheckbox:SetValue(db.focusMarker.announceReadyCheck)
-  frame.focusMarkerAnnounceCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.focusMarker.announceReadyCheck = value
-  end)
-  frame.settingsFrame:AddChild(frame.focusMarkerAnnounceCheckbox)
-
-  frame.focusMarkerMacroCheckbox = AceGUI:Create("CheckBox")
-  frame.focusMarkerMacroCheckbox:SetLabel(L["Use macro instead of keybind"])
-  frame.focusMarkerMacroCheckbox:SetWidth(frameWidth - 10)
-  frame.focusMarkerMacroCheckbox:SetValue(db.focusMarker.useMacro)
-  frame.focusMarkerMacroCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.focusMarker.useMacro = value
-    if MDT.FocusMarker_RefreshAction then
-      MDT:FocusMarker_RefreshAction()
-    end
-  end)
-  frame.settingsFrame:AddChild(frame.focusMarkerMacroCheckbox)
 
   frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
   frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
