@@ -923,6 +923,11 @@ function MDT:FocusMarker_OpenAssignments()
   pruneAssignmentsToRoster(assignments, roster)
 
   MDT:HideAllDialogs()
+  if frame.macroIcon then
+    frame.macroIcon:Hide()
+    frame.macroIcon:ClearAllPoints()
+    frame.macroIcon:SetParent(frame.frame)
+  end
   frame:ReleaseChildren()
 
   local rowCount = math.max(#roster, 5)
@@ -967,47 +972,50 @@ function MDT:FocusMarker_OpenAssignments()
     settings.announceReadyCheck = value
   end)
 
-  local macroIcon
   local macroCheckbox = AceGUI:Create("CheckBox")
   macroCheckbox:SetLabel(L["Use macro instead of keybind"])
   macroCheckbox:SetFullWidth(true)
   macroCheckbox:SetValue(settings.useMacro)
   macroCheckbox:SetCallback("OnValueChanged", function(_, _, value)
     settings.useMacro = value
-    if macroIcon then
-      macroIcon:SetShown(value)
+    if frame.macroIcon then
+      frame.macroIcon:SetShown(value)
     end
     MDT:FocusMarker_RefreshAction()
   end)
   frame:AddChild(macroCheckbox)
 
   local function positionMacroIcon()
-    macroIcon:ClearAllPoints()
-    macroIcon:SetPoint("LEFT", macroCheckbox.text, "LEFT", math.ceil(macroCheckbox.text:GetStringWidth()) + 8, 0)
+    frame.macroIcon:ClearAllPoints()
+    frame.macroIcon:SetPoint("LEFT", macroCheckbox.text, "LEFT", math.ceil(macroCheckbox.text:GetStringWidth()) + 8, 0)
   end
 
-  macroIcon = CreateFrame("Button", nil, macroCheckbox.frame)
-  macroIcon:SetSize(36, 36)
+  if not frame.macroIcon then
+    frame.macroIcon = CreateFrame("Button", nil, frame.frame)
+    frame.macroIcon:SetSize(36, 36)
+    frame.macroIcon.texture = frame.macroIcon:CreateTexture(nil, "ARTWORK")
+    frame.macroIcon.texture:SetAllPoints()
+    frame.macroIcon:RegisterForClicks("LeftButtonUp")
+    frame.macroIcon:RegisterForDrag("LeftButton")
+    frame.macroIcon:SetScript("OnClick", function()
+      pickupFocusMarkerMacro()
+    end)
+    frame.macroIcon:SetScript("OnDragStart", pickupFocusMarkerMacro)
+    frame.macroIcon:SetScript("OnEnter", function(self)
+      local currentSettings = getMacroSettings() or {}
+      GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+      GameTooltip:AddLine(currentSettings.macroName or MACRO_NAME, 1, 1, 1)
+      GameTooltip:AddLine(L["focusMarkerMacroDragTooltip"], 1, 0.8196, 0, true)
+      GameTooltip:Show()
+    end)
+    frame.macroIcon:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+    end)
+  end
+  frame.macroIcon:SetParent(macroCheckbox.frame)
   positionMacroIcon()
-  macroIcon.texture = macroIcon:CreateTexture(nil, "ARTWORK")
-  macroIcon.texture:SetAllPoints()
-  macroIcon.texture:SetTexture(settings.macroIcon or MACRO_ICON)
-  macroIcon:RegisterForClicks("LeftButtonUp")
-  macroIcon:RegisterForDrag("LeftButton")
-  macroIcon:SetScript("OnClick", function()
-    pickupFocusMarkerMacro()
-  end)
-  macroIcon:SetScript("OnDragStart", pickupFocusMarkerMacro)
-  macroIcon:SetScript("OnEnter", function(self)
-    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-    GameTooltip:AddLine(settings.macroName or MACRO_NAME, 1, 1, 1)
-    GameTooltip:AddLine(L["focusMarkerMacroDragTooltip"], 1, 0.8196, 0, true)
-    GameTooltip:Show()
-  end)
-  macroIcon:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-  macroIcon:SetShown(settings.useMacro)
+  frame.macroIcon.texture:SetTexture(settings.macroIcon or MACRO_ICON)
+  frame.macroIcon:SetShown(settings.useMacro)
 
   addCheckbox(frame, L["Never show MDT focus marker notification."], settings.suppressNotifications, function(value)
     settings.suppressNotifications = value
@@ -1051,5 +1059,5 @@ function MDT:FocusMarker_OpenAssignments()
   frame:Show()
   frame:DoLayout()
   positionMacroIcon()
-  macroIcon:SetShown(settings.useMacro)
+  frame.macroIcon:SetShown(settings.useMacro)
 end
