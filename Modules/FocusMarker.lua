@@ -123,6 +123,8 @@ local notificationSerial = 0
 local getMacroSettings
 local openKeybindSettings
 local openMarkSettings
+local refreshAssignmentsFrame
+local assignmentsFrame
 
 local function clearPendingMacroUpdate()
   pendingMacroName = nil
@@ -635,11 +637,35 @@ end)
 function MDT:FocusMarker_ApplySyncedAssignments(payload, senderFullName)
   if type(payload) ~= "table" or type(payload.assignments) ~= "table" then return end
 
-  self:FocusMarker_ApplyMarker(payload.assignments[getPlayerFullName()] or 0, {
+  local assignments = self:FocusMarker_GetAssignments()
+  local roster = getGroupRoster()
+  local rosterLookup = {}
+  local syncedAssignments = {}
+  for _, player in ipairs(roster) do
+    rosterLookup[player.fullName] = true
+  end
+  for fullName, markerIndex in pairs(payload.assignments) do
+    markerIndex = tonumber(markerIndex)
+    if type(fullName) == "string" and rosterLookup[fullName] and markerIndex and markerIndex >= 1 and markerIndex <= 8 then
+      syncedAssignments[fullName] = markerIndex
+    end
+  end
+  for fullName in pairs(assignments) do
+    assignments[fullName] = nil
+  end
+  for fullName, markerIndex in pairs(syncedAssignments) do
+    assignments[fullName] = markerIndex
+  end
+
+  self:FocusMarker_ApplyMarker(assignments[getPlayerFullName()] or 0, {
     fullName = payload.senderFullName or senderFullName,
     name = payload.senderName or getShortName(senderFullName),
     class = payload.senderClass,
   })
+
+  if refreshAssignmentsFrame then
+    refreshAssignmentsFrame()
+  end
 end
 
 function MDT:FocusMarker_SendAssignments()
@@ -726,7 +752,8 @@ local function setButtonMarker(button, markerIndex)
   button:SetText(markerLabel(markerIndex))
 end
 
-local function refreshAssignmentsFrame()
+refreshAssignmentsFrame = function()
+  if not assignmentsFrame or not assignmentsFrame.frame or not assignmentsFrame.frame:IsShown() then return end
   C_Timer.After(0, function()
     MDT:FocusMarker_OpenAssignments()
   end)
@@ -857,8 +884,6 @@ local function openMarkerMenu(widget, fullName)
     end)
   end)
 end
-
-local assignmentsFrame
 
 local function hideAceGUIBuiltInCloseButton(frame)
   for _, child in ipairs({ frame.frame:GetChildren() }) do
