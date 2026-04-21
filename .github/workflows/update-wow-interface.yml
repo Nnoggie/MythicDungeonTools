@@ -1,0 +1,28 @@
+name: Update WoW TOC Interface
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "37 4 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - id: toc
+        uses: Nnoggie/wow-interface-updater@v1
+
+      - uses: peter-evans/create-pull-request@v7
+        if: steps.toc.outputs.changed == 'true'
+        with:
+          branch: automation/wow-interface
+          delete-branch: true
+          commit-message: Update WoW TOC interface versions
+          title: Update WoW TOC interface versions
+          body: ${{ steps.toc.outputs.pr-body }}
