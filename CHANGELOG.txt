@@ -1,4 +1,3 @@
-## 6.0.14 (2026-04-21)
+## 6.0.15 (2026-04-21)
 
-- Remove FocusMarker controls from the general settings menu and keep them in the Marks window.
-- Increase the general settings window height.
+- Prevent duplicate FocusMarker macro icons from appearing in the Marks window.
