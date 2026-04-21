@@ -1,3 +1,5 @@
-## 6.0.12-alpha1 (2026-04-20)
+## 6.0.12-alpha2 (2026-04-21)
 
-- Fix minimap icon refresh on reload.
+- Add synced focus marker assignments with a draggable macro and toast opt-out.
+- Fix Seat of the Triumvirate and Algethar Academy zone IDs.
+- Update WoW interface versions.
