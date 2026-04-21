@@ -245,21 +245,9 @@ local function getNotificationFrame()
     return button
   end
 
-  frame.keybindButton = createNotificationButton(L["Keybinds"])
-  frame.keybindButton:SetSize(116, 22)
-  frame.keybindButton:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", -4, 8)
-  frame.keybindButton:SetScript("OnClick", function()
-    notificationSerial = notificationSerial + 1
-    frame:Hide()
-    if openKeybindSettings then
-      openKeybindSettings()
-    end
-  end)
-  frame.keybindButton:Hide()
-
   frame.markSettingsButton = createNotificationButton(L["Mark Settings"])
   frame.markSettingsButton:SetSize(116, 22)
-  frame.markSettingsButton:SetPoint("LEFT", frame.keybindButton, "RIGHT", 8, 0)
+  frame.markSettingsButton:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", -4, 8)
   frame.markSettingsButton:SetScript("OnClick", function()
     notificationSerial = notificationSerial + 1
     frame:Hide()
@@ -268,6 +256,19 @@ local function getNotificationFrame()
     end
   end)
   frame.markSettingsButton:Hide()
+
+  frame.dontShowAgainButton = createNotificationButton(L["Don't show again"])
+  frame.dontShowAgainButton:SetSize(116, 22)
+  frame.dontShowAgainButton:SetPoint("LEFT", frame.markSettingsButton, "RIGHT", 8, 0)
+  frame.dontShowAgainButton:SetScript("OnClick", function()
+    local settings = getMacroSettings and getMacroSettings()
+    if settings then
+      settings.suppressNotifications = true
+    end
+    notificationSerial = notificationSerial + 1
+    frame:Hide()
+  end)
+  frame.dontShowAgainButton:Hide()
 
   frame:Hide()
   notificationFrame = frame
@@ -303,8 +304,8 @@ local function updateNotificationKeybindHint(frame)
     frame.keybindText:SetPoint("RIGHT", -12, 0)
     frame.keybindText:SetText(L["focusMarkerKeybindMissingToast"])
     frame.keybindText:Show()
-    frame.keybindButton:Show()
     frame.markSettingsButton:Show()
+    frame.dontShowAgainButton:Show()
   else
     frame:SetSize(430, 64)
     frame.logo:SetPoint("TOP", frame, "TOP", -18, -8)
@@ -313,8 +314,8 @@ local function updateNotificationKeybindHint(frame)
     frame.text:SetPoint("LEFT", frame.icon, "RIGHT", 8, 0)
     frame.text:SetPoint("RIGHT", -12, 0)
     frame.keybindText:Hide()
-    frame.keybindButton:Hide()
     frame.markSettingsButton:Hide()
+    frame.dontShowAgainButton:Hide()
   end
   return showHint
 end
