@@ -409,22 +409,20 @@ local function announceFocusMarker()
   if not settings then return end
   if not settings.announceReadyCheck then return end
 
-  local distribution = MDT:IsPlayerInGroup()
-  if not distribution then return end
-
   local markerIndex = tonumber(settings.lastMarker)
   if not markerIndex or markerIndex == 0 then return end
 
   local markerName = markerNames[markerIndex]
   if not markerName then return end
 
-  C_ChatInfo.SendChatMessage(("My Focus Marker is {%s}"):format(markerName), distribution)
+  C_ChatInfo.SendChatMessage(("My Focus Marker is {%s}"):format(markerName), "PARTY")
 end
 
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("READY_CHECK")
 eventFrame:SetScript("OnEvent", function(_, event)
   if event == "READY_CHECK" then
+    if IsInRaid() then return end
     announceFocusMarker()
   end
 end)
