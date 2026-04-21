@@ -1,5 +1,7 @@
-## 6.0.12-alpha2 (2026-04-21)
+## 6.0.13 (2026-04-21)
 
 - Add synced focus marker assignments with a draggable macro and toast opt-out.
+- Keep received focus marker assignments synced in the Marks window.
+- Suppress focus marker ready-check announcements in raid groups.
 - Fix Seat of the Triumvirate and Algethar Academy zone IDs.
 - Update WoW interface versions.
