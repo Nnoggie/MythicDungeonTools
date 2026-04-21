@@ -18,7 +18,7 @@ jobs:
       - id: toc
         uses: Nnoggie/wow-interface-updater@v1
 
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         if: steps.toc.outputs.changed == 'true'
         with:
           branch: automation/wow-interface
