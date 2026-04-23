@@ -7,6 +7,7 @@ local MACRO_NAME = "MDTFocusMarker"
 local MACRO_CONDITIONALS = "[@mouseover,exists,nodead][]"
 local MACRO_ICON = 1033497
 local MDT_LOGO = "Interface\\AddOns\\MythicDungeonTools\\Textures\\MDTFull"
+local NO_MACRO_SLOTS_ERROR = "nomacroslots"
 local KEYBIND_BUTTON_NAME = "MDTFocusMarkerButton"
 local KEYBIND_COMMAND = "CLICK MDTFocusMarkerButton:LeftButton"
 local NOTIFICATION_DURATION = 4
@@ -356,8 +357,53 @@ local function showAssignmentNotification(markerIndex, sender, queued)
   end)
 end
 
+local function showNoMacroSlotsNotification()
+  local frame = getNotificationFrame()
+  frame:EnableMouse(true)
+  frame:SetSize(430, 86)
+  frame.logo:ClearAllPoints()
+  frame.brand:ClearAllPoints()
+  frame.icon:ClearAllPoints()
+  frame.text:ClearAllPoints()
+  frame.keybindText:ClearAllPoints()
+
+  frame.logo:SetPoint("TOP", frame, "TOP", -18, -8)
+  frame.brand:SetPoint("LEFT", frame.logo, "RIGHT", 5, 0)
+  frame.icon:SetPoint("TOPLEFT", 20, -34)
+  frame.icon:SetTexture("Interface\\Buttons\\UI-GroupLoot-Pass-Up")
+  frame.icon:SetTexCoord(0, 1, 0, 1)
+  frame.text:SetPoint("LEFT", frame.icon, "RIGHT", 8, 0)
+  frame.text:SetPoint("RIGHT", -12, 0)
+  frame.text:SetText(L["focusMarkerNoMacroSlotsTitle"])
+  frame.keybindText:SetPoint("TOPLEFT", frame.text, "BOTTOMLEFT", 0, -6)
+  frame.keybindText:SetPoint("RIGHT", -12, 0)
+  frame.keybindText:SetText(L["focusMarkerNoMacroSlotsText"])
+  frame.keybindText:Show()
+  frame.markSettingsButton:Hide()
+  frame.dontShowAgainButton:Hide()
+
+  notificationSerial = notificationSerial + 1
+  local serial = notificationSerial
+  frame:SetAlpha(1)
+  frame:Show()
+  C_Timer.After(KEYBIND_HINT_NOTIFICATION_DURATION, function()
+    if notificationSerial == serial then
+      frame:Hide()
+    end
+  end)
+end
+
 local function notify(message)
   print("|cffffd100MDT:|r "..message)
+end
+
+local function notifyMacroUpdateFailed(err)
+  if err == NO_MACRO_SLOTS_ERROR then
+    showNoMacroSlotsNotification()
+    notify(L["focusMarkerNoMacroSlotsText"])
+  else
+    notify(string.format(L["focusMarkerMacroUpdateFailed"], tostring(err)))
+  end
 end
 
 getMacroSettings = function()
@@ -379,6 +425,11 @@ end
 local function buildMacroBody(markerIndex)
   markerIndex = tonumber(markerIndex) or 0
   return "/focus "..MACRO_CONDITIONALS.."\n/tm [@focus] "..markerIndex
+end
+
+local function hasAccountMacroSlot()
+  local numAccountMacros = GetNumMacros()
+  return numAccountMacros < MAX_ACCOUNT_MACROS
 end
 
 local function createKeybindButton()
@@ -437,17 +488,26 @@ local function applyMacroNow(name, icon, body)
     return false, "incombat"
   end
 
-  local ok, err = pcall(function()
+  local ok, result = pcall(function()
     local macroIndex = GetMacroIndexByName(name)
     if macroIndex and macroIndex > 0 then
       EditMacro(macroIndex, name, icon, body)
     else
-      CreateMacro(name, icon, body, nil)
+      if not hasAccountMacroSlot() then
+        return NO_MACRO_SLOTS_ERROR
+      end
+      local createdMacroIndex = CreateMacro(name, icon, body, nil)
+      if not createdMacroIndex or createdMacroIndex == 0 then
+        return NO_MACRO_SLOTS_ERROR
+      end
     end
   end)
 
   if not ok then
-    return false, err
+    return false, result
+  end
+  if result == NO_MACRO_SLOTS_ERROR then
+    return false, result
   end
   return true
 end
@@ -464,7 +524,7 @@ local function pickupFocusMarkerMacro()
   if not macroIndex or macroIndex == 0 or not InCombatLockdown() then
     local ok, err = applyMacroNow(name, icon, body)
     if not ok then
-      notify(string.format(L["focusMarkerMacroUpdateFailed"], tostring(err)))
+      notifyMacroUpdateFailed(err)
       return
     end
     macroIndex = GetMacroIndexByName(name)
@@ -496,7 +556,7 @@ queuedFrame:SetScript("OnEvent", function()
       notify(L["focusMarkerMacroUpdated"])
     end
   else
-    notify(string.format(L["focusMarkerMacroUpdateFailed"], tostring(err)))
+    notifyMacroUpdateFailed(err)
   end
   clearPendingMacroUpdate()
 end)
@@ -590,7 +650,7 @@ function MDT:FocusMarker_ApplyMarker(markerIndex, sender)
   elseif err == "incombat" then
     queueMacroUpdate(name, icon, body, markerIndex, sender, settings.useMacro)
   else
-    notify(string.format(L["focusMarkerMacroUpdateFailed"], tostring(err)))
+    notifyMacroUpdateFailed(err)
   end
 end
 

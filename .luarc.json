@@ -77,7 +77,8 @@
     "GetAddOnMetadata",
     "LOCALIZED_CLASS_NAMES_MALE",
         "C_Secrets",
-        "ChatFrameUtil"
+        "ChatFrameUtil",
+        "MAX_ACCOUNT_MACROS"
   ],
   "diagnostics.disable": ["invisible"]
 }
