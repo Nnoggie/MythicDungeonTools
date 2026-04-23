@@ -12,6 +12,11 @@ local tinsert, tremove, CreateFrame, tonumber, max, min, abs, pairs, ipairs, Get
 
 local sizex = 840
 local sizey = 555
+local defaultNonFullscreenScale = 1.4
+local minNonFullscreenScale = 0.9
+local sidePanelWidth = 251
+local panelHeight = 30
+local screenEdgePadding = 10
 local framesInitialized, initFrames
 MDT.externalLinks = {
   {
@@ -156,7 +161,7 @@ local defaultSavedVars = {
     toolbarExpanded = true,
     currentSeason = 11, -- not really used for anything anymore
     scale = 1,
-    nonFullscreenScale = 1.4,
+    nonFullscreenScale = defaultNonFullscreenScale,
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
     enemyStyle = 1,
@@ -582,16 +587,34 @@ function MDT:SetScale(scale)
 end
 
 function MDT:GetFullScreenSizes()
-  local newSizey = GetScreenHeight() - 60 --top and bottom panel 30 each
+  local newSizey = GetScreenHeight() - (panelHeight * 2)
   local newSizex = newSizey * (sizex / sizey)
   local isNarrow
-  if newSizex + 251 > GetScreenWidth() then --251 sidebar
-    newSizex = GetScreenWidth() - 251
+  if newSizex + sidePanelWidth > GetScreenWidth() then
+    newSizex = GetScreenWidth() - sidePanelWidth
     newSizey = newSizex * (sizey / sizex)
     isNarrow = true
   end
   local scale = newSizey / sizey --use this for adjusting NPC / POI positions later
   return newSizex, newSizey, scale, isNarrow
+end
+
+function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
+  xoffset = xoffset or defaultSavedVars.global.xoffset
+  yoffset = yoffset or defaultSavedVars.global.yoffset
+
+  local screenWidth = GetScreenWidth()
+  local screenHeight = GetScreenHeight()
+  if not screenWidth or not screenHeight or screenWidth <= 0 or screenHeight <= 0 then
+    return defaultNonFullscreenScale
+  end
+
+  local maxLeftScale = ((screenWidth / 2) + xoffset - screenEdgePadding) * 2 / sizex
+  local maxRightScale = ((screenWidth / 2) - sidePanelWidth - xoffset - screenEdgePadding) * 2 / sizex
+  local maxHeightScale = (screenHeight + yoffset - panelHeight - screenEdgePadding) / sizey
+  local maxScale = min(maxLeftScale, maxRightScale, maxHeightScale)
+
+  return min(defaultNonFullscreenScale, max(minNonFullscreenScale, maxScale))
 end
 
 function MDT:SkinProgressBar(progressBar)
@@ -864,7 +887,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel:EnableMouse(true)
 
   frame.sidePanel:ClearAllPoints()
-  frame.sidePanel:SetWidth(251)
+  frame.sidePanel:SetWidth(sidePanelWidth)
   frame.sidePanel:SetPoint("TOPLEFT", frame, "TOPRIGHT", 0, 30)
   frame.sidePanel:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, -30)
 
@@ -4323,15 +4346,16 @@ function MDT:ResetMainFramePos(soft)
     if not framesInitialized then initFrames() end
     local f = self.main_frame
     if not soft then
-      db.nonFullscreenScale = defaultSavedVars.global.nonFullscreenScale
       db.maximized = false
       if not framesInitialized then initFrames() end
       if not framesInitialized then return end
-      f.maximizeButton:Minimize()
-      db.xoffset = 0
-      db.yoffset = -150
+      db.xoffset = defaultSavedVars.global.xoffset
+      db.yoffset = defaultSavedVars.global.yoffset
       db.anchorFrom = "TOP"
       db.anchorTo = "TOP"
+      db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
+      db.scale = db.nonFullscreenScale
+      f.maximizeButton:Minimize()
     end
     f:ClearAllPoints()
     f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
@@ -4542,7 +4566,10 @@ function initFrames()
     end
   end
 
-  db.nonFullscreenScale = db.nonFullscreenScale or defaultSavedVars.global.nonFullscreenScale
+  db.nonFullscreenScale = db.nonFullscreenScale or MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
+  if db.nonFullscreenScale == defaultNonFullscreenScale and db.anchorFrom == "TOP" and db.anchorTo == "TOP" then
+    db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
+  end
   if not db.maximized then db.scale = db.nonFullscreenScale end
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
