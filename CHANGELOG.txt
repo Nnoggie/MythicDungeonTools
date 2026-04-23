@@ -1,3 +1,4 @@
-## 6.0.15 (2026-04-21)
+## 6.0.16 (2026-04-23)
 
-- Prevent duplicate FocusMarker macro icons from appearing in the Marks window.
+- Clamp the default MDT window size after `/mdt reset` so it fits smaller screens.
+- Show a clear focus marker macro warning when account macro slots are full.
