@@ -1,4 +1,5 @@
-## 6.0.16 (2026-04-23)
+## 6.0.17 (2026-04-23)
 
+- Fixed missing localization in the CurseForge release package.
 - Clamp the default MDT window size after `/mdt reset` so it fits smaller screens.
 - Show a clear focus marker macro warning when account macro slots are full.
