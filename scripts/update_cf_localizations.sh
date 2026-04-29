@@ -8,7 +8,7 @@ poll_interval="${CF_LOCALIZATION_POLL_INTERVAL:-10}"
 api_base="${CF_LOCALIZATION_API_BASE:-https://legacy.curseforge.com/api/projects/${project_id}/localization}"
 locales=(
   "enUS|Locales/enUS.lua|DoNothing"
-  "zhCN|Locales/zhCN.lua|DeletePhrase"
+  "zhCN|Locales/zhCN.lua|DoNothing"
 )
 
 if [[ -z "${CF_API_KEY:-}" ]]; then
