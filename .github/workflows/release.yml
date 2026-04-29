@@ -35,6 +35,9 @@ jobs:
         with:
           fetch-depth: 0  # gets entire git history, needed for automatic changelogs
 
+      - name: Update CurseForge localizations
+        run: bash scripts/update_cf_localizations.sh
+
       # once cloned, we just run the GitHub Action for the packager project
       - name: Package and release
         uses: BigWigsMods/packager@v2

@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+import argparse
+import re
+import sys
+from pathlib import Path
+
+
+ENTRY_RE = re.compile(r'^\s*L\["([^"]+)"\]\s*=', re.MULTILINE)
+
+
+def extract_entries(source_path):
+    lines = source_path.read_text(encoding="utf-8").splitlines()
+    entries = []
+    index = 0
+
+    while index < len(lines):
+        line = lines[index]
+        if "@localization" in line:
+            break
+
+        match = ENTRY_RE.match(line)
+        if not match:
+            index += 1
+            continue
+
+        key = match.group(1)
+        block = [line.rstrip()]
+        index += 1
+
+        while index < len(lines):
+            next_line = lines[index]
+            if "@localization" in next_line or ENTRY_RE.match(next_line):
+                break
+            block.append(next_line.rstrip())
+            index += 1
+
+        entries.append((key, block))
+
+    return entries
+
+
+def write_entries(entries, output_path, keys_path):
+    output_path.write_text(
+        "\n".join("\n".join(block) for _, block in entries) + "\n",
+        encoding="utf-8",
+    )
+    keys_path.write_text(
+        "\n".join(key for key, _ in entries) + "\n",
+        encoding="utf-8",
+    )
+
+
+def check_export(export_path, keys_path):
+    export_text = export_path.read_text(encoding="utf-8", errors="replace")
+    exported_keys = set(ENTRY_RE.findall(export_text))
+    expected_keys = [
+        line
+        for line in keys_path.read_text(encoding="utf-8").splitlines()
+        if line
+    ]
+    missing = [key for key in expected_keys if key not in exported_keys]
+    if missing:
+        print(f"Missing {len(missing)} localization keys in CurseForge export.")
+        for key in missing[:20]:
+            print(f"  {key}")
+        return 1
+    print(f"CurseForge export contains {len(expected_keys)} enUS keys.")
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--source", default="Locales/enUS.lua")
+    parser.add_argument("--output")
+    parser.add_argument("--keys")
+    parser.add_argument("--check-export")
+    args = parser.parse_args()
+
+    if args.check_export:
+        if not args.keys:
+            parser.error("--keys is required with --check-export")
+        return check_export(Path(args.check_export), Path(args.keys))
+
+    if not args.output or not args.keys:
+        parser.error("--output and --keys are required")
+
+    entries = extract_entries(Path(args.source))
+    if not entries:
+        print("No enUS localization entries found.", file=sys.stderr)
+        return 1
+
+    write_entries(entries, Path(args.output), Path(args.keys))
+    print(f"Wrote {len(entries)} enUS localization entries.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
