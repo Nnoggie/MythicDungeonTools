@@ -182,6 +182,7 @@ local defaultSavedVars = {
     },
     presets = {},
     currentPreset = {},
+    alwaysOverwriteRoutesByUID = false,
     fadeOutDuringCombat = false,
     fadeOutAlpha = 0.5,
     focusMarker = {
@@ -2205,6 +2206,7 @@ end
 function MDT:EnsureDBTables()
   --dungeonIdx doesnt exist
   local seasonList = MDT:GetSeasonList()
+  if db.alwaysOverwriteRoutesByUID == nil then db.alwaysOverwriteRoutesByUID = false end
   db.selectedDungeonList = db.selectedDungeonList or defaultSavedVars.global.selectedDungeonList
   if not MDT.dungeonList[db.currentDungeonIdx] or string.find(MDT.dungeonList[db.currentDungeonIdx], ">") or
       not db.selectedDungeonList or not seasonList[db.selectedDungeonList] then
@@ -2841,23 +2843,17 @@ function MDT:ImportPreset(preset, fromLiveSession)
   local updateIndex
   local duplicatePreset
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-    if v.uid and v.uid == preset.uid then
+    if preset.uid and v.uid and v.uid == preset.uid then
       updateIndex = k
       duplicatePreset = v
       break
     end
   end
 
-  local updateCallback = function()
-    if self.main_frame.ConfirmationFrame then
-      self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()
-      end)
-    end
-    db.presets[db.currentDungeonIdx][updateIndex] = preset
-    db.currentPreset[db.currentDungeonIdx] = updateIndex
-    self.liveUpdateFrameOpen = nil
+  local finishImport = function()
     self:UpdatePresetDropDown()
     self:UpdateMap()
+    self.liveUpdateFrameOpen = nil
     if fromLiveSession then
       self.main_frame.SendingStatusBar:Hide()
       if self.main_frame.LoadingSpinner then
@@ -2866,11 +2862,23 @@ function MDT:ImportPreset(preset, fromLiveSession)
       end
     end
   end
-  local copyCallback = function()
+
+  local clearConfirmationCloseCallback = function()
     if self.main_frame.ConfirmationFrame then
       self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()
       end)
     end
+  end
+
+  local updateCallback = function()
+    clearConfirmationCloseCallback()
+    db.presets[db.currentDungeonIdx][updateIndex] = preset
+    db.currentPreset[db.currentDungeonIdx] = updateIndex
+    finishImport()
+  end
+
+  local copyCallback = function(preserveUid)
+    clearConfirmationCloseCallback()
     local name = preset.text
     local num = 2
     for k, v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -2881,9 +2889,10 @@ function MDT:ImportPreset(preset, fromLiveSession)
     end
     preset.text = name
     if fromLiveSession then
-      if duplicatePreset then duplicatePreset.uid = nil end
+      if not preserveUid and duplicatePreset then duplicatePreset.uid = nil end
+      MDT:SetUniqueID(preset)
     else
-      preset.uid = nil
+      if not preserveUid then preset.uid = nil end
       MDT:SetUniqueID(preset)
     end
     local countPresets = 0
@@ -2893,16 +2902,7 @@ function MDT:ImportPreset(preset, fromLiveSession)
     db.presets[db.currentDungeonIdx][countPresets + 1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
     db.presets[db.currentDungeonIdx][countPresets] = preset
     db.currentPreset[db.currentDungeonIdx] = countPresets
-    self.liveUpdateFrameOpen = nil
-    self:UpdatePresetDropDown()
-    self:UpdateMap()
-    if fromLiveSession then
-      self.main_frame.SendingStatusBar:Hide()
-      if self.main_frame.LoadingSpinner then
-        self.main_frame.LoadingSpinner:Hide()
-        self.main_frame.LoadingSpinner.Anim:Stop()
-      end
-    end
+    finishImport()
   end
   local closeCallback = function()
     self.liveUpdateFrameOpen = nil
@@ -2920,14 +2920,26 @@ function MDT:ImportPreset(preset, fromLiveSession)
 
   --open dialog to ask for replacing
   if updateIndex then
+    if db.alwaysOverwriteRoutesByUID then
+      updateCallback()
+      return
+    end
     local prompt = string.format(L["Earlier Version"], duplicatePreset.text, "\n", "\n", "\n", "\n")
-    self:OpenConfirmationFrame(450, 150, L["Import Preset"], L["Update"], prompt, updateCallback, L["Copy"], copyCallback)
+    local checkboxCallback = function(value)
+      db.alwaysOverwriteRoutesByUID = value
+      if self.main_frame and self.main_frame.alwaysOverwriteRoutesByUIDCheckbox then
+        self.main_frame.alwaysOverwriteRoutesByUIDCheckbox:SetValue(value)
+      end
+    end
+    self:OpenConfirmationFrame(450, 180, L["Import Preset"], L["Overwrite"], prompt, updateCallback, L["Make copy"],
+      function() copyCallback(false) end, nil, L["Always overwrite matching routes on import"], db.alwaysOverwriteRoutesByUID,
+      checkboxCallback)
     if fromLiveSession then
       self.liveUpdateFrameOpen = true
       self.main_frame.ConfirmationFrame:SetCallback("OnClose", function() closeCallback() end)
     end
   else
-    copyCallback()
+    copyCallback(true)
   end
 end
 
@@ -3132,9 +3144,9 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame.frame:SetParent(frame)
   frame.settingsFrame.frame:SetFrameStrata("DIALOG")
   frame.settingsFrame:SetTitle(L["Settings"])
-  local frameWidth = 300
+  local frameWidth = 350
   frame.settingsFrame:SetWidth(frameWidth)
-  frame.settingsFrame:SetHeight(420)
+  frame.settingsFrame:SetHeight(450)
   frame.settingsFrame:EnableResize(false)
   frame.settingsFrame:SetLayout("Flow")
   frame.settingsFrame.statustext:GetParent():Hide()
@@ -3179,6 +3191,15 @@ function MDT:MakeSettingsFrame(frame)
     MDT:ReloadPullButtons()
   end)
   frame.settingsFrame:AddChild(frame.forcesCheckbox)
+
+  frame.alwaysOverwriteRoutesByUIDCheckbox = AceGUI:Create("CheckBox")
+  frame.alwaysOverwriteRoutesByUIDCheckbox:SetLabel(L["Always overwrite matching routes on import"])
+  frame.alwaysOverwriteRoutesByUIDCheckbox:SetWidth(frameWidth - 10)
+  frame.alwaysOverwriteRoutesByUIDCheckbox:SetValue(db.alwaysOverwriteRoutesByUID)
+  frame.alwaysOverwriteRoutesByUIDCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.alwaysOverwriteRoutesByUID = value
+  end)
+  frame.settingsFrame:AddChild(frame.alwaysOverwriteRoutesByUIDCheckbox)
 
   -- Initialize database values if they don't exist
   if db.fadeOutDuringCombat == nil then db.fadeOutDuringCombat = false end
@@ -3918,7 +3939,8 @@ function MDT:MakeClearConfirmationFrame(frame)
 end
 
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
-function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2, fireCancelOnClose)
+function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2,
+                                   fireCancelOnClose, checkboxText, checkboxValue, checkboxCallback)
   local f
   if MDT.main_frame then
     f = MDT.main_frame.ConfirmationFrame
@@ -3946,6 +3968,11 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     f.label:SetHeight(height - 20)
     f:AddChild(f.label)
 
+    f.CheckBox = AceGUI:Create("CheckBox")
+    f.CheckBox:SetWidth(390)
+    f.CheckBox.frame:Hide()
+    f:AddChild(f.CheckBox)
+
     f.OkayButton = AceGUI:Create("Button")
     f.OkayButton:SetWidth(100)
     f:AddChild(f.OkayButton)
@@ -3961,11 +3988,24 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   f:SetWidth(width or 250)
   f:SetHeight(height or 120)
   f:SetTitle(title)
+  f.label:SetHeight(math.max((height or 120) - (checkboxText and 80 or 20), 20))
   f.OkayButton:SetText(buttonText)
   f.OkayButton:SetCallback("OnClick", function()
     if callback then callback() end
     MDT:HideAllDialogs()
   end)
+  if checkboxText then
+    f.CheckBox:SetLabel(checkboxText)
+    f.CheckBox:SetValue(checkboxValue)
+    f.CheckBox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+      if checkboxCallback then checkboxCallback(value) end
+    end)
+    f.CheckBox.frame:Show()
+  else
+    f.CheckBox:SetCallback("OnValueChanged", function()
+    end)
+    f.CheckBox.frame:Hide()
+  end
   if buttonText2 then
     f.CancelButton:SetText(buttonText2)
   else
@@ -3994,6 +4034,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   f:SetPoint("CENTER", MDT.main_frame or UIParent, "CENTER", 0, 50)
   f.label:SetText(prompt)
   f:Show()
+  f:DoLayout()
 end
 
 function MDT:Round(number, decimals)
