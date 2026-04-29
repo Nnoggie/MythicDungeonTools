@@ -3785,6 +3785,8 @@ function MDT:RenamePreset(renameText, takeOwnership)
   preset.text = renameText
   if takeOwnership then
     MDT:EnsurePresetCreatedBy(preset, true)
+    preset.uid = nil
+    MDT:SetUniqueID(preset)
   end
   MDT.main_frame.RenameFrame:Hide()
   MDT:UpdatePresetDropDown()
