@@ -1,5 +1,8 @@
-## 6.0.17 (2026-04-23)
+## 6.1.0-alpha1 (2026-04-29)
 
-- Fixed missing localization in the CurseForge release package.
-- Clamp the default MDT window size after `/mdt reset` so it fits smaller screens.
-- Show a clear focus marker macro warning when account macro slots are full.
+- Added assignable captive points of interest for Midnight dungeons.
+- Updated Midnight dungeon enemy data.
+- Added route creator ownership, route forking, and overwrite/make-copy handling for matching route imports.
+- Deferred route imports until MDT frames finish loading.
+- Synced focus marker state across live sessions.
+- Fixed the CurseForge localization sync and run it before packaging so new strings land in release builds.

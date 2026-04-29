@@ -23,12 +23,13 @@ export_file="$tmpdir/export.lua"
 
 python3 scripts/extract_enUS_localizations.py --output "$localizations" --keys "$keys"
 key_count="$(wc -l < "$keys" | tr -d ' ')"
+metadata="{\"language\":\"${language}\",\"namespace\":\"${namespace}\",\"formatType\":\"TableAdditions\",\"missing-phrase-handling\":\"DoNothing\"}"
 
 echo "Importing ${key_count} ${language} localization keys to CurseForge project ${project_id}..."
 status="$(
   curl -sS -0 -X POST -w "%{http_code}" -o "$response" \
     -H "X-Api-Token: ${CF_API_KEY}" \
-    -F "metadata={ language: \"${language}\", namespace: \"${namespace}\", formatType: TableAdditions, \"missing-phrase-handling\": \"DoNothing\" }" \
+    -F "metadata=${metadata}" \
     -F "localizations=<${localizations}" \
     "${api_base}/import"
 )"
