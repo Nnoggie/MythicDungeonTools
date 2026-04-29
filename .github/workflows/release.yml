@@ -9,6 +9,12 @@ on:
   push:
     tags:
       - '**'
+  workflow_dispatch:
+    inputs:
+      sync_localizations_only:
+        description: Sync CurseForge localizations without packaging a release
+        type: boolean
+        default: true
 
 # a workflow is built up as jobs, and within these jobs are steps
 jobs:
@@ -40,6 +46,7 @@ jobs:
 
       # once cloned, we just run the GitHub Action for the packager project
       - name: Package and release
+        if: github.event_name == 'push'
         uses: BigWigsMods/packager@v2
         with:
           args: -w 0
