@@ -12,6 +12,12 @@ local KEYBIND_BUTTON_NAME = "MDTFocusMarkerButton"
 local KEYBIND_COMMAND = "CLICK MDTFocusMarkerButton:LeftButton"
 local NOTIFICATION_DURATION = 4
 local KEYBIND_HINT_NOTIFICATION_DURATION = 8
+local FOCUS_MARKER_KIND_STATE_REQUEST = "stateRequest"
+local FOCUS_MARKER_KIND_STATE_RESPONSE = "stateResponse"
+local FOCUS_MARKER_KIND_STATE_UPDATE = "stateUpdate"
+local FOCUS_MARKER_KIND_SYNC_V2 = "syncV2"
+local FOCUS_MARKER_SYNC_WARNING_CONFLICT = "conflict"
+local FOCUS_MARKER_SYNC_WARNING_MANUAL = "manual"
 
 local markerNames = {
   [0] = "None",
@@ -101,6 +107,18 @@ local function markerLabel(index)
   return markerTexture(index).." "..name
 end
 
+local function unknownMarkerLabel()
+  return L["Unknown"] or UNKNOWN or "Unknown"
+end
+
+local function conflictNeedsSyncText()
+  return L["focusMarkerConflictNeedsSync"] or "Marker already assigned. Click Sync Marks to overwrite."
+end
+
+local function manualChangeNeedsSyncText()
+  return L["focusMarkerManualChangeNeedsSync"] or "Click Sync Marks to apply this assignment to group members."
+end
+
 local function findNextAvailableMarker(usedMarkers, markerPriorities)
   if type(markerPriorities) == "number" then
     markerPriorities = { markerPriorities }
@@ -126,6 +144,9 @@ local openKeybindSettings
 local openMarkSettings
 local refreshAssignmentsFrame
 local assignmentsFrame
+local assignmentKnown = {}
+local assignmentEdited = {}
+local focusMarkerSyncWarning
 
 local function clearPendingMacroUpdate()
   pendingMacroName = nil
@@ -482,6 +503,7 @@ end)
 
 local getGroupRoster
 local pruneAssignmentsToRoster
+local pruneAssignmentKnown
 
 local function applyMacroNow(name, icon, body)
   if InCombatLockdown() then
@@ -577,6 +599,129 @@ local function queueMacroUpdate(name, icon, body, markerIndex, sender, useMacro)
   end
 end
 
+local function normalizeSyncedMarker(markerIndex, allowNone)
+  markerIndex = tonumber(markerIndex)
+  if markerIndex and markerIndex >= 1 and markerIndex <= 8 then
+    return markerIndex
+  end
+  if allowNone and markerIndex == 0 then
+    return 0
+  end
+end
+
+local function normalizeOwnMarker(markerIndex)
+  return normalizeSyncedMarker(markerIndex, true) or 0
+end
+
+local function applyKnownAssignment(assignments, fullName, markerIndex)
+  markerIndex = normalizeSyncedMarker(markerIndex, true)
+  if type(fullName) ~= "string" or not markerIndex then return end
+
+  assignmentKnown[fullName] = true
+  if markerIndex > 0 then
+    assignments[fullName] = markerIndex
+  else
+    assignments[fullName] = nil
+  end
+  return markerIndex
+end
+
+local function createSenderPayload(kind)
+  local senderName, senderRealm = UnitFullName("player")
+  return {
+    kind = kind,
+    senderFullName = getFullName(senderName, senderRealm),
+    senderName = senderName,
+    senderClass = select(2, UnitClass("player")),
+  }
+end
+
+local function sendFocusMarkerPayload(mdt, payload, distribution, target)
+  if not distribution then return end
+  local export = mdt:TableToString(payload, false, 5)
+  MDTcommsObject:SendCommMessage(mdt.liveSessionPrefixes.focusMarkerAssignment, export, distribution, target, "ALERT")
+end
+
+local function clearTableValues(values)
+  for key in pairs(values) do
+    values[key] = nil
+  end
+end
+
+local function clearEditedAssignments(roster)
+  if not roster then
+    clearTableValues(assignmentEdited)
+    return
+  end
+
+  for _, player in ipairs(roster) do
+    assignmentEdited[player.fullName] = nil
+  end
+end
+
+local function hasEditedAssignments(roster)
+  for _, player in ipairs(roster) do
+    if assignmentEdited[player.fullName] then
+      return true
+    end
+  end
+  return false
+end
+
+local function buildRosterLookup(roster)
+  local lookup = {}
+  for _, player in ipairs(roster) do
+    lookup[player.fullName] = true
+  end
+  return lookup
+end
+
+local function resetAssignmentKnowledgeForRoster(roster, assignments)
+  clearTableValues(assignmentKnown)
+  clearTableValues(assignmentEdited)
+
+  local settings = getMacroSettings()
+  local playerFullName = getPlayerFullName()
+  for _, player in ipairs(roster) do
+    if player.fullName == playerFullName then
+      applyKnownAssignment(assignments, player.fullName, normalizeOwnMarker(settings and settings.lastMarker))
+    else
+      assignments[player.fullName] = nil
+    end
+  end
+end
+
+local function markRosterAssignmentsKnown(roster, edited)
+  for _, player in ipairs(roster) do
+    assignmentKnown[player.fullName] = true
+    if edited then
+      assignmentEdited[player.fullName] = true
+    end
+  end
+end
+
+local function buildV2Markers(roster, assignments)
+  local markers = {}
+  for _, player in ipairs(roster) do
+    if assignmentKnown[player.fullName] then
+      markers[player.fullName] = normalizeOwnMarker(assignments[player.fullName])
+    end
+  end
+  return markers
+end
+
+local function assignmentHasKnownMarkerConflict(assignments, fullName, markerIndex)
+  markerIndex = normalizeSyncedMarker(markerIndex)
+  if not markerIndex then return false end
+
+  for assignedPlayer, assignedMarker in pairs(assignments) do
+    if assignedPlayer ~= fullName and assignmentKnown[assignedPlayer] and assignedMarker == markerIndex then
+      return true
+    end
+  end
+  return false
+end
+
 function MDT:FocusMarker_GetAssignments()
   local settings = getMacroSettings()
   if not settings then return {} end
@@ -591,8 +736,10 @@ function MDT:FocusMarker_SetAssignment(fullName, markerIndex)
   local assignments = self:FocusMarker_GetAssignments()
   local roster = getGroupRoster()
   pruneAssignmentsToRoster(assignments, roster)
+  pruneAssignmentKnown(roster)
   local playerFullName = getPlayerFullName()
   local previousOwnMarker = assignments[playerFullName]
+  local previousTargetMarker = normalizeOwnMarker(assignments[fullName])
   local playerInGroup = false
   for _, player in ipairs(roster) do
     if player.fullName == fullName then
@@ -603,10 +750,16 @@ function MDT:FocusMarker_SetAssignment(fullName, markerIndex)
   if not playerInGroup then return end
 
   markerIndex = tonumber(markerIndex)
+  local ownAssignmentChanged = fullName == playerFullName
+  local ownMarkerConflict = ownAssignmentChanged and assignmentHasKnownMarkerConflict(assignments, fullName, markerIndex)
+  assignmentKnown[fullName] = true
+  assignmentEdited[fullName] = true
   if markerIndex and markerIndex >= 1 and markerIndex <= 8 then
     for assignedPlayer, assignedMarker in pairs(assignments) do
       if assignedPlayer ~= fullName and assignedMarker == markerIndex then
         assignments[assignedPlayer] = nil
+        assignmentKnown[assignedPlayer] = true
+        assignmentEdited[assignedPlayer] = true
       end
     end
     assignments[fullName] = markerIndex
@@ -615,8 +768,20 @@ function MDT:FocusMarker_SetAssignment(fullName, markerIndex)
   end
 
   local currentOwnMarker = assignments[playerFullName]
+  local currentTargetMarker = normalizeOwnMarker(assignments[fullName])
   if previousOwnMarker ~= currentOwnMarker then
     self:FocusMarker_ApplyMarker(currentOwnMarker or 0)
+  end
+  if ownAssignmentChanged and previousOwnMarker ~= currentOwnMarker then
+    if ownMarkerConflict then
+      focusMarkerSyncWarning = FOCUS_MARKER_SYNC_WARNING_CONFLICT
+    else
+      focusMarkerSyncWarning = nil
+      assignmentEdited[playerFullName] = nil
+      self:FocusMarker_SendStateUpdate(currentOwnMarker or 0)
+    end
+  elseif not ownAssignmentChanged and previousTargetMarker ~= currentTargetMarker then
+    focusMarkerSyncWarning = FOCUS_MARKER_SYNC_WARNING_MANUAL
   end
 end
 
@@ -694,34 +859,85 @@ startupFrame:SetScript("OnEvent", function(self, event, addonName)
   self:UnregisterEvent("PLAYER_LOGIN")
 end)
 
-function MDT:FocusMarker_ApplySyncedAssignments(payload, senderFullName)
-  if type(payload) ~= "table" or type(payload.assignments) ~= "table" then return end
+function MDT:FocusMarker_ApplySyncedAssignmentsV2(payload, senderFullName)
+  if type(payload) ~= "table" or type(payload.markers) ~= "table" then return end
 
   local assignments = self:FocusMarker_GetAssignments()
   local roster = getGroupRoster()
-  local rosterLookup = {}
-  local syncedAssignments = {}
-  for _, player in ipairs(roster) do
-    rosterLookup[player.fullName] = true
-  end
-  for fullName, markerIndex in pairs(payload.assignments) do
-    markerIndex = tonumber(markerIndex)
-    if type(fullName) == "string" and rosterLookup[fullName] and markerIndex and markerIndex >= 1 and markerIndex <= 8 then
-      syncedAssignments[fullName] = markerIndex
+  local rosterLookup = buildRosterLookup(roster)
+
+  local ownMarker
+  local ownMarkerSynced = false
+  local playerFullName = getPlayerFullName()
+  for fullName, markerIndex in pairs(payload.markers) do
+    markerIndex = normalizeSyncedMarker(markerIndex, true)
+    if type(fullName) == "string" and rosterLookup[fullName] and markerIndex then
+      applyKnownAssignment(assignments, fullName, markerIndex)
+      assignmentEdited[fullName] = nil
+      if fullName == playerFullName then
+        ownMarker = markerIndex
+        ownMarkerSynced = true
+      end
     end
   end
-  for fullName in pairs(assignments) do
-    assignments[fullName] = nil
-  end
-  for fullName, markerIndex in pairs(syncedAssignments) do
-    assignments[fullName] = markerIndex
+
+  if ownMarkerSynced then
+    self:FocusMarker_ApplyMarker(ownMarker, {
+      fullName = payload.senderFullName or senderFullName,
+      name = payload.senderName or getShortName(senderFullName),
+      class = payload.senderClass,
+    })
   end
 
-  self:FocusMarker_ApplyMarker(assignments[getPlayerFullName()] or 0, {
-    fullName = payload.senderFullName or senderFullName,
-    name = payload.senderName or getShortName(senderFullName),
-    class = payload.senderClass,
-  })
+  if refreshAssignmentsFrame then
+    refreshAssignmentsFrame()
+  end
+  if not hasEditedAssignments(roster) then
+    focusMarkerSyncWarning = nil
+  end
+end
+
+function MDT:FocusMarker_SendStateRequest()
+  local distribution = self:IsPlayerInGroup()
+  if not distribution then return end
+
+  local payload = createSenderPayload(FOCUS_MARKER_KIND_STATE_REQUEST)
+  sendFocusMarkerPayload(self, payload, distribution)
+end
+
+function MDT:FocusMarker_SendStateResponse()
+  local distribution = self:IsPlayerInGroup()
+  if not distribution then return end
+
+  local settings = getMacroSettings()
+  local payload = createSenderPayload(FOCUS_MARKER_KIND_STATE_RESPONSE)
+  payload.marker = normalizeOwnMarker(settings and settings.lastMarker)
+  sendFocusMarkerPayload(self, payload, distribution)
+end
+
+function MDT:FocusMarker_SendStateUpdate(markerIndex)
+  local distribution = self:IsPlayerInGroup()
+  if not distribution then return end
+
+  local payload = createSenderPayload(FOCUS_MARKER_KIND_STATE_UPDATE)
+  payload.marker = normalizeOwnMarker(markerIndex)
+  sendFocusMarkerPayload(self, payload, distribution)
+end
+
+local function applyStateMarkerPayload(mdt, payload, senderFullName)
+  if type(payload) ~= "table" then return end
+
+  local fullName = senderFullName or payload.senderFullName
+  local markerIndex = normalizeSyncedMarker(payload.marker, true)
+  if type(fullName) ~= "string" or not markerIndex then return end
+
+  local assignments = mdt:FocusMarker_GetAssignments()
+  local roster = getGroupRoster()
+  local rosterLookup = buildRosterLookup(roster)
+  if not rosterLookup[fullName] then return end
+  if assignmentEdited[fullName] then return end
+
+  applyKnownAssignment(assignments, fullName, markerIndex)
 
   if refreshAssignmentsFrame then
     refreshAssignmentsFrame()
@@ -729,30 +945,39 @@ function MDT:FocusMarker_ApplySyncedAssignments(payload, senderFullName)
 end
 
 function MDT:FocusMarker_SendAssignments()
+  focusMarkerSyncWarning = nil
   local assignments = self:FocusMarker_GetAssignments()
-  pruneAssignmentsToRoster(assignments, getGroupRoster())
+  local roster = getGroupRoster()
+  pruneAssignmentsToRoster(assignments, roster)
+  pruneAssignmentKnown(roster)
 
-  local senderName, senderRealm = UnitFullName("player")
-  local payload = {
-    senderFullName = getFullName(senderName, senderRealm),
-    senderName = senderName,
-    senderClass = select(2, UnitClass("player")),
-    assignments = assignments,
-  }
+  local payload = createSenderPayload(FOCUS_MARKER_KIND_SYNC_V2)
+  payload.markers = buildV2Markers(roster, assignments)
 
   local distribution = self:IsPlayerInGroup()
   if distribution then
-    local export = self:TableToString(payload, false, 5)
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.focusMarkerAssignment, export, distribution, nil, "ALERT")
+    sendFocusMarkerPayload(self, payload, distribution)
   end
 
-  self:FocusMarker_ApplySyncedAssignments(payload, payload.senderFullName)
+  clearEditedAssignments(roster)
+  self:FocusMarker_ApplySyncedAssignmentsV2(payload, payload.senderFullName)
 end
 
 function MDT:FocusMarker_OnCommReceived(message, senderFullName)
   if senderFullName == getPlayerFullName() then return end
 
-  self:FocusMarker_ApplySyncedAssignments(self:StringToTable(message, false), senderFullName)
+  local payload = self:StringToTable(message, false)
+  if type(payload) ~= "table" then return end
+
+  if payload.kind == FOCUS_MARKER_KIND_STATE_REQUEST then
+    self:FocusMarker_SendStateResponse()
+  elseif payload.kind == FOCUS_MARKER_KIND_STATE_RESPONSE then
+    applyStateMarkerPayload(self, payload, senderFullName)
+  elseif payload.kind == FOCUS_MARKER_KIND_STATE_UPDATE then
+    applyStateMarkerPayload(self, payload, senderFullName)
+  elseif payload.kind == FOCUS_MARKER_KIND_SYNC_V2 then
+    self:FocusMarker_ApplySyncedAssignmentsV2(payload, senderFullName)
+  end
 end
 
 getGroupRoster = function()
@@ -796,10 +1021,7 @@ getGroupRoster = function()
 end
 
 pruneAssignmentsToRoster = function(assignments, roster)
-  local inGroup = {}
-  for _, player in ipairs(roster) do
-    inGroup[player.fullName] = true
-  end
+  local inGroup = buildRosterLookup(roster)
   for fullName in pairs(assignments) do
     if not inGroup[fullName] then
       assignments[fullName] = nil
@@ -807,15 +1029,34 @@ pruneAssignmentsToRoster = function(assignments, roster)
   end
 end
 
-local function setButtonMarker(button, markerIndex)
+pruneAssignmentKnown = function(roster)
+  local inGroup = buildRosterLookup(roster)
+  for fullName in pairs(assignmentKnown) do
+    if not inGroup[fullName] then
+      assignmentKnown[fullName] = nil
+    end
+  end
+  for fullName in pairs(assignmentEdited) do
+    if not inGroup[fullName] then
+      assignmentEdited[fullName] = nil
+    end
+  end
+end
+
+local function setButtonMarker(button, markerIndex, known)
   button.markerIndex = markerIndex
-  button:SetText(markerLabel(markerIndex))
+  button.markerKnown = known ~= false
+  if not button.markerKnown then
+    button:SetText(unknownMarkerLabel())
+  else
+    button:SetText(markerLabel(markerIndex))
+  end
 end
 
 refreshAssignmentsFrame = function()
   if not assignmentsFrame or not assignmentsFrame.frame or not assignmentsFrame.frame:IsShown() then return end
   C_Timer.After(0, function()
-    MDT:FocusMarker_OpenAssignments()
+    MDT:FocusMarker_OpenAssignments(true)
   end)
 end
 
@@ -927,19 +1168,19 @@ local function openMarkerMenu(widget, fullName)
 
     for i = 1, 8 do
       rootDescription:CreateRadio(markerLabel(i), function(index)
-        return widget.markerIndex == index
+        return widget.markerKnown and widget.markerIndex == index
       end, function(index)
         MDT:FocusMarker_SetAssignment(fullName, index)
-        setButtonMarker(widget, index)
+        setButtonMarker(widget, index, true)
         refreshAssignmentsFrame()
       end, i)
     end
 
     rootDescription:CreateRadio(L["None"], function()
-      return widget.markerIndex == nil
+      return widget.markerKnown and widget.markerIndex == nil
     end, function()
       MDT:FocusMarker_SetAssignment(fullName, nil)
-      setButtonMarker(widget, nil)
+      setButtonMarker(widget, nil, true)
       refreshAssignmentsFrame()
     end)
   end)
@@ -974,13 +1215,20 @@ local function createAssignmentsFrame()
   return frame
 end
 
-function MDT:FocusMarker_OpenAssignments()
+function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   assignmentsFrame = assignmentsFrame or createAssignmentsFrame()
   local frame = assignmentsFrame
   local assignments = self:FocusMarker_GetAssignments()
   local settings = getMacroSettings()
   local roster = getGroupRoster()
   pruneAssignmentsToRoster(assignments, roster)
+  if skipDiscovery then
+    pruneAssignmentKnown(roster)
+  else
+    focusMarkerSyncWarning = nil
+    resetAssignmentKnowledgeForRoster(roster, assignments)
+    self:FocusMarker_SendStateRequest()
+  end
 
   MDT:HideAllDialogs()
   if frame.macroIcon then
@@ -1015,7 +1263,7 @@ function MDT:FocusMarker_OpenAssignments()
     local marker = AceGUI:Create("Button")
     marker:SetWidth(markerButtonWidth)
     if player then
-      setButtonMarker(marker, assignments[player.fullName])
+      setButtonMarker(marker, assignments[player.fullName], assignmentKnown[player.fullName])
       marker:SetCallback("OnClick", function(widget)
         openMarkerMenu(widget, player.fullName)
       end)
@@ -1081,6 +1329,21 @@ function MDT:FocusMarker_OpenAssignments()
     settings.suppressNotifications = value
   end)
 
+  local warningHeight = 0
+  local warningText
+  if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_CONFLICT then
+    warningText = conflictNeedsSyncText()
+  elseif focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_MANUAL then
+    warningText = manualChangeNeedsSyncText()
+  end
+  if warningText then
+    local warning = AceGUI:Create("Label")
+    warning:SetFullWidth(true)
+    warning:SetText("|cffffd100"..warningText.."|r")
+    frame:AddChild(warning)
+    warningHeight = 22
+  end
+
   local buttons = AceGUI:Create("SimpleGroup")
   buttons:SetLayout("Flow")
   buttons:SetFullWidth(true)
@@ -1093,11 +1356,13 @@ function MDT:FocusMarker_OpenAssignments()
     local playerFullName = getPlayerFullName()
     local previousOwnMarker = assignments[playerFullName]
     applyClassDefaults(roster, assignments)
+    markRosterAssignmentsKnown(roster, true)
     local currentOwnMarker = assignments[playerFullName]
     if previousOwnMarker ~= currentOwnMarker then
       MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
     end
-    MDT:FocusMarker_OpenAssignments()
+    focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
+    MDT:FocusMarker_OpenAssignments(true)
   end)
 
   addButton(buttons, L["Sync Marks"], footerButtonWidth, function()
@@ -1113,7 +1378,7 @@ function MDT:FocusMarker_OpenAssignments()
   end)
   frame:AddChild(buttons)
 
-  frame:SetHeight(190 + (rowCount * 28))
+  frame:SetHeight(190 + warningHeight + (rowCount * 28))
   frame:ClearAllPoints()
   frame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
   frame:Show()
