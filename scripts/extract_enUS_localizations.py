@@ -100,13 +100,28 @@ def check_export(export_path, keys_path):
         for line in keys_path.read_text(encoding="utf-8").splitlines()
         if line
     ]
+    skipped_keys = [
+        key
+        for key in expected_keys
+        if "\n" in key
+    ]
+    expected_keys = [
+        key
+        for key in expected_keys
+        if "\n" not in key
+    ]
     missing = [key for key in expected_keys if key not in exported_keys]
     if missing:
         print(f"Missing {len(missing)} localization keys in CurseForge export.")
         for key in missing[:20]:
             print(f"  {display_key(key)}")
         return 1
-    print(f"CurseForge export contains {len(expected_keys)} enUS keys.")
+    if skipped_keys:
+        print(
+            f"Skipped {len(skipped_keys)} enUS keys with embedded newlines; "
+            "CurseForge export does not round-trip them."
+        )
+    print(f"CurseForge export contains {len(expected_keys)} checked enUS keys.")
     return 0
 
 
