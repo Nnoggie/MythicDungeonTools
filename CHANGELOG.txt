@@ -1,4 +1,4 @@
-## 6.1.0-alpha1 (2026-04-29)
+## 6.1.0 (2026-04-29)
 
 - Added assignable Witherbark Prisoners and Captives for Maisara Caverns and Pit of Saron.
 - Unlinked various enemies which are often assigned individually to pulls.
