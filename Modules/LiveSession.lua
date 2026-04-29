@@ -19,6 +19,7 @@ function MDT:LiveSession_Enable()
   self:LiveSession_RequestSession()
   --set id here incase there is no other sessions
   self:SetUniqueID(self:GetCurrentPreset())
+  self:EnsurePresetCreatedBy(self:GetCurrentPreset())
   self.livePresetUID = self:GetCurrentPreset().uid
   self:UpdatePresetDropdownTextColor()
   timer = C_Timer.NewTimer(2, function()
@@ -212,6 +213,8 @@ function MDT:LiveSession_SendPreset(preset)
   local distribution = self:IsPlayerInGroup()
   if distribution then
     local db = self:GetDB()
+    self:SetUniqueID(preset)
+    self:EnsurePresetCreatedBy(preset)
     preset.difficulty = db.currentDifficulty
     local export = MDT:TableToString(preset, false, 5)
     local silent, fromLiveSession = true, true

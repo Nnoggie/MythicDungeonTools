@@ -1022,6 +1022,7 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.RenameFrame.RenameButton.text:SetTextColor(0.5, 0.5, 0.5)
     MDT.main_frame.RenameFrame:ClearAllPoints()
     MDT.main_frame.RenameFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+    MDT.main_frame.RenameFrame.TakeOwnershipCheckbox:SetValue(false)
     MDT.main_frame.RenameFrame.Editbox:SetText(currentPresetName)
     MDT.main_frame.RenameFrame.Editbox:HighlightText(0, string.len(currentPresetName))
     MDT.main_frame.RenameFrame.Editbox:SetFocus()
@@ -1071,6 +1072,7 @@ function MDT:MakeSidePanel(frame)
     if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls(_, _, _, true) end
     local preset = MDT:GetCurrentPreset()
     MDT:SetUniqueID(preset)
+    MDT:EnsurePresetCreatedBy(preset)
     preset.difficulty = db.currentDifficulty
     preset.addonVersion = db.version
     local export = MDT:TableToString(preset, true, 5)
@@ -1401,11 +1403,74 @@ function MDT:UpdatePresetDropDown()
   local dropdown = MDT.main_frame.sidePanel.WidgetGroup.PresetDropDown
   local presetList = {}
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-    table.insert(presetList, k, v.text)
+    presetList[k] = MDT:GetPresetDropdownText(v)
   end
   dropdown:SetList(presetList)
   dropdown:SetValue(db.currentPreset[db.currentDungeonIdx])
   dropdown:ClearFocus()
+end
+
+local raidClassColorKeyByClassIndex = {
+  [1] = "WARRIOR",
+  [2] = "PALADIN",
+  [3] = "HUNTER",
+  [4] = "ROGUE",
+  [5] = "PRIEST",
+  [6] = "DEATHKNIGHT",
+  [7] = "SHAMAN",
+  [8] = "MAGE",
+  [9] = "WARLOCK",
+  [10] = "MONK",
+  [11] = "DRUID",
+  [12] = "DEMONHUNTER",
+  [13] = "EVOKER",
+}
+
+function MDT:GetCurrentRouteAuthor()
+  local name, realm = UnitFullName("player")
+  local _, _, classIdx = UnitClass("player")
+  if not name or not classIdx then return end
+  if not realm or realm == "" then realm = GetRealmName and GetRealmName() or "" end
+  return {
+    name = name,
+    realm = realm,
+    classIdx = classIdx,
+  }
+end
+
+function MDT:EnsurePresetCreatedBy(preset, force)
+  if type(preset) ~= "table" then return end
+  if preset.text == L["Default"] then
+    preset.createdBy = nil
+    return
+  end
+  if not force and type(preset.createdBy) == "table" then return end
+  local author = self:GetCurrentRouteAuthor()
+  if author then preset.createdBy = author end
+end
+
+function MDT:GetClassFileByIndex(classIdx)
+  if type(classIdx) ~= "number" and type(classIdx) ~= "string" then return end
+  return raidClassColorKeyByClassIndex[tonumber(classIdx)]
+end
+
+function MDT:GetClassColoredRouteAuthorName(createdBy)
+  if type(createdBy) ~= "table" or type(createdBy.name) ~= "string" then return end
+  local classFile = self:GetClassFileByIndex(createdBy.classIdx)
+  if not classFile then return end
+  local _, _, _, classHexString = GetClassColor(classFile)
+  if not classHexString then return end
+  return WrapTextInColorCode(createdBy.name, classHexString)
+end
+
+function MDT:GetPresetDropdownText(preset)
+  if type(preset) ~= "table" then return "" end
+  local text = preset.text or ""
+  local authorName = self:GetClassColoredRouteAuthorName(preset.createdBy)
+  if authorName then
+    return authorName.." - "..text
+  end
+  return text
 end
 
 function MDT:UpdatePresetDropdownTextColor(forceReset)
@@ -2543,6 +2608,7 @@ function MDT:CreateNewPreset(name)
     end
 
     db.currentPreset[db.currentDungeonIdx] = countPresets
+    MDT:EnsurePresetCreatedBy(db.presets[db.currentDungeonIdx][countPresets], true)
     MDT.main_frame.presetCreationFrame:Hide()
     MDT:UpdatePresetDropDown()
     MDT:UpdateMap()
@@ -3714,8 +3780,12 @@ function MDT:DeletePull(index)
   --self:UpdateAutomaticColors(index)
 end
 
-function MDT:RenamePreset(renameText)
-  db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text = renameText
+function MDT:RenamePreset(renameText, takeOwnership)
+  local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
+  preset.text = renameText
+  if takeOwnership then
+    MDT:EnsurePresetCreatedBy(preset, true)
+  end
   MDT.main_frame.RenameFrame:Hide()
   MDT:UpdatePresetDropDown()
 end
@@ -3748,7 +3818,7 @@ function MDT:MakeRenameFrame(frame)
   frame.RenameFrame.frame:SetFrameStrata("DIALOG")
   frame.RenameFrame:SetTitle(L["Rename Preset"])
   frame.RenameFrame:SetWidth(350)
-  frame.RenameFrame:SetHeight(150)
+  frame.RenameFrame:SetHeight(180)
   frame.RenameFrame:EnableResize(false)
   frame.RenameFrame:SetLayout("Flow")
   frame.RenameFrame:SetCallback("OnClose", function(widget)
@@ -3778,17 +3848,24 @@ function MDT:MakeRenameFrame(frame)
   end)
   frame.RenameFrame.Editbox:SetCallback("OnEnterPressed", function(widget, event, text)
     if MDT:SanitizePresetName(renameText) then
-      MDT:RenamePreset(renameText)
+      MDT:RenamePreset(renameText, frame.RenameFrame.TakeOwnershipCheckbox:GetValue())
     end
   end)
   frame.RenameFrame.Editbox:DisableButton(true)
 
   frame.RenameFrame:AddChild(frame.RenameFrame.Editbox)
 
+  frame.RenameFrame.TakeOwnershipCheckbox = AceGUI:Create("CheckBox")
+  frame.RenameFrame.TakeOwnershipCheckbox:SetLabel(L["Mark as my route"])
+  frame.RenameFrame.TakeOwnershipCheckbox:SetWidth(200)
+  frame.RenameFrame:AddChild(frame.RenameFrame.TakeOwnershipCheckbox)
+
   frame.RenameFrame.RenameButton = AceGUI:Create("Button")
   frame.RenameFrame.RenameButton:SetText(L["Rename"])
   frame.RenameFrame.RenameButton:SetWidth(100)
-  frame.RenameFrame.RenameButton:SetCallback("OnClick", function() MDT:RenamePreset(renameText) end)
+  frame.RenameFrame.RenameButton:SetCallback("OnClick", function()
+    MDT:RenamePreset(renameText, frame.RenameFrame.TakeOwnershipCheckbox:GetValue())
+  end)
   frame.RenameFrame:AddChild(frame.RenameFrame.RenameButton)
 
   frame.RenameFrame.PresetRenameLabel = AceGUI:Create("Label")

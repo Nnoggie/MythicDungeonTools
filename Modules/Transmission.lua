@@ -769,6 +769,7 @@ function MDT:SendToGroup(distribution, silent, preset)
   preset = preset or MDT:GetCurrentPreset()
   --set unique id
   MDT:SetUniqueID(preset)
+  MDT:EnsurePresetCreatedBy(preset)
   --gotta encode difficulty into preset
   local db = MDT:GetDB()
   preset.difficulty = db.currentDifficulty
