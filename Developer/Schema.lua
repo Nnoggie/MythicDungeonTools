@@ -169,12 +169,32 @@ local schemas = {
                 type = "number",
               },
               {
+                name = "atlas",
+                type = "string",
+              },
+              {
                 name = "spellId",
                 type = "number",
               },
               {
                 name = "size",
                 type = "number",
+              },
+              {
+                name = "fontSize",
+                type = "number",
+              },
+              {
+                name = "textOffsetX",
+                type = "number",
+              },
+              {
+                name = "textOffsetY",
+                type = "number",
+              },
+              {
+                name = "desaturateIfUnassigned",
+                type = "boolean",
               },
             },
           },
