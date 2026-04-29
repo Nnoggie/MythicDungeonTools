@@ -18,6 +18,7 @@ local sidePanelWidth = 251
 local panelHeight = 30
 local screenEdgePadding = 10
 local framesInitialized, initFrames
+local frameInitializedCallbacks = {}
 MDT.externalLinks = {
   {
     name = "GitHub",
@@ -380,6 +381,15 @@ end
 
 function MDT:ShowInterface(force)
   MDT:Async(function() MDT:ShowInterfaceInternal(force) end, "showInterface")
+end
+
+function MDT:RunAfterFramesInitialized(callback)
+  if framesInitialized then
+    callback()
+    return true
+  end
+  tinsert(frameInitializedCallbacks, callback)
+  return false
 end
 
 function MDT:ShowInterfaceInternal(force)
@@ -2901,6 +2911,13 @@ function MDT:ValidateImportPreset(preset)
 end
 
 function MDT:ImportPreset(preset, fromLiveSession)
+  if not framesInitialized then
+    MDT:RunAfterFramesInitialized(function()
+      MDT:ImportPreset(preset, fromLiveSession)
+    end)
+    return
+  end
+
   --change dungeon to dungeon of the new preset
   MDT:SetDungeonList(nil, preset.value.currentDungeonIdx)
   MDT:UpdateDungeonDropDown()
@@ -4894,4 +4911,9 @@ function initFrames()
   if db.maximized then MDT:Maximize() end
   initSpinner:Hide()
   initSpinner.Anim:Stop()
+  local callbacks = frameInitializedCallbacks
+  frameInitializedCallbacks = {}
+  for _, callback in ipairs(callbacks) do
+    callback()
+  end
 end
