@@ -6,6 +6,45 @@ from pathlib import Path
 
 
 ENTRY_RE = re.compile(r'^\s*L\["([^"]+)"\]\s*=', re.MULTILINE)
+LUA_ESCAPES = {
+    "a": "\a",
+    "b": "\b",
+    "f": "\f",
+    "n": "\n",
+    "r": "\r",
+    "t": "\t",
+    "v": "\v",
+    "\\": "\\",
+    '"': '"',
+    "'": "'",
+}
+
+
+def normalize_lua_key(key):
+    normalized = []
+    index = 0
+
+    while index < len(key):
+        char = key[index]
+        if char != "\\" or index + 1 >= len(key):
+            normalized.append(char)
+            index += 1
+            continue
+
+        next_char = key[index + 1]
+        if next_char in LUA_ESCAPES:
+            normalized.append(LUA_ESCAPES[next_char])
+            index += 2
+            continue
+
+        normalized.append(next_char)
+        index += 2
+
+    return "".join(normalized)
+
+
+def display_key(key):
+    return key.encode("unicode_escape").decode("ascii")
 
 
 def extract_entries(source_path):
@@ -52,9 +91,12 @@ def write_entries(entries, output_path, keys_path):
 
 def check_export(export_path, keys_path):
     export_text = export_path.read_text(encoding="utf-8", errors="replace")
-    exported_keys = set(ENTRY_RE.findall(export_text))
+    exported_keys = {
+        normalize_lua_key(key)
+        for key in ENTRY_RE.findall(export_text)
+    }
     expected_keys = [
-        line
+        normalize_lua_key(line)
         for line in keys_path.read_text(encoding="utf-8").splitlines()
         if line
     ]
@@ -62,7 +104,7 @@ def check_export(export_path, keys_path):
     if missing:
         print(f"Missing {len(missing)} localization keys in CurseForge export.")
         for key in missing[:20]:
-            print(f"  {key}")
+            print(f"  {display_key(key)}")
         return 1
     print(f"CurseForge export contains {len(expected_keys)} enUS keys.")
     return 0
