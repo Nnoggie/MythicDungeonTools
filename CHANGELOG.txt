@@ -1,8 +1,8 @@
 ## 6.1.0-alpha1 (2026-04-29)
 
-- Added assignable captive points of interest for Midnight dungeons.
-- Updated Midnight dungeon enemy data.
-- Added route creator ownership, route forking, and overwrite/make-copy handling for matching route imports.
-- Deferred route imports until MDT frames finish loading.
-- Synced focus marker state across live sessions.
-- Fixed the CurseForge localization sync and run it before packaging so new strings land in release builds.
+- Added assignable Witherbark Prisoners and Captives for Maisara Caverns and Pit of Saron.
+- Unlinked various enemies which are often assigned individually to pulls.
+- Routes which are shared multiple times will now prompt the user to choose if they want to overwrite the existing route or create a copy. Repeatedly importing the same route will no longer create many copies of the same route.
+- Added class colored route author to route names in the route dropdown list.
+- Fix a rare crash when loading a route before MDT was finished initializing.
+- Improvements for Focus Marker Syncing
