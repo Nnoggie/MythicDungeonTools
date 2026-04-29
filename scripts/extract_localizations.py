@@ -89,7 +89,7 @@ def write_entries(entries, output_path, keys_path):
     )
 
 
-def check_export(export_path, keys_path):
+def check_export(export_path, keys_path, language):
     export_text = export_path.read_text(encoding="utf-8", errors="replace")
     exported_keys = {
         normalize_lua_key(key)
@@ -118,16 +118,17 @@ def check_export(export_path, keys_path):
         return 1
     if skipped_keys:
         print(
-            f"Skipped {len(skipped_keys)} enUS keys with embedded newlines; "
+            f"Skipped {len(skipped_keys)} {language} keys with embedded newlines; "
             "CurseForge export does not round-trip them."
         )
-    print(f"CurseForge export contains {len(expected_keys)} checked enUS keys.")
+    print(f"CurseForge export contains {len(expected_keys)} checked {language} keys.")
     return 0
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source", default="Locales/enUS.lua")
+    parser.add_argument("--source", required=True)
+    parser.add_argument("--language", default="localization")
     parser.add_argument("--output")
     parser.add_argument("--keys")
     parser.add_argument("--check-export")
@@ -136,18 +137,18 @@ def main():
     if args.check_export:
         if not args.keys:
             parser.error("--keys is required with --check-export")
-        return check_export(Path(args.check_export), Path(args.keys))
+        return check_export(Path(args.check_export), Path(args.keys), args.language)
 
     if not args.output or not args.keys:
         parser.error("--output and --keys are required")
 
     entries = extract_entries(Path(args.source))
     if not entries:
-        print("No enUS localization entries found.", file=sys.stderr)
+        print(f"No {args.language} localization entries found.", file=sys.stderr)
         return 1
 
     write_entries(entries, Path(args.output), Path(args.keys))
-    print(f"Wrote {len(entries)} enUS localization entries.")
+    print(f"Wrote {len(entries)} {args.language} localization entries.")
     return 0
 
 

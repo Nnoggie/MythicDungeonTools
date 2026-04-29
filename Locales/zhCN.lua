@@ -4,13 +4,6 @@ end
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
-
-L["Make copy"] = "创建副本"
-L["Overwrite"] = "覆盖"
-L["Always overwrite matching routes on import"] = "导入时始终覆盖匹配的路线"
-L["Earlier Version"] = "你已经有一个匹配的路线'%s'.%s你想覆盖它还是创建副本?%s%s%s"
-L["Mark as my route"] = "标记为我的路线"
-
 -- MDT
 L["seatItemA"] = "大多数怪物踏入虚空区域(地图边的黑水)时 会获得此BUFF"
 L["Spellwoven Familiar"] = "魔网编织魔宠"
@@ -29,14 +22,9 @@ L["MaisaraCaverns"] = "迈萨拉洞窟"
 L["MaisaraCavernsShortName"] = "迈萨"
 L["NexusPointXenas"] = "节点希纳斯"
 L["NexusPointXenasShortName"] = "节点"
-
-
-
 L["exampleItemNameNoSpellId"] = "亡语者侍僧"
 L["exampleItemDescriptionNoSpellId"] = "A sample item with no associated spell ID.%s%sNew lines supported"
 L["exampleItemDescriptionWithSpellId"] = "A sample item that references a spell ID."
-
-
 -- L["CNNAME"] = ""
 L["Core Technician"] = "核心技师"
 L["Outcast Servant"] = "下层仆从"
@@ -213,79 +201,8 @@ L["Phalanx Breaker"] = "破阵铁骑"
 L["Haunting Grunt"] = "恼人的步兵"
 L["Scouting Trapper"] = "侦察诱捕者"
 L["Deathwhisper Necrolyte"] = "亡语者侍僧"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 L[" >Legion"] = "> 军团再临"
 L[" K'aresh Elemental"] = "卡雷什元素"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 L["%s HP"] = "%s 血量"
 L["%s is in sublevel: %s"] = "%s 在子区域: %s"
 L["(G %d)"] = "(G %d)"
@@ -738,6 +655,9 @@ L["Control Undead"] = "控制亡灵"
 L["Cooking Pot"] = "烹饪锅"
 L["copiedToClipboard"] = "复制!"
 L["Copy"] = "复制"
+L["Make copy"] = "创建副本"
+L["Overwrite"] = "覆盖"
+L["Always overwrite matching routes on import"] = "导入时始终覆盖匹配的路线"
 L["Copy error"] = "复制错误"
 L["Cordana Felsong"] = "科达娜·邪歌"
 L["Corpse Collector"] = "屍骸收集者"
@@ -1036,6 +956,7 @@ L["Duskwatch Sentry"] = "暮色卫队哨兵"
 L["Dwarven Bomber"] = "矮人轰炸者"
 L["Dynamite Mine Cart"] = "炸藥礦坑推車"
 L["E.D.N.A"] = "E.D.N.A."
+L["Earlier Version"] = "你已经有一个匹配的路线'%s'.%s你想覆盖它还是创建副本?%s%s%s"
 L["Earth Infused Golem"] = "大地注能的魔像"
 L["Earthen Custodian"] = "土灵管理者"
 L["Earthen Guardian"] = "土灵守护者"
@@ -2263,6 +2184,7 @@ L["Remnant of Fury"] = "愤怒残余"
 L["Rename"] = "重命名"
 L["Rename Preset"] = "重命名路线"
 L["Rename the preset"] = "重命名路线"
+L["Mark as my route"] = "标记为我的路线"
 L["Repentance"] = "忏悔"
 L["Reposing Knight"] = "休息中的骑士"
 L["Repurposed Loaderbot"] = "改造的载货机器人"
