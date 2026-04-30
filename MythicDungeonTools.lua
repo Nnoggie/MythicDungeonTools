@@ -66,6 +66,22 @@ function MDT:ShowMinimapButton()
   if MDT.main_frame and MDT.main_frame.minimapCheckbox then MDT.main_frame.minimapCheckbox:SetValue(true) end
 end
 
+---@param shouldWarn boolean|nil
+function MDT:IsInRestrictedEnvironment(shouldWarn)
+  if C_Secrets and C_Secrets.ShouldAurasBeSecret and C_Secrets.ShouldAurasBeSecret() then
+    if shouldWarn then
+      print('MDT: '..(L["Action blocked: Restricted environment"] or "Action blocked: Restricted environment"))
+    end
+    return true
+  end
+  return false
+end
+
+function MDT:CreateContextMenu(ownerRegion, generator, ...)
+  if self:IsInRestrictedEnvironment(true) then return end
+  return MenuUtil.CreateContextMenu(ownerRegion, generator, ...)
+end
+
 ---@diagnostic disable: missing-fields
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
   type = "data source",
@@ -1146,10 +1162,7 @@ function MDT:MakeSidePanel(frame)
   frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
   frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
   frame.LinkToChatButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if C_Secrets and C_Secrets.ShouldAurasBeSecret() then
-      print('MDT: '..L["Cannot share routes right now due to blizzard restrictions."])
-      return
-    end
+    if MDT:IsInRestrictedEnvironment(true) then return end
     local distribution = MDT:IsPlayerInGroup()
     if not distribution then return end
     local callback = function()
@@ -1188,10 +1201,7 @@ function MDT:MakeSidePanel(frame)
   local c1, c2, c3 = frame.LiveSessionButton.text:GetTextColor()
   frame.LiveSessionButton.normalTextColor = { r = c1, g = c2, b = c3, }
   frame.LiveSessionButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if C_Secrets and C_Secrets.ShouldAurasBeSecret() then
-      print('MDT: '..L["Cannot share routes right now due to blizzard restrictions."])
-      return
-    end
+    if MDT:IsInRestrictedEnvironment(true) then return end
     if MDT.liveSessionActive then
       MDT:LiveSession_Disable()
     else

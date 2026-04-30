@@ -1054,7 +1054,7 @@ end
 local currentNote
 
 local function openContextMenu()
-  MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
     rootDescription:CreateButton(L["Edit"], function()
       currentNote:OpenEditBox()
     end)

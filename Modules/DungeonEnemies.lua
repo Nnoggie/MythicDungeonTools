@@ -206,7 +206,7 @@ local iconColors = {
 local createEnemyContextMenu = function(frame)
   MDT:GetCurrentPreset().value.enemyAssignments = MDT:GetCurrentPreset().value.enemyAssignments or {}
   local assignments = MDT:GetCurrentPreset().value.enemyAssignments
-  MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
     rootDescription:CreateTitle(L[frame.data.name])
 
     local function IsSelected(data)

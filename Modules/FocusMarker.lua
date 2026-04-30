@@ -1163,7 +1163,7 @@ openMarkSettings = function()
 end
 
 local function openMarkerMenu(widget, fullName)
-  MenuUtil.CreateContextMenu(widget.frame, function(ownerRegion, rootDescription)
+  MDT:CreateContextMenu(widget.frame, function(ownerRegion, rootDescription)
     rootDescription:CreateTitle(L["Focus Marker"])
 
     for i = 1, 8 do
