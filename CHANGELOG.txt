@@ -1,4 +1,4 @@
-## 6.1.0 (2026-04-29)
+## 6.1.1 (2026-04-30)
 
 - Added assignable Witherbark Prisoners and Captives for Maisara Caverns and Pit of Saron.
 - Unlinked various enemies which are often assigned individually to pulls.
@@ -6,3 +6,4 @@
 - Added class colored route author to route names in the route dropdown list.
 - Fix a rare crash when loading a route before MDT was finished initializing.
 - Improvements for Focus Marker Syncing
+- Added a temporary workaround for dropdowns affected by a Blizzard bug. Hopefully Blizzard fixes the underlying issue soon.
