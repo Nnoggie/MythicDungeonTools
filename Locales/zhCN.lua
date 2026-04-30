@@ -5,6 +5,7 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 -- MDT
+L["Action blocked: Restricted environment"] = "操作已被阻止：受限环境"
 L["seatItemA"] = "大多数怪物踏入虚空区域(地图边的黑水)时 会获得此BUFF"
 L["Spellwoven Familiar"] = "魔网编织魔宠"
 L["Midnight Season 1"] = "至暗之夜 第一赛季"
