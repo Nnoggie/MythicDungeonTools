@@ -9,7 +9,7 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Maisara Caverns",
   mapID = 560
 };
-local zones = { 2501 }
+local zones = { 2437, 2501 }
 for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
