@@ -125,7 +125,7 @@ local methods = {
 
     local buttonSelf = self --needed for scope issue within new context menu
     local function openSingleContextMenu()
-      MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+      MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
         if buttonSelf.index ~= 1 then
           rootDescription:CreateButton(L["Pull Drop Move up"], function()
             MDT:MovePullUp(buttonSelf.index)
@@ -216,7 +216,7 @@ local methods = {
     end
 
     local function openMultiContextMenu()
-      MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+      MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
         rootDescription:CreateButton(L["Pull Drop Insert before"], function()
           MDT.U.do_if(MDT:GetSelection(), {
             condition = function(entry)

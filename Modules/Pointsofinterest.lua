@@ -66,7 +66,7 @@ local function POI_SetDevOptions(frame, poi)
 end
 
 local createPlayerAssignmentContextMenu = function(frame)
-  MenuUtil.CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
+  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
     rootDescription:CreateTitle(L["dropdownAssignPlayer"])
 
     local group = MDT.U.GetGroupMembers()
