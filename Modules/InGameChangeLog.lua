@@ -2,6 +2,17 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.1.3",
+    date = "2026-05-17",
+    notes = {
+      "Split the version check window into Change Log and Party Versions tabs.",
+      "Added party member MDT versions to the Party Versions tab.",
+      "Fixed Magisters Terrace and Pit of Saron detection for additional zone IDs.",
+      "Added a missing Scrounger in Nexus Point Xenas.",
+      "Unlinked two Maisara Caverns enemies from group 91 so they can be assigned separately.",
+    },
+  },
+  {
     tag = "6.1.2",
     date = "2026-05-05",
     notes = {
