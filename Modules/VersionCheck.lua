@@ -1,6 +1,7 @@
 local AddonName, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDTcommsObject
+local AceGUI = LibStub("AceGUI-3.0")
 
 local versionCheckPrefix = MDT.versionCheckPrefix
 local versionCheckRequest = "R"
@@ -275,8 +276,8 @@ end
 
 local function setActiveVersionCheckTab(f, tab)
   f.activeTab = tab
-  f.changeLogTab:SetEnabled(tab ~= "changelog")
-  f.versionsTab:SetEnabled(tab ~= "versions")
+  f.changeLogTab:SetDisabled(tab == "changelog")
+  f.versionsTab:SetDisabled(tab == "versions")
   if tab == "versions" then
     requestMissingPlayerVersions()
     MDT:UpdatePlayerVersionsDisplay()
@@ -286,12 +287,17 @@ local function setActiveVersionCheckTab(f, tab)
   MDT:UpdateVersionCheckDisplay()
 end
 
-local function createVersionCheckTabButton(parent, tab, text, xOffset, width)
-  local button = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
-  button:SetSize(width, 22)
-  button:SetPoint("TOPLEFT", parent, "TOPLEFT", xOffset, -31)
+local function createVersionCheckTabButton(parent, tab, text, tabIndex)
+  local width = parent:GetWidth() / 3
+  local xOffset = 10 + ((tabIndex - 1) * width)
+  local button = AceGUI:Create("Button")
+  button.frame:SetParent(parent)
+  button:SetWidth(width)
+  button:SetHeight(22)
+  button.frame:SetPoint("TOPLEFT", parent, "TOPLEFT", xOffset, -31)
+  button.frame:Show()
   button:SetText(text)
-  button:SetScript("OnClick", function()
+  button:SetCallback("OnClick", function()
     setActiveVersionCheckTab(parent, tab)
   end)
 
@@ -335,8 +341,8 @@ local function createVersionCheckFrame()
     MDT.copyHelper:SmartHide()
   end)
 
-  f.changeLogTab = createVersionCheckTabButton(f, "changelog", L["Change Log"], 10, 104)
-  f.versionsTab = createVersionCheckTabButton(f, "versions", L["Party Versions"], 118, 118)
+  f.changeLogTab = createVersionCheckTabButton(f, "changelog", L["Change Log"], 1)
+  f.versionsTab = createVersionCheckTabButton(f, "versions", L["Party Versions"], 2)
   f.activeTab = "changelog"
 
   local scrollFrame = CreateFrame("scrollframe", nil, f, "BackdropTemplate")
