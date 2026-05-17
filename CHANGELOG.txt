@@ -1,7 +1,7 @@
-## 6.1.2 (2026-05-05)
+## 6.1.3 (2026-05-17)
 
-- Added a version check and changelog window from the version text in the bottom-left corner.
-- Added update notifications with copyable CurseForge and Wago download links when a newer party member version is detected.
-- Added copyable GitHub, Discord, and Patreon link dialogs in the bottom toolbar.
-- Side panel buttons now close their open dialogs when clicked again.
-- Fixed Maisara Caverns detection for zone 2437.
+- Split the version check window into Change Log and Party Versions tabs.
+- Added party member MDT versions to the Party Versions tab.
+- Fixed Magisters Terrace and Pit of Saron detection for additional zone IDs.
+- Added a missing Scrounger in Nexus Point Xenas.
+- Unlinked two Maisara Caverns enemies from group 91 so they can be assigned separately.
