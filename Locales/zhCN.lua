@@ -5,8 +5,10 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 -- MDT
+L["Change Log"] = "更新日志"
 L["No changelog entries available."] = "暂无更新日志。"
 L["Open changelog / version check"] = "打开更新日志 / 版本检查"
+L["Party Versions"] = "队伍版本"
 L["update available"] = "有可用更新"
 L["Version Check / Change Log"] = "版本检查 / 更新日志"
 L["Action blocked: Restricted environment"] = "操作已被阻止：受限环境"
