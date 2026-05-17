@@ -1,6 +1,7 @@
 local AddonName, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDTcommsObject
+local AceGUI = LibStub("AceGUI-3.0")
 
 local versionCheckPrefix = MDT.versionCheckPrefix
 local versionCheckRequest = "R"
@@ -26,8 +27,29 @@ local versionColors = {
 
 local changeLog = MDT.changeLog or {}
 local incomingChangeLogs = {}
+local reportedVersions = {}
 local remoteChangeLog
 local buildChangeLogText
+local buildPlayerVersionsText
+
+local function getFullName(unit)
+  local name, realm = UnitFullName(unit)
+  if not name then return nil end
+  if not realm or string.len(realm) < 3 then
+    local _, playerRealm = UnitFullName("player")
+    realm = playerRealm
+  end
+  if realm and string.len(realm) > 0 then
+    return name.."-"..realm
+  end
+  return name
+end
+
+local function forEachPartyMember(callback)
+  for i = 1, GetNumSubgroupMembers() do
+    callback(getFullName("party"..i))
+  end
+end
 
 local function sendVersionCheckComm(message)
   MDTcommsObject:SendCommMessage(versionCheckPrefix, message, "PARTY", nil, "ALERT")
@@ -64,17 +86,23 @@ local function getOutdatedType()
   return "patch"
 end
 
-local function recordVersion(version)
+local function recordVersion(version, sender)
+  if not version or version == "" then return end
+  if sender then
+    reportedVersions[sender] = version
+  end
   if compareVersions(version, latestVersion) then
     latestVersion = version
   end
   MDT:UpdateVersionCheckDisplay()
+  MDT:UpdatePlayerVersionsDisplay()
 end
 
-function MDT:RequestVersionCheck()
+function MDT:RequestVersionCheck(force)
   local now = GetTime()
-  if now - lastVersionRequestAt < versionCheckCooldown then
+  if not force and now - lastVersionRequestAt < versionCheckCooldown then
     MDT:UpdateVersionCheckDisplay()
+    MDT:UpdatePlayerVersionsDisplay()
     return false
   end
 
@@ -103,7 +131,7 @@ function MDT:UpdateVersionCheckDisplay()
   end
 
   if MDT.versionCheckFrame and MDT.versionCheckFrame.downloadFrame then
-    if outdatedType then
+    if outdatedType and MDT.versionCheckFrame.activeTab == "changelog" then
       MDT.versionCheckFrame.downloadFrame:Show()
     else
       MDT.versionCheckFrame.downloadFrame:Hide()
@@ -111,18 +139,32 @@ function MDT:UpdateVersionCheckDisplay()
   end
 end
 
-function MDT:UpdateChangeLogDisplay()
-  local f = MDT.versionCheckFrame
+local function updateVersionCheckScrollText(f, text)
   if not f or not f.changeLogTextBox then return end
 
-  f.changeLogTextBox:SetText(buildChangeLogText())
+  f.changeLogTextBox:SetText(text)
   local contentHeight = math.max(f.scrollHeight, f.changeLogTextBox:GetStringHeight() + (f.textPadding * 2))
   f.changeLogContentFrame:SetHeight(contentHeight)
   f.sliderHeight = math.max(1, contentHeight - f.scrollHeight)
   f.slider:SetMinMaxValues(0, f.sliderHeight)
-  if f.slider:GetValue() > f.sliderHeight then
-    f.slider:SetValue(f.sliderHeight)
-  end
+  local sliderValue = math.min(f.slider:GetValue(), f.sliderHeight)
+  f.slider:SetValue(sliderValue)
+end
+
+function MDT:UpdateChangeLogDisplay()
+  local f = MDT.versionCheckFrame
+  if not f or not f.changeLogTextBox then return end
+  if f.activeTab and f.activeTab ~= "changelog" then return end
+
+  updateVersionCheckScrollText(f, buildChangeLogText())
+end
+
+function MDT:UpdatePlayerVersionsDisplay()
+  local f = MDT.versionCheckFrame
+  if not f or not f.changeLogTextBox then return end
+  if f.activeTab ~= "versions" then return end
+
+  updateVersionCheckScrollText(f, buildPlayerVersionsText())
 end
 
 function MDT:VersionCheck_OnCommReceived(message, distribution, sender)
@@ -174,7 +216,7 @@ function MDT:VersionCheck_OnCommReceived(message, distribution, sender)
   end
 
   if message:sub(1, 1) == versionCheckResponsePrefix then
-    recordVersion(message:sub(2))
+    recordVersion(message:sub(2), sender)
   end
 end
 
@@ -203,6 +245,63 @@ buildChangeLogText = function()
   end
 
   return text
+end
+
+local function hasMissingPlayerVersionData()
+  local missing = false
+  forEachPartyMember(function(memberName)
+    if memberName and not reportedVersions[memberName] then missing = true end
+  end)
+
+  return missing
+end
+
+local function requestMissingPlayerVersions()
+  if hasMissingPlayerVersionData() then
+    MDT:RequestVersionCheck(true)
+  end
+end
+
+buildPlayerVersionsText = function()
+  local lines = {}
+  forEachPartyMember(function(memberName)
+    local version = reportedVersions[memberName]
+    if version then
+      lines[#lines + 1] = memberName..": v"..version
+    end
+  end)
+
+  return table.concat(lines, "\n")
+end
+
+local function setActiveVersionCheckTab(f, tab)
+  f.activeTab = tab
+  f.changeLogTab:SetDisabled(tab == "changelog")
+  f.versionsTab:SetDisabled(tab == "versions")
+  if tab == "versions" then
+    requestMissingPlayerVersions()
+    MDT:UpdatePlayerVersionsDisplay()
+  else
+    MDT:UpdateChangeLogDisplay()
+  end
+  MDT:UpdateVersionCheckDisplay()
+end
+
+local function createVersionCheckTabButton(parent, tab, text, tabIndex)
+  local width = parent:GetWidth() / 3
+  local xOffset = 10 + ((tabIndex - 1) * width)
+  local button = AceGUI:Create("Button")
+  button.frame:SetParent(parent)
+  button:SetWidth(width)
+  button:SetHeight(22)
+  button.frame:SetPoint("TOPLEFT", parent, "TOPLEFT", xOffset, -31)
+  button.frame:Show()
+  button:SetText(text)
+  button:SetCallback("OnClick", function()
+    setActiveVersionCheckTab(parent, tab)
+  end)
+
+  return button
 end
 
 local function createVersionCheckFrame()
@@ -242,10 +341,14 @@ local function createVersionCheckFrame()
     MDT.copyHelper:SmartHide()
   end)
 
+  f.changeLogTab = createVersionCheckTabButton(f, "changelog", L["Change Log"], 1)
+  f.versionsTab = createVersionCheckTabButton(f, "versions", L["Party Versions"], 2)
+  f.activeTab = "changelog"
+
   local scrollFrame = CreateFrame("scrollframe", nil, f, "BackdropTemplate")
-  scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -40)
+  scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -62)
   local scrollWidth = width - 46
-  local scrollHeight = height - 105
+  local scrollHeight = height - 127
   scrollFrame:SetSize(scrollWidth, scrollHeight)
 
   local contentFrame = CreateFrame("frame", nil, scrollFrame, "BackdropTemplate")
@@ -346,6 +449,7 @@ local function createVersionCheckFrame()
   f.scrollHeight = scrollHeight
   f.textPadding = textPadding
   f.slider = slider
+  setActiveVersionCheckTab(f, f.activeTab)
 
   return f
 end
@@ -364,7 +468,12 @@ function MDT:ToggleVersionCheckFrame()
     if getOutdatedType() and (not remoteChangeLog or remoteChangeLog.tag ~= latestVersion) then
       sendVersionCheckComm(changeLogRequestPrefix..latestVersion)
     end
-    MDT:UpdateChangeLogDisplay()
+    if MDT.versionCheckFrame.activeTab == "versions" then
+      requestMissingPlayerVersions()
+      MDT:UpdatePlayerVersionsDisplay()
+    else
+      MDT:UpdateChangeLogDisplay()
+    end
     MDT.versionCheckFrame:Show()
   end
 end
