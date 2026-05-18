@@ -147,13 +147,13 @@ function MDT:MakeNavigationSidebar(frame)
 
     local sections = {
       { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 } },
-      { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 } },
-      { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
+      { key = "macros", tooltip = L["Macros"], texCoords = { 0.5, 0.75, 0, 0.25 } },
+      { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.25, 0.5, 0, 0.25 } },
       { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25 },
     }
     local buttonSize = 36
     local iconSize = 31
-    local firstButtonTopOffset = -(panelHeight + 4)
+    local firstButtonTopOffset = -panelHeight
     local defaultIconTexture = "Interface\\AddOns\\"..AddonName.."\\Textures\\navigationSidebarIcons"
 
     for idx, section in ipairs(sections) do

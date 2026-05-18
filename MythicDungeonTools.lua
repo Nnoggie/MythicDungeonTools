@@ -953,7 +953,6 @@ function MDT:MakeSidePanel(frame)
   MDT:UpdatePresetDropDown()
   frame.sidePanel.WidgetGroup:AddChild(dropdown)
 
-
   local function anchorTooltip(anchorFrame)
     GameTooltip:SetOwner(anchorFrame, "ANCHOR_BOTTOMLEFT", -7, anchorFrame:GetHeight() + 3)
   end
@@ -2139,7 +2138,6 @@ function MDT:HideAllDialogs()
     MDT.main_frame.RenameFrame:Hide()
     MDT.main_frame.ClearConfirmationFrame:Hide()
     MDT.main_frame.DeleteConfirmationFrame:Hide()
-
     if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
     if MDT.versionCheckFrame then MDT.versionCheckFrame:Hide() end
     if MDT.externalLinkCopyFrame then MDT.externalLinkCopyFrame:Hide() end
@@ -2197,7 +2195,6 @@ function MDT:OpenClearPresetDialog()
   MDT.main_frame.ClearConfirmationFrame.label:SetText(string.format(L["Reset %s?"], currentPresetName))
   MDT.main_frame.ClearConfirmationFrame:Show()
 end
-
 
 ---Makes sure profiles are valid and have their fields set
 function MDT:EnsureDBTables()
@@ -3002,7 +2999,6 @@ local colorPaletteValues = {
     [4] = { [1] = 1.0, [2] = 0.6901960784313725, [3] = 0.0 },
   },
 }
-
 
 ---Saves currently selected automatic coloring settings to the current
 ---This can be achieved easier, but it will increase the export text length significantly for non custom palettes.
