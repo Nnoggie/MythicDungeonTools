@@ -8,6 +8,7 @@ local validSections = {
   maps = true,
   macros = true,
   marks = true,
+  settings = true,
 }
 
 function MDT:GetNavigationSidebarWidth()
@@ -82,7 +83,7 @@ function MDT:UpdateSectionVisibility()
   end
 
   if frame.sidePanel then
-    setShown(frame.sidePanel.WidgetGroup, true)
+    setShown(frame.sidePanel.WidgetGroup, showMapControls)
     if frame.sidePanel.WidgetGroup then
       setShown(frame.sidePanel.WidgetGroup.PresetDropDown, showMapControls)
     end
@@ -95,7 +96,6 @@ function MDT:UpdateSectionVisibility()
     setShown(frame.LiveSessionButton, showMapControls)
     setShown(frame.sidePanel.DifficultySlider, showMapControls)
     setShown(frame.sidePanel.middleLine, showMapControls)
-    setShown(frame.settingsCogwheel, true)
     setShown(frame.sidePanel.PullButtonScrollGroup, showMapControls)
     setShown(frame.sidePanel.ProgressBar, showMapControls)
     if not showMapControls then
@@ -149,11 +149,12 @@ function MDT:MakeNavigationSidebar(frame)
       { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 } },
       { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 } },
       { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
+      { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25 },
     }
     local buttonSize = 36
     local iconSize = 31
     local firstButtonTopOffset = -(panelHeight + 4)
-    local iconTexture = "Interface\\AddOns\\"..AddonName.."\\Textures\\navigationSidebarIcons"
+    local defaultIconTexture = "Interface\\AddOns\\"..AddonName.."\\Textures\\navigationSidebarIcons"
 
     for idx, section in ipairs(sections) do
       local button = CreateFrame("Button", "MDTNavigationSidebarButton"..idx, frame.navigationSidebar)
@@ -172,17 +173,17 @@ function MDT:MakeNavigationSidebar(frame)
       button.activeTexture = active
 
       local icon = button:CreateTexture(nil, "ARTWORK", nil, 0)
-      icon:SetTexture(iconTexture)
+      icon:SetTexture(section.texture or defaultIconTexture)
       icon:SetTexCoord(unpack(section.texCoords))
-      icon:SetSize(iconSize, iconSize)
+      icon:SetSize(section.iconSize or iconSize, section.iconSize or iconSize)
       icon:SetPoint("CENTER", button, "CENTER", 0, 0)
       icon:SetVertexColor(1, 1, 1, 0.9)
       button:SetNormalTexture(icon)
 
       local pushed = button:CreateTexture(nil, "ARTWORK", nil, 0)
-      pushed:SetTexture(iconTexture)
+      pushed:SetTexture(section.texture or defaultIconTexture)
       pushed:SetTexCoord(unpack(section.texCoords))
-      pushed:SetSize(iconSize, iconSize)
+      pushed:SetSize(section.iconSize or iconSize, section.iconSize or iconSize)
       pushed:SetPoint("CENTER", button, "CENTER", 1, -1)
       pushed:SetVertexColor(0.85, 0.85, 0.85, 0.9)
       button:SetPushedTexture(pushed)
@@ -220,7 +221,7 @@ function MDT:MakeSectionFrames(frame)
   frame.sectionContentFrames = frame.sectionContentFrames or {}
   frame.sectionSidePanelFrames = frame.sectionSidePanelFrames or {}
 
-  local sections = { "macros", "marks" }
+  local sections = { "macros", "marks", "settings" }
   for _, sectionKey in ipairs(sections) do
     if not frame.sectionContentFrames[sectionKey] then
       local contentFrame = CreateFrame("Frame", "MDT"..sectionKey.."SectionContentFrame", frame)
