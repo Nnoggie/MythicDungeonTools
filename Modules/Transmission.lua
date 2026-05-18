@@ -327,6 +327,12 @@ function MDTcommsObject:OnEnable()
   ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filterFunc)
 end
 
+local function showMapSectionIfNeeded()
+  if MDT.IsMapSectionActive and MDT.SetCurrentSection and not MDT:IsMapSectionActive() then
+    MDT:SetCurrentSection("maps")
+  end
+end
+
 --handle preset chat link clicks
 hooksecurefunc("SetItemRef", function(link, text)
   if (link and link:sub(0, 19) == "garrmission:mdtlive") then
@@ -337,9 +343,13 @@ hooksecurefunc("SetItemRef", function(link, text)
     local playerName, playerRealm = UnitFullName("player")
     playerName = playerName.."-"..playerRealm
     if sender == playerName then
-      MDT:Async(function() MDT:ShowInterfaceInternal(true) end, "showInterface")
+      MDT:Async(function()
+        showMapSectionIfNeeded()
+        MDT:ShowInterfaceInternal(true)
+      end, "showInterface")
     else
       MDT:Async(function()
+        showMapSectionIfNeeded()
         MDT:ShowInterfaceInternal(true)
         MDT:LiveSession_Enable()
       end, "showInterfaceLive")
@@ -362,6 +372,7 @@ hooksecurefunc("SetItemRef", function(link, text)
     local preset = MDT.transmissionCache[sender] and MDT.transmissionCache[sender][displayName]
     if preset and type(preset) == "table" then
       MDT:Async(function()
+        showMapSectionIfNeeded()
         MDT:ShowInterfaceInternal(true)
         MDT:ImportPreset(CopyTable(preset))
       end, "showInterfaceChatImport")
