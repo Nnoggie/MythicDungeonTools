@@ -1246,6 +1246,13 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   assignmentsHeading:SetFullWidth(true)
   frame:AddChild(assignmentsHeading)
 
+  local assignmentsDescriptionHeight = 36
+  local assignmentsDescription = AceGUI:Create("Label")
+  assignmentsDescription:SetText(L["focusMarkerAssignmentsTooltip"])
+  assignmentsDescription:SetFullWidth(true)
+  assignmentsDescription:SetColor(0.82, 0.82, 0.82)
+  frame:AddChild(assignmentsDescription)
+
   local rowCount = math.max(#roster, 5)
   local rosterNameWidth = 294
   local markerButtonWidth = 256
@@ -1284,6 +1291,14 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   buttons:SetHeight(36)
   local actionButtonWidth = 183
 
+  addButton(buttons, L["Set Keybind"], actionButtonWidth, function()
+    openKeybindSettings()
+  end)
+
+  addButton(buttons, L["Sync Marks"], actionButtonWidth, function()
+    MDT:FocusMarker_SendAssignments()
+  end)
+
   addButton(buttons, L["Auto Assign"], actionButtonWidth, function()
     roster = getGroupRoster()
     pruneAssignmentsToRoster(assignments, roster)
@@ -1297,14 +1312,6 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     end
     focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
     MDT:FocusMarker_OpenAssignments(true)
-  end)
-
-  addButton(buttons, L["Sync Marks"], actionButtonWidth, function()
-    MDT:FocusMarker_SendAssignments()
-  end)
-
-  addButton(buttons, L["Set Keybind"], actionButtonWidth, function()
-    openKeybindSettings()
   end)
   frame:AddChild(buttons)
 
@@ -1376,7 +1383,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     warningHeight = 22
   end
 
-  frame:SetHeight(math.max(350, 145 + warningHeight + (rowCount * 28)))
+  frame:SetHeight(math.max(350 + assignmentsDescriptionHeight, 145 + assignmentsDescriptionHeight + warningHeight + (rowCount * 28)))
   frame:Show()
   frame:DoLayout()
   positionMacroIcon()

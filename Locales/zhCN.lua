@@ -8,6 +8,7 @@ L = L or {}
 L["Maps"] = "Maps"
 L["Macros"] = "Macros"
 L["Marks"] = "Marks"
+L["focusMarkerAssignmentsTooltip"] = "MDT 提供按键绑定或宏，可以设置你的焦点目标，并给它加上目标标记。你可以和队伍协调标记，确保每个人都有自己使用的个人目标标记。"
 L["Change Log"] = "更新日志"
 L["No changelog entries available."] = "暂无更新日志。"
 L["Open changelog / version check"] = "打开更新日志 / 版本检查"
