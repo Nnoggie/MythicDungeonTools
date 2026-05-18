@@ -146,10 +146,10 @@ function MDT:MakeNavigationSidebar(frame)
     MDT:RegisterMainFrameDragHandle(frame.navigationSidebar, frame)
 
     local sections = {
-      { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 } },
+      { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 }, iconOffsetY = -0.5 },
       { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
-      { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 } },
-      { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25 },
+      { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 }, iconOffsetX = -1 },
+      { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25, iconOffsetX = 0.75 },
     }
     local buttonSize = 36
     local iconSize = 31
@@ -176,7 +176,7 @@ function MDT:MakeNavigationSidebar(frame)
       icon:SetTexture(section.texture or defaultIconTexture)
       icon:SetTexCoord(unpack(section.texCoords))
       icon:SetSize(section.iconSize or iconSize, section.iconSize or iconSize)
-      icon:SetPoint("CENTER", button, "CENTER", 0, 0)
+      icon:SetPoint("CENTER", button, "CENTER", section.iconOffsetX or 0, section.iconOffsetY or 0)
       icon:SetVertexColor(1, 1, 1, 0.9)
       button:SetNormalTexture(icon)
 
@@ -184,7 +184,7 @@ function MDT:MakeNavigationSidebar(frame)
       pushed:SetTexture(section.texture or defaultIconTexture)
       pushed:SetTexCoord(unpack(section.texCoords))
       pushed:SetSize(section.iconSize or iconSize, section.iconSize or iconSize)
-      pushed:SetPoint("CENTER", button, "CENTER", 1, -1)
+      pushed:SetPoint("CENTER", button, "CENTER", (section.iconOffsetX or 0) + 1, (section.iconOffsetY or 0) - 1)
       pushed:SetVertexColor(0.85, 0.85, 0.85, 0.9)
       button:SetPushedTexture(pushed)
 
