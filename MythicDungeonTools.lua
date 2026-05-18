@@ -367,6 +367,30 @@ function MDT:GetDB()
   return db
 end
 
+function MDT:RegisterMainFrameDragHandle(dragHandle, frame)
+  frame = frame or MDT.main_frame
+  if not dragHandle or not frame then return end
+
+  dragHandle:EnableMouse(true)
+  dragHandle:RegisterForDrag("LeftButton")
+  dragHandle:SetScript("OnDragStart", function()
+    frame:SetMovable(true)
+    frame:StartMoving()
+  end)
+  dragHandle:SetScript("OnDragStop", function()
+    frame:StopMovingOrSizing()
+    frame:SetMovable(false)
+    if MDT:IsFrameOffScreen() then
+      MDT:ResetMainFramePos(true)
+    else
+      local from, _, to, x, y = frame:GetPoint()
+      db.anchorFrom = from
+      db.anchorTo = to
+      db.xoffset, db.yoffset = x, y
+    end
+  end)
+end
+
 function MDT:ShowInterface(force)
   MDT:Async(function() MDT:ShowInterfaceInternal(force) end, "showInterface")
 end
@@ -703,24 +727,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT")
   frame.topPanel:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT")
 
-  frame.topPanel:EnableMouse(true)
-  frame.topPanel:RegisterForDrag("LeftButton")
-  frame.topPanel:SetScript("OnDragStart", function(self, button)
-    frame:SetMovable(true)
-    frame:StartMoving()
-  end)
-  frame.topPanel:SetScript("OnDragStop", function(self, button)
-    frame:StopMovingOrSizing()
-    frame:SetMovable(false)
-    if MDT:IsFrameOffScreen() then
-      MDT:ResetMainFramePos(true)
-    else
-      local from, _, to, x, y = MDT.main_frame:GetPoint(nil)
-      db.anchorFrom = from
-      db.anchorTo = to
-      db.xoffset, db.yoffset = x, y
-    end
-  end)
+  MDT:RegisterMainFrameDragHandle(frame.topPanel, frame)
 
   if frame.bottomPanel == nil then
     frame.bottomPanel = CreateFrame("Frame", "MDTBottomPanel", frame)
@@ -789,25 +796,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.statusString:SetTextColor(1, 1, 1, 1)
   frame.statusString:Hide()
 
-  frame.bottomPanel:EnableMouse(true)
-  frame.bottomPanel:RegisterForDrag("LeftButton")
-  frame.bottomPanel:SetScript("OnDragStart", function(self, button)
-    frame:SetMovable(true)
-    frame:StartMoving()
-  end)
-  frame.bottomPanel:SetScript("OnDragStop", function(self, button)
-    frame:StopMovingOrSizing()
-    frame:SetMovable(false)
-    if MDT:IsFrameOffScreen() then
-      MDT:ResetMainFramePos(true)
-    else
-      ---@diagnostic disable-next-line: missing-parameter
-      local from, _, to, x, y = MDT.main_frame:GetPoint()
-      db.anchorFrom = from
-      db.anchorTo = to
-      db.xoffset, db.yoffset = x, y
-    end
-  end)
+  MDT:RegisterMainFrameDragHandle(frame.bottomPanel, frame)
 end
 
 function MDT:MakeCopyHelper(frame)
@@ -881,7 +870,7 @@ function MDT:MakeSidePanel(frame)
     frame.sidePanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.sidePanelTex:Show()
   end
-  frame.sidePanel:EnableMouse(true)
+  MDT:RegisterMainFrameDragHandle(frame.sidePanel, frame)
 
   frame.sidePanel:ClearAllPoints()
   frame.sidePanel:SetWidth(sidePanelWidth)
@@ -908,6 +897,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:SetLayout("Flow")
 
   frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
+  MDT:RegisterMainFrameDragHandle(frame.sidePanel.WidgetGroup.frame, frame)
   if not frame.sidePanel.WidgetGroup.frame.SetBackdrop then
     Mixin(frame.sidePanel.WidgetGroup.frame, BackdropTemplateMixin)
   end
@@ -4683,11 +4673,12 @@ function initFrames()
   if not db.maximized then db.scale = db.nonFullscreenScale end
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
+  MDT:RegisterMainFrameDragHandle(main_frame, main_frame)
   main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
   main_frame.background:SetAllPoints()
   main_frame.background:SetDrawLayer(canvasDrawLayer, 1)
   main_frame.background:SetColorTexture(unpack(MDT.BackdropColor))
-  main_frame.background:SetAlpha(0.2)
+  main_frame.background:SetAlpha(0)
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
