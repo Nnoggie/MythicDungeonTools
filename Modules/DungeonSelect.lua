@@ -107,6 +107,49 @@ end
 local dungeonButtons = {}
 local BUTTON_SIZE = 40
 
+function MDT:UpdateDungeonSelectVisibility(showMapControls)
+  if showMapControls == nil then showMapControls = MDT:IsMapSectionActive() end
+  local frame = MDT.main_frame
+  if not frame then return end
+
+  local currentList = db and dungeonSelectionToIndex[db.selectedDungeonList]
+  local visibleDungeonButtons = currentList and #currentList or 0
+  for idx, button in ipairs(dungeonButtons) do
+    if showMapControls and idx <= visibleDungeonButtons then
+      button:Show()
+    else
+      button:Hide()
+    end
+  end
+
+  if frame.seasonSelectionGroup then
+    if showMapControls then
+      frame.seasonSelectionGroup.frame:Show()
+    else
+      if frame.seasonSelectionGroup.seasonDropdown and frame.seasonSelectionGroup.seasonDropdown.pullout then
+        frame.seasonSelectionGroup.seasonDropdown.pullout:Close()
+        frame.seasonSelectionGroup.seasonDropdown.pullout.frame:Hide()
+      end
+      frame.seasonSelectionGroup.frame:Hide()
+    end
+  end
+
+  if frame.sublevelSelectionGroup then
+    local sublevels = db and MDT.dungeonSubLevels[db.currentDungeonIdx]
+    if showMapControls and sublevels and #sublevels > 1 then
+      frame.sublevelSelectionGroup.frame:Show()
+      frame.sublevelSelectionGroup.sublevelDropdown.frame:Show()
+    else
+      if frame.sublevelSelectionGroup.sublevelDropdown.pullout then
+        frame.sublevelSelectionGroup.sublevelDropdown.pullout:Close()
+        frame.sublevelSelectionGroup.sublevelDropdown.pullout.frame:Hide()
+      end
+      frame.sublevelSelectionGroup.sublevelDropdown.frame:Hide()
+      frame.sublevelSelectionGroup.frame:Hide()
+    end
+  end
+end
+
 function MDT:UpdateDungeonSelectHighlight()
   for _, button in ipairs(dungeonButtons) do
     if button.dungeonIdx == db.currentDungeonIdx then
@@ -219,6 +262,7 @@ function MDT:UpdateDungeonDropDown()
     sublevelDropdown.frame:Show()
     sublevelGroup.frame:Show()
   end
+  MDT:UpdateDungeonSelectVisibility()
 end
 
 --for old maps that need it

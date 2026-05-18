@@ -5,6 +5,9 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 -- MDT
+L["Maps"] = "Maps"
+L["Macros"] = "Macros"
+L["Marks"] = "Marks"
 L["Change Log"] = "更新日志"
 L["No changelog entries available."] = "暂无更新日志。"
 L["Open changelog / version check"] = "打开更新日志 / 版本检查"

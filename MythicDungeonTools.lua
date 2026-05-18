@@ -196,6 +196,7 @@ local defaultSavedVars = {
       numberCustomColors = 12,
     },
     currentDungeonIdx = MDT:IsMop() and 130 or 150, -- set this one every new season
+    currentSection = "maps",
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
     knownAffixWeeks = {},
@@ -404,6 +405,7 @@ function MDT:ShowInterfaceInternal(force)
     MDT:HideInterface()
   else
     self.main_frame:Show()
+    MDT:UpdateSectionVisibility()
     MDT:RequestVersionCheck()
     self:CheckCurrentZone()
     MDT:UpdateBottomText()
@@ -597,9 +599,10 @@ end
 function MDT:GetFullScreenSizes()
   local newSizey = GetScreenHeight() - (panelHeight * 2)
   local newSizex = newSizey * (sizex / sizey)
+  local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
   local isNarrow
-  if newSizex + sidePanelWidth > GetScreenWidth() then
-    newSizex = GetScreenWidth() - sidePanelWidth
+  if newSizex + sidePanelWidth + navigationSidebarWidth > GetScreenWidth() then
+    newSizex = GetScreenWidth() - sidePanelWidth - navigationSidebarWidth
     newSizey = newSizex * (sizey / sizex)
     isNarrow = true
   end
@@ -617,7 +620,8 @@ function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
     return defaultNonFullscreenScale
   end
 
-  local maxLeftScale = ((screenWidth / 2) + xoffset - screenEdgePadding) * 2 / sizex
+  local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
+  local maxLeftScale = ((screenWidth / 2) + xoffset - navigationSidebarWidth - screenEdgePadding) * 2 / sizex
   local maxRightScale = ((screenWidth / 2) - sidePanelWidth - xoffset - screenEdgePadding) * 2 / sizex
   local maxHeightScale = (screenHeight + yoffset - panelHeight - screenEdgePadding) / sizey
   local maxScale = min(maxLeftScale, maxRightScale, maxHeightScale)
@@ -637,7 +641,7 @@ function MDT:IsFrameOffScreen()
   local bottomPanel = MDT.main_frame.bottomPanel
   local width = GetScreenWidth()
   local height = GetScreenHeight()
-  local left = topPanel:GetLeft()     -->width
+  local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
   local right = topPanel:GetRight()   --<0
   local bottom = topPanel:GetBottom() --<0
   local top = bottomPanel:GetTop()    -->height
@@ -737,7 +741,7 @@ function MDT:MakeTopBottomTextures(frame)
 
   frame.bottomPanel:ClearAllPoints()
   frame.bottomPanel:SetHeight(30)
-  frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT")
+  frame.bottomPanel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", -MDT:GetNavigationSidebarWidth(), 0)
   frame.bottomPanel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT")
 
   frame.bottomPanelString = frame.bottomPanel:CreateFontString("MDTMid")
@@ -4736,11 +4740,13 @@ function initFrames()
   MDT:CheckCurrentZone(true)
   MDT:EnsureDBTables()
   MDT:MakeTopBottomTextures(main_frame)
+  MDT:MakeNavigationSidebar(main_frame)
   MDT:MakeCopyHelper(main_frame)
   coroutine.yield()
   MDT:MakeMapTexture(main_frame)
   coroutine.yield()
   MDT:MakeSidePanel(main_frame)
+  MDT:MakeSectionFrames(main_frame)
   coroutine.yield()
   MDT:CreateMenu()
   coroutine.yield()
@@ -4882,6 +4888,7 @@ function initFrames()
     main_frame.toolbar.toggleButton:Click()
     main_frame.toolbar.widgetGroup.frame:Hide()
   end
+  MDT:UpdateSectionVisibility()
 
   --ping
   --MDT.ping = CreateFrame("PlayerModel", nil, MDT.main_frame.mapPanelFrame)
@@ -4900,6 +4907,7 @@ function initFrames()
   --gotta set the list here, as affixes are not ready to be retrieved yet on login
   main_frame.sidePanel.affixDropdown:UpdateAffixList()
   main_frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or (MDT:GetCurrentAffixWeek() or 1))
+  MDT:UpdateSectionVisibility()
   coroutine.yield()
 
   if MDT:IsFrameOffScreen() then

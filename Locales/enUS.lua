@@ -16,6 +16,9 @@ L["Cannot share routes right now due to blizzard restrictions."] = "Cannot share
 L["exampleItemNameNoSpellId"] = "Example Item (No Spell ID)"
 L["exampleItemDescriptionNoSpellId"] = "A sample item with no associated spell ID.%s%sNew lines supported"
 L["exampleItemDescriptionWithSpellId"] = "A sample item that references a spell ID."
+L["Maps"] = "Maps"
+L["Macros"] = "Macros"
+L["Marks"] = "Marks"
 --12.0 ADD
 L["Adept of the Dawn"] = "Adept of the Dawn"
 L["Adorned Bladetalon"] = "Adorned Bladetalon"
