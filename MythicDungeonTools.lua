@@ -266,14 +266,8 @@ do
       local inGroup = UnitInRaid("player") or IsInGroup()
       MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
       MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
-      if MDT.main_frame.FocusMarkerButton then
-        MDT.main_frame.FocusMarkerButton:SetDisabled(false)
-      end
       if inGroup then
         MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
-        if MDT.main_frame.FocusMarkerButton then
-          MDT.main_frame.FocusMarkerButton.text:SetTextColor(1, 0.8196, 0)
-        end
         if MDT.liveSessionActive then
           MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
           MDT.main_frame.LiveSessionButton.text:SetTextColor(0, 1, 0)
@@ -284,9 +278,6 @@ do
       else
         MDT.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
         MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
-        if MDT.main_frame.FocusMarkerButton then
-          MDT.main_frame.FocusMarkerButton.text:SetTextColor(1, 0.8196, 0)
-        end
       end
       last = now
     end
@@ -1229,26 +1220,6 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
   end
 
-  frame.FocusMarkerButton = AceGUI:Create("Button")
-  frame.FocusMarkerButton:SetText(L["Marks"])
-  frame.FocusMarkerButton:SetWidth(buttonWidth)
-  frame.FocusMarkerButton.frame:SetNormalFontObject(fontInstance)
-  frame.FocusMarkerButton.frame:SetHighlightFontObject(fontInstance)
-  frame.FocusMarkerButton.frame:SetDisabledFontObject(fontInstance)
-  frame.FocusMarkerButton:SetCallback("OnClick", function()
-    if closeIfShown(MDT.main_frame.FocusMarkerAssignmentsFrame) then return end
-    MDT:FocusMarker_OpenAssignments()
-  end)
-  frame.FocusMarkerButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.FocusMarkerButton.frame)
-    GameTooltip:AddLine(L["Focus Marker Assignments"], 1, 1, 1)
-    GameTooltip:AddLine(L["focusMarkerAssignmentsTooltip"], 1, 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.FocusMarkerButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
@@ -1256,7 +1227,6 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.FocusMarkerButton)
 
   --Week Dropdown
   local function makeAffixString(week, affixes, longText)
@@ -2193,7 +2163,6 @@ function MDT:HideAllDialogs()
       MDT.main_frame.settingsFrame.CustomColorFrame:Hide()
       MDT.main_frame.settingsFrame:Hide()
     end
-    if MDT.main_frame.FocusMarkerAssignmentsFrame then MDT.main_frame.FocusMarkerAssignmentsFrame:Hide() end
     if MDT.main_frame.ConfirmationFrame then MDT.main_frame.ConfirmationFrame:Hide() end
     if MDT.versionCheckFrame then MDT.versionCheckFrame:Hide() end
     if MDT.externalLinkCopyFrame then MDT.externalLinkCopyFrame:Hide() end

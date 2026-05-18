@@ -93,7 +93,6 @@ function MDT:UpdateSectionVisibility()
     setShown(frame.sidePanelImportButton, showMapControls)
     setShown(frame.LinkToChatButton, showMapControls)
     setShown(frame.LiveSessionButton, showMapControls)
-    setShown(frame.FocusMarkerButton, showMapControls)
     setShown(frame.sidePanel.DifficultySlider, showMapControls)
     setShown(frame.sidePanel.middleLine, showMapControls)
     setShown(frame.settingsCogwheel, true)
@@ -120,6 +119,16 @@ function MDT:UpdateSectionVisibility()
   if frame.sectionSidePanelFrames then
     for sectionKey, sectionFrame in pairs(frame.sectionSidePanelFrames) do
       setShown(sectionFrame, sectionKey == currentSection)
+    end
+  end
+
+  local sectionChanged = frame.lastVisibleSection ~= currentSection
+  frame.lastVisibleSection = currentSection
+  if currentSection == "marks" and MDT.FocusMarker_OpenAssignments then
+    local focusMarkerFrame = frame.FocusMarkerAssignmentsFrame
+    local focusMarkerShown = focusMarkerFrame and focusMarkerFrame.frame and focusMarkerFrame.frame:IsShown()
+    if sectionChanged or not focusMarkerShown then
+      MDT:FocusMarker_OpenAssignments(not sectionChanged)
     end
   end
 end
@@ -157,7 +166,7 @@ function MDT:MakeNavigationSidebar(frame)
     local sections = {
       { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 } },
       { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 } },
-      { key = "marks", tooltip = L["Marks"], texCoords = { 0.5, 0.75, 0, 0.25 } },
+      { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
     }
     local buttonSize = 36
     local iconSize = 31

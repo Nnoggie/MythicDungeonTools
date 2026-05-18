@@ -1055,6 +1055,7 @@ end
 
 refreshAssignmentsFrame = function()
   if not assignmentsFrame or not assignmentsFrame.frame or not assignmentsFrame.frame:IsShown() then return end
+  if MDT.GetCurrentSection and MDT:GetCurrentSection() ~= "marks" then return end
   C_Timer.After(0, function()
     MDT:FocusMarker_OpenAssignments(true)
   end)
@@ -1186,36 +1187,38 @@ local function openMarkerMenu(widget, fullName)
   end)
 end
 
-local function hideAceGUIBuiltInCloseButton(frame)
-  for _, child in ipairs({ frame.frame:GetChildren() }) do
-    if child.GetText and child:GetText() == CLOSE then
-      child:Hide()
-      child:Disable()
-      child:SetScript("OnClick", nil)
-      break
-    end
-  end
-end
-
 local function createAssignmentsFrame()
-  local frame = AceGUI:Create("Frame")
-  frame.frame:SetParent(MDT.main_frame)
-  frame.frame:SetFrameStrata("DIALOG")
-  frame:SetTitle(L["Focus Marker Assignments"])
-  frame:SetWidth(500)
-  frame:SetHeight(260)
-  frame:EnableResize(false)
+  local mainFrame = MDT.main_frame
+  local contentParent = mainFrame.sectionContentFrames and mainFrame.sectionContentFrames.marks or mainFrame
+
+  local frame = AceGUI:Create("SimpleGroup")
+  frame.frame:SetParent(contentParent)
+  frame.frame:SetFrameStrata("HIGH")
+  frame.frame:SetFrameLevel(3)
+  frame:SetWidth(555)
+  frame:SetHeight(420)
   frame:SetLayout("Flow")
-  frame:SetCallback("OnClose", function() end)
-  frame.statustext:GetParent():Hide()
-  hideAceGUIBuiltInCloseButton(frame)
+  frame.frame:ClearAllPoints()
+  frame.frame:SetPoint("TOP", contentParent, "TOP", 0, -20)
+
+  function frame:Show(...)
+    if self.frame then self.frame:Show() end
+  end
+  function frame:Hide(...)
+    if self.frame then self.frame:Hide() end
+  end
+
   frame:Hide()
-  MDT:FixAceGUIShowHide(frame, nil, nil, true)
   MDT.main_frame.FocusMarkerAssignmentsFrame = frame
   return frame
 end
 
 function MDT:FocusMarker_OpenAssignments(skipDiscovery)
+  if self.GetCurrentSection and self.SetCurrentSection and self:GetCurrentSection() ~= "marks" then
+    self:SetCurrentSection("marks")
+    return
+  end
+
   assignmentsFrame = assignmentsFrame or createAssignmentsFrame()
   local frame = assignmentsFrame
   local assignments = self:FocusMarker_GetAssignments()
@@ -1238,10 +1241,14 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   end
   frame:ReleaseChildren()
 
+  local assignmentsHeading = AceGUI:Create("Heading")
+  assignmentsHeading:SetText(L["Focus Marker Assignments"])
+  assignmentsHeading:SetFullWidth(true)
+  frame:AddChild(assignmentsHeading)
+
   local rowCount = math.max(#roster, 5)
-  local rosterRowIndent = 85
-  local rosterNameWidth = 150
-  local markerButtonWidth = 150
+  local rosterNameWidth = 294
+  local markerButtonWidth = 256
 
   for index = 1, rowCount do
     local player = roster[index]
@@ -1249,11 +1256,6 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     row:SetLayout("Flow")
     row:SetFullWidth(true)
     row:SetHeight(28)
-
-    local spacer = AceGUI:Create("Label")
-    spacer:SetWidth(rosterRowIndent)
-    spacer:SetText("")
-    row:AddChild(spacer)
 
     local name = AceGUI:Create("Label")
     name:SetWidth(rosterNameWidth)
@@ -1275,6 +1277,36 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
 
     frame:AddChild(row)
   end
+
+  local buttons = AceGUI:Create("SimpleGroup")
+  buttons:SetLayout("Flow")
+  buttons:SetFullWidth(true)
+  buttons:SetHeight(36)
+  local actionButtonWidth = 183
+
+  addButton(buttons, L["Auto Assign"], actionButtonWidth, function()
+    roster = getGroupRoster()
+    pruneAssignmentsToRoster(assignments, roster)
+    local playerFullName = getPlayerFullName()
+    local previousOwnMarker = assignments[playerFullName]
+    applyClassDefaults(roster, assignments)
+    markRosterAssignmentsKnown(roster, true)
+    local currentOwnMarker = assignments[playerFullName]
+    if previousOwnMarker ~= currentOwnMarker then
+      MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
+    end
+    focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
+    MDT:FocusMarker_OpenAssignments(true)
+  end)
+
+  addButton(buttons, L["Sync Marks"], actionButtonWidth, function()
+    MDT:FocusMarker_SendAssignments()
+  end)
+
+  addButton(buttons, L["Set Keybind"], actionButtonWidth, function()
+    openKeybindSettings()
+  end)
+  frame:AddChild(buttons)
 
   addCheckbox(frame, L["Announce focus marker on ready check"], settings.announceReadyCheck, function(value)
     settings.announceReadyCheck = value
@@ -1344,43 +1376,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     warningHeight = 22
   end
 
-  local buttons = AceGUI:Create("SimpleGroup")
-  buttons:SetLayout("Flow")
-  buttons:SetFullWidth(true)
-  buttons:SetHeight(40)
-  local footerButtonWidth = 108
-
-  addButton(buttons, L["Auto Assign"], footerButtonWidth, function()
-    roster = getGroupRoster()
-    pruneAssignmentsToRoster(assignments, roster)
-    local playerFullName = getPlayerFullName()
-    local previousOwnMarker = assignments[playerFullName]
-    applyClassDefaults(roster, assignments)
-    markRosterAssignmentsKnown(roster, true)
-    local currentOwnMarker = assignments[playerFullName]
-    if previousOwnMarker ~= currentOwnMarker then
-      MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
-    end
-    focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
-    MDT:FocusMarker_OpenAssignments(true)
-  end)
-
-  addButton(buttons, L["Sync Marks"], footerButtonWidth, function()
-    MDT:FocusMarker_SendAssignments()
-  end)
-
-  addButton(buttons, L["Set Keybind"], footerButtonWidth, function()
-    openKeybindSettings()
-  end)
-
-  addButton(buttons, L["Close"], footerButtonWidth, function()
-    frame:Hide()
-  end)
-  frame:AddChild(buttons)
-
-  frame:SetHeight(190 + warningHeight + (rowCount * 28))
-  frame:ClearAllPoints()
-  frame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+  frame:SetHeight(math.max(350, 145 + warningHeight + (rowCount * 28)))
   frame:Show()
   frame:DoLayout()
   positionMacroIcon()
