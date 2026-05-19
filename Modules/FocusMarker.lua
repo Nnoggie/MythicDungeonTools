@@ -1090,7 +1090,7 @@ end
 
 refreshAssignmentsFrame = function()
   if not assignmentsFrame or not assignmentsFrame.frame or not assignmentsFrame.frame:IsShown() then return end
-  if MDT.GetCurrentSection and MDT:GetCurrentSection() ~= "marks" then return end
+  if MDT:GetCurrentSection() ~= "marks" then return end
   C_Timer.After(0, function()
     MDT:FocusMarker_OpenAssignments(true)
   end)
@@ -1249,7 +1249,7 @@ local function createAssignmentsFrame()
 end
 
 function MDT:FocusMarker_OpenAssignments(skipDiscovery)
-  if self.GetCurrentSection and self.SetCurrentSection and self:GetCurrentSection() ~= "marks" then
+  if self:GetCurrentSection() ~= "marks" then
     self:SetCurrentSection("marks")
     return
   end

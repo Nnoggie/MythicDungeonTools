@@ -559,7 +559,7 @@ eventFrame:SetScript("OnEvent", function()
 end)
 
 function MDT:MacroManager_Open()
-  if self.GetCurrentSection and self.SetCurrentSection and self:GetCurrentSection() ~= "macros" then
+  if self:GetCurrentSection() ~= "macros" then
     self:SetCurrentSection("macros")
     return
   end
