@@ -188,6 +188,10 @@ local defaultSavedVars = {
       suppressNotifications = false,
       assignments = {},
     },
+    macroManager = {
+      selectedScope = "account",
+      selectedMacroIDs = {},
+    },
     colorPaletteInfo = {
       autoColoring = true,
       forceColorBlindMode = false,

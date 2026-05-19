@@ -9,6 +9,7 @@
 	<Script file='ExternalLinks.lua'/>
 	<Script file='NavigationSidebar.lua'/>
 	<Script file='Settings.lua'/>
+	<Script file='MacroManager.lua'/>
 	<Script file='LiveSession.lua'/>
 	<Script file='FocusMarker.lua'/>
 	<Script file='Maximize.lua'/>

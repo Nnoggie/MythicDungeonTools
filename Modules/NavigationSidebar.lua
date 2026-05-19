@@ -130,6 +130,13 @@ function MDT:UpdateSectionVisibility()
     if sectionChanged or not focusMarkerShown then
       MDT:FocusMarker_OpenAssignments(not sectionChanged)
     end
+  elseif currentSection == "macros" and MDT.MacroManager_Open then
+    local macroManagerFrame = frame.MacroManagerFrame
+    local macroManagerShown = macroManagerFrame and macroManagerFrame.content and macroManagerFrame.content.frame and
+        macroManagerFrame.content.frame:IsShown()
+    if sectionChanged or not macroManagerShown then
+      MDT:MacroManager_Open()
+    end
   end
 end
 
@@ -148,7 +155,7 @@ function MDT:MakeNavigationSidebar(frame)
     local sections = {
       { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 }, iconOffsetY = -0.5 },
       { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
-      { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 }, iconOffsetX = -1 },
+      { key = "macros", tooltip = L["Macro Manager"], texCoords = { 0.25, 0.5, 0, 0.25 }, iconOffsetX = -1 },
       { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25, iconOffsetX = 0.75 },
     }
     local buttonSize = 36
