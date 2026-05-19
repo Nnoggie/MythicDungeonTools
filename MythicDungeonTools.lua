@@ -201,21 +201,25 @@ local defaultSavedVars = {
         mythic_dungeon = false,
         mythic_plus = false,
       },
+      macroManager = {
+        selectedScope = "account",
+        selectedMacroIDs = {},
+      },
+      colorPaletteInfo = {
+        autoColoring = true,
+        forceColorBlindMode = false,
+        colorPaletteIdx = 4,
+        customPaletteValues = {},
+        numberCustomColors = 12,
+      },
+      currentDungeonIdx = MDT:IsMop() and 130 or 150, -- set this one every new season
+      currentSection = "maps",
+      latestDungeonSeen = 0,
+      selectedDungeonList = 1,
+      knownAffixWeeks = {},
+      prePatchWarningSeenFor = 0,
     },
-    colorPaletteInfo = {
-      autoColoring = true,
-      forceColorBlindMode = false,
-      colorPaletteIdx = 4,
-      customPaletteValues = {},
-      numberCustomColors = 12,
-    },
-    currentDungeonIdx = MDT:IsMop() and 130 or 150, -- set this one every new season
-    currentSection = "maps",
-    latestDungeonSeen = 0,
-    selectedDungeonList = 1,
-    knownAffixWeeks = {},
-    prePatchWarningSeenFor = 0,
-  },
+  }
 }
 do
   for i = 1, 200 do
@@ -672,9 +676,9 @@ function MDT:IsFrameOffScreen()
   local width = GetScreenWidth()
   local height = GetScreenHeight()
   local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
-  local right = topPanel:GetRight()   --<0
-  local bottom = topPanel:GetBottom() --<0
-  local top = bottomPanel:GetTop()    -->height
+  local right = topPanel:GetRight()                                                                                  --<0
+  local bottom = topPanel:GetBottom()                                                                                --<0
+  local top = bottomPanel:GetTop()                                                                                   -->height
   return left > width or right < 0 or bottom < 0 or top > height
 end
 
