@@ -328,7 +328,7 @@ function MDTcommsObject:OnEnable()
 end
 
 local function showMapSectionIfNeeded()
-  if MDT.IsMapSectionActive and MDT.SetCurrentSection and not MDT:IsMapSectionActive() then
+  if not MDT:IsMapSectionActive() then
     MDT:SetCurrentSection("maps")
   end
 end
