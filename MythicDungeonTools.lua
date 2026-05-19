@@ -3705,6 +3705,35 @@ function MDT:MakeClearConfirmationFrame(frame)
 end
 
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
+local function confirmationHasCheckbox(f)
+  for _, child in ipairs(f.children or {}) do
+    if child == f.CheckBox then
+      return true
+    end
+  end
+  return false
+end
+
+local function confirmationEnsureCheckbox(f)
+  if f.CheckBox and not confirmationHasCheckbox(f) then
+    f:AddChild(f.CheckBox, f.OkayButton)
+  end
+end
+
+local function confirmationRemoveCheckbox(f)
+  for index, child in ipairs(f.children or {}) do
+    if child == f.CheckBox then
+      table.remove(f.children, index)
+      break
+    end
+  end
+  if f.CheckBox then
+    f.CheckBox:SetLabel("")
+    f.CheckBox:SetValue(false)
+    f.CheckBox.frame:Hide()
+  end
+end
+
 function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2,
                                    fireCancelOnClose, checkboxText, checkboxValue, checkboxCallback)
   local f
@@ -3737,7 +3766,6 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     f.CheckBox = AceGUI:Create("CheckBox")
     f.CheckBox:SetWidth(390)
     f.CheckBox.frame:Hide()
-    f:AddChild(f.CheckBox)
 
     f.OkayButton = AceGUI:Create("Button")
     f.OkayButton:SetWidth(100)
@@ -3761,6 +3789,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     MDT:HideAllDialogs()
   end)
   if checkboxText then
+    confirmationEnsureCheckbox(f)
     f.CheckBox:SetLabel(checkboxText)
     f.CheckBox:SetValue(checkboxValue)
     f.CheckBox:SetCallback("OnValueChanged", function(widget, callbackName, value)
@@ -3770,7 +3799,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   else
     f.CheckBox:SetCallback("OnValueChanged", function()
     end)
-    f.CheckBox.frame:Hide()
+    confirmationRemoveCheckbox(f)
   end
   if buttonText2 then
     f.CancelButton:SetText(buttonText2)
