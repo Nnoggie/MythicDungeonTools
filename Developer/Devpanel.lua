@@ -170,7 +170,7 @@ function MDT:CreateDevPanel(frame)
   )
   devPanel:SetWidth(250)
   devPanel:ClearAllPoints()
-  devPanel:SetPoint("TOPRIGHT", frame.topPanel, "TOPLEFT", 0, 0)
+  devPanel:SetPoint("TOPRIGHT", frame.navigationSidebar, "TOPLEFT", 0, 0)
   devPanel:SetLayout("Flow")
   devPanel.frame:Hide()
 
