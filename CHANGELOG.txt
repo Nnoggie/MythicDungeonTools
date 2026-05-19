@@ -1,7 +1,3 @@
-## 6.1.3 (2026-05-17)
+## 6.1.4 (2026-05-19)
 
-- Split the version check window into Change Log and Party Versions tabs.
-- Added party member MDT versions to the Party Versions tab.
-- Fixed Magisters Terrace and Pit of Saron detection for additional zone IDs.
-- Added a missing Scrounger in Nexus Point Xenas.
-- Unlinked two Maisara Caverns enemies from group 91 so they can be assigned separately.
+- Added missing dormant Dreadflails to Nexus Point Xenas.
