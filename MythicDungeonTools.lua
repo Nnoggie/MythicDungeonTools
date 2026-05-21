@@ -1449,7 +1449,6 @@ function MDT:GetCurrentRouteAuthor()
 end
 
 function MDT:EnsurePresetCreatedBy(preset, force)
-  if type(preset) ~= "table" then return end
   if preset.text == L["Default"] then
     preset.createdBy = nil
     return
@@ -1460,7 +1459,6 @@ function MDT:EnsurePresetCreatedBy(preset, force)
 end
 
 function MDT:GetClassFileByIndex(classIdx)
-  if type(classIdx) ~= "number" and type(classIdx) ~= "string" then return end
   return raidClassColorKeyByClassIndex[tonumber(classIdx)]
 end
 
@@ -1474,7 +1472,6 @@ function MDT:GetClassColoredRouteAuthorName(createdBy)
 end
 
 function MDT:GetPresetDropdownText(preset)
-  if type(preset) ~= "table" then return "" end
   local text = preset.text or ""
   local authorName = self:GetClassColoredRouteAuthorName(preset.createdBy)
   if authorName then
@@ -2218,7 +2215,7 @@ function MDT:OpenNewPresetDialog()
   local countPresets = 0
   for k, v in pairs(db.presets[db.currentDungeonIdx]) do
     if v.text ~= L["<New Preset>"] then
-      table.insert(presetList, k, v.text)
+      table.insert(presetList, k, MDT:GetPresetDropdownText(v))
       local indexNumber = tonumber(v.text:match("^"..L["defaultPresetName"].."%s*(%d+)$"))
       if indexNumber and indexNumber > highestIndex then
         highestIndex = indexNumber
