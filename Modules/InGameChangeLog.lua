@@ -2,6 +2,16 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.1.5",
+    date = "2026-05-23",
+    notes = {
+      "Added a missing Rotting Ghoul to the first pull area in Pit of Saron.",
+      "Added a missing Champion to the first boss area in Seat of the Triumvirate.",
+      "Removed two non-existing Radiant Swarms from Nexus Point Xenas.",
+      "Starting point route names now show the same class-colored route author names as the route dropdown.",
+    },
+  },
+  {
     tag = "6.1.4",
     date = "2026-05-19",
     notes = {
@@ -17,17 +27,6 @@ MDT.changeLog = {
       "Fixed Magisters Terrace and Pit of Saron detection for additional zone IDs.",
       "Added a missing Scrounger in Nexus Point Xenas.",
       "Unlinked two Maisara Caverns enemies from group 91 so they can be assigned separately.",
-    },
-  },
-  {
-    tag = "6.1.2",
-    date = "2026-05-05",
-    notes = {
-      "Added a version check and changelog window from the version text in the bottom-left corner.",
-      "Added update notifications with copyable CurseForge and Wago download links when a newer party member version is detected.",
-      "Added copyable GitHub, Discord, and Patreon link dialogs in the bottom toolbar.",
-      "Side panel buttons now close their open dialogs when clicked again.",
-      "Fixed Maisara Caverns detection for zone 2437.",
     },
   },
 }
