@@ -172,6 +172,8 @@ function MDT:UpdateSectionVisibility()
     if sectionChanged or not macroManagerShown then
       MDT:MacroManager_Open()
     end
+  elseif currentSection == "settings" and MDT.Settings_RefreshLayout then
+    MDT:Settings_RefreshLayout()
   end
 >>>>>>> 2d98caae (wip:macro manager)
 end
