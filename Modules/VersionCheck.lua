@@ -262,8 +262,21 @@ local function requestMissingPlayerVersions()
   end
 end
 
+local function reportPlayerVersionsToParty()
+  C_ChatInfo.SendChatMessage("MDT Version Check:", "PARTY")
+  C_ChatInfo.SendChatMessage(getFullName("player")..": v"..currentVersion, "PARTY")
+  forEachPartyMember(function(memberName)
+    local version = reportedVersions[memberName]
+    if version then
+      C_ChatInfo.SendChatMessage(memberName..": v"..version, "PARTY")
+    end
+  end)
+end
+
 buildPlayerVersionsText = function()
-  local lines = {}
+  local lines = {
+    getFullName("player")..": v"..currentVersion,
+  }
   forEachPartyMember(function(memberName)
     local version = reportedVersions[memberName]
     if version then
@@ -279,9 +292,11 @@ local function setActiveVersionCheckTab(f, tab)
   f.changeLogTab:SetDisabled(tab == "changelog")
   f.versionsTab:SetDisabled(tab == "versions")
   if tab == "versions" then
+    f.reportVersionsButton.frame:Show()
     requestMissingPlayerVersions()
     MDT:UpdatePlayerVersionsDisplay()
   else
+    f.reportVersionsButton.frame:Hide()
     MDT:UpdateChangeLogDisplay()
   end
   MDT:UpdateVersionCheckDisplay()
@@ -444,6 +459,16 @@ local function createVersionCheckFrame()
   })
   downloadFrame:Hide()
 
+  local reportVersionsButton = AceGUI:Create("Button")
+  reportVersionsButton.frame:SetParent(f)
+  reportVersionsButton:SetWidth(230)
+  reportVersionsButton:SetHeight(22)
+  reportVersionsButton.frame:SetPoint("TOPLEFT", scrollFrame, "BOTTOMLEFT", 0, -8)
+  reportVersionsButton:SetText(L["Send versions to party chat"])
+  reportVersionsButton:SetCallback("OnClick", reportPlayerVersionsToParty)
+  reportVersionsButton.frame:Hide()
+
+  f.reportVersionsButton = reportVersionsButton
   f.changeLogTextBox = textBox
   f.changeLogContentFrame = contentFrame
   f.scrollHeight = scrollHeight
