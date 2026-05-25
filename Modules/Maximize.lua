@@ -27,12 +27,13 @@ function MDT:Maximize()
   f.topPanel:SetMouseClickEnabled(false)
   f.bottomPanel:SetMouseClickEnabled(false)
   local newSizex, newSizey, scale, isNarrow = MDT:GetFullScreenSizes()
+  local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
   db.scale = scale
   f:ClearAllPoints()
   if not isNarrow then
-    f:SetPoint("TOP", UIParent, "TOP", -(f.sidePanel:GetWidth() / 2), -30)
+    f:SetPoint("TOP", UIParent, "TOP", -((f.sidePanel:GetWidth() - navigationSidebarWidth) / 2), -30)
   else
-    f:SetPoint("LEFT", UIParent, "LEFT")
+    f:SetPoint("LEFT", UIParent, "LEFT", navigationSidebarWidth, 0)
   end
   f:SetSize(newSizex, newSizey)
   f.scrollFrame:SetSize(newSizex, newSizey)

@@ -5,6 +5,9 @@ local AceGUI = LibStub("AceGUI-3.0")
 
 local MACRO_NAME = "MDTFocusMarker"
 local MACRO_CONDITIONALS = "[@mouseover,exists,nodead][]"
+local TARGET_MARKER_CONDITIONALS = "[@focus]"
+local HOSTILE_TARGET_MARKER_CONDITIONALS = "[@focus,harm,exists]"
+local RAID_GROUP_STOP_CONDITIONALS = "[group:raid]"
 local MACRO_ICON = 1033497
 local MDT_LOGO = "Interface\\AddOns\\MythicDungeonTools\\Textures\\MDTFull"
 local NO_MACRO_SLOTS_ERROR = "nomacroslots"
@@ -437,15 +440,24 @@ getMacroSettings = function()
   if db.focusMarker.useMacro == nil then
     db.focusMarker.useMacro = false
   end
+  if db.focusMarker.disableTargetMarkerInRaid == nil then
+    db.focusMarker.disableTargetMarkerInRaid = false
+  end
   if db.focusMarker.suppressNotifications == nil then
     db.focusMarker.suppressNotifications = false
   end
   return db.focusMarker
 end
 
-local function buildMacroBody(markerIndex)
+local function buildMacroBody(markerIndex, settings)
   markerIndex = tonumber(markerIndex) or 0
-  return "/focus "..MACRO_CONDITIONALS.."\n/tm [@focus] "..markerIndex
+  local body = "/focus "..MACRO_CONDITIONALS
+  local targetMarkerConditionals = TARGET_MARKER_CONDITIONALS
+  if settings and settings.disableTargetMarkerInRaid then
+    body = body.."\n/stopmacro "..RAID_GROUP_STOP_CONDITIONALS
+    targetMarkerConditionals = HOSTILE_TARGET_MARKER_CONDITIONALS
+  end
+  return body.."\n/tm "..targetMarkerConditionals.." "..markerIndex
 end
 
 local function hasAccountMacroSlot()
@@ -540,7 +552,7 @@ local function pickupFocusMarkerMacro()
 
   local name = settings.macroName or MACRO_NAME
   local icon = settings.macroIcon or MACRO_ICON
-  local body = buildMacroBody(settings.lastMarker or 0)
+  local body = buildMacroBody(settings.lastMarker or 0, settings)
   local macroIndex = GetMacroIndexByName(name)
 
   if not macroIndex or macroIndex == 0 or not InCombatLockdown() then
@@ -799,7 +811,7 @@ function MDT:FocusMarker_ApplyMarker(markerIndex, sender)
 
   local name = settings.macroName or MACRO_NAME
   local icon = settings.macroIcon or MACRO_ICON
-  local body = buildMacroBody(markerIndex)
+  local body = buildMacroBody(markerIndex, settings)
   local ok, err
   if settings.useMacro then
     ok, err = applyMacroNow(name, icon, body)
@@ -823,7 +835,7 @@ function MDT:FocusMarker_RefreshAction()
   local settings = getMacroSettings()
   if not settings then return end
   local markerIndex = tonumber(settings.lastMarker) or 0
-  local body = buildMacroBody(markerIndex)
+  local body = buildMacroBody(markerIndex, settings)
   if settings.useMacro then
     self:FocusMarker_ApplyMarker(markerIndex)
   else
@@ -1055,6 +1067,7 @@ end
 
 refreshAssignmentsFrame = function()
   if not assignmentsFrame or not assignmentsFrame.frame or not assignmentsFrame.frame:IsShown() then return end
+  if MDT.GetCurrentSection and MDT:GetCurrentSection() ~= "marks" then return end
   C_Timer.After(0, function()
     MDT:FocusMarker_OpenAssignments(true)
   end)
@@ -1186,36 +1199,38 @@ local function openMarkerMenu(widget, fullName)
   end)
 end
 
-local function hideAceGUIBuiltInCloseButton(frame)
-  for _, child in ipairs({ frame.frame:GetChildren() }) do
-    if child.GetText and child:GetText() == CLOSE then
-      child:Hide()
-      child:Disable()
-      child:SetScript("OnClick", nil)
-      break
-    end
-  end
-end
-
 local function createAssignmentsFrame()
-  local frame = AceGUI:Create("Frame")
-  frame.frame:SetParent(MDT.main_frame)
-  frame.frame:SetFrameStrata("DIALOG")
-  frame:SetTitle(L["Focus Marker Assignments"])
-  frame:SetWidth(500)
-  frame:SetHeight(260)
-  frame:EnableResize(false)
+  local mainFrame = MDT.main_frame
+  local contentParent = mainFrame.sectionContentFrames and mainFrame.sectionContentFrames.marks or mainFrame
+
+  local frame = AceGUI:Create("SimpleGroup")
+  frame.frame:SetParent(contentParent)
+  frame.frame:SetFrameStrata("HIGH")
+  frame.frame:SetFrameLevel(3)
+  frame:SetWidth(555)
+  frame:SetHeight(420)
   frame:SetLayout("Flow")
-  frame:SetCallback("OnClose", function() end)
-  frame.statustext:GetParent():Hide()
-  hideAceGUIBuiltInCloseButton(frame)
+  frame.frame:ClearAllPoints()
+  frame.frame:SetPoint("TOP", contentParent, "TOP", 0, -20)
+
+  function frame:Show(...)
+    if self.frame then self.frame:Show() end
+  end
+  function frame:Hide(...)
+    if self.frame then self.frame:Hide() end
+  end
+
   frame:Hide()
-  MDT:FixAceGUIShowHide(frame, nil, nil, true)
   MDT.main_frame.FocusMarkerAssignmentsFrame = frame
   return frame
 end
 
 function MDT:FocusMarker_OpenAssignments(skipDiscovery)
+  if self.GetCurrentSection and self.SetCurrentSection and self:GetCurrentSection() ~= "marks" then
+    self:SetCurrentSection("marks")
+    return
+  end
+
   assignmentsFrame = assignmentsFrame or createAssignmentsFrame()
   local frame = assignmentsFrame
   local assignments = self:FocusMarker_GetAssignments()
@@ -1238,10 +1253,21 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   end
   frame:ReleaseChildren()
 
+  local assignmentsHeading = AceGUI:Create("Heading")
+  assignmentsHeading:SetText(L["Focus Marker Assignments"])
+  assignmentsHeading:SetFullWidth(true)
+  frame:AddChild(assignmentsHeading)
+
+  local assignmentsDescriptionHeight = 36
+  local assignmentsDescription = AceGUI:Create("Label")
+  assignmentsDescription:SetText(L["focusMarkerAssignmentsTooltip"])
+  assignmentsDescription:SetFullWidth(true)
+  assignmentsDescription:SetColor(0.82, 0.82, 0.82)
+  frame:AddChild(assignmentsDescription)
+
   local rowCount = math.max(#roster, 5)
-  local rosterRowIndent = 85
-  local rosterNameWidth = 150
-  local markerButtonWidth = 150
+  local rosterNameWidth = 294
+  local markerButtonWidth = 256
 
   for index = 1, rowCount do
     local player = roster[index]
@@ -1249,11 +1275,6 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     row:SetLayout("Flow")
     row:SetFullWidth(true)
     row:SetHeight(28)
-
-    local spacer = AceGUI:Create("Label")
-    spacer:SetWidth(rosterRowIndent)
-    spacer:SetText("")
-    row:AddChild(spacer)
 
     local name = AceGUI:Create("Label")
     name:SetWidth(rosterNameWidth)
@@ -1276,8 +1297,53 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     frame:AddChild(row)
   end
 
+  local buttons = AceGUI:Create("SimpleGroup")
+  buttons:SetLayout("Flow")
+  buttons:SetFullWidth(true)
+  buttons:SetHeight(36)
+  local actionButtonWidth = 183
+
+  addButton(buttons, L["Set Keybind"], actionButtonWidth, function()
+    openKeybindSettings()
+  end)
+
+  addButton(buttons, L["Sync Marks"], actionButtonWidth, function()
+    MDT:FocusMarker_SendAssignments()
+  end)
+
+  addButton(buttons, L["Auto Assign"], actionButtonWidth, function()
+    roster = getGroupRoster()
+    pruneAssignmentsToRoster(assignments, roster)
+    local playerFullName = getPlayerFullName()
+    local previousOwnMarker = assignments[playerFullName]
+    applyClassDefaults(roster, assignments)
+    markRosterAssignmentsKnown(roster, true)
+    local currentOwnMarker = assignments[playerFullName]
+    if previousOwnMarker ~= currentOwnMarker then
+      MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
+    end
+    focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
+    MDT:FocusMarker_OpenAssignments(true)
+  end)
+  frame:AddChild(buttons)
+
   addCheckbox(frame, L["Announce focus marker on ready check"], settings.announceReadyCheck, function(value)
     settings.announceReadyCheck = value
+  end)
+
+  local macroPreview
+  local macroPreviewText
+  local function updateMacroPreview()
+    macroPreviewText = buildMacroBody(settings.lastMarker or 0, settings)
+    if macroPreview then
+      macroPreview:SetText(macroPreviewText)
+    end
+  end
+
+  addCheckbox(frame, L["Don't set target marker while in a raid group"], settings.disableTargetMarkerInRaid, function(value)
+    settings.disableTargetMarkerInRaid = value
+    MDT:FocusMarker_RefreshAction()
+    updateMacroPreview()
   end)
 
   local macroCheckbox = AceGUI:Create("CheckBox")
@@ -1329,6 +1395,21 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     settings.suppressNotifications = value
   end)
 
+  updateMacroPreview()
+  local targetMarkerCheckboxHeight = 24
+  local macroPreviewHeight = 85
+  local extraSettingsHeight = targetMarkerCheckboxHeight + macroPreviewHeight
+  macroPreview = AceGUI:Create("MultiLineEditBox")
+  macroPreview:SetLabel(L["Macro Preview:"])
+  macroPreview:SetFullWidth(true)
+  macroPreview:SetNumLines(4)
+  macroPreview:DisableButton(true)
+  macroPreview:SetText(macroPreviewText)
+  macroPreview:SetCallback("OnTextChanged", function(widget)
+    widget:SetText(macroPreviewText)
+  end)
+  frame:AddChild(macroPreview)
+
   local warningHeight = 0
   local warningText
   if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_CONFLICT then
@@ -1344,43 +1425,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     warningHeight = 22
   end
 
-  local buttons = AceGUI:Create("SimpleGroup")
-  buttons:SetLayout("Flow")
-  buttons:SetFullWidth(true)
-  buttons:SetHeight(40)
-  local footerButtonWidth = 108
-
-  addButton(buttons, L["Auto Assign"], footerButtonWidth, function()
-    roster = getGroupRoster()
-    pruneAssignmentsToRoster(assignments, roster)
-    local playerFullName = getPlayerFullName()
-    local previousOwnMarker = assignments[playerFullName]
-    applyClassDefaults(roster, assignments)
-    markRosterAssignmentsKnown(roster, true)
-    local currentOwnMarker = assignments[playerFullName]
-    if previousOwnMarker ~= currentOwnMarker then
-      MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
-    end
-    focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
-    MDT:FocusMarker_OpenAssignments(true)
-  end)
-
-  addButton(buttons, L["Sync Marks"], footerButtonWidth, function()
-    MDT:FocusMarker_SendAssignments()
-  end)
-
-  addButton(buttons, L["Set Keybind"], footerButtonWidth, function()
-    openKeybindSettings()
-  end)
-
-  addButton(buttons, L["Close"], footerButtonWidth, function()
-    frame:Hide()
-  end)
-  frame:AddChild(buttons)
-
-  frame:SetHeight(190 + warningHeight + (rowCount * 28))
-  frame:ClearAllPoints()
-  frame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+  frame:SetHeight(math.max(350 + assignmentsDescriptionHeight + extraSettingsHeight, 145 + assignmentsDescriptionHeight + extraSettingsHeight + warningHeight + (rowCount * 28)))
   frame:Show()
   frame:DoLayout()
   positionMacroIcon()
