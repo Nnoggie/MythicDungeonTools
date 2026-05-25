@@ -16,8 +16,100 @@ local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName,
 
 function MDT:ToggleDevMode()
   db = MDT:GetDB()
-  db.devMode = not db.devMode
-  ReloadUI()
+  if db.devMode then
+    MDT:Async(function()
+      MDT:DisableDevMode()
+    end, "toggleDevMode")
+    return
+  end
+
+  MDT:Async(function()
+    MDT:EnableDevMode()
+  end, "toggleDevMode")
+end
+
+local function syncDevModeCache()
+  if not db.loadCache then return end
+
+  if db.dungeonEnemies then
+    MDT.dungeonEnemies = db.dungeonEnemies
+  else
+    db.dungeonEnemies = MDT.dungeonEnemies
+  end
+
+  if db.mapPOIs then
+    MDT.mapPOIs = db.mapPOIs
+  else
+    db.mapPOIs = MDT.mapPOIs
+  end
+end
+
+local function positionDevPanel(frame)
+  frame.devPanel:ClearAllPoints()
+  if db.maximized then
+    frame.devPanel:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, -45)
+  else
+    frame.devPanel:SetPoint("TOPRIGHT", frame.topPanel, "TOPLEFT", 0, 0)
+  end
+end
+
+local function syncDevPanelShowHide(devPanel, frame)
+  local originalShow, originalHide = frame.Show, frame.Hide
+
+  function frame:Hide(...)
+    devPanel.frame:Hide()
+    return originalHide(self, ...)
+  end
+
+  function frame:Show(...)
+    if db.devMode then
+      devPanel.frame:Show()
+    end
+    return originalShow(self, ...)
+  end
+end
+
+function MDT:EnableDevMode()
+  db = MDT:GetDB()
+  db.devMode = true
+  syncDevModeCache()
+
+  MDT:ShowInterfaceInternal(true)
+
+  local frame = MDT.main_frame
+  if not frame then return end
+
+  frame:SetScript("OnUpdate", nil)
+  MDT:HideAllBlipLabels()
+
+  if MDT.CreateDevPanel and not frame.devPanel then
+    MDT:CreateDevPanel(frame)
+  end
+
+  if frame.devPanel then
+    positionDevPanel(frame)
+    frame.devPanel.frame:Show()
+  end
+
+  MDT:UpdateMap()
+  MDT:UpdateEnemyInfoFrame()
+end
+
+function MDT:DisableDevMode()
+  db = MDT:GetDB()
+  db.devMode = false
+
+  local frame = MDT.main_frame
+  if not frame then return end
+
+  if frame.devPanel then
+    frame.devPanel.frame:Hide()
+  end
+
+  MDT:SetUpModifiers(frame)
+  MDT:HideAllBlipLabels()
+  MDT:UpdateMap()
+  MDT:UpdateEnemyInfoFrame()
 end
 
 function MDT:AddNPCFromUnit(unit)
@@ -82,7 +174,7 @@ function MDT:CreateDevPanel(frame)
   devPanel:SetLayout("Flow")
   devPanel.frame:Hide()
 
-  MDT:FixAceGUIShowHide(devPanel)
+  syncDevPanelShowHide(devPanel, frame)
 
   -- function that draws the widgets for the first tab
   local function DrawGroup1(container)
@@ -787,6 +879,7 @@ function MDT:CreateDevPanel(frame)
   local originalFunc = MDT.UpdateMap
   function MDT:UpdateMap(...)
     originalFunc(...)
+    if not db.devMode then return end
     local selectedTab
     for k, v in pairs(devPanel.tabs) do
       if v.selected == true then

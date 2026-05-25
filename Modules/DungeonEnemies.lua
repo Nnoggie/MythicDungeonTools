@@ -75,7 +75,6 @@ end
 
 function MDT:HideAllBlipLabels()
   for _, blip in pairs(blips) do
-    if not blip.textLocked then return end
     blip.fontstring_Text1:Hide()
     blip.textLocked = nil
   end
@@ -617,6 +616,16 @@ local function blipDevModeSetup(blip)
   updateBlipText()
 end
 
+local function resetBlipDevModeSetup(blip)
+  blip.devSelected = nil
+  blip.UpdateBlipText = nil
+  blip.textLocked = nil
+  blip.fontstring_Text1:SetTextColor(1, 1, 1, 1)
+  blip.fontstring_Text1:Hide()
+  blip:SetScript("OnMouseWheel", nil)
+  blip:SetMovable(false)
+end
+
 function MDTDungeonEnemyMixin:SetUp(data, clone)
   local scale = MDT:GetScale()
   self:ClearAllPoints()
@@ -674,7 +683,11 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
   else
     self.texture_OverlayIcon:Hide()
   end
-  if db.devMode then blipDevModeSetup(self) end
+  if db.devMode then
+    blipDevModeSetup(self)
+  else
+    resetBlipDevModeSetup(self)
+  end
 end
 
 ---DungeonEnemies_IsAnyBlipMoving
