@@ -34,8 +34,26 @@ function MDT:OpenCustomColorsDialog()
     MDT:MakeSettingsFrame(MDT.main_frame)
   end
   MDT:SetCurrentSection("settings")
-  MDT.main_frame.settingsFrame.frame:Show()
-  MDT.main_frame.settingsFrame.CustomColorFrame.frame:Show()
+  MDT:Settings_RefreshLayout()
+end
+
+function MDT:Settings_RefreshLayout()
+  local frame = MDT.main_frame
+  if not frame or not frame.settingsFrame then return end
+
+  frame.settingsFrame.frame:Show()
+  if frame.settingsGeneralColumn then
+    frame.settingsGeneralColumn.frame:Show()
+    frame.settingsGeneralColumn:DoLayout()
+  end
+  if frame.settingsColorsColumn then
+    frame.settingsColorsColumn.frame:Show()
+    frame.settingsColorsColumn:DoLayout()
+  end
+  if frame.settingsFrame.CustomColorFrame then
+    frame.settingsFrame.CustomColorFrame.frame:Show()
+    frame.settingsFrame.CustomColorFrame:DoLayout()
+  end
 end
 
 ---creates frame housing settings for user customized color palette
@@ -115,28 +133,36 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame.frame:SetFrameStrata(mainFrameStrata)
   frame.settingsFrame.frame:SetFrameLevel(3)
   local columnWidth = 325
-  local frameWidth = columnWidth * 2
+  local columnGap = 36
+  local columnHeight = 450
+  local frameWidth = (columnWidth * 2) + columnGap
   local settingWidth = columnWidth - 10
   frame.settingsFrame:SetWidth(frameWidth)
-  frame.settingsFrame:SetHeight(450)
+  frame.settingsFrame:SetHeight(columnHeight)
+  frame.settingsFrame:SetAutoAdjustHeight(false)
   frame.settingsFrame.settingWidth = settingWidth
   frame.settingsFrame:SetLayout("Flow")
   frame.settingsFrame.frame:ClearAllPoints()
   frame.settingsFrame.frame:SetPoint("TOP", parentFrame, "TOP", 0, -(panelHeight + 15))
 
-  local function createSettingsColumn()
+  local function createSettingsColumn(point, relativeTo, relativePoint, xOffset)
     local column = AceGUI:Create("SimpleGroup")
+    column:SetParent(frame.settingsFrame)
+    column.frame:SetFrameStrata(mainFrameStrata)
+    column.frame:SetFrameLevel(frame.settingsFrame.frame:GetFrameLevel() + 1)
     column:SetWidth(columnWidth)
-    column:SetHeight(450)
+    column:SetHeight(columnHeight)
     column:SetLayout("Flow")
     column:SetAutoAdjustHeight(false)
     column.alignoffset = 0
-    frame.settingsFrame:AddChild(column)
+    column.frame:ClearAllPoints()
+    column.frame:SetPoint(point, relativeTo, relativePoint, xOffset, 0)
+    column.frame:Show()
     return column
   end
 
-  frame.settingsGeneralColumn = createSettingsColumn()
-  frame.settingsColorsColumn = createSettingsColumn()
+  frame.settingsGeneralColumn = createSettingsColumn("TOPLEFT", frame.settingsFrame.content, "TOPLEFT", 0)
+  frame.settingsColorsColumn = createSettingsColumn("TOPLEFT", frame.settingsGeneralColumn.frame, "TOPRIGHT", columnGap)
   frame.settingsFrame.settingsColorsColumn = frame.settingsColorsColumn
 
   frame.settingsHeading = AceGUI:Create("Heading")
@@ -311,5 +337,5 @@ function MDT:MakeSettingsFrame(frame)
   end
   frame.settingsGeneralColumn:AddChild(frame.localeLabel)
 
-  frame.settingsFrame.frame:Show()
+  MDT:Settings_RefreshLayout()
 end

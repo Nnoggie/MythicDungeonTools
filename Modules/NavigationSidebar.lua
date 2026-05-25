@@ -129,6 +129,8 @@ function MDT:UpdateSectionVisibility()
     if sectionChanged or not focusMarkerShown then
       MDT:FocusMarker_OpenAssignments(not sectionChanged)
     end
+  elseif currentSection == "settings" and MDT.Settings_RefreshLayout then
+    MDT:Settings_RefreshLayout()
   end
 end
 
