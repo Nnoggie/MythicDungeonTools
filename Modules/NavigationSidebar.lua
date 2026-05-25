@@ -6,7 +6,6 @@ local navigationSidebarWidth = 42
 local panelHeight = 30
 local validSections = {
   maps = true,
-  macros = true,
   marks = true,
   settings = true,
 }
@@ -148,7 +147,6 @@ function MDT:MakeNavigationSidebar(frame)
     local sections = {
       { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 }, iconOffsetY = -0.5 },
       { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
-      { key = "macros", tooltip = L["Macros"], texCoords = { 0.25, 0.5, 0, 0.25 }, iconOffsetX = -1 },
       { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25, iconOffsetX = 0.75 },
     }
     local buttonSize = 36
@@ -221,7 +219,7 @@ function MDT:MakeSectionFrames(frame)
   frame.sectionContentFrames = frame.sectionContentFrames or {}
   frame.sectionSidePanelFrames = frame.sectionSidePanelFrames or {}
 
-  local sections = { "macros", "marks", "settings" }
+  local sections = { "marks", "settings" }
   for _, sectionKey in ipairs(sections) do
     if not frame.sectionContentFrames[sectionKey] then
       local contentFrame = CreateFrame("Frame", "MDT"..sectionKey.."SectionContentFrame", frame)
