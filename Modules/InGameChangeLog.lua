@@ -2,6 +2,15 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.1.6",
+    date = "2026-05-25",
+    notes = {
+      "Party Versions now includes your own MDT version and can send detected party versions to party chat.",
+      "Fixed Skyreach group 27 enemy positions for the Adept and Chakram Master.",
+      "Grouped the second pull Necrolytes and Gargoyle together in Pit of Saron.",
+    },
+  },
+  {
     tag = "6.1.5",
     date = "2026-05-23",
     notes = {
@@ -16,17 +25,6 @@ MDT.changeLog = {
     date = "2026-05-19",
     notes = {
       "Added missing dormant Dreadflails to Nexus Point Xenas.",
-    },
-  },
-  {
-    tag = "6.1.3",
-    date = "2026-05-17",
-    notes = {
-      "Split the version check window into Change Log and Party Versions tabs.",
-      "Added party member MDT versions to the Party Versions tab.",
-      "Fixed Magisters Terrace and Pit of Saron detection for additional zone IDs.",
-      "Added a missing Scrounger in Nexus Point Xenas.",
-      "Unlinked two Maisara Caverns enemies from group 91 so they can be assigned separately.",
     },
   },
 }
