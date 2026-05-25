@@ -5,6 +5,9 @@ local AceGUI = LibStub("AceGUI-3.0")
 
 local MACRO_NAME = "MDTFocusMarker"
 local MACRO_CONDITIONALS = "[@mouseover,exists,nodead][]"
+local TARGET_MARKER_CONDITIONALS = "[@focus]"
+local HOSTILE_TARGET_MARKER_CONDITIONALS = "[@focus,harm,exists]"
+local RAID_GROUP_STOP_CONDITIONALS = "[group:raid]"
 local MACRO_ICON = 1033497
 local MDT_LOGO = "Interface\\AddOns\\MythicDungeonTools\\Textures\\MDTFull"
 local NO_MACRO_SLOTS_ERROR = "nomacroslots"
@@ -437,15 +440,24 @@ getMacroSettings = function()
   if db.focusMarker.useMacro == nil then
     db.focusMarker.useMacro = false
   end
+  if db.focusMarker.disableTargetMarkerInRaid == nil then
+    db.focusMarker.disableTargetMarkerInRaid = false
+  end
   if db.focusMarker.suppressNotifications == nil then
     db.focusMarker.suppressNotifications = false
   end
   return db.focusMarker
 end
 
-local function buildMacroBody(markerIndex)
+local function buildMacroBody(markerIndex, settings)
   markerIndex = tonumber(markerIndex) or 0
-  return "/focus "..MACRO_CONDITIONALS.."\n/tm [@focus] "..markerIndex
+  local body = "/focus "..MACRO_CONDITIONALS
+  local targetMarkerConditionals = TARGET_MARKER_CONDITIONALS
+  if settings and settings.disableTargetMarkerInRaid then
+    body = body.."\n/stopmacro "..RAID_GROUP_STOP_CONDITIONALS
+    targetMarkerConditionals = HOSTILE_TARGET_MARKER_CONDITIONALS
+  end
+  return body.."\n/tm "..targetMarkerConditionals.." "..markerIndex
 end
 
 local function hasAccountMacroSlot()
@@ -540,7 +552,7 @@ local function pickupFocusMarkerMacro()
 
   local name = settings.macroName or MACRO_NAME
   local icon = settings.macroIcon or MACRO_ICON
-  local body = buildMacroBody(settings.lastMarker or 0)
+  local body = buildMacroBody(settings.lastMarker or 0, settings)
   local macroIndex = GetMacroIndexByName(name)
 
   if not macroIndex or macroIndex == 0 or not InCombatLockdown() then
@@ -799,7 +811,7 @@ function MDT:FocusMarker_ApplyMarker(markerIndex, sender)
 
   local name = settings.macroName or MACRO_NAME
   local icon = settings.macroIcon or MACRO_ICON
-  local body = buildMacroBody(markerIndex)
+  local body = buildMacroBody(markerIndex, settings)
   local ok, err
   if settings.useMacro then
     ok, err = applyMacroNow(name, icon, body)
@@ -823,7 +835,7 @@ function MDT:FocusMarker_RefreshAction()
   local settings = getMacroSettings()
   if not settings then return end
   local markerIndex = tonumber(settings.lastMarker) or 0
-  local body = buildMacroBody(markerIndex)
+  local body = buildMacroBody(markerIndex, settings)
   if settings.useMacro then
     self:FocusMarker_ApplyMarker(markerIndex)
   else
@@ -1319,6 +1331,21 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     settings.announceReadyCheck = value
   end)
 
+  local macroPreview
+  local macroPreviewText
+  local function updateMacroPreview()
+    macroPreviewText = buildMacroBody(settings.lastMarker or 0, settings)
+    if macroPreview then
+      macroPreview:SetText(macroPreviewText)
+    end
+  end
+
+  addCheckbox(frame, L["Don't set target marker while in a raid group"], settings.disableTargetMarkerInRaid, function(value)
+    settings.disableTargetMarkerInRaid = value
+    MDT:FocusMarker_RefreshAction()
+    updateMacroPreview()
+  end)
+
   local macroCheckbox = AceGUI:Create("CheckBox")
   macroCheckbox:SetLabel(L["Use macro instead of keybind"])
   macroCheckbox:SetFullWidth(true)
@@ -1368,6 +1395,21 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     settings.suppressNotifications = value
   end)
 
+  updateMacroPreview()
+  local targetMarkerCheckboxHeight = 24
+  local macroPreviewHeight = 85
+  local extraSettingsHeight = targetMarkerCheckboxHeight + macroPreviewHeight
+  macroPreview = AceGUI:Create("MultiLineEditBox")
+  macroPreview:SetLabel(L["Macro Preview:"])
+  macroPreview:SetFullWidth(true)
+  macroPreview:SetNumLines(4)
+  macroPreview:DisableButton(true)
+  macroPreview:SetText(macroPreviewText)
+  macroPreview:SetCallback("OnTextChanged", function(widget)
+    widget:SetText(macroPreviewText)
+  end)
+  frame:AddChild(macroPreview)
+
   local warningHeight = 0
   local warningText
   if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_CONFLICT then
@@ -1383,7 +1425,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     warningHeight = 22
   end
 
-  frame:SetHeight(math.max(350 + assignmentsDescriptionHeight, 145 + assignmentsDescriptionHeight + warningHeight + (rowCount * 28)))
+  frame:SetHeight(math.max(350 + assignmentsDescriptionHeight + extraSettingsHeight, 145 + assignmentsDescriptionHeight + extraSettingsHeight + warningHeight + (rowCount * 28)))
   frame:Show()
   frame:DoLayout()
   positionMacroIcon()
