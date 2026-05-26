@@ -22,6 +22,19 @@ local FOCUS_MARKER_KIND_SYNC_V2 = "syncV2"
 local FOCUS_MARKER_SYNC_WARNING_CONFLICT = "conflict"
 local FOCUS_MARKER_SYNC_WARNING_MANUAL = "manual"
 
+MDT:RegisterNavigationSection({
+  key = "marks",
+  name = L["Focus Marker"],
+  tooltip = L["Focus Marker Assignments"],
+  texCoords = { 0.5, 0.75, 0, 0.25 },
+  onShow = function(sectionChanged)
+    local focusMarkerFrame = MDT.main_frame.FocusMarkerAssignmentsFrame
+    if sectionChanged or not focusMarkerFrame.frame:IsShown() then
+      MDT:FocusMarker_OpenAssignments(not sectionChanged)
+    end
+  end,
+})
+
 local markerNames = {
   [0] = "None",
   [1] = "Star",
