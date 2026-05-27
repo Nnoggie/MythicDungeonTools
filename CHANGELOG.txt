@@ -1,3 +1,5 @@
-## 6.1.9 (2026-05-26)
+## 6.1.10 (2026-05-27)
 
-- Renamed Void Infuser to Void Terror.
+- Added a Combat Logging section that can automatically toggle combat logging for selected raid and dungeon difficulties.
+- Added an Enemy forces in tooltips setting with multiple count and percentage display formats.
+- Focus Marker Assignments now only shows raid subgroup 1 while in a raid group.
