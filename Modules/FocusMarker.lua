@@ -1026,7 +1026,10 @@ getGroupRoster = function()
 
   if IsInRaid() then
     for i = 1, GetNumGroupMembers() do
-      addUnit("raid"..i)
+      local _, _, subgroup = GetRaidRosterInfo(i)
+      if subgroup == 1 then
+        addUnit("raid"..i)
+      end
     end
   else
     addUnit("player")
