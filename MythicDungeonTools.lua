@@ -192,10 +192,10 @@ local defaultSavedVars = {
     combatLogging = {
       enabled = false,
       content = {
-        lfr = true,
-        normal = true,
-        heroic = true,
-        mythic = true,
+        lfr = false,
+        normal = false,
+        heroic = false,
+        mythic = false,
         mythic_dungeon = false,
         mythic_plus = false,
       },

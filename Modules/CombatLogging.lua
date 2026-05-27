@@ -11,18 +11,6 @@ local ContentTypes = {
   MYTHIC_PLUS = "mythic_plus",
 }
 
-local defaultSettings = {
-  enabled = false,
-  content = {
-    lfr = true,
-    normal = true,
-    heroic = true,
-    mythic = true,
-    mythic_dungeon = false,
-    mythic_plus = false,
-  },
-}
-
 local RAID_DIFFICULTY_IDS_BY_CONTENT = {
   [ContentTypes.LFR] = {
     [7] = true,
@@ -71,28 +59,13 @@ local ADVANCED_COMBAT_LOGGING_CVAR = "advancedCombatLogging"
 local combatLoggingFrame
 local eventFrame = CreateFrame("Frame")
 local hasSyncedState = false
-local initialized = false
-
-MDT.CombatLogging_ContentTypes = ContentTypes
 
 local function notify(message)
-  if message then
-    print("|cffffd100MDT:|r "..message)
-  end
+  print("|cffffd100MDT:|r "..message)
 end
 
 local function getSettings()
-  local db = MDT:GetDB()
-
-  db.combatLogging = db.combatLogging or {}
-  if db.combatLogging.enabled == nil then db.combatLogging.enabled = defaultSettings.enabled end
-  db.combatLogging.content = db.combatLogging.content or {}
-  for _, key in pairs(ContentTypes) do
-    if db.combatLogging.content[key] == nil then
-      db.combatLogging.content[key] = defaultSettings.content[key]
-    end
-  end
-  return db.combatLogging
+  return MDT:GetDB().combatLogging
 end
 
 local function ensureAdvancedCombatLoggingCVar()
@@ -139,24 +112,24 @@ function MDT:CombatLogging_SetCombatLoggingState(shouldLog, forceSync)
 end
 
 function MDT:CombatLogging_GetCurrentInstanceContentType()
-  local _, instanceType, difficultyID, _, maxPlayers = GetInstanceInfo()
+  local _, instanceType, difficultyID = GetInstanceInfo()
 
   if instanceType == "raid" then
     return RAID_DIFFICULTY_TO_CONTENT[difficultyID]
   end
 
-  if instanceType == "party" and maxPlayers and maxPlayers <= 5 then
+  if instanceType == "party" then
     return PARTY_DIFFICULTY_TO_CONTENT[difficultyID]
   end
 end
 
 function MDT:CombatLogging_IsContentEnabled(contentType)
-  return getSettings().content[contentType] == true
+  return getSettings().content[contentType]
 end
 
 function MDT:CombatLogging_SetContentEnabled(contentType, enabled)
   local settings = getSettings()
-  settings.content[contentType] = enabled == true
+  settings.content[contentType] = enabled
   if settings.enabled then
     self:CombatLogging_EvaluateInstanceLogging()
   end
@@ -168,11 +141,11 @@ function MDT:CombatLogging_ShouldLogInstance()
   return self:CombatLogging_IsContentEnabled(contentType)
 end
 
-function MDT:CombatLogging_EvaluateInstanceLogging(eventOrForceDisable)
+function MDT:CombatLogging_EvaluateInstanceLogging(forceDisable)
   local settings = getSettings()
 
   local shouldLog = false
-  if eventOrForceDisable ~= true and settings.enabled then
+  if not forceDisable and settings.enabled then
     shouldLog = self:CombatLogging_ShouldLogInstance()
   end
 
@@ -196,7 +169,7 @@ function MDT:CombatLogging_SetEnabled(enabled)
     self:CombatLogging_EvaluateInstanceLogging()
     delayedEvaluate()
   else
-    local wasEnabled = settings.enabled == true
+    local wasEnabled = settings.enabled
     settings.enabled = false
     unregisterLoggingEvents()
     if wasEnabled then
@@ -206,10 +179,7 @@ function MDT:CombatLogging_SetEnabled(enabled)
 end
 
 local function initializeCombatLogging()
-  if initialized then return end
   local settings = getSettings()
-
-  initialized = true
   if settings.enabled then
     MDT:CombatLogging_SetEnabled(true)
   end
@@ -224,10 +194,10 @@ end
 local function addCheckbox(parent, label, value, relativeWidth, onChanged)
   local checkbox = AceGUI:Create("CheckBox")
   checkbox:SetLabel(label)
-  checkbox:SetRelativeWidth(relativeWidth or 1)
-  checkbox:SetValue(value == true)
+  checkbox:SetRelativeWidth(relativeWidth)
+  checkbox:SetValue(value)
   checkbox:SetCallback("OnValueChanged", function(_, _, newValue)
-    onChanged(newValue == true)
+    onChanged(newValue)
   end)
   parent:AddChild(checkbox)
   return checkbox
@@ -333,10 +303,8 @@ MDT:RegisterNavigationSection({
   name = L["Combat Logging"],
   tooltip = L["Combat Logging"],
   texCoords = { 0.75, 1, 0, 0.25 },
-  onShow = function(sectionChanged)
-    if sectionChanged or not combatLoggingFrame.frame:IsShown() then
-      MDT:CombatLogging_Open()
-    end
+  onShow = function()
+    MDT:CombatLogging_Open()
   end,
 })
 
@@ -350,5 +318,5 @@ eventFrame:SetScript("OnEvent", function(_, event, ...)
     end
     return
   end
-  MDT:CombatLogging_EvaluateInstanceLogging(event)
+  MDT:CombatLogging_EvaluateInstanceLogging()
 end)
