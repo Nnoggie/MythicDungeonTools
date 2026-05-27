@@ -4,11 +4,43 @@ local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 local navigationSidebarWidth = 42
 local panelHeight = 30
-local validSections = {
-  maps = true,
-  marks = true,
-  settings = true,
-}
+local defaultIconTexture = "Interface\\AddOns\\"..AddonName.."\\Textures\\navigationSidebarIcons"
+
+MDT.navigationSections = {}
+MDT.navigationSectionLookup = {}
+
+function MDT:RegisterNavigationSection(section)
+  assert(section.key, "Navigation section requires a key")
+  assert(not self.navigationSectionLookup[section.key], "Duplicate navigation section: "..section.key)
+  section.createContentFrame = section.createContentFrame ~= false
+  section.createSidePanelFrame = section.createSidePanelFrame ~= false
+  section.texture = section.texture or defaultIconTexture
+  section.onShow = section.onShow or function() end
+  self.navigationSectionLookup[section.key] = section
+  table.insert(self.navigationSections, section)
+  return section
+end
+
+function MDT:GetNavigationSections()
+  return self.navigationSections
+end
+
+function MDT:GetNavigationSection(sectionKey)
+  return self.navigationSectionLookup[sectionKey]
+end
+
+function MDT:IsValidNavigationSection(sectionKey)
+  return self:GetNavigationSection(sectionKey) ~= nil
+end
+
+MDT:RegisterNavigationSection({
+  key = "maps",
+  tooltip = L["Maps"],
+  texCoords = { 0, 0.25, 0, 0.25 },
+  iconOffsetY = -0.5,
+  createContentFrame = false,
+  createSidePanelFrame = false,
+})
 
 function MDT:GetNavigationSidebarWidth()
   return navigationSidebarWidth
@@ -17,10 +49,10 @@ end
 function MDT:GetCurrentSection()
   local db = MDT:GetDB()
   if db then
-    if not validSections[db.currentSection] then db.currentSection = "maps" end
+    if not self:IsValidNavigationSection(db.currentSection) then db.currentSection = "maps" end
     return db.currentSection
   end
-  if not validSections[self.currentSection] then self.currentSection = "maps" end
+  if not self:IsValidNavigationSection(self.currentSection) then self.currentSection = "maps" end
   return self.currentSection
 end
 
@@ -45,7 +77,7 @@ local function closeAceDropdown(widget)
 end
 
 function MDT:SetCurrentSection(sectionKey)
-  if not validSections[sectionKey] then sectionKey = "maps" end
+  if not self:IsValidNavigationSection(sectionKey) then sectionKey = "maps" end
   local db = MDT:GetDB()
   if db then
     db.currentSection = sectionKey
@@ -123,15 +155,8 @@ function MDT:UpdateSectionVisibility()
 
   local sectionChanged = frame.lastVisibleSection ~= currentSection
   frame.lastVisibleSection = currentSection
-  if currentSection == "marks" and MDT.FocusMarker_OpenAssignments then
-    local focusMarkerFrame = frame.FocusMarkerAssignmentsFrame
-    local focusMarkerShown = focusMarkerFrame and focusMarkerFrame.frame and focusMarkerFrame.frame:IsShown()
-    if sectionChanged or not focusMarkerShown then
-      MDT:FocusMarker_OpenAssignments(not sectionChanged)
-    end
-  elseif currentSection == "settings" and MDT.Settings_RefreshLayout then
-    MDT:Settings_RefreshLayout()
-  end
+  local currentSectionConfig = MDT:GetNavigationSection(currentSection)
+  currentSectionConfig.onShow(sectionChanged)
 end
 
 function MDT:MakeNavigationSidebar(frame)
@@ -146,15 +171,10 @@ function MDT:MakeNavigationSidebar(frame)
     frame.navigationSidebar.buttons = {}
     MDT:RegisterMainFrameDragHandle(frame.navigationSidebar, frame)
 
-    local sections = {
-      { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 }, iconOffsetY = -0.5 },
-      { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
-      { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25, iconOffsetX = 0.75 },
-    }
+    local sections = MDT:GetNavigationSections()
     local buttonSize = 36
     local iconSize = 31
     local firstButtonTopOffset = -panelHeight
-    local defaultIconTexture = "Interface\\AddOns\\"..AddonName.."\\Textures\\navigationSidebarIcons"
 
     for idx, section in ipairs(sections) do
       local button = CreateFrame("Button", "MDTNavigationSidebarButton"..idx, frame.navigationSidebar)
@@ -173,7 +193,7 @@ function MDT:MakeNavigationSidebar(frame)
       button.activeTexture = active
 
       local icon = button:CreateTexture(nil, "ARTWORK", nil, 0)
-      icon:SetTexture(section.texture or defaultIconTexture)
+      icon:SetTexture(section.texture)
       icon:SetTexCoord(unpack(section.texCoords))
       icon:SetSize(section.iconSize or iconSize, section.iconSize or iconSize)
       icon:SetPoint("CENTER", button, "CENTER", section.iconOffsetX or 0, section.iconOffsetY or 0)
@@ -181,7 +201,7 @@ function MDT:MakeNavigationSidebar(frame)
       button:SetNormalTexture(icon)
 
       local pushed = button:CreateTexture(nil, "ARTWORK", nil, 0)
-      pushed:SetTexture(section.texture or defaultIconTexture)
+      pushed:SetTexture(section.texture)
       pushed:SetTexCoord(unpack(section.texCoords))
       pushed:SetSize(section.iconSize or iconSize, section.iconSize or iconSize)
       pushed:SetPoint("CENTER", button, "CENTER", (section.iconOffsetX or 0) + 1, (section.iconOffsetY or 0) - 1)
@@ -221,9 +241,9 @@ function MDT:MakeSectionFrames(frame)
   frame.sectionContentFrames = frame.sectionContentFrames or {}
   frame.sectionSidePanelFrames = frame.sectionSidePanelFrames or {}
 
-  local sections = { "marks", "settings" }
-  for _, sectionKey in ipairs(sections) do
-    if not frame.sectionContentFrames[sectionKey] then
+  for _, section in ipairs(MDT:GetNavigationSections()) do
+    local sectionKey = section.key
+    if section.createContentFrame and not frame.sectionContentFrames[sectionKey] then
       local contentFrame = CreateFrame("Frame", "MDT"..sectionKey.."SectionContentFrame", frame)
       contentFrame:SetAllPoints(frame)
       contentFrame:SetFrameStrata(mainFrameStrata)
@@ -233,7 +253,7 @@ function MDT:MakeSectionFrames(frame)
       frame.sectionContentFrames[sectionKey] = contentFrame
     end
 
-    if frame.sidePanel and not frame.sectionSidePanelFrames[sectionKey] then
+    if section.createSidePanelFrame and not frame.sectionSidePanelFrames[sectionKey] then
       local sidePanelFrame = CreateFrame("Frame", "MDT"..sectionKey.."SectionSidePanelFrame", frame.sidePanel)
       sidePanelFrame:SetAllPoints(frame.sidePanel)
       sidePanelFrame:SetFrameStrata(mainFrameStrata)

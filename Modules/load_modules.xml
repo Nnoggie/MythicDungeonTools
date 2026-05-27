@@ -8,9 +8,10 @@
 	<Script file='Transmission.lua'/>
 	<Script file='ExternalLinks.lua'/>
 	<Script file='NavigationSidebar.lua'/>
+	<Script file='FocusMarker.lua'/>
+	<Script file='CombatLogging.lua'/>
 	<Script file='Settings.lua'/>
 	<Script file='LiveSession.lua'/>
-	<Script file='FocusMarker.lua'/>
 	<Script file='Maximize.lua'/>
 	<Script file='API.lua'/>
 	<Script file='EnemyForces.lua'/>

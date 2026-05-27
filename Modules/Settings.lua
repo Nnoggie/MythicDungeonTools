@@ -1,4 +1,4 @@
-local _, MDT = ...
+local AddonName, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
 local panelHeight = 30
@@ -28,6 +28,19 @@ local enemyForcesTooltipOptions = {
   [7] = enemyForcesTooltipIcon.."1.2%",
 }
 local enemyForcesTooltipOptionOrder = { 1, 2, 4, 3, 5, 7, 6 }
+
+MDT:RegisterNavigationSection({
+  key = "settings",
+  name = L["Settings"],
+  tooltip = L["Settings"],
+  texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons",
+  texCoords = { 0, 0.25, 0.25, 0.5 },
+  iconSize = 25,
+  iconOffsetX = 0.75,
+  onShow = function()
+    MDT:Settings_RefreshLayout()
+  end,
+})
 
 function MDT:ToggleSettingsDialog()
   local db = MDT:GetDB()

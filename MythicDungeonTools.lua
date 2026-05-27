@@ -189,6 +189,17 @@ local defaultSavedVars = {
       suppressNotifications = false,
       assignments = {},
     },
+    combatLogging = {
+      enabled = false,
+      content = {
+        lfr = false,
+        normal = false,
+        heroic = false,
+        mythic = false,
+        mythic_dungeon = false,
+        mythic_plus = false,
+      },
+    },
     colorPaletteInfo = {
       autoColoring = true,
       forceColorBlindMode = false,
