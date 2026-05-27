@@ -96,7 +96,7 @@ local function delayedEvaluate()
 end
 
 function MDT:CombatLogging_GetCurrentCombatLoggingState()
-  return LoggingCombat()
+  return LoggingCombat() and true or false
 end
 
 function MDT:CombatLogging_SetCombatLoggingState(shouldLog, forceSync)
