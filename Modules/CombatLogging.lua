@@ -59,6 +59,7 @@ local ADVANCED_COMBAT_LOGGING_CVAR = "advancedCombatLogging"
 local combatLoggingFrame
 local eventFrame = CreateFrame("Frame")
 local hasSyncedState = false
+local lastCombatLoggingState
 
 local function notify(message)
   print("|cffffd100MDT:|r "..message)
@@ -101,11 +102,16 @@ end
 
 function MDT:CombatLogging_SetCombatLoggingState(shouldLog, forceSync)
   local wasLogging = self:CombatLogging_GetCurrentCombatLoggingState()
-  local stateChanged = wasLogging ~= shouldLog
-  if forceSync or stateChanged then
+  if lastCombatLoggingState == nil then
+    lastCombatLoggingState = wasLogging
+  end
+
+  local stateChanged = lastCombatLoggingState ~= shouldLog
+  if forceSync or wasLogging ~= shouldLog then
     LoggingCombat(shouldLog)
   end
 
+  lastCombatLoggingState = shouldLog
   if stateChanged then
     notify(shouldLog and L["combatLoggingStarted"] or L["combatLoggingStopped"])
   end
