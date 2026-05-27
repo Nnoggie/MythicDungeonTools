@@ -13,6 +13,7 @@
 	<Script file='FocusMarker.lua'/>
 	<Script file='Maximize.lua'/>
 	<Script file='API.lua'/>
+	<Script file='EnemyForces.lua'/>
 	<Script file='DungeonSelect.lua'/>
 	<Script file='Conflicts.lua'/>
 	<Script file='PrePatchWarning.lua'/>

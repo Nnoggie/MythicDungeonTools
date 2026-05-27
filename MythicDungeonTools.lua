@@ -161,6 +161,7 @@ local defaultSavedVars = {
     nonFullscreenScale = defaultNonFullscreenScale,
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
+    enemyForcesTooltip = 1,
     enemyStyle = 1,
     currentDifficulty = 10,
     xoffset = -80,

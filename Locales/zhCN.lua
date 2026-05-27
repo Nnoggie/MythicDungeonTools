@@ -1020,6 +1020,7 @@ L["Enemies related to seasonal affixes are currently hidden"] = "目前已隐藏
 L["Enemy Info"] = "敌人信息"
 L["Enemy Info NPC Creature Type"] = "种类"
 L["Enemy Info NPC Enemy Forces"] = "敌方部队"
+L["Enemy forces in tooltips"] = "鼠标提示中的敌方部队"
 L["Enemy Info NPC Enemy Forces (Teeming)"] = "敌方部队 (繁盛)"
 L["Enemy Info NPC Health"] = "血量 (+%d %s)"
 L["Enemy Info NPC Id"] = "NPC ID"
