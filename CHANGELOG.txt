@@ -1,4 +1,4 @@
-## 6.1.10 (2026-05-27)
+## 6.1.11 (2026-05-27)
 
 - Added a Combat Logging section that can automatically toggle combat logging for selected raid and dungeon difficulties.
 - Added an Enemy forces in tooltips setting with multiple count and percentage display formats.
