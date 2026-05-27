@@ -16,6 +16,19 @@ local colorPaletteNames = {
   [6] = L["Custom"],
 }
 
+local enemyForcesTooltipIcon = "|TInterface\\AddOns\\MythicDungeonTools\\Textures\\MDTMinimap:0:0|t"
+local enemyForcesTooltipLabel = L["Enemy Info NPC Enemy Forces"]
+local enemyForcesTooltipOptions = {
+  [1] = "None",
+  [2] = enemyForcesTooltipIcon..enemyForcesTooltipLabel..": 1.2% (5)",
+  [3] = enemyForcesTooltipIcon..enemyForcesTooltipLabel..": 5",
+  [4] = enemyForcesTooltipIcon..enemyForcesTooltipLabel..": 1.2%",
+  [5] = enemyForcesTooltipIcon.."1.2% (5)",
+  [6] = enemyForcesTooltipIcon.."5",
+  [7] = enemyForcesTooltipIcon.."1.2%",
+}
+local enemyForcesTooltipOptionOrder = { 1, 2, 4, 3, 5, 7, 6 }
+
 function MDT:ToggleSettingsDialog()
   local db = MDT:GetDB()
   if not db then return end
@@ -209,6 +222,16 @@ function MDT:MakeSettingsFrame(frame)
     MDT:ReloadPullButtons()
   end)
   frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
+
+  frame.enemyForcesTooltipDropdown = AceGUI:Create("Dropdown")
+  frame.enemyForcesTooltipDropdown:SetList(enemyForcesTooltipOptions, enemyForcesTooltipOptionOrder)
+  frame.enemyForcesTooltipDropdown:SetLabel(L["Enemy forces in tooltips"])
+  frame.enemyForcesTooltipDropdown:SetWidth(settingWidth)
+  frame.enemyForcesTooltipDropdown:SetValue(db.enemyForcesTooltip)
+  frame.enemyForcesTooltipDropdown:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.enemyForcesTooltip = value
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.enemyForcesTooltipDropdown)
 
   frame.alwaysOverwriteRoutesByUIDCheckbox = AceGUI:Create("CheckBox")
   frame.alwaysOverwriteRoutesByUIDCheckbox:SetLabel(L["Always overwrite matching routes on import"])

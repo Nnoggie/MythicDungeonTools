@@ -78,7 +78,8 @@
     "LOCALIZED_CLASS_NAMES_MALE",
         "C_Secrets",
         "ChatFrameUtil",
-        "MAX_ACCOUNT_MACROS"
+        "MAX_ACCOUNT_MACROS",
+        "TooltipDataProcessor"
   ],
   "diagnostics.disable": ["invisible"]
 }
