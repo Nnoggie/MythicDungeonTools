@@ -25,6 +25,17 @@ local macroManagerFrame
 local suppressTextChanged
 local suppressSearchChanged
 
+MDT:RegisterNavigationSection({
+  key = "macros",
+  name = L["Macro Manager"],
+  tooltip = L["Macro Manager"],
+  texCoords = { 0.25, 0.5, 0, 0.25 },
+  iconOffsetX = -1,
+  onShow = function()
+    MDT:MacroManager_Open()
+  end,
+})
+
 local function notify(message)
   if message then
     print("|cffffd100MDT:|r "..message)

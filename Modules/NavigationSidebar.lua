@@ -155,27 +155,8 @@ function MDT:UpdateSectionVisibility()
 
   local sectionChanged = frame.lastVisibleSection ~= currentSection
   frame.lastVisibleSection = currentSection
-<<<<<<< HEAD
   local currentSectionConfig = MDT:GetNavigationSection(currentSection)
   currentSectionConfig.onShow(sectionChanged)
-=======
-  if currentSection == "marks" and MDT.FocusMarker_OpenAssignments then
-    local focusMarkerFrame = frame.FocusMarkerAssignmentsFrame
-    local focusMarkerShown = focusMarkerFrame and focusMarkerFrame.frame and focusMarkerFrame.frame:IsShown()
-    if sectionChanged or not focusMarkerShown then
-      MDT:FocusMarker_OpenAssignments(not sectionChanged)
-    end
-  elseif currentSection == "macros" and MDT.MacroManager_Open then
-    local macroManagerFrame = frame.MacroManagerFrame
-    local macroManagerShown = macroManagerFrame and macroManagerFrame.content and macroManagerFrame.content.frame and
-        macroManagerFrame.content.frame:IsShown()
-    if sectionChanged or not macroManagerShown then
-      MDT:MacroManager_Open()
-    end
-  elseif currentSection == "settings" and MDT.Settings_RefreshLayout then
-    MDT:Settings_RefreshLayout()
-  end
->>>>>>> 2d98caae (wip:macro manager)
 end
 
 function MDT:MakeNavigationSidebar(frame)
@@ -190,16 +171,7 @@ function MDT:MakeNavigationSidebar(frame)
     frame.navigationSidebar.buttons = {}
     MDT:RegisterMainFrameDragHandle(frame.navigationSidebar, frame)
 
-<<<<<<< HEAD
     local sections = MDT:GetNavigationSections()
-=======
-    local sections = {
-      { key = "maps", tooltip = L["Maps"], texCoords = { 0, 0.25, 0, 0.25 }, iconOffsetY = -0.5 },
-      { key = "marks", tooltip = L["Focus Marker Assignments"], texCoords = { 0.5, 0.75, 0, 0.25 } },
-      { key = "macros", tooltip = L["Macro Manager"], texCoords = { 0.25, 0.5, 0, 0.25 }, iconOffsetX = -1 },
-      { key = "settings", tooltip = L["Settings"], texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons", texCoords = { 0, 0.25, 0.25, 0.5 }, iconSize = 25, iconOffsetX = 0.75 },
-    }
->>>>>>> 2d98caae (wip:macro manager)
     local buttonSize = 36
     local iconSize = 31
     local firstButtonTopOffset = -panelHeight
@@ -269,15 +241,9 @@ function MDT:MakeSectionFrames(frame)
   frame.sectionContentFrames = frame.sectionContentFrames or {}
   frame.sectionSidePanelFrames = frame.sectionSidePanelFrames or {}
 
-<<<<<<< HEAD
   for _, section in ipairs(MDT:GetNavigationSections()) do
     local sectionKey = section.key
     if section.createContentFrame and not frame.sectionContentFrames[sectionKey] then
-=======
-  local sections = { "macros", "marks", "settings" }
-  for _, sectionKey in ipairs(sections) do
-    if not frame.sectionContentFrames[sectionKey] then
->>>>>>> 2d98caae (wip:macro manager)
       local contentFrame = CreateFrame("Frame", "MDT"..sectionKey.."SectionContentFrame", frame)
       contentFrame:SetAllPoints(frame)
       contentFrame:SetFrameStrata(mainFrameStrata)
