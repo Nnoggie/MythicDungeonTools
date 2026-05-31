@@ -255,6 +255,18 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.alwaysOverwriteRoutesByUIDCheckbox)
 
+  frame.muteXalatathVoiceLinesCheckbox = AceGUI:Create("CheckBox")
+  frame.muteXalatathVoiceLinesCheckbox:SetLabel(L["Mute Xal'atath Voice Lines"])
+  frame.muteXalatathVoiceLinesCheckbox:SetWidth(settingWidth)
+  frame.muteXalatathVoiceLinesCheckbox:SetValue(db.muteXalatathVoiceLines == true)
+  frame.muteXalatathVoiceLinesCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.muteXalatathVoiceLines = value
+    MDT:SetXalatathVoiceLinesMuted(value)
+  end)
+  if MDT:IsRetail() then
+    frame.settingsGeneralColumn:AddChild(frame.muteXalatathVoiceLinesCheckbox)
+  end
+
   -- Initialize database values if they don't exist
   if db.fadeOutDuringCombat == nil then db.fadeOutDuringCombat = false end
   if db.fadeOutAlpha == nil then db.fadeOutAlpha = 0.5 end

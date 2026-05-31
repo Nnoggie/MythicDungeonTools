@@ -19,6 +19,7 @@ L["exampleItemDescriptionWithSpellId"] = "A sample item that references a spell 
 L["Maps"] = "Maps"
 L["Macros"] = "Macros"
 L["Marks"] = "Marks"
+L["Mute Xal'atath Voice Lines"] = "Mute Xal'atath Voice Lines"
 L["Combat Logging"] = "Combat Logging"
 L["combatLoggingAdvancedNote"] = "Advanced combat logging is enabled automatically while combat logging is enabled."
 L["combatLoggingDungeons"] = "Dungeons"

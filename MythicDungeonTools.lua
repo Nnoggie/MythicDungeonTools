@@ -162,6 +162,7 @@ local defaultSavedVars = {
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
     enemyForcesTooltip = 1,
+    muteXalatathVoiceLines = false,
     enemyStyle = 1,
     currentDifficulty = 10,
     xoffset = -80,
@@ -301,6 +302,7 @@ do
       if db and not db.minimap.hide then
         minimapIcon:Refresh("MythicDungeonTools", db.minimap)
       end
+      MDT:ApplyXalatathVoiceLinesMute()
       if db.loadOnStartUp and db.devMode then MDT:Async(function() MDT:ShowInterfaceInternal(true) end, "showInterface") end
     end)
     eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
