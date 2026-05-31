@@ -73,10 +73,12 @@ function MDT:DisplayBlipModifierLabels(modifier)
   end
 end
 
-function MDT:HideAllBlipLabels()
+function MDT:HideAllBlipLabels(force)
   for _, blip in pairs(blips) do
-    blip.fontstring_Text1:Hide()
-    blip.textLocked = nil
+    if force or blip.textLocked then
+      blip.fontstring_Text1:Hide()
+      blip.textLocked = nil
+    end
   end
 end
 

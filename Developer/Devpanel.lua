@@ -80,7 +80,7 @@ function MDT:EnableDevMode()
   if not frame then return end
 
   frame:SetScript("OnUpdate", nil)
-  MDT:HideAllBlipLabels()
+  MDT:HideAllBlipLabels(true)
 
   if MDT.CreateDevPanel and not frame.devPanel then
     MDT:CreateDevPanel(frame)
@@ -107,7 +107,7 @@ function MDT:DisableDevMode()
   end
 
   MDT:SetUpModifiers(frame)
-  MDT:HideAllBlipLabels()
+  MDT:HideAllBlipLabels(true)
   MDT:UpdateMap()
   MDT:UpdateEnemyInfoFrame()
 end
