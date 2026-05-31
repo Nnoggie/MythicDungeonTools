@@ -8,6 +8,7 @@ L = L or {}
 L["Maps"] = "Maps"
 L["Macros"] = "Macros"
 L["Marks"] = "Marks"
+L["Mute Xal'atath Voice Lines"] = "静音 Xal'atath 语音台词"
 L["Combat Logging"] = "战斗日志"
 L["combatLoggingAdvancedNote"] = "启用战斗日志时会自动开启高级战斗日志。"
 L["combatLoggingDungeons"] = "地下城"
