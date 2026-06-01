@@ -3714,6 +3714,26 @@ function MDT:MakeClearConfirmationFrame(frame)
   frame.ClearConfirmationFrame:Hide()
 end
 
+-- AceGUI flow layout force-shows every child during DoLayout, so optional widgets
+-- must be removed from the child list when inactive.
+local function addConfirmationCheckbox(f)
+  for _, child in ipairs(f.children) do
+    if child == f.CheckBox then return end
+  end
+  f:AddChild(f.CheckBox, f.OkayButton)
+end
+
+local function removeConfirmationCheckbox(f)
+  for index, child in ipairs(f.children) do
+    if child == f.CheckBox then
+      tremove(f.children, index)
+      f.CheckBox.parent = nil
+      break
+    end
+  end
+  f.CheckBox.frame:Hide()
+end
+
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
 function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, callback, buttonText2, callback2,
                                    fireCancelOnClose, checkboxText, checkboxValue, checkboxCallback)
@@ -3747,7 +3767,6 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     f.CheckBox = AceGUI:Create("CheckBox")
     f.CheckBox:SetWidth(390)
     f.CheckBox.frame:Hide()
-    f:AddChild(f.CheckBox)
 
     f.OkayButton = AceGUI:Create("Button")
     f.OkayButton:SetWidth(100)
@@ -3771,6 +3790,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     MDT:HideAllDialogs()
   end)
   if checkboxText then
+    addConfirmationCheckbox(f)
     f.CheckBox:SetLabel(checkboxText)
     f.CheckBox:SetValue(checkboxValue)
     f.CheckBox:SetCallback("OnValueChanged", function(widget, callbackName, value)
@@ -3780,7 +3800,9 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   else
     f.CheckBox:SetCallback("OnValueChanged", function()
     end)
-    f.CheckBox.frame:Hide()
+    f.CheckBox:SetLabel("")
+    f.CheckBox:SetValue(false)
+    removeConfirmationCheckbox(f)
   end
   if buttonText2 then
     f.CancelButton:SetText(buttonText2)
