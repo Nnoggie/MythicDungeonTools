@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.1.14",
+    date = "2026-06-05",
+    notes = {
+      "MoP Patch 5.0.4 update",
+    },
+  },
+  {
     tag = "6.1.13",
     date = "2026-06-04",
     notes = {
@@ -17,15 +24,6 @@ MDT.changeLog = {
       "Updated short names for Windrunner Spire, Magister's Terrace, and Nexus Point Xenas.",
       "Adjusted Magister's Terrace G25 positions and unlinked Spellwoven Familiars",
       "Fixed enemy count labels hiding when mouseovering enemies",
-    },
-  },
-  {
-    tag = "6.1.11",
-    date = "2026-05-27",
-    notes = {
-      "Added a Combat Logging section that can automatically toggle combat logging for selected raid and dungeon difficulties.",
-      "Added an Enemy forces in tooltips setting with multiple count and percentage display formats.",
-      "Focus Marker Assignments now only shows raid subgroup 1 while in a raid group.",
     },
   },
 }
