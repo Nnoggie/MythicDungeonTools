@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - id: toc
-        uses: Nnoggie/wow-interface-updater@v1
+        uses: Nnoggie/wow-interface-updater@5d4857867ca38a2a26041ae2c527ec3a4f522af5 # v1
 
       - uses: peter-evans/create-pull-request@v8
         if: steps.toc.outputs.changed == 'true'
