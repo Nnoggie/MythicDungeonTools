@@ -187,6 +187,7 @@ local defaultSavedVars = {
     focusMarker = {
       announceReadyCheck = false,
       useMacro = false,
+      preserveExistingTargetMarkers = true,
       suppressNotifications = false,
       assignments = {},
     },
