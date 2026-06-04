@@ -1,6 +1,4 @@
-## 6.1.12 (2026-05-31)
+## 6.1.13 (2026-06-04)
 
-- Added a General setting to mute Xal'atath voice lines
-- Updated short names for Windrunner Spire, Magister's Terrace, and Nexus Point Xenas.
-- Adjusted Magister's Terrace G25 positions and unlinked Spellwoven Familiars
-- Fixed enemy count labels hiding when mouseovering enemies
+- Fixed confirmation dialogs showing an empty checkbox when the action does not use one
+- Moved two bats in Maisara Caverns to more accurate positions
