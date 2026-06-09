@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.1.16",
+    date = "2026-06-09",
+    notes = {
+      "Fixed a Shadowguard Champion in Seat of the Triumvirate incorrectly giving enemy forces count",
+    },
+  },
+  {
     tag = "6.1.15",
     date = "2026-06-08",
     notes = {
@@ -13,14 +20,6 @@ MDT.changeLog = {
     date = "2026-06-05",
     notes = {
       "MoP Patch 5.0.4 update",
-    },
-  },
-  {
-    tag = "6.1.13",
-    date = "2026-06-04",
-    notes = {
-      "Fixed confirmation dialogs showing an empty checkbox when the action does not use one",
-      "Moved two bats in Maisara Caverns to more accurate positions",
     },
   },
 }
