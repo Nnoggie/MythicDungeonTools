@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.1.17",
+    date = "2026-06-17",
+    notes = {
+      "Patch 12.0.7 Update",
+      "Added a Focus Marker option to avoid overwriting existing target markers",
+    },
+  },
+  {
     tag = "6.1.16",
     date = "2026-06-09",
     notes = {
@@ -13,13 +21,6 @@ MDT.changeLog = {
     date = "2026-06-08",
     notes = {
       "Added two missing Pesty Lashlings to Windrunner Spire",
-    },
-  },
-  {
-    tag = "6.1.14",
-    date = "2026-06-05",
-    notes = {
-      "MoP Patch 5.0.4 update",
     },
   },
 }
