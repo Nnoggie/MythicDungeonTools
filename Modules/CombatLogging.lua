@@ -29,6 +29,7 @@ local RAID_DIFFICULTY_IDS_BY_CONTENT = {
   },
   [ContentTypes.MYTHIC] = {
     [16] = true,
+    [233] = true, --Mythic - Flexible Raiding
   },
 }
 
