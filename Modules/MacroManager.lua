@@ -532,7 +532,7 @@ local function saveSelectedMacro(frame)
 
   local body = frame.editor:GetText() or ""
   local ok, err = pcall(function()
-    EditMacro(selected.index, selected.name, selected.icon or DEFAULT_MACRO_ICON, body)
+    EditMacro(selected.index, nil, nil, body)
   end)
 
   if ok then
