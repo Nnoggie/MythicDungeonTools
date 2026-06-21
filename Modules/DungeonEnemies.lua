@@ -91,7 +91,7 @@ function MDT:SetUpModifiers(frame)
     if timeSinceLastUpdate >= ONUPDATE_INTERVAL then
       timeSinceLastUpdate = 0
       local modifier = (IsAltKeyDown() and "alt") or (IsControlKeyDown() and "ctrl")
-      local overMDT = MouseIsOver(frame) or MouseIsOver(frame.sidePanel) or MouseIsOver(frame.topPanel) or MouseIsOver(frame.bottomPanel)
+      local overMDT = frame:IsMouseOver() or frame.sidePanel:IsMouseOver() or frame.topPanel:IsMouseOver() or frame.bottomPanel:IsMouseOver()
       if modifier and overMDT then
         MDT:DisplayBlipModifierLabels(modifier)
         local statusText = (modifier == "alt" and L["altKeyDownStatusText"]) or (modifier == "ctrl" and L["ctrlKeyDownStatusText"])

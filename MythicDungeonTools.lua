@@ -4,11 +4,9 @@ local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 
-local tinsert, tremove, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip, MouseIsOver =
-    table
-    .insert
-    , table.remove, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition, GameTooltip,
-    MouseIsOver
+local tinsert, tremove, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
+    table.insert, table.remove, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition,
+    GameTooltip
 
 local sizex = 840
 local sizey = 555
@@ -672,9 +670,9 @@ function MDT:IsFrameOffScreen()
   local width = GetScreenWidth()
   local height = GetScreenHeight()
   local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
-  local right = topPanel:GetRight()   --<0
-  local bottom = topPanel:GetBottom() --<0
-  local top = bottomPanel:GetTop()    -->height
+  local right = topPanel:GetRight()                                                                                  --<0
+  local bottom = topPanel:GetBottom()                                                                                --<0
+  local top = bottomPanel:GetTop()                                                                                   -->height
   return left > width or right < 0 or bottom < 0 or top > height
 end
 
@@ -1676,9 +1674,9 @@ end
 ---Updates the tooltip which is being displayed when a pull is mouseovered
 function MDT:UpdatePullTooltip(tooltip)
   local frame = MDT.main_frame
-  if not MouseIsOver(frame.sidePanel.pullButtonsScrollFrame.frame) then
+  if not frame.sidePanel.pullButtonsScrollFrame.frame:IsMouseOver() then
     tooltip:Hide()
-  elseif frame.sidePanel.newPullButton and MouseIsOver(frame.sidePanel.newPullButton.frame) then
+  elseif frame.sidePanel.newPullButton and frame.sidePanel.newPullButton.frame:IsMouseOver() then
     tooltip:Hide()
   else
     if frame.sidePanel.newPullButtons and tooltip.currentPull and frame.sidePanel.newPullButtons[tooltip.currentPull] then
@@ -1686,30 +1684,28 @@ function MDT:UpdatePullTooltip(tooltip)
 
       --enemy portraits
       for k, v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
-        if MouseIsOver(v) then
-          if v:IsShown() then
-            --model
-            if v.enemyData.displayId and (not tooltip.modelNpcId or (tooltip.modelNpcId ~= v.enemyData.displayId)) then
-              tooltip.Model:SetDisplayInfo(v.enemyData.displayId)
-              tooltip.modelNpcId = v.enemyData.displayId
-            end
-            --topString
-            local newLine = "\n"
-            local text = newLine..newLine..newLine..L[v.enemyData.name].." x"..v.enemyData.quantity..newLine
-            text = text..string.format(L["Level %d %s"], v.enemyData.level, L[v.enemyData.creatureType])..newLine
-            local boss = v.enemyData.isBoss or false
-            local health = MDT:CalculateEnemyHealth(boss, v.enemyData.baseHealth, db.currentDifficulty, v.enemyData.ignoreFortified)
-            text = text..string.format(L["%s HP"], MDT:FormatEnemyHealth(health))..newLine
-
-            local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-            local count = v.enemyData.count
-            text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count, totalForcesMax, false)
-
-            tooltip.topString:SetText(text)
-            showData = true
+        if v:IsMouseOver() and v:IsShown() then
+          --model
+          if v.enemyData.displayId and (not tooltip.modelNpcId or (tooltip.modelNpcId ~= v.enemyData.displayId)) then
+            tooltip.Model:SetDisplayInfo(v.enemyData.displayId)
+            tooltip.modelNpcId = v.enemyData.displayId
           end
-          break
+          --topString
+          local newLine = "\n"
+          local text = newLine..newLine..newLine..L[v.enemyData.name].." x"..v.enemyData.quantity..newLine
+          text = text..string.format(L["Level %d %s"], v.enemyData.level, L[v.enemyData.creatureType])..newLine
+          local boss = v.enemyData.isBoss or false
+          local health = MDT:CalculateEnemyHealth(boss, v.enemyData.baseHealth, db.currentDifficulty, v.enemyData.ignoreFortified)
+          text = text..string.format(L["%s HP"], MDT:FormatEnemyHealth(health))..newLine
+
+          local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+          local count = v.enemyData.count
+          text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count, totalForcesMax, false)
+
+          tooltip.topString:SetText(text)
+          showData = true
         end
+        break
       end
       if showData then
         tooltip.topString:Show()

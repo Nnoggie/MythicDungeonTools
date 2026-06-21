@@ -328,7 +328,7 @@ function MDT:EnableBrushPreview(tool)
   if tool == "mover" then return end
   frame.brushPreview:Show()
   frame.brushPreview:SetScript("OnUpdate", function(self, tick)
-    if MouseIsOver(MDTScrollFrame) and not MouseIsOver(MDTToolbarFrame) then
+    if MDTScrollFrame:IsMouseOver() and not MDTToolbarFrame:IsMouseOver() then
       local x, y = GetCursorPosition()
       x = x / UIParent:GetScale()
       y = y / UIParent:GetScale()
@@ -533,7 +533,7 @@ end
 function MDT:GetHighestFrameLevelAtCursor()
   local currentSublevel = -8
   for k, v in pairs(activeTextures) do
-    if MouseIsOver(v) and v:IsShown() and (not v.isOwn) then
+    if v:IsMouseOver() and v:IsShown() and (not v.isOwn) then
       local _, sublevel = v:GetDrawLayer()
       currentSublevel = max(currentSublevel, sublevel + 1)
     end
@@ -575,7 +575,7 @@ function MDT:StartArrowDrawing()
   nobj.t = {}
   local scale = MDT:GetScale()
   frame.toolbar:SetScript("OnUpdate", function(self, tick)
-    if not MouseIsOver(MDTScrollFrame) then return end
+    if not MDTScrollFrame:IsMouseOver() then return end
     local x, y = MDT:GetCursorPosition()
     local currentDrawLayer = MDT:GetHighestFrameLevelAtCursor()
     drawLayer = max(drawLayer, currentDrawLayer)
@@ -643,7 +643,7 @@ function MDT:StartLineDrawing()
 
   local scale = MDT:GetScale()
   frame.toolbar:SetScript("OnUpdate", function(self, tick)
-    if not MouseIsOver(MDTScrollFrame) then return end
+    if not MDTScrollFrame:IsMouseOver() then return end
     local currentDrawLayer = MDT:GetHighestFrameLevelAtCursor()
     drawLayer = max(drawLayer, currentDrawLayer)
     endx, endy = MDT:GetCursorPosition()
@@ -718,7 +718,7 @@ function MDT:StartPencilDrawing()
   local lineIdx = 1
   local scale = MDT:GetScale()
   frame.toolbar:SetScript("OnUpdate", function(self, tick)
-    if not MouseIsOver(MDTScrollFrame) then return end
+    if not MDTScrollFrame:IsMouseOver() then return end
     local currentDrawLayer = MDT:GetHighestFrameLevelAtCursor()
     layerSublevel = max(layerSublevel, currentDrawLayer)
     local x, y = MDT:GetCursorPosition()
@@ -796,7 +796,7 @@ function MDT:StartMovingObject()
   local startx, starty = MDT:GetCursorPosition()
   originalX, originalY = MDT:GetCursorPosition()
   frame.toolbar:SetScript("OnUpdate", function(self, tick)
-    if not MouseIsOver(MDTScrollFrame) then return end
+    if not MDTScrollFrame:IsMouseOver() then return end
     local x, y = MDT:GetCursorPosition()
     if x ~= startx or y ~= starty then
       for j, tex in pairs(activeTextures) do
@@ -845,7 +845,7 @@ function MDT:GetHighestPresetObjectIndexAtCursor()
   local currentSublevel = -8
   local highestTexture
   for k, v in pairs(activeTextures) do
-    if MouseIsOver(v) and v:IsShown() then
+    if v:IsMouseOver() and v:IsShown() then
       local _, sublevel = v:GetDrawLayer()
       if sublevel >= currentSublevel then
         highestTexture = v
@@ -868,12 +868,12 @@ function MDT:StartEraserDrawing()
   local scale = MDT:GetScale()
   twipe(changedObjects)
   frame.toolbar:SetScript("OnUpdate", function(self, tick)
-    if not MouseIsOver(MDTScrollFrame) then return end
+    if not MDTScrollFrame:IsMouseOver() then return end
     local x, y = MDT:GetCursorPosition()
     if x ~= startx or y ~= starty then
       local highestObjectIdx = MDT:GetHighestPresetObjectIndexAtCursor()
       for j, tex in pairs(activeTextures) do
-        if MouseIsOver(tex) and tex:IsShown() and tex.objectIndex == highestObjectIdx then --tex.coords means this is a line
+        if tex:IsMouseOver() and tex:IsShown() and tex.objectIndex == highestObjectIdx then --tex.coords means this is a line
           tex:Hide()
           if tex.coords then
             local x1, y1, x2, y2 = unpack(tex.coords)

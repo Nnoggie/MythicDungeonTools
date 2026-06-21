@@ -3,7 +3,7 @@ local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local MDT = MDT
 local L = MDT.L
-local tinsert, SetPortraitTextureFromCreatureDisplayID, MouseIsOver, next = table.insert, SetPortraitTextureFromCreatureDisplayID, MouseIsOver, next
+local tinsert, SetPortraitTextureFromCreatureDisplayID, next = table.insert, SetPortraitTextureFromCreatureDisplayID, next
 
 local width, height = 248, 32
 local maxPortraitCount = 7
@@ -342,7 +342,7 @@ local methods = {
     end
 
     function self.callbacks.OnClickNormal(_, mouseButton, force)
-      if not force and not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+      if not force and not MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame:IsMouseOver() then return end
 
       if (IsControlKeyDown()) then
         if (mouseButton == "LeftButton") then

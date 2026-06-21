@@ -904,7 +904,7 @@ end
 ---Adds a clone at the cursor position to the dungeon enemy table
 ---bound to hotkey and used to add new npcs to the map
 function MDT:AddCloneAtCursorPosition()
-  if not MouseIsOver(MDTScrollFrame) then return end
+  if not MDTScrollFrame:IsMouseOver() then return end
   if currentEnemyIdx then
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentEnemyIdx]
     local cursorx, cursory = MDT:GetCursorPosition()
@@ -927,7 +927,7 @@ end
 ---AddPatrolWaypointAtCursorPosition
 ---Adds a patrol waypoint to the selected enemy
 function MDT:AddPatrolWaypointAtCursorPosition()
-  if not MouseIsOver(MDTScrollFrame) then return end
+  if not MDTScrollFrame:IsMouseOver() then return end
   local currentBlip = MDT:GetCurrentDevmodeBlip()
   if currentBlip then
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
@@ -941,13 +941,13 @@ function MDT:AddPatrolWaypointAtCursorPosition()
     --snap onto other waypoints
     local patrolBlips = MDT:GetPatrolBlips()
     for idx, waypoint in pairs(patrolBlips) do
-      if MouseIsOver(waypoint) then
+      if waypoint:IsMouseOver() then
         cursorx = waypoint.x
         cursory = waypoint.y
       end
     end
     --snap onto blip
-    if MouseIsOver(currentBlip) then
+    if currentBlip:IsMouseOver() then
       cursorx = currentBlip.clone.x
       cursory = currentBlip.clone.y
     end
