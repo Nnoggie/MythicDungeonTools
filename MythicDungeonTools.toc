@@ -1,4 +1,4 @@
-## Interface: 120007, 120005, 120001, 50504
+## Interface: 120100, 120007, 120005, 120001, 50504
 # WOW_INTERFACE_TARGETS: mainline-beta, mainline-test, mainline, mists
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
