@@ -28,6 +28,8 @@ AceGUIWidgets\load_widgets.xml
 Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
+#@do-not-package@
 Developer\load_developer.xml
+#@end-do-not-package@
 Midnight\load_midnight.xml [AllowLoadGameType mainline]
 MistsOfPandaria\load_mop.xml [AllowLoadGameType mists]
