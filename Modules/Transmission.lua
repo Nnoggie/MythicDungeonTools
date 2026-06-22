@@ -722,17 +722,6 @@ end
 
 MDT.displaySendingProgress = displaySendingProgress
 
-function MDT:GetPresetByUid(presetUid)
-  local db = MDT:GetDB()
-  for _, dungeon in pairs(db.presets) do
-    for _, preset in pairs(dungeon) do
-      if preset.uid == presetUid then
-        return preset
-      end
-    end
-  end
-end
-
 ---generates a unique random 11 digit number in base64
 function MDT:GenerateUniqueID(length)
   local s = {}

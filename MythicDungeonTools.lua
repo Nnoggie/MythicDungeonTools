@@ -319,27 +319,6 @@ MDT.dungeonList = {
   [39] = "-",
 }
 
-function MDT:IsOnBetaServer()
-  local realm = GetRealmName()
-  local regionID = GetCurrentRegion()
-  if regionID <= 5 then return false end
-  local realms = {
-    ["These Go To Eleven"] = true,
-    ["Turnips Delight"] = true,
-    ["Alleria"] = true,
-    ["Khadgar"] = true,
-  }
-  return realms[realm]
-end
-
-function MDT:GetNumDungeons()
-  local count = 0
-  for _, _ in pairs(MDT.dungeonList) do
-    count = count + 1
-  end
-  return count
-end
-
 function MDT:GetDungeonName(idx, forceEnglish)
   if forceEnglish and MDT.mapInfo[idx] and MDT.mapInfo[idx].englishName then
     return MDT.mapInfo[idx].englishName
@@ -349,11 +328,6 @@ end
 
 function MDT:GetDungeonSublevels()
   return MDT.dungeonSubLevels
-end
-
-function MDT:GetSublevelName(dungeonIdx, sublevelIdx)
-  if not dungeonIdx then dungeonIdx = db.currentDungeonIdx end
-  return MDT.dungeonSubLevels[dungeonIdx][sublevelIdx]
 end
 
 function MDT:GetDB()
@@ -1772,11 +1746,6 @@ function MDT:GetCurrentLivePreset()
       end
     end
   end
-end
-
-function MDT:GetEffectivePresetSeason(preset)
-  local season = db.currentSeason
-  return season
 end
 
 function MDT:ReturnToLivePreset()
@@ -3982,17 +3951,6 @@ end
 function MDT:GetScrollingAmount(scrollFrame, pixelPerSecond)
   local viewheight = scrollFrame.frame.obj.content:GetHeight()
   return (pixelPerSecond / viewheight) * 1000
-end
-
-function MDT:ScrollToPull(pullIdx)
-  -- Get scroll frame
-  local scrollFrame = MDT.main_frame.sidePanel.pullButtonsScrollFrame
-  -- Get amount of total pulls plus the extra button "+ Add Pull"
-  local pulls = #MDT:GetCurrentPreset().value.pulls + 1 or 1
-  local percentage = pullIdx / pulls
-  local value = percentage * 1000
-  scrollFrame:SetScroll(value)
-  scrollFrame:FixScroll()
 end
 
 function MDT:CopyPullOptions(sourceIdx, destinationIdx)

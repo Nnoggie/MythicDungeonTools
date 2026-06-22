@@ -692,18 +692,6 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
   end
 end
 
----DungeonEnemies_IsAnyBlipMoving
-function MDT:DungeonEnemies_IsAnyBlipMoving()
-  local isAnyMoving
-  for blipIdx, blip in pairs(blips) do
-    if blip:IsDragging() then
-      isAnyMoving = true
-      break
-    end
-  end
-  return isAnyMoving
-end
-
 ---DungeonEnemies_HideAllBlips
 ---Used to hide blips during scaling changes to the map
 function MDT:DungeonEnemies_HideAllBlips()
@@ -738,21 +726,6 @@ end
 function MDT:DungeonEnemies_CreateFramePools()
   db = self:GetDB()
   MDT.dungeonEnemies_framePool = MDT.CreateFramePool("Button", MDT.main_frame.mapPanelFrame, "MDTDungeonEnemyTemplate")
-end
-
-function MDT:FindPullOfBlip(blip)
-  local preset = MDT:GetCurrentPreset()
-  local pulls = preset.value.pulls or {}
-
-  for pullIdx, pull in ipairs(pulls) do
-    if pull[blip.enemyIdx] then
-      for storageIdx, cloneIdx in ipairs(pull[blip.enemyIdx]) do
-        if cloneIdx == blip.cloneIdx then
-          return pullIdx
-        end
-      end
-    end
-  end
 end
 
 function MDT:GetBlip(enemyIdx, cloneIdx)
@@ -926,17 +899,6 @@ function MDT:DungeonEnemies_GetPullColor(pull, pulls)
   return r, g, b
 end
 
-function MDT:IsNPCInPulls(poi)
-  local data = self.dungeonEnemies[db.currentDungeonIdx]
-  for enemyIdx, enemy in pairs(data) do
-    if enemy.id == poi.npcId then
-      for cloneIdx in pairs(enemy.clones) do
-        if MDT:IsCloneInPulls(enemyIdx, cloneIdx) then return true end
-      end
-    end
-  end
-end
-
 function MDT:IsCloneInPulls(enemyIdx, cloneIdx)
   local pulls = MDT:GetCurrentPreset().value.pulls
   local numClones = 0
@@ -954,53 +916,6 @@ function MDT:IsCloneInPulls(enemyIdx, cloneIdx)
     end
   end
   return numClones > 0
-end
-
----tries to retrieve npc name by npcId
----only looks for npcs in the current dungeon
-function MDT:GetNPCNameById(npcId)
-  local data = MDT.dungeonEnemies[db.currentDungeonIdx]
-  if data then
-    for _, enemy in pairs(data) do
-      if enemy.id == npcId then
-        return enemy.name
-      end
-    end
-  end
-end
-
----exports all ids of npcs that do not have a displayId associated to them
---dungeons = [
---Dungeon(name='AtalDazar', idx=15, npcIds=[134739, 161241, 136347]),
---    Dungeon(name='RandomDungeon', idx=14, npcIds=[161241, 134739, 136347]),
---]
-function MDT:ExportNPCIdsWithoutDisplayIds()
-  local output = "dungeons = [\n"
-  for idx = 15, MDT:GetNumDungeons() do
-    local shouldAddDungeonText = true
-    local enemyData = MDT.dungeonEnemies[idx]
-    if enemyData then
-      for _, enemy in pairs(enemyData) do
-        if not enemy.displayId then
-          if shouldAddDungeonText then
-            output = output.."Dungeon(name='"..MDT:GetDungeonName(idx).."', idx="..idx..", npcIds=["
-            shouldAddDungeonText = false
-          end
-          output = output..enemy.id..", "
-        end
-      end
-      if not shouldAddDungeonText then output = output.."]),\n" end
-    end
-  end
-  output = output.."]"
-  MDT:HideAllDialogs()
-  MDT.main_frame.ExportFrame:Show()
-  MDT.main_frame.ExportFrame:ClearAllPoints()
-  MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  MDT.main_frame.ExportFrameEditbox:SetText(output)
-  MDT.main_frame.ExportFrameEditbox:HighlightText(0, string.len(output))
-  MDT.main_frame.ExportFrameEditbox:SetFocus()
-  MDT.main_frame.ExportFrameEditbox:SetLabel("NPC ids without displayId")
 end
 
 local function ArrayRemove(t, fnKeep)
