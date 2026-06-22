@@ -4125,52 +4125,6 @@ function MDT:GetCurrentAffixWeek()
   return 1
 end
 
----Helper function to print out current affixes with their ids and their names
-function MDT:PrintCurrentAffixes()
-  --run this once so blizz stuff is loaded
-  MDT:GetCurrentAffixWeek()
-  --https://www.wowhead.com/affixes
-  local affixNames = {
-    [1] = L["Overflowing"],
-    [2] = L["Skittish"],
-    [3] = L["Volcanic"],
-    [4] = L["Necrotic"],
-    [5] = L["Teeming"],
-    [6] = L["Raging"],
-    [7] = L["Bolstering"],
-    [8] = L["Sanguine"],
-    [9] = L["Tyrannical"],
-    [10] = L["Fortified"],
-    [11] = L["Bursting"],
-    [12] = L["Grievous"],
-    [13] = L["Explosive"],
-    [14] = L["Quaking"],
-    [15] = L["Relentless"],
-    [16] = L["Infested"],
-    [117] = L["Reaping"],
-    [119] = L["Beguiling"],
-    [120] = L["Awakened"],
-    [121] = L["Prideful"],
-    [122] = L["Inspiring"],
-    [123] = L["Spiteful"],
-    [124] = L["Storming"],
-    [128] = L["Tormented"],
-    [130] = L["Encrypted"],
-    [131] = L["Shrouded"],
-    [132] = L["Thundering"],
-    [147] = L["Xal'atath's Guile"],
-    [148] = L["Xal'atath's Bargain: Ascendant"],
-    [152] = L["Challenger's Peril"],
-    [158] = L["Xal'atath's Bargain: Voidbound"],
-    [159] = L["Xal'atath's Bargain: Oblivion"],
-    [160] = L["Xal'atath's Bargain: Devour"],
-  }
-  local affixIds = C_MythicPlus.GetCurrentAffixes()
-  for idx, data in ipairs(affixIds) do
-    print(data.id, affixNames[data.id])
-  end
-end
-
 ---Checks if the players is in a group/raid and returns the type
 function MDT:IsPlayerInGroup()
   local inGroup = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
