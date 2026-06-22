@@ -2426,69 +2426,6 @@ function MDT:SanitizePresetName(text)
   end
 end
 
-function MDT:MakeChatPresetImportFrame(frame)
-  frame.chatPresetImportFrame = AceGUI:Create("Frame")
-  frame.chatPresetImportFrame.frame:SetParent(frame)
-  frame.chatPresetImportFrame.frame:SetFrameStrata("DIALOG")
-  local chatImport = frame.chatPresetImportFrame
-  chatImport:SetTitle(L["Import Preset"])
-  chatImport:SetWidth(400)
-  chatImport:SetHeight(100)
-  chatImport:EnableResize(false)
-  chatImport:SetLayout("Flow")
-  chatImport:SetCallback("OnClose", function(widget)
-    MDT:UpdatePresetDropDown()
-    if db.currentPreset[db.currentDungeonIdx] ~= 1 then
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-    end
-  end)
-  chatImport.statustext:GetParent():Hide()
-  chatImport.defaultText = L["Import Preset"]..":\n"
-  chatImport.importLabel = AceGUI:Create("Label")
-  chatImport.importLabel:SetText(chatImport.defaultText)
-  chatImport.importLabel:SetWidth(250)
-  --chatImport.importLabel:SetColor(1,0,0)
-
-  chatImport.importButton = AceGUI:Create("Button")
-  local importButton = chatImport.importButton
-  importButton:SetText(L["Import"])
-  importButton:SetWidth(100)
-  importButton:SetCallback("OnClick", function()
-    local newPreset = chatImport.currentPreset
-    if MDT:ValidateImportPreset(newPreset) then
-      chatImport:Hide()
-      MDT:ImportPreset(MDT:DeepCopy(newPreset))
-    else
-      print(L["MDT: Error importing preset"])
-    end
-  end)
-  chatImport:AddChild(chatImport.importLabel)
-  chatImport:AddChild(importButton)
-  chatImport:Hide()
-end
-
-function MDT:OpenChatImportPresetDialog(sender, preset, live)
-  MDT:HideAllDialogs()
-  local chatImport = MDT.main_frame.chatPresetImportFrame
-  chatImport:ClearAllPoints()
-  chatImport:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  chatImport.currentPreset = preset
-  local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx)
-  local name = preset.text
-  chatImport:Show()
-  chatImport.importLabel:SetText(chatImport.defaultText..sender..": "..dungeon.." - "..name)
-  chatImport:SetTitle(L["Import Preset"])
-  chatImport.importButton:SetText(L["Import"])
-  chatImport.live = nil
-  if live then
-    chatImport.importLabel:SetText(string.format(L["Join Live Session"], "\n", sender, dungeon, name))
-    chatImport:SetTitle(L["Live Session"])
-    chatImport.importButton:SetText(L["Join"])
-    chatImport.live = true
-  end
-end
-
 function MDT:MakePresetImportFrame(frame)
   frame.presetImportFrame = AceGUI:Create("Frame")
   frame.presetImportFrame.frame:SetParent(frame)
@@ -4251,8 +4188,6 @@ function initFrames()
   MDT:MakeClearConfirmationFrame(main_frame)
   coroutine.yield()
   MDT:POI_CreateFramePools()
-  MDT:MakeChatPresetImportFrame(main_frame)
-  coroutine.yield()
   MDT:MakeSendingStatusBar(main_frame)
   MDT:POI_CreateDropDown(main_frame)
   MDT:SetupPrePatchWarning()
