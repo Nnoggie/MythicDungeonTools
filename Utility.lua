@@ -77,40 +77,6 @@ U.isInRange = function(value, min, max)
   return (value >= min and value <= max)
 end
 
-
--- Performance measurement
--- Usage:
--- MDT.U:TMStart("DungeonEnemies_UpdateEnemies")
--- MDT.U:TMStep("ReleaseAll")
--- MDT.U:TMStep("AddBlips")
--- MDT.U:TMEnd()
--- Open VDT to see the results, times are in elapsed milliseconds
-local debugTimes
-U.TMStart = function(self, segmentName)
-  debugTimes = {}
-  tinsert(debugTimes, { name = segmentName, time = debugprofilestop() })
-end
-
-U.TMStep = function(self, segmentName)
-  if not debugTimes then return end
-  tinsert(debugTimes, { name = segmentName, time = debugprofilestop() })
-end
-
-
-U.TMEnd = function()
-  local stepTimes = {}
-  local total = 0
-  for segmentIdx, data in ipairs(debugTimes) do
-    if segmentIdx > 1 then
-      local time = data.time - debugTimes[segmentIdx - 1].time
-      stepTimes[segmentIdx] = MDT:Round(time, 1).."ms "..data.name
-      total = total + time
-    end
-  end
-  DevTool:AddData(stepTimes)
-  DevTool:AddData(total)
-end
-
 local function getGroupMembers(reversed, forceParty)
   local unit            = (not forceParty and IsInRaid()) and 'raid' or 'party'
   local numGroupMembers = forceParty and GetNumSubgroupMembers() or GetNumGroupMembers()
@@ -152,82 +118,6 @@ U.GetClassColoredClassNames = function()
     end
   end
   return res
-end
-
-local bytetoB64 = {
-  [0] = "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "(",
-  ")"
-}
-
----generates a unique random id
-U.GetUniqueId = function(length)
-  local s = {}
-  for i = 1, 11 do
-    tinsert(s, bytetoB64[math.random(0, 63)])
-  end
-  return table.concat(s)
 end
 
 function U.TableToString(tbl)
