@@ -105,7 +105,7 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   cmd = cmd:lower()
   local rqst, arg = strsplit(' ', cmd)
   if rqst == "devmode" then
-    MDT:ToggleDevMode()
+    if MDT.ToggleDevMode then MDT:ToggleDevMode() end
   elseif rqst == "reset" then
     MDT:ResetMainFramePos()
   elseif rqst == "hardreset" then
@@ -123,7 +123,9 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
       MDT:HideMinimapButton()
     end
   elseif rqst == "test" then
-    MDT:OpenConfirmationFrame(450, 150, "MDT Test", "Run", "Run all tests?", MDT.test.RunAllTests)
+    if MDT.test and MDT.test.RunAllTests then
+      MDT:OpenConfirmationFrame(450, 150, "MDT Test", "Run", "Run all tests?", MDT.test.RunAllTests)
+    end
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
   end
