@@ -16,7 +16,7 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 220, teeming = 264, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 220 }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
