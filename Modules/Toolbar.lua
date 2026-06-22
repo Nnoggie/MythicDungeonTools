@@ -8,8 +8,8 @@ local drawingActive = false
 local currentTool
 local objectDrawLayer = "OVERLAY"
 
-local twipe, tinsert, tremove, tgetn, CreateFrame, tonumber, pi, max, min, atan2, abs, pairs, ipairs, GetCursorPosition, GameTooltip = table
-    .wipe, table.insert, table.remove, table.getn, CreateFrame, tonumber, math.pi, math.max, math.min, math.atan2,
+local twipe, tinsert, tremove, CreateFrame, tonumber, pi, max, min, atan2, abs, pairs, ipairs, GetCursorPosition, GameTooltip = table
+    .wipe, table.insert, table.remove, CreateFrame, tonumber, math.pi, math.max, math.min, math.atan2,
     math.abs, pairs, ipairs, GetCursorPosition, GameTooltip
 
 ---sets up the toolbar frame and the widgets in it
@@ -282,7 +282,7 @@ local activeTextures = {}
 local texturePool = {}
 local noteFramePool
 local function getTexture()
-  local size = tgetn(texturePool)
+  local size = #texturePool
   if size == 0 then
     return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else

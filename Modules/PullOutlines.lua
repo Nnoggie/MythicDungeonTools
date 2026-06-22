@@ -1,5 +1,5 @@
 local _, MDT = ...
-local twipe, tinsert, tremove, tgetn = table.wipe, table.insert, table.remove, table.getn
+local twipe, tinsert, tremove = table.wipe, table.insert, table.remove
 
 local NONACTIVE_ALPHA = 0.5
 
@@ -98,7 +98,7 @@ end
 local activeTextures = {}
 local texturePool = {}
 local function getTexture()
-  local size = tgetn(texturePool)
+  local size = #texturePool
   if size == 0 then
     return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else
@@ -157,7 +157,7 @@ function MDT:PullClickAreaOnLeave()
 end
 
 local function getFontString()
-  local size = tgetn(fontStringPool)
+  local size = #fontStringPool
   if size == 0 then
     local fsFrame = CreateFrame("Frame", "MDTFontStringContainerFrame"..frameIndex, MDT.main_frame.mapPanelFrame)
     frameIndex = frameIndex + 1

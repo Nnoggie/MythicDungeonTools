@@ -2951,7 +2951,7 @@ end
 
 function MDT:GetPullsNum(preset)
   preset = preset or self:GetCurrentPreset()
-  return table.getn(preset.value.pulls)
+  return #preset.value.pulls
 end
 
 function MDT:CopyObject(obj, seen)
