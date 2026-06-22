@@ -490,17 +490,9 @@ function DC:InitHealthTrack()
     --check difficulty if challenge mode and m+ level
     local difficultyID = GetDungeonDifficultyID()
     local isChallenge = difficultyID and C_ChallengeMode.IsChallengeModeActive()
-    local level, activeAffixIDs = C_ChallengeMode.GetActiveKeystoneInfo()
-    local fortified
-    local tyrannical
-    for k, v in pairs(activeAffixIDs) do
-      if v == 10 then
-        fortified = true
-      end
-      if v == 9 then
-        tyrannical = true
-      end
-    end
+    local level = C_ChallengeMode.GetActiveKeystoneInfo()
+    local fortified = level and level >= 10
+    local tyrannical = level and level >= 10
     level = isChallenge and level or -1
     if level > -1 then
       local unit

@@ -232,14 +232,6 @@ function MDT:LiveSession_SendPulls(pulls)
   end
 end
 
----Sends Affix Week Change
-function MDT:LiveSession_SendAffixWeek(week)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.week, week.."", distribution, nil, "ALERT")
-  end
-end
-
 do
   local colorTimer
   ---LiveSession_QueueColorUpdate

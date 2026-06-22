@@ -927,14 +927,11 @@ function MDT:DungeonEnemies_GetPullColor(pull, pulls)
 end
 
 function MDT:IsNPCInPulls(poi)
-  local week = self:GetEffectivePresetWeek()
   local data = self.dungeonEnemies[db.currentDungeonIdx]
   for enemyIdx, enemy in pairs(data) do
     if enemy.id == poi.npcId then
-      for cloneIdx, clone in pairs(enemy.clones) do
-        if clone.week[week] then
-          return MDT:IsCloneInPulls(enemyIdx, cloneIdx)
-        end
+      for cloneIdx in pairs(enemy.clones) do
+        if MDT:IsCloneInPulls(enemyIdx, cloneIdx) then return true end
       end
     end
   end

@@ -211,7 +211,6 @@ local defaultSavedVars = {
     currentSection = "maps",
     latestDungeonSeen = 0,
     selectedDungeonList = 1,
-    knownAffixWeeks = {},
     prePatchWarningSeenFor = 0,
   },
 }
@@ -241,7 +240,6 @@ do
   eventFrame:RegisterEvent("ADDON_LOADED")
   eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
   eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-  --TODO Register Affix Changed event
   eventFrame:SetScript("OnEvent", function(self, event, ...)
     return MDT[event](self, ...)
   end)
@@ -307,22 +305,6 @@ do
     eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
   end
 end
-
---affixID as used in C_ChallengeMode.GetAffixInfo(affixID)
---https://www.wowhead.com/affixes
---lvl 4 affix, lvl 7 affix, tyrannical/fortified affix
-local affixWeeks = {
-  [1] = { 9, 148 },
-  [2] = { 10 },
-  [3] = { 9 },
-  [4] = { 10 },
-  [5] = { 9 },
-  [6] = { 10 },
-  [7] = { 9 },
-  [8] = { 10 },
-  [9] = { 9 },
-  [10] = { 10 },
-}
 
 MDT.mapInfo = {}
 MDT.dungeonTotalCount = {}
@@ -955,12 +937,7 @@ function MDT:MakeSidePanel(frame)
         end
       end
       db.currentPreset[db.currentDungeonIdx] = key
-      --Set affix dropdown to preset week
-      --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek())
-      --UpdateMap is called in SetAffixWeek, no need to call twice
-      -- im not sure why this was left in here, but it was causing the map to update twice when changing presets
-      -- MDT:UpdateMap()
-      frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek() or 1)
+      MDT:UpdateMap()
     end
   end)
   MDT:UpdatePresetDropDown()
@@ -1219,96 +1196,6 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-
-  --Week Dropdown
-  local function makeAffixString(week, affixes, longText)
-    local ret
-    local sep = ""
-    if not MDT:IsRetail() then return "" end
-    for _, affixID in ipairs(affixes) do
-      local name, _, filedataid = C_ChallengeMode.GetAffixInfo(affixID)
-      name = name or L["Unknown"]
-      filedataid = filedataid or 134400 --questionmark
-      if longText then
-        ret = ret or ""
-        ret = ret..sep..name
-        sep = ", "
-      else
-        ret = ret or week..(week > 9 and ". " or ".   ")
-        if week == MDT:GetCurrentAffixWeek() then
-          ret = WrapTextInColorCode(ret, "FF00FF00")
-        end
-        ret = ret..CreateTextureMarkup(filedataid, 64, 64, 20, 20, 0.1, 0.9, 0.1, 0.9, 0, 0).."  "
-      end
-    end
-    --date
-    local currentWeek = MDT:GetCurrentAffixWeek()
-    if not longText and week ~= currentWeek then
-      local deltaWeeks = week - currentWeek
-      if deltaWeeks < 0 then deltaWeeks = deltaWeeks + #affixWeeks end
-      local secondsInOneWeek = 604800
-      local now = time()
-      local secondsToReset = C_DateAndTime.GetSecondsUntilWeeklyReset()
-      local reset = now + secondsToReset + (secondsInOneWeek * (deltaWeeks - 1))
-      local monthDay = date("%b %d", reset)
-      ret = ret.." "..monthDay
-    end
-    return ret
-  end
-
-  frame.sidePanel.affixDropdown = AceGUI:Create("Dropdown")
-  frame.sidePanel.affixDropdown.pullout.frame:SetParent(frame.sidePanel.affixDropdown.frame)
-  local affixDropdown = frame.sidePanel.affixDropdown
-  affixDropdown.text:SetJustifyH("LEFT")
-  affixDropdown:SetLabel(L["Affixes"])
-
-  function affixDropdown:UpdateAffixList()
-    local affixWeekMarkups = {}
-    for week, affixes in ipairs(affixWeeks) do
-      tinsert(affixWeekMarkups, makeAffixString(week, affixes))
-    end
-    local order = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
-    affixDropdown:SetList(affixWeekMarkups, order)
-    --mouseover list items
-    for itemIdx, item in ipairs(affixDropdown.pullout.items) do
-      item:SetOnEnter(function()
-        GameTooltip:SetOwner(item.frame, "ANCHOR_LEFT", -11, -25)
-        local v = affixWeeks[itemIdx]
-        GameTooltip:SetText(makeAffixString(itemIdx, v, true), 1, 1, 1, 1)
-        GameTooltip:Show()
-      end)
-      item:SetOnLeave(function()
-        GameTooltip:Hide()
-      end)
-    end
-  end
-
-  function affixDropdown:SetAffixWeek(key, ignoreReloadPullButtons, ignoreUpdateProgressBar)
-    affixDropdown:SetValue(key)
-    MDT:GetCurrentPreset().week = key
-    if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
-    MDT:UpdateMap(nil, ignoreReloadPullButtons, ignoreUpdateProgressBar)
-  end
-
-  affixDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-    affixDropdown:SetAffixWeek(key)
-    if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
-      MDT:LiveSession_SendAffixWeek(key)
-    end
-  end)
-  affixDropdown:SetCallback("OnEnter", function(...)
-    local selectedWeek = affixDropdown:GetValue()
-    if not selectedWeek then return end
-    GameTooltip:SetOwner(affixDropdown.frame, "ANCHOR_LEFT", -6, -41)
-    local v = affixWeeks[selectedWeek]
-    GameTooltip:SetText(makeAffixString(selectedWeek, v, true), 1, 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  affixDropdown:SetCallback("OnLeave", function(...)
-    GameTooltip:Hide()
-  end)
-
-  -- frame.sidePanel.WidgetGroup:AddChild(affixDropdown)
 
   --difficulty slider
   frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
@@ -1797,22 +1684,6 @@ function MDT:IsCloneIncluded(enemyIdx, cloneIdx)
   return true
 end
 
-function MDT:IsCurrentPresetFortified()
-  local currentWeek = self:GetCurrentPreset().week
-  return affixWeeks[currentWeek][1] == 10 or
-      affixWeeks[currentWeek][2] == 10 or
-      affixWeeks[currentWeek][3] == 10 or
-      affixWeeks[currentWeek][4] == 10
-end
-
-function MDT:IsCurrentPresetTyrannical()
-  local currentWeek = self:GetCurrentPreset().week
-  return affixWeeks[currentWeek][1] == 9 or
-      affixWeeks[currentWeek][2] == 9 or
-      affixWeeks[currentWeek][3] == 9 or
-      affixWeeks[currentWeek][4] == 9
-end
-
 function MDT:MouseDownHook()
 
 end
@@ -1903,13 +1774,6 @@ function MDT:GetCurrentLivePreset()
       end
     end
   end
-end
-
-function MDT:GetEffectivePresetWeek(preset)
-  preset = preset or self:GetCurrentPreset()
-  local week
-  week = preset.week
-  return week
 end
 
 function MDT:GetEffectivePresetSeason(preset)
@@ -2069,7 +1933,7 @@ do
 
   local getFortTyrMult = function(level, boss, fortified, tyrannical, ignoreFortified)
     local mult = 1
-    if level >= 4 then
+    if level >= 10 then
       if not boss and (fortified and not ignoreFortified) then mult = mult * fortMult end
       if boss and tyrannical then mult = mult * tyrMult end
     end
@@ -2244,8 +2108,7 @@ function MDT:EnsureDBTables()
       preset.objects = nil
     end
   end
-  if preset.week and (preset.week < 1 or preset.week > 10) then preset.week = nil end
-  preset.week = preset.week or MDT:GetCurrentAffixWeek()
+  preset.week = nil
   db.currentPreset[db.currentDungeonIdx] = db.currentPreset[db.currentDungeonIdx] or 1
   db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentDungeonIdx = db.currentDungeonIdx
   db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = db.presets[
@@ -2322,8 +2185,6 @@ function MDT:EnsureDBTables()
     end
     pull["color"] = pull["color"] or db.defaultColor
   end
-
-  MDT:GetCurrentPreset().week = MDT:GetCurrentPreset().week or MDT:GetCurrentAffixWeek()
 
   preset.difficulty = preset.difficulty or db.currentDifficulty
 
@@ -2441,9 +2302,6 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not framesInitialized then coroutine.yield() end
     if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
     MDT:UpdateDungeonDropDown()
-    if not framesInitialized then coroutine.yield() end
-    --frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week,ignoreReloadPullButtons,ignoreUpdateProgressBar)
-    frame.sidePanel.affixDropdown:SetValue(MDT:GetCurrentPreset().week)
     if not framesInitialized then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not framesInitialized then coroutine.yield() end
@@ -4107,24 +3965,6 @@ function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
   end
 end
 
-function MDT:GetCurrentAffixWeek()
-  if not C_AddOns.IsAddOnLoaded("Blizzard_ChallengesUI") then
-    C_AddOns.LoadAddOn("Blizzard_ChallengesUI")
-  end
-  C_MythicPlus.RequestCurrentAffixes()
-  C_MythicPlus.RequestMapInfo()
-  C_MythicPlus.RequestRewards()
-  local affixIds = C_MythicPlus.GetCurrentAffixes() --table
-  if not affixIds then return 1 end
-  if not affixIds[1] then return 1 end
-  for week, affixes in ipairs(affixWeeks) do
-    if affixes[1] == affixIds[2].id and affixes[2] == affixIds[3].id and affixes[3] == affixIds[1].id then
-      return week
-    end
-  end
-  return 1
-end
-
 ---Checks if the players is in a group/raid and returns the type
 function MDT:IsPlayerInGroup()
   local inGroup = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
@@ -4555,10 +4395,7 @@ function initFrames()
   -- ping:SetSize(ping.mySize, ping.mySize)
   -- ping:Hide()
 
-  --Set affix dropdown to preset week
-  --gotta set the list here, as affixes are not ready to be retrieved yet on login
-  main_frame.sidePanel.affixDropdown:UpdateAffixList()
-  main_frame.sidePanel.affixDropdown:SetAffixWeek(MDT:GetCurrentPreset().week or (MDT:GetCurrentAffixWeek() or 1))
+  MDT:UpdateMap()
   MDT:UpdateSectionVisibility()
   coroutine.yield()
 
