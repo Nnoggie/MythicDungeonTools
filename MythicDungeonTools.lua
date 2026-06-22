@@ -1956,14 +1956,6 @@ do
     return round(mult * baseHealth, 0)
   end
 
-  function MDT:ReverseCalcEnemyHealth(health, level, boss, fortified, tyrannical)
-    local mult = 1
-    mult = getFortTyrMult(level, boss, fortified, tyrannical, false)
-    mult = getScaling(mult, level)
-
-    local baseHealth = round(health / mult, 0)
-    return baseHealth
-  end
 end
 
 function MDT:FormatEnemyHealth(amount)
