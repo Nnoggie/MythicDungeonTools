@@ -1,5 +1,12 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-    <!-- <Script file='MurderRow.lua'/> -->
+    <Script file='MurderRow.lua'/>
+    <Script file='DenOfNalorakk.lua'/>
+    <Script file='TheBlindingVale.lua'/>
+    <Script file='VoidscarArena.lua'/>
+    <Script file='AltarOfFangs.lua'/>
+    <Script file='RubyLifePools.lua'/>
+    <Script file='TempleOfSethraliss.lua'/>
+    <Script file='KingsRest.lua'/>
     <Script file='AlgetharAcademy.lua'/>
     <Script file='MagistersTerrace.lua'/>
     <Script file='MaisaraCaverns.lua'/>
