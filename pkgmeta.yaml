@@ -19,4 +19,3 @@ externals:
   libs/CallbackHandler-1.0: https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0
   libs/LibStub: https://repos.curseforge.com/wow/libstub/trunk
   libs/LibAsync: https://github.com/Nnoggie/LibAsync
-  libs/WagoAnalytics: https://github.com/wagoio/WagoAnalyticsShim

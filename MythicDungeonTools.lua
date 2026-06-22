@@ -129,8 +129,6 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
   end
 end
 
---MDT.WagoAnalytics = LibStub("WagoAnalytics"):Register("rN4VrAKD")
-
 function MDT:GetLocaleIndex()
   local localeToIndex = {
     ["enUS"] = 1,
