@@ -921,7 +921,7 @@ local methods = {
     local db = MDT:GetDB()
     local currentForces = MDT:CountForces(self.index)
     local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-    local currentPercent = currentForces / totalForcesMax
+    local currentPercent = totalForcesMax > 0 and currentForces / totalForcesMax or 0
     local progressText
     if db.useForcesCount then
       progressText = string.format("%3d", currentForces)

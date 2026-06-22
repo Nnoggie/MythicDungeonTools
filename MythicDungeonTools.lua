@@ -1463,19 +1463,20 @@ function MDT:FormatEnemyForces(forces, forcesmax, progressbar)
   if not forcesmax then
     forcesmax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
   end
+  local percent = forcesmax > 0 and (forces / forcesmax) * 100 or 0
   if db.enemyForcesFormat == 1 then
     if progressbar then return forces.."/"..forcesmax end
     return forces
   elseif db.enemyForcesFormat == 2 then
-    if progressbar then return string.format((forces.."/"..forcesmax.." (%.2f%%)"), (forces / forcesmax) * 100) end
-    return string.format(forces.." (%.2f%%)", (forces / forcesmax) * 100)
+    if progressbar then return string.format((forces.."/"..forcesmax.." (%.2f%%)"), percent) end
+    return string.format(forces.." (%.2f%%)", percent)
   end
 end
 
 ---Progressbar_SetValue
 ---Sets the value/progress/color of the count progressbar to the apropriate data
 function MDT:Progressbar_SetValue(self, totalCurrent, totalMax)
-  local percent = (totalCurrent / totalMax) * 100
+  local percent = totalMax > 0 and (totalCurrent / totalMax) * 100 or 0
   if percent >= 102 then
     if totalCurrent - totalMax > 8 then
       self.Bar:SetStatusBarColor(1, 0, 0, 1)
