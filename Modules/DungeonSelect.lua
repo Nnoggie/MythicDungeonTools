@@ -21,6 +21,8 @@ MDT.dungeonSelectionToIndex = {}
 
 do
   if MDT:IsRetail() then
+    tinsert(MDT.seasonList, L["Midnight Season 2"])
+    tinsert(MDT.dungeonSelectionToIndex, { 160, 161, 162, 163, 164, 42, 20, 17 })
     tinsert(MDT.seasonList, L["Midnight Season 1"])
     tinsert(MDT.dungeonSelectionToIndex, { 45, 11, 150, 151, 152, 153, 154, 155 })
   end
@@ -95,6 +97,11 @@ MDT.knownDungeons = {
   [121] = "Theater of Pain",
   [122] = "Mechagon - Workshop",
   [123] = "Eco-Dome Al'dani",
+  [160] = "Murder Row",
+  [161] = "Den of Nalorakk",
+  [162] = "The Blinding Vale",
+  [163] = "Voidscar Arena",
+  [164] = "Altar of Fangs",
 }
 
 local seasonList = MDT.seasonList
