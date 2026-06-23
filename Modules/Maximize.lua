@@ -53,10 +53,6 @@ function MDT:Maximize()
   MDT:ZoomMap(0)
   MDT:UpdateEnemyInfoFrame()
   MDT:UpdateMap()
-  if db.devMode then
-    f.devPanel:ClearAllPoints()
-    f.devPanel:SetPoint("TOPLEFT", f, "TOPLEFT", 0, -45)
-  end
   f.resizer:Hide()
   db.maximized = true
 end
@@ -97,10 +93,6 @@ function MDT:Minimize()
   MDT:ZoomMap(0)
   MDT:UpdateEnemyInfoFrame()
   MDT:UpdateMap()
-  if db.devMode then
-    f.devPanel:ClearAllPoints()
-    f.devPanel:SetPoint("TOPRIGHT", f.topPanel, "TOPLEFT", 0, 0)
-  end
   f.resizer:Show()
 
   db.maximized = false

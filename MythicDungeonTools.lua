@@ -202,6 +202,10 @@ local defaultSavedVars = {
         mythic_plus = false,
       },
     },
+    macroManager = {
+      selectedScope = "account",
+      selectedMacroIDs = {},
+    },
     colorPaletteInfo = {
       autoColoring = true,
       forceColorBlindMode = false,
@@ -672,9 +676,9 @@ function MDT:IsFrameOffScreen()
   local width = GetScreenWidth()
   local height = GetScreenHeight()
   local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
-  local right = topPanel:GetRight()   --<0
-  local bottom = topPanel:GetBottom() --<0
-  local top = bottomPanel:GetTop()    -->height
+  local right = topPanel:GetRight()                                                                                  --<0
+  local bottom = topPanel:GetBottom()                                                                                --<0
+  local top = bottomPanel:GetTop()                                                                                   -->height
   return left > width or right < 0 or bottom < 0 or top > height
 end
 
@@ -3717,22 +3721,34 @@ end
 
 -- AceGUI flow layout force-shows every child during DoLayout, so optional widgets
 -- must be removed from the child list when inactive.
-local function addConfirmationCheckbox(f)
-  for _, child in ipairs(f.children) do
-    if child == f.CheckBox then return end
+local function confirmationHasCheckbox(f)
+  for _, child in ipairs(f.children or {}) do
+    if child == f.CheckBox then
+      return true
+    end
   end
-  f:AddChild(f.CheckBox, f.OkayButton)
+  return false
 end
 
-local function removeConfirmationCheckbox(f)
-  for index, child in ipairs(f.children) do
+local function confirmationEnsureCheckbox(f)
+  if f.CheckBox and not confirmationHasCheckbox(f) then
+    f:AddChild(f.CheckBox, f.OkayButton)
+  end
+end
+
+local function confirmationRemoveCheckbox(f)
+  for index, child in ipairs(f.children or {}) do
     if child == f.CheckBox then
-      tremove(f.children, index)
+      table.remove(f.children, index)
       f.CheckBox.parent = nil
       break
     end
   end
-  f.CheckBox.frame:Hide()
+  if f.CheckBox then
+    f.CheckBox:SetLabel("")
+    f.CheckBox:SetValue(false)
+    f.CheckBox.frame:Hide()
+  end
 end
 
 ---Creates a generic dialog that pops up when a user wants needs confirmation for an action
@@ -3791,7 +3807,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     MDT:HideAllDialogs()
   end)
   if checkboxText then
-    addConfirmationCheckbox(f)
+    confirmationEnsureCheckbox(f)
     f.CheckBox:SetLabel(checkboxText)
     f.CheckBox:SetValue(checkboxValue)
     f.CheckBox:SetCallback("OnValueChanged", function(widget, callbackName, value)
@@ -3801,9 +3817,7 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   else
     f.CheckBox:SetCallback("OnValueChanged", function()
     end)
-    f.CheckBox:SetLabel("")
-    f.CheckBox:SetValue(false)
-    removeConfirmationCheckbox(f)
+    confirmationRemoveCheckbox(f)
   end
   if buttonText2 then
     f.CancelButton:SetText(buttonText2)

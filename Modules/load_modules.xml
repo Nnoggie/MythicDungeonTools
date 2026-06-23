@@ -9,6 +9,7 @@
 	<Script file='ExternalLinks.lua'/>
 	<Script file='NavigationSidebar.lua'/>
 	<Script file='FocusMarker.lua'/>
+	<Script file='MacroManager.lua'/>
 	<Script file='CombatLogging.lua'/>
 	<Script file='Xalatathmuter.lua'/>
 	<Script file='Settings.lua'/>
