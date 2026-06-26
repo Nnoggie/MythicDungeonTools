@@ -935,8 +935,15 @@ local methods = {
       progressText = string.format("%.2f%%", currentPercent * 100)
     end
     local pullForces = MDT:CountForces(self.index, true)
-    if pullForces > 0 then
-      self.percentageFontString:SetText(progressText)
+    local text = pullForces > 0 and progressText or ""
+    local pullHealth = db.showPullButtonHealth and MDT:SumCurrentPullHealth(self.index) or 0
+    if pullHealth > 0 then
+      local healthText = MDT:FormatEnemyHealth(pullHealth)
+      text = text ~= "" and text.."\n"..healthText or healthText
+    end
+    if text ~= "" then
+      self.percentageFontString:SetText(text)
+      self.percentageFontString:SetHeight(pullForces > 0 and pullHealth > 0 and 20 or 10)
       self.percentageFontString:Show()
     else
       self.percentageFontString:Hide()

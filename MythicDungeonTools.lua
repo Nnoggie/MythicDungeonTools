@@ -159,6 +159,7 @@ local defaultSavedVars = {
     nonFullscreenScale = defaultNonFullscreenScale,
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
+    showPullButtonHealth = false,
     autoPanToPull = true,
     enemyForcesTooltip = 1,
     muteXalatathVoiceLines = false,
@@ -1712,17 +1713,17 @@ end
 function MDT:SumCurrentPullHealth(currentPull)
   currentPull = currentPull or 1000
   local preset = self:GetCurrentPreset()
+  local pull = preset.value.pulls[currentPull]
+  if not pull then return 0 end
+
   local totalHealth = 0
-  for pullIdx, pull in pairs(preset.value.pulls) do
-    if pullIdx == currentPull then
-      for enemyIdx, clones in pairs(pull) do
-        if tonumber(enemyIdx) then
-          for k, v in pairs(clones) do
-            if MDT:IsCloneIncluded(enemyIdx, v) then
-              local health = self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].health
-              totalHealth = totalHealth + health
-            end
-          end
+  for enemyIdx, clones in pairs(pull) do
+    if tonumber(enemyIdx) then
+      for k, v in pairs(clones) do
+        if MDT:IsCloneIncluded(enemyIdx, v) then
+          local data = self.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+          local health = self:CalculateEnemyHealth(data.isBoss or false, data.health, db.currentDifficulty, data.ignoreFortified)
+          totalHealth = totalHealth + health
         end
       end
     end

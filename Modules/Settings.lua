@@ -236,6 +236,16 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
 
+  frame.pullButtonHealthCheckbox = AceGUI:Create("CheckBox")
+  frame.pullButtonHealthCheckbox:SetLabel(L["Show pull health"])
+  frame.pullButtonHealthCheckbox:SetWidth(settingWidth)
+  frame.pullButtonHealthCheckbox:SetValue(db.showPullButtonHealth)
+  frame.pullButtonHealthCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.showPullButtonHealth = value
+    MDT:ReloadPullButtons()
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.pullButtonHealthCheckbox)
+
   frame.autoPanToPullCheckbox = AceGUI:Create("CheckBox")
   frame.autoPanToPullCheckbox:SetLabel(L["Auto pan to selected pull"])
   frame.autoPanToPullCheckbox:SetWidth(settingWidth)
