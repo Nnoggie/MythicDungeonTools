@@ -420,7 +420,13 @@ local methods = {
           MDT:GetCurrentPreset().value.selection = { self.index }
           local changed = MDT:SetMapSublevel(self.index)
           MDT:SetSelectionToPull(self.index)
-          if changed then MDT:UpdateMap() end
+          local shouldAutoPan = MDT:GetDB().autoPanToPull ~= false
+          if changed then
+            if shouldAutoPan then MDT.pendingAutoPanToPull = self.index end
+            MDT:UpdateMap()
+          elseif shouldAutoPan then
+            MDT:PanMapToPull(self.index)
+          end
         end
       end
     end

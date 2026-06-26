@@ -236,6 +236,15 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
 
+  frame.autoPanToPullCheckbox = AceGUI:Create("CheckBox")
+  frame.autoPanToPullCheckbox:SetLabel(L["Auto pan to selected pull"])
+  frame.autoPanToPullCheckbox:SetWidth(settingWidth)
+  frame.autoPanToPullCheckbox:SetValue(db.autoPanToPull ~= false)
+  frame.autoPanToPullCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.autoPanToPull = value
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.autoPanToPullCheckbox)
+
   frame.enemyForcesTooltipDropdown = AceGUI:Create("Dropdown")
   frame.enemyForcesTooltipDropdown:SetList(enemyForcesTooltipOptions, enemyForcesTooltipOptionOrder)
   frame.enemyForcesTooltipDropdown:SetLabel(L["Enemy forces in tooltips"])

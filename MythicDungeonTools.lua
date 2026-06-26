@@ -159,6 +159,7 @@ local defaultSavedVars = {
     nonFullscreenScale = defaultNonFullscreenScale,
     enemyForcesFormat = 2,
     useForcesCount = false, -- replaces percent in pull buttons with count
+    autoPanToPull = true,
     enemyForcesTooltip = 1,
     muteXalatathVoiceLines = false,
     enemyStyle = 1,
@@ -1524,6 +1525,85 @@ function MDT:ZoomMap(delta)
   MDT:SetPingOffsets(newScale)
 end
 
+function MDT:GetPullMapCenter(pull)
+  local pullData = self:GetCurrentPreset().value.pulls[pull]
+  if not pullData then return end
+
+  local currentSublevel = self:GetCurrentSubLevel()
+  local scale = self:GetScale()
+  local minX, maxX, minY, maxY
+  for enemyIdx, clones in pairs(pullData) do
+    local enemy = tonumber(enemyIdx) and self.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+    if enemy then
+      for _, cloneIdx in pairs(clones) do
+        local clone = enemy.clones[cloneIdx]
+        if clone and (clone.sublevel == currentSublevel or not clone.sublevel) then
+          local x = clone.x * scale
+          local y = clone.y * scale
+          minX = minX and min(minX, x) or x
+          maxX = maxX and max(maxX, x) or x
+          minY = minY and min(minY, y) or y
+          maxY = maxY and max(maxY, y) or y
+        end
+      end
+    end
+  end
+
+  if not minX then return end
+  return (minX + maxX) / 2, (minY + maxY) / 2
+end
+
+function MDT:PanMapToPull(pull)
+  local centerX, centerY = self:GetPullMapCenter(pull)
+  if not centerX then return end
+
+  local scrollFrame = MDTScrollFrame
+  local mapPanelFrame = MDTMapPanelFrame
+  if not scrollFrame or not mapPanelFrame or not scrollFrame:GetLeft() then return end
+
+  self:ZoomMap(0)
+  local zoomScale = mapPanelFrame:GetScale()
+  local targetH = centerX - scrollFrame:GetWidth() / (2 * zoomScale)
+  local targetV = -centerY - scrollFrame:GetHeight() / (2 * zoomScale)
+  targetH = max(0, min(targetH, scrollFrame.maxX or 0))
+  targetV = max(0, min(targetV, scrollFrame.maxY or 0))
+
+  if scrollFrame.autoPanAnimation then
+    scrollFrame.autoPanAnimation:Stop()
+    scrollFrame.autoPanAnimation = nil
+  end
+
+  scrollFrame.panning = false
+  scrollFrame.isFadeOutPanning = false
+
+  local startH = scrollFrame:GetHorizontalScroll()
+  local startV = scrollFrame:GetVerticalScroll()
+  if abs(startH - targetH) < 1 and abs(startV - targetV) < 1 then
+    scrollFrame:SetHorizontalScroll(targetH)
+    scrollFrame:SetVerticalScroll(targetV)
+    return
+  end
+
+  local animationGroup = scrollFrame:CreateAnimationGroup()
+  local animation = animationGroup:CreateAnimation("Animation")
+  animation:SetDuration(0.45)
+  animation:SetSmoothing("OUT")
+  animation:SetScript("OnUpdate", function()
+    local progress = animation:GetSmoothProgress()
+    scrollFrame:SetHorizontalScroll(startH + (targetH - startH) * progress)
+    scrollFrame:SetVerticalScroll(startV + (targetV - startV) * progress)
+  end)
+  animation:SetScript("OnFinished", function()
+    scrollFrame:SetHorizontalScroll(targetH)
+    scrollFrame:SetVerticalScroll(targetV)
+    if scrollFrame.autoPanAnimation == animationGroup then
+      scrollFrame.autoPanAnimation = nil
+    end
+  end)
+  scrollFrame.autoPanAnimation = animationGroup
+  animationGroup:Play()
+end
+
 ---ActivatePullTooltip
 ---
 function MDT:ActivatePullTooltip(pull)
@@ -2262,6 +2342,11 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     MDT:UpdatePresetDropdownTextColor()
     if not framesInitialized then coroutine.yield() end
     if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
+    if MDT.pendingAutoPanToPull then
+      local pull = MDT.pendingAutoPanToPull
+      MDT.pendingAutoPanToPull = nil
+      if db.autoPanToPull ~= false then MDT:PanMapToPull(pull) end
+    end
     MDT:UpdateDungeonDropDown()
     if not framesInitialized then coroutine.yield() end
     MDT:DrawAllPresetObjects()
