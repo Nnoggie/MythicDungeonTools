@@ -654,6 +654,7 @@ local bottomTips = {
   [17] = L["ConnectedTip"],
   [18] = L["EfficiencyScoreTip"],
   [19] = L["ctrlKeyCountTip"],
+  [20] = L["enemyDragToPullTip"],
 }
 
 function MDT:UpdateBottomText()

@@ -4,6 +4,7 @@ end
 local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
+L["enemyDragToPullTip"] = "Drag enemies on the map to move them into pulls."
 -- MDT
 L["Maps"] = "Maps"
 L["Macros"] = "Macros"
