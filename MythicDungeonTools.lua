@@ -1647,8 +1647,8 @@ function MDT:UpdatePullTooltip(tooltip)
 
           tooltip.topString:SetText(text)
           showData = true
+          break
         end
-        break
       end
       if showData then
         tooltip.topString:Show()
