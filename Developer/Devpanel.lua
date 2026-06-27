@@ -44,13 +44,18 @@ local function syncDevModeCache()
   end
 end
 
-local function positionDevPanel(frame)
+function MDT:PositionDevPanel(frame, maximized)
+  frame = frame or MDT.main_frame
+  if not frame or not frame.devPanel then return end
+  if maximized == nil then maximized = db.maximized end
+
   frame.devPanel:ClearAllPoints()
-  if db.maximized then
+  if maximized then
     frame.devPanel:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, -45)
   else
-    frame.devPanel:SetPoint("TOPRIGHT", frame.topPanel, "TOPLEFT", 0, 0)
+    frame.devPanel:SetPoint("TOPRIGHT", frame.navigationSidebar, "TOPLEFT", 0, 0)
   end
+  if db.devMode then frame.devPanel.frame:Show() end
 end
 
 local function syncDevPanelShowHide(devPanel, frame)
@@ -87,8 +92,7 @@ function MDT:EnableDevMode()
   end
 
   if frame.devPanel then
-    positionDevPanel(frame)
-    frame.devPanel.frame:Show()
+    MDT:PositionDevPanel(frame)
   end
 
   MDT:UpdateMap()
@@ -158,6 +162,7 @@ function MDT:CreateDevPanel(frame)
   db = MDT:GetDB()
   frame.devPanel = AceGUI:Create("TabGroup")
   local devPanel = frame.devPanel
+  devPanel.frame:SetParent(frame)
   devPanel.frame:SetFrameStrata("HIGH")
   devPanel.frame:SetFrameLevel(50)
 
@@ -170,9 +175,9 @@ function MDT:CreateDevPanel(frame)
   )
   devPanel:SetWidth(250)
   devPanel:ClearAllPoints()
-  devPanel:SetPoint("TOPRIGHT", frame.navigationSidebar, "TOPLEFT", 0, 0)
+  MDT:PositionDevPanel(frame)
   devPanel:SetLayout("Flow")
-  devPanel.frame:Hide()
+  if not db.devMode then devPanel.frame:Hide() end
 
   syncDevPanelShowHide(devPanel, frame)
 
@@ -904,7 +909,7 @@ end
 ---Adds a clone at the cursor position to the dungeon enemy table
 ---bound to hotkey and used to add new npcs to the map
 function MDT:AddCloneAtCursorPosition()
-  if not MouseIsOver(MDTScrollFrame) then return end
+  if not MDTScrollFrame:IsMouseOver() then return end
   if currentEnemyIdx then
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentEnemyIdx]
     local cursorx, cursory = MDT:GetCursorPosition()
@@ -927,7 +932,7 @@ end
 ---AddPatrolWaypointAtCursorPosition
 ---Adds a patrol waypoint to the selected enemy
 function MDT:AddPatrolWaypointAtCursorPosition()
-  if not MouseIsOver(MDTScrollFrame) then return end
+  if not MDTScrollFrame:IsMouseOver() then return end
   local currentBlip = MDT:GetCurrentDevmodeBlip()
   if currentBlip then
     local data = MDT.dungeonEnemies[db.currentDungeonIdx][currentBlip.enemyIdx]
@@ -941,13 +946,13 @@ function MDT:AddPatrolWaypointAtCursorPosition()
     --snap onto other waypoints
     local patrolBlips = MDT:GetPatrolBlips()
     for idx, waypoint in pairs(patrolBlips) do
-      if MouseIsOver(waypoint) then
+      if waypoint:IsMouseOver() then
         cursorx = waypoint.x
         cursory = waypoint.y
       end
     end
     --snap onto blip
-    if MouseIsOver(currentBlip) then
+    if currentBlip:IsMouseOver() then
       cursorx = currentBlip.clone.x
       cursory = currentBlip.clone.y
     end

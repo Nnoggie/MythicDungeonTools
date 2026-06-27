@@ -303,7 +303,6 @@ MDT.liveSessionPrefixes = {
   ["note"] = "MDTLiveNote",
   ["preset"] = "MDTLivePreset",
   ["pull"] = "MDTLivePull",
-  ["week"] = "MDTLiveWeek",
   ["free"] = "MDTLiveFree",
   ["bora"] = "MDTLiveBora",
   ["reqPre"] = "MDTLiveReqPre",
@@ -483,24 +482,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         MDT:UpdateProgressbar()
         if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
         MDT:ReloadPullButtons()
-      end
-    end
-  end
-
-  --week
-  if prefix == MDT.liveSessionPrefixes.week then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local week = tonumber(message)
-      if preset.week ~= week then
-        preset.week = week
-        if preset == MDT:GetCurrentPreset() then
-          local affixDropdown = MDT.main_frame.sidePanel.affixDropdown
-          affixDropdown:SetValue(week)
-          MDT:POI_UpdateAll()
-          MDT:UpdateProgressbar()
-          MDT:ReloadPullButtons()
-        end
       end
     end
   end
@@ -740,17 +721,6 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
 end
 
 MDT.displaySendingProgress = displaySendingProgress
-
-function MDT:GetPresetByUid(presetUid)
-  local db = MDT:GetDB()
-  for _, dungeon in pairs(db.presets) do
-    for _, preset in pairs(dungeon) do
-      if preset.uid == presetUid then
-        return preset
-      end
-    end
-  end
-end
 
 ---generates a unique random 11 digit number in base64
 function MDT:GenerateUniqueID(length)

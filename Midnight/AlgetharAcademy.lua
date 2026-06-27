@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AlgetharAcademy"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 460, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 460 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
