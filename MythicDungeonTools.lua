@@ -1570,9 +1570,9 @@ function MDT:PanMapToPull(pull)
   targetH = max(0, min(targetH, scrollFrame.maxX or 0))
   targetV = max(0, min(targetV, scrollFrame.maxY or 0))
 
-  if scrollFrame.autoPanAnimation then
-    scrollFrame.autoPanAnimation:Stop()
-    scrollFrame.autoPanAnimation = nil
+  local animationGroup = scrollFrame.autoPanAnimation
+  if animationGroup and animationGroup:IsPlaying() then
+    animationGroup:Stop()
   end
 
   scrollFrame.panning = false
@@ -1586,23 +1586,30 @@ function MDT:PanMapToPull(pull)
     return
   end
 
-  local animationGroup = scrollFrame:CreateAnimationGroup()
-  local animation = animationGroup:CreateAnimation("Animation")
-  animation:SetDuration(0.45)
-  animation:SetSmoothing("OUT")
-  animation:SetScript("OnUpdate", function()
-    local progress = animation:GetSmoothProgress()
-    scrollFrame:SetHorizontalScroll(startH + (targetH - startH) * progress)
-    scrollFrame:SetVerticalScroll(startV + (targetV - startV) * progress)
-  end)
-  animation:SetScript("OnFinished", function()
-    scrollFrame:SetHorizontalScroll(targetH)
-    scrollFrame:SetVerticalScroll(targetV)
-    if scrollFrame.autoPanAnimation == animationGroup then
-      scrollFrame.autoPanAnimation = nil
-    end
-  end)
-  scrollFrame.autoPanAnimation = animationGroup
+  local panData = scrollFrame.autoPanAnimationData
+  if not animationGroup then
+    panData = {}
+    animationGroup = scrollFrame:CreateAnimationGroup()
+    local animation = animationGroup:CreateAnimation("Animation")
+    animation:SetDuration(0.45)
+    animation:SetSmoothing("OUT")
+    animation:SetScript("OnUpdate", function()
+      local progress = animation:GetSmoothProgress()
+      scrollFrame:SetHorizontalScroll(panData.startH + (panData.targetH - panData.startH) * progress)
+      scrollFrame:SetVerticalScroll(panData.startV + (panData.targetV - panData.startV) * progress)
+    end)
+    animation:SetScript("OnFinished", function()
+      scrollFrame:SetHorizontalScroll(panData.targetH)
+      scrollFrame:SetVerticalScroll(panData.targetV)
+    end)
+    scrollFrame.autoPanAnimation = animationGroup
+    scrollFrame.autoPanAnimationData = panData
+  end
+
+  panData.startH = startH
+  panData.startV = startV
+  panData.targetH = targetH
+  panData.targetV = targetV
   animationGroup:Play()
 end
 
