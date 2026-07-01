@@ -4,7 +4,7 @@ local L = MDT.L
 local dungeonIndex = 17
 MDT.dungeonList[dungeonIndex] = L["Kings' Rest"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 1289778,
+  teleportId = 1286831,
   iconId = 2011123,
   shortName = L["kingsRestShortName"],
   englishName = "King's Rest",
@@ -16,7 +16,7 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 246 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 699 }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
@@ -32,7 +32,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Animated Guardian",
     ["id"] = 133935,
-    ["count"] = 8,
+    ["count"] = 15,
     ["health"] = 1306442,
     ["scale"] = 1.2,
     ["displayId"] = 83252,
@@ -87,6 +87,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [269935] = {
+        ["magic"] = true,
       },
       [269936] = {
       },
@@ -217,9 +218,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [3] = {
-    ["name"] = "Shadow-Borne Witch Doctor",
+    ["name"] = "Risen Hexer",
     ["id"] = 134174,
-    ["count"] = 5,
+    ["count"] = 20,
     ["health"] = 1152741,
     ["scale"] = 1,
     ["displayId"] = 83371,
@@ -230,8 +231,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [269972] = {
+        ["curse"] = true,
+        ["interruptible"] = true,
       },
       [269973] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -264,7 +268,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [4] = {
     ["name"] = "Shadow-Borne Champion",
     ["id"] = 134158,
-    ["count"] = 6,
+    ["count"] = 25,
     ["health"] = 1229590,
     ["scale"] = 1.2,
     ["displayId"] = 83364,
@@ -277,6 +281,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [269928] = {
       },
       [269976] = {
+        ["enrage"] = true,
       },
     },
     ["clones"] = {
@@ -295,9 +300,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [5] = {
-    ["name"] = "Shadow-Borne Warrior",
+    ["name"] = "Umbral Warrior",
     ["id"] = 134157,
-    ["count"] = 4,
+    ["count"] = 5,
     ["health"] = 768494,
     ["scale"] = 1,
     ["displayId"] = 83363,
@@ -360,7 +365,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["health"] = 5379459,
     ["scale"] = 1,
     ["displayId"] = 84202,
-    ["creatureType"] = "Elemental",
+    ["creatureType"] = "Beast",
     ["level"] = 122,
     ["isBoss"] = true,
     ["encounterID"] = 2165,
@@ -389,7 +394,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [7] = {
     ["name"] = "Skeletal Hunting Raptor",
     ["id"] = 137487,
-    ["count"] = 4,
+    ["count"] = 10,
     ["health"] = 768494,
     ["scale"] = 0.8,
     ["displayId"] = 33733,
@@ -418,7 +423,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [8] = {
     ["name"] = "Queen Patlaa",
     ["id"] = 137486,
-    ["count"] = 4,
+    ["count"] = 25,
     ["health"] = 1229590,
     ["scale"] = 1,
     ["displayId"] = 85287,
@@ -429,6 +434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [270505] = {
+        ["interruptible"] = true,
       },
       [270930] = {
       },
@@ -445,7 +451,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [9] = {
     ["name"] = "King A'akul",
     ["id"] = 137484,
-    ["count"] = 6,
+    ["count"] = 25,
     ["health"] = 1998085,
     ["scale"] = 1,
     ["displayId"] = 85284,
@@ -456,6 +462,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [270865] = {
+        ["poison"] = true,
       },
     },
     ["clones"] = {
@@ -468,9 +475,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [10] = {
-    ["name"] = "Bloodsworn Agent",
+    ["name"] = "Bloodsworn Assassin",
     ["id"] = 137485,
-    ["count"] = 4,
+    ["count"] = 7,
     ["health"] = 768494,
     ["scale"] = 0.7,
     ["displayId"] = 85285,
@@ -522,7 +529,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [11] = {
     ["name"] = "Seneschal M'bara",
     ["id"] = 134251,
-    ["count"] = 4,
+    ["count"] = 10,
     ["health"] = 768494,
     ["scale"] = 1,
     ["displayId"] = 83517,
@@ -533,6 +540,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [270901] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -547,7 +556,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [12] = {
     ["name"] = "Guard Captain Atu",
     ["id"] = 137473,
-    ["count"] = 4,
+    ["count"] = 10,
     ["health"] = 1248802,
     ["scale"] = 1,
     ["displayId"] = 85270,
@@ -561,6 +570,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [270084] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -575,7 +585,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [13] = {
     ["name"] = "King Rahu'ai",
     ["id"] = 134331,
-    ["count"] = 6,
+    ["count"] = 25,
     ["health"] = 1229590,
     ["scale"] = 1,
     ["displayId"] = 83544,
@@ -599,7 +609,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [14] = {
     ["name"] = "King Timalji",
     ["id"] = 137474,
-    ["count"] = 6,
+    ["count"] = 25,
     ["health"] = 1229590,
     ["scale"] = 1,
     ["displayId"] = 85272,
@@ -626,7 +636,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [15] = {
     ["name"] = "Queen Wasi",
     ["id"] = 137478,
-    ["count"] = 6,
+    ["count"] = 25,
     ["health"] = 1229590,
     ["scale"] = 1,
     ["displayId"] = 85274,
@@ -639,16 +649,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [589] = {
       },
       [5116] = {
+        ["interruptible"] = true,
       },
       [186439] = {
       },
       [212792] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [270920] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [270923] = {
+        ["interruptible"] = true,
       },
       [280404] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -663,7 +680,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [16] = {
     ["name"] = "Purification Construct",
     ["id"] = 134739,
-    ["count"] = 10,
+    ["count"] = 25,
     ["health"] = 1844388,
     ["scale"] = 1.2,
     ["displayId"] = 83836,
@@ -745,7 +762,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [17] = {
     ["name"] = "Interment Construct",
     ["id"] = 137969,
-    ["count"] = 6,
+    ["count"] = 15,
     ["health"] = 1536988,
     ["scale"] = 1,
     ["displayId"] = 85677,
@@ -809,9 +826,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [19] = {
-    ["name"] = "Spectral Hex Priest",
+    ["name"] = "Phantom Hex Priest",
     ["id"] = 135204,
-    ["count"] = 4,
+    ["count"] = 7,
     ["health"] = 691644,
     ["scale"] = 1,
     ["displayId"] = 84140,
@@ -828,8 +845,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [270492] = {
+        ["curse"] = true,
+        ["interruptible"] = true,
       },
       [270493] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -866,9 +886,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [20] = {
-    ["name"] = "Spectral Berserker",
+    ["name"] = "Royal Berserker",
     ["id"] = 135167,
-    ["count"] = 4,
+    ["count"] = 22,
     ["health"] = 922193,
     ["scale"] = 1,
     ["displayId"] = 84112,
@@ -890,6 +910,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [270485] = {
       },
       [270487] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -932,9 +953,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [21] = {
-    ["name"] = "Spectral Witch Doctor",
+    ["name"] = "Spectral Shaman",
     ["id"] = 135239,
-    ["count"] = 4,
+    ["count"] = 7,
     ["health"] = 768494,
     ["scale"] = 1,
     ["displayId"] = 84163,
@@ -953,6 +974,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [270497] = {
       },
       [270499] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -983,9 +1005,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [22] = {
-    ["name"] = "Spectral Brute",
+    ["name"] = "Ghostly Brute",
     ["id"] = 135231,
-    ["count"] = 8,
+    ["count"] = 25,
     ["health"] = 1536988,
     ["scale"] = 1,
     ["displayId"] = 85125,
@@ -1113,10 +1135,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [270505] = {
+        ["interruptible"] = true,
       },
       [270506] = {
+        ["interruptible"] = true,
       },
       [270507] = {
+        ["poison"] = true,
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1137,7 +1163,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [24] = {
     ["name"] = "Honored Raptor",
     ["id"] = 135192,
-    ["count"] = 4,
+    ["count"] = 5,
     ["health"] = 768494,
     ["scale"] = 1,
     ["displayId"] = 84133,
@@ -1231,8 +1257,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [267060] = {
       },
       [267273] = {
+        ["poison"] = true,
+        ["interruptible"] = true,
       },
       [267308] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1263,6 +1292,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [266206] = {
       },
       [266231] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {

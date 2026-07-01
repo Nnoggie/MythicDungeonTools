@@ -287,12 +287,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["magic"] = true,
       },
       [1249818] = {
+        ["interruptible"] = true,
       },
       [1252218] = {
       },
       [1277451] = {
       },
       [1278882] = {
+        ["interruptible"] = true,
       },
       [1285445] = {
         ["interruptible"] = true,
@@ -509,6 +511,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1257124] = {
       },
       [1269283] = {
+        ["interruptible"] = true,
       },
       [1282950] = {
       },
@@ -841,7 +844,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1281637] = {
       },
-      [1264295] = {},
+      [1264295] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -901,6 +906,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1252417] = {
       },
       [1252429] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1207,6 +1213,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 0,
     ["spells"] = {
       [1250553] = {
+        ["interruptible"] = true,
       },
       [1251626] = {
       },
@@ -1336,6 +1343,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1257268] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1368,7 +1376,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [22] = {
-    ["name"] = "Null Guardian",
+    ["name"] = "Dreadflail",
     ["id"] = 251024,
     ["count"] = 0,
     ["health"] = 556910,
@@ -1397,7 +1405,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [23] = {
-    ["name"] = "Wretched Supplicant",
+    ["name"] = "Grand Nullifier",
     ["id"] = 251031,
     ["count"] = 0,
     ["health"] = 326286,

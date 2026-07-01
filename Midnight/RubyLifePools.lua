@@ -4,7 +4,7 @@ local L = MDT.L
 local dungeonIndex = 42
 MDT.dungeonList[dungeonIndex] = L["RubyLifePools"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 1289780,
+  teleportId = 393256,
   shortName = L["rubyLifePoolsShortName"],
   englishName = "Ruby Life Pools",
   mapID = 399
@@ -67,12 +67,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [2] = {
-    ["name"] = "Flashfrost Earthshaper",
+    ["name"] = "Deepstone Earthshaper",
     ["id"] = 187969,
     ["count"] = 10,
     ["health"] = 6713011,
     ["scale"] = 1,
-    ["displayId"] = 107409,
+    ["displayId"] = 102955,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
     ["characteristics"] = {
@@ -158,7 +158,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [3] = {
-    ["name"] = "Primal Terrasentry",
+    ["name"] = "Earthbound Guardian",
     ["id"] = 188011,
     ["count"] = 10,
     ["health"] = 6713011,
@@ -273,16 +273,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [371887] = {
       },
       [371984] = {
+        ["interruptible"] = true,
       },
       [372565] = {
       },
       [372568] = {
       },
       [372743] = {
+        ["interruptible"] = true,
       },
       [372749] = {
+        ["magic"] = true,
       },
       [384933] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -356,7 +360,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 1,
     ["health"] = 2315989,
     ["scale"] = 1,
-    ["displayId"] = 102140,
+    ["displayId"] = 110633,
     ["creatureType"] = "Dragonkin",
     ["level"] = 70,
     ["characteristics"] = {
@@ -379,6 +383,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [372683] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -758,6 +763,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [372794] = {
       },
       [372796] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -787,6 +793,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [372808] = {
+        ["interruptible"] = true,
       },
       [372851] = {
       },
@@ -848,6 +855,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [373869] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [378968] = {
       },
@@ -1027,6 +1036,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [392640] = {
       },
       [392641] = {
+        ["magic"] = true,
       },
       [392642] = {
       },
@@ -1072,10 +1082,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [384194] = {
+        ["interruptible"] = true,
       },
       [384197] = {
+        ["interruptible"] = true,
       },
       [385063] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1191,7 +1204,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [12] = {
-    ["name"] = "Primalist Flamedancer",
+    ["name"] = "Ashseer Flamelasher",
     ["id"] = 190206,
     ["count"] = 10,
     ["health"] = 7384312,
@@ -1220,6 +1233,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [373972] = {
+        ["magic"] = true,
       },
       [373973] = {
       },
@@ -1278,7 +1292,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [13] = {
-    ["name"] = "Primalist Shockcaster",
+    ["name"] = "Ruinous Stormbringer",
     ["id"] = 195119,
     ["count"] = 14,
     ["health"] = 10740817,
@@ -1292,6 +1306,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [385310] = {
+        ["interruptible"] = true,
       },
       [385311] = {
       },
@@ -1417,7 +1432,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 10,
     ["health"] = 6713011,
     ["scale"] = 1,
-    ["displayId"] = 107116,
+    ["displayId"] = 110964,
     ["creatureType"] = "Humanoid",
     ["level"] = 70,
     ["characteristics"] = {
@@ -1537,6 +1552,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [391031] = {
+        ["magic"] = true,
       },
       [392398] = {
       },
@@ -1699,7 +1715,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 16,
     ["health"] = 10740817,
     ["scale"] = 1,
-    ["displayId"] = 102868,
+    ["displayId"] = 110967,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
     ["characteristics"] = {
@@ -1714,6 +1730,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [392574] = {
       },
       [392576] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1739,7 +1756,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 16,
     ["health"] = 10740817,
     ["scale"] = 1,
-    ["displayId"] = 102888,
+    ["displayId"] = 110969,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
     ["characteristics"] = {
@@ -1748,10 +1765,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [392451] = {
+        ["interruptible"] = true,
       },
       [392452] = {
       },
       [392454] = {
+        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -1777,7 +1796,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 40,
     ["health"] = 20139032,
     ["scale"] = 1,
-    ["displayId"] = 102943,
+    ["displayId"] = 110966,
     ["creatureType"] = "Humanoid",
     ["level"] = 71,
     ["characteristics"] = {
@@ -1796,6 +1815,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [392574] = {
       },
       [392924] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1834,6 +1855,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [381514] = {
       },
       [381515] = {
+        ["magic"] = true,
       },
       [381516] = {
       },

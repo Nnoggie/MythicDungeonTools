@@ -4,7 +4,7 @@ local L = MDT.L
 local dungeonIndex = 20
 MDT.dungeonList[dungeonIndex] = L["Temple of Sethraliss"]
 MDT.mapInfo[dungeonIndex] = {
-  teleportId = 1289782,
+  teleportId = 1286828,
   iconId = 2011143,
   shortName = L["templeOfSethralisShortName"],
   englishName = "Temple of Sethraliss",
@@ -30,7 +30,7 @@ MDT.mapPOIs[dungeonIndex] = {};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
-    ["name"] = "Sandswept Marksman",
+    ["name"] = "Sandswept Hunter",
     ["id"] = 134600,
     ["count"] = 4,
     ["health"] = 768495,
@@ -57,10 +57,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [209859] = {
       },
       [264574] = {
+        ["interruptible"] = true,
       },
       [272670] = {
       },
       [273563] = {
+        ["poison"] = true,
+        ["interruptible"] = true,
       },
       [277242] = {
       },
@@ -169,7 +172,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [2] = {
-    ["name"] = "Krolusk Pup",
+    ["name"] = "Barbed Krolusk",
     ["id"] = 134616,
     ["count"] = 2,
     ["health"] = 461097,
@@ -272,7 +275,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [3] = {
-    ["name"] = "Charged Dust Devil",
+    ["name"] = "Storm Adept",
     ["id"] = 134990,
     ["count"] = 4,
     ["health"] = 768495,
@@ -296,8 +299,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [209859] = {
       },
       [265968] = {
+        ["interruptible"] = true,
       },
       [268703] = {
+        ["interruptible"] = true,
       },
       [277564] = {
       },
@@ -673,7 +678,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [6] = {
-    ["name"] = "Krolusk Hatchling",
+    ["name"] = "Rogue Krolusk",
     ["id"] = 134617,
     ["count"] = 1,
     ["health"] = 5631,
@@ -772,10 +777,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [263257] = {
       },
       [263318] = {
+        ["interruptible"] = true,
       },
       [263371] = {
       },
       [263775] = {
+        ["interruptible"] = true,
       },
       [263778] = {
       },
@@ -836,7 +843,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [9] = {
-    ["name"] = "Scaled Krolusk Rider",
+    ["name"] = "Sand-Sworn Rider",
     ["id"] = 134629,
     ["count"] = 6,
     ["health"] = 1229592,
@@ -861,10 +868,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [262046] = {
       },
       [272657] = {
+        ["poison"] = true,
       },
       [272658] = {
       },
       [272659] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [277564] = {
       },
@@ -1094,7 +1104,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [10] = {
-    ["name"] = "Venomous Ophidian",
+    ["name"] = "Poisonous Viper",
     ["id"] = 135562,
     ["count"] = 2,
     ["health"] = 307398,
@@ -1115,6 +1125,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [209859] = {
       },
       [267027] = {
+        ["poison"] = true,
+        ["interruptible"] = true,
       },
       [277564] = {
       },
@@ -1135,7 +1147,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [11] = {
-    ["name"] = "Sand-Crusted Striker",
+    ["name"] = "Lightning Serpent",
     ["id"] = 135846,
     ["count"] = 2,
     ["health"] = 307398,
@@ -1176,7 +1188,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [12] = {
-    ["name"] = "Scaled Krolusk Tamer",
+    ["name"] = "Dutiful Tamer",
     ["id"] = 139422,
     ["count"] = 6,
     ["health"] = 1229592,
@@ -1195,6 +1207,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [272658] = {
       },
       [272659] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [277564] = {
       },
@@ -1208,7 +1222,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [13] = {
-    ["name"] = "Mature Krolusk",
+    ["name"] = "Krolusk Matriarch",
     ["id"] = 134686,
     ["count"] = 4,
     ["health"] = 768495,
@@ -1249,7 +1263,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [14] = {
-    ["name"] = "Faithless Tender",
+    ["name"] = "Faithless Subjugator",
     ["id"] = 134364,
     ["count"] = 4,
     ["health"] = 768495,
@@ -1276,10 +1290,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [267237] = {
       },
       [269896] = {
+        ["magic"] = true,
       },
       [272699] = {
+        ["poison"] = true,
       },
       [272700] = {
+        ["interruptible"] = true,
       },
       [277242] = {
       },
@@ -1325,7 +1342,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [15] = {
-    ["name"] = "Crazed Incubator",
+    ["name"] = "Brood Alchemist",
     ["id"] = 139425,
     ["count"] = 4,
     ["health"] = 768495,
@@ -1349,8 +1366,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [272696] = {
       },
       [272698] = {
+        ["interruptible"] = true,
       },
       [272699] = {
+        ["poison"] = true,
       },
       [273995] = {
       },
@@ -1402,6 +1421,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["spells"] = {
       [263912] = {
+        ["poison"] = true,
       },
       [263914] = {
       },
@@ -1436,8 +1456,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [265911] = {
       },
       [265912] = {
+        ["magic"] = true,
       },
       [269129] = {
+        ["magic"] = true,
       },
       [277564] = {
       },
@@ -1493,8 +1515,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [269116] = {
       },
       [269129] = {
+        ["magic"] = true,
       },
       [272820] = {
+        ["interruptible"] = true,
       },
       [272821] = {
       },
@@ -1524,7 +1548,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [19] = {
-    ["name"] = "Static-charged Dervish",
+    ["name"] = "Static-Charged Anomaly",
     ["id"] = 134691,
     ["count"] = 4,
     ["health"] = 768495,
@@ -1640,13 +1664,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [21] = {
-    ["name"] = "Eye of Sethraliss",
+    ["name"] = "Arcane Eye",
     ["id"] = 68819,
     ["count"] = 12,
     ["health"] = 0,
     ["scale"] = 2,
     ["displayId"] = 46941,
-    ["creatureType"] = "Unknown",
+    ["creatureType"] = "Wild Pet",
     ["level"] = 0,
     ["clones"] = {
       [1] = {
@@ -1664,7 +1688,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [22] = {
-    ["name"] = "Hoodoo Hexer",
+    ["name"] = "Twisted Hexxer",
     ["id"] = 136250,
     ["count"] = 4,
     ["health"] = 768495,
@@ -1679,8 +1703,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [209859] = {
       },
       [268013] = {
+        ["interruptible"] = true,
       },
       [274642] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1742,8 +1768,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [209859] = {
       },
       [268008] = {
+        ["magic"] = true,
+        ["interruptible"] = true,
       },
       [268061] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1775,6 +1804,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [269670] = {
       },
       [279000] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1788,7 +1818,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [25] = {
     ["name"] = "Spark Channeler",
     ["id"] = 139110,
-    ["count"] = 11,
+    ["count"] = 6,
     ["health"] = 1229590,
     ["scale"] = 1.4,
     ["displayId"] = 83553,
@@ -1803,6 +1833,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [267483] = {
       },
       [272820] = {
+        ["interruptible"] = true,
       },
       [272821] = {
       },
@@ -1832,6 +1863,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [209859] = {
       },
       [268007] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
