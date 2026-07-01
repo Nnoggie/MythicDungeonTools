@@ -321,7 +321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [3] = {
-    ["name"] = "Arcane Ravager",
+    ["name"] = "Vicious Ravager",
     ["id"] = 196671,
     ["count"] = 15,
     ["health"] = 3645228,
