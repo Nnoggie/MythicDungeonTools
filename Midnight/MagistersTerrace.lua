@@ -885,7 +885,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [7] = {
-    ["name"] = "Dreaded Voidwalker",
+    ["name"] = "Dreadful Voidwalker",
     ["id"] = 234064,
     ["count"] = 7,
     ["health"] = 1670730,
@@ -1084,7 +1084,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [10] = {
-    ["name"] = "Void Infuser",
+    ["name"] = "Void Terror",
     ["id"] = 249086,
     ["count"] = 7,
     ["health"] = 1366961,
@@ -1371,7 +1371,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["count"] = 1,
     ["health"] = 303769,
     ["scale"] = 0.4,
-    ["displayId"] = 16217,
+    ["displayId"] = 144230,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
@@ -1869,6 +1869,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1255187] = {
         ["magic"] = true,
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {

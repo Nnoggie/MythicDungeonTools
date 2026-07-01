@@ -1,4 +1,4 @@
-## Interface: 120007, 120001, 50504
+## Interface: 120100, 120007, 50504
 # WOW_INTERFACE_TARGETS: mainline-beta, mainline-test, mainline, mists
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
@@ -16,7 +16,7 @@
 ## Notes-koKR: Tool for planning and optimizing Mythic+ dungeon runs
 ## Notes-zhCN: 规划和优化大秘境地下城运行的工具
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
-## OptionalDeps: !!AddonLocale, LibStub, Ace3, WagoAnalytics
+## OptionalDeps: !!AddonLocale, LibStub, Ace3
 ## SavedVariables: MythicDungeonToolsDB
 ## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\MDTFull
 
@@ -28,6 +28,8 @@ AceGUIWidgets\load_widgets.xml
 Utility.lua
 MythicDungeonTools.lua
 Modules\load_modules.xml
+#@do-not-package@
 Developer\load_developer.xml
+#@end-do-not-package@
 Midnight\load_midnight.xml [AllowLoadGameType mainline]
 MistsOfPandaria\load_mop.xml [AllowLoadGameType mists]

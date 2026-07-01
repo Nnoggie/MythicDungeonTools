@@ -496,10 +496,6 @@ function MDT:GetEnemyInfoEnemyIdx()
   return lastEnemyIdx
 end
 
-function MDT:GetEnemyInfoSpellBlacklist()
-  return spellBlacklist
-end
-
 function MDT:UpdateEnemyInfoFrame(enemyIdx)
   if not enemyIdx then enemyIdx = lastEnemyIdx end
   lastEnemyIdx = enemyIdx
@@ -650,8 +646,11 @@ function MDT:UpdateEnemyInfoData(enemyIdx)
   f.enemyDataContainer.stealthDetectCheckBox.defaultValue = data.stealthDetect
 
   local level = db.currentDifficulty
-  local fortifiedTyrannical = MDT:IsCurrentPresetFortified() and L["Fortified"] or L["Tyrannical"]
-  f.enemyDataContainer.healthEditBox:SetLabel(string.format(L["Enemy Info NPC Health"], level, fortifiedTyrannical))
+  local healthLabel = string.format(L["Enemy Info NPC Health Level"], level)
+  if level >= 10 then
+    healthLabel = string.format(L["Enemy Info NPC Health"], level, L["Fortified"].."/"..L["Tyrannical"])
+  end
+  f.enemyDataContainer.healthEditBox:SetLabel(healthLabel)
 end
 
 function MDT:ShowEnemyInfoFrame(blip)

@@ -3,7 +3,7 @@ local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local MDT = MDT
 local L = MDT.L
-local tinsert, SetPortraitTextureFromCreatureDisplayID, MouseIsOver, next = table.insert, SetPortraitTextureFromCreatureDisplayID, MouseIsOver, next
+local tinsert, SetPortraitTextureFromCreatureDisplayID, next = table.insert, SetPortraitTextureFromCreatureDisplayID, next
 
 local width, height = 248, 32
 local maxPortraitCount = 7
@@ -342,7 +342,7 @@ local methods = {
     end
 
     function self.callbacks.OnClickNormal(_, mouseButton, force)
-      if not force and not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+      if not force and not MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame:IsMouseOver() then return end
 
       if (IsControlKeyDown()) then
         if (mouseButton == "LeftButton") then
@@ -420,7 +420,13 @@ local methods = {
           MDT:GetCurrentPreset().value.selection = { self.index }
           local changed = MDT:SetMapSublevel(self.index)
           MDT:SetSelectionToPull(self.index)
-          if changed then MDT:UpdateMap() end
+          local shouldAutoPan = MDT:GetDB().autoPanToPull ~= false
+          if changed then
+            if shouldAutoPan then MDT.pendingAutoPanToPull = self.index end
+            MDT:UpdateMap()
+          elseif shouldAutoPan then
+            MDT:PanMapToPull(self.index)
+          end
         end
       end
     end
@@ -921,7 +927,7 @@ local methods = {
     local db = MDT:GetDB()
     local currentForces = MDT:CountForces(self.index)
     local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-    local currentPercent = currentForces / totalForcesMax
+    local currentPercent = totalForcesMax > 0 and currentForces / totalForcesMax or 0
     local progressText
     if db.useForcesCount then
       progressText = string.format("%3d", currentForces)
@@ -929,8 +935,15 @@ local methods = {
       progressText = string.format("%.2f%%", currentPercent * 100)
     end
     local pullForces = MDT:CountForces(self.index, true)
-    if pullForces > 0 then
-      self.percentageFontString:SetText(progressText)
+    local text = pullForces > 0 and progressText or ""
+    local pullHealth = db.showPullButtonHealth and MDT:SumCurrentPullHealth(self.index) or 0
+    if pullHealth > 0 then
+      local healthText = MDT:FormatEnemyHealth(pullHealth)
+      text = text ~= "" and text.."\n"..healthText or healthText
+    end
+    if text ~= "" then
+      self.percentageFontString:SetText(text)
+      self.percentageFontString:SetHeight(pullForces > 0 and pullHealth > 0 and 20 or 10)
       self.percentageFontString:Show()
     else
       self.percentageFontString:Hide()
