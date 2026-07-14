@@ -518,10 +518,9 @@ local function announceFocusMarker()
   local markerIndex = tonumber(settings.lastMarker)
   if not markerIndex or markerIndex == 0 then return end
 
-  local markerName = markerNames[markerIndex]
-  if not markerName then return end
+  if markerIndex < 1 or markerIndex > 8 then return end
 
-  C_ChatInfo.SendChatMessage(("My Focus Marker is {%s}"):format(markerName), "PARTY")
+  C_ChatInfo.SendChatMessage(string.format(L["focusMarkerChatAnnouncement"], markerIndex), "PARTY")
 end
 
 local eventFrame = CreateFrame("Frame")

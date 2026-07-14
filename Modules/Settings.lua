@@ -286,6 +286,16 @@ function MDT:MakeSettingsFrame(frame)
     frame.settingsGeneralColumn:AddChild(frame.muteXalatathVoiceLinesCheckbox)
   end
 
+  frame.announceDungeonResetCheckbox = AceGUI:Create("CheckBox")
+  frame.announceDungeonResetCheckbox:SetLabel(L["announceDungeonReset"])
+  frame.announceDungeonResetCheckbox:SetWidth(settingWidth)
+  frame.announceDungeonResetCheckbox:SetValue(db.announceDungeonReset == true)
+  frame.announceDungeonResetCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.announceDungeonReset = value
+    if value then MDT:EnableDungeonResetAnnounceHook() end
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.announceDungeonResetCheckbox)
+
   -- Initialize database values if they don't exist
   if db.fadeOutDuringCombat == nil then db.fadeOutDuringCombat = false end
   if db.fadeOutAlpha == nil then db.fadeOutAlpha = 0.5 end

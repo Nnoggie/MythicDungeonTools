@@ -1,7 +1,7 @@
 local MDT = MDT
 
 -- A Schema describes the structure of a table. In it you can define how
--- tables should be exported to Lua. This makes it possible to
+-- lua tables should be exported to their string representation. This makes it possible to
 -- export a table to Lua while keeping the structure of the table consistent
 -- even if the table is consisting of unindexed tables.
 

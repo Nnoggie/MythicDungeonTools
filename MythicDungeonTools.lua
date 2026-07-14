@@ -163,6 +163,7 @@ local defaultSavedVars = {
     autoPanToPull = true,
     enemyForcesTooltip = 1,
     muteXalatathVoiceLines = false,
+    announceDungeonReset = false,
     enemyStyle = 1,
     currentDifficulty = 10,
     xoffset = -80,
@@ -265,6 +266,7 @@ do
       end
       -- Initialize fade frame for combat transparency
       MDT:InitializeFadeFrame()
+      if db.announceDungeonReset then MDT:EnableDungeonResetAnnounceHook() end
       eventFrame:UnregisterEvent("ADDON_LOADED")
     end
   end
