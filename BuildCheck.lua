@@ -1,4 +1,7 @@
 local addonName, MDT = ...
+_G["MDT"] = MDT
+MDT.L = {}
+
 local AceGUI = LibStub("AceGUI-3.0")
 local L
 
