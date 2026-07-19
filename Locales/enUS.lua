@@ -3261,7 +3261,7 @@ L["Forgemaster Gorek"] = "Forgemaster Gorek"
 L["Forgewrought Monstrosity"] = "Forgewrought Monstrosity"
 L["Neltharus"] = "Neltharus"
 
-L["MoP Challenge Mode"] = "MoP Challenge Mode"
+L["Mists of Pandaria"] = "Mists of Pandaria"
 L["Gate of the Setting Sun"] = "Gate of the Setting Sun"
 L["gateOfTheSettingSunShortName"] = "GATE"
 L["Gate Watch Tower"] = "Gate Watch Tower"
