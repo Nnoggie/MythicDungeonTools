@@ -262,6 +262,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.enemyForcesTooltipDropdown:SetValue(db.enemyForcesTooltip)
   frame.enemyForcesTooltipDropdown:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.enemyForcesTooltip = value
+    if value ~= 1 then MDT:EnableEnemyForcesTooltip() end
   end)
   frame.settingsGeneralColumn:AddChild(frame.enemyForcesTooltipDropdown)
 

@@ -80,6 +80,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
 function MDT:InitializeRuntime()
   db = MDT:InitializeSavedVariables()
   if not db then return end
+  if db.enemyForcesTooltip ~= 1 then MDT:EnableEnemyForcesTooltip() end
   ---@diagnostic disable-next-line: param-type-mismatch
   minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
   if not db.minimap.hide then MDT:ShowMinimapButton() end
