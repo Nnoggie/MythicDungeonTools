@@ -1,5 +1,6 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file='InitTests.lua'/>
+	<Script file='TestSavedVariables.lua'/>
 	<Script file='TestOpenAddon.lua'/>
 	<Script file='TestImport.lua'/>
 	<Script file='TestResize.lua'/>
