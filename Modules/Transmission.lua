@@ -417,7 +417,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     local preset = MDT:StringToTable(message, false)
-    if not MDT:ValidateImportPreset(preset) then return end
+    if not MDT:ValidateImportPreset(preset, true) then return end
     local presetName = preset.text
     local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     if not dungeon then

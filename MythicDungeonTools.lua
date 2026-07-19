@@ -2581,7 +2581,7 @@ function MDT:MakePresetCreationFrame(frame)
   frame.presetCreationFrame:Hide()
 end
 
-function MDT:ValidateImportPreset(preset)
+function MDT:ValidateImportPreset(preset, allowKnownDungeon)
   if type(preset) ~= "table" then return false end
   if not preset.text then return false end
   if not preset.value then return false end
@@ -2592,7 +2592,10 @@ function MDT:ValidateImportPreset(preset)
   if not preset.value.currentSublevel then return false end
   if not preset.value.pulls then return false end
   if type(preset.value.pulls) ~= "table" then return false end
-  if not MDT.dungeonList[preset.value.currentDungeonIdx] then return false end
+  if not MDT.dungeonList[preset.value.currentDungeonIdx] and
+      not (allowKnownDungeon and MDT.knownDungeons and MDT.knownDungeons[preset.value.currentDungeonIdx]) then
+    return false
+  end
   return true
 end
 
