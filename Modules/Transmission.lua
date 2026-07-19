@@ -417,6 +417,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     local preset = MDT:StringToTable(message, false)
+    if not MDT:ValidateImportPreset(preset) then return end
     local presetName = preset.text
     local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     if not dungeon then
@@ -434,16 +435,14 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     MDT.transmissionCache[fullName][displayName] = preset
     --live session preset
     if MDT.liveSessionActive and MDT.liveSessionAcceptingPreset and preset.uid == MDT.livePresetUID then
-      if MDT:ValidateImportPreset(preset) then
-        MDT:ImportPreset(preset, true)
-        MDT.liveSessionAcceptingPreset = false
-        MDT.main_frame.SendingStatusBar:Hide()
-        if MDT.main_frame.LoadingSpinner then
-          MDT.main_frame.LoadingSpinner:Hide()
-          MDT.main_frame.LoadingSpinner.Anim:Stop()
-        end
-        MDT.liveSessionRequested = false
+      MDT:ImportPreset(preset, true)
+      MDT.liveSessionAcceptingPreset = false
+      MDT.main_frame.SendingStatusBar:Hide()
+      if MDT.main_frame.LoadingSpinner then
+        MDT.main_frame.LoadingSpinner:Hide()
+        MDT.main_frame.LoadingSpinner.Anim:Stop()
       end
+      MDT.liveSessionRequested = false
     end
   end
 
