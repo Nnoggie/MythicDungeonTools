@@ -261,6 +261,7 @@ function MDT:RegisterErrorHandledFunctions()
     ["AddPull"] = true,
     ["ClearPull"] = true,
     ["ShowInterfaceInternal"] = true,
+    ["InitializeMainFrame"] = true,
     ["UpdateToDungeon"] = true,
     ["UpdateMap"] = true,
     ["MovePullUp"] = true,
