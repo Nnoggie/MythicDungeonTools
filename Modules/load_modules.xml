@@ -9,6 +9,7 @@
 	<Script file='PullOutlines.lua'/>
 	<Script file='EnemyInfo.lua'/>
 	<Script file='Pointsofinterest.lua'/>
+	<Script file='PresetObjects.lua'/>
 	<Script file='Toolbar.lua'/>
 	<Script file='Transmission.lua'/>
 	<Script file='ExternalLinks.lua'/>
