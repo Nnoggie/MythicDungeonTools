@@ -2,6 +2,7 @@
 	<Script file='MainFrame.lua'/>
 	<Script file='MapView.lua'/>
 	<Script file='Presets.lua'/>
+	<Script file='Pulls.lua'/>
 	<Script file='FramePools.lua'/>
 	<Include file='DungeonEnemies.xml'/>
 	<Script file='PullOutlines.lua'/>
