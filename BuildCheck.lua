@@ -4,7 +4,7 @@ local L
 
 function MDT:IsRetail()
   local gameVersion = select(4, GetBuildInfo())
-  return gameVersion >= 110000
+  return gameVersion >= 120000
 end
 
 function MDT:IsCompatibleVersion()
