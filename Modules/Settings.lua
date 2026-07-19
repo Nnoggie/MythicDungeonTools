@@ -296,10 +296,6 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.announceDungeonResetCheckbox)
 
-  -- Initialize database values if they don't exist
-  if db.fadeOutDuringCombat == nil then db.fadeOutDuringCombat = false end
-  if db.fadeOutAlpha == nil then db.fadeOutAlpha = 0.5 end
-
   frame.fadeOutCheckbox = AceGUI:Create("CheckBox")
   frame.fadeOutCheckbox:SetLabel(L["Make window transparent in combat"])
   frame.fadeOutCheckbox:SetWidth(settingWidth)
