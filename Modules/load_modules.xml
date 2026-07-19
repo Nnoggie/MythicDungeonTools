@@ -3,6 +3,7 @@
 	<Script file='MapView.lua'/>
 	<Script file='Presets.lua'/>
 	<Script file='Pulls.lua'/>
+	<Script file='PresetDialogs.lua'/>
 	<Script file='FramePools.lua'/>
 	<Include file='DungeonEnemies.xml'/>
 	<Script file='PullOutlines.lua'/>
