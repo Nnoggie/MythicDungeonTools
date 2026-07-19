@@ -15,7 +15,7 @@ local minNonFullscreenScale = 0.9
 local sidePanelWidth = 251
 local panelHeight = 30
 local screenEdgePadding = 10
-local framesInitialized, initFrames
+local framesInitialized
 local frameInitializedCallbacks = {}
 
 local AceGUI = LibStub("AceGUI-3.0")
@@ -72,7 +72,7 @@ function MDT:ShowInterfaceInternal(force)
     return
   end
   MDT:DisplayErrors()
-  if not framesInitialized then initFrames() end
+  if not framesInitialized then MDT:StartMainFrameInitialization() end
   if not framesInitialized then return end
   if self.main_frame:IsShown() and not force then
     MDT:HideInterface()
@@ -947,11 +947,11 @@ end
 function MDT:ResetMainFramePos(soft)
   MDT:Async(function()
     --soft reset just redraws the window with existing coordinates from db
-    if not framesInitialized then initFrames() end
+    if not framesInitialized then MDT:StartMainFrameInitialization() end
     local f = self.main_frame
     if not soft then
       db.maximized = false
-      if not framesInitialized then initFrames() end
+      if not framesInitialized then MDT:StartMainFrameInitialization() end
       if not framesInitialized then return end
       db.xoffset = defaultSavedVars.global.xoffset
       db.yoffset = defaultSavedVars.global.yoffset
@@ -983,25 +983,7 @@ function MDT:HideSpinner()
   MDT.initSpinner.Anim:Stop()
 end
 
-local initStarted
-function initFrames()
-  if initStarted then return end
-  initStarted = true
-  for _, module in pairs(MDT.modules) do
-    if module.OnInitialize then
-      module:OnInitialize()
-    end
-  end
-  MDT:RegisterErrorHandledFunctions()
-  MDT:CheckSeenDungeonLists()
-
-  -- request spell info for all teleports, so icons are instantly working
-  for _, mapInfo in pairs(MDT.mapInfo) do
-    if mapInfo.teleportId then
-      C_Spell.RequestLoadSpellData(mapInfo.teleportId)
-    end
-  end
-
+function MDT:InitializeMainFrame()
   local initSpinner = CreateFrame("Button", "MDTInitSpinner", UIParent, "LoadingSpinnerTemplate")
   initSpinner.BackgroundFrame.Background:SetVertexColor(0, 1, 0, 1)
   initSpinner.AnimFrame.Circle:SetVertexColor(0, 1, 0, 1)

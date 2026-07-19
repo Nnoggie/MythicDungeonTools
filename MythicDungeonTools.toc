@@ -28,6 +28,7 @@ AceGUIWidgets\load_widgets.xml
 Utility.lua
 Core\SavedVariables.lua
 MythicDungeonTools.lua
+Core\Lifecycle.lua
 Modules\load_modules.xml
 #@do-not-package@
 Developer\load_developer.xml
