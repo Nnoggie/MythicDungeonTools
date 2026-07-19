@@ -7,13 +7,8 @@ function MDT:IsRetail()
   return gameVersion >= 110000
 end
 
-function MDT:IsMop()
-  local gameVersion = select(4, GetBuildInfo())
-  return gameVersion >= 50000 and gameVersion < 60000
-end
-
 function MDT:IsCompatibleVersion()
-  return MDT:IsMop() or MDT:IsRetail()
+  return MDT:IsRetail()
 end
 
 function MDT:ShowFallbackWindow()

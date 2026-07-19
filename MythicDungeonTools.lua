@@ -1136,8 +1136,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.middleLine)
   frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
 
-  local progressBarTemplate = MDT:IsMop() and "TooltipProgressBarTemplate" or "ScenarioProgressBarTemplate"
-  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, progressBarTemplate)
+  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioProgressBarTemplate")
   frame.sidePanel.ProgressBar:Show()
   frame.sidePanel.ProgressBar:ClearAllPoints()
   frame.sidePanel.ProgressBar:SetPoint("TOP", frame.sidePanel.WidgetGroup.frame, "BOTTOM", -10, 5)
