@@ -51,6 +51,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1306911] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -103,6 +104,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1307526] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -231,6 +233,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307602] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -319,6 +322,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1306383] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -470,6 +474,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1306381] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -587,6 +592,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1306338] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -737,6 +743,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1307571] = {
         ["poison"] = true,
       },
+      [1306856] = {},
     },
     ["clones"] = {
       [1] = {
@@ -797,6 +804,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1309416] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -830,6 +838,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307269] = {
       },
+      [1294568] = {},
+      [1294570] = {},
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1069,6 +1080,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1294859] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1101,10 +1113,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [317898] = {
-      },
       [1308518] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1277,6 +1288,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307915] = {
       },
+      [1296050] = {},
+      [1296216] = {},
+      [1296219] = {},
+      [1307703] = {},
+      [1307921] = {},
+      [1309522] = {},
+      [1310413] = {},
+      [1310378] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1324,6 +1343,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300083] = {
       },
+      [1287798] = {},
+      [1300503] = {},
+      [1300686] = {},
+      [1305368] = {
+        ["poison"] = true,
+      },
+      [1305393] = {},
+      [1310357] = {},
+      [1310547] = {},
+      [1310974] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1371,6 +1400,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1301508] = {
       },
+      [1301217] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1402,6 +1432,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1305393] = {
       },
+      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1498,6 +1529,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300698] = {
       },
+      [1305393] = {},
     },
     ["clones"] = {
       [1] = {
