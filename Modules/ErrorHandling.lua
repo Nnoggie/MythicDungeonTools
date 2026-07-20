@@ -167,7 +167,7 @@ function MDT:DisplayErrors(force)
     errorFrame:AddChild(errorFrame.errorBox)
     errorFrame:AddChild(errorFrame.errorBoxCopyButton)
     errorFrame:AddChild(errorFrame.hardResetButton)
-    if MDT.main_frame then
+    MDT:RunAfterFramesInitialized(function()
       --error button
       local errorButton = AceGUI:Create("Icon")
       errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.25, 0.5)
@@ -187,7 +187,7 @@ function MDT:DisplayErrors(force)
       local externalButtonGroup = MDT.main_frame.externalButtonGroup
       externalButtonGroup:AddChild(errorButton)
       MDT:FixAceGUIShowHide(externalButtonGroup, MDT.main_frame)
-    end
+    end)
   end
 
   for _, error in ipairs(caughtErrors) do
