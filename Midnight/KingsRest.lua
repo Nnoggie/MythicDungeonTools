@@ -1231,7 +1231,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [41] = {
-    ["name"] = "未完成的木乃伊",
+    ["name"] = "Half-Finished Mummy",
     ["id"] = 273050,
     ["count"] = 0,
     ["health"] = 10000,
