@@ -10,7 +10,7 @@ local function initializeDB()
 end
 
 function MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
-  local presetSize = self:GetPresetSize(false, 5)
+  local presetSize = #self:TableToString(self:GetCurrentPreset())
   if presetSize > 3500 then
     local timeToSend = 1 + math.max(presetSize - 2550, 0) / 255
     local prompt = string.format(L["LargePresetWarning"], timeToSend, "\n", "\n", "\n")

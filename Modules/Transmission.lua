@@ -1,219 +1,42 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
-local Compresser = LibStub:GetLibrary("LibCompress")
-local Encoder = Compresser:GetAddonEncodeTable()
-local Serializer = LibStub:GetLibrary("AceSerializer-3.0")
-local LibDeflate = LibStub:GetLibrary("LibDeflate")
-local configForDeflate = {
-  [1] = { level = 1 },
-  [2] = { level = 2 },
-  [3] = { level = 3 },
-  [4] = { level = 4 },
-  [5] = { level = 5 },
-  [6] = { level = 6 },
-  [7] = { level = 7 },
-  [8] = { level = 8 },
-  [9] = { level = 9 },
-}
-MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject", "AceComm-3.0", "AceSerializer-3.0")
-local numActiveTransmissions = 0
+local LegacyCompressor = LibStub:GetLibrary("LibCompress")
+local LegacySerializer = LibStub:GetLibrary("AceSerializer-3.0")
+local LegacyDeflate = LibStub:GetLibrary("LibDeflate")
+MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject", "AceComm-3.0")
 
 -- Lua APIs
-local string_char, tremove, tinsert = string.char, table.remove, table.insert
+local tremove = table.remove
 local pairs, type, unpack = pairs, type, unpack
-local bit_band, bit_lshift, bit_rshift = bit.band, bit.lshift, bit.rshift
 
---Based on code from WeakAuras2, all credit goes to the authors
-local bytetoB64 = {
-  [0] = "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "(",
-  ")"
-}
+local uidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()"
 
-local B64tobyte = {
-  a = 0,
-  b = 1,
-  c = 2,
-  d = 3,
-  e = 4,
-  f = 5,
-  g = 6,
-  h = 7,
-  i = 8,
-  j = 9,
-  k = 10,
-  l = 11,
-  m = 12,
-  n = 13,
-  o = 14,
-  p = 15,
-  q = 16,
-  r = 17,
-  s = 18,
-  t = 19,
-  u = 20,
-  v = 21,
-  w = 22,
-  x = 23,
-  y = 24,
-  z = 25,
-  A = 26,
-  B = 27,
-  C = 28,
-  D = 29,
-  E = 30,
-  F = 31,
-  G = 32,
-  H = 33,
-  I = 34,
-  J = 35,
-  K = 36,
-  L = 37,
-  M = 38,
-  N = 39,
-  O = 40,
-  P = 41,
-  Q = 42,
-  R = 43,
-  S = 44,
-  T = 45,
-  U = 46,
-  V = 47,
-  W = 48,
-  X = 49,
-  Y = 50,
-  Z = 51,
-  ["0"] = 52,
-  ["1"] = 53,
-  ["2"] = 54,
-  ["3"] = 55,
-  ["4"] = 56,
-  ["5"] = 57,
-  ["6"] = 58,
-  ["7"] = 59,
-  ["8"] = 60,
-  ["9"] = 61,
-  ["("] = 62,
-  [")"] = 63
-}
+-- "~" cannot start either legacy LibDeflate encoding, so this marker cannot collide with existing exports.
+local encodingPrefix = "!~MDT2~"
 
--- This code is based on the Encode7Bit algorithm from LibCompress
--- Credit goes to Galmok (galmok@gmail.com)
-local decodeB64Table = {}
-
-local function decodeB64(str)
-  local bit8 = decodeB64Table
-  local decoded_size = 0
-  local ch
-  local i = 1
-  local bitfield_len = 0
-  local bitfield = 0
-  local l = #str
-  while true do
-    if bitfield_len >= 8 then
-      decoded_size = decoded_size + 1
-      bit8[decoded_size] = string_char(bit_band(bitfield, 255))
-      bitfield = bit_rshift(bitfield, 8)
-      bitfield_len = bitfield_len - 8
-    end
-    ch = B64tobyte[str:sub(i, i)]
-    bitfield = bitfield + bit_lshift(ch or 0, bitfield_len)
-    bitfield_len = bitfield_len + 6
-    if i > l then
-      break
-    end
-    i = i + 1
-  end
-  return table.concat(bit8, "", 1, decoded_size)
-end
-
-function MDT:TableToString(inTable, forChat, level)
-  local serialized = Serializer:Serialize(inTable)
-  local compressed = LibDeflate:CompressDeflate(serialized, configForDeflate[level])
-  -- prepend with "!" so that we know that it is not a legacy compression
-  -- also this way, old versions will error out due to the "bad" encoding
-  local encoded = "!"
-  if (forChat) then
-    encoded = encoded..LibDeflate:EncodeForPrint(compressed)
-  else
-    encoded = encoded..LibDeflate:EncodeForWoWAddonChannel(compressed)
-  end
-  return encoded
+function MDT:TableToString(inTable)
+  local serialized = C_EncodingUtil.SerializeCBOR(inTable)
+  local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate)
+  local encoded = C_EncodingUtil.EncodeBase64(compressed)
+  return encodingPrefix..encoded
 end
 
 function MDT:StringToTable(inString, fromChat)
-  -- if gsub strips off a ! at the beginning then we know that this is not a legacy encoding
+  if inString:sub(1, #encodingPrefix) == encodingPrefix then
+    local decoded = C_EncodingUtil.DecodeBase64(inString:sub(#encodingPrefix + 1))
+    if not decoded then return "Error decoding." end
+    local decompressed = C_EncodingUtil.DecompressString(decoded, Enum.CompressionMethod.Deflate)
+    if not decompressed then return "Error decompressing." end
+    return C_EncodingUtil.DeserializeCBOR(decompressed) or "Error deserializing."
+  end
+
+  -- Legacy "!" exports use LibDeflate; strings without the marker use LibCompress.
   local encoded, usesDeflate = inString:gsub("^%!", "")
   local decoded
   if (fromChat) then
-    if usesDeflate == 1 then
-      decoded = LibDeflate:DecodeForPrint(encoded)
-    else
-      decoded = decodeB64(encoded)
-    end
+    decoded = LegacyDeflate:DecodeForPrint(encoded)
   else
-    decoded = LibDeflate:DecodeForWoWAddonChannel(encoded)
+    decoded = LegacyDeflate:DecodeForWoWAddonChannel(encoded)
   end
 
   if not decoded then
@@ -222,15 +45,15 @@ function MDT:StringToTable(inString, fromChat)
 
   local decompressed, errorMsg = nil, "unknown compression method"
   if usesDeflate == 1 then
-    decompressed = LibDeflate:DecompressDeflate(decoded)
+    decompressed = LegacyDeflate:DecompressDeflate(decoded)
   else
-    decompressed, errorMsg = Compresser:Decompress(decoded)
+    decompressed, errorMsg = LegacyCompressor:Decompress(decoded)
   end
   if not (decompressed) then
     return "Error decompressing: "..errorMsg
   end
 
-  local success, deserialized = Serializer:Deserialize(decompressed)
+  local success, deserialized = LegacySerializer:Deserialize(decompressed)
   if not (success) then
     return "Error deserializing "..deserialized
   end
@@ -267,7 +90,6 @@ local function filterFunc(chatFrame, event, msg, player, l, cs, t, flag, channel
       characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
       newMsg = newMsg..remaining:sub(1, start - 1)
-      local texture = "|TInterface\\AddOns\\"..AddonName.."\\Textures\\NnoggieMinimap:12|t"
       newMsg = "|cffe6cc80|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
       remaining = remaining:sub(finish + 1)
       checkChatframeInteractive(chatFrame)
@@ -672,7 +494,7 @@ function MDT:MakeSendingStatusBar(f)
 end
 
 --callback for SendCommMessage
-local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
+local function displaySendingProgress(userArgs, bytesSent, bytesToSend, didSend)
   MDT.main_frame.SendingStatusBar:Show()
   MDT.main_frame.SendingStatusBar:SetValue(bytesSent / bytesToSend)
   MDT.main_frame.SendingStatusBar.value:SetText(string.format(L["Sending: %.1f"], bytesSent / bytesToSend * 100).."%")
@@ -695,7 +517,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     MDT.main_frame.LiveSessionButton:SetDisabled(false)
     MDT.main_frame.SendingStatusBar:Hide()
     --output chat link
-    if not silent and preset then
+    if didSend ~= false and not silent and preset then
       local prefix = "[MDT_v2: "
       local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
       local presetName = preset.text
@@ -713,9 +535,10 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       name = UnitFullName(name)
 
       local fullName = name.."+"..realm
-      C_ChatInfo.SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+      local message = prefix..fullName.." - "..dungeon..": "..presetName.."]"
+      -- ponytail: delivery gap; add receiver acknowledgements if cross-client ordering still races.
+      C_Timer.After(0.5, function() C_ChatInfo.SendChatMessage(message, distribution) end)
     end
-    numActiveTransmissions = numActiveTransmissions - 1
   end
 end
 
@@ -725,7 +548,8 @@ MDT.displaySendingProgress = displaySendingProgress
 function MDT:GenerateUniqueID(length)
   local s = {}
   for i = 1, length do
-    tinsert(s, bytetoB64[math.random(0, 63)])
+    local index = math.random(1, #uidCharacters)
+    s[i] = uidCharacters:sub(index, index)
   end
   return table.concat(s)
 end
@@ -762,16 +586,7 @@ function MDT:SendToGroup(distribution, silent, preset)
   --gotta encode difficulty into preset
   local db = MDT:GetDB()
   preset.difficulty = db.currentDifficulty
-  local export = MDT:TableToString(preset, false, 5)
-  numActiveTransmissions = numActiveTransmissions + 1
+  local export = MDT:TableToString(preset)
   MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,
     { distribution, preset, silent })
-end
-
----GetPresetSize
----Returns the number of characters the string version of the preset contains
-function MDT:GetPresetSize(forChat, level)
-  local preset = MDT:GetCurrentPreset()
-  local export = MDT:TableToString(preset, forChat, level)
-  return string.len(export)
 end

@@ -718,7 +718,7 @@ function MDT:MakeSidePanel(frame)
     MDT:EnsurePresetCreatedBy(preset)
     preset.difficulty = db.currentDifficulty
     preset.addonVersion = db.version
-    local export = MDT:TableToString(preset, true, 5)
+    local export = MDT:TableToString(preset)
     MDT:HideAllDialogs()
     MDT.main_frame.ExportFrame:Show()
     MDT.main_frame.ExportFrame:ClearAllPoints()

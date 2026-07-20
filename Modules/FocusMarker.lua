@@ -653,7 +653,7 @@ end
 
 local function sendFocusMarkerPayload(mdt, payload, distribution, target)
   if not distribution then return end
-  local export = mdt:TableToString(payload, false, 5)
+  local export = mdt:TableToString(payload)
   MDTcommsObject:SendCommMessage(mdt.liveSessionPrefixes.focusMarkerAssignment, export, distribution, target, "ALERT")
 end
 

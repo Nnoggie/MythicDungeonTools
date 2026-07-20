@@ -8,7 +8,7 @@ local tinsert, slen = table.insert, string.len
 local caughtErrors = {}
 
 local function getDiagnostics()
-  local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
+  local presetExport = MDT:TableToString(MDT:GetCurrentPreset())
   ---@diagnostic disable-next-line: redundant-parameter
   local addonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
   local locale = GetLocale()
