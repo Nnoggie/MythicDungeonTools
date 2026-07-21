@@ -13,6 +13,108 @@ local function initializeDB()
   db = db or MDT:GetDB()
 end
 
+local function createAlphaWatermarkLabel(frame)
+  local label = frame:CreateFontString(nil, canvasDrawLayer)
+  label:SetDrawLayer(canvasDrawLayer, 6)
+  label:SetFont("Fonts\\ARIALN.TTF", 40, "")
+  label:SetText("ALPHA")
+  label:SetTextColor(1, 1, 1, 0.25)
+
+  local animationGroup = label:CreateAnimationGroup()
+  local rotation = animationGroup:CreateAnimation("Rotation")
+  rotation:SetDegrees(45)
+  rotation:SetOrigin("CENTER", 0, 0)
+  rotation:SetDuration(0.01)
+  rotation:SetEndDelay(10 ^ 8)
+  animationGroup:Play()
+
+  return label
+end
+
+local function layoutAlphaWatermark(frame)
+  local labels = frame.alphaWatermarkLabels
+  if not labels then return end
+
+  local spacingX, spacingY = 170, 110
+  local columns = math.ceil(frame:GetWidth() / spacingX)
+  local rows = math.ceil(frame:GetHeight() / spacingY)
+  local labelIndex = 0
+
+  for row = 0, rows do
+    local rowOffset = row % 2 == 0 and 0 or spacingX / 2
+    for column = -1, columns do
+      labelIndex = labelIndex + 1
+      local label = labels[labelIndex]
+      if not label then
+        label = createAlphaWatermarkLabel(frame)
+        labels[labelIndex] = label
+      end
+      label:ClearAllPoints()
+      label:SetPoint("CENTER", frame, "TOPLEFT", column * spacingX + rowOffset, -row * spacingY)
+      label:Show()
+    end
+  end
+
+  for i = labelIndex + 1, #labels do
+    labels[i]:Hide()
+  end
+end
+
+local function createAlphaWarning(frame)
+  local warning = CreateFrame("Frame", "MDTAlphaWarningFrame", frame, "BackdropTemplate")
+  warning:SetSize(390, 82)
+  warning:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, 0)
+  warning:SetFrameStrata("HIGH")
+  warning:SetFrameLevel(60)
+  warning:EnableMouse(true)
+  warning:SetBackdrop({
+    bgFile = "Interface\\Buttons\\WHITE8X8",
+    edgeFile = "Interface\\Buttons\\WHITE8X8",
+    edgeSize = 1,
+  })
+  warning:SetBackdropColor(unpack(MDT.BackdropColor))
+  warning:SetBackdropBorderColor(1, 0, 0, 1)
+
+  local icon = warning:CreateTexture(nil, "ARTWORK")
+  icon:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\icons")
+  icon:SetTexCoord(0.75, 1, 0.25, 0.5)
+  icon:SetSize(48, 48)
+  icon:SetPoint("LEFT", warning, "LEFT", 8, 0)
+
+  local close = CreateFrame("Button", nil, warning, "UIPanelCloseButton")
+  close:SetSize(22, 22)
+  close:SetPoint("TOPRIGHT", warning, "TOPRIGHT", -1, -1)
+  close:SetScript("OnClick", function()
+    warning:Hide()
+    if MDT.copyHelper then MDT.copyHelper:SmartHide() end
+  end)
+
+  local title = warning:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+  title:SetPoint("TOPLEFT", warning, "TOPLEFT", 64, -8)
+  title:SetWidth(296)
+  title:SetJustifyH("LEFT")
+  title:SetText(L["Alpha Version! Mapping will be inaccurate!"])
+  title:SetTextColor(1, 0.15, 0.15)
+
+  warning.linkRow = MDT:CreateCopyableLinkRow(warning, "Discord", MDT.externalLinks[2].url, {
+    width = 318,
+    buttonWidth = 72,
+    point = true,
+    xOffset = 64,
+    yOffset = -25,
+    label = L["Report enemy position in Discord:"],
+    copyHelperAnchor = frame,
+    copyHelperY = 50,
+  })
+  warning.linkRow.editBox.label:SetTextColor(1, 1, 1)
+
+  frame.alphaWarningFrame = warning
+  frame:HookScript("OnShow", function()
+    layoutAlphaWatermark(frame.mapPanelFrame)
+    warning:Show()
+  end)
+end
+
 function MDT:OnPan(cursorX, cursorY)
   local scrollFrame = MDTScrollFrame
   local scale = MDTMapPanelFrame:GetScale() / 1.5
@@ -421,6 +523,13 @@ function MDT:MakeMapTexture(frame)
         tile:SetColorTexture(i / 10, j / 10, 0, 1)
         tile:Hide()
       end
+    end
+
+    local version = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+    if version and version:lower():find("-alpha", 1, true) then
+      frame.mapPanelFrame.alphaWatermarkLabels = {}
+      frame.mapPanelFrame:SetScript("OnSizeChanged", layoutAlphaWatermark)
+      createAlphaWarning(frame)
     end
 
     frame.scrollFrame:SetScrollChild(frame.mapPanelFrame)
