@@ -330,7 +330,7 @@ function MDT:CreateNewPreset(name)
 
     local startingPointPresetIdx = MDT.main_frame.PresetCreationDropDown:GetValue() - 1
     if startingPointPresetIdx > 0 then
-      db.presets[db.currentDungeonIdx][countPresets] = MDT:CopyObject(db.presets[db.currentDungeonIdx][
+      db.presets[db.currentDungeonIdx][countPresets] = CopyTable(db.presets[db.currentDungeonIdx][
       startingPointPresetIdx])
       db.presets[db.currentDungeonIdx][countPresets].text = name
       db.presets[db.currentDungeonIdx][countPresets].uid = nil
@@ -527,16 +527,6 @@ function MDT:GetPresetColorPaletteInfo(preset)
     MDT:SetPresetColorPaletteInfo()
   end
   return preset.colorPaletteInfo
-end
-
-function MDT:CopyObject(obj, seen)
-  if type(obj) ~= 'table' then return obj end
-  if seen and seen[obj] then return seen[obj] end
-  local s = seen or {}
-  local res = setmetatable({}, getmetatable(obj))
-  s[obj] = res
-  for k, v in pairs(obj) do res[self:CopyObject(k, s)] = self:CopyObject(v, s) end
-  return res
 end
 
 function MDT:RenamePreset(renameText, takeOwnership)

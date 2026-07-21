@@ -271,7 +271,6 @@ function MDT:RegisterErrorHandledFunctions()
     ["Async"] = true,
     ["RegisterErrorHandledFunctions"] = true,
     ["OnError"] = true,
-    ["DeepCopy"] = true,
   }
   local tablesToAdd = {
     MDT, MDTDungeonEnemyMixin

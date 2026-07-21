@@ -268,10 +268,8 @@ function MDT:GetPullsNum(preset)
 end
 
 function MDT:PresetsSwapPulls(p1, p2)
-  local p1copy = self:CopyObject(self:GetCurrentPreset().value.pulls[p1])
-  local p2copy = self:CopyObject(self:GetCurrentPreset().value.pulls[p2])
-  self:GetCurrentPreset().value.pulls[p1] = p2copy
-  self:GetCurrentPreset().value.pulls[p2] = p1copy
+  local pulls = self:GetCurrentPreset().value.pulls
+  pulls[p1], pulls[p2] = pulls[p2], pulls[p1]
 end
 
 function MDT:SetSelectionToPull(pull, ignoreHulls)

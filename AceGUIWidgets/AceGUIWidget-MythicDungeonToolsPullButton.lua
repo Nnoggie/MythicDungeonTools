@@ -252,7 +252,7 @@ local methods = {
         end)
 
         rootDescription:CreateButton(L["Pull Drop Merge"], function()
-          local selected_pulls = MDT.U.copy(MDT:GetSelection())
+          local selected_pulls = CopyTable(MDT:GetSelection())
           -- Assure, that the destination is always the last selected_pull, to copy it's options at last
           MDT.U.iremove_if(selected_pulls, function(pullIdx)
             return pullIdx == self.index
@@ -705,7 +705,7 @@ local methods = {
         self:Pick()
       end
 
-      local selected_pulls = MDT.U.copy(MDT:GetSelection())
+      local selected_pulls = CopyTable(MDT:GetSelection())
       table.sort(selected_pulls)
 
       for _, pullIdx in ipairs(selected_pulls) do
@@ -754,7 +754,7 @@ local methods = {
 
     if #MDT:GetSelection() > 1 then
       local sidePanel = MDT.main_frame.sidePanel
-      local selected_pulls = MDT.U.copy(MDT:GetSelection())
+      local selected_pulls = CopyTable(MDT:GetSelection())
       local new_pulls = {}
       local progressed_pulls = {}
       table.sort(selected_pulls)

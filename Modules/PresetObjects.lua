@@ -117,9 +117,9 @@ function MDT:StorePresetObject(obj, ignoreScale, preset)
     end
   end
   if pos > 1 then
-    tinsert(preset.objects, pos, self:DeepCopy(obj))
+    tinsert(preset.objects, pos, CopyTable(obj))
   else
-    tinsert(preset.objects, self:DeepCopy(obj))
+    tinsert(preset.objects, CopyTable(obj))
   end
 end
 

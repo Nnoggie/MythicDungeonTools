@@ -537,21 +537,6 @@ function MDT:HexToRGB(rgb)
   end
 end
 
-function MDT:DeepCopy(orig)
-  local orig_type = type(orig)
-  local copy
-  if orig_type == 'table' then
-    copy = {}
-    for orig_key, orig_value in next, orig, nil do
-      copy[MDT:DeepCopy(orig_key)] = MDT:DeepCopy(orig_value)
-    end
-    setmetatable(copy, MDT:DeepCopy(getmetatable(orig)))
-  else -- number, string, boolean, etc
-    copy = orig
-  end
-  return copy
-end
-
 ---Checks if the players is in a group/raid and returns the type
 function MDT:IsPlayerInGroup()
   local inGroup = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")

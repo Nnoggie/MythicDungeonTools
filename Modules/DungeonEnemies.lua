@@ -213,7 +213,7 @@ local function setUpMouseHandlers(self)
     local x, y, scale
     local dragTargetUpdateElapsed = DRAG_TARGET_UPDATE_INTERVAL
     preset = MDT:GetCurrentPreset()
-    tempPulls = MDT:DeepCopy(preset.value.pulls)
+    tempPulls = CopyTable(preset.value.pulls)
     targetPull = nil
     dragPreviewHullState = nil
     dragPreviewIgnoreGrouped = IsControlKeyDown()
@@ -226,7 +226,7 @@ local function setUpMouseHandlers(self)
         local ignoreGrouped = IsControlKeyDown()
         if ignoreGrouped ~= dragPreviewIgnoreGrouped then
           dragPreviewIgnoreGrouped = ignoreGrouped
-          tempPulls = MDT:DeepCopy(preset.value.pulls)
+          tempPulls = CopyTable(preset.value.pulls)
           targetPull = nil
           dragPreviewHullState = nil
           dragTargetUpdateElapsed = DRAG_TARGET_UPDATE_INTERVAL
@@ -251,14 +251,14 @@ local function setUpMouseHandlers(self)
           targetPull = nil
           if dragPreviewHullState ~= false then
             dragPreviewHullState = false
-            MDT:DrawAllHulls(MDT:DeepCopy(tempPulls), true)
+            MDT:DrawAllHulls(CopyTable(tempPulls), true)
           end
         elseif pullIdx ~= targetPull or dragPreviewHullState ~= pullIdx then
           targetPull = pullIdx
           MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, true, ignoreGrouped, tempPulls, pullIdx, true)
           MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull(), tempPulls)
           dragPreviewHullState = pullIdx
-          MDT:DrawAllHulls(MDT:DeepCopy(tempPulls), true)
+          MDT:DrawAllHulls(CopyTable(tempPulls), true)
         end
       end
     end)

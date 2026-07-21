@@ -55,20 +55,6 @@ U.contains = function(t, needle)
   return false
 end
 
-U.copy = function(t)
-  local new = {}
-
-  for k, v in pairs(t) do
-    if type(v) == "table" then
-      new[k] = U.copy(v)
-    else
-      new[k] = v
-    end
-  end
-
-  return new
-end
-
 U.lerp = function(a, b, alpha)
   return (b - a) * alpha + a
 end
