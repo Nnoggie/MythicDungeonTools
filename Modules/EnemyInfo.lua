@@ -2,44 +2,7 @@ local MDT = MDT
 local L = MDT.L
 local AceGUI = LibStub("AceGUI-3.0")
 local db
-local tconcat, tinsert = table.concat, table.insert
---test
-local function CreateDispatcher(argCount)
-  local code = [[
-        local xpcall, eh = ...
-        local method, ARGS
-        local function call() return method(ARGS) end
-
-        local function dispatch(func, ...)
-            method = func
-            if not method then return end
-            ARGS = ...
-            return xpcall(call, eh)
-        end
-
-        return dispatch
-    ]]
-
-  local ARGS = {}
-  for i = 1, argCount do ARGS[i] = "arg"..i end
-  code = code:gsub("ARGS", tconcat(ARGS, ", "))
-  return assert(loadstring(code, "safecall Dispatcher["..argCount.."]"))(xpcall, errorhandler)
-end
-
-local Dispatchers = setmetatable({}, {
-  __index = function(self, argCount)
-    local dispatcher = CreateDispatcher(argCount)
-    rawset(self, argCount, dispatcher)
-    return dispatcher
-  end
-})
-Dispatchers[0] = function(func)
-  return xpcall(func, errorhandler)
-end
-
-local function safecall(func, ...)
-  return Dispatchers[select("#", ...)](func, ...)
-end
+local tinsert = table.insert
 
 AceGUI:RegisterLayout("ThreeColums", function(content, children)
   if children[1] then
@@ -63,7 +26,7 @@ AceGUI:RegisterLayout("ThreeColums", function(content, children)
     children[3].frame:SetPoint("BOTTOMLEFT", children[2].frame, "BOTTOMRIGHT", 0, 0)
     children[3].frame:Show()
   end
-  safecall(content.obj.LayoutFinished, content.obj, nil, nil)
+  xpcall(content.obj.LayoutFinished, errorhandler, content.obj, nil, nil)
 end)
 
 -- Very simple Layout, Children are stacked on top of each other down the left side
