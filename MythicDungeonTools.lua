@@ -153,13 +153,8 @@ function MDT:FormatEnemyForces(forces, forcesmax, progressbar)
     forcesmax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
   end
   local percent = forcesmax > 0 and (forces / forcesmax) * 100 or 0
-  if db.enemyForcesFormat == 1 then
-    if progressbar then return forces.."/"..forcesmax end
-    return forces
-  elseif db.enemyForcesFormat == 2 then
-    if progressbar then return string.format((forces.."/"..forcesmax.." (%.2f%%)"), percent) end
-    return string.format(forces.." (%.2f%%)", percent)
-  end
+  if progressbar then return string.format((forces.."/"..forcesmax.." (%.2f%%)"), percent) end
+  return string.format(forces.." (%.2f%%)", percent)
 end
 
 ---Progressbar_SetValue

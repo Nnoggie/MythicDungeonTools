@@ -252,7 +252,7 @@ function MDT:NormalizeCurrentPreset()
         end
       end
     end
-    pull["color"] = pull["color"] or db.defaultColor
+    pull["color"] = pull["color"] or "228b22"
   end
 
   preset.difficulty = preset.difficulty or db.currentDifficulty

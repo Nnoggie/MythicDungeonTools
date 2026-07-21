@@ -898,8 +898,7 @@ local methods = {
   end,
   ["UpdateColor"] = function(self)
     local colorHex = MDT:RGBToHex(self.color.r, self.color.g, self.color.b)
-    local db = MDT:GetDB()
-    if colorHex == db.defaultColor then
+    if colorHex == "228b22" then
       self.background:SetVertexColor(0.5, 0.5, 0.5, 0.25)
       self.frame.pickedGlow:SetVertexColor(1, 0.85, 0, 1)
     else

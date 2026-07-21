@@ -1087,8 +1087,6 @@ function MDT:InitializeMainFrame()
     MDT:CreateDevPanel(MDT.main_frame)
   end
 
-  db.currentSeason = defaultSavedVars.global.currentSeason
-
   --tooltip new
   do
     MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", UIParent, "TooltipBorderedFrameTemplate")

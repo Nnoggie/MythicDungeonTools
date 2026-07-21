@@ -165,9 +165,7 @@ local function setupDragPreview(preview, blip, cursorX, cursorY)
   preview.texture_Portrait:SetSize(blip.normalScale * 15, blip.normalScale * 15)
   preview.texture_Portrait:SetVertexColor(1, 1, 1, 1)
   preview.texture_Portrait:SetDesaturated(false)
-  if db.enemyStyle == 2 then
-    preview.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
-  elseif blip.data.iconTexture then
+  if blip.data.iconTexture then
     preview.texture_Portrait:SetTexture(blip.data.iconTexture)
   else
     SetPortraitTextureFromCreatureDisplayID(preview.texture_Portrait, blip.data.displayId or 39490)
@@ -494,32 +492,24 @@ function MDT:DisplayBlipTooltip(blip, shown)
   tooltip.String:SetText(text)
 
   tooltip:ClearAllPoints()
-  if db.tooltipInCorner then
-    tooltip:SetPoint("BOTTOMRIGHT", MDT.main_frame, "BOTTOMRIGHT", 0, 0)
-    tooltip:SetPoint("TOPLEFT", MDT.main_frame, "BOTTOMRIGHT", -tooltip.mySizes.x, tooltip.mySizes.y)
-  else
-    --check for bottom clipping
-    tooltip:ClearAllPoints()
-    tooltip:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", 30, 0)
-    tooltip:SetPoint("BOTTOMRIGHT", blip, "BOTTOMRIGHT", 30 + tooltip.mySizes.x, -tooltip.mySizes.y)
-    local bottomOffset = 0
-    local rightOffset = 0
-    local tooltipBottom = tooltip:GetBottom()
-    local mainFrameBottom = MDT.main_frame:GetBottom()
-    if tooltipBottom < mainFrameBottom then
-      bottomOffset = tooltip.mySizes.y
-    end
-    --right side clipping
-    local tooltipRight = tooltip:GetRight()
-    local mainFrameRight = MDT.main_frame:GetRight()
-    if tooltipRight > mainFrameRight then
-      rightOffset = -(tooltip.mySizes.x + 60)
-    end
-
-    tooltip:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", 30 + rightOffset, bottomOffset)
-    tooltip:SetPoint("BOTTOMRIGHT", blip, "BOTTOMRIGHT", 30 + tooltip.mySizes.x + rightOffset,
-      -tooltip.mySizes.y + bottomOffset)
+  tooltip:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", 30, 0)
+  tooltip:SetPoint("BOTTOMRIGHT", blip, "BOTTOMRIGHT", 30 + tooltip.mySizes.x, -tooltip.mySizes.y)
+  local bottomOffset = 0
+  local rightOffset = 0
+  local tooltipBottom = tooltip:GetBottom()
+  local mainFrameBottom = MDT.main_frame:GetBottom()
+  if tooltipBottom < mainFrameBottom then
+    bottomOffset = tooltip.mySizes.y
   end
+  local tooltipRight = tooltip:GetRight()
+  local mainFrameRight = MDT.main_frame:GetRight()
+  if tooltipRight > mainFrameRight then
+    rightOffset = -(tooltip.mySizes.x + 60)
+  end
+
+  tooltip:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", 30 + rightOffset, bottomOffset)
+  tooltip:SetPoint("BOTTOMRIGHT", blip, "BOTTOMRIGHT", 30 + tooltip.mySizes.x + rightOffset,
+    -tooltip.mySizes.y + bottomOffset)
 end
 
 function MDT:GetEfficiencyScoreString(count, health)
@@ -750,14 +740,10 @@ function MDTDungeonEnemyMixin:SetUp(data, clone)
   self:SetMovable(false)
   setUpMouseHandlers(self)
   tinsert(blips, self)
-  if db.enemyStyle == 2 then
-    self.texture_Portrait:SetTexture("Interface\\Worldmap\\WorldMapPartyIcon")
+  if data.iconTexture then
+    self.texture_Portrait:SetTexture(data.iconTexture);
   else
-    if data.iconTexture then
-      self.texture_Portrait:SetTexture(data.iconTexture);
-    else
-      SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait, data.displayId or 39490)
-    end
+    SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait, data.displayId or 39490)
   end
   self.texture_Indicator:Hide()
   local assignments = MDT:GetCurrentPreset().value.enemyAssignments
@@ -907,12 +893,8 @@ function MDT:DungeonEnemies_UpdateBlipColors(pull, r, g, b, pulls)
         for _, blip in pairs(blips) do
           if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
             if not db.devMode then
-              if db.enemyStyle == 2 then
-                blip.texture_Portrait:SetVertexColor(r, g, b, 1)
-              else
-                blip.texture_Portrait:SetVertexColor(r, g, b, 1)
-                blip.texture_SelectedHighlight:SetVertexColor(r, g, b, 0.7)
-              end
+              blip.texture_Portrait:SetVertexColor(r, g, b, 1)
+              blip.texture_SelectedHighlight:SetVertexColor(r, g, b, 0.7)
             end
             break
           end
@@ -932,11 +914,7 @@ function MDT:DungeonEnemies_UpdateSelected(pull, pulls, ignoreHulls)
     blip.selected = false
     blip.texture_PullIndicator:Hide()
     if not db.devMode then
-      if db.enemyStyle == 2 then
-        blip.texture_Portrait:SetVertexColor(1, 1, 1, 1)
-      else
-        blip.texture_Portrait:SetVertexColor(1, 1, 1, 1)
-      end
+      blip.texture_Portrait:SetVertexColor(1, 1, 1, 1)
     end
   end
   --highlight all pull enemies
@@ -950,12 +928,8 @@ function MDT:DungeonEnemies_UpdateSelected(pull, pulls, ignoreHulls)
               blip.texture_SelectedHighlight:Show()
               blip.selected = true
               if not db.devMode then
-                if db.enemyStyle == 2 then
-                  blip.texture_Portrait:SetVertexColor(0, 1, 0, 1)
-                else
-                  blip.texture_Portrait:SetVertexColor(r, g, b, 1)
-                  blip.texture_SelectedHighlight:SetVertexColor(r, g, b, 0.7)
-                end
+                blip.texture_Portrait:SetVertexColor(r, g, b, 1)
+                blip.texture_SelectedHighlight:SetVertexColor(r, g, b, 0.7)
               end
               if pullIdx == pull then
                 blip.texture_PullIndicator:Show()
@@ -984,7 +958,7 @@ function MDT:DungeonEnemies_GetPullColor(pull, pulls)
   pulls = pulls or preset.value.pulls
   local r, g, b = MDT:HexToRGB(pulls[pull]["color"])
   if not r then
-    r, g, b = MDT:HexToRGB(db.defaultColor)
+    r, g, b = MDT:HexToRGB("228b22")
     MDT:DungeonEnemies_SetPullColor(pull, r, g, b)
   end
   return r, g, b
