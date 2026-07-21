@@ -537,18 +537,6 @@ function MDT:HexToRGB(rgb)
   end
 end
 
----https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB_alternative
-function MDT:HSVtoRGB(H, S, V)
-  H = H % 361
-
-  local function f(n)
-    local k = (n + H / 60) % 6
-    return V - V * S * math.max(math.min(k, 4 - k, 1), 0)
-  end
-
-  return f(5), f(3), f(1)
-end
-
 function MDT:DeepCopy(orig)
   local orig_type = type(orig)
   local copy

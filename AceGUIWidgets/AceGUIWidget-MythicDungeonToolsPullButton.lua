@@ -229,7 +229,6 @@ local methods = {
           MDT:PresetsAddPull(self.index)
           MDT:ReloadPullButtons()
           MDT:SetSelectionToPull(self.index)
-          --MDT:UpdateAutomaticColors(self.index)
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
@@ -247,7 +246,6 @@ local methods = {
           MDT:PresetsAddPull(self.index + 1)
           MDT:ReloadPullButtons()
           MDT:SetSelectionToPull(self.index + 1)
-          --MDT:UpdateAutomaticColors(self.index + 1)
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
@@ -821,7 +819,6 @@ local methods = {
     end
 
     MDT:Hide_DropIndicator()
-    --MDT:UpdateAutomaticColors(math.min(self.index, insertID))
     MDT.pullTooltip:Show()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())

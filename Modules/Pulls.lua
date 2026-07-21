@@ -311,35 +311,6 @@ function MDT:AddPull(index)
   MDT:SetSelectionToPull(index)
 end
 
-function MDT:SetAutomaticColor(index)
-  --if not db.colorPaletteInfo.autoColoring then return end
-
-  local H = (index - 1) * 360 / 12 + 120 --db.automaticColorsNum
-  --if db.alternatingColors and index % 2 == 0 then
-  --	H = H + 180
-  --end
-
-  local V = 1 --0.5451
-  --if db.brightColors then V = 1 end
-
-  local r, g, b = self:HSVtoRGB(H, 0.7554, V)
-
-  --self:DungeonEnemies_SetPullColor(index, r, g, b)
-  --self:UpdatePullButtonColor(index, r, g, b)
-  --self:DungeonEnemies_UpdateBlipColors(index, r, g, b)
-  --if self.liveSessionActive and self:GetCurrentPreset().uid == self.livePresetUID then
-  --	self:LiveSession_QueueColorUpdate()
-  --end
-end
-
-function MDT:UpdateAutomaticColors(index)
-  initializeDB()
-  if not db.colorPaletteInfo.autoColoring then return end
-  for i = index or 1, self:GetPullsNum() do
-    self:SetAutomaticColor(i)
-  end
-end
-
 ---Clears all the npcs out of a pull
 function MDT:ClearPull(index)
   initializeDB()
@@ -347,7 +318,6 @@ function MDT:ClearPull(index)
   MDT:EnsureDBTables()
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index)
-  --MDT:SetAutomaticColor(index)
 end
 
 ---Moves the selected pull up
@@ -355,7 +325,6 @@ function MDT:MovePullUp(index)
   MDT:PresetsSwapPulls(index, index - 1)
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index - 1)
-  --MDT:UpdateAutomaticColors(index - 1)
 end
 
 ---Moves the selected pull down
@@ -363,7 +332,6 @@ function MDT:MovePullDown(index)
   MDT:PresetsSwapPulls(index, index + 1)
   MDT:ReloadPullButtons()
   MDT:SetSelectionToPull(index + 1)
-  --MDT:UpdateAutomaticColors(index)
 end
 
 ---Deletes the selected pull and makes sure that a pull will be selected afterwards
@@ -379,7 +347,6 @@ function MDT:DeletePull(index)
   end
   if index > pullCount then index = pullCount end
   self:SetSelectionToPull(index)
-  --self:UpdateAutomaticColors(index)
 end
 
 function MDT:GetSelection()
