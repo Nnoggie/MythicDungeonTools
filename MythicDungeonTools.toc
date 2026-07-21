@@ -2,7 +2,7 @@
 # WOW_INTERFACE_TARGETS: mainline-beta, mainline-test, mainline
 ## Title: Mythic Dungeon Tools
 ## Author: Nnoggie
-## Version: 6.1.20
+## Version: 6.2.0-alpha1
 ## X-Curse-Project-ID: 288981
 ## X-Wago-ID: rN4VrAKD
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs
