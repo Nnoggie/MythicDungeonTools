@@ -503,7 +503,6 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend, didSend)
     local distribution = userArgs[1]
     local preset = userArgs[2]
     local silent = userArgs[3]
-    local fromLiveSession = userArgs[4]
     --restore "Send" and "Live" button
     if MDT.liveSessionActive then
       MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])

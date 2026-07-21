@@ -104,7 +104,6 @@ local methods = {
       local db = MDT:GetDB()
       if db.devMode then
         local enemies = MDT.dungeonEnemies[db.currentDungeonIdx]
-        local devBlip = MDT:GetCurrentDevmodeBlip()
         local enemyIdx = MDT:GetEnemyInfoEnemyIdx()
         local enemy = enemies[enemyIdx]
         if not enemy or not enemy.spells or not enemy.spells[self.spellId] then return end

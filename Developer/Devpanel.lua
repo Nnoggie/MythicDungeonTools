@@ -646,7 +646,7 @@ function MDT:CreateDevPanel(frame)
       local currentBlip = MDT:GetCurrentDevmodeBlip()
       if currentBlip then
         --encounterID
-        local encounterID, encounterName, description, displayInfo, iconImage = EJ_GetCreatureInfo(1)
+        local encounterID = EJ_GetCreatureInfo(1)
         if not encounterID then
           print("MDT: Error - Make sure to open Encounter Journal and navigate to the boss you want to add!")
           return

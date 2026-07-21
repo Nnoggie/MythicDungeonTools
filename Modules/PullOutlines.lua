@@ -1,5 +1,5 @@
 local _, MDT = ...
-local twipe, tinsert, tremove = table.wipe, table.insert, table.remove
+local tinsert, tremove = table.insert, table.remove
 
 local NONACTIVE_ALPHA = 0.5
 
@@ -47,18 +47,6 @@ local function convex_hull(pts)
     table.insert(hullpts, pts[index])
   end
   return hullpts
-end
-
-local function cross(a, b)
-  return a[1] * b[2] - a[2] * b[1]
-end
-
-local function area(points)
-  local res = cross(points[#points], points[1])
-  for i = 1, #points - 1 do
-    res = res + cross(points[i], points[i + 1])
-  end
-  return math.abs(res) / 2
 end
 
 local function centroid(pts)
@@ -322,7 +310,7 @@ local function getPullVertices(p, blips)
         if MDT:IsCloneIncluded(enemyIdx, cloneIdx) then
           for _, blip in pairs(blips) do
             if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
-              local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
+              local endX, endY = select(4, blip:GetPoint())
               table.insert(vertices, { endX, endY, blip.normalScale })
               break
             end

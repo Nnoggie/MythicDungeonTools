@@ -229,8 +229,6 @@ local function onError(msg, stackTrace, name)
   local stackTraceValue = stackTrace and name..":\n"..stackTrace
   tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue, count = 1 })
   addTrace = true
-  local diagnostics = getDiagnostics()
-  local diagnosticString = diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\n"..diagnostics.region
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
     MDT:DisplayErrors(true)

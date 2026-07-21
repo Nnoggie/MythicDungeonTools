@@ -3,8 +3,8 @@ local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 
-local tinsert, tremove, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
-    table.insert, table.remove, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition,
+local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
+    table.insert, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition,
     GameTooltip
 
 local sizex = 840
@@ -1129,7 +1129,6 @@ function MDT:InitializeMainFrame()
   do
     MDT.pullTooltip = CreateFrame("Frame", "MDTPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
     --MDT.pullTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-    local pullTT = MDT.pullTooltip
     MDT.pullTooltip:SetClampedToScreen(true)
     MDT.pullTooltip:SetFrameStrata("TOOLTIP")
     MDT.pullTooltip.myHeight = 180
