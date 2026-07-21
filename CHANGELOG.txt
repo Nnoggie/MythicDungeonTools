@@ -1,4 +1,4 @@
-## 6.2.0-alpha2 (2026-07-21)
+## 6.2.0-alpha3 (2026-07-21)
 
 - Added initial WoW 12.1 PTR support for Midnight Season 2.
 - Added an option to show each pull's total health in the route sidebar. (off by default)

@@ -2,7 +2,7 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
-    tag = "6.2.0-alpha2",
+    tag = "6.2.0-alpha3",
     date = "2026-07-21",
     notes = {
       "Added initial WoW 12.1 PTR support for Midnight Season 2.",
