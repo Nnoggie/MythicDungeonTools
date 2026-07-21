@@ -221,17 +221,6 @@ function MDT:initToolbar(frame)
   mover.tooltipText = L["Move Object"]
   tinsert(widgets, mover)
 
-  ---cogwheel
-  local cogwheel = AceGUI:Create("Icon")
-  cogwheel:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, 0.25, 0.25, 0.5)
-  cogwheel:SetCallback("OnClick", function(widget, callbackName)
-    InterfaceOptionsFrame_OpenToCategory("MythicDungeonTools")
-    InterfaceOptionsFrame_OpenToCategory("MythicDungeonTools")
-    MDT:HideInterface()
-  end)
-  cogwheel.tooltipText = L["Settings"]
-  --tinsert(widgets,cogwheel)
-
   ---eraser
   local eraser = AceGUI:Create("Icon")
   eraser:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.25, 0.5)
