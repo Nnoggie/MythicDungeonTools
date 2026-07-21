@@ -1,6 +1,6 @@
 local MDT = MDT
 local L = MDT.L
-local MDTcommsObject = MDTcommsObject
+local MDTcommsObject = MDT.commsObject
 local twipe, tinsert = table.wipe, table.insert
 
 local timer

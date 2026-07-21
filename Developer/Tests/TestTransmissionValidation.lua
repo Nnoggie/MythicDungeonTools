@@ -10,12 +10,12 @@ local function testFunc()
   assert(decoded.value.currentDungeonIdx == preset.value.currentDungeonIdx, "Blizzard encoding changed the dungeon")
 
   local name, realm = UnitFullName("player")
-  MDTcommsObject:OnCommReceived("MDTPreset", message, "PARTY", name)
+  addon.commsObject:OnCommReceived("MDTPreset", message, "PARTY", name)
   local displayName = addon:GetDungeonName(preset.value.currentDungeonIdx, true)..": "..preset.text
   assert(addon.transmissionCache[name.."-"..realm][displayName], "Blizzard transmission was not cached")
 
   local invalidMessage = addon:TableToString({ test = true })
-  MDTcommsObject:OnCommReceived("MDTPreset", invalidMessage, "PARTY", UnitName("player"))
+  addon.commsObject:OnCommReceived("MDTPreset", invalidMessage, "PARTY", UnitName("player"))
 
   local legacyDungeonIdx
   for dungeonIdx in pairs(addon.knownDungeons) do

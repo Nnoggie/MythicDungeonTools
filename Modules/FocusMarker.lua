@@ -1,6 +1,6 @@
 local MDT = MDT
 local L = MDT.L
-local MDTcommsObject = MDTcommsObject
+local MDTcommsObject = MDT.commsObject
 local AceGUI = LibStub("AceGUI-3.0")
 
 local MACRO_NAME = "MDTFocusMarker"

@@ -3,7 +3,9 @@ local L = MDT.L
 local LegacyCompressor = LibStub:GetLibrary("LibCompress")
 local LegacySerializer = LibStub:GetLibrary("AceSerializer-3.0")
 local LegacyDeflate = LibStub:GetLibrary("LibDeflate")
-MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject", "AceComm-3.0")
+MDT.commsObject = {}
+local MDTcommsObject = MDT.commsObject
+LibStub("AceComm-3.0"):Embed(MDTcommsObject)
 
 -- Lua APIs
 local tremove = table.remove
@@ -133,12 +135,11 @@ MDT.liveSessionPrefixes = {
   ["focusMarkerAssignment"] = "MDTFocusMark",
 }
 
----@diagnostic disable-next-line: duplicate-set-field
-function MDTcommsObject:OnEnable()
-  self:RegisterComm(presetCommPrefix)
-  self:RegisterComm(MDT.versionCheckPrefix)
+local function initializeComms()
+  MDTcommsObject:RegisterComm(presetCommPrefix)
+  MDTcommsObject:RegisterComm(MDT.versionCheckPrefix)
   for _, prefix in pairs(MDT.liveSessionPrefixes) do
-    self:RegisterComm(prefix)
+    MDTcommsObject:RegisterComm(prefix)
   end
   MDT.transmissionCache = {}
   local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter or ChatFrameUtil.AddMessageEventFilter
@@ -589,3 +590,5 @@ function MDT:SendToGroup(distribution, silent, preset)
   MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,
     { distribution, preset, silent })
 end
+
+initializeComms()
