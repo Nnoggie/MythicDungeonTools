@@ -102,7 +102,7 @@ local function createAlphaWarning(frame)
     point = true,
     xOffset = 64,
     yOffset = -25,
-    label = L["Report enemy position in Discord:"],
+    label = L["Report enemy positions in Discord:"],
     copyHelperAnchor = frame,
     copyHelperY = 50,
   })
