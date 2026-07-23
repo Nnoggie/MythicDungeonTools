@@ -4,4 +4,4 @@
 - Added an option to show each pull's total health in the route sidebar. (off by default)
 - Added an option to automatically pan the map to the selected pull. (on by default)
 - Enemies can now be dragged on the map to move them into pulls, with a preview showing which enemies will move.
-- New route exports and group sharing now use Blizzard's route encoding. Existing route strings still import, but new strings require this alpha or newer.
+- New route export strings now use Blizzard's native encoding. Existing route strings still import, but new strings require an updated addon version to import.
