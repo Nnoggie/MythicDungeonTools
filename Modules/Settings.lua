@@ -216,11 +216,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.compartmentCheckbox:SetValue(not db.minimap.compartmentHide)
   frame.compartmentCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.minimap.compartmentHide = not value
-    if not db.minimap.compartmentHide then
-      minimapIcon:AddButtonToCompartment("MythicDungeonTools")
-    else
-      minimapIcon:RemoveButtonFromCompartment("MythicDungeonTools")
-    end
+    MythicDungeonTools_SetAddonCompartmentShown(value)
   end)
   if MDT:IsRetail() then
     frame.settingsGeneralColumn:AddChild(frame.compartmentCheckbox)
@@ -293,7 +289,6 @@ function MDT:MakeSettingsFrame(frame)
   frame.announceDungeonResetCheckbox:SetValue(db.announceDungeonReset == true)
   frame.announceDungeonResetCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.announceDungeonReset = value
-    if value then MDT:EnableDungeonResetAnnounceHook() end
   end)
   frame.settingsGeneralColumn:AddChild(frame.announceDungeonResetCheckbox)
 

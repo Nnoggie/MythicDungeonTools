@@ -509,12 +509,11 @@ end
 
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("READY_CHECK")
-eventFrame:SetScript("OnEvent", function(_, event)
-  if event == "READY_CHECK" then
-    if IsInRaid() then return end
-    announceFocusMarker()
-  end
-end)
+function MDT:FocusMarker_OnReadyCheck()
+  if IsInRaid() then return end
+  announceFocusMarker()
+end
+eventFrame:SetScript("OnEvent", function() MDT:FocusMarker_OnReadyCheck() end)
 
 local getGroupRoster
 local pruneAssignmentsToRoster

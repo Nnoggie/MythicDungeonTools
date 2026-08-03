@@ -21,12 +21,8 @@ function MDT:CancelAsync(name)
   MDT.asyncHandler:CancelAsync(name)
 end
 
-SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
-SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
-SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
-
 local db
-function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
+function MDT:HandleSlashCommand(cmd, editbox)
   cmd = cmd:lower()
   local rqst, arg = strsplit(' ', cmd)
   if rqst == "devmode" then
@@ -98,7 +94,10 @@ function MDT.GROUP_ROSTER_UPDATE()
   end
 end
 
+local playerEnteredWorld
 function MDT.PLAYER_ENTERING_WORLD()
+  if playerEnteredWorld then return end
+  playerEnteredWorld = true
   C_Timer.After(1, function()
     MDT:RefreshMinimapButton()
     MDT:ApplyXalatathVoiceLinesMute()

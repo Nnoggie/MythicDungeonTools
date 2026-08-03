@@ -9,6 +9,9 @@ local function FireUnprotectedSlashCommand(command)
 end
 
 local function testFunc()
+  assert(type(MythicDungeonTools_Load) == "function", "Bootstrap loader is unavailable")
+  assert(type(MythicDungeonTools_Toggle) == "function", "Bootstrap toggle is unavailable")
+  assert(type(MythicDungeonTools_SetAddonCompartmentShown) == "function", "Bootstrap compartment API is unavailable")
   if addon.main_frame and addon.main_frame:IsShown() then return end
   FireUnprotectedSlashCommand("/mdt")
 end

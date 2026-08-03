@@ -83,12 +83,13 @@ function MDT:InitializeRuntime()
   if db.enemyForcesTooltip ~= 1 then MDT:EnableEnemyForcesTooltip() end
   ---@diagnostic disable-next-line: param-type-mismatch
   minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
-  if not db.minimap.hide then MDT:ShowMinimapButton() end
-  if not db.minimap.compartmentHide then
-    minimapIcon:AddButtonToCompartment("MythicDungeonTools")
+  if db.minimap.hide then
+    minimapIcon:Hide("MythicDungeonTools")
+  else
+    MDT:ShowMinimapButton()
   end
+  MythicDungeonTools_SetAddonCompartmentShown(not db.minimap.compartmentHide)
   MDT:InitializeFadeFrame()
-  if db.announceDungeonReset then MDT:EnableDungeonResetAnnounceHook() end
   return db
 end
 
