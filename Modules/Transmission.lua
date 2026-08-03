@@ -3,9 +3,8 @@ local L = MDT.L
 local LegacyCompressor = LibStub:GetLibrary("LibCompress")
 local LegacySerializer = LibStub:GetLibrary("AceSerializer-3.0")
 local LegacyDeflate = LibStub:GetLibrary("LibDeflate")
-MDT.commsObject = {}
 local MDTcommsObject = MDT.commsObject
-LibStub("AceComm-3.0"):Embed(MDTcommsObject)
+local presetCommPrefix = MDT.presetCommPrefix
 
 -- Lua APIs
 local tremove = table.remove
@@ -62,92 +61,7 @@ function MDT:StringToTable(inString, fromChat)
   return deserialized
 end
 
-local checkChatframeInteractive
-do
-  local lastPrintTime = 0
-  checkChatframeInteractive = function(chatFrame)
-    if chatFrame and chatFrame.isUninteractable then
-      local currentTime = GetTime()
-      if currentTime - lastPrintTime >= 5 * 60 then
-        C_Timer.After(0.2, function()
-          print("MDT: |cFFFF0000Warning!|r "..L["chatNoninteractiveWarning"])
-        end)
-        lastPrintTime = currentTime
-      end
-    end
-  end
-end
-
-local function filterFunc(chatFrame, event, msg, player, l, cs, t, flag, channelId, ...)
-  if flag == "GM" or flag == "DEV" or (event == "CHAT_MSG_CHANNEL" and type(channelId) == "number" and channelId > 0) then
-    return
-  end
-  local newMsg = ""
-  local remaining = msg
-  local done
-  repeat
-    local start, finish, characterName, displayName = remaining:find("%[MDT_v2: ([^%s]+) %- ([^%]]+)%]")
-    local startLive, finishLive, characterNameLive, displayNameLive = remaining:find("%[MDTLive: ([^%s]+) %- ([^%]]+)%]")
-    if (characterName and displayName) then
-      characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      newMsg = newMsg..remaining:sub(1, start - 1)
-      newMsg = "|cffe6cc80|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
-      remaining = remaining:sub(finish + 1)
-      checkChatframeInteractive(chatFrame)
-    elseif (characterNameLive and displayNameLive) then
-      characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      newMsg = newMsg..remaining:sub(1, startLive - 1)
-      newMsg = newMsg..
-          "|Hgarrmission:mdtlive-"..
-          characterNameLive.."|h[".."|cFF00FF00Live Session: |cffe6cc80"..""..displayNameLive.."]|h|r"
-      remaining = remaining:sub(finishLive + 1)
-      checkChatframeInteractive(chatFrame)
-    else
-      done = true
-    end
-  until (done)
-  if newMsg ~= "" then
-    return false, newMsg, player, l, cs, t, flag, channelId, ...
-  end
-end
-
-local presetCommPrefix = "MDTPreset"
-MDT.versionCheckPrefix = "MDTVersion"
-
-MDT.liveSessionPrefixes = {
-  ["enabled"] = "MDTLiveEnabled",
-  ["request"] = "MDTLiveReq",
-  ["ping"] = "MDTLivePing",
-  ["obj"] = "MDTLiveObj",
-  ["objOff"] = "MDTLiveObjOff",
-  ["objChg"] = "MDTLiveObjChg",
-  ["cmd"] = "MDTLiveCmd",
-  ["note"] = "MDTLiveNote",
-  ["preset"] = "MDTLivePreset",
-  ["pull"] = "MDTLivePull",
-  ["free"] = "MDTLiveFree",
-  ["bora"] = "MDTLiveBora",
-  ["reqPre"] = "MDTLiveReqPre",
-  ["difficulty"] = "MDTLiveLvl",
-  ["poiAssignment"] = "MDTPOIAssignment",
-  ["focusMarkerAssignment"] = "MDTFocusMark",
-}
-
-local function initializeComms()
-  MDTcommsObject:RegisterComm(presetCommPrefix)
-  MDTcommsObject:RegisterComm(MDT.versionCheckPrefix)
-  for _, prefix in pairs(MDT.liveSessionPrefixes) do
-    MDTcommsObject:RegisterComm(prefix)
-  end
-  MDT.transmissionCache = {}
-  local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter or ChatFrameUtil.AddMessageEventFilter
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterFunc)
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterFunc)
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filterFunc)
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filterFunc)
-end
+MDT.transmissionCache = {}
 
 local function showMapSectionIfNeeded()
   if MDT.IsMapSectionActive and MDT.SetCurrentSection and not MDT:IsMapSectionActive() then
@@ -155,8 +69,7 @@ local function showMapSectionIfNeeded()
   end
 end
 
---handle preset chat link clicks
-hooksecurefunc("SetItemRef", function(link, text)
+function MDT:HandleChatLink(link, text)
   if (link and link:sub(0, 19) == "garrmission:mdtlive") then
     local sender = link:sub(21, string.len(link))
     local name, realm = string.match(sender, "(.*)+(.*)")
@@ -211,7 +124,7 @@ hooksecurefunc("SetItemRef", function(link, text)
     end
     return
   end
-end)
+end
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --[[
@@ -590,5 +503,3 @@ function MDT:SendToGroup(distribution, silent, preset)
   MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,
     { distribution, preset, silent })
 end
-
-initializeComms()

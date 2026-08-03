@@ -1,3 +1,4 @@
+local _, MDT = ...
 local Type, Version = "MDTNewPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local L = MDT.L

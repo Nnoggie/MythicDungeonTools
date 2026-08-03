@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
 local twipe, tinsert = table.wipe, table.insert

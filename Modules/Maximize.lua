@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local db
 local sizex, sizey
 local canvasDrawLayer = "BORDER"

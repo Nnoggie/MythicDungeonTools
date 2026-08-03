@@ -1,5 +1,5 @@
 local AceGUI = LibStub("AceGUI-3.0")
-local MDT = MDT
+local _, MDT = ...
 local db
 local tonumber, tinsert, pairs, ipairs = tonumber, table.insert, pairs, ipairs
 local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel

@@ -1,7 +1,7 @@
 ---@diagnostic disable: assign-type-mismatch, redundant-parameter
 local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
 local tinsert, SetPortraitTextureFromCreatureDisplayID, next = table.insert, SetPortraitTextureFromCreatureDisplayID, next
 

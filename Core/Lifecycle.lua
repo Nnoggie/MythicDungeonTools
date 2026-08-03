@@ -1,4 +1,4 @@
-local _, MDT = ...
+local UIAddonName, MDT = ...
 local L = MDT.L
 
 local pairs, CreateFrame = pairs, CreateFrame
@@ -21,12 +21,8 @@ function MDT:CancelAsync(name)
   MDT.asyncHandler:CancelAsync(name)
 end
 
-SLASH_MYTHICDUNGEONTOOLS1 = "/mplus"
-SLASH_MYTHICDUNGEONTOOLS2 = "/mdt"
-SLASH_MYTHICDUNGEONTOOLS3 = "/mythicdungeontools"
-
 local db
-function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
+function MDT:HandleSlashCommand(cmd, editbox)
   cmd = cmd:lower()
   local rqst, arg = strsplit(' ', cmd)
   if rqst == "devmode" then
@@ -59,18 +55,17 @@ end
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
-  return MDT[event](self, ...)
-end)
-
-function MDT.ADDON_LOADED(self, addon)
-  if addon == "MythicDungeonTools" then
+  if event == "ADDON_LOADED" then
+    local addon = ...
+    if addon ~= UIAddonName then return end
+    MDT:AttachCoreAPI()
     db = MDT:InitializeRuntime()
-    if not db then return end
-    eventFrame:UnregisterEvent("ADDON_LOADED")
+    self:UnregisterEvent("ADDON_LOADED")
+  elseif event == "GROUP_ROSTER_UPDATE" then
+    MDT.GROUP_ROSTER_UPDATE()
   end
-end
+end)
 
 local last = 0
 function MDT.GROUP_ROSTER_UPDATE()
@@ -96,15 +91,6 @@ function MDT.GROUP_ROSTER_UPDATE()
     end
     last = now
   end
-end
-
-function MDT.PLAYER_ENTERING_WORLD()
-  C_Timer.After(1, function()
-    MDT:RefreshMinimapButton()
-    MDT:ApplyXalatathVoiceLinesMute()
-    if db.loadOnStartUp and db.devMode then MDT:Async(function() MDT:ShowInterfaceInternal(true) end, "showInterface") end
-  end)
-  eventFrame:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 local initStarted

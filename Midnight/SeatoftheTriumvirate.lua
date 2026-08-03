@@ -1,5 +1,5 @@
-local addonName = ...
-local MDT = MDT
+local _, MDT = ...
+local addonName = MDT.AddonName
 local L = MDT.L
 local dungeonIndex = 11
 MDT.dungeonList[dungeonIndex] = L["Seat of the Triumvirate"]

@@ -1,4 +1,5 @@
 local _, addon = ...
+local MDT = addon
 addon.test = {}
 local T = addon.test
 

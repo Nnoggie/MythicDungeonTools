@@ -1,34 +1,13 @@
 -- Made by Nnoggie, 2017-2025
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 
 local CreateFrame, tonumber, pairs, ipairs = CreateFrame, tonumber, pairs, ipairs
 
-BINDING_HEADER_MDT = "Mythic Dungeon Tools (MDT)"
-BINDING_NAME_MDTTOGGLE = L["Toggle MDT"]
 _G["BINDING_NAME_CLICK MDTFocusMarkerButton:LeftButton"] = L["MDT Set Focus Macro"]
-
-local mythicColor = "|cFFFFFFFF"
-MDT.BackdropColor = { 0.058823399245739, 0.058823399245739, 0.058823399245739, 0.9 }
 
 local AceGUI = LibStub("AceGUI-3.0")
 local db
-local minimapIcon = LibStub("LibDBIcon-1.0")
-
-function MDT:HideMinimapButton()
-  db.minimap.hide = true
-  minimapIcon:Hide("MythicDungeonTools")
-  -- update the checkbox in settings
-  if MDT.main_frame and MDT.main_frame.minimapCheckbox then MDT.main_frame.minimapCheckbox:SetValue(false) end
-  print(L["MDT: Use /mdt minimap to show the minimap icon again"])
-end
-
-function MDT:ShowMinimapButton()
-  db.minimap.hide = false
-  minimapIcon:Refresh("MythicDungeonTools", db.minimap)
-  -- update the checkbox in settings
-  if MDT.main_frame and MDT.main_frame.minimapCheckbox then MDT.main_frame.minimapCheckbox:SetValue(true) end
-end
 
 ---@param shouldWarn boolean|nil
 function MDT:IsInRestrictedEnvironment(shouldWarn)
@@ -46,56 +25,11 @@ function MDT:CreateContextMenu(ownerRegion, generator, ...)
   return MenuUtil.CreateContextMenu(ownerRegion, generator, ...)
 end
 
----@diagnostic disable: missing-fields
-local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("MythicDungeonTools", {
-  type = "data source",
-  text = "Mythic Dungeon Tools",
-  icon = "Interface\\AddOns\\"..AddonName.."\\Textures\\MDTMinimap",
-  OnClick = function(button, buttonPressed)
-    if buttonPressed == "RightButton" then
-      if db.minimap.lock then
-        minimapIcon:Unlock("MythicDungeonTools")
-      else
-        minimapIcon:Lock("MythicDungeonTools")
-      end
-    elseif (buttonPressed == 'MiddleButton') then
-      if db.minimap.hide then
-        MDT:ShowMinimapButton()
-      else
-        MDT:HideMinimapButton()
-      end
-    else
-      MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
-    end
-  end,
-  OnTooltipShow = function(tooltip)
-    if not tooltip or not tooltip.AddLine then return end
-    tooltip:AddLine(mythicColor.."Mythic Dungeon Tools|r")
-    tooltip:AddLine(L["Click to toggle AddOn Window"])
-    tooltip:AddLine(L["Right-click to lock Minimap Button"])
-    tooltip:AddLine(L["Middle-click to disable Minimap Button"])
-  end,
-})
-
 function MDT:InitializeRuntime()
   db = MDT:InitializeSavedVariables()
   if not db then return end
-  if db.enemyForcesTooltip ~= 1 then MDT:EnableEnemyForcesTooltip() end
-  ---@diagnostic disable-next-line: param-type-mismatch
-  minimapIcon:Register("MythicDungeonTools", LDB, db.minimap)
-  if not db.minimap.hide then MDT:ShowMinimapButton() end
-  if not db.minimap.compartmentHide then
-    minimapIcon:AddButtonToCompartment("MythicDungeonTools")
-  end
   MDT:InitializeFadeFrame()
-  if db.announceDungeonReset then MDT:EnableDungeonResetAnnounceHook() end
   return db
-end
-
-function MDT:RefreshMinimapButton()
-  if db and not db.minimap.hide then
-    minimapIcon:Refresh("MythicDungeonTools", db.minimap)
-  end
 end
 
 BINDING_NAME_MDTTOGGLE = L["Toggle Window"]

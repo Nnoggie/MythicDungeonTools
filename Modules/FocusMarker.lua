@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
 local AceGUI = LibStub("AceGUI-3.0")
@@ -853,7 +853,7 @@ local startupFrame = CreateFrame("Frame")
 startupFrame:RegisterEvent("ADDON_LOADED")
 startupFrame:RegisterEvent("PLAYER_LOGIN")
 startupFrame:SetScript("OnEvent", function(self, event, addonName)
-  if event == "ADDON_LOADED" and addonName ~= "MythicDungeonTools" then return end
+  if event == "ADDON_LOADED" and addonName ~= MDT.UIAddonName then return end
   if not MDT:GetDB() then return end
 
   C_Timer.After(0, function()

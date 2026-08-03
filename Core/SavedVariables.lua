@@ -84,6 +84,7 @@ function MDT:GetDefaultSavedVariables()
 end
 
 function MDT:InitializeSavedVariables()
+  if db then return db end
   db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
   if not db then return end
 
@@ -109,3 +110,5 @@ function MDT:HardReset()
   MythicDungeonToolsDB = nil
   ReloadUI()
 end
+
+MDT:InitializeSavedVariables()

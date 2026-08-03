@@ -7,6 +7,8 @@ ignore:
   - scripts
   - Developer
 enable-nolib-creation: no
+move-folders:
+  MythicDungeonTools/MythicDungeonTools_UI: MythicDungeonTools_UI
 externals:
   libs/AceComm-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceComm-3.0
   libs/AceDB-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceDB-3.0

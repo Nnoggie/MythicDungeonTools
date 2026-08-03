@@ -1,4 +1,4 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
@@ -375,7 +375,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString:Show()
     frame.topPanelString:SetFont(frame.topPanelString:GetFont() or '', 20, '')
     frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "ARTWORK", nil, 7)
-    frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\MDTFull")
+    frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..MDT.AddonName.."\\Textures\\MDTFull")
     frame.topPanelLogo:SetWidth(30)
     frame.topPanelLogo:SetHeight(30)
     frame.topPanelLogo:SetPoint("RIGHT", frame.topPanelString, "LEFT", -5, -1)
@@ -417,7 +417,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
   frame.bottomLeftPanelString:SetTextColor(1, 1, 1, 1)
   ---@diagnostic disable-next-line: redundant-parameter
-  frame.bottomLeftPanelString:SetText(" v"..C_AddOns.GetAddOnMetadata(AddonName, "Version"))
+  frame.bottomLeftPanelString:SetText(" v"..C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version"))
   frame.bottomLeftPanelString:Show()
   --add clickarea
   frame.bottomLeftPanelString.clickArea = CreateFrame("Button", "MDTBottomLeftPanelClickArea", frame)
@@ -460,6 +460,10 @@ function MDT:MakeTopBottomTextures(frame)
 end
 
 function MDT:MakeCopyHelper(frame)
+  if MDT.copyHelper then
+    MDT.copyHelper:SetParent(frame)
+    return MDT.copyHelper
+  end
   MDT.copyHelper = CreateFrame("Frame", "MDTCopyHelper", frame)
   MDT.copyHelper:SetFrameStrata("TOOLTIP")
   MDT.copyHelper:SetFrameLevel(200)
@@ -1039,7 +1043,7 @@ function MDT:InitializeMainFrame()
   main_frame.mainFrametex:SetColorTexture(unpack(MDT.BackdropColor))
 
   ---@diagnostic disable-next-line: redundant-parameter
-  local version = C_AddOns.GetAddOnMetadata(AddonName, "Version"):gsub("%.", "")
+  local version = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version"):gsub("%.", "")
   db.version = tonumber(version)
   -- Set frame position
   main_frame:ClearAllPoints()

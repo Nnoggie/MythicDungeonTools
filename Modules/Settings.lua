@@ -1,10 +1,9 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
 local panelHeight = 30
 
 local AceGUI = LibStub("AceGUI-3.0")
-local minimapIcon = LibStub("LibDBIcon-1.0")
 
 ---Dropdown menu items for color settings frame
 local colorPaletteNames = {
@@ -33,7 +32,7 @@ MDT:RegisterNavigationSection({
   key = "settings",
   name = L["Settings"],
   tooltip = L["Settings"],
-  texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons",
+  texture = "Interface\\AddOns\\"..MDT.AddonName.."\\Textures\\icons",
   texCoords = { 0, 0.25, 0.25, 0.5 },
   iconSize = 25,
   iconOffsetX = 0.75,
@@ -201,12 +200,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.minimapCheckbox:SetWidth(settingWidth)
   frame.minimapCheckbox:SetValue(not db.minimap.hide)
   frame.minimapCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.minimap.hide = not value
-    if not db.minimap.hide then
-      minimapIcon:Refresh("MythicDungeonTools", db.minimap)
-    else
-      minimapIcon:Hide("MythicDungeonTools")
-    end
+    if value then MDT:ShowMinimapButton() else MDT:HideMinimapButton() end
   end)
   frame.settingsGeneralColumn:AddChild(frame.minimapCheckbox)
 
@@ -215,12 +209,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.compartmentCheckbox:SetWidth(settingWidth)
   frame.compartmentCheckbox:SetValue(not db.minimap.compartmentHide)
   frame.compartmentCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.minimap.compartmentHide = not value
-    if not db.minimap.compartmentHide then
-      minimapIcon:AddButtonToCompartment("MythicDungeonTools")
-    else
-      minimapIcon:RemoveButtonFromCompartment("MythicDungeonTools")
-    end
+    MDT:SetCompartmentButtonShown(value)
   end)
   if MDT:IsRetail() then
     frame.settingsGeneralColumn:AddChild(frame.compartmentCheckbox)

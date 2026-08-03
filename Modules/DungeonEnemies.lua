@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local db
 local tonumber, tinsert, pairs, ipairs, tostring, twipe, max, tremove, DrawLine = tonumber, table.insert, pairs, ipairs,
     tostring, table.wipe, math.max, table.remove, DrawLine

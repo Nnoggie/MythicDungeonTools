@@ -1,9 +1,28 @@
 local addonName, MDT = ...
-_G["MDT"] = MDT
-MDT.L = {}
+local API = {}
+_G.MDT = MDT
+_G.MythicDungeonToolsAPI = API
 
-local AceGUI = LibStub("AceGUI-3.0")
-local L
+MDT.API = API
+MDT.AddonName = addonName
+MDT.L = setmetatable({
+  ["Click to toggle AddOn Window"] = "Click to toggle AddOn Window",
+  ["chatNoninteractiveWarning"] = "Chat frame is currently set to noninteractive, you will not be able to click on MDT routes.",
+  ["combatLoggingStarted"] = "Started combat logging.",
+  ["combatLoggingStopped"] = "Ended combat logging.",
+  ["dungeonResetAnnouncement"] = "<Dungeons have been reset!>",
+  ["Enemy Info NPC Enemy Forces"] = "Enemy Forces",
+  ["focusMarkerChatAnnouncement"] = "My Focus Marker is {rt%d}",
+  ["incompatibleVersionError"] = "This version of World of Warcraft is not compatible with Mythic Dungeon Tools.",
+  ["MDT Set Focus Macro"] = "MDT Set Focus Macro",
+  ["Middle-click to disable Minimap Button"] = "Middle-click to disable Minimap Button",
+  ["Right-click to lock Minimap Button"] = "Right-click to lock Minimap Button",
+  ["Toggle MDT"] = "Toggle MDT",
+}, {
+  __index = function(_, key)
+    return key
+  end,
+})
 
 function MDT:IsRetail()
   local gameVersion = select(4, GetBuildInfo())
@@ -15,29 +34,28 @@ function MDT:IsCompatibleVersion()
 end
 
 function MDT:ShowFallbackWindow()
-  if not MDT.fallbackFrame then
-    L = MDT.L
-    local gameVersionString = GetBuildInfo()
-    local addonVersionString = C_AddOns and C_AddOns.GetAddOnMetadata(addonName, "Version") or GetAddOnMetadata(addonName, "Version")
-    local labelText = L["incompatibleVersionError"].."\n\nGame: "..gameVersionString.."\nMDT: "..addonVersionString
-    MDT.fallbackFrame = AceGUI:Create("Frame")
-    _G["MDTFallbackFrame"] = MDT.fallbackFrame.frame
-    tinsert(UISpecialFrames, "MDTFallbackFrame")
-    local fallbackFrame = MDT.fallbackFrame
-    fallbackFrame:EnableResize(false)
-    fallbackFrame:SetWidth(600)
-    fallbackFrame:SetHeight(300)
-    fallbackFrame:EnableResize(false)
-    fallbackFrame:SetLayout("Flow")
-    fallbackFrame:SetCallback("OnClose", function(widget) end)
-    fallbackFrame:SetTitle(L["MDT Error"])
-    fallbackFrame.label = AceGUI:Create("Label")
-    fallbackFrame.label:SetWidth(600)
-    fallbackFrame.label:SetFontObject("GameFontNormalLarge")
-    fallbackFrame.label.label:SetFont(fallbackFrame.label.label:GetFont(), 30);
-    fallbackFrame.label.label:SetTextColor(1, 0, 0)
-    fallbackFrame.label:SetText(labelText)
-    fallbackFrame:AddChild(fallbackFrame.label)
-  end
-  MDT.fallbackFrame:Show()
+  local gameVersionString = GetBuildInfo()
+  local addonVersionString = C_AddOns.GetAddOnMetadata(addonName, "Version")
+  StaticPopupDialogs.MDT_INCOMPATIBLE_VERSION = {
+    text = MDT.L["incompatibleVersionError"].."\n\nGame: "..gameVersionString.."\nMDT: "..addonVersionString,
+    button1 = OKAY,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+  }
+  StaticPopup_Show("MDT_INCOMPATIBLE_VERSION")
 end
+
+function MDT:ExportAPI(methodName)
+  API[methodName] = function(_, ...)
+    return MDT[methodName](MDT, ...)
+  end
+end
+
+function API:GetAddonName()
+  return addonName
+end
+
+MDT:ExportAPI("IsRetail")
+MDT:ExportAPI("IsCompatibleVersion")
+MDT:ExportAPI("ShowFallbackWindow")

@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local L = MDT.L

@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 
 -- A Schema describes the structure of a table. In it you can define how
 -- lua tables should be exported to their string representation. This makes it possible to

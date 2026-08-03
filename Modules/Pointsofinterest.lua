@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
 local db
 local tinsert, slen, pairs, tremove, twipe = table.insert, string.len, pairs, table.remove, table.wipe

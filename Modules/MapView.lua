@@ -1,4 +1,4 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 local canvasDrawLayer = "BORDER"
 
@@ -76,7 +76,7 @@ local function createAlphaWarning(frame)
   warning:SetBackdropBorderColor(1, 0, 0, 1)
 
   local icon = warning:CreateTexture(nil, "ARTWORK")
-  icon:SetTexture("Interface\\AddOns\\"..AddonName.."\\Textures\\icons")
+  icon:SetTexture("Interface\\AddOns\\"..MDT.AddonName.."\\Textures\\icons")
   icon:SetTexCoord(0.75, 1, 0.25, 0.5)
   icon:SetSize(48, 48)
   icon:SetPoint("LEFT", warning, "LEFT", 8, 0)
@@ -525,7 +525,7 @@ function MDT:MakeMapTexture(frame)
       end
     end
 
-    local version = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+    local version = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version")
     if version and version:lower():find("-alpha", 1, true) then
       frame.mapPanelFrame.alphaWatermarkLabels = {}
       frame.mapPanelFrame:SetScript("OnSizeChanged", layoutAlphaWatermark)

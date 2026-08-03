@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local slen = string.len
 
 -- The purpose of these functions is to provide a much better way to export the dungeon data lua tables to their string representations.

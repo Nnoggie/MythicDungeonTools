@@ -1,4 +1,4 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local AceGUI = LibStub("AceGUI-3.0")
 local L = MDT.L
 local tinsert, slen = table.insert, string.len
@@ -10,7 +10,7 @@ local caughtErrors = {}
 local function getDiagnostics()
   local presetExport = MDT:TableToString(MDT:GetCurrentPreset())
   ---@diagnostic disable-next-line: redundant-parameter
-  local addonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+  local addonVersion = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version")
   local locale = GetLocale()
   local dateString = date("%d/%m/%y %H:%M:%S")
   local gameVersion = select(4, GetBuildInfo())
@@ -76,6 +76,7 @@ function MDT:DisplayErrors(force)
     _G["MDTErrorFrame"] = MDT.errorFrame.frame
     tinsert(UISpecialFrames, "MDTErrorFrame")
     local errorFrame = MDT.errorFrame
+    if not MDT.copyHelper then MDT:MakeCopyHelper(errorFrame.frame) end
     errorFrame:EnableResize(false)
     errorFrame:SetWidth(800)
     errorFrame:SetHeight(600)

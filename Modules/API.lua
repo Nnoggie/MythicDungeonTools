@@ -1,11 +1,11 @@
-local MDT = MDT
+local _, MDT = ...
 
---- AddOn / WeakAura Creators can use these functions to retrieve data from MDT
+--- AddOn / WeakAura creators can use MythicDungeonToolsAPI to retrieve data from MDT.
 
 do
   local dungeonCountCache = {}
 
-  --- Usage: local count, maxCountNormal = MDT:GetEnemyForces(npcId)
+  --- Usage: local count, maxCountNormal = MythicDungeonToolsAPI:GetEnemyForces(npcId)
   --- Prefers to find the npc in the current dungeon of the player
   --- @param npcId number | any
   --- @return number | nil, number | nil, number | nil, number | nil

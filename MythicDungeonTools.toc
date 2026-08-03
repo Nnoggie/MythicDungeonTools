@@ -18,18 +18,10 @@
 ## Notes-zhTW: 幫助你計算 M+ 的小怪%，規劃出最佳拉怪路線。
 ## OptionalDeps: !!AddonLocale, LibStub, Ace3
 ## SavedVariables: MythicDungeonToolsDB
+## LoadSavedVariablesFirst: 1
 ## IconTexture: Interface\AddOns\MythicDungeonTools\Textures\MDTFull
 
-libs\load_libs.xml
+libs\load_core_libs.xml
 BuildCheck.lua
-locales.xml
-AceGUIWidgets\load_widgets.xml
-Utility.lua
-Core\SavedVariables.lua
-MythicDungeonTools.lua
-Core\Lifecycle.lua
-Modules\load_modules.xml
-#@do-not-package@
-Developer\load_developer.xml
-#@end-do-not-package@
-Midnight\load_midnight.xml [AllowLoadGameType mainline]
+Core\Bootstrap.lua
+Core\CombatLogging.lua

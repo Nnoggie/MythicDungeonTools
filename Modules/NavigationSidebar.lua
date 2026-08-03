@@ -1,10 +1,10 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 local navigationSidebarWidth = 42
 local panelHeight = 30
-local defaultIconTexture = "Interface\\AddOns\\"..AddonName.."\\Textures\\navigationSidebarIcons"
+local defaultIconTexture = "Interface\\AddOns\\"..MDT.AddonName.."\\Textures\\navigationSidebarIcons"
 
 MDT.navigationSections = {}
 MDT.navigationSectionLookup = {}

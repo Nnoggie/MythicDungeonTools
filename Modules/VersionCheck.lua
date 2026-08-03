@@ -1,4 +1,4 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
 local AceGUI = LibStub("AceGUI-3.0")
@@ -10,7 +10,7 @@ local changeLogRequestPrefix = "C"
 local changeLogHeaderPrefix = "H"
 local changeLogNotePrefix = "N"
 local versionCheckCooldown = 300
-local currentVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+local currentVersion = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version")
 local latestVersion = currentVersion
 local lastVersionRequestAt = -versionCheckCooldown
 
