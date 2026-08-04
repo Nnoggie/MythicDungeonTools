@@ -1,6 +1,6 @@
 ## Interface: 120100
 # WOW_INTERFACE_TARGETS: mainline-beta, mainline-test, mainline
-## Title: Mythic Dungeon Tools
+## Title: Mythic Dungeon Tools (MDT)
 ## Author: Nnoggie
 ## Version: 6.2.0-alpha3
 ## X-Curse-Project-ID: 288981
