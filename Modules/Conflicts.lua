@@ -97,7 +97,7 @@ function MDT:CheckAddonConflicts()
         ---@diagnostic disable-next-line: redundant-parameter
         local version = C_AddOns.GetAddOnMetadata(i, "Version"):gsub("%.", "")
         local versionNum = tonumber(version)
-        candidate.detected = versionNum <= candidate.version
+        candidate.detected = versionNum ~= nil and versionNum <= candidate.version
       else
         candidate.detected = true
       end
