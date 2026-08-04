@@ -53,6 +53,8 @@ function MDT:GetDB()
   return db
 end
 
+MDT:ExportAPI("GetDB")
+
 function API:GetBackdropColor()
   return unpack(MDT.BackdropColor)
 end
@@ -69,16 +71,38 @@ function MDT:ResetDataCache()
 end
 
 local uiHandlers
+local uiPluginAPI
 local uiLoading
 local pendingPresetComms = {}
+local pendingUIInitializers = {}
 
-function API:AttachUI(handlers)
+local function runUIInitializer(initializer)
+  xpcall(function() initializer(uiPluginAPI) end, geterrorhandler())
+end
+
+function API:RegisterUIInitializer(initializer)
+  assert(type(initializer) == "function", "MythicDungeonTools UI initializer must be a function")
+  if uiPluginAPI then
+    runUIInitializer(initializer)
+  else
+    pendingUIInitializers[#pendingUIInitializers + 1] = initializer
+  end
+end
+
+function API:AttachUI(handlers, pluginAPI)
   assert(not uiHandlers, "MythicDungeonTools UI already attached")
   assert(type(handlers) == "table", "MythicDungeonTools UI handlers must be a table")
   for _, methodName in ipairs({ "ShowInterface", "HandleSlashCommand", "HandleChatLink", "OnCommReceived", "GetEnemyForces", "GetDungeonName", "GetDungeonSublevels" }) do
     assert(type(handlers[methodName]) == "function", "Missing MythicDungeonTools UI handler: "..methodName)
   end
+  assert(type(pluginAPI) == "table", "MythicDungeonTools UI plugin API must be a table")
+  for _, methodName in ipairs({ "RegisterNavigationSection", "GetCurrentSection", "SetCurrentSection", "GetNavigationSectionContentFrame", "HideAllDialogs", "RegisterDungeonData" }) do
+    assert(type(pluginAPI[methodName]) == "function", "Missing MythicDungeonTools UI plugin method: "..methodName)
+  end
   uiHandlers = handlers
+  uiPluginAPI = pluginAPI
+  for _, initializer in ipairs(pendingUIInitializers) do runUIInitializer(initializer) end
+  wipe(pendingUIInitializers)
 end
 
 local function isUILoaded()
