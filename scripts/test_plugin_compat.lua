@@ -65,12 +65,14 @@ function LibStub(name, silent)
   error("missing mock library: "..name)
 end
 
-assert(loadfile(root.."/BuildCheck.lua"))("MythicDungeonTools", {})
+local core = {}
+assert(loadfile(root.."/BuildCheck.lua"))("MythicDungeonTools", core)
 local coreSource = read("Core/Bootstrap.lua")
 local corePrefix = assert(coreSource:match("^([%s%S]-)\nlocal function isUILoaded%(%).*"))
-assert(loadstring(corePrefix, "@Core/Bootstrap.lua"))("MythicDungeonTools", _G.MDT)
+assert(loadstring(corePrefix, "@Core/Bootstrap.lua"))("MythicDungeonTools", core)
 
 local API = assert(_G.MythicDungeonToolsAPI)
+assert(_G.MDT == nil)
 assert(type(API.GetDB) == "function")
 assert(type(API.RegisterUIInitializer) == "function")
 

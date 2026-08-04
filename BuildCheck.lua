@@ -1,6 +1,5 @@
 local addonName, MDT = ...
 local API = {}
-_G.MDT = MDT
 _G.MythicDungeonToolsAPI = API
 
 MDT.API = API
