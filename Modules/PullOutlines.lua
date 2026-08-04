@@ -1,5 +1,5 @@
 local _, MDT = ...
-local twipe, tinsert, tremove, tgetn = table.wipe, table.insert, table.remove, table.getn
+local tinsert, tremove = table.insert, table.remove
 
 local NONACTIVE_ALPHA = 0.5
 
@@ -49,18 +49,6 @@ local function convex_hull(pts)
   return hullpts
 end
 
-local function cross(a, b)
-  return a[1] * b[2] - a[2] * b[1]
-end
-
-local function area(points)
-  local res = cross(points[#points], points[1])
-  for i = 1, #points - 1 do
-    res = res + cross(points[i], points[i + 1])
-  end
-  return math.abs(res) / 2
-end
-
 local function centroid(pts)
   local rx = 0
   local ry = 0
@@ -98,7 +86,7 @@ end
 local activeTextures = {}
 local texturePool = {}
 local function getTexture()
-  local size = tgetn(texturePool)
+  local size = #texturePool
   if size == 0 then
     return MDT.main_frame.mapPanelFrame:CreateTexture(nil, "OVERLAY", nil, 0)
   else
@@ -157,7 +145,7 @@ function MDT:PullClickAreaOnLeave()
 end
 
 local function getFontString()
-  local size = tgetn(fontStringPool)
+  local size = #fontStringPool
   if size == 0 then
     local fsFrame = CreateFrame("Frame", "MDTFontStringContainerFrame"..frameIndex, MDT.main_frame.mapPanelFrame)
     frameIndex = frameIndex + 1
@@ -322,7 +310,7 @@ local function getPullVertices(p, blips)
         if MDT:IsCloneIncluded(enemyIdx, cloneIdx) then
           for _, blip in pairs(blips) do
             if (blip.enemyIdx == enemyIdx) and (blip.cloneIdx == cloneIdx) then
-              local endPoint, endRelativeTo, endRelativePoint, endX, endY = blip:GetPoint()
+              local endX, endY = select(4, blip:GetPoint())
               table.insert(vertices, { endX, endY, blip.normalScale })
               break
             end

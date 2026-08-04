@@ -1,6 +1,6 @@
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
-local MDTcommsObject = MDTcommsObject
+local MDTcommsObject = MDT.commsObject
 local AceGUI = LibStub("AceGUI-3.0")
 
 local MACRO_NAME = "MDTFocusMarker"
@@ -446,22 +446,6 @@ end
 getMacroSettings = function()
   local db = MDT:GetDB()
   if not db then return end
-  db.focusMarker = db.focusMarker or {}
-  if db.focusMarker.announceReadyCheck == nil then
-    db.focusMarker.announceReadyCheck = false
-  end
-  if db.focusMarker.useMacro == nil then
-    db.focusMarker.useMacro = false
-  end
-  if db.focusMarker.disableTargetMarkerInRaid == nil then
-    db.focusMarker.disableTargetMarkerInRaid = false
-  end
-  if db.focusMarker.preserveExistingTargetMarkers == nil then
-    db.focusMarker.preserveExistingTargetMarkers = true
-  end
-  if db.focusMarker.suppressNotifications == nil then
-    db.focusMarker.suppressNotifications = false
-  end
   return db.focusMarker
 end
 
@@ -669,7 +653,7 @@ end
 
 local function sendFocusMarkerPayload(mdt, payload, distribution, target)
   if not distribution then return end
-  local export = mdt:TableToString(payload, false, 5)
+  local export = mdt:TableToString(payload)
   MDTcommsObject:SendCommMessage(mdt.liveSessionPrefixes.focusMarkerAssignment, export, distribution, target, "ALERT")
 end
 
@@ -869,7 +853,7 @@ local startupFrame = CreateFrame("Frame")
 startupFrame:RegisterEvent("ADDON_LOADED")
 startupFrame:RegisterEvent("PLAYER_LOGIN")
 startupFrame:SetScript("OnEvent", function(self, event, addonName)
-  if event == "ADDON_LOADED" and addonName ~= "MythicDungeonTools" then return end
+  if event == "ADDON_LOADED" and addonName ~= MDT.UIAddonName then return end
   if not MDT:GetDB() then return end
 
   C_Timer.After(0, function()

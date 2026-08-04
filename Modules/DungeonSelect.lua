@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local L = MDT.L
@@ -21,12 +21,10 @@ MDT.dungeonSelectionToIndex = {}
 
 do
   if MDT:IsRetail() then
+    tinsert(MDT.seasonList, L["Midnight Season 2"])
+    tinsert(MDT.dungeonSelectionToIndex, { 160, 161, 162, 163, 164, 42, 20, 17 })
     tinsert(MDT.seasonList, L["Midnight Season 1"])
     tinsert(MDT.dungeonSelectionToIndex, { 45, 11, 150, 151, 152, 153, 154, 155 })
-  end
-  if MDT:IsMop() then
-    tinsert(MDT.seasonList, L["MoP Challenge Mode"])
-    tinsert(MDT.dungeonSelectionToIndex, { 130, 131, 132, 133, 134, 135, 136, 137, 138 })
   end
 end
 
@@ -95,6 +93,20 @@ MDT.knownDungeons = {
   [121] = "Theater of Pain",
   [122] = "Mechagon - Workshop",
   [123] = "Eco-Dome Al'dani",
+  [130] = "Gate of the Setting Sun",
+  [131] = "Mogu'shan Palace",
+  [132] = "Scarlet Halls",
+  [133] = "Scarlet Monastery",
+  [134] = "Scholomance",
+  [135] = "Shado-Pan Monastery",
+  [136] = "Siege of Niuzao Temple",
+  [137] = "Stormstout Brewery",
+  [138] = "Temple of the Jade Serpent",
+  [160] = "Murder Row",
+  [161] = "Den of Nalorakk",
+  [162] = "The Blinding Vale",
+  [163] = "Voidscar Arena",
+  [164] = "Altar of Fangs",
 }
 
 local seasonList = MDT.seasonList
@@ -220,13 +232,6 @@ function MDT:UpdateDungeonDropDown()
       local timer
       if mapInfo.mapID then
         timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID))
-        -- TODO: this is completely gone in S2
-        -- we want to always show the correct timer including the Challenger's Peril affix
-        -- add 90s if we are not currently in a key
-        -- local activeKeystoneLevel = select(1, C_ChallengeMode.GetActiveKeystoneInfo())
-        -- if timer and (not activeKeystoneLevel or activeKeystoneLevel < 7) then
-        --   timer = timer + 90
-        -- end
       end
       GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
       GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)

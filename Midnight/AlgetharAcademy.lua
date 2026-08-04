@@ -1,5 +1,5 @@
-local addonName = ...
-local MDT = MDT
+local _, MDT = ...
+local addonName = MDT.AddonName
 local L = MDT.L
 local dungeonIndex = 45
 MDT.dungeonList[dungeonIndex] = L["AlgetharAcademy"]
@@ -23,7 +23,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AlgetharAcademy"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 460, teeming = 1000, teemingEnabled = true }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 460 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -321,7 +321,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [3] = {
-    ["name"] = "Arcane Ravager",
+    ["name"] = "Vicious Ravager",
     ["id"] = 196671,
     ["count"] = 15,
     ["health"] = 3645228,

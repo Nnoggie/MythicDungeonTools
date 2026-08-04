@@ -1,6 +1,6 @@
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
-local MDTcommsObject = MDTcommsObject
+local MDTcommsObject = MDT.commsObject
 local twipe, tinsert = table.wipe, table.insert
 
 local timer
@@ -156,7 +156,7 @@ function MDT:LiveSession_SendObject(obj)
   if self:GetCurrentPreset().uid == self.livePresetUID then
     local distribution = self:IsPlayerInGroup()
     if distribution then
-      local export = MDT:TableToString(obj, false, 5)
+      local export = MDT:TableToString(obj)
       local silent, fromLiveSession = true, true
       MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.obj, export, distribution, nil, "BULK", MDT.displaySendingProgress,
         { distribution, nil, silent, fromLiveSession })
@@ -180,7 +180,7 @@ function MDT:LiveSession_SendUpdatedObjects(changedObjects)
   if self:GetCurrentPreset().uid == self.livePresetUID then
     local distribution = self:IsPlayerInGroup()
     if distribution then
-      local export = MDT:TableToString(changedObjects, false, 5)
+      local export = MDT:TableToString(changedObjects)
       MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.objChg, export, distribution, nil, "ALERT")
     end
   end
@@ -216,7 +216,7 @@ function MDT:LiveSession_SendPreset(preset)
     self:SetUniqueID(preset)
     self:EnsurePresetCreatedBy(preset)
     preset.difficulty = db.currentDifficulty
-    local export = MDT:TableToString(preset, false, 5)
+    local export = MDT:TableToString(preset)
     local silent, fromLiveSession = true, true
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "BULK", MDT.displaySendingProgress,
       { distribution, preset, silent, fromLiveSession })
@@ -227,29 +227,8 @@ end
 function MDT:LiveSession_SendPulls(pulls)
   local distribution = self:IsPlayerInGroup()
   if distribution then
-    local msg = MDT:TableToString(pulls, false, 5)
+    local msg = MDT:TableToString(pulls)
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.pull, msg, distribution, nil, "ALERT")
-  end
-end
-
----Sends Affix Week Change
-function MDT:LiveSession_SendAffixWeek(week)
-  local distribution = self:IsPlayerInGroup()
-  if distribution then
-    MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.week, week.."", distribution, nil, "ALERT")
-  end
-end
-
-do
-  local colorTimer
-  ---LiveSession_QueueColorUpdate
-  ---Disgusting workaround for shitty colorpicker
-  ---Only send an update once a color of a pull has not changed for 0.2 seconds
-  function MDT:LiveSession_QueueColorUpdate()
-    if colorTimer then colorTimer:Cancel() end
-    colorTimer = C_Timer.NewTimer(0.2, function()
-      self:LiveSession_SendPulls(self:GetPulls())
-    end)
   end
 end
 
@@ -265,7 +244,7 @@ end
 function MDT:LiveSession_SendPOIAssignment(sublevel, poiIdx, value)
   local distribution = self:IsPlayerInGroup()
   if distribution then
-    local export = MDT:TableToString({ sublevel, poiIdx, value }, false, 5)
+    local export = MDT:TableToString({ sublevel, poiIdx, value })
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.poiAssignment, export, distribution, nil, "ALERT")
   end
 end

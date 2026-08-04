@@ -1,219 +1,43 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
-local Compresser = LibStub:GetLibrary("LibCompress")
-local Encoder = Compresser:GetAddonEncodeTable()
-local Serializer = LibStub:GetLibrary("AceSerializer-3.0")
-local LibDeflate = LibStub:GetLibrary("LibDeflate")
-local configForDeflate = {
-  [1] = { level = 1 },
-  [2] = { level = 2 },
-  [3] = { level = 3 },
-  [4] = { level = 4 },
-  [5] = { level = 5 },
-  [6] = { level = 6 },
-  [7] = { level = 7 },
-  [8] = { level = 8 },
-  [9] = { level = 9 },
-}
-MDTcommsObject = LibStub("AceAddon-3.0"):NewAddon("MDTCommsObject", "AceComm-3.0", "AceSerializer-3.0")
-local numActiveTransmissions = 0
+local LegacyCompressor = LibStub:GetLibrary("LibCompress")
+local LegacySerializer = LibStub:GetLibrary("AceSerializer-3.0")
+local LegacyDeflate = LibStub:GetLibrary("LibDeflate")
+local MDTcommsObject = MDT.commsObject
+local presetCommPrefix = MDT.presetCommPrefix
 
 -- Lua APIs
-local string_char, tremove, tinsert = string.char, table.remove, table.insert
+local tremove = table.remove
 local pairs, type, unpack = pairs, type, unpack
-local bit_band, bit_lshift, bit_rshift = bit.band, bit.lshift, bit.rshift
 
---Based on code from WeakAuras2, all credit goes to the authors
-local bytetoB64 = {
-  [0] = "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "(",
-  ")"
-}
+local uidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()"
 
-local B64tobyte = {
-  a = 0,
-  b = 1,
-  c = 2,
-  d = 3,
-  e = 4,
-  f = 5,
-  g = 6,
-  h = 7,
-  i = 8,
-  j = 9,
-  k = 10,
-  l = 11,
-  m = 12,
-  n = 13,
-  o = 14,
-  p = 15,
-  q = 16,
-  r = 17,
-  s = 18,
-  t = 19,
-  u = 20,
-  v = 21,
-  w = 22,
-  x = 23,
-  y = 24,
-  z = 25,
-  A = 26,
-  B = 27,
-  C = 28,
-  D = 29,
-  E = 30,
-  F = 31,
-  G = 32,
-  H = 33,
-  I = 34,
-  J = 35,
-  K = 36,
-  L = 37,
-  M = 38,
-  N = 39,
-  O = 40,
-  P = 41,
-  Q = 42,
-  R = 43,
-  S = 44,
-  T = 45,
-  U = 46,
-  V = 47,
-  W = 48,
-  X = 49,
-  Y = 50,
-  Z = 51,
-  ["0"] = 52,
-  ["1"] = 53,
-  ["2"] = 54,
-  ["3"] = 55,
-  ["4"] = 56,
-  ["5"] = 57,
-  ["6"] = 58,
-  ["7"] = 59,
-  ["8"] = 60,
-  ["9"] = 61,
-  ["("] = 62,
-  [")"] = 63
-}
+-- "~" cannot start either legacy LibDeflate encoding, so this marker cannot collide with existing exports.
+local encodingPrefix = "!~MDT2~"
 
--- This code is based on the Encode7Bit algorithm from LibCompress
--- Credit goes to Galmok (galmok@gmail.com)
-local decodeB64Table = {}
-
-local function decodeB64(str)
-  local bit8 = decodeB64Table
-  local decoded_size = 0
-  local ch
-  local i = 1
-  local bitfield_len = 0
-  local bitfield = 0
-  local l = #str
-  while true do
-    if bitfield_len >= 8 then
-      decoded_size = decoded_size + 1
-      bit8[decoded_size] = string_char(bit_band(bitfield, 255))
-      bitfield = bit_rshift(bitfield, 8)
-      bitfield_len = bitfield_len - 8
-    end
-    ch = B64tobyte[str:sub(i, i)]
-    bitfield = bitfield + bit_lshift(ch or 0, bitfield_len)
-    bitfield_len = bitfield_len + 6
-    if i > l then
-      break
-    end
-    i = i + 1
-  end
-  return table.concat(bit8, "", 1, decoded_size)
-end
-
-function MDT:TableToString(inTable, forChat, level)
-  local serialized = Serializer:Serialize(inTable)
-  local compressed = LibDeflate:CompressDeflate(serialized, configForDeflate[level])
-  -- prepend with "!" so that we know that it is not a legacy compression
-  -- also this way, old versions will error out due to the "bad" encoding
-  local encoded = "!"
-  if (forChat) then
-    encoded = encoded..LibDeflate:EncodeForPrint(compressed)
-  else
-    encoded = encoded..LibDeflate:EncodeForWoWAddonChannel(compressed)
-  end
-  return encoded
+function MDT:TableToString(inTable)
+  local serialized = C_EncodingUtil.SerializeCBOR(inTable)
+  local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate)
+  local encoded = C_EncodingUtil.EncodeBase64(compressed)
+  return encodingPrefix..encoded
 end
 
 function MDT:StringToTable(inString, fromChat)
-  -- if gsub strips off a ! at the beginning then we know that this is not a legacy encoding
+  if inString:sub(1, #encodingPrefix) == encodingPrefix then
+    local decoded = C_EncodingUtil.DecodeBase64(inString:sub(#encodingPrefix + 1))
+    if not decoded then return "Error decoding." end
+    local decompressed = C_EncodingUtil.DecompressString(decoded, Enum.CompressionMethod.Deflate)
+    if not decompressed then return "Error decompressing." end
+    return C_EncodingUtil.DeserializeCBOR(decompressed) or "Error deserializing."
+  end
+
+  -- Legacy "!" exports use LibDeflate; strings without the marker use LibCompress.
   local encoded, usesDeflate = inString:gsub("^%!", "")
   local decoded
   if (fromChat) then
-    if usesDeflate == 1 then
-      decoded = LibDeflate:DecodeForPrint(encoded)
-    else
-      decoded = decodeB64(encoded)
-    end
+    decoded = LegacyDeflate:DecodeForPrint(encoded)
   else
-    decoded = LibDeflate:DecodeForWoWAddonChannel(encoded)
+    decoded = LegacyDeflate:DecodeForWoWAddonChannel(encoded)
   end
 
   if not decoded then
@@ -222,110 +46,22 @@ function MDT:StringToTable(inString, fromChat)
 
   local decompressed, errorMsg = nil, "unknown compression method"
   if usesDeflate == 1 then
-    decompressed = LibDeflate:DecompressDeflate(decoded)
+    decompressed = LegacyDeflate:DecompressDeflate(decoded)
   else
-    decompressed, errorMsg = Compresser:Decompress(decoded)
+    decompressed, errorMsg = LegacyCompressor:Decompress(decoded)
   end
   if not (decompressed) then
     return "Error decompressing: "..errorMsg
   end
 
-  local success, deserialized = Serializer:Deserialize(decompressed)
+  local success, deserialized = LegacySerializer:Deserialize(decompressed)
   if not (success) then
     return "Error deserializing "..deserialized
   end
   return deserialized
 end
 
-local checkChatframeInteractive
-do
-  local lastPrintTime = 0
-  checkChatframeInteractive = function(chatFrame)
-    if chatFrame and chatFrame.isUninteractable then
-      local currentTime = GetTime()
-      if currentTime - lastPrintTime >= 5 * 60 then
-        C_Timer.After(0.2, function()
-          print("MDT: |cFFFF0000Warning!|r "..L["chatNoninteractiveWarning"])
-        end)
-        lastPrintTime = currentTime
-      end
-    end
-  end
-end
-
-local function filterFunc(chatFrame, event, msg, player, l, cs, t, flag, channelId, ...)
-  if flag == "GM" or flag == "DEV" or (event == "CHAT_MSG_CHANNEL" and type(channelId) == "number" and channelId > 0) then
-    return
-  end
-  local newMsg = ""
-  local remaining = msg
-  local done
-  repeat
-    local start, finish, characterName, displayName = remaining:find("%[MDT_v2: ([^%s]+) %- ([^%]]+)%]")
-    local startLive, finishLive, characterNameLive, displayNameLive = remaining:find("%[MDTLive: ([^%s]+) %- ([^%]]+)%]")
-    if (characterName and displayName) then
-      characterName = characterName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      displayName = displayName:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      newMsg = newMsg..remaining:sub(1, start - 1)
-      local texture = "|TInterface\\AddOns\\"..AddonName.."\\Textures\\NnoggieMinimap:12|t"
-      newMsg = "|cffe6cc80|Hgarrmission:mdt-"..characterName.."|h["..displayName.."]|h|r"
-      remaining = remaining:sub(finish + 1)
-      checkChatframeInteractive(chatFrame)
-    elseif (characterNameLive and displayNameLive) then
-      characterNameLive = characterNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      displayNameLive = displayNameLive:gsub("|c[Ff][Ff]......", ""):gsub("|r", "")
-      newMsg = newMsg..remaining:sub(1, startLive - 1)
-      newMsg = newMsg..
-          "|Hgarrmission:mdtlive-"..
-          characterNameLive.."|h[".."|cFF00FF00Live Session: |cffe6cc80"..""..displayNameLive.."]|h|r"
-      remaining = remaining:sub(finishLive + 1)
-      checkChatframeInteractive(chatFrame)
-    else
-      done = true
-    end
-  until (done)
-  if newMsg ~= "" then
-    return false, newMsg, player, l, cs, t, flag, channelId, ...
-  end
-end
-
-local presetCommPrefix = "MDTPreset"
-MDT.versionCheckPrefix = "MDTVersion"
-
-MDT.liveSessionPrefixes = {
-  ["enabled"] = "MDTLiveEnabled",
-  ["request"] = "MDTLiveReq",
-  ["ping"] = "MDTLivePing",
-  ["obj"] = "MDTLiveObj",
-  ["objOff"] = "MDTLiveObjOff",
-  ["objChg"] = "MDTLiveObjChg",
-  ["cmd"] = "MDTLiveCmd",
-  ["note"] = "MDTLiveNote",
-  ["preset"] = "MDTLivePreset",
-  ["pull"] = "MDTLivePull",
-  ["week"] = "MDTLiveWeek",
-  ["free"] = "MDTLiveFree",
-  ["bora"] = "MDTLiveBora",
-  ["reqPre"] = "MDTLiveReqPre",
-  ["difficulty"] = "MDTLiveLvl",
-  ["poiAssignment"] = "MDTPOIAssignment",
-  ["focusMarkerAssignment"] = "MDTFocusMark",
-}
-
----@diagnostic disable-next-line: duplicate-set-field
-function MDTcommsObject:OnEnable()
-  self:RegisterComm(presetCommPrefix)
-  self:RegisterComm(MDT.versionCheckPrefix)
-  for _, prefix in pairs(MDT.liveSessionPrefixes) do
-    self:RegisterComm(prefix)
-  end
-  MDT.transmissionCache = {}
-  local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter or ChatFrameUtil.AddMessageEventFilter
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterFunc)
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterFunc)
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filterFunc)
-  ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filterFunc)
-end
+MDT.transmissionCache = {}
 
 local function showMapSectionIfNeeded()
   if MDT.IsMapSectionActive and MDT.SetCurrentSection and not MDT:IsMapSectionActive() then
@@ -333,8 +69,7 @@ local function showMapSectionIfNeeded()
   end
 end
 
---handle preset chat link clicks
-hooksecurefunc("SetItemRef", function(link, text)
+function MDT:HandleChatLink(link, text)
   if (link and link:sub(0, 19) == "garrmission:mdtlive") then
     local sender = link:sub(21, string.len(link))
     local name, realm = string.match(sender, "(.*)+(.*)")
@@ -389,7 +124,7 @@ hooksecurefunc("SetItemRef", function(link, text)
     end
     return
   end
-end)
+end
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --[[
@@ -418,6 +153,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     local preset = MDT:StringToTable(message, false)
+    if not MDT:ValidateImportPreset(preset, true) then return end
     local presetName = preset.text
     local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     if not dungeon then
@@ -435,16 +171,14 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
     MDT.transmissionCache[fullName][displayName] = preset
     --live session preset
     if MDT.liveSessionActive and MDT.liveSessionAcceptingPreset and preset.uid == MDT.livePresetUID then
-      if MDT:ValidateImportPreset(preset) then
-        MDT:ImportPreset(preset, true)
-        MDT.liveSessionAcceptingPreset = false
-        MDT.main_frame.SendingStatusBar:Hide()
-        if MDT.main_frame.LoadingSpinner then
-          MDT.main_frame.LoadingSpinner:Hide()
-          MDT.main_frame.LoadingSpinner.Anim:Stop()
-        end
-        MDT.liveSessionRequested = false
+      MDT:ImportPreset(preset, true)
+      MDT.liveSessionAcceptingPreset = false
+      MDT.main_frame.SendingStatusBar:Hide()
+      if MDT.main_frame.LoadingSpinner then
+        MDT.main_frame.LoadingSpinner:Hide()
+        MDT.main_frame.LoadingSpinner.Anim:Stop()
       end
+      MDT.liveSessionRequested = false
     end
   end
 
@@ -483,24 +217,6 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         MDT:UpdateProgressbar()
         if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
         MDT:ReloadPullButtons()
-      end
-    end
-  end
-
-  --week
-  if prefix == MDT.liveSessionPrefixes.week then
-    if MDT.liveSessionActive then
-      local preset = MDT:GetCurrentLivePreset()
-      local week = tonumber(message)
-      if preset.week ~= week then
-        preset.week = week
-        if preset == MDT:GetCurrentPreset() then
-          local affixDropdown = MDT.main_frame.sidePanel.affixDropdown
-          affixDropdown:SetValue(week)
-          MDT:POI_UpdateAll()
-          MDT:UpdateProgressbar()
-          MDT:ReloadPullButtons()
-        end
       end
     end
   end
@@ -692,7 +408,7 @@ function MDT:MakeSendingStatusBar(f)
 end
 
 --callback for SendCommMessage
-local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
+local function displaySendingProgress(userArgs, bytesSent, bytesToSend, didSend)
   MDT.main_frame.SendingStatusBar:Show()
   MDT.main_frame.SendingStatusBar:SetValue(bytesSent / bytesToSend)
   MDT.main_frame.SendingStatusBar.value:SetText(string.format(L["Sending: %.1f"], bytesSent / bytesToSend * 100).."%")
@@ -701,7 +417,6 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     local distribution = userArgs[1]
     local preset = userArgs[2]
     local silent = userArgs[3]
-    local fromLiveSession = userArgs[4]
     --restore "Send" and "Live" button
     if MDT.liveSessionActive then
       MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
@@ -715,7 +430,7 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
     MDT.main_frame.LiveSessionButton:SetDisabled(false)
     MDT.main_frame.SendingStatusBar:Hide()
     --output chat link
-    if not silent and preset then
+    if didSend ~= false and not silent and preset then
       local prefix = "[MDT_v2: "
       local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
       local presetName = preset.text
@@ -733,30 +448,21 @@ local function displaySendingProgress(userArgs, bytesSent, bytesToSend)
       name = UnitFullName(name)
 
       local fullName = name.."+"..realm
-      C_ChatInfo.SendChatMessage(prefix..fullName.." - "..dungeon..": "..presetName.."]", distribution)
+      local message = prefix..fullName.." - "..dungeon..": "..presetName.."]"
+      -- ponytail: delivery gap; add receiver acknowledgements if cross-client ordering still races.
+      C_Timer.After(0.5, function() C_ChatInfo.SendChatMessage(message, distribution) end)
     end
-    numActiveTransmissions = numActiveTransmissions - 1
   end
 end
 
 MDT.displaySendingProgress = displaySendingProgress
 
-function MDT:GetPresetByUid(presetUid)
-  local db = MDT:GetDB()
-  for _, dungeon in pairs(db.presets) do
-    for _, preset in pairs(dungeon) do
-      if preset.uid == presetUid then
-        return preset
-      end
-    end
-  end
-end
-
 ---generates a unique random 11 digit number in base64
 function MDT:GenerateUniqueID(length)
   local s = {}
   for i = 1, length do
-    tinsert(s, bytetoB64[math.random(0, 63)])
+    local index = math.random(1, #uidCharacters)
+    s[i] = uidCharacters:sub(index, index)
   end
   return table.concat(s)
 end
@@ -793,16 +499,7 @@ function MDT:SendToGroup(distribution, silent, preset)
   --gotta encode difficulty into preset
   local db = MDT:GetDB()
   preset.difficulty = db.currentDifficulty
-  local export = MDT:TableToString(preset, false, 5)
-  numActiveTransmissions = numActiveTransmissions + 1
+  local export = MDT:TableToString(preset)
   MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,
     { distribution, preset, silent })
-end
-
----GetPresetSize
----Returns the number of characters the string version of the preset contains
-function MDT:GetPresetSize(forChat, level)
-  local preset = MDT:GetCurrentPreset()
-  local export = MDT:TableToString(preset, forChat, level)
-  return string.len(export)
 end

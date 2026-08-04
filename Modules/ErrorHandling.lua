@@ -1,4 +1,4 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local AceGUI = LibStub("AceGUI-3.0")
 local L = MDT.L
 local tinsert, slen = table.insert, string.len
@@ -8,9 +8,9 @@ local tinsert, slen = table.insert, string.len
 local caughtErrors = {}
 
 local function getDiagnostics()
-  local presetExport = MDT:TableToString(MDT:GetCurrentPreset(), true, 5)
+  local presetExport = MDT:TableToString(MDT:GetCurrentPreset())
   ---@diagnostic disable-next-line: redundant-parameter
-  local addonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+  local addonVersion = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version")
   local locale = GetLocale()
   local dateString = date("%d/%m/%y %H:%M:%S")
   local gameVersion = select(4, GetBuildInfo())
@@ -76,6 +76,7 @@ function MDT:DisplayErrors(force)
     _G["MDTErrorFrame"] = MDT.errorFrame.frame
     tinsert(UISpecialFrames, "MDTErrorFrame")
     local errorFrame = MDT.errorFrame
+    if not MDT.copyHelper then MDT:MakeCopyHelper(errorFrame.frame) end
     errorFrame:EnableResize(false)
     errorFrame:SetWidth(800)
     errorFrame:SetHeight(600)
@@ -167,7 +168,7 @@ function MDT:DisplayErrors(force)
     errorFrame:AddChild(errorFrame.errorBox)
     errorFrame:AddChild(errorFrame.errorBoxCopyButton)
     errorFrame:AddChild(errorFrame.hardResetButton)
-    if MDT.main_frame then
+    MDT:RunAfterFramesInitialized(function()
       --error button
       local errorButton = AceGUI:Create("Icon")
       errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.25, 0.5)
@@ -187,7 +188,7 @@ function MDT:DisplayErrors(force)
       local externalButtonGroup = MDT.main_frame.externalButtonGroup
       externalButtonGroup:AddChild(errorButton)
       MDT:FixAceGUIShowHide(externalButtonGroup, MDT.main_frame)
-    end
+    end)
   end
 
   for _, error in ipairs(caughtErrors) do
@@ -229,9 +230,6 @@ local function onError(msg, stackTrace, name)
   local stackTraceValue = stackTrace and name..":\n"..stackTrace
   tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue, count = 1 })
   addTrace = true
-  local diagnostics = getDiagnostics()
-  local diagnosticString = diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\n"..diagnostics.region
-  -- MDT.WagoAnalytics:Error(e..diagnosticString)
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
     MDT:DisplayErrors(true)
@@ -262,6 +260,7 @@ function MDT:RegisterErrorHandledFunctions()
     ["AddPull"] = true,
     ["ClearPull"] = true,
     ["ShowInterfaceInternal"] = true,
+    ["InitializeMainFrame"] = true,
     ["UpdateToDungeon"] = true,
     ["UpdateMap"] = true,
     ["MovePullUp"] = true,
@@ -273,7 +272,6 @@ function MDT:RegisterErrorHandledFunctions()
     ["Async"] = true,
     ["RegisterErrorHandledFunctions"] = true,
     ["OnError"] = true,
-    ["DeepCopy"] = true,
   }
   local tablesToAdd = {
     MDT, MDTDungeonEnemyMixin

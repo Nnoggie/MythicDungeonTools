@@ -143,5 +143,33 @@
             <OnClick method="OnClick"/>
         </Scripts>
     </Button>
+    <Frame name="MDTDungeonEnemyDragPreviewTemplate" enableMouse="false" virtual="true">
+        <Layers>
+            <Layer level="BORDER">
+                <Texture name="$parent_Portrait" hidden="false" parentKey="texture_Portrait">
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+                <MaskTexture parentKey="mask_PortraitMask" file="Interface\CHARACTERFRAME\TempPortraitAlphaMask">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeKey="$parent.texture_Portrait" x="0" y="0"/>
+                        <Anchor point="BOTTOMRIGHT" relativeKey="$parent.texture_Portrait" x="0" y="0"/>
+                    </Anchors>
+                    <MaskedTextures>
+                        <MaskedTexture childKey="texture_Portrait"/>
+                    </MaskedTextures>
+                </MaskTexture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <Texture name="$parent_Background" hidden="false" parentKey="texture_Background" file="Interface\AddOns\MythicDungeonTools\Textures\UI-EncounterJournalTextures">
+                    <TexCoords left="0.85" right="0.97" top="0.43" bottom="0.4865"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+    </Frame>
     <Frame name="MDTAnimatedLineTemplate" virtual="true"/>
 </Ui>

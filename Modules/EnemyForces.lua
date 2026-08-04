@@ -33,6 +33,9 @@ local function addEnemyForcesLine(tooltip)
   tooltip:Show()
 end
 
-do
+local enemyForcesTooltipEnabled
+function MDT:EnableEnemyForcesTooltip()
+  if enemyForcesTooltipEnabled then return end
+  enemyForcesTooltipEnabled = true
   TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, addEnemyForcesLine)
 end

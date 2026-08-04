@@ -1,5 +1,5 @@
-local addonName = ...
-local MDT = MDT
+local _, MDT = ...
+local addonName = MDT.AddonName
 local L = MDT.L
 local dungeonIndex = 154
 MDT.dungeonList[dungeonIndex] = L["MaisaraCaverns"]
@@ -605,6 +605,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1255964] = {
+        ["interruptible"] = true,
       },
       [1255966] = {
       },
@@ -1640,6 +1641,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1256047] = {
       },
       [1256059] = {
+        ["bleed"] = true,
       },
     },
     ["clones"] = {
@@ -2888,7 +2890,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [25] = {
-    ["name"] = "Zil'jan",
+    ["name"] = "Zaib'yan",
     ["id"] = 253458,
     ["count"] = 7,
     ["health"] = 607538,

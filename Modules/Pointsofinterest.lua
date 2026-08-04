@@ -1,4 +1,4 @@
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
 local db
 local tinsert, slen, pairs, tremove, twipe = table.insert, string.len, pairs, table.remove, table.wipe
@@ -1352,7 +1352,6 @@ function MDT:POI_UpdateAll()
   local currentSublevel = MDT:GetCurrentSubLevel()
   local pois = MDT.mapPOIs[db.currentDungeonIdx][currentSublevel]
   if not pois then return end
-  local preset = MDT:GetCurrentPreset()
   local scale = MDT:GetScale()
   for poiIdx, poi in pairs(pois) do
     local poiFrame = MDT.GetFramePool(poi.template or "MapLinkPinTemplate"):Acquire()

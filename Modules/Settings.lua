@@ -1,10 +1,9 @@
-local AddonName, MDT = ...
+local _, MDT = ...
 local L = MDT.L
 local mainFrameStrata = "HIGH"
 local panelHeight = 30
 
 local AceGUI = LibStub("AceGUI-3.0")
-local minimapIcon = LibStub("LibDBIcon-1.0")
 
 ---Dropdown menu items for color settings frame
 local colorPaletteNames = {
@@ -33,7 +32,7 @@ MDT:RegisterNavigationSection({
   key = "settings",
   name = L["Settings"],
   tooltip = L["Settings"],
-  texture = "Interface\\AddOns\\"..AddonName.."\\Textures\\icons",
+  texture = "Interface\\AddOns\\"..MDT.AddonName.."\\Textures\\icons",
   texCoords = { 0, 0.25, 0.25, 0.5 },
   iconSize = 25,
   iconOffsetX = 0.75,
@@ -201,12 +200,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.minimapCheckbox:SetWidth(settingWidth)
   frame.minimapCheckbox:SetValue(not db.minimap.hide)
   frame.minimapCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.minimap.hide = not value
-    if not db.minimap.hide then
-      minimapIcon:Refresh("MythicDungeonTools", db.minimap)
-    else
-      minimapIcon:Hide("MythicDungeonTools")
-    end
+    if value then MDT:ShowMinimapButton() else MDT:HideMinimapButton() end
   end)
   frame.settingsGeneralColumn:AddChild(frame.minimapCheckbox)
 
@@ -215,12 +209,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.compartmentCheckbox:SetWidth(settingWidth)
   frame.compartmentCheckbox:SetValue(not db.minimap.compartmentHide)
   frame.compartmentCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.minimap.compartmentHide = not value
-    if not db.minimap.compartmentHide then
-      minimapIcon:AddButtonToCompartment("MythicDungeonTools")
-    else
-      minimapIcon:RemoveButtonFromCompartment("MythicDungeonTools")
-    end
+    MDT:SetCompartmentButtonShown(value)
   end)
   if MDT:IsRetail() then
     frame.settingsGeneralColumn:AddChild(frame.compartmentCheckbox)
@@ -236,6 +225,25 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
 
+  frame.pullButtonHealthCheckbox = AceGUI:Create("CheckBox")
+  frame.pullButtonHealthCheckbox:SetLabel(L["Show pull health"])
+  frame.pullButtonHealthCheckbox:SetWidth(settingWidth)
+  frame.pullButtonHealthCheckbox:SetValue(db.showPullButtonHealth)
+  frame.pullButtonHealthCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.showPullButtonHealth = value
+    MDT:ReloadPullButtons()
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.pullButtonHealthCheckbox)
+
+  frame.autoPanToPullCheckbox = AceGUI:Create("CheckBox")
+  frame.autoPanToPullCheckbox:SetLabel(L["Auto pan to selected pull"])
+  frame.autoPanToPullCheckbox:SetWidth(settingWidth)
+  frame.autoPanToPullCheckbox:SetValue(db.autoPanToPull ~= false)
+  frame.autoPanToPullCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
+    db.autoPanToPull = value
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.autoPanToPullCheckbox)
+
   frame.enemyForcesTooltipDropdown = AceGUI:Create("Dropdown")
   frame.enemyForcesTooltipDropdown:SetList(enemyForcesTooltipOptions, enemyForcesTooltipOptionOrder)
   frame.enemyForcesTooltipDropdown:SetLabel(L["Enemy forces in tooltips"])
@@ -243,6 +251,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.enemyForcesTooltipDropdown:SetValue(db.enemyForcesTooltip)
   frame.enemyForcesTooltipDropdown:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.enemyForcesTooltip = value
+    if value ~= 1 then MDT:EnableEnemyForcesTooltip() end
   end)
   frame.settingsGeneralColumn:AddChild(frame.enemyForcesTooltipDropdown)
 
@@ -276,10 +285,6 @@ function MDT:MakeSettingsFrame(frame)
     if value then MDT:EnableDungeonResetAnnounceHook() end
   end)
   frame.settingsGeneralColumn:AddChild(frame.announceDungeonResetCheckbox)
-
-  -- Initialize database values if they don't exist
-  if db.fadeOutDuringCombat == nil then db.fadeOutDuringCombat = false end
-  if db.fadeOutAlpha == nil then db.fadeOutAlpha = 0.5 end
 
   frame.fadeOutCheckbox = AceGUI:Create("CheckBox")
   frame.fadeOutCheckbox:SetLabel(L["Make window transparent in combat"])

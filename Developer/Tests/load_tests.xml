@@ -1,10 +1,12 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file='InitTests.lua'/>
+	<Script file='TestSavedVariables.lua'/>
+	<Script file='TestLoadOnDemand.lua'/>
+	<Script file='TestTransmissionValidation.lua'/>
 	<Script file='TestOpenAddon.lua'/>
 	<Script file='TestImport.lua'/>
 	<Script file='TestResize.lua'/>
 	<Script file='TestMaximize.lua'/>
 	<Script file='TestDelete.lua'/>
 	<Script file='TestPullButtons.lua'/>
-	<Script file='TestSettings.lua'/>
 </Ui>

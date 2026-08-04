@@ -1,4 +1,5 @@
-local addonName, addon = ...
+local _, addon = ...
+local MDT = addon
 
 local function testFunc()
   local frame = MDT.main_frame

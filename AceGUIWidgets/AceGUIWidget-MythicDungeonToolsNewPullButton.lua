@@ -1,3 +1,4 @@
+local _, MDT = ...
 local Type, Version = "MDTNewPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 local L = MDT.L
@@ -13,7 +14,7 @@ local methods = {
     self.callbacks = {};
 
     function self.callbacks.OnClickNormal(_, mouseButton)
-      if not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+      if not MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame:IsMouseOver() then return end
       if (IsControlKeyDown()) then
 
       elseif (IsShiftKeyDown()) then

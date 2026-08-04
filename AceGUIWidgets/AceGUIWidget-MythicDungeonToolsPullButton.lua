@@ -1,9 +1,9 @@
 ---@diagnostic disable: assign-type-mismatch, redundant-parameter
 local Type, Version = "MDTPullButton", 1
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
-local MDT = MDT
+local _, MDT = ...
 local L = MDT.L
-local tinsert, SetPortraitTextureFromCreatureDisplayID, MouseIsOver, next = table.insert, SetPortraitTextureFromCreatureDisplayID, MouseIsOver, next
+local tinsert, SetPortraitTextureFromCreatureDisplayID, next = table.insert, SetPortraitTextureFromCreatureDisplayID, next
 
 local width, height = 248, 32
 local maxPortraitCount = 7
@@ -229,7 +229,6 @@ local methods = {
           MDT:PresetsAddPull(self.index)
           MDT:ReloadPullButtons()
           MDT:SetSelectionToPull(self.index)
-          --MDT:UpdateAutomaticColors(self.index)
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
@@ -247,14 +246,13 @@ local methods = {
           MDT:PresetsAddPull(self.index + 1)
           MDT:ReloadPullButtons()
           MDT:SetSelectionToPull(self.index + 1)
-          --MDT:UpdateAutomaticColors(self.index + 1)
           if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
             MDT:LiveSession_SendPulls(MDT:GetPulls())
           end
         end)
 
         rootDescription:CreateButton(L["Pull Drop Merge"], function()
-          local selected_pulls = MDT.U.copy(MDT:GetSelection())
+          local selected_pulls = CopyTable(MDT:GetSelection())
           -- Assure, that the destination is always the last selected_pull, to copy it's options at last
           MDT.U.iremove_if(selected_pulls, function(pullIdx)
             return pullIdx == self.index
@@ -342,7 +340,7 @@ local methods = {
     end
 
     function self.callbacks.OnClickNormal(_, mouseButton, force)
-      if not force and not MouseIsOver(MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame) then return end
+      if not force and not MDT.main_frame.sidePanel.pullButtonsScrollFrame.frame:IsMouseOver() then return end
 
       if (IsControlKeyDown()) then
         if (mouseButton == "LeftButton") then
@@ -420,7 +418,13 @@ local methods = {
           MDT:GetCurrentPreset().value.selection = { self.index }
           local changed = MDT:SetMapSublevel(self.index)
           MDT:SetSelectionToPull(self.index)
-          if changed then MDT:UpdateMap() end
+          local shouldAutoPan = MDT:GetDB().autoPanToPull ~= false
+          if changed then
+            if shouldAutoPan then MDT.pendingAutoPanToPull = self.index end
+            MDT:UpdateMap()
+          elseif shouldAutoPan then
+            MDT:PanMapToPull(self.index)
+          end
         end
       end
     end
@@ -701,7 +705,7 @@ local methods = {
         self:Pick()
       end
 
-      local selected_pulls = MDT.U.copy(MDT:GetSelection())
+      local selected_pulls = CopyTable(MDT:GetSelection())
       table.sort(selected_pulls)
 
       for _, pullIdx in ipairs(selected_pulls) do
@@ -750,7 +754,7 @@ local methods = {
 
     if #MDT:GetSelection() > 1 then
       local sidePanel = MDT.main_frame.sidePanel
-      local selected_pulls = MDT.U.copy(MDT:GetSelection())
+      local selected_pulls = CopyTable(MDT:GetSelection())
       local new_pulls = {}
       local progressed_pulls = {}
       table.sort(selected_pulls)
@@ -815,7 +819,6 @@ local methods = {
     end
 
     MDT:Hide_DropIndicator()
-    --MDT:UpdateAutomaticColors(math.min(self.index, insertID))
     MDT.pullTooltip:Show()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())
@@ -892,8 +895,7 @@ local methods = {
   end,
   ["UpdateColor"] = function(self)
     local colorHex = MDT:RGBToHex(self.color.r, self.color.g, self.color.b)
-    local db = MDT:GetDB()
-    if colorHex == db.defaultColor then
+    if colorHex == "228b22" then
       self.background:SetVertexColor(0.5, 0.5, 0.5, 0.25)
       self.frame.pickedGlow:SetVertexColor(1, 0.85, 0, 1)
     else
@@ -921,7 +923,7 @@ local methods = {
     local db = MDT:GetDB()
     local currentForces = MDT:CountForces(self.index)
     local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-    local currentPercent = currentForces / totalForcesMax
+    local currentPercent = totalForcesMax > 0 and currentForces / totalForcesMax or 0
     local progressText
     if db.useForcesCount then
       progressText = string.format("%3d", currentForces)
@@ -929,8 +931,15 @@ local methods = {
       progressText = string.format("%.2f%%", currentPercent * 100)
     end
     local pullForces = MDT:CountForces(self.index, true)
-    if pullForces > 0 then
-      self.percentageFontString:SetText(progressText)
+    local text = pullForces > 0 and progressText or ""
+    local pullHealth = db.showPullButtonHealth and MDT:SumCurrentPullHealth(self.index) or 0
+    if pullHealth > 0 then
+      local healthText = MDT:FormatEnemyHealth(pullHealth)
+      text = text ~= "" and text.."\n"..healthText or healthText
+    end
+    if text ~= "" then
+      self.percentageFontString:SetText(text)
+      self.percentageFontString:SetHeight(pullForces > 0 and pullHealth > 0 and 20 or 10)
       self.percentageFontString:Show()
     else
       self.percentageFontString:Hide()
