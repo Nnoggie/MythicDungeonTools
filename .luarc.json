@@ -65,7 +65,9 @@
         "ChatFrameUtil",
         "MAX_ACCOUNT_MACROS",
         "TooltipDataProcessor",
-        "StaticPopupDialogs"
+        "StaticPopupDialogs",
+        "OKAY",
+        "StaticPopup_Show"
   ],
   "diagnostics.disable": ["invisible"]
 }
