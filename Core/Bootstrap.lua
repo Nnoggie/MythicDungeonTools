@@ -3,6 +3,7 @@ local L = MDT.L
 local API = MDT.API
 
 local UI_ADDON_NAME = "MythicDungeonTools_UI"
+local UI_DISABLED_POPUP = "MDT_UI_DISABLED"
 local coreDefaults = {
   enemyForcesTooltip = 1,
   muteXalatathVoiceLines = false,
@@ -110,6 +111,19 @@ local function isUILoaded()
   return loaded == nil and loadedOrLoading or loaded
 end
 
+StaticPopupDialogs[UI_DISABLED_POPUP] = {
+  text = "MythicDungeonTools UI is disabled. Enable it and reload the interface?",
+  button1 = "Enable and Reload",
+  button2 = _G.CANCEL,
+  OnAccept = function()
+    C_AddOns.EnableAddOn(UI_ADDON_NAME)
+    ReloadUI()
+  end,
+  timeout = 0,
+  whileDead = true,
+  hideOnEscape = true,
+}
+
 function MDT:LoadUI(reason)
   if isUILoaded() then return true end
   if uiLoading then return false end
@@ -119,6 +133,9 @@ function MDT:LoadUI(reason)
   uiLoading = nil
 
   if not loaded and not isUILoaded() then
+    if loadError == "DISABLED" then
+      StaticPopup_Show(UI_DISABLED_POPUP)
+    end
     print(("|cffffd100MDT:|r Failed to load UI%s: %s"):format(reason and " ("..reason..")" or "", loadError or "unknown error"))
     return false
   end

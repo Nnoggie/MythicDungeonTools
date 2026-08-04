@@ -64,7 +64,8 @@
         "C_Secrets",
         "ChatFrameUtil",
         "MAX_ACCOUNT_MACROS",
-        "TooltipDataProcessor"
+        "TooltipDataProcessor",
+        "StaticPopupDialogs"
   ],
   "diagnostics.disable": ["invisible"]
 }
