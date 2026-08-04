@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.0-alpha4",
+    date = "2026-08-04",
+    notes = {
+      "MDT's interface now loads only when opened, reducing memory usage while MDT is not in use.",
+    },
+  },
+  {
     tag = "6.2.0-alpha3",
     date = "2026-07-21",
     notes = {
