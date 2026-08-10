@@ -1,5 +1,5 @@
-local _, MDT = ...
-local addonName = MDT.AddonName
+local addonName = ...
+local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 161
 MDT.dungeonList[dungeonIndex] = L["DenOfNalorakk"]
@@ -33,20 +33,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spirit of Hunger",
     ["id"] = 245855,
     ["count"] = 25,
-    ["health"] = 10000,
+    ["health"] = 4864883,
     ["scale"] = 1.6,
     ["displayId"] = 26857,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1238687] = {
       },
       [1238725] = {
       },
       [1238760] = {
       },
-      [1221063] = {},
-      [1249737] = {},
+      [1249737] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -90,12 +92,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthwhisper Tender",
     ["id"] = 241814,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 3729743,
     ["scale"] = 1,
     ["displayId"] = 128080,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1241214] = {
         ["interruptible"] = true,
       },
@@ -103,7 +107,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
         ["magic"] = true,
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -151,18 +154,45 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -480.94928274419,
         ["sublevel"] = 1,
       },
+      [10] = {
+        ["x"] = 402.84539306787,
+        ["y"] = -370.81541778532,
+        ["sublevel"] = 1,
+      },
+      [11] = {
+        ["x"] = 401.45140750266,
+        ["y"] = -398.22974385049,
+        ["sublevel"] = 1,
+      },
+      [12] = {
+        ["x"] = 429.33052014424,
+        ["y"] = -364.77491344652,
+        ["sublevel"] = 1,
+      },
+      [13] = {
+        ["x"] = 417.71422321025,
+        ["y"] = -439.11905168632,
+        ["sublevel"] = 1,
+      },
+      [14] = {
+        ["x"] = 426.54259890238,
+        ["y"] = -436.79576735525,
+        ["sublevel"] = 1,
+      },
     },
   },
   [3] = {
     ["name"] = "Thornclaw Gatherer",
     ["id"] = 241813,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 3243255,
     ["scale"] = 1,
     ["displayId"] = 141213,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1241217] = {
       },
       [1297699] = {
@@ -170,7 +200,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1297701] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -253,24 +282,60 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -485.01648177336,
         ["sublevel"] = 1,
       },
+      [17] = {
+        ["x"] = 372.64307092802,
+        ["y"] = -382.43168977505,
+        ["sublevel"] = 1,
+      },
+      [18] = {
+        ["x"] = 377.75420166815,
+        ["y"] = -378.24983285652,
+        ["sublevel"] = 1,
+      },
+      [19] = {
+        ["x"] = 396.80478895199,
+        ["y"] = -363.38092788132,
+        ["sublevel"] = 1,
+      },
+      [20] = {
+        ["x"] = 405.63336419827,
+        ["y"] = -362.91629097052,
+        ["sublevel"] = 1,
+      },
+      [21] = {
+        ["x"] = 368.46131378657,
+        ["y"] = -399.62370447142,
+        ["sublevel"] = 1,
+      },
+      [22] = {
+        ["x"] = 400.52208379253,
+        ["y"] = -389.40139310263,
+        ["sublevel"] = 1,
+      },
+      [23] = {
+        ["x"] = 425.14871311425,
+        ["y"] = -445.15951860872,
+        ["sublevel"] = 1,
+      },
     },
   },
   [4] = {
     ["name"] = "Territorial Matriarch",
     ["id"] = 241808,
     ["count"] = 8,
-    ["health"] = 10000,
+    ["health"] = 3729743,
     ["scale"] = 1,
     ["displayId"] = 14316,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1238053] = {
         ["enrage"] = true,
       },
       [1241219] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -313,28 +378,49 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -374.62160054936,
         ["sublevel"] = 1,
       },
+      [9] = {
+        ["x"] = 446.98717175142,
+        ["y"] = -427.5027796966,
+        ["sublevel"] = 1,
+      },
+      [10] = {
+        ["x"] = 441.41142904476,
+        ["y"] = -421.46232524634,
+        ["sublevel"] = 1,
+      },
+      [11] = {
+        ["x"] = 400.98679553613,
+        ["y"] = -425.64411980419,
+        ["sublevel"] = 1,
+      },
+      [12] = {
+        ["x"] = 542.70526891106,
+        ["y"] = -393.11861311036,
+        ["sublevel"] = 1,
+      },
     },
   },
   [5] = {
     ["name"] = "The Winter Squall",
     ["id"] = 250478,
     ["count"] = 50,
-    ["health"] = 10000,
-    ["scale"] = 1,
+    ["health"] = 3243255,
+    ["scale"] = 1.5,
     ["displayId"] = 138885,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1309947] = {
       },
       [1309964] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 275.33771481838,
-        ["y"] = -40.946504434314,
+        ["x"] = 287.32083783265,
+        ["y"] = -185.72188794948,
         ["sublevel"] = 1,
       },
     },
@@ -343,24 +429,85 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Frostfang",
     ["id"] = 241874,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 2789199,
     ["scale"] = 1,
     ["displayId"] = 141223,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1241226] = {
       },
       [1265400] = {
       },
       [1265402] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 278.18143081471,
-        ["y"] = -83.837305047043,
+        ["x"] = 501.21383306197,
+        ["y"] = -286.88964663471,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 507.85642799763,
+        ["y"] = -282.5317107526,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 477.88653732402,
+        ["y"] = -230.60703678525,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 477.94455126876,
+        ["y"] = -222.01098557687,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 483.34618312903,
+        ["y"] = -227.64489528887,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 429.33052014424,
+        ["y"] = -245.8242972517,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 428.86580840064,
+        ["y"] = -253.25876221143,
+        ["sublevel"] = 1,
+      },
+      [8] = {
+        ["x"] = 434.44160099583,
+        ["y"] = -249.54151725943,
+        ["sublevel"] = 1,
+      },
+      [9] = {
+        ["x"] = 365.18729290989,
+        ["y"] = -165.37557375728,
+        ["sublevel"] = 1,
+      },
+      [10] = {
+        ["x"] = 358.09526891426,
+        ["y"] = -160.7290861424,
+        ["sublevel"] = 1,
+      },
+      [11] = {
+        ["x"] = 372.27934316265,
+        ["y"] = -159.99540947389,
+        ["sublevel"] = 1,
+      },
+      [12] = {
+        ["x"] = 348.01649149484,
+        ["y"] = -211.90482993694,
+        ["sublevel"] = 1,
+      },
+      [13] = {
+        ["x"] = 346.15799374018,
+        ["y"] = -218.40997118653,
         ["sublevel"] = 1,
       },
     },
@@ -369,22 +516,53 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Terra Rumbler",
     ["id"] = 241911,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 2918930,
     ["scale"] = 1,
     ["displayId"] = 35201,
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1296518] = {
       },
       [1296519] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 165.57724562802,
-        ["y"] = -82.407585380486,
+        ["x"] = 470.3882136584,
+        ["y"] = -256.18707820407,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 435.66133186967,
+        ["y"] = -200.69516178965,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 407.89844098956,
+        ["y"] = -190.53091425413,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 373.50213761016,
+        ["y"] = -195.45560822345,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 327.77072807284,
+        ["y"] = -190.80909435144,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 511.03754466325,
+        ["y"] = -259.65662755133,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 517.82864151286,
+        ["y"] = -255.36751779114,
         ["sublevel"] = 1,
       },
     },
@@ -393,21 +571,57 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Frigid Mauler",
     ["id"] = 241872,
     ["count"] = 9,
-    ["health"] = 10000,
+    ["health"] = 3567581,
     ["scale"] = 1,
     ["displayId"] = 141288,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1309919] = {
         ["interruptible"] = true,
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 264.74661458396,
-        ["y"] = -71.756396146523,
+        ["x"] = 484.06167210214,
+        ["y"] = -273.41480205753,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 473.00758708419,
+        ["y"] = -249.54151725943,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 497.92456799893,
+        ["y"] = -216.95786400173,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 504.71998573176,
+        ["y"] = -219.22311907484,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 387.51195095895,
+        ["y"] = -211.44016808187,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 386.58257736028,
+        ["y"] = -218.87460809733,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 360.54077903788,
+        ["y"] = -171.24485581966,
+        ["sublevel"] = 1,
+      },
+      [8] = {
+        ["x"] = 368.61103859152,
+        ["y"] = -172.46762401004,
         ["sublevel"] = 1,
       },
     },
@@ -416,12 +630,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Glacial Revenant",
     ["id"] = 241876,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 3081092,
     ["scale"] = 1,
     ["displayId"] = 103213,
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1239860] = {
         ["magic"] = true,
       },
@@ -429,12 +645,46 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1266178] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 263.37264319198,
-        ["y"] = -91.271695173967,
+        ["x"] = 465.03104910299,
+        ["y"] = -250.18225807808,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 445.24477782686,
+        ["y"] = -198.60423977416,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 443.21197563079,
+        ["y"] = -207.20024407356,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 408.4212355516,
+        ["y"] = -222.12711636146,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 407.02729987493,
+        ["y"] = -230.02616834345,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 372.52390205215,
+        ["y"] = -202.54764534765,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 318.96676559357,
+        ["y"] = -211.10699642316,
+        ["sublevel"] = 1,
+      },
+      [8] = {
+        ["x"] = 398.13629343577,
+        ["y"] = -168.06680160757,
         ["sublevel"] = 1,
       },
     },
@@ -443,24 +693,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Avatar of Determination",
     ["id"] = 241869,
     ["count"] = 28,
-    ["health"] = 10000,
-    ["scale"] = 1,
+    ["health"] = 6486510,
+    ["scale"] = 1.5,
     ["displayId"] = 128095,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1240280] = {
       },
       [1241463] = {
       },
       [1241464] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 317.47074018063,
-        ["y"] = -106.78391837075,
+        ["x"] = 457.7952778789,
+        ["y"] = -231.77491418302,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 323.3687468332,
+        ["y"] = -200.10212209546,
         ["sublevel"] = 1,
       },
     },
@@ -469,7 +725,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ruthless Totemcaller",
     ["id"] = 245143,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 3243255,
     ["scale"] = 1,
     ["displayId"] = 129563,
     ["creatureType"] = "Humanoid",
@@ -510,19 +766,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Stormbound Mystic",
     ["id"] = 245139,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 2918930,
     ["scale"] = 1,
     ["displayId"] = 129562,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1246687] = {
         ["interruptible"] = true,
       },
       [1297778] = {
         ["interruptible"] = true,
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -556,17 +813,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Grizzled Warbringer",
     ["id"] = 245146,
     ["count"] = 25,
-    ["health"] = 10000,
+    ["health"] = 5513534,
     ["scale"] = 1.5,
     ["displayId"] = 131630,
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1246957] = {
       },
       [1246986] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -590,7 +848,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bonded Beasttamer",
     ["id"] = 245145,
     ["count"] = 6,
-    ["health"] = 10000,
+    ["health"] = 3081092,
     ["scale"] = 1,
     ["displayId"] = 129581,
     ["creatureType"] = "Humanoid",
@@ -633,29 +891,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [15] = {
-    ["name"] = "Avatar of Starvation",
-    ["id"] = 241805,
-    ["count"] = 0,
-    ["health"] = 10000,
-    ["scale"] = 1,
-    ["displayId"] = 141003,
-    ["creatureType"] = "Undead",
-    ["level"] = 90,
-    ["spells"] = {
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 144.70658623752,
-        ["y"] = -97.312149624227,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [16] = {
     ["name"] = "Curious Yearling",
     ["id"] = 241809,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 778381,
     ["scale"] = 0.6,
     ["displayId"] = 141179,
     ["creatureType"] = "Beast",
@@ -763,11 +1002,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [17] = {
+  [16] = {
     ["name"] = "The Hoardmonger",
     ["id"] = 241812,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 23648733,
     ["scale"] = 1,
     ["displayId"] = 129344,
     ["creatureType"] = "Humanoid",
@@ -776,6 +1015,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2777,
     ["instanceID"] = 1311,
     ["spells"] = {
+      [1221063] = {
+      },
       [1232012] = {
       },
       [1234021] = {
@@ -807,7 +1048,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1245593] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -817,22 +1057,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [18] = {
+  [17] = {
     ["name"] = "Keen-Eyed Striker",
     ["id"] = 241816,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 2918930,
     ["scale"] = 1,
     ["displayId"] = 124212,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1238439] = {
         ["bleed"] = true,
       },
       [1238440] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -885,13 +1126,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["y"] = -421.39416241068,
         ["sublevel"] = 1,
       },
+      [11] = {
+        ["x"] = 407.95667347361,
+        ["y"] = -393.11861311036,
+        ["sublevel"] = 1,
+      },
+      [12] = {
+        ["x"] = 431.65377953104,
+        ["y"] = -371.74466666265,
+        ["sublevel"] = 1,
+      },
     },
   },
-  [19] = {
+  [18] = {
     ["name"] = "Sentinel of Winter",
     ["id"] = 244100,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 21283860,
     ["scale"] = 1,
     ["displayId"] = 129418,
     ["creatureType"] = "Humanoid",
@@ -930,11 +1181,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [20] = {
+  [19] = {
     ["name"] = "Raging Squall",
     ["id"] = 244696,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 428857,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
@@ -947,17 +1198,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 249.96068034554,
-        ["y"] = -85.981869097848,
+        ["x"] = 241.13230465341,
+        ["y"] = -160.79063177631,
         ["sublevel"] = 1,
       },
     },
   },
-  [21] = {
+  [20] = {
     ["name"] = "Fractured Shivercore",
     ["id"] = 244759,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 675678,
     ["scale"] = 1,
     ["displayId"] = 103231,
     ["creatureType"] = "Elemental",
@@ -981,11 +1232,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [22] = {
+  [21] = {
     ["name"] = "Loa Speaker Nanea",
     ["id"] = 244889,
-    ["count"] = 0,
-    ["health"] = 10000,
+    ["count"] = 35,
+    ["health"] = 7783812,
     ["scale"] = 1,
     ["displayId"] = 138584,
     ["creatureType"] = "Humanoid",
@@ -1011,17 +1262,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 667.28833322768,
-        ["y"] = -103.43294920195,
+        ["x"] = 663.57113816422,
+        ["y"] = -104.82693476715,
         ["sublevel"] = 1,
       },
     },
   },
-  [23] = {
+  [22] = {
     ["name"] = "Grizzled Warbringer",
     ["id"] = 245148,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 698700,
     ["scale"] = 1.5,
     ["displayId"] = 129564,
     ["creatureType"] = "Humanoid",
@@ -1029,7 +1280,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1247030] = {
       },
-      [1311572] = {},
+      [1311572] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1049,11 +1301,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [24] = {
+  [23] = {
     ["name"] = "Loyal Saberfang",
     ["id"] = 245190,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 2594604,
     ["scale"] = 1,
     ["displayId"] = 124949,
     ["creatureType"] = "Beast",
@@ -1088,34 +1340,65 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [25] = {
+  [24] = {
     ["name"] = "Starvation Effigy",
     ["id"] = 245567,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 557514,
     ["scale"] = 1,
     ["displayId"] = 129707,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1238801] = {
         ["curse"] = true,
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 126.12056103167,
-        ["y"] = -68.988538966415,
+        ["x"] = 103.81736570663,
+        ["y"] = -333.37477371109,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 79.44849960871,
+        ["y"] = -402.41160076902,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 85.488929114701,
+        ["y"] = -431.68462414299,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 138.92382017826,
+        ["y"] = -391.72465248943,
+        ["sublevel"] = 1,
+      },
+      [5] = {
+        ["x"] = 203.51022159939,
+        ["y"] = -390.79535372356,
+        ["sublevel"] = 1,
+      },
+      [6] = {
+        ["x"] = 168.19679366369,
+        ["y"] = -448.41205181711,
+        ["sublevel"] = 1,
+      },
+      [7] = {
+        ["x"] = 169.12606748529,
+        ["y"] = -498.59433483946,
         ["sublevel"] = 1,
       },
     },
   },
-  [26] = {
+  [25] = {
     ["name"] = "Nalorakk",
     ["id"] = 246404,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 21891970,
     ["scale"] = 1,
     ["displayId"] = 129989,
     ["creatureType"] = "Beast",
@@ -1124,6 +1407,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2777,
     ["instanceID"] = 1311,
     ["spells"] = {
+      [1221063] = {
+      },
       [1242860] = {
       },
       [1242869] = {
@@ -1152,7 +1437,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1297797] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1162,11 +1446,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [27] = {
+  [26] = {
     ["name"] = "Zul'jarra",
     ["id"] = 246409,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 21891970,
     ["scale"] = 1,
     ["displayId"] = 125149,
     ["creatureType"] = "Humanoid",
@@ -1195,11 +1479,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [28] = {
+  [27] = {
     ["name"] = "Echo of Nalorakk",
     ["id"] = 247301,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 3378390,
     ["scale"] = 1,
     ["displayId"] = 129989,
     ["creatureType"] = "Beast",
@@ -1225,11 +1509,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [29] = {
+  [28] = {
     ["name"] = "Snow Orb Stalker",
     ["id"] = 251189,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 648651,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
@@ -1240,38 +1524,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 252.10523522564,
-        ["y"] = -101.69281690136,
+        ["x"] = 248.38799027364,
+        ["y"] = -136.07699595973,
         ["sublevel"] = 1,
       },
     },
   },
-  [30] = {
-    ["name"] = "Satiated Avatar of Starvation",
-    ["id"] = 252041,
-    ["count"] = 0,
-    ["health"] = 10000,
-    ["scale"] = 1,
-    ["displayId"] = 141003,
-    ["creatureType"] = "Undead",
-    ["level"] = 90,
-    ["spells"] = {
-      [1254815] = {
-      },
-    },
-    ["clones"] = {
-      [1] = {
-        ["x"] = 265.67164733695,
-        ["y"] = -99.548185269656,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [31] = {
+  [29] = {
     ["name"] = "Volatile Totem",
     ["id"] = 272074,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 698699,
     ["scale"] = 1,
     ["displayId"] = 30762,
     ["creatureType"] = "Not specified",
@@ -1282,17 +1545,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 169.15151015748,
-        ["y"] = -110.98578571297,
+        ["x"] = 671.90358925833,
+        ["y"] = -103.55144547459,
         ["sublevel"] = 1,
       },
     },
   },
-  [32] = {
+  [30] = {
     ["name"] = "The Pale Eye",
     ["id"] = 245076,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 537461,
     ["scale"] = 1,
     ["displayId"] = 129498,
     ["creatureType"] = "Not specified",
@@ -1303,17 +1566,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 200,
-        ["y"] = -200,
+        ["x"] = 248.32363560208,
+        ["y"] = -153.99957389618,
         ["sublevel"] = 1,
       },
     },
   },
-  [33] = {
+  [31] = {
     ["name"] = "Keen-Eyed Striker",
     ["id"] = 245752,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 2918930,
     ["scale"] = 1,
     ["displayId"] = 124212,
     ["creatureType"] = "Beast",
@@ -1322,42 +1585,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [110960] = {
       },
       [1238439] = {
+        ["bleed"] = true,
       },
       [1238440] = {
       },
       [1239394] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 220,
-        ["y"] = -200,
+        ["x"] = 151.23171671607,
+        ["y"] = -64.321981075329,
         ["sublevel"] = 1,
       },
     },
   },
-  [34] = {
-    ["name"] = "Glacial Tomb",
-    ["id"] = 246591,
-    ["count"] = 0,
-    ["health"] = 10000,
-    ["scale"] = 1,
-    ["displayId"] = 130071,
-    ["creatureType"] = "Not specified",
-    ["level"] = 90,
-    ["clones"] = {
-      [1] = {
-        ["x"] = 240,
-        ["y"] = -200,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [35] = {
+  [32] = {
     ["name"] = "Magma Totem",
     ["id"] = 248666,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 692461,
     ["scale"] = 1,
     ["displayId"] = 30762,
     ["creatureType"] = "Not specified",
@@ -1370,8 +1618,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 260,
-        ["y"] = -200,
+        ["x"] = 719.53959918316,
+        ["y"] = -84.301966902111,
         ["sublevel"] = 1,
       },
     },

@@ -1,5 +1,5 @@
-local _, MDT = ...
-local addonName = MDT.AddonName
+local addonName = ...
+local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 20
 MDT.dungeonList[dungeonIndex] = L["Temple of Sethraliss"]
@@ -16,7 +16,7 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 661 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 649 }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
@@ -33,7 +33,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sandswept Hunter",
     ["id"] = 134600,
     ["count"] = 7,
-    ["health"] = 768495,
+    ["health"] = 3567581,
     ["scale"] = 1.2,
     ["displayId"] = 83780,
     ["creatureType"] = "Humanoid",
@@ -50,6 +50,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1292585] = {
+      },
+      [1292623] = {
+      },
+      [1308113] = {
+      },
+      [1308116] = {
+      },
     },
     ["clones"] = {
       [8] = {
@@ -112,7 +122,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Barbed Krolusk",
     ["id"] = 134616,
     ["count"] = 5,
-    ["health"] = 461097,
+    ["health"] = 2594604,
     ["scale"] = 1.2,
     ["displayId"] = 83787,
     ["creatureType"] = "Beast",
@@ -125,6 +135,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1291399] = {
+      },
     },
     ["clones"] = {
       [8] = {
@@ -181,7 +195,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Storm Adept",
     ["id"] = 134990,
     ["count"] = 7,
-    ["health"] = 768495,
+    ["health"] = 2918930,
     ["scale"] = 1.2,
     ["displayId"] = 84024,
     ["creatureType"] = "Humanoid",
@@ -197,6 +211,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1291262] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [2] = {
@@ -253,13 +272,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sandfury Stonefist",
     ["id"] = 134991,
     ["count"] = 25,
-    ["health"] = 1229592,
+    ["health"] = 5837859,
     ["scale"] = 1.7,
     ["displayId"] = 84207,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [265966] = {
+      },
+      [1291468] = {
+      },
     },
     ["clones"] = {
       [3] = {
@@ -292,7 +317,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shrouded Fang",
     ["id"] = 134602,
     ["count"] = 7,
-    ["health"] = 614796,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["stealth"] = true,
     ["displayId"] = 83782,
@@ -306,6 +331,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1295610] = {
+      },
+      [1295635] = {
+      },
+      [1308100] = {
+        ["interruptible"] = true,
+        ["poison"] = true,
+      },
     },
     ["clones"] = {
       [2] = {
@@ -356,7 +391,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sand-Sworn Rider",
     ["id"] = 134629,
     ["count"] = 25,
-    ["health"] = 1229592,
+    ["health"] = 5189208,
     ["scale"] = 1.7,
     ["displayId"] = 84761,
     ["creatureType"] = "Humanoid",
@@ -369,6 +404,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [262046] = {
+      },
+      [272655] = {
+      },
+      [1291399] = {
+      },
+      [1292990] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -451,7 +496,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Poisonous Viper",
     ["id"] = 135562,
     ["count"] = 7,
-    ["health"] = 307398,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 78250,
     ["creatureType"] = "Beast",
@@ -464,6 +509,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1308148] = {
+        ["interruptible"] = true,
+        ["poison"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -508,7 +559,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lightning Serpent",
     ["id"] = 135846,
     ["count"] = 5,
-    ["health"] = 307398,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 78247,
     ["creatureType"] = "Beast",
@@ -519,6 +570,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1293133] = {
+      },
+      [1310396] = {
+      },
+      [1310402] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -563,13 +622,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Dutiful Tamer",
     ["id"] = 139422,
     ["count"] = 7,
-    ["health"] = 1229592,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 84761,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [1291399] = {
+      },
+      [1292990] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -584,7 +649,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Krolusk Matriarch",
     ["id"] = 134686,
     ["count"] = 16,
-    ["health"] = 768495,
+    ["health"] = 4216232,
     ["scale"] = 1.7,
     ["displayId"] = 75595,
     ["creatureType"] = "Beast",
@@ -593,6 +658,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Fear"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [272654] = {
+      },
+      [272655] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -607,7 +678,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Faithless Subjugator",
     ["id"] = 134364,
     ["count"] = 7,
-    ["health"] = 768495,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 86510,
     ["creatureType"] = "Humanoid",
@@ -624,6 +695,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [269896] = {
+      },
+      [1293307] = {
+        ["interruptible"] = true,
+        ["curse"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -650,7 +729,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Brood Tender",
     ["id"] = 139425,
     ["count"] = 7,
-    ["health"] = 768495,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 83444,
     ["creatureType"] = "Humanoid",
@@ -664,6 +743,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1310683] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -690,7 +774,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Merektha",
     ["id"] = 133384,
     ["count"] = 0,
-    ["health"] = 3535073,
+    ["health"] = 15540596,
     ["scale"] = 2,
     ["displayId"] = 88585,
     ["creatureType"] = "Beast",
@@ -700,6 +784,34 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1030,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [264172] = {
+      },
+      [1289205] = {
+      },
+      [1289589] = {
+      },
+      [1289602] = {
+      },
+      [1290031] = {
+      },
+      [1290797] = {
+      },
+      [1291734] = {
+      },
+      [1293048] = {
+      },
+      [1296738] = {
+      },
+      [1296912] = {
+      },
+      [1297034] = {
+      },
+      [1298329] = {
+      },
+      [1308838] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -714,13 +826,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Agitated Nimbus",
     ["id"] = 136076,
     ["count"] = 25,
-    ["health"] = 1229592,
+    ["health"] = 5189208,
     ["scale"] = 1.7,
     ["displayId"] = 65631,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [1293464] = {
+        ["magic"] = true,
+      },
+      [1293475] = {
+      },
+      [1293650] = {
+      },
+      [1293652] = {
+      },
+      [1310739] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -747,7 +873,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Imbued Stormcaller",
     ["id"] = 134599,
     ["count"] = 7,
-    ["health"] = 768495,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 83779,
     ["creatureType"] = "Humanoid",
@@ -762,6 +888,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sap"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [269116] = {
+      },
+      [1291262] = {
+        ["interruptible"] = true,
+      },
+      [1296045] = {
+      },
+      [1296052] = {
+        ["magic"] = true,
+      },
+      [1310739] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -788,37 +929,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 30,
         ["sublevel"] = 1,
       },
-      [7] = {
-        ["x"] = 471.35673651109,
-        ["y"] = -173.94799445927,
-        ["g"] = 32,
-        ["sublevel"] = 1,
-      },
-      [8] = {
-        ["x"] = 481.73597646374,
-        ["y"] = -173.52545170775,
-        ["g"] = 32,
-        ["sublevel"] = 1,
-      },
-      [9] = {
-        ["x"] = 475.3975106151,
-        ["y"] = -163.93850463745,
-        ["g"] = 32,
-        ["sublevel"] = 1,
-      },
-      [10] = {
-        ["x"] = 488.11134479761,
-        ["y"] = -145.58867723591,
-        ["g"] = 31,
-        ["sublevel"] = 1,
-      },
     },
   },
   [16] = {
     ["name"] = "Static Anomaly",
     ["id"] = 134691,
     ["count"] = 5,
-    ["health"] = 768495,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 81655,
     ["creatureType"] = "Elemental",
@@ -826,7 +943,37 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [264763] = {
+      },
+      [1310693] = {
+      },
+    },
     ["clones"] = {
+      [1] = {
+        ["x"] = 484.38764206587,
+        ["y"] = -144.93569966322,
+        ["g"] = 31,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 472.97839693686,
+        ["y"] = -161.6270052093,
+        ["g"] = 31,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 468.96404534479,
+        ["y"] = -171.1346759095,
+        ["g"] = 31,
+        ["sublevel"] = 1,
+      },
+      [4] = {
+        ["x"] = 478.89433414907,
+        ["y"] = -170.2895516146,
+        ["g"] = 31,
+        ["sublevel"] = 1,
+      },
       [5] = {
         ["x"] = 537.87483531924,
         ["y"] = -154.58075550007,
@@ -845,13 +992,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Twisted Hexxer",
     ["id"] = 136250,
     ["count"] = 25,
-    ["health"] = 768495,
+    ["health"] = 4864883,
     ["scale"] = 1.7,
     ["displayId"] = 84676,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [268013] = {
+        ["interruptible"] = true,
+      },
+      [1300666] = {
+      },
+      [1300684] = {
+      },
+      [1311964] = {
+      },
+      [1311980] = {
+      },
+      [1311981] = {
+      },
     },
     ["clones"] = {
       [6] = {
@@ -866,7 +1028,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Avatar of Sethraliss",
     ["id"] = 133392,
     ["count"] = 0,
-    ["health"] = 1536990,
+    ["health"] = 21621700,
     ["scale"] = 2,
     ["displayId"] = 83203,
     ["creatureType"] = "Undead",
@@ -887,7 +1049,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spark Channeler",
     ["id"] = 265057,
     ["count"] = 5,
-    ["health"] = 1229590,
+    ["health"] = 648651,
     ["scale"] = 1.5,
     ["displayId"] = 83553,
     ["creatureType"] = "Humanoid",
@@ -908,11 +1070,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "A Knot of Snakes",
     ["id"] = 134388,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 540542,
     ["scale"] = 1,
     ["displayId"] = 83574,
     ["creatureType"] = "Beast",
     ["level"] = 90,
+    ["spells"] = {
+      [263958] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 431.31924209001,
@@ -926,11 +1092,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toxic Viper",
     ["id"] = 134389,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 1405411,
     ["scale"] = 1.2,
     ["displayId"] = 78250,
     ["creatureType"] = "Beast",
     ["level"] = 90,
+    ["spells"] = {
+      [267027] = {
+        ["interruptible"] = true,
+        ["poison"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 403.01005603595,
@@ -950,11 +1122,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Storm Serpent",
     ["id"] = 134390,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 2972984,
     ["scale"] = 1.7,
     ["displayId"] = 78247,
     ["creatureType"] = "Beast",
     ["level"] = 91,
+    ["spells"] = {
+      [1289589] = {
+      },
+      [1291622] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 409.83830457903,
@@ -968,7 +1146,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Merektha",
     ["id"] = 134487,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 307716,
     ["scale"] = 1,
     ["displayId"] = 78247,
     ["creatureType"] = "Beast",
@@ -986,11 +1164,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Orb Watcher",
     ["id"] = 135007,
     ["count"] = 25,
-    ["health"] = 10000,
+    ["health"] = 6486510,
     ["scale"] = 1.5,
     ["displayId"] = 84503,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["spells"] = {
+      [1303443] = {
+      },
+      [1303452] = {
+      },
+      [1303486] = {
+      },
+      [1308546] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 261.59302994071,
@@ -1010,7 +1198,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lightning Spire",
     ["id"] = 135445,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 21621699,
     ["scale"] = 1,
     ["displayId"] = 46710,
     ["creatureType"] = "Elemental",
@@ -1028,11 +1216,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Sandswept Marksman",
     ["id"] = 139097,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 439629,
     ["scale"] = 1,
     ["displayId"] = 83780,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [273225] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 594.82509279125,
@@ -1050,11 +1242,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Loose Spark",
     ["id"] = 139108,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 3243255,
     ["scale"] = 1,
     ["displayId"] = 51418,
     ["creatureType"] = "Elemental",
     ["level"] = 90,
+    ["spells"] = {
+      [267483] = {
+      },
+      [273241] = {
+      },
+      [1225638] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 258.76810415329,
@@ -1092,11 +1292,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Eye of Sethraliss",
     ["id"] = 240681,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 287585,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
+    ["spells"] = {
+      [1303596] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 247.40037310624,
@@ -1116,7 +1320,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Adderis",
     ["id"] = 262530,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 10135172,
     ["scale"] = 1.5,
     ["displayId"] = 83550,
     ["creatureType"] = "Humanoid",
@@ -1124,6 +1328,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2142,
     ["instanceID"] = 1030,
+    ["spells"] = {
+      [263425] = {
+      },
+      [1288092] = {
+      },
+      [1288235] = {
+      },
+      [1288428] = {
+      },
+      [1289229] = {
+      },
+      [1308738] = {
+      },
+      [1308740] = {
+      },
+      [1310311] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 644.7031081657,
@@ -1137,7 +1359,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aspix",
     ["id"] = 262822,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 10135172,
     ["scale"] = 1.5,
     ["displayId"] = 83552,
     ["creatureType"] = "Humanoid",
@@ -1145,6 +1367,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2142,
     ["instanceID"] = 1030,
+    ["spells"] = {
+      [1288457] = {
+      },
+      [1288864] = {
+      },
+      [1288885] = {
+      },
+      [1289062] = {
+      },
+      [1289229] = {
+      },
+      [1292035] = {
+      },
+      [1310311] = {
+      },
+      [1310712] = {
+      },
+      [1311808] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 645.41878914688,
@@ -1163,6 +1405,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 55649,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["spells"] = {
+      [1289208] = {
+      },
+      [1296738] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 429.20388549141,
@@ -1176,7 +1424,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Galvazzt",
     ["id"] = 263658,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 21621699,
     ["scale"] = 2,
     ["displayId"] = 81654,
     ["creatureType"] = "Elemental",
@@ -1184,6 +1432,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2142,
     ["instanceID"] = 1030,
+    ["spells"] = {
+      [1290531] = {
+      },
+      [1291815] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 438.34802463012,
@@ -1197,7 +1451,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Swarming Krolusk",
     ["id"] = 264785,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 810814,
     ["scale"] = 1,
     ["displayId"] = 83787,
     ["creatureType"] = "Beast",
@@ -1233,11 +1487,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Faithless Tormentor",
     ["id"] = 268317,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 1135139,
     ["scale"] = 1.2,
     ["displayId"] = 80960,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [1300704] = {
+      },
+      [1300714] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 84.037263839491,
@@ -1269,11 +1529,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupted Guardian",
     ["id"] = 268344,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 1702709,
     ["scale"] = 1,
     ["displayId"] = 84761,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
+    ["spells"] = {
+      [1300803] = {
+      },
+      [1302616] = {
+      },
+      [1302618] = {
+      },
+      [1302761] = {
+      },
+      [1303446] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 142.65397817523,
@@ -1287,11 +1559,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lifeforce",
     ["id"] = 268364,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 330722,
     ["scale"] = 1,
     ["displayId"] = 169,
     ["creatureType"] = "Not specified",
     ["level"] = 90,
+    ["spells"] = {
+      [1300871] = {
+      },
+      [1302826] = {
+      },
+      [1302897] = {
+      },
+      [1312214] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 85.034318985311,
@@ -1305,11 +1587,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Essence Defiler",
     ["id"] = 268427,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 4324340,
     ["scale"] = 1,
     ["displayId"] = 84024,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["spells"] = {
+      [1301199] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 132.71438360346,
@@ -1329,11 +1615,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Twisted Hexxer",
     ["id"] = 268491,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 2351360,
     ["scale"] = 1,
     ["displayId"] = 84676,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["spells"] = {
+      [1300684] = {
+      },
+      [1302153] = {
+      },
+      [1302158] = {
+        ["interruptible"] = true,
+      },
+      [1311964] = {
+      },
+      [1311979] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 143.25526891455,
@@ -1347,11 +1646,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Faithless Tormentor",
     ["id"] = 268729,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 486488,
     ["scale"] = 1,
     ["displayId"] = 80960,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [1300704] = {
+      },
+      [1300714] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 149.57293559817,
@@ -1383,11 +1688,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spark Channeler",
     ["id"] = 139110,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 972977,
     ["scale"] = 1.7,
     ["displayId"] = 83553,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
+    ["spells"] = {
+      [267483] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 242.37012931409,
@@ -1401,7 +1710,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Faithless Conscript",
     ["id"] = 135971,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 648651,
     ["scale"] = 1,
     ["displayId"] = 88179,
     ["creatureType"] = "Humanoid",
@@ -1461,7 +1770,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Snake",
     ["id"] = 263383,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 1081085,
     ["scale"] = 1,
     ["displayId"] = 7409,
     ["creatureType"] = "Beast",
@@ -1497,7 +1806,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Temple Disruptor",
     ["id"] = 269227,
     ["count"] = 5,
-    ["health"] = 10000,
+    ["health"] = 1945953,
     ["scale"] = 1,
     ["displayId"] = 80961,
     ["creatureType"] = "Humanoid",

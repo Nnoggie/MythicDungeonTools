@@ -1,5 +1,5 @@
-local _, MDT = ...
-local addonName = MDT.AddonName
+local addonName = ...
+local MDT = MDT
 local L = MDT.L
 local dungeonIndex = 164
 MDT.dungeonList[dungeonIndex] = L["AltarOfFangs"]
@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["AltarOfFangs"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 836 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 817 }
 
 MDT.mapPOIs[dungeonIndex] = {};
 
@@ -33,12 +33,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ritual Chieftain",
     ["id"] = 270306,
     ["count"] = 25,
-    ["health"] = 4664120,
+    ["health"] = 5189208,
     ["scale"] = 1.8,
     ["displayId"] = 146680,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1306517] = {
       },
       [1306550] = {
@@ -51,7 +53,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1306911] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -96,15 +97,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloodletter",
     ["id"] = 261552,
     ["count"] = 5,
-    ["health"] = 2915075,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 146661,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1307526] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -209,12 +211,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "High Evolutionist",
     ["id"] = 261557,
     ["count"] = 7,
-    ["health"] = 2623568,
+    ["health"] = 2918930,
     ["scale"] = 1.2,
     ["displayId"] = 146663,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1287544] = {
       },
       [1289416] = {
@@ -233,7 +237,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307602] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -314,15 +317,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Hatchling",
     ["id"] = 261556,
     ["count"] = 0,
-    ["health"] = 874523,
+    ["health"] = 972977,
     ["scale"] = 1,
     ["displayId"] = 146662,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1306383] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -336,7 +340,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Living Venom",
     ["id"] = 263112,
     ["count"] = 1,
-    ["health"] = 1166030,
+    ["health"] = 1297302,
     ["scale"] = 1,
     ["displayId"] = 146677,
     ["creatureType"] = "Elemental",
@@ -463,18 +467,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primal Serpent",
     ["id"] = 261560,
     ["count"] = 7,
-    ["health"] = 2623568,
+    ["health"] = 2918930,
     ["scale"] = 1.2,
     ["displayId"] = 146653,
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1294557] = {
         ["interruptible"] = true,
       },
       [1306381] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -513,27 +518,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 6,
         ["sublevel"] = 1,
       },
-      [7] = {
-        ["x"] = 48.582634625243,
-        ["y"] = -197.43402535127,
-        ["g"] = 5,
-        ["sublevel"] = 1,
-      },
       [8] = {
-        ["x"] = 48.39499365292,
-        ["y"] = -214.25717124444,
+        ["x"] = 44.6764716987,
+        ["y"] = -206.82004116278,
         ["g"] = 5,
         ["sublevel"] = 1,
       },
       [9] = {
-        ["x"] = 209.53081313267,
-        ["y"] = -189.51599665858,
-        ["g"] = 7,
-        ["sublevel"] = 1,
-      },
-      [10] = {
-        ["x"] = 209.08959762927,
-        ["y"] = -219.65074034143,
+        ["x"] = 223.47546127312,
+        ["y"] = -204.85506283332,
         ["g"] = 7,
         ["sublevel"] = 1,
       },
@@ -579,12 +572,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ravenous Descendant",
     ["id"] = 261553,
     ["count"] = 5,
-    ["health"] = 3206583,
+    ["health"] = 3567581,
     ["scale"] = 1.2,
     ["displayId"] = 146654,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1306308] = {
         ["enrage"] = true,
       },
@@ -592,7 +587,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1306338] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -649,15 +643,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 5,
         ["sublevel"] = 1,
       },
-      [10] = {
-        ["x"] = 220.11019730411,
-        ["y"] = -198.10108609305,
-        ["g"] = 7,
-        ["sublevel"] = 1,
-      },
       [11] = {
-        ["x"] = 218.75954370135,
-        ["y"] = -212.56267698001,
+        ["x"] = 208.53344213604,
+        ["y"] = -188.39196420564,
         ["g"] = 7,
         ["sublevel"] = 1,
       },
@@ -685,12 +673,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 15,
         ["sublevel"] = 1,
       },
-      [16] = {
-        ["x"] = 133.26327990371,
-        ["y"] = -290.82904973167,
-        ["g"] = 13,
-        ["sublevel"] = 1,
-      },
       [17] = {
         ["x"] = 127.97379699136,
         ["y"] = -280.7781359731,
@@ -715,13 +697,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 14,
         ["sublevel"] = 1,
       },
+      [21] = {
+        ["x"] = 209.00249715976,
+        ["y"] = -220.61647324249,
+        ["g"] = 7,
+        ["sublevel"] = 1,
+      },
     },
   },
   [8] = {
     ["name"] = "Ula'tek's Chosen",
     ["id"] = 263109,
     ["count"] = 25,
-    ["health"] = 4372613,
+    ["health"] = 4864883,
     ["scale"] = 1.8,
     ["displayId"] = 142327,
     ["creatureType"] = "Humanoid",
@@ -737,13 +725,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1306853] = {
       },
+      [1306856] = {
+      },
       [1307567] = {
         ["interruptible"] = true,
       },
       [1307571] = {
         ["poison"] = true,
       },
-      [1306856] = {},
     },
     ["clones"] = {
       [1] = {
@@ -776,12 +765,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ascendant Serpent",
     ["id"] = 261573,
     ["count"] = 30,
-    ["health"] = 9328240,
+    ["health"] = 9081114,
     ["scale"] = 2,
     ["displayId"] = 146299,
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1293420] = {
       },
       [1294934] = {
@@ -804,7 +795,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1309416] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -819,16 +809,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Twinfang Harrower",
     ["id"] = 261554,
     ["count"] = 25,
-    ["health"] = 4955628,
+    ["health"] = 5513534,
     ["scale"] = 1.8,
     ["displayId"] = 142386,
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1294567] = {
+      },
+      [1294568] = {
       },
       [1294569] = {
         ["magic"] = true,
+      },
+      [1294570] = {
       },
       [1294572] = {
       },
@@ -838,9 +834,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307269] = {
       },
-      [1294568] = {},
-      [1294570] = {},
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -873,7 +866,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Venom Leech",
     ["id"] = 261550,
     ["count"] = 1,
-    ["health"] = 1749045,
+    ["health"] = 1945953,
     ["scale"] = 1,
     ["displayId"] = 146598,
     ["creatureType"] = "Beast",
@@ -1067,12 +1060,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rattling Writhe",
     ["id"] = 262011,
     ["count"] = 25,
-    ["health"] = 4955628,
+    ["health"] = 5513534,
     ["scale"] = 1.8,
     ["displayId"] = 146664,
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
+      [1221063] = {
+      },
       [1294845] = {
         ["poison"] = true,
       },
@@ -1080,7 +1075,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1294859] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1107,15 +1101,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blade of the Altar",
     ["id"] = 271453,
     ["count"] = 5,
-    ["health"] = 2915075,
+    ["health"] = 3243255,
     ["scale"] = 1.2,
     ["displayId"] = 142336,
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
+      [1221063] = {
+      },
       [1308518] = {
       },
-      [1221063] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1250,7 +1245,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rav'i",
     ["id"] = 259445,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 21216291,
     ["scale"] = 1.5,
     ["displayId"] = 144110,
     ["creatureType"] = "Beast",
@@ -1259,10 +1254,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2880,
     ["instanceID"] = 0,
     ["spells"] = {
+      [1296050] = {
+      },
       [1296058] = {
       },
       [1296069] = {
         ["disease"] = true,
+      },
+      [1296216] = {
+      },
+      [1296219] = {
       },
       [1296220] = {
       },
@@ -1280,6 +1281,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307700] = {
       },
+      [1307703] = {
+      },
       [1307765] = {
       },
       [1307768] = {
@@ -1288,14 +1291,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1307915] = {
       },
-      [1296050] = {},
-      [1296216] = {},
-      [1296219] = {},
-      [1307703] = {},
-      [1307921] = {},
-      [1309522] = {},
-      [1310413] = {},
-      [1310378] = {},
+      [1307921] = {
+      },
+      [1309522] = {
+      },
+      [1310378] = {
+      },
+      [1310413] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1310,7 +1313,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Writhing Coil",
     ["id"] = 259446,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 30405514,
     ["scale"] = 1.3,
     ["displayId"] = 144156,
     ["creatureType"] = "Beast",
@@ -1319,6 +1322,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2880,
     ["instanceID"] = 0,
     ["spells"] = {
+      [1287798] = {
+      },
       [1287811] = {
       },
       [1298949] = {
@@ -1343,16 +1348,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300083] = {
       },
-      [1287798] = {},
-      [1300503] = {},
-      [1300686] = {},
+      [1300503] = {
+      },
+      [1300612] = {
+      },
+      [1300686] = {
+      },
       [1305368] = {
         ["poison"] = true,
       },
-      [1305393] = {},
-      [1310357] = {},
-      [1310547] = {},
-      [1310974] = {},
+      [1305393] = {
+      },
+      [1310357] = {
+      },
+      [1310547] = {
+      },
+      [1310974] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1367,7 +1379,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'jan",
     ["id"] = 259447,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 27027123,
     ["scale"] = 1.5,
     ["displayId"] = 145435,
     ["creatureType"] = "Humanoid",
@@ -1392,6 +1404,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1301114] = {
       },
+      [1301217] = {
+      },
       [1301350] = {
       },
       [1301353] = {
@@ -1400,7 +1414,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1301508] = {
       },
-      [1301217] = {},
     },
     ["clones"] = {
       [1] = {
@@ -1415,12 +1428,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Uncoiled Writhe",
     ["id"] = 262398,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 361821,
     ["scale"] = 1,
     ["displayId"] = 142361,
     ["creatureType"] = "Beast",
     ["level"] = 92,
     ["spells"] = {
+      [1221063] = {
+      },
       [1300503] = {
       },
       [1300618] = {
@@ -1432,7 +1447,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1305393] = {
       },
-      [1221063] = {},
+      [1310666] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1453,7 +1470,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infused Eggs",
     ["id"] = 264798,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 648651,
     ["scale"] = 1,
     ["displayId"] = 144271,
     ["creatureType"] = "Not specified",
@@ -1498,7 +1515,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ritual Spirit",
     ["id"] = 270378,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 5189208,
     ["scale"] = 1,
     ["displayId"] = 146372,
     ["creatureType"] = "Humanoid",
@@ -1519,7 +1536,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Uncoiled Writhe",
     ["id"] = 270417,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 32432550,
     ["scale"] = 1,
     ["displayId"] = 142361,
     ["creatureType"] = "Beast",
@@ -1529,7 +1546,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300698] = {
       },
-      [1305393] = {},
+      [1305393] = {
+      },
     },
     ["clones"] = {
       [1] = {
