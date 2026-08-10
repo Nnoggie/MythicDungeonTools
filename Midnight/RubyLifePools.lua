@@ -26,20 +26,32 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.mapPOIs[dungeonIndex] = {};
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 531 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 553 }
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Primal Juggernaut",
     ["id"] = 188244,
     ["count"] = 25,
-    ["health"] = 13426021,
+    ["health"] = 6486510,
     ["scale"] = 1,
     ["displayId"] = 101209,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [372730] = {
+      },
+      [372793] = {
+      },
+      [1305201] = {
+      },
+      [1305213] = {
+      },
+      [1310489] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -61,7 +73,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Deepstone Earthshaper",
     ["id"] = 187969,
     ["count"] = 5,
-    ["health"] = 6713011,
+    ["health"] = 3891906,
     ["scale"] = 1,
     ["displayId"] = 102955,
     ["creatureType"] = "Humanoid",
@@ -84,6 +96,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
       ["Sleep Walk"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [371471] = {
+      },
+      [1305225] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -148,7 +166,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthbound Guardian",
     ["id"] = 188011,
     ["count"] = 5,
-    ["health"] = 6713011,
+    ["health"] = 3567581,
     ["scale"] = 1,
     ["displayId"] = 79800,
     ["creatureType"] = "Elemental",
@@ -167,6 +185,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
       ["Slow"] = true,
       ["Sleep Walk"] = true,
+    },
+    ["spells"] = {
+      [384933] = {
+        ["interruptible"] = true,
+      },
+      [1307205] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -238,7 +263,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Flashfrost Chillweaver",
     ["id"] = 188067,
     ["count"] = 7,
-    ["health"] = 6713011,
+    ["health"] = 3243255,
     ["scale"] = 1,
     ["displayId"] = 107397,
     ["creatureType"] = "Humanoid",
@@ -261,6 +286,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
       ["Sleep Walk"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [371489] = {
+      },
+      [371984] = {
+        ["interruptible"] = true,
+      },
+      [372743] = {
+        ["interruptible"] = true,
+      },
+      [372749] = {
+      },
+      [384933] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -311,7 +351,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infused Whelp",
     ["id"] = 187894,
     ["count"] = 0,
-    ["health"] = 2315989,
+    ["health"] = 3243255,
     ["scale"] = 1,
     ["displayId"] = 110633,
     ["creatureType"] = "Dragonkin",
@@ -333,6 +373,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sleep Walk"] = true,
       ["Hibernate"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [1305234] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -705,7 +750,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Defier Draghar",
     ["id"] = 187897,
     ["count"] = 30,
-    ["health"] = 20139032,
+    ["health"] = 9729765,
     ["scale"] = 1,
     ["stealthDetect"] = true,
     ["displayId"] = 107106,
@@ -714,6 +759,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [372047] = {
+      },
+      [372087] = {
+      },
+      [372794] = {
+      },
+      [1309705] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -728,7 +783,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Melidrussa Chillworn",
     ["id"] = 188252,
     ["count"] = 0,
-    ["health"] = 46843573,
+    ["health"] = 20270342,
     ["scale"] = 1,
     ["displayId"] = 106891,
     ["creatureType"] = "Humanoid",
@@ -739,6 +794,31 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [372808] = {
+        ["interruptible"] = true,
+      },
+      [372851] = {
+      },
+      [372988] = {
+      },
+      [373046] = {
+      },
+      [373680] = {
+      },
+      [373688] = {
+      },
+      [373727] = {
+      },
+      [383925] = {
+      },
+      [384024] = {
+      },
+      [396044] = {
+      },
+      [397077] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -753,7 +833,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scorchling",
     ["id"] = 190205,
     ["count"] = 0,
-    ["health"] = 1342602,
+    ["health"] = 648651,
     ["scale"] = 1,
     ["displayId"] = 102535,
     ["creatureType"] = "Elemental",
@@ -773,153 +853,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
       ["Sleep Walk"] = true,
     },
+    ["spells"] = {
+      [1307372] = {
+      },
+    },
     ["clones"] = {
-      [1] = {
-        ["x"] = 492.13614612859,
-        ["y"] = -295.47539664849,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [2] = {
-        ["x"] = 500.25181175504,
-        ["y"] = -290.87698119043,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [3] = {
-        ["x"] = 499.70537721627,
-        ["y"] = -301.87013808378,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [4] = {
-        ["x"] = 455.8972547562,
-        ["y"] = -331.79842050928,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [5] = {
-        ["x"] = 463.28797282585,
-        ["y"] = -358.13669303088,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [6] = {
-        ["x"] = 516.02809843308,
-        ["y"] = -404.19476041828,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [7] = {
-        ["x"] = 522.73505386803,
-        ["y"] = -458.75084439749,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [8] = {
-        ["x"] = 532.67245583012,
-        ["y"] = -466.78621574516,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [9] = {
-        ["x"] = 557.02238893344,
-        ["y"] = -434.15629250042,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [10] = {
-        ["x"] = 612.30861303376,
-        ["y"] = -450.32258383015,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [11] = {
-        ["x"] = 627.90364851055,
-        ["y"] = -459.88939594336,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [12] = {
-        ["x"] = 639.30879707081,
-        ["y"] = -446.74357802914,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [13] = {
-        ["x"] = 766.11619942765,
-        ["y"] = -323.97254325904,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [14] = {
-        ["x"] = 773.96863215766,
-        ["y"] = -305.23356163146,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [15] = {
-        ["x"] = 760.31062014295,
-        ["y"] = -303.21628038448,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [16] = {
-        ["x"] = 714.58108899603,
-        ["y"] = -227.61175814968,
-        ["g"] = 18,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [17] = {
-        ["x"] = 676.32408662608,
-        ["y"] = -237.89026541935,
-        ["g"] = 18,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [18] = {
-        ["x"] = 709.13727013039,
-        ["y"] = -218.00184298392,
-        ["g"] = 18,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [19] = {
-        ["x"] = 668.38409652752,
-        ["y"] = -226.40132988479,
-        ["g"] = 18,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [20] = {
-        ["x"] = 692.73334675594,
-        ["y"] = -208.79667877594,
-        ["g"] = 18,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [21] = {
-        ["x"] = 591.56158459574,
-        ["y"] = -196.96277766472,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
       [22] = {
-        ["x"] = 542.45029092567,
-        ["y"] = -235.7266101616,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [23] = {
-        ["x"] = 556.31232179183,
-        ["y"] = -238.56782169582,
-        ["sublevel"] = 1,
-        ["scale"] = 1,
-      },
-      [24] = {
-        ["x"] = 549.21367787381,
-        ["y"] = -250.02452917774,
+        ["x"] = 525.25198839473,
+        ["y"] = -207.8374369853,
         ["sublevel"] = 1,
         ["scale"] = 1,
       },
@@ -928,8 +869,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [9] = {
     ["name"] = "Thunderhead",
     ["id"] = 197698,
-    ["count"] = 30,
-    ["health"] = 20139032,
+    ["count"] = 48,
+    ["health"] = 8432463,
     ["scale"] = 1,
     ["displayId"] = 106435,
     ["creatureType"] = "Dragonkin",
@@ -937,6 +878,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [391726] = {
+      },
+      [391727] = {
+      },
+      [392395] = {
+      },
+      [392640] = {
+      },
+      [392641] = {
+        ["magic"] = true,
+      },
+      [395303] = {
+      },
+      [1310599] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -951,7 +909,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primalist Cinderweaver",
     ["id"] = 190207,
     ["count"] = 7,
-    ["health"] = 6713011,
+    ["health"] = 2918930,
     ["scale"] = 1,
     ["displayId"] = 102886,
     ["creatureType"] = "Humanoid",
@@ -975,7 +933,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Sleep Walk"] = true,
       ["Mind Soothe"] = true,
     },
+    ["spells"] = {
+      [373693] = {
+      },
+      [384194] = {
+        ["interruptible"] = true,
+      },
+    },
     ["clones"] = {
+      [1] = {
+        ["x"] = 732.67175304531,
+        ["y"] = -275.40754495017,
+        ["g"] = 17,
+        ["sublevel"] = 1,
+        ["scale"] = 1.3,
+      },
+      [2] = {
+        ["x"] = 787.9229977042,
+        ["y"] = -383.23631826682,
+        ["g"] = 38,
+        ["sublevel"] = 1,
+        ["scale"] = 1.3,
+      },
       [3] = {
         ["x"] = 498.22350206768,
         ["y"] = -423.35927878552,
@@ -987,6 +966,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 578.21035783222,
         ["y"] = -470.51856834355,
         ["g"] = 16,
+        ["sublevel"] = 1,
+        ["scale"] = 1.3,
+      },
+      [5] = {
+        ["x"] = 658.01904989903,
+        ["y"] = -502.29802506958,
+        ["g"] = 39,
+        ["sublevel"] = 1,
+        ["scale"] = 1.3,
+      },
+      [6] = {
+        ["x"] = 473.48521589194,
+        ["y"] = -382.37434405068,
+        ["g"] = 14,
         ["sublevel"] = 1,
         ["scale"] = 1.3,
       },
@@ -1017,13 +1010,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazebound Destroyer",
     ["id"] = 190034,
     ["count"] = 25,
-    ["health"] = 11412119,
+    ["health"] = 7135161,
     ["scale"] = 1,
     ["displayId"] = 102505,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [373614] = {
+      },
+      [373692] = {
+      },
+      [384139] = {
+      },
+      [1305955] = {
+        ["interruptible"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1034,8 +1038,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 2,
       },
       [2] = {
-        ["x"] = 568.38271854785,
-        ["y"] = -457.39319674692,
+        ["x"] = 570.70683477823,
+        ["y"] = -455.99871716032,
         ["g"] = 16,
         ["sublevel"] = 1,
         ["scale"] = 2,
@@ -1060,7 +1064,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ashseer Flamelasher",
     ["id"] = 190206,
     ["count"] = 7,
-    ["health"] = 7384312,
+    ["health"] = 3567581,
     ["scale"] = 1,
     ["displayId"] = 102969,
     ["creatureType"] = "Humanoid",
@@ -1083,6 +1087,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
       ["Sleep Walk"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [373972] = {
+        ["magic"] = true,
+      },
+      [373973] = {
+      },
+      [373977] = {
+      },
+      [385536] = {
+      },
+      [385567] = {
+      },
+      [1305865] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1107,8 +1126,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.3,
       },
       [4] = {
-        ["x"] = 733.01393950451,
-        ["y"] = -280.62216296745,
+        ["x"] = 732.14235893479,
+        ["y"] = -287.59445359949,
         ["g"] = 17,
         ["sublevel"] = 1,
         ["scale"] = 1.3,
@@ -1128,9 +1147,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.3,
       },
       [8] = {
-        ["x"] = 728.44787991053,
-        ["y"] = -268.00774634691,
-        ["g"] = 17,
+        ["x"] = 775.72154680341,
+        ["y"] = -383.23631826682,
+        ["g"] = 38,
         ["sublevel"] = 1,
         ["scale"] = 1.3,
       },
@@ -1141,12 +1160,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
         ["scale"] = 1.3,
       },
+      [10] = {
+        ["x"] = 656.15967812779,
+        ["y"] = -489.28303819384,
+        ["g"] = 39,
+        ["sublevel"] = 1,
+        ["scale"] = 1.3,
+      },
     },
   },
   [13] = {
     ["name"] = "Ruinous Stormbringer",
     ["id"] = 195119,
-    ["count"] = 7,
+    ["count"] = 10,
     ["health"] = 10740817,
     ["scale"] = 1,
     ["displayId"] = 108753,
@@ -1156,6 +1182,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
     },
+    ["spells"] = {
+      [385310] = {
+        ["interruptible"] = true,
+      },
+      [385311] = {
+      },
+      [385312] = {
+      },
+      [385313] = {
+      },
+      [385314] = {
+      },
+      [385316] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 526.809602612,
@@ -1164,14 +1205,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.8,
       },
       [2] = {
-        ["x"] = 574.27773054004,
-        ["y"] = -415.35553202475,
+        ["x"] = 642.8387448672,
+        ["y"] = -437.4345190412,
         ["sublevel"] = 1,
         ["scale"] = 1.8,
       },
       [3] = {
-        ["x"] = 680.30835983498,
-        ["y"] = -277.13847947594,
+        ["x"] = 715.46044756828,
+        ["y"] = -356.15798360943,
         ["sublevel"] = 1,
         ["scale"] = 1.8,
       },
@@ -1186,8 +1227,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [14] = {
     ["name"] = "Flamegullet",
     ["id"] = 197697,
-    ["count"] = 30,
-    ["health"] = 20139032,
+    ["count"] = 40,
+    ["health"] = 9729765,
     ["scale"] = 1,
     ["stealthDetect"] = true,
     ["displayId"] = 106023,
@@ -1197,10 +1238,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
     },
+    ["spells"] = {
+      [391723] = {
+      },
+      [392394] = {
+      },
+      [392569] = {
+      },
+      [392570] = {
+      },
+      [395292] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 731.33110037629,
-        ["y"] = -400.47436133393,
+        ["x"] = 747.89039257338,
+        ["y"] = -333.65643120583,
         ["sublevel"] = 1,
         ["scale"] = 2.5,
       },
@@ -1210,7 +1263,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kokia Blazehoof",
     ["id"] = 189232,
     ["count"] = 0,
-    ["health"] = 40151634,
+    ["health"] = 21621698,
     ["scale"] = 1,
     ["displayId"] = 106851,
     ["creatureType"] = "Humanoid",
@@ -1221,6 +1274,28 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [372107] = {
+      },
+      [372811] = {
+      },
+      [372819] = {
+      },
+      [372820] = {
+      },
+      [372858] = {
+      },
+      [372859] = {
+      },
+      [372860] = {
+      },
+      [372863] = {
+      },
+      [1306272] = {
+      },
+      [1309540] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1235,7 +1310,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Storm Warrior",
     ["id"] = 197982,
     ["count"] = 5,
-    ["health"] = 6713011,
+    ["health"] = 3567581,
     ["scale"] = 1,
     ["displayId"] = 110964,
     ["creatureType"] = "Humanoid",
@@ -1258,6 +1333,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
       ["Sleep Walk"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [392406] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1331,7 +1410,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Primal Thundercloud",
     ["id"] = 197509,
     ["count"] = 0,
-    ["health"] = 995103,
+    ["health"] = 1621628,
     ["scale"] = 1,
     ["displayId"] = 102516,
     ["creatureType"] = "Elemental",
@@ -1350,6 +1429,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
       ["Slow"] = true,
       ["Sleep Walk"] = true,
+    },
+    ["spells"] = {
+      [391031] = {
+        ["magic"] = true,
+      },
+      [392399] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1512,7 +1598,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Tempest Channeler",
     ["id"] = 198047,
     ["count"] = 25,
-    ["health"] = 10740817,
+    ["health"] = 5189208,
     ["scale"] = 0.8,
     ["displayId"] = 110967,
     ["creatureType"] = "Humanoid",
@@ -1520,6 +1606,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [392576] = {
+        ["interruptible"] = true,
+      },
+      [1306366] = {
+      },
+      [1307488] = {
+      },
+      [1307502] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1542,7 +1639,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "High Channeler Ryvati",
     ["id"] = 197535,
     ["count"] = 30,
-    ["health"] = 20139032,
+    ["health"] = 6486510,
     ["scale"] = 1,
     ["displayId"] = 110966,
     ["creatureType"] = "Humanoid",
@@ -1550,6 +1647,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [1306366] = {
+      },
+      [1307488] = {
+      },
+      [1307511] = {
+      },
+      [1310355] = {
+      },
+      [1310361] = {
+      },
+      [1310363] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1565,7 +1676,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Erkhart Stormvein",
     ["id"] = 190485,
     ["count"] = 0,
-    ["health"] = 30113726,
+    ["health"] = 15202757,
     ["scale"] = 1,
     ["displayId"] = 108318,
     ["creatureType"] = "Humanoid",
@@ -1576,6 +1687,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [181089] = {
+      },
+      [381512] = {
+      },
+      [381513] = {
+      },
+      [381514] = {
+      },
+      [381515] = {
+        ["magic"] = true,
+      },
+      [381516] = {
+      },
+      [381517] = {
+      },
+      [381518] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1591,7 +1721,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kyrakka",
     ["id"] = 190484,
     ["count"] = 0,
-    ["health"] = 24090980,
+    ["health"] = 13513562,
     ["scale"] = 1,
     ["displayId"] = 107137,
     ["creatureType"] = "Dragonkin",
@@ -1602,6 +1732,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
+    },
+    ["spells"] = {
+      [381525] = {
+      },
+      [381526] = {
+      },
+      [381602] = {
+      },
+      [381605] = {
+      },
+      [381862] = {
+      },
+      [381864] = {
+      },
+      [384773] = {
+      },
+      [1312669] = {
+      },
+      [1312684] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -1617,15 +1767,34 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Blazebound Firestorm",
     ["id"] = 189886,
     ["count"] = 0,
-    ["health"] = 10000,
-    ["scale"] = 1,
+    ["health"] = 2162170,
+    ["scale"] = 1.8,
     ["displayId"] = 102505,
     ["creatureType"] = "Elemental",
     ["level"] = 91,
+    ["spells"] = {
+      [373017] = {
+        ["interruptible"] = true,
+      },
+      [373087] = {
+      },
+      [384823] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 375.70211354471,
-        ["y"] = -274.83611913845,
+        ["x"] = 502.59808170246,
+        ["y"] = -221.38179053256,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 503.69858955364,
+        ["y"] = -239.20963387208,
+        ["sublevel"] = 1,
+      },
+      [3] = {
+        ["x"] = 494.40212463212,
+        ["y"] = -255.01348143734,
         ["sublevel"] = 1,
       },
     },
@@ -1634,11 +1803,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infused Whelp",
     ["id"] = 189893,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 810814,
     ["scale"] = 1,
     ["displayId"] = 110633,
     ["creatureType"] = "Dragonkin",
     ["level"] = 90,
+    ["spells"] = {
+      [1305234] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 338.06439542087,
@@ -1651,14 +1825,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Scorchling",
     ["id"] = 194622,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 648651,
     ["scale"] = 1,
     ["displayId"] = 102535,
     ["creatureType"] = "Elemental",
     ["level"] = 90,
+    ["spells"] = {
+      [1307372] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 240,
+        ["x"] = 517.03300013562,
         ["y"] = -200,
         ["sublevel"] = 1,
       },

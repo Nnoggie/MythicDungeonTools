@@ -16,7 +16,7 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 654 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 608 }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
@@ -32,8 +32,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
     ["name"] = "Animated Guardian",
     ["id"] = 133935,
-    ["count"] = 15,
-    ["health"] = 1306442,
+    ["count"] = 22,
+    ["health"] = 5513534,
     ["scale"] = 2,
     ["displayId"] = 83252,
     ["creatureType"] = "Undead",
@@ -41,16 +41,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [270003] = {
+      },
+      [270016] = {
+      },
+      [1310755] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 615.12986577294,
-        ["y"] = -279.00499227019,
+        ["x"] = 589.10950032871,
+        ["y"] = -277.61103164926,
         ["g"] = 1,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 614.6749587382,
-        ["y"] = -298.7114362741,
+        ["x"] = 588.65454340543,
+        ["y"] = -296.85278885383,
         ["g"] = 1,
         ["sublevel"] = 1,
       },
@@ -72,7 +80,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Minion of Zul",
     ["id"] = 133943,
     ["count"] = 0,
-    ["health"] = 36,
+    ["health"] = 340110,
     ["scale"] = 1,
     ["displayId"] = 76055,
     ["creatureType"] = "Aberration",
@@ -80,6 +88,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [269935] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -166,13 +179,23 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Risen Hexer",
     ["id"] = 134174,
     ["count"] = 20,
-    ["health"] = 1152741,
+    ["health"] = 4864883,
     ["scale"] = 2,
     ["displayId"] = 83371,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [269972] = {
+        ["interruptible"] = true,
+        ["curse"] = true,
+      },
+      [1294815] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [4] = {
@@ -187,13 +210,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Shadow-Borne Champion",
     ["id"] = 134158,
     ["count"] = 25,
-    ["health"] = 1229590,
+    ["health"] = 5189208,
     ["scale"] = 2,
     ["displayId"] = 83364,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [269928] = {
+      },
+      [269976] = {
+        ["enrage"] = true,
+      },
+      [1305945] = {
+      },
+      [1310758] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -214,7 +248,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Umbral Warrior",
     ["id"] = 134157,
     ["count"] = 5,
-    ["health"] = 768494,
+    ["health"] = 3243255,
     ["scale"] = 1.5,
     ["displayId"] = 83363,
     ["creatureType"] = "Undead",
@@ -225,6 +259,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1311942] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -269,7 +307,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Golden Serpent",
     ["id"] = 135322,
     ["count"] = 0,
-    ["health"] = 5379459,
+    ["health"] = 21283860,
     ["scale"] = 2,
     ["displayId"] = 84202,
     ["creatureType"] = "Beast",
@@ -279,6 +317,26 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1041,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [265773] = {
+      },
+      [265781] = {
+      },
+      [265910] = {
+      },
+      [265923] = {
+      },
+      [265991] = {
+      },
+      [1306736] = {
+      },
+      [1311987] = {
+      },
+      [1311988] = {
+      },
+      [1312104] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -292,13 +350,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Skeletal Hunting Raptor",
     ["id"] = 137487,
     ["count"] = 10,
-    ["health"] = 768494,
+    ["health"] = 3243255,
     ["scale"] = 2,
     ["displayId"] = 33733,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [270500] = {
+      },
+      [270502] = {
+      },
+      [270503] = {
+      },
+      [1297763] = {
+        ["enrage"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -313,13 +382,29 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Queen Patlaa",
     ["id"] = 137486,
     ["count"] = 25,
-    ["health"] = 1229590,
+    ["health"] = 5189208,
     ["scale"] = 2,
     ["displayId"] = 85287,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [270931] = {
+      },
+      [1294883] = {
+      },
+      [1297763] = {
+        ["enrage"] = true,
+      },
+      [1305982] = {
+      },
+      [1306761] = {
+      },
+      [1306763] = {
+        ["poison"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -334,13 +419,20 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King A'akul",
     ["id"] = 137484,
     ["count"] = 25,
-    ["health"] = 1998085,
+    ["health"] = 8432462,
     ["scale"] = 2,
     ["displayId"] = 85284,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [1297918] = {
+        ["bleed"] = true,
+      },
+      [1297970] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -355,7 +447,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Bloodsworn Assassin",
     ["id"] = 137485,
     ["count"] = 7,
-    ["health"] = 768494,
+    ["health"] = 3243255,
     ["scale"] = 1.5,
     ["displayId"] = 85285,
     ["creatureType"] = "Undead",
@@ -365,6 +457,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1297781] = {
+        ["bleed"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -380,14 +477,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 562.85049977413,
-        ["y"] = -467.33959039595,
+        ["x"] = 564.70910746082,
+        ["y"] = -465.29509799409,
         ["g"] = 9,
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 562.73453460789,
-        ["y"] = -480.51184372824,
+        ["x"] = 563.84968325557,
+        ["y"] = -479.02496556106,
         ["g"] = 9,
         ["sublevel"] = 1,
       },
@@ -397,13 +494,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Seneschal M'bara",
     ["id"] = 134251,
     ["count"] = 10,
-    ["health"] = 768494,
+    ["health"] = 3243255,
     ["scale"] = 1.5,
     ["displayId"] = 83517,
     ["creatureType"] = "Undead",
     ["level"] = 90,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [270901] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
+      [1296671] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -418,7 +524,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Guard Captain Atu",
     ["id"] = 137473,
     ["count"] = 10,
-    ["health"] = 1248802,
+    ["health"] = 5270289,
     ["scale"] = 1.5,
     ["displayId"] = 85270,
     ["creatureType"] = "Undead",
@@ -428,6 +534,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [1296671] = {
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -442,11 +553,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Rahu'ai",
     ["id"] = 134331,
     ["count"] = 25,
-    ["health"] = 1229590,
+    ["health"] = 5189208,
     ["scale"] = 2,
     ["displayId"] = 83544,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["spells"] = {
+      [270889] = {
+      },
+      [270891] = {
+      },
+      [1296671] = {
+        ["magic"] = true,
+      },
+      [1296719] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 539.92245312894,
@@ -460,7 +582,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Timalji",
     ["id"] = 137474,
     ["count"] = 25,
-    ["health"] = 1229590,
+    ["health"] = 7783811,
     ["scale"] = 2,
     ["displayId"] = 85272,
     ["creatureType"] = "Undead",
@@ -468,10 +590,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [270927] = {
+      },
+      [270928] = {
+      },
+      [1297326] = {
+      },
+      [1306049] = {
+      },
+      [1306056] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 588.01178040324,
-        ["y"] = -498.31406154316,
+        ["x"] = 589.31275389984,
+        ["y"] = -503.33229032397,
         ["g"] = 8,
         ["sublevel"] = 1,
       },
@@ -481,7 +615,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Queen Wasi",
     ["id"] = 137478,
     ["count"] = 25,
-    ["health"] = 1229590,
+    ["health"] = 7783811,
     ["scale"] = 2,
     ["displayId"] = 85274,
     ["creatureType"] = "Undead",
@@ -489,10 +623,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [270920] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
+      [1294972] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
+      [1297326] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 588.62622226958,
-        ["y"] = -478.67629549639,
+        ["x"] = 589.74137091726,
+        ["y"] = -484.2521035899,
         ["g"] = 8,
         ["sublevel"] = 1,
       },
@@ -502,13 +648,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Purification Construct",
     ["id"] = 134739,
     ["count"] = 25,
-    ["health"] = 1844388,
+    ["health"] = 7783811,
     ["scale"] = 2,
     ["displayId"] = 83836,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [270292] = {
+      },
+      [270293] = {
+      },
+      [1310755] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -523,7 +677,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Interment Construct",
     ["id"] = 137969,
     ["count"] = 15,
-    ["health"] = 1536988,
+    ["health"] = 5837859,
     ["scale"] = 1.9,
     ["displayId"] = 85677,
     ["creatureType"] = "Undead",
@@ -531,10 +685,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["characteristics"] = {
       ["Taunt"] = true,
     },
+    ["spells"] = {
+      [271555] = {
+      },
+      [271561] = {
+      },
+      [271562] = {
+      },
+      [1310755] = {
+      },
+      [1312569] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 487.68158107671,
-        ["y"] = -176.95879737405,
+        ["x"] = 493.80648828438,
+        ["y"] = -175.90274761188,
         ["g"] = 13,
         ["sublevel"] = 1,
       },
@@ -550,7 +716,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Mchimba the Embalmer",
     ["id"] = 134993,
     ["count"] = 0,
-    ["health"] = 5379459,
+    ["health"] = 21283860,
     ["scale"] = 1.7,
     ["displayId"] = 83529,
     ["creatureType"] = "Mechanical",
@@ -560,6 +726,22 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1041,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [267618] = {
+      },
+      [267639] = {
+      },
+      [267702] = {
+      },
+      [267874] = {
+      },
+      [271290] = {
+      },
+      [1312146] = {
+      },
+      [1312848] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -574,7 +756,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Phantom Hex Priest",
     ["id"] = 135204,
     ["count"] = 7,
-    ["health"] = 691644,
+    ["health"] = 2918930,
     ["scale"] = 1.5,
     ["displayId"] = 84140,
     ["creatureType"] = "Undead",
@@ -587,6 +769,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [270492] = {
+        ["interruptible"] = true,
+        ["curse"] = true,
+      },
+      [1295125] = {
+        ["interruptible"] = true,
+        ["magic"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -602,8 +794,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 359.10487620687,
-        ["y"] = -248.4578351603,
+        ["x"] = 357.71089064167,
+        ["y"] = -223.36671859339,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -613,7 +805,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Royal Berserker",
     ["id"] = 135167,
     ["count"] = 22,
-    ["health"] = 922193,
+    ["health"] = 3891906,
     ["scale"] = 1.5,
     ["displayId"] = 84112,
     ["creatureType"] = "Undead",
@@ -628,23 +820,32 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
       ["Slow"] = true,
     },
+    ["spells"] = {
+      [270482] = {
+      },
+      [270485] = {
+      },
+      [1301851] = {
+        ["bleed"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 355.28890832266,
-        ["y"] = -357.44292738428,
+        ["x"] = 358.5056830791,
+        ["y"] = -354.22609506413,
         ["g"] = 26,
         ["sublevel"] = 1,
       },
-      [3] = {
-        ["x"] = 358.45924673474,
-        ["y"] = -201.89619836971,
-        ["g"] = 23,
+      [2] = {
+        ["x"] = 369.39058760817,
+        ["y"] = -166.36909063245,
+        ["g"] = 30,
         ["sublevel"] = 1,
       },
-      [6] = {
-        ["x"] = 366.27850068825,
-        ["y"] = -357.43458855614,
-        ["g"] = 26,
+      [4] = {
+        ["x"] = 349.41057683712,
+        ["y"] = -166.36909063245,
+        ["g"] = 30,
         ["sublevel"] = 1,
       },
     },
@@ -653,7 +854,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Spectral Shaman",
     ["id"] = 135239,
     ["count"] = 7,
-    ["health"] = 768494,
+    ["health"] = 3243255,
     ["scale"] = 1.5,
     ["displayId"] = 84163,
     ["creatureType"] = "Undead",
@@ -665,10 +866,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Stun"] = true,
       ["Slow"] = true,
     },
+    ["spells"] = {
+      [270497] = {
+      },
+      [270499] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [2] = {
-        ["x"] = 346.10383503844,
-        ["y"] = -235.08378437275,
+        ["x"] = 343.78062554018,
+        ["y"] = -223.46746249449,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -685,8 +893,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 372.58349720379,
-        ["y"] = -234.77034907934,
+        ["x"] = 373.0482089474,
+        ["y"] = -223.61876388895,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -696,13 +904,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Ghostly Brute",
     ["id"] = 135231,
     ["count"] = 25,
-    ["health"] = 1536988,
+    ["health"] = 6486509,
     ["scale"] = 2,
     ["displayId"] = 85125,
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [270514] = {
+      },
+      [1302028] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -711,19 +925,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 25,
         ["sublevel"] = 1,
       },
-      [2] = {
-        ["x"] = 358.69822294224,
-        ["y"] = -171.41694248057,
-        ["g"] = 23,
-        ["sublevel"] = 1,
-      },
     },
   },
   [23] = {
     ["name"] = "Honored Raptor",
     ["id"] = 135192,
     ["count"] = 5,
-    ["health"] = 768494,
+    ["health"] = 3243255,
     ["scale"] = 1.5,
     ["displayId"] = 84133,
     ["creatureType"] = "Undead",
@@ -733,28 +941,36 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
     },
+    ["spells"] = {
+      [270500] = {
+      },
+      [270502] = {
+      },
+      [270503] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 345.01382109797,
-        ["y"] = -201.64050644486,
-        ["g"] = 23,
+        ["x"] = 367.60331413059,
+        ["y"] = -368.2836492894,
+        ["g"] = 26,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 371.70802164203,
-        ["y"] = -202.31935984527,
-        ["g"] = 23,
+        ["x"] = 350.0894812563,
+        ["y"] = -367.92622667404,
+        ["g"] = 26,
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 346.02369571804,
-        ["y"] = -249.21588849066,
+        ["x"] = 348.81156707137,
+        ["y"] = -234.81174514761,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 371.99903106768,
-        ["y"] = -248.69004975073,
+        ["x"] = 368.28178611568,
+        ["y"] = -234.75054331848,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -763,8 +979,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [24] = {
     ["name"] = "Shadow of Zul",
     ["id"] = 138489,
-    ["count"] = 8,
-    ["health"] = 2612880,
+    ["count"] = 30,
+    ["health"] = 8432462,
     ["scale"] = 2.5,
     ["displayId"] = 85860,
     ["creatureType"] = "Humanoid",
@@ -785,7 +1001,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "King Dazar",
     ["id"] = 136160,
     ["count"] = 0,
-    ["health"] = 5994255,
+    ["health"] = 30405514,
     ["scale"] = 2,
     ["displayId"] = 84352,
     ["creatureType"] = "Undead",
@@ -795,6 +1011,38 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1041,
     ["characteristics"] = {
       ["Taunt"] = true,
+    },
+    ["spells"] = {
+      [268586] = {
+      },
+      [268587] = {
+      },
+      [268589] = {
+      },
+      [268590] = {
+      },
+      [268591] = {
+      },
+      [269503] = {
+      },
+      [1302945] = {
+      },
+      [1303105] = {
+      },
+      [1303111] = {
+      },
+      [1303115] = {
+      },
+      [1303267] = {
+      },
+      [1303372] = {
+      },
+      [1303374] = {
+      },
+      [1303396] = {
+      },
+      [1303399] = {
+      },
     },
     ["clones"] = {
       [1] = {
@@ -809,7 +1057,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Embalming Fluid",
     ["id"] = 137989,
     ["count"] = 1,
-    ["health"] = 461096,
+    ["health"] = 1945953,
     ["scale"] = 0.7,
     ["displayId"] = 33008,
     ["creatureType"] = "Aberration",
@@ -821,6 +1069,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Disorient"] = true,
       ["Stun"] = true,
       ["Slow"] = true,
+    },
+    ["spells"] = {
+      [271563] = {
+      },
+      [1298104] = {
+        ["poison"] = true,
+      },
     },
     ["clones"] = {
       [1] = {
@@ -856,55 +1111,55 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [6] = {
         ["x"] = 460.56931034336,
         ["y"] = -175.57077986759,
-        ["g"] = 14,
+        ["g"] = 16,
         ["sublevel"] = 1,
       },
       [7] = {
         ["x"] = 467.29233069341,
         ["y"] = -176.37245519833,
-        ["g"] = 14,
+        ["g"] = 16,
         ["sublevel"] = 1,
       },
       [8] = {
         ["x"] = 425.44497507075,
         ["y"] = -174.43237211124,
-        ["g"] = 15,
+        ["g"] = 16,
         ["sublevel"] = 1,
       },
       [9] = {
         ["x"] = 430.51340252744,
         ["y"] = -179.59466554863,
-        ["g"] = 15,
+        ["g"] = 16,
         ["sublevel"] = 1,
       },
       [10] = {
         ["x"] = 426.30909723536,
         ["y"] = -140.89085431466,
-        ["g"] = 17,
+        ["g"] = 18,
         ["sublevel"] = 1,
       },
       [11] = {
         ["x"] = 432.76503020625,
         ["y"] = -141.07679149179,
-        ["g"] = 17,
+        ["g"] = 18,
         ["sublevel"] = 1,
       },
       [12] = {
         ["x"] = 428.82339856913,
         ["y"] = -146.10824062515,
-        ["g"] = 17,
+        ["g"] = 18,
         ["sublevel"] = 1,
       },
       [13] = {
         ["x"] = 421.40296434111,
         ["y"] = -121.38449390923,
-        ["g"] = 19,
+        ["g"] = 18,
         ["sublevel"] = 1,
       },
       [14] = {
         ["x"] = 421.55594994242,
         ["y"] = -128.07059346949,
-        ["g"] = 19,
+        ["g"] = 18,
         ["sublevel"] = 1,
       },
       [15] = {
@@ -931,11 +1186,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Disruption Totem",
     ["id"] = 135761,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 324326,
     ["scale"] = 1.5,
     ["displayId"] = 84680,
     ["creatureType"] = "Totem",
     ["level"] = 90,
+    ["spells"] = {
+      [267257] = {
+      },
+      [1309499] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 359.98181736554,
@@ -949,11 +1210,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Explosive Totem",
     ["id"] = 135764,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 374121,
     ["scale"] = 1.5,
     ["displayId"] = 84933,
     ["creatureType"] = "Totem",
     ["level"] = 90,
+    ["spells"] = {
+      [267077] = {
+      },
+      [1309499] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 343.73035572661,
@@ -967,11 +1234,17 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Torrent Totem",
     ["id"] = 135765,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 324326,
     ["scale"] = 1.5,
     ["displayId"] = 84934,
     ["creatureType"] = "Totem",
     ["level"] = 90,
+    ["spells"] = {
+      [267105] = {
+      },
+      [1309499] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 373.03132125613,
@@ -985,7 +1258,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Coffin",
     ["id"] = 136256,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 540543,
     ["scale"] = 1,
     ["displayId"] = 76137,
     ["creatureType"] = "Not specified",
@@ -1003,11 +1276,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "T'zala",
     ["id"] = 136976,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 27027123,
     ["scale"] = 2,
     ["displayId"] = 84274,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["spells"] = {
+      [1303324] = {
+      },
+      [1303326] = {
+      },
+      [1303327] = {
+      },
+      [1303396] = {
+      },
+      [1303399] = {
+      },
+      [1303488] = {
+      },
+      [1303490] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 87.293451679553,
@@ -1021,11 +1310,24 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Reban",
     ["id"] = 136984,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 3783797,
     ["scale"] = 2,
     ["displayId"] = 84273,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["spells"] = {
+      [269230] = {
+      },
+      [269231] = {
+      },
+      [269232] = {
+      },
+      [269369] = {
+        ["interruptible"] = true,
+      },
+      [1303039] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 86.849867196651,
@@ -1039,11 +1341,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Minion of Zul",
     ["id"] = 138493,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 243242,
     ["scale"] = 1,
     ["displayId"] = 76055,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [269935] = {
+        ["magic"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 192.78363284503,
@@ -1057,7 +1364,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aka'ali the Conqueror",
     ["id"] = 269808,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 8108137,
     ["scale"] = 1.5,
     ["displayId"] = 84269,
     ["creatureType"] = "Undead",
@@ -1065,6 +1372,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2170,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [266237] = {
+      },
+      [266951] = {
+      },
+      [267494] = {
+      },
+      [1310761] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 324.77239853842,
@@ -1078,7 +1395,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zanazal the Wise",
     ["id"] = 269810,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 10135171,
     ["scale"] = 1.5,
     ["displayId"] = 84271,
     ["creatureType"] = "Undead",
@@ -1086,6 +1403,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2170,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [267060] = {
+      },
+      [267273] = {
+        ["interruptible"] = true,
+        ["poison"] = true,
+      },
+      [1305810] = {
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 360.57824810358,
@@ -1099,7 +1426,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kula the Butcher",
     ["id"] = 269811,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 5405425,
     ["scale"] = 1.5,
     ["displayId"] = 84272,
     ["creatureType"] = "Undead",
@@ -1107,6 +1434,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["isBoss"] = true,
     ["encounterID"] = 2170,
     ["instanceID"] = 0,
+    ["spells"] = {
+      [266191] = {
+        ["bleed"] = true,
+      },
+      [266206] = {
+      },
+      [266231] = {
+        ["bleed"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
         ["x"] = 396.39185979621,
@@ -1120,21 +1457,27 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Half-Finished Mummy",
     ["id"] = 270502,
     ["count"] = 7,
-    ["health"] = 10000,
+    ["health"] = 3243255,
     ["scale"] = 1.5,
     ["displayId"] = 84688,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["spells"] = {
+      [267763] = {
+        ["interruptible"] = true,
+        ["disease"] = true,
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 501.65414935989,
-        ["y"] = -159.79055841819,
+        ["x"] = 502.07656926476,
+        ["y"] = -160.63537555131,
         ["g"] = 13,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 503.56705083726,
-        ["y"] = -197.84681516771,
+        ["x"] = 502.93346633318,
+        ["y"] = -187.49779961782,
         ["g"] = 13,
         ["sublevel"] = 1,
       },
@@ -1156,15 +1499,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Animated Gold",
     ["id"] = 135406,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 224807,
     ["scale"] = 1,
     ["displayId"] = 88651,
     ["creatureType"] = "Aberration",
     ["level"] = 90,
+    ["spells"] = {
+      [265991] = {
+      },
+      [1289063] = {
+      },
+    },
     ["clones"] = {
       [1] = {
-        ["x"] = 751.68710139964,
-        ["y"] = -435.20644755881,
+        ["x"] = 757.26294388337,
+        ["y"] = -390.60000702019,
         ["sublevel"] = 1,
       },
       [2] = {
@@ -1193,7 +1542,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Healing Tide Totem",
     ["id"] = 137591,
     ["count"] = 0,
-    ["health"] = 10000,
+    ["health"] = 374121,
     ["scale"] = 1,
     ["displayId"] = 84934,
     ["creatureType"] = "Totem",
@@ -1206,43 +1555,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 358.89150069613,
-        ["y"] = -237.94921102825,
+        ["x"] = 359.13750420205,
+        ["y"] = -233.630640161,
         ["g"] = 24,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [40] = {
-    ["name"] = "Pool of Darkness",
-    ["id"] = 138250,
-    ["count"] = 0,
-    ["health"] = 10000,
-    ["scale"] = 1,
-    ["displayId"] = 11686,
-    ["creatureType"] = "Not specified",
-    ["level"] = 90,
-    ["clones"] = {
-      [1] = {
-        ["x"] = 200,
-        ["y"] = -200,
-        ["sublevel"] = 1,
-      },
-    },
-  },
-  [41] = {
-    ["name"] = "Half-Finished Mummy",
-    ["id"] = 273050,
-    ["count"] = 0,
-    ["health"] = 10000,
-    ["scale"] = 1,
-    ["displayId"] = 84688,
-    ["creatureType"] = "Undead",
-    ["level"] = 90,
-    ["clones"] = {
-      [1] = {
-        ["x"] = 220,
-        ["y"] = -200,
         ["sublevel"] = 1,
       },
     },
