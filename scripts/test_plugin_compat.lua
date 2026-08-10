@@ -68,6 +68,30 @@ end
 local core = {}
 assert(loadfile(root.."/BuildCheck.lua"))("MythicDungeonTools", core)
 local coreSource = read("Core/Bootstrap.lua")
+local callUIWithLoadingSource = assert(coreSource:match(
+  "(local function callUIWithLoading%([%s%S]-\r?\nend)\r?\n\r?\nfunction MDT:ShowInterface"))
+local callUIWithLoadingChunk = assert(loadstring(callUIWithLoadingSource.."\nreturn callUIWithLoading", "@Core/Bootstrap.lua"))
+local deferredCallback
+local loadingShown
+local calledMethod
+local callUIWithLoadingEnvironment = setmetatable({
+  C_Timer = { After = function(delay, callback)
+    assert(delay == 0)
+    deferredCallback = callback
+  end },
+  callUI = function(methodName) calledMethod = methodName end,
+  isUILoaded = function() return false end,
+  showUILoading = function() loadingShown = true end,
+  unpack = unpack,
+}, { __index = _G })
+setfenv(callUIWithLoadingChunk, callUIWithLoadingEnvironment)
+local callUIWithLoading = callUIWithLoadingChunk()
+callUIWithLoading("ShowInterface")
+assert(loadingShown, "UI loading spinner was not shown")
+assert(not calledMethod, "UI loaded before the loading spinner could render")
+assert(deferredCallback, "UI load was not deferred")
+deferredCallback()
+assert(calledMethod == "ShowInterface", "deferred UI call was lost")
 local corePrefix = assert(coreSource:match("^([%s%S]-)\nlocal function isUILoaded%(%).*"))
 assert(loadstring(corePrefix, "@Core/Bootstrap.lua"))("MythicDungeonTools", core)
 

@@ -74,6 +74,7 @@ end
 local uiHandlers
 local uiPluginAPI
 local uiLoading
+local uiLoadingSpinner
 local pendingPresetComms = {}
 local pendingUIInitializers = {}
 
@@ -111,6 +112,27 @@ local function isUILoaded()
   return loaded == nil and loadedOrLoading or loaded
 end
 
+local function showUILoading()
+  if not uiLoadingSpinner then
+    local spinner = CreateFrame("Button", "MDTUILoadingSpinner", UIParent, "LoadingSpinnerTemplate")
+    spinner:SetPoint("CENTER", UIParent, "CENTER")
+    spinner:SetFrameStrata("DIALOG")
+    spinner:SetSize(60, 60)
+    spinner.BackgroundFrame.Background:SetVertexColor(0, 1, 0, 1)
+    spinner.AnimFrame.Circle:SetVertexColor(0, 1, 0, 1)
+    uiLoadingSpinner = spinner
+  end
+
+  uiLoadingSpinner:Show()
+  uiLoadingSpinner.Anim:Play()
+end
+
+local function hideUILoading()
+  if not uiLoadingSpinner then return end
+  uiLoadingSpinner:Hide()
+  uiLoadingSpinner.Anim:Stop()
+end
+
 StaticPopupDialogs[UI_DISABLED_POPUP] = {
   text = "MythicDungeonTools UI is disabled. Enable it and reload the interface?",
   button1 = "Enable and Reload",
@@ -143,7 +165,11 @@ function MDT:LoadUI(reason)
 end
 
 local function callUI(methodName, ...)
-  if not MDT:LoadUI(methodName) then return end
+  if not MDT:LoadUI(methodName) then
+    hideUILoading()
+    return
+  end
+  hideUILoading()
   if uiHandlers then
     for _, comm in ipairs(pendingPresetComms) do
       uiHandlers.OnCommReceived(unpack(comm))
@@ -158,8 +184,16 @@ local function callUI(methodName, ...)
   return implementation(...)
 end
 
+local function callUIWithLoading(methodName, ...)
+  if isUILoaded() then return callUI(methodName, ...) end
+
+  local args = { ... }
+  showUILoading()
+  C_Timer.After(0, function() callUI(methodName, unpack(args)) end)
+end
+
 function MDT:ShowInterface(...)
-  return callUI("ShowInterface", ...)
+  return callUIWithLoading("ShowInterface", ...)
 end
 
 function MDT:GetEnemyForces(...)
@@ -198,7 +232,7 @@ function SlashCmdList.MYTHICDUNGEONTOOLS(cmd, editbox)
     return
   end
 
-  callUI("HandleSlashCommand", cmd, editbox)
+  callUIWithLoading("HandleSlashCommand", cmd, editbox)
 end
 
 local minimapIcon = LibStub("LibDBIcon-1.0")
@@ -470,7 +504,7 @@ addMessageEventFilter("CHAT_MSG_RAID_LEADER", filterRouteLinks)
 
 hooksecurefunc("SetItemRef", function(link, text)
   if link and (link:sub(1, 19) == "garrmission:mdtlive" or link:sub(1, 15) == "garrmission:mdt") then
-    callUI("HandleChatLink", link, text)
+    callUIWithLoading("HandleChatLink", link, text)
   end
 end)
 
