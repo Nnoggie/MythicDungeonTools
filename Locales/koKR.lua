@@ -5,7 +5,6 @@ local addonName, MDT = ...
 local L = MDT.L
 L = L or {}
 
---@localization(locale="koKR", format="lua_additive_table", namespace="MDT", handle-subnamespaces="none")@
 -- MDT
 L[" >Battle for Azeroth"] = ">격전의 아제로스"
 L[" >Legion"] = ">군단"

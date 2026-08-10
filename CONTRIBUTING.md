@@ -6,6 +6,6 @@
   - Line endings in addon files must use LF.
   - No trailing whitespace at the end of a line.
 - All user-facing strings must be localized via using `L["localized phrase"]`. You must use double quoted strings, and name the localization table (found at `MDT.L`) `L` in your code for this to work properly
-  - We use the [curseforge localization](https://www.curseforge.com/wow/addons/mythic-dungeon-tools/localization) service. You can however submit pull requests for localizations if you wish to.
+  - Add and update translations in `Locales/` through GitHub pull requests. `enUS.lua` is the source of truth for localization keys.
 - When editing enemy data please use the ingame editor available via /mdt devmode and export your changes via Enemy>Export to Lua.
 
