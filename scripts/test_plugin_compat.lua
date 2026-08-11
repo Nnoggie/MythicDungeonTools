@@ -102,7 +102,7 @@ assert(type(API.RegisterUIInitializer) == "function")
 
 local function loadLegacy(legacyRoot)
   local addon = {}
-  for _, fileName in ipairs({ "locale.lua", "versionCheck.lua", "buildCheck.lua", "core.lua" }) do
+  for _, fileName in ipairs({ "versionCheck.lua", "buildCheck.lua", "core.lua" }) do
     assert(loadfile(legacyRoot.."/"..fileName))("MDT_Legacy", addon)
   end
   for _, directory in ipairs({ "Legion", "BattleForAzeroth", "Shadowlands", "Dragonflight", "TheWarWithin", "MistsOfPandaria" }) do
@@ -119,6 +119,22 @@ local function loadLegacy(legacyRoot)
     for fileName in contents:gmatch("<Script file='([^']+)'/>") do
       assert(loadfile(legacyRoot.."/"..directory.."/"..fileName))("MDT_Legacy", addon)
     end
+  end
+  GAME_LOCALE = "enUS"
+  for _, fileName in ipairs({
+    "Locales/enUS.lua",
+    "Locales/deDE.lua",
+    "Locales/frFR.lua",
+    "Locales/koKR.lua",
+    "Locales/zhCN.lua",
+    "Locales/zhTW.lua",
+    "Locales/esES.lua",
+    "Locales/esMX.lua",
+    "Locales/ruRU.lua",
+    "Locales/ptBR.lua",
+    "Locales/itIT.lua",
+  }) do
+    assert(loadfile(legacyRoot.."/"..fileName))("MDT_Legacy", addon)
   end
   assert(loadfile(legacyRoot.."/register.lua"))("MDT_Legacy", addon)
   return addon
@@ -163,6 +179,10 @@ for _, fieldName in ipairs({
   "scaleMultiplier",
   "zoneIdToDungeonIdx",
 }) do legacyData[fieldName] = {} end
+legacyData.L = {
+  ["Legacy Dungeon"] = "Plugin Dungeon",
+  ["Plugin Only"] = "Plugin Only Value",
+}
 legacyData.dungeonList[900] = "Legacy Dungeon"
 legacyData.mapInfo[900] = { shortName = "legacyShort" }
 legacyData.dungeonSubLevels[900] = { "Legacy Floor" }
@@ -257,13 +277,15 @@ if actualInterrupt then
 end
 assert(ui.navigationSections.interrupts)
 assert(ui.dungeonList[900] == "Localized Dungeon")
+assert(ui.L["Legacy Dungeon"] == "Localized Dungeon")
+assert(ui.L["Plugin Only"] == "Plugin Only Value")
 assert(ui.mapInfo[900].shortName == "Localized Short")
 assert(ui.dungeonSubLevels[900][1] == "Localized Floor")
 assert(ui.seasonList[1] == "Localized Season")
 assert(ui.dungeonSelectionToIndex[1][1] == 900)
 if actualLegacy then
   assert(ui.dungeonList[2] == "Cathedral of Eternal Night")
-  assert(ui.seasonList[2] == "The War Within Season 3")
+  assert(ui.seasonList[2] == "War Within Season 3")
   assert(ui.seasonList[#ui.seasonList] == "Mists of Pandaria")
 end
 assert(pluginAPI:GetNavigationSectionContentFrame("interrupts") == ui.main_frame.sectionContentFrames.interrupts)

@@ -53,6 +53,9 @@ local dungeonDataFields = {
 
 function pluginAPI:RegisterDungeonData(data, seasons)
   assert(type(data) == "table", "Dungeon data must be a table")
+  for key, value in pairs(data.L or {}) do
+    if rawget(MDT.L, key) == nil then MDT.L[key] = value end
+  end
   for _, fieldName in ipairs(dungeonDataFields) do
     local source = data[fieldName]
     local target = MDT[fieldName]
