@@ -1,4 +1,4 @@
-## 6.2.0-alpha6 (2026-08-11)
+## 6.2.1 (2026-08-11)
 
 - Add WoW 12.1 support for Midnight Season 2
 - Added an option to show each pull's total health in the route sidebar. (off by default)

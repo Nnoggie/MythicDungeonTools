@@ -2,7 +2,7 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
-    tag = "6.2.0-alpha6",
+    tag = "6.2.1",
     date = "2026-08-11",
     notes = {
       "Add WoW 12.1 support for Midnight Season 2",
