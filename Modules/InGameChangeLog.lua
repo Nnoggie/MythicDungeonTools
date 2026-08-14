@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.2",
+    date = "2026-08-14",
+    notes = {
+      "Corrected enemy data and map positions for Altar of Fangs, Den of Nalorakk, Murder Row, and The Blinding Vale.",
+    },
+  },
+  {
     tag = "6.2.1",
     date = "2026-08-11",
     notes = {
@@ -23,13 +30,6 @@ MDT.changeLog = {
       "Enemies can now be dragged on the map to move them into pulls, with a preview showing which enemies will move.",
       "New route exports and group sharing now use Blizzard's route encoding. Existing route strings still import, but new strings require this alpha or newer.",
       "MDT's interface now loads only when opened, reducing memory usage while MDT is not in use and reducing loading screen impact.",
-    },
-  },
-  {
-    tag = "6.2.0-alpha4",
-    date = "2026-08-04",
-    notes = {
-      "MDT's interface now loads only when opened, reducing memory usage while MDT is not in use.",
     },
   },
 }
