@@ -1,11 +1,13 @@
 local _, MDT = ...
 local db
-local tonumber, tinsert, pairs, ipairs, tostring, twipe, max, tremove, DrawLine = tonumber, table.insert, pairs, ipairs,
-    tostring, table.wipe, math.max, table.remove, DrawLine
+local tonumber, tinsert, pairs, ipairs, tostring, twipe, max, tremove, floor, DrawLine = tonumber, table.insert, pairs,
+    ipairs, tostring, table.wipe, math.max, table.remove, math.floor, DrawLine
 local L = MDT.L
 local blips = {}
 local preset
 local patrolColor = { 0, 0.5, 1, 0.8 }
+local OVERLAP_BUCKET_SIZE = 9
+local OVERLAP_DISTANCE_SQUARED = OVERLAP_BUCKET_SIZE * OVERLAP_BUCKET_SIZE
 
 function MDT:GetDungeonEnemyBlips()
   return blips
@@ -107,6 +109,7 @@ end
 
 function MDTDungeonEnemyMixin:OnEnter()
   self:updateSizes(1.2)
+  self.sizesDirty = true
   self:SetFrameLevel(self:GetFrameLevel() + 5)
   self:DisplayPatrol(true)
   MDT:DisplayBlipTooltip(self, true)
@@ -127,6 +130,7 @@ end
 
 function MDTDungeonEnemyMixin:OnLeave()
   self:updateSizes(1)
+  self.sizesDirty = nil
   self:SetFrameLevel(self:GetFrameLevel() - 5)
   if db.devMode then
     if not self.devSelected then self:DisplayPatrol(false) end
@@ -696,70 +700,102 @@ local function blipDevModeSetup(blip)
 end
 
 local function resetBlipDevModeSetup(blip)
-  blip.devSelected = nil
-  blip.UpdateBlipText = nil
   blip.textLocked = nil
-  blip.fontstring_Text1:SetTextColor(1, 1, 1, 1)
   blip.fontstring_Text1:Hide()
-  blip:SetScript("OnMouseWheel", nil)
-  blip:SetMovable(false)
+  if blip.devModeSetup then
+    blip.devSelected = nil
+    blip.UpdateBlipText = nil
+    blip.fontstring_Text1:SetTextColor(1, 1, 1, 1)
+    setUpMouseHandlers(blip)
+    blip:SetScript("OnMouseWheel", nil)
+    blip:SetMovable(false)
+    blip.devModeSetup = nil
+  end
 end
 
-function MDTDungeonEnemyMixin:SetUp(data, clone)
+function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPreset)
   local scale = MDT:GetScale()
   self:ClearAllPoints()
   self:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", clone.x * scale, clone.y * scale)
+  if not self.setupInitialized then
+    self.texture_Portrait:SetDesaturated(false)
+    self.texture_MouseHighlight:SetAlpha(0.4)
+    self.fontstring_Text1:SetFontObject("GameFontNormal")
+    setUpMouseHandlers(self)
+    self.setupInitialized = true
+  end
   local cloneScale = clone.scale or 1
-  self.normalScale = cloneScale * data.scale * (data.isBoss and 1.7 or 1) *
-      (MDT.scaleMultiplier[db.currentDungeonIdx] or 1) * scale
-  self.normalScale = self.normalScale * 0.6
-  self:SetSize(self.normalScale * 13, self.normalScale * 13)
-  self:updateSizes(1)
-  self.texture_Portrait:SetDesaturated(false)
+  local normalScale = cloneScale * data.scale * (data.isBoss and 1.7 or 1) *
+      (MDT.scaleMultiplier[db.currentDungeonIdx] or 1) * scale * 0.6
+  if self.normalScale ~= normalScale or self.sizesDirty then
+    self.normalScale = normalScale
+    self.sizesDirty = nil
+    self:SetSize(normalScale * 13, normalScale * 13)
+    self:updateSizes(1)
+    local textScale = math.max(0.2, normalScale * 10)
+    self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), textScale, "OUTLINE", "")
+  end
   local raise = 4
-  for k, v in pairs(blips) do
+  for _, v in ipairs(overlapCandidates or blips) do
     --only check neighboring blips - saves performance on big maps
-    if ((clone.x - v.clone.x) ^ 2 + (clone.y - v.clone.y) ^ 2 < 81) and MDT:DoFramesOverlap(self, v, 5) then
+    if ((clone.x - v.clone.x) ^ 2 + (clone.y - v.clone.y) ^ 2 < OVERLAP_DISTANCE_SQUARED) and
+        MDT:DoFramesOverlap(self, v, 5) then
       raise = max(raise
       , v:GetFrameLevel() + 1)
     end
   end
   self:SetFrameLevel(raise)
-  self.fontstring_Text1:SetFontObject("GameFontNormal")
-  local textScale = math.max(0.2, self.normalScale * 10)
-  self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), textScale, "OUTLINE", "")
   self.fontstring_Text1:SetText((clone.isBoss and data.count == 0 and "") or data.count)
-  self.texture_MouseHighlight:SetAlpha(0.4)
-  if data.isBoss then self.texture_Dragon:Show() else self.texture_Dragon:Hide() end
-  self.texture_Background:SetVertexColor(1, 1, 1, 1)
-  if clone.patrol then self.texture_Background:SetVertexColor(unpack(patrolColor)) end
+  local isBoss = data.isBoss and true or false
+  if self.isBoss ~= isBoss then
+    self.isBoss = isBoss
+    if isBoss then self.texture_Dragon:Show() else self.texture_Dragon:Hide() end
+  end
+  local hasPatrol = clone.patrol and true or false
+  if self.hasPatrol ~= hasPatrol then
+    self.hasPatrol = hasPatrol
+    if hasPatrol then
+      self.texture_Background:SetVertexColor(unpack(patrolColor))
+    else
+      self.texture_Background:SetVertexColor(1, 1, 1, 1)
+    end
+  end
   self.data = data
   self.clone = clone
   self:Show()
   self:SetScript("OnUpdate", nil)
-  self:SetMovable(false)
-  setUpMouseHandlers(self)
   tinsert(blips, self)
-  if data.iconTexture then
-    self.texture_Portrait:SetTexture(data.iconTexture);
-  else
-    SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait, data.displayId or 39490)
+  local portrait = data.iconTexture or data.displayId or 39490
+  local portraitIsTexture = data.iconTexture and true or false
+  if self.portrait ~= portrait or self.portraitIsTexture ~= portraitIsTexture then
+    self.portrait = portrait
+    self.portraitIsTexture = portraitIsTexture
+    if portraitIsTexture then
+      self.texture_Portrait:SetTexture(portrait)
+    else
+      SetPortraitTextureFromCreatureDisplayID(self.texture_Portrait, portrait)
+    end
   end
   self.texture_Indicator:Hide()
-  local assignments = MDT:GetCurrentPreset().value.enemyAssignments
+  local assignments = (currentPreset or MDT:GetCurrentPreset()).value.enemyAssignments
   local assignment = assignments and assignments[self.enemyIdx] and assignments[self.enemyIdx][self.cloneIdx]
-  if assignment then
-    self.texture_OverlayIcon:Show()
-    if assignment >= 1 and assignment <= 8 then
-      self.texture_OverlayIcon:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcon_"..assignment)
+  if not self.assignmentInitialized or self.assignment ~= assignment then
+    self.assignmentInitialized = true
+    self.assignment = assignment
+    if assignment then
+      self.texture_OverlayIcon:Show()
+      if assignment >= 1 and assignment <= 8 then
+        self.texture_OverlayIcon:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcon_"..assignment)
+      else
+        --TODO: other pre set icons, sheep, sap etc they will have specific indexes
+      end
     else
-      --TODO: other pre set icons, sheep, sap etc they will have specific indexes
+      self.texture_OverlayIcon:Hide()
     end
-  else
-    self.texture_OverlayIcon:Hide()
   end
   if db.devMode then
     blipDevModeSetup(self)
+    self.devModeSetup = true
   else
     resetBlipDevModeSetup(self)
   end
@@ -783,15 +819,44 @@ function MDT:DungeonEnemies_UpdateEnemiesAsync()
   preset = MDT:GetCurrentPreset()
 
   local currentSublevel = MDT:GetCurrentSubLevel()
+  local overlapBuckets = {}
+  local overlapCandidates = {}
 
   for enemyIdx, data in pairs(enemies) do
     for cloneIdx, clone in pairs(data["clones"]) do
       --check sublevel
       if clone.sublevel == currentSublevel or (not clone.sublevel) then
+        twipe(overlapCandidates)
+        local bucketX = floor(clone.x / OVERLAP_BUCKET_SIZE)
+        local bucketY = floor(clone.y / OVERLAP_BUCKET_SIZE)
+        for x = bucketX - 1, bucketX + 1 do
+          local column = overlapBuckets[x]
+          if column then
+            for y = bucketY - 1, bucketY + 1 do
+              local bucket = column[y]
+              if bucket then
+                for _, candidate in ipairs(bucket) do
+                  tinsert(overlapCandidates, candidate)
+                end
+              end
+            end
+          end
+        end
         local blip = MDT.dungeonEnemies_framePool:Acquire()
         blip.enemyIdx = enemyIdx
         blip.cloneIdx = cloneIdx
-        blip:SetUp(data, clone)
+        blip:SetUp(data, clone, overlapCandidates, preset)
+        local column = overlapBuckets[bucketX]
+        if not column then
+          column = {}
+          overlapBuckets[bucketX] = column
+        end
+        local bucket = column[bucketY]
+        if not bucket then
+          bucket = {}
+          column[bucketY] = bucket
+        end
+        tinsert(bucket, blip)
         coroutine.yield()
       end
     end
