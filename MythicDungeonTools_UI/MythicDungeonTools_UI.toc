@@ -1,5 +1,5 @@
 ## Interface: 120100
-# WOW_INTERFACE_TARGETS: mainline-beta, mainline-test, mainline
+# WOW_INTERFACE_TARGETS: mainline
 ## Title: Mythic Dungeon Tools (MDT) - UI
 ## Author: Nnoggie
 ## Version: @project-version@
