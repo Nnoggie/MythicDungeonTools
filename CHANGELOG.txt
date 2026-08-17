@@ -1,3 +1,5 @@
-## 6.2.2 (2026-08-14)
+## 6.2.3 (2026-08-17)
 
-- Corrected enemy data and map positions for Altar of Fangs, Den of Nalorakk, Murder Row, and The Blinding Vale.
+- Improved map loading and responsiveness when displaying large numbers of enemies.
+- Corrected enemy positions and icon sizes throughout The Blinding Vale.
+- Bosses in The Blinding Vale no longer contribute enemy forces.
