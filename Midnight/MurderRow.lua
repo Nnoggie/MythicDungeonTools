@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["MurderRow"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 690 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 655 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
