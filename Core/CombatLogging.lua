@@ -1,5 +1,4 @@
 local _, MDT = ...
-local L = MDT.L
 
 local contentTypes = {
   LFR = "lfr",
@@ -31,7 +30,6 @@ local partyDifficultyToContent = {
 
 local eventFrame = CreateFrame("Frame")
 local hasSyncedState
-local lastCombatLoggingState
 
 local function getSettings()
   return MDT:GetDB().combatLogging
@@ -62,15 +60,7 @@ end
 
 function MDT:CombatLogging_SetCombatLoggingState(shouldLog, forceSync)
   local wasLogging = self:CombatLogging_GetCurrentCombatLoggingState()
-  if lastCombatLoggingState == nil then lastCombatLoggingState = wasLogging end
-
-  local stateChanged = lastCombatLoggingState ~= shouldLog
   if forceSync or wasLogging ~= shouldLog then LoggingCombat(shouldLog) end
-
-  lastCombatLoggingState = shouldLog
-  if stateChanged then
-    print("|cffffd100MDT:|r "..(shouldLog and L["combatLoggingStarted"] or L["combatLoggingStopped"]))
-  end
 end
 
 function MDT:CombatLogging_GetCurrentInstanceContentType()
