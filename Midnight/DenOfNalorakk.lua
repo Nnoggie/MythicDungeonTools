@@ -26,7 +26,22 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 729 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 163.9,
+      ["y"] = -290.6,
+      ["sizeMult"] = 1.5,
+    },
+    [2] = {
+      ["type"] = "graveyard",
+      ["x"] = 411.7,
+      ["y"] = -375.1,
+      ["graveyardDescription"] = "",
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -293,18 +308,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 85.442311804414,
         ["y"] = -385.38844184283,
         ["g"] = 10,
-        ["sublevel"] = 1,
-      },
-      [13] = {
-        ["x"] = 44.538558147264,
-        ["y"] = -383.06447334173,
-        ["g"] = 8,
-        ["sublevel"] = 1,
-      },
-      [14] = {
-        ["x"] = 45.93303773386,
-        ["y"] = -393.7553255214,
-        ["g"] = 8,
         ["sublevel"] = 1,
       },
       [15] = {
@@ -712,6 +715,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 576.5,
         ["y"] = -395.4,
         ["g"] = 34,
+        ["sublevel"] = 1,
+      },
+      [11] = {
+        ["x"] = 516.9,
+        ["y"] = -261.6,
+        ["g"] = 45,
         ["sublevel"] = 1,
       },
     },
@@ -1309,12 +1318,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 4,
         ["sublevel"] = 1,
       },
-      [6] = {
-        ["x"] = 64.525364214664,
-        ["y"] = -363.54186684214,
-        ["g"] = 6,
-        ["sublevel"] = 1,
-      },
       [7] = {
         ["x"] = 101.71141184339,
         ["y"] = -421.64459980508,
@@ -1373,6 +1376,18 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 535.2,
         ["y"] = -417,
         ["g"] = 31,
+        ["sublevel"] = 1,
+      },
+      [17] = {
+        ["x"] = 44.5,
+        ["y"] = -383,
+        ["g"] = 8,
+        ["sublevel"] = 1,
+      },
+      [18] = {
+        ["x"] = 45.9,
+        ["y"] = -393.7,
+        ["g"] = 8,
         ["sublevel"] = 1,
       },
     },
@@ -1857,9 +1872,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 151.23171671607,
-        ["y"] = -64.321981075329,
-        ["g"] = 64,
+        ["x"] = 64.3,
+        ["y"] = -363.3,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 51.1,
+        ["y"] = -452.1,
+        ["g"] = 75,
         ["sublevel"] = 1,
       },
     },
