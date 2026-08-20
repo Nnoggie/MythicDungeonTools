@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\MurderRow' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\MurderRow' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -136,10 +136,6 @@ MDT.mapPOIs[dungeonIndex] = {
     },
   },
 };
-
-
-
-
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -1323,15 +1319,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 228.99314772293,
-        ["y"] = -375.0241760227,
-        ["g"] = 32,
+        ["x"] = 231.3,
+        ["y"] = -357.8,
+        ["g"] = 58,
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 237.20000225738,
-        ["y"] = -383.54038147684,
-        ["g"] = 32,
+        ["x"] = 238,
+        ["y"] = -357.2,
+        ["g"] = 58,
         ["sublevel"] = 1,
       },
       [5] = {
@@ -1374,18 +1370,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 184.6490134212,
         ["y"] = -334.06910589821,
         ["g"] = 29,
-        ["sublevel"] = 1,
-      },
-      [12] = {
-        ["x"] = 233.47396680073,
-        ["y"] = -485.30812611969,
-        ["g"] = 38,
-        ["sublevel"] = 1,
-      },
-      [13] = {
-        ["x"] = 259.85567537116,
-        ["y"] = -479.88883311715,
-        ["g"] = 38,
         ["sublevel"] = 1,
       },
     },
@@ -1433,12 +1417,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 127.90279192401,
         ["y"] = -362.68402401321,
         ["g"] = 30,
-        ["sublevel"] = 1,
-      },
-      [4] = {
-        ["x"] = 246.84353719061,
-        ["y"] = -483.11527773742,
-        ["g"] = 38,
         ["sublevel"] = 1,
       },
       [5] = {
@@ -1559,6 +1537,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 249.32616521437,
         ["y"] = -457.02335114215,
         ["g"] = 37,
+        ["sublevel"] = 1,
+      },
+      [18] = {
+        ["x"] = 163.8,
+        ["y"] = -348.3,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
+      [19] = {
+        ["x"] = 171.6,
+        ["y"] = -348.2,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
+      [20] = {
+        ["x"] = 162.9,
+        ["y"] = -356,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
+      [21] = {
+        ["x"] = 170.5,
+        ["y"] = -356.1,
+        ["g"] = 57,
         ["sublevel"] = 1,
       },
     },
