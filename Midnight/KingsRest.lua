@@ -26,7 +26,28 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Kings' Rest Sublevel"],
 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "graveyard",
+      ["x"] = 368,
+      ["y"] = -422.4,
+      ["graveyardDescription"] = "",
+    },
+    [2] = {
+      ["type"] = "graveyard",
+      ["x"] = 724.1,
+      ["y"] = -265.5,
+      ["graveyardDescription"] = "",
+    },
+    [3] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 753.3,
+      ["y"] = -266.3,
+      ["sizeMult"] = 1.5,
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -1183,7 +1204,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [27] = {
-    ["name"] = "Disruption Totem",
+    ["name"] = "Thundering Totem",
     ["id"] = 135761,
     ["count"] = 0,
     ["health"] = 324326,
@@ -1281,6 +1302,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 84274,
     ["creatureType"] = "Undead",
     ["level"] = 91,
+    ["isBoss"] = true,
+    ["encounterID"] = 2172,
+    ["instanceID"] = 1041,
     ["spells"] = {
       [1303324] = {
       },
