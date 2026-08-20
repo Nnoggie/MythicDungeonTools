@@ -17,14 +17,23 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\RubyLifePools' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\RubyLifePools' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["RubyLifePools"],
 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 360.9,
+      ["y"] = -523.1,
+      ["sizeMult"] = 1.5,
+    },
+  },
+};
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 553 }
 
@@ -105,11 +114,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 130.89323000235,
-        ["y"] = -374.35184176998,
+        ["x"] = 125.6,
+        ["y"] = -366,
         ["g"] = 1,
         ["sublevel"] = 1,
-        ["scale"] = 1.6,
       },
       [2] = {
         ["x"] = 104.38231928109,
@@ -147,8 +155,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.6,
       },
       [8] = {
-        ["x"] = 200.61475916268,
-        ["y"] = -132.62121883682,
+        ["x"] = 190.4,
+        ["y"] = -133.1,
         ["g"] = 33,
         ["sublevel"] = 1,
         ["scale"] = 1.6,
@@ -195,25 +203,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 139.44271912845,
-        ["y"] = -365.53792645157,
+        ["x"] = 132.4,
+        ["y"] = -360.7,
         ["g"] = 1,
         ["sublevel"] = 1,
-        ["scale"] = 1.6,
-      },
-      [2] = {
-        ["x"] = 80.39931527567,
-        ["y"] = -303.05422821141,
-        ["g"] = 3,
-        ["sublevel"] = 1,
-        ["scale"] = 1.6,
-      },
-      [3] = {
-        ["x"] = 71.515154500318,
-        ["y"] = -293.50582363109,
-        ["g"] = 3,
-        ["sublevel"] = 1,
-        ["scale"] = 1.6,
       },
       [4] = {
         ["x"] = 47.661843299819,
@@ -236,13 +229,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
         ["scale"] = 1.6,
       },
-      [7] = {
-        ["x"] = 117.3129381105,
-        ["y"] = -150.61896646271,
-        ["g"] = 12,
-        ["sublevel"] = 1,
-        ["scale"] = 1.6,
-      },
       [8] = {
         ["x"] = 110.04022186769,
         ["y"] = -477.70766968788,
@@ -251,8 +237,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.6,
       },
       [9] = {
-        ["x"] = 159.51479751329,
-        ["y"] = -122.10158070481,
+        ["x"] = 155.9,
+        ["y"] = -122.2,
         ["g"] = 34,
         ["sublevel"] = 1,
         ["scale"] = 1.6,
@@ -330,16 +316,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["scale"] = 1.6,
       },
       [8] = {
-        ["x"] = 128.11860789449,
-        ["y"] = -155.35617714507,
+        ["x"] = 118.3,
+        ["y"] = -151.4,
         ["g"] = 12,
         ["sublevel"] = 1,
         ["scale"] = 1.6,
       },
       [9] = {
-        ["x"] = 186.76931599511,
-        ["y"] = -129.08830703889,
-        ["g"] = 33,
+        ["x"] = 159,
+        ["y"] = -129.3,
+        ["g"] = 34,
         ["sublevel"] = 1,
         ["scale"] = 1.6,
         ["patrol"] = {
@@ -756,6 +742,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 107106,
     ["creatureType"] = "Dragonkin",
     ["level"] = 91,
+    ["isBoss"] = true,
+    ["instanceID"] = 1202,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
@@ -875,6 +863,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 106435,
     ["creatureType"] = "Dragonkin",
     ["level"] = 91,
+    ["isBoss"] = true,
+    ["instanceID"] = 1202,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
@@ -1234,6 +1224,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 106023,
     ["creatureType"] = "Dragonkin",
     ["level"] = 91,
+    ["isBoss"] = true,
+    ["instanceID"] = 1202,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
@@ -1644,6 +1636,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["displayId"] = 110966,
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
+    ["isBoss"] = true,
+    ["instanceID"] = 1202,
     ["characteristics"] = {
       ["Taunt"] = true,
       ["Mind Soothe"] = true,
