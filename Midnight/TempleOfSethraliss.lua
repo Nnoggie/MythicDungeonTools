@@ -16,17 +16,33 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 649 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 689 }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
   [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\TempleOfSethraliss' },
 }
+
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Temple of Sethraliss"],
 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 571.5,
+      ["y"] = -542.3,
+      ["sizeMult"] = 1.5,
+    },
+    [2] = {
+      ["type"] = "graveyard",
+      ["x"] = 374.6,
+      ["y"] = -279.3,
+      ["graveyardDescription"] = "",
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -1397,7 +1413,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [32] = {
-    ["name"] = "Egg Marker",
+    ["name"] = "Egg",
     ["id"] = 263181,
     ["count"] = 0,
     ["health"] = 10000,
