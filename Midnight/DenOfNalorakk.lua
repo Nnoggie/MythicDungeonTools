@@ -30,15 +30,9 @@ MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
       ["type"] = "dungeonEntrance",
-      ["x"] = 163.9,
-      ["y"] = -290.6,
+      ["x"] = 40.9,
+      ["y"] = -313.6,
       ["sizeMult"] = 1.5,
-    },
-    [2] = {
-      ["type"] = "graveyard",
-      ["x"] = 411.7,
-      ["y"] = -375.1,
-      ["graveyardDescription"] = "",
     },
   },
 };

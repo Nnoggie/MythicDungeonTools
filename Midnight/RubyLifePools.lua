@@ -28,8 +28,8 @@ MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
       ["type"] = "dungeonEntrance",
-      ["x"] = 360.9,
-      ["y"] = -523.1,
+      ["x"] = 119.9,
+      ["y"] = -514.5,
       ["sizeMult"] = 1.5,
     },
   },

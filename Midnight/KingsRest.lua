@@ -29,21 +29,9 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
     [1] = {
-      ["type"] = "graveyard",
-      ["x"] = 368,
-      ["y"] = -422.4,
-      ["graveyardDescription"] = "",
-    },
-    [2] = {
-      ["type"] = "graveyard",
-      ["x"] = 724.1,
-      ["y"] = -265.5,
-      ["graveyardDescription"] = "",
-    },
-    [3] = {
       ["type"] = "dungeonEntrance",
-      ["x"] = 753.3,
-      ["y"] = -266.3,
+      ["x"] = 806.3,
+      ["y"] = -288.3,
       ["sizeMult"] = 1.5,
     },
   },

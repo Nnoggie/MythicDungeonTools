@@ -26,7 +26,17 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 817 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 134.9,
+      ["y"] = -107.6,
+      ["sizeMult"] = 1.5,
+    },
+  },
+};
+
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
