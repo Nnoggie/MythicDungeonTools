@@ -299,6 +299,7 @@ if not db.minimap.compartmentHide then minimapIcon:AddButtonToCompartment("Mythi
 local function buildFocusMarkerMacro(settings)
   local markerIndex = tonumber(settings.lastMarker) or 0
   local body = "/focus [@mouseover,exists,nodead][]"
+  if markerIndex == 0 and settings.preserveExistingTargetMarkers then return body end
   local conditionals = "[@focus]"
   local targetMarkerIndex = markerIndex
   if settings.disableTargetMarkerInRaid then

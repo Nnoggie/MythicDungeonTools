@@ -452,6 +452,7 @@ end
 local function buildMacroBody(markerIndex, settings)
   markerIndex = tonumber(markerIndex) or 0
   local body = "/focus "..MACRO_CONDITIONALS
+  if markerIndex == 0 and settings and settings.preserveExistingTargetMarkers then return body end
   local targetMarkerConditionals = TARGET_MARKER_CONDITIONALS
   local targetMarkerIndex = markerIndex
   if settings and settings.disableTargetMarkerInRaid then
