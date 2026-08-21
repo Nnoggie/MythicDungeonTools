@@ -26,7 +26,16 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 729 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 40.9,
+      ["y"] = -313.6,
+      ["sizeMult"] = 1.5,
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -99,7 +108,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Earthwhisper Tender",
     ["id"] = 241814,
     ["count"] = 7,
-    ["health"] = 3729743,
+    ["health"] = 2918930,
     ["scale"] = 1,
     ["displayId"] = 128080,
     ["creatureType"] = "Humanoid",
@@ -293,18 +302,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 85.442311804414,
         ["y"] = -385.38844184283,
         ["g"] = 10,
-        ["sublevel"] = 1,
-      },
-      [13] = {
-        ["x"] = 44.538558147264,
-        ["y"] = -383.06447334173,
-        ["g"] = 8,
-        ["sublevel"] = 1,
-      },
-      [14] = {
-        ["x"] = 45.93303773386,
-        ["y"] = -393.7553255214,
-        ["g"] = 8,
         ["sublevel"] = 1,
       },
       [15] = {
@@ -712,6 +709,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 576.5,
         ["y"] = -395.4,
         ["g"] = 34,
+        ["sublevel"] = 1,
+      },
+      [11] = {
+        ["x"] = 516.9,
+        ["y"] = -261.6,
+        ["g"] = 45,
         ["sublevel"] = 1,
       },
     },
@@ -1209,7 +1212,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Hoardmonger",
     ["id"] = 241812,
     ["count"] = 0,
-    ["health"] = 23648733,
+    ["health"] = 22702784,
     ["scale"] = 1,
     ["displayId"] = 129344,
     ["creatureType"] = "Humanoid",
@@ -1309,12 +1312,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 4,
         ["sublevel"] = 1,
       },
-      [6] = {
-        ["x"] = 64.525364214664,
-        ["y"] = -363.54186684214,
-        ["g"] = 6,
-        ["sublevel"] = 1,
-      },
       [7] = {
         ["x"] = 101.71141184339,
         ["y"] = -421.64459980508,
@@ -1375,13 +1372,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 31,
         ["sublevel"] = 1,
       },
+      [17] = {
+        ["x"] = 44.5,
+        ["y"] = -383,
+        ["g"] = 8,
+        ["sublevel"] = 1,
+      },
+      [18] = {
+        ["x"] = 45.9,
+        ["y"] = -393.7,
+        ["g"] = 8,
+        ["sublevel"] = 1,
+      },
     },
   },
   [18] = {
     ["name"] = "Sentinel of Winter",
     ["id"] = 244100,
     ["count"] = 0,
-    ["health"] = 21283860,
+    ["health"] = 20432506,
     ["scale"] = 1,
     ["displayId"] = 129418,
     ["creatureType"] = "Humanoid",
@@ -1448,7 +1457,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fractured Shivercore",
     ["id"] = 244759,
     ["count"] = 0,
-    ["health"] = 675678,
+    ["health"] = 810814,
     ["scale"] = 1,
     ["displayId"] = 103231,
     ["creatureType"] = "Elemental",
@@ -1593,7 +1602,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Starvation Effigy",
     ["id"] = 245567,
     ["count"] = 0,
-    ["health"] = 557514,
+    ["health"] = 421623,
     ["scale"] = 1,
     ["displayId"] = 129707,
     ["creatureType"] = "Not specified",
@@ -1654,7 +1663,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nalorakk",
     ["id"] = 246404,
     ["count"] = 0,
-    ["health"] = 21891970,
+    ["health"] = 21016293,
     ["scale"] = 1,
     ["displayId"] = 129989,
     ["creatureType"] = "Beast",
@@ -1707,7 +1716,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'jarra",
     ["id"] = 246409,
     ["count"] = 0,
-    ["health"] = 21891970,
+    ["health"] = 1621628,
     ["scale"] = 1,
     ["displayId"] = 125149,
     ["creatureType"] = "Humanoid",
@@ -1794,7 +1803,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Volatile Totem",
     ["id"] = 272074,
     ["count"] = 0,
-    ["health"] = 698699,
+    ["health"] = 64865,
     ["scale"] = 1,
     ["displayId"] = 30762,
     ["creatureType"] = "Not specified",
@@ -1857,9 +1866,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 151.23171671607,
-        ["y"] = -64.321981075329,
-        ["g"] = 64,
+        ["x"] = 64.3,
+        ["y"] = -363.3,
+        ["sublevel"] = 1,
+      },
+      [2] = {
+        ["x"] = 51.1,
+        ["y"] = -452.1,
+        ["g"] = 75,
         ["sublevel"] = 1,
       },
     },
@@ -1868,7 +1882,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Magma Totem",
     ["id"] = 248666,
     ["count"] = 0,
-    ["health"] = 692461,
+    ["health"] = 6487,
     ["scale"] = 1,
     ["displayId"] = 30762,
     ["creatureType"] = "Not specified",

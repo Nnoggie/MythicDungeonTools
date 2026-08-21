@@ -17,7 +17,7 @@ end
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
-  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\MurderRow' }
+  [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\MurderRow' },
 }
 
 MDT.dungeonSubLevels[dungeonIndex] = {
@@ -136,10 +136,6 @@ MDT.mapPOIs[dungeonIndex] = {
     },
   },
 };
-
-
-
-
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -723,7 +719,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Unleashed Imp",
     ["id"] = 234849,
     ["count"] = 2,
-    ["health"] = 601841,
+    ["health"] = 486488,
     ["scale"] = 0.7,
     ["displayId"] = 65901,
     ["creatureType"] = "Demon",
@@ -1184,14 +1180,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [15] = {
-        ["x"] = 268.96515552732,
-        ["y"] = -502.23261705343,
+        ["x"] = 257.668,
+        ["y"] = -488.77180378629948,
         ["g"] = 39,
         ["sublevel"] = 1,
       },
       [16] = {
-        ["x"] = 244.22562040772,
-        ["y"] = -512.77180629948,
+        ["x"] = 238.26515552732,
+        ["y"] = -495.23261705343,
         ["g"] = 39,
         ["sublevel"] = 1,
       },
@@ -1201,7 +1197,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Fel Invoker",
     ["id"] = 235268,
     ["count"] = 7,
-    ["health"] = 3405418,
+    ["health"] = 2918930,
     ["scale"] = 1.2,
     ["displayId"] = 124770,
     ["creatureType"] = "Humanoid",
@@ -1323,15 +1319,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [3] = {
-        ["x"] = 228.99314772293,
-        ["y"] = -375.0241760227,
-        ["g"] = 32,
+        ["x"] = 231.3,
+        ["y"] = -357.8,
+        ["g"] = 58,
         ["sublevel"] = 1,
       },
       [4] = {
-        ["x"] = 237.20000225738,
-        ["y"] = -383.54038147684,
-        ["g"] = 32,
+        ["x"] = 238,
+        ["y"] = -357.2,
+        ["g"] = 58,
         ["sublevel"] = 1,
       },
       [5] = {
@@ -1374,18 +1370,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 184.6490134212,
         ["y"] = -334.06910589821,
         ["g"] = 29,
-        ["sublevel"] = 1,
-      },
-      [12] = {
-        ["x"] = 233.47396680073,
-        ["y"] = -485.30812611969,
-        ["g"] = 38,
-        ["sublevel"] = 1,
-      },
-      [13] = {
-        ["x"] = 259.85567537116,
-        ["y"] = -479.88883311715,
-        ["g"] = 38,
         ["sublevel"] = 1,
       },
     },
@@ -1433,12 +1417,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["x"] = 127.90279192401,
         ["y"] = -362.68402401321,
         ["g"] = 30,
-        ["sublevel"] = 1,
-      },
-      [4] = {
-        ["x"] = 246.84353719061,
-        ["y"] = -483.11527773742,
-        ["g"] = 38,
         ["sublevel"] = 1,
       },
       [5] = {
@@ -1561,6 +1539,30 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 37,
         ["sublevel"] = 1,
       },
+      [18] = {
+        ["x"] = 163.8,
+        ["y"] = -348.3,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
+      [19] = {
+        ["x"] = 171.6,
+        ["y"] = -348.2,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
+      [20] = {
+        ["x"] = 162.9,
+        ["y"] = -356,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
+      [21] = {
+        ["x"] = 170.5,
+        ["y"] = -356.1,
+        ["g"] = 57,
+        ["sublevel"] = 1,
+      },
     },
   },
   [17] = {
@@ -1653,8 +1655,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 256.57195821161,
-        ["y"] = -508.10278252497,
+        ["x"] = 247.729,
+        ["y"] = -492.361,
         ["g"] = 39,
         ["sublevel"] = 1,
       },
@@ -1738,7 +1740,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Xathuux the Annihilator",
     ["id"] = 234647,
     ["count"] = 0,
-    ["health"] = 23648733,
+    ["health"] = 22702784,
     ["scale"] = 1.5,
     ["displayId"] = 140268,
     ["creatureType"] = "Demon",
@@ -1781,7 +1783,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kystia Manaheart",
     ["id"] = 234648,
     ["count"] = 0,
-    ["health"] = 20270342,
+    ["health"] = 19459530,
     ["scale"] = 1.5,
     ["displayId"] = 124578,
     ["creatureType"] = "Humanoid",
@@ -1822,7 +1824,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zaen Bladesorrow",
     ["id"] = 234649,
     ["count"] = 0,
-    ["health"] = 23648733,
+    ["health"] = 22702784,
     ["scale"] = 2,
     ["displayId"] = 124592,
     ["creatureType"] = "Humanoid",
@@ -1881,7 +1883,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Nibbles",
     ["id"] = 234660,
     ["count"] = 0,
-    ["health"] = 20270342,
+    ["health"] = 7783812,
     ["scale"] = 1.5,
     ["displayId"] = 126199,
     ["creatureType"] = "Beast",
@@ -1919,7 +1921,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Lithiel Cinderfury",
     ["id"] = 234763,
     ["count"] = 0,
-    ["health"] = 17567630,
+    ["health"] = 16864926,
     ["scale"] = 2,
     ["displayId"] = 124577,
     ["creatureType"] = "Humanoid",
@@ -1972,7 +1974,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Furious Vilefiend",
     ["id"] = 234799,
     ["count"] = 0,
-    ["health"] = 1621628,
+    ["health"] = 1945953,
     ["scale"] = 1,
     ["displayId"] = 84426,
     ["creatureType"] = "Demon",
@@ -1996,7 +1998,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Forbidden Freight",
     ["id"] = 234852,
     ["count"] = 0,
-    ["health"] = 514394,
+    ["health"] = 649,
     ["scale"] = 1.5,
     ["displayId"] = 137176,
     ["creatureType"] = "Not specified",
@@ -2098,7 +2100,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Legion Axe",
     ["id"] = 235520,
     ["count"] = 0,
-    ["health"] = 1013518,
+    ["health"] = 972977,
     ["scale"] = 1,
     ["displayId"] = 16956,
     ["creatureType"] = "Not specified",
@@ -2187,7 +2189,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Wild Imp",
     ["id"] = 237626,
     ["count"] = 0,
-    ["health"] = 399253,
+    ["health"] = 259460,
     ["scale"] = 1,
     ["displayId"] = 77406,
     ["creatureType"] = "Demon",
@@ -2214,7 +2216,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Infernal",
     ["id"] = 238414,
     ["count"] = 0,
-    ["health"] = 202703424,
+    ["health"] = 2703424,
     ["scale"] = 1,
     ["displayId"] = 103096,
     ["creatureType"] = "Demon",
@@ -2314,7 +2316,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Kystia Manaheart",
     ["id"] = 255050,
     ["count"] = 0,
-    ["health"] = 5405427,
+    ["health"] = 5189210,
     ["scale"] = 1.5,
     ["displayId"] = 138932,
     ["creatureType"] = "Humanoid",

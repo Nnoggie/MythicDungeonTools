@@ -16,17 +16,27 @@ for _, zone in ipairs(zones) do
   MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
 end
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 649 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 689 }
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",
   [1] = { customTextures = 'Interface\\AddOns\\'..addonName..'\\Midnight\\Textures\\TempleOfSethraliss' },
 }
+
 MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["Temple of Sethraliss"],
 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 705.5,
+      ["y"] = -542.3,
+      ["sizeMult"] = 1.5,
+    },
+  },
+};
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -774,7 +784,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Merektha",
     ["id"] = 133384,
     ["count"] = 0,
-    ["health"] = 15540596,
+    ["health"] = 14918973,
     ["scale"] = 2,
     ["displayId"] = 88585,
     ["creatureType"] = "Beast",
@@ -1028,7 +1038,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Avatar of Sethraliss",
     ["id"] = 133392,
     ["count"] = 0,
-    ["health"] = 21621700,
+    ["health"] = 25946039,
     ["scale"] = 2,
     ["displayId"] = 83203,
     ["creatureType"] = "Undead",
@@ -1092,7 +1102,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Toxic Viper",
     ["id"] = 134389,
     ["count"] = 0,
-    ["health"] = 1405411,
+    ["health"] = 1686493,
     ["scale"] = 1.2,
     ["displayId"] = 78250,
     ["creatureType"] = "Beast",
@@ -1122,7 +1132,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Storm Serpent",
     ["id"] = 134390,
     ["count"] = 0,
-    ["health"] = 2972984,
+    ["health"] = 3567581,
     ["scale"] = 1.7,
     ["displayId"] = 78247,
     ["creatureType"] = "Beast",
@@ -1320,7 +1330,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Adderis",
     ["id"] = 262530,
     ["count"] = 0,
-    ["health"] = 10135172,
+    ["health"] = 9729765,
     ["scale"] = 1.5,
     ["displayId"] = 83550,
     ["creatureType"] = "Humanoid",
@@ -1359,7 +1369,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Aspix",
     ["id"] = 262822,
     ["count"] = 0,
-    ["health"] = 10135172,
+    ["health"] = 9729765,
     ["scale"] = 1.5,
     ["displayId"] = 83552,
     ["creatureType"] = "Humanoid",
@@ -1397,7 +1407,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [32] = {
-    ["name"] = "Egg Marker",
+    ["name"] = "Egg",
     ["id"] = 263181,
     ["count"] = 0,
     ["health"] = 10000,
@@ -1424,7 +1434,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Galvazzt",
     ["id"] = 263658,
     ["count"] = 0,
-    ["health"] = 21621699,
+    ["health"] = 20756831,
     ["scale"] = 2,
     ["displayId"] = 81654,
     ["creatureType"] = "Elemental",
@@ -1529,7 +1539,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Corrupted Guardian",
     ["id"] = 268344,
     ["count"] = 0,
-    ["health"] = 1702709,
+    ["health"] = 2043251,
     ["scale"] = 1,
     ["displayId"] = 84761,
     ["creatureType"] = "Elemental",
@@ -1587,7 +1597,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Essence Defiler",
     ["id"] = 268427,
     ["count"] = 0,
-    ["health"] = 4324340,
+    ["health"] = 5189208,
     ["scale"] = 1,
     ["displayId"] = 84024,
     ["creatureType"] = "Humanoid",
@@ -1615,7 +1625,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Twisted Hexxer",
     ["id"] = 268491,
     ["count"] = 0,
-    ["health"] = 2351360,
+    ["health"] = 2821632,
     ["scale"] = 1,
     ["displayId"] = 84676,
     ["creatureType"] = "Humanoid",
@@ -1646,7 +1656,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Faithless Tormentor",
     ["id"] = 268729,
     ["count"] = 0,
-    ["health"] = 486488,
+    ["health"] = 583786,
     ["scale"] = 1,
     ["displayId"] = 80960,
     ["creatureType"] = "Humanoid",
@@ -1770,7 +1780,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Snake",
     ["id"] = 263383,
     ["count"] = 0,
-    ["health"] = 1081085,
+    ["health"] = 1297302,
     ["scale"] = 1,
     ["displayId"] = 7409,
     ["creatureType"] = "Beast",

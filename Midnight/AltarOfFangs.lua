@@ -26,7 +26,17 @@ MDT.dungeonSubLevels[dungeonIndex] = {
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 817 }
 
-MDT.mapPOIs[dungeonIndex] = {};
+MDT.mapPOIs[dungeonIndex] = {
+  [1] = {
+    [1] = {
+      ["type"] = "dungeonEntrance",
+      ["x"] = 134.9,
+      ["y"] = -107.6,
+      ["sizeMult"] = 1.5,
+    },
+  },
+};
+
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
@@ -1245,7 +1255,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Rav'i",
     ["id"] = 259445,
     ["count"] = 0,
-    ["health"] = 21216291,
+    ["health"] = 20367641,
     ["scale"] = 1.5,
     ["displayId"] = 144110,
     ["creatureType"] = "Beast",
@@ -1313,7 +1323,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "The Writhing Coil",
     ["id"] = 259446,
     ["count"] = 0,
-    ["health"] = 30405514,
+    ["health"] = 29189294,
     ["scale"] = 1.3,
     ["displayId"] = 144156,
     ["creatureType"] = "Beast",
@@ -1379,7 +1389,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Zul'jan",
     ["id"] = 259447,
     ["count"] = 0,
-    ["health"] = 27027123,
+    ["health"] = 25946039,
     ["scale"] = 1.5,
     ["displayId"] = 145435,
     ["creatureType"] = "Humanoid",
@@ -1428,7 +1438,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["name"] = "Uncoiled Writhe",
     ["id"] = 262398,
     ["count"] = 0,
-    ["health"] = 361821,
+    ["health"] = 32432549,
     ["scale"] = 1,
     ["displayId"] = 142361,
     ["creatureType"] = "Beast",
