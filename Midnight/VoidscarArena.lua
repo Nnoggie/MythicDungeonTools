@@ -1,7 +1,6 @@
 local _, MDT = ...
 local addonName = MDT.AddonName
 local L = MDT.L
-
 local dungeonIndex = 163
 MDT.dungeonList[dungeonIndex] = L["VoidscarArena"]
 MDT.mapInfo[dungeonIndex] = {
@@ -401,15 +400,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [11] = {
-        ["x"] = 698.02480063097,
-        ["y"] = -358.23846911549,
+        ["x"] = 698.2,
+        ["y"] = -353.2,
         ["g"] = 55,
-        ["sublevel"] = 1,
-      },
-      [12] = {
-        ["x"] = 614.20644182213,
-        ["y"] = -380.73020278058,
-        ["g"] = 36,
         ["sublevel"] = 1,
       },
       [13] = {
@@ -498,15 +491,21 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [12] = {
-        ["x"] = 706.08728490923,
-        ["y"] = -376.85121082903,
-        ["g"] = 56,
+        ["x"] = 704.2,
+        ["y"] = -358.9,
+        ["g"] = 55,
         ["sublevel"] = 1,
       },
       [13] = {
         ["x"] = 165.14186200507,
         ["y"] = -482.56192955344,
         ["g"] = 5,
+        ["sublevel"] = 1,
+      },
+      [14] = {
+        ["x"] = 614.2,
+        ["y"] = -380.7,
+        ["g"] = 36,
         ["sublevel"] = 1,
       },
     },
@@ -958,8 +957,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [14] = {
-        ["x"] = 709.12201144271,
-        ["y"] = -357.71515053596,
+        ["x"] = 708.9,
+        ["y"] = -352.8,
         ["g"] = 55,
         ["sublevel"] = 1,
       },
