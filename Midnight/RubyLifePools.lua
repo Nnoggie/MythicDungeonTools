@@ -35,7 +35,7 @@ MDT.mapPOIs[dungeonIndex] = {
   },
 };
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 553 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 551 }
 
 MDT.dungeonEnemies[dungeonIndex] = {
   [1] = {
