@@ -1,3 +1,5 @@
 ## 6.2.9 (2026-08-25)
 
 - Corrected total enemy forces in Temple of Sethraliss from 689 to 687 and Ruby Life Pools from 553 to 551.
+- Corrected The Blinding Vale's total enemy forces from 655 to 686.
+- Corrected the Potatoad Matriarch's enemy forces from 30 to 60.

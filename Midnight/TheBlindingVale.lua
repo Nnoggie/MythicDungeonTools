@@ -24,7 +24,7 @@ MDT.dungeonSubLevels[dungeonIndex] = {
   [1] = L["TheBlindingVale"],
 }
 
-MDT.dungeonTotalCount[dungeonIndex] = { normal = 655 }
+MDT.dungeonTotalCount[dungeonIndex] = { normal = 686 }
 
 MDT.mapPOIs[dungeonIndex] = {
   [1] = {
@@ -2258,7 +2258,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
   [23] = {
     ["name"] = "Potatoad Matriarch",
     ["id"] = 249756,
-    ["count"] = 30,
+    ["count"] = 60,
     ["health"] = 9729764,
     ["scale"] = 2,
     ["displayId"] = 136026,
