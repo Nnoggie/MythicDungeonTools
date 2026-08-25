@@ -1,3 +1,6 @@
-## 6.2.7 (2026-08-22)
+## 6.2.8 (2026-08-25)
 
-- Corrected Temple of Sethraliss's total enemy forces from 649 to 689.
+- Corrected enemy map positions in The Blinding Vale, Den of Nalorakk, Murder Row, Altar of Fangs, and Voidscar Arena.
+- Corrected pull groupings and floor assignments in The Blinding Vale, Den of Nalorakk, Murder Row, and Voidscar Arena.
+- Added missing enemy placements in The Blinding Vale, Den of Nalorakk, and Murder Row.
+- Corrected the models for Ula'tek's Chosen, Twinfang Harrower, and Blade of the Altar in Altar of Fangs.
