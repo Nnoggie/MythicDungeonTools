@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.9",
+    date = "2026-08-25",
+    notes = {
+      "Corrected total enemy forces in Temple of Sethraliss from 689 to 687 and Ruby Life Pools from 553 to 551.",
+    },
+  },
+  {
     tag = "6.2.8",
     date = "2026-08-25",
     notes = {
@@ -16,13 +23,6 @@ MDT.changeLog = {
     date = "2026-08-22",
     notes = {
       "Corrected Temple of Sethraliss's total enemy forces from 649 to 689.",
-    },
-  },
-  {
-    tag = "6.2.6",
-    date = "2026-08-22",
-    notes = {
-      "Corrected Temple of Sethraliss's total enemy forces from 689 to 649.",
     },
   },
 }

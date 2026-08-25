@@ -1,6 +1,3 @@
-## 6.2.8 (2026-08-25)
+## 6.2.9 (2026-08-25)
 
-- Corrected enemy map positions in The Blinding Vale, Den of Nalorakk, Murder Row, Altar of Fangs, and Voidscar Arena.
-- Corrected pull groupings and floor assignments in The Blinding Vale, Den of Nalorakk, Murder Row, and Voidscar Arena.
-- Added missing enemy placements in The Blinding Vale, Den of Nalorakk, and Murder Row.
-- Corrected the models for Ula'tek's Chosen, Twinfang Harrower, and Blade of the Altar in Altar of Fangs.
+- Corrected total enemy forces in Temple of Sethraliss from 689 to 687 and Ruby Life Pools from 553 to 551.
