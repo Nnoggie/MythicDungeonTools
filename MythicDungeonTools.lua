@@ -313,7 +313,8 @@ function MDT:UpdatePullButtonNPCData(idx)
       if tonumber(enemyIdx) then
         --check if enemy exists, remove if not
         if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
-          local incremented = false
+          -- Keep portraits with different per-clone forces separate.
+          local entriesByCount = {}
           local npcId = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
           local name = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
           local creatureType = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
@@ -323,22 +324,25 @@ function MDT:UpdatePullButtonNPCData(idx)
             --check if clone exists, remove if not
             if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
               if self:IsCloneIncluded(enemyIdx, cloneIdx) then
-                if not incremented then
+                local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+                local count = MDT:GetCloneEnemyForces(data, data.clones[cloneIdx])
+                if not entriesByCount[count] then
                   enemyTableIdx = enemyTableIdx + 1
-                  incremented = true
+                  entriesByCount[count] = enemyTableIdx
                 end
-                if not enemyTable[enemyTableIdx] then enemyTable[enemyTableIdx] = {} end
-                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity or 0
-                enemyTable[enemyTableIdx].npcId = npcId
-                enemyTable[enemyTableIdx].count = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["count"]
-                enemyTable[enemyTableIdx].displayId = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["displayId"]
-                enemyTable[enemyTableIdx].quantity = enemyTable[enemyTableIdx].quantity + 1
-                enemyTable[enemyTableIdx].name = name
-                enemyTable[enemyTableIdx].level = level
-                enemyTable[enemyTableIdx].creatureType = creatureType
-                enemyTable[enemyTableIdx].baseHealth = baseHealth
-                enemyTable[enemyTableIdx].ignoreFortified = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["ignoreFortified"]
-                enemyTable[enemyTableIdx].isBoss = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["isBoss"]
+                local entryIdx = entriesByCount[count]
+                if not enemyTable[entryIdx] then enemyTable[entryIdx] = {} end
+                local entry = enemyTable[entryIdx]
+                entry.quantity = (entry.quantity or 0) + 1
+                entry.npcId = npcId
+                entry.count = count
+                entry.displayId = data.displayId
+                entry.name = name
+                entry.level = level
+                entry.creatureType = creatureType
+                entry.baseHealth = baseHealth
+                entry.ignoreFortified = data.ignoreFortified
+                entry.isBoss = data.isBoss
               end
             end
           end

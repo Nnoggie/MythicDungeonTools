@@ -7,6 +7,11 @@ local function initializeDB()
   db = db or MDT:GetDB()
 end
 
+-- A clone may award different forces from other spawns of the same NPC.
+function MDT:GetCloneEnemyForces(enemy, clone)
+  return clone and clone.count or enemy.count
+end
+
 ---CountForces
 ---Counts total selected enemy forces in the current preset up to pull
 function MDT:CountForces(currentPull, currentOnly)
@@ -22,7 +27,8 @@ function MDT:CountForces(currentPull, currentOnly)
           if tonumber(enemyIdx) then
             for k, v in pairs(clones) do
               if MDT:IsCloneIncluded(enemyIdx, v) then
-                local count = self.dungeonEnemies[db.currentDungeonIdx][enemyIdx].count
+                local enemy = self.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+                local count = self:GetCloneEnemyForces(enemy, enemy.clones[v])
                 pullCurrent = pullCurrent + count
               end
             end

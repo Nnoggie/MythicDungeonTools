@@ -455,6 +455,10 @@ local schemas = {
                 type = "number"
               },
               {
+                name = "count",
+                type = "number"
+              },
+              {
                 name = "scale",
                 type = "number"
               },

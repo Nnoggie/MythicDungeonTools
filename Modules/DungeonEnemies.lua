@@ -69,7 +69,7 @@ end
 function MDT:DisplayBlipModifierLabels(modifier)
   for _, blip in pairs(blips) do
     blip.textLocked = true
-    local text = (modifier == "alt" and blip.clone.g and "G"..blip.clone.g) or (modifier == "ctrl" and blip.data.count) or ""
+    local text = (modifier == "alt" and blip.clone.g and "G"..blip.clone.g) or (modifier == "ctrl" and MDT:GetCloneEnemyForces(blip.data, blip.clone)) or ""
     blip.fontstring_Text1:SetText(text)
     blip.fontstring_Text1:Show()
   end
@@ -115,12 +115,12 @@ function MDTDungeonEnemyMixin:OnEnter()
   MDT:DisplayBlipTooltip(self, true)
   if not db.devMode then
     if self.textLocked then return end
-    self.fontstring_Text1:SetText(self.data.count)
+    self.fontstring_Text1:SetText(MDT:GetCloneEnemyForces(self.data, self.clone))
     self.fontstring_Text1:Show()
     if self.clone.g then
       for _, blip in pairs(blips) do
         if blip.clone.g == self.clone.g then
-          blip.fontstring_Text1:SetText(blip.data.count)
+          blip.fontstring_Text1:SetText(MDT:GetCloneEnemyForces(blip.data, blip.clone))
           blip.fontstring_Text1:Show()
         end
       end
@@ -489,7 +489,7 @@ function MDT:DisplayBlipTooltip(blip, shown)
     text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"].."\n\n"..text
   end
 
-  local count = data.count
+  local count = MDT:GetCloneEnemyForces(data, blip.clone)
   text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count)
   text = text.."\n"..L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health)
   text = text.."\n\n["..L["Right click for more info"].."]"
@@ -745,7 +745,8 @@ function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPrese
     end
   end
   self:SetFrameLevel(raise)
-  self.fontstring_Text1:SetText((clone.isBoss and data.count == 0 and "") or data.count)
+  local count = MDT:GetCloneEnemyForces(data, clone)
+  self.fontstring_Text1:SetText((clone.isBoss and count == 0 and "") or count)
   local isBoss = data.isBoss and true or false
   if self.isBoss ~= isBoss then
     self.isBoss = isBoss

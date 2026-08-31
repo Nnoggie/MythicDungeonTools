@@ -112,36 +112,36 @@ local methods = {
 
         if key == "I" then
           spell.interruptible = not spell.interruptible
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         if key == "M" then
           spell.magic = not spell.magic
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         if key == "P" then
           spell.poison = not spell.poison
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         if key == "D" then
           spell.disease = not spell.disease
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         if key == "C" then
           spell.curse = not spell.curse
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         if key == "B" then
           spell.bleed = not spell.bleed
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         if key == "E" then
           spell.enrage = not spell.enrage
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
 
         if key == "R" then
           enemy.spells[self.spellId] = nil
-          MDT:UpdateEnemyInfoFrame(enemyIdx)
+          MDT:UpdateEnemyInfoFrame()
         end
         --print spellId
         if key == "S" then

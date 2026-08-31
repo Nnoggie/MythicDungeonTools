@@ -683,6 +683,21 @@ function MDT:CreateDevPanel(frame)
 
     --clone options
 
+    local cloneForces = AceGUI:Create("EditBox")
+    cloneForces:SetLabel(MDT.L["Clone forces override (blank = default)"])
+    cloneForces:SetCallback("OnEnterPressed", function(widget, callbackName, text)
+      local currentBlip = MDT:GetCurrentDevmodeBlip()
+      if not currentBlip then return end
+      local value = tonumber(text)
+      if not text:match("^%s*$") and (not value or value < 0 or value % 1 ~= 0) then
+        widget:SetText(currentBlip.clone.count or "")
+        return
+      end
+      currentBlip.clone.count = value
+      MDT:UpdateMap()
+    end)
+    container:AddChild(cloneForces)
+
     --group
     local cloneGroup = AceGUI:Create("EditBox")
     cloneGroup:SetLabel("Group of clone:")
@@ -779,7 +794,9 @@ function MDT:CreateDevPanel(frame)
 
     --enter clone options into the GUI (red)
     local currentBlip = MDT:GetCurrentDevmodeBlip()
+    cloneForces:SetDisabled(not currentBlip)
     if currentBlip then
+      cloneForces:SetText(currentBlip.clone.count or "")
       cloneGroup:SetText(currentBlip.clone.g)
       currentCloneGroup = currentBlip.clone.g
       currentCloneScale = currentBlip.clone.scale

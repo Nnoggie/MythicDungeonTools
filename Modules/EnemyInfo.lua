@@ -454,14 +454,14 @@ local spellBlacklist = {
   [472765] = true, -- Consumed Void
   --[X]  = true,
 }
-local lastEnemyIdx
+local lastEnemyIdx, lastCloneIdx
 function MDT:GetEnemyInfoEnemyIdx()
   return lastEnemyIdx
 end
 
-function MDT:UpdateEnemyInfoFrame(enemyIdx)
-  if not enemyIdx then enemyIdx = lastEnemyIdx end
-  lastEnemyIdx = enemyIdx
+function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
+  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
+  lastEnemyIdx, lastCloneIdx = enemyIdx, cloneIdx
   if not enemyIdx then return end
   local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
   if not data then return end
@@ -523,7 +523,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
     end
   end
 
-  MDT:UpdateEnemyInfoData(enemyIdx)
+  MDT:UpdateEnemyInfoData(enemyIdx, cloneIdx)
 
   --ace is finicky
   f.rightContainer:PauseLayout()
@@ -579,9 +579,9 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx)
   f.rightContainer:DoLayout()
 end
 
-function MDT:UpdateEnemyInfoData(enemyIdx)
+function MDT:UpdateEnemyInfoData(enemyIdx, cloneIdx)
   local f = MDT.EnemyInfoFrame
-  if not enemyIdx then enemyIdx = lastEnemyIdx end
+  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
   if not enemyIdx then return end
   local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
   --data
@@ -601,8 +601,9 @@ function MDT:UpdateEnemyInfoData(enemyIdx)
   f.enemyDataContainer.creatureTypeEditBox.defaultText = data.creatureType
   f.enemyDataContainer.levelEditBox:SetText(data.level)
   f.enemyDataContainer.levelEditBox.defaultText = data.level
-  f.enemyDataContainer.countEditBox:SetText(data.count)
-  f.enemyDataContainer.countEditBox.defaultText = data.count
+  local count = MDT:GetCloneEnemyForces(data, data.clones[cloneIdx])
+  f.enemyDataContainer.countEditBox:SetText(count)
+  f.enemyDataContainer.countEditBox.defaultText = count
   f.enemyDataContainer.stealthCheckBox:SetValue(data.stealth)
   f.enemyDataContainer.stealthCheckBox.defaultValue = data.stealth
   f.enemyDataContainer.stealthDetectCheckBox:SetValue(data.stealthDetect)
@@ -619,6 +620,6 @@ end
 function MDT:ShowEnemyInfoFrame(blip)
   db = MDT:GetDB()
   MDT.EnemyInfoFrame = MDT.EnemyInfoFrame or MakeEnemeyInfoFrame()
-  MDT:UpdateEnemyInfoFrame(blip.enemyIdx)
+  MDT:UpdateEnemyInfoFrame(blip.enemyIdx, blip.cloneIdx)
   MDT.EnemyInfoFrame:Show()
 end
