@@ -66,8 +66,10 @@ function MDT:HardReset()
 end
 
 function MDT:ResetDataCache()
+  db.devModeCache = nil
   db.dungeonEnemies = nil
   db.mapPOIs = nil
+  db.devModeCacheBaseline = nil
   ReloadUI()
 end
 

@@ -28,6 +28,8 @@ end
 function MDT:InitializeRuntime()
   db = MDT:InitializeSavedVariables()
   if not db then return end
+  -- Release packages omit Developer/. Keep its saved edits, but use normal UI/data.
+  if not MDT.CreateDevPanel then db.devMode = false end
   MDT:InitializeFadeFrame()
   return db
 end

@@ -1004,19 +1004,7 @@ function MDT:InitializeMainFrame()
   main_frame:Hide()
   tinsert(UISpecialFrames, "MDTFrame")
 
-  --cache dungeon data to not lose data during reloads
-  if db.devMode and db.loadCache then
-    if db.dungeonEnemies then
-      MDT.dungeonEnemies = db.dungeonEnemies
-    else
-      db.dungeonEnemies = MDT.dungeonEnemies
-    end
-    if db.mapPOIs then
-      MDT.mapPOIs = db.mapPOIs
-    else
-      db.mapPOIs = MDT.mapPOIs
-    end
-  end
+  if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end
 
   db.nonFullscreenScale = db.nonFullscreenScale or MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
   if db.nonFullscreenScale == defaultNonFullscreenScale and db.anchorFrom == "TOP" and db.anchorTo == "TOP" then

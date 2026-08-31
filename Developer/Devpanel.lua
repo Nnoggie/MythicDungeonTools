@@ -28,22 +28,6 @@ function MDT:ToggleDevMode()
   end, "toggleDevMode")
 end
 
-local function syncDevModeCache()
-  if not db.loadCache then return end
-
-  if db.dungeonEnemies then
-    MDT.dungeonEnemies = db.dungeonEnemies
-  else
-    db.dungeonEnemies = MDT.dungeonEnemies
-  end
-
-  if db.mapPOIs then
-    MDT.mapPOIs = db.mapPOIs
-  else
-    db.mapPOIs = MDT.mapPOIs
-  end
-end
-
 function MDT:PositionDevPanel(frame, maximized)
   frame = frame or MDT.main_frame
   if not frame or not frame.devPanel then return end
@@ -77,7 +61,7 @@ end
 function MDT:EnableDevMode()
   db = MDT:GetDB()
   db.devMode = true
-  syncDevModeCache()
+  if not MDT:InitializeDevModeCache() then return end
 
   MDT:ShowInterfaceInternal(true)
 
@@ -101,6 +85,7 @@ end
 
 function MDT:DisableDevMode()
   db = MDT:GetDB()
+  MDT:SaveDevModeCache()
   db.devMode = false
 
   local frame = MDT.main_frame
@@ -833,10 +818,7 @@ function MDT:CreateDevPanel(frame)
     local loadCacheCheckbox = AceGUI:Create("CheckBox")
     loadCacheCheckbox:SetLabel("Load Cache in devmode")
     loadCacheCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-      db.loadCache = value or nil
-      if value then
-        ReloadUI()
-      end
+      MDT:SetDevModeCacheEnabled(value)
     end)
     loadCacheCheckbox:SetValue(db.loadCache)
     container:AddChild(loadCacheCheckbox)
