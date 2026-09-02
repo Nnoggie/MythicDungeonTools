@@ -7,9 +7,9 @@ local UnitName, UnitGUID, UnitCreatureType, UnitHealthMax, UnitLevel = UnitName,
 --[[
   Bind macros:
   1. Add clone
-  /run MDT:AddCloneAtCursorPosition()
+  /run MDTAddCloneAtCursorPosition()
   2. Add patrol point to clone
-  /run MDT:AddPatrolWaypointAtCursorPosition()
+  /run MDTAddPatrolWaypointAtCursorPosition()
   3. Add untargetable unit if needed
   /run MDT:AddNPCFromUnit("mouseover")
 ]]
@@ -928,6 +928,10 @@ function MDT:AddCloneAtCursorPosition()
   end
 end
 
+function _G.MDTAddCloneAtCursorPosition()
+  MDT:AddCloneAtCursorPosition()
+end
+
 ---AddPatrolWaypointAtCursorPosition
 ---Adds a patrol waypoint to the selected enemy
 function MDT:AddPatrolWaypointAtCursorPosition()
@@ -959,4 +963,8 @@ function MDT:AddPatrolWaypointAtCursorPosition()
     print(string.format("MDT: Created Waypoint %d of %s %d at %d,%d", 1, data.name, #cloneData.patrol, cursorx, cursory))
     MDT:UpdateMap()
   end
+end
+
+function _G.MDTAddPatrolWaypointAtCursorPosition()
+  MDT:AddPatrolWaypointAtCursorPosition()
 end
