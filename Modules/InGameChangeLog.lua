@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.11",
+    date = "2026-09-02",
+    notes = {
+      "Corrected enemy placements and pull groupings in King's Rest, Ruby Life Pools, Temple of Sethraliss, and The Blinding Vale.",
+      "Restored developer-mode macros for adding enemies and patrol waypoints.",
+    },
+  },
+  {
     tag = "6.2.10",
     date = "2026-08-31",
     notes = {
@@ -21,16 +29,6 @@ MDT.changeLog = {
       "Corrected total enemy forces in Temple of Sethraliss from 689 to 687 and Ruby Life Pools from 553 to 551.",
       "Corrected The Blinding Vale's total enemy forces from 655 to 686.",
       "Corrected the Potatoad Matriarch's enemy forces from 30 to 60.",
-    },
-  },
-  {
-    tag = "6.2.8",
-    date = "2026-08-25",
-    notes = {
-      "Corrected enemy map positions in The Blinding Vale, Den of Nalorakk, Murder Row, Altar of Fangs, and Voidscar Arena.",
-      "Corrected pull groupings and floor assignments in The Blinding Vale, Den of Nalorakk, Murder Row, and Voidscar Arena.",
-      "Added missing enemy placements in The Blinding Vale, Den of Nalorakk, and Murder Row.",
-      "Corrected the models for Ula'tek's Chosen, Twinfang Harrower, and Blade of the Altar in Altar of Fangs.",
     },
   },
 }
