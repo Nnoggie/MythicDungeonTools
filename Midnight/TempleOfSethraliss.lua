@@ -170,14 +170,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [13] = {
-        ["x"] = 701.33218784475,
-        ["y"] = -397.32216193294,
-        ["g"] = 9,
-        ["sublevel"] = 1,
-      },
-      [14] = {
-        ["x"] = 711.96334837735,
-        ["y"] = -396.85889822295,
+        ["x"] = 706.57442049733,
+        ["y"] = -398.50587971347,
         ["g"] = 9,
         ["sublevel"] = 1,
       },
@@ -720,8 +714,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["curse"] = true,
       },
       [1314082] = {
-        ["curse"] = true,
         ["interruptible"] = true,
+        ["curse"] = true,
       },
     },
     ["clones"] = {
@@ -1348,6 +1342,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [263425] = {
       },
+      [1288087] = {
+      },
       [1288092] = {
       },
       [1288235] = {
@@ -1362,8 +1358,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1310311] = {
       },
-      [1288087] = {},
-      [1314051] = {},
+      [1314051] = {
+      },
     },
     ["clones"] = {
       [1] = {
