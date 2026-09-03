@@ -1,4 +1,3 @@
-## 6.2.11 (2026-09-02)
+## 6.2.12 (2026-09-03)
 
-- Corrected enemy placements and pull groupings in King's Rest, Ruby Life Pools, Temple of Sethraliss, and The Blinding Vale.
-- Restored developer-mode macros for adding enemies and patrol waypoints.
+- Fixed an error when creating the MDT Focus Marker macro.
