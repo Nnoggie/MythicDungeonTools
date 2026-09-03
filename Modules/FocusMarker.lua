@@ -467,7 +467,7 @@ end
 
 local function hasAccountMacroSlot()
   local numAccountMacros = GetNumMacros()
-  return numAccountMacros < MAX_ACCOUNT_MACROS
+  return numAccountMacros < Constants.MacroConsts.MAX_ACCOUNT_MACROS
 end
 
 local function createKeybindButton()
