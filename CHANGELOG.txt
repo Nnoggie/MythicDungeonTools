@@ -1,3 +1,3 @@
-## 6.2.12 (2026-09-03)
+## 6.2.13 (2026-09-04)
 
-- Fixed an error when creating the MDT Focus Marker macro.
+- Corrected pull groupings for Lightfeather Petalwings and a Sporeblight Belcher, and removed an extra Radiant Spellsower in The Blinding Vale.
