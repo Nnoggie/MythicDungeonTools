@@ -63,6 +63,41 @@ end
 
 MDT.transmissionCache = {}
 
+local function diagnosticValue(value)
+  if issecretvalue(value) then return "<secret>" end
+  return tostring(value)
+end
+
+local receiptHistory = {}
+local function reportImportError(link, text, sender, displayName)
+  local details = {
+    "Time: "..GetTime(),
+    "Link: "..diagnosticValue(link):gsub("|", "||"),
+    "Text: "..diagnosticValue(text):gsub("|", "||"),
+    "Sender: "..diagnosticValue(sender),
+    "Display name: "..diagnosticValue(displayName),
+    "Group size: "..GetNumGroupMembers(),
+    "In group: "..diagnosticValue(IsInGroup()),
+    "In raid: "..diagnosticValue(IsInRaid()),
+    "Lockdowns at click: "..MDT:GetLockdownState(),
+    "Cache keys (no route contents):",
+  }
+  for cachedSender, presets in pairs(MDT.transmissionCache) do
+    for cachedName, preset in pairs(presets) do
+      details[#details + 1] = diagnosticValue(cachedSender).." / "..diagnosticValue(cachedName).." / "..type(preset)
+    end
+  end
+  details[#details + 1] = "Recent completed preset receipts (oldest first; empty means none processed since UI load):"
+  for _, receipt in ipairs(receiptHistory) do
+    local fields = {}
+    for key, value in pairs(receipt) do fields[#fields + 1] = key.."="..diagnosticValue(value) end
+    table.sort(fields)
+    details[#details + 1] = table.concat(fields, "; ")
+  end
+  MDT:OnError("Missing or invalid cached route for "..diagnosticValue(sender).." / "..diagnosticValue(displayName),
+    table.concat(details, "\n").."\n"..debugstack(), "MDT failed to import preset from chat link", true)
+end
+
 local function showMapSectionIfNeeded()
   if MDT.IsMapSectionActive and MDT.SetCurrentSection and not MDT:IsMapSectionActive() then
     MDT:SetCurrentSection("maps")
@@ -94,15 +129,11 @@ function MDT:HandleChatLink(link, text)
     local sender = link:sub(17, string.len(link))
     local name, realm = string.match(sender, "(.*)+(.*)")
     if (not name) or (not realm) then
-      local msg = "\nsender: "..sender
-      local escapedText = text:gsub("|", "||")
-      msg = msg.."\nfull text: "..escapedText
-      local cache = MDT.U.TableToString(MDT.transmissionCache)
-      MDT:OnError(msg, cache, "MDT failed to import preset from chat link")
+      reportImportError(link, text, sender)
       return
     end
     -- to get the displayName (name of the preset) we need to get everything between the starting and closing brackets
-    local displayName = text:match("%[(.-)%]")
+    local displayName = text and text:match("%[(.-)%]")
     sender = name.."-"..realm
     local preset = MDT.transmissionCache[sender] and MDT.transmissionCache[sender][displayName]
     if preset and type(preset) == "table" then
@@ -115,18 +146,28 @@ function MDT:HandleChatLink(link, text)
       local msg = L["WARNING_OLD_DUNGEON_IMPORT"]
       print("|cFFFF0000MDT:|r "..msg)
     else
-      local msg = "\nparsed displayName: "..displayName
-      msg = msg.."\nsender: "..sender
-      local escapedText = text:gsub("|", "||")
-      msg = msg.."\nfull text: "..escapedText
-      local cache = MDT.U.TableToString(MDT.transmissionCache)
-      MDT:OnError(msg, cache, "MDT failed to import preset from chat link")
+      reportImportError(link, text, sender, displayName)
     end
     return
   end
 end
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
+  local receipt
+  if prefix == presetCommPrefix then
+    receipt = {
+      time = GetTime(),
+      sender = diagnosticValue(sender),
+      distribution = diagnosticValue(distribution),
+      bytes = #message,
+      status = "Resolving sender",
+      lockdowns = MDT:GetLockdownState(),
+      groupSize = GetNumGroupMembers(),
+    }
+    -- Keep metadata for only the latest 20 completed messages, never their route payloads.
+    if #receiptHistory == 20 then tremove(receiptHistory, 1) end
+    receiptHistory[#receiptHistory + 1] = receipt
+  end
   --[[
         Sender has no realm name attached when sender is from the same realm as the player
         UnitFullName("Nnoggie") returns no realm while UnitFullName("player") does
@@ -134,12 +175,20 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         We append our realm if there is no realm
     ]]
   local name, realm = UnitFullName(sender)
-  if not name then return end
+  if receipt then
+    receipt.name = diagnosticValue(name)
+    receipt.realm = diagnosticValue(realm)
+  end
+  if not name then
+    if receipt then receipt.status = "Dropped: sender lookup returned nil" end
+    return
+  end
   if not realm or string.len(realm) < 3 then
     local _, r = UnitFullName("player")
     realm = r
   end
   local fullName = name.."-"..realm
+  if receipt then receipt.cacheSender = fullName end
 
   if prefix == MDT.versionCheckPrefix then
     if MDT.VersionCheck_OnCommReceived then
@@ -152,23 +201,49 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --we cache the preset here already
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
+    receipt.status = "Decoding route"
     local preset = MDT:StringToTable(message, false)
-    if not MDT:ValidateImportPreset(preset, true) then return end
+    receipt.decodedType = type(preset)
+    if type(preset) == "string" then receipt.decodeError = preset end
+    if type(preset) == "table" then
+      receipt.textType = type(preset.text)
+      receipt.valueType = type(preset.value)
+      if type(preset.value) == "table" then
+        receipt.dungeonIndex = diagnosticValue(preset.value.currentDungeonIdx)
+        receipt.currentPull = diagnosticValue(preset.value.currentPull)
+        receipt.currentSublevel = diagnosticValue(preset.value.currentSublevel)
+        receipt.pullsType = type(preset.value.pulls)
+      end
+    end
+    receipt.status = "Validating route"
+    if not MDT:ValidateImportPreset(preset, true) then
+      receipt.status = "Dropped: route validation failed"
+      return
+    end
+    receipt.status = "Resolving dungeon"
+    receipt.dungeonIndex = preset.value.currentDungeonIdx
+    receipt.presetName = preset.text
+    receipt.uid = preset.uid
     local presetName = preset.text
     local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     if not dungeon then
+      receipt.status = "Dropped: unknown dungeon"
       -- check if it's dungeon that has been in MDT before but is not in the current version
       local knownDungeon = MDT.knownDungeons[preset.value.currentDungeonIdx]
       if knownDungeon then
         local displayName = knownDungeon..": "..presetName
         MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
         MDT.transmissionCache[fullName][displayName] = 0 --special marker for old dungeon preset
+        receipt.status = "Cached old-dungeon marker"
+        receipt.displayName = displayName
       end
       return
     end
     local displayName = dungeon..": "..presetName
     MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
     MDT.transmissionCache[fullName][displayName] = preset
+    receipt.status = "Cached"
+    receipt.displayName = displayName
     --live session preset
     if MDT.liveSessionActive and MDT.liveSessionAcceptingPreset and preset.uid == MDT.livePresetUID then
       MDT:ImportPreset(preset, true)
@@ -405,11 +480,6 @@ function MDT:MakeSendingStatusBar(f)
   statusbar:HookScript("OnHide", function(self)
     MDT.main_frame.bottomPanelString:Show()
   end)
-end
-
-local function diagnosticValue(value)
-  if issecretvalue(value) then return "<secret>" end
-  return tostring(value)
 end
 
 local function reportShareError(context, message)
