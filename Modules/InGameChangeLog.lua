@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.14-alpha1",
+    date = "2026-09-05",
+    notes = {
+      "Experimental alpha version intended to help debug route sharing issues.",
+      "Added detailed error reports for route sharing problems. If an MDT error window appears while sharing a route, please report it using the links in the window.",
+    },
+  },
+  {
     tag = "6.2.13",
     date = "2026-09-04",
     notes = {
@@ -13,14 +21,6 @@ MDT.changeLog = {
     date = "2026-09-03",
     notes = {
       "Fixed an error when creating the MDT Focus Marker macro.",
-    },
-  },
-  {
-    tag = "6.2.11",
-    date = "2026-09-02",
-    notes = {
-      "Corrected enemy placements and pull groupings in King's Rest, Ruby Life Pools, Temple of Sethraliss, and The Blinding Vale.",
-      "Restored developer-mode macros for adding enemies and patrol waypoints.",
     },
   },
 }

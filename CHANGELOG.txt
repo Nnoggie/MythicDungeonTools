@@ -1,3 +1,4 @@
-## 6.2.13 (2026-09-04)
+## 6.2.14-alpha1 (2026-09-05)
 
-- Corrected pull groupings for Lightfeather Petalwings and a Sporeblight Belcher, and removed an extra Radiant Spellsower in The Blinding Vale.
+- Experimental alpha version intended to help debug route sharing issues.
+- Added detailed error reports for route sharing problems. If an MDT error window appears while sharing a route, please report it using the links in the window.
