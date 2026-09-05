@@ -10,20 +10,30 @@ local caughtErrors = {}
 function MDT:GetLockdownState()
   -- Same order as MethodInternalAdmin's effective addon restrictions.
   local states = {}
-  for i, name in ipairs({ "Map", "Chat", "Combat", "Encounter", "ChallengeMode", "PvPMatch" }) do
+  local unavailable = false
+  for _, name in ipairs({ "Map", "Chat", "Combat", "Encounter", "ChallengeMode", "PvPMatch" }) do
     local restriction = Enum.AddOnRestrictionType and Enum.AddOnRestrictionType[name]
     local ok, active = false, nil
     if restriction and C_RestrictedActions and C_RestrictedActions.IsAddOnRestrictionActive then
       ok, active = pcall(C_RestrictedActions.IsAddOnRestrictionActive, restriction)
     end
-    states[i] = ok and (active and "1" or "0") or "?"
+    if not ok then
+      unavailable = true
+    elseif active then
+      states[#states + 1] = name
+    end
   end
-  return table.concat(states).." (Map, Chat, Combat, Encounter, ChallengeMode, PvPMatch; ? = unavailable)"
+  if unavailable then states[#states + 1] = "Some states unavailable" end
+  return #states > 0 and table.concat(states, ", ") or "None"
 end
 
-local function getDiagnostics()
-  local exportOK, presetExport = pcall(function() return MDT:TableToString(MDT:GetCurrentPreset()) end)
-  if not exportOK or type(presetExport) ~= "string" then presetExport = "Unavailable: "..tostring(presetExport) end
+local function getDiagnostics(omitRoute)
+  local presetExport
+  if not omitRoute then
+    local exportOK
+    exportOK, presetExport = pcall(function() return MDT:TableToString(MDT:GetCurrentPreset()) end)
+    if not exportOK or type(presetExport) ~= "string" then presetExport = "Unavailable: "..tostring(presetExport) end
+  end
   ---@diagnostic disable-next-line: redundant-parameter
   local addonVersion = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version")
   local locale = GetLocale()
@@ -208,14 +218,18 @@ function MDT:DisplayErrors(force)
     end)
   end
 
+  local omitRoute = false
   for _, error in ipairs(caughtErrors) do
     errorBoxText = errorBoxText..error.count.."x: "..error.message.."\n"
+    omitRoute = omitRoute or error.omitRoute
   end
   --add diagnostics
-  local diagnostics = getDiagnostics()
+  local diagnostics = getDiagnostics(omitRoute)
   errorBoxText = errorBoxText.."\n"..diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\nCharacter: "..diagnostics.name.."-"..diagnostics.realm.." ("..diagnostics.region..")"
   errorBoxText = errorBoxText.."\n"..diagnostics.combatState.."\nLockdowns: "..MDT:GetLockdownState().."\n"..diagnostics.zoneInfo.."\n"
-  errorBoxText = errorBoxText.."\nRoute:\n"..diagnostics.presetExport
+  if diagnostics.presetExport then
+    errorBoxText = errorBoxText.."\nRoute:\n"..diagnostics.presetExport
+  end
   errorBoxText = errorBoxText.."\nStacktraces\n\n"
   for _, error in ipairs(caughtErrors) do
     errorBoxText = errorBoxText..error.stackTrace.."\n"
@@ -232,7 +246,7 @@ end
 local numError = 0
 local currentFunc = ""
 local addTrace = false
-local function onError(msg, stackTrace, name)
+local function onError(msg, stackTrace, name, omitRoute)
   numError = numError + 1
   local funcName = name or currentFunc
   local e = funcName..": "..msg
@@ -240,12 +254,13 @@ local function onError(msg, stackTrace, name)
   for _, error in pairs(caughtErrors) do
     if error.message == e then
       error.count = error.count + 1
+      error.omitRoute = error.omitRoute or omitRoute
       addTrace = false
       return false
     end
   end
   local stackTraceValue = stackTrace and name..":\n"..stackTrace
-  tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue, count = 1 })
+  tinsert(caughtErrors, { message = e, stackTrace = stackTraceValue, count = 1, omitRoute = omitRoute })
   addTrace = true
   if MDT.errorTimer then MDT.errorTimer:Cancel() end
   MDT.errorTimer = C_Timer.NewTimer(0.5, function()
@@ -259,8 +274,9 @@ local function onError(msg, stackTrace, name)
 end
 
 --accessible function for errors in coroutines
-function MDT:OnError(msg, stackTrace, name)
-  onError(msg, stackTrace, name)
+-- omitRoute suppresses route export for the combined report if any error requests it.
+function MDT:OnError(msg, stackTrace, name, omitRoute)
+  onError(msg, stackTrace, name, omitRoute)
 end
 
 function MDT:GetErrors()
