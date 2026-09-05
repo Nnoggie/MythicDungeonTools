@@ -7,8 +7,23 @@ local tinsert, slen = table.insert, string.len
 
 local caughtErrors = {}
 
+function MDT:GetLockdownState()
+  -- Same order as MethodInternalAdmin's effective addon restrictions.
+  local states = {}
+  for i, name in ipairs({ "Map", "Chat", "Combat", "Encounter", "ChallengeMode", "PvPMatch" }) do
+    local restriction = Enum.AddOnRestrictionType and Enum.AddOnRestrictionType[name]
+    local ok, active = false, nil
+    if restriction and C_RestrictedActions and C_RestrictedActions.IsAddOnRestrictionActive then
+      ok, active = pcall(C_RestrictedActions.IsAddOnRestrictionActive, restriction)
+    end
+    states[i] = ok and (active and "1" or "0") or "?"
+  end
+  return table.concat(states).." (Map, Chat, Combat, Encounter, ChallengeMode, PvPMatch; ? = unavailable)"
+end
+
 local function getDiagnostics()
-  local presetExport = MDT:TableToString(MDT:GetCurrentPreset())
+  local exportOK, presetExport = pcall(function() return MDT:TableToString(MDT:GetCurrentPreset()) end)
+  if not exportOK or type(presetExport) ~= "string" then presetExport = "Unavailable: "..tostring(presetExport) end
   ---@diagnostic disable-next-line: redundant-parameter
   local addonVersion = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version")
   local locale = GetLocale()
@@ -28,15 +43,17 @@ local function getDiagnostics()
   local region = regions[regionId] or "UNKNOWN"
   local combatState = InCombatLockdown() and "In combat" or "Out of combat"
   local mapID = C_Map.GetBestMapForUnit("player");
-  local zoneInfo = format("Zone: %s (%d)", C_Map.GetMapInfo(C_Map.GetMapInfo(mapID or 0).parentMapID).name, mapID)
+  local mapInfo = mapID and C_Map.GetMapInfo(mapID)
+  local parentInfo = mapInfo and C_Map.GetMapInfo(mapInfo.parentMapID)
+  local zoneInfo = format("Zone: %s (%s)", parentInfo and parentInfo.name or mapInfo and mapInfo.name or "Unknown", tostring(mapID))
   return {
     presetExport = presetExport,
     addonVersion = addonVersion,
     locale = locale,
     dateString = dateString,
     gameVersion = gameVersion,
-    name = name,
-    realm = realm,
+    name = name or "Unknown",
+    realm = realm or "Unknown",
     region = region,
     combatState = combatState,
     zoneInfo = zoneInfo
@@ -197,7 +214,7 @@ function MDT:DisplayErrors(force)
   --add diagnostics
   local diagnostics = getDiagnostics()
   errorBoxText = errorBoxText.."\n"..diagnostics.dateString.."\nMDT: "..diagnostics.addonVersion.."\nClient: "..diagnostics.gameVersion.." "..diagnostics.locale.."\nCharacter: "..diagnostics.name.."-"..diagnostics.realm.." ("..diagnostics.region..")"
-  errorBoxText = errorBoxText.."\n"..diagnostics.combatState.."\n"..diagnostics.zoneInfo.."\n"
+  errorBoxText = errorBoxText.."\n"..diagnostics.combatState.."\nLockdowns: "..MDT:GetLockdownState().."\n"..diagnostics.zoneInfo.."\n"
   errorBoxText = errorBoxText.."\nRoute:\n"..diagnostics.presetExport
   errorBoxText = errorBoxText.."\nStacktraces\n\n"
   for _, error in ipairs(caughtErrors) do
