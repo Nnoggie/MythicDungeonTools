@@ -1,3 +1,4 @@
-## 6.2.15 (2026-09-05)
+## 6.2.16 (2026-09-08)
 
-- Added two missing Twinfang Harrowers in Altar of Fangs.
+- Added a missing Lightgorged Lasher and corrected a Lasher's position in The Blinding Vale.
+- Added missing translations for The Blinding Vale enemies and Thundering Totem in King's Rest.
