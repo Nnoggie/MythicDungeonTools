@@ -19,13 +19,6 @@ jobs:
     # we can run our steps on pretty much anything, but the "ubuntu-latest" image is a safe bet
     runs-on: ubuntu-22.04
 
-    # specify the environment variables used by the packager, matching the secrets from the project on GitHub
-    env:
-      CF_API_KEY: ${{ secrets.CF_API_KEY }}
-      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}  # "GITHUB_TOKEN" is a secret always provided to the workflow
-                                                 # for your own token, the name cannot start with "GITHUB_"
-      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
-
     # "steps" holds a list of all the steps needed to package and release our AddOn
     steps:
 
@@ -35,8 +28,21 @@ jobs:
         with:
           fetch-depth: 0  # gets entire git history, needed for automatic changelogs
 
+      - name: Install Lua 5.1
+        run: sudo apt-get update && sudo apt-get install -y lua5.1
+
+      - name: Test localization checker
+        run: lua5.1 scripts/check_locales.lua --self-test
+
+      - name: Check localization coverage
+        run: lua5.1 scripts/check_locales.lua
+
       # once cloned, we just run the GitHub Action for the packager project
       - name: Package and release
         uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
         with:
           args: -w 0 -l
