@@ -5,6 +5,7 @@ ignore:
   - cspell.json
   - AGENTS.md
   - scripts
+  - .luals
   - Developer
 enable-nolib-creation: no
 move-folders:

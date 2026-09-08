@@ -1,6 +1,13 @@
 {
   "runtime.version": "Lua 5.1",
-  "workspace.ignoreDir": [".github", ".vscode", "**/libs"],
+  "workspace.ignoreDir": [
+    ".github",
+    ".vscode",
+    ".luals",
+    "**/Libs",
+    "**/libs",
+    "scripts"
+  ],
   "diagnostics.globals": [
     "ReloadUI",
     "UISpecialFrames",
@@ -61,12 +68,44 @@
     "CloseDropDownMenus",
     "GetAddOnMetadata",
     "LOCALIZED_CLASS_NAMES_MALE",
-        "C_Secrets",
-        "ChatFrameUtil",
-        "TooltipDataProcessor",
-        "StaticPopupDialogs",
-        "OKAY",
-        "StaticPopup_Show"
+    "C_Secrets",
+    "ChatFrameUtil",
+    "TooltipDataProcessor",
+    "StaticPopupDialogs",
+    "OKAY",
+    "StaticPopup_Show"
   ],
-  "diagnostics.disable": ["invisible"]
+  "diagnostics.disable": [
+    "invisible"
+  ],
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.builtin": {
+    "basic": "disable",
+    "debug": "disable",
+    "io": "disable",
+    "math": "disable",
+    "os": "disable",
+    "package": "disable",
+    "string": "disable",
+    "table": "disable",
+    "utf8": "disable"
+  },
+  "type.weakUnionCheck": false,
+  "workspace.checkThirdParty": "Disable",
+  "workspace.library": [
+    ".luals/wow-api-0.22.3/extension/Annotations/Core"
+  ],
+  "diagnostics.ignoredFiles": "Disable",
+  "diagnostics.libraryFiles": "Disable",
+  "diagnostics.neededFileStatus": {
+    "cast-local-type": "Any!"
+  },
+  "diagnostics.severity": {
+    "cast-local-type": "Warning!",
+    "unused-local": "Warning!",
+    "unused-function": "Warning!",
+    "unused-vararg": "Warning!",
+    "redefined-local": "Warning!",
+    "empty-block": "Warning!"
+  }
 }

@@ -1,0 +1,40 @@
+name: LuaLS
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lua-language-server:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Test LuaLS checker
+        shell: pwsh
+        run: ./scripts/run-luals.ps1 -SelfTest
+
+      - name: Check LuaLS diagnostics
+        shell: pwsh
+        run: ./scripts/run-luals.ps1
+
+      - name: Upload LuaLS reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luals-report
+          path: |
+            .luals/report.json
+            .luals/report.md
+            .luals/reports/
+          include-hidden-files: true
+          if-no-files-found: error

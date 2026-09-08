@@ -35,6 +35,20 @@ For dungeons of previous expansions use the [MDT Legacy Plugin](https://github.c
 - /mythicdungeontools
 - /mdt
 
+## LuaLS checks
+
+Run the same check as GitHub CI from PowerShell 7 on Windows:
+
+```powershell
+pwsh -NoProfile -File scripts/run-luals.ps1
+```
+
+Use `-SelfTest` to verify clean scans, hint failures, typed WoW calls, and standalone script coverage against a small temporary workspace.
+
+The first run downloads checksum-verified LuaLS 3.19.1 and WoW API 0.22.3 definitions into the ignored `.luals/` directory. The root `.luarc.json` is the single diagnostic policy for addon code, developer code, and standalone Lua tools. The runner checks `scripts/` separately using a generated copy of that config with standard Lua libraries instead of WoW APIs; diagnostic rules are inherited unchanged. The generated config is included in the reports for inspection. The root editor workspace excludes `scripts/`; use the runner to check those tools.
+
+Every diagnostic, including hints, fails the check. Existing diagnostics are reported without new suppressions or a baseline allowance. Read `.luals/report.md` locally, or the annotations, summary, and `luals-report` artifact in GitHub Actions.
+
 ## Support / Social
 
 [![Foo](https://i.imgur.com/Y2fEMMH.png)](https://streamlabs.com/nnoggie/tip) Support me with a [Donation](https://streamlabs.com/nnoggie/tip "Donate")

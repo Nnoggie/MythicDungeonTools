@@ -1,5 +1,6 @@
 .idea/
 .vscode/
+.luals/
 AGENTS.local.md
 libs/*
 !libs/LibDeflate
