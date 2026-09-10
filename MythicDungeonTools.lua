@@ -550,8 +550,3 @@ function MDT:UpdatePullButtonColor(pullIdx, r, g, b)
   button.color.r, button.color.g, button.color.b = r, g, b
   button:UpdateColor()
 end
-
-MDT.modules = {}
-function MDT:RegisterModule(modulename, module)
-  MDT.modules[modulename] = module
-end

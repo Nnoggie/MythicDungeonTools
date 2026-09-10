@@ -97,11 +97,6 @@ local initStarted
 function MDT:StartMainFrameInitialization()
   if initStarted then return end
   initStarted = true
-  for _, module in pairs(MDT.modules) do
-    if module.OnInitialize then
-      module:OnInitialize()
-    end
-  end
   MDT:RegisterErrorHandledFunctions()
   MDT:CheckSeenDungeonLists()
 

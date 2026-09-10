@@ -273,27 +273,6 @@ local schemas = {
           type = "number"
         },
         {
-          name = "powers",
-          type = "array",
-          fields = {
-            type = "schemaArray",
-            fields = {
-              {
-                name = "dps",
-                type = "boolean"
-              },
-              {
-                name = "healer",
-                type = "boolean"
-              },
-              {
-                name = "tank",
-                type = "boolean"
-              },
-            },
-          }
-        },
-        {
           name = "characteristics",
           type = "schemaArray",
           fields = {
