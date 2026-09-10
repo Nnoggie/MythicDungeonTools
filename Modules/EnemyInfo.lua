@@ -380,80 +380,6 @@ local characteristics = {
   ["Turn Evil"] = "Interface\\ICONS\\ability_paladin_turnevil",
   ["Mind Soothe"] = "Interface\\ICONS\\spell_holy_mindsooth",
 }
-local spellBlacklist = {
-  [277564] = true, --Regenerative Blood
-  [277247] = true, --Regenerative Blood
-  [209859] = true, --Bolster
-  [233490] = true, --UA
-  [91021]  = true, --Find Weakness
-  [2094]   = true, --Blind
-  [273836] = true, --Filthy Transfusion
-  [205708] = true, --Chilled
-  [212792] = true, --Cone of Cold
-  [48181]  = true, --Haunt
-  [191380] = true, --Mark of the Distant Army
-  [236299] = true, --Chrono Shift
-  [1490]   = true, --Chaos Brand
-  [205276] = true, --Phantom Singularity
-  [132951] = true, --Flare
-  [255228] = true, --Polymorphed
-  [122]    = true, --Frost Nova
-  [12654]  = true, --Ignite
-  [2818]   = true, --Deadly Poison
-  [55095]  = true, --Frost Fever
-  [408]    = true, --Kidney Shot
-  [34914]  = true, --Vampiric Touch
-  [205369] = true, --Mind Bomb
-  [154953] = true, --Internal Bleeding
-  [51490]  = true, --Thunderstorm
-  [3409]   = true, --Crippling Poison
-  [272970] = true, --Packed Ice
-  [262115] = true, --Deep Wounds
-  [226943] = true, --Mind Bomb
-  [198813] = true, --Vengeful Retreat
-  [121308] = true, --Disguise
-  [224729] = true, --Bursting Shot
-  [186439] = true, --Shadow Mend
-  [113746] = true, --Mystic Touch
-  [280404] = true, --Tidal Surge
-  [589]    = true, --Shadow Word: Pain
-  [5116]   = true, --Concussive Shot
-  [288865] = true, --Meerahs Jukebox
-  [317898] = true, --Blinding Sleet
-  [334882] = true, --
-  [201657] = true, --
-  [320297] = true, --
-  [325748] = true, --
-  [326868] = true, --
-  [132466] = true, --
-  [344991] = true, --
-  [320785] = true, --
-  [335072] = true, --
-  [1604]   = true, --
-  [35079]  = true, --
-  [50707]  = true, --
-  [240443] = true, --
-  [328506] = true, --
-  [344663] = true, -- shattered psyche
-  [176039] = true, -- flametongue
-  [176033] = true, -- flametongue
-  [176031] = true, -- flametongue
-  [213405] = true, -- dh stuff
-  [391191] = true, -- dh stuff
-  [390181] = true, -- dh stuff
-  [228318] = true, -- enrage
-  [374557] = true, -- brittle
-  [387096] = true, -- pyrogenics
-  [454782] = true, -- Radiant Focus
-  [462597] = true, -- [DNT] In RP Combat
-  [434481] = true, -- Bombardments
-  [257069] = true, -- Watertight Shell
-  [324859] = true, -- Bramblethorn Entanglement
-  [427359] = true, -- Defend
-  [429099] = true, -- Overwhelmed
-  [472765] = true, -- Consumed Void
-  --[X]  = true,
-}
 local lastEnemyIdx, lastCloneIdx
 function MDT:GetEnemyInfoEnemyIdx()
   return lastEnemyIdx
@@ -543,9 +469,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
     local spellIds = {}
     -- Insert all spell IDs into the table
     for spellId in pairs(data.spells) do
-      if MDT:GetDB().devMode or not spellBlacklist[spellId] then
-        table.insert(spellIds, spellId)
-      end
+      table.insert(spellIds, spellId)
     end
     -- Sort the spell IDs
     table.sort(spellIds) -- Sort in numerical order
