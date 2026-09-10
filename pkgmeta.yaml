@@ -1,6 +1,7 @@
 manual-changelog: CHANGELOG.txt
 ignore:
   - README.md
+  - API.md
   - pkgmeta.yaml
   - cspell.json
   - AGENTS.md

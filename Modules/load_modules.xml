@@ -1,4 +1,4 @@
-﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='MainFrame.lua'/>
 	<Script file='MapView.lua'/>
 	<Script file='Presets.lua'/>
@@ -20,6 +20,7 @@
 	<Script file='LiveSession.lua'/>
 	<Script file='Maximize.lua'/>
 	<Script file='API.lua'/>
+	<Script file='EnemySearchAPI.lua'/>
 	<Script file='DungeonSelect.lua'/>
 	<Script file='Conflicts.lua'/>
 	<Script file='PrePatchWarning.lua'/>

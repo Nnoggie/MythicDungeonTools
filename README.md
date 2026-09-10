@@ -30,6 +30,10 @@ Mythic Dungeon Tools is a Mythic+ Dungeon Planner AddOn which helps you perfectl
 
 For dungeons of previous expansions use the [MDT Legacy Plugin](https://github.com/Nnoggie/MDT_Legacy)
 
+## AddOn API
+
+See [API.md](API.md) for dynamic enemy/spell metadata and navigation to MDT's enemy details.
+
 ## Slash Commands
 
 - /mythicdungeontools

@@ -90,6 +90,8 @@ function MDT:AttachCoreAPI()
     GetEnemyForces = function(...) return MDT:GetEnemyForces(...) end,
     GetDungeonName = function(...) return MDT:GetDungeonName(...) end,
     GetDungeonSublevels = function(...) return MDT:GetDungeonSublevels(...) end,
+    IterateEnemies = function(...) return MDT:IterateEnemies(...) end,
+    OpenEnemyInfo = function(...) return MDT:OpenEnemyInfo(...) end,
     OnMinimapVisibilityChanged = function(shown)
       local checkbox = MDT.main_frame and MDT.main_frame.minimapCheckbox
       if checkbox then checkbox:SetValue(shown) end

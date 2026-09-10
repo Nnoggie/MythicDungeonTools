@@ -455,6 +455,10 @@ local spellBlacklist = {
   --[X]  = true,
 }
 local lastEnemyIdx, lastCloneIdx
+function MDT:GetEnemyInfoSpellBlacklist()
+  return spellBlacklist
+end
+
 function MDT:GetEnemyInfoEnemyIdx()
   return lastEnemyIdx
 end
