@@ -32,7 +32,26 @@ For dungeons of previous expansions use the [MDT Legacy Plugin](https://github.c
 
 ## AddOn API
 
-See [API.md](API.md) for dynamic enemy/spell metadata and navigation to MDT's enemy details.
+Search addons can read enemy names and spell IDs, then open an enemy's details:
+
+```lua
+local API = MythicDungeonToolsAPI
+local enemies = API and API.IterateEnemies and API:IterateEnemies() -- optional dungeon index
+if enemies then
+  for enemy in enemies do
+    -- enemy: dungeonIndex, dungeonName, npcID, name, englishName, isBoss, spellIDs
+    -- Store matches and call this when the player selects one:
+    -- API:OpenEnemyInfo(enemy.dungeonIndex, enemy.npcID)
+  end
+end
+```
+
+Names are localized. Records are copies; spell IDs follow the enemy-info blacklist.
+Iteration loads the UI addon but does not open its window. Start a new iterator
+when rebuilding results; iteration order is unspecified.
+`OpenEnemyInfo` returns `true` when queued, or `nil` when unavailable. It opens
+MDT if needed and selects the creature. During initialization, the latest selection
+wins. Navigation is skipped in combat or restricted environments.
 
 ## Slash Commands
 

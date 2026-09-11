@@ -210,27 +210,16 @@ function MDT:GetDungeonSublevels(...)
   return callUI("GetDungeonSublevels", ...)
 end
 
--- Explicit reads may load the UI addon (which owns dungeon data), but do not
--- initialize or show the main window. Do not load it for a cold combat query.
-local function validEnemySearchID(value)
-  return not issecretvalue(value) and type(value) == "number" and value > 0 and value < math.huge and value == math.floor(value)
-end
-
 function API:IterateEnemies(dungeonIndex)
-  if issecretvalue(dungeonIndex) or (dungeonIndex ~= nil and not validEnemySearchID(dungeonIndex)) then return nil, "INVALID_ARGUMENT" end
-  if not isUILoaded() and InCombatLockdown() then return nil, "COMBAT" end
-  local iterator, reason = callUI("IterateEnemies", dungeonIndex)
-  if not iterator then return nil, reason or "UI_UNAVAILABLE" end
-  return iterator
+  if issecretvalue(dungeonIndex) or (dungeonIndex ~= nil and type(dungeonIndex) ~= "number") then return end
+  if not isUILoaded() and InCombatLockdown() then return end
+  return callUI("IterateEnemies", dungeonIndex)
 end
 
-function API:OpenEnemyInfo(dungeonIndex, npcID, onComplete)
-  if not validEnemySearchID(dungeonIndex) or not validEnemySearchID(npcID)
-      or (onComplete ~= nil and type(onComplete) ~= "function") then return false, "INVALID_ARGUMENT" end
-  if InCombatLockdown() then return false, "COMBAT" end
-  local accepted, reason = callUI("OpenEnemyInfo", dungeonIndex, npcID, onComplete)
-  if not accepted then return false, reason or "UI_UNAVAILABLE" end
-  return true
+function API:OpenEnemyInfo(dungeonIndex, npcID)
+  if issecretvalue(dungeonIndex) or issecretvalue(npcID) then return end
+  if type(dungeonIndex) ~= "number" or type(npcID) ~= "number" or InCombatLockdown() then return end
+  return callUI("OpenEnemyInfo", dungeonIndex, npcID)
 end
 
 MDT:ExportAPI("ShowInterface")

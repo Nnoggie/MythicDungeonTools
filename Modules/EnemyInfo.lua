@@ -455,10 +455,6 @@ local spellBlacklist = {
   --[X]  = true,
 }
 local lastEnemyIdx, lastCloneIdx
-function MDT:GetEnemyInfoSpellBlacklist()
-  return spellBlacklist
-end
-
 function MDT:GetEnemyInfoEnemyIdx()
   return lastEnemyIdx
 end
@@ -626,4 +622,78 @@ function MDT:ShowEnemyInfoFrame(blip)
   MDT.EnemyInfoFrame = MDT.EnemyInfoFrame or MakeEnemeyInfoFrame()
   MDT:UpdateEnemyInfoFrame(blip.enemyIdx, blip.cloneIdx)
   MDT.EnemyInfoFrame:Show()
+end
+
+--- Returns copied search metadata, one enemy at a time. Order is unspecified.
+function MDT:IterateEnemies(dungeonIndex)
+  return coroutine.wrap(function()
+    for index, enemies in pairs(self.dungeonEnemies) do
+      if not dungeonIndex or index == dungeonIndex then
+        for _, enemy in pairs(enemies) do
+          if enemy.clones and next(enemy.clones) then
+            local spellIDs = {}
+            for spellID in pairs(enemy.spells or {}) do
+              if self:GetDB().devMode or not spellBlacklist[spellID] then
+                spellIDs[#spellIDs + 1] = spellID
+              end
+            end
+            coroutine.yield({
+              dungeonIndex = index,
+              dungeonName = self:GetDungeonName(index),
+              npcID = enemy.id,
+              name = L[enemy.name],
+              englishName = enemy.name,
+              isBoss = enemy.isBoss == true,
+              spellIDs = spellIDs,
+            })
+          end
+        end
+      end
+    end
+  end)
+end
+
+local function findEnemy(dungeonIndex, npcID)
+  for enemyIndex, enemy in pairs(MDT.dungeonEnemies[dungeonIndex] or {}) do
+    if enemy.id == npcID and enemy.clones then
+      local cloneIndex = next(enemy.clones)
+      if cloneIndex then return enemyIndex, cloneIndex end
+    end
+  end
+end
+
+local pendingEnemy, waitingForFrames
+local function openPendingEnemy()
+  MDT:Async(function()
+    local target = pendingEnemy
+    pendingEnemy = nil
+    if not target or InCombatLockdown() or MDT:IsInRestrictedEnvironment() then return end
+    if not findEnemy(target.dungeonIndex, target.npcID) then return end
+    MDT:ShowInterfaceInternal(true)
+    MDT:SetCurrentSection("maps")
+    MDT:SetDungeonList(nil, target.dungeonIndex)
+    MDT:UpdateToDungeon(target.dungeonIndex)
+    local enemyIndex, cloneIndex = findEnemy(target.dungeonIndex, target.npcID)
+    if not enemyIndex or InCombatLockdown() or MDT:IsInRestrictedEnvironment() then return end
+    MDT:UpdateDungeonDropDown()
+    MDT:ShowEnemyInfoFrame({ enemyIdx = enemyIndex, cloneIdx = cloneIndex })
+  end, "openEnemyInfo", true)
+end
+
+function MDT:OpenEnemyInfo(dungeonIndex, npcID)
+  if InCombatLockdown() or self:IsInRestrictedEnvironment() then return end
+  if not self:IsCompatibleVersion() or self:CheckAddonConflicts() then return end
+  if not findEnemy(dungeonIndex, npcID) then return end
+  pendingEnemy = { dungeonIndex = dungeonIndex, npcID = npcID }
+  if self:AreFramesInitialized() then
+    openPendingEnemy()
+  elseif not waitingForFrames then
+    waitingForFrames = true
+    self:RunAfterFramesInitialized(function()
+      waitingForFrames = nil
+      openPendingEnemy()
+    end)
+    self:ShowInterface(true)
+  end
+  return true
 end
