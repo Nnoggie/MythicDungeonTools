@@ -438,7 +438,9 @@ local function onCommReceived(self, prefix, message, distribution, sender)
   if prefix == MDT.versionCheckPrefix then
     if message == "R" and distribution == "PARTY" then
       local version = C_AddOns.GetAddOnMetadata(addonName, "Version")
-      self:SendCommMessage(prefix, "V"..version, "PARTY", nil, "ALERT")
+      -- Older clients must not treat prereleases as stable updates.
+      local responsePrefix = version:find("-", 1, true) and "P" or "V"
+      self:SendCommMessage(prefix, responsePrefix..version, "PARTY", nil, "ALERT")
       return
     end
   end

@@ -5,6 +5,7 @@ local MDTcommsObject = MDT.commsObject
 local versionCheckPrefix = MDT.versionCheckPrefix
 local versionCheckRequest = "R"
 local versionCheckResponsePrefix = "V"
+local prereleaseResponsePrefix = "P"
 local changeLogRequestPrefix = "C"
 local changeLogHeaderPrefix = "H"
 local changeLogNotePrefix = "N"
@@ -55,22 +56,36 @@ local function sendVersionCheckComm(message)
 end
 
 local function parseVersion(version)
+  local release, suffix = version:lower():match("^v?(%d[%d%.]*)(.*)$")
+  if not release or release:find("..", 1, true) or release:sub(-1) == "." then return end
   local parts = {}
-  for part in version:gmatch("%d+") do
+  for part in release:gmatch("%d+") do
     parts[#parts + 1] = tonumber(part)
   end
-  return parts
+  return parts, suffix
 end
 
+local prereleaseOrder = { alpha = 1, beta = 2, rc = 3 }
+local _, currentSuffix = parseVersion(currentVersion)
+
 local function compareVersions(a, b)
-  a = parseVersion(a)
-  b = parseVersion(b)
-  for i = 1, 4 do
-    if (a[i] or 0) ~= (b[i] or 0) then
-      return (a[i] or 0) > (b[i] or 0)
+  local aParts, aSuffix = parseVersion(a)
+  local bParts, bSuffix = parseVersion(b)
+  if not aParts or not bParts then return false end
+  for i = 1, math.max(#aParts, #bParts) do
+    if (aParts[i] or 0) ~= (bParts[i] or 0) then
+      return (aParts[i] or 0) > (bParts[i] or 0)
     end
   end
-  return false
+  if aSuffix == bSuffix then return false end
+  if aSuffix == "" then return true end
+  if bSuffix == "" then return false end
+  local aStage, aNumber = aSuffix:match("^%-(%a+)[%.%-]?(%d*)$")
+  local bStage, bNumber = bSuffix:match("^%-(%a+)[%.%-]?(%d*)$")
+  if aStage ~= bStage then
+    return (prereleaseOrder[aStage] or 0) > (prereleaseOrder[bStage] or 0)
+  end
+  return (tonumber(aNumber) or 0) > (tonumber(bNumber) or 0)
 end
 
 local function getOutdatedType()
@@ -90,7 +105,8 @@ local function recordVersion(version, sender)
   if sender then
     reportedVersions[sender] = version
   end
-  if compareVersions(version, latestVersion) then
+  local _, suffix = parseVersion(version)
+  if (currentSuffix ~= "" or suffix == "") and compareVersions(version, latestVersion) then
     latestVersion = version
   end
   MDT:UpdateVersionCheckDisplay()
@@ -171,7 +187,8 @@ function MDT:VersionCheck_OnCommReceived(message, distribution, sender)
 
   if message == versionCheckRequest then
     lastVersionRequestAt = GetTime()
-    sendVersionCheckComm(versionCheckResponsePrefix..currentVersion)
+    local responsePrefix = currentSuffix == "" and versionCheckResponsePrefix or prereleaseResponsePrefix
+    sendVersionCheckComm(responsePrefix..currentVersion)
     return
   end
 
@@ -214,7 +231,7 @@ function MDT:VersionCheck_OnCommReceived(message, distribution, sender)
     return
   end
 
-  if message:sub(1, 1) == versionCheckResponsePrefix then
+  if message:sub(1, 1) == versionCheckResponsePrefix or message:sub(1, 1) == prereleaseResponsePrefix then
     recordVersion(message:sub(2), sender)
   end
 end
