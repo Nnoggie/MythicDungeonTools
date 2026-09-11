@@ -502,7 +502,7 @@ local function deleteNoteObj(note)
 end
 
 local function makeNoteEditbox()
-  local editbox = AceGUI:Create("SimpleGroup")
+  local editbox = MDT:CreateWidget("SimpleGroup")
   editbox.frame:SetParent(MDT.main_frame)
   editbox:SetWidth(240)
   editbox:SetHeight(120)
@@ -513,7 +513,7 @@ local function makeNoteEditbox()
   end
   editbox.frame:SetBackdropColor(unpack(MDT.BackdropColor))
   editbox:SetLayout("Flow")
-  editbox.multiBox = AceGUI:Create("MultiLineEditBox")
+  editbox.multiBox = MDT:CreateWidget("MultiLineEditBox")
   editbox.multiBox:SetLabel(L["Note Text:"])
 
   editbox.multiBox:SetCallback("OnEnterPressed", function(widget, callbackName, text)

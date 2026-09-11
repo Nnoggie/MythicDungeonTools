@@ -1,7 +1,6 @@
 local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
-local AceGUI = LibStub("AceGUI-3.0")
 
 local versionCheckPrefix = MDT.versionCheckPrefix
 local versionCheckRequest = "R"
@@ -305,7 +304,7 @@ end
 local function createVersionCheckTabButton(parent, tab, text, tabIndex)
   local width = parent:GetWidth() / 3
   local xOffset = 10 + ((tabIndex - 1) * width)
-  local button = AceGUI:Create("Button")
+  local button = MDT:CreateWidget("Button")
   button.frame:SetParent(parent)
   button:SetWidth(width)
   button:SetHeight(22)
@@ -459,7 +458,7 @@ local function createVersionCheckFrame()
   })
   downloadFrame:Hide()
 
-  local reportVersionsButton = AceGUI:Create("Button")
+  local reportVersionsButton = MDT:CreateWidget("Button")
   reportVersionsButton.frame:SetParent(f)
   reportVersionsButton:SetWidth(230)
   reportVersionsButton:SetHeight(22)
@@ -476,6 +475,7 @@ local function createVersionCheckFrame()
   f.slider = slider
   setActiveVersionCheckTab(f, f.activeTab)
 
+  MDT:RegisterFontFrame(f)
   return f
 end
 

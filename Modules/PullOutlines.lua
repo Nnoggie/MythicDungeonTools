@@ -177,6 +177,7 @@ local function getFontString()
     local font = GameFontNormalMed3Outline
     fs:SetFontObject(font)
     fsFrame.fs = fs
+    MDT:RegisterFontFrame(fsFrame)
     return fsFrame
   else
     local fsFrame = fontStringPool[size]

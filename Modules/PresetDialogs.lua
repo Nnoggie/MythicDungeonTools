@@ -90,7 +90,7 @@ end
 
 function MDT:MakePresetImportFrame(frame)
   initializeDB()
-  frame.presetImportFrame = AceGUI:Create("Frame")
+  frame.presetImportFrame = MDT:CreateWidget("Frame")
   frame.presetImportFrame.frame:SetParent(frame)
   frame.presetImportFrame.frame:SetFrameStrata("DIALOG")
   frame.presetImportFrame:SetTitle(L["Import Preset"])
@@ -107,13 +107,13 @@ function MDT:MakePresetImportFrame(frame)
   end)
   frame.presetImportFrame.statustext:GetParent():Hide()
 
-  frame.presetImportLabel = AceGUI:Create("Label")
+  frame.presetImportLabel = MDT:CreateWidget("Label")
   frame.presetImportLabel:SetText(nil)
   frame.presetImportLabel:SetWidth(390)
   frame.presetImportLabel:SetColor(1, 0, 0)
 
   local importString = ""
-  frame.presetImportBox = AceGUI:Create("EditBox")
+  frame.presetImportBox = MDT:CreateWidget("EditBox")
   local editbox = frame.presetImportBox
   editbox:SetLabel(L["Import Preset"]..":")
   editbox:SetWidth(255)
@@ -167,7 +167,7 @@ function MDT:MakePresetImportFrame(frame)
   end);
   frame.presetImportFrame:AddChild(frame.presetImportBox)
 
-  local importButton = AceGUI:Create("Button")
+  local importButton = MDT:CreateWidget("Button")
   importButton:SetText(L["Import"])
   importButton:SetWidth(100)
   importButton:SetCallback("OnClick", function()
@@ -191,7 +191,7 @@ function MDT:MakePresetImportFrame(frame)
   frame.presetImportFrame:AddChild(importButton)
   frame.presetImportFrame:AddChild(frame.presetImportLabel)
   if db.devMode then
-    local inspectButton = AceGUI:Create("Button")
+    local inspectButton = MDT:CreateWidget("Button")
     inspectButton:SetText("Inspect")
     inspectButton:SetWidth(100)
     inspectButton:SetCallback("OnClick", function()
@@ -209,7 +209,7 @@ end
 
 function MDT:MakePresetCreationFrame(frame)
   initializeDB()
-  frame.presetCreationFrame = AceGUI:Create("Frame")
+  frame.presetCreationFrame = MDT:CreateWidget("Frame")
   frame.presetCreationFrame.frame:SetParent(frame)
   frame.presetCreationFrame.frame:SetFrameStrata("DIALOG")
   frame.presetCreationFrame:SetTitle(L["New Preset"])
@@ -227,7 +227,7 @@ function MDT:MakePresetCreationFrame(frame)
   end)
   frame.presetCreationFrame.statustext:GetParent():Hide()
 
-  frame.PresetCreationEditbox = AceGUI:Create("EditBox")
+  frame.PresetCreationEditbox = MDT:CreateWidget("EditBox")
   frame.PresetCreationEditbox:SetLabel(L["Preset Name"]..":")
   frame.PresetCreationEditbox:SetWidth(255)
   frame.PresetCreationEditbox:SetCallback("OnTextChanged", function(widget, event, text)
@@ -251,7 +251,7 @@ function MDT:MakePresetCreationFrame(frame)
   end)
   frame.presetCreationFrame:AddChild(frame.PresetCreationEditbox)
 
-  frame.presetCreationCreateButton = AceGUI:Create("Button")
+  frame.presetCreationCreateButton = MDT:CreateWidget("Button")
   frame.presetCreationCreateButton:SetText(L["Create"])
   frame.presetCreationCreateButton:SetWidth(100)
   frame.presetCreationCreateButton:SetCallback("OnClick", function()
@@ -260,14 +260,14 @@ function MDT:MakePresetCreationFrame(frame)
   end)
   frame.presetCreationFrame:AddChild(frame.presetCreationCreateButton)
 
-  frame.presetCreationLabel = AceGUI:Create("Label")
+  frame.presetCreationLabel = MDT:CreateWidget("Label")
   frame.presetCreationLabel:SetText(nil)
   frame.presetCreationLabel:SetWidth(390)
   frame.presetCreationLabel:SetColor(1, 0, 0)
   frame.presetCreationFrame:AddChild(frame.presetCreationLabel)
 
 
-  frame.PresetCreationDropDown = AceGUI:Create("Dropdown")
+  frame.PresetCreationDropDown = MDT:CreateWidget("Dropdown")
   frame.PresetCreationDropDown:SetLabel(L["Use as a starting point:"])
   frame.PresetCreationDropDown.text:SetJustifyH("LEFT")
   frame.presetCreationFrame:AddChild(frame.PresetCreationDropDown)
@@ -276,7 +276,7 @@ function MDT:MakePresetCreationFrame(frame)
 end
 
 function MDT:MakeRenameFrame(frame)
-  frame.RenameFrame = AceGUI:Create("Frame")
+  frame.RenameFrame = MDT:CreateWidget("Frame")
   frame.RenameFrame.frame:SetParent(frame)
   frame.RenameFrame.frame:SetFrameStrata("DIALOG")
   frame.RenameFrame:SetTitle(L["Rename Preset"])
@@ -291,7 +291,7 @@ function MDT:MakeRenameFrame(frame)
   frame.RenameFrame:Hide()
 
   local renameText
-  frame.RenameFrame.Editbox = AceGUI:Create("EditBox")
+  frame.RenameFrame.Editbox = MDT:CreateWidget("EditBox")
   frame.RenameFrame.Editbox:SetLabel(L["Preset Name"]..":")
   frame.RenameFrame.Editbox:SetWidth(200)
   frame.RenameFrame.Editbox:SetCallback("OnTextChanged", function(widget, event, text)
@@ -318,12 +318,12 @@ function MDT:MakeRenameFrame(frame)
 
   frame.RenameFrame:AddChild(frame.RenameFrame.Editbox)
 
-  frame.RenameFrame.TakeOwnershipCheckbox = AceGUI:Create("CheckBox")
+  frame.RenameFrame.TakeOwnershipCheckbox = MDT:CreateWidget("CheckBox")
   frame.RenameFrame.TakeOwnershipCheckbox:SetLabel(L["Mark as my route"])
   frame.RenameFrame.TakeOwnershipCheckbox:SetWidth(200)
   frame.RenameFrame:AddChild(frame.RenameFrame.TakeOwnershipCheckbox)
 
-  frame.RenameFrame.RenameButton = AceGUI:Create("Button")
+  frame.RenameFrame.RenameButton = MDT:CreateWidget("Button")
   frame.RenameFrame.RenameButton:SetText(L["Rename"])
   frame.RenameFrame.RenameButton:SetWidth(100)
   frame.RenameFrame.RenameButton:SetCallback("OnClick", function()
@@ -331,7 +331,7 @@ function MDT:MakeRenameFrame(frame)
   end)
   frame.RenameFrame:AddChild(frame.RenameFrame.RenameButton)
 
-  frame.RenameFrame.PresetRenameLabel = AceGUI:Create("Label")
+  frame.RenameFrame.PresetRenameLabel = MDT:CreateWidget("Label")
   frame.RenameFrame.PresetRenameLabel:SetText(nil)
   frame.RenameFrame.PresetRenameLabel:SetWidth(390)
   frame.RenameFrame.PresetRenameLabel:SetColor(1, 0, 0)
@@ -340,7 +340,7 @@ end
 
 ---Creates the frame used to export presets to a string which can be uploaded to text sharing websites like pastebin
 function MDT:MakeExportFrame(frame)
-  frame.ExportFrame = AceGUI:Create("Frame")
+  frame.ExportFrame = MDT:CreateWidget("Frame")
   frame.ExportFrame.frame:SetParent(frame)
   frame.ExportFrame.frame:SetFrameStrata("DIALOG")
   frame.ExportFrame:SetTitle(L["Export"])
@@ -351,7 +351,7 @@ function MDT:MakeExportFrame(frame)
   frame.ExportFrame:SetCallback("OnClose", function(widget)
     frame.ExportFrame.statustext:GetParent():Hide()
   end)
-  frame.ExportFrameEditbox = AceGUI:Create("MultiLineEditBox")
+  frame.ExportFrameEditbox = MDT:CreateWidget("MultiLineEditBox")
   frame.ExportFrameEditbox:SetWidth(600)
   frame.ExportFrameEditbox:DisableButton(true)
   frame.ExportFrameEditbox:SetNumLines(20)
@@ -379,7 +379,7 @@ function MDT:MakeExportFrame(frame)
     end
   end);
 
-  frame.ExportFrameSelectAllButton = AceGUI:Create("Button")
+  frame.ExportFrameSelectAllButton = MDT:CreateWidget("Button")
   selectAllButton = frame.ExportFrameSelectAllButton
   selectAllButton:SetText(L["Select all"])
   selectAllButton:SetHeight(40)
@@ -397,7 +397,7 @@ end
 ---Creates the delete confirmation dialog that pops up when a user wants to delete a preset
 function MDT:MakeDeleteConfirmationFrame(frame)
   initializeDB()
-  frame.DeleteConfirmationFrame = AceGUI:Create("Frame")
+  frame.DeleteConfirmationFrame = MDT:CreateWidget("Frame")
   frame.DeleteConfirmationFrame.frame:SetParent(frame)
   frame.DeleteConfirmationFrame.frame:SetFrameStrata("DIALOG")
   frame.DeleteConfirmationFrame:SetTitle(L["Delete Preset"])
@@ -410,20 +410,20 @@ function MDT:MakeDeleteConfirmationFrame(frame)
   end)
   frame.DeleteConfirmationFrame.statustext:GetParent():Hide()
 
-  frame.DeleteConfirmationFrame.label = AceGUI:Create("Label")
+  frame.DeleteConfirmationFrame.label = MDT:CreateWidget("Label")
   frame.DeleteConfirmationFrame.label:SetWidth(390)
   frame.DeleteConfirmationFrame.label:SetHeight(10)
   --frame.DeleteConfirmationFrame.label:SetColor(1,0,0)
   frame.DeleteConfirmationFrame:AddChild(frame.DeleteConfirmationFrame.label)
 
-  frame.DeleteConfirmationFrame.OkayButton = AceGUI:Create("Button")
+  frame.DeleteConfirmationFrame.OkayButton = MDT:CreateWidget("Button")
   frame.DeleteConfirmationFrame.OkayButton:SetText(L["Delete"])
   frame.DeleteConfirmationFrame.OkayButton:SetWidth(100)
   frame.DeleteConfirmationFrame.OkayButton:SetCallback("OnClick", function()
     MDT:DeletePreset(db.currentPreset[db.currentDungeonIdx])
     frame.DeleteConfirmationFrame:Hide()
   end)
-  frame.DeleteConfirmationFrame.CancelButton = AceGUI:Create("Button")
+  frame.DeleteConfirmationFrame.CancelButton = MDT:CreateWidget("Button")
   frame.DeleteConfirmationFrame.CancelButton:SetText(L["Cancel"])
   frame.DeleteConfirmationFrame.CancelButton:SetWidth(100)
   frame.DeleteConfirmationFrame.CancelButton:SetCallback("OnClick", function()
@@ -437,7 +437,7 @@ end
 
 ---Creates the clear confirmation dialog that pops up when a user wants to clear a preset
 function MDT:MakeClearConfirmationFrame(frame)
-  frame.ClearConfirmationFrame = AceGUI:Create("Frame")
+  frame.ClearConfirmationFrame = MDT:CreateWidget("Frame")
   frame.ClearConfirmationFrame.frame:SetParent(frame)
   frame.ClearConfirmationFrame.frame:SetFrameStrata("DIALOG")
   frame.ClearConfirmationFrame:SetTitle(L["Reset Preset"])
@@ -450,13 +450,13 @@ function MDT:MakeClearConfirmationFrame(frame)
   end)
   frame.ClearConfirmationFrame.statustext:GetParent():Hide()
 
-  frame.ClearConfirmationFrame.label = AceGUI:Create("Label")
+  frame.ClearConfirmationFrame.label = MDT:CreateWidget("Label")
   frame.ClearConfirmationFrame.label:SetWidth(390)
   frame.ClearConfirmationFrame.label:SetHeight(10)
   --frame.DeleteConfirmationFrame.label:SetColor(1,0,0)
   frame.ClearConfirmationFrame:AddChild(frame.ClearConfirmationFrame.label)
 
-  frame.ClearConfirmationFrame.OkayButton = AceGUI:Create("Button")
+  frame.ClearConfirmationFrame.OkayButton = MDT:CreateWidget("Button")
   frame.ClearConfirmationFrame.OkayButton:SetText(L["Reset"])
   frame.ClearConfirmationFrame.OkayButton:SetWidth(100)
   frame.ClearConfirmationFrame.OkayButton:SetCallback("OnClick", function()
@@ -467,7 +467,7 @@ function MDT:MakeClearConfirmationFrame(frame)
     end
     frame.ClearConfirmationFrame:Hide()
   end)
-  frame.ClearConfirmationFrame.CancelButton = AceGUI:Create("Button")
+  frame.ClearConfirmationFrame.CancelButton = MDT:CreateWidget("Button")
   frame.ClearConfirmationFrame.CancelButton:SetText(L["Cancel"])
   frame.ClearConfirmationFrame.CancelButton:SetWidth(100)
   frame.ClearConfirmationFrame.CancelButton:SetCallback("OnClick", function()
@@ -510,12 +510,12 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
   end
   if not f then
     if MDT.main_frame then
-      MDT.main_frame.ConfirmationFrame = AceGUI:Create("Frame")
+      MDT.main_frame.ConfirmationFrame = MDT:CreateWidget("Frame")
       MDT.main_frame.ConfirmationFrame.frame:SetParent(MDT.main_frame)
       MDT.main_frame.ConfirmationFrame.frame:SetFrameStrata("DIALOG")
       f = MDT.main_frame.ConfirmationFrame
     else
-      MDT.tempConfirmationFrame = AceGUI:Create("Frame")
+      MDT.tempConfirmationFrame = MDT:CreateWidget("Frame")
       f = MDT.tempConfirmationFrame
     end
     f:EnableResize(false)
@@ -524,20 +524,20 @@ function MDT:OpenConfirmationFrame(width, height, title, buttonText, prompt, cal
     end)
     f.statustext:GetParent():Hide()
 
-    f.label = AceGUI:Create("Label")
+    f.label = MDT:CreateWidget("Label")
     f.label:SetWidth(390)
     f.label:SetHeight(height - 20)
     f:AddChild(f.label)
 
-    f.CheckBox = AceGUI:Create("CheckBox")
+    f.CheckBox = MDT:CreateWidget("CheckBox")
     f.CheckBox:SetWidth(390)
     f.CheckBox.frame:Hide()
 
-    f.OkayButton = AceGUI:Create("Button")
+    f.OkayButton = MDT:CreateWidget("Button")
     f.OkayButton:SetWidth(100)
     f:AddChild(f.OkayButton)
 
-    f.CancelButton = AceGUI:Create("Button")
+    f.CancelButton = MDT:CreateWidget("Button")
     f.CancelButton:SetText(L["Cancel"])
     f.CancelButton:SetWidth(100)
     f.CancelButton:SetCallback("OnClick", function()

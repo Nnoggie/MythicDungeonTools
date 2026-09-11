@@ -1,7 +1,6 @@
 local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
-local AceGUI = LibStub("AceGUI-3.0")
 
 local MACRO_NAME = "MDTFocusMarker"
 local MACRO_CONDITIONALS = "[@mouseover,exists,nodead][]"
@@ -312,6 +311,7 @@ local function getNotificationFrame()
 
   frame:Hide()
   notificationFrame = frame
+  MDT:RegisterFontFrame(frame)
   return frame
 end
 
@@ -1081,7 +1081,7 @@ refreshAssignmentsFrame = function()
 end
 
 local function addCheckbox(frame, label, value, onChanged)
-  local checkbox = AceGUI:Create("CheckBox")
+  local checkbox = MDT:CreateWidget("CheckBox")
   checkbox:SetLabel(label)
   checkbox:SetFullWidth(true)
   checkbox:SetValue(value)
@@ -1092,7 +1092,7 @@ local function addCheckbox(frame, label, value, onChanged)
 end
 
 local function addButton(frame, text, width, onClick)
-  local button = AceGUI:Create("Button")
+  local button = MDT:CreateWidget("Button")
   button:SetWidth(width)
   button:SetText(text)
   button:SetCallback("OnClick", onClick)
@@ -1210,7 +1210,7 @@ local function createAssignmentsFrame()
   local mainFrame = MDT.main_frame
   local contentParent = mainFrame.sectionContentFrames and mainFrame.sectionContentFrames.marks or mainFrame
 
-  local frame = AceGUI:Create("SimpleGroup")
+  local frame = MDT:CreateWidget("SimpleGroup")
   frame.frame:SetParent(contentParent)
   frame.frame:SetFrameStrata("HIGH")
   frame.frame:SetFrameLevel(3)
@@ -1260,13 +1260,13 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   end
   frame:ReleaseChildren()
 
-  local assignmentsHeading = AceGUI:Create("Heading")
+  local assignmentsHeading = MDT:CreateWidget("Heading")
   assignmentsHeading:SetText(L["Focus Marker Assignments"])
   assignmentsHeading:SetFullWidth(true)
   frame:AddChild(assignmentsHeading)
 
   local assignmentsDescriptionHeight = 36
-  local assignmentsDescription = AceGUI:Create("Label")
+  local assignmentsDescription = MDT:CreateWidget("Label")
   assignmentsDescription:SetText(L["focusMarkerAssignmentsTooltip"])
   assignmentsDescription:SetFullWidth(true)
   assignmentsDescription:SetColor(0.82, 0.82, 0.82)
@@ -1278,17 +1278,17 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
 
   for index = 1, rowCount do
     local player = roster[index]
-    local row = AceGUI:Create("SimpleGroup")
+    local row = MDT:CreateWidget("SimpleGroup")
     row:SetLayout("Flow")
     row:SetFullWidth(true)
     row:SetHeight(28)
 
-    local name = AceGUI:Create("Label")
+    local name = MDT:CreateWidget("Label")
     name:SetWidth(rosterNameWidth)
     name:SetText(player and player.displayName or L["No player"])
     row:AddChild(name)
 
-    local marker = AceGUI:Create("Button")
+    local marker = MDT:CreateWidget("Button")
     marker:SetWidth(markerButtonWidth)
     if player then
       setButtonMarker(marker, assignments[player.fullName], assignmentKnown[player.fullName])
@@ -1304,7 +1304,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     frame:AddChild(row)
   end
 
-  local buttons = AceGUI:Create("SimpleGroup")
+  local buttons = MDT:CreateWidget("SimpleGroup")
   buttons:SetLayout("Flow")
   buttons:SetFullWidth(true)
   buttons:SetHeight(36)
@@ -1359,7 +1359,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     updateMacroPreview()
   end)
 
-  local macroCheckbox = AceGUI:Create("CheckBox")
+  local macroCheckbox = MDT:CreateWidget("CheckBox")
   macroCheckbox:SetLabel(L["Use macro instead of keybind"])
   macroCheckbox:SetFullWidth(true)
   macroCheckbox:SetValue(settings.useMacro)
@@ -1412,7 +1412,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   local targetMarkerCheckboxHeight = 24
   local macroPreviewHeight = 85
   local extraSettingsHeight = targetMarkerCheckboxHeight + macroPreviewHeight
-  macroPreview = AceGUI:Create("MultiLineEditBox")
+  macroPreview = MDT:CreateWidget("MultiLineEditBox")
   macroPreview:SetLabel(L["Macro Preview:"])
   macroPreview:SetFullWidth(true)
   macroPreview:SetNumLines(4)
@@ -1431,7 +1431,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     warningText = manualChangeNeedsSyncText()
   end
   if warningText then
-    local warning = AceGUI:Create("Label")
+    local warning = MDT:CreateWidget("Label")
     warning:SetFullWidth(true)
     warning:SetText("|cffffd100"..warningText.."|r")
     frame:AddChild(warning)

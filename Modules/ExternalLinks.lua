@@ -35,8 +35,8 @@ function MDT:CreateCopyableLinkRow(parent, name, url, options)
   local copyHelperY = options.copyHelperY or 0
   local editBoxText = url
 
-  local editBox = AceGUI:Create("EditBox")
-  local copyButton = AceGUI:Create("Button")
+  local editBox = MDT:CreateWidget("EditBox")
+  local copyButton = MDT:CreateWidget("Button")
   local row = {
     editBox = editBox,
     copyButton = copyButton,
@@ -114,7 +114,7 @@ function MDT:CreateCopyableLinkRow(parent, name, url, options)
 end
 
 function MDT:CreateExternalLinkButtons(frame)
-  local externalButtonGroup = AceGUI:Create("SimpleGroup")
+  local externalButtonGroup = MDT:CreateWidget("SimpleGroup")
   MDT:FixAceGUIShowHide(externalButtonGroup, frame)
   externalButtonGroup.frame:ClearAllPoints()
   externalButtonGroup.frame:SetParent(frame.bottomPanel)
@@ -131,7 +131,7 @@ function MDT:CreateExternalLinkButtons(frame)
   frame.externalButtonGroup = externalButtonGroup
 
   for _, dest in ipairs(MDT.externalLinks) do
-    local button = AceGUI:Create("Icon")
+    local button = MDT:CreateWidget("Icon")
     button:SetImage(unpack(dest.texture))
     button:SetCallback("OnClick", function()
       MDT:ShowExternalLinkCopyFrame(dest)

@@ -58,6 +58,7 @@ local function layoutAlphaWatermark(frame)
   for i = labelIndex + 1, #labels do
     labels[i]:Hide()
   end
+  MDT:RegisterFontFrame(frame)
 end
 
 local function createAlphaWarning(frame)
@@ -109,6 +110,7 @@ local function createAlphaWarning(frame)
   warning.linkRow.editBox.label:SetTextColor(1, 1, 1)
 
   frame.alphaWarningFrame = warning
+  MDT:RegisterFontFrame(warning)
   frame:HookScript("OnShow", function()
     layoutAlphaWatermark(frame.mapPanelFrame)
     warning:Show()

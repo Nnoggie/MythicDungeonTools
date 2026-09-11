@@ -212,6 +212,7 @@ function MDT:UpdateDungeonDropDown()
       button.shortText:SetPoint("BOTTOM", button, "BOTTOM", 0, 2)
       button.shortText:SetFont(button.shortText:GetFont(), 9, "OUTLINE")
       button.shortText:SetTextColor(1, 1, 1)
+      MDT:RegisterFontFrame(button)
       button:SetScript("OnLeave", function()
         GameTooltip:Hide()
       end)
@@ -273,7 +274,7 @@ end
 --for old maps that need it
 function MDT:CreateSublevelDropdown(frame)
   db = MDT:GetDB()
-  frame.sublevelSelectionGroup = AceGUI:Create("SimpleGroup")
+  frame.sublevelSelectionGroup = MDT:CreateWidget("SimpleGroup")
   frame.sublevelSelectionGroup.frame:SetParent(frame)
   local group = frame.sublevelSelectionGroup
   group.frame:Hide()
@@ -293,7 +294,7 @@ function MDT:CreateSublevelDropdown(frame)
   -- MDT:FixAceGUIShowHide(group)
 
   ---@diagnostic disable-next-line: inject-field
-  group.sublevelDropdown = AceGUI:Create("Dropdown")
+  group.sublevelDropdown = MDT:CreateWidget("Dropdown")
   ---@diagnostic disable-next-line: undefined-field
   group.sublevelDropdown.pullout.frame:SetParent(group.sublevelDropdown.frame)
   ---@diagnostic disable-next-line: undefined-field
@@ -334,7 +335,7 @@ function MDT:CreateSeasonDropdown(frame)
     return
   end
   db = MDT:GetDB()
-  frame.seasonSelectionGroup = AceGUI:Create("SimpleGroup")
+  frame.seasonSelectionGroup = MDT:CreateWidget("SimpleGroup")
   frame.seasonSelectionGroup.frame:SetParent(frame)
   local group = frame.seasonSelectionGroup
   group.frame:Hide()
@@ -354,7 +355,7 @@ function MDT:CreateSeasonDropdown(frame)
   MDT:FixAceGUIShowHide(group)
 
   ---@diagnostic disable-next-line: inject-field
-  group.seasonDropdown = AceGUI:Create("Dropdown")
+  group.seasonDropdown = MDT:CreateWidget("Dropdown")
   ---@diagnostic disable-next-line: undefined-field
   group.seasonDropdown.pullout.frame:SetParent(group.seasonDropdown.frame)
   ---@diagnostic disable-next-line: undefined-field

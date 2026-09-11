@@ -3,8 +3,6 @@ local L = MDT.L
 local mainFrameStrata = "HIGH"
 local panelHeight = 30
 
-local AceGUI = LibStub("AceGUI-3.0")
-
 ---Dropdown menu items for color settings frame
 local colorPaletteNames = {
   [1] = L["Rainbow"],
@@ -89,7 +87,7 @@ function MDT:MakeCustomColorFrame(frame)
   --Base frame for custom palette setup
   if not frame.CustomColorFrame then
     local customColorParent = frame.settingsColorsColumn or frame
-    frame.CustomColorFrame = AceGUI:Create("InlineGroup")
+    frame.CustomColorFrame = MDT:CreateWidget("InlineGroup")
     frame.CustomColorFrame:SetTitle(L["Custom Color Palette"])
     frame.CustomColorFrame:SetWidth(frame.settingWidth or 250)
     frame.CustomColorFrame:SetLayout("Flow")
@@ -100,7 +98,7 @@ function MDT:MakeCustomColorFrame(frame)
   frame.CustomColorFrame.ColorPicker = {}
 
   --Slider to adjust number of different colors and remake the frame OnMouseUp
-  frame.CustomColorFrame.ColorSlider = AceGUI:Create("Slider")
+  frame.CustomColorFrame.ColorSlider = MDT:CreateWidget("Slider")
   frame.CustomColorFrame.ColorSlider:SetSliderValues(2, 20, 1)
   frame.CustomColorFrame.ColorSlider:SetLabel(L["Choose number of colors"])
   frame.CustomColorFrame.ColorSlider:SetRelativeWidth(1)
@@ -122,7 +120,7 @@ function MDT:MakeCustomColorFrame(frame)
 
   --Loop to create as many colorpickers as requested limited by db.colorPaletteInfo.numberCustomColors
   for i = 1, db.colorPaletteInfo.numberCustomColors do
-    frame.CustomColorFrame.ColorPicker[i] = AceGUI:Create("ColorPicker")
+    frame.CustomColorFrame.ColorPicker[i] = MDT:CreateWidget("ColorPicker")
     if db.colorPaletteInfo.customPaletteValues[i] then
       frame.CustomColorFrame.ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
         db.colorPaletteInfo.customPaletteValues[i][2], db.colorPaletteInfo.customPaletteValues[i][3])
@@ -153,15 +151,15 @@ function MDT:MakeSettingsFrame(frame)
   if not db then return end
 
   local parentFrame = frame.sectionContentFrames and frame.sectionContentFrames.settings or frame
-  frame.settingsFrame = AceGUI:Create("SimpleGroup")
+  frame.settingsFrame = MDT:CreateWidget("SimpleGroup")
   frame.settingsFrame.frame:SetParent(parentFrame)
   frame.settingsFrame.frame:SetFrameStrata(mainFrameStrata)
   frame.settingsFrame.frame:SetFrameLevel(3)
   local columnWidth = 325
   local columnGap = 36
-  local columnHeight = 450
+  local columnHeight = 600
   local frameWidth = (columnWidth * 2) + columnGap
-  local settingWidth = columnWidth - 10
+  local settingWidth = columnWidth - 30
   frame.settingsFrame:SetWidth(frameWidth)
   frame.settingsFrame:SetHeight(columnHeight)
   frame.settingsFrame:SetAutoAdjustHeight(false)
@@ -170,15 +168,15 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsFrame.frame:ClearAllPoints()
   frame.settingsFrame.frame:SetPoint("TOP", parentFrame, "TOP", 0, -(panelHeight + 15))
 
-  local function createSettingsColumn(point, relativeTo, relativePoint, xOffset)
-    local column = AceGUI:Create("SimpleGroup")
+  local function createSettingsColumn(point, relativeTo, relativePoint, xOffset, scrollable)
+    local column = MDT:CreateWidget(scrollable and "ScrollFrame" or "SimpleGroup")
     column:SetParent(frame.settingsFrame)
     column.frame:SetFrameStrata(mainFrameStrata)
     column.frame:SetFrameLevel(frame.settingsFrame.frame:GetFrameLevel() + 1)
     column:SetWidth(columnWidth)
     column:SetHeight(columnHeight)
     column:SetLayout("Flow")
-    column:SetAutoAdjustHeight(false)
+    if not scrollable then column:SetAutoAdjustHeight(false) end
     column.alignoffset = 0
     column.frame:ClearAllPoints()
     column.frame:SetPoint(point, relativeTo, relativePoint, xOffset, 0)
@@ -186,16 +184,16 @@ function MDT:MakeSettingsFrame(frame)
     return column
   end
 
-  frame.settingsGeneralColumn = createSettingsColumn("TOPLEFT", frame.settingsFrame.content, "TOPLEFT", 0)
+  frame.settingsGeneralColumn = createSettingsColumn("TOPLEFT", frame.settingsFrame.content, "TOPLEFT", 0, true)
   frame.settingsColorsColumn = createSettingsColumn("TOPLEFT", frame.settingsGeneralColumn.frame, "TOPRIGHT", columnGap)
   frame.settingsFrame.settingsColorsColumn = frame.settingsColorsColumn
 
-  frame.settingsHeading = AceGUI:Create("Heading")
+  frame.settingsHeading = MDT:CreateWidget("Heading")
   frame.settingsHeading:SetText(L["General"])
   frame.settingsHeading:SetFullWidth(true)
   frame.settingsGeneralColumn:AddChild(frame.settingsHeading)
 
-  frame.minimapCheckbox = AceGUI:Create("CheckBox")
+  frame.minimapCheckbox = MDT:CreateWidget("CheckBox")
   frame.minimapCheckbox:SetLabel(L["Enable Minimap Button"])
   frame.minimapCheckbox:SetWidth(settingWidth)
   frame.minimapCheckbox:SetValue(not db.minimap.hide)
@@ -204,7 +202,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.minimapCheckbox)
 
-  frame.compartmentCheckbox = AceGUI:Create("CheckBox")
+  frame.compartmentCheckbox = MDT:CreateWidget("CheckBox")
   frame.compartmentCheckbox:SetLabel(L["Enable Compartment Button"])
   frame.compartmentCheckbox:SetWidth(settingWidth)
   frame.compartmentCheckbox:SetValue(not db.minimap.compartmentHide)
@@ -215,7 +213,7 @@ function MDT:MakeSettingsFrame(frame)
     frame.settingsGeneralColumn:AddChild(frame.compartmentCheckbox)
   end
 
-  frame.forcesCheckbox = AceGUI:Create("CheckBox")
+  frame.forcesCheckbox = MDT:CreateWidget("CheckBox")
   frame.forcesCheckbox:SetLabel(L["Use forces count"])
   frame.forcesCheckbox:SetWidth(settingWidth)
   frame.forcesCheckbox:SetValue(db.useForcesCount)
@@ -225,7 +223,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
 
-  frame.pullButtonHealthCheckbox = AceGUI:Create("CheckBox")
+  frame.pullButtonHealthCheckbox = MDT:CreateWidget("CheckBox")
   frame.pullButtonHealthCheckbox:SetLabel(L["Show pull health"])
   frame.pullButtonHealthCheckbox:SetWidth(settingWidth)
   frame.pullButtonHealthCheckbox:SetValue(db.showPullButtonHealth)
@@ -235,7 +233,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.pullButtonHealthCheckbox)
 
-  frame.autoPanToPullCheckbox = AceGUI:Create("CheckBox")
+  frame.autoPanToPullCheckbox = MDT:CreateWidget("CheckBox")
   frame.autoPanToPullCheckbox:SetLabel(L["Auto pan to selected pull"])
   frame.autoPanToPullCheckbox:SetWidth(settingWidth)
   frame.autoPanToPullCheckbox:SetValue(db.autoPanToPull ~= false)
@@ -244,7 +242,29 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.autoPanToPullCheckbox)
 
-  frame.enemyForcesTooltipDropdown = AceGUI:Create("Dropdown")
+  frame.fontDropdown = MDT:CreateWidget("Dropdown")
+  frame.fontDropdown:SetList(MDT:GetFontList())
+  frame.fontDropdown:SetLabel(L["Font"])
+  frame.fontDropdown:SetWidth(settingWidth)
+  frame.fontDropdown:SetValue(db.font)
+  frame.fontDropdown:SetCallback("OnValueChanged", function(_, _, value)
+    db.font = value
+    MDT:RefreshFonts()
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.fontDropdown)
+
+  frame.fontSizeSlider = MDT:CreateWidget("Slider")
+  frame.fontSizeSlider:SetLabel(L["Font Size"])
+  frame.fontSizeSlider:SetWidth(settingWidth)
+  frame.fontSizeSlider:SetSliderValues(5, 25, 1)
+  frame.fontSizeSlider:SetValue(db.fontSize)
+  frame.fontSizeSlider:SetCallback("OnValueChanged", function(_, _, value)
+    db.fontSize = math.max(5, math.min(25, value))
+    MDT:RefreshFonts()
+  end)
+  frame.settingsGeneralColumn:AddChild(frame.fontSizeSlider)
+
+  frame.enemyForcesTooltipDropdown = MDT:CreateWidget("Dropdown")
   frame.enemyForcesTooltipDropdown:SetList(enemyForcesTooltipOptions, enemyForcesTooltipOptionOrder)
   frame.enemyForcesTooltipDropdown:SetLabel(L["Enemy forces in tooltips"])
   frame.enemyForcesTooltipDropdown:SetWidth(settingWidth)
@@ -255,7 +275,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.enemyForcesTooltipDropdown)
 
-  frame.alwaysOverwriteRoutesByUIDCheckbox = AceGUI:Create("CheckBox")
+  frame.alwaysOverwriteRoutesByUIDCheckbox = MDT:CreateWidget("CheckBox")
   frame.alwaysOverwriteRoutesByUIDCheckbox:SetLabel(L["Always overwrite matching routes on import"])
   frame.alwaysOverwriteRoutesByUIDCheckbox:SetWidth(settingWidth)
   frame.alwaysOverwriteRoutesByUIDCheckbox:SetValue(db.alwaysOverwriteRoutesByUID)
@@ -264,7 +284,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.alwaysOverwriteRoutesByUIDCheckbox)
 
-  frame.muteXalatathVoiceLinesCheckbox = AceGUI:Create("CheckBox")
+  frame.muteXalatathVoiceLinesCheckbox = MDT:CreateWidget("CheckBox")
   frame.muteXalatathVoiceLinesCheckbox:SetLabel(L["Mute Xal'atath Voice Lines"])
   frame.muteXalatathVoiceLinesCheckbox:SetWidth(settingWidth)
   frame.muteXalatathVoiceLinesCheckbox:SetValue(db.muteXalatathVoiceLines == true)
@@ -276,7 +296,7 @@ function MDT:MakeSettingsFrame(frame)
     frame.settingsGeneralColumn:AddChild(frame.muteXalatathVoiceLinesCheckbox)
   end
 
-  frame.announceDungeonResetCheckbox = AceGUI:Create("CheckBox")
+  frame.announceDungeonResetCheckbox = MDT:CreateWidget("CheckBox")
   frame.announceDungeonResetCheckbox:SetLabel(L["announceDungeonReset"])
   frame.announceDungeonResetCheckbox:SetWidth(settingWidth)
   frame.announceDungeonResetCheckbox:SetValue(db.announceDungeonReset == true)
@@ -286,7 +306,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.announceDungeonResetCheckbox)
 
-  frame.fadeOutCheckbox = AceGUI:Create("CheckBox")
+  frame.fadeOutCheckbox = MDT:CreateWidget("CheckBox")
   frame.fadeOutCheckbox:SetLabel(L["Make window transparent in combat"])
   frame.fadeOutCheckbox:SetWidth(settingWidth)
   frame.fadeOutCheckbox:SetValue(db.fadeOutDuringCombat)
@@ -297,7 +317,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.fadeOutCheckbox)
 
-  frame.fadeOutAlphaSlider = AceGUI:Create("Slider")
+  frame.fadeOutAlphaSlider = MDT:CreateWidget("Slider")
   frame.fadeOutAlphaSlider:SetLabel(L["Combat Transparency"])
   frame.fadeOutAlphaSlider:SetWidth(settingWidth)
   frame.fadeOutAlphaSlider:SetSliderValues(0.1, 1.0, 0.1)
@@ -308,12 +328,12 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsGeneralColumn:AddChild(frame.fadeOutAlphaSlider)
 
-  frame.colorsHeading = AceGUI:Create("Heading")
+  frame.colorsHeading = MDT:CreateWidget("Heading")
   frame.colorsHeading:SetText(L["Colors"])
   frame.colorsHeading:SetFullWidth(true)
   frame.settingsColorsColumn:AddChild(frame.colorsHeading)
 
-  frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
+  frame.AutomaticColorsCheck = MDT:CreateWidget("CheckBox")
   frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
   frame.AutomaticColorsCheck:SetWidth(settingWidth)
   frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
@@ -328,7 +348,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.settingsColorsColumn:AddChild(frame.AutomaticColorsCheck)
 
   --Toggle local color blind mode
-  frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
+  frame.toggleForceColorBlindMode = MDT:CreateWidget("CheckBox")
   frame.toggleForceColorBlindMode:SetLabel(L["Local color blind mode"])
   frame.toggleForceColorBlindMode:SetWidth(settingWidth)
   frame.toggleForceColorBlindMode:SetValue(db.colorPaletteInfo.forceColorBlindMode)
@@ -339,7 +359,7 @@ function MDT:MakeSettingsFrame(frame)
   end)
   frame.settingsColorsColumn:AddChild(frame.toggleForceColorBlindMode)
 
-  frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
+  frame.PaletteSelectDropdown = MDT:CreateWidget("Dropdown")
   frame.PaletteSelectDropdown:SetList(colorPaletteNames)
   frame.PaletteSelectDropdown:SetLabel(L["Choose preferred color palette"])
   frame.PaletteSelectDropdown:SetWidth(settingWidth)
@@ -358,7 +378,7 @@ function MDT:MakeSettingsFrame(frame)
 
   -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
   -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
-  frame.button = AceGUI:Create("Button")
+  frame.button = MDT:CreateWidget("Button")
   frame.button:SetText(L["Apply to preset"])
   frame.button:SetWidth(settingWidth)
   frame.button:SetCallback("OnClick", function(widget, callbackName)
@@ -374,12 +394,12 @@ function MDT:MakeSettingsFrame(frame)
 
   MDT:MakeCustomColorFrame(frame.settingsFrame)
 
-  frame.localeHeading = AceGUI:Create("Heading")
+  frame.localeHeading = MDT:CreateWidget("Heading")
   frame.localeHeading:SetText(L["Language"])
   frame.localeHeading:SetFullWidth(true)
   frame.settingsGeneralColumn:AddChild(frame.localeHeading)
 
-  frame.localeButton = AceGUI:Create("Button")
+  frame.localeButton = MDT:CreateWidget("Button")
   frame.localeButton:SetText(L["Change Language"])
   frame.localeButton:SetWidth(settingWidth)
   local slashToFire = _G.SlashCmdList["ADDONLOCALE"]
@@ -392,7 +412,7 @@ function MDT:MakeSettingsFrame(frame)
   end
   frame.settingsGeneralColumn:AddChild(frame.localeButton)
 
-  frame.localeLabel = AceGUI:Create("Label")
+  frame.localeLabel = MDT:CreateWidget("Label")
   if not slashToFire then
     frame.localeLabel:SetText("|cff808080"..L["localeButtonTooltip1"].."|r")
   else

@@ -553,7 +553,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanelString:SetPoint("TOPLEFT", frame.sidePanel, "TOPLEFT", 33, -120 - 30 - 25)
   frame.sidePanelString:Hide()
 
-  frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
+  frame.sidePanel.WidgetGroup = MDT:CreateWidget("SimpleGroup")
   frame.sidePanel.WidgetGroup.frame:SetParent(frame.sidePanel)
   frame.sidePanel.WidgetGroup:SetWidth(245)
   frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight() + (frame.topPanel:GetHeight() * 2) - 31)
@@ -582,7 +582,7 @@ function MDT:MakeSidePanel(frame)
   end
 
   --preset selection
-  frame.sidePanel.WidgetGroup.PresetDropDown = AceGUI:Create("Dropdown")
+  frame.sidePanel.WidgetGroup.PresetDropDown = MDT:CreateWidget("Dropdown")
   frame.sidePanel.WidgetGroup.PresetDropDown.pullout.frame:SetParent(frame.sidePanel.WidgetGroup.PresetDropDown.frame)
   local dropdown = frame.sidePanel.WidgetGroup.PresetDropDown
   dropdown.frame:SetWidth(170)
@@ -627,7 +627,7 @@ function MDT:MakeSidePanel(frame)
 
   ---new profile,rename,export,delete
   local buttonWidth = 75
-  frame.sidePanelNewButton = AceGUI:Create("Button")
+  frame.sidePanelNewButton = MDT:CreateWidget("Button")
   frame.sidePanelNewButton:SetText(L["New"])
   frame.sidePanelNewButton:SetWidth(buttonWidth)
   --button fontInstance
@@ -652,7 +652,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
 
-  frame.sidePanelRenameButton = AceGUI:Create("Button")
+  frame.sidePanelRenameButton = MDT:CreateWidget("Button")
   frame.sidePanelRenameButton:SetWidth(buttonWidth)
   frame.sidePanelRenameButton:SetText(L["Rename"])
   frame.sidePanelRenameButton.frame:SetNormalFontObject(fontInstance)
@@ -681,7 +681,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
 
-  frame.sidePanelImportButton = AceGUI:Create("Button")
+  frame.sidePanelImportButton = MDT:CreateWidget("Button")
   frame.sidePanelImportButton:SetText(L["Import"])
   frame.sidePanelImportButton:SetWidth(buttonWidth)
   frame.sidePanelImportButton.frame:SetNormalFontObject(fontInstance)
@@ -704,7 +704,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
 
-  frame.sidePanelExportButton = AceGUI:Create("Button")
+  frame.sidePanelExportButton = MDT:CreateWidget("Button")
   frame.sidePanelExportButton:SetText(L["Export"])
   frame.sidePanelExportButton:SetWidth(buttonWidth)
   frame.sidePanelExportButton.frame:SetNormalFontObject(fontInstance)
@@ -744,7 +744,7 @@ function MDT:MakeSidePanel(frame)
     GameTooltip:Hide()
   end)
 
-  frame.sidePanelDeleteButton = AceGUI:Create("Button")
+  frame.sidePanelDeleteButton = MDT:CreateWidget("Button")
   frame.sidePanelDeleteButton:SetText(L["Delete"])
   frame.sidePanelDeleteButton:SetWidth(buttonWidth)
   frame.sidePanelDeleteButton.frame:SetScript("OnEnter", function()
@@ -777,7 +777,7 @@ function MDT:MakeSidePanel(frame)
     end
   end)
 
-  frame.LinkToChatButton = AceGUI:Create("Button")
+  frame.LinkToChatButton = MDT:CreateWidget("Button")
   frame.LinkToChatButton:SetText(L["Share"])
   frame.LinkToChatButton:SetWidth(buttonWidth)
   frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
@@ -814,7 +814,7 @@ function MDT:MakeSidePanel(frame)
     MDT.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
   end
 
-  frame.LiveSessionButton = AceGUI:Create("Button")
+  frame.LiveSessionButton = MDT:CreateWidget("Button")
   frame.LiveSessionButton:SetText(L["Live"])
   frame.LiveSessionButton:SetWidth(buttonWidth)
   frame.LiveSessionButton.frame:SetNormalFontObject(fontInstance)
@@ -867,7 +867,7 @@ function MDT:MakeSidePanel(frame)
   frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
 
   --difficulty slider
-  frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
+  frame.sidePanel.DifficultySlider = MDT:CreateWidget("Slider")
   frame.sidePanel.DifficultySlider:SetSliderValues(1, 35, 1)
   frame.sidePanel.DifficultySlider:SetLabel(L["Dungeon Level"])
   frame.sidePanel.DifficultySlider.label:SetJustifyH("LEFT")
@@ -918,7 +918,7 @@ function MDT:MakeSidePanel(frame)
   if MDT:IsRetail() then
     frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
   end
-  frame.sidePanel.middleLine = AceGUI:Create("Heading")
+  frame.sidePanel.middleLine = MDT:CreateWidget("Heading")
   frame.sidePanel.middleLine:SetWidth(240)
   frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.middleLine)
   frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
@@ -1207,6 +1207,9 @@ function MDT:InitializeMainFrame()
     MDT:ResetMainFramePos()
   end
 
+  MDT:RegisterFontFrame(main_frame)
+  MDT:RegisterFontFrame(MDT.tooltip)
+  MDT:RegisterFontFrame(MDT.pullTooltip)
   framesInitialized = true
   --Maximize if needed
   if db.maximized then MDT:Maximize() end

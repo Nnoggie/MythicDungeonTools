@@ -276,7 +276,7 @@ function MDT:FormatEnemyHealth(amount)
 end
 
 function MDT:MakePullSelectionButtons(frame)
-  frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
+  frame.PullButtonScrollGroup = MDT:CreateWidget("SimpleGroup")
   frame.PullButtonScrollGroup:SetWidth(248)
   frame.PullButtonScrollGroup:SetHeight(410)
   frame.PullButtonScrollGroup:SetPoint("TOPLEFT", frame.WidgetGroup.frame, "BOTTOMLEFT", -4, -32)
@@ -291,7 +291,7 @@ function MDT:MakePullSelectionButtons(frame)
 
   self:FixAceGUIShowHide(frame.PullButtonScrollGroup)
 
-  frame.pullButtonsScrollFrame = AceGUI:Create("ScrollFrame")
+  frame.pullButtonsScrollFrame = MDT:CreateWidget("ScrollFrame")
   frame.pullButtonsScrollFrame:SetLayout("Flow")
 
   frame.PullButtonScrollGroup:AddChild(frame.pullButtonsScrollFrame)
@@ -383,7 +383,7 @@ function MDT:ReloadPullButtons(force)
     for k, pull in ipairs(preset.value.pulls) do
       idx = idx + 1
       ---@diagnostic disable-next-line: param-type-mismatch
-      frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
+      frame.newPullButtons[idx] = MDT:CreateWidget("MDTPullButton")
       frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
       frame.newPullButtons[idx]:SetIndex(idx)
       MDT:UpdatePullButtonNPCData(idx)
@@ -394,7 +394,7 @@ function MDT:ReloadPullButtons(force)
     end
     --add the "new pull" button
     ---@diagnostic disable-next-line: param-type-mismatch
-    frame.newPullButton = AceGUI:Create("MDTNewPullButton")
+    frame.newPullButton = MDT:CreateWidget("MDTNewPullButton")
     frame.newPullButton:Initialize()
     frame.newPullButton:Enable()
     frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)

@@ -99,7 +99,7 @@ function MDT:DisplayErrors(force)
   local errorBoxText = ""
 
   if not MDT.errorFrame then
-    MDT.errorFrame = AceGUI:Create("Frame")
+    MDT.errorFrame = MDT:CreateWidget("Frame")
     _G["MDTErrorFrame"] = MDT.errorFrame.frame
     tinsert(UISpecialFrames, "MDTErrorFrame")
     local errorFrame = MDT.errorFrame
@@ -111,7 +111,7 @@ function MDT:DisplayErrors(force)
     errorFrame:SetLayout("Flow")
     errorFrame:SetCallback("OnClose", function(widget) end)
     errorFrame:SetTitle(L["MDT Error"])
-    errorFrame.label = AceGUI:Create("Label")
+    errorFrame.label = MDT:CreateWidget("Label")
     errorFrame.label:SetWidth(800)
     errorFrame.label:SetFontObject("GameFontNormalLarge")
     errorFrame.label.label:SetTextColor(1, 0, 0)
@@ -119,7 +119,7 @@ function MDT:DisplayErrors(force)
     errorFrame:AddChild(errorFrame.label)
 
     for _, dest in ipairs(MDT.externalLinks) do
-      errorFrame[dest.name.."EditBox"] = AceGUI:Create("EditBox")
+      errorFrame[dest.name.."EditBox"] = MDT:CreateWidget("EditBox")
       local editBox = errorFrame[dest.name.."EditBox"]
       local copyButton
       editBox:SetLabel(dest.name..":")
@@ -141,7 +141,7 @@ function MDT:DisplayErrors(force)
           MDT.copyHelper:SmartHide()
         end
       end);
-      errorFrame[dest.name.."CopyButton"] = AceGUI:Create("Button")
+      errorFrame[dest.name.."CopyButton"] = MDT:CreateWidget("Button")
       copyButton = errorFrame[dest.name.."CopyButton"]
       copyButton:SetText(L["Copy"])
       copyButton:SetWidth(100)
@@ -153,7 +153,7 @@ function MDT:DisplayErrors(force)
     end
 
     local errorBox, errorBoxCopyButton
-    errorFrame.errorBox = AceGUI:Create("MultiLineEditBox")
+    errorFrame.errorBox = MDT:CreateWidget("MultiLineEditBox")
     errorBox = errorFrame.errorBox
     errorBox:SetWidth(800)
     errorBox:SetLabel(L["Error Message:"])
@@ -174,7 +174,7 @@ function MDT:DisplayErrors(force)
       end
     end);
 
-    errorFrame.errorBoxCopyButton = AceGUI:Create("Button")
+    errorFrame.errorBoxCopyButton = MDT:CreateWidget("Button")
     errorBoxCopyButton = errorFrame.errorBoxCopyButton
     errorBoxCopyButton:SetText(L["Copy error"])
     errorBoxCopyButton:SetHeight(40)
@@ -182,7 +182,7 @@ function MDT:DisplayErrors(force)
       startCopyAction(errorFrame.errorBox, errorBoxCopyButton, errorBoxText)
     end)
 
-    errorFrame.hardResetButton = AceGUI:Create("Button")
+    errorFrame.hardResetButton = MDT:CreateWidget("Button")
     local hardResetButton = errorFrame.hardResetButton
     hardResetButton:SetText(L["hardResetButton"])
     hardResetButton:SetHeight(40)
@@ -197,7 +197,7 @@ function MDT:DisplayErrors(force)
     errorFrame:AddChild(errorFrame.hardResetButton)
     MDT:RunAfterFramesInitialized(function()
       --error button
-      local errorButton = AceGUI:Create("Icon")
+      local errorButton = MDT:CreateWidget("Icon")
       errorButton:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.76, 1, 0.25, 0.5)
       errorButton:SetCallback("OnClick", function(widget, callbackName)
         MDT:DisplayErrors("true")

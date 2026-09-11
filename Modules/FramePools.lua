@@ -22,6 +22,7 @@ function MDT.CreateFramePool(frametype, parent, template)
       local frame = table.remove(self.inactive)
       if not frame then
         frame = CreateFrame(frametype, nil, parent, template)
+        MDT:RegisterFontFrame(frame)
         local override = overrides[template]
         if override then
           for k, v in pairs(override) do

@@ -1,6 +1,5 @@
 local _, MDT = ...
 local L = MDT.L
-local AceGUI = LibStub("AceGUI-3.0")
 
 local ContentTypes = {
   LFR = "lfr",
@@ -24,7 +23,7 @@ local function setDifficultyCheckboxesDisabled(checkboxes, disabled)
 end
 
 local function addCheckbox(parent, label, value, relativeWidth, onChanged)
-  local checkbox = AceGUI:Create("CheckBox")
+  local checkbox = MDT:CreateWidget("CheckBox")
   checkbox:SetLabel(label)
   checkbox:SetRelativeWidth(relativeWidth)
   checkbox:SetValue(value)
@@ -39,7 +38,7 @@ local function createCombatLoggingFrame()
   local mainFrame = MDT.main_frame
   local contentParent = mainFrame.sectionContentFrames.combatLogging
 
-  local frame = AceGUI:Create("SimpleGroup")
+  local frame = MDT:CreateWidget("SimpleGroup")
   frame.frame:SetParent(contentParent)
   frame.frame:SetFrameStrata("HIGH")
   frame.frame:SetFrameLevel(3)
@@ -70,12 +69,12 @@ function MDT:CombatLogging_Open()
 
   local difficultyCheckboxes = {}
 
-  local heading = AceGUI:Create("Heading")
+  local heading = MDT:CreateWidget("Heading")
   heading:SetText(L["Combat Logging"])
   heading:SetFullWidth(true)
   frame:AddChild(heading)
 
-  local overview = AceGUI:Create("Label")
+  local overview = MDT:CreateWidget("Label")
   overview:SetText(L["combatLoggingOverview"])
   overview:SetFullWidth(true)
   overview:SetColor(0.82, 0.82, 0.82)
@@ -87,7 +86,7 @@ function MDT:CombatLogging_Open()
   end)
   enabledCheckbox:SetFullWidth(true)
 
-  local raidRow = AceGUI:Create("SimpleGroup")
+  local raidRow = MDT:CreateWidget("SimpleGroup")
   raidRow:SetLayout("Flow")
   raidRow:SetFullWidth(true)
   raidRow:SetHeight(28)
@@ -106,7 +105,7 @@ function MDT:CombatLogging_Open()
     self:CombatLogging_SetContentEnabled(ContentTypes.MYTHIC, value)
   end))
 
-  local dungeonRow = AceGUI:Create("SimpleGroup")
+  local dungeonRow = MDT:CreateWidget("SimpleGroup")
   dungeonRow:SetLayout("Flow")
   dungeonRow:SetFullWidth(true)
   dungeonRow:SetHeight(28)
@@ -119,7 +118,7 @@ function MDT:CombatLogging_Open()
     self:CombatLogging_SetContentEnabled(ContentTypes.MYTHIC_PLUS, value)
   end))
 
-  local advancedNote = AceGUI:Create("Label")
+  local advancedNote = MDT:CreateWidget("Label")
   advancedNote:SetText(L["combatLoggingAdvancedNote"])
   advancedNote:SetFullWidth(true)
   advancedNote:SetColor(0.82, 0.82, 0.82)

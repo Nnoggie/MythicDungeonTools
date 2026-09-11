@@ -10,7 +10,7 @@ local LEGACY_DOWNLOAD_LINKS = {
 }
 
 local function createCopyableLinkRow(frame, name, url, startCopyAction, stopCopyAction)
-  local editBox = AceGUI:Create("EditBox")
+  local editBox = MDT:CreateWidget("EditBox")
   local copyButton
   editBox:SetLabel(name..":")
   editBox:DisableButton(true)
@@ -31,7 +31,7 @@ local function createCopyableLinkRow(frame, name, url, startCopyAction, stopCopy
     end
   end)
 
-  copyButton = AceGUI:Create("Button")
+  copyButton = MDT:CreateWidget("Button")
   copyButton:SetText(L["Copy"])
   copyButton:SetWidth(100)
   copyButton:SetCallback("OnClick", function()
@@ -52,7 +52,7 @@ function MDT:SetupPrePatchWarning()
   if not MDT.main_frame then return end
 
   if not MDT.prePatchWarningFrame then
-    local frame = AceGUI:Create("Frame")
+    local frame = MDT:CreateWidget("Frame")
     MDT.prePatchWarningFrame = frame
     _G["MDTPrePatchWarningFrame"] = frame.frame
     tinsert(UISpecialFrames, "MDTPrePatchWarningFrame")
@@ -67,7 +67,7 @@ function MDT:SetupPrePatchWarning()
       MDT.copyHelper:SmartHide()
     end)
 
-    local label = AceGUI:Create("Label")
+    local label = MDT:CreateWidget("Label")
     label:SetWidth(480)
     label:SetText(L["PREPATCH_LAUNCH_WARNING_TEXT"])
     frame:AddChild(label)

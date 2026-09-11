@@ -10,6 +10,7 @@ enable-nolib-creation: no
 move-folders:
   MythicDungeonTools/MythicDungeonTools_UI: MythicDungeonTools_UI
 externals:
+  libs/LibSharedMedia-3.0: https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
   libs/AceComm-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceComm-3.0
   libs/AceDB-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceDB-3.0
   libs/AceGUI-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceGUI-3.0

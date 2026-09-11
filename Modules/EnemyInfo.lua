@@ -31,7 +31,7 @@ end)
 
 local currentTab = "tab1"
 local function MakeEnemeyInfoFrame()
-  local f = AceGUI:Create("Frame")
+  local f = MDT:CreateWidget("Frame")
   f.frame:SetParent(MDT.main_frame)
   f.frame:SetFrameStrata("DIALOG")
   MDT.enemyInfoFrame = f
@@ -53,7 +53,7 @@ local function MakeEnemeyInfoFrame()
     return originalHide(self, ...);
   end
 
-  f.tabGroup = AceGUI:Create("TabGroup")
+  f.tabGroup = MDT:CreateWidget("TabGroup")
   local tabGroup = f.tabGroup
   tabGroup:SetTabs(
     {
@@ -67,7 +67,7 @@ local function MakeEnemeyInfoFrame()
   --EnemyInfo
   local function DrawGroup1(container)
     ---LEFT
-    local leftContainer = AceGUI:Create("SimpleGroup")
+    local leftContainer = MDT:CreateWidget("SimpleGroup")
     f.leftContainer = leftContainer
     if not leftContainer.frame.SetBackdrop then
       Mixin(leftContainer.frame, BackdropTemplateMixin)
@@ -80,7 +80,7 @@ local function MakeEnemeyInfoFrame()
     leftContainer:SetHeight(container.frame:GetHeight())
 
     --enemyDropDown
-    f.enemyDropDown = AceGUI:Create("Dropdown")
+    f.enemyDropDown = MDT:CreateWidget("Dropdown")
     local enemyDropDown = f.enemyDropDown
     enemyDropDown:SetCallback("OnValueChanged", function(widget, callbackName, key)
       MDT:UpdateEnemyInfoFrame(key)
@@ -94,7 +94,7 @@ local function MakeEnemeyInfoFrame()
     model:SetScript("OnEnter", nil)
     model:SetFrameLevel(150)
     model:Show()
-    f.modelContainer = f.modelContainer or AceGUI:Create("InlineGroup")
+    f.modelContainer = f.modelContainer or MDT:CreateWidget("InlineGroup")
     local modelContainer = f.modelContainer
     if not modelContainer.frame.SetBackdrop then
       Mixin(modelContainer.frame, BackdropTemplateMixin)
@@ -103,7 +103,7 @@ local function MakeEnemeyInfoFrame()
     modelContainer:SetWidth(leftContainer.frame:GetWidth() - 20)
     modelContainer:SetHeight(249)
     modelContainer:SetLayout("Flow")
-    f.modelDummyIcon = f.modelDummyIcon or AceGUI:Create("Icon")
+    f.modelDummyIcon = f.modelDummyIcon or MDT:CreateWidget("Icon")
     local modelDummyIcon = f.modelDummyIcon
     modelDummyIcon:SetImageSize(leftContainer.frame:GetWidth() - 20, 249)
     modelDummyIcon:SetDisabled(true)
@@ -112,7 +112,7 @@ local function MakeEnemeyInfoFrame()
     model:SetPoint("BOTTOM", modelContainer.frame, "BOTTOM", 0, 10)
     MDT:FixAceGUIShowHide(model, modelContainer.frame, true)
 
-    f.characteristicsContainer = AceGUI:Create("InlineGroup")
+    f.characteristicsContainer = MDT:CreateWidget("InlineGroup")
     if not f.characteristicsContainer.frame.SetBackdrop then
       Mixin(f.characteristicsContainer.frame, BackdropTemplateMixin)
     end
@@ -126,7 +126,7 @@ local function MakeEnemeyInfoFrame()
     leftContainer:AddChild(f.characteristicsContainer)
 
     ---MIDDLE
-    f.midContainer = f.midContainer or AceGUI:Create("SimpleGroup")
+    f.midContainer = f.midContainer or MDT:CreateWidget("SimpleGroup")
     local midContainer = f.midContainer
     if not midContainer.frame.SetBackdrop then
       Mixin(midContainer.frame, BackdropTemplateMixin)
@@ -139,13 +139,13 @@ local function MakeEnemeyInfoFrame()
     midContainer:SetHeight(container.frame:GetHeight())
 
     --spacing
-    local midDummyIcon = AceGUI:Create("Icon")
+    local midDummyIcon = MDT:CreateWidget("Icon")
     midDummyIcon:SetImageSize(20, 20)
     midDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
     midDummyIcon:SetDisabled(true)
     midContainer:AddChild(midDummyIcon)
 
-    f.enemyDataContainer = AceGUI:Create("InlineGroup")
+    f.enemyDataContainer = MDT:CreateWidget("InlineGroup")
     if not f.enemyDataContainer.frame.SetBackdrop then
       Mixin(f.enemyDataContainer.frame, BackdropTemplateMixin)
     end
@@ -154,7 +154,7 @@ local function MakeEnemeyInfoFrame()
     f.enemyDataContainer:SetHeight(235)
     f.enemyDataContainer:SetLayout("Flow")
 
-    f.enemyDataContainer.nameEditBox = AceGUI:Create("EditBox")
+    f.enemyDataContainer.nameEditBox = MDT:CreateWidget("EditBox")
     f.enemyDataContainer.nameEditBox:SetLabel(L["Enemy Info NPC Name"])
     f.enemyDataContainer.nameEditBox:DisableButton(true)
     f.enemyDataContainer.nameEditBox:SetCallback("OnTextChanged", function(self)
@@ -162,7 +162,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.nameEditBox)
 
-    f.enemyDataContainer.idEditBox = AceGUI:Create("EditBox")
+    f.enemyDataContainer.idEditBox = MDT:CreateWidget("EditBox")
     f.enemyDataContainer.idEditBox:SetLabel(L["Enemy Info NPC Id"])
     f.enemyDataContainer.idEditBox:DisableButton(true)
     f.enemyDataContainer.idEditBox:SetCallback("OnTextChanged", function(self)
@@ -170,7 +170,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.idEditBox)
 
-    f.enemyDataContainer.healthEditBox = AceGUI:Create("EditBox")
+    f.enemyDataContainer.healthEditBox = MDT:CreateWidget("EditBox")
     f.enemyDataContainer.healthEditBox:SetLabel(" ") --has to be non empty for proper spacing, we set this later
     f.enemyDataContainer.healthEditBox:DisableButton(true)
     f.enemyDataContainer.healthEditBox:SetCallback("OnTextChanged", function(self)
@@ -178,7 +178,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.healthEditBox)
 
-    f.enemyDataContainer.creatureTypeEditBox = AceGUI:Create("EditBox")
+    f.enemyDataContainer.creatureTypeEditBox = MDT:CreateWidget("EditBox")
     f.enemyDataContainer.creatureTypeEditBox:SetLabel(L["Enemy Info NPC Creature Type"])
     f.enemyDataContainer.creatureTypeEditBox:DisableButton(true)
     f.enemyDataContainer.creatureTypeEditBox:SetCallback("OnTextChanged", function(self)
@@ -186,7 +186,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.creatureTypeEditBox)
 
-    f.enemyDataContainer.levelEditBox = AceGUI:Create("EditBox")
+    f.enemyDataContainer.levelEditBox = MDT:CreateWidget("EditBox")
     f.enemyDataContainer.levelEditBox:SetLabel(L["Enemy Info NPC Level"])
     f.enemyDataContainer.levelEditBox:DisableButton(true)
     f.enemyDataContainer.levelEditBox:SetCallback("OnTextChanged", function(self)
@@ -194,7 +194,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.levelEditBox)
 
-    f.enemyDataContainer.countEditBox = AceGUI:Create("EditBox")
+    f.enemyDataContainer.countEditBox = MDT:CreateWidget("EditBox")
     f.enemyDataContainer.countEditBox:SetLabel(L["Enemy Info NPC Enemy Forces"])
     f.enemyDataContainer.countEditBox:DisableButton(true)
     f.enemyDataContainer.countEditBox:SetCallback("OnTextChanged", function(self)
@@ -202,7 +202,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.countEditBox)
 
-    f.enemyDataContainer.stealthCheckBox = AceGUI:Create("CheckBox")
+    f.enemyDataContainer.stealthCheckBox = MDT:CreateWidget("CheckBox")
     f.enemyDataContainer.stealthCheckBox:SetLabel(L["Enemy Info NPC Stealth"])
     f.enemyDataContainer.stealthCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth() / 2) - 40)
     f.enemyDataContainer.stealthCheckBox:SetCallback("OnValueChanged", function(self)
@@ -210,7 +210,7 @@ local function MakeEnemeyInfoFrame()
     end)
     f.enemyDataContainer:AddChild(f.enemyDataContainer.stealthCheckBox)
 
-    f.enemyDataContainer.stealthDetectCheckBox = AceGUI:Create("CheckBox")
+    f.enemyDataContainer.stealthDetectCheckBox = MDT:CreateWidget("CheckBox")
     f.enemyDataContainer.stealthDetectCheckBox:SetLabel(L["Enemy Info NPC Stealth Detect"])
     f.enemyDataContainer.stealthDetectCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth() / 2))
     f.enemyDataContainer.stealthDetectCheckBox:SetCallback("OnValueChanged", function(self)
@@ -222,7 +222,7 @@ local function MakeEnemeyInfoFrame()
     midContainer:AddChild(f.enemyDataContainer)
 
     ---RIGHT
-    f.rightContainer = f.rightContainer or AceGUI:Create("SimpleGroup")
+    f.rightContainer = f.rightContainer or MDT:CreateWidget("SimpleGroup")
     local rightContainer = f.rightContainer
     if not rightContainer.frame.SetBackdrop then
       Mixin(rightContainer.frame, BackdropTemplateMixin)
@@ -235,19 +235,19 @@ local function MakeEnemeyInfoFrame()
     rightContainer:SetHeight(container.frame:GetHeight())
 
     if db.devMode then
-      local devModeLabel = AceGUI:Create("Label")
+      local devModeLabel = MDT:CreateWidget("Label")
       devModeLabel:SetText("R: Delete\nI: Toggle Interruptible\nS: Print SpellId")
       rightContainer:AddChild(devModeLabel)
     end
 
     --spacing
-    local rightDummyIcon = AceGUI:Create("Icon")
+    local rightDummyIcon = MDT:CreateWidget("Icon")
     rightDummyIcon:SetImageSize(20, 20)
     rightDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
     rightDummyIcon:SetDisabled(true)
 
     --spells
-    f.spellScrollContainer = f.spellScrollContainer or AceGUI:Create("InlineGroup")
+    f.spellScrollContainer = f.spellScrollContainer or MDT:CreateWidget("InlineGroup")
     local spellScrollContainer = f.spellScrollContainer
     if not spellScrollContainer.frame.SetBackdrop then
       Mixin(spellScrollContainer.frame, BackdropTemplateMixin)
@@ -257,12 +257,12 @@ local function MakeEnemeyInfoFrame()
     spellScrollContainer:SetHeight(282)
     spellScrollContainer:SetLayout("Fill")
 
-    f.spellScroll = AceGUI:Create("ScrollFrame")
+    f.spellScroll = MDT:CreateWidget("ScrollFrame")
     f.spellScroll:SetLayout("List")
     spellScrollContainer:AddChild(f.spellScroll)
 
     --spellButtons
-    f.spellButtonsContainer = f.spellButtonsContainer or AceGUI:Create("InlineGroup")
+    f.spellButtonsContainer = f.spellButtonsContainer or MDT:CreateWidget("InlineGroup")
     local spellButtonsContainer = f.spellButtonsContainer
     if not spellButtonsContainer.frame.SetBackdrop then
       Mixin(spellButtonsContainer.frame, BackdropTemplateMixin)
@@ -272,7 +272,7 @@ local function MakeEnemeyInfoFrame()
     spellScrollContainer:SetLayout("Flow")
 
     local buttonWidth = 110
-    f.sendSpellsButton = f.sendSpellsButton or AceGUI:Create("Button")
+    f.sendSpellsButton = f.sendSpellsButton or MDT:CreateWidget("Button")
     local sendSpellsButton = f.sendSpellsButton
     sendSpellsButton:SetText(L["Link Spells"])
     sendSpellsButton:SetWidth(buttonWidth)
@@ -392,13 +392,13 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
 
   --characteristics
   f.characteristicsContainer:ReleaseChildren()
-  local characteristicsText = AceGUI:Create("Label")
+  local characteristicsText = MDT:CreateWidget("Label")
   characteristicsText:SetWidth(f.characteristicsContainer.frame:GetWidth())
   characteristicsText:SetText(L["Affected by:"])
   f.characteristicsContainer:AddChild(characteristicsText)
   for text, iconPath in pairs(characteristics) do
     if data.characteristics and data.characteristics[text] then
-      local icon = AceGUI:Create("Icon")
+      local icon = MDT:CreateWidget("Icon")
       icon:SetImage(iconPath)
       icon:SetImageSize(25, 25)
       icon:SetWidth(25)
@@ -437,7 +437,7 @@ function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
     -- Create spell buttons in sorted order
     for _, spellId in ipairs(spellIds) do
       local spellData = data.spells[spellId]
-      local spellButton = AceGUI:Create("MDTSpellButton")
+      local spellButton = MDT:CreateWidget("MDTSpellButton")
       spellButton:SetSpell(spellId, spellData)
       spellButton:Initialize()
       spellButton:Enable()

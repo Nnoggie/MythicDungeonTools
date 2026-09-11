@@ -1,5 +1,4 @@
 local _, MDT = ...
-local AceGUI = LibStub("AceGUI-3.0")
 local conflictFrame
 local L = MDT.L
 
@@ -114,13 +113,13 @@ end
 
 function MDT:ShowConflictFrame()
   if not conflictFrame then
-    conflictFrame = AceGUI:Create("Frame")
+    conflictFrame = MDT:CreateWidget("Frame")
     conflictFrame:EnableResize(false)
     conflictFrame:SetLayout("Flow")
     conflictFrame:SetCallback("OnClose", function(widget) end)
     conflictFrame:SetTitle(L["Addon Conflict"])
 
-    conflictFrame.label = AceGUI:Create("Label")
+    conflictFrame.label = MDT:CreateWidget("Label")
     conflictFrame.label:SetWidth(550)
     conflictFrame.label:SetFontObject('GameFontNormalLarge')
     local labelText = L["conflictPrompt"]
