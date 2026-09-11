@@ -2,6 +2,17 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.17-alpha1",
+    date = "2026-09-12",
+    notes = {
+      "Experimental alpha version for testing customizable UI fonts.",
+      "Added Font and Font Size settings under General, with fonts supplied by other addons and a font size range of 5 to 25.",
+      "Increased the height of the General settings panel to make room for the new controls.",
+      "Alpha and beta versions no longer trigger update notices for players using stable releases.",
+      "Enemy Info now shows all spells listed for an enemy.",
+    },
+  },
+  {
     tag = "6.2.16",
     date = "2026-09-08",
     notes = {
@@ -14,14 +25,6 @@ MDT.changeLog = {
     date = "2026-09-05",
     notes = {
       "Added two missing Twinfang Harrowers in Altar of Fangs.",
-    },
-  },
-  {
-    tag = "6.2.14-alpha1",
-    date = "2026-09-05",
-    notes = {
-      "Experimental alpha version intended to help debug route sharing issues.",
-      "Added detailed error reports for route sharing problems. If an MDT error window appears while sharing a route, please report it using the links in the window.",
     },
   },
 }
