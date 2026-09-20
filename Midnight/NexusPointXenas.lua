@@ -9,10 +9,10 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Nexus Point Xenas",
   mapID = 559
 };
-local zones = { 2556 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2405, 2556 },
+  subzoneAreaIDs = { 15954 }, -- Nexus-Point Xenas
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

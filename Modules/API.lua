@@ -13,8 +13,7 @@ do
     if not npcId or issecretvalue(npcId) then return end
     npcId = tonumber(npcId)
     if not npcId then return end
-    local zoneId = C_Map.GetBestMapForUnit("player")
-    local dungeonIdx = self.zoneIdToDungeonIdx[zoneId]
+    local dungeonIdx = self:GetDungeonIdxForCurrentLocation()
 
     if dungeonIdx and dungeonCountCache[dungeonIdx] and dungeonCountCache[dungeonIdx][npcId] then
       local cached = dungeonCountCache[dungeonIdx][npcId]

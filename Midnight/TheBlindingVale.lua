@@ -10,10 +10,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 584
 };
 
-local zones = { 2500 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2413, 2500 },
+  subzoneAreaIDs = { 15933 }, -- The Blinding Bloom
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

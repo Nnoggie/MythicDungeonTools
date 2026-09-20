@@ -9,10 +9,10 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Maisara Caverns",
   mapID = 560
 };
-local zones = { 2437, 2501 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2437, 2501 },
+  subzoneAreaIDs = { 16199 }, -- Maisara Deeps
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

@@ -9,10 +9,10 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Skyreach",
   mapID = 161
 };
-local zones = { 601, 602 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 542, 601, 602 },
+  subzoneAreaIDs = { 6988 }, -- Skyreach
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

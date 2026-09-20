@@ -10,10 +10,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 402
 }
 
-local zones = { 2025, 2097, 2098, 2099 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2025, 2097, 2098, 2099 },
+  subzoneAreaIDs = { 13795 }, -- Algeth'ar Academy
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

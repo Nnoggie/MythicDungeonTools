@@ -22,6 +22,7 @@
     "GetLocale",
     "GetCurrentRegion",
     "C_Map",
+    "GetSubZoneText",
     "CopyTable",
     "C_Timer",
     "date",

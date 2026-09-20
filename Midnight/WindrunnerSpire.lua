@@ -9,10 +9,10 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Windrunner Spire",
   mapID = 557
 };
-local zones = { 2492, 2493, 2494, 2496, 2497, 2498, 2499 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2395, 2492, 2493, 2494, 2496, 2497, 2498, 2499 },
+  subzoneAreaIDs = { 16057 }, -- Windrunner Spire
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

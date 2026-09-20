@@ -10,10 +10,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 586
 };
 
-local zones = { 2513, 2514, 2564 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2437, 2513, 2514, 2564 },
+  subzoneAreaIDs = { 16189 }, -- Nalorakk's Prowl
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

@@ -11,10 +11,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 249
 };
 
-local zones = { 1004 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 862, 1004 },
+  subzoneAreaIDs = { 9404 }, -- Atal'Dazar
+})
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 608 }
 

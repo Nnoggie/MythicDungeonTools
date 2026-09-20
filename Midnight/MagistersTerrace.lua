@@ -9,10 +9,10 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Magisters Terrace",
   mapID = 558
 };
-local zones = { 2424, 2511, 2515, 2516, 2517, 2518, 2519, 2520 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2424, 2511, 2515, 2516, 2517, 2518, 2519, 2520 },
+  subzoneAreaIDs = { 16814 }, -- Magisters' Terrace
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

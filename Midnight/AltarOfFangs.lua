@@ -10,10 +10,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 588
 };
 
-local zones = { 2588, 2589, 2590 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 2512, 2588, 2589, 2590 },
+  subzoneAreaIDs = { 16365 }, -- The Coiled Isle
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

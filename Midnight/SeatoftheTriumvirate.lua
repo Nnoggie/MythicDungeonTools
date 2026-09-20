@@ -10,10 +10,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 239
 };
 
-local zones = { 903 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 882, 903 },
+  subzoneAreaIDs = { 8703 }, -- The Seat of the Triumvirate
+})
 
 
 

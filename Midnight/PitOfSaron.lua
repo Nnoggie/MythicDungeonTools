@@ -9,10 +9,10 @@ MDT.mapInfo[dungeonIndex] = {
   englishName = "Pit of Saron",
   mapID = 556
 };
-local zones = { 118, 184 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 118, 184, 823 },
+  subzoneAreaIDs = { 5577 }, -- Pit of Saron Entrance
+})
 
 MDT.dungeonMaps[dungeonIndex] = {
   [0] = "",

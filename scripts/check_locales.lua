@@ -47,6 +47,7 @@ local function loadEnemies(source, path)
     dungeonList = {}, mapInfo = {}, zoneIdToDungeonIdx = {}, dungeonMaps = {},
     dungeonSubLevels = {}, dungeonTotalCount = {}, mapPOIs = {}, dungeonEnemies = {}, scaleMultiplier = {},
   }
+  function addon:RegisterDungeonLocation() end
   run(source, path, { ipairs = ipairs, pairs = pairs }, addon)
   local enemies = {}
   for _, dungeon in pairs(addon.dungeonEnemies) do

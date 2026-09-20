@@ -11,10 +11,10 @@ MDT.mapInfo[dungeonIndex] = {
   mapID = 250
 };
 
-local zones = { 1038, 1043 }
-for _, zone in ipairs(zones) do
-  MDT.zoneIdToDungeonIdx[zone] = dungeonIndex
-end
+MDT:RegisterDungeonLocation(dungeonIndex, {
+  zoneIds = { 864, 1038, 1043 },
+  subzoneAreaIDs = { 8875 }, -- Skycallers' Spire
+})
 
 MDT.dungeonTotalCount[dungeonIndex] = { normal = 687 }
 
