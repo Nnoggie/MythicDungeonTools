@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.17",
+    date = "2026-09-21",
+    notes = {
+      "Fix automatic dungeon selection in shared zones.",
+      "Improve Korean translations throughout MDT.",
+    },
+  },
+  {
     tag = "6.2.16",
     date = "2026-09-08",
     notes = {
@@ -14,14 +22,6 @@ MDT.changeLog = {
     date = "2026-09-05",
     notes = {
       "Added two missing Twinfang Harrowers in Altar of Fangs.",
-    },
-  },
-  {
-    tag = "6.2.14-alpha1",
-    date = "2026-09-05",
-    notes = {
-      "Experimental alpha version intended to help debug route sharing issues.",
-      "Added detailed error reports for route sharing problems. If an MDT error window appears while sharing a route, please report it using the links in the window.",
     },
   },
 }
