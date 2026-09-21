@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.18",
+    date = "2026-09-21",
+    notes = {
+      "Corrected positions of G62 and a Devouring Brutalizer in Voidscar Arena.",
+    },
+  },
+  {
     tag = "6.2.17",
     date = "2026-09-21",
     notes = {
@@ -15,13 +22,6 @@ MDT.changeLog = {
     notes = {
       "Added a missing Lightgorged Lasher and corrected a Lasher's position in The Blinding Vale.",
       "Added missing translations for The Blinding Vale enemies and Thundering Totem in King's Rest.",
-    },
-  },
-  {
-    tag = "6.2.15",
-    date = "2026-09-05",
-    notes = {
-      "Added two missing Twinfang Harrowers in Altar of Fangs.",
     },
   },
 }
