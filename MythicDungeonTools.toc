@@ -1,5 +1,5 @@
 ## Interface: 120100
-# WOW_INTERFACE_TARGETS: mainline
+# WOW_INTERFACE_TARGETS: standard
 ## Title: Mythic Dungeon Tools (MDT)
 ## Author: Nnoggie
 ## Version: 6.2.18
