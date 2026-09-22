@@ -1,3 +1,4 @@
-## 6.2.18 (2026-09-21)
+## 6.2.19 (2026-09-22)
 
-- Corrected positions of G62 and a Devouring Brutalizer in Voidscar Arena.
+- Fixed overlapping enemy blips visuals
+- Corrected G34 Living Venom positions and added two missing Living Venoms in Altar of Fangs.
