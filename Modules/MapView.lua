@@ -684,6 +684,16 @@ MDT.zoneIdToDungeonIdx = {}
 ---@field subzoneAreaIDs? number[]
 ---@type table<number, DungeonLocation[]>
 local dungeonLocationsByZone = {}
+local autoSelectedZoneId
+
+local zoneChangeFrame = CreateFrame("Frame")
+zoneChangeFrame:RegisterEvent("ZONE_CHANGED")
+zoneChangeFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
+zoneChangeFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+zoneChangeFrame:SetScript("OnEvent", function()
+  local zoneId = C_Map.GetBestMapForUnit("player")
+  if zoneId and zoneId ~= autoSelectedZoneId then autoSelectedZoneId = nil end
+end)
 
 local function getDungeonPriority(dungeonIdx)
   for listIdx, dungeonList in ipairs(MDT.dungeonSelectionToIndex or {}) do
@@ -732,21 +742,22 @@ function MDT:GetDungeonIdxForZone(zoneId, subzoneText)
   return MDT.zoneIdToDungeonIdx[zoneId]
 end
 
----@return number?
+---@return number? dungeonIdx
+---@return number? zoneId
 function MDT:GetDungeonIdxForCurrentLocation()
   local zoneId = C_Map.GetBestMapForUnit("player")
   if not zoneId then return end
-  return MDT:GetDungeonIdxForZone(zoneId, GetSubZoneText())
+  return MDT:GetDungeonIdxForZone(zoneId, GetSubZoneText()), zoneId
 end
 
 function MDT:CheckCurrentZone(init)
   initializeDB()
   if C_ChallengeMode.IsChallengeModeActive() then return end
-  local dungeonIdx = MDT:GetDungeonIdxForCurrentLocation()
-  if dungeonIdx then
-    MDT:UpdateToDungeon(dungeonIdx, nil, init)
-    MDT:SetDungeonList(nil, dungeonIdx)
-  end
+  local dungeonIdx, zoneId = MDT:GetDungeonIdxForCurrentLocation()
+  if not dungeonIdx or zoneId == autoSelectedZoneId then return end
+  autoSelectedZoneId = zoneId
+  MDT:UpdateToDungeon(dungeonIdx, nil, init)
+  MDT:SetDungeonList(nil, dungeonIdx)
 end
 
 function MDT:SetMapSublevel(pull)
