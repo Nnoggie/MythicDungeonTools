@@ -6,8 +6,9 @@ local L = MDT.L
 local blips = {}
 local preset
 local patrolColor = { 0, 0.5, 1, 0.8 }
-local OVERLAP_BUCKET_SIZE = 9
-local OVERLAP_DISTANCE_SQUARED = OVERLAP_BUCKET_SIZE * OVERLAP_BUCKET_SIZE
+local MIN_OVERLAP_BUCKET_SIZE = 9
+local BLIP_FRAME_SIZE = 13
+local BLIP_VISUAL_SIZE = 30
 
 function MDT:GetDungeonEnemyBlips()
   return blips
@@ -64,6 +65,17 @@ function MDTDungeonEnemyMixin:updateSizes(scale)
   for tex, size in pairs(defaultSizes) do
     self[tex]:SetSize(size * self.normalScale * scale, size * self.normalScale * scale)
   end
+end
+
+function MDTDungeonEnemyMixin:SetFrameLevelAboveOverlaps(overlapCandidates)
+  local raise = 4
+  for _, other in ipairs(overlapCandidates or blips) do
+    local visualOffset = (BLIP_VISUAL_SIZE - BLIP_FRAME_SIZE) * 0.5 * (self.normalScale + other.normalScale)
+    if MDT:DoFramesOverlap(self, other, visualOffset) then
+      raise = max(raise, other:GetFrameLevel() + 1)
+    end
+  end
+  self:SetFrameLevel(raise)
 end
 
 function MDT:DisplayBlipModifierLabels(modifier)
@@ -730,21 +742,12 @@ function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPrese
   if self.normalScale ~= normalScale or self.sizesDirty then
     self.normalScale = normalScale
     self.sizesDirty = nil
-    self:SetSize(normalScale * 13, normalScale * 13)
+    self:SetSize(normalScale * BLIP_FRAME_SIZE, normalScale * BLIP_FRAME_SIZE)
     self:updateSizes(1)
     local textScale = math.max(0.2, normalScale * 10)
     self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), textScale, "OUTLINE", "")
   end
-  local raise = 4
-  for _, v in ipairs(overlapCandidates or blips) do
-    --only check neighboring blips - saves performance on big maps
-    if ((clone.x - v.clone.x) ^ 2 + (clone.y - v.clone.y) ^ 2 < OVERLAP_DISTANCE_SQUARED) and
-        MDT:DoFramesOverlap(self, v, 5) then
-      raise = max(raise
-      , v:GetFrameLevel() + 1)
-    end
-  end
-  self:SetFrameLevel(raise)
+  self:SetFrameLevelAboveOverlaps(overlapCandidates)
   local count = MDT:GetCloneEnemyForces(data, clone)
   self.fontstring_Text1:SetText((clone.isBoss and count == 0 and "") or count)
   local isBoss = data.isBoss and true or false
@@ -822,45 +825,63 @@ function MDT:DungeonEnemies_UpdateEnemiesAsync()
   local currentSublevel = MDT:GetCurrentSubLevel()
   local overlapBuckets = {}
   local overlapCandidates = {}
+  local visibleEnemies = {}
+  local overlapBucketSize = MIN_OVERLAP_BUCKET_SIZE
+  local dungeonScale = MDT.scaleMultiplier[db.currentDungeonIdx] or 1
 
   for enemyIdx, data in pairs(enemies) do
     for cloneIdx, clone in pairs(data["clones"]) do
       --check sublevel
       if clone.sublevel == currentSublevel or (not clone.sublevel) then
-        twipe(overlapCandidates)
-        local bucketX = floor(clone.x / OVERLAP_BUCKET_SIZE)
-        local bucketY = floor(clone.y / OVERLAP_BUCKET_SIZE)
-        for x = bucketX - 1, bucketX + 1 do
-          local column = overlapBuckets[x]
-          if column then
-            for y = bucketY - 1, bucketY + 1 do
-              local bucket = column[y]
-              if bucket then
-                for _, candidate in ipairs(bucket) do
-                  tinsert(overlapCandidates, candidate)
-                end
-              end
+        local visualScale = (clone.scale or 1) * data.scale * (data.isBoss and 1.7 or 1)
+        overlapBucketSize = max(overlapBucketSize, visualScale * dungeonScale * 0.6 * BLIP_VISUAL_SIZE)
+        tinsert(visibleEnemies, {
+          enemyIdx = enemyIdx,
+          cloneIdx = cloneIdx,
+          data = data,
+          clone = clone,
+        })
+      end
+    end
+  end
+  table.sort(visibleEnemies, function(a, b)
+    if a.enemyIdx ~= b.enemyIdx then return a.enemyIdx < b.enemyIdx end
+    return a.cloneIdx < b.cloneIdx
+  end)
+  for _, enemy in ipairs(visibleEnemies) do
+    local clone = enemy.clone
+    twipe(overlapCandidates)
+    local bucketX = floor(clone.x / overlapBucketSize)
+    local bucketY = floor(clone.y / overlapBucketSize)
+    for x = bucketX - 1, bucketX + 1 do
+      local column = overlapBuckets[x]
+      if column then
+        for y = bucketY - 1, bucketY + 1 do
+          local bucket = column[y]
+          if bucket then
+            for _, candidate in ipairs(bucket) do
+              tinsert(overlapCandidates, candidate)
             end
           end
         end
-        local blip = MDT.dungeonEnemies_framePool:Acquire()
-        blip.enemyIdx = enemyIdx
-        blip.cloneIdx = cloneIdx
-        blip:SetUp(data, clone, overlapCandidates, preset)
-        local column = overlapBuckets[bucketX]
-        if not column then
-          column = {}
-          overlapBuckets[bucketX] = column
-        end
-        local bucket = column[bucketY]
-        if not bucket then
-          bucket = {}
-          column[bucketY] = bucket
-        end
-        tinsert(bucket, blip)
-        coroutine.yield()
       end
     end
+    local blip = MDT.dungeonEnemies_framePool:Acquire()
+    blip.enemyIdx = enemy.enemyIdx
+    blip.cloneIdx = enemy.cloneIdx
+    blip:SetUp(enemy.data, clone, overlapCandidates, preset)
+    local column = overlapBuckets[bucketX]
+    if not column then
+      column = {}
+      overlapBuckets[bucketX] = column
+    end
+    local bucket = column[bucketY]
+    if not bucket then
+      bucket = {}
+      column[bucketY] = bucket
+    end
+    tinsert(bucket, blip)
+    coroutine.yield()
   end
 end
 
