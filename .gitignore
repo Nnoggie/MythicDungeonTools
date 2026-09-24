@@ -2,6 +2,5 @@
 .vscode/
 AGENTS.local.md
 libs/*
-!libs/LibDeflate
 !libs/load_core_libs.xml
 !libs/load_libs.xml

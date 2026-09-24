@@ -136,7 +136,7 @@ function MDT:MakePresetImportFrame(frame)
     if pasteCharCount > 10 then
       local pasteString = strtrim(table.concat(pasteBuffer))
       editbox:SetText(string.sub(pasteString, 1, 2000));
-      local newPreset = MDT:StringToTable(pasteString, true)
+      local newPreset = MDT:StringToTable(pasteString)
       if MDT:ValidateImportPreset(newPreset) then
         MDT.main_frame.presetImportFrame:Hide()
         MDT:ImportPreset(newPreset)
@@ -144,7 +144,7 @@ function MDT:MakePresetImportFrame(frame)
           MDT:ColorAllPulls()
         end
       else
-        frame.presetImportLabel:SetText(L["Invalid import string"])
+        frame.presetImportLabel:SetText(type(newPreset) == "string" and newPreset or L["Invalid import string"])
       end
     end
   end
@@ -176,7 +176,7 @@ function MDT:MakePresetImportFrame(frame)
       MDT:HideAllDialogs()
       return
     end
-    local newPreset = MDT:StringToTable(importString, true)
+    local newPreset = MDT:StringToTable(importString)
     if MDT:ValidateImportPreset(newPreset) then
       MDT:HideAllDialogs()
       MDT:ImportPreset(newPreset)
@@ -184,7 +184,7 @@ function MDT:MakePresetImportFrame(frame)
         MDT:ColorAllPulls()
       end
     else
-      frame.presetImportLabel:SetText(L["Invalid import string"])
+      frame.presetImportLabel:SetText(type(newPreset) == "string" and newPreset or L["Invalid import string"])
     end
   end)
   frame.presetImportButton = importButton
@@ -195,7 +195,7 @@ function MDT:MakePresetImportFrame(frame)
     inspectButton:SetText("Inspect")
     inspectButton:SetWidth(100)
     inspectButton:SetCallback("OnClick", function()
-      local newPreset = MDT:StringToTable(importString, true)
+      local newPreset = MDT:StringToTable(importString)
       if not DevTool and not DevTool.AddData then
         print("MDT: Install Dev Tool to inspect route")
       else

@@ -1,8 +1,5 @@
 local _, MDT = ...
 local L = MDT.L
-local LegacyCompressor = LibStub:GetLibrary("LibCompress")
-local LegacySerializer = LibStub:GetLibrary("AceSerializer-3.0")
-local LegacyDeflate = LibStub:GetLibrary("LibDeflate")
 local MDTcommsObject = MDT.commsObject
 local presetCommPrefix = MDT.presetCommPrefix
 
@@ -12,7 +9,6 @@ local pairs, type, unpack = pairs, type, unpack
 
 local uidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()"
 
--- "~" cannot start either legacy LibDeflate encoding, so this marker cannot collide with existing exports.
 local encodingPrefix = "!~MDT2~"
 
 function MDT:TableToString(inTable)
@@ -22,43 +18,15 @@ function MDT:TableToString(inTable)
   return encodingPrefix..encoded
 end
 
-function MDT:StringToTable(inString, fromChat)
-  if inString:sub(1, #encodingPrefix) == encodingPrefix then
-    local decoded = C_EncodingUtil.DecodeBase64(inString:sub(#encodingPrefix + 1))
-    if not decoded then return "Error decoding." end
-    local decompressed = C_EncodingUtil.DecompressString(decoded, Enum.CompressionMethod.Deflate)
-    if not decompressed then return "Error decompressing." end
-    return C_EncodingUtil.DeserializeCBOR(decompressed) or "Error deserializing."
+function MDT:StringToTable(inString)
+  if inString:sub(1, #encodingPrefix) ~= encodingPrefix then
+    return L["Unsupported route format. Only !~MDT2~ routes are supported."]
   end
-
-  -- Legacy "!" exports use LibDeflate; strings without the marker use LibCompress.
-  local encoded, usesDeflate = inString:gsub("^%!", "")
-  local decoded
-  if (fromChat) then
-    decoded = LegacyDeflate:DecodeForPrint(encoded)
-  else
-    decoded = LegacyDeflate:DecodeForWoWAddonChannel(encoded)
-  end
-
-  if not decoded then
-    return "Error decoding."
-  end
-
-  local decompressed, errorMsg = nil, "unknown compression method"
-  if usesDeflate == 1 then
-    decompressed = LegacyDeflate:DecompressDeflate(decoded)
-  else
-    decompressed, errorMsg = LegacyCompressor:Decompress(decoded)
-  end
-  if not (decompressed) then
-    return "Error decompressing: "..errorMsg
-  end
-
-  local success, deserialized = LegacySerializer:Deserialize(decompressed)
-  if not (success) then
-    return "Error deserializing "..deserialized
-  end
-  return deserialized
+  local decoded = C_EncodingUtil.DecodeBase64(inString:sub(#encodingPrefix + 1))
+  if not decoded then return "Error decoding." end
+  local decompressed = C_EncodingUtil.DecompressString(decoded, Enum.CompressionMethod.Deflate)
+  if not decompressed then return "Error decompressing." end
+  return C_EncodingUtil.DeserializeCBOR(decompressed) or "Error deserializing."
 end
 
 MDT.transmissionCache = {}
@@ -202,7 +170,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
     receipt.status = "Decoding route"
-    local preset = MDT:StringToTable(message, false)
+    local preset = MDT:StringToTable(message)
     receipt.decodedType = type(preset)
     if type(preset) == "string" then receipt.decodeError = preset end
     if type(preset) == "table" then
@@ -267,7 +235,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.pull then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local pulls = MDT:StringToTable(message, false)
+      local pulls = MDT:StringToTable(message)
+      if type(pulls) ~= "table" then return end
       preset.value.pulls = pulls
       if not preset.value.pulls[preset.value.currentPull] then
         preset.value.currentPull = #preset.value.pulls
@@ -299,7 +268,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.poiAssignment then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local deserialized = MDT:StringToTable(message, false)
+      local deserialized = MDT:StringToTable(message)
       if deserialized and type(deserialized) == "table" then
         local sublevel, poiIdx, value = unpack(deserialized)
         preset.value.poiAssignments = preset.value.poiAssignments or {}
@@ -359,7 +328,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.obj then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local obj = MDT:StringToTable(message, false)
+      local obj = MDT:StringToTable(message)
+      if type(obj) ~= "table" then return end
       MDT:StorePresetObject(obj, true, preset)
       if preset == MDT:GetCurrentPreset() then
         local scale = MDT:GetScale()
@@ -387,7 +357,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.objChg then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local changedObjects = MDT:StringToTable(message, false)
+      local changedObjects = MDT:StringToTable(message)
       if changedObjects and type(changedObjects) == "table" then
         for objIdx, obj in pairs(changedObjects) do
           preset.objects[objIdx] = obj
@@ -431,15 +401,14 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --preset
   if prefix == MDT.liveSessionPrefixes.preset then
     if MDT.liveSessionActive then
-      local preset = MDT:StringToTable(message, false)
+      local preset = MDT:StringToTable(message)
+      if not MDT:ValidateImportPreset(preset) then return end
       local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
       local displayName = dungeon..": "..preset.text
       MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
       MDT.transmissionCache[fullName][displayName] = preset
-      if MDT:ValidateImportPreset(preset) then
-        MDT.livePresetUID = preset.uid
-        MDT:ImportPreset(preset, true)
-      end
+      MDT.livePresetUID = preset.uid
+      MDT:ImportPreset(preset, true)
     end
   end
 end

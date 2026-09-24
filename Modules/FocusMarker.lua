@@ -982,7 +982,7 @@ end
 function MDT:FocusMarker_OnCommReceived(message, senderFullName)
   if senderFullName == getPlayerFullName() then return end
 
-  local payload = self:StringToTable(message, false)
+  local payload = self:StringToTable(message)
   if type(payload) ~= "table" then return end
 
   if payload.kind == FOCUS_MARKER_KIND_STATE_REQUEST then
