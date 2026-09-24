@@ -34,6 +34,16 @@ MDT.mapPOIs[dungeonIndex] = {
       ["y"] = -107.6,
       ["sizeMult"] = 1.5,
     },
+    [2] = {
+      ["type"] = "genericItem",
+      ["x"] = 796.3,
+      ["y"] = -435.8,
+      ["info"] = {
+        ["texture"] = 136242,
+        ["spellId"] = 1310012,
+        ["size"] = 15,
+      },
+    },
   },
 };
 
