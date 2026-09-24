@@ -1961,24 +1961,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
   },
   [29] = {
-    ["name"] = "Magma Totem",
-    ["id"] = 248666,
-    ["count"] = 0,
-    ["health"] = 441313,
-    ["scale"] = 1,
-    ["displayId"] = 30762,
-    ["creatureType"] = "Not specified",
-    ["level"] = 90,
-    ["spells"] = {
-      [1246821] = {
-      },
-      [1246825] = {
-      },
-    },
-    ["clones"] = {
-    },
-  },
-  [30] = {
     ["name"] = "Ethereal Shade",
     ["id"] = 254677,
     ["count"] = 0,
@@ -2006,7 +1988,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [31] = {
+  [30] = {
     ["name"] = "Targeting Stalker",
     ["id"] = 255000,
     ["count"] = 0,
@@ -2030,7 +2012,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
     },
   },
-  [32] = {
+  [31] = {
     ["name"] = "Gravitic Orb",
     ["id"] = 255001,
     ["count"] = 0,
