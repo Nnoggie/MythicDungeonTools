@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "Nutzbar von Nachtelfen, Tauren, Hochbergtauren
 L["prioryItemDescription"] = "Nutzbar von Priestern oder |cFFF48CBAPaladinen|r"
 L["redoDrawing"] = "Zeichnung wiederholen"
 L["rookItemDescription"] = "Nach dem Besiegen von |cFFFF0000Kyrioss|r die |cFF00FF00Sturmkrähenfeder|r aufnehmen.\nWende sie auf eine in der Nähe befindliche |cFF00FF00Angekettete Sturmkrähe|r an, um diesen Buff für 5 Minuten zu erhalten."
+L["routeIncomplete"] = "Die Route von %s ist nicht vollständig angekommen. Bitte darum, sie erneut zu senden."
 L["rubyLifePoolsShortName"] = "RLP"
 L["seatItemA"] = "Die meisten Gegner erhalten beim Betreten des Leerenbereichs diesen Buff"
 L["seatOfTheTriumvirateShortName"] = "SITZ"

@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "夜精靈、牛頭人、高嶺牛頭人、德�
 L["prioryItemDescription"] = "Usable by Priests or |cFFF48CBAPaladin|r"
 L["redoDrawing"] = "重做繪圖"
 L["rookItemDescription"] = "擊敗 |cFFFF0000Kyrioss|r 後拾取 |cFF00FF00Stormrook Feather|r \n對附近的 |cFF00FF00Chained Stormrook|r 使用，可獲得此增益效果 5 分鐘。"
+L["routeIncomplete"] = "來自%s的路線未完整接收。請讓對方重新傳送路線。"
 L["rubyLifePoolsShortName"] = "晶紅"
 L["seatItemA"] = "大多數敵人踏入虛無區域時會獲得此增益效果"
 L["seatOfTheTriumvirateShortName"] = "三傑"

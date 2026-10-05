@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "Utilizzabile da Elfi della Notte, Tauren, Taur
 L["prioryItemDescription"] = "Utilizzabile dai Sacerdoti o |cFFF48CBAPaladini|r"
 L["redoDrawing"] = "Rifare il disegno"
 L["rookItemDescription"] = "Dopo aver sconfitto |cFFFF0000Kyrioss|r bottino |cFF00FF00Stormrook Feather|r \nUsalo su un vicino |cFF00FF00Chained Stormrook|r per ottenere questo buff per 5 minuti."
+L["routeIncomplete"] = "Il percorso di %s non è arrivato completo. Chiedi di inviarlo di nuovo."
 L["rubyLifePoolsShortName"] = "RLP"
 L["seatItemA"] = "La maggior parte dei nemici ottiene questo potenziamento quando entra nell'area del Vuoto"
 L["seatOfTheTriumvirateShortName"] = "SEDE"

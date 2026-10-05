@@ -804,6 +804,7 @@ L["overgrownRootsDescription"] = "Usable by Night Elves, Tauren, Highmountain Ta
 L["prioryItemDescription"] = "Usable by Priests or |cFFF48CBAPaladins|r"
 L["redoDrawing"] = "Redo Drawing"
 L["rookItemDescription"] = "After defeating |cFFFF0000Kyrioss|r loot |cFF00FF00Stormrook Feather|r \nUse it on a nearby |cFF00FF00Chained Stormrook|r to gain this buff for 5 minutes."
+L["routeIncomplete"] = "The route from %s did not arrive completely. Ask them to send it again."
 L["rubyLifePoolsShortName"] = "RLP"
 L["seatItemA"] = "Most enemies gain this buff when stepping into the Void area"
 L["seatOfTheTriumvirateShortName"] = "SEAT"

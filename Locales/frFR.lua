@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "Utilisable par les Elfes de la nuit, les Taure
 L["prioryItemDescription"] = "Utilisable par les Prêtre ou les |cFFF48CBAPaladin|r"
 L["redoDrawing"] = "Refaire le dessin"
 L["rookItemDescription"] = "Après avoir vaincu |cFFFF0000Kyrioss|r, récupérez la |cFF00FF00Plume de freux de la tempête|r.\nUtilisez-la sur un |cFF00FF00Freux de la tempête enchaîné|r à proximité pour obtenir ce bonus pendant 5 minutes."
+L["routeIncomplete"] = "L'itinéraire de %s n'est pas arrivé en entier. Demandez-lui de le renvoyer."
 L["rubyLifePoolsShortName"] = "RLP"
 L["seatItemA"] = "La plupart des ennemis obtiennent ce buff lorsqu'ils entrent dans la zone du Vide."
 L["seatOfTheTriumvirateShortName"] = "SIÈGE"

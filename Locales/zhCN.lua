@@ -807,6 +807,7 @@ L["overgrownRootsDescription"] = "可由 暗夜精灵、牛头人、至高岭牛
 L["prioryItemDescription"] = "可由牧师 或 |cFFF48CBA圣骑士|r开启"
 L["redoDrawing"] = "重做绘图"
 L["rookItemDescription"] = "在击败|cFFFF0000凯里欧斯|r后,拾取|cFF00FF00雷鸫之羽|r\n对着周围的|cFF00FF00缚链雷鸫|r使用,来获得此增益,持续5分钟."
+L["routeIncomplete"] = "来自%s的路线未完整接收。请让对方重新发送路线。"
 L["rubyLifePoolsShortName"] = "红玉"
 L["seatItemA"] = "大多数怪物踏入虚空区域(地图边的黑水)时 会获得此BUFF"
 L["seatOfTheTriumvirateShortName"] = "执政"

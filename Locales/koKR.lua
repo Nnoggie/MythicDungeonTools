@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "나이트 엘프, 타우렌, 높은산 타우�
 L["prioryItemDescription"] = "사제 또는 |cFFF48CBA성기사|r인 경우 사용 가능합니다."
 L["redoDrawing"] = "취소한 작업을 다시 복구 합니다."
 L["rookItemDescription"] = "|cFFFF0000키리오스|r 전리품 |cFF00FF00폭풍루크 깃털|r \n이를 근처의 |cFF00FF00사슬에 묶인 폭풍루크|r에 사용하면 5분 동안 이 버프를 얻을 수 있습니다."
+L["routeIncomplete"] = "%s님의 경로가 완전히 도착하지 않았습니다. 경로를 다시 보내 달라고 요청하세요."
 L["rubyLifePoolsShortName"] = "루생웅"
 L["seatItemA"] = "대부분의 적들은 공허 지역에 들어서면 이 버프를 얻습니다."
 L["seatOfTheTriumvirateShortName"] = "삼두정"

@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "Может использоваться ноч
 L["prioryItemDescription"] = "Может использоваться Жрецами или |cFFF48CBAПаладинами|r"
 L["redoDrawing"] = "Нарисовать заново"
 L["rookItemDescription"] = "После победы над |cFFFF0000Кириоссом|r добудьте |cFF00FF00Перо буреклюва|r.\nИспользуйте его на ближайшем |cFF00FF00Скованном буреклюве|r, чтобы получить этот эффект на 5 минут."
+L["routeIncomplete"] = "Маршрут от %s получен не полностью. Попросите отправить его ещё раз."
 L["rubyLifePoolsShortName"] = "РОЖ"
 L["seatItemA"] = "Большинство врагов получают этот бафф, когда попадают в область Пустоты"
 L["seatOfTheTriumvirateShortName"] = "ПТ"

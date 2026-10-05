@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "Utilizable por elfos de la noche, tauren, taur
 L["prioryItemDescription"] = "Utilizable por sacerdotes o |cFFF48CBAPaladines|r"
 L["redoDrawing"] = "Rehacer dibujo"
 L["rookItemDescription"] = "Después de derrotar a |cFFFF0000Kyrioss|r, obtén el botín |cFF00FF00Stormrook Feather|r \nÚsalo en un |cFF00FF00Chained Stormrook|r cercano para obtener este beneficio durante 5 minutos."
+L["routeIncomplete"] = "La ruta de %s no llegó completa. Pídele que la envíe de nuevo."
 L["rubyLifePoolsShortName"] = "RUBI"
 L["seatItemA"] = "La mayoría de los enemigos obtienen este beneficio al entrar en el área del Vacío."
 L["seatOfTheTriumvirateShortName"] = "ASIENTO"

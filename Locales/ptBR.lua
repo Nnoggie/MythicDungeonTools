@@ -808,6 +808,7 @@ L["overgrownRootsDescription"] = "Utilizável por elfos noturnos, taurens, taure
 L["prioryItemDescription"] = "Utilizável por sacerdotes ou |cFFF48CBAPaladinos|r"
 L["redoDrawing"] = "Refazer desenho"
 L["rookItemDescription"] = "Após derrotar |cFFFF0000Kyrioss|r, saqueie a |cFF00FF00Stormrook Feather|r. \nUse-a em um |cFF00FF00Chained Stormrook|r próximo para receber este bônus por 5 minutos."
+L["routeIncomplete"] = "A rota de %s não chegou completa. Peça para enviá-la novamente."
 L["rubyLifePoolsShortName"] = "RLP"
 L["seatItemA"] = "A maioria dos inimigos recebe este bônus ao entrar na área do Caos"
 L["seatOfTheTriumvirateShortName"] = "SEAT"
