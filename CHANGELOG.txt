@@ -1,6 +1,4 @@
-## 6.2.20 (2026-09-25)
+## 6.2.21 (2026-10-05)
 
-- Backend changes
-- Added a Mutating Elixir map icon in Altar of Fangs.
-- Added Warding Incense and Rune of Anchoring map icons in Den of Nalorakk.
-- Added Proof of Endurance and Proof of Mastery map icons above the enemies that grant them in Voidscar Arena.
+- Clicking a shared route that did not fully arrive now shows a chat message asking you to have the route sent again, instead of an error window.
+- Fixed an error window appearing when drawing or setting a new route during a Live Session.

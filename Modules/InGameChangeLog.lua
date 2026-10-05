@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.2.21",
+    date = "2026-10-05",
+    notes = {
+      "Clicking a shared route that did not fully arrive now shows a chat message asking you to have the route sent again, instead of an error window.",
+      "Fixed an error window appearing when drawing or setting a new route during a Live Session.",
+    },
+  },
+  {
     tag = "6.2.20",
     date = "2026-09-25",
     notes = {
@@ -17,13 +25,6 @@ MDT.changeLog = {
     notes = {
       "Fixed overlapping enemy blips visuals",
       "Corrected G34 Living Venom positions and added two missing Living Venoms in Altar of Fangs.",
-    },
-  },
-  {
-    tag = "6.2.18",
-    date = "2026-09-21",
-    notes = {
-      "Corrected positions of G62 and a Devouring Brutalizer in Voidscar Arena.",
     },
   },
 }
