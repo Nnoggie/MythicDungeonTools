@@ -157,9 +157,9 @@ function MDT:LiveSession_SendObject(obj)
     local distribution = self:IsPlayerInGroup()
     if distribution then
       local export = MDT:TableToString(obj)
-      local silent, fromLiveSession = true, true
+      local silent = true
       MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.obj, export, distribution, nil, "BULK", MDT.displaySendingProgress,
-        { distribution, nil, silent, fromLiveSession })
+        { distribution, nil, silent })
     end
   end
 end
@@ -217,9 +217,9 @@ function MDT:LiveSession_SendPreset(preset)
     self:EnsurePresetCreatedBy(preset)
     preset.difficulty = db.currentDifficulty
     local export = MDT:TableToString(preset)
-    local silent, fromLiveSession = true, true
+    local silent = true
     MDTcommsObject:SendCommMessage(self.liveSessionPrefixes.preset, export, distribution, nil, "BULK", MDT.displaySendingProgress,
-      { distribution, preset, silent, fromLiveSession })
+      { distribution, preset, silent })
   end
 end
 
