@@ -256,6 +256,9 @@ end
 
 ---Deletes objects from the current preset in the current sublevel
 function MDT:DeletePresetObjects(preset, silent)
+  --finish editing first, a text that was never stored is dropped with everything else
+  --deletions from the live session are silent and leave the own edit alone
+  if not silent then MDT:ClearPresetTextSelection(true) end
   preset = preset or self:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   local currentSublevel = self:GetCurrentSubLevel()

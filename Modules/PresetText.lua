@@ -210,12 +210,12 @@ local function storeTextObject(preset, obj)
   return storedObj
 end
 
-local function deleteTextObject(preset, objectIndex)
+local function deleteTextObject(preset, objectIndex, noRedraw)
   --pending updates refer to indices that are about to shift
   flushPendingUpdates()
   MDT:RemovePresetObject(preset, objectIndex)
   if canSendToLiveSession(preset) then MDT:LiveSession_SendNoteCommand("delete", objectIndex, "0", nil, preset) end
-  MDT:DrawAllPresetObjects()
+  if not noRedraw then MDT:DrawAllPresetObjects() end
 end
 
 ---Texts can be selected and moved without a tool and with the tools that work on them
@@ -338,8 +338,8 @@ local function closeEditor()
 end
 
 ---Stores the text currently being edited, empty texts are removed
----keepSelected leaves the text selected afterwards
-function MDT:CommitPresetTextEdit(keepSelected)
+---keepSelected leaves the text selected afterwards, noRedraw leaves redrawing to the caller
+function MDT:CommitPresetTextEdit(keepSelected, noRedraw)
   if not editing then return end
   local state = editing
   local text = textEditor:GetText():gsub("^%s+", ""):gsub("%s+$", "")
@@ -358,7 +358,7 @@ function MDT:CommitPresetTextEdit(keepSelected)
     if objectIndex then
       if isEmpty then
         selectText(nil, nil)
-        deleteTextObject(state.preset, objectIndex)
+        deleteTextObject(state.preset, objectIndex, noRedraw)
         return
       elseif text ~= state.obj.d[5] or state.styleChanged then
         state.obj.d[5] = text
@@ -372,12 +372,14 @@ function MDT:CommitPresetTextEdit(keepSelected)
   else
     selectText(nil, nil)
   end
-  MDT:DrawAllPresetObjects()
+  if not noRedraw then MDT:DrawAllPresetObjects() end
 end
 
 ---Finishes editing and clears the selection, returns true if a text was selected or edited
-function MDT:ClearPresetTextSelection()
+---discardNew drops a text that was never stored instead of storing it
+function MDT:ClearPresetTextSelection(discardNew)
   local hadSelection = editing ~= nil or selectedObj ~= nil
+  if discardNew and editing and editing.isNew then closeEditor() end
   MDT:CommitPresetTextEdit()
   if selectedObj then selectText(nil, nil) end
   return hadSelection
@@ -385,7 +387,9 @@ end
 
 ---Drops selection and editing when their preset, sublevel or object are gone
 function MDT:ValidatePresetTextSelection()
-  if editing and (editing.preset ~= MDT:GetCurrentPreset() or editing.obj.d[3] ~= MDT:GetCurrentSubLevel()) then
+  --an undo can hide the text that is being edited
+  if editing and (editing.preset ~= MDT:GetCurrentPreset() or editing.obj.d[3] ~= MDT:GetCurrentSubLevel()
+        or (not editing.isNew and not editing.obj.d[4])) then
     MDT:CommitPresetTextEdit()
   end
   if selectedObj and (selectedPreset ~= MDT:GetCurrentPreset() or selectedObj.d[3] ~= MDT:GetCurrentSubLevel()
@@ -394,8 +398,10 @@ function MDT:ValidatePresetTextSelection()
   end
 end
 
+---Hides texts while the window is resized like other drawings, the map is redrawn once resizing ends
 function MDT:HidePresetTexts()
-  MDT:ClearPresetTextSelection()
+  MDT:CommitPresetTextEdit(false, true)
+  if selectedObj then selectText(nil, nil) end
   for _, frame in ipairs(activeTextFrames) do
     frame:Hide()
   end
@@ -625,6 +631,9 @@ local function insertTag(tag)
   colorSelection = nil
   editor:SetFocus()
   editor:SetCursorPosition(min(editorCursorPosition or #editor:GetText(), #editor:GetText()))
+  --a tag cut by the letter limit would show up as broken text
+  local length = strlenutf8 and strlenutf8(editor:GetText()) or #editor:GetText()
+  if length + #tag > MAX_TEXT_LENGTH then return end
   editor:Insert(tag)
 end
 
@@ -1080,7 +1089,8 @@ function openEditor(preset, obj, isNew)
   selectText(nil, nil)
   --the font has to be set before any text
   refreshEditorStyle()
-  editor:SetText(obj.d[5] or "")
+  --texts colored with the style bar can be longer than the letter limit
+  setEditorText(obj.d[5] or "")
   editorCursorPosition = #editor:GetText()
   editor:Show()
   editor:SetFocus()
@@ -1226,6 +1236,14 @@ function createTextFrame()
     end
   end)
   frame:SetScript("OnMouseDown", function(self, button)
+    if button == "RightButton" then
+      --right drag pans the map like everywhere else on it, a right click without moving opens the menu
+      self.rightDownX, self.rightDownY = GetCursorPosition()
+      local scrollFrame = MDT.main_frame.scrollFrame
+      local onMouseDown = scrollFrame:GetScript("OnMouseDown")
+      if onMouseDown then onMouseDown(scrollFrame, button) end
+      return
+    end
     if button ~= "LeftButton" or not self.obj then return end
     if MDT:GetCurrentToolbarTool() == "eraser" then
       local preset = MDT:GetCurrentPreset()
@@ -1242,6 +1260,8 @@ function createTextFrame()
     self:SetScript("OnUpdate", updateDrag)
   end)
   frame:SetScript("OnMouseUp", function(self, button)
+    --end a map pan that was started on this text
+    if button == "RightButton" then MDT.main_frame.scrollFrame.panning = false end
     if not self.obj then return end
     local obj = self.obj
     local preset = MDT:GetCurrentPreset()
@@ -1261,7 +1281,11 @@ function createTextFrame()
         selectText(preset, obj)
       end
     elseif button == "RightButton" then
-      if not findObjectIndex(preset, obj) then return end
+      local x, y = GetCursorPosition()
+      local moved = not self.rightDownX or abs(x - self.rightDownX) > DRAG_THRESHOLD
+          or abs(y - self.rightDownY) > DRAG_THRESHOLD
+      self.rightDownX, self.rightDownY = nil, nil
+      if moved or not findObjectIndex(preset, obj) then return end
       MDT:CommitPresetTextEdit()
       selectText(preset, obj)
       openContextMenu(preset, obj)
