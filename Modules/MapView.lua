@@ -737,13 +737,14 @@ end
 
 ---@param zoneId number
 ---@param subzoneText? string
----@return number?
+---@return number? dungeonIdx
+---@return boolean? isSubzoneMatch
 function MDT:GetDungeonIdxForZone(zoneId, subzoneText)
   local locations = dungeonLocationsByZone[zoneId]
   if locations and subzoneText and subzoneText ~= "" then
     for _, location in ipairs(locations) do
       for _, areaID in ipairs(location.subzoneAreaIDs or {}) do
-        if subzoneText == C_Map.GetAreaInfo(areaID) then return location.dungeonIdx end
+        if subzoneText == C_Map.GetAreaInfo(areaID) then return location.dungeonIdx, true end
       end
     end
   end
@@ -752,18 +753,28 @@ end
 
 ---@return number? dungeonIdx
 ---@return number? zoneId
+---@return boolean? isSubzoneMatch
 function MDT:GetDungeonIdxForCurrentLocation()
   local zoneId = C_Map.GetBestMapForUnit("player")
   if not zoneId then return end
-  return MDT:GetDungeonIdxForZone(zoneId, GetSubZoneText()), zoneId
+  local dungeonIdx, isSubzoneMatch = MDT:GetDungeonIdxForZone(zoneId, GetSubZoneText())
+  return dungeonIdx, zoneId, isSubzoneMatch
+end
+
+---true for outdoor zones like Eversong Woods, false for dungeon maps and entrance areas
+local function isWorldZone(zoneId)
+  local mapInfo = C_Map.GetMapInfo(zoneId)
+  return mapInfo ~= nil and mapInfo.mapType <= Enum.UIMapType.Zone
 end
 
 function MDT:CheckCurrentZone(init)
   initializeDB()
   if C_ChallengeMode.IsChallengeModeActive() then return end
-  local dungeonIdx, zoneId = MDT:GetDungeonIdxForCurrentLocation()
+  local dungeonIdx, zoneId, isSubzoneMatch = MDT:GetDungeonIdxForCurrentLocation()
   if not dungeonIdx or zoneId == autoSelectedZoneId then return end
-  if not tContains(MDT.dungeonSelectionToIndex[1] or {}, dungeonIdx) then return end
+  --anywhere else in an outdoor zone only switch to dungeons of the latest season
+  local isLatestSeason = tContains(MDT.dungeonSelectionToIndex[1] or {}, dungeonIdx)
+  if not isSubzoneMatch and isWorldZone(zoneId) and not isLatestSeason then return end
   autoSelectedZoneId = zoneId
   MDT:UpdateToDungeon(dungeonIdx, nil, init)
   MDT:SetDungeonList(nil, dungeonIdx)
