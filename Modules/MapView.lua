@@ -763,6 +763,7 @@ function MDT:CheckCurrentZone(init)
   if C_ChallengeMode.IsChallengeModeActive() then return end
   local dungeonIdx, zoneId = MDT:GetDungeonIdxForCurrentLocation()
   if not dungeonIdx or zoneId == autoSelectedZoneId then return end
+  if not tContains(MDT.dungeonSelectionToIndex[1] or {}, dungeonIdx) then return end
   autoSelectedZoneId = zoneId
   MDT:UpdateToDungeon(dungeonIdx, nil, init)
   MDT:SetDungeonList(nil, dungeonIdx)
