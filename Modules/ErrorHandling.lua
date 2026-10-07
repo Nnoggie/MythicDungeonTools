@@ -119,37 +119,39 @@ function MDT:DisplayErrors(force)
     errorFrame:AddChild(errorFrame.label)
 
     for _, dest in ipairs(MDT.externalLinks) do
-      errorFrame[dest.name.."EditBox"] = AceGUI:Create("EditBox")
-      local editBox = errorFrame[dest.name.."EditBox"]
-      local copyButton
-      editBox:SetLabel(dest.name..":")
-      editBox:DisableButton(true)
-      editBox:SetText(dest.url)
-      editBox:SetCallback("OnTextChanged", function()
+      if not dest.hideInErrorFrame then
+        errorFrame[dest.name.."EditBox"] = AceGUI:Create("EditBox")
+        local editBox = errorFrame[dest.name.."EditBox"]
+        local copyButton
+        editBox:SetLabel(dest.name..":")
+        editBox:DisableButton(true)
         editBox:SetText(dest.url)
-      end)
+        editBox:SetCallback("OnTextChanged", function()
+          editBox:SetText(dest.url)
+        end)
 
-      editBox:SetWidth(400)
-      editBox.editbox:HookScript('OnEditFocusLost', function()
-        stopCopyAction(copyButton)
-      end);
-      editBox.editbox:SetScript('OnKeyUp', function(_, key)
-        if (MDT.copyHelper:WasControlKeyDown() and key == 'C') then
-          MDT.copyHelper:SmartFadeOut()
-          editBox:ClearFocus();
-        else
-          MDT.copyHelper:SmartHide()
-        end
-      end);
-      errorFrame[dest.name.."CopyButton"] = AceGUI:Create("Button")
-      copyButton = errorFrame[dest.name.."CopyButton"]
-      copyButton:SetText(L["Copy"])
-      copyButton:SetWidth(100)
-      copyButton:SetCallback("OnClick", function(widget, callbackName, value)
-        startCopyAction(editBox, copyButton, dest.url)
-      end)
-      errorFrame:AddChild(editBox)
-      errorFrame:AddChild(copyButton)
+        editBox:SetWidth(400)
+        editBox.editbox:HookScript('OnEditFocusLost', function()
+          stopCopyAction(copyButton)
+        end);
+        editBox.editbox:SetScript('OnKeyUp', function(_, key)
+          if (MDT.copyHelper:WasControlKeyDown() and key == 'C') then
+            MDT.copyHelper:SmartFadeOut()
+            editBox:ClearFocus();
+          else
+            MDT.copyHelper:SmartHide()
+          end
+        end);
+        errorFrame[dest.name.."CopyButton"] = AceGUI:Create("Button")
+        copyButton = errorFrame[dest.name.."CopyButton"]
+        copyButton:SetText(L["Copy"])
+        copyButton:SetWidth(100)
+        copyButton:SetCallback("OnClick", function(widget, callbackName, value)
+          startCopyAction(editBox, copyButton, dest.url)
+        end)
+        errorFrame:AddChild(editBox)
+        errorFrame:AddChild(copyButton)
+      end
     end
 
     local errorBox, errorBoxCopyButton
@@ -205,6 +207,8 @@ function MDT:DisplayErrors(force)
       errorButton.tooltipText = L["encounteredErrors"]
       errorButton:SetWidth(24)
       errorButton:SetImageSize(20, 20)
+      local restoreHighlight = MDT:ReplaceIconHighlight(errorButton)
+      errorButton:SetCallback("OnRelease", restoreHighlight)
       errorButton:SetCallback("OnEnter", function(widget, callbackName)
         MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
       end)

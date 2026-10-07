@@ -432,6 +432,7 @@ function MDT:MakeTopBottomTextures(frame)
     MDT:ToggleVersionCheckFrame()
     MDT:ToggleToolbarTooltip(false)
   end)
+  MDT:CreateHoverHighlight(clickArea, 3)
   clickArea.tooltipText = L["Open changelog / version check"]
   clickArea:SetScript("OnEnter", function()
     local widget = {

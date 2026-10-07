@@ -93,8 +93,6 @@ function MDT:initToolbar(frame)
     self:PresetObjectStepBack()
   end)
   back.tooltipText = L["Undo"]
-  local t = back.frame:CreateTexture(nil, "ARTWORK", nil, 0)
-  back.frame:SetHighlightTexture(t)
   tinsert(widgets, back)
 
   ---forward
@@ -248,6 +246,9 @@ function MDT:initToolbar(frame)
     widget:SetWidth(widgetWidth)
     if widget.type == "EditBox" then widget:SetWidth(30) end
     if widget.SetImageSize then widget:SetImageSize(20, 20) end
+    if widget.type == "Icon" then
+      widget:SetCallback("OnRelease", MDT:ReplaceIconHighlight(widget))
+    end
     widget:SetCallback("OnEnter", function(widget, callbackName)
       MDT:ToggleToolbarTooltip(true, widget)
     end)

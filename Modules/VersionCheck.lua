@@ -126,7 +126,7 @@ function MDT:UpdateVersionCheckDisplay()
     versionText:SetText(bottomText)
     versionText:SetTextColor(unpack(bottomColor))
     if versionText.clickArea then
-      versionText.clickArea:SetWidth(math.max(50, versionText:GetStringWidth() + 8))
+      versionText.clickArea:SetWidth(versionText:GetStringWidth() + 3)
     end
   end
 

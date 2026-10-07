@@ -17,9 +17,18 @@ MDT.externalLinks = {
   },
   {
     name = "Patreon",
+    hideInErrorFrame = true,
     tooltip = L["Support MDT on Patreon"],
     url = "https://www.patreon.com/nnoggie",
     texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\patreon", 0, 1, 0, 1 },
+  },
+  {
+    name = "Donate",
+    hideInErrorFrame = true,
+    label = L["Donate"],
+    tooltip = L["Support MDT with a donation"],
+    url = "https://streamlabs.com/nnoggie/tip",
+    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\donate", 0, 1, 0, 1 },
   },
 }
 
@@ -113,6 +122,36 @@ function MDT:CreateCopyableLinkRow(parent, name, url, options)
   return row
 end
 
+---Sets the button's highlight texture to match the navigation sidebar hover, inset vertically by yInset
+function MDT:CreateHoverHighlight(button, yInset)
+  yInset = yInset or 0
+  local highlight = button:CreateTexture(nil, "HIGHLIGHT", nil, 0)
+  highlight:SetPoint("TOPLEFT", 0, -yInset)
+  highlight:SetPoint("BOTTOMRIGHT", 0, yInset)
+  highlight:SetColorTexture(1, 1, 1, 0.08)
+  button:SetHighlightTexture(highlight)
+  return highlight
+end
+
+---Replaces the default glow of an AceGUI Icon widget with our hover highlight
+---@return function restore restores the default glow, call when the widget is released
+function MDT:ReplaceIconHighlight(iconWidget)
+  local defaultHighlight
+  for _, region in ipairs({ iconWidget.frame:GetRegions() }) do
+    if region:IsObjectType("Texture") and region:GetDrawLayer() == "HIGHLIGHT" then
+      defaultHighlight = region
+      break
+    end
+  end
+  if defaultHighlight then defaultHighlight:Hide() end
+  local highlight = MDT:CreateHoverHighlight(iconWidget.frame, 3)
+  return function()
+    iconWidget.frame:ClearHighlightTexture()
+    highlight:Hide()
+    if defaultHighlight then defaultHighlight:Show() end
+  end
+end
+
 function MDT:CreateExternalLinkButtons(frame)
   local externalButtonGroup = AceGUI:Create("SimpleGroup")
   MDT:FixAceGUIShowHide(externalButtonGroup, frame)
@@ -122,8 +161,10 @@ function MDT:CreateExternalLinkButtons(frame)
     Mixin(externalButtonGroup.frame, BackdropTemplateMixin)
   end
   externalButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
-  externalButtonGroup:SetHeight(40)
-  externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", 0, 0)
+  -- Flow adds a 3px gap above the 30px icon row, pad the bottom to match so icons center on the version text
+  externalButtonGroup.noAutoHeight = true
+  externalButtonGroup:SetHeight(36)
+  externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", 3, 0)
   externalButtonGroup:SetLayout("Flow")
   externalButtonGroup.frame:SetFrameStrata("High")
   externalButtonGroup.frame:SetFrameLevel(7)
@@ -140,6 +181,26 @@ function MDT:CreateExternalLinkButtons(frame)
     button.tooltipText = dest.tooltip
     button:SetWidth(24)
     button:SetImageSize(20, 20)
+    local restoreHighlight = MDT:ReplaceIconHighlight(button)
+    local labelText
+    if dest.label then
+      labelText = button.frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+      labelText:SetTextColor(1, 1, 1, 1)
+      labelText:SetText(dest.label)
+      labelText:SetPoint("LEFT", button.image, "RIGHT", 3, 0)
+      button.image:ClearAllPoints()
+      button.image:SetPoint("TOPLEFT", 2, -5)
+      button:SetWidth(24 + 3 + labelText:GetStringWidth())
+    end
+    -- restore the pooled Icon widget's default layout
+    button:SetCallback("OnRelease", function(widget)
+      if labelText then
+        labelText:Hide()
+        widget.image:ClearAllPoints()
+        widget.image:SetPoint("TOP", 0, -5)
+      end
+      restoreHighlight()
+    end)
     button:SetCallback("OnEnter", function(widget)
       MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
     end)
@@ -156,7 +217,7 @@ function MDT:ShowExternalLinkCopyFrame(link)
     MDT.externalLinkCopyFrame = frame
     frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(50)
-    frame:SetSize(300, 50)
+    frame:SetSize(420, 50)
     frame:EnableMouse(true)
     frame.bgTex = frame:CreateTexture(nil, "BACKGROUND", nil, 0)
     frame.bgTex:SetAllPoints()
@@ -172,7 +233,7 @@ function MDT:ShowExternalLinkCopyFrame(link)
     end)
 
     frame.linkRow = MDT:CreateCopyableLinkRow(frame, link.name, link.url, {
-      width = 258,
+      width = 378,
       buttonWidth = 64,
       point = true,
       xOffset = 10,
