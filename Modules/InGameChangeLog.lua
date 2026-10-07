@@ -2,6 +2,15 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.0",
+    date = "2026-10-07",
+    notes = {
+      "New Feature: Text tool. Write right on the map, style it with sizes, colors (including class colors) and backgrounds, and drop in spell, class, role and raid marker icons from a searchable picker or with tags like {spell:2825}. Texts sync in Live Sessions.",
+      "New Feature: Box selection. Hold Shift and left-drag on the map to draw a box that adds all unpulled enemies inside it to the current pull, together with their groups unless Ctrl is held.",
+      "Added Berry Bush, Barrel of Apples and Salmon Pool map icons in Den of Nalorakk. Enemies are now always drawn above map icons.",
+    },
+  },
+  {
     tag = "6.2.22",
     date = "2026-10-07",
     notes = {
@@ -14,16 +23,6 @@ MDT.changeLog = {
     notes = {
       "Clicking a shared route that did not fully arrive now shows a chat message asking you to have the route sent again, instead of an error window.",
       "Fixed an error window appearing when drawing or setting a new route during a Live Session.",
-    },
-  },
-  {
-    tag = "6.2.20",
-    date = "2026-09-25",
-    notes = {
-      "Backend changes",
-      "Added a Mutating Elixir map icon in Altar of Fangs.",
-      "Added Warding Incense and Rune of Anchoring map icons in Den of Nalorakk.",
-      "Added Proof of Endurance and Proof of Mastery map icons above the enemies that grant them in Voidscar Arena.",
     },
   },
 }
