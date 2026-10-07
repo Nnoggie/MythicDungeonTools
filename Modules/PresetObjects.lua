@@ -45,6 +45,7 @@ function MDT:ReleaseAllActiveTextures()
   end
   twipe(activeTextures)
   if noteFramePool then noteFramePool:ReleaseAll() end
+  MDT:ReleasePresetTexts()
 end
 
 function MDT:SetPresetNotesMovable(movable)
@@ -93,6 +94,7 @@ function MDT:SetPresetNotesMovable(movable)
 end
 
 ---scale if preset comes from live session
+---returns the stored copy of the object
 function MDT:StorePresetObject(obj, ignoreScale, preset)
   --adjust scale
   if not ignoreScale then
@@ -116,11 +118,13 @@ function MDT:StorePresetObject(obj, ignoreScale, preset)
       pos = pos - 1
     end
   end
+  local storedObj = CopyTable(obj)
   if pos > 1 then
-    tinsert(preset.objects, pos, CopyTable(obj))
+    tinsert(preset.objects, pos, storedObj)
   else
-    tinsert(preset.objects, CopyTable(obj))
+    tinsert(preset.objects, storedObj)
   end
+  return storedObj
 end
 
 ---excluding notes, these are handled in OverrideScrollFrameScripts
@@ -147,6 +151,7 @@ end
 
 ---Draws all Preset objects on the map canvas/sublevel
 function MDT:DrawAllPresetObjects()
+  MDT:ValidatePresetTextSelection()
   MDT:Async(function()
     self:ReleaseAllActiveTextures()
     coroutine.yield()
@@ -158,7 +163,8 @@ function MDT:DrawAllPresetObjects()
       self:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSublevel)
       coroutine.yield()
     end
-  end, "DrawAllPresetObjects")
+    --singleton: a new redraw cancels a running one, two at once would draw every object twice
+  end, "DrawAllPresetObjects", true)
 end
 
 ---Draws specific preset object
@@ -175,7 +181,9 @@ function MDT:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSub
   --l: x1,y1,x2,y2,...
   local color = {}
   if obj.d[3] == currentSublevel and obj.d[4] then
-    if obj.n then
+    if obj.tx then
+      self:DrawText(obj, objectIndex)
+    elseif obj.n then
       local x = obj.d[1] * scale
       local y = obj.d[2] * scale
       local text = obj.d[5]
@@ -238,8 +246,19 @@ function MDT:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSub
   end
 end
 
+---Removes a single object, later objects move down one index (matches live session note deletion)
+function MDT:RemovePresetObject(preset, objectIndex)
+  local obj = preset.objects[objectIndex]
+  tremove(preset.objects, objectIndex)
+  --table.remove does nothing past the array border when objects contains holes
+  if preset.objects[objectIndex] == obj then preset.objects[objectIndex] = nil end
+end
+
 ---Deletes objects from the current preset in the current sublevel
 function MDT:DeletePresetObjects(preset, silent)
+  --finish editing first, a text that was never stored is dropped with everything else
+  --deletions from the live session are silent and leave the own edit alone
+  if not silent then MDT:ClearPresetTextSelection(true) end
   preset = preset or self:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   local currentSublevel = self:GetCurrentSubLevel()
@@ -255,6 +274,12 @@ end
 function MDT:PresetObjectStepBack(preset, silent, ignoreLiveSession)
   --keybind can be pressed before the frames are initialized
   if not MDT:AreFramesInitialized() then return end
+  --finish an open text edit first so it is not sent as a side effect of the undo,
+  --undo while typing a new text only drops that text, undo after emptying a text only deletes that text
+  if not ignoreLiveSession then
+    local _, discardedNew, deletedText = MDT:ClearPresetTextSelection(true)
+    if discardedNew or deletedText then return end
+  end
   preset = preset or self:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   preset.objects = preset.objects or {}
@@ -277,6 +302,12 @@ end
 ---Redo the latest drawing
 function MDT:PresetObjectStepForward(preset, silent, ignoreLiveSession)
   if not MDT:AreFramesInitialized() then return end
+  --finish an open text edit first so it is not sent as a side effect of the redo,
+  --a new text that is being typed is kept and the redo is ignored
+  if not ignoreLiveSession then
+    if MDT:IsEditingNewPresetText() then return end
+    MDT:ClearPresetTextSelection()
+  end
   preset = preset or MDT:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   preset.objects = preset.objects or {}
@@ -337,6 +368,8 @@ function MDT:HideAllPresetObjects()
       note:Hide()
     end
   end
+  --texts
+  MDT:HidePresetTexts()
 end
 
 ---StopMovingDrawing
@@ -496,7 +529,7 @@ end
 
 local function deleteNoteObj(note)
   local currentPreset = MDT:GetCurrentPreset()
-  tremove(currentPreset.objects, note.objectIndex)
+  MDT:RemovePresetObject(currentPreset, note.objectIndex)
   if MDT.liveSessionActive then MDT:LiveSession_SendNoteCommand("delete", note.objectIndex, "0") end
   MDT:DrawAllPresetObjects()
 end

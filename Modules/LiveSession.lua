@@ -151,9 +151,9 @@ function MDT:LiveSession_SendPing(x, y, sublevel)
   end
 end
 
----Sends a preset object
-function MDT:LiveSession_SendObject(obj)
-  if self:GetCurrentPreset().uid == self.livePresetUID then
+---Sends a preset object, preset defaults to the current preset
+function MDT:LiveSession_SendObject(obj, preset)
+  if (preset or self:GetCurrentPreset()).uid == self.livePresetUID then
     local distribution = self:IsPlayerInGroup()
     if distribution then
       local export = MDT:TableToString(obj)
@@ -176,8 +176,8 @@ function MDT:LiveSession_SendObjectOffsets(objIdx, x, y)
 end
 
 ---Sends updated objects - instead of sending an update every time we erase a part of an object we send one message after mouse up
-function MDT:LiveSession_SendUpdatedObjects(changedObjects)
-  if self:GetCurrentPreset().uid == self.livePresetUID then
+function MDT:LiveSession_SendUpdatedObjects(changedObjects, preset)
+  if (preset or self:GetCurrentPreset()).uid == self.livePresetUID then
     local distribution = self:IsPlayerInGroup()
     if distribution then
       local export = MDT:TableToString(changedObjects)
@@ -197,8 +197,8 @@ function MDT:LiveSession_SendCommand(cmd)
 end
 
 ---Sends a note text update
-function MDT:LiveSession_SendNoteCommand(cmd, noteIdx, text, y)
-  if self:GetCurrentPreset().uid == self.livePresetUID then
+function MDT:LiveSession_SendNoteCommand(cmd, noteIdx, text, y, preset)
+  if (preset or self:GetCurrentPreset()).uid == self.livePresetUID then
     local distribution = self:IsPlayerInGroup()
     if distribution then
       text = text..":"..(y or "0")

@@ -117,6 +117,8 @@ end
 
 function MDT:OnPan(cursorX, cursorY)
   local scrollFrame = MDTScrollFrame
+  --a pan can start on a map text, which may be redrawn before it gets the mouse up
+  if scrollFrame.panning and not IsMouseButtonDown() then scrollFrame.panning = false end
   local scale = MDTMapPanelFrame:GetScale() / 1.5
   local deltaX = (scrollFrame.cursorX - cursorX) / scale
   local deltaY = (cursorY - scrollFrame.cursorY) / scale
@@ -370,6 +372,7 @@ end
 ---Handles mouse-down events on the map scrollframe
 MDT.OnMouseDown = function(self, button)
   local scrollFrame = MDT.main_frame.scrollFrame
+  if button == "LeftButton" then MDT:ClearPresetTextSelection() end
   if button == "LeftButton" and IsShiftKeyDown() and not db.devMode then
     MDT:DungeonEnemies_StartBoxSelection()
   elseif scrollFrame.zoomedIn then

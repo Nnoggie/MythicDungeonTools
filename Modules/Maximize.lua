@@ -6,6 +6,8 @@ local canvasDrawLayer = "BORDER"
 --Fullscreen the AddOn Window
 function MDT:Maximize()
   db = MDT:GetDB()
+  --the text editor is laid out for the old scale
+  MDT:ClearPresetTextSelection()
   sizex, sizey = MDT:GetDefaultMapPanelSize()
   local f = MDT.main_frame
 
@@ -63,6 +65,8 @@ end
 ---Restore normal AddOn Window
 function MDT:Minimize()
   db = MDT:GetDB()
+  --the text editor is laid out for the old scale
+  MDT:ClearPresetTextSelection()
   sizex, sizey = MDT:GetDefaultMapPanelSize()
   local f = MDT.main_frame
 
