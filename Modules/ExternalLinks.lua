@@ -136,17 +136,21 @@ end
 ---Replaces the default glow of an AceGUI Icon widget with our hover highlight
 ---@return function restore restores the default glow, call when the widget is released
 function MDT:ReplaceIconHighlight(iconWidget)
-  local defaultHighlight
-  for _, region in ipairs({ iconWidget.frame:GetRegions() }) do
-    if region:IsObjectType("Texture") and region:GetDrawLayer() == "HIGHLIGHT" then
-      defaultHighlight = region
-      break
+  local frame = iconWidget.frame
+  -- cache the default glow on first use, a pooled frame keeps our hidden highlights from earlier acquisitions
+  if not frame.mdtDefaultHighlight then
+    for _, region in ipairs({ frame:GetRegions() }) do
+      if region:IsObjectType("Texture") and region:GetDrawLayer() == "HIGHLIGHT" then
+        frame.mdtDefaultHighlight = region
+        break
+      end
     end
   end
+  local defaultHighlight = frame.mdtDefaultHighlight
   if defaultHighlight then defaultHighlight:Hide() end
-  local highlight = MDT:CreateHoverHighlight(iconWidget.frame, 3)
+  local highlight = MDT:CreateHoverHighlight(frame, 3)
   return function()
-    iconWidget.frame:ClearHighlightTexture()
+    frame:ClearHighlightTexture()
     highlight:Hide()
     if defaultHighlight then defaultHighlight:Show() end
   end
