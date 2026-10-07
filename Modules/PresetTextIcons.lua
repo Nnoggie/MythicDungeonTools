@@ -13,9 +13,9 @@ local RAID_TARGET_TEXTURE = "Interface\\TargetingFrame\\UI-RaidTargetingIcon_"
 local CLASS_ICON_PATH = "Interface\\Icons\\ClassIcon_"
 --modern role icons, the first atlas the client knows is used
 local ROLE_ATLASES = {
-  tank = { "groupfinder-icon-role-large-tank", "roleicon-tiny-tank" },
-  healer = { "groupfinder-icon-role-large-heal", "roleicon-tiny-healer" },
-  dps = { "groupfinder-icon-role-large-dps", "roleicon-tiny-dps" },
+  tank = { "UI-LFG-RoleIcon-Tank", "roleicon-tiny-tank" },
+  healer = { "UI-LFG-RoleIcon-Healer", "roleicon-tiny-healer" },
+  dps = { "UI-LFG-RoleIcon-DPS", "roleicon-tiny-dps" },
 }
 --fallback when none of the atlases exist
 local ROLE_ICON_TEXTURE = "Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES"
