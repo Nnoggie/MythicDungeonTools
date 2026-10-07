@@ -1114,8 +1114,13 @@ local function POI_SetOptions(frame, type, poi)
   end
   if type == "genericItem" then
     local info = poi.info
-    frame.Texture:SetTexture(info.texture)
-    frame.HighlightTexture:SetAtlas("bags-innerglow")
+    if info.atlas then
+      frame.Texture:SetAtlas(info.atlas)
+      frame.HighlightTexture:SetAtlas(info.atlas)
+    else
+      frame.Texture:SetTexture(info.texture)
+      frame.HighlightTexture:SetAtlas("bags-innerglow")
+    end
 
     frame:SetSize(info.size, info.size)
     frame.Texture:SetSize(info.size, info.size)
@@ -1140,10 +1145,15 @@ local function POI_SetOptions(frame, type, poi)
         GameTooltip:SetSpellByID(info.spellId)
       else
         GameTooltip_SetTitle(GameTooltip, L[info.name])
-        GameTooltip:AddTexture(info.texture)
+        if info.texture then
+          GameTooltip:AddTexture(info.texture)
+        end
       end
       if formattedDescription then
-        GameTooltip:AddLine(" ", 1, 1, 1, true)
+        -- text-only tooltips show the description directly below the title
+        if info.spellId then
+          GameTooltip:AddLine(" ", 1, 1, 1, true)
+        end
         GameTooltip:AddLine(formattedDescription, 1, 1, 1, true)
       end
       GameTooltip:Show()

@@ -9,6 +9,8 @@ local patrolColor = { 0, 0.5, 1, 0.8 }
 local MIN_OVERLAP_BUCKET_SIZE = 9
 local BLIP_FRAME_SIZE = 13
 local BLIP_VISUAL_SIZE = 30
+-- POI frames sit at level 4; sharing a level would interleave blip and POI draw layers
+local BLIP_BASE_FRAME_LEVEL = 5
 
 function MDT:GetDungeonEnemyBlips()
   return blips
@@ -68,7 +70,7 @@ function MDTDungeonEnemyMixin:updateSizes(scale)
 end
 
 function MDTDungeonEnemyMixin:SetFrameLevelAboveOverlaps(overlapCandidates)
-  local raise = 4
+  local raise = BLIP_BASE_FRAME_LEVEL
   for _, other in ipairs(overlapCandidates or blips) do
     local visualOffset = (BLIP_VISUAL_SIZE - BLIP_FRAME_SIZE) * 0.5 * (self.normalScale + other.normalScale)
     if MDT:DoFramesOverlap(self, other, visualOffset) then

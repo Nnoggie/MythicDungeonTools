@@ -18,13 +18,14 @@ function MDT:initToolbar(frame)
 
   frame.toolbar = CreateFrame("Frame", "MDTToolbarFrame", frame)
   frame.toolbar:SetFrameStrata("HIGH")
-  frame.toolbar:SetFrameLevel(5)
+  -- above enemy blips, which start at level 5 and rise when stacked or hovered
+  frame.toolbar:SetFrameLevel(20)
   frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "OVERLAY", nil, 6)
   frame.toolbar.tex:SetAllPoints()
   frame.toolbar.tex:SetColorTexture(unpack(MDT.BackdropColor))
   frame.toolbar.toggleButton = CreateFrame("Button", nil, frame);
   frame.toolbar.toggleButton:SetFrameStrata("HIGH")
-  frame.toolbar.toggleButton:SetFrameLevel(6)
+  frame.toolbar.toggleButton:SetFrameLevel(21)
 
   frame.toolbar.toggleButton:SetPoint("LEFT", frame, "LEFT")
   frame.toolbar.toggleButton:SetSize(11, 32)
