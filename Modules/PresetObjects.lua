@@ -163,7 +163,8 @@ function MDT:DrawAllPresetObjects()
       self:DrawPresetObject(obj, objectIndex, scale, currentPreset, currentSublevel)
       coroutine.yield()
     end
-  end, "DrawAllPresetObjects")
+    --singleton: a new redraw cancels a running one, two at once would draw every object twice
+  end, "DrawAllPresetObjects", true)
 end
 
 ---Draws specific preset object

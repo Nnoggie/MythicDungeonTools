@@ -284,7 +284,10 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local changedObjects = MDT:StringToTable(message)
       if changedObjects and type(changedObjects) == "table" then
         for objIdx, obj in pairs(changedObjects) do
-          preset.objects[objIdx] = obj
+          --texts keep their table so a selected or edited text stays attached
+          if not MDT:ApplyPresetTextUpdate(preset.objects[objIdx], obj) then
+            preset.objects[objIdx] = obj
+          end
         end
         if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
       end

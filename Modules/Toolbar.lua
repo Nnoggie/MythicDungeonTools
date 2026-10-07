@@ -306,13 +306,20 @@ local function updateTextPreview(preview)
   end
   local x, y = GetCursorPosition()
   local uiScale = UIParent:GetScale()
+  --brush tools resize the preview frame, the text has to start exactly at the cursor
+  preview:SetSize(1, 1)
   preview:ClearAllPoints()
   preview:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / uiScale, y / uiScale)
   local mapScale = MDT.main_frame.mapPanelFrame:GetEffectiveScale() / preview:GetEffectiveScale()
   local r, g, b, size = MDT:GetPresetTextDefaultStyle()
-  preview.text:SetFont(STANDARD_TEXT_FONT, max(1, size * MDT:GetScale() * mapScale), "OUTLINE")
-  preview.text:SetTextColor(r, g, b)
-  preview.text:SetText("Aa")
+  local fontSize = max(1, size * MDT:GetScale() * mapScale)
+  --runs every frame, only update the font when zooming changed its size
+  if preview.textFontSize ~= fontSize then
+    preview.textFontSize = fontSize
+    preview.text:SetFont(STANDARD_TEXT_FONT, fontSize, "OUTLINE")
+    preview.text:SetTextColor(r, g, b)
+    preview.text:SetText("Aa")
+  end
   preview.text:Show()
 end
 

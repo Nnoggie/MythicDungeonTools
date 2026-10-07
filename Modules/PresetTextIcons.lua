@@ -84,8 +84,12 @@ local function onSpellDataLoaded(_, _, spellId, success)
   end)
 end
 
+local requestedSpells = {}
 local function requestSpellData(spellId)
-  if pendingSpells[spellId] then return end
+  --request each spell once per session, a spell that loads without an icon would otherwise
+  --keep requesting and redrawing forever
+  if requestedSpells[spellId] then return end
+  requestedSpells[spellId] = true
   if C_Spell.DoesSpellExist and not C_Spell.DoesSpellExist(spellId) then return end
   if not spellLoadFrame then
     spellLoadFrame = CreateFrame("Frame")
@@ -94,6 +98,19 @@ local function requestSpellData(spellId)
   end
   pendingSpells[spellId] = true
   C_Spell.RequestLoadSpellData(spellId)
+end
+
+---Parses spell and spec ids, rejects things like 1e9, 2.5 or ids too large for the game api
+local MAX_ID = 2147483647
+local function parseId(text)
+  if type(text) ~= "string" or not text:match("^%d+$") or #text > 10 then return end
+  local id = tonumber(text)
+  if id and id > 0 and id <= MAX_ID then return id end
+end
+
+---the spec functions moved to C_SpecializationInfo, the globals are deprecated
+local function getSpecApi(name)
+  return C_SpecializationInfo and C_SpecializationInfo[name] or _G[name]
 end
 
 ---Returns the icon of a spell, false if the spell does not exist and nil while it is loading
@@ -193,7 +210,7 @@ local function renderTag(tag, size)
   name = name:lower()
   if name == "spell" then
     --{spell:ID:size} is accepted, icons always match the font size
-    local spellId = tonumber(argument:match("^(%d+)"))
+    local spellId = parseId(argument:match("^(%d+)"))
     if not spellId then return end
     local icon = MDT:GetPresetTextSpellIcon(spellId)
     if icon == false then return end
@@ -202,8 +219,9 @@ local function renderTag(tag, size)
     if argument == "" or argument:find("|", 1, true) then return end
     return textureMarkup(argument, size)
   elseif name == "spec" then
-    local specId = tonumber(argument)
-    local icon = specId and select(4, GetSpecializationInfoByID(specId))
+    local specId = parseId(argument)
+    local getSpecInfo = getSpecApi("GetSpecializationInfoByID")
+    local icon = specId and getSpecInfo and select(4, getSpecInfo(specId))
     if isUsableValue(icon) then return textureMarkup(icon, size, ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE) end
   elseif argument == "" then
     if ROLE_COORDS[name] then
@@ -275,8 +293,10 @@ local function buildEntries()
   local specs = newSection(L["Specializations"])
   for classIndex = 1, GetNumClasses() do
     local className, _, classId = GetClassInfo(classIndex)
-    for specIndex = 1, GetNumSpecializationsForClassID(classId) do
-      local specId, specName, _, icon = GetSpecializationInfoForClassID(classId, specIndex)
+    local getNumSpecs = getSpecApi("GetNumSpecializationsForClassID")
+    local getSpecInfo = getSpecApi("GetSpecializationInfoForClassID")
+    for specIndex = 1, getNumSpecs and getSpecInfo and getNumSpecs(classId) or 0 do
+      local specId, specName, _, icon = getSpecInfo(classId, specIndex)
       if specId and isUsableValue(icon) then
         addEntry(specs, "{spec:"..specId.."}", icon, ZOOMED_COORDS, nil, function() return specName.." "..className end,
           { className })
@@ -408,8 +428,8 @@ local function layoutPicker()
   end
 
   --a number searches for that spell id
-  local spellId = tonumber(query)
-  if spellId and spellId > 0 then
+  local spellId = parseId(query)
+  if spellId then
     local icon = MDT:GetPresetTextSpellIcon(spellId)
     if icon ~= false then
       placeSection(L["Spell ID"], { {
@@ -543,8 +563,12 @@ function MDT:CreatePresetTextIconPicker(parent, onPick)
   picker.noResults:Hide()
 
   picker:SetScript("OnShow", function()
-    picker.search:SetText("")
-    layoutPicker()
+    --clearing the search lays out the picker through OnTextChanged
+    if picker.search:GetText() ~= "" then
+      picker.search:SetText("")
+    else
+      layoutPicker()
+    end
   end)
   picker:Hide()
   return picker

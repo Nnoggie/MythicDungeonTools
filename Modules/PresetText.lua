@@ -10,8 +10,8 @@ local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
 local DEFAULT_FONT_SIZE = 8
 local DEFAULT_COLOR = "ffffff"
 local DEFAULT_ALIGN = "LEFT"
---icon tags like {spell:12345} take up a lot of letters
-local MAX_TEXT_LENGTH = 500
+--keeps presets and live session messages small, icon tags and color codes take up a lot of letters
+local MAX_TEXT_LENGTH = 2000
 local FRAME_PADDING = 2
 local BACKGROUND_PADDING = 3
 local EDITOR_PADDING = 3
@@ -80,6 +80,10 @@ local function parseRichText(text)
         --escaped pipe or another escape sequence, keep the pipe together with the next character
         unitEnd = min(i + 1, length)
       end
+    elseif char == "{" and text:find("^{[^{}|]+}", i) then
+      --icon tags stay in one piece so colors never end up inside of them
+      local _, tagEnd = text:find("^{[^{}|]+}", i)
+      unitEnd = tagEnd
     else
       local byte = char:byte()
       local size = byte >= 240 and 4 or byte >= 224 and 3 or byte >= 192 and 2 or 1
@@ -168,25 +172,49 @@ local function findObjectIndex(preset, obj)
   end
 end
 
---live session messages always refer to the displayed preset
+--changes are sent for the live preset even if it is no longer displayed,
+--e.g. an edit that is finished by switching presets
 local function canSendToLiveSession(preset)
-  return MDT.liveSessionActive and preset == MDT:GetCurrentPreset()
+  return MDT.liveSessionActive and preset and preset.uid ~= nil and preset.uid == MDT.livePresetUID
 end
 
 local function sendUpdatedObject(preset, objectIndex, obj)
-  if canSendToLiveSession(preset) then MDT:LiveSession_SendUpdatedObjects({ [objectIndex] = obj }) end
+  if canSendToLiveSession(preset) then MDT:LiveSession_SendUpdatedObjects({ [objectIndex] = obj }, preset) end
+end
+
+---style changes like scrolling through font sizes are sent once they settle
+local SEND_DELAY = 0.3
+local pendingUpdates = {}
+local updateTimer
+local function flushPendingUpdates()
+  if updateTimer then updateTimer:Cancel() end
+  updateTimer = nil
+  for obj, preset in pairs(pendingUpdates) do
+    pendingUpdates[obj] = nil
+    --look up the index now, objects may have moved in the meantime
+    local objectIndex = findObjectIndex(preset, obj)
+    if objectIndex then sendUpdatedObject(preset, objectIndex, obj) end
+  end
+end
+
+local function queueUpdatedObject(preset, obj)
+  if not canSendToLiveSession(preset) then return end
+  pendingUpdates[obj] = preset
+  if not updateTimer then updateTimer = C_Timer.NewTimer(SEND_DELAY, flushPendingUpdates) end
 end
 
 ---returns the stored copy
 local function storeTextObject(preset, obj)
   local storedObj = MDT:StorePresetObject(obj, true, preset)
-  if canSendToLiveSession(preset) then MDT:LiveSession_SendObject(obj) end
+  if canSendToLiveSession(preset) then MDT:LiveSession_SendObject(obj, preset) end
   return storedObj
 end
 
 local function deleteTextObject(preset, objectIndex)
+  --pending updates refer to indices that are about to shift
+  flushPendingUpdates()
   MDT:RemovePresetObject(preset, objectIndex)
-  if canSendToLiveSession(preset) then MDT:LiveSession_SendNoteCommand("delete", objectIndex, "0") end
+  if canSendToLiveSession(preset) then MDT:LiveSession_SendNoteCommand("delete", objectIndex, "0", nil, preset) end
   MDT:DrawAllPresetObjects()
 end
 
@@ -199,6 +227,7 @@ end
 local activeTextFrames = {}
 local inactiveTextFrames = {}
 local createTextFrame
+local layoutTextFrame
 
 local function acquireTextFrame()
   local frame = tremove(inactiveTextFrames) or createTextFrame()
@@ -405,10 +434,10 @@ local function getTextWidth(obj)
     widthMeasure = MDT.main_frame.mapPanelFrame:CreateFontString(nil, "BACKGROUND")
     widthMeasure:Hide()
   end
-  --the editor shows icon tags as text, the map shows them as icons
+  --measure the text as the map shows it, with icon tags drawn as icons
   local isEdited = editing and editing.obj == obj
   local text = isEdited and textEditor:GetText() or obj.d[5] or ""
-  if not isEdited then text = MDT:RenderPresetTextTags(text, getFontSize(obj) * MDT:GetScale()) end
+  text = MDT:RenderPresetTextTags(text, getFontSize(obj) * MDT:GetScale())
   applyFontStyle(widthMeasure, obj)
   widthMeasure:SetText(text)
   return widthMeasure:GetStringWidth() / MDT:GetScale()
@@ -423,6 +452,24 @@ local function refreshEditorStyle()
   editor:SetBackdropColor(0, 0, 0, hasBackground(obj) and 0.6 or 0.3)
   measureEditor()
   updateStyleBar()
+end
+
+---Applies a text object changed by another live session member onto the existing object,
+---selection and editor refer to the object table and would otherwise lose it
+---returns false if the objects are not both texts
+function MDT:ApplyPresetTextUpdate(existing, incoming)
+  if type(existing) ~= "table" or type(incoming) ~= "table" or not existing.tx or not incoming.tx then
+    return false
+  end
+  for key in pairs(existing) do existing[key] = nil end
+  for key, value in pairs(incoming) do existing[key] = value end
+  if editing and editing.obj == existing then
+    --keep what is being typed, take over position and style
+    refreshEditorStyle()
+  elseif selectedObj == existing then
+    updateStyleBar()
+  end
+  return true
 end
 
 ---Changes a style property of the selected or edited text
@@ -449,14 +496,19 @@ local function setStyle(field, value)
     refreshEditorStyle()
     return
   end
-  local objectIndex = findObjectIndex(preset, obj)
-  if not objectIndex then
+  if not findObjectIndex(preset, obj) then
     selectText(nil, nil)
     return
   end
-  sendUpdatedObject(preset, objectIndex, obj)
+  queueUpdatedObject(preset, obj)
   updateStyleBar()
-  MDT:DrawAllPresetObjects()
+  --only the changed text needs to be laid out again
+  local frame = getFrameForObject(obj)
+  if frame then
+    layoutTextFrame(frame, obj)
+  else
+    MDT:DrawAllPresetObjects()
+  end
 end
 
 local function stepFontSize(delta)
@@ -489,6 +541,13 @@ local function cycleAlign()
   setStyle(FIELD_ALIGN, align == "LEFT" and "CENTER" or align == "CENTER" and "RIGHT" or "LEFT")
 end
 
+---the letter limit is for typing, color codes added by the style bar must not cut the text
+local function setEditorText(text)
+  textEditor:SetMaxLetters(0)
+  textEditor:SetText(text)
+  textEditor:SetMaxLetters(MAX_TEXT_LENGTH)
+end
+
 ---colorSelection is the highlighted part of the edited text, 0 based offsets
 ---edit boxes cannot report their highlight and clicking a button clears it,
 ---so it is captured while the mouse moves over the color controls
@@ -501,8 +560,8 @@ local function captureColorSelection()
   editor:SetMaxLetters(0)
   editor:Insert(SELECTION_MARKER)
   local marked = editor:GetText()
-  editor:SetText(text)
   editor:SetMaxLetters(MAX_TEXT_LENGTH)
+  setEditorText(text)
   local markerStart = marked:find(SELECTION_MARKER, 1, true)
   local selectionStart = markerStart and markerStart - 1
   local selectionStop = markerStart and #text - (#marked - (selectionStart + #SELECTION_MARKER))
@@ -535,7 +594,7 @@ local function applyColor(hex)
   if selection then
     local text, start, stop = colorTextRange(selection.text, selection.start, selection.stop, hex, getColorHex(obj))
     editing.styleChanged = true
-    textEditor:SetText(text)
+    setEditorText(text)
     if start then
       colorSelection = { text = text, start = start, stop = stop }
     else
@@ -547,7 +606,7 @@ local function applyColor(hex)
   colorSelection = nil
   --coloring the whole text replaces colors of single words
   if editing then
-    textEditor:SetText(stripInlineColors(textEditor:GetText()))
+    setEditorText(stripInlineColors(textEditor:GetText()))
   else
     obj.d[5] = stripInlineColors(obj.d[5] or "")
   end
@@ -832,13 +891,21 @@ local function positionStyleBar(bar)
   if isBelowTarget then
     y = bottom * scale - parentBottom - 6 - barHeight
   end
-  bar:ClearAllPoints()
-  bar:SetPoint("BOTTOM", parent, "BOTTOMLEFT", x, y)
+  --runs every frame, only move the bar when its position changed
+  if x ~= bar.lastX or y ~= bar.lastY then
+    bar.lastX, bar.lastY = x, y
+    bar:ClearAllPoints()
+    bar:SetPoint("BOTTOM", parent, "BOTTOMLEFT", x, y)
+  end
   if bar.popupsBelow ~= isBelowTarget then anchorStylePopups(bar, isBelowTarget) end
 end
 
 function getStyleBar()
   if styleBar then return styleBar end
+  --switching to another sidebar section hides the map, the bar must not stay on top of it
+  MDT.main_frame.mapPanelFrame:HookScript("OnHide", function()
+    MDT:ClearPresetTextSelection()
+  end)
   local bar = CreateFrame("Frame", "MDTPresetTextStyleBar", MDT.main_frame, "BackdropTemplate")
   bar:SetFrameStrata("DIALOG")
   bar:SetClampedToScreen(true)
@@ -1203,12 +1270,9 @@ function createTextFrame()
   return frame
 end
 
----DrawText
-function MDT:DrawText(obj, objectIndex)
-  local frame = acquireTextFrame()
+---Applies text, style and position of an object to its frame
+function layoutTextFrame(frame, obj)
   local padding = hasBackground(obj) and BACKGROUND_PADDING or FRAME_PADDING
-  frame.obj = obj
-  frame.objectIndex = objectIndex
   applyFontStyle(frame.fontString, obj)
   frame.fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", getFontSize(obj) * MDT:GetScale()))
   frame.fontString:ClearAllPoints()
@@ -1219,6 +1283,14 @@ function MDT:DrawText(obj, objectIndex)
   frame.anchorPoint, frame.anchorX, frame.anchorY = anchorPoint, anchorX, anchorY
   frame.background:SetShown(hasBackground(obj))
   frame.selection:SetShown(obj == selectedObj)
+end
+
+---DrawText
+function MDT:DrawText(obj, objectIndex)
+  local frame = acquireTextFrame()
+  frame.obj = obj
+  frame.objectIndex = objectIndex
+  layoutTextFrame(frame, obj)
   local interactive = isInteractiveTool(MDT:GetCurrentToolbarTool())
   frame:EnableMouse(interactive)
   frame:EnableMouseWheel(interactive)
