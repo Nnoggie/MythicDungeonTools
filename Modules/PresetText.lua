@@ -7,7 +7,7 @@ local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, Cr
 
 local TEXT_SIZES = { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48 }
 local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
-local DEFAULT_FONT_SIZE = 8
+local DEFAULT_FONT_SIZE = 12
 local DEFAULT_COLOR = "ffffff"
 local DEFAULT_ALIGN = "LEFT"
 --keeps presets and live session messages small, icon tags and color codes take up a lot of letters
