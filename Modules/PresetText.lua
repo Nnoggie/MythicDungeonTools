@@ -8,6 +8,9 @@ local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, Cr
 local TEXT_SIZES = { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48 }
 local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
 local DEFAULT_FONT_SIZE = 12
+--texts are laid out at this size and their frames scaled to the text size,
+--fonts stop growing at large sizes while frame scaling keeps text and icons in proportion
+local BASE_FONT_SIZE = 12
 local DEFAULT_COLOR = "ffffff"
 local DEFAULT_ALIGN = "LEFT"
 --keeps presets and live session messages small, icon tags and color codes take up a lot of letters
@@ -144,15 +147,21 @@ local function hasVisibleText(text)
   return false
 end
 
+---scale of the frames a text is drawn in
+local function getTextScale(obj)
+  return getFontSize(obj) / BASE_FONT_SIZE
+end
+
 local function applyFontStyle(fontInstance, obj)
-  fontInstance:SetFont(STANDARD_TEXT_FONT, getFontSize(obj) * MDT:GetScale(), "OUTLINE")
+  fontInstance:SetFont(STANDARD_TEXT_FONT, BASE_FONT_SIZE * MDT:GetScale(), "OUTLINE")
   fontInstance:SetTextColor(MDT:HexToRGB(getColorHex(obj)))
   fontInstance:SetJustifyH(getAlign(obj))
 end
 
 ---places a region so the text inside of it starts at the stored position
-local function anchorToText(region, obj, padding)
-  local scale = MDT:GetScale()
+---padding and offsets are in the units of the region, which is scaled by regionScale
+local function anchorToText(region, obj, padding, regionScale)
+  local scale = MDT:GetScale() / (regionScale or 1)
   local align = getAlign(obj)
   region:ClearAllPoints()
   region:SetPoint(ANCHOR_POINTS[align], MDT.main_frame.mapPanelTile1, "TOPLEFT",
@@ -327,7 +336,7 @@ local function measureEditor()
   --empty trailing lines are not measured, pad them so the cursor stays inside the box
   if text == "" or text:sub(-1) == "\n" then text = text.." " end
   editor.measure:SetText(text)
-  local fontHeight = getFontSize(editing.obj) * MDT:GetScale()
+  local fontHeight = BASE_FONT_SIZE * MDT:GetScale()
   local width = max(editor.measure:GetStringWidth(), fontHeight * 3) + fontHeight
   local height = max(editor.measure:GetStringHeight(), fontHeight)
   editor:SetSize(width + EDITOR_PADDING * 2, height + EDITOR_PADDING * 2)
@@ -453,36 +462,9 @@ local function duplicateText(preset, obj, x, y)
   MDT:DrawAllPresetObjects()
 end
 
----Fonts do not grow in proportion to their size, so icons follow the measured text height
----and keep the proportions they have next to text of size 12
-local ICON_REFERENCE_FONT_SIZE = 12
-local heightMeasure
-local measuredHeights = {}
-
-local function getRenderedTextHeight(fontPixels)
-  local key = math.floor(fontPixels * 100 + 0.5)
-  local height = measuredHeights[key]
-  if not height then
-    if not heightMeasure then
-      --measured on the map so it uses the same scaling as the texts
-      heightMeasure = MDT.main_frame.mapPanelFrame:CreateFontString(nil, "BACKGROUND")
-      heightMeasure:Hide()
-    end
-    heightMeasure:SetFont(STANDARD_TEXT_FONT, fontPixels, "OUTLINE")
-    heightMeasure:SetText("A")
-    height = heightMeasure:GetStringHeight()
-    measuredHeights[key] = height
-  end
-  return height
-end
-
-local function getIconSize(obj)
-  local scale = MDT:GetScale()
-  local referencePixels = ICON_REFERENCE_FONT_SIZE * scale
-  local referenceHeight = getRenderedTextHeight(referencePixels)
-  local height = getRenderedTextHeight(getFontSize(obj) * scale)
-  if not referenceHeight or referenceHeight <= 0 or not height then return getFontSize(obj) * scale end
-  return referencePixels * height / referenceHeight
+---icons match the base font, the text frame scaling sizes them with the text
+local function getIconSize()
+  return BASE_FONT_SIZE * MDT:GetScale()
 end
 
 ---width of the text in its current style in unscaled map units
@@ -495,18 +477,20 @@ local function getTextWidth(obj)
   --measure the text as the map shows it, with icon tags drawn as icons
   local isEdited = editing and editing.obj == obj
   local text = isEdited and textEditor:GetText() or obj.d[5] or ""
-  text = MDT:RenderPresetTextTags(text, getIconSize(obj))
+  text = MDT:RenderPresetTextTags(text, getIconSize())
   applyFontStyle(widthMeasure, obj)
   widthMeasure:SetText(text)
-  return widthMeasure:GetStringWidth() / MDT:GetScale()
+  return widthMeasure:GetStringWidth() * getTextScale(obj) / MDT:GetScale()
 end
 
 local function refreshEditorStyle()
   local editor = textEditor
   local obj = editing.obj
+  local textScale = getTextScale(obj)
+  editor:SetScale(textScale)
   applyFontStyle(editor, obj)
   applyFontStyle(editor.measure, obj)
-  anchorToText(editor, obj, EDITOR_PADDING)
+  anchorToText(editor, obj, EDITOR_PADDING, textScale)
   editor:SetBackdropColor(0, 0, 0, hasBackground(obj) and 0.6 or 0.3)
   measureEditor()
   updateStyleBar()
@@ -1259,8 +1243,10 @@ function createTextFrame()
   frame.highlight = display:CreateTexture(nil, "BORDER")
   frame.highlight:SetAllPoints()
   frame.highlight:Hide()
-  frame.selection = CreateFrame("Frame", nil, display)
+  --the outline belongs to the unscaled frame so it stays one pixel wide at every text size
+  frame.selection = CreateFrame("Frame", nil, frame)
   frame.selection:SetAllPoints()
+  frame.selection:SetFrameLevel(display:GetFrameLevel() + 1)
   createEdge(frame, "TOPLEFT", "TOPRIGHT", true)
   createEdge(frame, "BOTTOMLEFT", "BOTTOMRIGHT", true)
   createEdge(frame, "TOPLEFT", "BOTTOMLEFT", false)
@@ -1367,12 +1353,16 @@ end
 ---Applies text, style and position of an object to its frame
 function layoutTextFrame(frame, obj)
   local padding = hasBackground(obj) and BACKGROUND_PADDING or FRAME_PADDING
+  local textScale = getTextScale(obj)
+  --the display is scaled, the click frame around it is not
+  frame.display:SetScale(textScale)
   applyFontStyle(frame.fontString, obj)
-  frame.fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", getIconSize(obj)))
+  frame.fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", getIconSize()))
   frame.fontString:ClearAllPoints()
   frame.fontString:SetPoint("TOPLEFT", padding, -padding)
-  frame:SetSize(frame.fontString:GetStringWidth() + padding * 2, frame.fontString:GetStringHeight() + padding * 2)
-  anchorToText(frame, obj, padding)
+  frame:SetSize((frame.fontString:GetStringWidth() + padding * 2) * textScale,
+    (frame.fontString:GetStringHeight() + padding * 2) * textScale)
+  anchorToText(frame, obj, padding * textScale)
   local anchorPoint, _, _, anchorX, anchorY = frame:GetPoint(1)
   frame.anchorPoint, frame.anchorX, frame.anchorY = anchorPoint, anchorX, anchorY
   frame.background:SetShown(hasBackground(obj))
