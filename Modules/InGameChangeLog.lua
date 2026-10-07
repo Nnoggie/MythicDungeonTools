@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.1",
+    date = "2026-10-07",
+    notes = {
+      "Fixed icons in map texts being too small at small text sizes and too large at big text sizes.",
+    },
+  },
+  {
     tag = "6.3.0",
     date = "2026-10-07",
     notes = {
@@ -15,14 +22,6 @@ MDT.changeLog = {
     date = "2026-10-07",
     notes = {
       "Added a Donate button to the bottom bar next to the GitHub, Discord and Patreon links.",
-    },
-  },
-  {
-    tag = "6.2.21",
-    date = "2026-10-05",
-    notes = {
-      "Clicking a shared route that did not fully arrive now shows a chat message asking you to have the route sent again, instead of an error window.",
-      "Fixed an error window appearing when drawing or setting a new route during a Live Session.",
     },
   },
 }
