@@ -219,6 +219,14 @@ local function deleteTextObject(preset, objectIndex, noRedraw)
 end
 
 ---Texts can be selected and moved without a tool and with the tools that work on them
+---Texts draw above enemies but below the toolbar, which sits on top of the map's left edge
+---returns the levels of the text display and of the text editor
+local function getTextFrameLevels()
+  local toolbar = MDT.main_frame.toolbar
+  local toolbarLevel = toolbar and toolbar:GetFrameLevel() or 20
+  return toolbarLevel - 2, toolbarLevel - 1
+end
+
 local function isInteractiveTool(tool)
   return tool == nil or tool == "text" or tool == "mover" or tool == "eraser"
 end
@@ -1043,7 +1051,8 @@ local function getTextEditor()
   if textEditor then return textEditor end
   local mapPanelFrame = MDT.main_frame.mapPanelFrame
   local editor = CreateFrame("EditBox", "MDTPresetTextEditBox", mapPanelFrame, "BackdropTemplate")
-  editor:SetFrameLevel(mapPanelFrame:GetFrameLevel() + 50)
+  local _, editorLevel = getTextFrameLevels()
+  editor:SetFrameLevel(editorLevel)
   editor:SetMultiLine(true)
   editor:SetAutoFocus(false)
   editor:SetMaxLetters(MAX_TEXT_LENGTH)
@@ -1209,8 +1218,8 @@ function createTextFrame()
   frame:SetFrameLevel(mapPanelFrame:GetFrameLevel())
   local display = CreateFrame("Frame", nil, frame)
   display:SetAllPoints()
-  --below the text editor, above enemies and pull outlines
-  display:SetFrameLevel(mapPanelFrame:GetFrameLevel() + 45)
+  --below the text editor and the toolbar, above enemies and pull outlines
+  display:SetFrameLevel((getTextFrameLevels()))
   frame.display = display
   frame.background = display:CreateTexture(nil, "BACKGROUND")
   frame.background:SetAllPoints()
@@ -1258,6 +1267,14 @@ function createTextFrame()
       return
     end
     if button ~= "LeftButton" or not self.obj then return end
+    --shift+drag selects enemies with a box like everywhere else on the map
+    if IsShiftKeyDown() and MDT:GetCurrentToolbarTool() == nil then
+      self.forwardedLeftClick = true
+      local scrollFrame = MDT.main_frame.scrollFrame
+      local onMouseDown = scrollFrame:GetScript("OnMouseDown")
+      if onMouseDown then onMouseDown(scrollFrame, button) end
+      return
+    end
     if MDT:GetCurrentToolbarTool() == "eraser" then
       local preset = MDT:GetCurrentPreset()
       local objectIndex = findObjectIndex(preset, self.obj)
@@ -1275,6 +1292,14 @@ function createTextFrame()
   frame:SetScript("OnMouseUp", function(self, button)
     --end a map pan that was started on this text
     if button == "RightButton" then MDT.main_frame.scrollFrame.panning = false end
+    --finish a box selection that was started on this text
+    if button == "LeftButton" and self.forwardedLeftClick then
+      self.forwardedLeftClick = nil
+      local scrollFrame = MDT.main_frame.scrollFrame
+      local onMouseUp = scrollFrame:GetScript("OnMouseUp")
+      if onMouseUp then onMouseUp(scrollFrame, button) end
+      return
+    end
     if not self.obj then return end
     local obj = self.obj
     local preset = MDT:GetCurrentPreset()
