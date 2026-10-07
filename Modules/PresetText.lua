@@ -939,7 +939,6 @@ local resizeHandle
 local function getResizeHandle()
   if resizeHandle then return resizeHandle end
   local handle = CreateFrame("Frame", nil, MDT.main_frame.mapPanelFrame)
-  handle:SetSize(RESIZE_HANDLE_SIZE, RESIZE_HANDLE_SIZE)
   handle:EnableMouse(true)
   handle.marker = handle:CreateTexture(nil, "OVERLAY")
   handle.marker:SetAllPoints()
@@ -985,9 +984,9 @@ local function updateResizeHandle()
     handle:ClearAllPoints()
     handle:SetPoint("BOTTOMRIGHT", target, "BOTTOMRIGHT")
   end
-  --same size on screen at every zoom level
-  local scale = 1 / MDT.main_frame.mapPanelFrame:GetScale()
-  if handle:GetScale() ~= scale then handle:SetScale(scale) end
+  --zooms with the map like the selection border
+  local size = RESIZE_HANDLE_SIZE * MDT:GetScale()
+  if handle:GetWidth() ~= size then handle:SetSize(size, size) end
   handle:Show()
 end
 
