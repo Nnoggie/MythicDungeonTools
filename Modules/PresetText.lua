@@ -327,14 +327,12 @@ end
 
 local function measureEditor()
   local editor = textEditor
-  local text = editor:GetText()
-  --empty trailing lines are not measured, pad them so the cursor stays inside the box
-  if text == "" or text:sub(-1) == "\n" then text = text.." " end
-  editor.measure:SetText(text)
+  editor.measure:SetText(editor:GetText())
   local fontHeight = getFontSize(editing.obj) * MDT:GetScale()
   local width = max(editor.measure:GetStringWidth(), fontHeight * 3) + fontHeight
-  local height = max(editor.measure:GetStringHeight(), fontHeight)
-  editor:SetSize(width + EDITOR_PADDING * 2, height + EDITOR_PADDING * 2)
+  --multi-line edit boxes fit their height to the text themselves,
+  --a measured height can come out a fraction lower and hides the cursor and highlight of a single line
+  editor:SetWidth(width + EDITOR_PADDING * 2)
 end
 
 local colorSelection
