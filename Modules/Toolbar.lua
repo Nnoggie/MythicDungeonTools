@@ -326,7 +326,11 @@ end
 ---EnableBrushPreview
 function MDT:EnableBrushPreview(tool)
   local frame = MDT.main_frame
-  if tool == "mover" then return end
+  --the mover has no preview, also clears the preview of the previous tool
+  if tool == "mover" then
+    MDT:DisableBrushPreview()
+    return
+  end
   frame.brushPreview:Show()
   frame.brushPreview.text:Hide()
   if tool == "text" then

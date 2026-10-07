@@ -57,7 +57,9 @@ local function isUsableValue(value)
   return value ~= nil and not (issecretvalue and issecretvalue(value))
 end
 
+local savedIcons
 local function getSavedIcons()
+  if savedIcons then return savedIcons end
   local db = MDT:GetDB()
   local build = select(2, GetBuildInfo())
   local cache = db.presetTextIconCache
@@ -66,7 +68,8 @@ local function getSavedIcons()
     cache = { build = build, icons = {} }
     db.presetTextIconCache = cache
   end
-  return cache.icons
+  savedIcons = cache.icons
+  return savedIcons
 end
 
 local function onSpellDataLoaded(_, _, spellId, success)
@@ -114,16 +117,20 @@ local function getSpecApi(name)
 end
 
 ---Returns the icon of a spell, false if the spell does not exist and nil while it is loading
-function MDT:GetPresetTextSpellIcon(spellId)
+---dontSave keeps lookups like the picker search out of the saved variables
+function MDT:GetPresetTextSpellIcon(spellId, dontSave)
   local icon = sessionIcons[spellId]
-  if icon ~= nil then return icon end
-  local savedIcons = getSavedIcons()
-  icon = savedIcons[spellId]
+  if icon ~= nil then
+    if icon and not dontSave then getSavedIcons()[spellId] = icon end
+    return icon
+  end
+  local saved = getSavedIcons()
+  icon = saved[spellId]
   if not icon then
     local texture = C_Spell.GetSpellTexture(spellId)
     if isUsableValue(texture) then
       icon = texture
-      savedIcons[spellId] = icon
+      if not dontSave then saved[spellId] = icon end
     elseif C_Spell.DoesSpellExist and not C_Spell.DoesSpellExist(spellId) then
       icon = false
     else
@@ -339,7 +346,7 @@ local function setButtonIcon(button, entry)
   local icon = button.icon
   icon:SetTexCoord(0, 1, 0, 1)
   if entry.spellId then
-    local spellIcon = MDT:GetPresetTextSpellIcon(entry.spellId)
+    local spellIcon = MDT:GetPresetTextSpellIcon(entry.spellId, entry.dontSave)
     icon:SetTexture(spellIcon or QUESTION_MARK_ICON)
     icon:SetTexCoord(unpack(ZOOMED_COORDS))
   elseif entry.atlas then
@@ -430,11 +437,13 @@ local function layoutPicker()
   --a number searches for that spell id
   local spellId = parseId(query)
   if spellId then
-    local icon = MDT:GetPresetTextSpellIcon(spellId)
+    --typing an id passes through every prefix of it, only cache icons that end up in texts
+    local icon = MDT:GetPresetTextSpellIcon(spellId, true)
     if icon ~= false then
       placeSection(L["Spell ID"], { {
         tag = "{spell:"..spellId.."}",
         spellId = spellId,
+        dontSave = true,
         getName = function() return getSpellName(spellId, tostring(spellId)) end,
       } })
     end

@@ -377,12 +377,18 @@ end
 
 ---Finishes editing and clears the selection, returns true if a text was selected or edited
 ---discardNew drops a text that was never stored instead of storing it
+---the second return value is true if an unsaved new text was dropped
 function MDT:ClearPresetTextSelection(discardNew)
   local hadSelection = editing ~= nil or selectedObj ~= nil
-  if discardNew and editing and editing.isNew then closeEditor() end
+  local discardedNew = false
+  if discardNew and editing and editing.isNew then
+    closeEditor()
+    discardedNew = true
+  end
   MDT:CommitPresetTextEdit()
-  if selectedObj then selectText(nil, nil) end
-  return hadSelection
+  --also hides the style bar left over from a dropped text
+  selectText(nil, nil)
+  return hadSelection, discardedNew
 end
 
 ---Drops selection and editing when their preset, sublevel or object are gone
@@ -1068,7 +1074,8 @@ local function getTextEditor()
   end)
   editor:EnableMouseWheel(true)
   editor:SetScript("OnMouseWheel", function(_, delta)
-    if IsControlKeyDown() then
+    --ctrl+shift+wheel switches sublevels
+    if IsControlKeyDown() and not IsShiftKeyDown() then
       stepFontSize(delta)
     else
       forwardMouseWheel(delta)
@@ -1229,7 +1236,7 @@ function createTextFrame()
     self.highlight:Hide()
   end)
   frame:SetScript("OnMouseWheel", function(self, delta)
-    if IsControlKeyDown() and self.obj and self.obj == selectedObj then
+    if IsControlKeyDown() and not IsShiftKeyDown() and self.obj and self.obj == selectedObj then
       stepFontSize(delta)
     else
       forwardMouseWheel(delta)

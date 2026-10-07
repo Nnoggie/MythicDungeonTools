@@ -117,6 +117,8 @@ end
 
 function MDT:OnPan(cursorX, cursorY)
   local scrollFrame = MDTScrollFrame
+  --a pan can start on a map text, which may be redrawn before it gets the mouse up
+  if scrollFrame.panning and not IsMouseButtonDown() then scrollFrame.panning = false end
   local scale = MDTMapPanelFrame:GetScale() / 1.5
   local deltaX = (scrollFrame.cursorX - cursorX) / scale
   local deltaY = (cursorY - scrollFrame.cursorY) / scale
