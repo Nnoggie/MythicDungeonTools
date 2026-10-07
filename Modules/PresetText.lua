@@ -359,7 +359,8 @@ function MDT:CommitPresetTextEdit(keepSelected, noRedraw)
       if isEmpty then
         selectText(nil, nil)
         deleteTextObject(state.preset, objectIndex, noRedraw)
-        return
+        --tells callers that finishing the edit deleted the text
+        return true
       elseif text ~= state.obj.d[5] or state.styleChanged then
         state.obj.d[5] = text
         sendUpdatedObject(state.preset, objectIndex, state.obj)
@@ -377,7 +378,7 @@ end
 
 ---Finishes editing and clears the selection, returns true if a text was selected or edited
 ---discardNew drops a text that was never stored instead of storing it
----the second return value is true if an unsaved new text was dropped
+---also returns whether an unsaved new text was dropped and whether an emptied text was deleted
 function MDT:ClearPresetTextSelection(discardNew)
   local hadSelection = editing ~= nil or selectedObj ~= nil
   local discardedNew = false
@@ -385,10 +386,10 @@ function MDT:ClearPresetTextSelection(discardNew)
     closeEditor()
     discardedNew = true
   end
-  MDT:CommitPresetTextEdit()
+  local deletedText = MDT:CommitPresetTextEdit() == true
   --also hides the style bar left over from a dropped text
   selectText(nil, nil)
-  return hadSelection, discardedNew
+  return hadSelection, discardedNew, deletedText
 end
 
 ---Drops selection and editing when their preset, sublevel or object are gone
@@ -415,6 +416,11 @@ end
 
 function MDT:IsEditingPresetText()
   return editing ~= nil
+end
+
+---true while a placed text has not been stored yet
+function MDT:IsEditingNewPresetText()
+  return editing ~= nil and editing.isNew == true
 end
 
 local function deleteTarget()

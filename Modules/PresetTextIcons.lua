@@ -58,6 +58,14 @@ local function isUsableValue(value)
 end
 
 local savedIcons
+---assumes the spell exists if the game does not give a usable answer
+local function spellExists(spellId)
+  if not C_Spell.DoesSpellExist then return true end
+  local exists = C_Spell.DoesSpellExist(spellId)
+  if not isUsableValue(exists) then return true end
+  return exists
+end
+
 local function getSavedIcons()
   if savedIcons then return savedIcons end
   local db = MDT:GetDB()
@@ -93,7 +101,7 @@ local function requestSpellData(spellId)
   --keep requesting and redrawing forever
   if requestedSpells[spellId] then return end
   requestedSpells[spellId] = true
-  if C_Spell.DoesSpellExist and not C_Spell.DoesSpellExist(spellId) then return end
+  if not spellExists(spellId) then return end
   if not spellLoadFrame then
     spellLoadFrame = CreateFrame("Frame")
     spellLoadFrame:RegisterEvent("SPELL_DATA_LOAD_RESULT")
@@ -131,7 +139,7 @@ function MDT:GetPresetTextSpellIcon(spellId, dontSave)
     if isUsableValue(texture) then
       icon = texture
       if not dontSave then saved[spellId] = icon end
-    elseif C_Spell.DoesSpellExist and not C_Spell.DoesSpellExist(spellId) then
+    elseif not spellExists(spellId) then
       icon = false
     else
       requestSpellData(spellId)

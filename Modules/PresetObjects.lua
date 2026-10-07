@@ -275,10 +275,10 @@ function MDT:PresetObjectStepBack(preset, silent, ignoreLiveSession)
   --keybind can be pressed before the frames are initialized
   if not MDT:AreFramesInitialized() then return end
   --finish an open text edit first so it is not sent as a side effect of the undo,
-  --undo while typing a new text only drops that text
+  --undo while typing a new text only drops that text, undo after emptying a text only deletes that text
   if not ignoreLiveSession then
-    local _, discardedNew = MDT:ClearPresetTextSelection(true)
-    if discardedNew then return end
+    local _, discardedNew, deletedText = MDT:ClearPresetTextSelection(true)
+    if discardedNew or deletedText then return end
   end
   preset = preset or self:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
@@ -302,8 +302,12 @@ end
 ---Redo the latest drawing
 function MDT:PresetObjectStepForward(preset, silent, ignoreLiveSession)
   if not MDT:AreFramesInitialized() then return end
-  --finish an open text edit first so it is not sent as a side effect of the redo
-  if not ignoreLiveSession then MDT:ClearPresetTextSelection(true) end
+  --finish an open text edit first so it is not sent as a side effect of the redo,
+  --a new text that is being typed is kept and the redo is ignored
+  if not ignoreLiveSession then
+    if MDT:IsEditingNewPresetText() then return end
+    MDT:ClearPresetTextSelection()
+  end
   preset = preset or MDT:GetCurrentPreset()
   if preset == self:GetCurrentPreset() then silent = false end
   preset.objects = preset.objects or {}
