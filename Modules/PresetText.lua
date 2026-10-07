@@ -32,6 +32,7 @@ local BAR_BUTTON_SIZE = 18
 local BAR_SPACING = 2
 local BAR_GROUP_SPACING = 9
 local BAR_PADDING = 4
+local RESIZE_HANDLE_SIZE = 16
 
 ---text objects are stored as notes so older versions still show them as note pins
 ---d: x,y,sublevel,shown,text,colorstring,fontSize,justifyH,background
@@ -502,7 +503,8 @@ function MDT:ApplyPresetTextUpdate(existing, incoming)
 end
 
 ---Changes a style property of the selected or edited text
-local function setStyle(field, value)
+---sizePivot is the point on the top edge that stays in place when the size changes, 0 is left and 1 is right
+local function setStyle(field, value, sizePivot)
   local preset, obj = getTarget()
   if not obj then return end
   local align = getAlign(obj)
@@ -512,11 +514,11 @@ local function setStyle(field, value)
     obj.d[1] = obj.d[1] + (ANCHOR_WIDTH_FACTOR[value] - ANCHOR_WIDTH_FACTOR[align]) * getTextWidth(obj)
     obj.d[field] = value
   elseif field == FIELD_SIZE then
-    --resize around the top center of the text
+    --resize around the top center of the text by default
     local oldWidth = getTextWidth(obj)
     obj.d[field] = value
     local newWidth = getTextWidth(obj)
-    obj.d[1] = obj.d[1] + (0.5 - ANCHOR_WIDTH_FACTOR[align]) * (oldWidth - newWidth)
+    obj.d[1] = obj.d[1] + (ANCHOR_WIDTH_FACTOR[align] - (sizePivot or 0.5)) * (newWidth - oldWidth)
   else
     obj.d[field] = value
   end
@@ -902,13 +904,96 @@ local function confirmDelete()
   if styleBar and getTarget() then styleBar.deleteConfirm:Show() end
 end
 
-local function positionStyleBar(bar)
-  local target
-  if editing then
-    target = textEditor
-  elseif selectedObj then
-    target = getFrameForObject(selectedObj)
+---the frame showing the selected or edited text
+local function getTargetFrame()
+  if editing then return textEditor end
+  if selectedObj then return getFrameForObject(selectedObj) end
+end
+
+---Resize handle on the bottom right corner of the selected or edited text
+local function getNearestFontSize(size)
+  local nearest = TEXT_SIZES[1]
+  for _, s in ipairs(TEXT_SIZES) do
+    if abs(math.log(s / size)) < abs(math.log(nearest / size)) then nearest = s end
   end
+  return nearest
+end
+
+local function stopResize(handle)
+  handle:SetScript("OnUpdate", nil)
+  handle.obj = nil
+  handle.marker:SetVertexColor(unpack(SELECTION_COLOR))
+end
+
+local function updateResize(handle)
+  local _, obj = getTarget()
+  if obj ~= handle.obj then return stopResize(handle) end
+  local x, y = MDT:GetCursorPosition()
+  --dragging right or down grows the text, the top left corner stays in place
+  local extent = max(handle.startExtent + (x - handle.startX) - (y - handle.startY), 1)
+  local size = getNearestFontSize(handle.startSize * extent / handle.startExtent)
+  if size ~= getFontSize(obj) then setStyle(FIELD_SIZE, size, 0) end
+end
+
+local resizeHandle
+local function getResizeHandle()
+  if resizeHandle then return resizeHandle end
+  local handle = CreateFrame("Frame", nil, MDT.main_frame.mapPanelFrame)
+  handle:SetSize(RESIZE_HANDLE_SIZE, RESIZE_HANDLE_SIZE)
+  handle:EnableMouse(true)
+  handle.marker = handle:CreateTexture(nil, "OVERLAY")
+  handle.marker:SetAllPoints()
+  handle.marker:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Resize")
+  handle.marker:SetVertexColor(unpack(SELECTION_COLOR))
+  handle:SetScript("OnEnter", function(self) self.marker:SetVertexColor(1, 1, 1, 1) end)
+  handle:SetScript("OnLeave", function(self)
+    if not self.obj then self.marker:SetVertexColor(unpack(SELECTION_COLOR)) end
+  end)
+  handle:SetScript("OnMouseDown", function(self, button)
+    local _, obj = getTarget()
+    local target = getTargetFrame()
+    if button ~= "LeftButton" or not obj or not target then return end
+    self.obj = obj
+    self.startX, self.startY = MDT:GetCursorPosition()
+    self.startSize = getFontSize(obj)
+    self.startExtent = target:GetWidth() + target:GetHeight()
+    self:SetScript("OnUpdate", updateResize)
+  end)
+  handle:SetScript("OnMouseUp", function(self, button)
+    if button ~= "LeftButton" or not self.obj then return end
+    stopResize(self)
+    if self:IsMouseOver() then self.marker:SetVertexColor(1, 1, 1, 1) end
+    restoreEditorFocus()
+  end)
+  handle:Hide()
+  resizeHandle = handle
+  return handle
+end
+
+local function updateResizeHandle()
+  local target = getTargetFrame()
+  if not target or not isInteractiveTool(MDT:GetCurrentToolbarTool()) then
+    if resizeHandle then resizeHandle:Hide() end
+    return
+  end
+  local handle = getResizeHandle()
+  --text frames are pooled and redrawn, follow the frame that currently shows the text
+  local parent = target == textEditor and target or target.display
+  if handle:GetParent() ~= parent then
+    handle:SetParent(parent)
+    handle:SetFrameLevel(parent:GetFrameLevel() + 2)
+    handle:ClearAllPoints()
+    handle:SetPoint("BOTTOMRIGHT", target, "BOTTOMRIGHT")
+  end
+  --same size on screen at every zoom level
+  local scale = 1 / MDT.main_frame.mapPanelFrame:GetScale()
+  if handle:GetScale() ~= scale then handle:SetScale(scale) end
+  handle:Show()
+end
+
+local function positionStyleBar(bar)
+  updateResizeHandle()
+  local target = getTargetFrame()
   if not target then return end
   local parent = MDT.main_frame
   local left, bottom, width, height = target:GetRect()
@@ -1029,6 +1114,10 @@ function getStyleBar()
     bar.palette:Hide()
     bar.iconPicker:Hide()
     bar.deleteConfirm:Hide()
+    if resizeHandle then
+      stopResize(resizeHandle)
+      resizeHandle:Hide()
+    end
   end)
   bar:Hide()
   styleBar = bar
