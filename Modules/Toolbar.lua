@@ -1,6 +1,6 @@
 local _, MDT = ...
 local L = MDT.L
-local sizex, sizey = 33, 420
+local sizex, sizey = 33, 453
 local AceGUI = LibStub("AceGUI-3.0")
 local db
 local toolbarTools = {}
@@ -199,6 +199,17 @@ function MDT:initToolbar(frame)
   arrow.tooltipText = L["Drawing: Arrow"]
   tinsert(widgets, arrow)
 
+  ---text
+  local text = AceGUI:Create("Icon")
+  text:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\text")
+  toolbarTools["text"] = text
+  text:SetCallback("OnClick", function(widget, callbackName)
+    if currentTool == "text" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("text") end
+  end)
+  text.tooltipText = L["Insert Text"]
+  text.tooltipHint = L["insertTextHint"]
+  tinsert(widgets, text)
+
   ---note
   local note = AceGUI:Create("Icon")
   note:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0, 0.25)
@@ -276,6 +287,33 @@ function MDT:CreateBrushPreview(frame)
   frame.brushPreview.tex = frame.brushPreview:CreateTexture(nil, "OVERLAY", nil, 0)
   frame.brushPreview.tex:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\ring")
   frame.brushPreview.tex:SetAllPoints()
+  frame.brushPreview.text = frame.brushPreview:CreateFontString(nil, "OVERLAY")
+  --new texts start at the cursor
+  frame.brushPreview.text:SetPoint("LEFT")
+  frame.brushPreview.text:SetShadowOffset(1, -1)
+  frame.brushPreview.text:SetShadowColor(0, 0, 0, 1)
+  frame.brushPreview.text:SetAlpha(0.7)
+  frame.brushPreview.text:Hide()
+end
+
+---Shows a sample of the text that would be placed at the cursor
+local function updateTextPreview(preview)
+  preview.tex:Hide()
+  if not MDTScrollFrame:IsMouseOver() or MDTToolbarFrame:IsMouseOver() or MDT:IsEditingPresetText()
+      or MDT:IsMouseOverPresetText() then
+    preview.text:Hide()
+    return
+  end
+  local x, y = GetCursorPosition()
+  local uiScale = UIParent:GetScale()
+  preview:ClearAllPoints()
+  preview:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / uiScale, y / uiScale)
+  local mapScale = MDT.main_frame.mapPanelFrame:GetEffectiveScale() / preview:GetEffectiveScale()
+  local r, g, b, size = MDT:GetPresetTextDefaultStyle()
+  preview.text:SetFont(STANDARD_TEXT_FONT, max(1, size * MDT:GetScale() * mapScale), "OUTLINE")
+  preview.text:SetTextColor(r, g, b)
+  preview.text:SetText("Aa")
+  preview.text:Show()
 end
 
 ---EnableBrushPreview
@@ -283,6 +321,11 @@ function MDT:EnableBrushPreview(tool)
   local frame = MDT.main_frame
   if tool == "mover" then return end
   frame.brushPreview:Show()
+  frame.brushPreview.text:Hide()
+  if tool == "text" then
+    frame.brushPreview:SetScript("OnUpdate", updateTextPreview)
+    return
+  end
   frame.brushPreview:SetScript("OnUpdate", function(self, tick)
     if MDTScrollFrame:IsMouseOver() and not MDTToolbarFrame:IsMouseOver() then
       local x, y = GetCursorPosition()
@@ -311,6 +354,7 @@ function MDT:DisableBrushPreview()
   local frame = MDT.main_frame
   frame.brushPreview:Hide()
   frame.brushPreview.tex:Hide()
+  frame.brushPreview.text:Hide()
   frame.brushPreview:SetScript("OnUpdate", nil)
 end
 
@@ -325,6 +369,7 @@ function MDT:ToggleToolbarTooltip(show, widget, anchor)
     if widget.type == "ColorPicker" then yOffset = yOffset - 3 end
     GameTooltip:SetOwner(widget.frame, anchor, 0, yOffset)
     GameTooltip:SetText(widget.tooltipText, 1, 1, 1, 1)
+    if widget.tooltipHint then GameTooltip:AddLine(widget.tooltipHint, 1, 1, 1) end
     GameTooltip:Show()
   end
 end
@@ -333,6 +378,7 @@ end
 ---Called when a tool is selected/deselected
 function MDT:UpdateSelectedToolbarTool(widgetName)
   local toolbar = MDT.main_frame.toolbar
+  MDT:ClearPresetTextSelection()
   if not widgetName or (not toolbarTools[widgetName]) then
     if toolbar.highlight then toolbar.highlight:Hide() end
     MDT:RestoreScrollframeScripts()
@@ -346,6 +392,7 @@ function MDT:UpdateSelectedToolbarTool(widgetName)
     end
     currentTool = nil
     toolbar:SetScript("OnUpdate", nil)
+    MDT:UpdatePresetTextInteractivity()
     return
   end
   local widget = toolbarTools[widgetName]
@@ -358,16 +405,25 @@ function MDT:UpdateSelectedToolbarTool(widgetName)
   toolbar.highlight:SetPoint("CENTER", widget.frame, "CENTER")
   MDT:OverrideScrollframeScripts()
   MDT:EnableBrushPreview(currentTool)
+  MDT:UpdatePresetTextInteractivity()
   toolbar.highlight:Show()
+end
+
+---Returns the name of the selected toolbar tool, nil if no tool is selected
+function MDT:GetCurrentToolbarTool()
+  return currentTool
 end
 
 ---OverrideScrollframeScripts
 ---Take control of the map scrollframe mouse event scripts
 ---Called when the user starts drawing on the map
+local textSelectionCleared
 function MDT:OverrideScrollframeScripts()
   local frame = MDT.main_frame
   frame.scrollFrame:SetScript("OnMouseDown", function(self, button)
     if button == "LeftButton" then
+      --clicking the map while a text is selected or edited only deselects it
+      textSelectionCleared = MDT:ClearPresetTextSelection()
       if currentTool == "pencil" then MDT:StartPencilDrawing() end
       if currentTool == "arrow" then MDT:StartArrowDrawing() end
       if currentTool == "line" then MDT:StartLineDrawing() end
@@ -392,6 +448,7 @@ function MDT:OverrideScrollframeScripts()
       if currentTool == "mover" then MDT:StopMovingObject() end
       if currentTool == "eraser" then MDT:StopEraserDrawing() end
       if currentTool == "note" then MDT:StartNoteDrawing() end
+      if currentTool == "text" and not textSelectionCleared then MDT:OnTextToolMapClick() end
     end
     if button == "RightButton" then
       local scrollFrame = MDT.main_frame.scrollFrame

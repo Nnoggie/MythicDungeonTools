@@ -4,7 +4,6 @@ local MDTcommsObject = MDT.commsObject
 local presetCommPrefix = MDT.presetCommPrefix
 
 -- Lua APIs
-local tremove = table.remove
 local pairs, type, unpack = pairs, type, unpack
 
 local uidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()"
@@ -255,12 +254,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local preset = MDT:GetCurrentLivePreset()
       local obj = MDT:StringToTable(message)
       if type(obj) ~= "table" then return end
-      MDT:StorePresetObject(obj, true, preset)
+      local storedObj = MDT:StorePresetObject(obj, true, preset)
       if preset == MDT:GetCurrentPreset() then
         local scale = MDT:GetScale()
         local currentPreset = MDT:GetCurrentPreset()
         local currentSublevel = MDT:GetCurrentSubLevel()
-        MDT:DrawPresetObject(obj, nil, scale, currentPreset, currentSublevel)
+        MDT:DrawPresetObject(storedObj, nil, scale, currentPreset, currentSublevel)
       end
     end
   end
@@ -307,19 +306,21 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.note then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local action, noteIdx, text, y = string.match(message, "(.*):(.*):(.*):(.*)")
+      --text may contain colons, the trailing y value never does
+      local action, noteIdx, text, y = string.match(message, "^(%a+):(%d+):(.*):([^:]*)$")
       noteIdx = tonumber(noteIdx)
-      if action == "text" then
-        preset.objects[noteIdx].d[5] = text
-      elseif action == "delete" then
-        tremove(preset.objects, noteIdx)
-      elseif action == "move" then
-        local x = tonumber(text)
-        y = tonumber(y)
-        preset.objects[noteIdx].d[1] = x
-        preset.objects[noteIdx].d[2] = y
+      local obj = noteIdx and preset.objects and preset.objects[noteIdx]
+      if obj then
+        if action == "text" then
+          obj.d[5] = text
+        elseif action == "delete" then
+          MDT:RemovePresetObject(preset, noteIdx)
+        elseif action == "move" then
+          obj.d[1] = tonumber(text)
+          obj.d[2] = tonumber(y)
+        end
+        if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
       end
-      if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
     end
   end
 

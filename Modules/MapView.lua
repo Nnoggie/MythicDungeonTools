@@ -370,6 +370,7 @@ end
 ---Handles mouse-down events on the map scrollframe
 MDT.OnMouseDown = function(self, button)
   local scrollFrame = MDT.main_frame.scrollFrame
+  if button == "LeftButton" then MDT:ClearPresetTextSelection() end
   if scrollFrame.zoomedIn then
     scrollFrame.panning = true
     scrollFrame.cursorX, scrollFrame.cursorY = GetCursorPosition()
