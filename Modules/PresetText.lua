@@ -993,18 +993,28 @@ local function positionStyleBar(bar)
   local target = getTargetFrame()
   if not target then return end
   local parent = MDT.main_frame
+  local map = parent.scrollFrame
   local left, bottom, width, height = target:GetRect()
-  local parentLeft, parentBottom, parentWidth, parentHeight = parent:GetRect()
-  if not left or not parentLeft then return end
+  local parentLeft, parentBottom = parent:GetRect()
+  local mapLeft, mapBottom, mapWidth, mapHeight = map:GetRect()
+  if not left or not parentLeft or not mapLeft then return end
   local scale = target:GetEffectiveScale() / parent:GetEffectiveScale()
+  local mapScale = map:GetEffectiveScale() / parent:GetEffectiveScale()
+  --the visible part of the map, the text can be scrolled out of it when zoomed in
+  local minX, minY = mapLeft * mapScale - parentLeft, mapBottom * mapScale - parentBottom
+  local maxX, maxY = minX + mapWidth * mapScale, minY + mapHeight * mapScale
+  local top = (bottom + height) * scale - parentBottom
   local barWidth, barHeight = bar:GetSize()
   local x = (left + width / 2) * scale - parentLeft
-  x = min(max(x, barWidth / 2), parentWidth - barWidth / 2)
-  local y = (bottom + height) * scale - parentBottom + 6
-  local isBelowTarget = y + barHeight > parentHeight
-  if isBelowTarget then
+  x = min(max(x, minX + barWidth / 2), maxX - barWidth / 2)
+  local y = top + 6
+  if y + barHeight > maxY then
     y = bottom * scale - parentBottom - 6 - barHeight
   end
+  --stays at the edge of the map while the text is out of view
+  y = min(max(y, minY), maxY - barHeight)
+  --popups open away from the text
+  local isBelowTarget = y < top
   --runs every frame, only move the bar when its position changed
   if x ~= bar.lastX or y ~= bar.lastY then
     bar.lastX, bar.lastY = x, y
