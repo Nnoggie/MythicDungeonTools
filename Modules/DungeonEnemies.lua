@@ -1,7 +1,7 @@
 local _, MDT = ...
 local db
-local tonumber, tinsert, pairs, ipairs, tostring, twipe, max, tremove, floor, DrawLine = tonumber, table.insert, pairs,
-    ipairs, tostring, table.wipe, math.max, table.remove, math.floor, DrawLine
+local tonumber, tinsert, pairs, ipairs, tostring, twipe, max, min, tremove, floor, DrawLine = tonumber, table.insert, pairs,
+    ipairs, tostring, table.wipe, math.max, math.min, table.remove, math.floor, DrawLine
 local L = MDT.L
 local blips = {}
 local preset
@@ -120,6 +120,10 @@ function MDT:SetUpModifiers(frame)
 end
 
 function MDTDungeonEnemyMixin:OnEnter()
+  if MDT:DungeonEnemies_IsBoxSelecting() then
+    self.hoverSuppressed = true
+    return
+  end
   self:updateSizes(1.2)
   self.sizesDirty = true
   self:SetFrameLevel(self:GetFrameLevel() + 5)
@@ -141,6 +145,10 @@ function MDTDungeonEnemyMixin:OnEnter()
 end
 
 function MDTDungeonEnemyMixin:OnLeave()
+  if self.hoverSuppressed then
+    self.hoverSuppressed = nil
+    return
+  end
   self:updateSizes(1)
   self.sizesDirty = nil
   self:SetFrameLevel(self:GetFrameLevel() - 5)
@@ -966,6 +974,209 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
     end
   end
   -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pull) end
+end
+
+local BOX_SELECTION_MIN_DRAG = 4
+local BOX_SELECTION_UPDATE_INTERVAL = 0.05
+local boxSelection
+
+local function getBoxSelectionFrame()
+  local frame = MDT.main_frame.boxSelectionFrame
+  if frame then return frame end
+  frame = CreateFrame("Frame", nil, MDT.main_frame.mapPanelFrame)
+  frame:SetFrameStrata("HIGH")
+  frame:SetFrameLevel(110)
+  frame:EnableMouse(false)
+  frame.fill = frame:CreateTexture(nil, "ARTWORK")
+  frame.fill:SetAllPoints()
+  frame.fill:SetColorTexture(0.2, 0.55, 0.95, 0.25)
+  frame.edges = {}
+  for i = 1, 4 do
+    local edge = frame:CreateTexture(nil, "OVERLAY")
+    edge:SetColorTexture(0.35, 0.7, 1, 0.9)
+    frame.edges[i] = edge
+  end
+  frame.edges[1]:SetPoint("TOPLEFT")
+  frame.edges[1]:SetPoint("TOPRIGHT")
+  frame.edges[2]:SetPoint("BOTTOMLEFT")
+  frame.edges[2]:SetPoint("BOTTOMRIGHT")
+  frame.edges[3]:SetPoint("TOPLEFT")
+  frame.edges[3]:SetPoint("BOTTOMLEFT")
+  frame.edges[4]:SetPoint("TOPRIGHT")
+  frame.edges[4]:SetPoint("BOTTOMRIGHT")
+  frame:SetScript("OnHide", function()
+    if boxSelection then MDT:DungeonEnemies_StopBoxSelection(true) end
+  end)
+  frame:Hide()
+  MDT.main_frame.boxSelectionFrame = frame
+  return frame
+end
+
+local function updateBoxSelectionFrame(frame, minX, maxX, minY, maxY)
+  local anchor = MDT.main_frame.mapPanelTile1
+  local thickness = 1.5 / MDT.main_frame.mapPanelFrame:GetScale()
+  frame:ClearAllPoints()
+  frame:SetPoint("TOPLEFT", anchor, "TOPLEFT", minX, maxY)
+  frame:SetPoint("BOTTOMRIGHT", anchor, "TOPLEFT", maxX, minY)
+  frame.edges[1]:SetHeight(thickness)
+  frame.edges[2]:SetHeight(thickness)
+  frame.edges[3]:SetWidth(thickness)
+  frame.edges[4]:SetWidth(thickness)
+end
+
+---Adds every unpulled enemy inside the box (and its group unless ignoreGrouped) to the current pull of pulls
+---Returns a key identifying the added clones and whether any were skipped due to constraints
+local function applyBoxSelection(pulls, pull, minX, maxX, minY, maxY, ignoreGrouped)
+  local pulledClones = {}
+  local constrainedCounts = {}
+  for _, p in pairs(pulls) do
+    for enemyIdx, clones in pairs(p) do
+      if tonumber(enemyIdx) then
+        for _, cloneIdx in pairs(clones) do
+          pulledClones[enemyIdx.."-"..cloneIdx] = true
+          local enemy = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+          local clone = enemy and enemy.clones[cloneIdx]
+          if clone and clone.constrained then
+            local index = clone.constrained.index
+            constrainedCounts[index] = (constrainedCounts[index] or 0) + 1
+          end
+        end
+      end
+    end
+  end
+
+  local addedKeys = {}
+  local skippedConstrained = false
+  local function addBlip(blip)
+    local key = blip.enemyIdx.."-"..blip.cloneIdx
+    if pulledClones[key] or not blip:IsShown() or not blip:IsEnabled() then return end
+    local constrained = blip.clone.constrained
+    if constrained then
+      if (constrainedCounts[constrained.index] or 0) >= constrained.amount then
+        skippedConstrained = true
+        return
+      end
+      constrainedCounts[constrained.index] = (constrainedCounts[constrained.index] or 0) + 1
+    end
+    pulledClones[key] = true
+    tinsert(addedKeys, key)
+    pulls[pull] = pulls[pull] or {}
+    pulls[pull][blip.enemyIdx] = pulls[pull][blip.enemyIdx] or {}
+    tinsert(pulls[pull][blip.enemyIdx], blip.cloneIdx)
+  end
+
+  for _, blip in ipairs(blips) do
+    local _, _, _, blipX, blipY = blip:GetPoint()
+    local radius = defaultSizes.texture_Background * blip.normalScale / 2
+    if blipX and blipX + radius >= minX and blipX - radius <= maxX and blipY + radius >= minY and blipY - radius <= maxY then
+      if not pulledClones[blip.enemyIdx.."-"..blip.cloneIdx] then
+        addBlip(blip)
+        if not ignoreGrouped and blip.clone.g then
+          for _, otherBlip in ipairs(blips) do
+            if otherBlip.clone.g == blip.clone.g then addBlip(otherBlip) end
+          end
+        end
+      end
+    end
+  end
+  return table.concat(addedKeys, ","), skippedConstrained
+end
+
+local function updateBoxSelection(force)
+  local selection = boxSelection
+  local x, y = MDT:GetCursorPosition()
+  if not selection.active then
+    local zoom = MDT.main_frame.mapPanelFrame:GetScale()
+    if ((x - selection.startX) ^ 2 + (y - selection.startY) ^ 2) * zoom ^ 2 < BOX_SELECTION_MIN_DRAG ^ 2 then return end
+    selection.active = true
+    selection.frame:Show()
+  end
+  local minX, maxX = min(selection.startX, x), max(selection.startX, x)
+  local minY, maxY = min(selection.startY, y), max(selection.startY, y)
+  updateBoxSelectionFrame(selection.frame, minX, maxX, minY, maxY)
+
+  local ignoreGrouped = IsControlKeyDown()
+  if not force and selection.elapsed < BOX_SELECTION_UPDATE_INTERVAL and ignoreGrouped == selection.ignoreGrouped then return end
+  selection.elapsed = 0
+  selection.ignoreGrouped = ignoreGrouped
+  local basePulls = selection.preset.value.pulls
+  local tempPulls = CopyTable(basePulls)
+  local key, skippedConstrained = applyBoxSelection(tempPulls, selection.preset.value.currentPull, minX, maxX, minY, maxY,
+    ignoreGrouped)
+  selection.skippedConstrained = skippedConstrained
+  --always keep the latest copy so pulls changed mid drag (e.g. by a live session) are not overwritten on commit
+  selection.tempPulls = tempPulls
+  if key == selection.key and basePulls == selection.basePulls then return end
+  selection.key = key
+  selection.basePulls = basePulls
+  MDT:DungeonEnemies_UpdateSelected(selection.preset.value.currentPull, tempPulls)
+  MDT:DrawAllHulls(CopyTable(tempPulls))
+end
+
+---Starts a box selection on the map at the cursor position
+---Enemies inside the box are previewed in the current pull and only added when the selection is stopped
+function MDT:DungeonEnemies_StartBoxSelection()
+  if boxSelection then self:DungeonEnemies_StopBoxSelection(true) end
+  preset = self:GetCurrentPreset()
+  local x, y = self:GetCursorPosition()
+  local frame = getBoxSelectionFrame()
+  boxSelection = {
+    preset = preset,
+    sublevel = self:GetCurrentSubLevel(),
+    startX = x,
+    startY = y,
+    elapsed = 0,
+    key = "",
+    frame = frame,
+  }
+  local updater = MDT.main_frame.boxSelectionUpdater or CreateFrame("Frame", nil, MDT.main_frame.mapPanelFrame)
+  MDT.main_frame.boxSelectionUpdater = updater
+  updater:SetScript("OnUpdate", function(_, elapsed)
+    if not boxSelection then return end
+    --mouse up may not reach the map (e.g. a toolbar tool took over its scripts mid drag)
+    if not IsMouseButtonDown("LeftButton") then
+      MDT:DungeonEnemies_StopBoxSelection()
+      return
+    end
+    --box coordinates are meaningless on another sublevel
+    if MDT:GetCurrentSubLevel() ~= boxSelection.sublevel then
+      MDT:DungeonEnemies_StopBoxSelection(true)
+      return
+    end
+    boxSelection.elapsed = boxSelection.elapsed + elapsed
+    updateBoxSelection()
+  end)
+end
+
+function MDT:DungeonEnemies_IsBoxSelecting()
+  return boxSelection ~= nil
+end
+
+---Stops the box selection and adds the selected enemies to the current pull unless cancelled
+function MDT:DungeonEnemies_StopBoxSelection(cancel)
+  local selection = boxSelection
+  if not selection then return end
+  if not cancel and selection.active then updateBoxSelection(true) end
+  boxSelection = nil
+  MDT.main_frame.boxSelectionUpdater:SetScript("OnUpdate", nil)
+  selection.frame:Hide()
+  if not selection.basePulls then return end
+  MDT:CancelAsync("DrawAllHulls")
+  if cancel or selection.key == "" then
+    MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
+    MDT:DrawAllHulls(nil, true)
+    return
+  end
+  if selection.skippedConstrained then
+    print(L["MDT: Cannot add enemy - you are trying to add too many enemies of the same kind"])
+  end
+  selection.preset.value.pulls = selection.tempPulls
+  MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
+  MDT:ReloadPullButtons(true)
+  MDT:UpdateProgressbar()
+  if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
+    MDT:LiveSession_SendPulls(MDT:GetPulls())
+  end
 end
 
 ---DungeonEnemies_UpdateBlipColors

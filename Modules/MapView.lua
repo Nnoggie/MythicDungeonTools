@@ -370,7 +370,9 @@ end
 ---Handles mouse-down events on the map scrollframe
 MDT.OnMouseDown = function(self, button)
   local scrollFrame = MDT.main_frame.scrollFrame
-  if scrollFrame.zoomedIn then
+  if button == "LeftButton" and IsShiftKeyDown() and not db.devMode then
+    MDT:DungeonEnemies_StartBoxSelection()
+  elseif scrollFrame.zoomedIn then
     scrollFrame.panning = true
     scrollFrame.cursorX, scrollFrame.cursorY = GetCursorPosition()
   end
@@ -383,6 +385,9 @@ end
 MDT.OnMouseUp = function(self, button)
   local scrollFrame = MDT.main_frame.scrollFrame
   if scrollFrame.panning then scrollFrame.panning = false end
+  if button == "LeftButton" and MDT:DungeonEnemies_IsBoxSelecting() then
+    MDT:DungeonEnemies_StopBoxSelection()
+  end
 
   --play minimap ping on right click at cursor position
   --only ping if we didnt pan
