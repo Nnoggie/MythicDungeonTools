@@ -453,6 +453,38 @@ local function duplicateText(preset, obj, x, y)
   MDT:DrawAllPresetObjects()
 end
 
+---Fonts do not grow in proportion to their size, so icons follow the measured text height
+---and keep the proportions they have next to text of size 12
+local ICON_REFERENCE_FONT_SIZE = 12
+local heightMeasure
+local measuredHeights = {}
+
+local function getRenderedTextHeight(fontPixels)
+  local key = math.floor(fontPixels * 100 + 0.5)
+  local height = measuredHeights[key]
+  if not height then
+    if not heightMeasure then
+      --measured on the map so it uses the same scaling as the texts
+      heightMeasure = MDT.main_frame.mapPanelFrame:CreateFontString(nil, "BACKGROUND")
+      heightMeasure:Hide()
+    end
+    heightMeasure:SetFont(STANDARD_TEXT_FONT, fontPixels, "OUTLINE")
+    heightMeasure:SetText("A")
+    height = heightMeasure:GetStringHeight()
+    measuredHeights[key] = height
+  end
+  return height
+end
+
+local function getIconSize(obj)
+  local scale = MDT:GetScale()
+  local referencePixels = ICON_REFERENCE_FONT_SIZE * scale
+  local referenceHeight = getRenderedTextHeight(referencePixels)
+  local height = getRenderedTextHeight(getFontSize(obj) * scale)
+  if not referenceHeight or referenceHeight <= 0 or not height then return getFontSize(obj) * scale end
+  return referencePixels * height / referenceHeight
+end
+
 ---width of the text in its current style in unscaled map units
 local widthMeasure
 local function getTextWidth(obj)
@@ -463,7 +495,7 @@ local function getTextWidth(obj)
   --measure the text as the map shows it, with icon tags drawn as icons
   local isEdited = editing and editing.obj == obj
   local text = isEdited and textEditor:GetText() or obj.d[5] or ""
-  text = MDT:RenderPresetTextTags(text, getFontSize(obj) * MDT:GetScale())
+  text = MDT:RenderPresetTextTags(text, getIconSize(obj))
   applyFontStyle(widthMeasure, obj)
   widthMeasure:SetText(text)
   return widthMeasure:GetStringWidth() / MDT:GetScale()
@@ -1336,7 +1368,7 @@ end
 function layoutTextFrame(frame, obj)
   local padding = hasBackground(obj) and BACKGROUND_PADDING or FRAME_PADDING
   applyFontStyle(frame.fontString, obj)
-  frame.fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", getFontSize(obj) * MDT:GetScale()))
+  frame.fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", getIconSize(obj)))
   frame.fontString:ClearAllPoints()
   frame.fontString:SetPoint("TOPLEFT", padding, -padding)
   frame:SetSize(frame.fontString:GetStringWidth() + padding * 2, frame.fontString:GetStringHeight() + padding * 2)
