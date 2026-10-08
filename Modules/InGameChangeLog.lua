@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.5",
+    date = "2026-10-08",
+    notes = {
+      "The Barrel of Apples, Berry Bush and Salmon Pool offerings in Den of Nalorakk can now be assigned to players",
+    },
+  },
+  {
     tag = "6.3.4",
     date = "2026-10-08",
     notes = {
@@ -14,14 +21,6 @@ MDT.changeLog = {
     notes = {
       "Fixed the text cursor and text highlighting not showing while editing a single-line map text with the map zoomed out.",
       "The style bar of a selected map text now stays inside the map when the text is scrolled out of view, instead of moving out of the MDT window.",
-    },
-  },
-  {
-    tag = "6.3.2",
-    date = "2026-10-07",
-    notes = {
-      "Selected map texts now have a resize handle in their bottom right corner. Drag it to change the text size while the top left corner stays in place.",
-      "Opening MDT in an open-world zone like Eversong Woods no longer switches to a past season dungeon located there. Inside a dungeon or at its entrance MDT still switches to it.",
     },
   },
 }
