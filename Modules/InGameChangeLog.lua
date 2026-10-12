@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.6",
+    date = "2026-10-12",
+    notes = {
+      "Added WoW 12.1.5 PTR support.",
+    },
+  },
+  {
     tag = "6.3.5",
     date = "2026-10-08",
     notes = {
@@ -13,14 +20,6 @@ MDT.changeLog = {
     date = "2026-10-08",
     notes = {
       "Added one missing Unleashed Imp to group 45.",
-    },
-  },
-  {
-    tag = "6.3.3",
-    date = "2026-10-08",
-    notes = {
-      "Fixed the text cursor and text highlighting not showing while editing a single-line map text with the map zoomed out.",
-      "The style bar of a selected map text now stays inside the map when the text is scrolled out of view, instead of moving out of the MDT window.",
     },
   },
 }
