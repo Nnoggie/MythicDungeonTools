@@ -994,6 +994,8 @@ local function hideHandle(handle)
 end
 
 local function updateResize(handle)
+  --a redraw can take the mouse up away from the handle
+  if not IsMouseButtonDown("LeftButton") then return stopHandleDrag(handle) end
   local _, obj = getTarget()
   if obj ~= handle.obj then return stopHandleDrag(handle) end
   local x, y = MDT:GetCursorPosition()
@@ -1005,6 +1007,7 @@ local function updateResize(handle)
 end
 
 local function updateRotate(handle)
+  if not IsMouseButtonDown("LeftButton") then return stopHandleDrag(handle) end
   local preset, obj = getTarget()
   local frame = obj == handle.obj and not editing and getFrameForObject(obj)
   if not frame then return stopHandleDrag(handle) end
