@@ -35,11 +35,11 @@ local BAR_SPACING = 2
 local BAR_GROUP_SPACING = 9
 local BAR_PADDING = 4
 local RESIZE_HANDLE_SIZE = 16
-local ROTATE_HANDLE_SIZE = 9
+local ROTATE_HANDLE_SIZE = 5
 --the knob takes clicks a bit around itself, it is small to grab
-local ROTATE_HANDLE_HIT_SIZE = 16
+local ROTATE_HANDLE_HIT_SIZE = 10
 --from the top edge of the text to the center of the knob
-local ROTATE_HANDLE_DISTANCE = 18
+local ROTATE_HANDLE_DISTANCE = 10
 local ROTATION_SNAP = 15
 
 ---text objects are stored as notes so older versions still show them as note pins
@@ -1593,7 +1593,8 @@ function createTextFrame()
   end
   frame.selection:Hide()
   frame.fontString = display:CreateFontString(nil, "OVERLAY")
-  frame.fontString:SetPoint("TOPLEFT", FRAME_PADDING, -FRAME_PADDING)
+  --rotated font strings turn around their anchor point, the padding is the same on all sides
+  frame.fontString:SetPoint("CENTER")
   frame.fontString:SetShadowOffset(1, -1)
   frame.fontString:SetShadowColor(0, 0, 0, 1)
 
@@ -1654,8 +1655,6 @@ function layoutTextFrame(frame, obj)
   local fontString = frame.fontString
   applyFontStyle(fontString, obj)
   fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE * scale))
-  fontString:ClearAllPoints()
-  fontString:SetPoint("TOPLEFT", padding, -padding)
   fontString:SetRotation(rotation)
   local textWidth, textHeight = fontString:GetStringWidth(), fontString:GetStringHeight()
   local width, height = textWidth + padding * 2, textHeight + padding * 2
