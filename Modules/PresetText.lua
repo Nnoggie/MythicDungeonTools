@@ -276,6 +276,10 @@ local function getFrameForObject(obj)
   end
 end
 
+---Presses on a text frame per mouse button: the text frame that handles them, or MAP for presses that went to the map
+local MAP = {}
+local pressOwner = {}
+
 function MDT:ReleasePresetTexts()
   for i = #activeTextFrames, 1, -1 do
     local frame = tremove(activeTextFrames, i)
@@ -285,6 +289,10 @@ function MDT:ReleasePresetTexts()
     frame.obj = nil
     frame:Hide()
     tinsert(inactiveTextFrames, frame)
+  end
+  --hidden frames lose their mouse ups, presses on the map are still finished
+  for button, owner in pairs(pressOwner) do
+    if owner ~= MAP then pressOwner[button] = nil end
   end
 end
 
@@ -330,6 +338,15 @@ local function forwardMouseClick(script, button)
   local onClick = scrollFrame:GetScript(script)
   if onClick then onClick(scrollFrame, button) end
 end
+
+--the map press can outlive the text frame it started on, e.g. the eraser redraws all texts when it starts
+local mapPressFrame = CreateFrame("Frame")
+mapPressFrame:RegisterEvent("GLOBAL_MOUSE_UP")
+mapPressFrame:SetScript("OnEvent", function(_, _, button)
+  if pressOwner[button] ~= MAP then return end
+  pressOwner[button] = nil
+  forwardMouseClick("OnMouseUp", button)
+end)
 
 ---Selection and editing state
 local selectedPreset, selectedObj
@@ -1478,6 +1495,62 @@ local function updateHover(display)
   frame.highlight:SetShown(isCursorOverText(frame))
 end
 
+local function onTextMouseDown(frame, button)
+  if button == "RightButton" then
+    --right drag pans the map like everywhere else on it, a right click without moving opens the menu
+    frame.rightDownX, frame.rightDownY = GetCursorPosition()
+    forwardMouseClick("OnMouseDown", button)
+    return
+  end
+  if button ~= "LeftButton" or not frame.obj then return end
+  if MDT:GetCurrentToolbarTool() == "eraser" then
+    local preset = MDT:GetCurrentPreset()
+    local objectIndex = findObjectIndex(preset, frame.obj)
+    if objectIndex then
+      if selectedObj == frame.obj then selectText(nil, nil) end
+      deleteTextObject(preset, objectIndex)
+    end
+    return
+  end
+  frame.dragStartX, frame.dragStartY = MDT:GetCursorPosition()
+  frame.dragging = nil
+  frame.duplicateOnDrag = IsAltKeyDown()
+  frame:SetScript("OnUpdate", updateDrag)
+end
+
+local function onTextMouseUp(frame, button)
+  --end a map pan that was started on this text
+  if button == "RightButton" then MDT.main_frame.scrollFrame.panning = false end
+  if not frame.obj then return end
+  local obj = frame.obj
+  local preset = MDT:GetCurrentPreset()
+  if button == "LeftButton" then
+    if MDT:GetCurrentToolbarTool() == "eraser" then return end
+    --finish editing another text first
+    if editing and editing.obj ~= obj then MDT:CommitPresetTextEdit() end
+    if stopDrag(frame) then return end
+    if not findObjectIndex(preset, obj) then return end
+    --click selects, double click edits
+    local now = GetTime()
+    if lastClickObj == obj and lastClickTime and now - lastClickTime < DOUBLE_CLICK_TIME then
+      lastClickObj, lastClickTime = nil, nil
+      openEditor(preset, obj)
+    else
+      lastClickObj, lastClickTime = obj, now
+      selectText(preset, obj)
+    end
+  elseif button == "RightButton" then
+    local x, y = GetCursorPosition()
+    local moved = not frame.rightDownX or abs(x - frame.rightDownX) > DRAG_THRESHOLD
+        or abs(y - frame.rightDownY) > DRAG_THRESHOLD
+    frame.rightDownX, frame.rightDownY = nil, nil
+    if moved or not findObjectIndex(preset, obj) then return end
+    MDT:CommitPresetTextEdit()
+    selectText(preset, obj)
+    openContextMenu(preset, obj)
+  end
+end
+
 ---Texts are drawn above enemies but take mouse input below them:
 ---the frame itself is an invisible click area under the enemies, its display child draws everything above them
 ---rotated texts draw their display turned inside of the frame, which covers the whole turned text
@@ -1535,72 +1608,24 @@ function createTextFrame()
     end
   end)
   frame:SetScript("OnMouseDown", function(self, button)
-    --clicks next to a rotated text go to the map,
+    --clicks next to a rotated text go to the map
+    local owner = isCursorOverText(self) and self or nil
     --shift+drag selects enemies with a box like everywhere else on the map
-    if not isCursorOverText(self)
-        or (button == "LeftButton" and IsShiftKeyDown() and MDT:GetCurrentToolbarTool() == nil) then
-      self.forwardedClick = button
+    if button == "LeftButton" and IsShiftKeyDown() and MDT:GetCurrentToolbarTool() == nil then owner = nil end
+    --replaces a press whose mouse up got lost
+    pressOwner[button] = owner or MAP
+    if owner then
+      onTextMouseDown(owner, button)
+    else
       forwardMouseClick("OnMouseDown", button)
-      return
     end
-    if button == "RightButton" then
-      --right drag pans the map like everywhere else on it, a right click without moving opens the menu
-      self.rightDownX, self.rightDownY = GetCursorPosition()
-      forwardMouseClick("OnMouseDown", button)
-      return
-    end
-    if button ~= "LeftButton" or not self.obj then return end
-    if MDT:GetCurrentToolbarTool() == "eraser" then
-      local preset = MDT:GetCurrentPreset()
-      local objectIndex = findObjectIndex(preset, self.obj)
-      if objectIndex then
-        if selectedObj == self.obj then selectText(nil, nil) end
-        deleteTextObject(preset, objectIndex)
-      end
-      return
-    end
-    self.dragStartX, self.dragStartY = MDT:GetCursorPosition()
-    self.dragging = nil
-    self.duplicateOnDrag = IsAltKeyDown()
-    self:SetScript("OnUpdate", updateDrag)
   end)
-  frame:SetScript("OnMouseUp", function(self, button)
-    --finish a click or box selection that went to the map
-    if self.forwardedClick == button then
-      self.forwardedClick = nil
-      forwardMouseClick("OnMouseUp", button)
-      return
-    end
-    --end a map pan that was started on this text
-    if button == "RightButton" then MDT.main_frame.scrollFrame.panning = false end
-    if not self.obj then return end
-    local obj = self.obj
-    local preset = MDT:GetCurrentPreset()
-    if button == "LeftButton" then
-      if MDT:GetCurrentToolbarTool() == "eraser" then return end
-      --finish editing another text first
-      if editing and editing.obj ~= obj then MDT:CommitPresetTextEdit() end
-      if stopDrag(self) then return end
-      if not findObjectIndex(preset, obj) then return end
-      --click selects, double click edits
-      local now = GetTime()
-      if lastClickObj == obj and lastClickTime and now - lastClickTime < DOUBLE_CLICK_TIME then
-        lastClickObj, lastClickTime = nil, nil
-        openEditor(preset, obj)
-      else
-        lastClickObj, lastClickTime = obj, now
-        selectText(preset, obj)
-      end
-    elseif button == "RightButton" then
-      local x, y = GetCursorPosition()
-      local moved = not self.rightDownX or abs(x - self.rightDownX) > DRAG_THRESHOLD
-          or abs(y - self.rightDownY) > DRAG_THRESHOLD
-      self.rightDownX, self.rightDownY = nil, nil
-      if moved or not findObjectIndex(preset, obj) then return end
-      MDT:CommitPresetTextEdit()
-      selectText(preset, obj)
-      openContextMenu(preset, obj)
-    end
+  frame:SetScript("OnMouseUp", function(_, button)
+    local owner = pressOwner[button]
+    --presses that went to the map are finished by the global mouse up
+    if not owner or owner == MAP then return end
+    pressOwner[button] = nil
+    onTextMouseUp(owner, button)
   end)
   return frame
 end
