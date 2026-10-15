@@ -4,6 +4,8 @@ local L = MDT.L
 local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, CreateFrame, GameTooltip, GetTime =
     table.insert, table.remove, pairs, ipairs, math.min, math.max, math.abs, tonumber, type, unpack, CreateFrame,
     GameTooltip, GetTime
+local cos, sin, rad = math.cos, math.sin, math.rad
+local GetCursorPosition = GetCursorPosition
 
 local TEXT_SIZES = { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48 }
 local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
@@ -35,10 +37,11 @@ local BAR_PADDING = 4
 local RESIZE_HANDLE_SIZE = 16
 
 ---text objects are stored as notes so older versions still show them as note pins
----d: x,y,sublevel,shown,text,colorstring,fontSize,justifyH,background
----x,y is the top of the text on its aligned side (top left corner for left aligned text)
+---d: x,y,sublevel,shown,text,colorstring,fontSize,justifyH,background,rotation
+---x,y is the top of the upright text on its aligned side (top left corner for left aligned text)
+---rotation is in whole degrees counter clockwise around the center of the text, nil when upright
 ---n = true, tx = true
-local FIELD_COLOR, FIELD_SIZE, FIELD_ALIGN, FIELD_BACKGROUND = 6, 7, 8, 9
+local FIELD_COLOR, FIELD_SIZE, FIELD_ALIGN, FIELD_BACKGROUND, FIELD_ROTATION = 6, 7, 8, 9, 10
 local ANCHOR_POINTS = { LEFT = "TOPLEFT", CENTER = "TOP", RIGHT = "TOPRIGHT" }
 local ANCHOR_PADDING_SIGN = { LEFT = -1, CENTER = 0, RIGHT = 1 }
 local ANCHOR_WIDTH_FACTOR = { LEFT = 0, CENTER = 0.5, RIGHT = 1 }
@@ -61,6 +64,18 @@ end
 
 local function hasBackground(obj)
   return obj.d[FIELD_BACKGROUND] == true
+end
+
+---in radians
+local function getRotation(obj)
+  local degrees = tonumber(obj.d[FIELD_ROTATION])
+  return degrees and rad(degrees % 360) or 0
+end
+
+---rotates a point around the origin, y points up
+local function rotatePoint(x, y, rotation)
+  local c, s = cos(rotation), sin(rotation)
+  return x * c - y * s, x * s + y * c
 end
 
 ---Rich text: parts of a text can be colored with |cffRRGGBB ... |r codes
@@ -257,6 +272,7 @@ function MDT:ReleasePresetTexts()
   for i = #activeTextFrames, 1, -1 do
     local frame = tremove(activeTextFrames, i)
     frame:SetScript("OnUpdate", nil)
+    frame.display:SetScript("OnUpdate", nil)
     frame.dragging = nil
     frame.obj = nil
     frame:Hide()
@@ -264,9 +280,21 @@ function MDT:ReleasePresetTexts()
   end
 end
 
+---the frame covers rotated texts with an upright box, only the turned text itself counts
+local function isCursorOverText(frame)
+  if not frame:IsMouseOver() then return false end
+  local centerX, centerY = frame:GetCenter()
+  if not centerX then return false end
+  local cursorX, cursorY = GetCursorPosition()
+  local scale = frame:GetEffectiveScale()
+  --turn the cursor back into the axes of the upright text
+  local x, y = rotatePoint(cursorX / scale - centerX, cursorY / scale - centerY, -frame.textRotation)
+  return abs(x) <= frame.display:GetWidth() / 2 and abs(y) <= frame.display:GetHeight() / 2
+end
+
 function MDT:IsMouseOverPresetText()
   for _, frame in ipairs(activeTextFrames) do
-    if frame:IsShown() and frame:IsMouseEnabled() and frame:IsMouseOver() then return true end
+    if frame:IsShown() and frame:IsMouseEnabled() and isCursorOverText(frame) then return true end
   end
   return false
 end
@@ -276,7 +304,10 @@ function MDT:UpdatePresetTextInteractivity()
   for _, frame in ipairs(activeTextFrames) do
     frame:EnableMouse(interactive)
     frame:EnableMouseWheel(interactive)
-    if not interactive then frame.highlight:Hide() end
+    if not interactive then
+      frame.display:SetScript("OnUpdate", nil)
+      frame.highlight:Hide()
+    end
   end
 end
 
@@ -284,6 +315,12 @@ local function forwardMouseWheel(delta)
   local scrollFrame = MDT.main_frame.scrollFrame
   local onMouseWheel = scrollFrame:GetScript("OnMouseWheel")
   if onMouseWheel then onMouseWheel(scrollFrame, delta) end
+end
+
+local function forwardMouseClick(script, button)
+  local scrollFrame = MDT.main_frame.scrollFrame
+  local onClick = scrollFrame:GetScript(script)
+  if onClick then onClick(scrollFrame, button) end
 end
 
 ---Selection and editing state
@@ -353,16 +390,17 @@ local function measureText(obj)
 end
 
 ---Runs change and moves the text so the point u, v of its box stays on the same spot of the map
----u is 0 on the left and 1 on the right edge, v is 0 on the top and 1 on the bottom edge
+---u is 0 on the left and 1 on the right edge, v is 0 on the top and 1 on the bottom edge of the upright text
 local function keepPointInPlace(obj, u, v, change)
   local width, height = measureText(obj)
   local factor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
   change()
   local newWidth, newHeight = measureText(obj)
   local newFactor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
-  --the stored point moves by the change of its own offset and of the kept point's offset from the center
-  obj.d[1] = obj.d[1] + ((0.5 - factor) * width - (0.5 - newFactor) * newWidth + (u - 0.5) * (width - newWidth))
-  obj.d[2] = obj.d[2] + ((newHeight - height) / 2 + (0.5 - v) * (height - newHeight))
+  --the stored point belongs to the upright text, only the way from the center to the kept point turns
+  local dx, dy = rotatePoint((u - 0.5) * (width - newWidth), (0.5 - v) * (height - newHeight), getRotation(obj))
+  obj.d[1] = obj.d[1] + ((0.5 - factor) * width - (0.5 - newFactor) * newWidth + dx)
+  obj.d[2] = obj.d[2] + ((newHeight - height) / 2 + dy)
 end
 
 local colorSelection
@@ -402,8 +440,10 @@ function MDT:CommitPresetTextEdit(keepSelected, noRedraw)
         --tells callers that finishing the edit deleted the text
         return true
       elseif text ~= state.obj.d[5] or state.styleChanged then
-        state.obj.d[5] = text
-        sendUpdatedObject(state.preset, objectIndex, state.obj)
+        local obj = state.obj
+        --the editor shows the text upright, a rotated text grows from its aligned side along its own axes
+        keepPointInPlace(obj, ANCHOR_WIDTH_FACTOR[getAlign(obj)], 0, function() obj.d[5] = text end)
+        sendUpdatedObject(state.preset, objectIndex, obj)
       end
       resultObj = state.obj
     end
@@ -1279,7 +1319,7 @@ local function updateDrag(frame)
     frame.dragging = true
   end
   frame:ClearAllPoints()
-  frame:SetPoint(frame.anchorPoint, MDT.main_frame.mapPanelTile1, "TOPLEFT", frame.anchorX + dx, frame.anchorY + dy)
+  frame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", frame.anchorX + dx, frame.anchorY + dy)
 end
 
 ---returns true if the text was dragged, alt+drag places a copy and leaves the original where it was
@@ -1310,23 +1350,27 @@ end
 
 local lastClickObj, lastClickTime
 
-local function createEdge(frame, point1, point2, horizontal)
-  local edge = frame.selection:CreateTexture(nil, "OVERLAY")
-  edge:SetColorTexture(unpack(SELECTION_COLOR))
-  edge:SetPoint(point1)
-  edge:SetPoint(point2)
-  if horizontal then edge:SetHeight(1) else edge:SetWidth(1) end
+---places a selection edge between two points given from the center of the upright text box
+local function placeEdge(edge, display, rotation, x1, y1, x2, y2)
+  edge:SetStartPoint("CENTER", display, rotatePoint(x1, y1, rotation))
+  edge:SetEndPoint("CENTER", display, rotatePoint(x2, y2, rotation))
+end
+
+local function updateHover(display)
+  local frame = display:GetParent()
+  frame.highlight:SetShown(isCursorOverText(frame))
 end
 
 ---Texts are drawn above enemies but take mouse input below them:
 ---the frame itself is an invisible click area under the enemies, its display child draws everything above them
+---rotated texts draw their display turned inside of the frame, which covers the whole turned text
 function createTextFrame()
   local mapPanelFrame = MDT.main_frame.mapPanelFrame
   local frame = CreateFrame("Frame", nil, mapPanelFrame)
   --enemies start at frame level 4, keep the click area below them
   frame:SetFrameLevel(mapPanelFrame:GetFrameLevel())
   local display = CreateFrame("Frame", nil, frame)
-  display:SetAllPoints()
+  display:SetPoint("CENTER")
   --below the text editor and the toolbar, above enemies and pull outlines
   display:SetFrameLevel((getTextFrameLevels()))
   frame.display = display
@@ -1338,52 +1382,57 @@ function createTextFrame()
   frame.highlight:Hide()
   frame.selection = CreateFrame("Frame", nil, display)
   frame.selection:SetAllPoints()
-  createEdge(frame, "TOPLEFT", "TOPRIGHT", true)
-  createEdge(frame, "BOTTOMLEFT", "BOTTOMRIGHT", true)
-  createEdge(frame, "TOPLEFT", "BOTTOMLEFT", false)
-  createEdge(frame, "TOPRIGHT", "BOTTOMRIGHT", false)
+  frame.selection.edges = {}
+  for i = 1, 4 do
+    local edge = frame.selection:CreateLine(nil, "OVERLAY")
+    edge:SetColorTexture(unpack(SELECTION_COLOR))
+    edge:SetThickness(1)
+    frame.selection.edges[i] = edge
+  end
   frame.selection:Hide()
   frame.fontString = display:CreateFontString(nil, "OVERLAY")
   frame.fontString:SetPoint("TOPLEFT", FRAME_PADDING, -FRAME_PADDING)
   frame.fontString:SetShadowOffset(1, -1)
   frame.fontString:SetShadowColor(0, 0, 0, 1)
 
+  --the frame can be larger than a rotated text, the highlight follows the text itself
   frame:SetScript("OnEnter", function(self)
     if MDT:GetCurrentToolbarTool() == "eraser" then
       self.highlight:SetColorTexture(1, 0.2, 0.2, 0.35)
     else
       self.highlight:SetColorTexture(1, 1, 1, 0.12)
     end
-    self.highlight:Show()
+    updateHover(self.display)
+    self.display:SetScript("OnUpdate", updateHover)
   end)
   frame:SetScript("OnLeave", function(self)
+    self.display:SetScript("OnUpdate", nil)
     self.highlight:Hide()
   end)
   frame:SetScript("OnMouseWheel", function(self, delta)
-    if IsControlKeyDown() and not IsShiftKeyDown() and self.obj and self.obj == selectedObj then
+    if IsControlKeyDown() and not IsShiftKeyDown() and self.obj and self.obj == selectedObj
+        and isCursorOverText(self) then
       stepFontSize(delta)
     else
       forwardMouseWheel(delta)
     end
   end)
   frame:SetScript("OnMouseDown", function(self, button)
+    --clicks next to a rotated text go to the map,
+    --shift+drag selects enemies with a box like everywhere else on the map
+    if not isCursorOverText(self)
+        or (button == "LeftButton" and IsShiftKeyDown() and MDT:GetCurrentToolbarTool() == nil) then
+      self.forwardedClick = button
+      forwardMouseClick("OnMouseDown", button)
+      return
+    end
     if button == "RightButton" then
       --right drag pans the map like everywhere else on it, a right click without moving opens the menu
       self.rightDownX, self.rightDownY = GetCursorPosition()
-      local scrollFrame = MDT.main_frame.scrollFrame
-      local onMouseDown = scrollFrame:GetScript("OnMouseDown")
-      if onMouseDown then onMouseDown(scrollFrame, button) end
+      forwardMouseClick("OnMouseDown", button)
       return
     end
     if button ~= "LeftButton" or not self.obj then return end
-    --shift+drag selects enemies with a box like everywhere else on the map
-    if IsShiftKeyDown() and MDT:GetCurrentToolbarTool() == nil then
-      self.forwardedLeftClick = true
-      local scrollFrame = MDT.main_frame.scrollFrame
-      local onMouseDown = scrollFrame:GetScript("OnMouseDown")
-      if onMouseDown then onMouseDown(scrollFrame, button) end
-      return
-    end
     if MDT:GetCurrentToolbarTool() == "eraser" then
       local preset = MDT:GetCurrentPreset()
       local objectIndex = findObjectIndex(preset, self.obj)
@@ -1399,16 +1448,14 @@ function createTextFrame()
     self:SetScript("OnUpdate", updateDrag)
   end)
   frame:SetScript("OnMouseUp", function(self, button)
-    --end a map pan that was started on this text
-    if button == "RightButton" then MDT.main_frame.scrollFrame.panning = false end
-    --finish a box selection that was started on this text
-    if button == "LeftButton" and self.forwardedLeftClick then
-      self.forwardedLeftClick = nil
-      local scrollFrame = MDT.main_frame.scrollFrame
-      local onMouseUp = scrollFrame:GetScript("OnMouseUp")
-      if onMouseUp then onMouseUp(scrollFrame, button) end
+    --finish a click or box selection that went to the map
+    if self.forwardedClick == button then
+      self.forwardedClick = nil
+      forwardMouseClick("OnMouseUp", button)
       return
     end
+    --end a map pan that was started on this text
+    if button == "RightButton" then MDT.main_frame.scrollFrame.panning = false end
     if not self.obj then return end
     local obj = self.obj
     local preset = MDT:GetCurrentPreset()
@@ -1444,14 +1491,36 @@ end
 ---Applies text, style and position of an object to its frame
 function layoutTextFrame(frame, obj)
   local padding = hasBackground(obj) and BACKGROUND_PADDING or FRAME_PADDING
-  applyFontStyle(frame.fontString, obj)
-  frame.fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE * MDT:GetScale()))
-  frame.fontString:ClearAllPoints()
-  frame.fontString:SetPoint("TOPLEFT", padding, -padding)
-  frame:SetSize(frame.fontString:GetStringWidth() + padding * 2, frame.fontString:GetStringHeight() + padding * 2)
-  anchorToText(frame, obj, padding)
-  local anchorPoint, _, _, anchorX, anchorY = frame:GetPoint(1)
-  frame.anchorPoint, frame.anchorX, frame.anchorY = anchorPoint, anchorX, anchorY
+  local scale = MDT:GetScale()
+  local rotation = getRotation(obj)
+  local fontString = frame.fontString
+  applyFontStyle(fontString, obj)
+  fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE * scale))
+  fontString:ClearAllPoints()
+  fontString:SetPoint("TOPLEFT", padding, -padding)
+  fontString:SetRotation(rotation)
+  local textWidth, textHeight = fontString:GetStringWidth(), fontString:GetStringHeight()
+  local width, height = textWidth + padding * 2, textHeight + padding * 2
+  frame.display:SetSize(width, height)
+  frame.background:SetRotation(rotation)
+  frame.highlight:SetRotation(rotation)
+  local right, top = width / 2, height / 2
+  --edges lie inside the box like a border
+  local innerRight, innerTop = right - 0.5, top - 0.5
+  local edges = frame.selection.edges
+  placeEdge(edges[1], frame.display, rotation, -right, innerTop, right, innerTop)
+  placeEdge(edges[2], frame.display, rotation, -right, -innerTop, right, -innerTop)
+  placeEdge(edges[3], frame.display, rotation, -innerRight, top, -innerRight, -top)
+  placeEdge(edges[4], frame.display, rotation, innerRight, top, innerRight, -top)
+  frame.textRotation = rotation
+  --the click area covers the rotated box, the box turns around its center
+  local c, s = abs(cos(rotation)), abs(sin(rotation))
+  frame:SetSize(width * c + height * s, width * s + height * c)
+  local centerX = obj.d[1] * scale + (0.5 - ANCHOR_WIDTH_FACTOR[getAlign(obj)]) * textWidth
+  local centerY = obj.d[2] * scale - textHeight / 2
+  frame:ClearAllPoints()
+  frame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", centerX, centerY)
+  frame.anchorX, frame.anchorY = centerX, centerY
   frame.background:SetShown(hasBackground(obj))
   frame.selection:SetShown(obj == selectedObj)
 end
