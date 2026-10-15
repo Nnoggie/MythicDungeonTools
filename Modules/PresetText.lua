@@ -974,7 +974,6 @@ local function getTargetBox()
   return target.display, target.textRotation
 end
 
----Handles on the selected or edited text: resize on the bottom right corner, rotate above the top edge
 local function getNearestFontSize(size)
   local nearest = TEXT_SIZES[1]
   for _, s in ipairs(TEXT_SIZES) do
@@ -983,6 +982,7 @@ local function getNearestFontSize(size)
   return nearest
 end
 
+---Handles on the selected or edited text: resize on the bottom right corner, rotate above the top edge
 local function stopHandleDrag(handle)
   handle:SetScript("OnUpdate", nil)
   handle.obj = nil
@@ -1028,7 +1028,7 @@ local function updateRotate(handle)
   layoutTextFrame(frame, obj)
 end
 
----texture is drawn in the handle, a round knob without one
+---texture is drawn in the handle, a round knob without one, startDrag is optional
 local function createHandle(texture, startDrag, updateDrag)
   local handle = CreateFrame("Frame", nil, MDT.main_frame.mapPanelFrame)
   handle:EnableMouse(true)
@@ -1053,7 +1053,7 @@ local function createHandle(texture, startDrag, updateDrag)
     local box, rotation = getTargetBox()
     if button ~= "LeftButton" or not obj or not box then return end
     self.obj = obj
-    startDrag(self, obj, box, rotation)
+    if startDrag then startDrag(self, obj, box, rotation) end
     self:SetScript("OnUpdate", updateDrag)
   end)
   handle:SetScript("OnMouseUp", function(self, button)
@@ -1082,7 +1082,7 @@ end
 
 local function getRotateHandle()
   if rotateHandle then return rotateHandle end
-  rotateHandle = createHandle(nil, hideTooltip, updateRotate)
+  rotateHandle = createHandle(nil, nil, updateRotate)
   rotateHandle.line = rotateHandle:CreateLine(nil, "OVERLAY")
   rotateHandle.line:SetColorTexture(unpack(SELECTION_COLOR))
   rotateHandle.line:SetThickness(1)
@@ -1091,6 +1091,7 @@ local function getRotateHandle()
     if not self.obj then showButtonTooltip(self) end
   end)
   rotateHandle:HookScript("OnLeave", hideTooltip)
+  rotateHandle:HookScript("OnMouseDown", hideTooltip)
   return rotateHandle
 end
 
