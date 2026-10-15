@@ -4,8 +4,8 @@ local L = MDT.L
 local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, CreateFrame, GameTooltip, GetTime =
     table.insert, table.remove, pairs, ipairs, math.min, math.max, math.abs, tonumber, type, unpack, CreateFrame,
     GameTooltip, GetTime
-local cos, sin, rad = math.cos, math.sin, math.rad
-local GetCursorPosition = GetCursorPosition
+local cos, sin, rad, deg, atan2, floor = math.cos, math.sin, math.rad, math.deg, math.atan2, math.floor
+local GetCursorPosition, IsShiftKeyDown = GetCursorPosition, IsShiftKeyDown
 
 local TEXT_SIZES = { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48 }
 local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
@@ -35,6 +35,10 @@ local BAR_SPACING = 2
 local BAR_GROUP_SPACING = 9
 local BAR_PADDING = 4
 local RESIZE_HANDLE_SIZE = 16
+local ROTATE_HANDLE_SIZE = 9
+--from the top edge of the text to the center of the knob
+local ROTATE_HANDLE_DISTANCE = 18
+local ROTATION_SNAP = 15
 
 ---text objects are stored as notes so older versions still show them as note pins
 ---d: x,y,sublevel,shown,text,colorstring,fontSize,justifyH,background,rotation
@@ -397,8 +401,10 @@ local function keepPointInPlace(obj, u, v, change)
   change()
   local newWidth, newHeight = measureText(obj)
   local newFactor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
+  --the editor shows texts upright, keep the point where it is on screen
+  local rotation = not (editing and editing.obj == obj) and getRotation(obj) or 0
   --the stored point belongs to the upright text, only the way from the center to the kept point turns
-  local dx, dy = rotatePoint((u - 0.5) * (width - newWidth), (0.5 - v) * (height - newHeight), getRotation(obj))
+  local dx, dy = rotatePoint((u - 0.5) * (width - newWidth), (0.5 - v) * (height - newHeight), rotation)
   obj.d[1] = obj.d[1] + ((0.5 - factor) * width - (0.5 - newFactor) * newWidth + dx)
   obj.d[2] = obj.d[2] + ((newHeight - height) / 2 + dy)
 end
@@ -958,7 +964,15 @@ local function getTargetFrame()
   if selectedObj then return getFrameForObject(selectedObj) end
 end
 
----Resize handle on the bottom right corner of the selected or edited text
+---the upright box of the selected or edited text and its rotation, the editor shows texts upright
+local function getTargetBox()
+  local target = getTargetFrame()
+  if not target then return end
+  if target == textEditor then return target, 0 end
+  return target.display, target.textRotation
+end
+
+---Handles on the selected or edited text: resize on the bottom right corner, rotate above the top edge
 local function getNearestFontSize(size)
   local nearest = TEXT_SIZES[1]
   for _, s in ipairs(TEXT_SIZES) do
@@ -967,30 +981,63 @@ local function getNearestFontSize(size)
   return nearest
 end
 
-local function stopResize(handle)
+local function stopHandleDrag(handle)
   handle:SetScript("OnUpdate", nil)
   handle.obj = nil
   handle.marker:SetVertexColor(unpack(SELECTION_COLOR))
 end
 
+local function hideHandle(handle)
+  if not handle or not handle:IsShown() then return end
+  stopHandleDrag(handle)
+  handle:Hide()
+end
+
 local function updateResize(handle)
   local _, obj = getTarget()
-  if obj ~= handle.obj then return stopResize(handle) end
+  if obj ~= handle.obj then return stopHandleDrag(handle) end
   local x, y = MDT:GetCursorPosition()
-  --dragging right or down grows the text, the top left corner stays in place
-  local extent = max(handle.startExtent + (x - handle.startX) - (y - handle.startY), 1)
+  --dragging right or down along the text grows it, the top left corner stays in place
+  local right, up = rotatePoint(x - handle.startX, y - handle.startY, -handle.startRotation)
+  local extent = max(handle.startExtent + right - up, 1)
   local size = getNearestFontSize(handle.startSize * extent / handle.startExtent)
   if size ~= getFontSize(obj) then setStyle(FIELD_SIZE, size, 0) end
 end
 
-local resizeHandle
-local function getResizeHandle()
-  if resizeHandle then return resizeHandle end
+local function updateRotate(handle)
+  local preset, obj = getTarget()
+  local frame = obj == handle.obj and not editing and getFrameForObject(obj)
+  if not frame then return stopHandleDrag(handle) end
+  local centerX, centerY = frame:GetCenter()
+  if not centerX then return end
+  local cursorX, cursorY = GetCursorPosition()
+  local scale = frame:GetEffectiveScale()
+  --the text is upright while the cursor is straight above its center
+  local degrees = deg(atan2(centerX - cursorX / scale, cursorY / scale - centerY))
+  local step = IsShiftKeyDown() and ROTATION_SNAP or 1
+  degrees = floor(degrees / step + 0.5) * step % 360
+  local rotation = degrees ~= 0 and degrees or nil
+  if rotation == obj.d[FIELD_ROTATION] then return end
+  obj.d[FIELD_ROTATION] = rotation
+  queueUpdatedObject(preset, obj)
+  layoutTextFrame(frame, obj)
+end
+
+---texture is drawn in the handle, a round knob without one
+local function createHandle(texture, startDrag, updateDrag)
   local handle = CreateFrame("Frame", nil, MDT.main_frame.mapPanelFrame)
   handle:EnableMouse(true)
   handle.marker = handle:CreateTexture(nil, "OVERLAY")
   handle.marker:SetAllPoints()
-  handle.marker:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Resize")
+  if texture then
+    handle.marker:SetTexture(texture)
+  else
+    handle.marker:SetColorTexture(1, 1, 1, 1)
+    local mask = handle:CreateMaskTexture()
+    mask:SetAllPoints(handle.marker)
+    mask:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    handle.marker:AddMaskTexture(mask)
+  end
   handle.marker:SetVertexColor(unpack(SELECTION_COLOR))
   handle:SetScript("OnEnter", function(self) self.marker:SetVertexColor(1, 1, 1, 1) end)
   handle:SetScript("OnLeave", function(self)
@@ -998,48 +1045,99 @@ local function getResizeHandle()
   end)
   handle:SetScript("OnMouseDown", function(self, button)
     local _, obj = getTarget()
-    local target = getTargetFrame()
-    if button ~= "LeftButton" or not obj or not target then return end
+    local box, rotation = getTargetBox()
+    if button ~= "LeftButton" or not obj or not box then return end
     self.obj = obj
-    self.startX, self.startY = MDT:GetCursorPosition()
-    self.startSize = getFontSize(obj)
-    self.startExtent = target:GetWidth() + target:GetHeight()
-    self:SetScript("OnUpdate", updateResize)
+    startDrag(self, obj, box, rotation)
+    self:SetScript("OnUpdate", updateDrag)
   end)
   handle:SetScript("OnMouseUp", function(self, button)
     if button ~= "LeftButton" or not self.obj then return end
-    stopResize(self)
+    stopHandleDrag(self)
     if self:IsMouseOver() then self.marker:SetVertexColor(1, 1, 1, 1) end
     restoreEditorFocus()
   end)
   handle:Hide()
-  resizeHandle = handle
   return handle
 end
 
-local function updateResizeHandle()
-  local target = getTargetFrame()
-  if not target or not isInteractiveTool(MDT:GetCurrentToolbarTool()) then
-    if resizeHandle then resizeHandle:Hide() end
-    return
-  end
-  local handle = getResizeHandle()
-  --text frames are pooled and redrawn, follow the frame that currently shows the text
-  local parent = target == textEditor and target or target.display
-  if handle:GetParent() ~= parent then
-    handle:SetParent(parent)
-    handle:SetFrameLevel(parent:GetFrameLevel() + 2)
-    handle:ClearAllPoints()
-    handle:SetPoint("BOTTOMRIGHT", target, "BOTTOMRIGHT")
+local function startResize(handle, obj, box, rotation)
+  handle.startX, handle.startY = MDT:GetCursorPosition()
+  handle.startSize = getFontSize(obj)
+  handle.startExtent = box:GetWidth() + box:GetHeight()
+  handle.startRotation = rotation
+end
+
+local resizeHandle, rotateHandle
+local function getResizeHandle()
+  if resizeHandle then return resizeHandle end
+  resizeHandle = createHandle("Interface\\AddOns\\MythicDungeonTools\\Textures\\Resize", startResize, updateResize)
+  return resizeHandle
+end
+
+local function getRotateHandle()
+  if rotateHandle then return rotateHandle end
+  rotateHandle = createHandle(nil, hideTooltip, updateRotate)
+  rotateHandle.line = rotateHandle:CreateLine(nil, "OVERLAY")
+  rotateHandle.line:SetColorTexture(unpack(SELECTION_COLOR))
+  rotateHandle.line:SetThickness(1)
+  rotateHandle.tooltipText = L["rotateTextHint"]
+  rotateHandle:HookScript("OnEnter", function(self)
+    if not self.obj then showButtonTooltip(self) end
+  end)
+  rotateHandle:HookScript("OnLeave", hideTooltip)
+  return rotateHandle
+end
+
+---places a handle at x, y from the center of the upright box, returns true if it moved
+local function placeHandle(handle, box, rotation, size, x, y)
+  --text frames are pooled and redrawn, follow the box that currently shows the text
+  if handle:GetParent() ~= box then
+    handle:SetParent(box)
+    handle:SetFrameLevel(box:GetFrameLevel() + 2)
+    handle.offsetX = nil
   end
   --zooms with the map like the selection border
-  local size = RESIZE_HANDLE_SIZE * MDT:GetScale()
   if handle:GetWidth() ~= size then handle:SetSize(size, size) end
+  x, y = rotatePoint(x, y, rotation)
   handle:Show()
+  --runs every frame, only move the handle when its position changed
+  if x == handle.offsetX and y == handle.offsetY then return false end
+  handle.offsetX, handle.offsetY = x, y
+  handle:ClearAllPoints()
+  handle:SetPoint("CENTER", box, "CENTER", x, y)
+  return true
+end
+
+local function updateHandles()
+  local box, rotation = getTargetBox()
+  if not box or not isInteractiveTool(MDT:GetCurrentToolbarTool()) then
+    hideHandle(resizeHandle)
+    hideHandle(rotateHandle)
+    return
+  end
+  local scale = MDT:GetScale()
+  local right, top = box:GetWidth() / 2, box:GetHeight() / 2
+  local resizeSize = RESIZE_HANDLE_SIZE * scale
+  local resize = getResizeHandle()
+  if placeHandle(resize, box, rotation, resizeSize, right - resizeSize / 2, resizeSize / 2 - top) then
+    resize.marker:SetRotation(rotation)
+  end
+  if editing then
+    hideHandle(rotateHandle)
+    return
+  end
+  local knob = getRotateHandle()
+  local knobSize = ROTATE_HANDLE_SIZE * scale
+  local distance = ROTATE_HANDLE_DISTANCE * scale
+  if placeHandle(knob, box, rotation, knobSize, 0, top + distance) then
+    knob.line:SetStartPoint("CENTER", box, rotatePoint(0, top, rotation))
+    knob.line:SetEndPoint("CENTER", box, rotatePoint(0, top + distance - knobSize / 2, rotation))
+  end
 end
 
 local function positionStyleBar(bar)
-  updateResizeHandle()
+  updateHandles()
   local target = getTargetFrame()
   if not target then return end
   local parent = MDT.main_frame
@@ -1053,7 +1151,15 @@ local function positionStyleBar(bar)
   --the visible part of the map, the text can be scrolled out of it when zoomed in
   local minX, minY = mapLeft * mapScale - parentLeft, mapBottom * mapScale - parentBottom
   local maxX, maxY = minX + mapWidth * mapScale, minY + mapHeight * mapScale
-  local top = (bottom + height) * scale - parentBottom
+  local targetTop = bottom + height
+  --the bar must not cover the rotate handle, which can stick out above or below the text
+  if rotateHandle and rotateHandle:IsShown() then
+    local _, knobBottom, _, knobHeight = rotateHandle:GetRect()
+    if knobBottom then
+      bottom, targetTop = min(bottom, knobBottom), max(targetTop, knobBottom + knobHeight)
+    end
+  end
+  local top = targetTop * scale - parentBottom
   local barWidth, barHeight = bar:GetSize()
   local x = (left + width / 2) * scale - parentLeft
   x = min(max(x, minX + barWidth / 2), maxX - barWidth / 2)
@@ -1171,10 +1277,8 @@ function getStyleBar()
     bar.palette:Hide()
     bar.iconPicker:Hide()
     bar.deleteConfirm:Hide()
-    if resizeHandle then
-      stopResize(resizeHandle)
-      resizeHandle:Hide()
-    end
+    hideHandle(resizeHandle)
+    hideHandle(rotateHandle)
   end)
   bar:Hide()
   styleBar = bar
