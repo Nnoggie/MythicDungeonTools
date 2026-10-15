@@ -1,3 +1,3 @@
-## 6.3.6 (2026-10-12)
+## 6.3.7 (2026-10-15)
 
-- Added Patch 12.1.5 support
+- Map texts can now be rotated. Select a text and drag the round handle above it.

@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.7",
+    date = "2026-10-15",
+    notes = {
+      "Map texts can now be rotated. Select a text and drag the round handle above it.",
+    },
+  },
+  {
     tag = "6.3.6",
     date = "2026-10-12",
     notes = {
@@ -13,13 +20,6 @@ MDT.changeLog = {
     date = "2026-10-08",
     notes = {
       "The Barrel of Apples, Berry Bush and Salmon Pool offerings in Den of Nalorakk can now be assigned to players",
-    },
-  },
-  {
-    tag = "6.3.4",
-    date = "2026-10-08",
-    notes = {
-      "Added one missing Unleashed Imp to group 45.",
     },
   },
 }
