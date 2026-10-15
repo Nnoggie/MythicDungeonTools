@@ -73,7 +73,9 @@ end
 ---in radians
 local function getRotation(obj)
   local degrees = tonumber(obj.d[FIELD_ROTATION])
-  return degrees and rad(degrees % 360) or 0
+  --imported and received texts can hold anything, nan fails every comparison
+  if not degrees or not (abs(degrees) <= 360) then return 0 end
+  return rad(degrees % 360)
 end
 
 ---rotates a point around the origin, y points up
