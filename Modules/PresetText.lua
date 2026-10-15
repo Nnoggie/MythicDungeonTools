@@ -308,6 +308,16 @@ local function isCursorOverText(frame)
   return abs(x) <= frame.display:GetWidth() / 2 and abs(y) <= frame.display:GetHeight() / 2
 end
 
+---the text under the cursor, the frame that got the mouse event first, otherwise the last drawn one
+---the frame of a rotated text can cover other texts with its empty corners
+local function getTextUnderCursor(frame)
+  if isCursorOverText(frame) then return frame end
+  for i = #activeTextFrames, 1, -1 do
+    local other = activeTextFrames[i]
+    if other ~= frame and other:IsShown() and other:IsMouseEnabled() and isCursorOverText(other) then return other end
+  end
+end
+
 function MDT:IsMouseOverPresetText()
   for _, frame in ipairs(activeTextFrames) do
     if frame:IsShown() and frame:IsMouseEnabled() and isCursorOverText(frame) then return true end
@@ -1491,8 +1501,10 @@ local function placeEdge(edge, display, rotation, x1, y1, x2, y2)
 end
 
 local function updateHover(display)
-  local frame = display:GetParent()
-  frame.highlight:SetShown(isCursorOverText(frame))
+  local owner = getTextUnderCursor(display:GetParent())
+  for _, frame in ipairs(activeTextFrames) do
+    frame.highlight:SetShown(frame == owner)
+  end
 end
 
 local function onTextMouseDown(frame, button)
@@ -1585,31 +1597,35 @@ function createTextFrame()
   frame.fontString:SetShadowOffset(1, -1)
   frame.fontString:SetShadowColor(0, 0, 0, 1)
 
-  --the frame can be larger than a rotated text, the highlight follows the text itself
+  --the frame can be larger than a rotated text, the highlight follows the text under the cursor
   frame:SetScript("OnEnter", function(self)
-    if MDT:GetCurrentToolbarTool() == "eraser" then
-      self.highlight:SetColorTexture(1, 0.2, 0.2, 0.35)
-    else
-      self.highlight:SetColorTexture(1, 1, 1, 0.12)
+    local isEraser = MDT:GetCurrentToolbarTool() == "eraser"
+    for _, other in ipairs(activeTextFrames) do
+      if isEraser then
+        other.highlight:SetColorTexture(1, 0.2, 0.2, 0.35)
+      else
+        other.highlight:SetColorTexture(1, 1, 1, 0.12)
+      end
     end
     updateHover(self.display)
     self.display:SetScript("OnUpdate", updateHover)
   end)
   frame:SetScript("OnLeave", function(self)
     self.display:SetScript("OnUpdate", nil)
-    self.highlight:Hide()
+    for _, other in ipairs(activeTextFrames) do
+      other.highlight:Hide()
+    end
   end)
   frame:SetScript("OnMouseWheel", function(self, delta)
-    if IsControlKeyDown() and not IsShiftKeyDown() and self.obj and self.obj == selectedObj
-        and isCursorOverText(self) then
+    local owner = getTextUnderCursor(self)
+    if IsControlKeyDown() and not IsShiftKeyDown() and owner and owner.obj == selectedObj then
       stepFontSize(delta)
     else
       forwardMouseWheel(delta)
     end
   end)
   frame:SetScript("OnMouseDown", function(self, button)
-    --clicks next to a rotated text go to the map
-    local owner = isCursorOverText(self) and self or nil
+    local owner = getTextUnderCursor(self)
     --shift+drag selects enemies with a box like everywhere else on the map
     if button == "LeftButton" and IsShiftKeyDown() and MDT:GetCurrentToolbarTool() == nil then owner = nil end
     --replaces a press whose mouse up got lost
