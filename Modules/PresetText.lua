@@ -1141,6 +1141,8 @@ end
 
 local function positionStyleBar(bar)
   updateHandles()
+  --the knob swings around the text while it is dragged, the bar would hop above and below it
+  if rotateHandle and rotateHandle.obj then return end
   local target = getTargetFrame()
   if not target then return end
   local parent = MDT.main_frame
