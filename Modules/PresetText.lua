@@ -403,10 +403,8 @@ local function keepPointInPlace(obj, u, v, change)
   change()
   local newWidth, newHeight = measureText(obj)
   local newFactor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
-  --the editor shows texts upright, keep the point where it is on screen
-  local rotation = not (editing and editing.obj == obj) and getRotation(obj) or 0
   --the stored point belongs to the upright text, only the way from the center to the kept point turns
-  local dx, dy = rotatePoint((u - 0.5) * (width - newWidth), (0.5 - v) * (height - newHeight), rotation)
+  local dx, dy = rotatePoint((u - 0.5) * (width - newWidth), (0.5 - v) * (height - newHeight), getRotation(obj))
   obj.d[1] = obj.d[1] + ((0.5 - factor) * width - (0.5 - newFactor) * newWidth + dx)
   obj.d[2] = obj.d[2] + ((newHeight - height) / 2 + dy)
 end
