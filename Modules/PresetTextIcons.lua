@@ -219,7 +219,8 @@ local function getClassIcon(token)
 end
 
 ---Tags follow the Method Raid Tools note syntax, {spec:ID} is an addition
-local function renderTag(tag, size)
+---returns texture, coords and their texture size or the atlas of the icon for a tag
+local function renderTag(tag)
   local name, argument = tag:match("^([^:]+):?(.*)$")
   if not name then return end
   name = name:lower()
@@ -229,25 +230,25 @@ local function renderTag(tag, size)
     if not spellId then return end
     local icon = MDT:GetPresetTextSpellIcon(spellId)
     if icon == false then return end
-    return textureMarkup(icon or QUESTION_MARK_ICON, size, ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE)
+    return icon or QUESTION_MARK_ICON, ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE
   elseif name == "icon" then
     if argument == "" or argument:find("|", 1, true) then return end
-    return textureMarkup(argument, size)
+    return argument
   elseif name == "spec" then
     local specId = parseId(argument)
     local getSpecInfo = getSpecApi("GetSpecializationInfoByID")
     local icon = specId and getSpecInfo and select(4, getSpecInfo(specId))
-    if isUsableValue(icon) then return textureMarkup(icon, size, ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE) end
+    if isUsableValue(icon) then return icon, ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE end
   elseif argument == "" then
     if ROLE_COORDS[name] then
       local atlas = getRoleAtlas(name)
-      if atlas then return ("|A:%s:%d:%d|a"):format(atlas, size, size) end
-      return textureMarkup(ROLE_ICON_TEXTURE, size, ROLE_COORDS[name], 64)
+      if atlas then return nil, nil, nil, atlas end
+      return ROLE_ICON_TEXTURE, ROLE_COORDS[name], 64
     end
     local markerIndex = getMarkerIndex(name)
-    if markerIndex then return textureMarkup(RAID_TARGET_TEXTURE..markerIndex, size) end
+    if markerIndex then return RAID_TARGET_TEXTURE..markerIndex end
     local token = getClassToken(name)
-    if token then return textureMarkup(getClassIcon(token), size, ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE) end
+    if token then return getClassIcon(token), ZOOMED_MARKUP_COORDS, ZOOMED_MARKUP_SIZE end
   end
 end
 
@@ -255,15 +256,27 @@ end
 local BLANK_TEXTURE = "Interface\\AddOns\\MythicDungeonTools\\Textures\\Blank"
 
 ---Replaces icon tags with texture markup, unknown tags stay as they are
----icons collects the markup of every icon in order and leaves icons.blank of the same size in its place
+---icons collects every icon in order as { texture, coords from 0 to 1 } or { atlas },
+---and leaves icons.blank of the same size in its place
 function MDT:RenderPresetTextTags(text, size, icons)
   size = max(1, floor(size + 0.5))
   if icons then icons.blank = textureMarkup(BLANK_TEXTURE, size) end
   return (text:gsub("{([^{}]+)}", function(tag)
-    local markup = renderTag(tag, size)
-    if not markup or not icons then return markup end
-    tinsert(icons, markup)
-    return icons.blank
+    local texture, coords, textureSize, atlas = renderTag(tag)
+    if not texture and not atlas then return end
+    if icons then
+      if atlas then
+        tinsert(icons, { atlas = atlas })
+      else
+        local iconCoords = { 0, 1, 0, 1 }
+        for i, coord in ipairs(coords or {}) do iconCoords[i] = coord / textureSize end
+        --{icon:ID} gives file ids as text, markup accepts them but textures need numbers
+        tinsert(icons, { texture = tonumber(texture) or texture, coords = iconCoords })
+      end
+      return icons.blank
+    end
+    if atlas then return ("|A:%s:%d:%d|a"):format(atlas, size, size) end
+    return textureMarkup(texture, size, coords, textureSize)
   end))
 end
 

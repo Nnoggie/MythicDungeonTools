@@ -1600,7 +1600,7 @@ function createTextFrame()
   frame.fontString = display:CreateFontString(nil, "OVERLAY")
   frame.fontString:SetShadowOffset(1, -1)
   frame.fontString:SetShadowColor(0, 0, 0, 1)
-  frame.iconStrings = {}
+  frame.iconTextures = {}
 
   --the frame can be larger than a rotated text, the highlight follows the text under the cursor
   frame:SetScript("OnEnter", function(self)
@@ -1651,11 +1651,11 @@ function createTextFrame()
   return frame
 end
 
----The game draws the inline icons of a rotated font string where they would be on the upright text,
----rotated texts leave blanks in their place and draw every icon by itself at its turned position
+---The game draws the inline icons of a rotated font string upright where they would be on the upright text,
+---rotated texts leave blanks in their place and draw every icon turned at its turned position
 local function placeIcons(frame, obj, text, icons, rotation, textWidth, textHeight)
-  local iconStrings = frame.iconStrings
-  for i = #icons + 1, #iconStrings do iconStrings[i]:Hide() end
+  local iconTextures = frame.iconTextures
+  for i = #icons + 1, #iconTextures do iconTextures[i]:Hide() end
   if #icons == 0 then return end
   local measure = getTextMeasure(obj)
   local function width(s)
@@ -1668,7 +1668,7 @@ local function placeIcons(frame, obj, text, icons, rotation, textWidth, textHeig
   end
   local factor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
   local searchFrom = 1
-  for i, markup in ipairs(icons) do
+  for i, icon in ipairs(icons) do
     local blankStart, blankEnd = text:find(icons.blank, searchFrom, true)
     searchFrom = blankEnd + 1
     local lineStart = 1
@@ -1679,21 +1679,27 @@ local function placeIcons(frame, obj, text, icons, rotation, textWidth, textHeig
     local lineEnd = (text:find("\n", blankEnd, true) or #text + 1) - 1
     local prefix = text:sub(lineStart, blankStart - 1)
     --position in the upright text, from its top left corner
-    local x = factor * (textWidth - width(text:sub(lineStart, lineEnd)))
-        + (width(prefix) + width(prefix..icons.blank)) / 2
+    local prefixWidth = width(prefix)
+    local size = width(prefix..icons.blank) - prefixWidth
+    local x = factor * (textWidth - width(text:sub(lineStart, lineEnd))) + prefixWidth + size / 2
     local top = lineStart > 1 and height(text:sub(1, lineStart - 2)) or 0
     local y = (top + height(text:sub(1, lineEnd))) / 2
-    local iconString = iconStrings[i]
-    if not iconString then
-      iconString = frame.display:CreateFontString(nil, "OVERLAY")
-      iconStrings[i] = iconString
+    local texture = iconTextures[i]
+    if not texture then
+      texture = frame.display:CreateTexture(nil, "OVERLAY")
+      iconTextures[i] = texture
     end
-    applyFontStyle(iconString, obj)
-    iconString:SetText(markup)
-    iconString:ClearAllPoints()
-    iconString:SetPoint("CENTER", frame.display, "CENTER",
-      rotatePoint(x - textWidth / 2, textHeight / 2 - y, rotation))
-    iconString:Show()
+    if icon.atlas then
+      texture:SetAtlas(icon.atlas)
+    else
+      texture:SetTexture(icon.texture)
+      texture:SetTexCoord(unpack(icon.coords))
+    end
+    texture:SetSize(size, size)
+    texture:SetRotation(rotation)
+    texture:ClearAllPoints()
+    texture:SetPoint("CENTER", frame.display, "CENTER", rotatePoint(x - textWidth / 2, textHeight / 2 - y, rotation))
+    texture:Show()
   end
 end
 
