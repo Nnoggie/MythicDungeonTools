@@ -36,6 +36,8 @@ local BAR_GROUP_SPACING = 9
 local BAR_PADDING = 4
 local RESIZE_HANDLE_SIZE = 16
 local ROTATE_HANDLE_SIZE = 9
+--the knob takes clicks a bit around itself, it is small to grab
+local ROTATE_HANDLE_HIT_SIZE = 16
 --from the top edge of the text to the center of the knob
 local ROTATE_HANDLE_DISTANCE = 18
 local ROTATION_SNAP = 15
@@ -1093,7 +1095,8 @@ local function getRotateHandle()
 end
 
 ---places a handle at x, y from the center of the upright box, returns true if it moved
-local function placeHandle(handle, box, rotation, size, x, y)
+---hitSize is the size of its mouse area, the handle size if nil
+local function placeHandle(handle, box, rotation, size, x, y, hitSize)
   --text frames are pooled and redrawn, follow the box that currently shows the text
   if handle:GetParent() ~= box then
     handle:SetParent(box)
@@ -1101,7 +1104,11 @@ local function placeHandle(handle, box, rotation, size, x, y)
     handle.offsetX = nil
   end
   --zooms with the map like the selection border
-  if handle:GetWidth() ~= size then handle:SetSize(size, size) end
+  if handle:GetWidth() ~= size then
+    handle:SetSize(size, size)
+    local inset = (size - (hitSize or size)) / 2
+    handle:SetHitRectInsets(inset, inset, inset, inset)
+  end
   x, y = rotatePoint(x, y, rotation)
   handle:Show()
   --runs every frame, only move the handle when its position changed
@@ -1133,7 +1140,7 @@ local function updateHandles()
   local knob = getRotateHandle()
   local knobSize = ROTATE_HANDLE_SIZE * scale
   local distance = ROTATE_HANDLE_DISTANCE * scale
-  if placeHandle(knob, box, rotation, knobSize, 0, top + distance) then
+  if placeHandle(knob, box, rotation, knobSize, 0, top + distance, ROTATE_HANDLE_HIT_SIZE * scale) then
     knob.line:SetStartPoint("CENTER", box, rotatePoint(0, top, rotation))
     knob.line:SetEndPoint("CENTER", box, rotatePoint(0, top + distance - knobSize / 2, rotation))
   end
