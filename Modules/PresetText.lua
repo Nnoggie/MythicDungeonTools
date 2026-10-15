@@ -1593,8 +1593,6 @@ function createTextFrame()
   end
   frame.selection:Hide()
   frame.fontString = display:CreateFontString(nil, "OVERLAY")
-  --rotated font strings turn around their anchor point, the padding is the same on all sides
-  frame.fontString:SetPoint("CENTER")
   frame.fontString:SetShadowOffset(1, -1)
   frame.fontString:SetShadowColor(0, 0, 0, 1)
 
@@ -1659,6 +1657,11 @@ function layoutTextFrame(frame, obj)
   local textWidth, textHeight = fontString:GetStringWidth(), fontString:GetStringHeight()
   local width, height = textWidth + padding * 2, textHeight + padding * 2
   frame.display:SetSize(width, height)
+  --rotated font strings turn their letters around the top of their aligned side, not around their center
+  local align = getAlign(obj)
+  local pivotX, pivotY = rotatePoint((ANCHOR_WIDTH_FACTOR[align] - 0.5) * textWidth, textHeight / 2, rotation)
+  fontString:ClearAllPoints()
+  fontString:SetPoint(ANCHOR_POINTS[align], frame.display, "CENTER", pivotX, pivotY)
   frame.background:SetRotation(rotation)
   frame.highlight:SetRotation(rotation)
   local right, top = width / 2, height / 2
