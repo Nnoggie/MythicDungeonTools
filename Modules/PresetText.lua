@@ -335,6 +335,36 @@ local function measureEditor()
   editor:SetWidth(width + EDITOR_PADDING * 2)
 end
 
+---width and height of the text in its current style in unscaled map units
+local textMeasure
+local function measureText(obj)
+  if not textMeasure then
+    textMeasure = MDT.main_frame.mapPanelFrame:CreateFontString(nil, "BACKGROUND")
+    textMeasure:Hide()
+  end
+  --measure the text as the map shows it, with icon tags drawn as icons
+  local isEdited = editing and editing.obj == obj
+  local text = isEdited and textEditor:GetText() or obj.d[5] or ""
+  text = MDT:RenderPresetTextTags(text, ICON_MARKUP_SIZE * MDT:GetScale())
+  applyFontStyle(textMeasure, obj)
+  textMeasure:SetText(text)
+  local scale = MDT:GetScale()
+  return textMeasure:GetStringWidth() / scale, textMeasure:GetStringHeight() / scale
+end
+
+---Runs change and moves the text so the point u, v of its box stays on the same spot of the map
+---u is 0 on the left and 1 on the right edge, v is 0 on the top and 1 on the bottom edge
+local function keepPointInPlace(obj, u, v, change)
+  local width, height = measureText(obj)
+  local factor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
+  change()
+  local newWidth, newHeight = measureText(obj)
+  local newFactor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
+  --the stored point moves by the change of its own offset and of the kept point's offset from the center
+  obj.d[1] = obj.d[1] + ((0.5 - factor) * width - (0.5 - newFactor) * newWidth + (u - 0.5) * (width - newWidth))
+  obj.d[2] = obj.d[2] + ((newHeight - height) / 2 + (0.5 - v) * (height - newHeight))
+end
+
 local colorSelection
 local editorCursorPosition
 
@@ -455,22 +485,6 @@ local function duplicateText(preset, obj, x, y)
   MDT:DrawAllPresetObjects()
 end
 
----width of the text in its current style in unscaled map units
-local widthMeasure
-local function getTextWidth(obj)
-  if not widthMeasure then
-    widthMeasure = MDT.main_frame.mapPanelFrame:CreateFontString(nil, "BACKGROUND")
-    widthMeasure:Hide()
-  end
-  --measure the text as the map shows it, with icon tags drawn as icons
-  local isEdited = editing and editing.obj == obj
-  local text = isEdited and textEditor:GetText() or obj.d[5] or ""
-  text = MDT:RenderPresetTextTags(text, ICON_MARKUP_SIZE * MDT:GetScale())
-  applyFontStyle(widthMeasure, obj)
-  widthMeasure:SetText(text)
-  return widthMeasure:GetStringWidth() / MDT:GetScale()
-end
-
 local function refreshEditorStyle()
   local editor = textEditor
   local obj = editing.obj
@@ -505,20 +519,16 @@ end
 local function setStyle(field, value, sizePivot)
   local preset, obj = getTarget()
   if not obj then return end
-  local align = getAlign(obj)
+  local function change() obj.d[field] = value end
   if field == FIELD_ALIGN then
-    if align == value then return end
+    if getAlign(obj) == value then return end
     --keep the text where it is, only the side it is anchored on changes
-    obj.d[1] = obj.d[1] + (ANCHOR_WIDTH_FACTOR[value] - ANCHOR_WIDTH_FACTOR[align]) * getTextWidth(obj)
-    obj.d[field] = value
+    keepPointInPlace(obj, 0, 0, change)
   elseif field == FIELD_SIZE then
     --resize around the top center of the text by default
-    local oldWidth = getTextWidth(obj)
-    obj.d[field] = value
-    local newWidth = getTextWidth(obj)
-    obj.d[1] = obj.d[1] + (ANCHOR_WIDTH_FACTOR[align] - (sizePivot or 0.5)) * (newWidth - oldWidth)
+    keepPointInPlace(obj, sizePivot or 0.5, 0, change)
   else
-    obj.d[field] = value
+    change()
   end
   if editing then
     editing.styleChanged = true
