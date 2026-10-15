@@ -251,11 +251,19 @@ local function renderTag(tag, size)
   end
 end
 
+--transparent, keeps the space of an icon in a text that draws the icon itself
+local BLANK_TEXTURE = "Interface\\AddOns\\MythicDungeonTools\\Textures\\Blank"
+
 ---Replaces icon tags with texture markup, unknown tags stay as they are
-function MDT:RenderPresetTextTags(text, size)
+---icons collects the markup of every icon in order and leaves icons.blank of the same size in its place
+function MDT:RenderPresetTextTags(text, size, icons)
   size = max(1, floor(size + 0.5))
+  if icons then icons.blank = textureMarkup(BLANK_TEXTURE, size) end
   return (text:gsub("{([^{}]+)}", function(tag)
-    return renderTag(tag, size)
+    local markup = renderTag(tag, size)
+    if not markup or not icons then return markup end
+    tinsert(icons, markup)
+    return icons.blank
   end))
 end
 

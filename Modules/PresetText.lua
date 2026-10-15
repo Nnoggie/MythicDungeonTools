@@ -5,7 +5,7 @@ local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, Cr
     table.insert, table.remove, pairs, ipairs, math.min, math.max, math.abs, tonumber, type, unpack, CreateFrame,
     GameTooltip, GetTime
 local cos, sin, rad, deg, atan2, floor = math.cos, math.sin, math.rad, math.deg, math.atan2, math.floor
-local GetCursorPosition, IsShiftKeyDown = GetCursorPosition, IsShiftKeyDown
+local GetCursorPosition, IsShiftKeyDown, IsMouseButtonDown = GetCursorPosition, IsShiftKeyDown, IsMouseButtonDown
 
 local TEXT_SIZES = { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48 }
 local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
@@ -407,21 +407,26 @@ local function measureEditor()
   editor:SetWidth(width + EDITOR_PADDING * 2)
 end
 
----width and height of the text in its current style in unscaled map units
+---hidden font string in the style of the text, measures in scaled map units
 local textMeasure
-local function measureText(obj)
+local function getTextMeasure(obj)
   if not textMeasure then
     textMeasure = MDT.main_frame.mapPanelFrame:CreateFontString(nil, "BACKGROUND")
     textMeasure:Hide()
   end
+  applyFontStyle(textMeasure, obj)
+  return textMeasure
+end
+
+---width and height of the text in its current style in unscaled map units
+local function measureText(obj)
   --measure the text as the map shows it, with icon tags drawn as icons
   local isEdited = editing and editing.obj == obj
   local text = isEdited and textEditor:GetText() or obj.d[5] or ""
-  text = MDT:RenderPresetTextTags(text, ICON_MARKUP_SIZE * MDT:GetScale())
-  applyFontStyle(textMeasure, obj)
-  textMeasure:SetText(text)
+  local measure = getTextMeasure(obj)
+  measure:SetText(MDT:RenderPresetTextTags(text, ICON_MARKUP_SIZE * MDT:GetScale()))
   local scale = MDT:GetScale()
-  return textMeasure:GetStringWidth() / scale, textMeasure:GetStringHeight() / scale
+  return measure:GetStringWidth() / scale, measure:GetStringHeight() / scale
 end
 
 ---Runs change and moves the text so the point u, v of its box stays on the same spot of the map
@@ -1595,6 +1600,7 @@ function createTextFrame()
   frame.fontString = display:CreateFontString(nil, "OVERLAY")
   frame.fontString:SetShadowOffset(1, -1)
   frame.fontString:SetShadowColor(0, 0, 0, 1)
+  frame.iconStrings = {}
 
   --the frame can be larger than a rotated text, the highlight follows the text under the cursor
   frame:SetScript("OnEnter", function(self)
@@ -1645,6 +1651,52 @@ function createTextFrame()
   return frame
 end
 
+---The game draws the inline icons of a rotated font string where they would be on the upright text,
+---rotated texts leave blanks in their place and draw every icon by itself at its turned position
+local function placeIcons(frame, obj, text, icons, rotation, textWidth, textHeight)
+  local iconStrings = frame.iconStrings
+  for i = #icons + 1, #iconStrings do iconStrings[i]:Hide() end
+  if #icons == 0 then return end
+  local measure = getTextMeasure(obj)
+  local function width(s)
+    measure:SetText(s)
+    return measure:GetStringWidth()
+  end
+  local function height(s)
+    measure:SetText(s)
+    return measure:GetStringHeight()
+  end
+  local factor = ANCHOR_WIDTH_FACTOR[getAlign(obj)]
+  local searchFrom = 1
+  for i, markup in ipairs(icons) do
+    local blankStart, blankEnd = text:find(icons.blank, searchFrom, true)
+    searchFrom = blankEnd + 1
+    local lineStart = 1
+    for newline in text:gmatch("()\n") do
+      if newline > blankStart then break end
+      lineStart = newline + 1
+    end
+    local lineEnd = (text:find("\n", blankEnd, true) or #text + 1) - 1
+    local prefix = text:sub(lineStart, blankStart - 1)
+    --position in the upright text, from its top left corner
+    local x = factor * (textWidth - width(text:sub(lineStart, lineEnd)))
+        + (width(prefix) + width(prefix..icons.blank)) / 2
+    local top = lineStart > 1 and height(text:sub(1, lineStart - 2)) or 0
+    local y = (top + height(text:sub(1, lineEnd))) / 2
+    local iconString = iconStrings[i]
+    if not iconString then
+      iconString = frame.display:CreateFontString(nil, "OVERLAY")
+      iconStrings[i] = iconString
+    end
+    applyFontStyle(iconString, obj)
+    iconString:SetText(markup)
+    iconString:ClearAllPoints()
+    iconString:SetPoint("CENTER", frame.display, "CENTER",
+      rotatePoint(x - textWidth / 2, textHeight / 2 - y, rotation))
+    iconString:Show()
+  end
+end
+
 ---Applies text, style and position of an object to its frame
 function layoutTextFrame(frame, obj)
   local padding = hasBackground(obj) and BACKGROUND_PADDING or FRAME_PADDING
@@ -1652,7 +1704,9 @@ function layoutTextFrame(frame, obj)
   local rotation = getRotation(obj)
   local fontString = frame.fontString
   applyFontStyle(fontString, obj)
-  fontString:SetText(MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE * scale))
+  local icons = {}
+  local text = MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE * scale, rotation ~= 0 and icons or nil)
+  fontString:SetText(text)
   fontString:SetRotation(rotation)
   local textWidth, textHeight = fontString:GetStringWidth(), fontString:GetStringHeight()
   local width, height = textWidth + padding * 2, textHeight + padding * 2
@@ -1662,6 +1716,7 @@ function layoutTextFrame(frame, obj)
   local pivotX, pivotY = rotatePoint((ANCHOR_WIDTH_FACTOR[align] - 0.5) * textWidth, textHeight / 2, rotation)
   fontString:ClearAllPoints()
   fontString:SetPoint(ANCHOR_POINTS[align], frame.display, "CENTER", pivotX, pivotY)
+  placeIcons(frame, obj, text, icons, rotation, textWidth, textHeight)
   frame.background:SetRotation(rotation)
   frame.highlight:SetRotation(rotation)
   local right, top = width / 2, height / 2
