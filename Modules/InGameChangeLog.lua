@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.9",
+    date = "2026-10-17",
+    notes = {
+      "Added a \"Don't set focus on mouseover\" option to the Focus Marker settings. When enabled, the focus keybind and macro always focus your current target.",
+      "Improved the Korean translations.",
+    },
+  },
+  {
     tag = "6.3.8",
     date = "2026-10-16",
     notes = {
@@ -13,13 +21,6 @@ MDT.changeLog = {
     date = "2026-10-15",
     notes = {
       "Map texts can now be rotated. Select a text and drag the round handle above it.",
-    },
-  },
-  {
-    tag = "6.3.6",
-    date = "2026-10-12",
-    notes = {
-      "Added WoW 12.1.5 PTR support.",
     },
   },
 }
