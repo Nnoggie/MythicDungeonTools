@@ -451,7 +451,10 @@ end
 
 local function buildMacroBody(markerIndex, settings)
   markerIndex = tonumber(markerIndex) or 0
-  local body = "/focus "..MACRO_CONDITIONALS
+  local body = "/focus"
+  if not (settings and settings.disableMouseoverFocus) then
+    body = body.." "..MACRO_CONDITIONALS
+  end
   if markerIndex == 0 and settings and settings.preserveExistingTargetMarkers then return body end
   local targetMarkerConditionals = TARGET_MARKER_CONDITIONALS
   local targetMarkerIndex = markerIndex
@@ -1347,6 +1350,12 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     end
   end
 
+  addCheckbox(frame, L["Don't set focus on mouseover"], settings.disableMouseoverFocus, function(value)
+    settings.disableMouseoverFocus = value
+    MDT:FocusMarker_RefreshAction()
+    updateMacroPreview()
+  end)
+
   addCheckbox(frame, L["Don't set target marker while in a raid group"], settings.disableTargetMarkerInRaid, function(value)
     settings.disableTargetMarkerInRaid = value
     MDT:FocusMarker_RefreshAction()
@@ -1410,8 +1419,9 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
 
   updateMacroPreview()
   local targetMarkerCheckboxHeight = 24
+  local mouseoverFocusCheckboxHeight = 24
   local macroPreviewHeight = 85
-  local extraSettingsHeight = targetMarkerCheckboxHeight + macroPreviewHeight
+  local extraSettingsHeight = targetMarkerCheckboxHeight + mouseoverFocusCheckboxHeight + macroPreviewHeight
   macroPreview = AceGUI:Create("MultiLineEditBox")
   macroPreview:SetLabel(L["Macro Preview:"])
   macroPreview:SetFullWidth(true)

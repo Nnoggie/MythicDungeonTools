@@ -33,6 +33,7 @@ local defaultSavedVars = {
     focusMarker = {
       announceReadyCheck = false,
       useMacro = false,
+      disableMouseoverFocus = false,
       disableTargetMarkerInRaid = false,
       preserveExistingTargetMarkers = true,
       suppressNotifications = false,
