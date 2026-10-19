@@ -1,4 +1,4 @@
-## Interface: 120105, 120100
+## Interface: 120107, 120105
 # WOW_INTERFACE_TARGETS: standard-test, standard
 ## Title: Mythic Dungeon Tools (MDT)
 ## Author: Nnoggie
