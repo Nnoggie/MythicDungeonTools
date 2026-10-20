@@ -31,11 +31,11 @@ function Tooltip.Show(owner, content)
   if type(content) == "table" then
     local frame = ensureCard()
     frame.content:ReleaseChildren()
+    frame:ClearAllPoints()
+    frame:SetPoint("BOTTOMLEFT", owner, "TOPRIGHT", 0, 0)
     frame.content:SetWidth(content.width or 240)
     frame.content:Batch(function() content.build(frame.content) end)
     frame:SetSize(frame.content:GetWidth(), frame.content:GetHeight())
-    frame:ClearAllPoints()
-    frame:SetPoint("BOTTOMLEFT", owner, "TOPRIGHT", 0, 0)
     frame:Show()
     cardOwner = owner
     return

@@ -80,6 +80,7 @@ function Container:kitPlace(rects)
       child:ClearAllPoints()
       child:SetPoint("TOPLEFT", self, "TOPLEFT", rect.x, -rect.y)
       child:SetSize(math.max(0, rect.w), math.max(0, rect.h))
+      if child.kitPlaced then child:kitPlaced() end
     end
   end
 end

@@ -156,9 +156,16 @@ function UI.Define(def)
   end
   def.allProps, def.propIndex = allProps, index
 
+  local function definedByMixin(name)
+    if Base[name] then return true end
+    for _, mixin in ipairs(def.mixins or {}) do
+      if mixin[name] then return true end
+    end
+    return false
+  end
   local methods = {}
   for _, prop in ipairs(allProps) do
-    if not nativeSetters[prop.name] then
+    if not nativeSetters[prop.name] and not definedByMixin("Set"..capitalize(prop.name)) then
       methods["Set"..capitalize(prop.name)] = function(self, value)
         self.kitProps[prop.name] = value
         if prop.set then prop.set(self, value) end

@@ -108,6 +108,7 @@ function Dialogs.Open(spec)
   dialog.kitKey, dialog.kitGlobalName = spec.key, spec.globalName
   if spec.key then keyed[spec.key] = dialog end
   if spec.globalName then _G[spec.globalName] = dialog end
+  dialog:SetPoint("CENTER", parent, "CENTER", 0, 50)
   dialog.content:SetWidth(spec.width or DEFAULT_WIDTH)
   dialog.content:Batch(function()
     if spec.build then spec.build(dialog.content, dialog) end
@@ -115,8 +116,6 @@ function Dialogs.Open(spec)
   dialog:SetSize(dialog.content:GetWidth(), TITLE_HEIGHT + dialog.content:GetHeight())
   stack[#stack + 1] = dialog
   dialog:SetFrameLevel(LEVEL_BASE + LEVEL_STEP * #stack)
-  dialog:ClearAllPoints()
-  dialog:SetPoint("CENTER", parent, "CENTER", 0, 50)
   dialog.kitEscape = { close = function() dialog:Close("escape") end }
   Escape.Push(dialog.kitEscape)
   dialog:Show()

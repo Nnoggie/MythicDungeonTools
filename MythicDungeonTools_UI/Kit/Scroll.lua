@@ -113,6 +113,8 @@ function ScrollMethods:ScrollToChild(child)
   end
 end
 
+function ScrollMethods:kitPlaced() self:kitUpdateRange() end
+
 function ScrollMethods:kitUpdateRange()
   local viewW = self.kitViewport:GetWidth()
   if viewW > 0 and math.abs(self.content:GetWidth() - viewW) > 0.01 then self.content:SetWidth(viewW) end

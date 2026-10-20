@@ -295,4 +295,198 @@ return function(ctx)
     expect(lastLog() == "pop:outside" and not again:IsShown(), "click outside did not close the popover")
     expect(not catcher:IsShown(), "click catcher stayed up with nothing open")
   end)
+
+  local list, order, selection
+  local function buildItems()
+    local items = {}
+    for i, key in ipairs(order) do items[i] = { kind = "row", key = key, sig = "r"..key, text = "Item "..key } end
+    return items
+  end
+
+  step("kit list: 80 items virtualize, scroll, shift and ctrl selection", function()
+    log = {}
+    local Row = {}
+    function Row:OnCreate()
+      self.kitLabel = self:CreateFontString(nil, "ARTWORK")
+      self.kitLabel:SetFontObject(UI.Fonts.Get("body"))
+      self.kitLabel:SetPoint("LEFT", self, "LEFT", 8, 0)
+    end
+    function Row:Bind(item) self.kitLabel:SetText(item.text) end
+    order, selection = {}, {}
+    for i = 1, 80 do order[i] = i end
+    list = UI.List(page, { id = "list", height = 200, selection = selection,
+      kinds = { row = { height = 28, mixin = Row, draggable = true, selectable = true } },
+      items = buildItems(),
+      onSelect = function(newSelection) selection = newSelection list:SetSelection(newSelection) end,
+      onReorder = function(keys, slot)
+        order = UI.ListMath.Reorder(order, keys, slot)
+        log[#log + 1] = "reorder:"..table.concat(keys, ",")..">"..slot
+        list:SetItems(buildItems())
+      end,
+      onContext = function(item)
+        return {
+          { text = "Delete "..item.text, onSelect = function() log[#log + 1] = "delete:"..item.key end },
+          { kind = "separator" },
+          { text = "Disabled", disabled = true, onSelect = logged("never") },
+        }
+      end,
+      onActivate = function(item) log[#log + 1] = "activate:"..item.key end,
+    })
+    UI.Layout.FlushAll()
+    local bound = 0
+    list:ForEachRow(function() bound = bound + 1 end)
+    expect(bound > 0 and bound < 12, "list bound "..bound.." rows for a 200px viewport")
+    expect(list:GetRow(1) and not list:GetRow(40), "visible range is wrong")
+    W.fireScript(list.kitViewport, "OnMouseWheel", -1)
+    expect(list:GetOffset() > 0 and list:GetRow(1) == nil or list:GetOffset() > 0, "wheel did not scroll the list")
+    list:ScrollTo(80, "nearest")
+    expect(list:GetRow(80) and not list:GetRow(1), "ScrollTo did not reach the last item")
+    expect(list:GetRow(80):GetBottom() >= list.kitViewport:GetBottom() - 0.01, "last row is cut off")
+    list:SetOffset(0)
+    expect(list:GetRow(1) and list:GetRow(1):GetTop() == list.kitViewport:GetTop(), "offset 0 does not put row 1 at the top")
+
+    click(list:GetRow(2))
+    expect(#selection == 1 and selection[1] == 2 and lastLog() == "activate:2", "plain click did not select and activate")
+    W.modifiers = { shift = true }
+    click(list:GetRow(5))
+    W.modifiers = { ctrl = true }
+    click(list:GetRow(3))
+    click(list:GetRow(7))
+    W.modifiers = nil
+    expect(table.concat(selection, ",") == "2,4,5,7", "shift and ctrl selection is "..table.concat(selection, ","))
+    expect(list:GetRow(2).kitRowBorder.textures.top:IsShown() and not list:GetRow(3).kitRowBorder.textures.top:IsShown(), "selected rows are not painted")
+  end)
+
+  step("kit list: drag reorder with edge auto-scroll, queued SetItems, cancel and no-op drops", function()
+    log = {}
+    click(list:GetRow(2))
+    W.modifiers = { shift = true }
+    click(list:GetRow(3))
+    W.modifiers = nil
+    expect(table.concat(selection, ",") == "2,3", "selection before the drag is "..table.concat(selection, ","))
+    local depth = UI.Escape.Depth()
+    local viewport = list.kitViewport
+    W.cursorX, W.cursorY = list:GetRow(2):GetCenter()
+    W.fireScript(list:GetRow(2), "OnDragStart")
+    expect(list:IsDragging() and list.kitGhost:IsShown(), "drag did not start")
+    expect(UI.Escape.Depth() == depth + 1, "drag did not push an Escape entry")
+    expect(list.kitGhost.kitBadge:GetText() == "x2", "ghost badge is "..tostring(list.kitGhost.kitBadge:GetText()))
+    expect(list:GetRow(2):GetAlpha() < 1 and list:GetRow(4):GetAlpha() == 1, "drag source rows are not dimmed")
+    W.pump(0.1)
+    expect(not list.kitIndicator:IsShown(), "indicator shown while hovering the block's own slot")
+
+    list:SetItems(buildItems())
+    expect(list.kitPendingItems ~= nil, "SetItems during a drag was applied immediately")
+
+    W.cursorY = viewport:GetBottom() + 4
+    local before = list:GetOffset()
+    W.pump(0.5)
+    expect(list:GetOffset() > before + 50, "bottom edge did not auto-scroll: "..list:GetOffset())
+    W.cursorY = viewport:GetTop() - 4
+    W.pump(2)
+    expect(list:GetOffset() == 0, "top edge did not scroll back to the start")
+
+    local targetTop = viewport:GetTop() - (list.kitTops[6] - list:GetOffset())
+    W.cursorY = targetTop - 3
+    W.pump(0.05)
+    expect(list.kitIndicator:IsShown(), "drop indicator hidden over a valid slot")
+    expect(math.abs(list.kitIndicator:GetTop() - targetTop) <= 2, "indicator is not at the slot boundary")
+    W.fireScript(list.kitGhost, "OnDragStop")
+    W.fireScript(list:GetRow(1), "OnDragStop")
+    expect(not list:IsDragging() and not list.kitGhost:IsShown(), "drop did not end the drag")
+    expect(UI.Escape.Depth() == depth, "drag left its Escape entry")
+    expect(list.kitPendingItems == nil, "queued SetItems was not applied on drop")
+    expect(lastLog() == "reorder:2,3>6", "drop reported "..tostring(lastLog()))
+    expect(table.concat(order, ",", 1, 10) == "1,4,5,2,3,6,7,8,9,10", "order after the drop is "..table.concat(order, ",", 1, 10))
+    expect(list:GetRow(4).kitItem.key == 2 and list:GetRow(4).kitLabel:GetText() == "Item 2", "rows did not rebind to the new order")
+
+    local function reorders()
+      local count = 0
+      for _, entry in ipairs(log) do if entry:find("^reorder:") then count = count + 1 end end
+      return count
+    end
+    click(list:GetRow(5))
+    W.cursorX, W.cursorY = list:GetRow(5):GetCenter()
+    W.fireScript(list:GetRow(5), "OnDragStart")
+    W.cursorY = list:GetRow(5):GetTop() - 2
+    W.pump(0.05)
+    expect(not list.kitIndicator:IsShown(), "indicator shown over the row's own slot")
+    W.fireScript(list:GetRow(5), "OnDragStop")
+    expect(reorders() == 1, "dropping a row onto itself reordered")
+
+    click(list:GetRow(6))
+    W.fireScript(list:GetRow(6), "OnDragStart")
+    expect(list:IsDragging(), "second drag did not start")
+    expect(CloseSpecialWindows(), "Escape found nothing during the drag")
+    expect(not list:IsDragging() and reorders() == 1, "Escape did not cancel the drag")
+    expect(MDT.main_frame:IsShown(), "Escape during a drag closed the main window")
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("kit menus: context menu, button menu, dropdown choices", function()
+    log = {}
+    click(list:GetRow(1), "RightButton")
+    local menu = UI.Overlay.Top("menu")
+    expect(menu and menu.frame:IsVisible(), "right-click did not open a context menu")
+    local menuList
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "List" then menuList = child end
+    end
+    expect(menuList and menuList:GetRow(1).kitLabel:GetText() == "Delete Item 1", "context menu rows are wrong")
+    expect(menuList:GetRow(2).kitKind.static, "separator row is not static")
+    click(menuList:GetRow(3))
+    expect(UI.Overlay.Top("menu") == menu, "a disabled item closed the menu")
+    expect(CloseSpecialWindows(), "Escape found nothing with a menu open")
+    expect(not menu.frame:IsShown() and MDT.main_frame:IsShown(), "Escape did not close only the menu")
+    W.settle(asyncIdle, 5)
+    click(list:GetRow(1), "RightButton")
+    menu = UI.Overlay.Top("menu")
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "List" then menuList = child end
+    end
+    click(menuList:GetRow(1))
+    expect(lastLog() == "delete:1" and UI.Overlay.Top("menu") == nil, "selecting an action did not run it and close the menu")
+
+    local toggled = false
+    local menuButton = UI.Button(page, { id = "menuButton", text = "More", chevron = true, menu = function()
+      return {
+        { kind = "title", text = "Route" },
+        { text = "Rename", onSelect = logged("rename") },
+        { kind = "toggle", text = "Live", checked = toggled, onSelect = function(item) toggled = item.checked end },
+        { kind = "submenu", text = "Send", items = { { text = "Party", onSelect = logged("party") } } },
+      }
+    end })
+    UI.Layout.FlushAll()
+    click(menuButton)
+    menu = UI.Overlay.Top("menu")
+    expect(menu and menu.frame:IsVisible(), "button menu did not open")
+    expect(menu.frame:GetTop() <= menuButton:GetBottom() + 0.01, "button menu is not below the button")
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "List" then menuList = child end
+    end
+    click(menuList:GetRow(3))
+    expect(toggled == true and UI.Overlay.Top("menu") == menu, "toggle did not flip or closed the menu")
+    expect(menuList:GetRow(3).kitCheck:IsShown(), "toggle row did not repaint its check")
+    click(menuList:GetRow(4))
+    local submenu = UI.Overlay.Top("menu")
+    expect(submenu and submenu ~= menu and submenu.frame:IsVisible(), "submenu did not open")
+    local subList
+    for _, child in ipairs(submenu.frame.content.kitChildren) do
+      if child.kit.name == "List" then subList = child end
+    end
+    click(subList:GetRow(1))
+    expect(lastLog() == "party" and UI.Overlay.Top("menu") == nil, "submenu action did not close the whole chain")
+
+    local dropdown = page:Find("dropdown")
+    click(dropdown.kitButton)
+    menu = UI.Overlay.Top("menu")
+    expect(menu and menu.frame:IsVisible(), "dropdown did not open its menu")
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "List" then menuList = child end
+    end
+    expect(menuList:GetRow(2).kitCheck:IsShown() and not menuList:GetRow(1).kitCheck:IsShown(), "dropdown menu does not mark the current value")
+    click(menuList:GetRow(1))
+    expect(lastLog() == "pick:a" and dropdown:GetValue() == "a" and dropdown.kitButton:GetText() == "Alpha", "dropdown choice did not apply")
+    expect(UI.Overlay.Top("menu") == nil, "dropdown menu stayed open")
+  end)
 end

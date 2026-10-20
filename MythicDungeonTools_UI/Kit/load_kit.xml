@@ -25,5 +25,7 @@
 	<Script file='Controls\Stepper.lua'/>
 	<Script file='Controls\SegmentBar.lua'/>
 	<Script file='Popover.lua'/>
+	<Script file='List.lua'/>
+	<Script file='Menu.lua'/>
 	<Script file='Dialogs.lua'/>
 </Ui>
