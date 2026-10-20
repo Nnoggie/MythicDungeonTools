@@ -13,7 +13,7 @@ local function refreshText(self)
   local props = self.kitProps
   local label = MenuModel.LabelFor(props.items, props.value)
   self.kitButton:SetText(label or props.placeholder or "")
-  self.kitButton:SetTextColor(label and nil or "text.disabled")
+  self.kitButton:SetTextColor(not label and "text.disabled" or nil)
 end
 
 local function arrange(self)

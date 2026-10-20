@@ -3,6 +3,18 @@
 return function(ctx)
   local W, MDT, step, expect, click, asyncIdle = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.asyncIdle
   local UI = MDT.UI
+  step("kit dropdown: a picked value reads in the normal text color, only the placeholder is muted", function()
+    local host = CreateFrame("Frame", nil, UIParent)
+    host:SetSize(200, 60)
+    host:SetPoint("CENTER")
+    local items = UI.MenuModel.FromList({ a = "Alpha" }, { "a" })
+    local dropdown = UI.Dropdown(host, { items = items, placeholder = "Pick one" })
+    expect(dropdown.kitButton.kitProps.textColor == "text.disabled", "the placeholder is not muted")
+    dropdown:SetValue("a")
+    expect(dropdown.kitButton:GetText() == "Alpha" and dropdown.kitButton.kitProps.textColor == nil, "a picked value is drawn as "..tostring(dropdown.kitButton.kitProps.textColor))
+    dropdown:Release()
+    host:Hide()
+  end)
 
   step("kit edit box: justify aligns the text and onWheel takes the wheel instead of scrolling", function()
     local host = CreateFrame("Frame", nil, UIParent)
