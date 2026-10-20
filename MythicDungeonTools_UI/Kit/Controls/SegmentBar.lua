@@ -81,7 +81,7 @@ UI.Define({
     { name = "marker", default = nil, set = layoutSegments },
     { name = "text", default = nil, set = repaintText },
     { name = "overflow", default = false, set = repaintText },
-    { name = "font", default = "small", set = function(self, v) self.kitText:SetFontObject(Fonts.Get(v, true)) end },
+    { name = "font", default = "small", set = function(self, v) self.kitText:SetFontObject(Fonts.Get(v)) end },
   },
   Create = function(self)
     self.kitBackground = self:CreateTexture(nil, "BACKGROUND")
@@ -92,7 +92,9 @@ UI.Define({
     self.kitMarker = self:CreateTexture(nil, "OVERLAY")
     Theme.Bind(self.kitMarker, "text.normal")
     self.kitText = self:CreateFontString(nil, "OVERLAY")
-    self.kitText:SetFontObject(Fonts.Get("small", true))
+    self.kitText:SetFontObject(Fonts.Get("small"))
+    self.kitText:SetShadowColor(0, 0, 0, 1)
+    self.kitText:SetShadowOffset(0, -1)
     self.kitText:SetAllPoints()
     self.kitText:SetJustifyH("CENTER")
     self:SetScript("OnSizeChanged", function() layoutSegments(self) end)

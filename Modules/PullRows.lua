@@ -9,7 +9,10 @@ local PORTRAIT_OVERLAP = 4
 local MAX_PORTRAITS = 7
 local VALUE_WIDTH = 60
 local ROW_HEIGHT = 34
-local TINT_FROM, TINT_TO = 0.95, 0.22
+-- Pull colors are bright palette colors; mixing them toward the panel background keeps white text readable.
+local TINT_MUTE = 0.5
+local TINT_BACKGROUND = 0.07
+local TINT_FROM, TINT_TO = 0.9, 0.18
 local TOOLTIP_WIDTH, TOOLTIP_HEIGHT = 250, 180
 
 local tooltip
@@ -161,7 +164,9 @@ function PullRow:OnCreate()
   self.kitHover:SetAllPoints()
   self.kitHover:SetColorTexture(1, 1, 1, 0.08)
   self.kitNumber = self:CreateFontString(nil, "ARTWORK")
-  self.kitNumber:SetFontObject(Fonts.Get("number", true))
+  self.kitNumber:SetFontObject(Fonts.Get("number"))
+  self.kitNumber:SetShadowColor(0, 0, 0, 1)
+  self.kitNumber:SetShadowOffset(1, -1)
   self.kitNumber:SetPoint("LEFT", self, "LEFT", Theme.Space("xs"), 0)
   self.kitNumber:SetWidth(NUMBER_WIDTH)
   self.kitNumber:SetJustifyH("CENTER")
@@ -189,20 +194,26 @@ function PullRow:OnCreate()
     portrait.mask:SetAllPoints(portrait.texture)
     portrait.texture:AddMaskTexture(portrait.mask)
     portrait.count = portrait:CreateFontString(nil, "OVERLAY")
-    portrait.count:SetFontObject(Fonts.Get("small", true))
+    portrait.count:SetFontObject(Fonts.Get("small"))
+    portrait.count:SetShadowColor(0, 0, 0, 1)
+    portrait.count:SetShadowOffset(1, -1)
     portrait.count:SetPoint("BOTTOMRIGHT", portrait, "BOTTOMRIGHT", 3, -3)
     portrait.count:SetTextColor(1, 1, 1, 1)
     portrait:Hide()
     self.kitPortraits[i] = portrait
   end
   self.kitCumulative = self:CreateFontString(nil, "ARTWORK")
-  self.kitCumulative:SetFontObject(Fonts.Get("heading", true))
+  self.kitCumulative:SetFontObject(Fonts.Get("heading"))
+  self.kitCumulative:SetShadowColor(0, 0, 0, 1)
+  self.kitCumulative:SetShadowOffset(1, -1)
   self.kitCumulative:SetPoint("TOPRIGHT", self, "TOPRIGHT", -Theme.Space("md"), -4)
   self.kitCumulative:SetWidth(VALUE_WIDTH)
   self.kitCumulative:SetJustifyH("RIGHT")
   Theme.Bind(self.kitCumulative, "text.normal")
   self.kitPull = self:CreateFontString(nil, "ARTWORK")
-  self.kitPull:SetFontObject(Fonts.Get("small", true))
+  self.kitPull:SetFontObject(Fonts.Get("small"))
+  self.kitPull:SetShadowColor(0, 0, 0, 1)
+  self.kitPull:SetShadowOffset(1, -1)
   self.kitPull:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -Theme.Space("md"), 4)
   self.kitPull:SetWidth(VALUE_WIDTH)
   self.kitPull:SetJustifyH("RIGHT")
@@ -219,6 +230,7 @@ end
 ---@param item MDT.SidebarPullItem
 function PullRow:Bind(item)
   local r, g, b = item.color[1], item.color[2], item.color[3]
+  r, g, b = r * TINT_MUTE + TINT_BACKGROUND * (1 - TINT_MUTE), g * TINT_MUTE + TINT_BACKGROUND * (1 - TINT_MUTE), b * TINT_MUTE + TINT_BACKGROUND * (1 - TINT_MUTE)
   self.kitTint:SetGradient("HORIZONTAL", CreateColor(r, g, b, TINT_FROM), CreateColor(r, g, b, TINT_TO))
   self.kitNumber:SetText(item.index)
   for i, portrait in ipairs(self.kitPortraits) do
@@ -250,7 +262,7 @@ local DividerRow = {}
 
 function DividerRow:OnCreate()
   self.kitLabel = self:CreateFontString(nil, "ARTWORK")
-  self.kitLabel:SetFontObject(Fonts.Get("small", true))
+  self.kitLabel:SetFontObject(Fonts.Get("small"))
   self.kitLabel:SetPoint("CENTER", self, "CENTER", Theme.Space("sm"), 0)
   self.kitLabel:SetText(string.upper(L["Forces complete"]))
   Theme.Bind(self.kitLabel, "ok")
@@ -275,7 +287,7 @@ local NewPullRow = {}
 function NewPullRow:OnCreate()
   self.kitBorder = UI.Pixel.Border(self, "border.strong")
   self.kitLabel = self:CreateFontString(nil, "ARTWORK")
-  self.kitLabel:SetFontObject(Fonts.Get("body", true))
+  self.kitLabel:SetFontObject(Fonts.Get("body"))
   self.kitLabel:SetPoint("CENTER", self, "CENTER", 0, 0)
   self.kitLabel:SetText(L["+ Add pull"])
   Theme.Bind(self.kitLabel, "accent")
