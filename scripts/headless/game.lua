@@ -37,6 +37,19 @@ return function(W)
   function G.AddonCompartmentFrame:RegisterAddon(info) table.insert(self.registeredAddons, info) end
   function G.AddonCompartmentFrame:UpdateDisplay() end
   function G.GetScreenWidth() return W.screenWidth end
+  G.PixelUtil = {
+    GetPixelToUIUnitFactor = function() return 768 / W.screenHeight end,
+    GetNearestPixelSize = function(uiUnitSize, layoutScale, minPixels)
+      local factor = 768 / W.screenHeight
+      local pixels = uiUnitSize * layoutScale / factor
+      if minPixels and pixels < minPixels then pixels = minPixels end
+      return math.floor(pixels + 0.5) * factor / layoutScale
+    end,
+    SetPoint = function(region, ...) region:SetPoint(...) end,
+    SetWidth = function(region, width) region:SetWidth(width) end,
+    SetHeight = function(region, height) region:SetHeight(height) end,
+    SetSize = function(region, width, height) region:SetSize(width, height) end,
+  }
   function G.GetScreenHeight() return W.screenHeight end
   function G.GetPhysicalScreenSize() return W.screenWidth, W.screenHeight end
   function G.GetCursorPosition() return W.cursorX or W.screenWidth / 2, W.cursorY or W.screenHeight / 2 end

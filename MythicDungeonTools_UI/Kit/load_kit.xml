@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='Pure\Color.lua'/>
+	<Script file='Pure\Text.lua'/>
+	<Script file='Pure\Layout.lua'/>
+	<Script file='Pure\ListMath.lua'/>
+	<Script file='Pure\Selection.lua'/>
+	<Script file='Pure\MenuModel.lua'/>
+	<Script file='Theme.lua'/>
+	<Script file='Fonts.lua'/>
+	<Script file='Pixel.lua'/>
+	<Script file='Class.lua'/>
+	<Script file='LayoutHost.lua'/>
+</Ui>
