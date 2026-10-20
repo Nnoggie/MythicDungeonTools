@@ -58,7 +58,10 @@ local MAX_PORTRAITS = 7
 ---@field isLiveRoute boolean
 ---@field level integer
 ---@field forces {current: integer, max: integer, text: string, tone: MDT.UI.ColorToken}
----@field actions {canDelete: boolean, canDeleteAll: boolean, canShare: boolean, canLive: boolean, liveActive: boolean, canSetLive: boolean, canReturnToLive: boolean}
+---@field actions {canDelete: boolean, canDeleteAll: boolean, canShare: boolean, canLive: boolean, shareBlocked: MDT.SidebarBlock?, liveBlocked: MDT.SidebarBlock?, liveActive: boolean, canSetLive: boolean, canReturnToLive: boolean}
+
+---Why Share or Live is disabled: not in a group, a route is still being sent, or a live session already syncs changes.
+---@alias MDT.SidebarBlock "noGroup"|"busy"|"live"
 
 ---@param value number
 ---@param total number
@@ -170,6 +173,8 @@ function Model.Build(preset, ctx)
   items[#items + 1] = { kind = "newPull", key = "new" }
 
   local isLiveRoute = ctx.liveActive and preset.uid ~= nil and preset.uid == ctx.livePresetUID
+  local shareBlocked = ctx.liveActive and "live" or not ctx.inGroup and "noGroup" or ctx.busy and "busy" or nil
+  local liveBlocked = not ctx.liveActive and (not ctx.inGroup and "noGroup" or ctx.busy and "busy") or nil
   local createdBy = type(preset.createdBy) == "table" and preset.createdBy or nil
   local header = {
     author = createdBy and createdBy.name or nil,
@@ -184,8 +189,10 @@ function Model.Build(preset, ctx)
     actions = {
       canDelete = ctx.presetIdx ~= 1 and not ctx.liveActive,
       canDeleteAll = countRoutes(ctx.presets) > 1 and not ctx.liveActive,
-      canShare = ctx.inGroup and not ctx.busy and not ctx.liveActive,
-      canLive = ctx.liveActive or (ctx.inGroup and not ctx.busy),
+      canShare = shareBlocked == nil,
+      canLive = liveBlocked == nil,
+      shareBlocked = shareBlocked,
+      liveBlocked = liveBlocked,
       liveActive = ctx.liveActive,
       canSetLive = ctx.liveActive and not isLiveRoute,
       canReturnToLive = ctx.liveActive and not isLiveRoute,

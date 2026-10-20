@@ -118,6 +118,10 @@ return function(ctx)
       GameTooltip:Hide()
       W.hover(button)
       expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == button, id.." shows no tooltip"..(button:IsDisabled() and " while disabled" or ""))
+      if id == "shareRoute" or id == "liveSession" then -- the harness player is never in a group
+        local lines = W.state[GameTooltip].lines or {}
+        expect(lines[2] == "Join a group first", id.." tooltip does not say why it is disabled: "..table.concat(lines, " / "))
+      end
       W.fireScript(button, "OnLeave")
       local ix, iy = button.kitIcon:GetCenter()
       local bx, by = button:GetCenter()
@@ -394,6 +398,7 @@ return function(ctx)
     local search = control("routeSearch")
     search.kitEdit:Insert("zzzz")
     expect(#control("routes").kitProps.items == 0, "search did not filter the routes")
+    expect(control("routes"):GetHeight() == 7 * MDT.RouteListRowHeight, "the route list shrank when the search left no routes")
     search.kitEdit:SetText("")
     W.fireScript(search.kitEdit, "OnTextChanged", true)
     expect(#control("routes").kitProps.items == presetCount(), "clearing the search did not restore the list")

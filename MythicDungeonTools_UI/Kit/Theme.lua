@@ -58,11 +58,11 @@ Theme.data = {
       disabled = { bg = false, border = false, text = "text.disabled" },
     },
     window = {
-      normal = { bg = "bg.sunken", border = "border.strong", text = "text.secondary" },
+      normal = { bg = "bg.raised2", border = "border.strong", text = "text.normal" },
       hover = { bg = "bg.hover", border = "accent.border", text = "accent" },
       pressed = { bg = "bg.pressed", border = "accent", text = "accent" },
       selected = { bg = "accent.bg", border = "accent", text = "accent" },
-      disabled = { bg = "bg.sunken", border = "border.normal", text = "text.disabled" },
+      disabled = { bg = false, border = "border.divider", text = "text.disabled" },
     },
     icon = {
       normal = { bg = "bg.raised2", border = "border.normal", text = "text.normal" },

@@ -75,15 +75,7 @@ local function paintHeader(header)
 end
 
 local function refreshRoutes(ctx)
-  local items = Model.RouteListItems(Model.RouteGroups(ctx or MDT:SidebarContext()), routeQuery)
-  local height = math.max(1, math.min(#items, VISIBLE_ROUTES)) * MDT.RouteListRowHeight
-  local routes = sidebar.routes
-  if routes.kitProps.height ~= height then
-    routes.kitProps.height = height
-    routes:SetHeight(height)
-    routes:InvalidateLayout()
-  end
-  routes:SetItems(items)
+  sidebar.routes:SetItems(Model.RouteListItems(Model.RouteGroups(ctx or MDT:SidebarContext()), routeQuery))
 end
 
 ---The one impure refresh: rebuilds the header and the pull list from the current preset and paints the selection.
@@ -318,6 +310,35 @@ local function openLiveMenu(button)
   })
 end
 
+local BLOCK_REASONS = {
+  noGroup = "Join a group first",
+  busy = "Wait until the current route finishes sending",
+  live = "Not needed during a live session, changes sync automatically",
+}
+
+---Tooltip with a title and, when the action can't run right now, the reason in red. Evaluated on hover.
+---@param title string
+---@param reason fun(): string?
+local function explained(title, reason)
+  return function(tooltip)
+    tooltip:SetText(title, 1, 1, 1)
+    local why = reason()
+    if why then tooltip:AddLine(why, 1, 0.42, 0.36, true) end
+  end
+end
+
+local function groupReason(key)
+  return function()
+    if MDT:IsInRestrictedEnvironment() then return L["Action blocked: Restricted environment"] end
+    local block = sidebar.state.header.actions[key]
+    return block and L[BLOCK_REASONS[block]] or nil
+  end
+end
+
+local function combatReason(text)
+  return function() return InCombatLockdown() and L[text] or nil end
+end
+
 local function actionButton(parent, id, icon, tooltip, onClick, onRightClick)
   return UI.Button(parent, {
     id = id, variant = "window", icon = MDT:GetIconPath(icon), iconSize = ACTION_ICON, width = 20, grow = 1, height = ACTION_HEIGHT,
@@ -359,13 +380,13 @@ function MDT:MakeSidebar(sidePanel)
       refreshRoutes()
     end })
     local actions = UI.Row(root, { id = "routeActions", gap = "xs", valign = "center" })
-    built.share = actionButton(actions, "shareRoute", "share", L["Send to party"], routeActions.share)
+    built.share = actionButton(actions, "shareRoute", "share", explained(L["Send to party"], groupReason("shareBlocked")), routeActions.share)
     built.new = actionButton(actions, "newRoute", "plus", L["New Preset"], routeActions.new)
-    built.export = actionButton(actions, "exportRoute", "export", L["Export"], routeActions.export)
-    built.import = actionButton(actions, "importRoute", "import", L["Import"], routeActions.import)
-    built.live = actionButton(actions, "liveSession", "live", L["Live"], routeActions.toggleLive, openLiveMenu)
+    built.export = actionButton(actions, "exportRoute", "export", explained(L["Export"], combatReason("Cannot export while in combat")), routeActions.export)
+    built.import = actionButton(actions, "importRoute", "import", explained(L["Import"], combatReason("Cannot import while in combat")), routeActions.import)
+    built.live = actionButton(actions, "liveSession", "live", explained(L["Live"], groupReason("liveBlocked")), routeActions.toggleLive, openLiveMenu)
     built.routes = UI.List(root, {
-      id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = MDT.RouteListRowHeight, scrollbar = true,
+      id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = VISIBLE_ROUTES * MDT.RouteListRowHeight, scrollbar = true,
       onActivate = function(item) MDT:SwitchToPreset(item.idx) end,
       onContext = function(item)
         MDT:CreateContextMenu(sidebar.routes, routeMenuItems(item.idx))

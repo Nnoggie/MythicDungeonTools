@@ -464,7 +464,7 @@ test("SidebarModel.Build: rows, cumulative text, divider after the pull that com
   eq({ header.author, header.route, header.level, header.isLiveRoute }, { "Me", "Route 3", 22, false })
   eq(header.authorColor, { 0, 0.5, 1 })
   eq({ header.forces.current, header.forces.max, header.forces.text, header.forces.tone }, { 29, 20, "29/20 (145.00%)", "warn" })
-  eq(header.actions, { canDelete = true, canDeleteAll = true, canShare = false, canLive = false, liveActive = false, canSetLive = false, canReturnToLive = false })
+  eq(header.actions, { canDelete = true, canDeleteAll = true, canShare = false, canLive = false, shareBlocked = "noGroup", liveBlocked = "noGroup", liveActive = false, canSetLive = false, canReturnToLive = false })
 
   local overflow = Model.Build(fixturePreset(), fixtureContext({ totalForces = 729 }))
   eq(overflow.header.forces.tone, "text.normal")
@@ -481,9 +481,9 @@ test("SidebarModel.Build: rows, cumulative text, divider after the pull that com
 
   local live = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "mine", inGroup = true }))
   eq(live.header.isLiveRoute, true)
-  eq(live.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, liveActive = true, canSetLive = false, canReturnToLive = false })
+  eq(live.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, shareBlocked = "live", liveActive = true, canSetLive = false, canReturnToLive = false })
   local elsewhere = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "theirs", inGroup = true, busy = true }))
-  eq(elsewhere.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, liveActive = true, canSetLive = true, canReturnToLive = true })
+  eq(elsewhere.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, shareBlocked = "live", liveActive = true, canSetLive = true, canReturnToLive = true })
   local grouped = Model.Build(fixturePreset(), fixtureContext({ inGroup = true }))
   eq({ grouped.header.actions.canShare, grouped.header.actions.canLive }, { true, true })
   local default = Model.Build(fixturePreset(), fixtureContext({ presetIdx = 1 }))
