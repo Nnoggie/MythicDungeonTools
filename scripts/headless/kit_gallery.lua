@@ -198,6 +198,21 @@ return function(ctx)
     W.fireScript(readOnly.kitEdit, "OnKeyUp", "C")
     W.modifiers = nil
     expect(lastLog() == "copy", "Ctrl+C did not fire onCopy")
+    -- Ctrl released just before C still copies; a C long after Ctrl does not.
+    log[#log + 1] = "-"
+    W.modifiers = { ctrl = true }
+    W.pump(0.05)
+    W.modifiers = nil
+    W.pump(0.2)
+    W.fireScript(readOnly.kitEdit, "OnKeyUp", "C")
+    expect(lastLog() == "copy", "Ctrl released 0.2s before C did not copy")
+    log[#log + 1] = "-"
+    W.modifiers = { ctrl = true }
+    W.pump(0.05)
+    W.modifiers = nil
+    W.pump(1)
+    W.fireScript(readOnly.kitEdit, "OnKeyUp", "C")
+    expect(lastLog() == "-", "C a second after Ctrl still copied")
     readOnly:ClearFocus()
     expect(lastLog() == "focusLost", "blur did not fire onFocusLost")
 

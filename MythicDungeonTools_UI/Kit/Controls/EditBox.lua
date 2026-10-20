@@ -7,6 +7,13 @@ local LABEL_HEIGHT = 14
 local LINE_HEIGHT = 14
 local NATURAL_WIDTH = 160
 local WHEEL_STEP = 28
+-- Ctrl+C still counts when Ctrl comes up shortly before C does, as people often release both at once.
+local COPY_GRACE = 0.5
+
+---OnUpdate of a focused box with onCopy: remembers when Ctrl was last held.
+local function trackCtrl(edit)
+  if IsControlKeyDown() then edit.kitCtrlAt = GetTime() end
+end
 
 local Methods = {}
 function Methods:GetValue() return self.kitProps.value end
@@ -235,20 +242,27 @@ UI.Define({
     end)
     self.kitEdit:SetScript("OnEditFocusGained", function(edit)
       self.kitFocused = true
+      if self.kitProps.onCopy then edit:SetScript("OnUpdate", trackCtrl) end
       self.kitLastCommit = edit:GetText()
       repaint(self)
       if self.kitProps.selectAllOnFocus then edit:HighlightText(0, -1) end
     end)
     self.kitEdit:SetScript("OnEditFocusLost", function(edit)
       self.kitFocused = nil
+      edit:SetScript("OnUpdate", nil)
+      edit.kitCtrlAt = nil
       edit:HighlightText(0, 0)
       repaint(self)
       commit(self, "blur")
       self:Emit("onFocusLost", self)
     end)
     self.kitEdit:SetScript("OnChar", function(_, char) bufferChar(self, char) end)
-    self.kitEdit:SetScript("OnKeyUp", function(_, key)
-      if key == "C" and IsControlKeyDown() then self:Emit("onCopy", self) end
+    self.kitEdit:SetScript("OnKeyUp", function(edit, key)
+      if key ~= "C" then return end
+      if IsControlKeyDown() or (edit.kitCtrlAt and GetTime() - edit.kitCtrlAt < COPY_GRACE) then
+        edit.kitCtrlAt = nil
+        self:Emit("onCopy", self)
+      end
     end)
     self.kitEdit:SetScript("OnCursorChanged", function(edit, _, y, _, height)
       if not self.kitProps.multiline or not y then return end

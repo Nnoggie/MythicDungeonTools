@@ -453,7 +453,6 @@ function MDT:MakeCopyHelper(frame)
     UIFrameFadeOut(MDT.copyHelper, seconds, 1, 0)
     MDT.copyHelper.text:SetText(L["copiedToClipboard"])
     MDT.copyHelper.text:SetTextColor(1, 1, 1)
-    MDT.copyHelper:SetScript("OnUpdate", nil)
     C_Timer.After(seconds, function()
       MDT.copyHelper.text:SetText(L["errorLabel3"])
       MDT.copyHelper.text:SetTextColor(1, 1, 0)
@@ -469,22 +468,10 @@ function MDT:MakeCopyHelper(frame)
     MDT.copyHelper:SetFrameLevel(200)
     MDT.copyHelper:SetAlpha(1)
     MDT.copyHelper:Show()
-    MDT.copyHelper:SetScript("OnUpdate", function()
-      if IsControlKeyDown() then
-        MDT.lastCtrlDown = GetTime()
-      end
-    end)
   end
 
   function MDT.copyHelper:SmartHide()
     if not MDT.copyHelper.isFading then MDT.copyHelper:Hide() end
-  end
-
-  --ctrl+c works when ctrl was released up to 0.5s before the c key
-  function MDT.copyHelper:WasControlKeyDown()
-    if IsControlKeyDown() then return true end
-    if not MDT.lastCtrlDown then return false end
-    return (GetTime() - MDT.lastCtrlDown) < 0.5
   end
 end
 
