@@ -82,11 +82,8 @@ UI.Define({
     self.kitTitle:SetJustifyH("LEFT")
     self.kitTitle:SetWordWrap(false)
     Theme.Bind(self.kitTitle, "text.normal")
-    self.closeButton = UI.Button(self.kitTitleBar, { variant = "ghost", tooltip = L["Close"], onClick = function() self:Close("x") end })
-    self.closeButton:SetPoint("RIGHT", self.kitTitleBar, "RIGHT", -Theme.Space("xs"), 0)
-    self.closeButton:SetSize(TITLE_HEIGHT - Theme.Space("md"), TITLE_HEIGHT - Theme.Space("md"))
-    self.closeButton.kitCross = UI.Glyphs.Create(self.closeButton, "cross", 9, "text.muted")
-    self.closeButton.kitCross:SetPoint("CENTER", self.closeButton, "CENTER", 0, 0)
+    self.closeButton = UI.CloseButton(self.kitTitleBar, { tooltip = L["Close"], onClick = function() self:Close("x") end })
+    self.closeButton:SetPoint("RIGHT", self.kitTitleBar, "RIGHT", -(TITLE_HEIGHT - 24) / 2, 0)
 
     self.content = UI.Stack(self, { padding = "lg", gap = "md" })
     self.content:SetPoint("TOPLEFT", self.kitTitleBar, "BOTTOMLEFT", 0, 0)

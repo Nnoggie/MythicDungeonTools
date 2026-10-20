@@ -123,3 +123,16 @@ UI.Define({
     return math.ceil(width), height
   end,
 })
+
+local CLOSE_SIZE, CLOSE_ICON_SIZE = 24, 17
+
+---The one close button: MethodInternal's cross in a square window button, as on the main window.
+---@param parent table
+---@param spec {onClick: fun(), tooltip: string?}
+---@return MDT.UI.Control
+function UI.CloseButton(parent, spec)
+  return UI.Button(parent, {
+    variant = "window", icon = MDT:GetIconPath("close"), iconSize = CLOSE_ICON_SIZE,
+    width = CLOSE_SIZE, height = CLOSE_SIZE, tooltip = spec.tooltip, onClick = spec.onClick,
+  })
+end

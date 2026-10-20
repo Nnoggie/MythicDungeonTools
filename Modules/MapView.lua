@@ -81,13 +81,11 @@ local function createAlphaWarning(frame)
   icon:SetSize(48, 48)
   icon:SetPoint("LEFT", warning, "LEFT", 8, 0)
 
-  local close = CreateFrame("Button", nil, warning, "UIPanelCloseButton")
-  close:SetSize(22, 22)
-  close:SetPoint("TOPRIGHT", warning, "TOPRIGHT", -1, -1)
-  close:SetScript("OnClick", function()
+  local close = MDT.UI.CloseButton(warning, { onClick = function()
     warning:Hide()
     if MDT.copyHelper then MDT.copyHelper:SmartHide() end
-  end)
+  end })
+  close:SetPoint("TOPRIGHT", warning, "TOPRIGHT", -3, -3)
 
   local title = warning:CreateFontString(nil, "OVERLAY", "GameFontNormal")
   title:SetPoint("TOPLEFT", warning, "TOPLEFT", 64, -8)

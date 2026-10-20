@@ -122,10 +122,7 @@ end
 function MDT:CreateMenu()
   -- Close button
   local UI = MDT.UI
-  local closeButton = UI.Button(self.main_frame, {
-    variant = "window", icon = MDT:GetIconPath("close"), iconSize = 17, width = 24, height = 24,
-    onClick = function() self:HideInterface() end,
-  })
+  local closeButton = UI.CloseButton(self.main_frame, { onClick = function() self:HideInterface() end })
   closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -4, -4)
   closeButton:SetFrameLevel(10)
   self.main_frame.closeButton = closeButton

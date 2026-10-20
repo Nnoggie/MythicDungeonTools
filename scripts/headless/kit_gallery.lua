@@ -730,7 +730,10 @@ return function(ctx)
       confirm = { text = "Yes", onClick = logged("confirm1b") }, cancel = { onClick = logged("cancel1b") } })
     expect(lastLog() == "cancel1", "keyed re-open did not run the old dialog's cancel")
     expect(Dialogs.Count() == 1 and Dialogs.Get("first") == replaced, "keyed dialog is not the replacement")
-    click(replaced.closeButton)
+    local close = replaced.closeButton
+    expect(close.kitProps.variant == MDT.main_frame.closeButton.kitProps.variant and close.kitProps.icon == MDT.main_frame.closeButton.kitProps.icon
+      and math.abs(close:GetWidth() - MDT.main_frame.closeButton:GetWidth()) < 0.01, "the dialog close button differs from the main window's")
+    click(close)
     expect(lastLog() == "cancel1b" and Dialogs.Count() == 0, "X did not close with cancel")
     expect(UI.Escape.Depth() == 1, "Escape stack kept a closed dialog")
 
