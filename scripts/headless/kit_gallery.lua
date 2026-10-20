@@ -218,4 +218,81 @@ return function(ctx)
     expect(page:Find("reused") == nil, "released child is still findable")
     bad:Release()
   end)
+
+  step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
+    log = {}
+    local Dialogs = UI.Dialogs
+    expect(UI.Escape.Depth() == 1, "main window is not the only Escape entry: "..UI.Escape.Depth())
+    local first = Dialogs.Confirm({ key = "first", title = "First", text = "Delete it?",
+      confirm = { text = "Delete", variant = "danger", onClick = logged("confirm1") },
+      cancel = { onClick = logged("cancel1") } })
+    expect(first:IsVisible() and first:GetHeight() > 60, "confirm dialog is not visible with content")
+    expect(Dialogs.Top() == first and Dialogs.Count() == 1, "dialog stack is wrong")
+    local second = Dialogs.Prompt({ key = "second", title = "Second", label = "Name", value = "x",
+      validate = function(text) if text == "" then return false, "Empty" end return true end,
+      checkbox = { text = "Mine", value = true },
+      confirm = { text = "Rename", onClick = function(text, checked) log[#log + 1] = "rename:"..text..":"..tostring(checked) end },
+      cancel = { onClick = logged("cancel2") } })
+    expect(Dialogs.Count() == 2 and second:GetFrameLevel() > first:GetFrameLevel(), "second dialog is not above the first")
+    expect(UI.Escape.Depth() == 3, "dialogs did not push Escape entries")
+
+    expect(CloseSpecialWindows(), "Escape found no special window")
+    expect(not second:IsShown() and lastLog() == "cancel2", "Escape did not close the top dialog with cancel")
+    expect(first:IsShown() and MDT.main_frame:IsShown(), "Escape closed more than the top dialog")
+    W.settle(asyncIdle, 5)
+
+    local replaced = Dialogs.Confirm({ key = "first", title = "First again", text = "Again?",
+      confirm = { text = "Yes", onClick = logged("confirm1b") }, cancel = { onClick = logged("cancel1b") } })
+    expect(lastLog() == "cancel1", "keyed re-open did not run the old dialog's cancel")
+    expect(Dialogs.Count() == 1 and Dialogs.Get("first") == replaced, "keyed dialog is not the replacement")
+    click(replaced.closeButton)
+    expect(lastLog() == "cancel1b" and Dialogs.Count() == 0, "X did not close with cancel")
+    expect(UI.Escape.Depth() == 1, "Escape stack kept a closed dialog")
+
+    local prompt = Dialogs.Prompt({ title = "Prompt", value = "",
+      validate = function(text) if text == "" then return false, "Empty" end return true end,
+      confirm = { text = "Ok", onClick = function(text) log[#log + 1] = "prompt:"..text end },
+      cancel = { onClick = logged("promptCancel") } })
+    local edit, confirmButton
+    for _, child in ipairs(prompt.content.kitChildren) do
+      if child.kit.name == "EditBox" then edit = child end
+      if child.kit.name == "Row" then confirmButton = child.kitChildren[1] end
+    end
+    expect(edit and edit.kitEdit:HasFocus(), "prompt did not focus its edit box")
+    expect(confirmButton:IsDisabled(), "empty prompt enabled confirm")
+    click(confirmButton)
+    expect(prompt:IsShown(), "disabled confirm closed the prompt")
+    edit.kitEdit:Insert("Route")
+    expect(not confirmButton:IsDisabled(), "valid text kept confirm disabled")
+    W.fireScript(edit.kitEdit, "OnEnterPressed")
+    expect(lastLog() == "prompt:Route" and not prompt:IsShown(), "Enter did not confirm the prompt")
+
+    local counted = 0
+    Dialogs.Confirm({ title = "Count", text = "once", confirm = { text = "Ok", onClick = function() end },
+      cancel = { onClick = function() counted = counted + 1 end } })
+    Dialogs.Open({ title = "Plain", build = function(content) UI.Text(content, { text = "plain" }) end })
+    Dialogs.CloseAll("api")
+    expect(counted == 1 and Dialogs.Count() == 0, "CloseAll did not run cancel exactly once per dialog")
+    expect(UI.Escape.Depth() == 1 and MDT.main_frame:IsShown(), "CloseAll disturbed the main window entry")
+
+    local pop = UI.Popover({ anchor = page:Find("default"), width = 120, onClose = function(reason) log[#log + 1] = "pop:"..reason end,
+      build = function(content) UI.Text(content, { text = "popover" }) end })
+    expect(pop:IsVisible() and pop:GetHeight() > 0, "popover did not open")
+    expect(pop:GetTop() <= page:Find("default"):GetBottom() + 0.01, "popover is not below its anchor")
+    expect(CloseSpecialWindows(), "Escape found nothing with a popover open")
+    expect(lastLog() == "pop:escape" and not pop:IsShown(), "Escape did not close the popover")
+    W.settle(asyncIdle, 5)
+    local again = UI.Popover({ anchor = page:Find("default"), build = function(content) UI.Text(content, { text = "again" }) end,
+      onClose = function(reason) log[#log + 1] = "pop:"..reason end })
+    expect(again:IsVisible(), "second popover did not open")
+    local catcher
+    for _, object in ipairs(W.objects) do
+      local state = W.state[object]
+      if state.isFrame and state.class.name == "Button" and state.parent == UIParent and W.isVisible(object) and object:GetWidth() == UIParent:GetWidth() then catcher = object end
+    end
+    expect(catcher, "no full-screen click catcher is shown behind the popover")
+    click(catcher)
+    expect(lastLog() == "pop:outside" and not again:IsShown(), "click outside did not close the popover")
+    expect(not catcher:IsShown(), "click catcher stayed up with nothing open")
+  end)
 end

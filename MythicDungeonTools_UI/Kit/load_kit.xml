@@ -12,6 +12,7 @@
 	<Script file='LayoutHost.lua'/>
 	<Script file='Glyphs.lua'/>
 	<Script file='Tooltip.lua'/>
+	<Script file='Overlay.lua'/>
 	<Script file='Containers.lua'/>
 	<Script file='Scroll.lua'/>
 	<Script file='Controls\Text.lua'/>
@@ -23,4 +24,6 @@
 	<Script file='Controls\ColorSwatch.lua'/>
 	<Script file='Controls\Stepper.lua'/>
 	<Script file='Controls\SegmentBar.lua'/>
+	<Script file='Popover.lua'/>
+	<Script file='Dialogs.lua'/>
 </Ui>

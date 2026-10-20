@@ -21,6 +21,7 @@ function MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
 end
 
 function MDT:HideAllDialogs()
+  MDT.UI.Dialogs.CloseAll("api")
   if MDT.main_frame then
     MDT.main_frame.presetCreationFrame:Hide()
     MDT.main_frame.presetImportFrame:Hide()
