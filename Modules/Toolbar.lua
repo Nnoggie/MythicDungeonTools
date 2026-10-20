@@ -96,7 +96,7 @@ function MDT:initToolbar(frame)
     })
     iconButton(stack, "brushUp", { 0.25, 0.5, 0.5, 0.75 }, L["Increase Brush Size"], function() setBrushSize(db.toolbar.brushSize + 1) end)
     sizeBox = UI.EditBox(stack, {
-      id = "brushSize", width = CONTROL_SIZE, numeric = true, maxLetters = 2, justify = "CENTER", selectAllOnFocus = true,
+      id = "brushSize", width = CONTROL_SIZE, tooltip = L["Brush Size"], numeric = true, maxLetters = 2, justify = "CENTER", selectAllOnFocus = true,
       value = tostring(db.toolbar.brushSize),
       onChange = function(text)
         local size = tonumber(text)

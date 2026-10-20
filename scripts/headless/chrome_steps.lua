@@ -101,6 +101,10 @@ return function(ctx)
       expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool(id)), id.." shows no tooltip")
       W.fireScript(tool(id), "OnLeave")
     end
+    GameTooltip:Hide()
+    W.hover(tool("brushSize").kitEdit)
+    expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool("brushSize")), "brush size shows no tooltip")
+    W.fireScript(tool("brushSize").kitEdit, "OnLeave")
     render("toolbar", main)
   end)
 
