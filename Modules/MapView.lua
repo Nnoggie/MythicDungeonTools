@@ -184,14 +184,7 @@ function MDT:ExportCurrentZoomPanSettings()
   output = output.."            verticalPan = "..panV..";\n"
   output = output.."        };\n"
 
-  MDT:HideAllDialogs()
-  MDT.main_frame.ExportFrame:Show()
-  MDT.main_frame.ExportFrame:ClearAllPoints()
-  MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  MDT.main_frame.ExportFrameEditbox:SetText(output)
-  MDT.main_frame.ExportFrameEditbox:HighlightText(0, string.len(output))
-  MDT.main_frame.ExportFrameEditbox:SetFocus()
-  MDT.main_frame.ExportFrameEditbox:SetLabel("Current pan/zoom settings");
+  MDT:OpenExportStringDialog("Current pan/zoom settings", output)
 end
 
 function MDT:SetViewPortPosition(zoomScale, horizontalPan, verticalPan)

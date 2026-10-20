@@ -246,10 +246,10 @@ function MDT:initToolbar(frame)
   delete:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.75, 1)
   delete:SetCallback("OnClick", function(widget, callbackName)
     local prompt = string.format(L["deleteAllDrawingsPrompt"], "\n", "\n", "\n")
-    self:OpenConfirmationFrame(450, 150, L["Delete ALL drawings"], L["Delete"], prompt, function()
+    MDT.UI.Dialogs.Confirm({ width = 450, title = L["Delete ALL drawings"], text = prompt, confirm = { text = L["Delete"], variant = "danger", onClick = function()
       self:DeletePresetObjects()
       if self.liveSessionActive then self:LiveSession_SendCommand("deletePresetObjects") end
-    end)
+    end } })
   end)
   delete.tooltipText = L["Delete ALL drawings"]
   tinsert(widgets, delete)

@@ -190,7 +190,7 @@ function MDT:DisplayErrors(force)
     hardResetButton:SetHeight(40)
     hardResetButton:SetCallback("OnClick", function(widget, callbackName, value)
       MDT:Async(function()
-        MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], L["hardResetPrompt"], MDT.HardReset)
+        MDT.UI.Dialogs.Confirm({ width = 450, title = L["hardResetPromptTitle"], text = L["hardResetPrompt"], confirm = { text = L["Delete"], variant = "danger", onClick = function() MDT:HardReset() end } })
       end, "hardReset")
     end)
 

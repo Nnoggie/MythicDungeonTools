@@ -2,11 +2,9 @@ local _, addon = ...
 local MDT = addon
 
 local function testFunc()
-  local frame = MDT.main_frame
-  local okayButton = frame.DeleteConfirmationFrame.OkayButton.frame
   MDT:OpenDeletePresetDialog()
   C_Timer.After(0.5, function()
-    okayButton:Click()
+    MDT.UI.Dialogs.Get("deletePreset").content:Find("confirm"):Click()
   end)
 end
 

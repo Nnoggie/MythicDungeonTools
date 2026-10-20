@@ -37,4 +37,190 @@ return function(ctx)
     expect(box:GetValue() == "abcd" and box.kitEdit:GetMaxBytes() == 0, "the field did not return to normal after the paste")
     dialog:Close("api")
   end)
+
+  local db = MDT:GetDB()
+  local main = MDT.main_frame
+  local unusedPresetName, presetCount, asyncIdle = ctx.unusedPresetName, ctx.presetCount, ctx.asyncIdle
+  local function snapshot(name, dialog)
+    W.pump(0.05)
+    ctx.snapshot(name, dialog)
+  end
+  local function openDialog(key)
+    local dialog = UI.Dialogs.Get(key)
+    expect(dialog and dialog:IsVisible(), key.." dialog not shown")
+    return dialog
+  end
+  local function retype(dialog, text)
+    local edit = dialog.content:Find("input").kitEdit
+    edit:SetText("")
+    expect(W.userType(edit, text), "the "..dialog.kitKey.." field does not have focus")
+  end
+  local function problemOf(dialog)
+    for _, child in ipairs(dialog.content.kitChildren) do
+      if child.kit.name == "Text" and child.kitProps.color == "warn" then return child end
+    end
+  end
+  local function childOfKind(dialog, kind)
+    for _, child in ipairs(dialog.content.kitChildren) do
+      if child.kit.name == kind then return child end
+    end
+  end
+  local function pulls() return MDT:GetCurrentPreset().value.pulls end
+
+  step("dialogs: new route rejects a taken name and Enter creates it", function()
+    local before = presetCount()
+    MDT:OpenNewPresetDialog()
+    local dialog = openDialog("newPreset")
+    expect(dialog.content:Find("startingPoint"):GetValue() == 0, "new route does not start empty")
+    local taken = db.presets[db.currentDungeonIdx][1].text
+    retype(dialog, taken)
+    local problem = problemOf(dialog)
+    expect(dialog.content:Find("confirm"):IsDisabled() and problem:IsShown() and problem.kitProps.text:find(taken, 1, true), "a taken name is accepted")
+    snapshot("new route dialog", dialog)
+    local name = unusedPresetName("Headless Enter")
+    retype(dialog, name)
+    expect(not dialog.content:Find("confirm"):IsDisabled() and not problem:IsShown(), "a free name stays rejected")
+    W.fireScript(dialog.content:Find("input").kitEdit, "OnEnterPressed")
+    W.settle(asyncIdle, 30)
+    expect(UI.Dialogs.Get("newPreset") == nil, "Enter did not close the new route dialog")
+    expect(presetCount() == before + 1 and MDT:GetCurrentPreset().text == name, "Enter did not create the route")
+  end)
+
+  step("dialogs: rename has no ownership checkbox, rejects a taken name and Escape keeps the name", function()
+    local current = MDT:GetCurrentPreset().text
+    MDT:OpenRenamePresetDialog()
+    local dialog = openDialog("renamePreset")
+    expect(childOfKind(dialog, "Checkbox") == nil, "rename still offers a checkbox")
+    expect(not problemOf(dialog):IsShown(), "the unchanged name shows a problem")
+    retype(dialog, db.presets[db.currentDungeonIdx][1].text)
+    expect(dialog.content:Find("confirm"):IsDisabled() and problemOf(dialog):IsShown(), "rename accepts a taken name")
+    snapshot("rename dialog", dialog)
+    W.fireScript(dialog.content:Find("input").kitEdit, "OnEscapePressed")
+    expect(UI.Dialogs.Get("renamePreset") == nil, "Escape did not close the rename dialog")
+    expect(MDT:GetCurrentPreset().text == current, "Escape renamed the route")
+  end)
+
+  step("dialogs: export selects the string, Select all shows the hint, Ctrl+C closes it", function()
+    MDT:OpenExportDialog()
+    local dialog = openDialog("export")
+    local box = dialog.content:Find("text")
+    expect(box.kitEdit:HasFocus() and MDT.copyHelper:IsShown(), "export did not focus the string with the copy hint")
+    expect(box.kitLabel:GetText():find(MDT:GetCurrentPreset().text, 1, true), "export label does not name the route")
+    local exported = box:GetValue()
+    W.userType(box.kitEdit, "x")
+    expect(box:GetValue() == exported, "the export string is editable")
+    snapshot("export dialog", dialog)
+    box:ClearFocus()
+    expect(not MDT.copyHelper:IsShown(), "losing focus left the copy hint")
+    click(dialog.content:Find("selectAll"))
+    expect(box.kitEdit:HasFocus() and MDT.copyHelper:IsShown(), "Select all did not focus the string and show the hint")
+    W.modifiers = { ctrl = true }
+    W.fireScript(box.kitEdit, "OnKeyUp", "C")
+    W.modifiers = nil
+    expect(UI.Dialogs.Get("export") == nil, "Ctrl+C did not close the export dialog")
+    expect(MDT.copyHelper.isFading, "Ctrl+C did not show the copied hint")
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("dialogs: an invalid import says why and keeps the dialog open", function()
+    MDT:OpenImportPresetDialog()
+    local dialog = openDialog("importPreset")
+    expect(W.userType(dialog.content:Find("input").kitEdit, "this is not a route string"), "the import field does not have focus")
+    W.pump(0.05)
+    expect(UI.Dialogs.Get("importPreset") == dialog and problemOf(dialog):IsShown(), "an invalid paste did not explain itself")
+    snapshot("import dialog", dialog)
+    problemOf(dialog):SetHidden(true)
+    click(dialog.content:Find("import"))
+    expect(UI.Dialogs.Get("importPreset") == dialog and problemOf(dialog):IsShown(), "Import accepted an invalid string")
+    MDT:HideAllDialogs()
+    expect(UI.Dialogs.Count() == 0, "HideAllDialogs left a dialog open")
+  end)
+
+  step("dialogs: the large route warning shares on confirm and cancels on X", function()
+    local realToString = MDT.TableToString
+    MDT.TableToString = function() return string.rep("x", 4000) end
+    local log = {}
+    local function share() log[#log + 1] = "share" end
+    local function cancel() log[#log + 1] = "cancel" end
+    MDT:CheckPresetSize(share, cancel)
+    snapshot("large route warning", openDialog("largePreset"))
+    click(openDialog("largePreset").closeButton)
+    MDT:CheckPresetSize(share, cancel)
+    click(openDialog("largePreset").content:Find("confirm"))
+    MDT:CheckPresetSize(share)
+    click(openDialog("largePreset").content:Find("cancel"))
+    MDT.TableToString = realToString
+    expect(table.concat(log, ",") == "cancel,share", "share warning reported "..table.concat(log, ","))
+  end)
+
+  step("dialogs: an unanswered live update ends the live session", function()
+    local preset = MDT:GetCurrentPreset()
+    MDT:SetUniqueID(preset)
+    local overwrite = db.alwaysOverwriteRoutesByUID
+    db.alwaysOverwriteRoutesByUID = false
+    MDT.liveSessionActive = true
+    MDT:ImportPreset(CopyTable(preset), true)
+    local dialog = openDialog("importOverwrite")
+    expect(MDT.liveUpdateFrameOpen and dialog.content:Find("alt"), "a live update did not ask overwrite or copy")
+    snapshot("import overwrite dialog", dialog)
+    click(childOfKind(dialog, "Checkbox"))
+    expect(db.alwaysOverwriteRoutesByUID == true, "the checkbox did not set always overwrite")
+    db.alwaysOverwriteRoutesByUID = false
+    click(dialog.closeButton)
+    expect(not MDT.liveSessionActive and not MDT.liveUpdateFrameOpen, "closing the live update left the session running")
+    MDT.liveSessionActive = true
+    local before = presetCount()
+    MDT:ImportPreset(CopyTable(preset), true)
+    click(openDialog("importOverwrite").content:Find("confirm"))
+    expect(MDT.liveSessionActive and presetCount() == before, "overwrite ended the session or added a route")
+    MDT:LiveSession_Disable()
+    db.alwaysOverwriteRoutesByUID = overwrite
+    W.settle(asyncIdle, 30)
+  end)
+
+  step("dialogs: clear and delete all act only on confirm", function()
+    MDT:AddPull()
+    W.settle(asyncIdle, 30)
+    local count = #pulls()
+    MDT:OpenClearPresetDialog()
+    click(openDialog("clearPreset").content:Find("cancel"))
+    expect(#pulls() == count, "cancel cleared the route")
+    MDT:OpenClearPresetDialog()
+    snapshot("clear dialog", openDialog("clearPreset"))
+    click(openDialog("clearPreset").content:Find("confirm"))
+    W.settle(asyncIdle, 30)
+    expect(#pulls() <= 1, "confirm did not clear the route: "..#pulls().." pulls")
+    MDT:CreateNewPreset(unusedPresetName("Headless Doomed"))
+    W.settle(asyncIdle, 30)
+    expect(presetCount() > 1, "no extra route to delete")
+    MDT:OpenDeleteAllPresetsDialog()
+    snapshot("delete all dialog", openDialog("deleteAllPresets"))
+    click(openDialog("deleteAllPresets").content:Find("confirm"))
+    W.settle(asyncIdle, 30)
+    expect(presetCount() == 1, "delete all left "..presetCount().." routes")
+  end)
+
+  step("dialogs: Escape closes the top dialog first", function()
+    MDT:OpenRenamePresetDialog()
+    MDT:OpenDeleteAllPresetsDialog()
+    local rename = openDialog("renamePreset")
+    W.fireScript(rename.content:Find("input").kitEdit, "OnEscapePressed")
+    expect(UI.Dialogs.Get("renamePreset") == nil and UI.Dialogs.Get("deleteAllPresets"), "Escape in the rename field closed the wrong dialog")
+    expect(CloseSpecialWindows(), "no special window closed")
+    expect(UI.Dialogs.Count() == 0 and main:IsShown(), "Escape did not close the remaining dialog before the window")
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("dialogs: /mdt hardreset with the window closed asks on screen", function()
+    MDT:HideInterface()
+    MDT:HandleSlashCommand("hardreset")
+    W.settle(asyncIdle, 30)
+    local dialog = UI.Dialogs.Top()
+    expect(dialog and dialog:IsVisible() and dialog:GetParent() == UIParent, "the hard reset prompt is not visible without the window")
+    click(dialog.content:Find("cancel"))
+    expect(UI.Dialogs.Count() == 0, "cancel left the hard reset prompt open")
+    _G.MythicDungeonToolsAPI:ShowInterface()
+    W.settle(asyncIdle, 30)
+    expect(main:IsVisible(), "main window did not come back")
+  end)
 end

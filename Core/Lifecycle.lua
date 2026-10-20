@@ -34,7 +34,7 @@ function MDT:HandleSlashCommand(cmd, editbox)
       MDT:HardReset()
     else
       MDT:Async(function()
-        MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], L["hardResetPrompt"], MDT.HardReset)
+        MDT.UI.Dialogs.Confirm({ width = 450, parent = not (MDT.main_frame and MDT.main_frame:IsShown()) and UIParent or nil, title = L["hardResetPromptTitle"], text = L["hardResetPrompt"], confirm = { text = L["Delete"], variant = "danger", onClick = function() MDT:HardReset() end } })
       end, "hardReset")
     end
   elseif rqst == "minimap" then
@@ -45,7 +45,7 @@ function MDT:HandleSlashCommand(cmd, editbox)
     end
   elseif rqst == "test" then
     if MDT.test and MDT.test.RunAllTests then
-      MDT:OpenConfirmationFrame(450, 150, "MDT Test", "Run", "Run all tests?", MDT.test.RunAllTests)
+      MDT.UI.Dialogs.Confirm({ width = 450, parent = not (MDT.main_frame and MDT.main_frame:IsShown()) and UIParent or nil, title = "MDT Test", text = "Run all tests?", confirm = { text = "Run", onClick = function() MDT.test.RunAllTests() end } })
     end
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
