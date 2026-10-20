@@ -4,6 +4,7 @@ local Theme = UI.Theme
 
 local TRACK_WIDTH = 8
 local WHEEL_STEP = 40
+local BAR_RESERVE = TRACK_WIDTH + Theme.Space("xs")
 
 ---@class MDT.UI.ScrollbarMethods : MDT.UI.Control
 local ScrollbarMethods = {}
@@ -115,10 +116,15 @@ end
 
 function ScrollMethods:kitPlaced() self:kitUpdateRange() end
 
+-- The view size comes from the scroll's own size: the client can still report the viewport's old size while the
+-- scroll's OnSizeChanged runs, and a content width of 0 collapses every child for good.
 function ScrollMethods:kitUpdateRange()
-  local viewW = self.kitViewport:GetWidth()
-  if viewW > 0 and math.abs(self.content:GetWidth() - viewW) > 0.01 then self.content:SetWidth(viewW) end
-  self.kitBar:SetRange(self.kitViewport:GetHeight(), self.content:GetHeight())
+  local viewW = self:GetWidth() - BAR_RESERVE
+  if viewW > 0 and math.abs(self.content:GetWidth() - viewW) > 0.01 then
+    self.content:SetWidth(viewW)
+    UI.Layout.Invalidate(self.content)
+  end
+  self.kitBar:SetRange(self:GetHeight(), self.content:GetHeight())
   self:SetOffset(self:GetOffset())
 end
 
@@ -136,7 +142,7 @@ UI.Define({
   Create = function(self)
     self.kitViewport = CreateFrame("ScrollFrame", nil, self)
     self.kitViewport:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
-    self.kitViewport:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -(TRACK_WIDTH + Theme.Space("xs")), 0)
+    self.kitViewport:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -BAR_RESERVE, 0)
     self.kitViewport:SetClipsChildren(true)
     self.content = UI.Stack(self.kitViewport, {})
     self.content:SetPoint("TOPLEFT", self.kitViewport, "TOPLEFT", 0, 0)
@@ -147,6 +153,8 @@ UI.Define({
     self.kitViewport:EnableMouseWheel(true)
     self.kitViewport:SetScript("OnMouseWheel", function(_, delta) self:SetOffset(self:GetOffset() - delta * WHEEL_STEP) end)
     self:SetScript("OnSizeChanged", function() self:kitUpdateRange() end)
+    -- A scroll built inside a hidden section gets its size when the section first shows.
+    self:SetScript("OnShow", function() self:kitUpdateRange() end)
     self.content:HookScript("OnSizeChanged", function() self:kitUpdateRange() end)
   end,
   OnRelease = function(self)

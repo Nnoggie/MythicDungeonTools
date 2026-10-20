@@ -417,7 +417,7 @@ end
 
 local function sizeChanged(obj, state, oldWidth, oldHeight)
   if state.width ~= oldWidth or state.height ~= oldHeight then
-    if state.class.scripts.OnSizeChanged then
+    if state.class.scripts.OnSizeChanged and W.isVisible(obj) then
       state.reportedSize = { state.width or 0, state.height or 0 }
       fireScript(obj, "OnSizeChanged", state.width or 0, state.height or 0)
     end

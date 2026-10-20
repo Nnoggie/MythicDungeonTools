@@ -158,6 +158,29 @@ return function(ctx)
     host:Release()
   end)
 
+  step("kit scroll: a hand-placed scroll built while hidden lays out its content when shown", function()
+    local host = CreateFrame("Frame", nil, UI.Root)
+    host:SetSize(400, 300)
+    host:SetPoint("CENTER")
+    host:Hide()
+    local scroll = UI.Scroll(host, { padding = "md" })
+    scroll:SetPoint("TOP", host, "TOP", 0, 0)
+    scroll:SetPoint("BOTTOM", host, "BOTTOM", 0, 0)
+    scroll:SetWidth(300)
+    scroll.content:SetWidth(0) -- a fresh scroll, not one the pool kept sized from an earlier use
+    scroll.content:Batch(function() UI.Text(scroll.content, { id = "line", text = "visible" }) end)
+    -- The client can report the viewport's old size while the scroll's own size changes.
+    local viewport = scroll.kitViewport
+    viewport.GetWidth = function() return 0 end
+    host:Show()
+    W.pump(0.05)
+    viewport.GetWidth = nil
+    expect(scroll.content:GetWidth() > 250, "the content has no width: "..scroll.content:GetWidth())
+    expect(scroll.content:Find("line"):GetWidth() > 200, "the content's children were not laid out")
+    scroll:Release()
+    host:Hide()
+  end)
+
   step("kit gallery: controls report user input through their callbacks", function()
     log = {}
     click(page:Find("default"))
