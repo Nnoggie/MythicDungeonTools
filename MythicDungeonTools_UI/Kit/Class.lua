@@ -188,8 +188,6 @@ function UI.Define(def)
     return frame
   end
   def.pool = CreateObjectPool(creator, nil)
-  UI.classes = UI.classes or {}
-  UI.classes[def.name] = def
 
   local function construct(parent, spec)
     spec = spec or {}
@@ -214,15 +212,6 @@ function UI.Define(def)
   end
   UI[def.name] = construct
   return construct
-end
-
----Releases every control in the kit's pools. Test and teardown helper.
-function UI.ReleaseAll()
-  for _, def in pairs(UI.classes or {}) do
-    local active = {}
-    for frame in def.pool:EnumerateActive() do active[#active + 1] = frame end
-    for _, frame in ipairs(active) do frame:Release() end
-  end
 end
 
 UI.Mixins = {}
