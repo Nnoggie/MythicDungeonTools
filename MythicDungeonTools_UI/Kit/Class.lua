@@ -37,6 +37,8 @@ function Base:Release()
     return
   end
   self.kitReleased = true
+  self:Hide()
+  self.kitHovered, self.kitPressed, self.kitFocused = nil, nil, nil
   if self.kitChildren then
     local children = self.kitChildren
     self.kitChildren = {}
@@ -56,15 +58,15 @@ function Base:Release()
   end
   local def = self.kit
   if def.OnRelease then def.OnRelease(self) end
+  if self.kitParent then self.kitParent:kitDisown(self) end
+  UI.Tooltip.Hide(self)
+  self:ClearAllPoints()
+  self:SetParent(Holder)
   for _, prop in ipairs(def.allProps) do self.kitProps[prop.name] = prop.default end
   for _, prop in ipairs(def.allProps) do
     if prop.set then prop.set(self, prop.default) end
   end
-  if self.kitParent then self.kitParent:kitDisown(self) end
-  UI.Tooltip.Hide(self)
   self:Hide()
-  self:ClearAllPoints()
-  self:SetParent(Holder)
   def.pool:Release(self)
 end
 

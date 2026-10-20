@@ -361,6 +361,33 @@ return function(ctx)
     W.settle(asyncIdle, 5)
   end)
 
+  step("kit lifecycle: a control released mid-hover comes back from the pool unhovered, and release fires no spurious OnShow", function()
+    local function paint(button)
+      local color = W.state[button.kitBackground].color
+      return color and table.concat(color, ",") or "none"
+    end
+    local hovered = UI.Button(page, { text = "Hover" })
+    UI.Layout.FlushAll()
+    W.fireScript(hovered, "OnEnter")
+    W.fireScript(hovered, "OnMouseDown", "LeftButton")
+    hovered:Release()
+    local reused = UI.Button(page, { text = "Fresh" })
+    local fresh = UI.Button(page, { text = "Fresh" })
+    UI.Layout.FlushAll()
+    expect(reused == hovered and fresh ~= hovered, "setup: the pool did not hand back the hovered button first")
+    expect(paint(reused) == paint(fresh), ("reused button paints %s, a fresh one %s"):format(paint(reused), paint(fresh)))
+
+    local shows, hides = 0, 0
+    local hidden = UI.Button(page, { text = "Hidden", hidden = true })
+    hidden:HookScript("OnShow", function() shows = shows + 1 end)
+    hidden:HookScript("OnHide", function() hides = hides + 1 end)
+    hidden:Release()
+    expect(shows == 0 and hides == 0, ("releasing a hidden control fired %d OnShow and %d OnHide"):format(shows, hides))
+    reused:Release()
+    fresh:Release()
+    UI.Layout.FlushAll()
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
