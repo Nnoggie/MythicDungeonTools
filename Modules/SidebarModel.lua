@@ -332,10 +332,6 @@ end
 ---@field delete fun()
 ---@field deleteAll fun()
 
----The "more" menu. Enable states come from header.actions, never from widgets.
----@param header MDT.SidebarHeader
----@param actions MDT.RouteActions
----@param L table
 ---@class MDT.RouteEntry
 ---@field idx integer
 ---@field name string
@@ -345,9 +341,6 @@ end
 ---@field isCurrent boolean
 ---@field isLive boolean
 
----Routes of the current dungeon in three groups. The <New Preset> entry (value == 0) never appears.
----@param ctx MDT.SidebarContext
----@return {live: MDT.RouteEntry[], mine: MDT.RouteEntry[], others: MDT.RouteEntry[]}
 ---Whether `createdBy` names the player. Routes without an author are not anyone's.
 ---@param createdBy table?
 ---@param player {name: string, realm: string}?
@@ -356,6 +349,9 @@ function Model.IsAuthoredBy(createdBy, player)
   return type(createdBy) == "table" and player ~= nil and createdBy.name == player.name and createdBy.realm == player.realm
 end
 
+---Routes of the current dungeon in three groups. The <New Preset> entry (value == 0) never appears.
+---@param ctx MDT.SidebarContext
+---@return {live: MDT.RouteEntry[], mine: MDT.RouteEntry[], others: MDT.RouteEntry[]}
 function Model.RouteGroups(ctx)
   local groups = { live = {}, mine = {}, others = {} }
   local player = ctx.player

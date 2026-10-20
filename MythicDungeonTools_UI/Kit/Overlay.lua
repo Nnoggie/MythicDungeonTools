@@ -102,7 +102,7 @@ end)
 
 ---Pins a frame to a strata so reparenting cannot move it. The client ignores SetFrameStrata while the strata is fixed.
 ---@param frame table
----@param strata FrameStrata
+---@param strata string
 function Overlay.SetStrata(frame, strata)
   frame:SetFixedFrameStrata(false)
   frame:SetFrameStrata(strata)

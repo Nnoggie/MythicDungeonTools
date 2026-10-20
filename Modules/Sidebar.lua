@@ -354,7 +354,7 @@ local function combatReason(text)
   return function() return InCombatLockdown() and L[text] or nil end
 end
 
----@param width number fixed width; nil lets the button take the rest of the row
+---@param width number? fixed width; nil lets the button take the rest of the row
 local function actionButton(parent, id, icon, width, tooltip, onClick, onRightClick)
   return UI.Button(parent, {
     id = id, variant = "window", icon = MDT:GetIconPath(icon), iconSize = ACTION_ICON, width = width or 20, grow = not width and 1 or nil, height = ACTION_HEIGHT,
