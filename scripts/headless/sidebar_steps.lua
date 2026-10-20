@@ -366,7 +366,9 @@ return function(ctx)
       if item.kind == "divider" then dividers, position = dividers + 1, index end
     end
     expect(dividers == 1 and position == 2, ("divider count %d at %s"):format(dividers, tostring(position)))
-    expect(control("forces").kitText:GetTextColor() == UI.Theme.Resolve("ok") or control("forces").kitText:GetTextColor() == UI.Theme.Resolve("warn"), "completed forces are not toned")
+    local fill = control("forces").kitProps.segments[1].color
+    expect(fill[1] == UI.Theme.Resolve("bar.ok") or fill[1] == UI.Theme.Resolve("bar.warn"), "completed forces do not change the bar color")
+    expect(control("forces").kitText:GetTextColor() == UI.Theme.Resolve("text.normal"), "forces bar text is not white")
     totals.normal = 100000
     MDT:RefreshSidebar()
     for _, item in ipairs(control("pulls").kitProps.items) do expect(item.kind ~= "divider", "divider shown below 100%") end
@@ -526,6 +528,10 @@ return function(ctx)
     expect(list:GetOffset() == offset, "offset changed after an edit: "..list:GetOffset())
     local row = list:GetRow(target)
     expect(row and row.kitPortraits[1]:IsShown(), "edited row did not rebind")
+    for _, region in ipairs({ row.kitNumber, row.kitCumulative, row.kitPull, row.kitPortraits[1].count }) do
+      local _, _, flags = region:GetFontObject():GetFont()
+      expect(flags == "OUTLINE", "pull row text without an outline: "..tostring(region:GetText()))
+    end
     W.cursorX, W.cursorY = row:GetCenter()
     W.fireScript(row, "OnEnter")
     local tooltip = MDT.PullTooltip.Frame()
@@ -541,7 +547,7 @@ return function(ctx)
     W.fireScript(row, "OnLeave")
     expect(not tooltip:IsShown(), "leaving the row left the tooltip open")
     local forces, total = control("forces"), MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-    expect(forces.kitText:GetFontObject() == UI.Fonts.Get("body"), "forces bar text is not the body font")
+    expect(forces.kitText:GetFontObject() == UI.Fonts.Get("body", true), "forces bar text is not the outlined body font")
     W.fireScript(row, "OnEnter")
     expect(forces.kitText:GetText() == MDT.SidebarModel.FormatForcesTotal(row.kitItem.cumulative, total), "hovering a pull did not preview its running total: "..forces.kitText:GetText())
     W.fireScript(row, "OnLeave")

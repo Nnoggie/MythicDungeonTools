@@ -45,7 +45,9 @@ local function repaintText(self)
   local total = 0
   for _, segment in ipairs(props.segments) do total = total + segment.value end
   local color = "text.normal"
-  if props.overflow and total > props.max then color = "warn" elseif total >= props.max and props.max > 0 then color = "ok" end
+  if props.overflow then
+    if total > props.max then color = "warn" elseif total >= props.max and props.max > 0 then color = "ok" end
+  end
   Theme.Bind(self.kitText, color)
 end
 
@@ -69,7 +71,7 @@ end
 ---@field max number
 ---@field marker number? a tick at this value (the 100% line)
 ---@field text string? centered label
----@field overflow boolean? tint the text when the segments exceed max
+---@field overflow boolean? tint the text green at max and red above it; otherwise the text stays white
 ---@field font MDT.UI.FontRole? label font, default "small"
 UI.Define({
   name = "SegmentBar", frameType = "Frame", mixins = { Methods },
@@ -79,7 +81,7 @@ UI.Define({
     { name = "marker", default = nil, set = layoutSegments },
     { name = "text", default = nil, set = repaintText },
     { name = "overflow", default = false, set = repaintText },
-    { name = "font", default = "small", set = function(self, v) self.kitText:SetFontObject(Fonts.Get(v)) end },
+    { name = "font", default = "small", set = function(self, v) self.kitText:SetFontObject(Fonts.Get(v, true)) end },
   },
   Create = function(self)
     self.kitBackground = self:CreateTexture(nil, "BACKGROUND")
@@ -90,11 +92,9 @@ UI.Define({
     self.kitMarker = self:CreateTexture(nil, "OVERLAY")
     Theme.Bind(self.kitMarker, "text.normal")
     self.kitText = self:CreateFontString(nil, "OVERLAY")
-    self.kitText:SetFontObject(Fonts.Get("small"))
+    self.kitText:SetFontObject(Fonts.Get("small", true))
     self.kitText:SetAllPoints()
     self.kitText:SetJustifyH("CENTER")
-    self.kitText:SetShadowColor(0, 0, 0, 1)
-    self.kitText:SetShadowOffset(0, -1)
     self:SetScript("OnSizeChanged", function() layoutSegments(self) end)
   end,
   Measure = function(self, availW) return self.kitProps.width or availW, Theme.Size("sm") end,

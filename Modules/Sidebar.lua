@@ -10,7 +10,7 @@ local MIN_LEVEL, MAX_LEVEL = 1, 35
 local VISIBLE_ROUTES = 7
 local ACTION_HEIGHT = 32
 local ACTION_ICON = 20
-local BAR_TONES = { ["text.normal"] = "progress", ok = "ok", warn = "warn" }
+local BAR_TONES = { ["text.normal"] = "bar.progress", ok = "bar.ok", warn = "bar.warn" }
 
 local db
 local sidebar
@@ -67,7 +67,7 @@ local previewResetTimer
 ---@param current number
 local function paintForces(current)
   local max = sidebar.state.header.forces.max
-  local color = Theme.Rgba(BAR_TONES[Model.ForcesTone(current, max)] or "progress")
+  local color = Theme.Rgba(BAR_TONES[Model.ForcesTone(current, max)])
   sidebar.forces:SetSegments({ { value = current, color = color } }, math.max(max, current, 1))
   sidebar.forces:SetText(Model.FormatForcesTotal(current, max))
 end

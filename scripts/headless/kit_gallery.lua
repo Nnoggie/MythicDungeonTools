@@ -85,7 +85,7 @@ return function(ctx)
     expect(page:Find("tabA"), "first tab did not build its content")
     expect(lastLog() == "tab:a", "tabs did not report the initial selection")
     local userText = page:Find("userText")
-    expect(userText.kitLabel:GetFontObject() == UI.Fonts.fallbacks.body.russian, "Cyrillic user text did not pick the russian fallback font")
+    expect(userText.kitLabel:GetFontObject() == UI.Fonts.fallbacks.plain.body.russian, "Cyrillic user text did not pick the russian fallback font")
     ctx.render("kit gallery", root)
   end)
 
@@ -555,23 +555,35 @@ return function(ctx)
   step("kit fonts: a font family that comes back without its font falls back to a plain font", function()
     local Fonts = UI.Fonts
     local objects, fallbacks = {}, {}
-    for role, font in pairs(Fonts.objects) do objects[role] = font end
-    for role, byAlphabet in pairs(Fonts.fallbacks) do fallbacks[role] = byAlphabet end
+    for variant, byRole in pairs(Fonts.objects) do
+      objects[variant] = {}
+      for role, font in pairs(byRole) do objects[variant][role] = font end
+    end
+    for variant, byRole in pairs(Fonts.fallbacks) do
+      fallbacks[variant] = {}
+      for role, byAlphabet in pairs(byRole) do fallbacks[variant][role] = byAlphabet end
+    end
     local realFamily = CreateFontFamily
     CreateFontFamily = function(name) return CreateFont(name) end
     local ok, err = pcall(Fonts.Setup)
     CreateFontFamily = realFamily
-    local file = Fonts.objects.body and Fonts.objects.body:GetFont()
-    for role, font in pairs(objects) do
-      Fonts.objects[role] = font
-      _G[W.state[font].name] = font
+    local file = Fonts.Get("body"):GetFont()
+    local _, _, outlineFlags = Fonts.Get("body", true):GetFont()
+    for variant, byRole in pairs(objects) do
+      for role, font in pairs(byRole) do
+        Fonts.objects[variant][role] = font
+        _G[W.state[font].name] = font
+      end
     end
-    for role, byAlphabet in pairs(fallbacks) do
-      Fonts.fallbacks[role] = byAlphabet
-      for _, font in pairs(byAlphabet) do _G[W.state[font].name] = font end
+    for variant, byRole in pairs(fallbacks) do
+      for role, byAlphabet in pairs(byRole) do
+        Fonts.fallbacks[variant][role] = byAlphabet
+        for _, font in pairs(byAlphabet) do _G[W.state[font].name] = font end
+      end
     end
     expect(ok, "Fonts.Setup raised: "..tostring(err))
     expect(file == Fonts.files.roman, "a silently empty font family left the body font at "..tostring(file))
+    expect(outlineFlags == "OUTLINE", "the outlined body font has flags "..tostring(outlineFlags))
   end)
 
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
