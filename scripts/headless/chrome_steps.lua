@@ -38,6 +38,12 @@ return function(ctx)
     expect(dropdown and dropdown:IsVisible(), "season dropdown is not visible")
     local seasons = MDT:GetSeasonList()
     expect(dropdown.kitButton:GetText() == seasons[db.selectedDungeonList], "season dropdown shows "..tostring(dropdown.kitButton:GetText()))
+    local _, menu = openMenuRows(dropdown.kitButton)
+    expect(dropdown.kitProps.search == false, "the season dropdown allows a search box")
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      expect(child.kit.name ~= "EditBox", "the season menu has a search box")
+    end
+    UI.Menu.Close()
     local before = db.selectedDungeonList
     local other = before == 1 and 2 or 1
     pick(dropdown, seasons[other])

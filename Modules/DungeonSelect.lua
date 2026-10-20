@@ -133,7 +133,7 @@ end
 ---@param parent table
 ---@param onChange fun(value: integer)
 local function makeDropdown(parent, onChange)
-  local dropdown = UI.Dropdown(parent, { width = DROPDOWN_WIDTH, height = "md", hidden = true, onChange = onChange })
+  local dropdown = UI.Dropdown(parent, { width = DROPDOWN_WIDTH, height = "md", hidden = true, search = false, onChange = onChange })
   dropdown:SetFrameStrata("HIGH")
   dropdown:SetFrameLevel(50)
   return dropdown
