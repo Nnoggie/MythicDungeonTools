@@ -170,7 +170,7 @@ local function updateTextPreview(preview)
   --runs every frame, only update the font when zooming changed its size
   if preview.textFontSize ~= fontSize then
     preview.textFontSize = fontSize
-    preview.text:SetFont(STANDARD_TEXT_FONT, fontSize, "OUTLINE")
+    UI.Fonts.Apply(preview.text, fontSize, "OUTLINE")
     preview.text:SetTextColor(r, g, b)
     preview.text:SetText("Aa")
   end

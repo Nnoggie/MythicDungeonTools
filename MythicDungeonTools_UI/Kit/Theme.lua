@@ -27,7 +27,7 @@ Theme.data = {
   },
   space = { xs = 2, sm = 4, md = 8, lg = 12, xl = 16 },
   size = { sm = 22, md = 26, lg = 30, row = 28 },
-  font = { body = { size = 12 }, small = { size = 10 }, title = { size = 15 }, heading = { size = 13 }, number = { size = 12 } },
+  font = { body = { size = 12 }, small = { size = 10 }, title = { size = 15 }, heading = { size = 13 }, number = { size = 12 }, display = { size = 20 } },
   skin = {
     default = {
       normal = { bg = "bg.raised", border = "border.normal", text = "text.normal" },

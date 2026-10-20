@@ -740,7 +740,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPrese
   if not self.setupInitialized then
     self.texture_Portrait:SetDesaturated(false)
     self.texture_MouseHighlight:SetAlpha(0.4)
-    self.fontstring_Text1:SetFontObject("GameFontNormal")
+    MDT.UI.Fonts.Apply(self.fontstring_Text1, 12)
     setUpMouseHandlers(self)
     self.setupInitialized = true
   end
@@ -753,7 +753,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPrese
     self:SetSize(normalScale * BLIP_FRAME_SIZE, normalScale * BLIP_FRAME_SIZE)
     self:updateSizes(1)
     local textScale = math.max(0.2, normalScale * 10)
-    self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), textScale, "OUTLINE", "")
+    MDT.UI.Fonts.Apply(self.fontstring_Text1, textScale, "OUTLINE")
   end
   self:SetFrameLevelAboveOverlaps(overlapCandidates)
   local count = MDT:GetCloneEnemyForces(data, clone)

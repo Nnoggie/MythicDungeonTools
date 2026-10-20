@@ -207,6 +207,24 @@ dofile(root.."/scripts/headless/enemy_info_steps.lua")({
 })
 dofile(root.."/scripts/headless/dialogs_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, snapshot = snapshot, unusedPresetName = unusedPresetName, presetCount = presetCount })
 
+step("every visible MDT text uses MDT's fonts", function()
+  local allowed = {}
+  for _, file in pairs(MDT.UI.Fonts.files) do allowed[file:lower():gsub("/", "\\")] = true end
+  local checked, bad = 0, {}
+  for _, object in ipairs(W.objects) do
+    local kind = object.GetObjectType and object:GetObjectType()
+    if (kind == "FontString" or kind == "EditBox") and W.isVisible(object) and (object:GetText() or "") ~= "" then
+      local file = object:GetFont()
+      checked = checked + 1
+      if not (file and allowed[file:lower():gsub("/", "\\")]) then
+        bad[#bad + 1] = ("%s %q"):format(tostring(file), object:GetText():sub(1, 30))
+      end
+    end
+  end
+  expect(checked > 50, "only "..checked.." texts checked")
+  expect(#bad == 0, #bad.." texts use other fonts: "..table.concat(bad, "; ", 1, math.min(#bad, 8)))
+end)
+
 step("hover every visible widget", function()
   local hovered = 0
   for _, object in ipairs(W.objects) do

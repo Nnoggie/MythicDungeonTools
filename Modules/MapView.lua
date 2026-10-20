@@ -16,7 +16,7 @@ end
 local function createAlphaWatermarkLabel(frame)
   local label = frame:CreateFontString(nil, canvasDrawLayer)
   label:SetDrawLayer(canvasDrawLayer, 6)
-  label:SetFont("Fonts\\ARIALN.TTF", 40, "")
+  MDT.UI.Fonts.Apply(label, 40)
   label:SetText("ALPHA")
   label:SetTextColor(1, 1, 1, 0.25)
 
@@ -87,7 +87,8 @@ local function createAlphaWarning(frame)
   end })
   close:SetPoint("TOPRIGHT", warning, "TOPRIGHT", -3, -3)
 
-  local title = warning:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+  local title = warning:CreateFontString(nil, "OVERLAY")
+  title:SetFontObject(MDT.UI.Fonts.Get("body"))
   title:SetPoint("TOPLEFT", warning, "TOPLEFT", 64, -8)
   title:SetWidth(296)
   title:SetJustifyH("LEFT")

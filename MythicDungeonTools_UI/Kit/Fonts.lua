@@ -125,6 +125,17 @@ function Fonts.Get(role, outline)
   return Fonts.objects[outline and "outline" or "plain"][role] or error("Fonts: unknown role "..tostring(role), 2)
 end
 
+---MDT's font at any size, for map text that scales with zoom. Pass the text when users wrote it, so glyphs the client
+---alphabet lacks get a font that has them.
+---@param fontString table
+---@param size number
+---@param flags string? "" or "OUTLINE"
+---@param text string?
+function Fonts.Apply(fontString, size, flags, text)
+  local alphabet = text and Fonts.FallbackAlphabet(text, Fonts.locale) or Fonts.ClientAlphabet(Fonts.locale)
+  fontString:SetFont(Fonts.files[alphabet], math.max(1, size * Fonts.heightScale[alphabet]), flags or "")
+end
+
 ---User-authored text (route names, authors, notes) may hold glyphs the client alphabet lacks; this swaps the font object when it does.
 ---@param fontString table
 ---@param text string

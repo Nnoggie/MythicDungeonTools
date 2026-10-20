@@ -362,7 +362,7 @@ function MDT:MakeSendingStatusBar(f)
 
   statusbar.value = statusbar:CreateFontString(nil, "OVERLAY")
   statusbar.value:SetPoint("CENTER", statusbar, "CENTER", 0, 0)
-  statusbar.value:SetFontObject(GameFontNormalSmall)
+  statusbar.value:SetFontObject(MDT.UI.Fonts.Get("small"))
   statusbar.value:SetJustifyH("CENTER")
   statusbar.value:SetJustifyV("MIDDLE")
   statusbar.value:SetShadowOffset(1, -1)

@@ -425,7 +425,9 @@ local function acquireHeader()
   picker.headerCount = picker.headerCount + 1
   local header = picker.headers[picker.headerCount]
   if not header then
-    header = picker.content:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    header = picker.content:CreateFontString(nil, "OVERLAY")
+    header:SetFontObject(MDT.UI.Fonts.Get("small"))
+    header:SetTextColor(1, 0.82, 0)
     header:SetJustifyH("LEFT")
     picker.headers[picker.headerCount] = header
   end
@@ -506,7 +508,7 @@ local function createSearchBox(parent)
   local search = CreateFrame("EditBox", nil, parent, "BackdropTemplate")
   search:SetHeight(SEARCH_HEIGHT)
   search:SetAutoFocus(false)
-  search:SetFontObject("GameFontHighlightSmall")
+  search:SetFontObject(MDT.UI.Fonts.Get("small"))
   search:SetTextInsets(20, 18, 0, 0)
   search:SetBackdrop({
     bgFile = "Interface\\Buttons\\WHITE8X8",
@@ -522,14 +524,18 @@ local function createSearchBox(parent)
   magnifier:SetAtlas("common-search-magnifyingglass")
   magnifier:SetVertexColor(0.6, 0.6, 0.6)
 
-  local placeholder = search:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+  local placeholder = search:CreateFontString(nil, "OVERLAY")
+  placeholder:SetFontObject(MDT.UI.Fonts.Get("small"))
+  placeholder:SetTextColor(0.5, 0.5, 0.5)
   placeholder:SetPoint("LEFT", 20, 0)
   placeholder:SetText(SEARCH)
 
   local clear = CreateFrame("Button", nil, search)
   clear:SetSize(SEARCH_HEIGHT - 4, SEARCH_HEIGHT - 4)
   clear:SetPoint("RIGHT", -2, 0)
-  local clearLabel = clear:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+  local clearLabel = clear:CreateFontString(nil, "OVERLAY")
+  clearLabel:SetFontObject(MDT.UI.Fonts.Get("small"))
+  clearLabel:SetTextColor(0.5, 0.5, 0.5)
   clearLabel:SetPoint("CENTER", 0, 1)
   clearLabel:SetText("x")
   local clearHighlight = clear:CreateTexture(nil, "HIGHLIGHT")
@@ -595,7 +601,9 @@ function MDT:CreatePresetTextIconPicker(parent, onPick)
   picker.content:SetSize(1, 1)
   picker.scrollFrame:SetScrollChild(picker.content)
 
-  picker.noResults = picker:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+  picker.noResults = picker:CreateFontString(nil, "OVERLAY")
+  picker.noResults:SetFontObject(MDT.UI.Fonts.Get("small"))
+  picker.noResults:SetTextColor(0.5, 0.5, 0.5)
   picker.noResults:SetPoint("CENTER", picker.scrollFrame, "CENTER")
   picker.noResults:SetText(L["No results"])
   picker.noResults:Hide()

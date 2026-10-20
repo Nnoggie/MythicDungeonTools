@@ -55,6 +55,7 @@
 ---| "title"
 ---| "heading"
 ---| "number"
+---| "display"
 
 ---@alias MDT.UI.Variant
 ---| "default"
