@@ -111,7 +111,7 @@ return function(ctx)
     expect(control("routes"):GetWidth() > 150 and control("pulls"):GetHeight() > 150, "sidebar layout has no size")
   end)
 
-  step("sidebar: every route action button shows its tooltip, also while disabled", function()
+  step("sidebar: every route action button shows its tooltip, also while disabled, with its icon centered", function()
     expect(control("shareRoute"):IsDisabled(), "setup: share should be disabled outside a group")
     for _, id in ipairs({ "newRoute", "importRoute", "renameRoute", "duplicateRoute", "exportRoute", "shareRoute", "liveSession", "deleteRoute" }) do
       local button = control(id)
@@ -119,6 +119,9 @@ return function(ctx)
       W.hover(button)
       expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == button, id.." shows no tooltip"..(button:IsDisabled() and " while disabled" or ""))
       W.fireScript(button, "OnLeave")
+      local ix, iy = button.kitIcon:GetCenter()
+      local bx, by = button:GetCenter()
+      expect(math.abs(ix - bx) < 0.5 and math.abs(iy - by) < 0.5, ("%s icon is off center by %.1f, %.1f"):format(id, ix - bx, iy - by))
     end
   end)
 

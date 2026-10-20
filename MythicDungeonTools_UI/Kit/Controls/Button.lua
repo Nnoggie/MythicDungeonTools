@@ -13,7 +13,8 @@ local function arrange(self)
   if props.icon then
     local size = props.iconSize or ICON_SIZE
     self.kitIcon:SetSize(size, size)
-    if props.variant == "icon" then
+    local iconOnly = props.variant == "icon" or (props.text == nil or props.text == "") and not props.chevron
+    if iconOnly then
       self.kitIcon:SetPoint("CENTER", self, "CENTER", 0, 0)
     else
       self.kitIcon:SetPoint("LEFT", self, "LEFT", left, 0)
