@@ -65,6 +65,7 @@
 ---| "field"
 ---| "window"
 ---| "plain"
+---| "bare"
 ---| "row"
 
 ---@alias MDT.UI.State "normal"|"hover"|"pressed"|"selected"|"disabled"

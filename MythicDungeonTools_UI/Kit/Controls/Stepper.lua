@@ -7,6 +7,14 @@ local ARROW = 18
 
 local Methods = {}
 function Methods:GetValue() return self.kitProps.value end
+-- Hovering keeps the stepper's frame as it is; the arrow under the cursor lights up instead.
+function Methods:kitState() return self.kitProps.disabled and "disabled" or "normal" end
+
+---@param button MDT.UI.Control an arrow
+local function paintArrow(button)
+  local state = button:IsEnabled() and (button.kitHovered and "accent" or "text.muted") or "text.disabled"
+  button.kitGlyph:SetColor(state)
+end
 
 local function formatValue(self, value)
   local format = self.kitProps.format
@@ -21,6 +29,8 @@ local function repaint(self)
   Theme.Bind(self.kitValueText, disabled and "text.disabled" or "accent")
   self.kitDown:SetDisabled(disabled or props.value <= props.min)
   self.kitUp:SetDisabled(disabled or props.value >= props.max)
+  paintArrow(self.kitDown)
+  paintArrow(self.kitUp)
 end
 
 local function clamp(self, value)
@@ -79,18 +89,22 @@ UI.Define({
   },
   Create = function(self)
     self:kitSkinInit("default")
-    self.kitDown = UI.Button(self, { variant = "ghost", icon = nil, onClick = function() stepBy(self, -1) end })
+    self.kitDown = UI.Button(self, { variant = "bare", onClick = function() stepBy(self, -1) end })
     self.kitDown:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
     self.kitDown:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
     self.kitDown:SetWidth(ARROW)
-    self.kitDownGlyph = UI.Glyphs.Create(self.kitDown, "left", 7, "text.muted")
-    self.kitDownGlyph:SetPoint("CENTER", self.kitDown, "CENTER", 0, 0)
-    self.kitUp = UI.Button(self, { variant = "ghost", onClick = function() stepBy(self, 1) end })
+    self.kitDown.kitGlyph = UI.Glyphs.Create(self.kitDown, "left", 7, "text.muted")
+    self.kitDown.kitGlyph:SetPoint("CENTER", self.kitDown, "CENTER", 0, 0)
+    self.kitUp = UI.Button(self, { variant = "bare", onClick = function() stepBy(self, 1) end })
     self.kitUp:SetPoint("TOPRIGHT", self, "TOPRIGHT", 0, 0)
     self.kitUp:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
     self.kitUp:SetWidth(ARROW)
-    self.kitUpGlyph = UI.Glyphs.Create(self.kitUp, "right", 7, "text.muted")
-    self.kitUpGlyph:SetPoint("CENTER", self.kitUp, "CENTER", 0, 0)
+    self.kitUp.kitGlyph = UI.Glyphs.Create(self.kitUp, "right", 7, "text.muted")
+    self.kitUp.kitGlyph:SetPoint("CENTER", self.kitUp, "CENTER", 0, 0)
+    for _, arrow in ipairs({ self.kitDown, self.kitUp }) do
+      arrow:HookScript("OnEnter", paintArrow)
+      arrow:HookScript("OnLeave", paintArrow)
+    end
     self.kitValue = CreateFrame("Button", nil, self)
     self.kitValue:SetPoint("TOPLEFT", self.kitDown, "TOPRIGHT", 0, 0)
     self.kitValue:SetPoint("BOTTOMRIGHT", self.kitUp, "BOTTOMLEFT", 0, 0)

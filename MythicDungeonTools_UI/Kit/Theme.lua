@@ -57,6 +57,14 @@ Theme.data = {
       selected = { bg = "bg.selected", border = false, text = "accent" },
       disabled = { bg = false, border = false, text = "text.disabled" },
     },
+    -- Never a background or border: the caller shows hover itself (stepper arrows).
+    bare = {
+      normal = { bg = false, border = false, text = "text.muted" },
+      hover = { bg = false, border = false, text = "accent" },
+      pressed = { bg = false, border = false, text = "accent" },
+      selected = { bg = false, border = false, text = "accent" },
+      disabled = { bg = false, border = false, text = "text.disabled" },
+    },
     -- Borderless icon buttons that stay at full brightness: the map toolbar and the bottom bar links.
     plain = {
       normal = { bg = false, border = false, text = "text.normal" },
