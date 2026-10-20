@@ -610,41 +610,6 @@ function MDT:InitializeMainFrame()
     MDT:CreateDevPanel(MDT.main_frame)
   end
 
-  --tooltip new
-  do
-    MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", MDT.UI.Root, "TooltipBorderedFrameTemplate")
-    local tooltip = MDT.tooltip
-    tooltip:SetClampedToScreen(true)
-    tooltip:SetFrameStrata("TOOLTIP")
-    tooltip.mySizes = { x = 290, y = 120 }
-    tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
-    tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
-    tooltip.Model:SetFrameLevel(1)
-    tooltip.Model:SetSize(100, 100)
-    tooltip.Model.fac = 0
-    tooltip.Model:SetScript("OnUpdate", function(self, elapsed)
-      self.fac = self.fac + 0.5
-      if self.fac >= 360 then
-        self.fac = 0
-      end
-      self:SetFacing(PI * 2 / 360 * self.fac)
-    end)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 7, -7)
-    tooltip.String = tooltip:CreateFontString("MDTToolTipString")
-    tooltip.String:SetFontObject(MDT.UI.Fonts.Get("small"))
-    tooltip.String:SetTextColor(1, 1, 1, 1)
-    tooltip.String:SetJustifyH("LEFT")
-    --tooltip.String:SetJustifyV("MIDDLE")
-    tooltip.String:SetWidth(tooltip:GetWidth())
-    tooltip.String:SetHeight(90)
-    tooltip.String:SetWidth(175)
-    tooltip.String:SetText(" ")
-    ---@diagnostic disable-next-line: param-type-mismatch
-    tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
-    tooltip.String:Show()
-  end
-
   coroutine.yield()
   MDT:initToolbar(main_frame)
   coroutine.yield()

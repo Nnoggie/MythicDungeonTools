@@ -4,15 +4,27 @@ local UI = MDT.UI
 local Theme, Fonts = UI.Theme, UI.Fonts
 local db
 
+-- Enemy info lives in two cards. Hovering an enemy shows the compact hover card beside it; it stays while the cursor
+-- moves into it, so its spells can be hovered and linked. Pinning (its pin button or the right-click menu) opens the
+-- expanded pinned card in the same spot, which stays until closed while the map keeps working.
+
 local DEFAULT_DISPLAY_ID = 39490
 local UNKNOWN_SPELL_ICON = 134400
-local SPELL_ROW_HEIGHT = 32
-local SPELL_ICON_SIZE = 28
+local SPELL_ROW_HEIGHT = 22
+local SPELL_ICON_SIZE = 18
 local STATUS_ICON_SIZE = 14
 local TOOLTIP_ICON_SIZE = 12
-local CHARACTERISTIC_ICON_SIZE = 20
-local MIN_MODEL_HEIGHT = 120
-local MIN_LIST_HEIGHT = 64
+local CHARACTERISTIC_ICON_SIZE = 16
+---Seconds the hover card waits for the cursor after it leaves the enemy.
+local HOVER_GRACE = 0.2
+---Gap between an enemy and its card.
+local CARD_OFFSET = 30
+local MODEL_ROTATION_SPEED = math.pi / 4
+
+local LAYOUT = {
+  hover = { width = 250, modelWidth = 72, modelHeight = 84, spells = 4, strata = "TOOLTIP" },
+  pinned = { width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG" },
+}
 
 local CHARACTERISTICS = {
   { key = "Stun", icon = "Interface\\ICONS\\spell_frost_stun" },
@@ -68,19 +80,23 @@ end
 ---@field icon string|number
 ---@field statuses table[] entries of SPELL_STATUSES set on the spell
 
----@class MDT.EnemyInfoField
----@field id string
----@field label string
----@field value string
+---@class MDT.EnemyCard : Frame
+---@field kind "hover"|"pinned"
+---@field content MDT.UI.Control
+---@field model table
+---@field modelHost MDT.UI.Control
+---@field blip table? the enemy blip the card shows
+---@field enemyIdx integer?
+---@field cloneIdx integer?
+---@field spells MDT.EnemyInfoSpellItem[]?
 
-local lastEnemyIdx, lastCloneIdx
----The open window's controls; nil while it is closed.
-local view
-local model
-
-function MDT:GetEnemyInfoEnemyIdx()
-  return lastEnemyIdx
-end
+---@type MDT.EnemyCard?, MDT.EnemyCard?
+local hoverCard, pinnedCard
+---The enemy the hover card belongs to, and when the cursor was last over it or its card.
+local hoverBlip, lastInside = nil, 0
+---Where the hover card last showed and for which enemy, so pinning from the right-click menu opens in the same spot.
+local lastSpot
+local pinnedEscape
 
 ---@return MDT.EnemyInfoSpellItem[]
 local function spellItems(spells)
@@ -109,35 +125,16 @@ local function spellItems(spells)
   return items
 end
 
----@return MDT.EnemyInfoField[]
-local function enemyFields(data, cloneIdx)
-  local level = db.currentDifficulty
-  local healthLabel = string.format(L["Enemy Info NPC Health Level"], level)
-  if level >= 10 then
-    healthLabel = string.format(L["Enemy Info NPC Health"], level, L["Fortified"].."/"..L["Tyrannical"])
-  end
-  local health = MDT:CalculateEnemyHealth(data.isBoss or false, data.health, level, data.ignoreFortified)
-  return {
-    { id = "name", label = L["Enemy Info NPC Name"], value = L[data.name] },
-    { id = "npcId", label = L["Enemy Info NPC Id"], value = tostring(data.id) },
-    { id = "health", label = healthLabel, value = MDT:FormatEnemyHealth(health) },
-    { id = "creatureType", label = L["Enemy Info NPC Creature Type"], value = L[data.creatureType] },
-    { id = "level", label = L["Enemy Info NPC Level"], value = tostring(data.level) },
-    { id = "forces", label = L["Enemy Info NPC Enemy Forces"], value = tostring(MDT:GetCloneEnemyForces(data, data.clones[cloneIdx])) },
-  }
+local function isPinned()
+  return pinnedCard ~= nil and pinnedCard:IsShown() and pinnedCard.enemyIdx ~= nil
 end
 
-local function enemyChoices()
-  local names, order = {}, {}
-  for enemyIdx, data in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-    names[enemyIdx] = L[data.name]
-    order[enemyIdx] = enemyIdx
-  end
-  return UI.MenuModel.FromList(names, order)
+local function pinnedEnemy()
+  return isPinned() and MDT.dungeonEnemies[db.currentDungeonIdx][pinnedCard.enemyIdx] or nil
 end
 
-local function currentEnemy()
-  return lastEnemyIdx and MDT.dungeonEnemies[db.currentDungeonIdx][lastEnemyIdx]
+function MDT:GetEnemyInfoEnemyIdx()
+  return isPinned() and pinnedCard.enemyIdx or nil
 end
 
 local function showSpellTooltip(row, item)
@@ -156,7 +153,7 @@ end
 
 local function onDevKey(row, key)
   if not db.devMode then return end
-  local enemy = currentEnemy()
+  local enemy = pinnedEnemy()
   local spell = enemy and enemy.spells and enemy.spells[row.spellId]
   if not spell then return end
   if key == DEV_PRINT_KEY then
@@ -174,16 +171,18 @@ local function onDevKey(row, key)
   MDT:UpdateEnemyInfoFrame()
 end
 
+---One spell: its icon, its name and its status icons on the right.
 local SpellRow = {}
 
 function SpellRow:OnCreate()
   self.kitIcon = self:CreateTexture(nil, "ARTWORK")
   self.kitIcon:SetSize(SPELL_ICON_SIZE, SPELL_ICON_SIZE)
-  self.kitIcon:SetPoint("LEFT", self, "LEFT", Theme.Space("xs"), 0)
+  self.kitIcon:SetPoint("LEFT", self, "LEFT", 0, 0)
   self.kitName = self:CreateFontString(nil, "ARTWORK")
   self.kitName:SetFontObject(Fonts.Get("body"))
   self.kitName:SetJustifyH("LEFT")
   self.kitName:SetWordWrap(false)
+  self.kitName:SetPoint("LEFT", self.kitIcon, "RIGHT", Theme.Space("sm"), 0)
   Theme.Bind(self.kitName, "text.normal")
   self.kitStatusIcons = {}
   for i, status in ipairs(SPELL_STATUSES) do
@@ -202,31 +201,25 @@ function SpellRow:Bind(item)
   self.spellId = item.spellId
   UI.Icon.SetZoomed(self.kitIcon, item.icon)
   self.kitName:SetText(item.name)
-  self.kitName:ClearAllPoints()
-  self.kitName:SetPoint("RIGHT", self, "RIGHT", -Theme.Space("md"), 0)
-  local gap = Theme.Space("sm")
-  if #item.statuses > 0 then
-    self.kitName:SetPoint("TOPLEFT", self.kitIcon, "TOPRIGHT", gap, 0)
-  else
-    self.kitName:SetPoint("LEFT", self.kitIcon, "RIGHT", gap, 0)
-  end
   for _, icon in ipairs(self.kitStatusIcons) do icon:Hide() end
+  local gap = Theme.Space("xs")
   local previous
-  for _, status in ipairs(item.statuses) do
-    for i, candidate in ipairs(SPELL_STATUSES) do
-      if candidate == status then
+  for i = #SPELL_STATUSES, 1, -1 do
+    for _, status in ipairs(item.statuses) do
+      if status == SPELL_STATUSES[i] then
         local icon = self.kitStatusIcons[i]
         icon:ClearAllPoints()
         if previous then
-          icon:SetPoint("LEFT", previous, "RIGHT", Theme.Space("xs"), 0)
+          icon:SetPoint("RIGHT", previous, "LEFT", -gap, 0)
         else
-          icon:SetPoint("BOTTOMLEFT", self.kitIcon, "BOTTOMRIGHT", gap, 0)
+          icon:SetPoint("RIGHT", self, "RIGHT", -gap, 0)
         end
         icon:Show()
         previous = icon
       end
     end
   end
+  self.kitName:SetPoint("RIGHT", previous or self, previous and "LEFT" or "RIGHT", -gap, 0)
 end
 
 function SpellRow:OnUnbind()
@@ -244,59 +237,38 @@ local function insertSpellLink(item)
 end
 
 local function linkSpells()
-  local items = view and view.spells or {}
-  if #items < 1 then return end
+  local enemy = pinnedEnemy()
+  local items = pinnedCard and pinnedCard.spells or {}
+  if not enemy or #items < 1 then return end
   local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
   if not distribution then return end
-  C_ChatInfo.SendChatMessage(string.format(L["MDT: Spells for %s:"], L[currentEnemy().name]), distribution)
+  C_ChatInfo.SendChatMessage(string.format(L["MDT: Spells for %s:"], L[enemy.name]), distribution)
   for i, item in ipairs(items) do
     C_ChatInfo.SendChatMessage(i..". "..(C_Spell.GetSpellLink(item.spellId) or item.name), distribution)
   end
 end
 
-local function attachModel(host)
-  model = model or CreateFrame("PlayerModel", nil, host, "ModelWithControlsTemplate")
-  model:SetParent(host)
-  model:ClearAllPoints()
-  model:SetPoint("TOPLEFT", host, "TOPLEFT", 1, -1)
-  model:SetPoint("BOTTOMRIGHT", host, "BOTTOMRIGHT", -1, 1)
-  model:SetScript("OnEnter", nil)
-  model:Show()
+local function setModel(card, data)
+  local model = card.model
+  if data.displayId then model:SetDisplayInfo(data.displayId) else model:SetCreature(data.id or DEFAULT_DISPLAY_ID) end
+  -- ResetModel comes from the template's mixin, which not every client version has.
+  local resetModel = rawget(model, "ResetModel")
+  if resetModel then resetModel(model) end
+  model:SetPosition(0, 0, 0)
 end
 
--- The model is one frame for the addon's lifetime; it leaves the pooled host before the dialog is released.
-local function detachModel()
-  model:Hide()
-  model:ClearAllPoints()
-  model:SetParent(UI.Root)
-end
-
-local function buildContent(content)
-  local columns = UI.Columns(content, { weights = { 1, 1, 1 } })
-  for i = 1, 3 do columns[i]:SetAutoHeight(false) end
-  local left, middle, right = columns[1], columns[2], columns[3]
-  view.columns = columns
-
-  view.enemy = UI.Dropdown(left, { onChange = function(enemyIdx) MDT:UpdateEnemyInfoFrame(enemyIdx) end })
-  local modelHost = UI.Stack(left, { height = MIN_MODEL_HEIGHT, grow = 1, background = "bg.sunken", border = "border.normal" })
-  attachModel(modelHost)
-  UI.Text(left, { text = L["Affected by:"], font = "small", color = "text.muted" })
-  view.characteristics = UI.Row(left, { gap = "xs", wrap = true })
-
-  view.fields = {}
-  for _, field in ipairs(enemyFields(currentEnemy(), lastCloneIdx)) do
-    view.fields[field.id] = UI.EditBox(middle, { label = field.label, readOnly = true, selectAllOnFocus = true })
-  end
-  local flags = UI.Row(middle, { gap = "lg", wrap = true })
-  view.stealth = UI.Checkbox(flags, { label = L["Enemy Info NPC Stealth"], disabled = true })
-  view.stealthDetect = UI.Checkbox(flags, { label = L["Enemy Info NPC Stealth Detect"], disabled = true })
-
-  view.devHelp = UI.Text(right, { text = DEV_HELP, font = "small", color = "text.muted" })
-  view.list = UI.List(right, {
-    kinds = SPELL_KINDS, gap = "xs", height = MIN_LIST_HEIGHT, grow = 1,
+---The hover card lists its first spells and counts the rest; the pinned card scrolls through all of them.
+local function spellList(content, card, layout)
+  local items = card.spells
+  local rows = math.min(#items, layout.spells)
+  if card.kind == "hover" then items = { unpack(items, 1, rows) } end
+  local gap = Theme.Space("xs")
+  UI.List(content, {
+    id = "spells", kinds = SPELL_KINDS, items = items, gap = gap, scrollbar = #items > rows,
+    height = rows * SPELL_ROW_HEIGHT + math.max(0, rows - 1) * gap,
     onHover = function(item, _, row)
       showSpellTooltip(row, item)
-      if db.devMode then row:EnableKeyboard(true) end
+      if card.kind == "pinned" and db.devMode then row:EnableKeyboard(true) end
     end,
     onHoverEnd = function(_, _, row)
       if GameTooltip:IsOwned(row) then GameTooltip:Hide() end
@@ -306,101 +278,237 @@ local function buildContent(content)
       if mods.shift then insertSpellLink(item) end
     end,
   })
-  local actions = UI.Row(right, { align = "end" })
-  UI.Button(actions, { text = L["Link Spells"], onClick = linkSpells })
 end
 
----Sizes the window to cover the map; the columns share the height below the title bar.
-local function fitToMap()
-  local map = MDT.main_frame.scrollFrame
-  local dialog = view.dialog
-  local columnHeight = map:GetHeight() - (dialog:GetHeight() - view.columns:GetHeight())
-  dialog.content:SetWidth(map:GetWidth())
-  for i = 1, 3 do
-    view.columns[i]:SetHeight(columnHeight)
-    UI.Layout.Invalidate(view.columns[i])
-  end
-  UI.Layout.Invalidate(view.columns)
-  dialog:ClearAllPoints()
-  dialog:SetPoint("TOPLEFT", map, "TOPLEFT", 0, 0)
-end
+local pin
 
-local function applyFields(data, cloneIdx)
-  for _, field in ipairs(enemyFields(data, cloneIdx)) do
-    local box = view.fields[field.id]
-    box:SetLabel(field.label)
-    box:SetValue(field.value)
-  end
-  view.stealth:SetValue(data.stealth == true)
-  view.stealthDetect:SetValue(data.stealthDetect == true)
-end
-
-local function applyCharacteristics(data)
-  local row = view.characteristics
-  row:ReleaseChildren()
-  for _, characteristic in ipairs(CHARACTERISTICS) do
-    if data.characteristics and data.characteristics[characteristic.key] then
-      UI.Button(row, {
-        variant = "icon", icon = characteristic.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE, iconColor = false,
-        tooltip = L[characteristic.key],
+---Fills a card for one enemy clone. Both cards share this; the pinned card adds the NPC id, more spells, dev help and
+---Link Spells, and swaps the pin button for a close button.
+---@param card MDT.EnemyCard
+---@param blip table the enemy's map blip
+local function fill(card, blip)
+  db = MDT:GetDB()
+  local data, clone = blip.data, blip.clone
+  local layout = LAYOUT[card.kind]
+  local pinned = card.kind == "pinned"
+  card.blip, card.enemyIdx, card.cloneIdx = blip, blip.enemyIdx, blip.cloneIdx
+  card.spells = spellItems(data.spells)
+  local health = MDT:CalculateEnemyHealth(data.isBoss or false, data.health, db.currentDifficulty, data.ignoreFortified)
+  local count = MDT:GetCloneEnemyForces(data, clone)
+  local content = card.content
+  content:ReleaseChildren()
+  content:SetWidth(layout.width)
+  content:Batch(function()
+    local header = UI.Row(content, { id = "header", gap = "sm", valign = "center" })
+    UI.Text(header, { id = "name", text = L[data.name], font = "title", wrap = false, grow = 1, width = 40 })
+    local occurrence = (data.isBoss and "" or ("#"..blip.cloneIdx))..(clone.g and " "..string.format(L["(G %d)"], clone.g) or "")
+    if occurrence ~= "" then UI.Text(header, { id = "occurrence", text = occurrence, font = "small", color = "text.muted", wrap = false }) end
+    if pinned then
+      UI.CloseButton(header, { tooltip = L["Close"], onClick = function() MDT:CloseEnemyInfo() end })
+    else
+      UI.Button(header, {
+        id = "pin", variant = "plain", icon = MDT:GetIconPath("pin"), iconSize = 14, width = 22, height = 22,
+        tooltip = L["Pin"], onClick = function() pin(blip) end,
       })
     end
+
+    local body = UI.Row(content, { gap = "md", valign = "start" })
+    card.modelHost = UI.Stack(body, {
+      id = "model", width = layout.modelWidth, height = layout.modelHeight, autoHeight = false,
+      background = "bg.sunken", border = "border.normal",
+    })
+    local stats = UI.Stack(body, { gap = "xs", grow = 1, width = 40 })
+    UI.Text(stats, { id = "level", text = string.format(L["Level %d %s"], data.level, L[data.creatureType]), font = "small", color = "text.muted" })
+    UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)) })
+    UI.Text(stats, { id = "forces", text = L["Forces"]..": "..MDT:FormatEnemyForces(count) })
+    UI.Text(stats, { id = "efficiency", text = L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health), font = "small", color = "text.muted" })
+    if pinned then UI.Text(stats, { id = "npcId", text = L["Enemy Info NPC Id"]..": "..data.id, font = "small", color = "text.muted" }) end
+    if data.stealth then UI.Text(stats, { id = "stealth", text = L["Enemy Info NPC Stealth"], font = "small", color = "warn" }) end
+    if data.stealthDetect then UI.Text(stats, { id = "stealthDetect", text = L["Enemy Info NPC Stealth Detect"], font = "small", color = "warn" }) end
+
+    local affected = {}
+    for _, characteristic in ipairs(CHARACTERISTICS) do
+      if data.characteristics and data.characteristics[characteristic.key] then affected[#affected + 1] = characteristic end
+    end
+    if #affected > 0 then
+      UI.Text(content, { text = L["Affected by:"], font = "small", color = "text.muted" })
+      local icons = UI.Row(content, { id = "characteristics", gap = "xs", wrap = true })
+      for _, characteristic in ipairs(affected) do
+        UI.Button(icons, {
+          variant = "icon", icon = characteristic.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE,
+          iconColor = false, width = CHARACTERISTIC_ICON_SIZE + 2, height = CHARACTERISTIC_ICON_SIZE + 2, tooltip = L[characteristic.key],
+        })
+      end
+    end
+
+    if #card.spells > 0 then
+      spellList(content, card, layout)
+      if not pinned and #card.spells > layout.spells then
+        UI.Text(content, { id = "moreSpells", text = string.format(L["+%d more spells"], #card.spells - layout.spells), font = "small", color = "text.muted" })
+      end
+    end
+
+    if pinned then
+      if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = "small", color = "text.muted" }) end
+      local actions = UI.Row(content, { align = "end" })
+      UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = linkSpells })
+    else
+      local hint = L["Right click to pin"]
+      if db.devMode then hint = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"].."\n"..hint end
+      UI.Text(content, { id = "hint", text = hint, font = "small", color = "text.muted" })
+    end
+  end)
+  -- The model is the card's own frame; it sits on the placeholder the layout just placed.
+  local model = card.model
+  model:ClearAllPoints()
+  model:SetPoint("TOPLEFT", card.modelHost, "TOPLEFT", 1, -1)
+  model:SetPoint("BOTTOMRIGHT", card.modelHost, "BOTTOMRIGHT", -1, 1)
+  model:SetFrameLevel(card.modelHost:GetFrameLevel() + 2)
+  setModel(card, data)
+end
+
+---Gives a card a position before it is filled, so its spell list measures a real view.
+local function anchorAt(card, blip)
+  card:ClearAllPoints()
+  card:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", CARD_OFFSET, 0)
+end
+
+---Beside the enemy like the old tooltip: below and right of it, flipped up or left at the window's edges.
+local function placeBeside(card, blip)
+  local main = MDT.main_frame
+  card:ClearAllPoints()
+  card:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", CARD_OFFSET, 0)
+  local dx, dy = CARD_OFFSET, 0
+  if card:GetBottom() < main:GetBottom() then dy = card:GetHeight() end
+  if card:GetRight() > main:GetRight() then dx = -(card:GetWidth() + CARD_OFFSET * 2) end
+  card:ClearAllPoints()
+  card:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", dx, dy)
+end
+
+local function hideHover()
+  if hoverCard and hoverCard:IsShown() then
+    lastSpot = { blip = hoverBlip, left = hoverCard:GetLeft(), top = hoverCard:GetTop() }
+    hoverCard:Hide()
+  end
+  hoverBlip = nil
+end
+
+---While the hover card shows: it stays as long as the cursor is over the enemy or the card, and goes after a short grace.
+local function watchHover(card)
+  if (hoverBlip and hoverBlip:IsVisible() and hoverBlip:IsMouseOver()) or card:IsMouseOver() then
+    lastInside = GetTime()
+  elseif GetTime() - lastInside > HOVER_GRACE then
+    hideHover()
   end
 end
 
-local function openWindow()
-  view = {}
-  view.dialog = UI.Dialogs.Open({
-    key = "enemyInfo",
-    title = L["Enemy Info"],
-    parent = MDT.main_frame,
-    width = MDT.main_frame.scrollFrame:GetWidth(),
-    pinned = true,
-    build = buildContent,
-    onClose = function()
-      detachModel()
-      view = nil
-    end,
-  })
+---@param kind "hover"|"pinned"
+---@return MDT.EnemyCard
+local function createCard(kind)
+  local card = CreateFrame("Frame", nil, MDT.main_frame) --[[@as MDT.EnemyCard]]
+  card.kind = kind
+  card:SetClampedToScreen(true)
+  card:EnableMouse(true)
+  UI.Overlay.SetStrata(card, LAYOUT[kind].strata)
+  local background = card:CreateTexture(nil, "BACKGROUND")
+  background:SetAllPoints()
+  Theme.Bind(background, "bg.panel")
+  UI.Pixel.Border(card, "border.strong")
+  card.content = UI.Stack(card, { padding = "md", gap = "sm", onLayout = function(content)
+    card:SetSize(content:GetWidth(), content:GetHeight())
+  end })
+  card.content:SetPoint("TOPLEFT", card, "TOPLEFT", 0, 0)
+  if kind == "pinned" then
+    card.model = CreateFrame("PlayerModel", nil, card, "ModelWithControlsTemplate")
+    card.model:SetScript("OnEnter", nil)
+    card:SetMovable(true)
+    card:RegisterForDrag("LeftButton")
+    card:SetScript("OnDragStart", card.StartMoving)
+    card:SetScript("OnDragStop", card.StopMovingOrSizing)
+    card:SetScript("OnHide", function() MDT:CloseEnemyInfo() end)
+  else
+    card.model = CreateFrame("PlayerModel", nil, card)
+    card.model.facing = 0
+    card.model:SetScript("OnUpdate", function(model, elapsed)
+      model.facing = (model.facing + elapsed * MODEL_ROTATION_SPEED) % (math.pi * 2)
+      model:SetFacing(model.facing)
+    end)
+    card:SetScript("OnUpdate", watchHover)
+  end
+  card:Hide()
+  return card
 end
 
-function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
-  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
-  lastEnemyIdx, lastCloneIdx = enemyIdx, cloneIdx
-  if not view or not enemyIdx then return end
-  db = MDT:GetDB()
-  local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-  if not data then return end
-  view.dialog:SetTitle(L[data.name])
-  view.spells = spellItems(data.spells)
-  view.dialog.content:Batch(function()
-    fitToMap()
-    view.enemy:SetItems(enemyChoices())
-    view.enemy:SetValue(enemyIdx)
-    applyCharacteristics(data)
-    applyFields(data, cloneIdx)
-    view.devHelp:SetHidden(not db.devMode)
-    view.list:SetItems(view.spells)
-  end)
-  model:SetDisplayInfo(data.displayId or DEFAULT_DISPLAY_ID)
-  -- ResetModel comes from the template's mixin, which not every client version has.
-  local resetModel = rawget(model, "ResetModel")
-  if resetModel then resetModel(model) end
-  model:SetPosition(0, 0, 0)
+---Opens the pinned card for an enemy where its hover card was, or beside the enemy.
+---@param blip table
+pin = function(blip)
+  pinnedCard = pinnedCard or createCard("pinned")
+  hideHover()
+  local spot = lastSpot and lastSpot.blip == blip and lastSpot or nil
+  local main = MDT.main_frame
+  local left, top = spot and spot.left, spot and spot.top
+  anchorAt(pinnedCard, blip)
+  fill(pinnedCard, blip)
+  if left and top then
+    -- Grows down from the hover card's top left, moved up only as far as it must to stay inside the window.
+    top = math.max(top, main:GetBottom() + pinnedCard:GetHeight())
+    pinnedCard:ClearAllPoints()
+    pinnedCard:SetPoint("TOPLEFT", main, "BOTTOMLEFT", left - main:GetLeft(), top - main:GetBottom())
+  else
+    placeBeside(pinnedCard, blip)
+  end
+  pinnedCard:Show()
+  pinnedEscape = pinnedEscape or { close = function() MDT:CloseEnemyInfo() end }
+  UI.Escape.Push(pinnedEscape)
 end
 
----Refreshes the health, forces and other fields after the key level changed. No-op while the window is closed.
-function MDT:UpdateEnemyInfoData(enemyIdx, cloneIdx)
-  if not view then return end
-  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
-  local data = enemyIdx and MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-  if not data then return end
-  view.dialog.content:Batch(function() applyFields(data, cloneIdx) end)
+---Called by enemy blips on enter and leave. Entering shows the hover card for that enemy right away; leaving lets the
+---card's own watch hide it once the cursor is neither on the enemy nor on the card.
+---@param blip table
+---@param shown boolean
+function MDT:DisplayBlipTooltip(blip, shown)
+  if not shown then return end
+  if isPinned() and pinnedCard.blip == blip then return end
+  hoverCard = hoverCard or createCard("hover")
+  hoverBlip, lastInside = blip, GetTime()
+  anchorAt(hoverCard, blip)
+  fill(hoverCard, blip)
+  placeBeside(hoverCard, blip)
+  hoverCard:Show()
 end
 
+---Pins the enemy info card for a blip. The right-click menu and the dev panel open it through here.
+---@param blip table
 function MDT:ShowEnemyInfoFrame(blip)
-  db = MDT:GetDB()
-  lastEnemyIdx, lastCloneIdx = blip.enemyIdx, blip.cloneIdx
-  if not view then openWindow() end
-  MDT:UpdateEnemyInfoFrame(blip.enemyIdx, blip.cloneIdx)
+  pin(blip)
+end
+
+function MDT:CloseEnemyInfo()
+  hideHover()
+  if pinnedEscape then UI.Escape.Remove(pinnedEscape) end
+  if isPinned() then
+    pinnedCard.blip, pinnedCard.enemyIdx, pinnedCard.cloneIdx = nil, nil, nil
+    pinnedCard:Hide()
+  end
+end
+
+---Refills the pinned card after dev edits or map changes. No-op while nothing is pinned.
+function MDT:UpdateEnemyInfoFrame()
+  if not isPinned() then return end
+  local blip = pinnedCard.blip
+  if not blip.data or blip.enemyIdx ~= pinnedCard.enemyIdx then return MDT:CloseEnemyInfo() end
+  fill(pinnedCard, blip)
+end
+
+---Refreshes health and forces after the key level changed.
+function MDT:UpdateEnemyInfoData()
+  MDT:UpdateEnemyInfoFrame()
+  if hoverCard and hoverCard:IsShown() and hoverBlip then fill(hoverCard, hoverBlip) end
+end
+
+---Test and dev access to the cards.
+---@param kind "hover"|"pinned"
+---@return MDT.EnemyCard?
+function MDT:GetEnemyInfoCard(kind)
+  return kind == "pinned" and pinnedCard or hoverCard
 end

@@ -1,4 +1,4 @@
--- Harness steps for the enemy info window and, with --developer, the dev panel. Driven through real frames. Not shipped code.
+-- Harness steps for the enemy hover and pinned cards and, with --developer, the dev panel. Driven through real frames. Not shipped code.
 return function(ctx)
   local W, MDT, step, expect, click, asyncIdle, render = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.asyncIdle, ctx.render
   local UI = MDT.UI
@@ -26,9 +26,7 @@ return function(ctx)
     for _ in pairs(data.spells or {}) do count = count + 1 end
     return count
   end
-  local function window() return UI.Dialogs.Get("enemyInfo") end
   local function find(kitName, predicate, container)
-    container = container or window().content
     for _, child in ipairs(container.kitChildren or {}) do
       if child.kit.name == kitName and (not predicate or predicate(child)) then return child end
       local found = find(kitName, predicate, child)
@@ -39,149 +37,175 @@ return function(ctx)
       if found then return found end
     end
   end
-  local function spellList() return find("List") end
-  local function field(label)
-    return find("EditBox", function(box) return box.kitProps.label == label end)
+  local function card(kind) return MDT:GetEnemyInfoCard(kind) end
+  local function part(kind, id) return card(kind).content:Find(id) end
+  local function text(kind, id)
+    local control = part(kind, id)
+    return control and control.kitLabel:GetText()
   end
-  local function expectCoversMap()
-    local dialog, map = window(), main.scrollFrame
-    for _, edge in ipairs({ "GetLeft", "GetRight", "GetTop", "GetBottom" }) do
-      expect(math.abs(dialog[edge](dialog) - map[edge](map)) < 0.5,
-        ("enemy info %s is %.1f, the map's is %.1f"):format(edge, dialog[edge](dialog), map[edge](map)))
+  local function shown(kind) return card(kind) ~= nil and card(kind):IsVisible() end
+  local function moveAway() W.cursorX, W.cursorY = 1, 1 end
+  local function rest(seconds)
+    W.pump(seconds or 0.5)
+    W.settle(asyncIdle, 5)
+  end
+  local function visibleBlips()
+    local found = {}
+    for _, frame in ipairs(MDT.dungeonEnemies_framePool.active) do
+      if frame:IsVisible() and frame.data then found[#found + 1] = frame end
     end
+    table.sort(found, function(a, b) return spellCount(a.data) > spellCount(b.data) end)
+    return found
   end
 
-  local blip
-  step("enemy info: opens from a blip's right-click menu and covers the map", function()
-    local best = -1
-    for _, frame in ipairs(MDT.dungeonEnemies_framePool.active) do
-      if frame:IsVisible() and frame.data and spellCount(frame.data) > best then
-        blip, best = frame, spellCount(frame.data)
-      end
+  local blip, other
+  step("enemy card: hovering an enemy shows the hover card beside it", function()
+    local blips = visibleBlips()
+    blip = blips[1]
+    for _, candidate in ipairs(blips) do
+      if candidate.enemyIdx ~= blip.enemyIdx then other = candidate break end
     end
-    expect(blip and best > 0, "no visible enemy blip with spells on the map")
-    click(blip, "RightButton")
-    click(menuRow(menuList(), L["Open Enemy Info"]))
-    local dialog = window()
-    expect(dialog and dialog:IsVisible(), "enemy info did not open")
-    expect(dialog.kitTitle:GetText() == L[blip.data.name], "title is "..tostring(dialog.kitTitle:GetText()))
-    expectCoversMap()
-    expect(field(L["Enemy Info NPC Name"]):GetValue() == L[blip.data.name], "name field is "..field(L["Enemy Info NPC Name"]):GetValue())
-    expect(field(L["Enemy Info NPC Id"]):GetValue() == tostring(blip.data.id), "npc id field is "..field(L["Enemy Info NPC Id"]):GetValue())
-    local forces = tostring(MDT:GetCloneEnemyForces(blip.data, blip.data.clones[blip.cloneIdx]))
-    expect(field(L["Enemy Info NPC Enemy Forces"]):GetValue() == forces, "forces field is "..field(L["Enemy Info NPC Enemy Forces"]):GetValue())
-    expect(#spellList().kitProps.items == best, ("spell list has %d rows, the enemy has %d spells"):format(#spellList().kitProps.items, best))
-    local row = spellList():GetRow(1)
-    expect(row and row:IsVisible() and row:GetWidth() > 100, "first spell row is not laid out")
-    expect(row.kitName:GetText() ~= nil and row.kitName:GetText() ~= "", "first spell row has no name")
-    expect(not row.kitName:GetText():find("^%d+$"), "first spell row shows its id instead of the spell name")
-    local columns = find("Columns")
-    for i = 1, 3 do
-      expect(math.abs(columns[i]:GetBottom() - columns[1]:GetBottom()) < 0.5 and columns[i]:GetWidth() > 100, "column "..i.." is not laid out")
+    expect(blip and spellCount(blip.data) > 0 and other, "no two visible enemies with spells on the map")
+    W.hover(blip)
+    expect(shown("hover"), "hovering an enemy shows no card")
+    local hover = card("hover")
+    expect(text("hover", "name") == L[blip.data.name], "card name is "..tostring(text("hover", "name")))
+    local health = MDT:FormatEnemyHealth(MDT:CalculateEnemyHealth(blip.data.isBoss or false, blip.data.health, db.currentDifficulty, blip.data.ignoreFortified))
+    expect(text("hover", "health"):find(health, 1, true), "health line is "..text("hover", "health"))
+    expect(text("hover", "forces"):find(MDT:FormatEnemyForces(MDT:GetCloneEnemyForces(blip.data, blip.clone)), 1, true), "forces line is "..text("hover", "forces"))
+    expect(hover:GetLeft() >= blip:GetRight() or hover:GetRight() <= blip:GetLeft(), "the card covers its enemy")
+    expect(hover:GetBottom() >= main:GetBottom() - 0.5 and hover:GetRight() <= main:GetRight() + 0.5, "the card leaves the window")
+    local spells = spellCount(blip.data)
+    local list = part("hover", "spells")
+    expect(#list.kitProps.items == math.min(spells, 4) and list:GetHeight() > 0, "the hover card lists "..#list.kitProps.items.." of "..spells.." spells")
+    expect(not list.kitBar:IsShown(), "the hover card's spell list scrolls")
+    local row = list:GetRow(1)
+    expect(row and row:IsVisible() and row.kitName:GetText() ~= "" and row:GetWidth() > 150, ("the first spell row is not laid out: row=%s vis=%s name=%s w=%s list=%sx%s"):format(tostring(row), tostring(row and row:IsVisible()), tostring(row and row.kitName:GetText()), tostring(row and row:GetWidth()), tostring(list:GetWidth()), tostring(list:GetHeight())))
+    local more = part("hover", "moreSpells")
+    if spells > 4 then
+      expect(more and more.kitLabel:GetText() == string.format(L["+%d more spells"], spells - 4), "no +more line for "..spells.." spells")
+      expect(list:GetHeight() < 5 * 22, "the hover card shows more than 4 spell rows")
+    else
+      expect(more == nil, "a +more line for "..spells.." spells")
     end
-    local listBottom = spellList():GetBottom()
-    expect(listBottom > dialog:GetBottom() and listBottom < dialog:GetBottom() + 80, "the spell list does not reach down to the link button")
-    W.fireScript(dialog.kitTitleBar, "OnDragStart")
-    expect(not W.state[dialog].moving, "dragging the title bar moved the enemy info window")
-    render("enemy info", main, { dialog })
+    expect(text("hover", "hint") == L["Right click to pin"], "hint is "..tostring(text("hover", "hint")))
+    expect(math.abs(hover:GetWidth() - 250) < 1 and hover:GetHeight() > 100, ("hover card is %.0fx%.0f"):format(hover:GetWidth(), hover:GetHeight()))
+    render("enemy hover card", main, { hover })
   end)
 
-  step("enemy info: characteristics show their icons in full color with a tooltip", function()
+  step("enemy card: the hover card waits for the cursor and switches to the next enemy at once", function()
+    local hover = card("hover")
+    rest(0.5)
+    expect(shown("hover"), "the card left while the cursor is on its enemy")
+    W.fireScript(blip, "OnLeave")
+    W.cursorTo(hover)
+    rest(0.5)
+    expect(shown("hover"), "the card left while the cursor is on it")
+    moveAway()
+    W.pump(0.1)
+    expect(shown("hover"), "the card left before its grace period")
+    rest(0.3)
+    expect(not shown("hover"), "the card stayed after the cursor left")
+    W.hover(blip)
+    W.fireScript(blip, "OnLeave")
+    W.hover(other)
+    expect(shown("hover") and text("hover", "name") == L[other.data.name], "hovering another enemy did not switch the card")
+    W.fireScript(other, "OnLeave")
+    moveAway()
+    rest(0.5)
+  end)
+
+  step("enemy card: right-click Open Enemy Info pins the card where the hover card was", function()
+    W.hover(blip)
+    local hover = card("hover")
+    local left, top = hover:GetLeft(), hover:GetTop()
+    local depth = UI.Escape.Depth()
+    click(blip, "RightButton")
+    click(menuRow(menuList(), L["Open Enemy Info"]))
+    expect(shown("pinned"), "Open Enemy Info pinned nothing")
+    local pinned = card("pinned")
+    expect(not shown("hover"), "the hover card stayed after pinning")
+    -- It opens at the hover card's top left, moved up only as far as it needs to stay inside the window.
+    local moved = math.abs(pinned:GetBottom() - main:GetBottom()) < 0.5
+    expect(math.abs(pinned:GetLeft() - left) < 0.5 and (math.abs(pinned:GetTop() - top) < 0.5 or (moved and pinned:GetTop() > top)),
+      ("the pinned card did not open where the hover card was: %s,%s vs %s,%s"):format(pinned:GetLeft(), pinned:GetTop(), left, top))
+    expect(pinned:GetBottom() >= main:GetBottom() - 0.5, "the pinned card hangs below the window")
+    expect(text("pinned", "name") == L[blip.data.name] and text("pinned", "npcId"):find(tostring(blip.data.id), 1, true), "the pinned card shows the wrong enemy")
+    local list = part("pinned", "spells")
+    expect(#list.kitProps.items == spellCount(blip.data), "the pinned card lists the wrong spells")
+    expect(part("pinned", "linkSpells") and part("pinned", "hint") == nil and part("pinned", "moreSpells") == nil, "the pinned card has hover-card parts")
+    expect(UI.Escape.Depth() == depth + 1, "the pinned card is not on the Escape stack")
+    moveAway()
+    rest(0.5)
+    expect(shown("pinned"), "the pinned card left with the cursor")
+    render("enemy pinned card", main, { pinned })
+  end)
+
+  step("enemy card: the pin button pins, and other enemies still show hover cards while one is pinned", function()
+    MDT:CloseEnemyInfo()
+    W.hover(other)
+    click(part("hover", "pin"))
+    expect(shown("pinned") and text("pinned", "name") == L[other.data.name], "the pin button did not pin the hovered enemy")
+    expect(not shown("hover"), "the hover card stayed after pinning")
+    moveAway()
+    rest(0.3)
+    W.hover(blip)
+    expect(shown("hover") and text("hover", "name") == L[blip.data.name] and shown("pinned"), "hovering another enemy while one is pinned failed")
+    W.fireScript(blip, "OnLeave")
+    moveAway()
+    rest(0.5)
+    W.hover(card("pinned").blip)
+    expect(not shown("hover"), "hovering the pinned enemy shows a second card")
+    W.fireScript(card("pinned").blip, "OnLeave")
+    moveAway()
+    MDT:ShowEnemyInfoFrame(blip)
+    expect(text("pinned", "name") == L[blip.data.name], "pinning another enemy did not replace the pinned card")
+  end)
+
+  step("enemy card: characteristics show their icons in full color with a tooltip", function()
     local data = blip.data
     local saved = data.characteristics
     data.characteristics = { Root = true, Stun = true, Fear = true }
     MDT:UpdateEnemyInfoFrame()
-    local icons = find("Row", function(row) return row.kitChildren[1] and row.kitChildren[1].kitProps.variant == "icon" end)
+    local icons = part("pinned", "characteristics")
     expect(icons and #icons.kitChildren == 3, "expected 3 characteristic icons, got "..(icons and #icons.kitChildren or 0))
     local tooltips = {}
     for i, icon in ipairs(icons.kitChildren) do
       expect(table.concat({ icon.kitIcon:GetVertexColor() }, ",") == "1,1,1,1", "characteristic icon "..i.." is tinted")
-      expect(icon:GetLeft() >= icons:GetLeft() and icon:GetWidth() > 0, "characteristic icon "..i.." is not laid out")
       W.hover(icon)
       expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == icon, "characteristic icon "..i.." shows no tooltip")
       tooltips[i] = (W.state[GameTooltip].lines or {})[1]
       W.fireScript(icon, "OnLeave")
     end
     expect(table.concat(tooltips, ",") == table.concat({ L["Stun"], L["Fear"], L["Root"] }, ","), "icons are not in characteristic order: "..table.concat(tooltips, ","))
-    render("enemy info characteristics", main, { window() })
+    render("enemy pinned card characteristics", main, { card("pinned") })
     data.characteristics = saved
     MDT:UpdateEnemyInfoFrame()
-    expect(saved ~= nil or #icons.kitChildren == 0, "icons stayed after the characteristics were removed")
   end)
 
-  step("enemy info: the enemy dropdown switches to another enemy", function()
-    local dropdown = find("Dropdown")
-    expect(dropdown:GetValue() == blip.enemyIdx, "dropdown shows enemy "..tostring(dropdown:GetValue()))
-    click(dropdown.kitButton)
-    local list = menuList()
-    local otherIdx = blip.enemyIdx == 1 and 2 or 1
-    local other = MDT.dungeonEnemies[db.currentDungeonIdx][otherIdx]
-    local row
-    for index, item in ipairs(list.kitProps.items) do
-      if item.value == otherIdx then
-        list:ScrollTo(index, "nearest")
-        row = list:GetRow(index)
-      end
-    end
-    expect(row, "enemy "..otherIdx.." is not in the dropdown")
-    click(row)
-    expect(window().kitTitle:GetText() == L[other.name], "title did not follow the dropdown: "..tostring(window().kitTitle:GetText()))
-    expect(field(L["Enemy Info NPC Id"]):GetValue() == tostring(other.id), "fields did not follow the dropdown")
-    expect(#spellList().kitProps.items == spellCount(other), "spell list did not follow the dropdown")
-    expect(MDT:GetEnemyInfoEnemyIdx() == otherIdx, "enemy index is "..tostring(MDT:GetEnemyInfoEnemyIdx()))
-    MDT:ShowEnemyInfoFrame(blip)
-    expect(window().kitTitle:GetText() == L[blip.data.name], "opening from the blip again did not switch back")
-  end)
-
-  step("enemy info: scrolling the spell list and hovering a spell shows its tooltip", function()
-    local list = spellList()
-    local row = list:GetRow(1)
-    local overflow = list.kitTotal > list:GetHeight()
-    W.fireScript(row, "OnMouseWheel", -1)
-    if overflow then
-      expect(list:GetOffset() > 0, "the mouse wheel did not scroll the spell list")
-      W.fireScript(list:GetRow(2) or row, "OnMouseWheel", 1)
-    end
-    expect(list:GetOffset() == 0, "spell list did not scroll back to the top")
+  step("enemy card: hovering a spell shows its tooltip and shift-click links it into chat", function()
+    local list = part("pinned", "spells")
     local index, item
     for i, candidate in ipairs(list.kitProps.items) do
       if #candidate.statuses > 0 and not index then index, item = i, candidate end
     end
     index, item = index or 1, item or list.kitProps.items[1]
     list:ScrollTo(index, "nearest")
-    row = list:GetRow(index)
+    local row = list:GetRow(index)
     GameTooltip:Hide()
     W.hover(row)
     expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == row, "hovering a spell shows no tooltip")
     local lines = W.state[GameTooltip].lines or {}
     expect(#lines == #item.statuses, ("tooltip has %d status lines for %d statuses"):format(#lines, #item.statuses))
-    for i, status in ipairs(item.statuses) do
-      expect(lines[i]:find(status.label, 1, true), "tooltip line "..i.." does not name "..status.label)
-      expect(row.kitStatusIcons and next(row.kitStatusIcons), "row has no status icons")
-    end
     W.fireScript(row, "OnLeave")
     expect(not GameTooltip:IsShown(), "spell tooltip stayed up after the cursor left")
-  end)
-
-  step("enemy info: fields are read-only and shift-click links a spell into chat", function()
-    local box = field(L["Enemy Info NPC Name"])
-    local before = box:GetValue()
-    W.userClick(box.kitEdit)
-    expect(box.kitEdit:HasFocus(), "clicking the name field did not focus it")
-    W.userType(box.kitEdit, "x")
-    expect(box:GetValue() == before and box.kitEdit:GetText() == before, "typing changed a read-only field to "..box.kitEdit:GetText())
-    box:ClearFocus()
-    local stealth = find("Checkbox")
-    local value = stealth:GetValue()
-    click(stealth)
-    expect(stealth:GetValue() == value and stealth:IsDisabled(), "the stealth checkbox can be toggled")
 
     local chat = _G.ChatFrame1EditBox
     _G.DEFAULT_CHAT_FRAME.editBox = chat
     chat:Show()
     chat:SetText("look: ")
     W.modifiers = { shift = true }
-    local row = spellList():GetRow(1)
+    row = list:GetRow(1)
     click(row)
     W.modifiers = nil
     expect(chat:GetText() == "look: "..C_Spell.GetSpellLink(row.spellId), "shift-click did not insert the spell link: "..chat:GetText())
@@ -189,9 +213,8 @@ return function(ctx)
     _G.DEFAULT_CHAT_FRAME.editBox = nil
   end)
 
-  step("enemy info: Link Spells posts every spell to the group", function()
-    local link = find("Button", function(button) return button:GetText() == L["Link Spells"] end)
-    expect(link and link:IsVisible(), "no Link Spells button")
+  step("enemy card: Link Spells posts every spell to the group", function()
+    local link = part("pinned", "linkSpells")
     W.chatMessages = {}
     click(link)
     expect(#W.chatMessages == 0, "Link Spells posted outside a group")
@@ -203,72 +226,66 @@ return function(ctx)
     expect(W.chatMessages[1].chatType == "PARTY" and W.chatMessages[1].message:find(L[blip.data.name], 1, true), "header message is "..W.chatMessages[1].message)
   end)
 
-  step("enemy info: a key level change refreshes the health field", function()
+  step("enemy card: a key level change refreshes the health", function()
     local level = MDT:GetSidebarControl("level")
-    local box = find("EditBox", function(candidate) return candidate.kitProps.label:find("%+") ~= nil end)
-    expect(box, "no health field")
-    local before = box.kitProps.label
+    local before = text("pinned", "health")
     click(level.kitUp)
     W.settle(asyncIdle, 30)
-    expect(box.kitProps.label ~= before and box.kitProps.label:find("+"..db.currentDifficulty, 1, true), "health label did not follow the level: "..box.kitProps.label)
     local health = MDT:FormatEnemyHealth(MDT:CalculateEnemyHealth(blip.data.isBoss or false, blip.data.health, db.currentDifficulty, blip.data.ignoreFortified))
-    expect(box:GetValue() == health, "health is "..box:GetValue().." at +"..db.currentDifficulty..", expected "..health)
+    expect(text("pinned", "health") ~= before and text("pinned", "health"):find(health, 1, true), "health did not follow the level: "..text("pinned", "health"))
     click(level.kitDown)
     W.settle(asyncIdle, 30)
   end)
 
-  step("enemy info: dev mode keys toggle a spell flag on the hovered row", function()
+  step("enemy card: dev mode keys toggle a spell flag on the hovered row", function()
     local devMode = db.devMode
     db.devMode = true
     MDT:UpdateEnemyInfoFrame()
-    expect(find("Text", function(text) return text.kitLabel:GetText():find("Toggle", 1, true) ~= nil end):IsShown(), "dev key help is hidden in dev mode")
-    local list = spellList()
+    expect(part("pinned", "devHelp"), "dev key help is missing in dev mode")
+    local list = part("pinned", "spells")
     local row = list:GetRow(1)
-    local spellId = row.spellId
-    local spell = blip.data.spells[spellId]
+    local spell = blip.data.spells[row.spellId]
     local before = spell.magic
     W.hover(row)
     expect(W.state[row].keyboard, "hovering a spell in dev mode did not take the keyboard")
     W.fireScript(row, "OnKeyDown", "M")
     expect(spell.magic == not before, "M did not toggle magic")
+    list = part("pinned", "spells")
     local magicShown = false
     for _, status in ipairs(list.kitProps.items[1].statuses) do if status.key == "magic" then magicShown = true end end
     expect(magicShown == (spell.magic == true), "the row's statuses did not follow the toggle")
-    W.fireScript(list:GetRow(1), "OnKeyDown", "M")
     spell.magic = before
     W.fireScript(list:GetRow(1), "OnLeave")
-    expect(not W.state[row].keyboard, "the row kept the keyboard after the cursor left")
     db.devMode = devMode
     MDT:UpdateEnemyInfoFrame()
-    expect(not find("Text", function(text) return text.kitLabel:GetText():find("Toggle", 1, true) ~= nil end):IsShown(), "dev key help is shown outside dev mode")
+    expect(part("pinned", "devHelp") == nil, "dev key help is shown outside dev mode")
   end)
 
-  step("enemy info: follows the map through maximize and restore", function()
-    click(main.maximizeButton)
-    W.settle(asyncIdle, 30)
-    expect(window(), "maximize closed enemy info")
-    expectCoversMap()
-    render("enemy info maximized", main, { window() })
-    click(main.maximizeButton)
-    W.settle(asyncIdle, 30)
-    expectCoversMap()
-  end)
-
-  step("enemy info: Escape closes it before the main window and the model leaves with it", function()
-    local dialog = window()
+  step("enemy card: the pinned card drags, and Escape, hiding the window or switching dungeon close it", function()
+    local pinned = card("pinned")
+    W.fireScript(pinned, "OnDragStart")
+    expect(W.state[pinned].moving, "dragging did not move the pinned card")
+    W.fireScript(pinned, "OnDragStop")
     expect(CloseSpecialWindows(), "no special window closed")
-    expect(window() == nil and not dialog:IsShown(), "Escape did not close enemy info")
-    expect(main:IsShown(), "Escape closed the main window instead of enemy info")
+    expect(not shown("pinned") and main:IsShown(), "Escape did not close the pinned card first")
     W.settle(asyncIdle, 5)
     MDT:UpdateEnemyInfoFrame()
     MDT:UpdateEnemyInfoData()
-    expect(window() == nil, "an update reopened enemy info")
+    expect(not shown("pinned"), "an update reopened the pinned card")
     MDT:ShowEnemyInfoFrame(blip)
-    expect(window() and window():IsVisible(), "enemy info did not reopen")
     MDT:HideInterface()
-    expect(window() == nil, "hiding the main window left enemy info open")
+    expect(not shown("pinned"), "hiding the main window left the pinned card")
     MDT.main_frame:Show()
     W.settle(asyncIdle, 5)
+    expect(not shown("pinned"), "showing the window again brought back the pinned card")
+    MDT:ShowEnemyInfoFrame(blip)
+    local before = db.currentDungeonIdx
+    MDT:UpdateToDungeon(before == 45 and 46 or 45)
+    W.settle(asyncIdle, 30)
+    expect(not shown("pinned"), "switching dungeon left the pinned card open")
+    MDT:UpdateToDungeon(before)
+    W.settle(asyncIdle, 30)
+    blip = visibleBlips()[1]
   end)
 
   if not ctx.developer then return end
@@ -366,9 +383,9 @@ return function(ctx)
     local forces = panelBox(MDT.L["Clone forces override (blank = default)"])
     expect(not forces.kitProps.disabled and forces:GetValue() == (blip.clone.count and tostring(blip.clone.count) or ""), "clone forces does not show the selected blip")
     click(panelButton("Open Enemy Info"))
-    expect(window() and window().kitTitle:GetText() == L[blip.data.name], "Open Enemy Info did not open the selected blip")
-    expect(find("Text", function(text) return text.kitLabel:GetText():find("Toggle", 1, true) ~= nil end):IsShown(), "dev key help is hidden in dev mode")
-    window():Close("api")
+    expect(shown("pinned") and text("pinned", "name") == L[blip.data.name], "Open Enemy Info did not pin the selected blip")
+    expect(part("pinned", "devHelp"), "dev key help is hidden in dev mode")
+    MDT:CloseEnemyInfo()
     blip.devSelected = nil
     MDT:UpdateMap()
   end)

@@ -629,6 +629,7 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
   end
   if init then return end
+  MDT:CloseEnemyInfo()
   if not ignoreUpdateMap then MDT:UpdateMap() end
   MDT:ZoomMapToDefault()
   --Colors the first pull in "Default" presets
