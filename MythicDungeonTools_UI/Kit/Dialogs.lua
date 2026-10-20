@@ -193,11 +193,12 @@ function Dialogs.Prompt(spec)
           text = value
           validate()
         end,
-        onCommit = function(value)
+        onCommit = function(value, _, source)
           text = value
           validate()
-          if valid and not spec.multiline then dialog:Close("confirm") end
+          if source == "enter" and valid then dialog:Close("confirm") end
         end,
+        onEscape = function() dialog:Close("escape") end,
       })
       problem = UI.Text(content, { text = "", color = "warn", hidden = true })
       if spec.checkbox then

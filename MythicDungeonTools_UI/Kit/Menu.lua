@@ -150,7 +150,7 @@ function Menu.Open(spec)
 
   content:Batch(function()
     if spec.search then
-      UI.EditBox(content, { autoFocus = true, onChange = function(query) refresh(query) end })
+      UI.EditBox(content, { autoFocus = true, onChange = function(query) refresh(query) end, onEscape = Menu.Close })
     end
     local total = 0
     for _, item in ipairs(items) do total = total + Theme.Size(Menu.rowKinds[item.kind].height) end

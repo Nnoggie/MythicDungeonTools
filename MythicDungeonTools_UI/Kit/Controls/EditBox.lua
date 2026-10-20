@@ -75,11 +75,12 @@ local function setValue(self, text)
   repaint(self)
 end
 
-local function commit(self)
+---@param source "enter"|"blur"
+local function commit(self, source)
   local text = self.kitEdit:GetText()
-  if text == self.kitLastCommit then return end
+  if source == "blur" and text == self.kitLastCommit then return end
   self.kitLastCommit = text
-  self:Emit("onCommit", text, self)
+  self:Emit("onCommit", text, self, source)
 end
 
 ---@class MDT.UI.EditBoxSpec : MDT.UI.CommonSpec
@@ -97,8 +98,8 @@ end
 ---@field disabled boolean?
 ---@field font MDT.UI.FontRole?
 ---@field onChange fun(text: string, self: MDT.UI.Control)? every user edit
----@field onCommit fun(text: string, self: MDT.UI.Control)? Enter or focus lost, once per changed value
----@field onEscape fun(self: MDT.UI.Control)?
+---@field onCommit fun(text: string, self: MDT.UI.Control, source: "enter"|"blur")? every Enter; focus lost only when the text changed since the last commit
+---@field onEscape fun(self: MDT.UI.Control)? after Escape restored the last committed text (reported through onChange) and dropped focus without committing
 ---@field onFocusLost fun(self: MDT.UI.Control)?
 ---@field onCopy fun(self: MDT.UI.Control)? Ctrl+C pressed while focused
 UI.Define({
@@ -191,10 +192,15 @@ UI.Define({
     end)
     self.kitEdit:SetScript("OnEnterPressed", function(edit)
       if self.kitProps.multiline then return end
-      commit(self)
+      commit(self, "enter")
       edit:ClearFocus()
     end)
     self.kitEdit:SetScript("OnEscapePressed", function(edit)
+      local committed = self.kitLastCommit
+      if committed and edit:GetText() ~= committed then
+        edit:SetText(committed)
+        self:Emit("onChange", committed, self)
+      end
       edit:ClearFocus()
       self:Emit("onEscape", self)
     end)
@@ -208,7 +214,7 @@ UI.Define({
       self.kitFocused = nil
       edit:HighlightText(0, 0)
       repaint(self)
-      commit(self)
+      commit(self, "blur")
       self:Emit("onFocusLost", self)
     end)
     self.kitEdit:SetScript("OnKeyUp", function(_, key)

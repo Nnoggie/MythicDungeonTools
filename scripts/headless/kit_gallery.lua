@@ -271,6 +271,96 @@ return function(ctx)
     W.settle(asyncIdle, 5)
   end)
 
+  step("kit edit box: Escape reverts without committing; commits name their source; a Prompt confirms only on Enter or its button", function()
+    log = {}
+    local edit = UI.EditBox(page, { value = "Route",
+      onChange = function(text) log[#log + 1] = "change:"..text end,
+      onCommit = function(text, _, source) log[#log + 1] = "commit:"..text..":"..tostring(source) end,
+      onEscape = logged("escape") })
+    UI.Layout.FlushAll()
+    W.userClick(edit.kitEdit)
+    W.userType(edit.kitEdit, "!")
+    W.fireScript(edit.kitEdit, "OnEscapePressed")
+    expect(edit:GetValue() == "Route" and not edit.kitEdit:HasFocus(), "Escape did not restore the committed text and drop focus")
+    expect(table.concat(log, ",") == "change:Route!,change:Route,escape", "Escape reported "..table.concat(log, ","))
+    log = {}
+    W.userClick(edit.kitEdit)
+    W.userType(edit.kitEdit, "1")
+    W.fireScript(edit.kitEdit, "OnEnterPressed")
+    W.userClick(edit.kitEdit)
+    W.userType(edit.kitEdit, "2")
+    edit:ClearFocus()
+    W.userClick(edit.kitEdit)
+    W.fireScript(edit.kitEdit, "OnEnterPressed")
+    W.userClick(edit.kitEdit)
+    edit:ClearFocus()
+    expect(table.concat(log, ",") == "change:Route1,commit:Route1:enter,change:Route12,commit:Route12:blur,commit:Route12:enter",
+      "commits reported "..table.concat(log, ","))
+    edit:Release()
+
+    log = {}
+    local function promptEdit(prompt)
+      for _, child in ipairs(prompt.content.kitChildren) do
+        if child.kit.name == "EditBox" then return child end
+      end
+    end
+    local function openPrompt()
+      return UI.Dialogs.Prompt({ title = "Rename", value = "Old",
+        confirm = { text = "Ok", onClick = function(text) log[#log + 1] = "confirm:"..text end },
+        cancel = { onClick = logged("cancel") } })
+    end
+    local depth = UI.Escape.Depth()
+    local prompt = openPrompt()
+    W.userType(promptEdit(prompt).kitEdit, "X")
+    W.fireScript(promptEdit(prompt).kitEdit, "OnEscapePressed")
+    expect(prompt.kitReleased and table.concat(log, ",") == "cancel", "Escape in a prompt reported "..table.concat(log, ","))
+    expect(UI.Escape.Depth() == depth, "Escape in a prompt left its Escape entry")
+
+    log = {}
+    prompt = openPrompt()
+    W.fireScript(promptEdit(prompt).kitEdit, "OnEnterPressed")
+    expect(prompt.kitReleased and table.concat(log, ",") == "confirm:Old", "Enter on an unchanged prompt reported "..table.concat(log, ","))
+
+    log = {}
+    prompt = openPrompt()
+    local promptBox = promptEdit(prompt)
+    W.userType(promptBox.kitEdit, "Y")
+    promptBox:ClearFocus()
+    expect(not prompt.kitReleased and #log == 0, "losing focus confirmed the prompt: "..table.concat(log, ","))
+    local confirmButton
+    for _, child in ipairs(prompt.content.kitChildren) do
+      if child.kit.name == "Row" then confirmButton = child.kitChildren[1] end
+    end
+    click(confirmButton)
+    expect(prompt.kitReleased and table.concat(log, ",") == "confirm:OldY", "the confirm button reported "..table.concat(log, ","))
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("kit menus: Escape in a dropdown's search box closes the menu", function()
+    local list = {}
+    local order = {}
+    for i = 1, 13 do
+      list["k"..i] = "Choice "..i
+      order[i] = "k"..i
+    end
+    local dropdown = UI.Dropdown(page, { items = UI.MenuModel.FromList(list, order), value = "k1" })
+    UI.Layout.FlushAll()
+    local depth = UI.Escape.Depth()
+    click(dropdown.kitButton)
+    local menu = UI.Overlay.Top("menu")
+    local search
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "EditBox" then search = child end
+    end
+    expect(search and search.kitEdit:HasFocus(), "a long dropdown did not focus its search box")
+    W.userType(search.kitEdit, "1")
+    W.fireScript(search.kitEdit, "OnEscapePressed")
+    expect(UI.Overlay.Top("menu") == nil and not menu.frame:IsShown(), "Escape in the search box left the menu open")
+    expect(UI.Escape.Depth() == depth and dropdown:GetValue() == "k1", "Escape in the search box changed the stack or the value")
+    dropdown:Release()
+    W.settle(asyncIdle, 5)
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
