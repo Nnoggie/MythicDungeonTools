@@ -11,7 +11,7 @@ local TEXT_SIZES = { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48 
 local MIN_FONT_SIZE, MAX_FONT_SIZE = TEXT_SIZES[1], TEXT_SIZES[#TEXT_SIZES]
 local DEFAULT_FONT_SIZE = 12
 --inline icons are scaled with the font by the game, a fixed markup size keeps them
---in the proportions they have at text size 12 for every text size
+--in the proportions they have at text size 12 for every text size and map scale
 local ICON_MARKUP_SIZE = 12
 local DEFAULT_COLOR = "ffffff"
 local DEFAULT_ALIGN = "LEFT"
@@ -424,7 +424,7 @@ local function measureText(obj)
   local isEdited = editing and editing.obj == obj
   local text = isEdited and textEditor:GetText() or obj.d[5] or ""
   local measure = getTextMeasure(obj)
-  measure:SetText(MDT:RenderPresetTextTags(text, ICON_MARKUP_SIZE * MDT:GetScale()))
+  measure:SetText(MDT:RenderPresetTextTags(text, ICON_MARKUP_SIZE))
   local scale = MDT:GetScale()
   return measure:GetStringWidth() / scale, measure:GetStringHeight() / scale
 end
@@ -1711,7 +1711,7 @@ function layoutTextFrame(frame, obj)
   local fontString = frame.fontString
   applyFontStyle(fontString, obj)
   local icons = {}
-  local text = MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE * scale, rotation ~= 0 and icons or nil)
+  local text = MDT:RenderPresetTextTags(obj.d[5] or "", ICON_MARKUP_SIZE, rotation ~= 0 and icons or nil)
   fontString:SetText(text)
   fontString:SetRotation(rotation)
   local textWidth, textHeight = fontString:GetStringWidth(), fontString:GetStringHeight()
