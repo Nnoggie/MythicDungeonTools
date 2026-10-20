@@ -25,7 +25,7 @@ end
 
 local pureFiles = { "Pure/Color.lua", "Pure/Text.lua", "Pure/Layout.lua", "Pure/ListMath.lua", "Pure/Selection.lua", "Pure/MenuModel.lua", "Theme.lua", "Fonts.lua" }
 for _, path in ipairs(pureFiles) do loadPure(path) end
-loadPure("../../Modules/Sidebar/SidebarModel.lua")
+loadPure("../../Modules/SidebarModel.lua")
 local UI = MDT.UI
 local Model = MDT.SidebarModel
 
