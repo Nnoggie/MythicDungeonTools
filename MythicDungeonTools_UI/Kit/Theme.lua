@@ -13,7 +13,7 @@ Theme.data = {
     ["bg.panel"] = "111113", ["bg.sunken"] = "0b0b0c", ["bg.raised"] = "17171a", ["bg.raised2"] = "1b1b1f",
     ["bg.overlay"] = "141417", ["bg.dim"] = "00000099",
     ["border.normal"] = "2b2b30", ["border.strong"] = "303036", ["border.divider"] = "1f1f23",
-    ["text.normal"] = "e9e6e1", ["text.muted"] = "8e8a84", ["text.disabled"] = "55534f", ["text.inverse"] = "111113",
+    ["text.normal"] = "e9e6e1", ["text.secondary"] = "cfcac2", ["text.muted"] = "8e8a84", ["text.disabled"] = "55534f", ["text.inverse"] = "111113",
     ["accent"] = "ffd100", ["accent.bg"] = "2a2410", ["accent.border"] = "5c4b12",
     ["ok"] = "5ee07a", ["ok.line"] = "2d5a36", ["warn"] = "ff6b5b", ["live"] = "ff4b4b", ["live.bg"] = "3a1416",
     ["danger.bg"] = "3a1416", ["danger.border"] = "5a2626",

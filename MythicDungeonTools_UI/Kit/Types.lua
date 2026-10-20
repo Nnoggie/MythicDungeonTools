@@ -15,6 +15,7 @@
 ---| "border.strong"
 ---| "border.divider"
 ---| "text.normal"
+---| "text.secondary"
 ---| "text.muted"
 ---| "text.disabled"
 ---| "text.inverse"
