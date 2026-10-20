@@ -25,6 +25,7 @@
 ---| "accent.border"
 ---| "ok"
 ---| "ok.line"
+---| "progress"
 ---| "warn"
 ---| "live"
 ---| "live.bg"
@@ -59,6 +60,7 @@
 ---| "ghost"
 ---| "icon"
 ---| "field"
+---| "window"
 ---| "row"
 
 ---@alias MDT.UI.State "normal"|"hover"|"pressed"|"selected"|"disabled"

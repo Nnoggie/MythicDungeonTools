@@ -252,12 +252,12 @@ step("MythicDungeonToolsAPI:ShowInterface shows the main window again", function
 end)
 
 step("maximize", function()
-  click(main.maximizeButton.MaximizeButton)
+  click(main.maximizeButton)
   expect(db.maximized == true, "db.maximized not set")
 end)
 
 step("restore from maximized", function()
-  click(main.maximizeButton.MinimizeButton)
+  click(main.maximizeButton)
   expect(db.maximized == false, "db.maximized still set")
 end)
 

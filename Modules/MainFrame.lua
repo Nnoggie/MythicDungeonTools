@@ -121,25 +121,29 @@ end
 
 function MDT:CreateMenu()
   -- Close button
-  self.main_frame.closeButton = CreateFrame("Button", "MDTCloseButton", self.main_frame, "UIPanelCloseButton")
-  self.main_frame.closeButton:ClearAllPoints()
-  self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -1, -4)
-  self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
-  self.main_frame.closeButton:SetFrameLevel(4)
-  self.main_frame.closeButton:SetSize(24, 24)
+  local UI = MDT.UI
+  local closeButton = UI.Button(self.main_frame, {
+    variant = "window", icon = MDT:GetIconPath("close"), iconSize = 14, width = 22, height = 22,
+    onClick = function() self:HideInterface() end,
+  })
+  closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -4, -4)
+  closeButton:SetFrameLevel(10)
+  self.main_frame.closeButton = closeButton
 
-  --Maximize Button
-  self.main_frame.maximizeButton = CreateFrame("Button", "MDTMaximizeButton", self.main_frame,
-    "MaximizeMinimizeButtonFrameTemplate")
-  self.main_frame.maximizeButton:ClearAllPoints()
-  ---@diagnostic disable-next-line: param-type-mismatch
-  self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
-  self.main_frame.maximizeButton:SetFrameLevel(4)
   db.maximized = db.maximized or false
-  if not db.maximized then self.main_frame.maximizeButton:Minimize() end
-  self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
-  self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
-  self.main_frame.maximizeButton:SetSize(24, 24)
+  local maximizeButton = UI.Button(self.main_frame, {
+    variant = "window", icon = MDT:GetIconPath(db.maximized and "minimize" or "maximize"), iconSize = 14, width = 22, height = 22,
+    onClick = function()
+      if MDT:GetDB().maximized then MDT:Minimize() else MDT:Maximize() end
+    end,
+  })
+  maximizeButton:SetPoint("RIGHT", closeButton, "LEFT", -3, 0)
+  maximizeButton:SetFrameLevel(10)
+  ---Leaves fullscreen if needed; kept for callers that reset the window.
+  function maximizeButton:Minimize()
+    if MDT:GetDB().maximized then MDT:Minimize() end
+  end
+  self.main_frame.maximizeButton = maximizeButton
 
   --Resize Handle
   self.main_frame.resizer = CreateFrame("BUTTON", nil, self.main_frame.sidePanel)

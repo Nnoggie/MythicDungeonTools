@@ -4,13 +4,17 @@ local UI = MDT.UI
 local Theme, Selection, Model, PullTooltip = UI.Theme, UI.Selection, MDT.SidebarModel, MDT.PullTooltip
 
 local TOP_HEIGHT = 24
-local WINDOW_BUTTONS_WIDTH = 52
+local WINDOW_BUTTONS_WIDTH = 56
 local STEPPER_WIDTH = 64
 local MIN_LEVEL, MAX_LEVEL = 1, 35
+local VISIBLE_ROUTES = 7
+local ACTION_BUTTON = 22
+local BAR_TONES = { ["text.normal"] = "progress", ok = "ok", warn = "warn" }
 
 local db
 local sidebar
 local lastRoute = {}
+local routeQuery = ""
 
 local function notifyRouteChanged(preset)
   local dungeonIdx = db.currentDungeonIdx
@@ -56,16 +60,30 @@ function MDT:SidebarContext()
 end
 
 local function paintHeader(header)
-  sidebar.switcher:SetAuthor(header.author)
-  sidebar.switcher:SetAuthorColor(header.authorColor)
-  sidebar.switcher:SetRoute(header.route)
-  sidebar.switcher:SetLive(header.isLiveRoute)
+  sidebar.dungeon:SetText(string.upper(MDT:GetDungeonName(db.currentDungeonIdx) or ""))
   sidebar.level:SetValue(header.level)
   local forces = header.forces
-  sidebar.forces:SetSegments(forces.segments, math.max(forces.max, forces.current, 1))
+  local barColor = Theme.Rgba(BAR_TONES[forces.tone] or "progress")
+  sidebar.forces:SetSegments({ { value = forces.current, color = barColor } }, math.max(forces.max, forces.current, 1))
   sidebar.forces:SetMarker(forces.max)
   sidebar.forces:SetText(forces.text)
-  sidebar.forces:SetOverflow(forces.tone == "warn")
+  sidebar.forces:SetOverflow(false)
+  local actions = header.actions
+  sidebar.share:SetDisabled(not actions.canShare)
+  sidebar.live:SetDisabled(not actions.canLive)
+  sidebar.live:SetIconColor(actions.liveActive and "live" or nil)
+end
+
+local function refreshRoutes(ctx)
+  local items = Model.RouteListItems(Model.RouteGroups(ctx or MDT:SidebarContext()), routeQuery, L)
+  local height = math.max(1, math.min(#items, VISIBLE_ROUTES)) * MDT.RouteListRowHeight
+  local routes = sidebar.routes
+  if routes.kitProps.height ~= height then
+    routes.kitProps.height = height
+    routes:SetHeight(height)
+    routes:InvalidateLayout()
+  end
+  routes:SetItems(items)
 end
 
 ---The one impure refresh: rebuilds the header and the pull list from the current preset and paints the selection.
@@ -74,9 +92,11 @@ function MDT:RefreshSidebar()
   MDT:EnsureDBTables()
   MDT:ColorAllPulls(nil, 0)
   local preset = MDT:GetCurrentPreset()
-  local state = Model.Build(preset, MDT:SidebarContext())
+  local ctx = MDT:SidebarContext()
+  local state = Model.Build(preset, ctx)
   sidebar.state = state
   paintHeader(state.header)
+  refreshRoutes(ctx)
   sidebar.list:SetItems(state.items)
   sidebar.list:SetSelection(MDT:GetSelection())
   notifyRouteChanged(preset)
@@ -277,11 +297,29 @@ local function onHoverEnd(item, index, row)
   MDT:PullClickAreaOnLeave()
 end
 
-local function openSwitcher(button)
-  MDT:OpenRouteSwitcher(button, MDT:SidebarContext(), {
-    pick = function(idx) MDT:SwitchToPreset(idx) end,
-    new = routeActions.new,
-    import = routeActions.import,
+---Runs a route action on any route: switches to it first, because the dialogs act on the current route.
+---@param action string key of routeActions
+---@param presetIdx integer
+function MDT:RunRouteAction(action, presetIdx)
+  if presetIdx ~= db.currentPreset[db.currentDungeonIdx] then MDT:SwitchToPreset(presetIdx) end
+  if action == "delete" and IsShiftKeyDown() then action = "deleteAll" end
+  routeActions[action]()
+end
+
+local function openLiveMenu(button)
+  local a = sidebar.state.header.actions
+  if not a.liveActive then return end
+  MDT:CreateContextMenu(button, {
+    a.canSetLive and { text = L["Make this preset the live preset"], onSelect = routeActions.setLive } or false,
+    a.canReturnToLive and { text = L["Return to the live preset"], onSelect = routeActions.returnToLive } or false,
+    { text = L["Stop live session"], textColor = "live", onSelect = routeActions.toggleLive },
+  })
+end
+
+local function actionButton(parent, id, icon, tooltip, onClick, iconColor, onRightClick)
+  return UI.Button(parent, {
+    id = id, variant = "icon", icon = MDT:GetIconPath(icon), iconSize = 14, width = ACTION_BUTTON, height = ACTION_BUTTON,
+    tooltip = tooltip, iconColor = iconColor, onClick = onClick, onRightClick = onRightClick,
   })
 end
 
@@ -295,7 +333,22 @@ function MDT:MakeSidebar(sidePanel)
   local built = { root = root }
   root:Batch(function()
     local top = UI.Row(root, { id = "top", height = TOP_HEIGHT, width = sidePanel:GetWidth() - 8 - WINDOW_BUTTONS_WIDTH, valign = "center" })
-    built.switcher = UI.RouteSwitcher(top, { id = "switcher", width = 60, grow = 1, onClick = openSwitcher })
+    built.dungeon = UI.Text(top, { id = "dungeon", text = "", font = "small", color = "text.muted", wrap = false, grow = 1 })
+    local search = UI.Row(root, { id = "routeTools", gap = "xs", valign = "center" })
+    built.search = UI.EditBox(search, { id = "routeSearch", placeholder = L["Search routes"], width = 60, grow = 1, onChange = function(text)
+      routeQuery = text or ""
+      refreshRoutes()
+    end })
+    built.new = actionButton(search, "newRoute", "plus", L["New Preset"], routeActions.new, "accent")
+    built.import = actionButton(search, "importRoute", "import", L["Import"], routeActions.import)
+    built.share = actionButton(search, "shareRoute", "share", L["Send to party"], routeActions.share)
+    built.live = actionButton(search, "liveSession", "live", L["Live"], routeActions.toggleLive, nil, openLiveMenu)
+    built.routes = UI.List(root, {
+      id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = MDT.RouteListRowHeight, scrollbar = true,
+      onActivate = function(item) MDT:SwitchToPreset(item.idx) end,
+      onHover = function(_, _, row) row:kitShowActions(true) end,
+      onHoverEnd = function(_, _, row) row:kitShowActions(row:IsMouseOver()) end,
+    })
     local controls = UI.Row(root, { id = "controls", gap = "sm", valign = "center" })
     built.level = UI.Stepper(controls, {
       id = "level", value = db.currentDifficulty, min = MIN_LEVEL, max = MAX_LEVEL, width = STEPPER_WIDTH, variant = "primary",
@@ -303,12 +356,8 @@ function MDT:MakeSidebar(sidePanel)
       format = function(value) return "+"..value end,
       onChange = applyLevelChange,
       onCommit = commitLevelChange,
-      onPick = function(stepper) MDT:OpenLevelPicker(stepper, db.currentDifficulty, function(level) MDT:SetDungeonLevel(level) end) end,
     })
     built.forces = UI.SegmentBar(controls, { id = "forces", width = 60, grow = 1, segments = {}, max = 1 })
-    built.more = UI.Button(controls, { id = "more", variant = "icon", text = "···", menu = function()
-      return Model.RouteMenuItems(sidebar.state.header, routeActions, L)
-    end })
     built.list = UI.List(root, {
       id = "pulls", kinds = MDT.SidebarRowKinds, gap = "xs", height = 0, grow = 1,
       onSelect = onSelect, onActivate = onActivate, onContext = onContext, onReorder = onReorder,

@@ -60,6 +60,7 @@ function MDT:Maximize()
   end
   f.resizer:Hide()
   db.maximized = true
+  if f.maximizeButton then f.maximizeButton:SetIcon(MDT:GetIconPath("minimize")) end
 end
 
 ---Restore normal AddOn Window
@@ -106,4 +107,5 @@ function MDT:Minimize()
   f.resizer:Show()
 
   db.maximized = false
+  if f.maximizeButton then f.maximizeButton:SetIcon(MDT:GetIconPath("maximize")) end
 end

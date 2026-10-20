@@ -56,6 +56,7 @@ function Methods:GetText() return self.kitProps.text end
 ---@field text string?
 ---@field icon (string|number)?
 ---@field iconSize number?
+---@field iconColor MDT.UI.Color? tints the icon; defaults to the skin's text color
 ---@field iconCoords number[]?
 ---@field variant MDT.UI.Variant? default "default"
 ---@field font MDT.UI.FontRole?
@@ -77,6 +78,7 @@ UI.Define({
     { name = "justify", default = "CENTER", set = arrange },
     { name = "icon", default = nil, set = function(self, v) if v then self.kitIcon:SetTexture(v) end arrange(self) end, relayout = true },
     { name = "iconSize", default = nil, set = arrange, relayout = true },
+    { name = "iconColor", default = nil, set = function(self) self:kitRepaint() end },
     { name = "iconCoords", default = nil, set = function(self, v)
       if v then self.kitIcon:SetTexCoord(unpack(v)) else self.kitIcon:SetTexCoord(0, 1, 0, 1) end
     end },
@@ -97,7 +99,10 @@ UI.Define({
     self.kitIcon = self:CreateTexture(nil, "ARTWORK")
     self.kitChevron = UI.Glyphs.Create(self, "down", GLYPH_SIZE, "text.muted")
     self:SetScript("OnClick", onClick)
-    self.kitOnRepaint = function(button, row) button.kitChevron:SetColor(row.text) end
+    self.kitOnRepaint = function(button, row)
+      button.kitChevron:SetColor(row.text)
+      button.kitIcon:SetVertexColor(Theme.Resolve(button.kitProps.iconColor or row.text))
+    end
   end,
   Measure = function(self)
     local props = self.kitProps

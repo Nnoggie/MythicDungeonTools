@@ -3,13 +3,13 @@ local L = MDT.L
 local UI = MDT.UI
 local Theme, Fonts = UI.Theme, UI.Fonts
 
-local STRIPE = 3
-local NUMBER_WIDTH = 16
-local PORTRAIT = 20
-local PORTRAIT_OVERLAP = 3
+local NUMBER_WIDTH = 18
+local PORTRAIT = 24
+local PORTRAIT_OVERLAP = 4
 local MAX_PORTRAITS = 7
 local VALUE_WIDTH = 60
-local TINT_ALPHA = 0.15
+local ROW_HEIGHT = 34
+local TINT_FROM, TINT_TO = 0.95, 0.22
 local TOOLTIP_WIDTH, TOOLTIP_HEIGHT = 250, 180
 
 local tooltip
@@ -137,18 +137,21 @@ end
 local PullRow = {}
 
 function PullRow:OnCreate()
-  self.kitTint = self:CreateTexture(nil, "BACKGROUND", nil, -1)
+  -- Above the row skin's background so hover and selection never hide the pull color; the skin still draws the selected border.
+  self.kitTint = self:CreateTexture(nil, "BACKGROUND", nil, 1)
   self.kitTint:SetAllPoints()
-  self.kitStripe = self:CreateTexture(nil, "ARTWORK")
-  self.kitStripe:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
-  self.kitStripe:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
-  self.kitStripe:SetWidth(STRIPE)
+  self.kitTint:SetColorTexture(1, 1, 1, 1)
+  self.kitHover = self:CreateTexture(nil, "HIGHLIGHT")
+  self.kitHover:SetAllPoints()
+  self.kitHover:SetColorTexture(1, 1, 1, 0.08)
   self.kitNumber = self:CreateFontString(nil, "ARTWORK")
   self.kitNumber:SetFontObject(Fonts.Get("number"))
-  self.kitNumber:SetPoint("LEFT", self, "LEFT", STRIPE + Theme.Space("sm"), 0)
+  self.kitNumber:SetPoint("LEFT", self, "LEFT", Theme.Space("xs"), 0)
   self.kitNumber:SetWidth(NUMBER_WIDTH)
   self.kitNumber:SetJustifyH("CENTER")
-  Theme.Bind(self.kitNumber, "text.secondary")
+  self.kitNumber:SetShadowColor(0, 0, 0, 1)
+  self.kitNumber:SetShadowOffset(1, -1)
+  Theme.Bind(self.kitNumber, "text.normal")
   self.kitPortraits = {}
   for i = 1, MAX_PORTRAITS do
     local portrait = CreateFrame("Frame", nil, self)
@@ -178,7 +181,7 @@ function PullRow:OnCreate()
     portrait.texture:AddMaskTexture(portrait.mask)
     portrait.count = portrait:CreateFontString(nil, "OVERLAY")
     portrait.count:SetFontObject(Fonts.Get("small"))
-    portrait.count:SetPoint("BOTTOM", portrait, "BOTTOM", 0, -3)
+    portrait.count:SetPoint("BOTTOMRIGHT", portrait, "BOTTOMRIGHT", 3, -3)
     portrait.count:SetShadowColor(0, 0, 0, 1)
     portrait.count:SetShadowOffset(0, -1)
     portrait.count:SetTextColor(1, 1, 1, 1)
@@ -196,26 +199,29 @@ function PullRow:OnCreate()
   self.kitBossText:SetText(string.upper(L["Boss"]))
   Theme.Bind(self.kitBossText, "text.inverse")
   self.kitBoss:SetWidth(self.kitBossText:GetStringWidth() + Theme.Space("sm") * 2)
-  self.kitPull = self:CreateFontString(nil, "ARTWORK")
-  self.kitPull:SetFontObject(Fonts.Get("number"))
-  self.kitPull:SetPoint("TOPRIGHT", self, "TOPRIGHT", -Theme.Space("sm"), -3)
-  self.kitPull:SetWidth(VALUE_WIDTH)
-  self.kitPull:SetJustifyH("RIGHT")
-  Theme.Bind(self.kitPull, "text.normal")
   self.kitCumulative = self:CreateFontString(nil, "ARTWORK")
-  self.kitCumulative:SetFontObject(Fonts.Get("small"))
-  self.kitCumulative:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -Theme.Space("sm"), 3)
+  self.kitCumulative:SetFontObject(Fonts.Get("heading"))
+  self.kitCumulative:SetPoint("TOPRIGHT", self, "TOPRIGHT", -Theme.Space("md"), -4)
   self.kitCumulative:SetWidth(VALUE_WIDTH)
   self.kitCumulative:SetJustifyH("RIGHT")
-  Theme.Bind(self.kitCumulative, "text.muted")
+  self.kitCumulative:SetShadowColor(0, 0, 0, 1)
+  self.kitCumulative:SetShadowOffset(1, -1)
+  Theme.Bind(self.kitCumulative, "text.normal")
+  self.kitPull = self:CreateFontString(nil, "ARTWORK")
+  self.kitPull:SetFontObject(Fonts.Get("small"))
+  self.kitPull:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -Theme.Space("md"), 4)
+  self.kitPull:SetWidth(VALUE_WIDTH)
+  self.kitPull:SetJustifyH("RIGHT")
+  self.kitPull:SetShadowColor(0, 0, 0, 1)
+  self.kitPull:SetShadowOffset(1, -1)
+  Theme.Bind(self.kitPull, "text.secondary")
   self:HookScript("OnDragStart", function(row) PullTooltip.Hide(row) end)
 end
 
 ---@param item MDT.SidebarPullItem
 function PullRow:Bind(item)
   local r, g, b = item.color[1], item.color[2], item.color[3]
-  self.kitTint:SetColorTexture(r, g, b, TINT_ALPHA)
-  self.kitStripe:SetColorTexture(r, g, b, 1)
+  self.kitTint:SetGradient("HORIZONTAL", CreateColor(r, g, b, TINT_FROM), CreateColor(r, g, b, TINT_TO))
   self.kitNumber:SetText(item.index)
   local last = self.kitNumber
   for i, portrait in ipairs(self.kitPortraits) do
@@ -285,7 +291,7 @@ function NewPullRow:Bind() end
 
 ---@type table<string, MDT.UI.ListKind>
 MDT.SidebarRowKinds = {
-  pull = { height = "row", mixin = PullRow, draggable = true, selectable = true },
+  pull = { height = ROW_HEIGHT, mixin = PullRow, draggable = true, selectable = true },
   divider = { height = 20, mixin = DividerRow, static = true },
   newPull = { height = "md", mixin = NewPullRow },
 }

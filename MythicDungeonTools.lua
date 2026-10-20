@@ -23,6 +23,12 @@ end
 ---@param owner table?
 ---@param items MDT.UI.MenuItem[]|fun(): MDT.UI.MenuItem[]
 ---@return MDT.UI.Control?
+---@param name string file name under Textures\Icons without extension
+---@return string
+function MDT:GetIconPath(name)
+  return "Interface\\AddOns\\MythicDungeonTools\\Textures\\Icons\\"..name..".png"
+end
+
 function MDT:CreateContextMenu(owner, items)
   if self:IsInRestrictedEnvironment(true) then return end
   return MDT.UI.Menu.OpenContext(items, owner)

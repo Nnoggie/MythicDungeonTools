@@ -15,7 +15,7 @@ Theme.data = {
     ["border.normal"] = "2b2b30", ["border.strong"] = "303036", ["border.divider"] = "1f1f23",
     ["text.normal"] = "e9e6e1", ["text.secondary"] = "cfcac2", ["text.muted"] = "8e8a84", ["text.disabled"] = "55534f", ["text.inverse"] = "111113",
     ["accent"] = "ffd100", ["accent.bg"] = "2a2410", ["accent.border"] = "5c4b12",
-    ["ok"] = "5ee07a", ["ok.line"] = "2d5a36", ["warn"] = "ff6b5b", ["live"] = "ff4b4b", ["live.bg"] = "3a1416",
+    ["ok"] = "5ee07a", ["ok.line"] = "2d5a36", ["progress"] = "3f6fe0", ["warn"] = "ff6b5b", ["live"] = "ff4b4b", ["live.bg"] = "3a1416",
     ["danger.bg"] = "3a1416", ["danger.border"] = "5a2626",
   },
   derived = {
@@ -56,6 +56,13 @@ Theme.data = {
       pressed = { bg = "bg.raised", border = false, text = "text.normal" },
       selected = { bg = "bg.selected", border = false, text = "accent" },
       disabled = { bg = false, border = false, text = "text.disabled" },
+    },
+    window = {
+      normal = { bg = "bg.sunken", border = "border.strong", text = "accent" },
+      hover = { bg = "accent.bg", border = "accent", text = "text.normal" },
+      pressed = { bg = "accent.bg", border = "accent", text = "accent" },
+      selected = { bg = "accent.bg", border = "accent", text = "accent" },
+      disabled = { bg = "bg.sunken", border = "border.normal", text = "text.disabled" },
     },
     icon = {
       normal = { bg = "bg.raised2", border = "border.normal", text = "text.normal" },

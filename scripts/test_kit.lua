@@ -412,7 +412,7 @@ end
 test("SidebarModel: percent, forces tone and total text follow the old progress bar", function()
   eq(Model.FormatPercent(735, 729), "100.8%")
   eq(Model.FormatPercent(0, 0), "0.0%")
-  eq(Model.FormatForcesTotal(735, 729), "735/729 · 100.8%")
+  eq(Model.FormatForcesTotal(735, 729), "735/729 (100.82%)")
   eq(Model.ForcesTone(700, 729), "text.normal")
   eq(Model.ForcesTone(729, 729), "ok")
   eq(Model.ForcesTone(735, 729), "ok", "100.8% is green")
@@ -463,9 +463,7 @@ test("SidebarModel.Build: rows, cumulative text, divider after the pull that com
   local header = state.header
   eq({ header.author, header.route, header.level, header.isLiveRoute }, { "Me", "Route 3", 22, false })
   eq(header.authorColor, { 0, 0.5, 1 })
-  eq({ header.forces.current, header.forces.max, header.forces.text, header.forces.tone }, { 29, 20, "29/20 · 145.0%", "warn" })
-  eq(#header.forces.segments, 3, "a boss pull with no forces adds no segment")
-  eq(header.forces.segments[2], { value = 14, color = { 0.2, 0, 0 } })
+  eq({ header.forces.current, header.forces.max, header.forces.text, header.forces.tone }, { 29, 20, "29/20 (145.00%)", "warn" })
   eq(header.actions, { canDelete = true, canDeleteAll = true, canShare = false, canLive = false, liveActive = false, canSetLive = false, canReturnToLive = false })
 
   local overflow = Model.Build(fixturePreset(), fixtureContext({ totalForces = 729 }))
@@ -485,7 +483,7 @@ test("SidebarModel.Build: rows, cumulative text, divider after the pull that com
   eq(live.header.isLiveRoute, true)
   eq(live.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, liveActive = true, canSetLive = false, canReturnToLive = false })
   local elsewhere = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "theirs", inGroup = true, busy = true }))
-  eq(elsewhere.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = false, liveActive = true, canSetLive = true, canReturnToLive = true })
+  eq(elsewhere.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, liveActive = true, canSetLive = true, canReturnToLive = true })
   local grouped = Model.Build(fixturePreset(), fixtureContext({ inGroup = true }))
   eq({ grouped.header.actions.canShare, grouped.header.actions.canLive }, { true, true })
   local default = Model.Build(fixturePreset(), fixtureContext({ presetIdx = 1 }))
@@ -682,37 +680,25 @@ test("SidebarModel.PullMenuItems: single and multi menus hide what the old butto
   eq(calls, { "merge:1,3;2", "clear:1,3", "delete:1,3;2", "moveUp:2", "mergeDown:2", "delete:2;2" })
 end)
 
-test("SidebarModel.RouteMenuItems: enable rules and the live entries come from header.actions", function()
-  local actions = setmetatable({}, { __index = function() return function() end end })
-  local base = { actions = { canDelete = true, canDeleteAll = true, canShare = true, canLive = true, liveActive = false, canSetLive = false, canReturnToLive = false } }
-  eq(labels(Model.RouteMenuItems(base, actions, L)),
-    "New Preset|Duplicate|Rename|Import|Export|-|Send to party|Start live session|-|Delete this preset|Delete ALL presets")
-  local live = { actions = { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, liveActive = true, canSetLive = true, canReturnToLive = true } }
-  local items = UI.MenuModel.Normalize(Model.RouteMenuItems(live, actions, L))
-  eq(labels(items),
-    "New Preset|Duplicate|Rename|Import|Export|-|Send to party|Stop live session|Make this preset the live preset|Return to the live preset|-|Delete this preset|Delete ALL presets")
-  eq({ items[7].disabled, items[8].disabled, items[8].textColor, items[12].disabled, items[13].disabled }, { true, false, "live", true, true })
-  eq({ items[12].textColor, items[13].textColor }, { "warn", "warn" })
-end)
-
-test("SidebarModel.RouteGroups and SwitcherItems: live first, mine by author, no <New Preset>", function()
+test("SidebarModel.RouteGroups and RouteListItems: live, then yours, then others, no headers, no <New Preset>, no percent", function()
   local ctx = fixtureContext({ liveActive = true, livePresetUID = "theirs" })
   local groups = Model.RouteGroups(ctx)
   eq({ #groups.live, #groups.mine, #groups.others }, { 1, 2, 0 })
-  eq({ groups.live[1].idx, groups.live[1].name, groups.live[1].author, groups.live[1].forces, groups.live[1].isLive }, { 3, "Theirs", "Zed", 24, true })
-  eq({ groups.mine[1].idx, groups.mine[1].author, groups.mine[1].level, groups.mine[1].forces, groups.mine[1].isCurrent }, { 1, nil, 22, 0, false })
-  eq({ groups.mine[2].idx, groups.mine[2].level, groups.mine[2].forces, groups.mine[2].isCurrent }, { 2, 12, 5, true })
-  local picked
-  local items = UI.MenuModel.Normalize(Model.SwitcherItems(groups, 20, L, function(idx) picked = idx end), 2)
-  eq(labels(items), "Live session|Theirs|Your routes|Default|Mine")
-  eq({ items[2].detail, items[2].detailColor, items[2].trailing, items[2].trailingColor, items[2].userText }, { "Zed", { 0, 0.5, 1 }, "120.0%", "ok", true })
-  eq({ items[4].detail, items[4].trailing, items[4].trailingColor }, { "+22", "0.0%", "warn" })
-  eq({ items[4].checked, items[5].checked }, { false, true }, "the current route is marked")
-  items[2].onSelect()
-  eq(picked, 3)
-  local offline = Model.RouteGroups(fixtureContext())
-  eq({ #offline.live, #offline.mine, #offline.others }, { 0, 2, 1 })
-  eq(labels(Model.SwitcherItems(offline, 20, L, function() end)), "Your routes|Default|Mine|From others|Theirs")
+  eq({ groups.live[1].idx, groups.live[1].name, groups.live[1].author, groups.live[1].pulls, groups.live[1].isLive }, { 3, "Theirs", "Zed", 1, true })
+  eq({ groups.mine[2].idx, groups.mine[2].level, groups.mine[2].pulls, groups.mine[2].isCurrent }, { 2, 12, 1, true })
+  local items = Model.RouteListItems(groups, "", L)
+  local names = {}
+  for _, item in ipairs(items) do names[#names + 1] = item.kind..":"..item.name end
+  eq(table.concat(names, "|"), "route:Theirs|route:Default|route:Mine")
+  eq({ items[1].author, items[1].authorColor, items[1].detail, items[1].isLive }, { "Zed", { 0, 0.5, 1 }, "1 pulls · +22", true })
+  eq({ items[3].idx, items[3].isCurrent, items[3].detail }, { 2, true, "1 pulls · +12" })
+  local offline = Model.RouteListItems(Model.RouteGroups(fixtureContext()), "", L)
+  names = {}
+  for _, item in ipairs(offline) do names[#names + 1] = item.name end
+  eq(table.concat(names, "|"), "Default|Mine|Theirs", "your routes come before everyone else's")
+  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "ZED", L), 1, "search matches the author, case-insensitive")
+  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "min", L), 1, "search matches the name")
+  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "nothing", L), 0)
 end)
 
 test("Selection.Click: Shift and Ctrl right-clicks leave the selection alone, the sidebar handles them", function()

@@ -45,7 +45,7 @@ local MAX_PORTRAITS = 7
 ---@field color MDT.UI.RGBA
 ---@field portraits MDT.SidebarPortrait[]
 ---@field isBoss boolean
----@field forces integer
+---@field pulls integer
 ---@field cumulative integer
 ---@field pullText string "+8.8%" or "+64", empty for a pull with no forces
 ---@field cumulativeText string "45.2%" or "329"
@@ -57,7 +57,7 @@ local MAX_PORTRAITS = 7
 ---@field route string
 ---@field isLiveRoute boolean
 ---@field level integer
----@field forces {current: integer, max: integer, text: string, tone: MDT.UI.ColorToken, segments: {value: number, color: MDT.UI.RGBA}[]}
+---@field forces {current: integer, max: integer, text: string, tone: MDT.UI.ColorToken}
 ---@field actions {canDelete: boolean, canDeleteAll: boolean, canShare: boolean, canLive: boolean, liveActive: boolean, canSetLive: boolean, canReturnToLive: boolean}
 
 ---@param value number
@@ -83,7 +83,8 @@ end
 ---@param max number
 ---@return string
 function Model.FormatForcesTotal(current, max)
-  return current.."/"..max.." · "..Model.FormatPercent(current, max)
+  local percent = max > 0 and current / max * 100 or 0
+  return string.format("%d/%d (%.2f%%)", current, max, percent)
 end
 
 ---Groups the clones of one pull by (enemy, forces per clone), the way the old pull button did.
@@ -127,25 +128,6 @@ function Model.SummarizePull(pull, ctx)
   return forces, portraits, isBoss, health
 end
 
----@param preset table
----@param enemies table<integer, table>
----@return integer
-function Model.PresetForces(preset, enemies)
-  local total = 0
-  for _, pull in pairs(preset.value.pulls or {}) do
-    for enemyIdx, clones in pairs(pull) do
-      local enemy = tonumber(enemyIdx) and enemies[enemyIdx]
-      if enemy then
-        for _, cloneIdx in pairs(clones) do
-          local clone = enemy.clones[cloneIdx]
-          if clone then total = total + (clone.count or enemy.count) end
-        end
-      end
-    end
-  end
-  return total
-end
-
 local function countRoutes(presets)
   local count = 0
   for _, preset in pairs(presets) do
@@ -160,7 +142,7 @@ end
 function Model.Build(preset, ctx)
   local pulls = preset.value.pulls
   local total = ctx.totalForces
-  local items, segments = {}, {}
+  local items = {}
   local cumulative, dividerPlaced = 0, false
   for index, pull in ipairs(pulls) do
     local forces, portraits, isBoss, health = Model.SummarizePull(pull, ctx)
@@ -180,7 +162,6 @@ function Model.Build(preset, ctx)
       index = index, color = { r, g, b }, portraits = portraits, isBoss = isBoss,
       forces = forces, cumulative = cumulative, pullText = pullText, cumulativeText = cumulativeText, healthText = healthText,
     }
-    if forces > 0 then segments[#segments + 1] = { value = forces, color = { r, g, b } } end
     if not dividerPlaced and total > 0 and previous < total and cumulative >= total and index < #pulls then
       dividerPlaced = true
       items[#items + 1] = { kind = "divider", key = "complete" }
@@ -198,13 +179,13 @@ function Model.Build(preset, ctx)
     level = ctx.level,
     forces = {
       current = cumulative, max = total, text = Model.FormatForcesTotal(cumulative, total),
-      tone = Model.ForcesTone(cumulative, total), segments = segments,
+      tone = Model.ForcesTone(cumulative, total),
     },
     actions = {
       canDelete = ctx.presetIdx ~= 1 and not ctx.liveActive,
       canDeleteAll = countRoutes(ctx.presets) > 1 and not ctx.liveActive,
       canShare = ctx.inGroup and not ctx.busy and not ctx.liveActive,
-      canLive = ctx.inGroup and not ctx.busy,
+      canLive = ctx.liveActive or (ctx.inGroup and not ctx.busy),
       liveActive = ctx.liveActive,
       canSetLive = ctx.liveActive and not isLiveRoute,
       canReturnToLive = ctx.liveActive and not isLiveRoute,
@@ -337,36 +318,13 @@ end
 ---@param header MDT.SidebarHeader
 ---@param actions MDT.RouteActions
 ---@param L table
----@return MDT.UI.MenuItem[]
-function Model.RouteMenuItems(header, actions, L)
-  local a = header.actions
-  return {
-    { text = L["New Preset"], onSelect = actions.new },
-    { text = L["Duplicate"], onSelect = actions.duplicate },
-    { text = L["Rename"], onSelect = actions.rename },
-    { text = L["Import"], onSelect = actions.import },
-    { text = L["Export"], onSelect = actions.export },
-    { kind = "separator" },
-    { text = L["Send to party"], disabled = not a.canShare, onSelect = actions.share },
-    {
-      text = a.liveActive and L["Stop live session"] or L["Start live session"],
-      textColor = a.liveActive and "live" or nil, disabled = not a.canLive, onSelect = actions.toggleLive,
-    },
-    a.canSetLive and { text = L["Make this preset the live preset"], onSelect = actions.setLive } or false,
-    a.canReturnToLive and { text = L["Return to the live preset"], onSelect = actions.returnToLive } or false,
-    { kind = "separator" },
-    { text = L["Delete this preset"], textColor = "warn", disabled = not a.canDelete, onSelect = actions.delete },
-    { text = L["Delete ALL presets"], textColor = "warn", disabled = not a.canDeleteAll, onSelect = actions.deleteAll },
-  }
-end
-
 ---@class MDT.RouteEntry
 ---@field idx integer
 ---@field name string
 ---@field author string?
 ---@field authorColor MDT.UI.RGBA?
 ---@field level integer
----@field forces integer
+---@field pulls integer
 ---@field isCurrent boolean
 ---@field isLive boolean
 
@@ -382,7 +340,7 @@ function Model.RouteGroups(ctx)
       local entry = {
         idx = idx, name = preset.text or "", author = createdBy and createdBy.name or nil,
         authorColor = ctx.authorColor(createdBy), level = preset.difficulty or ctx.level,
-        forces = Model.PresetForces(preset, ctx.enemies), isCurrent = idx == ctx.presetIdx,
+        pulls = #(preset.value.pulls or {}), isCurrent = idx == ctx.presetIdx,
         isLive = ctx.liveActive and preset.uid ~= nil and preset.uid == ctx.livePresetUID,
       }
       local mine = not createdBy or (player ~= nil and createdBy.name == player.name and createdBy.realm == player.realm)
@@ -393,29 +351,36 @@ function Model.RouteGroups(ctx)
   return groups
 end
 
+---@class MDT.SidebarRouteItem : MDT.UI.ListItem
+---@field idx integer
+---@field name string
+---@field author string?
+---@field authorColor MDT.UI.RGBA?
+---@field detail string "12 pulls · +22"
+---@field isCurrent boolean
+---@field isLive boolean
+
+---One flat list: the live route, then your routes, then everyone else's. `query` matches name or author, case-insensitive.
 ---@param groups {live: MDT.RouteEntry[], mine: MDT.RouteEntry[], others: MDT.RouteEntry[]}
----@param totalForces integer
+---@param query string?
 ---@param L table
----@param onPick fun(idx: integer)
----@return MDT.UI.MenuItem[]
-function Model.SwitcherItems(groups, totalForces, L, onPick)
+---@return MDT.SidebarRouteItem[]
+function Model.RouteListItems(groups, query, L)
+  local needle = query and query:lower() or ""
   local items = {}
-  local function add(title, entries, detailFromAuthor)
-    if #entries == 0 then return end
-    items[#items + 1] = { kind = "title", text = title }
-    for _, entry in ipairs(entries) do
-      items[#items + 1] = {
-        kind = "choice", key = entry.idx, value = entry.idx, text = entry.name, userText = true,
-        detail = detailFromAuthor and entry.author or ("+"..entry.level),
-        detailColor = detailFromAuthor and entry.authorColor or nil,
-        trailing = Model.FormatPercent(entry.forces, totalForces),
-        trailingColor = entry.forces >= totalForces and "ok" or "warn",
-        onSelect = function() onPick(entry.idx) end,
-      }
+  for _, group in ipairs({ groups.live, groups.mine, groups.others }) do
+    for _, entry in ipairs(group) do
+      local haystack = (entry.name.." "..(entry.author or "")):lower()
+      if needle == "" or haystack:find(needle, 1, true) then
+        local detail = string.format(L["%d pulls"], entry.pulls).." · +"..entry.level
+        items[#items + 1] = {
+          kind = "route", key = entry.idx,
+          sig = table.concat({ entry.name, entry.author or "", detail, tostring(entry.isCurrent), tostring(entry.isLive) }, "|"),
+          idx = entry.idx, name = entry.name, author = entry.author, authorColor = entry.authorColor,
+          detail = detail, isCurrent = entry.isCurrent, isLive = entry.isLive,
+        }
+      end
     end
   end
-  add(L["Live session"], groups.live, true)
-  add(L["Your routes"], groups.mine, false)
-  add(L["From others"], groups.others, true)
   return items
 end
