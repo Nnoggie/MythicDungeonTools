@@ -38,6 +38,7 @@ return function(ctx)
       UI.Button(buttons, { text = "Danger", variant = "danger" })
       UI.Button(buttons, { text = "Ghost", variant = "ghost", chevron = true })
       UI.Button(buttons, { id = "icon", variant = "icon", icon = 136235, tooltip = function() return "An icon" end })
+      UI.Button(buttons, { id = "fullColorIcon", variant = "icon", icon = 136235, iconColor = false })
       UI.Button(buttons, { id = "disabled", text = "Disabled", disabled = true, onClick = logged("disabled-click") })
       UI.Checkbox(page, { id = "check", label = "Check me", value = false, onChange = function(v) log[#log + 1] = "check:"..tostring(v) end })
       UI.EditBox(page, { id = "edit", label = "Name", value = "Route", placeholder = "Type a name",
@@ -80,6 +81,10 @@ return function(ctx)
     expect(not page:Find("hiddenText"):IsShown(), "hidden child is shown")
     expect(page:Find("default"):GetWidth() > 0 and page:Find("default"):GetWidth() < 120, "button natural width is off")
     expect(page:Find("icon"):GetWidth() == page:Find("icon"):GetHeight(), "icon button is not square")
+    local tinted = { page:Find("icon").kitIcon:GetVertexColor() }
+    local untinted = { page:Find("fullColorIcon").kitIcon:GetVertexColor() }
+    expect(table.concat(tinted, ",") == table.concat({ UI.Theme.Resolve("text.normal") }, ","), "icon is not tinted with the skin text color")
+    expect(table.concat(untinted, ",") == "1,1,1,1", "iconColor = false still tints the icon: "..table.concat(untinted, ","))
     local columns = page:Find("columns")
     expect(math.abs(columns[1]:GetWidth() * 2 - columns[2]:GetWidth()) <= 3, "columns are not weighted 1:2")
     expect(page:Find("tabA"), "first tab did not build its content")
