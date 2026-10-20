@@ -113,8 +113,16 @@ local function surface(self)
   end
 end
 
-local function sizeChanged(self, width)
+---A fixed-height container also relays out when its height changes, and its parent re-measures it.
+local function sizeChanged(self, width, height)
   if width ~= self.kitLaidOutWidth then Layout.Invalidate(self) end
+  if height ~= self.kitSizedHeight then
+    self.kitSizedHeight = height
+    if not self:kitAutoHeight() then
+      Layout.Invalidate(self)
+      self:InvalidateLayout()
+    end
+  end
 end
 
 local function createContainer(self)

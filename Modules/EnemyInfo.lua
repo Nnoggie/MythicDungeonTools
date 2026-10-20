@@ -1,496 +1,402 @@
 local _, MDT = ...
 local L = MDT.L
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
+local Theme, Fonts = UI.Theme, UI.Fonts
 local db
-local tinsert = table.insert
 
-AceGUI:RegisterLayout("ThreeColums", function(content, children)
-  if children[1] then
-    children[1]:SetWidth(content:GetWidth() / 3 - 10)
-    children[1].frame:ClearAllPoints()
-    children[1].frame:SetPoint("TOPLEFT", content, "TOPLEFT", 0, 0)
-    children[1].frame:SetPoint("BOTTOMLEFT", content, "BOTTOMLEFT", 0, 0)
-    children[1].frame:Show()
-  end
-  if children[2] then
-    children[2]:SetWidth(content:GetWidth() / 3 - 10)
-    children[2].frame:ClearAllPoints()
-    children[2].frame:SetPoint("TOPLEFT", children[1].frame, "TOPRIGHT", 0, 0)
-    children[2].frame:SetPoint("BOTTOMLEFT", children[1].frame, "BOTTOMRIGHT", 0, 0)
-    children[2].frame:Show()
-  end
-  if children[3] then
-    children[3]:SetWidth(content:GetWidth() / 3 - 10)
-    children[3].frame:ClearAllPoints()
-    children[3].frame:SetPoint("TOPLEFT", children[2].frame, "TOPRIGHT", 0, 0)
-    children[3].frame:SetPoint("BOTTOMLEFT", children[2].frame, "BOTTOMRIGHT", 0, 0)
-    children[3].frame:Show()
-  end
-  xpcall(content.obj.LayoutFinished, errorhandler, content.obj, nil, nil)
-end)
+local DEFAULT_DISPLAY_ID = 39490
+local UNKNOWN_SPELL_ICON = 134400
+local SPELL_ROW_HEIGHT = 32
+local SPELL_ICON_SIZE = 28
+local STATUS_ICON_SIZE = 14
+local TOOLTIP_ICON_SIZE = 12
+local CHARACTERISTIC_ICON_SIZE = 20
+local MIN_MODEL_HEIGHT = 120
+local MIN_LIST_HEIGHT = 64
 
-local currentTab = "tab1"
-local function MakeEnemeyInfoFrame()
-  local f = AceGUI:Create("Frame")
-  f.frame:SetParent(MDT.main_frame)
-  f.frame:SetFrameStrata("DIALOG")
-  MDT.enemyInfoFrame = f
-  f:SetTitle(L["Enemy Info"])
-  f:EnableResize(false)
-  f.frame:SetMovable(false)
-  function f.frame:StartMoving() end
+local CHARACTERISTICS = {
+  { key = "Stun", icon = "Interface\\ICONS\\spell_frost_stun" },
+  { key = "Sap", icon = "Interface\\ICONS\\ability_sap" },
+  { key = "Incapacitate", icon = "Interface\\ICONS\\ability_monk_paralysis" },
+  { key = "Repentance", icon = "Interface\\ICONS\\spell_holy_prayerofhealing" },
+  { key = "Disorient", icon = "Interface\\ICONS\\spell_shadow_mindsteal" },
+  { key = "Banish", icon = "Interface\\ICONS\\spell_shadow_cripple" },
+  { key = "Fear", icon = "Interface\\ICONS\\spell_shadow_possession" },
+  { key = "Root", icon = "Interface\\ICONS\\spell_frost_frostnova" },
+  { key = "Polymorph", icon = "Interface\\ICONS\\spell_nature_polymorph" },
+  { key = "Shackle Undead", icon = "Interface\\ICONS\\spell_nature_slow" },
+  { key = "Mind Control", icon = "Interface\\ICONS\\spell_shadow_shadowworddominate" },
+  { key = "Grip", icon = "Interface\\ICONS\\spell_deathknight_strangulate" },
+  { key = "Knock", icon = "Interface\\ICONS\\ability_druid_typhoon" },
+  { key = "Silence", icon = "Interface\\ICONS\\ability_priest_silence" },
+  { key = "Taunt", icon = "Interface\\ICONS\\spell_nature_reincarnation" },
+  { key = "Control Undead", icon = "Interface\\ICONS\\inv_misc_bone_skull_01" },
+  { key = "Enslave Demon", icon = "Interface\\ICONS\\spell_shadow_enslavedemon" },
+  { key = "Slow", icon = "Interface\\ICONS\\ability_rogue_trip" },
+  { key = "Imprison", icon = "Interface\\ICONS\\ability_demonhunter_imprison" },
+  { key = "Sleep Walk", icon = "Interface\\ICONS\\ability_xavius_dreamsimulacrum" },
+  { key = "Scare Beast", icon = "Interface\\ICONS\\ability_druid_cower" },
+  { key = "Hibernate", icon = "Interface\\ICONS\\spell_nature_sleep" },
+  { key = "Turn Evil", icon = "Interface\\ICONS\\ability_paladin_turnevil" },
+  { key = "Mind Soothe", icon = "Interface\\ICONS\\spell_holy_mindsooth" },
+}
 
-  f:SetLayout("Fill")
-  f:SetCallback("OnClose", function(widget)
+---Spell flags in display order. devKey toggles the flag on the hovered spell row in dev mode.
+local SPELL_STATUSES = {
+  { key = "interruptible", atlas = "icons_16x16_interrupt", label = L["Interruptible"], devKey = "I" },
+  { key = "magic", atlas = "icons_16x16_magic", label = L["Magic"], devKey = "M" },
+  { key = "poison", atlas = "icons_16x16_poison", label = L["Poison"], devKey = "P" },
+  { key = "disease", atlas = "icons_16x16_disease", label = L["Disease"], devKey = "D" },
+  { key = "curse", atlas = "icons_16x16_curse", label = L["Curse"], devKey = "C" },
+  { key = "bleed", atlas = "icons_16x16_bleed", label = L["Bleed"], devKey = "B" },
+  { key = "enrage", atlas = "icons_16x16_enrage", label = L["Enrage"], devKey = "E" },
+}
+local STATUS_BY_DEV_KEY = {}
+for _, status in ipairs(SPELL_STATUSES) do STATUS_BY_DEV_KEY[status.devKey] = status end
 
-  end)
-  f.frame:ClearAllPoints()
-  f.frame:SetAllPoints(MDTScrollFrame)
-
-  local originalHide = MDT.main_frame.Hide
-  function MDT.main_frame:Hide(...)
-    f.frame:Hide()
-    return originalHide(self, ...);
-  end
-
-  f.tabGroup = AceGUI:Create("TabGroup")
-  local tabGroup = f.tabGroup
-  tabGroup:SetTabs(
-    {
-      { text = L["Enemy Info"], value = "tab1" },
-      --{text="Damage Calc", value="tab2"},
-    }
-  )
-  tabGroup:SetLayout("ThreeColums")
-  f:AddChild(tabGroup)
-
-  --EnemyInfo
-  local function DrawGroup1(container)
-    ---LEFT
-    local leftContainer = AceGUI:Create("SimpleGroup")
-    f.leftContainer = leftContainer
-    if not leftContainer.frame.SetBackdrop then
-      Mixin(leftContainer.frame, BackdropTemplateMixin)
-    end
-    --Temporary Fix: backdrop frame level is set to 10000 normally
-    --leftContainer.frame:GetBackdrop():SetFrameLevel(1)
-    leftContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    leftContainer:SetLayout("List")
-    leftContainer:SetWidth(container.frame:GetWidth() / 3)
-    leftContainer:SetHeight(container.frame:GetHeight())
-
-    --enemyDropDown
-    f.enemyDropDown = AceGUI:Create("Dropdown")
-    local enemyDropDown = f.enemyDropDown
-    enemyDropDown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-      MDT:UpdateEnemyInfoFrame(key)
-    end)
-
-    --model
-    f.model = f.model or CreateFrame("PlayerModel", nil, f.frame, "ModelWithControlsTemplate")
-    local model = f.model
-    model:SetFrameLevel(1)
-    model:SetSize(leftContainer.frame:GetWidth() - 30, 269)
-    model:SetScript("OnEnter", nil)
-    model:SetFrameLevel(150)
-    model:Show()
-    f.modelContainer = f.modelContainer or AceGUI:Create("InlineGroup")
-    local modelContainer = f.modelContainer
-    if not modelContainer.frame.SetBackdrop then
-      Mixin(modelContainer.frame, BackdropTemplateMixin)
-    end
-    modelContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    modelContainer:SetWidth(leftContainer.frame:GetWidth() - 20)
-    modelContainer:SetHeight(249)
-    modelContainer:SetLayout("Flow")
-    f.modelDummyIcon = f.modelDummyIcon or AceGUI:Create("Icon")
-    local modelDummyIcon = f.modelDummyIcon
-    modelDummyIcon:SetImageSize(leftContainer.frame:GetWidth() - 20, 249)
-    modelDummyIcon:SetDisabled(true)
-    modelContainer:AddChild(modelDummyIcon)
-    model:ClearAllPoints()
-    model:SetPoint("BOTTOM", modelContainer.frame, "BOTTOM", 0, 10)
-    MDT:FixAceGUIShowHide(model, modelContainer.frame, true)
-
-    f.characteristicsContainer = AceGUI:Create("InlineGroup")
-    if not f.characteristicsContainer.frame.SetBackdrop then
-      Mixin(f.characteristicsContainer.frame, BackdropTemplateMixin)
-    end
-    f.characteristicsContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    f.characteristicsContainer:SetWidth(leftContainer.frame:GetWidth() - 20)
-    f.characteristicsContainer:SetHeight(80)
-    f.characteristicsContainer:SetLayout("Flow")
-
-    leftContainer:AddChild(enemyDropDown)
-    leftContainer:AddChild(modelContainer)
-    leftContainer:AddChild(f.characteristicsContainer)
-
-    ---MIDDLE
-    f.midContainer = f.midContainer or AceGUI:Create("SimpleGroup")
-    local midContainer = f.midContainer
-    if not midContainer.frame.SetBackdrop then
-      Mixin(midContainer.frame, BackdropTemplateMixin)
-    end
-    --Temporary Fix: backdrop frame level is set to 10000 normally
-    --midContainer.frame.backdrop:SetFrameLevel(1)
-    midContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    midContainer:SetLayout("List")
-    midContainer:SetWidth(container.frame:GetWidth() / 3)
-    midContainer:SetHeight(container.frame:GetHeight())
-
-    --spacing
-    local midDummyIcon = AceGUI:Create("Icon")
-    midDummyIcon:SetImageSize(20, 20)
-    midDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
-    midDummyIcon:SetDisabled(true)
-    midContainer:AddChild(midDummyIcon)
-
-    f.enemyDataContainer = AceGUI:Create("InlineGroup")
-    if not f.enemyDataContainer.frame.SetBackdrop then
-      Mixin(f.enemyDataContainer.frame, BackdropTemplateMixin)
-    end
-    f.enemyDataContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    f.enemyDataContainer:SetWidth(leftContainer.frame:GetWidth() - 20)
-    f.enemyDataContainer:SetHeight(235)
-    f.enemyDataContainer:SetLayout("Flow")
-
-    f.enemyDataContainer.nameEditBox = AceGUI:Create("EditBox")
-    f.enemyDataContainer.nameEditBox:SetLabel(L["Enemy Info NPC Name"])
-    f.enemyDataContainer.nameEditBox:DisableButton(true)
-    f.enemyDataContainer.nameEditBox:SetCallback("OnTextChanged", function(self)
-      self:SetText(self.defaultText)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.nameEditBox)
-
-    f.enemyDataContainer.idEditBox = AceGUI:Create("EditBox")
-    f.enemyDataContainer.idEditBox:SetLabel(L["Enemy Info NPC Id"])
-    f.enemyDataContainer.idEditBox:DisableButton(true)
-    f.enemyDataContainer.idEditBox:SetCallback("OnTextChanged", function(self)
-      self:SetText(self.defaultText)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.idEditBox)
-
-    f.enemyDataContainer.healthEditBox = AceGUI:Create("EditBox")
-    f.enemyDataContainer.healthEditBox:SetLabel(" ") --has to be non empty for proper spacing, we set this later
-    f.enemyDataContainer.healthEditBox:DisableButton(true)
-    f.enemyDataContainer.healthEditBox:SetCallback("OnTextChanged", function(self)
-      self:SetText(self.defaultText)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.healthEditBox)
-
-    f.enemyDataContainer.creatureTypeEditBox = AceGUI:Create("EditBox")
-    f.enemyDataContainer.creatureTypeEditBox:SetLabel(L["Enemy Info NPC Creature Type"])
-    f.enemyDataContainer.creatureTypeEditBox:DisableButton(true)
-    f.enemyDataContainer.creatureTypeEditBox:SetCallback("OnTextChanged", function(self)
-      self:SetText(self.defaultText)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.creatureTypeEditBox)
-
-    f.enemyDataContainer.levelEditBox = AceGUI:Create("EditBox")
-    f.enemyDataContainer.levelEditBox:SetLabel(L["Enemy Info NPC Level"])
-    f.enemyDataContainer.levelEditBox:DisableButton(true)
-    f.enemyDataContainer.levelEditBox:SetCallback("OnTextChanged", function(self)
-      self:SetText(self.defaultText)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.levelEditBox)
-
-    f.enemyDataContainer.countEditBox = AceGUI:Create("EditBox")
-    f.enemyDataContainer.countEditBox:SetLabel(L["Enemy Info NPC Enemy Forces"])
-    f.enemyDataContainer.countEditBox:DisableButton(true)
-    f.enemyDataContainer.countEditBox:SetCallback("OnTextChanged", function(self)
-      self:SetText(self.defaultText)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.countEditBox)
-
-    f.enemyDataContainer.stealthCheckBox = AceGUI:Create("CheckBox")
-    f.enemyDataContainer.stealthCheckBox:SetLabel(L["Enemy Info NPC Stealth"])
-    f.enemyDataContainer.stealthCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth() / 2) - 40)
-    f.enemyDataContainer.stealthCheckBox:SetCallback("OnValueChanged", function(self)
-      self:SetValue(self.defaultValue)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.stealthCheckBox)
-
-    f.enemyDataContainer.stealthDetectCheckBox = AceGUI:Create("CheckBox")
-    f.enemyDataContainer.stealthDetectCheckBox:SetLabel(L["Enemy Info NPC Stealth Detect"])
-    f.enemyDataContainer.stealthDetectCheckBox:SetWidth((f.enemyDataContainer.frame:GetWidth() / 2))
-    f.enemyDataContainer.stealthDetectCheckBox:SetCallback("OnValueChanged", function(self)
-      self:SetValue(self.defaultValue)
-    end)
-    f.enemyDataContainer:AddChild(f.enemyDataContainer.stealthDetectCheckBox)
-
-
-    midContainer:AddChild(f.enemyDataContainer)
-
-    ---RIGHT
-    f.rightContainer = f.rightContainer or AceGUI:Create("SimpleGroup")
-    local rightContainer = f.rightContainer
-    if not rightContainer.frame.SetBackdrop then
-      Mixin(rightContainer.frame, BackdropTemplateMixin)
-    end
-    --Temporary Fix: backdrop frame level is set to 10000 normally
-    --rightContainer.frame.backdrop:SetFrameLevel(1)
-    rightContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    rightContainer:SetLayout("List")
-    rightContainer:SetWidth(container.frame:GetWidth() / 3)
-    rightContainer:SetHeight(container.frame:GetHeight())
-
-    if db.devMode then
-      local devModeLabel = AceGUI:Create("Label")
-      devModeLabel:SetText("R: Delete\nI: Toggle Interruptible\nS: Print SpellId")
-      rightContainer:AddChild(devModeLabel)
-    end
-
-    --spacing
-    local rightDummyIcon = AceGUI:Create("Icon")
-    rightDummyIcon:SetImageSize(20, 20)
-    rightDummyIcon:SetHeight(enemyDropDown.frame:GetHeight())
-    rightDummyIcon:SetDisabled(true)
-
-    --spells
-    f.spellScrollContainer = f.spellScrollContainer or AceGUI:Create("InlineGroup")
-    local spellScrollContainer = f.spellScrollContainer
-    if not spellScrollContainer.frame.SetBackdrop then
-      Mixin(spellScrollContainer.frame, BackdropTemplateMixin)
-    end
-    spellScrollContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    spellScrollContainer:SetWidth(leftContainer.frame:GetWidth() - 20)
-    spellScrollContainer:SetHeight(282)
-    spellScrollContainer:SetLayout("Fill")
-
-    f.spellScroll = AceGUI:Create("ScrollFrame")
-    f.spellScroll:SetLayout("List")
-    spellScrollContainer:AddChild(f.spellScroll)
-
-    --spellButtons
-    f.spellButtonsContainer = f.spellButtonsContainer or AceGUI:Create("InlineGroup")
-    local spellButtonsContainer = f.spellButtonsContainer
-    if not spellButtonsContainer.frame.SetBackdrop then
-      Mixin(spellButtonsContainer.frame, BackdropTemplateMixin)
-    end
-    spellButtonsContainer.frame:SetBackdropColor(1, 1, 1, 0)
-    spellButtonsContainer:SetWidth(leftContainer.frame:GetWidth() - 20)
-    spellScrollContainer:SetLayout("Flow")
-
-    local buttonWidth = 110
-    f.sendSpellsButton = f.sendSpellsButton or AceGUI:Create("Button")
-    local sendSpellsButton = f.sendSpellsButton
-    sendSpellsButton:SetText(L["Link Spells"])
-    sendSpellsButton:SetWidth(buttonWidth)
-    sendSpellsButton:SetCallback("OnClick", function()
-      if #f.spellScroll.children < 1 then return end
-      local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
-      if not distribution then return end
-      local enemyName = f.enemyDropDown.text:GetText()
-      C_ChatInfo.SendChatMessage(string.format(L["MDT: Spells for %s:"], enemyName), distribution)
-      for i, child in pairs(f.spellScroll.children) do
-        local link = C_Spell.GetSpellLink(child.spellId)
-        C_ChatInfo.SendChatMessage(i..". "..link, distribution)
-      end
-    end)
-    spellButtonsContainer:AddChild(sendSpellsButton)
-
-    rightContainer:AddChild(rightDummyIcon)
-    rightContainer:AddChild(spellScrollContainer)
-    rightContainer:AddChild(spellButtonsContainer)
-
-
-    container:AddChild(leftContainer)
-    container:AddChild(midContainer)
-    container:AddChild(rightContainer)
-  end
-
-  --Damage Calc
-  local function DrawGroup2(container)
-
-  end
-
-  -- Callback function for OnGroupSelected
-  local function SelectGroup(container, event, group)
-    container:ReleaseChildren()
-    if group == "tab1" then
-      DrawGroup1(container)
-    elseif group == "tab2" then
-      DrawGroup2(container)
-    end
-    currentTab = group
-  end
-
-  tabGroup:SetCallback("OnGroupSelected", SelectGroup)
-  tabGroup:SelectTab(currentTab)
-
-  return f
+local DEV_DELETE_KEY, DEV_PRINT_KEY = "R", "S"
+local DEV_HELP
+do
+  local lines = { DEV_DELETE_KEY..": Delete", DEV_PRINT_KEY..": Print SpellId" }
+  for _, status in ipairs(SPELL_STATUSES) do lines[#lines + 1] = status.devKey..": Toggle "..status.label end
+  DEV_HELP = table.concat(lines, "\n")
 end
 
-local characteristics = {
-  ["Stun"] = "Interface\\ICONS\\spell_frost_stun",
-  ["Sap"] = "Interface\\ICONS\\ability_sap",
-  ["Incapacitate"] = "Interface\\ICONS\\ability_monk_paralysis",
-  ["Repentance"] = "Interface\\ICONS\\spell_holy_prayerofhealing",
-  ["Disorient"] = "Interface\\ICONS\\spell_shadow_mindsteal",
-  ["Banish"] = "Interface\\ICONS\\spell_shadow_cripple",
-  ["Fear"] = "Interface\\ICONS\\spell_shadow_possession",
-  ["Root"] = "Interface\\ICONS\\spell_frost_frostnova",
-  ["Polymorph"] = "Interface\\ICONS\\spell_nature_polymorph",
-  ["Shackle Undead"] = "Interface\\ICONS\\spell_nature_slow",
-  ["Mind Control"] = "Interface\\ICONS\\spell_shadow_shadowworddominate",
-  ["Grip"] = "Interface\\ICONS\\spell_deathknight_strangulate",
-  ["Knock"] = "Interface\\ICONS\\ability_druid_typhoon",
-  ["Silence"] = "Interface\\ICONS\\ability_priest_silence",
-  ["Taunt"] = "Interface\\ICONS\\spell_nature_reincarnation",
-  ["Control Undead"] = "Interface\\ICONS\\inv_misc_bone_skull_01",
-  ["Enslave Demon"] = "Interface\\ICONS\\spell_shadow_enslavedemon",
-  ["Slow"] = "Interface\\ICONS\\ability_rogue_trip",
-  ["Imprison"] = "Interface\\ICONS\\ability_demonhunter_imprison",
-  ["Sleep Walk"] = "Interface\\ICONS\\ability_xavius_dreamsimulacrum",
-  ["Scare Beast"] = "Interface\\ICONS\\ability_druid_cower",
-  ["Hibernate"] = "Interface\\ICONS\\spell_nature_sleep",
-  ["Turn Evil"] = "Interface\\ICONS\\ability_paladin_turnevil",
-  ["Mind Soothe"] = "Interface\\ICONS\\spell_holy_mindsooth",
-}
+---@class MDT.EnemyInfoSpellItem : MDT.UI.ListItem
+---@field spellId number
+---@field name string
+---@field icon string|number
+---@field statuses table[] entries of SPELL_STATUSES set on the spell
+
+---@class MDT.EnemyInfoField
+---@field id string
+---@field label string
+---@field value string
+
 local lastEnemyIdx, lastCloneIdx
+---The open window's controls; nil while it is closed.
+local view
+local model
+
 function MDT:GetEnemyInfoEnemyIdx()
   return lastEnemyIdx
 end
 
-function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
-  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
-  lastEnemyIdx, lastCloneIdx = enemyIdx, cloneIdx
-  if not enemyIdx then return end
-  local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-  if not data then return end
-  local f = MDT.EnemyInfoFrame
-  f:SetTitle(L[data.name])
-  f.model:SetDisplayInfo(data.displayId or 39490)
-  if f.model.ResetModel then f.model:ResetModel() end
-  f.model:SetPosition(0, 0, 0)
-
-  local container = f.tabGroup
-  ---rescaling
-  ---LEFT
-  f.leftContainer:SetWidth(container.frame:GetWidth() / 3)
-  f.leftContainer:SetHeight(container.frame:GetHeight())
-  f.model:SetSize(f.leftContainer.frame:GetWidth() - 30, 1.127 * (f.leftContainer.frame:GetWidth() - 30))
-  f.modelContainer:SetWidth(f.leftContainer.frame:GetWidth() - 20)
-  f.modelDummyIcon:SetImageSize(f.leftContainer.frame:GetWidth() - 20, f.leftContainer.frame:GetWidth() - 20)
-  f.characteristicsContainer:SetWidth(f.leftContainer.frame:GetWidth() - 20)
-  ---MIDDLE
-  f.midContainer:SetWidth(container.frame:GetWidth() / 3)
-  f.midContainer:SetHeight(container.frame:GetHeight())
-  f.enemyDataContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth() - 20, 248))
-  ---RIGHT
-  f.rightContainer:SetWidth(container.frame:GetWidth() / 3)
-  f.rightContainer:SetHeight(container.frame:GetHeight())
-  f.spellScrollContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth() - 20, 248))
-  f.spellButtonsContainer:SetWidth(math.min(f.leftContainer.frame:GetWidth() - 20, 248))
-
-  local enemies = {}
-  for mobIdx, edata in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
-    tinsert(enemies, mobIdx, L[edata.name])
-  end
-  f.enemyDropDown:SetList(enemies)
-  f.enemyDropDown:SetValue(enemyIdx)
-
-  --characteristics
-  f.characteristicsContainer:ReleaseChildren()
-  local characteristicsText = AceGUI:Create("Label")
-  characteristicsText:SetWidth(f.characteristicsContainer.frame:GetWidth())
-  characteristicsText:SetText(L["Affected by:"])
-  f.characteristicsContainer:AddChild(characteristicsText)
-  for text, iconPath in pairs(characteristics) do
-    if data.characteristics and data.characteristics[text] then
-      local icon = AceGUI:Create("Icon")
-      icon:SetImage(iconPath)
-      icon:SetImageSize(25, 25)
-      icon:SetWidth(25)
-      icon:SetHeight(27)
-      icon:SetCallback("OnEnter", function()
-        GameTooltip:SetOwner(icon.frame, "ANCHOR_BOTTOM", 0, -5)
-        GameTooltip:SetText(L[text], 1, 1, 1, 1)
-        GameTooltip:Show()
-      end)
-      icon:SetCallback("OnLeave", function()
-        GameTooltip:Hide()
-      end)
-      f.characteristicsContainer:AddChild(icon)
+---@return MDT.EnemyInfoSpellItem[]
+local function spellItems(spells)
+  local spellIds = {}
+  for spellId in pairs(spells or {}) do spellIds[#spellIds + 1] = spellId end
+  table.sort(spellIds)
+  local items = {}
+  for _, spellId in ipairs(spellIds) do
+    if not C_Spell.IsSpellDataCached(spellId) then C_Spell.RequestLoadSpellData(spellId) end
+    -- Spells that only exist on beta or PTR have no info on live.
+    local info = C_Spell.GetSpellInfo(spellId)
+    local statuses, flags = {}, {}
+    for _, status in ipairs(SPELL_STATUSES) do
+      if spells[spellId][status.key] then
+        statuses[#statuses + 1] = status
+        flags[#flags + 1] = status.devKey
+      end
     end
+    local name = info and info.name or tostring(spellId)
+    items[#items + 1] = {
+      kind = "spell", key = spellId, sig = name.."|"..table.concat(flags),
+      spellId = spellId, name = name, statuses = statuses,
+      icon = info and C_Spell.GetSpellTexture(spellId) or UNKNOWN_SPELL_ICON,
+    }
   end
-
-  MDT:UpdateEnemyInfoData(enemyIdx, cloneIdx)
-
-  --ace is finicky
-  f.rightContainer:PauseLayout()
-  f.spellScrollContainer:SetHeight(322)
-  f.spellScrollContainer:SetLayout("Fill")
-
-  -- Spells
-  f.spellScroll:ReleaseChildren()
-  if data.spells then
-    -- Create a table to store spell IDs
-    local spellIds = {}
-    -- Insert all spell IDs into the table
-    for spellId in pairs(data.spells) do
-      table.insert(spellIds, spellId)
-    end
-    -- Sort the spell IDs
-    table.sort(spellIds) -- Sort in numerical order
-
-    -- Create spell buttons in sorted order
-    for _, spellId in ipairs(spellIds) do
-      local spellData = data.spells[spellId]
-      local spellButton = AceGUI:Create("MDTSpellButton")
-      spellButton:SetSpell(spellId, spellData)
-      spellButton:Initialize()
-      spellButton:Enable()
-      f.spellScroll:AddChild(spellButton)
-    end
-  end
-
-  f.rightContainer:SetHeight(container.frame:GetHeight())
-  f.rightContainer:ResumeLayout()
-  f.rightContainer:DoLayout()
+  return items
 end
 
-function MDT:UpdateEnemyInfoData(enemyIdx, cloneIdx)
-  local f = MDT.EnemyInfoFrame
-  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
-  if not enemyIdx then return end
-  local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-  --data
-  f.enemyDataContainer.nameEditBox:SetText(L[data.name])
-  f.enemyDataContainer.nameEditBox.defaultText = data.name
-  f.enemyDataContainer.idEditBox:SetText(data.id)
-  f.enemyDataContainer.idEditBox.defaultText = data.id
-
-  local boss = data.isBoss or false
-  local health = MDT:CalculateEnemyHealth(boss, data.health, db.currentDifficulty, data.ignoreFortified)
-  local healthText = MDT:FormatEnemyHealth(health)
-
-  f.enemyDataContainer.healthEditBox:SetText(healthText)
-  f.enemyDataContainer.healthEditBox.defaultText = healthText
-
-  f.enemyDataContainer.creatureTypeEditBox:SetText(L[data.creatureType])
-  f.enemyDataContainer.creatureTypeEditBox.defaultText = data.creatureType
-  f.enemyDataContainer.levelEditBox:SetText(data.level)
-  f.enemyDataContainer.levelEditBox.defaultText = data.level
-  local count = MDT:GetCloneEnemyForces(data, data.clones[cloneIdx])
-  f.enemyDataContainer.countEditBox:SetText(count)
-  f.enemyDataContainer.countEditBox.defaultText = count
-  f.enemyDataContainer.stealthCheckBox:SetValue(data.stealth)
-  f.enemyDataContainer.stealthCheckBox.defaultValue = data.stealth
-  f.enemyDataContainer.stealthDetectCheckBox:SetValue(data.stealthDetect)
-  f.enemyDataContainer.stealthDetectCheckBox.defaultValue = data.stealthDetect
-
+---@return MDT.EnemyInfoField[]
+local function enemyFields(data, cloneIdx)
   local level = db.currentDifficulty
   local healthLabel = string.format(L["Enemy Info NPC Health Level"], level)
   if level >= 10 then
     healthLabel = string.format(L["Enemy Info NPC Health"], level, L["Fortified"].."/"..L["Tyrannical"])
   end
-  f.enemyDataContainer.healthEditBox:SetLabel(healthLabel)
+  local health = MDT:CalculateEnemyHealth(data.isBoss or false, data.health, level, data.ignoreFortified)
+  return {
+    { id = "name", label = L["Enemy Info NPC Name"], value = L[data.name] },
+    { id = "npcId", label = L["Enemy Info NPC Id"], value = tostring(data.id) },
+    { id = "health", label = healthLabel, value = MDT:FormatEnemyHealth(health) },
+    { id = "creatureType", label = L["Enemy Info NPC Creature Type"], value = L[data.creatureType] },
+    { id = "level", label = L["Enemy Info NPC Level"], value = tostring(data.level) },
+    { id = "forces", label = L["Enemy Info NPC Enemy Forces"], value = tostring(MDT:GetCloneEnemyForces(data, data.clones[cloneIdx])) },
+  }
+end
+
+local function enemyChoices()
+  local names, order = {}, {}
+  for enemyIdx, data in ipairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+    names[enemyIdx] = L[data.name]
+    order[enemyIdx] = enemyIdx
+  end
+  return UI.MenuModel.FromList(names, order)
+end
+
+local function currentEnemy()
+  return lastEnemyIdx and MDT.dungeonEnemies[db.currentDungeonIdx][lastEnemyIdx]
+end
+
+local function showSpellTooltip(row, item)
+  GameTooltip:SetOwner(row, "ANCHOR_BOTTOMLEFT", 0, row:GetHeight())
+  GameTooltip:ClearLines()
+  GameTooltip:SetSpellByID(item.spellId)
+  for _, status in ipairs(item.statuses) do
+    if CreateAtlasMarkup then
+      GameTooltip:AddLine(CreateAtlasMarkup(status.atlas, TOOLTIP_ICON_SIZE, TOOLTIP_ICON_SIZE)..status.label)
+    else
+      GameTooltip:AddLine(status.label)
+    end
+  end
+  GameTooltip:Show()
+end
+
+local function onDevKey(row, key)
+  if not db.devMode then return end
+  local enemy = currentEnemy()
+  local spell = enemy and enemy.spells and enemy.spells[row.spellId]
+  if not spell then return end
+  if key == DEV_PRINT_KEY then
+    print(row.spellId)
+    return
+  end
+  if key == DEV_DELETE_KEY then
+    enemy.spells[row.spellId] = nil
+  elseif STATUS_BY_DEV_KEY[key] then
+    local flag = STATUS_BY_DEV_KEY[key].key
+    spell[flag] = not spell[flag]
+  else
+    return
+  end
+  MDT:UpdateEnemyInfoFrame()
+end
+
+local SpellRow = {}
+
+function SpellRow:OnCreate()
+  self.kitIcon = self:CreateTexture(nil, "ARTWORK")
+  self.kitIcon:SetSize(SPELL_ICON_SIZE, SPELL_ICON_SIZE)
+  self.kitIcon:SetPoint("LEFT", self, "LEFT", Theme.Space("xs"), 0)
+  self.kitName = self:CreateFontString(nil, "ARTWORK")
+  self.kitName:SetFontObject(Fonts.Get("body"))
+  self.kitName:SetJustifyH("LEFT")
+  self.kitName:SetWordWrap(false)
+  Theme.Bind(self.kitName, "text.normal")
+  self.kitStatusIcons = {}
+  for i, status in ipairs(SPELL_STATUSES) do
+    local icon = self:CreateTexture(nil, "OVERLAY")
+    icon:SetSize(STATUS_ICON_SIZE, STATUS_ICON_SIZE)
+    icon:SetAtlas(status.atlas)
+    icon:Hide()
+    self.kitStatusIcons[i] = icon
+  end
+  self:SetScript("OnKeyDown", onDevKey)
+  self:EnableKeyboard(false)
+end
+
+---@param item MDT.EnemyInfoSpellItem
+function SpellRow:Bind(item)
+  self.spellId = item.spellId
+  self.kitIcon:SetTexture(item.icon)
+  self.kitName:SetText(item.name)
+  self.kitName:ClearAllPoints()
+  self.kitName:SetPoint("RIGHT", self, "RIGHT", -Theme.Space("md"), 0)
+  local gap = Theme.Space("sm")
+  if #item.statuses > 0 then
+    self.kitName:SetPoint("TOPLEFT", self.kitIcon, "TOPRIGHT", gap, 0)
+  else
+    self.kitName:SetPoint("LEFT", self.kitIcon, "RIGHT", gap, 0)
+  end
+  for _, icon in ipairs(self.kitStatusIcons) do icon:Hide() end
+  local previous
+  for _, status in ipairs(item.statuses) do
+    for i, candidate in ipairs(SPELL_STATUSES) do
+      if candidate == status then
+        local icon = self.kitStatusIcons[i]
+        icon:ClearAllPoints()
+        if previous then
+          icon:SetPoint("LEFT", previous, "RIGHT", Theme.Space("xs"), 0)
+        else
+          icon:SetPoint("BOTTOMLEFT", self.kitIcon, "BOTTOMRIGHT", gap, 0)
+        end
+        icon:Show()
+        previous = icon
+      end
+    end
+  end
+end
+
+function SpellRow:OnUnbind()
+  self:EnableKeyboard(false)
+  self.spellId = nil
+end
+
+local SPELL_KINDS = { spell = { height = SPELL_ROW_HEIGHT, mixin = SpellRow } }
+
+local function insertSpellLink(item)
+  local editBox = DEFAULT_CHAT_FRAME.editBox
+  if editBox and editBox:IsVisible() then
+    editBox:SetText(editBox:GetText()..(C_Spell.GetSpellLink(item.spellId) or ""))
+  end
+end
+
+local function linkSpells()
+  local items = view and view.spells or {}
+  if #items < 1 then return end
+  local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
+  if not distribution then return end
+  C_ChatInfo.SendChatMessage(string.format(L["MDT: Spells for %s:"], L[currentEnemy().name]), distribution)
+  for i, item in ipairs(items) do
+    C_ChatInfo.SendChatMessage(i..". "..(C_Spell.GetSpellLink(item.spellId) or item.name), distribution)
+  end
+end
+
+local function attachModel(host)
+  model = model or CreateFrame("PlayerModel", nil, host, "ModelWithControlsTemplate")
+  model:SetParent(host)
+  model:ClearAllPoints()
+  model:SetPoint("TOPLEFT", host, "TOPLEFT", 1, -1)
+  model:SetPoint("BOTTOMRIGHT", host, "BOTTOMRIGHT", -1, 1)
+  model:SetScript("OnEnter", nil)
+  model:Show()
+end
+
+-- The model is one frame for the addon's lifetime; it leaves the pooled host before the dialog is released.
+local function detachModel()
+  model:Hide()
+  model:ClearAllPoints()
+  model:SetParent(UI.Root)
+end
+
+local function buildContent(content)
+  local columns = UI.Columns(content, { weights = { 1, 1, 1 } })
+  for i = 1, 3 do columns[i]:SetAutoHeight(false) end
+  local left, middle, right = columns[1], columns[2], columns[3]
+  view.columns = columns
+
+  view.enemy = UI.Dropdown(left, { onChange = function(enemyIdx) MDT:UpdateEnemyInfoFrame(enemyIdx) end })
+  local modelHost = UI.Stack(left, { height = MIN_MODEL_HEIGHT, grow = 1, background = "bg.sunken", border = "border.normal" })
+  attachModel(modelHost)
+  UI.Text(left, { text = L["Affected by:"], font = "small", color = "text.muted" })
+  view.characteristics = UI.Row(left, { gap = "xs", wrap = true })
+
+  view.fields = {}
+  for _, field in ipairs(enemyFields(currentEnemy(), lastCloneIdx)) do
+    view.fields[field.id] = UI.EditBox(middle, { label = field.label, readOnly = true, selectAllOnFocus = true })
+  end
+  local flags = UI.Row(middle, { gap = "lg", wrap = true })
+  view.stealth = UI.Checkbox(flags, { label = L["Enemy Info NPC Stealth"], disabled = true })
+  view.stealthDetect = UI.Checkbox(flags, { label = L["Enemy Info NPC Stealth Detect"], disabled = true })
+
+  view.devHelp = UI.Text(right, { text = DEV_HELP, font = "small", color = "text.muted" })
+  view.list = UI.List(right, {
+    kinds = SPELL_KINDS, gap = "xs", height = MIN_LIST_HEIGHT, grow = 1,
+    onHover = function(item, _, row)
+      showSpellTooltip(row, item)
+      if db.devMode then row:EnableKeyboard(true) end
+    end,
+    onHoverEnd = function(_, _, row)
+      if GameTooltip:IsOwned(row) then GameTooltip:Hide() end
+      row:EnableKeyboard(false)
+    end,
+    onActivate = function(item, _, mods)
+      if mods.shift then insertSpellLink(item) end
+    end,
+  })
+  local actions = UI.Row(right, { align = "end" })
+  UI.Button(actions, { text = L["Link Spells"], onClick = linkSpells })
+end
+
+---Sizes the window to cover the map; the columns share the height below the title bar.
+local function fitToMap()
+  local map = MDT.main_frame.scrollFrame
+  local dialog = view.dialog
+  local columnHeight = map:GetHeight() - (dialog:GetHeight() - view.columns:GetHeight())
+  dialog.content:SetWidth(map:GetWidth())
+  for i = 1, 3 do view.columns[i]:SetHeight(columnHeight) end
+  dialog:ClearAllPoints()
+  dialog:SetPoint("TOPLEFT", map, "TOPLEFT", 0, 0)
+end
+
+local function applyFields(data, cloneIdx)
+  for _, field in ipairs(enemyFields(data, cloneIdx)) do
+    local box = view.fields[field.id]
+    box:SetLabel(field.label)
+    box:SetValue(field.value)
+  end
+  view.stealth:SetValue(data.stealth == true)
+  view.stealthDetect:SetValue(data.stealthDetect == true)
+end
+
+local function applyCharacteristics(data)
+  local row = view.characteristics
+  row:ReleaseChildren()
+  for _, characteristic in ipairs(CHARACTERISTICS) do
+    if data.characteristics and data.characteristics[characteristic.key] then
+      UI.Button(row, {
+        variant = "icon", icon = characteristic.icon, iconSize = CHARACTERISTIC_ICON_SIZE, iconColor = false,
+        tooltip = L[characteristic.key],
+      })
+    end
+  end
+end
+
+local function openWindow()
+  view = {}
+  view.dialog = UI.Dialogs.Open({
+    key = "enemyInfo",
+    title = L["Enemy Info"],
+    parent = MDT.main_frame,
+    width = MDT.main_frame.scrollFrame:GetWidth(),
+    pinned = true,
+    build = buildContent,
+    onClose = function()
+      detachModel()
+      view = nil
+    end,
+  })
+end
+
+function MDT:UpdateEnemyInfoFrame(enemyIdx, cloneIdx)
+  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
+  lastEnemyIdx, lastCloneIdx = enemyIdx, cloneIdx
+  if not view or not enemyIdx then return end
+  db = MDT:GetDB()
+  local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+  if not data then return end
+  view.dialog:SetTitle(L[data.name])
+  view.spells = spellItems(data.spells)
+  view.dialog.content:Batch(function()
+    fitToMap()
+    view.enemy:SetItems(enemyChoices())
+    view.enemy:SetValue(enemyIdx)
+    applyCharacteristics(data)
+    applyFields(data, cloneIdx)
+    view.devHelp:SetHidden(not db.devMode)
+    view.list:SetItems(view.spells)
+  end)
+  model:SetDisplayInfo(data.displayId or DEFAULT_DISPLAY_ID)
+  -- ResetModel comes from the template's mixin, which not every client version has.
+  local resetModel = rawget(model, "ResetModel")
+  if resetModel then resetModel(model) end
+  model:SetPosition(0, 0, 0)
+end
+
+---Refreshes the health, forces and other fields after the key level changed. No-op while the window is closed.
+function MDT:UpdateEnemyInfoData(enemyIdx, cloneIdx)
+  if not view then return end
+  if not enemyIdx then enemyIdx, cloneIdx = lastEnemyIdx, lastCloneIdx end
+  local data = enemyIdx and MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
+  if not data then return end
+  view.dialog.content:Batch(function() applyFields(data, cloneIdx) end)
 end
 
 function MDT:ShowEnemyInfoFrame(blip)
   db = MDT:GetDB()
-  MDT.EnemyInfoFrame = MDT.EnemyInfoFrame or MakeEnemeyInfoFrame()
+  lastEnemyIdx, lastCloneIdx = blip.enemyIdx, blip.cloneIdx
+  if not view then openWindow() end
   MDT:UpdateEnemyInfoFrame(blip.enemyIdx, blip.cloneIdx)
-  MDT.EnemyInfoFrame:Show()
 end

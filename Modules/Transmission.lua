@@ -182,7 +182,7 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       if difficulty and difficulty ~= db.currentDifficulty then
         db.currentDifficulty = difficulty
         MDT:RefreshSidebar()
-        if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
+        MDT:UpdateEnemyInfoData()
       end
     end
   end

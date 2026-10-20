@@ -57,7 +57,7 @@ function Methods:GetText() return self.kitProps.text end
 ---@field text string?
 ---@field icon (string|number)?
 ---@field iconSize number?
----@field iconColor MDT.UI.Color? tints the icon; defaults to the skin's text color
+---@field iconColor (MDT.UI.Color|false)? tints the icon; defaults to the skin's text color; false keeps the texture's own colors (spell and ability icons)
 ---@field iconCoords number[]?
 ---@field variant MDT.UI.Variant? default "default"
 ---@field font MDT.UI.FontRole?
@@ -105,7 +105,12 @@ UI.Define({
     self:SetScript("OnDragStart", function(button) button:Emit("onDragStart", button) end)
     self.kitOnRepaint = function(button, row)
       button.kitChevron:SetColor(row.text)
-      button.kitIcon:SetVertexColor(Theme.Resolve(button.kitProps.iconColor or row.text))
+      local iconColor = button.kitProps.iconColor
+      if iconColor == false then
+        button.kitIcon:SetVertexColor(1, 1, 1, 1)
+      else
+        button.kitIcon:SetVertexColor(Theme.Resolve(iconColor or row.text))
+      end
     end
   end,
   Measure = function(self)

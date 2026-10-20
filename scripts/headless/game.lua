@@ -309,7 +309,7 @@ return function(W)
   function G.UnitExists(unit) return unit == "player" end
   function G.UnitIsUnit(a, b) return a == b end
   function G.UnitName(unit) if unit == "player" then return "Headless", nil end end
-  function G.UnitFullName(unit) if unit == "player" then return "Headless", "Testrealm" end end
+  function G.UnitFullName(unit) if unit == "player" or unit == "Headless" then return "Headless", "Testrealm" end end
   function G.GetUnitName(unit) return G.UnitName(unit) end
   function G.UnitNameUnmodified(unit) return G.UnitName(unit) end
   function G.GetRealmName() return "Testrealm" end
