@@ -327,7 +327,7 @@ local createEnemyContextMenu = function(frame)
     assignments[frame.enemyIdx][frame.cloneIdx] = index ~= 0 and index or nil
     frame:SetUp(frame.data, frame.clone)
     if not db.hasSeenAssignmentWarning then
-      MDT:OpenConfirmationFrame(450, 150, L["Warning"], L["Okay"], L["assignmentWarning"])
+      MDT.UI.Dialogs.Confirm({ key = "assignmentWarning", width = 450, title = L["Warning"], text = L["assignmentWarning"], confirm = { text = L["Okay"], onClick = function() end } })
       db.hasSeenAssignmentWarning = true
     end
   end

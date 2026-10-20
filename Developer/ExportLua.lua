@@ -1,5 +1,4 @@
 local _, MDT = ...
-local slen = string.len
 
 -- The purpose of these functions is to provide a much better way to export the dungeon data lua tables to their string representations.
 -- Using standard tShow functions does not work well because index and field orders are not
@@ -14,15 +13,7 @@ function MDT:ExportString(export)
   if not export then return end
   MDT:Async(function()
     MDT:ShowInterfaceInternal(true)
-    local exportFrame = MDT.main_frame.ExportFrame
-    local editBox = MDT.main_frame.ExportFrameEditbox
-    exportFrame:ClearAllPoints()
-    exportFrame:Show()
-    exportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-    editBox:SetText(export)
-    editBox:HighlightText(0, slen(export))
-    editBox:SetFocus()
-    MDT.copyHelper:SmartShow(MDT.main_frame, 0, 50)
+    MDT:OpenExportStringDialog("", export)
   end, "exportString")
 end
 

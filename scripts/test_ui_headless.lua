@@ -134,12 +134,6 @@ local function click(widget, button)
   W.userClick(frame, button)
 end
 
-local function typeInto(widget, text)
-  local editbox = widget.editbox or widget
-  editbox:SetFocus()
-  editbox:SetText(text)
-end
-
 local function pulls() return MDT:GetCurrentPreset().value.pulls end
 local function unusedPresetName(base)
   local taken = {}
@@ -170,7 +164,7 @@ end)
 
 dofile(root.."/scripts/headless/sidebar_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
-  typeInto = typeInto, unusedPresetName = unusedPresetName, presetCount = presetCount,
+  unusedPresetName = unusedPresetName, presetCount = presetCount,
 })
 
 for _, section in ipairs(MDT:GetNavigationSections()) do
@@ -192,9 +186,10 @@ end)
 
 step("clear dialog opens and cancels", function()
   MDT:OpenClearPresetDialog()
-  expect(main.ClearConfirmationFrame.frame:IsVisible(), "clear dialog not shown")
-  click(main.ClearConfirmationFrame.CancelButton)
-  expect(not main.ClearConfirmationFrame.frame:IsVisible(), "clear dialog still shown")
+  local dialog = MDT.UI.Dialogs.Get("clearPreset")
+  expect(dialog and dialog:IsVisible(), "clear dialog not shown")
+  click(dialog.content:Find("cancel"))
+  expect(not dialog:IsShown() and MDT.UI.Dialogs.Get("clearPreset") == nil, "clear dialog still shown")
 end)
 
 dofile(root.."/scripts/headless/kit_gallery.lua")({
@@ -210,6 +205,7 @@ dofile(root.."/scripts/headless/chrome_steps.lua")({ W = W, MDT = MDT, step = st
 dofile(root.."/scripts/headless/enemy_info_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, developer = flags.developer == true,
 })
+dofile(root.."/scripts/headless/dialogs_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, snapshot = snapshot, unusedPresetName = unusedPresetName, presetCount = presetCount })
 
 step("hover every visible widget", function()
   local hovered = 0

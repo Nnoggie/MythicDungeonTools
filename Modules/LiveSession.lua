@@ -31,8 +31,7 @@ function MDT:LiveSession_Enable()
     local cancelCallback = function()
       MDT:LiveSession_Disable()
     end
-    local fireCancelOnClose = true
-    MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
+    MDT:CheckPresetSize(callback, cancelCallback)
   end)
 end
 

@@ -477,9 +477,8 @@ local function drawDatabaseTab(content)
   buttonRow(content, {
     { text = "Clear Cache + DC", onClick = function() MDT:ResetDataCache() end },
     { text = "Hard Reset DB", onClick = function()
-      MDT:OpenConfirmationFrame(300, 150, "Reset MDT DB", "Confirm", "Do you want to reset MDT DB?", function()
-        MDT:HardReset()
-      end, "Cancel", nil)
+      MDT.UI.Dialogs.Confirm({ title = "Reset MDT DB", text = "Do you want to reset MDT DB?",
+        confirm = { text = "Confirm", onClick = function() MDT:HardReset() end } })
     end },
     { text = "VDT DB", onClick = function() DevTool:AddData(db) end },
   })

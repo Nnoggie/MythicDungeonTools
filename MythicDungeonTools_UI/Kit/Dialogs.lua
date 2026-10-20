@@ -130,11 +130,11 @@ end
 local function footer(content, dialog, spec, onConfirm)
   local row = UI.Row(content, { gap = "sm", align = "end" })
   local confirmButton = UI.Button(row, {
-    text = spec.confirm.text, variant = spec.confirm.variant or "primary",
+    id = "confirm", text = spec.confirm.text, variant = spec.confirm.variant or "primary",
     onClick = function() if onConfirm() ~= false then dialog:Close("confirm") end end,
   })
-  if spec.alt then UI.Button(row, { text = spec.alt.text, onClick = function() dialog:Close("alt") end }) end
-  UI.Button(row, { text = spec.cancel and spec.cancel.text or L["Cancel"], onClick = function() dialog:Close("cancel") end })
+  if spec.alt then UI.Button(row, { id = "alt", text = spec.alt.text, onClick = function() dialog:Close("alt") end }) end
+  UI.Button(row, { id = "cancel", text = spec.cancel and spec.cancel.text or L["Cancel"], onClick = function() dialog:Close("cancel") end })
   return confirmButton
 end
 
@@ -189,7 +189,7 @@ function Dialogs.Prompt(spec)
         problem:SetHidden(valid or not message)
       end
       UI.EditBox(content, {
-        label = spec.label, value = text, placeholder = spec.placeholder, multiline = spec.multiline, lines = spec.lines,
+        id = "input", label = spec.label, value = text, placeholder = spec.placeholder, multiline = spec.multiline, lines = spec.lines,
         readOnly = spec.readOnly, maxLetters = spec.maxLetters, autoFocus = not spec.readOnly, selectAllOnFocus = true,
         onChange = function(value)
           text = value
@@ -203,6 +203,7 @@ function Dialogs.Prompt(spec)
         onEscape = function() dialog:Close("escape") end,
       })
       problem = UI.Text(content, { text = "", color = "warn", hidden = true })
+      if spec.build then spec.build(content, dialog) end
       if spec.checkbox then
         UI.Checkbox(content, { label = spec.checkbox.text, value = checked, onChange = function(value) checked = value end })
       end

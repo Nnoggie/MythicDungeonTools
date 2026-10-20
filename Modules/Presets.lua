@@ -286,46 +286,27 @@ function MDT:ClearPreset(preset, silent)
   MDT:ColorPull()
 end
 
-function MDT:CreateNewPreset(name)
+---@param startingPointIdx integer? copy this preset of the current dungeon; nil or 0 starts empty
+function MDT:CreateNewPreset(name, startingPointIdx)
   initializeDB()
-  if name == "<New Preset>" then
-    MDT.main_frame.presetCreationLabel:SetText(string.format(L["Cannot create preset '%s'"], name))
-    MDT.main_frame.presetCreationCreateButton:SetDisabled(true)
-    MDT.main_frame.presetCreationCreateButton.text:SetTextColor(0.5, 0.5, 0.5)
-    MDT.main_frame.presetCreationFrame:DoLayout()
-    return
-  end
-  local duplicate = false
+  if not MDT:SanitizePresetName(name) then return end
   local countPresets = 0
-  for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-    countPresets = countPresets + 1
-    if v.text == name then duplicate = true end
-  end
-  if duplicate == false then
-    db.presets[db.currentDungeonIdx][countPresets + 1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
+  for _ in pairs(db.presets[db.currentDungeonIdx]) do countPresets = countPresets + 1 end
+  db.presets[db.currentDungeonIdx][countPresets + 1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
 
-    local startingPointPresetIdx = MDT.main_frame.PresetCreationDropDown:GetValue() - 1
-    if startingPointPresetIdx > 0 then
-      db.presets[db.currentDungeonIdx][countPresets] = CopyTable(db.presets[db.currentDungeonIdx][
-      startingPointPresetIdx])
-      db.presets[db.currentDungeonIdx][countPresets].text = name
-      db.presets[db.currentDungeonIdx][countPresets].uid = nil
-    else
-      db.presets[db.currentDungeonIdx][countPresets] = { text = name, value = {} }
-    end
-
-    db.currentPreset[db.currentDungeonIdx] = countPresets
-    MDT:EnsurePresetCreatedBy(db.presets[db.currentDungeonIdx][countPresets], true)
-    MDT.main_frame.presetCreationFrame:Hide()
-    MDT:UpdateMap()
-    MDT:SetPresetColorPaletteInfo()
-    MDT:ColorAllPulls()
+  if startingPointIdx and startingPointIdx > 0 then
+    db.presets[db.currentDungeonIdx][countPresets] = CopyTable(db.presets[db.currentDungeonIdx][startingPointIdx])
+    db.presets[db.currentDungeonIdx][countPresets].text = name
+    db.presets[db.currentDungeonIdx][countPresets].uid = nil
   else
-    MDT.main_frame.presetCreationLabel:SetText(string.format(L["Preset '%s' already exists"], name))
-    MDT.main_frame.presetCreationCreateButton:SetDisabled(true)
-    MDT.main_frame.presetCreationCreateButton.text:SetTextColor(0.5, 0.5, 0.5)
-    MDT.main_frame.presetCreationFrame:DoLayout()
+    db.presets[db.currentDungeonIdx][countPresets] = { text = name, value = {} }
   end
+
+  db.currentPreset[db.currentDungeonIdx] = countPresets
+  MDT:EnsurePresetCreatedBy(db.presets[db.currentDungeonIdx][countPresets], true)
+  MDT:UpdateMap()
+  MDT:SetPresetColorPaletteInfo()
+  MDT:ColorAllPulls()
 end
 
 function MDT:SanitizePresetName(text)
@@ -398,22 +379,13 @@ function MDT:ImportPreset(preset, fromLiveSession)
     end
   end
 
-  local clearConfirmationCloseCallback = function()
-    if self.main_frame.ConfirmationFrame then
-      self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()
-      end)
-    end
-  end
-
   local updateCallback = function()
-    clearConfirmationCloseCallback()
     db.presets[db.currentDungeonIdx][updateIndex] = preset
     db.currentPreset[db.currentDungeonIdx] = updateIndex
     finishImport()
   end
 
   local copyCallback = function(preserveUid)
-    clearConfirmationCloseCallback()
     local name = preset.text
     local num = 2
     for k, v in pairs(db.presets[db.currentDungeonIdx]) do
@@ -442,8 +414,6 @@ function MDT:ImportPreset(preset, fromLiveSession)
   local closeCallback = function()
     self.liveUpdateFrameOpen = nil
     self:LiveSession_Disable()
-    self.main_frame.ConfirmationFrame:SetCallback("OnClose", function()
-    end)
     if fromLiveSession then
       self.main_frame.SendingStatusBar:Hide()
       if self.main_frame.LoadingSpinner then
@@ -459,18 +429,22 @@ function MDT:ImportPreset(preset, fromLiveSession)
       updateCallback()
       return
     end
-    local prompt = string.format(L["Earlier Version"], duplicatePreset.text, "\n", "\n", "\n", "\n")
+    local prompt = string.format(L["Earlier Version"], duplicatePreset.text, "\n", "", "", "")
     local checkboxCallback = function(value)
       db.alwaysOverwriteRoutesByUID = value
       self:Settings_Refresh()
     end
-    self:OpenConfirmationFrame(450, 180, L["Import Preset"], L["Overwrite"], prompt, updateCallback, L["Make copy"],
-      function() copyCallback(false) end, nil, L["Always overwrite matching routes on import"], db.alwaysOverwriteRoutesByUID,
-      checkboxCallback)
-    if fromLiveSession then
-      self.liveUpdateFrameOpen = true
-      self.main_frame.ConfirmationFrame:SetCallback("OnClose", function() closeCallback() end)
-    end
+    if fromLiveSession then self.liveUpdateFrameOpen = true end
+    MDT.UI.Dialogs.Confirm({
+      key = "importOverwrite", width = 450, title = L["Import Preset"], text = prompt,
+      confirm = { text = L["Overwrite"], onClick = updateCallback },
+      alt = { text = L["Make copy"], onClick = function() copyCallback(false) end },
+      checkbox = { text = L["Always overwrite matching routes on import"], value = db.alwaysOverwriteRoutesByUID, onChange = checkboxCallback },
+      -- a live update that is not answered ends the session, also when the main window closes over it
+      onClose = fromLiveSession and function(_, reason)
+        if reason ~= "confirm" and reason ~= "alt" then closeCallback() end
+      end or nil,
+    })
   else
     copyCallback(true)
   end
@@ -501,11 +475,9 @@ function MDT:GetPresetColorPaletteInfo(preset)
   return preset.colorPaletteInfo
 end
 
-function MDT:RenamePreset(renameText, takeOwnership)
+function MDT:RenamePreset(renameText)
   initializeDB()
   local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
   preset.text = renameText
-  if takeOwnership then MDT:TakePresetOwnership(preset) end
-  MDT.main_frame.RenameFrame:Hide()
   MDT:RefreshSidebar()
 end
