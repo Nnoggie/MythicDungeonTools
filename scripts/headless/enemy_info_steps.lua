@@ -382,6 +382,14 @@ return function(ctx)
     expect(math.abs(panel():GetRight() - main.navigationSidebar:GetLeft()) < 0.5, "restored dev panel is not docked to the navigation bar")
   end)
 
+  step("dev tests: the in-game test suite passes", function()
+    W.printed = {}
+    MDT.test:RunAllTests()
+    W.settle(asyncIdle, 60, 30)
+    local output = table.concat(W.printed, " | ")
+    expect(output:find("All tests ran successfully", 1, true), "in-game tests failed: "..output)
+  end)
+
   step("dev panel: disabling dev mode hides the panel", function()
     MDT:ToggleDevMode()
     W.settle(asyncIdle, 30)
