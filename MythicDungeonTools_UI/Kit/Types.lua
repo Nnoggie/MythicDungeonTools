@@ -1,0 +1,170 @@
+-- LuaLS annotations for the MDT UI kit. Not loaded by the game; scripts/test_kit.lua checks the token aliases below against Kit/Theme.lua.
+---@meta
+
+---@alias MDT.UI.ColorToken
+---| "bg.panel"
+---| "bg.sunken"
+---| "bg.raised"
+---| "bg.raised2"
+---| "bg.overlay"
+---| "bg.dim"
+---| "bg.hover"
+---| "bg.pressed"
+---| "bg.selected"
+---| "border.normal"
+---| "border.strong"
+---| "border.divider"
+---| "text.normal"
+---| "text.muted"
+---| "text.disabled"
+---| "text.inverse"
+---| "accent"
+---| "accent.bg"
+---| "accent.bgHover"
+---| "accent.border"
+---| "ok"
+---| "ok.line"
+---| "warn"
+---| "live"
+---| "live.bg"
+---| "danger.bg"
+---| "danger.bgHover"
+---| "danger.border"
+
+---@alias MDT.UI.Space
+---| "xs"
+---| "sm"
+---| "md"
+---| "lg"
+---| "xl"
+
+---@alias MDT.UI.ControlSize
+---| "sm"
+---| "md"
+---| "lg"
+---| "row"
+
+---@alias MDT.UI.FontRole
+---| "body"
+---| "small"
+---| "title"
+---| "heading"
+---| "number"
+
+---@alias MDT.UI.Variant
+---| "default"
+---| "primary"
+---| "danger"
+---| "ghost"
+---| "icon"
+---| "field"
+---| "row"
+
+---@alias MDT.UI.State "normal"|"hover"|"pressed"|"selected"|"disabled"
+
+---@alias MDT.UI.RGBA number[] {r, g, b, a?} in 0..1. The only color shape that crosses an API.
+---@alias MDT.UI.Color MDT.UI.ColorToken|MDT.UI.RGBA
+
+---@class MDT.UI.SkinRow
+---@field bg MDT.UI.ColorToken|false
+---@field border MDT.UI.ColorToken|false
+---@field text MDT.UI.ColorToken
+
+---@class MDT.UI.ThemeData
+---@field color table<string, string> token -> hex
+---@field derived table<string, {[1]: string, [2]: "lighten"|"darken"|"mix", [3]: number, [4]: string?}>
+---@field space table<MDT.UI.Space, number>
+---@field size table<MDT.UI.ControlSize, number>
+---@field font table<MDT.UI.FontRole, {size: number}>
+---@field skin table<MDT.UI.Variant, table<MDT.UI.State, MDT.UI.SkinRow>>
+---@field border number
+---@field alpha {disabled: number, dragSource: number}
+---@field motion {commitDelay: number, dragScrollMax: number, dragEdge: number, submenuDelay: number}
+
+---@class MDT.UI.CommonSpec
+---@field id string? container:Find(id)
+---@field width number? fixed width; nil stretches in a Stack and takes the natural width in a Row
+---@field height (number|MDT.UI.ControlSize)? fixed height
+---@field grow number? share of leftover space in the parent container
+---@field hidden boolean? hidden children take no layout space
+---@field tooltip (string|fun(): string)?
+
+---@class MDT.UI.PropDef
+---@field name string
+---@field default any
+---@field set fun(self: MDT.UI.Control, value: any)? nil for callback props, which are only stored
+---@field relayout boolean? changing it invalidates the parent layout
+
+---@class MDT.UI.ClassDef
+---@field name string becomes UI[name]
+---@field frameType string
+---@field template string?
+---@field mixins table[]?
+---@field props MDT.UI.PropDef[] applied in declaration order on every acquire
+---@field Create fun(self: MDT.UI.Control) once per physical frame
+---@field OnRelease fun(self: MDT.UI.Control)?
+---@field Measure fun(self: MDT.UI.Control, availW: number): number, number? natural width and height
+
+---@class MDT.UI.Control
+---@field kit MDT.UI.ClassDef
+---@field kitProps table<string, any>
+---@field kitParent MDT.UI.Control?
+---@field kitChildren MDT.UI.Control[]?
+---@field [string] any
+
+---@class MDT.UI.MenuItem
+---@field kind ("action"|"choice"|"toggle"|"submenu"|"title"|"separator")? default "action"
+---@field text string?
+---@field detail string? muted second column
+---@field trailing string? right-aligned text
+---@field icon (string|number)?
+---@field textColor MDT.UI.Color?
+---@field value any? choice: compared with the dropdown value
+---@field checked boolean? toggle or choice
+---@field disabled boolean?
+---@field keepOpen boolean? toggle defaults to true, others to false
+---@field tooltip string?
+---@field items (MDT.UI.MenuItem[]|fun(): MDT.UI.MenuItem[])? submenu
+---@field onSelect fun(item: MDT.UI.MenuItem)?
+---@field key (string|number)? stable identity; defaults to the index
+
+---@class MDT.UI.ListItem
+---@field kind string selects a ListKind
+---@field key string|number identity for reconcile and drag
+---@field sig string? content signature; equal kind, key and sig skip the rebind
+---@field [string] any
+
+---@class MDT.UI.ListKind
+---@field height number|MDT.UI.ControlSize
+---@field mixin {OnCreate: fun(row: MDT.UI.Control), Bind: fun(row: MDT.UI.Control, item: MDT.UI.ListItem, index: integer, list: MDT.UI.Control), OnUnbind: fun(row: MDT.UI.Control)?}
+---@field draggable boolean?
+---@field selectable boolean?
+
+---@class MDT.UI.DialogSpec
+---@field title string
+---@field key string? keyed singleton: re-opening replaces the open one with reason "replaced"
+---@field width number? default 320
+---@field parent table? default: the registered provider, else UIParent
+---@field build fun(content: MDT.UI.Control, dialog: MDT.UI.Control)?
+---@field onClose fun(dialog: MDT.UI.Control, reason: "x"|"escape"|"cancel"|"confirm"|"alt"|"replaced"|"api"|"hidden")?
+---@field globalName string?
+
+---@class MDT.UI.ConfirmSpec : MDT.UI.DialogSpec
+---@field text string
+---@field confirm {text: string, onClick: fun(checked: boolean?), variant: MDT.UI.Variant?}
+---@field alt {text: string, onClick: fun(checked: boolean?)}?
+---@field cancel {text: string?, onClick: fun()?}? onClick runs once on every dismissal that is not confirm or alt
+---@field checkbox {text: string, value: boolean?, onChange: fun(value: boolean)?}?
+
+---@class MDT.UI.PromptSpec : MDT.UI.DialogSpec
+---@field label string?
+---@field value string?
+---@field placeholder string?
+---@field multiline boolean?
+---@field lines number?
+---@field readOnly boolean?
+---@field maxLetters number?
+---@field validate (fun(text: string): boolean, string?)?
+---@field checkbox {text: string, value: boolean?}?
+---@field confirm {text: string, onClick: fun(text: string, checked: boolean?), variant: MDT.UI.Variant?}
+---@field cancel {text: string?, onClick: fun()?}?
