@@ -81,13 +81,6 @@ function Base:kitMeasure(availW)
   return self.kitProps.width or self:GetWidth(), self:GetHeight()
 end
 
----@param disabled boolean
-function Base:SetDisabled(disabled)
-  self.kitProps.disabled = disabled and true or false
-  if self.SetEnabled then self:SetEnabled(not disabled) end
-  if self.kitRepaint then self:kitRepaint() end
-end
-
 function Base:IsDisabled()
   return self.kitProps.disabled == true
 end

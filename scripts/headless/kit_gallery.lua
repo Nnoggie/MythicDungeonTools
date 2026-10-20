@@ -219,6 +219,58 @@ return function(ctx)
     bad:Release()
   end)
 
+  step("kit lifecycle: SetDisabled at runtime makes every control inert, and SetDisabled(false) revives it", function()
+    log = {}
+    local box = UI.Stack(page, { id = "disabledBox" })
+    local button = UI.Button(box, { text = "Go", onClick = logged("button") })
+    local check = UI.Checkbox(box, { label = "Check", onChange = logged("check") })
+    local edit = UI.EditBox(box, { value = "v", onChange = logged("edit") })
+    local slider = UI.Slider(box, { min = 0, max = 10, step = 1, value = 2, onChange = logged("slider") })
+    local dropdown = UI.Dropdown(box, { items = UI.MenuModel.FromList({ a = "Alpha" }, { "a" }), onChange = logged("dropdown") })
+    local swatch = UI.ColorSwatch(box, { color = { 1, 0, 0, 1 }, onChange = logged("swatch") })
+    local stepper = UI.Stepper(box, { value = 5, min = 0, max = 10, onChange = logged("stepper") })
+    local controls = { button, check, edit, slider, dropdown, swatch, stepper }
+    UI.Layout.FlushAll()
+
+    local function drive()
+      click(button)
+      click(check)
+      W.userClick(edit.kitEdit)
+      W.userType(edit.kitEdit, "x")
+      edit:ClearFocus()
+      W.userDrag(slider.kitSlider, 7)
+      click(dropdown.kitButton)
+      local menuOpened = UI.Overlay.Top("menu") ~= nil
+      UI.Menu.Close()
+      click(swatch)
+      local pickerOpened = ColorPickerFrame:IsShown()
+      ColorPickerFrame:Hide()
+      click(stepper.kitUp)
+      return menuOpened, pickerOpened
+    end
+
+    edit:Focus()
+    for _, control in ipairs(controls) do control:SetDisabled(true) end
+    expect(not edit.kitEdit:HasFocus(), "disabling a focused edit box kept its focus")
+    for _, control in ipairs(controls) do expect(control:IsDisabled(), control.kit.name.." does not report disabled") end
+    local menuOpened, pickerOpened = drive()
+    expect(#log == 0, "a disabled control reported input: "..table.concat(log, ","))
+    expect(not menuOpened, "a disabled dropdown opened its menu")
+    expect(not pickerOpened, "a disabled color swatch opened the picker")
+    expect(edit:GetValue() == "v", "a disabled edit box took typing")
+    expect(stepper.kitUp:IsDisabled() and stepper.kitDown:IsDisabled(), "a disabled stepper left its arrows live")
+    expect(swatch.kitSwatch:GetAlpha() < 1, "a disabled color swatch is not dimmed")
+
+    for _, control in ipairs(controls) do control:SetDisabled(false) end
+    menuOpened, pickerOpened = drive()
+    expect(table.concat(log, ",") == "button,check,edit,slider,stepper", "re-enabled controls reported "..table.concat(log, ","))
+    expect(menuOpened and pickerOpened, "re-enabled dropdown or swatch did not open")
+    expect(swatch.kitSwatch:GetAlpha() == 1, "a re-enabled color swatch is still dimmed")
+    box:Release()
+    UI.Layout.FlushAll()
+    W.settle(asyncIdle, 5)
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs

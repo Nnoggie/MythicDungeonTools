@@ -114,7 +114,11 @@ UI.Define({
     { name = "maxBytes", default = 0, set = function(self, v) self.kitEdit:SetMaxBytes(v or 0) end },
     { name = "readOnly", default = false },
     { name = "selectAllOnFocus", default = false },
-    { name = "disabled", default = false, set = function(self, v) self.kitEdit:SetEnabled(not v) repaint(self) end },
+    { name = "disabled", default = false, set = function(self, v)
+      if v then self.kitEdit:ClearFocus() end
+      self.kitEdit:SetEnabled(not v)
+      repaint(self)
+    end },
     { name = "value", default = "", set = setValue },
     { name = "autoFocus", default = false, set = function(self, v) if v and not self.kitReleased then self.kitEdit:SetFocus() end end },
     { name = "onChange", default = nil },

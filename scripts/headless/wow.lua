@@ -457,8 +457,24 @@ function W.userClick(frame, button)
   else
     fireScript(frame, "OnMouseDown", button)
     fireScript(frame, "OnMouseUp", button)
+    if S[frame].class.name == "EditBox" and S[frame].enabled ~= false then frame:SetFocus() end
   end
 end
+
+-- Simulates typing: keystrokes reach only the focused edit box.
+function W.userType(editBox, text)
+  if not editBox:HasFocus() then return false end
+  editBox:Insert(text)
+  return true
+end
+
+-- Simulates dragging a slider's thumb: a disabled slider ignores the mouse.
+function W.userDrag(slider, value)
+  if S[slider].enabled == false then return false end
+  slider:SetValue(value, true)
+  return true
+end
+
 function ScriptRegion:EnableMouse(enabled) S[self].mouseEnabled = enabled ~= false end
 function ScriptRegion:IsMouseEnabled() return S[self].mouseEnabled == true end
 function ScriptRegion:EnableMouseMotion(enabled) S[self].mouseMotion = enabled ~= false end
