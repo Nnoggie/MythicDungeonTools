@@ -229,4 +229,81 @@ return function(ctx)
       expect(settings.enabled == false, "turning combat logging off did not save")
     end
   end)
+
+  local function playerFullName()
+    local name, realm = UnitFullName("player")
+    return realm and realm ~= "" and name.."-"..realm or name
+  end
+
+  step("focus marker: the player row picks a marker from its menu and the page shows it", function()
+    local page = openSection("marks")
+    local button = control(page, "marker1")
+    click(button)
+    local list = menuList()
+    local star = list.kitProps.items[2].text
+    expect(star:find("UI%-RaidTargetingIcon_1"), "the second menu item is not the star: "..tostring(star))
+    chooseFromMenu(star)
+    expect(MDT:FocusMarker_GetAssignments()[playerFullName()] == 1, "the star was not assigned to the player")
+    W.settle(ctx.asyncIdle, 30)
+    page = openSection("marks")
+    expect(control(page, "marker1"):GetText() == star, "the rebuilt marker button shows "..tostring(control(page, "marker1"):GetText()))
+    expect(control(page, "marker5"):IsDisabled(), "an empty roster row has an enabled marker button")
+  end)
+
+  step("focus marker: every checkbox saves, and the macro options rewrite the preview", function()
+    local settings = db.focusMarker
+    local page = openSection("marks")
+    local preview = control(page, "macroPreview")
+    for _, id in ipairs({ "announceReadyCheck", "useMacro", "suppressNotifications" }) do
+      toggle(page, id, function() return settings[id] == true end)()
+    end
+    local probes = { disableMouseoverFocus = "@mouseover", disableTargetMarkerInRaid = "/stopmacro", preserveExistingTargetMarkers = "~" }
+    for id, probe in pairs(probes) do
+      local had = preview:GetValue():find(probe, 1, true) ~= nil
+      local restore = toggle(page, id, function() return settings[id] == true end)
+      local has = preview:GetValue():find(probe, 1, true) ~= nil
+      expect(has ~= had, id.." did not change the macro preview: "..preview:GetValue())
+      restore()
+      expect((preview:GetValue():find(probe, 1, true) ~= nil) == had, id.." did not restore the macro preview")
+    end
+    local before = preview:GetValue()
+    W.userClick(preview.kitEdit)
+    W.userType(preview.kitEdit, "x")
+    expect(preview:GetValue() == before and preview.kitEdit:GetText() == before, "the read-only macro preview took typing")
+    preview:ClearFocus()
+  end)
+
+  step("focus marker: the macro icon follows Use macro, explains itself and drags the macro out", function()
+    local settings = db.focusMarker
+    local page = openSection("marks")
+    local icon = page:Find("macroIcon")
+    if settings.useMacro then click(control(page, "useMacro")) end
+    expect(not icon:IsVisible(), "the macro icon shows without Use macro")
+    click(control(page, "useMacro"))
+    expect(settings.useMacro == true and icon:IsVisible(), "the macro icon did not appear with Use macro")
+    W.pump(0.05)
+    local box = control(page, "useMacro")
+    expect(icon:GetLeft() >= box:GetRight() and icon:GetLeft() - box:GetRight() < 12, "the macro icon is not right after the checkbox label")
+    W.hover(icon)
+    expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == icon, "the macro icon shows no tooltip")
+    W.fireScript(icon, "OnLeave")
+    W.fireScript(icon, "OnDragStart")
+    expect(GetMacroIndexByName(settings.macroName or "MDTFocusMarker") > 0, "dragging the icon did not create the macro")
+    render("focus marker section", main)
+    click(control(page, "useMacro"))
+    expect(settings.useMacro == false and not icon:IsVisible(), "the macro icon stayed after Use macro was cleared")
+  end)
+
+  step("focus marker: Auto Assign gives the player a marker and the action buttons run", function()
+    local assignments = MDT:FocusMarker_GetAssignments()
+    assignments[playerFullName()] = nil
+    local page = openSection("marks")
+    click(control(page, "autoAssign"))
+    W.settle(ctx.asyncIdle, 30)
+    expect(assignments[playerFullName()] ~= nil, "Auto Assign left the player without a marker")
+    page = openSection("marks")
+    click(control(page, "syncMarks"))
+    click(control(page, "setKeybind"))
+    expect(page:Find("syncWarning") == nil, "a solo roster shows the sync warning")
+  end)
 end

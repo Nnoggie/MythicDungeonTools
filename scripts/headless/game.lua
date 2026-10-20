@@ -353,6 +353,7 @@ return function(W)
   function G.SaveBindings() end
   function G.GetCurrentBindingSet() return 1 end
   function G.KeyBindingFrame_LoadUI() end
+  G.Constants = { MacroConsts = { MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30 } }
   local macros = {}
   function G.GetNumMacros() return #macros, 0 end
   function G.GetMacroIndexByName(name)
