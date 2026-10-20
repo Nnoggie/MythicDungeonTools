@@ -91,7 +91,9 @@ UI.Define({
     self.content:HookScript("OnSizeChanged", function(content)
       self:SetSize(content:GetWidth(), TITLE_HEIGHT + content:GetHeight())
     end)
-    self:HookScript("OnHide", function() self:Close("hidden") end)
+    self:HookScript("OnHide", function()
+      if not UI.HiddenWithUIParent(self) then self:Close("hidden") end
+    end)
   end,
   OnRelease = function(self)
     self.content:ReleaseChildren()

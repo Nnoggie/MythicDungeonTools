@@ -1004,8 +1004,7 @@ function MDT:InitializeMainFrame()
   MDT:SetUpModifiers(main_frame)
   main_frame:Hide()
   local escapeEntry = { close = function() MDT:HideInterface() end }
-  main_frame:HookScript("OnShow", function() MDT.UI.Escape.Push(escapeEntry) end)
-  main_frame:HookScript("OnHide", function() MDT.UI.Escape.Remove(escapeEntry) end)
+  MDT.UI.Escape.Track(main_frame, escapeEntry)
   MDT.UI.Dialogs.SetDefaultParent(function() return MDT.main_frame end)
 
   if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end

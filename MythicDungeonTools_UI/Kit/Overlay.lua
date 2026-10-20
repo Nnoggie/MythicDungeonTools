@@ -7,7 +7,7 @@ local Escape = {}
 UI.Escape = Escape
 
 ---@class MDT.UI.EscapeEntry
----@field close fun() must remove the entry, directly or through the owner's close path
+---@field close fun() runs after Escape has removed the entry, so a close that finds its frame already hidden cannot wedge the stack
 
 ---@type MDT.UI.EscapeEntry[]
 local stack = {}
@@ -16,10 +16,25 @@ local catcher = CreateFrame("Frame", "MDTEscapeCatcher", UIParent)
 catcher:Hide()
 tinsert(UISpecialFrames, "MDTEscapeCatcher")
 
+---True when the frame is hidden only because UIParent is (Alt+Z, cinematics). It comes back with UIParent, so hide handlers ignore it.
+---@param frame table
+---@return boolean
+function UI.HiddenWithUIParent(frame)
+  local current = frame
+  while current and current ~= UIParent do
+    if not current:IsShown() then return false end
+    current = current:GetParent()
+  end
+  return current == UIParent and not UIParent:IsShown()
+end
+
 catcher:SetScript("OnHide", function()
-  if suppress then return end
+  if suppress or UI.HiddenWithUIParent(catcher) then return end
   local top = stack[#stack]
-  if top then top.close() end
+  if top then
+    Escape.Remove(top)
+    top.close()
+  end
   if #stack > 0 then
     C_Timer.After(0, function()
       if #stack > 0 and not catcher:IsShown() then catcher:Show() end
@@ -48,6 +63,21 @@ function Escape.Remove(entry)
     catcher:Hide()
     suppress = false
   end
+end
+
+---Ties an entry to a frame's own visibility: pushed when the frame shows, removed when it hides. Hiding UIParent leaves the entry in place.
+---@param frame table
+---@param entry MDT.UI.EscapeEntry
+function Escape.Track(frame, entry)
+  frame:HookScript("OnShow", function()
+    for _, existing in ipairs(stack) do
+      if existing == entry then return end
+    end
+    Escape.Push(entry)
+  end)
+  frame:HookScript("OnHide", function()
+    if not UI.HiddenWithUIParent(frame) then Escape.Remove(entry) end
+  end)
 end
 
 ---@return MDT.UI.EscapeEntry?

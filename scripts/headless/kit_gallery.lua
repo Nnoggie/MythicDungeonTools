@@ -296,6 +296,34 @@ return function(ctx)
     expect(not catcher:IsShown(), "click catcher stayed up with nothing open")
   end)
 
+  step("kit escape: hiding the whole UI (Alt+Z, cinematics) keeps dialogs, the window and the Escape stack", function()
+    log = {}
+    local depth = UI.Escape.Depth()
+    local dialog = UI.Dialogs.Confirm({ title = "Toggle", text = "Still here?",
+      confirm = { text = "Ok", onClick = logged("toggleConfirm") }, cancel = { onClick = logged("toggleCancel") } })
+    local top = UI.Escape.Top()
+    UIParent:Hide()
+    UIParent:Show()
+    W.settle(asyncIdle, 5)
+    expect(dialog:IsVisible() and not dialog.kitReleased, "hiding UIParent closed the dialog")
+    expect(MDT.main_frame:IsVisible(), "hiding UIParent closed the main window")
+    expect(#log == 0, "hiding UIParent ran a dialog callback: "..tostring(lastLog()))
+    expect(UI.Escape.Depth() == depth + 1 and UI.Escape.Top() == top, "hiding UIParent changed the Escape stack")
+    expect(CloseSpecialWindows(), "Escape found nothing after the UI came back")
+    expect(not dialog:IsShown() and lastLog() == "toggleCancel", "Escape after the UI came back did not close the dialog")
+    expect(MDT.main_frame:IsShown() and UI.Escape.Depth() == depth, "Escape after the UI came back popped more than one entry")
+    W.settle(asyncIdle, 5)
+
+    UIParent:Hide()
+    MDT:HideInterface()
+    UIParent:Show()
+    CloseSpecialWindows()
+    W.settle(asyncIdle, 5)
+    expect(UI.Escape.Depth() == depth - 1 and not CloseSpecialWindows(), "a window hidden while the UI was hidden wedged the Escape stack")
+    MDT.main_frame:Show()
+    expect(UI.Escape.Depth() == depth, "reopening the window did not push its Escape entry")
+  end)
+
   local list, order, selection
   local function buildItems()
     local items = {}
