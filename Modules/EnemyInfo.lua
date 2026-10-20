@@ -352,10 +352,8 @@ local function fill(card, blip)
       if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = "small", color = "text.muted" }) end
       local actions = UI.Row(content, { align = "end" })
       UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = linkSpells })
-    else
-      local hint = L["Right click to pin"]
-      if db.devMode then hint = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"].."\n"..hint end
-      UI.Text(content, { id = "hint", text = hint, font = "small", color = "text.muted" })
+    elseif db.devMode then
+      UI.Text(content, { id = "devHint", text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"], font = "small", color = "text.muted" })
     end
   end)
   -- The model is the card's own frame; it sits on the placeholder the layout just placed.
