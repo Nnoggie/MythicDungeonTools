@@ -81,7 +81,7 @@ UI.Define({
   end,
   Measure = function(self)
     local size = Theme.Size("md")
-    if self.kitProps.label then return size + Theme.Space("sm") + math.ceil(self.kitLabel:GetStringWidth()), size end
+    if self.kitProps.label then return size + Theme.Space("sm") + math.ceil(self.kitLabel:GetUnboundedStringWidth()), size end
     return size, size
   end,
 })

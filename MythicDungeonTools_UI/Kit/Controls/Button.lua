@@ -103,7 +103,7 @@ UI.Define({
     local props = self.kitProps
     local height = Theme.Size("md")
     if props.variant == "icon" then return height, height end
-    local width = Theme.Space("md") * 2 + self.kitLabel:GetStringWidth()
+    local width = Theme.Space("md") * 2 + self.kitLabel:GetUnboundedStringWidth()
     if props.icon then width = width + (props.iconSize or ICON_SIZE) + Theme.Space("sm") end
     if props.chevron then width = width + GLYPH_SIZE + Theme.Space("sm") end
     return math.ceil(width), height

@@ -388,6 +388,25 @@ return function(ctx)
     UI.Layout.FlushAll()
   end)
 
+  step("kit lifecycle: a control whose label grows measures the whole new label, not its old clipped width", function()
+    local long = "A much longer label than the last one"
+    local short = {}
+    for _, class in ipairs({ { "Button", "SetText" }, { "Checkbox", "SetLabel" }, { "ColorSwatch", "SetLabel" } }) do
+      local name, setter = class[1], class[2]
+      local row = UI.Row(page, {})
+      local control = UI[name](row, { [setter == "SetText" and "text" or "label"] = "Hi" })
+      UI.Layout.FlushAll()
+      control[setter](control, long)
+      UI.Layout.FlushAll()
+      local needed = control.kitLabel:GetUnboundedStringWidth()
+      local room = control:GetRight() - control.kitLabel:GetLeft()
+      if room < needed then short[#short + 1] = ("%s label has %d of the %d it needs"):format(name, room, needed) end
+      row:Release()
+    end
+    UI.Layout.FlushAll()
+    expect(#short == 0, table.concat(short, "; "))
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs

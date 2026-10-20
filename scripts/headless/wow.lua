@@ -785,14 +785,31 @@ function FontString:SetText(text)
 end
 function FontString:SetFormattedText(format, ...) self:SetText(string.format(format, ...)) end
 function FontString:GetText() return S[self].text end
-function FontString:GetStringWidth()
+function FontString:GetUnboundedStringWidth()
   local font = fontData(S[self])
   local text = S[self].text or ""
   local longest = 0
   for line in (text.."\n"):gmatch("(.-)\n") do longest = math.max(longest, #line:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")) end
   return longest * (font and font.height or 12) * 0.55
 end
-FontString.GetUnboundedStringWidth = FontString.GetStringWidth
+-- The width the string is laid out in: anchored on both sides, or an explicit width. nil when the string sizes itself.
+local function boundedWidth(fontString)
+  local state = S[fontString]
+  local left, right
+  for _, anchor in ipairs(state.points) do
+    local fraction = pointFractions[anchor.point][1]
+    if fraction == 0 then left = true elseif fraction == 1 then right = true end
+  end
+  local width = state.width
+  if left and right then width = select(3, resolveRect(fontString)) end
+  if width and width > 0 then return width end
+end
+-- Like the client: a bounded string reports at most its bounded width (truncated or wrapped).
+function FontString:GetStringWidth()
+  local width, bound = self:GetUnboundedStringWidth(), boundedWidth(self)
+  return bound and math.min(width, bound) or width
+end
+FontString.GetWrappedWidth = FontString.GetStringWidth
 function FontString:GetStringHeight()
   local font = fontData(S[self])
   local _, lines = (S[self].text or ""):gsub("\n", "")

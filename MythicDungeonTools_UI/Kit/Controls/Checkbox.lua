@@ -56,6 +56,6 @@ UI.Define({
     end)
   end,
   Measure = function(self)
-    return BOX + Theme.Space("sm") + math.ceil(self.kitLabel:GetStringWidth()), Theme.Size("sm")
+    return BOX + Theme.Space("sm") + math.ceil(self.kitLabel:GetUnboundedStringWidth()), Theme.Size("sm")
   end,
 })
