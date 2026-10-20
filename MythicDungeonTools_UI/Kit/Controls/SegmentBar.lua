@@ -6,16 +6,6 @@ local INSET = 1
 local MARKER_WIDTH = 2
 local SEGMENT_ALPHA = 0.55
 
-local Methods = {}
-
----@param segments {value: number, color: MDT.UI.Color}[]
----@param max number?
-function Methods:SetSegments(segments, max)
-  self.kitProps.segments = segments
-  if max then self.kitProps.max = max end
-  self:kitLayoutSegments()
-end
-
 local function layoutSegments(self)
   local props = self.kitProps
   local innerW = self:GetWidth() - INSET * 2
@@ -59,6 +49,21 @@ local function repaintText(self)
   Theme.Bind(self.kitText, color)
 end
 
+local function repaintAll(self)
+  layoutSegments(self)
+  repaintText(self)
+end
+
+local Methods = {}
+
+---@param segments {value: number, color: MDT.UI.Color}[]
+---@param max number?
+function Methods:SetSegments(segments, max)
+  self.kitProps.segments = segments
+  if max then self.kitProps.max = max end
+  repaintAll(self)
+end
+
 ---@class MDT.UI.SegmentBarSpec : MDT.UI.CommonSpec
 ---@field segments {value: number, color: MDT.UI.Color}[]
 ---@field max number
@@ -68,8 +73,8 @@ end
 UI.Define({
   name = "SegmentBar", frameType = "Frame", mixins = { Methods },
   props = {
-    { name = "max", default = 1, set = layoutSegments },
-    { name = "segments", default = {}, set = function(self) layoutSegments(self) repaintText(self) end },
+    { name = "max", default = 1, set = repaintAll },
+    { name = "segments", default = {}, set = repaintAll },
     { name = "marker", default = nil, set = layoutSegments },
     { name = "text", default = nil, set = repaintText },
     { name = "overflow", default = false, set = repaintText },
@@ -88,7 +93,6 @@ UI.Define({
     self.kitText:SetJustifyH("CENTER")
     self.kitText:SetShadowColor(0, 0, 0, 1)
     self.kitText:SetShadowOffset(0, -1)
-    self.kitLayoutSegments = layoutSegments
     self:SetScript("OnSizeChanged", function() layoutSegments(self) end)
   end,
   Measure = function(self, availW) return self.kitProps.width or availW, Theme.Size("sm") end,

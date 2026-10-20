@@ -533,6 +533,24 @@ return function(ctx)
     W.settle(asyncIdle, 5)
   end)
 
+  step("kit segment bar: SetSegments and SetMax repaint the over-max tint", function()
+    local function tint(bar) return table.concat({ bar.kitText:GetTextColor() }, ",") end
+    local function bar(segments, max) return UI.SegmentBar(page, { max = max, text = "x", overflow = true, segments = segments }) end
+    local over, under, full = { { value = 110, color = "ok" } }, { { value = 50, color = "ok" } }, { { value = 100, color = "ok" } }
+    local updated, freshUnder, freshOver, freshFull = bar(over, 100), bar(under, 100), bar(over, 100), bar(full, 100)
+    local wrong = {}
+    expect(tint(freshUnder) ~= tint(freshOver) and tint(freshFull) ~= tint(freshUnder), "setup: the three states share one tint")
+    updated:SetSegments(under, 100)
+    if tint(updated) ~= tint(freshUnder) then wrong[#wrong + 1] = "SetSegments to under max kept "..tint(updated) end
+    updated:SetSegments(full)
+    if tint(updated) ~= tint(freshFull) then wrong[#wrong + 1] = "SetSegments to exactly max kept "..tint(updated) end
+    updated:SetMax(200)
+    if tint(updated) ~= tint(freshUnder) then wrong[#wrong + 1] = "SetMax above the total kept "..tint(updated) end
+    expect(#wrong == 0, table.concat(wrong, "; "))
+    for _, control in ipairs({ updated, freshUnder, freshOver, freshFull }) do control:Release() end
+    UI.Layout.FlushAll()
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
