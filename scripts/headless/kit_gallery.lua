@@ -452,6 +452,25 @@ return function(ctx)
     UI.Layout.FlushAll()
   end)
 
+  step("kit dialogs: opening a dialog closes open popovers and menus so nothing covers it", function()
+    log = {}
+    local depth = UI.Escape.Depth()
+    local pop = UI.Popover({ anchor = page:Find("default"), onClose = function(reason) log[#log + 1] = "pop:"..reason end,
+      build = function(content) UI.Text(content, { text = "popover" }) end })
+    UI.Menu.Open({ anchor = page:Find("default"), items = { { text = "One" } }, onClose = function(reason) log[#log + 1] = "menu:"..reason end })
+    local dialog = UI.Dialogs.Confirm({ title = "Over", text = "On top", confirm = { text = "Ok", onClick = function() end } })
+    expect(not pop:IsShown() and UI.Overlay.Top("popover") == nil and UI.Overlay.Top("menu") == nil, "a popover or menu stayed open over the dialog")
+    expect(table.concat(log, ",") == "menu:replaced,pop:replaced", "dismissals reported "..table.concat(log, ","))
+    local covered = false
+    for _, object in ipairs(W.objects) do
+      local state = W.state[object]
+      if state.isFrame and state.class.name == "Button" and state.parent == UIParent and W.isVisible(object) and object:GetWidth() == UIParent:GetWidth() then covered = true end
+    end
+    expect(not covered, "the click catcher still covers the dialog")
+    expect(UI.Escape.Depth() == depth + 1, "the Escape stack holds more than the dialog")
+    dialog:Close("api")
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs

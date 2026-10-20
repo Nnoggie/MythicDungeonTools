@@ -9,6 +9,7 @@ local LEVEL_BASE = 100
 local LEVEL_STEP = 20
 
 ---Stackable dialogs. Escape closes the top one; a keyed dialog re-opened replaces itself; one close path, one reason.
+---Opening one closes open menus and popovers (reason "replaced"), whose click catcher would otherwise cover it.
 ---@class MDT.UI.DialogsApi
 local Dialogs = {}
 UI.Dialogs = Dialogs
@@ -103,6 +104,8 @@ UI.Define({
 ---@param spec MDT.UI.DialogSpec
 ---@return MDT.UI.Control dialog with Close(reason), `.content` and `.closeButton`
 function Dialogs.Open(spec)
+  UI.Overlay.PopAll("menu", "replaced")
+  UI.Overlay.PopAll("popover", "replaced")
   if spec.key and keyed[spec.key] then keyed[spec.key]:Close("replaced") end
   local parent = spec.parent or (parentProvider and parentProvider()) or UIParent
   local dialog = UI.DialogFrame(parent, { title = spec.title, onClose = spec.onClose })
