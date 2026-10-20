@@ -47,6 +47,14 @@ function MDT:EnsurePresetCreatedBy(preset, force)
   if author then preset.createdBy = author end
 end
 
+---Makes the player the preset's author and gives it a new uid, so it no longer counts as the original author's route.
+---@param preset table
+function MDT:TakePresetOwnership(preset)
+  MDT:EnsurePresetCreatedBy(preset, true)
+  preset.uid = nil
+  MDT:SetUniqueID(preset)
+end
+
 function MDT:GetClassFileByIndex(classIdx)
   return raidClassColorKeyByClassIndex[tonumber(classIdx)]
 end
@@ -499,11 +507,7 @@ function MDT:RenamePreset(renameText, takeOwnership)
   initializeDB()
   local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
   preset.text = renameText
-  if takeOwnership then
-    MDT:EnsurePresetCreatedBy(preset, true)
-    preset.uid = nil
-    MDT:SetUniqueID(preset)
-  end
+  if takeOwnership then MDT:TakePresetOwnership(preset) end
   MDT.main_frame.RenameFrame:Hide()
   MDT:RefreshSidebar()
 end

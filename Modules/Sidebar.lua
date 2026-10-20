@@ -161,6 +161,10 @@ local routeActions = {
   new = function() MDT:OpenNewPresetDialog() end,
   duplicate = function() MDT:OpenNewPresetDialog(db.currentPreset[db.currentDungeonIdx]) end,
   rename = function() MDT:OpenRenamePresetDialog() end,
+  takeOwnership = function()
+    MDT:TakePresetOwnership(MDT:GetCurrentPreset())
+    MDT:RefreshSidebar()
+  end,
   import = function() MDT:OpenImportPresetDialog() end,
   export = function() MDT:OpenExportDialog() end,
   share = function() MDT:SendCurrentPresetToGroup() end,
@@ -364,9 +368,14 @@ end
 local function routeMenuItems(idx)
   local a = sidebar.state.header.actions
   local function run(action) return function() MDT:RunRouteAction(action, idx) end end
+  local preset = db.presets[db.currentDungeonIdx][idx]
+  -- The default route has no author, and a new uid would drop the live route out of its session.
+  local canTakeOwnership = idx ~= 1 and not (a.liveActive and idx == a.livePresetIdx)
+    and not Model.IsAuthoredBy(preset.createdBy, MDT:GetCurrentRouteAuthor())
   return {
     { text = L["Rename"], onSelect = run("rename") },
     { text = L["Duplicate"], onSelect = run("duplicate") },
+    canTakeOwnership and { text = L["Mark as my route"], onSelect = run("takeOwnership") } or false,
     { text = L["Export"], onSelect = run("export") },
     { kind = "separator" },
     { text = L["Send to party"], disabled = not a.canShare, tooltip = groupReason("shareBlocked")(), onSelect = run("share") },

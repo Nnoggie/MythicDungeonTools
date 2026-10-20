@@ -348,6 +348,14 @@ end
 ---Routes of the current dungeon in three groups. The <New Preset> entry (value == 0) never appears.
 ---@param ctx MDT.SidebarContext
 ---@return {live: MDT.RouteEntry[], mine: MDT.RouteEntry[], others: MDT.RouteEntry[]}
+---Whether `createdBy` names the player. Routes without an author are not anyone's.
+---@param createdBy table?
+---@param player {name: string, realm: string}?
+---@return boolean
+function Model.IsAuthoredBy(createdBy, player)
+  return type(createdBy) == "table" and player ~= nil and createdBy.name == player.name and createdBy.realm == player.realm
+end
+
 function Model.RouteGroups(ctx)
   local groups = { live = {}, mine = {}, others = {} }
   local player = ctx.player
@@ -360,7 +368,7 @@ function Model.RouteGroups(ctx)
         isCurrent = idx == ctx.presetIdx,
         isLive = ctx.liveActive and preset.uid ~= nil and preset.uid == ctx.livePresetUID,
       }
-      local mine = not createdBy or (player ~= nil and createdBy.name == player.name and createdBy.realm == player.realm)
+      local mine = not createdBy or Model.IsAuthoredBy(createdBy, player)
       local group = entry.isLive and groups.live or mine and groups.mine or groups.others
       group[#group + 1] = entry
     end
