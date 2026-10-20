@@ -178,6 +178,9 @@ return function(ctx)
     local slider = page:Find("slider")
     local thumb = slider.kitThumbTexture
     expect(math.abs(slider.kitTrack:GetHeight() - 10) < 0.01, "the track is "..slider.kitTrack:GetHeight().." tall")
+    -- The thumb sits on the track's own frame in a higher layer; a separate track frame would draw over it.
+    expect(slider.kitThumbTexture:GetParent() == slider.kitTrack and slider.kitThumbTexture:GetDrawLayer() == "OVERLAY", "the thumb is drawn under the track")
+    expect(slider:GetHeight() >= 14, "the slider is too short for its thumb")
     expect(math.abs(thumb:GetWidth() - 6) < 0.01 and math.abs(thumb:GetHeight() - 14) < 0.01, "the thumb is not 6x14")
     expect(slider.kitTrackBorder.token == "border.strong", "the idle track border is lit")
     W.hover(slider.kitSlider)
