@@ -481,9 +481,9 @@ test("SidebarModel.Build: rows, cumulative text, divider after the pull that com
 
   local live = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "mine", inGroup = true }))
   eq(live.header.isLiveRoute, true)
-  eq(live.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, shareBlocked = "live", liveActive = true, canSetLive = false, canReturnToLive = false })
+  eq(live.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, shareBlocked = "live", liveActive = true, livePresetIdx = 2, canSetLive = false, canReturnToLive = false })
   local elsewhere = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "theirs", inGroup = true, busy = true }))
-  eq(elsewhere.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, shareBlocked = "live", liveActive = true, canSetLive = true, canReturnToLive = true })
+  eq(elsewhere.header.actions, { canDelete = false, canDeleteAll = false, canShare = false, canLive = true, shareBlocked = "live", liveActive = true, livePresetIdx = 3, canSetLive = true, canReturnToLive = true })
   local grouped = Model.Build(fixturePreset(), fixtureContext({ inGroup = true }))
   eq({ grouped.header.actions.canShare, grouped.header.actions.canLive }, { true, true })
   local default = Model.Build(fixturePreset(), fixtureContext({ presetIdx = 1 }))

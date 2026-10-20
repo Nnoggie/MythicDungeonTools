@@ -58,7 +58,7 @@ local MAX_PORTRAITS = 7
 ---@field isLiveRoute boolean
 ---@field level integer
 ---@field forces {current: integer, max: integer, text: string, tone: MDT.UI.ColorToken}
----@field actions {canDelete: boolean, canDeleteAll: boolean, canShare: boolean, canLive: boolean, shareBlocked: MDT.SidebarBlock?, liveBlocked: MDT.SidebarBlock?, liveActive: boolean, canSetLive: boolean, canReturnToLive: boolean}
+---@field actions {canDelete: boolean, canDeleteAll: boolean, canShare: boolean, canLive: boolean, shareBlocked: MDT.SidebarBlock?, liveBlocked: MDT.SidebarBlock?, liveActive: boolean, livePresetIdx: integer?, canSetLive: boolean, canReturnToLive: boolean}
 
 ---Why Share or Live is disabled: not in a group, a route is still being sent, or a live session already syncs changes.
 ---@alias MDT.SidebarBlock "noGroup"|"busy"|"live"
@@ -139,6 +139,16 @@ local function countRoutes(presets)
   return count
 end
 
+---Index of the live route in the current dungeon, or nil without a live session there.
+---@param ctx MDT.SidebarContext
+---@return integer?
+function Model.LivePresetIdx(ctx)
+  if not ctx.liveActive or not ctx.livePresetUID then return nil end
+  for idx, preset in ipairs(ctx.presets) do
+    if preset.uid == ctx.livePresetUID then return idx end
+  end
+end
+
 ---@param preset table
 ---@param ctx MDT.SidebarContext
 ---@return {header: MDT.SidebarHeader, items: MDT.UI.ListItem[]}
@@ -193,6 +203,7 @@ function Model.Build(preset, ctx)
       canLive = liveBlocked == nil,
       shareBlocked = shareBlocked,
       liveBlocked = liveBlocked,
+      livePresetIdx = Model.LivePresetIdx(ctx),
       liveActive = ctx.liveActive,
       canSetLive = ctx.liveActive and not isLiveRoute,
       canReturnToLive = ctx.liveActive and not isLiveRoute,

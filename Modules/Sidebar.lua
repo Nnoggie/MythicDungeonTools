@@ -91,8 +91,6 @@ local function paintHeader(header)
   paintForces(header.forces.current)
   local actions = header.actions
   sidebar.share:SetDisabled(not actions.canShare)
-  sidebar.live:SetDisabled(not actions.canLive)
-  sidebar.live:SetIconColor(actions.liveActive and "live" or nil)
 end
 
 local function refreshRoutes(ctx)
@@ -323,16 +321,6 @@ function MDT:RunRouteAction(action, presetIdx)
   routeActions[action]()
 end
 
-local function openLiveMenu(button)
-  local a = sidebar.state.header.actions
-  if not a.liveActive then return end
-  MDT:CreateContextMenu(button, {
-    a.canSetLive and { text = L["Make this preset the live preset"], onSelect = routeActions.setLive } or false,
-    a.canReturnToLive and { text = L["Return to the live preset"], onSelect = routeActions.returnToLive } or false,
-    { text = L["Stop live session"], textColor = "live", onSelect = routeActions.toggleLive },
-  })
-end
-
 local BLOCK_REASONS = {
   noGroup = "Join a group first",
   busy = "Wait until the current route finishes sending",
@@ -380,8 +368,12 @@ local function routeMenuItems(idx)
     { text = L["Duplicate"], onSelect = run("duplicate") },
     { text = L["Export"], onSelect = run("export") },
     { kind = "separator" },
-    { text = L["Send to party"], disabled = not a.canShare, onSelect = run("share") },
-    a.canSetLive and { text = L["Make this preset the live preset"], onSelect = run("setLive") } or false,
+    { text = L["Send to party"], disabled = not a.canShare, tooltip = groupReason("shareBlocked")(), onSelect = run("share") },
+    { kind = "separator" },
+    not a.liveActive and { text = L["Start live session"], disabled = not a.canLive, tooltip = groupReason("liveBlocked")(), onSelect = run("toggleLive") } or false,
+    a.liveActive and idx ~= a.livePresetIdx and { text = L["Make this preset the live preset"], onSelect = run("setLive") } or false,
+    a.liveActive and a.canReturnToLive and { text = L["Return to the live preset"], onSelect = routeActions.returnToLive } or false,
+    a.liveActive and { text = L["Stop live session"], textColor = "live", onSelect = routeActions.toggleLive } or false,
     { kind = "separator" },
     { text = L["Delete this preset"], textColor = "warn", disabled = idx == 1 or a.liveActive, onSelect = run("delete") },
     { text = L["Delete ALL presets"], textColor = "warn", disabled = not a.canDeleteAll, onSelect = routeActions.deleteAll },
@@ -407,7 +399,6 @@ function MDT:MakeSidebar(sidePanel)
     built.new = actionButton(actions, "newRoute", "plus", L["New Preset"], routeActions.new)
     built.export = actionButton(actions, "exportRoute", "export", explained(L["Export"], combatReason("Cannot export while in combat")), routeActions.export)
     built.import = actionButton(actions, "importRoute", "import", explained(L["Import"], combatReason("Cannot import while in combat")), routeActions.import)
-    built.live = actionButton(actions, "liveSession", "live", explained(L["Live"], groupReason("liveBlocked")), routeActions.toggleLive, openLiveMenu)
     built.routes = UI.List(root, {
       id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = VISIBLE_ROUTES * MDT.RouteListRowHeight, scrollbar = true,
       onActivate = function(item) MDT:SwitchToPreset(item.idx) end,

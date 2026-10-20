@@ -113,12 +113,12 @@ return function(ctx)
 
   step("sidebar: every route action button shows its tooltip, also while disabled, with its icon centered", function()
     expect(control("shareRoute"):IsDisabled(), "setup: share should be disabled outside a group")
-    for _, id in ipairs({ "shareRoute", "newRoute", "exportRoute", "importRoute", "liveSession" }) do
+    for _, id in ipairs({ "shareRoute", "newRoute", "exportRoute", "importRoute" }) do
       local button = control(id)
       GameTooltip:Hide()
       W.hover(button)
       expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == button, id.." shows no tooltip"..(button:IsDisabled() and " while disabled" or ""))
-      if id == "shareRoute" or id == "liveSession" then -- the harness player is never in a group
+      if id == "shareRoute" then -- the harness player is never in a group
         local lines = W.state[GameTooltip].lines or {}
         expect(lines[2] == "Join a group first", id.." tooltip does not say why it is disabled: "..table.concat(lines, " / "))
       end
@@ -488,30 +488,31 @@ return function(ctx)
     UI.Menu.Close()
   end)
 
-  step("sidebar: a live session tags the live route and the live button's right-click offers set and return", function()
+  step("sidebar: the route menu starts, switches and stops live sessions; the live route is tagged", function()
+    local menu = routeMenu(preset().text)
+    local _, start = rowByText(menu, "Start live session")
+    expect(start and start.disabled and start.tooltip == "Join a group first", "start live session outside a group is wrong: "..menuLabels(menu))
+    UI.Menu.Close()
     MDT:SetUniqueID(preset())
     MDT.liveSessionActive, MDT.livePresetUID = true, preset().uid
     MDT:RefreshSidebar()
     local row, current = currentRouteRow()
     expect(current.isLive and row.kitLive:IsShown(), "LIVE tag hidden on the live route")
-    expect(control("liveSession").kitProps.iconColor == "live", "live button is not tinted during a session")
     expect(control("shareRoute"):IsDisabled(), "share stays enabled during a live session")
-    click(control("liveSession"), "RightButton")
-    local menu = listOf(UI.Overlay.Top("menu"))
-    expect(rowByText(menu, "Stop live session") and rowByText(menu, "Make this route the live route") == nil, "live menu on the live route is wrong: "..menuLabels(menu))
+    menu = routeMenu(preset().text)
+    expect(rowByText(menu, "Stop live session") and rowByText(menu, "Make this route the live route") == nil and rowByText(menu, "Start live session") == nil,
+      "live menu on the live route is wrong: "..menuLabels(menu))
     UI.Menu.Close()
     MDT.livePresetUID = "somewhere-else"
     MDT:RefreshSidebar()
     row = currentRouteRow()
     expect(not row.kitLive:IsShown(), "LIVE tag shown on another route")
-    click(control("liveSession"), "RightButton")
-    menu = listOf(UI.Overlay.Top("menu"))
-    expect(rowByText(menu, "Make this route the live route") and rowByText(menu, "Return to the live route"), "live route entries are missing: "..menuLabels(menu))
+    menu = routeMenu(preset().text)
+    expect(rowByText(menu, "Make this route the live route") and rowByText(menu, "Return to the live route") and rowByText(menu, "Stop live session"),
+      "live route entries are missing: "..menuLabels(menu))
     UI.Menu.Close()
     MDT.liveSessionActive, MDT.livePresetUID = false, nil
     MDT:RefreshSidebar()
-    click(control("liveSession"), "RightButton")
-    expect(UI.Overlay.Top("menu") == nil, "right-click opened a live menu without a session")
   end)
 
   step("sidebar: the scroll position survives an edit and hovering shows the tooltip and the model", function()

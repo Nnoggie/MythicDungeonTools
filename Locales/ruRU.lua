@@ -318,6 +318,7 @@ L["Initiate of the Rising Sun"] = "Посвященный Восходящего
 L["Insert Note"] = "Добавить примечание"
 L["Insert Text"] = "Добавить текст"
 L["Search routes"] = "Поиск маршрутов"
+L["Start live session"] = "Начать живую сессию"
 L["Join a group first"] = "Сначала вступите в группу"
 L["Wait until the current route finishes sending"] = "Дождитесь окончания отправки текущего маршрута"
 L["Not needed during a live session, changes sync automatically"] = "Не нужно во время живой сессии, изменения синхронизируются автоматически"
