@@ -197,6 +197,59 @@ return function(ctx)
     expect(#MDT:GetCurrentPreset().objects == 0, "confirming kept "..#MDT:GetCurrentPreset().objects.." drawings")
   end)
 
+  local function shownNotes()
+    local notes = {}
+    for _, child in ipairs({ main.mapPanelFrame:GetChildren() }) do
+      if child.noteIdx and child:IsShown() then notes[#notes + 1] = child end
+    end
+    return notes
+  end
+
+  step("note editor: the note tool places a note, clicking it opens the editor, Save stores the text", function()
+    openToolbar()
+    local before = #shownNotes()
+    click(tool("note"))
+    W.cursorX, W.cursorY = main.scrollFrame:GetCenter()
+    W.fireScript(main.scrollFrame, "OnMouseUp", "LeftButton")
+    W.settle(asyncIdle, 30)
+    local notes = shownNotes()
+    expect(#notes == before + 1, "the note tool placed "..(#notes - before).." notes")
+    expect(MDT:GetCurrentToolbarTool() == nil, "the note tool stayed selected without shift")
+    local note = notes[#notes]
+    click(note)
+    local editor = MDT:GetNoteEditor()
+    expect(editor and editor:IsVisible(), "clicking the note did not open the editor")
+    expect(editor:GetLeft() >= note:GetRight() - 1, "the editor does not open beside the note")
+    local box = editor.content:Find("noteText")
+    expect(box.kitEdit:HasFocus(), "the note text is not focused")
+    W.userType(box.kitEdit, "Kick the caster")
+    render("note editor", main, { editor })
+    click(editor.content:Find("saveNote"))
+    expect(MDT:GetNoteEditor() == nil and not editor:IsShown(), "Save did not close the editor")
+    local objects = MDT:GetCurrentPreset().objects
+    expect(objects[note.objectIndex].d[5] == "Kick the caster", "Save stored "..tostring(objects[note.objectIndex].d[5]))
+    expect(note.tooltipText == "Kick the caster", "the note tooltip did not update")
+
+    click(note)
+    editor = MDT:GetNoteEditor()
+    box = editor.content:Find("noteText")
+    expect(box:GetValue() == "Kick the caster", "reopening shows "..box:GetValue())
+    W.userType(box.kitEdit, " now")
+    expect(CloseSpecialWindows(), "Escape closed nothing")
+    expect(MDT:GetNoteEditor() == nil, "Escape did not close the editor")
+    expect(main:IsShown(), "Escape closed the main window instead of the editor")
+    expect(objects[note.objectIndex].d[5] == "Kick the caster", "Escape saved the edit")
+    W.settle(asyncIdle, 5)
+
+    click(note)
+    expect(MDT:GetNoteEditor(), "setup: editor did not reopen")
+    MDT:ZoomMap(1)
+    W.settle(asyncIdle, 30)
+    expect(MDT:GetNoteEditor() == nil, "zooming the map left the editor open")
+    MDT:DeletePresetObjects()
+    W.settle(asyncIdle, 30)
+  end)
+
   step("kit dropdown: a picked value reads in the normal text color, only the placeholder is muted", function()
     local host = CreateFrame("Frame", nil, UIParent)
     host:SetSize(200, 60)
