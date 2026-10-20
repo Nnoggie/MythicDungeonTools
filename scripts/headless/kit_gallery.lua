@@ -161,6 +161,8 @@ return function(ctx)
     expect(dropdown.kitButton:GetText() == "Alpha", "dropdown shows "..tostring(dropdown.kitButton:GetText()))
     dropdown:SetValue("b")
     expect(dropdown.kitButton:GetText() == "Beta" and dropdown:GetValue() == "b", "dropdown SetValue did not relabel")
+    local shown = table.concat({ dropdown.kitButton.kitLabel:GetTextColor() }, ",")
+    expect(shown == table.concat({ UI.Theme.Resolve("text.normal") }, ","), "a picked dropdown value is not drawn in the normal text color: "..shown)
 
     local swatch = page:Find("swatch")
     click(swatch)
