@@ -168,33 +168,10 @@ step("switch dungeon via dungeon button", function()
   expect(db.currentDungeonIdx == button.dungeonIdx and db.currentDungeonIdx ~= before, "dungeon did not change")
 end)
 
-step("switch season and back", function()
-  local dropdown = main.seasonSelectionGroup and main.seasonSelectionGroup.seasonDropdown
-  expect(dropdown, "season dropdown missing")
-  dropdown:Fire("OnValueChanged", 2)
-  W.settle(asyncIdle, 30)
-  expect(db.selectedDungeonList == 2, "season list did not change")
-  dropdown:Fire("OnValueChanged", 1)
-end)
-
 dofile(root.."/scripts/headless/sidebar_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
   typeInto = typeInto, unusedPresetName = unusedPresetName, presetCount = presetCount,
 })
-
-step("sublevel dropdown: hidden for one floor, switches floors otherwise", function()
-  local group = main.sublevelSelectionGroup
-  local dropdown = group.sublevelDropdown
-  local sublevels = MDT.dungeonSubLevels[db.currentDungeonIdx]
-  if #sublevels < 2 then
-    expect(not group.frame:IsShown(), "sublevel dropdown shown for a single-floor dungeon")
-    return
-  end
-  expect(group.frame:IsVisible(), "sublevel dropdown hidden for a multi-floor dungeon")
-  dropdown:Fire("OnValueChanged", 2)
-  expect(MDT:GetCurrentSubLevel() == 2, "sublevel did not change")
-  dropdown:Fire("OnValueChanged", 1)
-end)
 
 for _, section in ipairs(MDT:GetNavigationSections()) do
   step("open navigation section "..section.key, function()

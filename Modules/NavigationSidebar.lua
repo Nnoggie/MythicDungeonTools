@@ -70,12 +70,6 @@ local function setShown(region, shown)
   end
 end
 
-local function closeAceDropdown(widget)
-  if not widget or not widget.pullout then return end
-  widget.pullout:Close()
-  if widget.pullout.frame then widget.pullout.frame:Hide() end
-end
-
 function MDT:SetCurrentSection(sectionKey)
   if not self:IsValidNavigationSection(sectionKey) then sectionKey = "maps" end
   local db = MDT:GetDB()
@@ -115,12 +109,6 @@ function MDT:UpdateSectionVisibility()
 
   MDT:SetSidebarShown(showMapControls)
 
-  if frame.seasonSelectionGroup then setShown(frame.seasonSelectionGroup, showMapControls) end
-  if frame.sublevelSelectionGroup then setShown(frame.sublevelSelectionGroup, showMapControls) end
-  if not showMapControls then
-    closeAceDropdown(frame.seasonSelectionGroup and frame.seasonSelectionGroup.seasonDropdown)
-    closeAceDropdown(frame.sublevelSelectionGroup and frame.sublevelSelectionGroup.sublevelDropdown)
-  end
   if MDT.UpdateDungeonSelectVisibility then MDT:UpdateDungeonSelectVisibility(showMapControls) end
 
   if frame.sectionContentFrames then

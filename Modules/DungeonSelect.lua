@@ -1,5 +1,5 @@
 local _, MDT = ...
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
 local db
 local L = MDT.L
 
@@ -118,6 +118,26 @@ end
 
 local dungeonButtons = {}
 local BUTTON_SIZE = 40
+local DROPDOWN_WIDTH = 180
+local seasonDropdown, sublevelDropdown
+
+---Choice items for a list of names, valued by their index.
+---@param names string[]
+---@return MDT.UI.MenuItem[]
+local function indexChoices(names)
+  local items = {}
+  for index, name in ipairs(names) do items[index] = { kind = "choice", value = index, text = name } end
+  return items
+end
+
+---@param parent table
+---@param onChange fun(value: integer)
+local function makeDropdown(parent, onChange)
+  local dropdown = UI.Dropdown(parent, { width = DROPDOWN_WIDTH, height = "md", hidden = true, onChange = onChange })
+  dropdown:SetFrameStrata("HIGH")
+  dropdown:SetFrameLevel(50)
+  return dropdown
+end
 
 function MDT:UpdateDungeonSelectVisibility(showMapControls)
   if showMapControls == nil then showMapControls = MDT:IsMapSectionActive() end
@@ -134,31 +154,10 @@ function MDT:UpdateDungeonSelectVisibility(showMapControls)
     end
   end
 
-  if frame.seasonSelectionGroup then
-    if showMapControls then
-      frame.seasonSelectionGroup.frame:Show()
-    else
-      if frame.seasonSelectionGroup.seasonDropdown and frame.seasonSelectionGroup.seasonDropdown.pullout then
-        frame.seasonSelectionGroup.seasonDropdown.pullout:Close()
-        frame.seasonSelectionGroup.seasonDropdown.pullout.frame:Hide()
-      end
-      frame.seasonSelectionGroup.frame:Hide()
-    end
-  end
-
-  if frame.sublevelSelectionGroup then
+  if seasonDropdown then seasonDropdown:SetHidden(not showMapControls) end
+  if sublevelDropdown then
     local sublevels = db and MDT.dungeonSubLevels[db.currentDungeonIdx]
-    if showMapControls and sublevels and #sublevels > 1 then
-      frame.sublevelSelectionGroup.frame:Show()
-      frame.sublevelSelectionGroup.sublevelDropdown.frame:Show()
-    else
-      if frame.sublevelSelectionGroup.sublevelDropdown.pullout then
-        frame.sublevelSelectionGroup.sublevelDropdown.pullout:Close()
-        frame.sublevelSelectionGroup.sublevelDropdown.pullout.frame:Hide()
-      end
-      frame.sublevelSelectionGroup.sublevelDropdown.frame:Hide()
-      frame.sublevelSelectionGroup.frame:Hide()
-    end
+    sublevelDropdown:SetHidden(not (showMapControls and sublevels and #sublevels > 1))
   end
 end
 
@@ -247,63 +246,19 @@ function MDT:UpdateDungeonDropDown()
   end
 
   local currentDungeonIdx = db.currentDungeonIdx
-  local sublevels = MDT.dungeonSubLevels[currentDungeonIdx]
-  local sublevelGroup = MDT.main_frame.sublevelSelectionGroup
-  local sublevelDropdown = sublevelGroup.sublevelDropdown
-
-  sublevelDropdown:SetList(sublevels)
+  sublevelDropdown:SetItems(indexChoices(MDT.dungeonSubLevels[currentDungeonIdx]))
   sublevelDropdown:SetValue(db.presets[currentDungeonIdx][db.currentPreset[currentDungeonIdx]].value.currentSublevel)
-  sublevelDropdown:ClearFocus()
-
-  if #sublevels == 1 then
-    -- Close and hide the pullout frame
-    if sublevelDropdown.pullout then
-      sublevelDropdown.pullout:Close()
-      sublevelDropdown.pullout.frame:Hide()
-    end
-    sublevelDropdown.frame:Hide()
-    sublevelGroup.frame:Hide()
-  else
-    sublevelDropdown.frame:Show()
-    sublevelGroup.frame:Show()
-  end
   MDT:UpdateDungeonSelectVisibility()
 end
 
---for old maps that need it
+---Floor picker for dungeons with more than one map, under the dungeon buttons.
 function MDT:CreateSublevelDropdown(frame)
   db = MDT:GetDB()
-  frame.sublevelSelectionGroup = AceGUI:Create("SimpleGroup")
-  frame.sublevelSelectionGroup.frame:SetParent(frame)
-  local group = frame.sublevelSelectionGroup
-  group.frame:Hide()
-  ---@diagnostic disable-next-line: undefined-field
-  if not group.frame.SetBackdrop then
-    Mixin(group.frame, BackdropTemplateMixin)
-  end
-  ---@diagnostic disable-next-line: undefined-field
-  group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
-  group.frame:SetFrameStrata("HIGH")
-  group.frame:SetFrameLevel(50)
-  group:SetWidth(204) --idk ace added weird margin on left
-  group:SetHeight(50)
-  group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, -68)
-  ---@diagnostic disable-next-line: undefined-field
-  group:SetLayout("List")
-  -- MDT:FixAceGUIShowHide(group)
-
-  ---@diagnostic disable-next-line: inject-field
-  group.sublevelDropdown = AceGUI:Create("Dropdown")
-  ---@diagnostic disable-next-line: undefined-field
-  group.sublevelDropdown.pullout.frame:SetParent(group.sublevelDropdown.frame)
-  ---@diagnostic disable-next-line: undefined-field
-  group.sublevelDropdown.text:SetJustifyH("LEFT")
-  group.sublevelDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = key
+  sublevelDropdown = makeDropdown(frame, function(sublevel)
+    db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = sublevel
     MDT:UpdateMap()
   end)
-  ---@diagnostic disable-next-line: undefined-field
-  group:AddChild(group.sublevelDropdown)
+  sublevelDropdown:SetPoint("TOPLEFT", frame, "TOPLEFT", 4, -(BUTTON_SIZE + 4))
 end
 
 function MDT:SetDungeonList(key, dungeonIdx)
@@ -324,54 +279,29 @@ function MDT:SetDungeonList(key, dungeonIdx)
   -- this probably happens if dropdown is being spammed (?)
   local index = math.min(#dungeonSelectionToIndex, key)
   db.selectedDungeonList = index
-  local dropdown = MDT.main_frame.seasonSelectionGroup and MDT.main_frame.seasonSelectionGroup.seasonDropdown
-  if dropdown then dropdown:SetValue(index) end
+  if seasonDropdown then seasonDropdown:SetValue(index) end
 end
 
+---Season picker in the top left of the title bar; absent when there is only one season.
 function MDT:CreateSeasonDropdown(frame)
-  if #seasonList == 1 then
-    -- no dropdown needed
-    return
-  end
+  if #seasonList == 1 then return end
   db = MDT:GetDB()
-  frame.seasonSelectionGroup = AceGUI:Create("SimpleGroup")
-  frame.seasonSelectionGroup.frame:SetParent(frame)
-  local group = frame.seasonSelectionGroup
-  group.frame:Hide()
-  ---@diagnostic disable-next-line: undefined-field
-  if not group.frame.SetBackdrop then
-    Mixin(group.frame, BackdropTemplateMixin)
-  end
-  ---@diagnostic disable-next-line: undefined-field
-  group.frame:SetBackdropColor(unpack(MDT.BackdropColor))
-  group.frame:SetFrameStrata("HIGH")
-  group.frame:SetFrameLevel(50)
-  group:SetWidth(204) --idk ace added weird margin on left
-  group:SetHeight(50)
-  group:SetPoint("TOPLEFT", frame.topPanel, "TOPLEFT", 0, 0)
-  ---@diagnostic disable-next-line: undefined-field
-  group:SetLayout("List")
-  MDT:FixAceGUIShowHide(group)
-
-  ---@diagnostic disable-next-line: inject-field
-  group.seasonDropdown = AceGUI:Create("Dropdown")
-  ---@diagnostic disable-next-line: undefined-field
-  group.seasonDropdown.pullout.frame:SetParent(group.seasonDropdown.frame)
-  ---@diagnostic disable-next-line: undefined-field
-  group.seasonDropdown.text:SetJustifyH("LEFT")
-  group.seasonDropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-    MDT:SetDungeonList(key)
+  seasonDropdown = makeDropdown(frame, function(list)
+    MDT:SetDungeonList(list)
     MDT:UpdateDungeonDropDown()
-    local currentList = dungeonSelectionToIndex[db.selectedDungeonList]
-    MDT:UpdateToDungeon(currentList[1])
+    MDT:UpdateToDungeon(dungeonSelectionToIndex[db.selectedDungeonList][1])
   end)
-  ---@diagnostic disable-next-line: undefined-field
-  group:AddChild(group.seasonDropdown)
+  seasonDropdown:SetItems(indexChoices(seasonList))
+  seasonDropdown:SetValue(db.selectedDungeonList)
+  seasonDropdown:SetPoint("LEFT", frame.topPanel, "LEFT", 4, 0)
+end
 
-  ---@diagnostic disable-next-line: undefined-field
-  group.seasonDropdown:SetList(seasonList)
-  ---@diagnostic disable-next-line: undefined-field
-  group.seasonDropdown:SetValue(db.selectedDungeonList)
+---Test access to the season ("season") and floor ("sublevel") dropdowns.
+---@param id "season"|"sublevel"
+---@return MDT.UI.Control?
+function MDT:GetDungeonSelectControl(id)
+  if id == "season" then return seasonDropdown end
+  if id == "sublevel" then return sublevelDropdown end
 end
 
 function MDT:CheckSeenDungeonLists()
