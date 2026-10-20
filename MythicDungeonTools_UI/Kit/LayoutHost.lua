@@ -37,7 +37,10 @@ function Layout.FlushAll()
     for i, container in ipairs(batch) do depths[container] = depth(container) * 100000 + i end
     table.sort(batch, function(a, b) return depths[a] < depths[b] end)
     for _, container in ipairs(batch) do
-      if not container.kitReleased then container:kitLayout() end
+      if not container.kitReleased then
+        container:kitLayout()
+        if container.kitProps.onLayout then container:Emit("onLayout", container) end
+      end
     end
   end
   if #queue > 0 then

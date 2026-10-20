@@ -140,6 +140,7 @@ local function containerProps(extra)
     { name = "autoHeight", default = true, relayout = true },
     { name = "background", default = nil, set = surface },
     { name = "border", default = nil, set = surface },
+    { name = "onLayout", default = nil },
   }
   for _, prop in ipairs(extra) do props[#props + 1] = prop end
   return props
@@ -167,6 +168,7 @@ end
 ---@field padding MDT.UI.Space|number?
 ---@field autoHeight boolean? default true; false keeps the frame's own height and lets `grow` children share it
 ---@field align "stretch"|"start"|"center"|"end"?
+---@field onLayout fun(self: MDT.UI.Control)? after every layout of this stack, with its new size
 ---@field background MDT.UI.ColorToken?
 ---@field border MDT.UI.ColorToken?
 UI.Define({

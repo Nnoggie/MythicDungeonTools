@@ -316,7 +316,11 @@ local function fitToMap()
   local dialog = view.dialog
   local columnHeight = map:GetHeight() - (dialog:GetHeight() - view.columns:GetHeight())
   dialog.content:SetWidth(map:GetWidth())
-  for i = 1, 3 do view.columns[i]:SetHeight(columnHeight) end
+  for i = 1, 3 do
+    view.columns[i]:SetHeight(columnHeight)
+    UI.Layout.Invalidate(view.columns[i])
+  end
+  UI.Layout.Invalidate(view.columns)
   dialog:ClearAllPoints()
   dialog:SetPoint("TOPLEFT", map, "TOPLEFT", 0, 0)
 end

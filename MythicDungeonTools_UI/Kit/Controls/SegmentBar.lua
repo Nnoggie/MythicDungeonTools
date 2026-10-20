@@ -60,6 +60,9 @@ local Methods = {}
 
 ---@param segments {value: number, color: MDT.UI.Color}[]
 ---@param max number?
+-- A container just sized the bar: draw now rather than on the next frame's OnSizeChanged.
+function Methods:kitPlaced() layoutSegments(self) end
+
 function Methods:SetSegments(segments, max)
   self.kitProps.segments = segments
   if max then self.kitProps.max = max end

@@ -152,7 +152,7 @@ return function(ctx)
     expect(math.abs(columns:GetHeight() - 100) < 0.5, "columns are not as tall as the fixed column: "..columns:GetHeight())
     local before = filler:GetHeight()
     columns[1]:SetHeight(160)
-    UI.Layout.FlushAll()
+    W.pump(0.05) -- the client reports the new height on the next frame
     expect(math.abs(filler:GetHeight() - before - 60) < 0.5, ("the grow child did not take the new height: %.1f -> %.1f"):format(before, filler:GetHeight()))
     expect(math.abs(columns:GetHeight() - 160) < 0.5 and host:GetHeight() >= 160, "columns did not follow the taller column: "..columns:GetHeight())
     host:Release()
@@ -654,6 +654,7 @@ return function(ctx)
     local loop = UI.Stack(page, {})
     local settles = loop.kitLayout
     loop.kitLayout = function(self) UI.Layout.Invalidate(self) end
+    UI.Layout.Invalidate(loop)
     UI.Layout.FlushAll()
     seterrorhandler(previous)
     expect(#errors == 1 and errors[1]:find("did not settle", 1, true), "a layout that never settles was not reported: "..table.concat(errors, "; "))

@@ -415,14 +415,9 @@ function ScriptRegion:AdjustPointsOffset(dx, dy)
   for _, anchor in ipairs(S[self].points) do anchor.x, anchor.y = anchor.x + dx, anchor.y + dy end
 end
 
-local function sizeChanged(obj, state, oldWidth, oldHeight)
-  if state.width ~= oldWidth or state.height ~= oldHeight then
-    if state.class.scripts.OnSizeChanged and W.isVisible(obj) then
-      state.reportedSize = { state.width or 0, state.height or 0 }
-      fireScript(obj, "OnSizeChanged", state.width or 0, state.height or 0)
-    end
-  end
-end
+-- Like the client, SetWidth/SetHeight never fire OnSizeChanged on the spot: the next layout pass reports the new
+-- size, and only for frames that are shown.
+local function sizeChanged() end
 
 -- Once per frame the client re-resolves anchors and fires OnSizeChanged for frames whose size moved since
 -- the last report, including moves that came from anchors rather than SetSize. Layouts that size from
@@ -436,7 +431,7 @@ function W.layoutPass()
     if state.scripts.OnSizeChanged and W.isVisible(frame) then
       local _, _, width, height = resolveRect(frame)
       width, height = width or state.width or 0, height or state.height or 0
-      local reported = state.reportedSize or { state.width or 0, state.height or 0 }
+      local reported = state.reportedSize or { 0, 0 } -- a frame reports its first size too
       if math.abs(width - reported[1]) > 0.001 or math.abs(height - reported[2]) > 0.001 then
         state.reportedSize = { width, height }
         fireScript(frame, "OnSizeChanged", width, height)

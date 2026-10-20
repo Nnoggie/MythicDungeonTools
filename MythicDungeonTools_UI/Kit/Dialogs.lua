@@ -85,11 +85,11 @@ UI.Define({
     self.closeButton = UI.CloseButton(self.kitTitleBar, { tooltip = L["Close"], onClick = function() self:Close("x") end })
     self.closeButton:SetPoint("RIGHT", self.kitTitleBar, "RIGHT", -(TITLE_HEIGHT - 24) / 2, 0)
 
-    self.content = UI.Stack(self, { padding = "lg", gap = "md" })
-    self.content:SetPoint("TOPLEFT", self.kitTitleBar, "BOTTOMLEFT", 0, 0)
-    self.content:HookScript("OnSizeChanged", function(content)
+    -- The dialog takes its size from its content after every layout, without waiting for OnSizeChanged.
+    self.content = UI.Stack(self, { padding = "lg", gap = "md", onLayout = function(content)
       self:SetSize(content:GetWidth(), TITLE_HEIGHT + content:GetHeight())
-    end)
+    end })
+    self.content:SetPoint("TOPLEFT", self.kitTitleBar, "BOTTOMLEFT", 0, 0)
     self:HookScript("OnHide", function() self:Close("hidden") end)
   end,
   OnRelease = function(self)
