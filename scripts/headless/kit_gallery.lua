@@ -296,6 +296,17 @@ return function(ctx)
     expect(not catcher:IsShown(), "click catcher stayed up with nothing open")
   end)
 
+  step("kit dialogs: a reused dialog parented to UIParent draws above the main window", function()
+    local rank = { BACKGROUND = 1, LOW = 2, MEDIUM = 3, HIGH = 4, DIALOG = 5, FULLSCREEN = 6, FULLSCREEN_DIALOG = 7, TOOLTIP = 8 }
+    UI.Dialogs.Open({ title = "First life", build = function(content) UI.Text(content, { text = "first" }) end }):Close("api")
+    local dialog = UI.Dialogs.Open({ title = "Second life", parent = UIParent, build = function(content) UI.Text(content, { text = "second" }) end })
+    expect(MDT.main_frame:IsShown() and dialog:GetParent() == UIParent, "setup: main window hidden or dialog not on UIParent")
+    expect(rank[dialog:GetFrameStrata()] > rank[MDT.main_frame:GetFrameStrata()],
+      ("reused dialog strata %s is not above the main window's %s"):format(dialog:GetFrameStrata(), MDT.main_frame:GetFrameStrata()))
+    expect(dialog.content:GetFrameStrata() == dialog:GetFrameStrata(), "dialog content did not follow the dialog's strata")
+    dialog:Close("api")
+  end)
+
   step("kit escape: hiding the whole UI (Alt+Z, cinematics) keeps dialogs, the window and the Escape stack", function()
     log = {}
     local depth = UI.Escape.Depth()

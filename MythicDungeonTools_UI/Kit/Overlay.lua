@@ -140,6 +140,7 @@ function Overlay.Push(entry)
   end
   entries[#entries + 1] = entry
   if entry.kind ~= "dialog" then
+    entry.frame:SetFixedFrameStrata(true)
     entry.frame:SetFrameStrata("FULLSCREEN_DIALOG")
     entry.frame:SetFrameLevel(clickCatcher:GetFrameLevel() + 10 * floatingCount())
   end
