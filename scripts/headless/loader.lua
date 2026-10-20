@@ -173,14 +173,24 @@ return function(W, options)
   -- Reports texture paths inside known addons that resolve to no file (the client would draw nothing).
   W.missingFiles, W.missingFileOrder = {}, {}
   local extensions = { "", ".tga", ".blp", ".png", ".jpg" }
-  function W.checkAddonFile(path)
+  ---Real file behind an Interface\AddOns path the client would load, or nil (false when the addon is unknown).
+  function W.resolveAddonFile(path)
     local addonName, rest = path:gsub("\\", "/"):match("^[Ii]nterface/[Aa]dd[Oo]ns/([^/]+)/(.+)$")
     local addon = addonName and addons[addonName]
-    if not addon then return end
+    if not addon then return false end
     for _, extension in ipairs(extensions) do
-      local file = io.open(addon.dir.."/"..rest..extension, "rb")
-      if file then file:close() return end
+      local real = addon.dir.."/"..rest..extension
+      local file = io.open(real, "rb")
+      if file then
+        file:close()
+        return real
+      end
     end
+  end
+
+  function W.checkAddonFile(path)
+    local found = W.resolveAddonFile(path)
+    if found ~= nil then return end
     local entry = W.missingFiles[path]
     if not entry then
       entry = { name = path, count = 0, site = W.callSite() }

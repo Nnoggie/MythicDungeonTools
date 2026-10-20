@@ -455,6 +455,7 @@ return function(W)
     for _, frame in ipairs(frames) do
       if W.isVisible(frame) then W.fireScript(frame, "OnUpdate", elapsed) end
     end
+    W.layoutPass()
     W.advanceAnimations(elapsed)
   end
 

@@ -10,6 +10,7 @@ local W = {
   topLevel = {},
   now = 0,
   onUpdateFrames = {},
+  sizeWatchers = {},
   playingAnimations = {},
 }
 
@@ -196,6 +197,7 @@ function Object:SetScript(scriptName, handler)
   usage(handler == nil or type(handler) == "function", "SetScript(): handler must be a function or nil")
   state.scripts[scriptName] = handler
   if scriptName == "OnUpdate" then W.onUpdateFrames[self] = handler and true or nil end
+  if scriptName == "OnSizeChanged" then W.sizeWatchers[self] = handler and true or nil end
 end
 
 function Object:GetScript(scriptName)
@@ -214,6 +216,7 @@ function Object:HookScript(scriptName, hook)
     state.scripts[scriptName] = hook
   end
   if scriptName == "OnUpdate" then W.onUpdateFrames[self] = true end
+  if scriptName == "OnSizeChanged" then W.sizeWatchers[self] = true end
 end
 
 function Object:HasScript(scriptName) return S[self].class.scripts[scriptName] == true end
@@ -374,9 +377,35 @@ end
 local function sizeChanged(obj, state, oldWidth, oldHeight)
   if state.width ~= oldWidth or state.height ~= oldHeight then
     if state.class.scripts.OnSizeChanged then
+      state.reportedSize = { state.width or 0, state.height or 0 }
       fireScript(obj, "OnSizeChanged", state.width or 0, state.height or 0)
     end
   end
+end
+
+-- Once per frame the client re-resolves anchors and fires OnSizeChanged for frames whose size moved since
+-- the last report, including moves that came from anchors rather than SetSize. Layouts that size from
+-- OnSizeChanged (AceGUI containers, scroll children) depend on it.
+function W.layoutPass()
+  local frames, fired = {}, 0
+  for frame in pairs(W.sizeWatchers) do frames[#frames + 1] = frame end
+  table.sort(frames, function(a, b) return S[a].id < S[b].id end)
+  for _, frame in ipairs(frames) do
+    local state = S[frame]
+    if state.scripts.OnSizeChanged and W.isVisible(frame) then
+      local _, _, width, height = resolveRect(frame)
+      width, height = width or state.width or 0, height or state.height or 0
+      local reported = state.reportedSize or { state.width or 0, state.height or 0 }
+      if math.abs(width - reported[1]) > 0.001 or math.abs(height - reported[2]) > 0.001 then
+        state.reportedSize = { width, height }
+        fireScript(frame, "OnSizeChanged", width, height)
+        fired = fired + 1
+      else
+        state.reportedSize = reported
+      end
+    end
+  end
+  return fired
 end
 
 local function checkNumber(value, method, name)
@@ -574,9 +603,10 @@ function ScriptRegion:SetParent(parent)
   local wasVisible = isVisible(self)
   detach(self, state)
   attach(self, state, parent)
+  -- The setters carry the new strata and level down to descendants, as the client does.
   if state.isFrame and parent then
-    state.strata = state.fixedStrata and state.strata or S[parent].strata
-    if not state.fixedLevel then state.level = (S[parent].level or 0) + 1 end
+    if not state.fixedStrata then self:SetFrameStrata(S[parent].strata or "MEDIUM") end
+    if not state.fixedLevel then self:SetFrameLevel(math.min(10000, (S[parent].level or 0) + 1)) end
   end
   local nowVisible = isVisible(self)
   if wasVisible ~= nowVisible then propagateVisibility(self, nowVisible and "OnShow" or "OnHide") end
@@ -777,15 +807,30 @@ function FontString:GetStringWidth()
   return longest * (font and font.height or 12) * 0.55
 end
 FontString.GetUnboundedStringWidth = FontString.GetStringWidth
+-- Wrapped line count at the string's width, using the same per-character estimate as GetStringWidth.
+local function wrappedLines(self)
+  local state = S[self]
+  local font = fontData(state)
+  local height = font and font.height or 12
+  local _, _, width = resolveRect(self)
+  width = width or state.width
+  local lines = 0
+  for line in ((state.text or "").."\n"):gmatch("(.-)\n") do
+    local lineWidth = #line:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "") * height * 0.55
+    if width and width > 0 and state.wordWrap ~= false and lineWidth > width then
+      lines = lines + math.ceil(lineWidth / width)
+    else
+      lines = lines + 1
+    end
+  end
+  if state.maxLines and state.maxLines > 0 then lines = math.min(lines, state.maxLines) end
+  return lines, height
+end
 function FontString:GetStringHeight()
-  local font = fontData(S[self])
-  local _, lines = (S[self].text or ""):gsub("\n", "")
-  return (lines + 1) * (font and font.height or 12)
+  local lines, height = wrappedLines(self)
+  return lines * height
 end
-function FontString:GetNumLines()
-  local _, lines = (S[self].text or ""):gsub("\n", "")
-  return lines + 1
-end
+function FontString:GetNumLines() return (wrappedLines(self)) end
 function FontString:SetWordWrap(value) S[self].wordWrap = value end
 function FontString:CanWordWrap() return S[self].wordWrap ~= false end
 function FontString:SetNonSpaceWrap(value) end
@@ -815,5 +860,6 @@ dofile(W.dir.."/templates.lua")(W)
 dofile(W.dir.."/api.lua")(W)
 dofile(W.dir.."/game.lua")(W)
 dofile(W.dir.."/dump.lua")(W)
+dofile(W.dir.."/render.lua")(W)
 
 return W

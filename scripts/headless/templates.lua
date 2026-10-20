@@ -29,9 +29,8 @@ return function(W)
   end
 
   local function threeSlice(frame, layer)
-    region(frame, "Texture", "Left", layer, "Left")
-    region(frame, "Texture", "Middle", layer, "Middle")
-    region(frame, "Texture", "Right", layer, "Right")
+    return region(frame, "Texture", "Left", layer, "Left"), region(frame, "Texture", "Middle", layer, "Middle"),
+      region(frame, "Texture", "Right", layer, "Right")
   end
 
   local T = W.templates
@@ -47,7 +46,18 @@ return function(W)
   T.InsecureActionButtonTemplate = function() end
 
   local function panelButton(frame)
-    threeSlice(frame, "BACKGROUND")
+    local left, middle, right = threeSlice(frame, "BACKGROUND")
+    left:SetAtlas("128-RedButton-Left")
+    left:SetPoint("TOPLEFT")
+    left:SetPoint("BOTTOMLEFT")
+    left:SetWidth(12)
+    right:SetAtlas("128-RedButton-Right")
+    right:SetPoint("TOPRIGHT")
+    right:SetPoint("BOTTOMRIGHT")
+    right:SetWidth(12)
+    middle:SetAtlas("_128-RedButton-Center")
+    middle:SetPoint("TOPLEFT", left, "TOPRIGHT")
+    middle:SetPoint("BOTTOMRIGHT", right, "BOTTOMLEFT")
     local text = region(frame, "FontString", "Text", "ARTWORK", "Text")
     text:SetPoint("CENTER")
     frame:SetFontString(text)
@@ -107,11 +117,24 @@ return function(W)
   T.SearchBoxTemplate = T.InputBoxTemplate
 
   T.UIDropDownMenuTemplate = function(frame)
-    threeSlice(frame, "ARTWORK")
+    local left, middle, right = threeSlice(frame, "ARTWORK")
+    left:SetSize(25, 64)
+    left:SetPoint("TOPLEFT", 0, 17)
+    middle:SetSize(115, 64)
+    middle:SetPoint("LEFT", left, "RIGHT")
+    right:SetSize(25, 64)
+    right:SetPoint("LEFT", middle, "RIGHT")
     local text = region(frame, "FontString", "Text", "ARTWORK", "Text")
     S[text].fontObject = rawget(_G, "GameFontHighlightSmall")
-    region(frame, "Texture", "Icon", "OVERLAY", "Icon")
+    text:SetSize(0, 10)
+    text:SetJustifyH("RIGHT")
+    text:SetPoint("RIGHT", right, "RIGHT", -43, 2)
+    local icon = region(frame, "Texture", "Icon", "OVERLAY", "Icon")
+    icon:SetSize(16, 16)
+    icon:SetPoint("LEFT", 30, 2)
     local button = child(frame, "Button", "Button", "Button", nil)
+    button:SetSize(24, 24)
+    button:SetPoint("TOPRIGHT", right, "TOPRIGHT", -16, -18)
     button:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIcon-ScrollDown-Up")
     if S[button].name then _G[S[button].name.."NormalTexture"] = button:GetNormalTexture() end
     button:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIcon-ScrollDown-Down")

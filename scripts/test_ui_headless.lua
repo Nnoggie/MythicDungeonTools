@@ -3,6 +3,8 @@
 --   --strict                      missing WoW API calls raise errors instead of being recorded
 --   --developer                   also load the #@do-not-package@ Developer files
 --   --dump=path                   write a text snapshot of the visible frame tree at each checkpoint
+--   --render=dir                  write <dir>/<checkpoint>.html renders of the main window at each checkpoint
+--   --render-scale=n              pixels per UI unit in those renders (default 1)
 --   --savedvariables=path         boot with a SavedVariables file (e.g. WTF/.../MythicDungeonTools.lua)
 --   --write-savedvariables=path   write MythicDungeonToolsDB after PLAYER_LOGOUT
 --   --undefined-globals           list undefined globals that were read
@@ -65,8 +67,34 @@ local function expect(condition, message)
   if not condition then error(message, 2) end
 end
 
+local MDT, db, main
+
+local renders = {}
+if flags.render == true then flags.render = "ui-render" end
+if flags.render then
+  local probe = io.open(flags.render.."/.probe", "w")
+  if probe then
+    probe:close()
+    os.remove(flags.render.."/.probe")
+  else
+    os.execute(('mkdir "%s"'):format(flags.render))
+  end
+end
+
+---Renders frame (plus any frames in `also`) to <render dir>/<name>.html; no-op without --render.
+local function render(name, frame, also)
+  if not flags.render then return end
+  local slug = name:lower():gsub("[^%w]+", "-"):gsub("^%-+", ""):gsub("%-+$", "")
+  local path = flags.render.."/"..slug..".html"
+  local stats = W.renderHTML(frame, path, { also = also, scale = tonumber(flags["render-scale"]), title = name })
+  stats.path = path
+  renders[#renders + 1] = stats
+end
+
 local snapshots = {}
-local function snapshot(label)
+---Checkpoint: text dump of the frame tree and a render of the main window with any extra top-level frames.
+local function snapshot(label, ...)
+  render(label, main, { ... })
   if not flags.dump then return end
   snapshots[#snapshots + 1] = "== "..label
   for _, line in ipairs(W.dumpTree()) do snapshots[#snapshots + 1] = line end
@@ -89,9 +117,9 @@ step("open main window via /mdt", function()
   expect(not Loader.addons.MythicDungeonTools_UI.loaded, "UI loaded before the loading spinner could render")
 end)
 
-local MDT = Loader.addons.MythicDungeonTools_UI.namespace
-local db = MDT.GetDB and MDT:GetDB()
-local main = MDT.main_frame
+MDT = Loader.addons.MythicDungeonTools_UI.namespace
+db = MDT.GetDB and MDT:GetDB()
+main = MDT.main_frame
 
 step("main window is shown", function()
   expect(main, "MDT.main_frame was not created")
@@ -288,7 +316,7 @@ step("clear dialog opens and cancels", function()
 end)
 
 dofile(root.."/scripts/headless/kit_gallery.lua")({
-  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render,
 })
 
 step("hover every visible widget", function()
@@ -330,7 +358,7 @@ step("conflict dialog opens on the kit and Escape closes it, not the window", fu
   local dialog = MDT.UI.Dialogs.Get("addonConflict")
   expect(dialog and dialog:IsVisible(), "conflict dialog not shown")
   expect(dialog:GetParent() == UIParent, "conflict dialog is parented to the main window")
-  snapshot("conflict dialog")
+  snapshot("conflict dialog", dialog)
   expect(CloseSpecialWindows(), "no special window closed")
   expect(not dialog:IsShown() and MDT.UI.Dialogs.Get("addonConflict") == nil, "Escape did not close the conflict dialog")
   expect(main:IsShown(), "Escape closed the main window instead of the dialog")
@@ -349,7 +377,7 @@ step("pre-patch warning opens through its real trigger, copies a link, and Escap
   local dialog = rawget(_G, "MDTPrePatchWarningFrame")
   expect(dialog and dialog:IsVisible(), "pre-patch warning not shown")
   expect(db.prePatchWarningSeenFor == 1768950035, "pre-patch warning was not marked as seen")
-  snapshot("pre-patch warning")
+  snapshot("pre-patch warning", dialog)
   local editBox, copyButton
   for _, child in ipairs(dialog.content.kitChildren) do
     if child.kit.name == "Row" then editBox, copyButton = child.kitChildren[1], child.kitChildren[2] end
@@ -371,6 +399,7 @@ step("pre-patch warning opens through its real trigger, copies a link, and Escap
 end)
 
 step("escape closes the main window", function()
+  render("final", main)
   expect(_G.CloseSpecialWindows(), "no special window closed")
   expect(not main:IsShown(), "main window still shown")
 end)
@@ -430,6 +459,12 @@ if flags.dump then
   file:write(table.concat(snapshots, "\n"), "\n")
   file:close()
   io.write(("frame tree snapshot: %s (%d lines)\n"):format(path, #snapshots))
+end
+
+for _, page in ipairs(renders) do
+  io.write(("render: %s %dx%d, %d items (%d fills, %d images, %d placeholders, %d texts, %d lines), %d unresolved\n"):format(
+    page.path, page.width, page.height, page.items, page.fills, page.images, page.placeholders, page.texts, page.lines, page.unresolved))
+  if W.verbose and page.unresolved > 0 then io.write("  unresolved: ", table.concat(page.unresolvedNames, ", "), "\n") end
 end
 
 if failures > 0 then
