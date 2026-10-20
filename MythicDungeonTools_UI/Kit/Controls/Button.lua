@@ -70,6 +70,7 @@ function Methods:GetText() return self.kitProps.text end
 ---@field onMenuClose fun()?
 ---@field onClick fun(self: MDT.UI.Control, mouseButton: string)?
 ---@field onRightClick fun(self: MDT.UI.Control)?
+---@field onDragStart fun(self: MDT.UI.Control)? left-button drag; macro and spell icons pick themselves up here
 UI.Define({
   name = "Button", frameType = "Button", mixins = { UI.Mixins.Skinned, Methods },
   props = {
@@ -91,6 +92,7 @@ UI.Define({
     { name = "onMenuClose", default = nil },
     { name = "onClick", default = nil },
     { name = "onRightClick", default = nil },
+    { name = "onDragStart", default = nil, set = function(self, v) if v then self:RegisterForDrag("LeftButton") else self:RegisterForDrag() end end },
   },
   Create = function(self)
     self:RegisterForClicks("LeftButtonUp", "RightButtonUp")
@@ -100,6 +102,7 @@ UI.Define({
     self.kitIcon = self:CreateTexture(nil, "ARTWORK")
     self.kitChevron = UI.Glyphs.Create(self, "down", GLYPH_SIZE, "text.muted")
     self:SetScript("OnClick", onClick)
+    self:SetScript("OnDragStart", function(button) button:Emit("onDragStart", button) end)
     self.kitOnRepaint = function(button, row)
       button.kitChevron:SetColor(row.text)
       button.kitIcon:SetVertexColor(Theme.Resolve(button.kitProps.iconColor or row.text))

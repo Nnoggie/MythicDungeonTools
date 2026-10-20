@@ -1,7 +1,7 @@
 local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
 
 local MACRO_NAME = "MDTFocusMarker"
 local MACRO_CONDITIONALS = "[@mouseover,exists,nodead][]"
@@ -21,6 +21,11 @@ local FOCUS_MARKER_KIND_STATE_UPDATE = "stateUpdate"
 local FOCUS_MARKER_KIND_SYNC_V2 = "syncV2"
 local FOCUS_MARKER_SYNC_WARNING_CONFLICT = "conflict"
 local FOCUS_MARKER_SYNC_WARNING_MANUAL = "manual"
+local PAGE_WIDTH = 555
+local PAGE_TOP = 20
+local PAGE_BOTTOM = 15
+local MARKER_BUTTON_WIDTH = 256
+local MACRO_ICON_SIZE = 36
 
 MDT:RegisterNavigationSection({
   key = "marks",
@@ -28,10 +33,7 @@ MDT:RegisterNavigationSection({
   tooltip = L["Focus Marker Assignments"],
   texCoords = { 0.5, 0.75, 0, 0.25 },
   onShow = function(sectionChanged)
-    local focusMarkerFrame = MDT.main_frame.FocusMarkerAssignmentsFrame
-    if sectionChanged or not focusMarkerFrame.frame:IsShown() then
-      MDT:FocusMarker_OpenAssignments(not sectionChanged)
-    end
+    if sectionChanged then MDT:FocusMarker_OpenAssignments(false) end
   end,
 })
 
@@ -159,7 +161,7 @@ local getMacroSettings
 local openKeybindSettings
 local openMarkSettings
 local refreshAssignmentsFrame
-local assignmentsFrame
+local page
 local assignmentKnown = {}
 local assignmentEdited = {}
 local focusMarkerSyncWarning
@@ -1065,41 +1067,17 @@ pruneAssignmentKnown = function(roster)
   end
 end
 
-local function setButtonMarker(button, markerIndex, known)
-  button.markerIndex = markerIndex
-  button.markerKnown = known ~= false
-  if not button.markerKnown then
-    button:SetText(unknownMarkerLabel())
-  else
-    button:SetText(markerLabel(markerIndex))
-  end
+local function markerButtonText(markerIndex, known)
+  if known == false then return unknownMarkerLabel() end
+  return markerLabel(markerIndex)
 end
 
 refreshAssignmentsFrame = function()
-  if not assignmentsFrame or not assignmentsFrame.frame or not assignmentsFrame.frame:IsShown() then return end
+  if not page then return end
   if MDT.GetCurrentSection and MDT:GetCurrentSection() ~= "marks" then return end
   C_Timer.After(0, function()
     MDT:FocusMarker_OpenAssignments(true)
   end)
-end
-
-local function addCheckbox(frame, label, value, onChanged)
-  local checkbox = AceGUI:Create("CheckBox")
-  checkbox:SetLabel(label)
-  checkbox:SetFullWidth(true)
-  checkbox:SetValue(value)
-  checkbox:SetCallback("OnValueChanged", function(_, _, newValue)
-    onChanged(newValue)
-  end)
-  frame:AddChild(checkbox)
-end
-
-local function addButton(frame, text, width, onClick)
-  local button = AceGUI:Create("Button")
-  button:SetWidth(width)
-  button:SetText(text)
-  button:SetCallback("OnClick", onClick)
-  frame:AddChild(button)
 end
 
 local function applyClassDefaults(roster, assignments)
@@ -1185,44 +1163,120 @@ openMarkSettings = function()
   C_Timer.After(0.1, openWhenReady)
 end
 
-local function openMarkerMenu(widget, fullName)
+
+local function markerMenuItems(fullName, markerIndex, known, button)
   local function assign(index)
     MDT:FocusMarker_SetAssignment(fullName, index)
-    setButtonMarker(widget, index, true)
+    button:SetText(markerLabel(index))
     refreshAssignmentsFrame()
   end
+  known = known ~= false
   local items = { { kind = "title", text = L["Focus Marker"] } }
   for i = 1, 8 do
-    items[#items + 1] = { kind = "choice", text = markerLabel(i), checked = widget.markerKnown and widget.markerIndex == i, onSelect = function() assign(i) end }
+    items[#items + 1] = { kind = "choice", text = markerLabel(i), checked = known and markerIndex == i, onSelect = function() assign(i) end }
   end
-  items[#items + 1] = { kind = "choice", text = L["None"], checked = widget.markerKnown and widget.markerIndex == nil, onSelect = function() assign(nil) end }
-  MDT:CreateContextMenu(widget.frame, items)
+  items[#items + 1] = { kind = "choice", text = L["None"], checked = known and markerIndex == nil, onSelect = function() assign(nil) end }
+  return items
 end
 
-local function createAssignmentsFrame()
-  local mainFrame = MDT.main_frame
-  local contentParent = mainFrame.sectionContentFrames and mainFrame.sectionContentFrames.marks or mainFrame
+local function macroIconTooltip(tooltip)
+  local settings = getMacroSettings() or {}
+  tooltip:SetText(settings.macroName or MACRO_NAME, 1, 1, 1)
+  tooltip:AddLine(L["focusMarkerMacroDragTooltip"], nil, nil, nil, true)
+end
 
-  local frame = AceGUI:Create("SimpleGroup")
-  frame.frame:SetParent(contentParent)
-  frame.frame:SetFrameStrata("HIGH")
-  frame.frame:SetFrameLevel(3)
-  frame:SetWidth(555)
-  frame:SetHeight(420)
-  frame:SetLayout("Flow")
-  frame.frame:ClearAllPoints()
-  frame.frame:SetPoint("TOP", contentParent, "TOP", 0, -20)
+local function syncWarningText()
+  if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_CONFLICT then return conflictNeedsSyncText() end
+  if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_MANUAL then return manualChangeNeedsSyncText() end
+end
 
-  function frame:Show(...)
-    if self.frame then self.frame:Show() end
+local function buildAssignments(content, roster, assignments, settings)
+  UI.Heading(content, { text = L["Focus Marker Assignments"] })
+  UI.Text(content, { text = L["focusMarkerAssignmentsTooltip"], color = "text.secondary" })
+
+  for index = 1, math.max(#roster, 5) do
+    local player = roster[index]
+    local row = UI.Row(content, { id = "player"..index, gap = "sm" })
+    UI.Text(row, { text = player and player.displayName or L["No player"], userText = player ~= nil, wrap = false, grow = 1 })
+    if player then
+      local markerIndex, known = assignments[player.fullName], assignmentKnown[player.fullName]
+      UI.Button(row, {
+        id = "marker"..index, text = markerButtonText(markerIndex, known), width = MARKER_BUTTON_WIDTH,
+        onClick = function(button) MDT:CreateContextMenu(button, markerMenuItems(player.fullName, markerIndex, known, button)) end,
+      })
+    else
+      UI.Button(row, { id = "marker"..index, text = L["None"], width = MARKER_BUTTON_WIDTH, disabled = true })
+    end
   end
-  function frame:Hide(...)
-    if self.frame then self.frame:Hide() end
+
+  local actions = UI.Columns(content, { weights = { 1, 1, 1 }, gap = "sm" })
+  UI.Button(actions[1], { id = "setKeybind", text = L["Set Keybind"], onClick = function() openKeybindSettings() end })
+  UI.Button(actions[2], { id = "syncMarks", text = L["Sync Marks"], onClick = function() MDT:FocusMarker_SendAssignments() end })
+  UI.Button(actions[3], {
+    id = "autoAssign", text = L["Auto Assign"],
+    onClick = function()
+      roster = getGroupRoster()
+      pruneAssignmentsToRoster(assignments, roster)
+      local playerFullName = getPlayerFullName()
+      local previousOwnMarker = assignments[playerFullName]
+      applyClassDefaults(roster, assignments)
+      markRosterAssignmentsKnown(roster, true)
+      local currentOwnMarker = assignments[playerFullName]
+      if previousOwnMarker ~= currentOwnMarker then
+        MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
+      end
+      focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
+      refreshAssignmentsFrame()
+    end,
+  })
+
+  local macroPreview
+  local function macroOption(id, label, key)
+    UI.Checkbox(content, {
+      id = id, label = label, value = settings[key] == true,
+      onChange = function(value)
+        settings[key] = value
+        MDT:FocusMarker_RefreshAction()
+        macroPreview:SetValue(buildMacroBody(settings.lastMarker or 0, settings))
+      end,
+    })
   end
 
-  frame:Hide()
-  MDT.main_frame.FocusMarkerAssignmentsFrame = frame
-  return frame
+  UI.Checkbox(content, {
+    id = "announceReadyCheck", label = L["Announce focus marker on ready check"], value = settings.announceReadyCheck == true,
+    onChange = function(value) settings.announceReadyCheck = value end,
+  })
+  macroOption("disableMouseoverFocus", L["Don't set focus on mouseover"], "disableMouseoverFocus")
+  macroOption("disableTargetMarkerInRaid", L["Don't set target marker while in a raid group"], "disableTargetMarkerInRaid")
+  macroOption("preserveExistingTargetMarkers", L["Don't overwrite existing target markers"], "preserveExistingTargetMarkers")
+
+  local macroRow = UI.Row(content, { id = "macroRow", gap = "md" })
+  local macroIcon
+  UI.Checkbox(macroRow, {
+    id = "useMacro", label = L["Use macro instead of keybind"], value = settings.useMacro == true,
+    onChange = function(value)
+      settings.useMacro = value
+      macroIcon:SetHidden(not value)
+      MDT:FocusMarker_RefreshAction()
+    end,
+  })
+  macroIcon = UI.Button(macroRow, {
+    id = "macroIcon", variant = "icon", icon = settings.macroIcon or MACRO_ICON, iconSize = MACRO_ICON_SIZE - 4, iconColor = "accent",
+    width = MACRO_ICON_SIZE, height = MACRO_ICON_SIZE, hidden = not settings.useMacro, tooltip = macroIconTooltip,
+    onClick = pickupFocusMarkerMacro, onDragStart = pickupFocusMarkerMacro,
+  })
+
+  UI.Checkbox(content, {
+    id = "suppressNotifications", label = L["Never show MDT focus marker notification."], value = settings.suppressNotifications == true,
+    onChange = function(value) settings.suppressNotifications = value end,
+  })
+  macroPreview = UI.EditBox(content, {
+    id = "macroPreview", label = L["Macro Preview:"], multiline = true, lines = 4, readOnly = true,
+    value = buildMacroBody(settings.lastMarker or 0, settings),
+  })
+
+  local warning = syncWarningText()
+  if warning then UI.Text(content, { id = "syncWarning", text = warning, color = "warn" }) end
 end
 
 function MDT:FocusMarker_OpenAssignments(skipDiscovery)
@@ -1231,8 +1285,6 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     return
   end
 
-  assignmentsFrame = assignmentsFrame or createAssignmentsFrame()
-  local frame = assignmentsFrame
   local assignments = self:FocusMarker_GetAssignments()
   local settings = getMacroSettings()
   local roster = getGroupRoster()
@@ -1246,201 +1298,13 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
   end
 
   MDT:HideAllDialogs()
-  if frame.macroIcon then
-    frame.macroIcon:Hide()
-    frame.macroIcon:ClearAllPoints()
-    frame.macroIcon:SetParent(frame.frame)
+  if not page then
+    local content = MDT.main_frame.sectionContentFrames.marks
+    page = UI.Scroll(content, { padding = "md", gap = "md" })
+    page:SetPoint("TOP", content, "TOP", 0, -PAGE_TOP)
+    page:SetPoint("BOTTOM", content, "BOTTOM", 0, PAGE_BOTTOM)
+    page:SetWidth(PAGE_WIDTH)
   end
-  frame:ReleaseChildren()
-
-  local assignmentsHeading = AceGUI:Create("Heading")
-  assignmentsHeading:SetText(L["Focus Marker Assignments"])
-  assignmentsHeading:SetFullWidth(true)
-  frame:AddChild(assignmentsHeading)
-
-  local assignmentsDescriptionHeight = 36
-  local assignmentsDescription = AceGUI:Create("Label")
-  assignmentsDescription:SetText(L["focusMarkerAssignmentsTooltip"])
-  assignmentsDescription:SetFullWidth(true)
-  assignmentsDescription:SetColor(0.82, 0.82, 0.82)
-  frame:AddChild(assignmentsDescription)
-
-  local rowCount = math.max(#roster, 5)
-  local rosterNameWidth = 294
-  local markerButtonWidth = 256
-
-  for index = 1, rowCount do
-    local player = roster[index]
-    local row = AceGUI:Create("SimpleGroup")
-    row:SetLayout("Flow")
-    row:SetFullWidth(true)
-    row:SetHeight(28)
-
-    local name = AceGUI:Create("Label")
-    name:SetWidth(rosterNameWidth)
-    name:SetText(player and player.displayName or L["No player"])
-    row:AddChild(name)
-
-    local marker = AceGUI:Create("Button")
-    marker:SetWidth(markerButtonWidth)
-    if player then
-      setButtonMarker(marker, assignments[player.fullName], assignmentKnown[player.fullName])
-      marker:SetCallback("OnClick", function(widget)
-        openMarkerMenu(widget, player.fullName)
-      end)
-    else
-      marker:SetText(L["None"])
-      marker:SetDisabled(true)
-    end
-    row:AddChild(marker)
-
-    frame:AddChild(row)
-  end
-
-  local buttons = AceGUI:Create("SimpleGroup")
-  buttons:SetLayout("Flow")
-  buttons:SetFullWidth(true)
-  buttons:SetHeight(36)
-  local actionButtonWidth = 183
-
-  addButton(buttons, L["Set Keybind"], actionButtonWidth, function()
-    openKeybindSettings()
-  end)
-
-  addButton(buttons, L["Sync Marks"], actionButtonWidth, function()
-    MDT:FocusMarker_SendAssignments()
-  end)
-
-  addButton(buttons, L["Auto Assign"], actionButtonWidth, function()
-    roster = getGroupRoster()
-    pruneAssignmentsToRoster(assignments, roster)
-    local playerFullName = getPlayerFullName()
-    local previousOwnMarker = assignments[playerFullName]
-    applyClassDefaults(roster, assignments)
-    markRosterAssignmentsKnown(roster, true)
-    local currentOwnMarker = assignments[playerFullName]
-    if previousOwnMarker ~= currentOwnMarker then
-      MDT:FocusMarker_ApplyMarker(currentOwnMarker or 0)
-    end
-    focusMarkerSyncWarning = #roster > 1 and FOCUS_MARKER_SYNC_WARNING_MANUAL or nil
-    MDT:FocusMarker_OpenAssignments(true)
-  end)
-  frame:AddChild(buttons)
-
-  addCheckbox(frame, L["Announce focus marker on ready check"], settings.announceReadyCheck, function(value)
-    settings.announceReadyCheck = value
-  end)
-
-  local macroPreview
-  local macroPreviewText
-  local function updateMacroPreview()
-    macroPreviewText = buildMacroBody(settings.lastMarker or 0, settings)
-    if macroPreview then
-      macroPreview:SetText(macroPreviewText)
-    end
-  end
-
-  addCheckbox(frame, L["Don't set focus on mouseover"], settings.disableMouseoverFocus, function(value)
-    settings.disableMouseoverFocus = value
-    MDT:FocusMarker_RefreshAction()
-    updateMacroPreview()
-  end)
-
-  addCheckbox(frame, L["Don't set target marker while in a raid group"], settings.disableTargetMarkerInRaid, function(value)
-    settings.disableTargetMarkerInRaid = value
-    MDT:FocusMarker_RefreshAction()
-    updateMacroPreview()
-  end)
-
-  addCheckbox(frame, L["Don't overwrite existing target markers"], settings.preserveExistingTargetMarkers, function(value)
-    settings.preserveExistingTargetMarkers = value
-    MDT:FocusMarker_RefreshAction()
-    updateMacroPreview()
-  end)
-
-  local macroCheckbox = AceGUI:Create("CheckBox")
-  macroCheckbox:SetLabel(L["Use macro instead of keybind"])
-  macroCheckbox:SetFullWidth(true)
-  macroCheckbox:SetValue(settings.useMacro)
-  macroCheckbox:SetCallback("OnValueChanged", function(_, _, value)
-    settings.useMacro = value
-    if frame.macroIcon then
-      frame.macroIcon:SetShown(value)
-    end
-    MDT:FocusMarker_RefreshAction()
-  end)
-  frame:AddChild(macroCheckbox)
-
-  local function positionMacroIcon()
-    frame.macroIcon:ClearAllPoints()
-    frame.macroIcon:SetPoint("LEFT", macroCheckbox.text, "LEFT", math.ceil(macroCheckbox.text:GetStringWidth()) + 8, 0)
-  end
-
-  if not frame.macroIcon then
-    frame.macroIcon = CreateFrame("Button", nil, frame.frame)
-    frame.macroIcon:SetSize(36, 36)
-    frame.macroIcon.texture = frame.macroIcon:CreateTexture(nil, "ARTWORK")
-    frame.macroIcon.texture:SetAllPoints()
-    frame.macroIcon:RegisterForClicks("LeftButtonUp")
-    frame.macroIcon:RegisterForDrag("LeftButton")
-    frame.macroIcon:SetScript("OnClick", function()
-      pickupFocusMarkerMacro()
-    end)
-    frame.macroIcon:SetScript("OnDragStart", pickupFocusMarkerMacro)
-    frame.macroIcon:SetScript("OnEnter", function(self)
-      local currentSettings = getMacroSettings() or {}
-      GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-      GameTooltip:AddLine(currentSettings.macroName or MACRO_NAME, 1, 1, 1)
-      GameTooltip:AddLine(L["focusMarkerMacroDragTooltip"], 1, 0.8196, 0, true)
-      GameTooltip:Show()
-    end)
-    frame.macroIcon:SetScript("OnLeave", function()
-      GameTooltip:Hide()
-    end)
-  end
-  frame.macroIcon:SetParent(macroCheckbox.frame)
-  positionMacroIcon()
-  frame.macroIcon.texture:SetTexture(settings.macroIcon or MACRO_ICON)
-  frame.macroIcon:SetShown(settings.useMacro)
-
-  addCheckbox(frame, L["Never show MDT focus marker notification."], settings.suppressNotifications, function(value)
-    settings.suppressNotifications = value
-  end)
-
-  updateMacroPreview()
-  local targetMarkerCheckboxHeight = 24
-  local mouseoverFocusCheckboxHeight = 24
-  local macroPreviewHeight = 85
-  local extraSettingsHeight = targetMarkerCheckboxHeight + mouseoverFocusCheckboxHeight + macroPreviewHeight
-  macroPreview = AceGUI:Create("MultiLineEditBox")
-  macroPreview:SetLabel(L["Macro Preview:"])
-  macroPreview:SetFullWidth(true)
-  macroPreview:SetNumLines(4)
-  macroPreview:DisableButton(true)
-  macroPreview:SetText(macroPreviewText)
-  macroPreview:SetCallback("OnTextChanged", function(widget)
-    widget:SetText(macroPreviewText)
-  end)
-  frame:AddChild(macroPreview)
-
-  local warningHeight = 0
-  local warningText
-  if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_CONFLICT then
-    warningText = conflictNeedsSyncText()
-  elseif focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_MANUAL then
-    warningText = manualChangeNeedsSyncText()
-  end
-  if warningText then
-    local warning = AceGUI:Create("Label")
-    warning:SetFullWidth(true)
-    warning:SetText("|cffffd100"..warningText.."|r")
-    frame:AddChild(warning)
-    warningHeight = 22
-  end
-
-  frame:SetHeight(math.max(350 + assignmentsDescriptionHeight + extraSettingsHeight, 145 + assignmentsDescriptionHeight + extraSettingsHeight + warningHeight + (rowCount * 28)))
-  frame:Show()
-  frame:DoLayout()
-  positionMacroIcon()
-  frame.macroIcon:SetShown(settings.useMacro)
+  page.content:ReleaseChildren()
+  page.content:Batch(function() buildAssignments(page.content, roster, assignments, settings) end)
 end

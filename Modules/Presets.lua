@@ -462,9 +462,7 @@ function MDT:ImportPreset(preset, fromLiveSession)
     local prompt = string.format(L["Earlier Version"], duplicatePreset.text, "\n", "\n", "\n", "\n")
     local checkboxCallback = function(value)
       db.alwaysOverwriteRoutesByUID = value
-      if self.main_frame and self.main_frame.alwaysOverwriteRoutesByUIDCheckbox then
-        self.main_frame.alwaysOverwriteRoutesByUIDCheckbox:SetValue(value)
-      end
+      self:Settings_Refresh()
     end
     self:OpenConfirmationFrame(450, 180, L["Import Preset"], L["Overwrite"], prompt, updateCallback, L["Make copy"],
       function() copyCallback(false) end, nil, L["Always overwrite matching routes on import"], db.alwaysOverwriteRoutesByUID,
