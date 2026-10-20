@@ -583,15 +583,10 @@ end
 local currentNote
 
 local function openContextMenu()
-  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateButton(L["Edit"], function()
-      currentNote:OpenEditBox()
-    end)
-    rootDescription:CreateButton(L["Delete"], function()
-      deleteNoteObj(currentNote)
-    end)
-    rootDescription:CreateButton(L["Close"], function() end)
-  end)
+  MDT:CreateContextMenu(MDT.main_frame, {
+    { text = L["Edit"], onSelect = function() currentNote:OpenEditBox() end },
+    { text = L["Delete"], onSelect = function() deleteNoteObj(currentNote) end },
+  })
 end
 
 local function POIButton_CalculateNumericTexCoords(index, color)

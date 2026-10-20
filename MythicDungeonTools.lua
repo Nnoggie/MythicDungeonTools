@@ -19,9 +19,13 @@ function MDT:IsInRestrictedEnvironment(shouldWarn)
   return false
 end
 
-function MDT:CreateContextMenu(ownerRegion, generator, ...)
+---Opens a kit context menu at the cursor. Every right-click menu in MDT goes through here so the restricted check runs once.
+---@param owner table?
+---@param items MDT.UI.MenuItem[]|fun(): MDT.UI.MenuItem[]
+---@return MDT.UI.Control?
+function MDT:CreateContextMenu(owner, items)
   if self:IsInRestrictedEnvironment(true) then return end
-  return MenuUtil.CreateContextMenu(ownerRegion, generator, ...)
+  return MDT.UI.Menu.OpenContext(items, owner)
 end
 
 function MDT:InitializeRuntime()

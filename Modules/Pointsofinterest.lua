@@ -66,48 +66,28 @@ local function POI_SetDevOptions(frame, poi)
 end
 
 local createPlayerAssignmentContextMenu = function(frame)
-  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateTitle(L["dropdownAssignPlayer"])
-
-    local group = MDT.U.GetGroupMembers()
-    for _, player in pairs(group) do
-      local function IsSelected(p)
-        return frame.playerAssignmentString:GetText() == p
-      end
-      local function SetSelected(p)
-        frame.playerAssignmentString:SetText(p)
-        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
-        if frame.setAssigned then
-          frame.setAssigned()
-        end
-      end
-      rootDescription:CreateRadio(player, IsSelected, SetSelected, player)
+  local function assign(p)
+    frame.playerAssignmentString:SetText(p)
+    MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
+    if frame.setAssigned then
+      frame.setAssigned()
     end
-
-    local classStrings = MDT.U.GetClassColoredClassNames()
-
-    for _, classString in pairs(classStrings) do
-      local function IsSelected(p)
-        return frame.playerAssignmentString:GetText() == p
-      end
-      local function SetSelected(p)
-        frame.playerAssignmentString:SetText(p)
-        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
-        if frame.setAssigned then
-          frame.setAssigned()
-        end
-      end
-      rootDescription:CreateRadio(classString, IsSelected, SetSelected, classString)
+  end
+  local items = { { kind = "title", text = L["dropdownAssignPlayer"] } }
+  for _, player in pairs(MDT.U.GetGroupMembers()) do
+    items[#items + 1] = { kind = "choice", text = player, checked = frame.playerAssignmentString:GetText() == player, onSelect = function() assign(player) end }
+  end
+  for _, classString in pairs(MDT.U.GetClassColoredClassNames()) do
+    items[#items + 1] = { kind = "choice", text = classString, checked = frame.playerAssignmentString:GetText() == classString, onSelect = function() assign(classString) end }
+  end
+  items[#items + 1] = { text = L["dropdownClear"], onSelect = function()
+    frame.playerAssignmentString:SetText()
+    MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+    if frame.setUnassigned then
+      frame.setUnassigned()
     end
-
-    rootDescription:CreateButton(L["dropdownClear"], function()
-      frame.playerAssignmentString:SetText()
-      MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
-      if frame.setUnassigned then
-        frame.setUnassigned()
-      end
-    end)
-  end)
+  end }
+  MDT:CreateContextMenu(MDT.main_frame, items)
 end
 
 local function POI_SetOptions(frame, type, poi)

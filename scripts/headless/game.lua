@@ -57,6 +57,11 @@ return function(W)
   function G.GetMouseFocus() return W.mouseFocus end
   function G.GetMouseFoci() return { W.mouseFocus } end
   function G.IsMouseButtonDown() return W.mouseDown == true end
+  G.ICON_LIST = {}
+  for i = 1, 8 do
+    G.ICON_LIST[i] = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_"..i..":"
+    G["RAID_TARGET_"..i] = "Raid target "..i
+  end
   function G.IsShiftKeyDown() return W.modifiers and W.modifiers.shift or false end
   function G.IsControlKeyDown() return W.modifiers and W.modifiers.ctrl or false end
   function G.IsAltKeyDown() return W.modifiers and W.modifiers.alt or false end

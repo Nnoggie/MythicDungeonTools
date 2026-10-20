@@ -1441,21 +1441,20 @@ end
 
 ---Context menu
 local function openContextMenu(preset, obj)
-  MDT:CreateContextMenu(MDT.main_frame, function(_, rootDescription)
-    rootDescription:CreateButton(L["Edit"], function()
+  MDT:CreateContextMenu(MDT.main_frame, {
+    { text = L["Edit"], onSelect = function()
       if findObjectIndex(preset, obj) then openEditor(preset, obj) end
-    end)
-    rootDescription:CreateButton(L["Duplicate"], function()
+    end },
+    { text = L["Duplicate"], onSelect = function()
       if not findObjectIndex(preset, obj) then return end
       duplicateText(preset, obj, obj.d[1] + DUPLICATE_OFFSET, obj.d[2] - DUPLICATE_OFFSET)
-    end)
-    rootDescription:CreateButton(L["Delete"], function()
+    end },
+    { text = L["Delete"], onSelect = function()
       if not findObjectIndex(preset, obj) then return end
       selectText(preset, obj)
       confirmDelete()
-    end)
-    rootDescription:CreateButton(L["Close"], function() end)
-  end)
+    end },
+  })
 end
 
 ---Dragging

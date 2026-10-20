@@ -256,8 +256,7 @@ local function onContext(item, index, mods)
     selection = MDT:GetSelection()
   end
   local ctx = { index = index, maxPulls = #pulls, selection = CopyTable(selection) }
-  if MDT:IsInRestrictedEnvironment(true) then return nil end
-  UI.Menu.OpenContext(Model.PullMenuItems(ctx, pullActions, L), sidebar.list)
+  MDT:CreateContextMenu(sidebar.list, Model.PullMenuItems(ctx, pullActions, L))
   return nil
 end
 

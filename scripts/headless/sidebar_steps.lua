@@ -4,6 +4,7 @@ return function(ctx)
   local W, MDT, step, expect, click, asyncIdle = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.asyncIdle
   local typeInto, unusedPresetName, presetCount = ctx.typeInto, ctx.unusedPresetName, ctx.presetCount
   local UI = MDT.UI
+  local L = MDT.L
   local main = MDT.main_frame
   local db = MDT:GetDB()
 
@@ -115,6 +116,35 @@ return function(ctx)
     local row = list:GetRow(preset().value.currentPull)
     expect(row and row.kitPortraits[1]:IsShown(), "the pull row shows no portrait for the enemy")
     expect(row.kitPull:GetText():sub(1, 1) == "+", "the pull row shows no forces: "..tostring(row.kitPull:GetText()))
+  end)
+
+  step("enemy blip right-click opens the kit context menu with the target marker submenu", function()
+    local blip
+    for _, frame in ipairs(MDT.dungeonEnemies_framePool.active) do
+      if frame:IsVisible() and frame.data then blip = frame break end
+    end
+    expect(blip, "no visible enemy blip on the map")
+    click(blip, "RightButton")
+    local menu = UI.Overlay.Top("menu")
+    expect(menu and menu.frame:IsVisible(), "right-click on a blip did not open a kit menu")
+    local list = listOf(menu)
+    expect(menuLabels(list) == L[blip.data.name].."|Set Target Marker|Open Enemy Info", "enemy menu is "..menuLabels(list))
+    click(rowByText(list, "Set Target Marker"))
+    local submenu = UI.Overlay.Top("menu")
+    expect(submenu and submenu ~= menu and submenu.frame:IsVisible(), "the marker submenu did not open")
+    local markers = listOf(submenu)
+    expect(#markers.kitProps.items == 10, "marker submenu has "..#markers.kitProps.items.." rows")
+    db.hasSeenAssignmentWarning = true
+    click(markers:GetRow(2))
+    W.settle(asyncIdle, 30)
+    local assignments = preset().value.enemyAssignments
+    expect(assignments[blip.enemyIdx] and assignments[blip.enemyIdx][blip.cloneIdx] == 2, "picking a marker did not assign it")
+    expect(UI.Overlay.Top("menu") == nil, "the menu chain stayed open after a pick")
+    click(blip, "RightButton")
+    click(rowByText(listOf(UI.Overlay.Top("menu")), "Set Target Marker"))
+    markers = listOf(UI.Overlay.Top("menu"))
+    expect(markers:GetRow(2).kitCheck:IsShown() and not markers:GetRow(1).kitCheck:IsShown(), "the assigned marker is not checked")
+    UI.Menu.Close()
   end)
 
   step("sidebar: clicking a pull selects it and outlines the row", function()

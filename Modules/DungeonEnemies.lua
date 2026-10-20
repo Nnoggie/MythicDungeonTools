@@ -318,40 +318,38 @@ local iconColors = {
 local createEnemyContextMenu = function(frame)
   MDT:GetCurrentPreset().value.enemyAssignments = MDT:GetCurrentPreset().value.enemyAssignments or {}
   local assignments = MDT:GetCurrentPreset().value.enemyAssignments
-  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateTitle(L[frame.data.name])
-
-    local function IsSelected(data)
-      local assignment = assignments[data.enemyIdx] and assignments[data.enemyIdx][data.cloneIdx]
-      return assignment and assignment == data.index or false
+  local function isSelected(index)
+    local assignment = assignments[frame.enemyIdx] and assignments[frame.enemyIdx][frame.cloneIdx]
+    return assignment ~= nil and assignment == index
+  end
+  local function select(index)
+    assignments[frame.enemyIdx] = assignments[frame.enemyIdx] or {}
+    assignments[frame.enemyIdx][frame.cloneIdx] = index ~= 0 and index or nil
+    frame:SetUp(frame.data, frame.clone)
+    if not db.hasSeenAssignmentWarning then
+      MDT:OpenConfirmationFrame(450, 150, L["Warning"], L["Okay"], L["assignmentWarning"])
+      db.hasSeenAssignmentWarning = true
     end
-    local function SetSelected(data)
-      assignments[data.enemyIdx] = assignments[data.enemyIdx] or {}
-      assignments[data.enemyIdx][data.cloneIdx] = data.index ~= 0 and data.index or nil
-      frame:SetUp(frame.data, frame.clone)
-      if not db.hasSeenAssignmentWarning then
-        MDT:OpenConfirmationFrame(450, 150, L["Warning"], L["Okay"], L["assignmentWarning"])
-        db.hasSeenAssignmentWarning = true
-      end
-    end
-    local submenu = rootDescription:CreateButton(L["Set Target Marker"], function() end);
-    for i = 1, 8 do
-      local iconPath = ICON_LIST[i].."16:16:|t"
-      local color = CreateColor(unpack(iconColors[i]))
-      local iconName = WrapTextInColor(_G["RAID_TARGET_"..i], color)
-      submenu:CreateRadio(iconPath.." "..iconName, IsSelected, SetSelected, { enemyIdx = frame.enemyIdx, cloneIdx = frame.cloneIdx, index = i })
-    end
-    submenu:CreateRadio(L["None"], IsSelected, SetSelected, { enemyIdx = frame.enemyIdx, cloneIdx = frame.cloneIdx, index = 0 })
-    submenu:CreateButton(L["Clear all Markers"], function()
-      twipe(assignments)
-      MDT:Async(function()
-        MDT:DungeonEnemies_UpdateEnemiesAsync()
-      end, "ClearAllMarkers")
-    end)
-    rootDescription:CreateButton(L["Open Enemy Info"], function()
-      MDT:ShowEnemyInfoFrame(frame)
-    end)
-  end)
+  end
+  local markers = {}
+  for i = 1, 8 do
+    local iconPath = ICON_LIST[i].."16:16:|t"
+    local color = CreateColor(unpack(iconColors[i]))
+    local iconName = WrapTextInColor(_G["RAID_TARGET_"..i], color)
+    markers[#markers + 1] = { kind = "choice", text = iconPath.." "..iconName, checked = isSelected(i), onSelect = function() select(i) end }
+  end
+  markers[#markers + 1] = { kind = "choice", text = L["None"], checked = isSelected(0), onSelect = function() select(0) end }
+  markers[#markers + 1] = { text = L["Clear all Markers"], onSelect = function()
+    twipe(assignments)
+    MDT:Async(function()
+      MDT:DungeonEnemies_UpdateEnemiesAsync()
+    end, "ClearAllMarkers")
+  end }
+  MDT:CreateContextMenu(MDT.main_frame, {
+    { kind = "title", text = L[frame.data.name] },
+    { kind = "submenu", text = L["Set Target Marker"], items = markers },
+    { text = L["Open Enemy Info"], onSelect = function() MDT:ShowEnemyInfoFrame(frame) end },
+  })
 end
 
 function MDTDungeonEnemyMixin:OnClick(button, down)
