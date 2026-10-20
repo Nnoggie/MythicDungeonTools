@@ -100,6 +100,15 @@ clickCatcher:SetScript("OnClick", function()
   end
 end)
 
+---Pins a frame to a strata so reparenting cannot move it. The client ignores SetFrameStrata while the strata is fixed.
+---@param frame table
+---@param strata FrameStrata
+function Overlay.SetStrata(frame, strata)
+  frame:SetFixedFrameStrata(false)
+  frame:SetFrameStrata(strata)
+  frame:SetFixedFrameStrata(true)
+end
+
 ---@param entry MDT.UI.OverlayEntry
 function Overlay.Push(entry)
   if entry.kind == "popover" then
@@ -110,8 +119,7 @@ function Overlay.Push(entry)
   end
   entries[#entries + 1] = entry
   if entry.kind ~= "dialog" then
-    entry.frame:SetFixedFrameStrata(true)
-    entry.frame:SetFrameStrata("FULLSCREEN_DIALOG")
+    Overlay.SetStrata(entry.frame, "FULLSCREEN_DIALOG")
     entry.frame:SetFrameLevel(clickCatcher:GetFrameLevel() + 10 * floatingCount())
   end
   entry.escape = { close = function() Overlay.Pop(entry, "escape") end }

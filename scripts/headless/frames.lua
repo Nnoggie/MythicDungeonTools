@@ -50,14 +50,18 @@ return function(W)
   function Frame:GetNumRegions() return #S[self].regions end
   function Frame:GetAdditionalRegions() return end
 
-  function Frame:SetFrameStrata(value)
-    usage(type(value) == "string" and strata[value:upper()], 'SetFrameStrata(): unknown strata "'..tostring(value)..'"')
-    value = value:upper()
-    local state = S[self]
+  local function applyStrata(frame, value)
+    local state = S[frame]
     state.strata = value
     for _, child in ipairs(state.children) do
-      if not S[child].fixedStrata then child:SetFrameStrata(value) end
+      if not S[child].fixedStrata then applyStrata(child, value) end
     end
+  end
+  -- The client ignores SetFrameStrata on a frame whose strata is fixed; callers unfix, set, then fix again.
+  function Frame:SetFrameStrata(value)
+    usage(type(value) == "string" and strata[value:upper()], 'SetFrameStrata(): unknown strata "'..tostring(value)..'"')
+    if S[self].fixedStrata then return end
+    applyStrata(self, value:upper())
   end
   function Frame:GetFrameStrata() return S[self].strata or "MEDIUM" end
   function Frame:SetFixedFrameStrata(value) S[self].fixedStrata = value end

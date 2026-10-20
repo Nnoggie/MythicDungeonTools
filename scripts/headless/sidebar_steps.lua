@@ -315,6 +315,26 @@ return function(ctx)
     W.settle(asyncIdle, 30)
   end)
 
+  step("sidebar: the route switcher, level picker and more menu draw above the main window, also when reused", function()
+    local rank = { BACKGROUND = 1, LOW = 2, MEDIUM = 3, HIGH = 4, DIALOG = 5, FULLSCREEN = 6, FULLSCREEN_DIALOG = 7, TOOLTIP = 8 }
+    local function checkTop(what, opener)
+      for life = 1, 2 do
+        opener()
+        local entry = UI.Overlay.Top("popover") or UI.Overlay.Top("menu")
+        expect(entry and entry.frame:IsVisible(), what.." did not open")
+        local frame = entry.frame
+        expect(rank[frame:GetFrameStrata()] > rank[main:GetFrameStrata()],
+          ("%s (open %d) strata %s is not above the main window's %s"):format(what, life, frame:GetFrameStrata(), main:GetFrameStrata()))
+        expect(frame.content:GetFrameStrata() == frame:GetFrameStrata(), what.." content did not follow the popover's strata")
+        UI.Overlay.Pop(entry, "api")
+        W.settle(asyncIdle, 5)
+      end
+    end
+    checkTop("route switcher", function() click(control("switcher")) end)
+    checkTop("level picker", function() click(control("level").kitValue) end)
+    checkTop("more menu", function() openMoreMenu() end)
+  end)
+
   step("sidebar: the forces divider sits exactly after the pull that completes the forces", function()
     ensurePulls(3)
     local totals = MDT.dungeonTotalCount[db.currentDungeonIdx]
