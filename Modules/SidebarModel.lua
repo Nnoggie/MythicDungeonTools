@@ -50,6 +50,7 @@ local MAX_PORTRAITS = 7
 ---@field pullText string "+8.8%" or "+64", empty for a pull with no forces
 ---@field cumulativeText string "45.2%" or "329"
 ---@field healthText string?
+---@field completes boolean? the pull where the running total first reaches 100% (only when more pulls follow)
 
 ---@class MDT.SidebarHeader
 ---@field author string?
@@ -156,7 +157,7 @@ function Model.Build(preset, ctx)
   local pulls = preset.value.pulls
   local total = ctx.totalForces
   local items = {}
-  local cumulative, dividerPlaced = 0, false
+  local cumulative, completed = 0, false
   for index, pull in ipairs(pulls) do
     local forces, portraits, isBoss, health = Model.SummarizePull(pull, ctx)
     local previous = cumulative
@@ -168,17 +169,16 @@ function Model.Build(preset, ctx)
     end
     local cumulativeText = ctx.useForcesCount and tostring(cumulative) or Model.FormatPercent(cumulative, total)
     local healthText = ctx.showHealth and health > 0 and ctx.formatHealth(health) or nil
-    local sigParts = { index, UI.Color.ToHex({ r, g, b }), pullText, cumulativeText, healthText or "", isBoss and "B" or "" }
+    local completes = not completed and total > 0 and previous < total and cumulative >= total and index < #pulls
+    if completes then completed = true end
+    local sigParts = { index, UI.Color.ToHex({ r, g, b }), pullText, cumulativeText, healthText or "", isBoss and "B" or "", completes and "C" or "" }
     for _, portrait in ipairs(portraits) do sigParts[#sigParts + 1] = tostring(portrait.displayId).."x"..portrait.quantity end
     items[#items + 1] = {
       kind = "pull", key = index, sig = table.concat(sigParts, "|"),
       index = index, color = { r, g, b }, portraits = portraits, isBoss = isBoss,
       forces = forces, cumulative = cumulative, pullText = pullText, cumulativeText = cumulativeText, healthText = healthText,
+      completes = completes,
     }
-    if not dividerPlaced and total > 0 and previous < total and cumulative >= total and index < #pulls then
-      dividerPlaced = true
-      items[#items + 1] = { kind = "divider", key = "complete" }
-    end
   end
   items[#items + 1] = { kind = "newPull", key = "new" }
 

@@ -345,7 +345,7 @@ return function(ctx)
     end
   end)
 
-  step("sidebar: the forces divider sits exactly after the pull that completes the forces", function()
+  step("sidebar: the pull that completes the forces is marked, and row index stays the pull index", function()
     ensurePulls(3)
     local totals = MDT.dungeonTotalCount[db.currentDungeonIdx]
     local realTotal = totals.normal
@@ -360,18 +360,20 @@ return function(ctx)
     expect(firstForces > 0, "pull 1 has no forces")
     totals.normal = firstForces
     MDT:RefreshSidebar()
-    local items = control("pulls").kitProps.items
-    local dividers, position = 0, nil
-    for index, item in ipairs(items) do
-      if item.kind == "divider" then dividers, position = dividers + 1, index end
-    end
-    expect(dividers == 1 and position == 2, ("divider count %d at %s"):format(dividers, tostring(position)))
+    local list = control("pulls")
+    local items = list.kitProps.items
+    for index = 1, #pulls() do expect(items[index].kind == "pull" and items[index].index == index, "row "..index.." is not pull "..index) end
+    expect(items[1].completes and list:GetRow(1).kitComplete:IsShown(), "pull 1 completes the forces but has no marker")
+    expect(not items[2].completes, "a later pull is marked too")
+    click(list:GetRow(#pulls()))
+    W.settle(asyncIdle, 30)
+    expect(preset().value.currentPull == #pulls(), "clicking the last pull after the completed one did not select it")
     local fill = control("forces").kitProps.segments[1].color
     expect(fill[1] == UI.Theme.Resolve("bar.ok") or fill[1] == UI.Theme.Resolve("bar.warn"), "completed forces do not change the bar color")
     expect(control("forces").kitText:GetTextColor() == UI.Theme.Resolve("text.normal"), "forces bar text is not white")
     totals.normal = 100000
     MDT:RefreshSidebar()
-    for _, item in ipairs(control("pulls").kitProps.items) do expect(item.kind ~= "divider", "divider shown below 100%") end
+    for _, item in ipairs(control("pulls").kitProps.items) do expect(not item.completes, "a pull is marked below 100%") end
     totals.normal = realTotal
     MDT:RefreshSidebar()
   end)

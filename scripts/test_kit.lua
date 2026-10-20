@@ -445,19 +445,19 @@ test("SidebarModel.SummarizePull: groups clones by enemy and per-clone forces, s
   eq(capped[1].enemyIdx, 1, "the largest forces come first")
 end)
 
-test("SidebarModel.Build: rows, cumulative text, divider after the pull that completes forces, header", function()
+test("SidebarModel.Build: rows, cumulative text, the pull that completes forces, header", function()
   local ctx = fixtureContext()
   local state = Model.Build(fixturePreset(), ctx)
   local items = state.items
-  eq(#items, 6, "4 pulls, one divider, one new-pull row")
+  eq(#items, 5, "4 pulls and the new-pull row; row index == pull index")
   eq({ items[1].kind, items[1].key, items[1].index, items[1].forces, items[1].cumulative }, { "pull", 1, 1, 10, 10 })
   eq({ items[1].pullText, items[1].cumulativeText, items[1].healthText }, { "+50.0%", "50.0%", nil })
   eq(items[1].color, { 0.1, 0, 0 })
   eq({ items[2].forces, items[2].cumulative, items[2].pullText, items[2].cumulativeText }, { 14, 24, "+70.0%", "120.0%" })
-  eq({ items[3].kind, items[3].key }, { "divider", "complete" }, "divider sits right after the pull that crosses the total")
-  eq({ items[4].kind, items[4].index, items[4].isBoss, items[4].pullText, items[4].cumulativeText }, { "pull", 3, true, "", "120.0%" })
-  eq({ items[5].kind, items[5].index, items[5].cumulative }, { "pull", 4, 29 })
-  eq({ items[6].kind, items[6].key }, { "newPull", "new" })
+  eq({ items[1].completes, items[2].completes, items[3].completes }, { false, true, false }, "pull 2 crosses the total")
+  eq({ items[3].kind, items[3].index, items[3].isBoss, items[3].pullText, items[3].cumulativeText }, { "pull", 3, true, "", "120.0%" })
+  eq({ items[4].kind, items[4].index, items[4].cumulative }, { "pull", 4, 29 })
+  eq({ items[5].kind, items[5].key }, { "newPull", "new" })
   eq(items[1].sig ~= items[2].sig, true)
   eq(Model.Build(fixturePreset(), ctx).items[2].sig, items[2].sig, "sig is stable across builds")
   local header = state.header
@@ -468,16 +468,16 @@ test("SidebarModel.Build: rows, cumulative text, divider after the pull that com
 
   local overflow = Model.Build(fixturePreset(), fixtureContext({ totalForces = 729 }))
   eq(overflow.header.forces.tone, "text.normal")
-  eq(#overflow.items, 5, "no divider when forces never complete")
+  for _, item in ipairs(overflow.items) do eq(item.completes == true, false, "no pull completes when forces never reach the total") end
 
   local lastCompletes = fixturePreset()
   lastCompletes.value.pulls[4], lastCompletes.value.pulls[3] = nil, nil
-  eq(#Model.Build(lastCompletes, fixtureContext({ totalForces = 20 })).items, 3, "no divider when the completing pull is the last one")
+  eq(Model.Build(lastCompletes, fixtureContext({ totalForces = 20 })).items[2].completes, false, "no marker when the completing pull is the last one")
 
   local counted = Model.Build(fixturePreset(), fixtureContext({ useForcesCount = true, showHealth = true }))
   eq({ counted.items[1].pullText, counted.items[1].cumulativeText, counted.items[1].healthText }, { "+10", "10", "4000hp" })
-  eq(counted.items[4].healthText, "10000hp", "boss health shows even with no forces")
-  eq(counted.items[4].sig ~= items[4].sig, true, "health text changes the sig")
+  eq(counted.items[3].healthText, "10000hp", "boss health shows even with no forces")
+  eq(counted.items[3].sig ~= items[3].sig, true, "health text changes the sig")
 
   local live = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "mine", inGroup = true }))
   eq(live.header.isLiveRoute, true)

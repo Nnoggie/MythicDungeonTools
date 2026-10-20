@@ -160,6 +160,12 @@ function PullRow:OnCreate()
   self.kitTint = self:CreateTexture(nil, "BACKGROUND", nil, 1)
   self.kitTint:SetAllPoints()
   self.kitTint:SetColorTexture(1, 1, 1, 1)
+  -- Marks the pull that completes the forces. A line inside the row, not a separate list row, so row index == pull index.
+  self.kitComplete = self:CreateTexture(nil, "ARTWORK")
+  self.kitComplete:SetPoint("BOTTOMLEFT")
+  self.kitComplete:SetPoint("BOTTOMRIGHT")
+  self.kitComplete:SetHeight(2)
+  Theme.Bind(self.kitComplete, "ok")
   self.kitHover = self:CreateTexture(nil, "HIGHLIGHT")
   self.kitHover:SetAllPoints()
   self.kitHover:SetColorTexture(1, 1, 1, 0.08)
@@ -247,6 +253,7 @@ function PullRow:Bind(item)
       portrait:Hide()
     end
   end
+  self.kitComplete:SetShown(item.completes == true)
   self.kitPull:SetText(item.pullText)
   local cumulative = item.cumulativeText
   if item.healthText then cumulative = cumulative.." · "..item.healthText end
@@ -257,30 +264,6 @@ function PullRow:OnUnbind()
   self:kitWatchPortraits(false)
   PullTooltip.Hide(self)
 end
-
-local DividerRow = {}
-
-function DividerRow:OnCreate()
-  self.kitLabel = self:CreateFontString(nil, "ARTWORK")
-  self.kitLabel:SetFontObject(Fonts.Get("small"))
-  self.kitLabel:SetPoint("CENTER", self, "CENTER", Theme.Space("sm"), 0)
-  self.kitLabel:SetText(string.upper(L["Forces complete"]))
-  Theme.Bind(self.kitLabel, "ok")
-  self.kitCheck = UI.Glyphs.Create(self, "check", 8, "ok")
-  self.kitCheck:SetPoint("RIGHT", self.kitLabel, "LEFT", -Theme.Space("xs"), 0)
-  self.kitLeft = self:CreateTexture(nil, "ARTWORK")
-  self.kitLeft:SetHeight(1)
-  self.kitLeft:SetPoint("LEFT", self, "LEFT", Theme.Space("md"), 0)
-  self.kitLeft:SetPoint("RIGHT", self.kitCheck, "LEFT", -Theme.Space("sm"), 0)
-  Theme.Bind(self.kitLeft, "ok.line")
-  self.kitRight = self:CreateTexture(nil, "ARTWORK")
-  self.kitRight:SetHeight(1)
-  self.kitRight:SetPoint("LEFT", self.kitLabel, "RIGHT", Theme.Space("sm"), 0)
-  self.kitRight:SetPoint("RIGHT", self, "RIGHT", -Theme.Space("md"), 0)
-  Theme.Bind(self.kitRight, "ok.line")
-end
-
-function DividerRow:Bind() end
 
 local NewPullRow = {}
 
@@ -298,6 +281,5 @@ function NewPullRow:Bind() end
 ---@type table<string, MDT.UI.ListKind>
 MDT.SidebarRowKinds = {
   pull = { height = ROW_HEIGHT, mixin = PullRow, draggable = true, selectable = true },
-  divider = { height = 20, mixin = DividerRow, static = true },
   newPull = { height = "md", mixin = NewPullRow },
 }
