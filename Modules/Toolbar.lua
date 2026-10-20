@@ -306,11 +306,11 @@ local function updateTextPreview(preview)
     return
   end
   local x, y = GetCursorPosition()
-  local uiScale = UIParent:GetScale()
+  local scale = preview:GetEffectiveScale()
   --brush tools resize the preview frame, the text has to start exactly at the cursor
   preview:SetSize(1, 1)
   preview:ClearAllPoints()
-  preview:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / uiScale, y / uiScale)
+  preview:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / scale, y / scale)
   local mapScale = MDT.main_frame.mapPanelFrame:GetEffectiveScale() / preview:GetEffectiveScale()
   local r, g, b, size = MDT:GetPresetTextDefaultStyle()
   local fontSize = max(1, size * MDT:GetScale() * mapScale)
@@ -341,8 +341,8 @@ function MDT:EnableBrushPreview(tool)
   frame.brushPreview:SetScript("OnUpdate", function(self, tick)
     if MDTScrollFrame:IsMouseOver() and not MDTToolbarFrame:IsMouseOver() then
       local x, y = GetCursorPosition()
-      x = x / UIParent:GetScale()
-      y = y / UIParent:GetScale()
+      x = x / self:GetEffectiveScale()
+      y = y / self:GetEffectiveScale()
       self:ClearAllPoints()
       self:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x, y)
       if tool == "eraser" then
@@ -491,14 +491,14 @@ end
 function MDT:GetCursorPosition()
   local frame = MDT.main_frame
   local scrollFrame = frame.scrollFrame
-  local relativeFrame = UIParent --UIParent
   local mapPanelFrame = MDT.main_frame.mapPanelFrame
   local cursorX, cursorY = GetCursorPosition()
+  local frameScale = scrollFrame:GetEffectiveScale()
   local mapScale = mapPanelFrame:GetScale()
   local scrollH = scrollFrame:GetHorizontalScroll()
   local scrollV = scrollFrame:GetVerticalScroll()
-  local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft()
-  local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale())
+  local frameX = (cursorX / frameScale) - scrollFrame:GetLeft()
+  local frameY = scrollFrame:GetTop() - (cursorY / frameScale)
   frameX = (frameX / mapScale) + scrollH
   frameY = (frameY / mapScale) + scrollV
   return frameX - 1, -frameY

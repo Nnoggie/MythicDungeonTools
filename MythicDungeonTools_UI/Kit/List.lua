@@ -230,7 +230,7 @@ end
 
 local function ghostFor(list)
   if list.kitGhost then return list.kitGhost end
-  local ghost = CreateFrame("Frame", nil, UIParent)
+  local ghost = CreateFrame("Frame", nil, UI.Root)
   ghost:SetFrameStrata("TOOLTIP")
   ghost:SetAlpha(0.6)
   ghost:Hide()

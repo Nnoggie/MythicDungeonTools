@@ -21,7 +21,7 @@ return function(ctx)
 
   step("kit gallery: build every control and container once", function()
     log = {}
-    local root = CreateFrame("Frame", "MDTKitGallery", UIParent)
+    local root = CreateFrame("Frame", "MDTKitGallery", UI.Root)
     root:SetSize(600, 900)
     root:SetPoint("TOP")
     page = UI.Stack(root, { gap = "md", padding = "md", background = "bg.panel", border = "border.normal" })
@@ -87,6 +87,25 @@ return function(ctx)
     local userText = page:Find("userText")
     expect(userText.kitLabel:GetFontObject() == UI.Fonts.fallbacks.plain.body.russian, "Cyrillic user text did not pick the russian fallback font")
     ctx.render("kit gallery", root)
+  end)
+
+  step("kit root: MDT keeps the pixel-perfect scale whatever UI scale the user sets", function()
+    local pixelPerfect = 768 / W.screenHeight
+    local function near(a, b) return math.abs(a - b) < 1e-6 end
+    expect(near(UI.Root:GetEffectiveScale(), pixelPerfect), "root scale is "..UI.Root:GetEffectiveScale())
+    local button = page:Find("default")
+    local width = button:GetWidth()
+    local _, _, screenWidth = button:GetScaledRect()
+    for _, uiScale in ipairs({ 0.64, 1.15 }) do
+      UIParent:SetScale(uiScale)
+      W.FireEvent("UI_SCALE_CHANGED")
+      expect(near(UI.Root:GetEffectiveScale(), pixelPerfect), ("root scale is %s at UI scale %s"):format(UI.Root:GetEffectiveScale(), uiScale))
+      expect(near(UI.Root:GetWidth(), W.screenWidth / pixelPerfect), "root does not cover the screen at UI scale "..uiScale)
+      local _, _, scaledWidth = button:GetScaledRect()
+      expect(near(button:GetWidth(), width) and near(scaledWidth, screenWidth), "a button changed its on-screen size at UI scale "..uiScale)
+    end
+    UIParent:SetScale(1)
+    W.FireEvent("UI_SCALE_CHANGED")
   end)
 
   step("kit gallery: controls report user input through their callbacks", function()
@@ -736,7 +755,7 @@ return function(ctx)
     expect(list:GetRow(80) and not list:GetRow(1), "ScrollTo did not reach the last item")
     expect(list:GetRow(80):GetBottom() >= list.kitViewport:GetBottom() - 0.01, "last row is cut off")
     list:SetOffset(0)
-    expect(list:GetRow(1) and list:GetRow(1):GetTop() == list.kitViewport:GetTop(), "offset 0 does not put row 1 at the top")
+    expect(list:GetRow(1) and math.abs(list:GetRow(1):GetTop() - list.kitViewport:GetTop()) < 0.01, "offset 0 does not put row 1 at the top")
 
     click(list:GetRow(2))
     expect(#selection == 1 and selection[1] == 2 and lastLog() == "activate:2", "plain click did not select and activate")
@@ -759,7 +778,7 @@ return function(ctx)
     expect(table.concat(selection, ",") == "2,3", "selection before the drag is "..table.concat(selection, ","))
     local depth = UI.Escape.Depth()
     local viewport = list.kitViewport
-    W.cursorX, W.cursorY = list:GetRow(2):GetCenter()
+    W.cursorTo(list:GetRow(2))
     W.fireScript(list:GetRow(2), "OnDragStart")
     expect(list:IsDragging() and list.kitGhost:IsShown(), "drag did not start")
     expect(UI.Escape.Depth() == depth + 1, "drag did not push an Escape entry")
@@ -771,16 +790,16 @@ return function(ctx)
     list:SetItems(buildItems())
     expect(list.kitPendingItems ~= nil, "SetItems during a drag was applied immediately")
 
-    W.cursorY = viewport:GetBottom() + 4
+    W.cursorToY(viewport, viewport:GetBottom() + 4)
     local before = list:GetOffset()
     W.pump(0.5)
     expect(list:GetOffset() > before + 50, "bottom edge did not auto-scroll: "..list:GetOffset())
-    W.cursorY = viewport:GetTop() - 4
+    W.cursorToY(viewport, viewport:GetTop() - 4)
     W.pump(2)
     expect(list:GetOffset() == 0, "top edge did not scroll back to the start")
 
     local targetTop = viewport:GetTop() - (list.kitTops[6] - list:GetOffset())
-    W.cursorY = targetTop - 3
+    W.cursorToY(viewport, targetTop - 3)
     W.pump(0.05)
     expect(list.kitIndicator:IsShown(), "drop indicator hidden over a valid slot")
     expect(math.abs(list.kitIndicator:GetTop() - targetTop) <= 2, "indicator is not at the slot boundary")
@@ -799,9 +818,9 @@ return function(ctx)
       return count
     end
     click(list:GetRow(5))
-    W.cursorX, W.cursorY = list:GetRow(5):GetCenter()
+    W.cursorTo(list:GetRow(5))
     W.fireScript(list:GetRow(5), "OnDragStart")
-    W.cursorY = list:GetRow(5):GetTop() - 2
+    W.cursorToY(list:GetRow(5), list:GetRow(5):GetTop() - 2)
     W.pump(0.05)
     expect(not list.kitIndicator:IsShown(), "indicator shown over the row's own slot")
     W.fireScript(list:GetRow(5), "OnDragStop")

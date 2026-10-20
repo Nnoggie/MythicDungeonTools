@@ -23,7 +23,7 @@ function MDT:Maximize()
     f.blackoutFrameTex:SetDrawLayer(canvasDrawLayer, -6)
     f.blackoutFrameTex:SetColorTexture(0.058823399245739, 0.058823399245739, 0.058823399245739, 1)
     f.blackoutFrame:ClearAllPoints()
-    f.blackoutFrame:SetAllPoints(UIParent)
+    f.blackoutFrame:SetAllPoints(MDT.UI.Root)
   end
   f.blackoutFrame:Show()
   f.topPanel:SetMouseClickEnabled(false)
@@ -33,9 +33,9 @@ function MDT:Maximize()
   db.scale = scale
   f:ClearAllPoints()
   if not isNarrow then
-    f:SetPoint("TOP", UIParent, "TOP", -((f.sidePanel:GetWidth() - navigationSidebarWidth) / 2), -30)
+    f:SetPoint("TOP", MDT.UI.Root, "TOP", -((f.sidePanel:GetWidth() - navigationSidebarWidth) / 2), -30)
   else
-    f:SetPoint("LEFT", UIParent, "LEFT", navigationSidebarWidth, 0)
+    f:SetPoint("LEFT", MDT.UI.Root, "LEFT", navigationSidebarWidth, 0)
   end
   f:SetSize(newSizex, newSizey)
   f.scrollFrame:SetSize(newSizex, newSizey)
@@ -82,7 +82,7 @@ function MDT:Minimize()
   local newSizex = sizex * db.scale
   local newSizey = sizey * db.scale
   f:ClearAllPoints()
-  f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
+  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
   f:SetSize(newSizex, newSizey)
   f.scrollFrame:SetSize(newSizex, newSizey)
   f.mapPanelFrame:SetSize(newSizex, newSizey)

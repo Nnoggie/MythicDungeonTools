@@ -3,7 +3,7 @@
 return function(ctx)
   local W, MDT, step, expect, click = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click
   local UI = MDT.UI
-  local root = CreateFrame("Frame", "MDTKitListSteps", UIParent)
+  local root = CreateFrame("Frame", "MDTKitListSteps", UI.Root)
   root:SetSize(300, 200)
   root:SetPoint("CENTER")
 
@@ -48,10 +48,10 @@ return function(ctx)
     newList({ height = 200 })
     local origin = list:GetRow(2)
     click(origin)
-    W.cursorX, W.cursorY = origin:GetCenter()
+    W.cursorTo(origin)
     W.fireScript(origin, "OnDragStart")
     expect(list:IsDragging(), "drag did not start")
-    W.cursorY = list.kitViewport:GetBottom() + 4
+    W.cursorToY(list.kitViewport, list.kitViewport:GetBottom() + 4)
     W.pump(1.5)
     expect(list:GetOffset() > 400, "bottom edge did not scroll far: "..list:GetOffset())
     expect(list:GetRow(2) == origin and origin.kitItem and origin.kitItem.key == 2, "the drag origin row was recycled while scrolled out")
@@ -62,7 +62,7 @@ return function(ctx)
     local targetIndex = math.floor(list:GetOffset() / 28) + 3
     local target = list:GetRow(targetIndex)
     expect(target, "row "..targetIndex.." is not visible after scrolling")
-    W.cursorY = target:GetTop() - 3
+    W.cursorToY(target, target:GetTop() - 3)
     W.pump(0.05)
     expect(list.kitIndicator:IsShown(), "no drop indicator over row "..targetIndex)
     W.fireScript(origin, "OnDragStop")
@@ -77,10 +77,10 @@ return function(ctx)
     newList({ height = 200 })
     local origin = list:GetRow(1)
     click(origin)
-    W.cursorX, W.cursorY = origin:GetCenter()
+    W.cursorTo(origin)
     W.fireScript(origin, "OnDragStart")
     local target = list:GetRow(4)
-    W.cursorY = target:GetTop() - 3
+    W.cursorToY(target, target:GetTop() - 3)
     W.pump(0.05)
     expect(list:IsDragging() and list.kitIndicator:IsShown(), "drag is not in progress over a slot")
     W.mouseDown = false

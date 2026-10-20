@@ -149,10 +149,10 @@ function Menu.Open(spec)
     for _, item in ipairs(items) do natural = math.max(natural, itemWidth(item)) end
     width = math.min(MAX_WIDTH, math.max(MIN_WIDTH, anchor ~= "cursor" and anchor:GetWidth() or 0, math.ceil(natural) + Theme.Space("xs") * 2))
   end
-  local popover = UI.PopoverFrame(UIParent, { onClose = spec.onClose, padding = "xs", gap = "xs" })
+  local popover = UI.PopoverFrame(UI.Root, { onClose = spec.onClose, padding = "xs", gap = "xs" })
   local openToken = {}
   popover.kitMenuToken = openToken
-  popover:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
+  popover:SetPoint("TOPLEFT", UI.Root, "TOPLEFT", 0, 0)
   local content = popover.content
   content:SetWidth(width)
   local list

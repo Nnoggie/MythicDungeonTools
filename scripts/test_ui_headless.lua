@@ -265,7 +265,7 @@ step("conflict dialog opens on the kit and Escape closes it, not the window", fu
   MDT:ShowConflictFrame()
   local dialog = MDT.UI.Dialogs.Get("addonConflict")
   expect(dialog and dialog:IsVisible(), "conflict dialog not shown")
-  expect(dialog:GetParent() == UIParent, "conflict dialog is parented to the main window")
+  expect(dialog:GetParent() == MDT.UI.Root, "conflict dialog is not on the UI root")
   snapshot("conflict dialog", dialog)
   expect(CloseSpecialWindows(), "no special window closed")
   expect(not dialog:IsShown() and MDT.UI.Dialogs.Get("addonConflict") == nil, "Escape did not close the conflict dialog")

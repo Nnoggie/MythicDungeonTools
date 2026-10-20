@@ -185,7 +185,7 @@ end
 W.fireScript = fireScript
 -- Like the client: the cursor moves onto the frame, and a disabled button only gets OnEnter when it allows motion scripts while disabled.
 function W.hover(obj)
-  W.cursorX, W.cursorY = obj:GetCenter()
+  W.cursorTo(obj)
   if obj.IsEnabled and not obj:IsEnabled() and not obj:GetMotionScriptsWhileDisabled() then return end
   return fireScript(obj, "OnEnter")
 end
@@ -236,19 +236,31 @@ local pointFractions = {
   BOTTOMLEFT = { 0, 0 }, BOTTOM = { 0.5, 0 }, BOTTOMRIGHT = { 1, 0 },
 }
 
-local resolveRect
+local resolveScreenRect
 
-local function anchorPosition(anchor, depth)
+-- Like the client: positions resolve in screen pixels. A frame's anchor offsets and size are in its own units, so
+-- they scale by its effective scale; GetLeft/GetWidth/... divide the screen rect back by that scale.
+local function effectiveScaleOf(obj)
+  local scale, current = 1, obj
+  while current do
+    scale = scale * (S[current].scale or 1)
+    current = S[current].parent
+  end
+  return scale
+end
+W.effectiveScaleOf = effectiveScaleOf
+
+local function anchorPosition(anchor, depth, scale)
   local relative = anchor.relativeTo
   local left, bottom, width, height
   if relative then
-    left, bottom, width, height = resolveRect(relative, depth + 1)
+    left, bottom, width, height = resolveScreenRect(relative, depth + 1)
     if not left then return nil end
   else
     left, bottom, width, height = 0, 0, W.screenWidth, W.screenHeight
   end
   local fraction = pointFractions[anchor.relativePoint]
-  return left + fraction[1] * width + anchor.x, bottom + fraction[2] * height + anchor.y
+  return left + fraction[1] * width + anchor.x * scale, bottom + fraction[2] * height + anchor.y * scale
 end
 
 local function solveAxis(constraints, size)
@@ -264,25 +276,47 @@ local function solveAxis(constraints, size)
   if center then return center - size / 2, size end
 end
 
-resolveRect = function(obj, depth)
+resolveScreenRect = function(obj, depth)
   depth = depth or 0
   if depth > 50 then return nil end
   local state = S[obj]
   if obj == W.UIParent or obj == W.WorldFrame then return 0, 0, W.screenWidth, W.screenHeight end
   if #state.points == 0 then return nil end
+  local scale = effectiveScaleOf(obj)
   local horizontal, vertical = {}, {}
   for _, anchor in ipairs(state.points) do
-    local x, y = anchorPosition(anchor, depth)
+    local x, y = anchorPosition(anchor, depth, scale)
     if not x then return nil end
     local fraction = pointFractions[anchor.point]
     horizontal[fraction[1]] = x
     vertical[fraction[2]] = y
   end
-  local left, width = solveAxis(horizontal, state.width)
-  local bottom, height = solveAxis(vertical, state.height)
+  local left, width = solveAxis(horizontal, state.width and state.width * scale)
+  local bottom, height = solveAxis(vertical, state.height and state.height * scale)
   return left, bottom, width, height
 end
+W.resolveScreenRect = resolveScreenRect
+
+-- The rect in the region's own units, as GetLeft/GetRect report it.
+local function resolveRect(obj, depth)
+  local left, bottom, width, height = resolveScreenRect(obj, depth)
+  if not left then return nil end
+  local scale = effectiveScaleOf(obj)
+  return left / scale, bottom / scale, width / scale, height / scale
+end
 W.resolveRect = resolveRect
+
+-- The cursor lives in screen pixels, like GetCursorPosition. These take positions in a region's own units
+-- (what GetCenter/GetTop report) and convert them.
+function W.cursorTo(region, x, y)
+  if not x then x, y = region:GetCenter() end
+  if not x then W.cursorX, W.cursorY = nil, nil return end
+  local scale = effectiveScaleOf(region)
+  W.cursorX, W.cursorY = x * scale, y * scale
+end
+function W.cursorToY(region, y)
+  W.cursorY = y * effectiveScaleOf(region)
+end
 
 local ScriptRegion = defineClass("ScriptRegion", "Object", {
   "OnShow", "OnHide", "OnEnter", "OnLeave", "OnMouseDown", "OnMouseUp", "OnMouseWheel", "OnLoad",
@@ -470,12 +504,12 @@ function ScriptRegion:GetCenter()
   return left + width / 2, bottom + height / 2
 end
 function ScriptRegion:GetRect() return resolveRect(self) end
-function ScriptRegion:GetScaledRect() return resolveRect(self) end
+function ScriptRegion:GetScaledRect() return resolveScreenRect(self) end
 function ScriptRegion:IsRectValid() return resolveRect(self) ~= nil end
 function ScriptRegion:IsAnchoringRestricted() return false end
 function ScriptRegion:IsMouseOver(offsetTop, offsetBottom, offsetLeft, offsetRight)
   if not W.cursorX or not W.isVisible(self) then return false end
-  local left, bottom, width, height = resolveRect(self)
+  local left, bottom, width, height = resolveScreenRect(self)
   if not left then return false end
   return W.cursorX >= left + (offsetLeft or 0) and W.cursorX <= left + width + (offsetRight or 0)
     and W.cursorY >= bottom + (offsetBottom or 0) and W.cursorY <= bottom + height + (offsetTop or 0)
@@ -484,8 +518,7 @@ function ScriptRegion:IsMouseMotionFocus() return W.mouseFocus == self end
 
 -- Simulates a user click: the cursor moves to the frame's center first, so IsMouseOver() guards pass.
 function W.userClick(frame, button)
-  local x, y = frame:GetCenter()
-  W.cursorX, W.cursorY = x, y
+  W.cursorTo(frame)
   W.mouseFocus = frame
   W.mouseDown = false
   button = button or "LeftButton"

@@ -152,7 +152,7 @@
 ---@field title string
 ---@field key string? keyed singleton: re-opening replaces the open one with reason "replaced"
 ---@field width number? default 320
----@field parent table? default: the registered provider, else UIParent
+---@field parent table? default: the registered provider, else UI.Root
 ---@field build fun(content: MDT.UI.Control, dialog: MDT.UI.Control)?
 ---@field onClose fun(dialog: MDT.UI.Control, reason: "x"|"escape"|"cancel"|"confirm"|"alt"|"replaced"|"api"|"hidden")?
 ---@field globalName string?

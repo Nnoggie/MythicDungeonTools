@@ -262,8 +262,9 @@ function MDT:ZoomMap(delta)
   scrollFrame.zoomedIn = abs(newScale - 1) > 0.02
 
   local cursorX, cursorY = GetCursorPosition()
-  local frameX = (cursorX / UIParent:GetScale()) - scrollFrame:GetLeft()
-  local frameY = scrollFrame:GetTop() - (cursorY / UIParent:GetScale())
+  local frameScale = scrollFrame:GetEffectiveScale()
+  local frameX = (cursorX / frameScale) - scrollFrame:GetLeft()
+  local frameY = scrollFrame:GetTop() - (cursorY / frameScale)
   local scaleChange = newScale / oldScale
   local newScrollH = (scaleChange * frameX - frameX) / newScale + oldScrollH
   local newScrollV = (scaleChange * frameY - frameY) / newScale + oldScrollV

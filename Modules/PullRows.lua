@@ -20,7 +20,7 @@ local tooltip
 ---The model card shown while a pull row or one of its portraits is hovered.
 local function ensureTooltip()
   if tooltip then return tooltip end
-  tooltip = CreateFrame("Frame", "MDTPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
+  tooltip = CreateFrame("Frame", "MDTPullTooltip", UI.Root, "TooltipBorderedFrameTemplate")
   tooltip:SetClampedToScreen(true)
   tooltip:SetFrameStrata("TOOLTIP")
   tooltip:SetSize(TOOLTIP_WIDTH, TOOLTIP_HEIGHT)

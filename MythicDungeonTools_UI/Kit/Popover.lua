@@ -53,8 +53,8 @@ UI.Define({
 ---@param spec MDT.UI.PopoverSpec
 ---@return MDT.UI.Control popover with Close(reason) and `.content`
 function UI.Popover(spec)
-  local popover = UI.PopoverFrame(UIParent, { onClose = spec.onClose, padding = spec.padding, gap = spec.gap })
-  popover:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
+  local popover = UI.PopoverFrame(UI.Root, { onClose = spec.onClose, padding = spec.padding, gap = spec.gap })
+  popover:SetPoint("TOPLEFT", UI.Root, "TOPLEFT", 0, 0)
   popover.content:SetWidth(spec.width or DEFAULT_WIDTH)
   popover.content:Batch(function() spec.build(popover.content, popover) end)
   popover:SetSize(popover.content:GetWidth(), popover.content:GetHeight())

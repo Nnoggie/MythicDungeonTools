@@ -105,7 +105,7 @@ function Dialogs.Open(spec)
   UI.Overlay.PopAll("menu", "replaced")
   UI.Overlay.PopAll("popover", "replaced")
   if spec.key and keyed[spec.key] then keyed[spec.key]:Close("replaced") end
-  local parent = spec.parent or (parentProvider and parentProvider()) or UIParent
+  local parent = spec.parent or (parentProvider and parentProvider()) or UI.Root
   local dialog = UI.DialogFrame(parent, { title = spec.title, onClose = spec.onClose })
   UI.Overlay.SetStrata(dialog, "DIALOG")
   dialog.kitKey, dialog.kitGlobalName = spec.key, spec.globalName

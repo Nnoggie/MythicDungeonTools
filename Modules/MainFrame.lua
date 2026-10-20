@@ -241,12 +241,13 @@ function MDT:SetScale(scale)
 end
 
 function MDT:GetFullScreenSizes()
-  local newSizey = GetScreenHeight() - (panelHeight * 2)
+  local screenWidth, screenHeight = MDT.UI.Root:GetWidth(), MDT.UI.Root:GetHeight()
+  local newSizey = screenHeight - (panelHeight * 2)
   local newSizex = newSizey * (sizex / sizey)
   local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
   local isNarrow
-  if newSizex + sidePanelWidth + navigationSidebarWidth > GetScreenWidth() then
-    newSizex = GetScreenWidth() - sidePanelWidth - navigationSidebarWidth
+  if newSizex + sidePanelWidth + navigationSidebarWidth > screenWidth then
+    newSizex = screenWidth - sidePanelWidth - navigationSidebarWidth
     newSizey = newSizex * (sizey / sizex)
     isNarrow = true
   end
@@ -258,8 +259,7 @@ function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
   xoffset = xoffset or defaultSavedVars.global.xoffset
   yoffset = yoffset or defaultSavedVars.global.yoffset
 
-  local screenWidth = GetScreenWidth()
-  local screenHeight = GetScreenHeight()
+  local screenWidth, screenHeight = MDT.UI.Root:GetWidth(), MDT.UI.Root:GetHeight()
   if not screenWidth or not screenHeight or screenWidth <= 0 or screenHeight <= 0 then
     return defaultNonFullscreenScale
   end
@@ -276,8 +276,7 @@ end
 function MDT:IsFrameOffScreen()
   local topPanel = MDT.main_frame.topPanel
   local bottomPanel = MDT.main_frame.bottomPanel
-  local width = GetScreenWidth()
-  local height = GetScreenHeight()
+  local width, height = MDT.UI.Root:GetWidth(), MDT.UI.Root:GetHeight()
   local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
   local right = topPanel:GetRight()                                                                                  --<0
   local bottom = topPanel:GetBottom()                                                                                --<0
@@ -543,7 +542,7 @@ function MDT:ResetMainFramePos(soft)
       f.maximizeButton:Minimize()
     end
     f:ClearAllPoints()
-    f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
+    f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
   end, 'resetMainFramePos')
 end
 
@@ -575,7 +574,7 @@ function MDT:InitializeMainFrame()
   initSpinner.Anim:Play()
   MDT.initSpinner = initSpinner
 
-  local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
+  local main_frame = CreateFrame("frame", "MDTFrame", MDT.UI.Root)
   main_frame:SetToplevel(true)
   MDT:SetUpModifiers(main_frame)
   main_frame:Hide()
@@ -615,7 +614,7 @@ function MDT:InitializeMainFrame()
   db.version = tonumber(version)
   -- Set frame position
   main_frame:ClearAllPoints()
-  main_frame:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
+  main_frame:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
   main_frame.contextDropdown = CreateFrame("frame", "MDTContextDropDown", nil, "UIDropDownMenuTemplate")
   MDT:CheckCurrentZone(true)
   MDT:EnsureDBTables()
@@ -661,7 +660,7 @@ function MDT:InitializeMainFrame()
 
   --tooltip new
   do
-    MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
+    MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", MDT.UI.Root, "TooltipBorderedFrameTemplate")
     local tooltip = MDT.tooltip
     tooltip:SetClampedToScreen(true)
     tooltip:SetFrameStrata("TOOLTIP")

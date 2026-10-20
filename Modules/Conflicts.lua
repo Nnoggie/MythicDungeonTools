@@ -127,7 +127,7 @@ function MDT:ShowConflictFrame()
     key = "addonConflict",
     title = L["Addon Conflict"],
     width = 580,
-    parent = UIParent,
+    parent = MDT.UI.Root,
     build = function(content)
       MDT.UI.Text(content, { text = labelText, font = "title" })
     end,

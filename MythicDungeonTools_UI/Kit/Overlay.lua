@@ -169,20 +169,20 @@ function Overlay.IsOpen(frame)
   return false
 end
 
-local function toUIParent(region, value)
-  return value * region:GetEffectiveScale() / UIParent:GetEffectiveScale()
+local function toRoot(region, value)
+  return value * region:GetEffectiveScale() / UI.Root:GetEffectiveScale()
 end
 
----Anchor-relative placement in UIParent coordinates with flipping and clamping to the screen.
+---Anchor-relative placement in Root coordinates with flipping and clamping to the screen.
 ---@param frame table
 ---@param anchor table
 ---@param prefer "below"|"above"|"right"|"left"?
 ---@param gap number?
 function Overlay.Place(frame, anchor, prefer, gap)
   gap = gap or 0
-  local screenW, screenH = UIParent:GetWidth(), UIParent:GetHeight()
-  local left, right = toUIParent(anchor, anchor:GetLeft() or 0), toUIParent(anchor, anchor:GetRight() or 0)
-  local top, bottom = toUIParent(anchor, anchor:GetTop() or 0), toUIParent(anchor, anchor:GetBottom() or 0)
+  local screenW, screenH = UI.Root:GetWidth(), UI.Root:GetHeight()
+  local left, right = toRoot(anchor, anchor:GetLeft() or 0), toRoot(anchor, anchor:GetRight() or 0)
+  local top, bottom = toRoot(anchor, anchor:GetTop() or 0), toRoot(anchor, anchor:GetBottom() or 0)
   local w, h = frame:GetWidth(), frame:GetHeight()
   local x, y
   prefer = prefer or "below"
@@ -208,18 +208,16 @@ function Overlay.Place(frame, anchor, prefer, gap)
   x = math.max(0, math.min(screenW - w, x))
   y = math.max(0, math.min(screenH - h, y))
   frame:ClearAllPoints()
-  frame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", x, y)
+  frame:SetPoint("BOTTOMLEFT", UI.Root, "BOTTOMLEFT", x, y)
 end
 
 ---Places the frame's top-left corner at the cursor, clamped to the screen.
 ---@param frame table
 function Overlay.PlaceAtCursor(frame)
-  local cursorX, cursorY = GetCursorPosition()
-  local scale = UIParent:GetEffectiveScale()
-  local x, y = cursorX / scale, cursorY / scale
-  local screenW, screenH = UIParent:GetWidth(), UIParent:GetHeight()
+  local x, y = UI.CursorInRoot()
+  local screenW, screenH = UI.Root:GetWidth(), UI.Root:GetHeight()
   x = math.max(0, math.min(screenW - frame:GetWidth(), x))
   y = math.max(frame:GetHeight(), math.min(screenH, y))
   frame:ClearAllPoints()
-  frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x, y)
+  frame:SetPoint("TOPLEFT", UI.Root, "BOTTOMLEFT", x, y)
 end

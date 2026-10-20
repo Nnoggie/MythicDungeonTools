@@ -11,7 +11,7 @@ local card, cardOwner
 
 local function ensureCard()
   if card then return card end
-  card = CreateFrame("Frame", nil, UIParent)
+  card = CreateFrame("Frame", nil, UI.Root)
   card:SetFrameStrata("TOOLTIP")
   card:SetClampedToScreen(true)
   card:Hide()
