@@ -325,6 +325,51 @@ step("restore from maximized", function()
   expect(db.maximized == false, "db.maximized still set")
 end)
 
+step("conflict dialog opens on the kit and Escape closes it, not the window", function()
+  MDT:ShowConflictFrame()
+  local dialog = MDT.UI.Dialogs.Get("addonConflict")
+  expect(dialog and dialog:IsVisible(), "conflict dialog not shown")
+  expect(dialog:GetParent() == UIParent, "conflict dialog is parented to the main window")
+  snapshot("conflict dialog")
+  expect(_G.CloseSpecialWindows(), "no special window closed")
+  expect(not dialog:IsShown() and MDT.UI.Dialogs.Get("addonConflict") == nil, "Escape did not close the conflict dialog")
+  expect(main:IsShown(), "Escape closed the main window instead of the dialog")
+  W.settle(asyncIdle, 5)
+  MDT:ShowConflictFrame()
+  click(MDT.UI.Dialogs.Get("addonConflict").closeButton)
+  expect(MDT.UI.Dialogs.Get("addonConflict") == nil, "X did not close the conflict dialog")
+end)
+
+step("pre-patch warning opens through its real trigger, copies a link, and Escape closes it first", function()
+  local realTime = _G.time
+  _G.time = function() return 1768950035 + 1 end
+  db.prePatchWarningSeenFor = nil
+  MDT:SetupPrePatchWarning()
+  _G.time = realTime
+  local dialog = _G.MDTPrePatchWarningFrame
+  expect(dialog and dialog:IsVisible(), "pre-patch warning not shown")
+  expect(db.prePatchWarningSeenFor == 1768950035, "pre-patch warning was not marked as seen")
+  snapshot("pre-patch warning")
+  local editBox, copyButton
+  for _, child in ipairs(dialog.content.kitChildren) do
+    if child.kit.name == "Row" then editBox, copyButton = child.kitChildren[1], child.kitChildren[2] end
+  end
+  expect(editBox and editBox:GetValue():find("legacy", 1, true), "link row is missing its url")
+  click(copyButton)
+  expect(editBox.kitEdit:HasFocus() and copyButton:IsDisabled(), "copy did not focus the link")
+  expect(MDT.copyHelper:IsShown(), "copy helper hint not shown")
+  W.modifiers = { ctrl = true }
+  W.fireScript(editBox.kitEdit, "OnKeyUp", "C")
+  W.modifiers = nil
+  expect(not editBox.kitEdit:HasFocus() and not copyButton:IsDisabled(), "Ctrl+C did not finish the copy flow")
+  MDT:SetupPrePatchWarning()
+  expect(_G.MDTPrePatchWarningFrame == dialog, "a seen warning was shown again")
+  expect(_G.CloseSpecialWindows(), "no special window closed")
+  expect(_G.MDTPrePatchWarningFrame == nil and not dialog:IsShown(), "Escape did not close the pre-patch warning")
+  expect(main:IsShown(), "Escape closed the main window instead of the dialog")
+  W.settle(asyncIdle, 5)
+end)
+
 step("escape closes the main window", function()
   expect(_G.CloseSpecialWindows(), "no special window closed")
   expect(not main:IsShown(), "main window still shown")
