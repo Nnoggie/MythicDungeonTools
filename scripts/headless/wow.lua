@@ -240,10 +240,12 @@ local resolveScreenRect
 
 -- Like the client: positions resolve in screen pixels. A frame's anchor offsets and size are in its own units, so
 -- they scale by its effective scale; GetLeft/GetWidth/... divide the screen rect back by that scale.
+-- A frame that ignores its parent's scale stops the walk: its own scale is its effective scale.
 local function effectiveScaleOf(obj)
   local scale, current = 1, obj
   while current do
     scale = scale * (S[current].scale or 1)
+    if S[current].ignoreParentScale then break end
     current = S[current].parent
   end
   return scale
@@ -577,14 +579,8 @@ function ScriptRegion:SetScale(scale)
   S[self].scale = scale
 end
 function ScriptRegion:GetScale() return S[self].scale or 1 end
-function ScriptRegion:GetEffectiveScale()
-  local scale, current = 1, self
-  while current do
-    scale = scale * (S[current].scale or 1)
-    current = S[current].parent
-  end
-  return scale
-end
+function ScriptRegion:GetEffectiveScale() return effectiveScaleOf(self) end
+function ScriptRegion:IsIgnoringParentScale() return S[self].ignoreParentScale == true end
 
 -- Visibility -------------------------------------------------------------------------------
 

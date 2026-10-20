@@ -108,7 +108,7 @@ return function(ctx)
       expect(near(UI.Root:GetWidth(), W.screenWidth / pixelPerfect), "root does not cover the screen at UI scale "..uiScale)
       local _, _, scaledWidth = button:GetScaledRect()
       expect(near(button:GetWidth(), width) and near(scaledWidth, screenWidth), "a button changed its on-screen size at UI scale "..uiScale)
-      expect(near(UI.Tooltip.Frame:GetEffectiveScale(), pixelPerfect), "MDT's tooltip follows the UI scale "..uiScale)
+      expect(near(UI.Tooltip.Frame:GetEffectiveScale(), pixelPerfect), "MDT's tooltip is not at MDT's scale at UI scale "..uiScale)
     end
     UIParent:SetScale(1)
     W.FireEvent("UI_SCALE_CHANGED")

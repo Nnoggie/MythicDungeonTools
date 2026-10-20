@@ -189,6 +189,8 @@ return function(W)
   end
 
   T.GameTooltipTemplate = function(frame)
+    -- Blizzard's tooltips ignore their parent's scale and draw at their own.
+    frame:SetIgnoreParentScale(true)
     T.BackdropTemplate(frame)
     child(frame, "Frame", "NineSlice", nil, nil)
     for index = 1, 2 do

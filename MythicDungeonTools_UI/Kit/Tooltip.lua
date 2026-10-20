@@ -10,6 +10,12 @@ UI.Tooltip = Tooltip
 ---MDT's tooltip: a GameTooltip of its own on the UI root, so it has the pixel-perfect scale like the rest of MDT
 ---instead of following the user's UI scale. It has the whole GameTooltip API; every MDT tooltip uses it.
 local frame = CreateFrame("GameTooltip", "MDTTooltip", UI.Root, "GameTooltipTemplate")
+-- The tooltip template ignores its parent's scale; MDT's tooltip takes the root's.
+local function useRootScale(tooltip)
+  tooltip:SetIgnoreParentScale(false)
+  tooltip:SetScale(1)
+end
+useRootScale(frame)
 frame:SetFrameStrata("TOOLTIP")
 frame:SetClampedToScreen(true)
 Tooltip.Frame = frame
@@ -21,7 +27,7 @@ local function applyFonts(tooltip)
       local line = _G["MDTTooltipText"..side..i]
       if line then
         local r, g, b, a = line:GetTextColor()
-        line:SetFontObject(UI.Fonts.Get(i == 1 and "title" or "body"))
+        line:SetFontObject(UI.Fonts.Get(i == 1 and "heading" or "body"))
         line:SetTextColor(r, g, b, a)
       end
     end
@@ -29,6 +35,7 @@ local function applyFonts(tooltip)
 end
 local show = frame.Show
 function frame:Show()
+  useRootScale(self)
   applyFonts(self)
   show(self)
 end
