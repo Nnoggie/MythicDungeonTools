@@ -3,6 +3,7 @@ local UI = MDT.UI
 local Theme, Fonts, MenuModel, Overlay = UI.Theme, UI.Fonts, UI.MenuModel, UI.Overlay
 
 local MIN_WIDTH = 160
+local MAX_WIDTH = 360
 local MAX_HEIGHT = 320
 local ICON_SIZE = 14
 local GLYPH_SIZE = 8
@@ -97,11 +98,39 @@ Menu.rowKinds = {
   separator = { height = SEPARATOR_HEIGHT, mixin = SeparatorRow, static = true },
 }
 
+local measure
+
+---The width a row needs to show its whole label, detail and trailing text, using the same insets as ItemRow:Bind.
+---@param item MDT.UI.MenuItem
+---@return number
+local function itemWidth(item)
+  if item.kind == "separator" then return 0 end
+  if not measure then
+    local holder = CreateFrame("Frame", nil, UIParent)
+    holder:Hide()
+    measure = holder:CreateFontString(nil, "ARTWORK")
+  end
+  local function textWidth(text, role)
+    if not text or text == "" then return 0 end
+    measure:SetFontObject(Fonts.Get(role))
+    measure:SetText(text)
+    return measure:GetUnboundedStringWidth()
+  end
+  local pad, gap = Theme.Space("md"), Theme.Space("sm")
+  local leading = (item.kind == "choice" or item.kind == "toggle") and GLYPH_SIZE + 2 or (item.icon and ICON_SIZE) or 0
+  local width = pad * 2 + textWidth(item.text, item.kind == "title" and "small" or "body")
+  if leading > 0 then width = width + leading + gap end
+  -- ItemRow keeps a gap before the detail and another before the trailing text even when they are empty.
+  width = width + gap * 2 + textWidth(item.detail, "small") + textWidth(item.trailing, "small")
+  if item.kind == "submenu" then width = width + gap + GLYPH_SIZE end
+  return width
+end
+
 ---@class MDT.UI.MenuSpec
 ---@field items MDT.UI.MenuItem[]|fun(): MDT.UI.MenuItem[]
 ---@field anchor table|"cursor"
 ---@field prefer "below"|"above"|"right"|"left"?
----@field width number? default max(anchor width, 160)
+---@field width number? default: wide enough for the longest item, at least the anchor and 160, at most 360
 ---@field value any? marks the matching choice item
 ---@field search boolean?
 ---@field onSelect fun(item: MDT.UI.MenuItem)? fires after the item's own onSelect
@@ -114,7 +143,12 @@ function Menu.Open(spec)
   local items = MenuModel.Normalize(spec.items, spec.value)
   if #items == 0 then return nil end
   local anchor = spec.anchor
-  local width = spec.width or math.max(MIN_WIDTH, anchor ~= "cursor" and anchor:GetWidth() or 0)
+  local width = spec.width
+  if not width then
+    local natural = 0
+    for _, item in ipairs(items) do natural = math.max(natural, itemWidth(item)) end
+    width = math.min(MAX_WIDTH, math.max(MIN_WIDTH, anchor ~= "cursor" and anchor:GetWidth() or 0, math.ceil(natural) + Theme.Space("xs") * 2))
+  end
   local popover = UI.PopoverFrame(UIParent, { onClose = spec.onClose, padding = "xs", gap = "xs" })
   local openToken = {}
   popover.kitMenuToken = openToken

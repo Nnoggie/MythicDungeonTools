@@ -511,6 +511,12 @@ return function(ctx)
     row = currentRouteRow()
     expect(not row.kitLive:IsShown(), "LIVE tag shown on another route")
     menu = routeMenu(preset().text)
+    for index, item in ipairs(menu.kitProps.items) do
+      local row = menu:GetRow(index)
+      if row and row.kitLabel and item.text then
+        expect(row.kitLabel:GetStringWidth() >= row.kitLabel:GetUnboundedStringWidth() - 0.5, ("menu item is cut off: %s (label %.1f of %.1f, row %.1f, menu %.1f, list %.1f)"):format(item.text, row.kitLabel:GetStringWidth(), row.kitLabel:GetUnboundedStringWidth(), row:GetWidth(), menu:GetParent():GetWidth(), menu:GetWidth()))
+      end
+    end
     expect(rowByText(menu, "Make this route the live route") and rowByText(menu, "Return to the live route") and rowByText(menu, "Stop live session"),
       "live route entries are missing: "..menuLabels(menu))
     UI.Menu.Close()
