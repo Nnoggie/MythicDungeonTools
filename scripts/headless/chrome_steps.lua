@@ -71,6 +71,132 @@ return function(ctx)
     expect(not dropdown:IsShown(), "floor dropdown still shown after the dungeon went back to one floor")
   end)
 
+  local function tool(id)
+    local found = main.toolbar.controls:Find(id)
+    expect(found, "toolbar control "..id.." is missing")
+    return found
+  end
+  local function openToolbar()
+    if not main.toolbar:IsShown() then click(main.toolbar.toggleButton) end
+    expect(main.toolbar:IsVisible(), "toolbar did not open")
+  end
+
+  step("toolbar: kit controls stacked top to bottom inside the toolbar, each with its tooltip", function()
+    openToolbar()
+    local order = { "undo", "redo", "color", "brushUp", "brushSize", "brushDown" }
+    for _, entry in ipairs(MDT.ToolbarTools) do order[#order + 1] = entry.id end
+    order[#order + 1] = "deleteAll"
+    local above
+    for _, id in ipairs(order) do
+      local control = tool(id)
+      expect(control:IsVisible(), id.." is hidden")
+      expect(control:GetLeft() >= main.toolbar:GetLeft() and control:GetRight() <= main.toolbar:GetRight(), id.." sticks out of the toolbar")
+      if above then expect(control:GetTop() <= above:GetBottom(), id.." overlaps "..tostring(above.kitProps.id)) end
+      above = control
+    end
+    expect(above:GetBottom() >= main.toolbar:GetBottom(), "the last control hangs below the toolbar")
+    for _, id in ipairs({ "undo", "color", "brushUp", "text", "deleteAll" }) do
+      GameTooltip:Hide()
+      W.hover(tool(id))
+      expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool(id)), id.." shows no tooltip")
+      W.fireScript(tool(id), "OnLeave")
+    end
+    render("toolbar", main)
+  end)
+
+  step("toolbar: brush size by typing, by the buttons and by the wheel, clamped to 1..99", function()
+    openToolbar()
+    local box = tool("brushSize")
+    local start = db.toolbar.brushSize
+    box:Focus()
+    box:SelectAll()
+    box.kitEdit:SetText("")
+    W.userType(box.kitEdit, "12")
+    expect(db.toolbar.brushSize == 12, "typing 12 set the size to "..tostring(db.toolbar.brushSize))
+    W.fireScript(box.kitEdit, "OnEnterPressed")
+    expect(not box.kitEdit:HasFocus() and box:GetValue() == "12", "Enter did not keep 12")
+    click(tool("brushUp"))
+    expect(db.toolbar.brushSize == 13 and box:GetValue() == "13", "+ did not grow the size to 13")
+    click(tool("brushDown"))
+    click(tool("brushDown"))
+    expect(db.toolbar.brushSize == 11 and box:GetValue() == "11", "- did not shrink the size to 11")
+    W.fireScript(box.kitScroll, "OnMouseWheel", 1)
+    expect(db.toolbar.brushSize == 12 and box:GetValue() == "12", "the wheel did not grow the size")
+    box:Focus()
+    box.kitEdit:SetText("")
+    W.fireScript(box.kitEdit, "OnEnterPressed")
+    expect(db.toolbar.brushSize == 12 and box:GetValue() == "12", "an empty box did not restore the size: "..box:GetValue())
+    box:Focus()
+    box.kitEdit:SetText("")
+    W.userType(box.kitEdit, "0")
+    box:ClearFocus()
+    expect(db.toolbar.brushSize == 1 and box:GetValue() == "1", "0 was not clamped to 1")
+    click(tool("brushDown"))
+    expect(db.toolbar.brushSize == 1, "- went below 1")
+    box:SetValue("99")
+    db.toolbar.brushSize = 99
+    click(tool("brushUp"))
+    expect(db.toolbar.brushSize == 99 and box:GetValue() == "99", "+ went above 99")
+    db.toolbar.brushSize = start
+    box:SetValue(tostring(start))
+  end)
+
+  step("toolbar: the color swatch opens the picker and stores the picked color", function()
+    openToolbar()
+    local swatch = tool("color")
+    local start = CopyTable(db.toolbar.color)
+    click(swatch)
+    expect(ColorPickerFrame:IsShown(), "the swatch did not open the color picker")
+    local realRGB = ColorPickerFrame.GetColorRGB
+    ColorPickerFrame.GetColorRGB = function() return 0.25, 0.5, 0.75 end
+    ColorPickerFrame.info.swatchFunc()
+    ColorPickerFrame.GetColorRGB = realRGB
+    local color = db.toolbar.color
+    expect(color.r == 0.25 and color.g == 0.5 and color.b == 0.75, "picked color not stored: "..color.r..","..color.g..","..color.b)
+    expect(swatch:GetColor()[3] == 0.75, "the swatch does not show the picked color")
+    ColorPickerFrame.info.cancelFunc()
+    expect(color.r == start.r and color.b == start.b, "cancel did not restore the color")
+    ColorPickerFrame:Hide()
+  end)
+
+  step("toolbar: a tool click selects it, a second click or closing the toolbar deselects it", function()
+    openToolbar()
+    click(tool("pencil"))
+    expect(MDT:GetCurrentToolbarTool() == "pencil" and tool("pencil").kitProps.selected, "pencil not selected")
+    click(tool("line"))
+    expect(MDT:GetCurrentToolbarTool() == "line" and not tool("pencil").kitProps.selected and tool("line").kitProps.selected, "switching to line kept pencil selected")
+    render("toolbar tool selected", main)
+    click(tool("line"))
+    expect(MDT:GetCurrentToolbarTool() == nil and not tool("line").kitProps.selected, "a second click did not deselect line")
+    click(tool("eraser"))
+    click(main.toolbar.toggleButton)
+    expect(MDT:GetCurrentToolbarTool() == nil and not tool("eraser").kitProps.selected, "closing the toolbar kept the eraser")
+    openToolbar()
+  end)
+
+  step("toolbar: delete all drawings asks first, and confirming deletes them", function()
+    openToolbar()
+    MDT:StorePresetObject({ d = { 3, 1, 1, true, "ffffff" }, l = { 1, -1, 5, -5 } })
+    local objects = MDT:GetCurrentPreset().objects
+    expect(#objects > 0, "setup: no drawing stored")
+    click(tool("deleteAll"))
+    local dialog = UI.Dialogs.Get("deleteAllDrawings")
+    expect(dialog and dialog:IsVisible(), "delete-all dialog not shown")
+    render("delete all drawings", main, { dialog })
+    expect(CloseSpecialWindows(), "Escape closed nothing")
+    expect(UI.Dialogs.Get("deleteAllDrawings") == nil and #MDT:GetCurrentPreset().objects > 0, "Escape deleted the drawings")
+    W.settle(asyncIdle, 5)
+    click(tool("deleteAll"))
+    dialog = UI.Dialogs.Get("deleteAllDrawings")
+    local confirm
+    for _, row in ipairs(dialog.content.kitChildren) do
+      if row.kit.name == "Row" then confirm = row.kitChildren[1] end
+    end
+    click(confirm)
+    W.settle(asyncIdle, 30)
+    expect(#MDT:GetCurrentPreset().objects == 0, "confirming kept "..#MDT:GetCurrentPreset().objects.." drawings")
+  end)
+
   step("kit dropdown: a picked value reads in the normal text color, only the placeholder is muted", function()
     local host = CreateFrame("Frame", nil, UIParent)
     host:SetSize(200, 60)

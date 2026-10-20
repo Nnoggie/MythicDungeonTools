@@ -700,7 +700,6 @@ function MDT:InitializeMainFrame()
   coroutine.yield()
   if db.toolbarExpanded then
     main_frame.toolbar.toggleButton:Click()
-    main_frame.toolbar.widgetGroup.frame:Hide()
   end
   MDT:UpdateSectionVisibility()
 
