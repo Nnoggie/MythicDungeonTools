@@ -285,7 +285,7 @@ return function(ctx)
     local box = control(page, "useMacro")
     expect(icon:GetLeft() >= box:GetRight() and icon:GetLeft() - box:GetRight() < 12, "the macro icon is not right after the checkbox label")
     W.hover(icon)
-    expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == icon, "the macro icon shows no tooltip")
+    expect(MDTTooltip:IsShown() and MDTTooltip:GetOwner() == icon, "the macro icon shows no tooltip")
     W.fireScript(icon, "OnLeave")
     local pickupMacro, pickedUp = _G.PickupMacro, nil
     _G.PickupMacro = function(index) pickedUp = index end

@@ -126,11 +126,11 @@ return function(ctx)
     expect(control("shareRoute"):IsDisabled(), "setup: share should be disabled outside a group")
     for _, id in ipairs({ "shareRoute", "newRoute", "exportRoute", "importRoute" }) do
       local button = control(id)
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       W.hover(button)
-      expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == button, id.." shows no tooltip"..(button:IsDisabled() and " while disabled" or ""))
+      expect(MDTTooltip:IsShown() and MDTTooltip:GetOwner() == button, id.." shows no tooltip"..(button:IsDisabled() and " while disabled" or ""))
       if id == "shareRoute" then -- the harness player is never in a group
-        local lines = W.state[GameTooltip].lines or {}
+        local lines = W.state[MDTTooltip].lines or {}
         expect(lines[2] == "Join a group first", id.." tooltip does not say why it is disabled: "..table.concat(lines, " / "))
       end
       W.fireScript(button, "OnLeave")

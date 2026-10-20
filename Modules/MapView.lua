@@ -2,8 +2,8 @@ local _, MDT = ...
 local L = MDT.L
 local canvasDrawLayer = "BORDER"
 
-local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
-    table.insert, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition, GameTooltip
+local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, MDTTooltip =
+    table.insert, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition, MDTTooltip
 
 local sizex = 840
 local sizey = 555

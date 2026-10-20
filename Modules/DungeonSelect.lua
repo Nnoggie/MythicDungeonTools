@@ -212,7 +212,7 @@ function MDT:UpdateDungeonDropDown()
       button.shortText:SetFontObject(UI.Fonts.Get("small", true))
       button.shortText:SetTextColor(1, 1, 1)
       button:SetScript("OnLeave", function()
-        GameTooltip:Hide()
+        MDTTooltip:Hide()
       end)
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
@@ -232,12 +232,12 @@ function MDT:UpdateDungeonDropDown()
       if mapInfo.mapID then
         timer = select(3, C_ChallengeMode.GetMapUIInfo(mapInfo.mapID))
       end
-      GameTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
-      GameTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
+      MDTTooltip:SetOwner(dungeonButtons[idx], "ANCHOR_BOTTOMRIGHT", -dungeonButtons[idx]:GetWidth(), 0)
+      MDTTooltip:AddLine(MDT.dungeonList[dungeonIdx], 1, 1, 1)
       if timer then
-        GameTooltip:AddLine(L["Timer"]..": "..formatTime(timer), 1, 1, 1)
+        MDTTooltip:AddLine(L["Timer"]..": "..formatTime(timer), 1, 1, 1)
       end
-      GameTooltip:Show()
+      MDTTooltip:Show()
     end)
   end
   MDT:UpdateDungeonSelectHighlight()

@@ -102,9 +102,9 @@ return function(ctx)
     end
     expect(above:GetBottom() >= main.toolbar:GetBottom(), "the last control hangs below the toolbar")
     for _, id in ipairs({ "undo", "color", "brushUp", "text", "deleteAll" }) do
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       W.hover(tool(id))
-      expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool(id)), id.." shows no tooltip")
+      expect(MDTTooltip:IsShown() and MDTTooltip:IsOwned(tool(id)), id.." shows no tooltip")
       W.fireScript(tool(id), "OnLeave")
     end
     -- Toolbar and bottom bar icons are bare and at full brightness until hovered.
@@ -116,9 +116,9 @@ return function(ctx)
       local r, g, b = button.kitIcon:GetVertexColor()
       expect(math.abs(r - white[1]) < 0.01 and math.abs(g - white[2]) < 0.01 and math.abs(b - white[3]) < 0.01, name.." icon is faded")
     end
-    GameTooltip:Hide()
+    MDTTooltip:Hide()
     W.hover(tool("brushSize").kitEdit)
-    expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool("brushSize")), "brush size shows no tooltip")
+    expect(MDTTooltip:IsShown() and MDTTooltip:IsOwned(tool("brushSize")), "brush size shows no tooltip")
     W.fireScript(tool("brushSize").kitEdit, "OnLeave")
     render("toolbar", main)
   end)

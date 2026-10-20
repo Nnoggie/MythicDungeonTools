@@ -173,8 +173,8 @@ return function(ctx)
     for i, icon in ipairs(icons.kitChildren) do
       expect(table.concat({ icon.kitIcon:GetVertexColor() }, ",") == "1,1,1,1", "characteristic icon "..i.." is tinted")
       W.hover(icon)
-      expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == icon, "characteristic icon "..i.." shows no tooltip")
-      tooltips[i] = (W.state[GameTooltip].lines or {})[1]
+      expect(MDTTooltip:IsShown() and MDTTooltip:GetOwner() == icon, "characteristic icon "..i.." shows no tooltip")
+      tooltips[i] = (W.state[MDTTooltip].lines or {})[1]
       W.fireScript(icon, "OnLeave")
     end
     expect(table.concat(tooltips, ",") == table.concat({ L["Stun"], L["Fear"], L["Root"] }, ","), "icons are not in characteristic order: "..table.concat(tooltips, ","))
@@ -192,13 +192,13 @@ return function(ctx)
     index, item = index or 1, item or list.kitProps.items[1]
     list:ScrollTo(index, "nearest")
     local row = list:GetRow(index)
-    GameTooltip:Hide()
+    MDTTooltip:Hide()
     W.hover(row)
-    expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == row, "hovering a spell shows no tooltip")
-    local lines = W.state[GameTooltip].lines or {}
+    expect(MDTTooltip:IsShown() and MDTTooltip:GetOwner() == row, "hovering a spell shows no tooltip")
+    local lines = W.state[MDTTooltip].lines or {}
     expect(#lines == #item.statuses, ("tooltip has %d status lines for %d statuses"):format(#lines, #item.statuses))
     W.fireScript(row, "OnLeave")
-    expect(not GameTooltip:IsShown(), "spell tooltip stayed up after the cursor left")
+    expect(not MDTTooltip:IsShown(), "spell tooltip stayed up after the cursor left")
 
     local chat = _G.ChatFrame1EditBox
     _G.DEFAULT_CHAT_FRAME.editBox = chat

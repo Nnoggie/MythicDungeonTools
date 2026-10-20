@@ -138,17 +138,17 @@ function MDT:GetEnemyInfoEnemyIdx()
 end
 
 local function showSpellTooltip(row, item)
-  GameTooltip:SetOwner(row, "ANCHOR_BOTTOMLEFT", 0, row:GetHeight())
-  GameTooltip:ClearLines()
-  GameTooltip:SetSpellByID(item.spellId)
+  MDTTooltip:SetOwner(row, "ANCHOR_BOTTOMLEFT", 0, row:GetHeight())
+  MDTTooltip:ClearLines()
+  MDTTooltip:SetSpellByID(item.spellId)
   for _, status in ipairs(item.statuses) do
     if CreateAtlasMarkup then
-      GameTooltip:AddLine(CreateAtlasMarkup(status.atlas, TOOLTIP_ICON_SIZE, TOOLTIP_ICON_SIZE)..status.label)
+      MDTTooltip:AddLine(CreateAtlasMarkup(status.atlas, TOOLTIP_ICON_SIZE, TOOLTIP_ICON_SIZE)..status.label)
     else
-      GameTooltip:AddLine(status.label)
+      MDTTooltip:AddLine(status.label)
     end
   end
-  GameTooltip:Show()
+  MDTTooltip:Show()
 end
 
 local function onDevKey(row, key)
@@ -271,7 +271,7 @@ local function spellList(content, card, layout)
       if card.kind == "pinned" and db.devMode then row:EnableKeyboard(true) end
     end,
     onHoverEnd = function(_, _, row)
-      if GameTooltip:IsOwned(row) then GameTooltip:Hide() end
+      if MDTTooltip:IsOwned(row) then MDTTooltip:Hide() end
       row:EnableKeyboard(false)
     end,
     onActivate = function(item, _, mods)

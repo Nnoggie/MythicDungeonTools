@@ -12,9 +12,9 @@ local activeTextures = MDT.presetObjectActiveTextures
 local currentTool
 local objectDrawLayer = "OVERLAY"
 
-local tinsert, CreateFrame, tonumber, pi, max, atan2, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
+local tinsert, CreateFrame, tonumber, pi, max, atan2, abs, pairs, ipairs, GetCursorPosition, MDTTooltip =
     table.insert, CreateFrame, tonumber, math.pi, math.max, math.atan2, math.abs, pairs, ipairs, GetCursorPosition,
-    GameTooltip
+    MDTTooltip
 
 ---The drawing tools in toolbar order. `coords` cut the icon from the icon atlas; `texture` replaces the atlas.
 ---@type {id: string, coords: number[]?, texture: string?, tooltip: string|fun(tooltip: table)}[]
@@ -226,11 +226,11 @@ end
 ---ToggleToolbarTooltip
 function MDT:ToggleToolbarTooltip(show, widget, anchor)
   if not show then
-    GameTooltip:Hide()
+    MDTTooltip:Hide()
   else
-    GameTooltip:SetOwner(widget.frame, anchor or "ANCHOR_BOTTOM", 0, -1)
-    GameTooltip:SetText(widget.tooltipText, 1, 1, 1, 1)
-    GameTooltip:Show()
+    MDTTooltip:SetOwner(widget.frame, anchor or "ANCHOR_BOTTOM", 0, -1)
+    MDTTooltip:SetText(widget.tooltipText, 1, 1, 1, 1)
+    MDTTooltip:Show()
   end
 end
 

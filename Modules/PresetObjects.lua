@@ -5,8 +5,8 @@ local UI = MDT.UI
 local NOTE_EDITOR_WIDTH = 240
 local NOTE_EDITOR_LINES = 6
 
-local twipe, tinsert, tremove, pi, max, pairs, ipairs, GameTooltip =
-    table.wipe, table.insert, table.remove, math.pi, math.max, pairs, ipairs, GameTooltip
+local twipe, tinsert, tremove, pi, max, pairs, ipairs, MDTTooltip =
+    table.wipe, table.insert, table.remove, math.pi, math.max, pairs, ipairs, MDTTooltip
 
 ---TexturePool
 local activeTextures = {}
@@ -654,12 +654,12 @@ function MDT:DrawNote(x, y, text, objectIndex)
     end
   end)
   note:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(note.tooltipText, 1, 1, 1, 1)
-    GameTooltip:Show()
+    MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+    MDTTooltip:AddLine(note.tooltipText, 1, 1, 1, 1)
+    MDTTooltip:Show()
   end)
   note:SetScript("OnLeave", function()
-    GameTooltip:Hide()
+    MDTTooltip:Hide()
   end)
 
   -- Interface\AddOns\Blizzard_MapCanvas\MapCanvas_DataProviderBase.lua calls this function when a pin is clicked

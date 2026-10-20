@@ -1,9 +1,9 @@
 local _, MDT = ...
 local L = MDT.L
 
-local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, CreateFrame, GameTooltip, GetTime =
+local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, CreateFrame, MDTTooltip, GetTime =
     table.insert, table.remove, pairs, ipairs, math.min, math.max, math.abs, tonumber, type, unpack, CreateFrame,
-    GameTooltip, GetTime
+    MDTTooltip, GetTime
 local cos, sin, rad, deg, atan2, floor = math.cos, math.sin, math.rad, math.deg, math.atan2, math.floor
 local GetCursorPosition, IsShiftKeyDown, IsMouseButtonDown = GetCursorPosition, IsShiftKeyDown, IsMouseButtonDown
 
@@ -753,13 +753,13 @@ end
 ---Style bar
 local function showButtonTooltip(button)
   if not button.tooltipText then return end
-  GameTooltip:SetOwner(button, "ANCHOR_TOP")
-  GameTooltip:SetText(button.tooltipText, 1, 1, 1, 1, true)
-  GameTooltip:Show()
+  MDTTooltip:SetOwner(button, "ANCHOR_TOP")
+  MDTTooltip:SetText(button.tooltipText, 1, 1, 1, 1, true)
+  MDTTooltip:Show()
 end
 
 local function hideTooltip()
-  GameTooltip:Hide()
+  MDTTooltip:Hide()
 end
 
 local function createBarButton(bar, tooltipText, onClick)
@@ -890,7 +890,7 @@ local function createAlignButton(bar)
   end
   --refresh the tooltip after a click changed the alignment
   button:HookScript("OnClick", function(self)
-    if GameTooltip:IsOwned(self) then showButtonTooltip(self) end
+    if MDTTooltip:IsOwned(self) then showButtonTooltip(self) end
   end)
   updateAlignButton(button, DEFAULT_ALIGN)
   return button

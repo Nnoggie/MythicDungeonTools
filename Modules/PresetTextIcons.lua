@@ -1,8 +1,8 @@
 local _, MDT = ...
 local L = MDT.L
 
-local tinsert, pairs, ipairs, tonumber, type, floor, min, max, unpack, CreateFrame, GameTooltip =
-    table.insert, pairs, ipairs, tonumber, type, math.floor, math.min, math.max, unpack, CreateFrame, GameTooltip
+local tinsert, pairs, ipairs, tonumber, type, floor, min, max, unpack, CreateFrame, MDTTooltip =
+    table.insert, pairs, ipairs, tonumber, type, math.floor, math.min, math.max, unpack, CreateFrame, MDTTooltip
 
 ---Inline icon tags for map texts, e.g. {spell:2825} or {rt8}
 ---texts store the tags, they are turned into texture markup when the text is drawn
@@ -386,14 +386,14 @@ end
 local function showEntryTooltip(button)
   local entry = button.entry
   if not entry then return end
-  GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
-  if entry.spellId and GameTooltip.SetSpellByID then
-    GameTooltip:SetSpellByID(entry.spellId)
+  MDTTooltip:SetOwner(button, "ANCHOR_RIGHT")
+  if entry.spellId and MDTTooltip.SetSpellByID then
+    MDTTooltip:SetSpellByID(entry.spellId)
   else
-    GameTooltip:SetText(entry.getName() or entry.tag, 1, 1, 1)
+    MDTTooltip:SetText(entry.getName() or entry.tag, 1, 1, 1)
   end
-  GameTooltip:AddLine(entry.tag, 0.6, 0.6, 0.6)
-  GameTooltip:Show()
+  MDTTooltip:AddLine(entry.tag, 0.6, 0.6, 0.6)
+  MDTTooltip:Show()
 end
 
 local function acquireButton()
@@ -408,7 +408,7 @@ local function acquireButton()
     highlight:SetAllPoints()
     highlight:SetColorTexture(1, 1, 1, 0.25)
     button:SetScript("OnEnter", showEntryTooltip)
-    button:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    button:SetScript("OnLeave", function() MDTTooltip:Hide() end)
     button:SetScript("OnClick", function(self)
       if self.entry and picker.onPick then picker.onPick(self.entry.tag) end
     end)

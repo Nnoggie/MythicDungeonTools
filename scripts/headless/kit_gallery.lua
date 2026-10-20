@@ -108,6 +108,7 @@ return function(ctx)
       expect(near(UI.Root:GetWidth(), W.screenWidth / pixelPerfect), "root does not cover the screen at UI scale "..uiScale)
       local _, _, scaledWidth = button:GetScaledRect()
       expect(near(button:GetWidth(), width) and near(scaledWidth, screenWidth), "a button changed its on-screen size at UI scale "..uiScale)
+      expect(near(UI.Tooltip.Frame:GetEffectiveScale(), pixelPerfect), "MDT's tooltip follows the UI scale "..uiScale)
     end
     UIParent:SetScale(1)
     W.FireEvent("UI_SCALE_CHANGED")
@@ -126,12 +127,12 @@ return function(ctx)
       local control = entry[1]
       for index = 2, #entry do
         local part = control[entry[index]]
-        GameTooltip:Hide()
+        MDTTooltip:Hide()
         W.hover(part)
-        expect(GameTooltip:IsShown() and GameTooltip:IsOwned(control), control.kit.name.."."..entry[index].." shows no tooltip")
+        expect(MDTTooltip:IsShown() and MDTTooltip:IsOwned(control), control.kit.name.."."..entry[index].." shows no tooltip")
         expect(control.kitHovered, control.kit.name.."."..entry[index].." does not hover the control")
         W.fireScript(part, "OnLeave")
-        expect(not GameTooltip:IsShown() and not control.kitHovered, control.kit.name.."."..entry[index].." left its tooltip up")
+        expect(not MDTTooltip:IsShown() and not control.kitHovered, control.kit.name.."."..entry[index].." left its tooltip up")
       end
     end
     box:Release()

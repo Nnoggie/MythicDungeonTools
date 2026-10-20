@@ -36,6 +36,7 @@
     "IsControlKeyDown",
     "GetTime",
     "GetPhysicalScreenSize",
+    "MDTTooltip",
     "C_Spell",
     "CreateAtlasMarkup",
     "CreateColor",
