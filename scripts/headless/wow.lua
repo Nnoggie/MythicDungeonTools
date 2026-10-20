@@ -486,8 +486,24 @@ function W.userClick(frame, button)
   else
     fireScript(frame, "OnMouseDown", button)
     fireScript(frame, "OnMouseUp", button)
+    if S[frame].class.name == "EditBox" and S[frame].enabled ~= false then frame:SetFocus() end
   end
 end
+
+-- Simulates typing: keystrokes reach only the focused edit box.
+function W.userType(editBox, text)
+  if not editBox:HasFocus() then return false end
+  editBox:Insert(text)
+  return true
+end
+
+-- Simulates dragging a slider's thumb: a disabled slider ignores the mouse.
+function W.userDrag(slider, value)
+  if S[slider].enabled == false then return false end
+  slider:SetValue(value, true)
+  return true
+end
+
 function ScriptRegion:EnableMouse(enabled) S[self].mouseEnabled = enabled ~= false end
 function ScriptRegion:IsMouseEnabled() return S[self].mouseEnabled == true end
 function ScriptRegion:EnableMouseMotion(enabled) S[self].mouseMotion = enabled ~= false end
@@ -799,14 +815,31 @@ function FontString:SetText(text)
 end
 function FontString:SetFormattedText(format, ...) self:SetText(string.format(format, ...)) end
 function FontString:GetText() return S[self].text end
-function FontString:GetStringWidth()
+function FontString:GetUnboundedStringWidth()
   local font = fontData(S[self])
   local text = S[self].text or ""
   local longest = 0
   for line in (text.."\n"):gmatch("(.-)\n") do longest = math.max(longest, #line:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")) end
   return longest * (font and font.height or 12) * 0.55
 end
-FontString.GetUnboundedStringWidth = FontString.GetStringWidth
+-- The width the string is laid out in: anchored on both sides, or an explicit width. nil when the string sizes itself.
+local function boundedWidth(fontString)
+  local state = S[fontString]
+  local left, right
+  for _, anchor in ipairs(state.points) do
+    local fraction = pointFractions[anchor.point][1]
+    if fraction == 0 then left = true elseif fraction == 1 then right = true end
+  end
+  local width = state.width
+  if left and right then width = select(3, resolveRect(fontString)) end
+  if width and width > 0 then return width end
+end
+-- Like the client: a bounded string reports at most its bounded width (truncated or wrapped).
+function FontString:GetStringWidth()
+  local width, bound = self:GetUnboundedStringWidth(), boundedWidth(self)
+  return bound and math.min(width, bound) or width
+end
+FontString.GetWrappedWidth = FontString.GetStringWidth
 -- Wrapped line count at the string's width, using the same per-character estimate as GetStringWidth.
 local function wrappedLines(self)
   local state = S[self]

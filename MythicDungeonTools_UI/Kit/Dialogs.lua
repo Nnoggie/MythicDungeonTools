@@ -9,6 +9,7 @@ local LEVEL_BASE = 100
 local LEVEL_STEP = 20
 
 ---Stackable dialogs. Escape closes the top one; a keyed dialog re-opened replaces itself; one close path, one reason.
+---Opening one closes open menus and popovers (reason "replaced"), whose click catcher would otherwise cover it.
 ---@class MDT.UI.DialogsApi
 local Dialogs = {}
 UI.Dialogs = Dialogs
@@ -52,7 +53,6 @@ UI.Define({
     { name = "onClose", default = nil },
   },
   Create = function(self)
-    self:SetFrameStrata("DIALOG")
     self:SetClampedToScreen(true)
     self:SetMovable(true)
     self:EnableMouse(true)
@@ -102,9 +102,13 @@ UI.Define({
 ---@param spec MDT.UI.DialogSpec
 ---@return MDT.UI.Control dialog with Close(reason), `.content` and `.closeButton`
 function Dialogs.Open(spec)
+  UI.Overlay.PopAll("menu", "replaced")
+  UI.Overlay.PopAll("popover", "replaced")
   if spec.key and keyed[spec.key] then keyed[spec.key]:Close("replaced") end
   local parent = spec.parent or (parentProvider and parentProvider()) or UIParent
   local dialog = UI.DialogFrame(parent, { title = spec.title, onClose = spec.onClose })
+  dialog:SetFixedFrameStrata(true)
+  dialog:SetFrameStrata("DIALOG")
   dialog.kitKey, dialog.kitGlobalName = spec.key, spec.globalName
   if spec.key then keyed[spec.key] = dialog end
   if spec.globalName then _G[spec.globalName] = dialog end
@@ -138,7 +142,7 @@ local function dispatch(spec, reason, ...)
     spec.confirm.onClick(...)
   elseif reason == "alt" then
     spec.alt.onClick(...)
-  elseif spec.cancel and spec.cancel.onClick then
+  elseif reason ~= "hidden" and spec.cancel and spec.cancel.onClick then
     spec.cancel.onClick()
   end
 end
@@ -190,11 +194,12 @@ function Dialogs.Prompt(spec)
           text = value
           validate()
         end,
-        onCommit = function(value)
+        onCommit = function(value, _, source)
           text = value
           validate()
-          if valid and not spec.multiline then dialog:Close("confirm") end
+          if source == "enter" and valid then dialog:Close("confirm") end
         end,
+        onEscape = function() dialog:Close("escape") end,
       })
       problem = UI.Text(content, { text = "", color = "warn", hidden = true })
       if spec.checkbox then

@@ -20,12 +20,18 @@ local function arrange(self)
   self:InvalidateLayout()
 end
 
+---The token of the swatch that opened the shared picker last. Callbacks from an older open, or after release, are ignored.
+local pickerToken
+
 local function openPicker(self)
   if self.kitProps.disabled then return end
   local color = self.kitProps.color
   local previous = { color[1], color[2], color[3], color[4] or 1 }
   local hasAlpha = self.kitProps.hasAlpha
+  local token = {}
+  self.kitPickerToken, pickerToken = token, token
   local function apply(r, g, b, a)
+    if self.kitPickerToken ~= token then return end
     self:SetColor({ r, g, b, a })
     self:Emit("onChange", r, g, b, a, self)
   end
@@ -79,9 +85,14 @@ UI.Define({
     self.kitOnRepaint = function(swatch, row) swatch.kitWellBorder:SetToken(row.border or (swatch.kitHovered and "accent" or "border.strong")) end
     self:SetScript("OnClick", openPicker)
   end,
+  OnRelease = function(self)
+    local owned = self.kitPickerToken ~= nil and self.kitPickerToken == pickerToken
+    self.kitPickerToken = nil
+    if owned and ColorPickerFrame:IsShown() then ColorPickerFrame:Hide() end
+  end,
   Measure = function(self)
     local size = Theme.Size("md")
-    if self.kitProps.label then return size + Theme.Space("sm") + math.ceil(self.kitLabel:GetStringWidth()), size end
+    if self.kitProps.label then return size + Theme.Space("sm") + math.ceil(self.kitLabel:GetUnboundedStringWidth()), size end
     return size, size
   end,
 })

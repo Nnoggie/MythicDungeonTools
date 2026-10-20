@@ -37,6 +37,8 @@ function Base:Release()
     return
   end
   self.kitReleased = true
+  self:Hide()
+  self.kitHovered, self.kitPressed, self.kitFocused = nil, nil, nil
   if self.kitChildren then
     local children = self.kitChildren
     self.kitChildren = {}
@@ -56,15 +58,15 @@ function Base:Release()
   end
   local def = self.kit
   if def.OnRelease then def.OnRelease(self) end
+  if self.kitParent then self.kitParent:kitDisown(self) end
+  UI.Tooltip.Hide(self)
+  self:ClearAllPoints()
+  self:SetParent(Holder)
   for _, prop in ipairs(def.allProps) do self.kitProps[prop.name] = prop.default end
   for _, prop in ipairs(def.allProps) do
     if prop.set then prop.set(self, prop.default) end
   end
-  if self.kitParent then self.kitParent:kitDisown(self) end
-  UI.Tooltip.Hide(self)
   self:Hide()
-  self:ClearAllPoints()
-  self:SetParent(Holder)
   def.pool:Release(self)
 end
 
@@ -79,13 +81,6 @@ function Base:kitMeasure(availW)
   local measure = self.kit.Measure
   if measure then return measure(self, availW) end
   return self.kitProps.width or self:GetWidth(), self:GetHeight()
-end
-
----@param disabled boolean
-function Base:SetDisabled(disabled)
-  self.kitProps.disabled = disabled and true or false
-  if self.SetEnabled then self:SetEnabled(not disabled) end
-  if self.kitRepaint then self:kitRepaint() end
 end
 
 function Base:IsDisabled()
@@ -193,8 +188,6 @@ function UI.Define(def)
     return frame
   end
   def.pool = CreateObjectPool(creator, nil)
-  UI.classes = UI.classes or {}
-  UI.classes[def.name] = def
 
   local function construct(parent, spec)
     spec = spec or {}
@@ -219,15 +212,6 @@ function UI.Define(def)
   end
   UI[def.name] = construct
   return construct
-end
-
----Releases every control in the kit's pools. Test and teardown helper.
-function UI.ReleaseAll()
-  for _, def in pairs(UI.classes or {}) do
-    local active = {}
-    for frame in def.pool:EnumerateActive() do active[#active + 1] = frame end
-    for _, frame in ipairs(active) do frame:Release() end
-  end
 end
 
 UI.Mixins = {}

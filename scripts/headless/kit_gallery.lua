@@ -220,6 +220,360 @@ return function(ctx)
     bad:Release()
   end)
 
+  step("kit lifecycle: SetDisabled at runtime makes every control inert, and SetDisabled(false) revives it", function()
+    log = {}
+    local box = UI.Stack(page, { id = "disabledBox" })
+    local button = UI.Button(box, { text = "Go", onClick = logged("button") })
+    local check = UI.Checkbox(box, { label = "Check", onChange = logged("check") })
+    local edit = UI.EditBox(box, { value = "v", onChange = logged("edit") })
+    local slider = UI.Slider(box, { min = 0, max = 10, step = 1, value = 2, onChange = logged("slider") })
+    local dropdown = UI.Dropdown(box, { items = UI.MenuModel.FromList({ a = "Alpha" }, { "a" }), onChange = logged("dropdown") })
+    local swatch = UI.ColorSwatch(box, { color = { 1, 0, 0, 1 }, onChange = logged("swatch") })
+    local stepper = UI.Stepper(box, { value = 5, min = 0, max = 10, onChange = logged("stepper") })
+    local controls = { button, check, edit, slider, dropdown, swatch, stepper }
+    UI.Layout.FlushAll()
+
+    local function drive()
+      click(button)
+      click(check)
+      W.userClick(edit.kitEdit)
+      W.userType(edit.kitEdit, "x")
+      edit:ClearFocus()
+      W.userDrag(slider.kitSlider, 7)
+      click(dropdown.kitButton)
+      local menuOpened = UI.Overlay.Top("menu") ~= nil
+      UI.Menu.Close()
+      click(swatch)
+      local pickerOpened = ColorPickerFrame:IsShown()
+      ColorPickerFrame:Hide()
+      click(stepper.kitUp)
+      return menuOpened, pickerOpened
+    end
+
+    edit:Focus()
+    for _, control in ipairs(controls) do control:SetDisabled(true) end
+    expect(not edit.kitEdit:HasFocus(), "disabling a focused edit box kept its focus")
+    for _, control in ipairs(controls) do expect(control:IsDisabled(), control.kit.name.." does not report disabled") end
+    local menuOpened, pickerOpened = drive()
+    expect(#log == 0, "a disabled control reported input: "..table.concat(log, ","))
+    expect(not menuOpened, "a disabled dropdown opened its menu")
+    expect(not pickerOpened, "a disabled color swatch opened the picker")
+    expect(edit:GetValue() == "v", "a disabled edit box took typing")
+    expect(stepper.kitUp:IsDisabled() and stepper.kitDown:IsDisabled(), "a disabled stepper left its arrows live")
+    expect(swatch.kitSwatch:GetAlpha() < 1, "a disabled color swatch is not dimmed")
+
+    for _, control in ipairs(controls) do control:SetDisabled(false) end
+    menuOpened, pickerOpened = drive()
+    expect(table.concat(log, ",") == "button,check,edit,slider,stepper", "re-enabled controls reported "..table.concat(log, ","))
+    expect(menuOpened and pickerOpened, "re-enabled dropdown or swatch did not open")
+    expect(swatch.kitSwatch:GetAlpha() == 1, "a re-enabled color swatch is still dimmed")
+    box:Release()
+    UI.Layout.FlushAll()
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("kit edit box: Escape reverts without committing; commits name their source; a Prompt confirms only on Enter or its button", function()
+    log = {}
+    local edit = UI.EditBox(page, { value = "Route",
+      onChange = function(text) log[#log + 1] = "change:"..text end,
+      onCommit = function(text, _, source) log[#log + 1] = "commit:"..text..":"..tostring(source) end,
+      onEscape = logged("escape") })
+    UI.Layout.FlushAll()
+    W.userClick(edit.kitEdit)
+    W.userType(edit.kitEdit, "!")
+    W.fireScript(edit.kitEdit, "OnEscapePressed")
+    expect(edit:GetValue() == "Route" and not edit.kitEdit:HasFocus(), "Escape did not restore the committed text and drop focus")
+    expect(table.concat(log, ",") == "change:Route!,change:Route,escape", "Escape reported "..table.concat(log, ","))
+    log = {}
+    W.userClick(edit.kitEdit)
+    W.userType(edit.kitEdit, "1")
+    W.fireScript(edit.kitEdit, "OnEnterPressed")
+    W.userClick(edit.kitEdit)
+    W.userType(edit.kitEdit, "2")
+    edit:ClearFocus()
+    W.userClick(edit.kitEdit)
+    W.fireScript(edit.kitEdit, "OnEnterPressed")
+    W.userClick(edit.kitEdit)
+    edit:ClearFocus()
+    expect(table.concat(log, ",") == "change:Route1,commit:Route1:enter,change:Route12,commit:Route12:blur,commit:Route12:enter",
+      "commits reported "..table.concat(log, ","))
+    edit:Release()
+
+    log = {}
+    local function promptEdit(prompt)
+      for _, child in ipairs(prompt.content.kitChildren) do
+        if child.kit.name == "EditBox" then return child end
+      end
+    end
+    local function openPrompt()
+      return UI.Dialogs.Prompt({ title = "Rename", value = "Old",
+        confirm = { text = "Ok", onClick = function(text) log[#log + 1] = "confirm:"..text end },
+        cancel = { onClick = logged("cancel") } })
+    end
+    local depth = UI.Escape.Depth()
+    local prompt = openPrompt()
+    W.userType(promptEdit(prompt).kitEdit, "X")
+    W.fireScript(promptEdit(prompt).kitEdit, "OnEscapePressed")
+    expect(prompt.kitReleased and table.concat(log, ",") == "cancel", "Escape in a prompt reported "..table.concat(log, ","))
+    expect(UI.Escape.Depth() == depth, "Escape in a prompt left its Escape entry")
+
+    log = {}
+    prompt = openPrompt()
+    W.fireScript(promptEdit(prompt).kitEdit, "OnEnterPressed")
+    expect(prompt.kitReleased and table.concat(log, ",") == "confirm:Old", "Enter on an unchanged prompt reported "..table.concat(log, ","))
+
+    log = {}
+    prompt = openPrompt()
+    local promptBox = promptEdit(prompt)
+    W.userType(promptBox.kitEdit, "Y")
+    promptBox:ClearFocus()
+    expect(not prompt.kitReleased and #log == 0, "losing focus confirmed the prompt: "..table.concat(log, ","))
+    local confirmButton
+    for _, child in ipairs(prompt.content.kitChildren) do
+      if child.kit.name == "Row" then confirmButton = child.kitChildren[1] end
+    end
+    click(confirmButton)
+    expect(prompt.kitReleased and table.concat(log, ",") == "confirm:OldY", "the confirm button reported "..table.concat(log, ","))
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("kit menus: Escape in a dropdown's search box closes the menu", function()
+    local list = {}
+    local order = {}
+    for i = 1, 13 do
+      list["k"..i] = "Choice "..i
+      order[i] = "k"..i
+    end
+    local dropdown = UI.Dropdown(page, { items = UI.MenuModel.FromList(list, order), value = "k1" })
+    UI.Layout.FlushAll()
+    local depth = UI.Escape.Depth()
+    click(dropdown.kitButton)
+    local menu = UI.Overlay.Top("menu")
+    local search
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "EditBox" then search = child end
+    end
+    expect(search and search.kitEdit:HasFocus(), "a long dropdown did not focus its search box")
+    W.userType(search.kitEdit, "1")
+    W.fireScript(search.kitEdit, "OnEscapePressed")
+    expect(UI.Overlay.Top("menu") == nil and not menu.frame:IsShown(), "Escape in the search box left the menu open")
+    expect(UI.Escape.Depth() == depth and dropdown:GetValue() == "k1", "Escape in the search box changed the stack or the value")
+    dropdown:Release()
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("kit lifecycle: a control released mid-hover comes back from the pool unhovered, and release fires no spurious OnShow", function()
+    local function paint(button)
+      local color = W.state[button.kitBackground].color
+      return color and table.concat(color, ",") or "none"
+    end
+    local hovered = UI.Button(page, { text = "Hover" })
+    UI.Layout.FlushAll()
+    W.fireScript(hovered, "OnEnter")
+    W.fireScript(hovered, "OnMouseDown", "LeftButton")
+    hovered:Release()
+    local reused = UI.Button(page, { text = "Fresh" })
+    local fresh = UI.Button(page, { text = "Fresh" })
+    UI.Layout.FlushAll()
+    expect(reused == hovered and fresh ~= hovered, "setup: the pool did not hand back the hovered button first")
+    expect(paint(reused) == paint(fresh), ("reused button paints %s, a fresh one %s"):format(paint(reused), paint(fresh)))
+
+    local shows, hides = 0, 0
+    local hidden = UI.Button(page, { text = "Hidden", hidden = true })
+    hidden:HookScript("OnShow", function() shows = shows + 1 end)
+    hidden:HookScript("OnHide", function() hides = hides + 1 end)
+    hidden:Release()
+    expect(shows == 0 and hides == 0, ("releasing a hidden control fired %d OnShow and %d OnHide"):format(shows, hides))
+    reused:Release()
+    fresh:Release()
+    UI.Layout.FlushAll()
+  end)
+
+  step("kit lifecycle: a control whose label grows measures the whole new label, not its old clipped width", function()
+    local long = "A much longer label than the last one"
+    local short = {}
+    for _, class in ipairs({ { "Button", "SetText" }, { "Checkbox", "SetLabel" }, { "ColorSwatch", "SetLabel" } }) do
+      local name, setter = class[1], class[2]
+      local row = UI.Row(page, {})
+      local control = UI[name](row, { [setter == "SetText" and "text" or "label"] = "Hi" })
+      UI.Layout.FlushAll()
+      control[setter](control, long)
+      UI.Layout.FlushAll()
+      local needed = control.kitLabel:GetUnboundedStringWidth()
+      local room = control:GetRight() - control.kitLabel:GetLeft()
+      if room < needed then short[#short + 1] = ("%s label has %d of the %d it needs"):format(name, room, needed) end
+      row:Release()
+    end
+    UI.Layout.FlushAll()
+    expect(#short == 0, table.concat(short, "; "))
+  end)
+
+  step("kit layout: wrapped text in a row takes its text's width, not the whole row", function()
+    local row = UI.Row(page, { gap = "sm" })
+    local text = UI.Text(row, { text = "Short" })
+    local button = UI.Button(row, { text = "After" })
+    UI.Layout.FlushAll()
+    local needed = text.kitLabel:GetUnboundedStringWidth()
+    expect(text:GetWidth() >= needed and text:GetWidth() <= needed + 1,
+      ("short text in a row is %d wide for %d of text"):format(text:GetWidth(), needed))
+    expect(button:GetRight() <= row:GetRight(), "the button after the text was pushed out of the row")
+    local long = UI.Text(row, { text = string.rep("long words wrap ", 40) })
+    UI.Layout.FlushAll()
+    expect(long:GetWidth() <= row:GetWidth(), "long wrapped text grew past the row")
+    row:Release()
+    UI.Layout.FlushAll()
+  end)
+
+  step("kit lifecycle: a released color swatch closes its picker and ignores the picker's late callbacks", function()
+    log = {}
+    local first = UI.ColorSwatch(page, { color = { 1, 0, 0, 1 }, onChange = logged("first") })
+    UI.Layout.FlushAll()
+    click(first)
+    local stale = ColorPickerFrame.info
+    first:Release()
+    expect(not ColorPickerFrame:IsShown(), "releasing the swatch left its color picker open")
+    local second = UI.ColorSwatch(page, { color = { 0, 0, 1, 1 }, onChange = logged("second") })
+    expect(second == first, "setup: the pool did not hand back the released swatch")
+    stale.swatchFunc()
+    stale.cancelFunc()
+    expect(#log == 0, "a stale picker callback reached a control: "..table.concat(log, ","))
+    local r, g, b = unpack(second:GetColor())
+    expect(r == 0 and g == 0 and b == 1, "a stale picker callback recolored the reused swatch")
+
+    click(second)
+    local other = UI.ColorSwatch(page, { color = { 0, 1, 0, 1 }, onChange = logged("other") })
+    UI.Layout.FlushAll()
+    click(other)
+    second:Release()
+    expect(ColorPickerFrame:IsShown(), "releasing a swatch closed a picker another swatch owns")
+    ColorPickerFrame.info.swatchFunc()
+    expect(table.concat(log, ",") == "other", "the picker's owner did not get its callback: "..table.concat(log, ","))
+    ColorPickerFrame:Hide()
+    other:Release()
+    UI.Layout.FlushAll()
+  end)
+
+  step("kit dialogs: opening a dialog closes open popovers and menus so nothing covers it", function()
+    log = {}
+    local depth = UI.Escape.Depth()
+    local pop = UI.Popover({ anchor = page:Find("default"), onClose = function(reason) log[#log + 1] = "pop:"..reason end,
+      build = function(content) UI.Text(content, { text = "popover" }) end })
+    UI.Menu.Open({ anchor = page:Find("default"), items = { { text = "One" } }, onClose = function(reason) log[#log + 1] = "menu:"..reason end })
+    local dialog = UI.Dialogs.Confirm({ title = "Over", text = "On top", confirm = { text = "Ok", onClick = function() end } })
+    expect(not pop:IsShown() and UI.Overlay.Top("popover") == nil and UI.Overlay.Top("menu") == nil, "a popover or menu stayed open over the dialog")
+    expect(table.concat(log, ",") == "menu:replaced,pop:replaced", "dismissals reported "..table.concat(log, ","))
+    local covered = false
+    for _, object in ipairs(W.objects) do
+      local state = W.state[object]
+      if state.isFrame and state.class.name == "Button" and state.parent == UIParent and W.isVisible(object) and object:GetWidth() == UIParent:GetWidth() then covered = true end
+    end
+    expect(not covered, "the click catcher still covers the dialog")
+    expect(UI.Escape.Depth() == depth + 1, "the Escape stack holds more than the dialog")
+    dialog:Close("api")
+  end)
+
+  step("kit layout: Batch returns with a 5-deep nested tree fully measured", function()
+    local root = UI.Stack(page, {})
+    UI.Layout.FlushAll()
+    local leaf
+    root:Batch(function()
+      local parent = root
+      for _ = 1, 5 do parent = UI.Stack(parent, { padding = "sm" }) end
+      leaf = UI.Text(parent, { text = "deep" })
+    end)
+    local afterBatch = root:GetHeight()
+    expect(not UI.Layout.IsDirty(), "Batch returned with containers still dirty")
+    UI.Layout.FlushAll()
+    expect(afterBatch == root:GetHeight() and afterBatch >= leaf:GetHeight() + 5 * 2 * UI.Theme.Space("sm"),
+      ("root was %d tall after Batch and %d once settled"):format(afterBatch, root:GetHeight()))
+
+    local errors = {}
+    local previous = geterrorhandler()
+    seterrorhandler(function(message) errors[#errors + 1] = tostring(message) end)
+    local loop = UI.Stack(page, {})
+    local settles = loop.kitLayout
+    loop.kitLayout = function(self) UI.Layout.Invalidate(self) end
+    UI.Layout.FlushAll()
+    seterrorhandler(previous)
+    expect(#errors == 1 and errors[1]:find("did not settle", 1, true), "a layout that never settles was not reported: "..table.concat(errors, "; "))
+    loop.kitLayout = settles
+    loop:Release()
+    root:Release()
+    UI.Layout.FlushAll()
+  end)
+
+  step("kit menus: a submenu hover timer from a closed menu does not fire into the next menu", function()
+    local function menuList(entry)
+      for _, child in ipairs(entry.frame.content.kitChildren) do
+        if child.kit.name == "List" then return child end
+      end
+    end
+    local function subTexts()
+      local texts = {}
+      local top = UI.Overlay.Top("menu")
+      while top and top.submenu do
+        local list = menuList(top)
+        list:ForEachRow(function(row) texts[#texts + 1] = row.kitLabel:GetText() end)
+        UI.Overlay.Pop(top, "api")
+        top = UI.Overlay.Top("menu")
+      end
+      return table.concat(texts, ",")
+    end
+    local anchor = page:Find("default")
+    UI.Menu.Open({ anchor = anchor, items = { { kind = "submenu", text = "Old", items = { { text = "Stale" } } } } })
+    local first = UI.Overlay.Top("menu").frame
+    W.fireScript(menuList(UI.Overlay.Top("menu")):GetRow(1), "OnEnter")
+    UI.Menu.Close()
+    UI.Menu.Open({ anchor = anchor, items = { { kind = "submenu", text = "New", items = { { text = "Fresh" } } } } })
+    expect(UI.Overlay.Top("menu").frame == first, "setup: the second menu did not reuse the first popover")
+    W.fireScript(menuList(UI.Overlay.Top("menu")):GetRow(1), "OnEnter")
+    W.pump(UI.Theme.data.motion.submenuDelay + 0.05)
+    local opened = subTexts()
+    expect(opened == "Fresh", "submenus opened after the hover delay: "..opened)
+    UI.Menu.Close()
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("kit segment bar: SetSegments and SetMax repaint the over-max tint", function()
+    local function tint(bar) return table.concat({ bar.kitText:GetTextColor() }, ",") end
+    local function bar(segments, max) return UI.SegmentBar(page, { max = max, text = "x", overflow = true, segments = segments }) end
+    local over, under, full = { { value = 110, color = "ok" } }, { { value = 50, color = "ok" } }, { { value = 100, color = "ok" } }
+    local updated, freshUnder, freshOver, freshFull = bar(over, 100), bar(under, 100), bar(over, 100), bar(full, 100)
+    local wrong = {}
+    expect(tint(freshUnder) ~= tint(freshOver) and tint(freshFull) ~= tint(freshUnder), "setup: the three states share one tint")
+    updated:SetSegments(under, 100)
+    if tint(updated) ~= tint(freshUnder) then wrong[#wrong + 1] = "SetSegments to under max kept "..tint(updated) end
+    updated:SetSegments(full)
+    if tint(updated) ~= tint(freshFull) then wrong[#wrong + 1] = "SetSegments to exactly max kept "..tint(updated) end
+    updated:SetMax(200)
+    if tint(updated) ~= tint(freshUnder) then wrong[#wrong + 1] = "SetMax above the total kept "..tint(updated) end
+    expect(#wrong == 0, table.concat(wrong, "; "))
+    for _, control in ipairs({ updated, freshUnder, freshOver, freshFull }) do control:Release() end
+    UI.Layout.FlushAll()
+  end)
+
+  step("kit fonts: a font family that comes back without its font falls back to a plain font", function()
+    local Fonts = UI.Fonts
+    local objects, fallbacks = {}, {}
+    for role, font in pairs(Fonts.objects) do objects[role] = font end
+    for role, byAlphabet in pairs(Fonts.fallbacks) do fallbacks[role] = byAlphabet end
+    local realFamily = CreateFontFamily
+    CreateFontFamily = function(name) return CreateFont(name) end
+    local ok, err = pcall(Fonts.Setup)
+    CreateFontFamily = realFamily
+    local file = Fonts.objects.body and Fonts.objects.body:GetFont()
+    for role, font in pairs(objects) do
+      Fonts.objects[role] = font
+      _G[W.state[font].name] = font
+    end
+    for role, byAlphabet in pairs(fallbacks) do
+      Fonts.fallbacks[role] = byAlphabet
+      for _, font in pairs(byAlphabet) do _G[W.state[font].name] = font end
+    end
+    expect(ok, "Fonts.Setup raised: "..tostring(err))
+    expect(file == Fonts.files.roman, "a silently empty font family left the body font at "..tostring(file))
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
@@ -297,6 +651,29 @@ return function(ctx)
     expect(not catcher:IsShown(), "click catcher stayed up with nothing open")
   end)
 
+  step("kit dialogs: a reused dialog parented to UIParent draws above the main window", function()
+    local rank = { BACKGROUND = 1, LOW = 2, MEDIUM = 3, HIGH = 4, DIALOG = 5, FULLSCREEN = 6, FULLSCREEN_DIALOG = 7, TOOLTIP = 8 }
+    UI.Dialogs.Open({ title = "First life", build = function(content) UI.Text(content, { text = "first" }) end }):Close("api")
+    local dialog = UI.Dialogs.Open({ title = "Second life", parent = UIParent, build = function(content) UI.Text(content, { text = "second" }) end })
+    expect(MDT.main_frame:IsShown() and dialog:GetParent() == UIParent, "setup: main window hidden or dialog not on UIParent")
+    expect(rank[dialog:GetFrameStrata()] > rank[MDT.main_frame:GetFrameStrata()],
+      ("reused dialog strata %s is not above the main window's %s"):format(dialog:GetFrameStrata(), MDT.main_frame:GetFrameStrata()))
+    expect(dialog.content:GetFrameStrata() == dialog:GetFrameStrata(), "dialog content did not follow the dialog's strata")
+    dialog:Close("api")
+  end)
+
+  step("kit dialogs: a dialog closed because its parent hid reports 'hidden' and skips cancel", function()
+    log = {}
+    local dialog = UI.Dialogs.Confirm({ title = "Parent", text = "Parent hides",
+      confirm = { text = "Ok", onClick = logged("hiddenConfirm") }, cancel = { onClick = logged("hiddenCancel") },
+      onClose = function(_, reason) log[#log + 1] = "close:"..reason end })
+    expect(dialog:GetParent() == MDT.main_frame, "setup: dialog is not on the main window")
+    MDT:HideInterface()
+    expect(dialog.kitReleased and lastLog() == "close:hidden", "parent hide did not close the dialog with 'hidden': "..tostring(lastLog()))
+    for _, entry in ipairs(log) do expect(entry ~= "hiddenCancel", "parent hide ran the dialog's cancel") end
+    MDT.main_frame:Show()
+  end)
+
   local list, order, selection
   local function buildItems()
     local items = {}
@@ -339,7 +716,10 @@ return function(ctx)
     expect(bound > 0 and bound < 12, "list bound "..bound.." rows for a 200px viewport")
     expect(list:GetRow(1) and not list:GetRow(40), "visible range is wrong")
     W.fireScript(list.kitViewport, "OnMouseWheel", -1)
-    expect(list:GetOffset() > 0 and list:GetRow(1) == nil or list:GetOffset() > 0, "wheel did not scroll the list")
+    local offset = list:GetOffset()
+    expect(offset > 0, "wheel did not scroll the list")
+    expect(list:GetRow(1) == nil or math.abs(list:GetRow(1):GetTop() - (list.kitViewport:GetTop() + offset)) < 0.01,
+      "rows did not move up by the wheel's scroll offset")
     list:ScrollTo(80, "nearest")
     expect(list:GetRow(80) and not list:GetRow(1), "ScrollTo did not reach the last item")
     expect(list:GetRow(80):GetBottom() >= list.kitViewport:GetBottom() - 0.01, "last row is cut off")

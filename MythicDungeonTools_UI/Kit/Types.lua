@@ -83,7 +83,7 @@
 
 ---@class MDT.UI.CommonSpec
 ---@field id string? container:Find(id)
----@field width number? fixed width; nil stretches in a Stack and takes the natural width in a Row
+---@field width number? fixed width; nil stretches in a Stack and takes the natural width in a Row. A container's natural width is the whole row, so a Stack, Row or Columns inside a Row needs an explicit width
 ---@field height (number|MDT.UI.ControlSize)? fixed height
 ---@field grow number? share of leftover space in the parent container
 ---@field hidden boolean? hidden children take no layout space
@@ -156,7 +156,7 @@
 ---@field text string
 ---@field confirm {text: string, onClick: fun(checked: boolean?), variant: MDT.UI.Variant?}
 ---@field alt {text: string, onClick: fun(checked: boolean?)}?
----@field cancel {text: string?, onClick: fun()?}? onClick runs once on every dismissal that is not confirm or alt
+---@field cancel {text: string?, onClick: fun()?}? onClick runs once on every dismissal except confirm, alt and "hidden" (the parent hid, usually the main window closing); a port that must react to "hidden" does it in onClose
 ---@field checkbox {text: string, value: boolean?, onChange: fun(value: boolean)?}?
 
 ---@class MDT.UI.PromptSpec : MDT.UI.DialogSpec
@@ -170,4 +170,4 @@
 ---@field validate (fun(text: string): boolean, string?)?
 ---@field checkbox {text: string, value: boolean?}?
 ---@field confirm {text: string, onClick: fun(text: string, checked: boolean?), variant: MDT.UI.Variant?}
----@field cancel {text: string?, onClick: fun()?}?
+---@field cancel {text: string?, onClick: fun()?}? same dismissal rules as MDT.UI.ConfirmSpec.cancel

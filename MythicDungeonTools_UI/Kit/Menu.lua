@@ -116,6 +116,8 @@ function Menu.Open(spec)
   local anchor = spec.anchor
   local width = spec.width or math.max(MIN_WIDTH, anchor ~= "cursor" and anchor:GetWidth() or 0)
   local popover = UI.PopoverFrame(UIParent, { onClose = spec.onClose, padding = "xs", gap = "xs" })
+  local openToken = {}
+  popover.kitMenuToken = openToken
   popover:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
   local content = popover.content
   content:SetWidth(width)
@@ -150,7 +152,7 @@ function Menu.Open(spec)
 
   content:Batch(function()
     if spec.search then
-      UI.EditBox(content, { autoFocus = true, onChange = function(query) refresh(query) end })
+      UI.EditBox(content, { autoFocus = true, onChange = function(query) refresh(query) end, onEscape = Menu.Close })
     end
     local total = 0
     for _, item in ipairs(items) do total = total + Theme.Size(Menu.rowKinds[item.kind].height) end
@@ -160,7 +162,7 @@ function Menu.Open(spec)
         if item.kind ~= "submenu" or item.disabled then return end
         C_Timer.After(Theme.data.motion.submenuDelay, function()
           local row = list:GetRow(index)
-          if row and row.kitHovered and not popover.kitReleased then activate(item, index) end
+          if row and row.kitHovered and popover.kitMenuToken == openToken then activate(item, index) end
         end)
       end,
     })
@@ -169,6 +171,7 @@ function Menu.Open(spec)
   popover.kitEntry = {
     frame = popover, kind = "menu", submenu = spec.submenu,
     onDismiss = function(reason)
+      popover.kitMenuToken = nil
       popover:Emit("onClose", reason)
       popover:Release()
     end,
