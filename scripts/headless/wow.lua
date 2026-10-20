@@ -186,7 +186,7 @@ W.fireScript = fireScript
 -- Like the client: the cursor moves onto the frame, and a disabled button only gets OnEnter when it allows motion scripts while disabled.
 function W.hover(obj)
   W.cursorTo(obj)
-  if obj.IsEnabled and not obj:IsEnabled() and not obj:GetMotionScriptsWhileDisabled() then return end
+  if obj:IsObjectType("Button") and not obj:IsEnabled() and not obj:GetMotionScriptsWhileDisabled() then return end
   return fireScript(obj, "OnEnter")
 end
 

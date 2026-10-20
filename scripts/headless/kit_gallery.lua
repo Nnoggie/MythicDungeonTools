@@ -108,6 +108,30 @@ return function(ctx)
     W.FireEvent("UI_SCALE_CHANGED")
   end)
 
+  step("kit tooltips: composite controls show their tooltip from the parts that take the mouse", function()
+    local box = UI.Stack(page, { id = "tooltipBox" })
+    local controls = {
+      { UI.EditBox(box, { tooltip = "edit tip" }), "kitField", "kitEdit" },
+      { UI.Stepper(box, { value = 5, min = 0, max = 10, tooltip = "stepper tip" }), "kitDown", "kitValue", "kitUp" },
+      { UI.Slider(box, { min = 0, max = 10, value = 2, tooltip = "slider tip" }), "kitSlider" },
+      { UI.Dropdown(box, { items = UI.MenuModel.FromList({ a = "Alpha" }, { "a" }), tooltip = "dropdown tip" }), "kitButton" },
+    }
+    UI.Layout.FlushAll()
+    for _, entry in ipairs(controls) do
+      local control = entry[1]
+      for index = 2, #entry do
+        local part = control[entry[index]]
+        GameTooltip:Hide()
+        W.hover(part)
+        expect(GameTooltip:IsShown() and GameTooltip:IsOwned(control), control.kit.name.."."..entry[index].." shows no tooltip")
+        expect(control.kitHovered, control.kit.name.."."..entry[index].." does not hover the control")
+        W.fireScript(part, "OnLeave")
+        expect(not GameTooltip:IsShown() and not control.kitHovered, control.kit.name.."."..entry[index].." left its tooltip up")
+      end
+    end
+    box:Release()
+  end)
+
   step("kit gallery: controls report user input through their callbacks", function()
     log = {}
     click(page:Find("default"))

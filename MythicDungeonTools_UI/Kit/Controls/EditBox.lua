@@ -237,6 +237,7 @@ UI.Define({
       self.kitBar:SetValue(offset)
     end)
     self.kitField:EnableMouse(true)
+    self:kitForwardHover(self.kitField, self.kitEdit)
     self.kitField:SetScript("OnMouseDown", function() if not self.kitProps.disabled then self.kitEdit:SetFocus() end end)
     self.kitRepaint = repaint
   end,

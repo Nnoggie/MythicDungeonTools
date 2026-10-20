@@ -68,6 +68,7 @@ UI.Define({
     self.kitButton = UI.Button(self, { variant = "field", chevron = true, justify = "LEFT", onClick = function() openMenu(self) end })
     self.kitButton:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
     self.kitButton.kitPersistent = true
+    self:kitForwardHover(self.kitButton)
   end,
   OnRelease = function(self)
     self.kitButton:SetText("")

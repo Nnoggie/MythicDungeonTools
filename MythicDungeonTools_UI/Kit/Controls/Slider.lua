@@ -98,6 +98,7 @@ UI.Define({
     self.kitSlider:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", THUMB / 2, 0)
     self.kitSlider:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -THUMB / 2, 0)
     self.kitSlider:SetHeight(THUMB + 4)
+    self:kitForwardHover(self.kitSlider)
     self.kitSlider:SetObeyStepOnDrag(true)
     local track = CreateFrame("Frame", nil, self.kitSlider)
     track:SetPoint("LEFT", self.kitSlider, "LEFT", 0, 0)

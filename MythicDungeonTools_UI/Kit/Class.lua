@@ -109,6 +109,17 @@ local function onLeave(self)
   if self.kitProps.tooltip then UI.Tooltip.Hide(self) end
 end
 
+---For composite controls: the given child frames take the mouse instead of the control, so their hover is the
+---control's hover. That drives the control's hover state and its tooltip prop.
+---@param ... table child frames
+function Base:kitForwardHover(...)
+  for index = 1, select("#", ...) do
+    local child = select(index, ...)
+    child:HookScript("OnEnter", function() onEnter(self) end)
+    child:HookScript("OnLeave", function() onLeave(self) end)
+  end
+end
+
 local function onMouseDown(self)
   self.kitPressed = true
   if self.kitRepaint then self:kitRepaint() end

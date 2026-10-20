@@ -102,6 +102,7 @@ UI.Define({
     self:EnableMouseWheel(true)
     self:SetScript("OnMouseWheel", function(_, delta) if self.kitProps.wheel then stepBy(self, delta > 0 and 1 or -1) end end)
     self.kitValue:EnableMouseWheel(true)
+    self:kitForwardHover(self.kitDown, self.kitUp, self.kitValue)
     self.kitValue:SetScript("OnMouseWheel", function(_, delta) if self.kitProps.wheel then stepBy(self, delta > 0 and 1 or -1) end end)
   end,
   OnRelease = function(self)
