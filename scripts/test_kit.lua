@@ -346,7 +346,7 @@ end)
 
 test("Types.lua aliases match the theme tables", function()
   local file = assert(io.open(kitDir.."Types.lua", "rb"))
-  local source = file:read("*a")
+  local source = file:read("*a"):gsub("\r\n", "\n")
   file:close()
   local function aliasValues(name)
     local block = source:match("%-%-%-@alias "..name:gsub("%.", "%%.").."\n(.-)\n\n")
