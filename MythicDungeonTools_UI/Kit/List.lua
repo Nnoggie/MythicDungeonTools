@@ -70,7 +70,7 @@ function Methods:SetOffset(offset)
   self:kitRefresh()
 end
 
----Replaces the items. Rows rebind only where kind, key or sig changed; the scroll offset is kept. During a drag the call waits for the drop.
+---Replaces the items. A row rebinds only where kind, key or sig changed, so fresh item tables with the same sig keep it; the scroll offset is kept. During a drag the call waits for the drop.
 ---@param items MDT.UI.ListItem[]
 function Methods:SetItems(items)
   if self.kitDrag then
@@ -148,23 +148,36 @@ function Methods:kitBind(row, item, index)
   self:kitPaintRow(row)
 end
 
+---The row that started a drag stays bound and placed until the drop, even when it scrolls out of the viewport.
+function Methods:kitIsDragOrigin(row)
+  return self.kitDrag ~= nil and self.kitDrag.row == row
+end
+
 ---Virtualization pass: releases rows outside the visible range, binds rows for new indices, repositions the rest.
 function Methods:kitRefresh()
   local items, kinds = self.kitProps.items, self.kitProps.kinds
   local viewport = self.kitViewport
   local viewH = viewport:GetHeight()
   self.kitBar:SetRange(viewH, self.kitTotal)
-  local inset = self.kitProps.scrollbar and self.kitBar:IsShown() and (BAR_WIDTH + Theme.Space("xs")) or 0
+  if not self.kitProps.scrollbar then self.kitBar:Hide() end
+  local inset = self.kitBar:IsShown() and (BAR_WIDTH + Theme.Space("xs")) or 0
   viewport:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -inset, 0)
   local first, last = ListMath.VisibleRange(self.kitTops, self.kitHeights, self.kitOffset, viewH, OVERSCAN)
   for index, row in pairs(self.kitRows) do
     local item = items[index]
-    if index < first or index > last or not item or item.kind ~= row.kitItem.kind then
+    local outside = index < first or index > last
+    if (outside and not self:kitIsDragOrigin(row)) or not item or item.kind ~= row.kitItem.kind then
       self.kitRows[index] = nil
       releaseRow(row)
     end
   end
   local width = viewport:GetWidth()
+  local function place(row, index)
+    row:ClearAllPoints()
+    row:SetPoint("TOPLEFT", viewport, "TOPLEFT", 0, -(self.kitTops[index] - self.kitOffset))
+    row:SetSize(width, self.kitHeights[index])
+    row:Show()
+  end
   for index = first, last do
     local item = items[index]
     local kind = kinds[item.kind]
@@ -176,13 +189,15 @@ function Methods:kitRefresh()
       UI.Pixel.RefreshFrame(row)
       self.kitRows[index] = row
       self:kitBind(row, item, index)
-    elseif row.kitKey ~= item.key or row.kitSig ~= item.sig or row.kitItem ~= item then
+    elseif row.kitKey ~= item.key or row.kitSig ~= item.sig then
       self:kitBind(row, item, index)
+    else
+      row.kitItem = item
     end
-    row:ClearAllPoints()
-    row:SetPoint("TOPLEFT", viewport, "TOPLEFT", 0, -(self.kitTops[index] - self.kitOffset))
-    row:SetSize(width, self.kitHeights[index])
-    row:Show()
+    place(row, index)
+  end
+  for index, row in pairs(self.kitRows) do
+    if (index < first or index > last) and self:kitIsDragOrigin(row) then place(row, index) end
   end
 end
 
@@ -206,7 +221,7 @@ function Methods:kitRowClick(row, button)
     self:Emit("onSelect", Selection.Click(self.kitProps.selection, index, mods), index, mods)
   end
   if button == "RightButton" then
-    local menuItems = self:Emit("onContext", item, index)
+    local menuItems = self:Emit("onContext", item, index, mods)
     if menuItems then UI.Menu.OpenContext(menuItems, row) end
   else
     self:Emit("onActivate", item, index, mods)
@@ -230,6 +245,10 @@ end
 local function dragUpdate(self, elapsed)
   local drag = self.kitDrag
   if not drag then return end
+  if not IsMouseButtonDown("LeftButton") then
+    self:kitDragFinish(true)
+    return
+  end
   local viewport = self.kitViewport
   local _, cursorY = GetCursorPosition()
   local localY = viewport:GetTop() - cursorY / viewport:GetEffectiveScale()
@@ -325,7 +344,7 @@ end
 ---@field scrollbar boolean? default true
 ---@field onSelect fun(selection: integer[], clicked: integer, mods: MDT.UI.ClickMods)? proposed selection from the pure click semantics
 ---@field onActivate fun(item: MDT.UI.ListItem, index: integer, mods: MDT.UI.ClickMods)?
----@field onContext fun(item: MDT.UI.ListItem, index: integer): MDT.UI.MenuItem[]? returned items open at the cursor
+---@field onContext fun(item: MDT.UI.ListItem, index: integer, mods: MDT.UI.ClickMods): MDT.UI.MenuItem[]? returned items open at the cursor
 ---@field onReorder fun(keys: (string|number)[], slot: integer)? slot is the insert-before position among draggable rows, 1..n+1
 ---@field onHover fun(item: MDT.UI.ListItem, index: integer, row: table)?
 ---@field onHoverEnd fun(item: MDT.UI.ListItem, index: integer, row: table)?

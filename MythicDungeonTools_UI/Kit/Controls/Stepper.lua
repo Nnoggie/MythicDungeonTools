@@ -57,6 +57,7 @@ end
 ---@field step number? default 1
 ---@field format fun(value: number): string?
 ---@field wheel boolean? default true
+---@field variant MDT.UI.Variant? default "default"
 ---@field disabled boolean?
 ---@field onChange fun(value: number, self: MDT.UI.Control)? every step
 ---@field onCommit fun(value: number, self: MDT.UI.Control)? after the last step of a burst
@@ -69,6 +70,7 @@ UI.Define({
     { name = "step", default = 1 },
     { name = "format", default = nil, set = repaint },
     { name = "wheel", default = true },
+    { name = "variant", default = "default", set = function(self, v) self:kitSkinInit(v) end },
     { name = "disabled", default = false, set = repaint },
     { name = "value", default = 0, set = setValue },
     { name = "onChange", default = nil },

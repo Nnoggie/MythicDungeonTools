@@ -4,6 +4,7 @@ MDT.UI = UI
 
 ---Click semantics of the pull list, lifted from the AceGUI pull button's OnClickNormal.
 ---The selection keeps click order; its last entry is the anchor for shift ranges.
+---Shift and Ctrl right-clicks never change the selection: the list owner handles those chords.
 ---@class MDT.UI.SelectionMath
 local Selection = {}
 UI.Selection = Selection
@@ -35,7 +36,7 @@ end
 ---@return integer[] newSelection
 function Selection.Click(selection, index, mods)
   if mods.button == "RightButton" then
-    if Selection.Contains(selection, index) then return copy(selection) end
+    if mods.shift or mods.ctrl or Selection.Contains(selection, index) then return copy(selection) end
     if #selection == 1 then return { index } end
     local result = copy(selection)
     result[#result + 1] = index

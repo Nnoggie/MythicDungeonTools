@@ -1186,27 +1186,17 @@ openMarkSettings = function()
 end
 
 local function openMarkerMenu(widget, fullName)
-  MDT:CreateContextMenu(widget.frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateTitle(L["Focus Marker"])
-
-    for i = 1, 8 do
-      rootDescription:CreateRadio(markerLabel(i), function(index)
-        return widget.markerKnown and widget.markerIndex == index
-      end, function(index)
-        MDT:FocusMarker_SetAssignment(fullName, index)
-        setButtonMarker(widget, index, true)
-        refreshAssignmentsFrame()
-      end, i)
-    end
-
-    rootDescription:CreateRadio(L["None"], function()
-      return widget.markerKnown and widget.markerIndex == nil
-    end, function()
-      MDT:FocusMarker_SetAssignment(fullName, nil)
-      setButtonMarker(widget, nil, true)
-      refreshAssignmentsFrame()
-    end)
-  end)
+  local function assign(index)
+    MDT:FocusMarker_SetAssignment(fullName, index)
+    setButtonMarker(widget, index, true)
+    refreshAssignmentsFrame()
+  end
+  local items = { { kind = "title", text = L["Focus Marker"] } }
+  for i = 1, 8 do
+    items[#items + 1] = { kind = "choice", text = markerLabel(i), checked = widget.markerKnown and widget.markerIndex == i, onSelect = function() assign(i) end }
+  end
+  items[#items + 1] = { kind = "choice", text = L["None"], checked = widget.markerKnown and widget.markerIndex == nil, onSelect = function() assign(nil) end }
+  MDT:CreateContextMenu(widget.frame, items)
 end
 
 local function createAssignmentsFrame()

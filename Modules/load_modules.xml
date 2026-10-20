@@ -3,6 +3,10 @@
 	<Script file='MapView.lua'/>
 	<Script file='Presets.lua'/>
 	<Script file='Pulls.lua'/>
+	<Script file='Sidebar\SidebarModel.lua'/>
+	<Script file='Sidebar\RouteHeader.lua'/>
+	<Script file='Sidebar\PullRows.lua'/>
+	<Script file='Sidebar\Sidebar.lua'/>
 	<Script file='PresetDialogs.lua'/>
 	<Script file='FramePools.lua'/>
 	<Include file='DungeonEnemies.xml'/>

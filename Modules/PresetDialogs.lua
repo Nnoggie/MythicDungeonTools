@@ -38,6 +38,10 @@ function MDT:HideAllDialogs()
 end
 
 function MDT:OpenImportPresetDialog()
+  if InCombatLockdown() then
+    print('MDT: '..L["Cannot import while in combat"])
+    return
+  end
   MDT:HideAllDialogs()
   MDT.main_frame.presetImportFrame:ClearAllPoints()
   MDT.main_frame.presetImportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
@@ -47,7 +51,8 @@ function MDT:OpenImportPresetDialog()
   MDT.main_frame.presetImportLabel:SetText(nil)
 end
 
-function MDT:OpenNewPresetDialog()
+---@param startingPointIdx integer? preselects "use as a starting point" with that preset, for Duplicate
+function MDT:OpenNewPresetDialog(startingPointIdx)
   initializeDB()
   MDT:HideAllDialogs()
   local presetList = {}
@@ -66,7 +71,7 @@ function MDT:OpenNewPresetDialog()
   local newIndex = math.max(highestIndex, countPresets - 1)
   table.insert(presetList, 1, L["Empty"])
   MDT.main_frame.PresetCreationDropDown:SetList(presetList)
-  MDT.main_frame.PresetCreationDropDown:SetValue(1)
+  MDT.main_frame.PresetCreationDropDown:SetValue(startingPointIdx and startingPointIdx + 1 or 1)
   MDT.main_frame.PresetCreationEditbox:SetText(L["defaultPresetName"].." "..newIndex + 1)
   MDT.main_frame.presetCreationFrame:ClearAllPoints()
   MDT.main_frame.presetCreationFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
@@ -77,6 +82,65 @@ function MDT:OpenNewPresetDialog()
   MDT.main_frame.PresetCreationEditbox:SetFocus()
   MDT.main_frame.PresetCreationEditbox:HighlightText(0, 50)
   MDT.main_frame.presetImportBox:SetText("")
+end
+
+function MDT:OpenRenamePresetDialog()
+  initializeDB()
+  MDT:HideAllDialogs()
+  local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
+  local frame = MDT.main_frame.RenameFrame
+  frame:Show()
+  frame.RenameButton:SetDisabled(true)
+  frame.RenameButton.text:SetTextColor(0.5, 0.5, 0.5)
+  frame:ClearAllPoints()
+  frame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
+  frame.TakeOwnershipCheckbox:SetValue(false)
+  frame.Editbox:SetText(currentPresetName)
+  frame.Editbox:HighlightText(0, string.len(currentPresetName))
+  frame.Editbox:SetFocus()
+end
+
+function MDT:OpenExportDialog()
+  initializeDB()
+  if InCombatLockdown() then
+    print('MDT: '..L["Cannot export while in combat"])
+    return
+  end
+  if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls(nil, nil, nil, true) end
+  local preset = MDT:GetCurrentPreset()
+  MDT:SetUniqueID(preset)
+  MDT:EnsurePresetCreatedBy(preset)
+  preset.difficulty = db.currentDifficulty
+  preset.addonVersion = db.version
+  local export = MDT:TableToString(preset)
+  MDT:HideAllDialogs()
+  local frame = MDT.main_frame
+  frame.ExportFrame:Show()
+  frame.ExportFrame:ClearAllPoints()
+  frame.ExportFrame:SetPoint("CENTER", frame, "CENTER", 0, 50)
+  frame.ExportFrameEditbox:SetText(export)
+  frame.ExportFrameEditbox:HighlightText(0, string.len(export))
+  frame.ExportFrameEditbox:SetFocus()
+  frame.ExportFrameEditbox:SetLabel(preset.text.." "..string.len(export))
+  MDT.copyHelper:SmartShow(frame, 0, 50)
+  if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
+end
+
+function MDT:OpenDeletePresetDialog()
+  initializeDB()
+  MDT:HideAllDialogs()
+  local frame = MDT.main_frame
+  frame.DeleteConfirmationFrame:ClearAllPoints()
+  frame.DeleteConfirmationFrame:SetPoint("CENTER", frame, "CENTER", 0, 50)
+  local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
+  frame.DeleteConfirmationFrame.label:SetText(string.format(L["Delete %s?"], currentPresetName))
+  frame.DeleteConfirmationFrame:Show()
+end
+
+function MDT:OpenDeleteAllPresetsDialog()
+  local numPresets = self:CountPresets()
+  local prompt = string.format(L["deleteAllWarning"], "\n", "\n", numPresets, "\n")
+  MDT:OpenConfirmationFrame(450, 150, L["Delete ALL presets"], L["Delete"], prompt, MDT.DeleteAllPresets)
 end
 
 function MDT:OpenClearPresetDialog()
@@ -100,11 +164,7 @@ function MDT:MakePresetImportFrame(frame)
   frame.presetImportFrame:EnableResize(false)
   frame.presetImportFrame:SetLayout("Flow")
   frame.presetImportFrame:SetCallback("OnClose", function(widget)
-    MDT:UpdatePresetDropDown()
-    if db.currentPreset[db.currentDungeonIdx] ~= 1 then
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-    end
+    MDT:RefreshSidebar()
   end)
   frame.presetImportFrame.statustext:GetParent():Hide()
 
@@ -220,11 +280,7 @@ function MDT:MakePresetCreationFrame(frame)
   --frame.presetCreationFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
   frame.presetCreationFrame:SetLayout("Flow")
   frame.presetCreationFrame:SetCallback("OnClose", function(widget)
-    MDT:UpdatePresetDropDown()
-    if db.currentPreset[db.currentDungeonIdx] ~= 1 then
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-    end
+    MDT:RefreshSidebar()
   end)
   frame.presetCreationFrame.statustext:GetParent():Hide()
 

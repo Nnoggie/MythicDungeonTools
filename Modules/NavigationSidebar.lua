@@ -113,26 +113,7 @@ function MDT:UpdateSectionVisibility()
     end
   end
 
-  if frame.sidePanel then
-    setShown(frame.sidePanel.WidgetGroup, showMapControls)
-    if frame.sidePanel.WidgetGroup then
-      setShown(frame.sidePanel.WidgetGroup.PresetDropDown, showMapControls)
-    end
-    setShown(frame.sidePanelNewButton, showMapControls)
-    setShown(frame.sidePanelRenameButton, showMapControls)
-    setShown(frame.sidePanelDeleteButton, showMapControls)
-    setShown(frame.sidePanelExportButton, showMapControls)
-    setShown(frame.sidePanelImportButton, showMapControls)
-    setShown(frame.LinkToChatButton, showMapControls)
-    setShown(frame.LiveSessionButton, showMapControls)
-    setShown(frame.sidePanel.DifficultySlider, showMapControls)
-    setShown(frame.sidePanel.middleLine, showMapControls)
-    setShown(frame.sidePanel.PullButtonScrollGroup, showMapControls)
-    setShown(frame.sidePanel.ProgressBar, showMapControls)
-    if not showMapControls then
-      closeAceDropdown(frame.sidePanel.WidgetGroup and frame.sidePanel.WidgetGroup.PresetDropDown)
-    end
-  end
+  MDT:SetSidebarShown(showMapControls)
 
   if frame.seasonSelectionGroup then setShown(frame.seasonSelectionGroup, showMapControls) end
   if frame.sublevelSelectionGroup then setShown(frame.sublevelSelectionGroup, showMapControls) end

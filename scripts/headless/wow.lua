@@ -178,6 +178,7 @@ function Object:SetForbidden() end
 function Object:CanChangeProtectedState() return true end
 
 local function fireScript(obj, scriptName, ...)
+  if scriptName == "OnDragStart" then W.mouseDown = true elseif scriptName == "OnDragStop" then W.mouseDown = false end
   local handler = S[obj].scripts[scriptName]
   if handler then return protectedCall(handler, obj, ...) end
 end
@@ -480,6 +481,7 @@ function W.userClick(frame, button)
   local x, y = frame:GetCenter()
   W.cursorX, W.cursorY = x, y
   W.mouseFocus = frame
+  W.mouseDown = false
   button = button or "LeftButton"
   if isA(S[frame].class, "Button") then
     frame:Click(button)
@@ -509,6 +511,8 @@ function ScriptRegion:IsMouseEnabled() return S[self].mouseEnabled == true end
 function ScriptRegion:EnableMouseMotion(enabled) S[self].mouseMotion = enabled ~= false end
 function ScriptRegion:SetMouseClickEnabled(enabled) S[self].mouseClick = enabled end
 function ScriptRegion:SetMouseMotionEnabled(enabled) S[self].mouseMotion = enabled end
+function ScriptRegion:SetPropagateMouseMotion(enabled) S[self].propagateMouseMotion = enabled end
+function ScriptRegion:SetPropagateMouseClicks(enabled) S[self].propagateMouseClicks = enabled end
 function ScriptRegion:SetPassThroughButtons() end
 
 function ScriptRegion:SetAlpha(alpha)

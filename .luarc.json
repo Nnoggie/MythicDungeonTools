@@ -83,7 +83,10 @@
     "PixelUtil",
     "CloseSpecialWindows",
     "seterrorhandler",
-    "geterrorhandler"
+    "geterrorhandler",
+    "GetClassColor",
+    "IsMouseButtonDown",
+    "SetPortraitTextureFromCreatureDisplayID"
   ],
   "diagnostics.disable": [
     "invisible"

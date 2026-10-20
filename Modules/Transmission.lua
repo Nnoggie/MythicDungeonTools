@@ -167,9 +167,9 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         preset.value.selection = { #preset.value.pulls }
       end
       if preset == MDT:GetCurrentPreset() then
-        MDT:ReloadPullButtons()
+        MDT:RefreshSidebar()
+        MDT:DrawAllHulls()
         MDT:SetSelectionToPull(MDT:GetCurrentPull())
-        MDT:UpdateProgressbar()
       end
     end
   end
@@ -181,10 +181,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local difficulty = tonumber(message)
       if difficulty and difficulty ~= db.currentDifficulty then
         db.currentDifficulty = difficulty
-        MDT.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
-        MDT:UpdateProgressbar()
+        MDT:RefreshSidebar()
         if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
-        MDT:ReloadPullButtons()
       end
     end
   end
@@ -429,17 +427,8 @@ local function updateSendingProgress(userArgs, bytesSent, bytesToSend, didSend, 
     local distribution = userArgs[1]
     local preset = userArgs[2]
     local silent = userArgs[3]
-    --restore "Send" and "Live" button
-    if MDT.liveSessionActive then
-      MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
-    else
-      MDT.main_frame.LiveSessionButton:SetText(L["Live"])
-      MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
-      MDT.main_frame.LinkToChatButton:SetDisabled(false)
-      MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
-    end
-    MDT.main_frame.LinkToChatButton:SetText(L["Share"])
-    MDT.main_frame.LiveSessionButton:SetDisabled(false)
+    MDT.transmissionBusy = nil
+    MDT:RefreshSidebar()
     MDT.main_frame.SendingStatusBar:Hide()
     --output chat link
     if didSend ~= false and not silent and preset then
@@ -525,6 +514,18 @@ function MDT:SetUniqueID(preset)
       MDT:SetUniqueID(preset)
     end
   end
+end
+
+---Shares the current preset with the group after the size check; the sidebar shows the transfer as busy
+function MDT:SendCurrentPresetToGroup()
+  if MDT:IsInRestrictedEnvironment(true) then return end
+  local distribution = MDT:IsPlayerInGroup()
+  if not distribution then return end
+  MDT:CheckPresetSize(function()
+    MDT.transmissionBusy = true
+    MDT:RefreshSidebar()
+    MDT:SendToGroup(distribution)
+  end)
 end
 
 ---SendToGroup
