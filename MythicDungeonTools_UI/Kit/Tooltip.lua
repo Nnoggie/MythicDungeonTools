@@ -26,7 +26,7 @@ local function ensureCard()
 end
 
 ---@param owner table
----@param content string|fun(): string|fun(tooltip: table)|{build: fun(content: MDT.UI.Control), width: number?}
+---@param content string|fun(tooltip: table): string?|{build: fun(content: MDT.UI.Control), width: number?}
 function Tooltip.Show(owner, content)
   if type(content) == "table" then
     local frame = ensureCard()

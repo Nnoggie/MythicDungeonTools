@@ -103,7 +103,10 @@
 ---@field props MDT.UI.PropDef[] applied in declaration order on every acquire
 ---@field Create fun(self: MDT.UI.Control) once per physical frame
 ---@field OnRelease fun(self: MDT.UI.Control)?
----@field Measure fun(self: MDT.UI.Control, availW: number): number, number? natural width and height
+---@field Measure (fun(self: MDT.UI.Control, availW: number): number, number)? natural width and height
+---@field allProps MDT.UI.PropDef[]? filled by UI.Define: common props followed by the declared ones
+---@field propIndex table<string, MDT.UI.PropDef>? filled by UI.Define
+---@field pool table? filled by UI.Define
 
 ---@class MDT.UI.Control
 ---@field kit MDT.UI.ClassDef

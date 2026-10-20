@@ -9,7 +9,7 @@ Holder:Hide()
 UI.Holder = Holder
 
 ---Every kit control carries these methods. The control is the native frame.
----@class MDT.UI.ControlBase
+---@class MDT.UI.ControlBase : MDT.UI.Control
 local Base = {}
 UI.Base = Base
 
@@ -233,7 +233,7 @@ end
 UI.Mixins = {}
 
 ---Hover, press, selected and disabled states painted from a skin variant.
----@class MDT.UI.Skinned
+---@class MDT.UI.Skinned : MDT.UI.Control
 local Skinned = {}
 UI.Mixins.Skinned = Skinned
 

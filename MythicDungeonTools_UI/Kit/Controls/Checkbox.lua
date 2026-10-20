@@ -19,6 +19,7 @@ end
 ---@field value boolean?
 ---@field disabled boolean?
 ---@field onChange fun(value: boolean, self: MDT.UI.Control)?
+---@class MDT.UI.CheckboxMethods : MDT.UI.Control
 local Methods = {}
 function Methods:GetValue() return self.kitProps.value end
 

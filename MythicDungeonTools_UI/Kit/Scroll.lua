@@ -5,7 +5,7 @@ local Theme = UI.Theme
 local TRACK_WIDTH = 8
 local WHEEL_STEP = 40
 
----@class MDT.UI.ScrollbarMethods
+---@class MDT.UI.ScrollbarMethods : MDT.UI.Control
 local ScrollbarMethods = {}
 
 ---@param viewH number
@@ -87,7 +87,7 @@ UI.Define({
   Measure = function(self) return TRACK_WIDTH, self:GetHeight() end,
 })
 
----@class MDT.UI.ScrollMethods
+---@class MDT.UI.ScrollMethods : MDT.UI.Control
 local ScrollMethods = {}
 
 function ScrollMethods:GetOffset() return self.kitViewport:GetVerticalScroll() end

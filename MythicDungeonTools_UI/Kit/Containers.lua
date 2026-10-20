@@ -3,7 +3,7 @@ local UI = MDT.UI
 local Theme, Layout = UI.Theme, UI.Layout
 
 ---Frames that own kit children. A child registers itself by being constructed with the container as parent.
----@class MDT.UI.Container
+---@class MDT.UI.Container : MDT.UI.Control
 local Container = {}
 UI.Mixins.Container = Container
 

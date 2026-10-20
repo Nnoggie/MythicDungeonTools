@@ -19,7 +19,7 @@ local shapes = {
   minus = { { -0.5, 0, 0.5, 0 } },
 }
 
----@class MDT.UI.Glyph
+---@class MDT.UI.Glyph : MDT.UI.Control
 local Glyph = {}
 
 ---@param shape "down"|"up"|"left"|"right"|"check"|"cross"|"plus"|"minus"

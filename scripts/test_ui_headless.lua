@@ -331,7 +331,7 @@ step("conflict dialog opens on the kit and Escape closes it, not the window", fu
   expect(dialog and dialog:IsVisible(), "conflict dialog not shown")
   expect(dialog:GetParent() == UIParent, "conflict dialog is parented to the main window")
   snapshot("conflict dialog")
-  expect(_G.CloseSpecialWindows(), "no special window closed")
+  expect(CloseSpecialWindows(), "no special window closed")
   expect(not dialog:IsShown() and MDT.UI.Dialogs.Get("addonConflict") == nil, "Escape did not close the conflict dialog")
   expect(main:IsShown(), "Escape closed the main window instead of the dialog")
   W.settle(asyncIdle, 5)
@@ -346,7 +346,7 @@ step("pre-patch warning opens through its real trigger, copies a link, and Escap
   db.prePatchWarningSeenFor = nil
   MDT:SetupPrePatchWarning()
   _G.time = realTime
-  local dialog = _G.MDTPrePatchWarningFrame
+  local dialog = rawget(_G, "MDTPrePatchWarningFrame")
   expect(dialog and dialog:IsVisible(), "pre-patch warning not shown")
   expect(db.prePatchWarningSeenFor == 1768950035, "pre-patch warning was not marked as seen")
   snapshot("pre-patch warning")
@@ -363,9 +363,9 @@ step("pre-patch warning opens through its real trigger, copies a link, and Escap
   W.modifiers = nil
   expect(not editBox.kitEdit:HasFocus() and not copyButton:IsDisabled(), "Ctrl+C did not finish the copy flow")
   MDT:SetupPrePatchWarning()
-  expect(_G.MDTPrePatchWarningFrame == dialog, "a seen warning was shown again")
-  expect(_G.CloseSpecialWindows(), "no special window closed")
-  expect(_G.MDTPrePatchWarningFrame == nil and not dialog:IsShown(), "Escape did not close the pre-patch warning")
+  expect(rawget(_G, "MDTPrePatchWarningFrame") == dialog, "a seen warning was shown again")
+  expect(CloseSpecialWindows(), "no special window closed")
+  expect(rawget(_G, "MDTPrePatchWarningFrame") == nil and not dialog:IsShown(), "Escape did not close the pre-patch warning")
   expect(main:IsShown(), "Escape closed the main window instead of the dialog")
   W.settle(asyncIdle, 5)
 end)
