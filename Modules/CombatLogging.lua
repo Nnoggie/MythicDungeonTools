@@ -1,58 +1,45 @@
 local _, MDT = ...
 local L = MDT.L
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
 
-local ContentTypes = {
-  LFR = "lfr",
-  NORMAL = "normal",
-  HEROIC = "heroic",
-  MYTHIC = "mythic",
-  MYTHIC_DUNGEON = "mythic_dungeon",
-  MYTHIC_PLUS = "mythic_plus",
+local PAGE_WIDTH = 555
+local PAGE_TOP = 20
+local PAGE_BOTTOM = 15
+
+---Content-type checkboxes, one Columns row per entry, split into equal columns.
+local CONTENT_ROWS = {
+  { { "lfr", L["combatLoggingLFR"] }, { "normal", L["combatLoggingNormal"] }, { "heroic", L["combatLoggingHeroic"] }, { "mythic", L["combatLoggingMythic"] } },
+  { { "mythic_dungeon", L["combatLoggingMythicDungeon"] }, { "mythic_plus", L["combatLoggingMythicPlus"] } },
 }
 
-local combatLoggingFrame
+local page
 
-local function getSettings()
-  return MDT:GetDB().combatLogging
-end
+local function build(content)
+  local settings = MDT:GetDB().combatLogging
+  local contentCheckboxes = {}
 
-local function setDifficultyCheckboxesDisabled(checkboxes, disabled)
-  for _, checkbox in ipairs(checkboxes) do
-    checkbox:SetDisabled(disabled)
+  UI.Heading(content, { text = L["Combat Logging"] })
+  UI.Text(content, { text = L["combatLoggingOverview"], color = "text.secondary" })
+  UI.Checkbox(content, {
+    id = "enabled", label = L["combatLoggingEnable"], value = settings.enabled == true,
+    onChange = function(value)
+      MDT:CombatLogging_SetEnabled(value)
+      for _, checkbox in ipairs(contentCheckboxes) do checkbox:SetDisabled(not value) end
+    end,
+  })
+  for _, row in ipairs(CONTENT_ROWS) do
+    local weights = {}
+    for i = 1, #row do weights[i] = 1 end
+    local columns = UI.Columns(content, { weights = weights, gap = "sm" })
+    for i, entry in ipairs(row) do
+      local contentType = entry[1]
+      contentCheckboxes[#contentCheckboxes + 1] = UI.Checkbox(columns[i], {
+        id = contentType, label = entry[2], value = settings.content[contentType] == true, disabled = settings.enabled ~= true,
+        onChange = function(value) MDT:CombatLogging_SetContentEnabled(contentType, value) end,
+      })
+    end
   end
-end
-
-local function addCheckbox(parent, label, value, relativeWidth, onChanged)
-  local checkbox = AceGUI:Create("CheckBox")
-  checkbox:SetLabel(label)
-  checkbox:SetRelativeWidth(relativeWidth)
-  checkbox:SetValue(value)
-  checkbox:SetCallback("OnValueChanged", function(_, _, newValue)
-    onChanged(newValue)
-  end)
-  parent:AddChild(checkbox)
-  return checkbox
-end
-
-local function createCombatLoggingFrame()
-  local mainFrame = MDT.main_frame
-  local contentParent = mainFrame.sectionContentFrames.combatLogging
-
-  local frame = AceGUI:Create("SimpleGroup")
-  frame.frame:SetParent(contentParent)
-  frame.frame:SetFrameStrata("HIGH")
-  frame.frame:SetFrameLevel(3)
-  frame:SetWidth(555)
-  frame:SetHeight(320)
-  frame:SetLayout("Flow")
-  frame.frame:ClearAllPoints()
-  frame.frame:SetPoint("TOP", contentParent, "TOP", 0, -20)
-  MDT:RegisterMainFrameDragHandle(frame.frame, mainFrame)
-
-  frame.frame:Hide()
-  MDT.main_frame.CombatLoggingFrame = frame
-  return frame
+  UI.Text(content, { text = L["combatLoggingAdvancedNote"], color = "text.secondary" })
 end
 
 function MDT:CombatLogging_Open()
@@ -61,73 +48,16 @@ function MDT:CombatLogging_Open()
     return
   end
 
-  combatLoggingFrame = combatLoggingFrame or createCombatLoggingFrame()
-  local frame = combatLoggingFrame
-  local settings = getSettings()
-
   MDT:HideAllDialogs()
-  frame:ReleaseChildren()
-
-  local difficultyCheckboxes = {}
-
-  local heading = AceGUI:Create("Heading")
-  heading:SetText(L["Combat Logging"])
-  heading:SetFullWidth(true)
-  frame:AddChild(heading)
-
-  local overview = AceGUI:Create("Label")
-  overview:SetText(L["combatLoggingOverview"])
-  overview:SetFullWidth(true)
-  overview:SetColor(0.82, 0.82, 0.82)
-  frame:AddChild(overview)
-
-  local enabledCheckbox = addCheckbox(frame, L["combatLoggingEnable"], settings.enabled, 1, function(value)
-    self:CombatLogging_SetEnabled(value)
-    setDifficultyCheckboxesDisabled(difficultyCheckboxes, not value)
-  end)
-  enabledCheckbox:SetFullWidth(true)
-
-  local raidRow = AceGUI:Create("SimpleGroup")
-  raidRow:SetLayout("Flow")
-  raidRow:SetFullWidth(true)
-  raidRow:SetHeight(28)
-  frame:AddChild(raidRow)
-
-  table.insert(difficultyCheckboxes, addCheckbox(raidRow, L["combatLoggingLFR"], settings.content.lfr, 0.25, function(value)
-    self:CombatLogging_SetContentEnabled(ContentTypes.LFR, value)
-  end))
-  table.insert(difficultyCheckboxes, addCheckbox(raidRow, L["combatLoggingNormal"], settings.content.normal, 0.25, function(value)
-    self:CombatLogging_SetContentEnabled(ContentTypes.NORMAL, value)
-  end))
-  table.insert(difficultyCheckboxes, addCheckbox(raidRow, L["combatLoggingHeroic"], settings.content.heroic, 0.25, function(value)
-    self:CombatLogging_SetContentEnabled(ContentTypes.HEROIC, value)
-  end))
-  table.insert(difficultyCheckboxes, addCheckbox(raidRow, L["combatLoggingMythic"], settings.content.mythic, 0.25, function(value)
-    self:CombatLogging_SetContentEnabled(ContentTypes.MYTHIC, value)
-  end))
-
-  local dungeonRow = AceGUI:Create("SimpleGroup")
-  dungeonRow:SetLayout("Flow")
-  dungeonRow:SetFullWidth(true)
-  dungeonRow:SetHeight(28)
-  frame:AddChild(dungeonRow)
-
-  table.insert(difficultyCheckboxes, addCheckbox(dungeonRow, L["combatLoggingMythicDungeon"], settings.content.mythic_dungeon, 0.5, function(value)
-    self:CombatLogging_SetContentEnabled(ContentTypes.MYTHIC_DUNGEON, value)
-  end))
-  table.insert(difficultyCheckboxes, addCheckbox(dungeonRow, L["combatLoggingMythicPlus"], settings.content.mythic_plus, 0.5, function(value)
-    self:CombatLogging_SetContentEnabled(ContentTypes.MYTHIC_PLUS, value)
-  end))
-
-  local advancedNote = AceGUI:Create("Label")
-  advancedNote:SetText(L["combatLoggingAdvancedNote"])
-  advancedNote:SetFullWidth(true)
-  advancedNote:SetColor(0.82, 0.82, 0.82)
-  frame:AddChild(advancedNote)
-
-  setDifficultyCheckboxesDisabled(difficultyCheckboxes, settings.enabled ~= true)
-  frame.frame:Show()
-  frame:DoLayout()
+  if not page then
+    local content = MDT.main_frame.sectionContentFrames.combatLogging
+    page = UI.Scroll(content, { padding = "md", gap = "md" })
+    page:SetPoint("TOP", content, "TOP", 0, -PAGE_TOP)
+    page:SetPoint("BOTTOM", content, "BOTTOM", 0, PAGE_BOTTOM)
+    page:SetWidth(PAGE_WIDTH)
+  end
+  page.content:ReleaseChildren()
+  page.content:Batch(function() build(page.content) end)
 end
 
 MDT:RegisterNavigationSection({

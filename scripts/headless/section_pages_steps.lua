@@ -192,4 +192,41 @@ return function(ctx)
     expect(SlashCmdList.ADDONLOCALE == nil, "setup: the harness has AddonLocale")
     expect(control(page, "language"):IsDisabled(), "the language button is enabled without AddonLocale")
   end)
+
+  local CONTENT_TYPES = { "lfr", "normal", "heroic", "mythic", "mythic_dungeon", "mythic_plus" }
+
+  step("combat logging: the master toggle saves and gates every content checkbox", function()
+    local settings = db.combatLogging
+    local page = openSection("combatLogging")
+    local restore = toggle(page, "enabled", function() return settings.enabled == true end)
+    for _, contentType in ipairs(CONTENT_TYPES) do
+      expect(control(page, contentType):IsDisabled() == not settings.enabled, contentType.." does not follow the master toggle")
+    end
+    restore()
+    for _, contentType in ipairs(CONTENT_TYPES) do
+      expect(control(page, contentType):IsDisabled() == not settings.enabled, contentType.." did not follow the master toggle back")
+    end
+  end)
+
+  step("combat logging: every content checkbox flips its saved value and back, and reopening shows saved state", function()
+    local settings = db.combatLogging
+    local page = openSection("combatLogging")
+    local wasEnabled = settings.enabled == true
+    if not wasEnabled then click(control(page, "enabled")) end
+    expect(settings.enabled == true, "setup: combat logging is still off")
+    for _, contentType in ipairs(CONTENT_TYPES) do
+      toggle(page, contentType, function() return settings.content[contentType] == true end)()
+    end
+    click(control(page, "mythic_plus"))
+    local flipped = settings.content.mythic_plus
+    click(main.navigationSidebar.buttons.maps)
+    page = openSection("combatLogging")
+    expect(control(page, "mythic_plus"):GetValue() == flipped, "reopening the section lost the saved content state")
+    click(control(page, "mythic_plus"))
+    render("combat logging section", main)
+    if not wasEnabled then
+      click(control(page, "enabled"))
+      expect(settings.enabled == false, "turning combat logging off did not save")
+    end
+  end)
 end
