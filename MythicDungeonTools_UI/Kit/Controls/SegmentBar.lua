@@ -70,6 +70,7 @@ end
 ---@field marker number? a tick at this value (the 100% line)
 ---@field text string? centered label
 ---@field overflow boolean? tint the text when the segments exceed max
+---@field font MDT.UI.FontRole? label font, default "small"
 UI.Define({
   name = "SegmentBar", frameType = "Frame", mixins = { Methods },
   props = {
@@ -78,6 +79,7 @@ UI.Define({
     { name = "marker", default = nil, set = layoutSegments },
     { name = "text", default = nil, set = repaintText },
     { name = "overflow", default = false, set = repaintText },
+    { name = "font", default = "small", set = function(self, v) self.kitText:SetFontObject(Fonts.Get(v)) end },
   },
   Create = function(self)
     self.kitBackground = self:CreateTexture(nil, "BACKGROUND")

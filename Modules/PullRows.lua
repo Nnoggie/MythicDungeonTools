@@ -199,17 +199,6 @@ function PullRow:OnCreate()
     portrait:Hide()
     self.kitPortraits[i] = portrait
   end
-  self.kitBoss = CreateFrame("Frame", nil, self)
-  self.kitBoss:SetHeight(13)
-  self.kitBossBackground = self.kitBoss:CreateTexture(nil, "BACKGROUND")
-  self.kitBossBackground:SetAllPoints()
-  Theme.Bind(self.kitBossBackground, "accent")
-  self.kitBossText = self.kitBoss:CreateFontString(nil, "ARTWORK")
-  self.kitBossText:SetFontObject(Fonts.Get("small"))
-  self.kitBossText:SetPoint("CENTER", self.kitBoss, "CENTER", 0, 0)
-  self.kitBossText:SetText(string.upper(L["Boss"]))
-  Theme.Bind(self.kitBossText, "text.inverse")
-  self.kitBoss:SetWidth(self.kitBossText:GetStringWidth() + Theme.Space("sm") * 2)
   self.kitCumulative = self:CreateFontString(nil, "ARTWORK")
   self.kitCumulative:SetFontObject(Fonts.Get("heading"))
   self.kitCumulative:SetPoint("TOPRIGHT", self, "TOPRIGHT", -Theme.Space("md"), -4)
@@ -240,7 +229,6 @@ function PullRow:Bind(item)
   local r, g, b = item.color[1], item.color[2], item.color[3]
   self.kitTint:SetGradient("HORIZONTAL", CreateColor(r, g, b, TINT_FROM), CreateColor(r, g, b, TINT_TO))
   self.kitNumber:SetText(item.index)
-  local last = self.kitNumber
   for i, portrait in ipairs(self.kitPortraits) do
     local data = item.portraits[i]
     if data then
@@ -251,14 +239,10 @@ function PullRow:Bind(item)
       end
       portrait.count:SetText("x"..data.quantity)
       portrait:Show()
-      last = portrait
     else
       portrait:Hide()
     end
   end
-  self.kitBoss:ClearAllPoints()
-  self.kitBoss:SetPoint("LEFT", last, "RIGHT", Theme.Space("md"), 0)
-  self.kitBoss:SetShown(item.isBoss)
   self.kitPull:SetText(item.pullText)
   local cumulative = item.cumulativeText
   if item.healthText then cumulative = cumulative.." · "..item.healthText end

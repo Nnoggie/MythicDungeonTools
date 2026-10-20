@@ -60,14 +60,35 @@ function MDT:SidebarContext()
   }
 end
 
+local PREVIEW_RESET_DELAY = 0.35
+local previewResetTimer
+
+---Paints the forces bar for `current` forces; the header total, or the running total up to a hovered pull.
+---@param current number
+local function paintForces(current)
+  local max = sidebar.state.header.forces.max
+  local color = Theme.Rgba(BAR_TONES[Model.ForcesTone(current, max)] or "progress")
+  sidebar.forces:SetSegments({ { value = current, color = color } }, math.max(max, current, 1))
+  sidebar.forces:SetText(Model.FormatForcesTotal(current, max))
+end
+
+---@param cumulative number? running total up to the hovered pull; nil ends the preview after a short delay
+local function previewForces(cumulative)
+  if previewResetTimer then previewResetTimer:Cancel() end
+  previewResetTimer = nil
+  if cumulative then
+    paintForces(cumulative)
+  else
+    previewResetTimer = C_Timer.NewTimer(PREVIEW_RESET_DELAY, function()
+      previewResetTimer = nil
+      if sidebar.state then paintForces(sidebar.state.header.forces.current) end
+    end)
+  end
+end
+
 local function paintHeader(header)
   sidebar.level:SetValue(header.level)
-  local forces = header.forces
-  local barColor = Theme.Rgba(BAR_TONES[forces.tone] or "progress")
-  sidebar.forces:SetSegments({ { value = forces.current, color = barColor } }, math.max(forces.max, forces.current, 1))
-  sidebar.forces:SetMarker(nil)
-  sidebar.forces:SetText(forces.text)
-  sidebar.forces:SetOverflow(false)
+  paintForces(header.forces.current)
   local actions = header.actions
   sidebar.share:SetDisabled(not actions.canShare)
   sidebar.live:SetDisabled(not actions.canLive)
@@ -281,6 +302,7 @@ local function onHover(item, index, row)
   if item.kind ~= "pull" then return end
   PullTooltip.ShowPull(row, item)
   row:kitWatchPortraits(true)
+  previewForces(item.cumulative)
   MDT:PullClickAreaOnEnter(index)
 end
 
@@ -288,6 +310,7 @@ local function onHoverEnd(item, index, row)
   if item.kind ~= "pull" then return end
   row:kitWatchPortraits(false)
   PullTooltip.Hide(row)
+  previewForces(nil)
   MDT:PullClickAreaOnLeave()
 end
 
@@ -401,7 +424,7 @@ function MDT:MakeSidebar(sidePanel)
       onChange = applyLevelChange,
       onCommit = commitLevelChange,
     })
-    built.forces = UI.SegmentBar(controls, { id = "forces", width = 60, grow = 1, segments = {}, max = 1 })
+    built.forces = UI.SegmentBar(controls, { id = "forces", width = 60, grow = 1, segments = {}, max = 1, font = "body" })
     built.list = UI.List(root, {
       id = "pulls", kinds = MDT.SidebarRowKinds, gap = "xs", height = 0, grow = 1,
       onSelect = onSelect, onActivate = onActivate, onContext = onContext, onReorder = onReorder,
