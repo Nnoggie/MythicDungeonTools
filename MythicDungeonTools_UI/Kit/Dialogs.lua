@@ -141,7 +141,7 @@ local function dispatch(spec, reason, ...)
     spec.confirm.onClick(...)
   elseif reason == "alt" then
     spec.alt.onClick(...)
-  elseif spec.cancel and spec.cancel.onClick then
+  elseif reason ~= "hidden" and spec.cancel and spec.cancel.onClick then
     spec.cancel.onClick()
   end
 end

@@ -156,7 +156,7 @@
 ---@field text string
 ---@field confirm {text: string, onClick: fun(checked: boolean?), variant: MDT.UI.Variant?}
 ---@field alt {text: string, onClick: fun(checked: boolean?)}?
----@field cancel {text: string?, onClick: fun()?}? onClick runs once on every dismissal that is not confirm or alt
+---@field cancel {text: string?, onClick: fun()?}? onClick runs once on every dismissal except confirm, alt and "hidden" (the parent hid, usually the main window closing); a port that must react to "hidden" does it in onClose
 ---@field checkbox {text: string, value: boolean?, onChange: fun(value: boolean)?}?
 
 ---@class MDT.UI.PromptSpec : MDT.UI.DialogSpec
@@ -170,4 +170,4 @@
 ---@field validate (fun(text: string): boolean, string?)?
 ---@field checkbox {text: string, value: boolean?}?
 ---@field confirm {text: string, onClick: fun(text: string, checked: boolean?), variant: MDT.UI.Variant?}
----@field cancel {text: string?, onClick: fun()?}?
+---@field cancel {text: string?, onClick: fun()?}? same dismissal rules as MDT.UI.ConfirmSpec.cancel

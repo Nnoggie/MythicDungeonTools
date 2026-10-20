@@ -307,6 +307,18 @@ return function(ctx)
     dialog:Close("api")
   end)
 
+  step("kit dialogs: a dialog closed because its parent hid reports 'hidden' and skips cancel", function()
+    log = {}
+    local dialog = UI.Dialogs.Confirm({ title = "Parent", text = "Parent hides",
+      confirm = { text = "Ok", onClick = logged("hiddenConfirm") }, cancel = { onClick = logged("hiddenCancel") },
+      onClose = function(_, reason) log[#log + 1] = "close:"..reason end })
+    expect(dialog:GetParent() == MDT.main_frame, "setup: dialog is not on the main window")
+    MDT:HideInterface()
+    expect(dialog.kitReleased and lastLog() == "close:hidden", "parent hide did not close the dialog with 'hidden': "..tostring(lastLog()))
+    for _, entry in ipairs(log) do expect(entry ~= "hiddenCancel", "parent hide ran the dialog's cancel") end
+    MDT.main_frame:Show()
+  end)
+
   step("kit escape: hiding the whole UI (Alt+Z, cinematics) keeps dialogs, the window and the Escape stack", function()
     log = {}
     local depth = UI.Escape.Depth()
