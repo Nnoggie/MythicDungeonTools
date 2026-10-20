@@ -4,7 +4,7 @@ local UI = MDT.UI
 local Theme, Selection, Model, PullTooltip = UI.Theme, UI.Selection, MDT.SidebarModel, MDT.PullTooltip
 
 local TOP_HEIGHT = 24
-local WINDOW_BUTTONS_WIDTH = 58
+local ACTION_COUNT = 4
 local STEPPER_WIDTH = 64
 local MIN_LEVEL, MAX_LEVEL = 1, 35
 local VISIBLE_ROUTES = 7
@@ -350,9 +350,10 @@ local function combatReason(text)
   return function() return InCombatLockdown() and L[text] or nil end
 end
 
-local function actionButton(parent, id, icon, tooltip, onClick, onRightClick)
+---@param width number fixed width; nil lets the button take the rest of the row
+local function actionButton(parent, id, icon, width, tooltip, onClick, onRightClick)
   return UI.Button(parent, {
-    id = id, variant = "window", icon = MDT:GetIconPath(icon), iconSize = ACTION_ICON, width = 20, grow = 1, height = ACTION_HEIGHT,
+    id = id, variant = "window", icon = MDT:GetIconPath(icon), iconSize = ACTION_ICON, width = width or 20, grow = not width and 1 or nil, height = ACTION_HEIGHT,
     tooltip = tooltip, onClick = onClick, onRightClick = onRightClick,
   })
 end
@@ -389,16 +390,19 @@ function MDT:MakeSidebar(sidePanel)
   root:SetPoint("BOTTOMRIGHT", sidePanel, "BOTTOMRIGHT", -4, 30)
   local built = { root = root }
   root:Batch(function()
-    local top = UI.Row(root, { id = "top", height = TOP_HEIGHT, width = sidePanel:GetWidth() - 8 - WINDOW_BUTTONS_WIDTH, valign = "center" })
+    -- The search box ends where the third action button ends; the window buttons sit above the last one.
+    local gap = Theme.Space("xs")
+    local buttonWidth = math.floor((sidePanel:GetWidth() - 8 - gap * (ACTION_COUNT - 1)) / ACTION_COUNT)
+    local top = UI.Row(root, { id = "top", height = TOP_HEIGHT, width = buttonWidth * (ACTION_COUNT - 1) + gap * (ACTION_COUNT - 2), valign = "center" })
     built.search = UI.EditBox(top, { id = "routeSearch", placeholder = L["Search routes"], width = 60, grow = 1, onChange = function(text)
       routeQuery = text or ""
       refreshRoutes()
     end })
     local actions = UI.Row(root, { id = "routeActions", gap = "xs", valign = "center" })
-    built.share = actionButton(actions, "shareRoute", "share", explained(L["Send to party"], groupReason("shareBlocked")), routeActions.share)
-    built.new = actionButton(actions, "newRoute", "plus", L["New Preset"], routeActions.new)
-    built.export = actionButton(actions, "exportRoute", "export", explained(L["Export"], combatReason("Cannot export while in combat")), routeActions.export)
-    built.import = actionButton(actions, "importRoute", "import", explained(L["Import"], combatReason("Cannot import while in combat")), routeActions.import)
+    built.share = actionButton(actions, "shareRoute", "share", buttonWidth, explained(L["Send to party"], groupReason("shareBlocked")), routeActions.share)
+    built.new = actionButton(actions, "newRoute", "plus", buttonWidth, L["New Preset"], routeActions.new)
+    built.export = actionButton(actions, "exportRoute", "export", buttonWidth, explained(L["Export"], combatReason("Cannot export while in combat")), routeActions.export)
+    built.import = actionButton(actions, "importRoute", "import", nil, explained(L["Import"], combatReason("Cannot import while in combat")), routeActions.import)
     built.routes = UI.List(root, {
       id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = VISIBLE_ROUTES * MDT.RouteListRowHeight, scrollbar = true,
       onActivate = function(item) MDT:SwitchToPreset(item.idx) end,
