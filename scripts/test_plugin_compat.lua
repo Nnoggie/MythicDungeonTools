@@ -34,37 +34,6 @@ C_AddOns = {
 function GetBuildInfo() return "12.1.0", "", "", 120100 end
 function UnitFactionGroup() return "Alliance", "Alliance" end
 
-local frameMethods = {
-  RegisterEvent = function() end,
-  UnregisterEvent = function() end,
-  SetScript = function(self, scriptName, handler)
-    self.scripts = self.scripts or {}
-    self.scripts[scriptName] = handler
-  end,
-}
-local function newFrame()
-  return setmetatable({}, { __index = frameMethods })
-end
-local createdFrames = {}
-function CreateFrame()
-  local frame = newFrame()
-  createdFrames[#createdFrames + 1] = frame
-  return frame
-end
-C_Timer = { After = function(_, callback) callback() end }
-
-local libraries = {
-  ["LibSpecialization"] = { frame = newFrame() },
-  ["LibGroupInSpecT-1.1"] = { frame = newFrame() },
-}
-local libraryRequests = {}
-function LibStub(name, silent)
-  libraryRequests[name] = (libraryRequests[name] or 0) + 1
-  local library = libraries[name]
-  if library or silent then return library end
-  error("missing mock library: "..name)
-end
-
 local core = {}
 assert(loadfile(root.."/BuildCheck.lua"))("MythicDungeonTools", core)
 local coreSource = read("Core/Bootstrap.lua")
@@ -140,32 +109,7 @@ local function loadLegacy(legacyRoot)
   return addon
 end
 
-local function loadInterruptTracker(interruptRoot)
-  local firstFrame = #createdFrames + 1
-  local addon = {}
-  GAME_LOCALE = "enUS"
-  for _, fileName in ipairs({
-    "Locales/enUS.lua",
-    "Locales/zhCN.lua",
-    "Core.lua",
-    "Constants.lua",
-    "Data.lua",
-    "Settings.lua",
-    "Roster.lua",
-    "Cooldowns.lua",
-    "Display.lua",
-    "Options.lua",
-    "Events.lua",
-  }) do
-    assert(loadfile(interruptRoot.."/"..fileName))("MDT_InterruptTracker", addon)
-  end
-  return addon, createdFrames[firstFrame]
-end
-
-local interruptInitialized = false
 local legacyInitialized = false
-local db = API:GetDB()
-db.interruptTracker = { enabled = false, showOnlyInDungeons = false }
 
 local legacyData = {}
 for _, fieldName in ipairs({
@@ -194,33 +138,12 @@ legacyData.scaleMultiplier[900] = 1
 legacyData.zoneIdToDungeonIdx[999] = 900
 
 API:RegisterUIInitializer(function(UI)
-  interruptInitialized = true
-  UI:RegisterNavigationSection({ key = "interrupts" })
-end)
-API:RegisterUIInitializer(function(UI)
   legacyInitialized = true
   UI:RegisterDungeonData(legacyData, { { name = "Legacy Season", dungeons = { 900 } } })
 end)
 
 local actualLegacy = arg[2] and loadLegacy(arg[2])
-local actualInterrupt, interruptEventFrame
-if arg[3] then
-  actualInterrupt, interruptEventFrame = loadInterruptTracker(arg[3])
-  local onEvent = assert(interruptEventFrame.scripts.OnEvent)
-  onEvent(interruptEventFrame, "ADDON_LOADED", "MDT_InterruptTracker")
-  onEvent(interruptEventFrame, "PLAYER_LOGIN")
-end
-db.interruptTracker.enabled = true
-
-assert(db.interruptTracker.enabled)
-assert(not interruptInitialized and not legacyInitialized)
-if actualInterrupt then
-  assert(not actualInterrupt.UI)
-  assert(not libraryRequests["AceGUI-3.0"])
-  assert(actualInterrupt:GetSettings() == db.interruptTracker)
-  assert(db.interruptTracker.enableInDungeonsOnly == false)
-  assert(db.interruptTracker.showOnlyInDungeons == nil)
-end
+assert(not legacyInitialized)
 if actualLegacy then assert(actualLegacy.Data.dungeonList[2] == "Cathedral of Eternal Night") end
 assert(loadCalls == 0, "plugin registration loaded the UI")
 
@@ -242,11 +165,8 @@ local ui = {
   zoneIdToDungeonIdx = {},
   seasonList = {},
   dungeonSelectionToIndex = {},
-  main_frame = { sectionContentFrames = { interrupts = {} } },
-  navigationSections = {},
 }
-function ui:RegisterNavigationSection(section) self.navigationSections[section.key] = section end
-function ui:GetCurrentSection() return "interrupts" end
+function ui:GetCurrentSection() return "maps" end
 function ui:SetCurrentSection() end
 function ui:HideAllDialogs() end
 function ui:ToggleToolbarTooltip() end
@@ -258,7 +178,6 @@ setfenv(pluginChunk, setmetatable({ MDT = ui }, { __index = _G }))
 local pluginAPI = pluginChunk()
 
 local function noop() end
-libraries["AceGUI-3.0"] = {}
 API:AttachUI({
   ShowInterface = noop,
   HandleSlashCommand = noop,
@@ -269,13 +188,9 @@ API:AttachUI({
   GetDungeonSublevels = noop,
 }, pluginAPI)
 
-assert(interruptInitialized and legacyInitialized)
-if actualInterrupt then
-  assert(actualInterrupt.UI == pluginAPI)
-  assert(libraryRequests["AceGUI-3.0"] == 1)
-  assert(actualInterrupt:IsSettingsSectionShown())
-end
-assert(ui.navigationSections.interrupts)
+assert(legacyInitialized)
+assert(pluginAPI.RegisterNavigationSection == nil, "navigation sections leaked through the plugin API")
+assert(pluginAPI.GetNavigationSectionContentFrame == nil, "section content frames leaked through the plugin API")
 assert(ui.dungeonList[900] == "Localized Dungeon")
 assert(ui.L["Legacy Dungeon"] == "Localized Dungeon")
 assert(ui.L["Plugin Only"] == "Plugin Only Value")
@@ -288,7 +203,6 @@ if actualLegacy then
   assert(ui.seasonList[2] == "War Within Season 3")
   assert(ui.seasonList[#ui.seasonList] == "Mists of Pandaria")
 end
-assert(pluginAPI:GetNavigationSectionContentFrame("interrupts") == ui.main_frame.sectionContentFrames.interrupts)
 assert(loadCalls == 0, "UI attach path called LoadAddOn")
 assert(#errors == 0, errors[1])
 

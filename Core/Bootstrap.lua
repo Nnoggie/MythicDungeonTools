@@ -101,7 +101,7 @@ function API:AttachUI(handlers, pluginAPI)
     assert(type(handlers[methodName]) == "function", "Missing MythicDungeonTools UI handler: "..methodName)
   end
   assert(type(pluginAPI) == "table", "MythicDungeonTools UI plugin API must be a table")
-  for _, methodName in ipairs({ "RegisterNavigationSection", "GetCurrentSection", "SetCurrentSection", "GetNavigationSectionContentFrame", "HideAllDialogs", "RegisterDungeonData" }) do
+  for _, methodName in ipairs({ "GetCurrentSection", "SetCurrentSection", "HideAllDialogs", "RegisterDungeonData" }) do
     assert(type(pluginAPI[methodName]) == "function", "Missing MythicDungeonTools UI plugin method: "..methodName)
   end
   uiHandlers = handlers

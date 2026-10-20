@@ -18,21 +18,12 @@ setmetatable(MDT, { __index = API })
 
 local pluginAPI = {}
 
-function pluginAPI:RegisterNavigationSection(section)
-  return MDT:RegisterNavigationSection(section)
-end
-
 function pluginAPI:GetCurrentSection()
   return MDT:GetCurrentSection()
 end
 
 function pluginAPI:SetCurrentSection(sectionKey)
   return MDT:SetCurrentSection(sectionKey)
-end
-
-function pluginAPI:GetNavigationSectionContentFrame(sectionKey)
-  local frames = MDT.main_frame and MDT.main_frame.sectionContentFrames
-  return frames and frames[sectionKey]
 end
 
 function pluginAPI:HideAllDialogs()
