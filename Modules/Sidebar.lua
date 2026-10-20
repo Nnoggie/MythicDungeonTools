@@ -4,11 +4,12 @@ local UI = MDT.UI
 local Theme, Selection, Model, PullTooltip = UI.Theme, UI.Selection, MDT.SidebarModel, MDT.PullTooltip
 
 local TOP_HEIGHT = 24
-local WINDOW_BUTTONS_WIDTH = 56
+local WINDOW_BUTTONS_WIDTH = 58
 local STEPPER_WIDTH = 64
 local MIN_LEVEL, MAX_LEVEL = 1, 35
 local VISIBLE_ROUTES = 7
-local ACTION_BUTTON = 22
+local ACTION_HEIGHT = 28
+local ACTION_ICON = 16
 local BAR_TONES = { ["text.normal"] = "progress", ok = "ok", warn = "warn" }
 
 local db
@@ -60,22 +61,22 @@ function MDT:SidebarContext()
 end
 
 local function paintHeader(header)
-  sidebar.dungeon:SetText(string.upper(MDT:GetDungeonName(db.currentDungeonIdx) or ""))
   sidebar.level:SetValue(header.level)
   local forces = header.forces
   local barColor = Theme.Rgba(BAR_TONES[forces.tone] or "progress")
   sidebar.forces:SetSegments({ { value = forces.current, color = barColor } }, math.max(forces.max, forces.current, 1))
-  sidebar.forces:SetMarker(forces.max)
+  sidebar.forces:SetMarker(nil)
   sidebar.forces:SetText(forces.text)
   sidebar.forces:SetOverflow(false)
   local actions = header.actions
   sidebar.share:SetDisabled(not actions.canShare)
   sidebar.live:SetDisabled(not actions.canLive)
   sidebar.live:SetIconColor(actions.liveActive and "live" or nil)
+  sidebar.delete:SetDisabled(not actions.canDelete and not actions.canDeleteAll)
 end
 
 local function refreshRoutes(ctx)
-  local items = Model.RouteListItems(Model.RouteGroups(ctx or MDT:SidebarContext()), routeQuery, L)
+  local items = Model.RouteListItems(Model.RouteGroups(ctx or MDT:SidebarContext()), routeQuery)
   local height = math.max(1, math.min(#items, VISIBLE_ROUTES)) * MDT.RouteListRowHeight
   local routes = sidebar.routes
   if routes.kitProps.height ~= height then
@@ -288,11 +289,13 @@ end
 local function onHover(item, index, row)
   if item.kind ~= "pull" then return end
   PullTooltip.ShowPull(row, item)
+  row:kitWatchPortraits(true)
   MDT:PullClickAreaOnEnter(index)
 end
 
 local function onHoverEnd(item, index, row)
   if item.kind ~= "pull" then return end
+  row:kitWatchPortraits(false)
   PullTooltip.Hide(row)
   MDT:PullClickAreaOnLeave()
 end
@@ -316,11 +319,39 @@ local function openLiveMenu(button)
   })
 end
 
-local function actionButton(parent, id, icon, tooltip, onClick, iconColor, onRightClick)
+local function actionButton(parent, id, icon, tooltip, onClick, onRightClick)
   return UI.Button(parent, {
-    id = id, variant = "icon", icon = MDT:GetIconPath(icon), iconSize = 14, width = ACTION_BUTTON, height = ACTION_BUTTON,
-    tooltip = tooltip, iconColor = iconColor, onClick = onClick, onRightClick = onRightClick,
+    id = id, variant = "window", icon = MDT:GetIconPath(icon), iconSize = ACTION_ICON, width = 20, grow = 1, height = ACTION_HEIGHT,
+    tooltip = tooltip, onClick = onClick, onRightClick = onRightClick,
   })
+end
+
+local function deleteClicked()
+  local a = sidebar.state.header.actions
+  if IsShiftKeyDown() then
+    if a.canDeleteAll then routeActions.deleteAll() end
+  elseif a.canDelete then
+    routeActions.delete()
+  end
+end
+
+---Every route action for one route, in the order of the action row. Actions on another route switch to it first.
+---@param idx integer
+---@return MDT.UI.MenuItem[]
+local function routeMenuItems(idx)
+  local a = sidebar.state.header.actions
+  local function run(action) return function() MDT:RunRouteAction(action, idx) end end
+  return {
+    { text = L["Rename"], onSelect = run("rename") },
+    { text = L["Duplicate"], onSelect = run("duplicate") },
+    { text = L["Export"], onSelect = run("export") },
+    { kind = "separator" },
+    { text = L["Send to party"], disabled = not a.canShare, onSelect = run("share") },
+    a.canSetLive and { text = L["Make this preset the live preset"], onSelect = run("setLive") } or false,
+    { kind = "separator" },
+    { text = L["Delete this preset"], textColor = "warn", disabled = idx == 1 or a.liveActive, onSelect = run("delete") },
+    { text = L["Delete ALL presets"], textColor = "warn", disabled = not a.canDeleteAll, onSelect = routeActions.deleteAll },
+  }
 end
 
 ---Builds the sidebar once on the side panel. Frames persist for the session; RefreshSidebar paints them.
@@ -333,21 +364,26 @@ function MDT:MakeSidebar(sidePanel)
   local built = { root = root }
   root:Batch(function()
     local top = UI.Row(root, { id = "top", height = TOP_HEIGHT, width = sidePanel:GetWidth() - 8 - WINDOW_BUTTONS_WIDTH, valign = "center" })
-    built.dungeon = UI.Text(top, { id = "dungeon", text = "", font = "small", color = "text.muted", wrap = false, grow = 1 })
-    local search = UI.Row(root, { id = "routeTools", gap = "xs", valign = "center" })
-    built.search = UI.EditBox(search, { id = "routeSearch", placeholder = L["Search routes"], width = 60, grow = 1, onChange = function(text)
+    built.search = UI.EditBox(top, { id = "routeSearch", placeholder = L["Search routes"], width = 60, grow = 1, onChange = function(text)
       routeQuery = text or ""
       refreshRoutes()
     end })
-    built.new = actionButton(search, "newRoute", "plus", L["New Preset"], routeActions.new, "accent")
-    built.import = actionButton(search, "importRoute", "import", L["Import"], routeActions.import)
-    built.share = actionButton(search, "shareRoute", "share", L["Send to party"], routeActions.share)
-    built.live = actionButton(search, "liveSession", "live", L["Live"], routeActions.toggleLive, nil, openLiveMenu)
+    local actions = UI.Row(root, { id = "routeActions", gap = "xs", valign = "center" })
+    built.new = actionButton(actions, "newRoute", "plus", L["New Preset"], routeActions.new)
+    built.import = actionButton(actions, "importRoute", "import", L["Import"], routeActions.import)
+    built.rename = actionButton(actions, "renameRoute", "rename", L["Rename"], routeActions.rename)
+    built.duplicate = actionButton(actions, "duplicateRoute", "copy", L["Duplicate"], routeActions.duplicate)
+    built.export = actionButton(actions, "exportRoute", "export", L["Export"], routeActions.export)
+    built.share = actionButton(actions, "shareRoute", "share", L["Send to party"], routeActions.share)
+    built.live = actionButton(actions, "liveSession", "live", L["Live"], routeActions.toggleLive, openLiveMenu)
+    built.delete = actionButton(actions, "deleteRoute", "delete", L["Delete this preset"].."\n"..L["Shift-Click to delete all presets for this dungeon"], deleteClicked)
     built.routes = UI.List(root, {
       id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = MDT.RouteListRowHeight, scrollbar = true,
       onActivate = function(item) MDT:SwitchToPreset(item.idx) end,
-      onHover = function(_, _, row) row:kitShowActions(true) end,
-      onHoverEnd = function(_, _, row) row:kitShowActions(row:IsMouseOver()) end,
+      onContext = function(item)
+        MDT:CreateContextMenu(sidebar.routes, routeMenuItems(item.idx))
+        return nil
+      end,
     })
     local controls = UI.Row(root, { id = "controls", gap = "sm", valign = "center" })
     built.level = UI.Stepper(controls, {

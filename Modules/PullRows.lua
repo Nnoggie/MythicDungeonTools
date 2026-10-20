@@ -123,18 +123,34 @@ end
 ---@return table?
 function PullTooltip.Frame() return tooltip end
 
-local function portraitEnter(portrait)
-  local row = portrait.kitRow
-  local item = row.kitItem
-  if not item or not item.portraits or not item.portraits[portrait.kitIndex] then return end
-  PullTooltip.ShowPortrait(row, item.portraits[portrait.kitIndex])
-end
-
-local function portraitLeave(portrait)
-  PullTooltip.HidePortrait(portrait.kitRow)
-end
-
 local PullRow = {}
+
+-- Portraits take no mouse input, so clicks and right-clicks always reach the row; while the row is hovered
+-- this checks which portrait sits under the cursor. The first portrait draws on top, so the first hit wins.
+function PullRow:kitUpdatePortraitHover()
+  local item = self.kitItem
+  local hit
+  for i, portrait in ipairs(self.kitPortraits) do
+    if portrait:IsShown() and portrait:IsMouseOver() then
+      hit = i
+      break
+    end
+  end
+  if hit == self.kitHoverPortrait then return end
+  self.kitHoverPortrait = hit
+  if hit and item and item.portraits and item.portraits[hit] then
+    PullTooltip.ShowPortrait(self, item.portraits[hit])
+  else
+    PullTooltip.HidePortrait(self)
+  end
+end
+
+---@param watching boolean
+function PullRow:kitWatchPortraits(watching)
+  self.kitHoverPortrait = nil
+  self.kitWatcher:SetShown(watching)
+  if watching then self:kitUpdatePortraitHover() end
+end
 
 function PullRow:OnCreate()
   -- Above the row skin's background so hover and selection never hide the pull color; the skin still draws the selected border.
@@ -162,17 +178,12 @@ function PullRow:OnCreate()
       portrait:SetPoint("LEFT", self.kitPortraits[i - 1], "RIGHT", -PORTRAIT_OVERLAP, 0)
     end
     portrait:SetFrameLevel(self:GetFrameLevel() + MAX_PORTRAITS - i + 1)
-    portrait.kitRow, portrait.kitIndex = self, i
-    portrait:SetMouseClickEnabled(false)
-    portrait:SetMouseMotionEnabled(true)
-    portrait:SetPropagateMouseMotion(true)
-    portrait:SetScript("OnEnter", portraitEnter)
-    portrait:SetScript("OnLeave", portraitLeave)
+    portrait:EnableMouse(false)
     portrait.ring = portrait:CreateTexture(nil, "BACKGROUND")
     portrait.ring:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White")
     portrait.ring:SetPoint("CENTER", portrait, "CENTER", 0, 0)
     portrait.ring:SetSize(PORTRAIT + 3, PORTRAIT + 3)
-    Theme.Bind(portrait.ring, "bg.panel")
+    portrait.ring:SetVertexColor(0, 0, 0, 0.85)
     portrait.texture = portrait:CreateTexture(nil, "ARTWORK")
     portrait.texture:SetAllPoints()
     portrait.mask = portrait:CreateMaskTexture()
@@ -215,7 +226,13 @@ function PullRow:OnCreate()
   self.kitPull:SetShadowColor(0, 0, 0, 1)
   self.kitPull:SetShadowOffset(1, -1)
   Theme.Bind(self.kitPull, "text.secondary")
-  self:HookScript("OnDragStart", function(row) PullTooltip.Hide(row) end)
+  self.kitWatcher = CreateFrame("Frame", nil, self)
+  self.kitWatcher:Hide()
+  self.kitWatcher:SetScript("OnUpdate", function() self:kitUpdatePortraitHover() end)
+  self:HookScript("OnDragStart", function(row)
+    row:kitWatchPortraits(false)
+    PullTooltip.Hide(row)
+  end)
 end
 
 ---@param item MDT.SidebarPullItem
@@ -249,6 +266,7 @@ function PullRow:Bind(item)
 end
 
 function PullRow:OnUnbind()
+  self:kitWatchPortraits(false)
   PullTooltip.Hide(self)
 end
 

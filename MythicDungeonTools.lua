@@ -19,16 +19,19 @@ function MDT:IsInRestrictedEnvironment(shouldWarn)
   return false
 end
 
+-- close.tga is MethodInternal's CloseCross, copied as is; the other icons are drawn to match it.
+local ICON_FILES = { close = "close.tga" }
+
+---@param name string icon name under Textures\Icons
+---@return string
+function MDT:GetIconPath(name)
+  return "Interface\\AddOns\\MythicDungeonTools\\Textures\\Icons\\"..(ICON_FILES[name] or name..".png")
+end
+
 ---Opens a kit context menu at the cursor. Every right-click menu in MDT goes through here so the restricted check runs once.
 ---@param owner table?
 ---@param items MDT.UI.MenuItem[]|fun(): MDT.UI.MenuItem[]
 ---@return MDT.UI.Control?
----@param name string file name under Textures\Icons without extension
----@return string
-function MDT:GetIconPath(name)
-  return "Interface\\AddOns\\MythicDungeonTools\\Textures\\Icons\\"..name..".png"
-end
-
 function MDT:CreateContextMenu(owner, items)
   if self:IsInRestrictedEnvironment(true) then return end
   return MDT.UI.Menu.OpenContext(items, owner)

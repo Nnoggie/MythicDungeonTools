@@ -123,7 +123,7 @@ function MDT:CreateMenu()
   -- Close button
   local UI = MDT.UI
   local closeButton = UI.Button(self.main_frame, {
-    variant = "window", icon = MDT:GetIconPath("close"), iconSize = 14, width = 22, height = 22,
+    variant = "window", icon = MDT:GetIconPath("close"), iconSize = 17, width = 24, height = 24,
     onClick = function() self:HideInterface() end,
   })
   closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -4, -4)
@@ -132,7 +132,7 @@ function MDT:CreateMenu()
 
   db.maximized = db.maximized or false
   local maximizeButton = UI.Button(self.main_frame, {
-    variant = "window", icon = MDT:GetIconPath(db.maximized and "minimize" or "maximize"), iconSize = 14, width = 22, height = 22,
+    variant = "window", icon = MDT:GetIconPath(db.maximized and "minimize" or "maximize"), iconSize = 17, width = 24, height = 24,
     onClick = function()
       if MDT:GetDB().maximized then MDT:Minimize() else MDT:Maximize() end
     end,

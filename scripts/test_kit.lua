@@ -313,7 +313,7 @@ test("Fonts.FallbackAlphabet: only when the client font lacks the glyphs", funct
 end)
 
 test("Theme: tokens resolve, derived colors, skins reference known tokens", function()
-  eq({ UI.Theme.Resolve("accent") }, { 1, 209 / 255, 0, 1 })
+  eq({ UI.Theme.Resolve("accent") }, { 1, 1, 1, 1 })
   eq({ UI.Theme.Resolve({ 0.1, 0.2, 0.3 }) }, { 0.1, 0.2, 0.3, 1 })
   eq(select(4, UI.Theme.Resolve("bg.dim")), 153 / 255)
   local r = UI.Theme.Resolve("bg.hover")
@@ -680,25 +680,25 @@ test("SidebarModel.PullMenuItems: single and multi menus hide what the old butto
   eq(calls, { "merge:1,3;2", "clear:1,3", "delete:1,3;2", "moveUp:2", "mergeDown:2", "delete:2;2" })
 end)
 
-test("SidebarModel.RouteGroups and RouteListItems: live, then yours, then others, no headers, no <New Preset>, no percent", function()
+test("SidebarModel.RouteGroups and RouteListItems: live, then yours, then others, no headers, no <New Preset>", function()
   local ctx = fixtureContext({ liveActive = true, livePresetUID = "theirs" })
   local groups = Model.RouteGroups(ctx)
   eq({ #groups.live, #groups.mine, #groups.others }, { 1, 2, 0 })
-  eq({ groups.live[1].idx, groups.live[1].name, groups.live[1].author, groups.live[1].pulls, groups.live[1].isLive }, { 3, "Theirs", "Zed", 1, true })
-  eq({ groups.mine[2].idx, groups.mine[2].level, groups.mine[2].pulls, groups.mine[2].isCurrent }, { 2, 12, 1, true })
-  local items = Model.RouteListItems(groups, "", L)
+  eq({ groups.live[1].idx, groups.live[1].name, groups.live[1].author, groups.live[1].isLive }, { 3, "Theirs", "Zed", true })
+  eq({ groups.mine[2].idx, groups.mine[2].level, groups.mine[2].isCurrent }, { 2, 12, true })
+  local items = Model.RouteListItems(groups, "")
   local names = {}
   for _, item in ipairs(items) do names[#names + 1] = item.kind..":"..item.name end
   eq(table.concat(names, "|"), "route:Theirs|route:Default|route:Mine")
-  eq({ items[1].author, items[1].authorColor, items[1].detail, items[1].isLive }, { "Zed", { 0, 0.5, 1 }, "1 pulls · +22", true })
-  eq({ items[3].idx, items[3].isCurrent, items[3].detail }, { 2, true, "1 pulls · +12" })
-  local offline = Model.RouteListItems(Model.RouteGroups(fixtureContext()), "", L)
+  eq({ items[1].author, items[1].authorColor, items[1].isLive }, { "Zed", { 0, 0.5, 1 }, true })
+  eq({ items[3].idx, items[3].isCurrent }, { 2, true })
+  local offline = Model.RouteListItems(Model.RouteGroups(fixtureContext()), "")
   names = {}
   for _, item in ipairs(offline) do names[#names + 1] = item.name end
   eq(table.concat(names, "|"), "Default|Mine|Theirs", "your routes come before everyone else's")
-  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "ZED", L), 1, "search matches the author, case-insensitive")
-  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "min", L), 1, "search matches the name")
-  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "nothing", L), 0)
+  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "ZED"), 1, "search matches the author, case-insensitive")
+  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "min"), 1, "search matches the name")
+  eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "nothing"), 0)
 end)
 
 test("Selection.Click: Shift and Ctrl right-clicks leave the selection alone, the sidebar handles them", function()

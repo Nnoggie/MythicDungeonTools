@@ -45,7 +45,7 @@ local MAX_PORTRAITS = 7
 ---@field color MDT.UI.RGBA
 ---@field portraits MDT.SidebarPortrait[]
 ---@field isBoss boolean
----@field pulls integer
+---@field forces integer
 ---@field cumulative integer
 ---@field pullText string "+8.8%" or "+64", empty for a pull with no forces
 ---@field cumulativeText string "45.2%" or "329"
@@ -324,7 +324,6 @@ end
 ---@field author string?
 ---@field authorColor MDT.UI.RGBA?
 ---@field level integer
----@field pulls integer
 ---@field isCurrent boolean
 ---@field isLive boolean
 
@@ -340,7 +339,7 @@ function Model.RouteGroups(ctx)
       local entry = {
         idx = idx, name = preset.text or "", author = createdBy and createdBy.name or nil,
         authorColor = ctx.authorColor(createdBy), level = preset.difficulty or ctx.level,
-        pulls = #(preset.value.pulls or {}), isCurrent = idx == ctx.presetIdx,
+        isCurrent = idx == ctx.presetIdx,
         isLive = ctx.liveActive and preset.uid ~= nil and preset.uid == ctx.livePresetUID,
       }
       local mine = not createdBy or (player ~= nil and createdBy.name == player.name and createdBy.realm == player.realm)
@@ -356,28 +355,25 @@ end
 ---@field name string
 ---@field author string?
 ---@field authorColor MDT.UI.RGBA?
----@field detail string "12 pulls · +22"
 ---@field isCurrent boolean
 ---@field isLive boolean
 
 ---One flat list: the live route, then your routes, then everyone else's. `query` matches name or author, case-insensitive.
 ---@param groups {live: MDT.RouteEntry[], mine: MDT.RouteEntry[], others: MDT.RouteEntry[]}
 ---@param query string?
----@param L table
 ---@return MDT.SidebarRouteItem[]
-function Model.RouteListItems(groups, query, L)
+function Model.RouteListItems(groups, query)
   local needle = query and query:lower() or ""
   local items = {}
   for _, group in ipairs({ groups.live, groups.mine, groups.others }) do
     for _, entry in ipairs(group) do
       local haystack = (entry.name.." "..(entry.author or "")):lower()
       if needle == "" or haystack:find(needle, 1, true) then
-        local detail = string.format(L["%d pulls"], entry.pulls).." · +"..entry.level
         items[#items + 1] = {
           kind = "route", key = entry.idx,
-          sig = table.concat({ entry.name, entry.author or "", detail, tostring(entry.isCurrent), tostring(entry.isLive) }, "|"),
+          sig = table.concat({ entry.name, entry.author or "", tostring(entry.isCurrent), tostring(entry.isLive) }, "|"),
           idx = entry.idx, name = entry.name, author = entry.author, authorColor = entry.authorColor,
-          detail = detail, isCurrent = entry.isCurrent, isLive = entry.isLive,
+          isCurrent = entry.isCurrent, isLive = entry.isLive,
         }
       end
     end
