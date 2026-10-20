@@ -152,6 +152,7 @@
 ---@field title string
 ---@field key string? keyed singleton: re-opening replaces the open one with reason "replaced"
 ---@field width number? default 320
+---@field pinned boolean? the title bar does not drag the dialog
 ---@field parent table? default: the registered provider, else UIParent
 ---@field build fun(content: MDT.UI.Control, dialog: MDT.UI.Control)?
 ---@field onClose fun(dialog: MDT.UI.Control, reason: "x"|"escape"|"cancel"|"confirm"|"alt"|"replaced"|"api"|"hidden")?

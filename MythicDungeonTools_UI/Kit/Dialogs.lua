@@ -45,12 +45,14 @@ end
 ---@class MDT.UI.DialogFrameSpec : MDT.UI.CommonSpec
 ---@field title string?
 ---@field onClose fun(dialog: MDT.UI.Control, reason: string)?
+---@field pinned boolean? the title bar does not drag the dialog
 
 UI.Define({
   name = "DialogFrame", frameType = "Frame", mixins = { Methods },
   props = {
     { name = "title", default = "", set = function(self, v) self.kitTitle:SetText(v) end },
     { name = "onClose", default = nil },
+    { name = "pinned", default = false },
   },
   Create = function(self)
     self:SetClampedToScreen(true)
@@ -67,7 +69,7 @@ UI.Define({
     self.kitTitleBar:SetHeight(TITLE_HEIGHT)
     self.kitTitleBar:EnableMouse(true)
     self.kitTitleBar:RegisterForDrag("LeftButton")
-    self.kitTitleBar:SetScript("OnDragStart", function() self:StartMoving() end)
+    self.kitTitleBar:SetScript("OnDragStart", function() if not self.kitProps.pinned then self:StartMoving() end end)
     self.kitTitleBar:SetScript("OnDragStop", function() self:StopMovingOrSizing() end)
     local titleBackground = self.kitTitleBar:CreateTexture(nil, "BACKGROUND")
     titleBackground:SetAllPoints()
@@ -106,7 +108,7 @@ function Dialogs.Open(spec)
   UI.Overlay.PopAll("popover", "replaced")
   if spec.key and keyed[spec.key] then keyed[spec.key]:Close("replaced") end
   local parent = spec.parent or (parentProvider and parentProvider()) or UIParent
-  local dialog = UI.DialogFrame(parent, { title = spec.title, onClose = spec.onClose })
+  local dialog = UI.DialogFrame(parent, { title = spec.title, onClose = spec.onClose, pinned = spec.pinned })
   UI.Overlay.SetStrata(dialog, "DIALOG")
   dialog.kitKey, dialog.kitGlobalName = spec.key, spec.globalName
   if spec.key then keyed[spec.key] = dialog end
