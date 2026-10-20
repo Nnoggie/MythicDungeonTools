@@ -441,22 +441,10 @@ local function createVersionCheckFrame()
   f.downloadFrame = downloadFrame
 
   local downloadLinkWidth = (scrollWidth - 8) / 2
-  MDT:CreateCopyableLinkRow(downloadFrame, downloadLinks[1].name, downloadLinks[1].url, {
-    width = downloadLinkWidth,
-    buttonWidth = 64,
-    point = true,
-    xOffset = 0,
-    copyHelperAnchor = MDT.main_frame,
-    copyHelperY = 50,
-  })
-  MDT:CreateCopyableLinkRow(downloadFrame, downloadLinks[2].name, downloadLinks[2].url, {
-    width = downloadLinkWidth,
-    buttonWidth = 64,
-    point = true,
-    xOffset = downloadLinkWidth + 8,
-    copyHelperAnchor = MDT.main_frame,
-    copyHelperY = 50,
-  })
+  for i, link in ipairs(downloadLinks) do
+    local row = MDT:AddCopyableLinkRow(downloadFrame, { label = link.name, url = link.url, anchor = MDT.main_frame, width = downloadLinkWidth })
+    row:SetPoint("TOPLEFT", downloadFrame, "TOPLEFT", (i - 1) * (downloadLinkWidth + 8), 0)
+  end
   downloadFrame:Hide()
 
   local reportVersionsButton = AceGUI:Create("Button")

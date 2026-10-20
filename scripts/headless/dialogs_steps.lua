@@ -3,6 +3,7 @@
 return function(ctx)
   local W, MDT, step, expect, click, render = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.render
   local UI = MDT.UI
+  local L = MDT.L
 
   step("kit: a prompt places build controls under its field and names its footer buttons", function()
     local picked
@@ -208,6 +209,35 @@ return function(ctx)
     expect(UI.Dialogs.Get("renamePreset") == nil and UI.Dialogs.Get("deleteAllPresets"), "Escape in the rename field closed the wrong dialog")
     expect(CloseSpecialWindows(), "no special window closed")
     expect(UI.Dialogs.Count() == 0 and main:IsShown(), "Escape did not close the remaining dialog before the window")
+    W.settle(asyncIdle, 5)
+  end)
+
+  step("external links: an icon opens its link, Copy shows the hint and Ctrl+C closes it", function()
+    local button = MDT:GetExternalLinkButton("Discord")
+    expect(button and button:IsVisible(), "the Discord link button is not visible")
+    expect(MDT:GetExternalLinkButton("Donate"):GetText() == L["Donate"], "the donate button lost its label")
+    expect(not MDT:GetExternalLinkButton("errors"):IsShown(), "the error button shows without errors")
+    W.hover(button)
+    expect(GameTooltip:IsShown(), "hovering a link icon shows no tooltip")
+    W.fireScript(button, "OnLeave")
+    click(button)
+    local popover = UI.Overlay.Top("popover")
+    expect(popover and popover.frame:IsVisible(), "clicking a link icon opened no popover")
+    local row = popover.frame.content.kitChildren[1]
+    local editBox, copy = row.kitChildren[1], row.kitChildren[2]
+    expect(editBox:GetValue() == MDT.externalLinks[2].url, "the popover shows "..tostring(editBox:GetValue()))
+    snapshot("external link popover", popover.frame)
+    click(copy)
+    expect(editBox.kitEdit:HasFocus() and copy:IsDisabled() and MDT.copyHelper:IsShown(), "Copy did not select the link with the hint")
+    W.modifiers = { ctrl = true }
+    W.fireScript(editBox.kitEdit, "OnKeyUp", "C")
+    W.modifiers = nil
+    expect(UI.Overlay.Top("popover") == nil, "Ctrl+C left the link popover open")
+    W.settle(asyncIdle, 5)
+    click(MDT:GetExternalLinkButton("GitHub"))
+    expect(UI.Overlay.Top("popover"), "the GitHub icon opened no popover")
+    expect(CloseSpecialWindows(), "no special window closed")
+    expect(UI.Overlay.Top("popover") == nil and main:IsShown(), "Escape did not close the link popover before the window")
     W.settle(asyncIdle, 5)
   end)
 

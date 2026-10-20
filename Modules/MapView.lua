@@ -96,17 +96,8 @@ local function createAlphaWarning(frame)
   title:SetText(L["Alpha Version! Mapping will be inaccurate!"])
   title:SetTextColor(1, 0.15, 0.15)
 
-  warning.linkRow = MDT:CreateCopyableLinkRow(warning, "Discord", MDT.externalLinks[2].url, {
-    width = 318,
-    buttonWidth = 72,
-    point = true,
-    xOffset = 64,
-    yOffset = -25,
-    label = L["Report enemy positions in Discord:"],
-    copyHelperAnchor = frame,
-    copyHelperY = 50,
-  })
-  warning.linkRow.editBox.label:SetTextColor(1, 1, 1)
+  local linkRow = MDT:AddCopyableLinkRow(warning, { label = L["Report enemy positions in Discord:"], url = MDT.externalLinks[2].url, anchor = frame, width = 318 })
+  linkRow:SetPoint("TOPLEFT", warning, "TOPLEFT", 64, -25)
 
   frame.alphaWarningFrame = warning
   frame:HookScript("OnShow", function()
