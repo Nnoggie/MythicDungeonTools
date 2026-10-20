@@ -225,7 +225,9 @@ return function(ctx)
     expect(popover and popover.frame:IsVisible(), "clicking a link icon opened no popover")
     expect(math.abs(popover.frame:GetLeft() - main:GetLeft()) < 0.5 and math.abs(popover.frame:GetBottom() - main:GetBottom()) < 0.5,
       "the link popover is not in the map's bottom-left corner")
-    local row = popover.frame.content.kitChildren[1]
+    local content = popover.frame.content
+    expect(content:Find("title").kitLabel:GetText() == MDT.externalLinks[2].name, "the link box is not titled with its link")
+    local row = content.kitChildren[2]
     local editBox, copy = row.kitChildren[1], row.kitChildren[2]
     expect(editBox:GetValue() == MDT.externalLinks[2].url, "the popover shows "..tostring(editBox:GetValue()))
     snapshot("external link popover", popover.frame)
@@ -240,6 +242,23 @@ return function(ctx)
     expect(UI.Overlay.Top("popover"), "the GitHub icon opened no popover")
     expect(CloseSpecialWindows(), "no special window closed")
     expect(UI.Overlay.Top("popover") == nil and main:IsShown(), "Escape did not close the link popover before the window")
+    W.settle(asyncIdle, 5)
+    click(MDT:GetExternalLinkButton("GitHub"))
+    local close = UI.Overlay.Top("popover").frame.content:Find("header").kitChildren[2]
+    click(close)
+    expect(UI.Overlay.Top("popover") == nil, "the link box's X did not close it")
+  end)
+
+  step("bottom left: the version check, the error report and the link boxes are never open together", function()
+    MDT:ToggleVersionCheckFrame()
+    expect(UI.Dialogs.Get("versionCheck"), "setup: the version check did not open")
+    click(MDT:GetExternalLinkButton("GitHub"))
+    expect(UI.Overlay.Top("popover") and UI.Dialogs.Get("versionCheck") == nil, "a link box opened over the version check")
+    MDT:ToggleVersionCheckFrame()
+    expect(UI.Dialogs.Get("versionCheck") and UI.Overlay.Top("popover") == nil, "the version check opened over a link box")
+    click(MDT:GetExternalLinkButton("Discord"))
+    expect(UI.Dialogs.Get("versionCheck") == nil, "the Discord link box left the version check open")
+    UI.Overlay.PopAll("popover", "api")
     W.settle(asyncIdle, 5)
   end)
 

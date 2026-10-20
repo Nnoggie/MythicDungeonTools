@@ -113,6 +113,7 @@ function MDT:DisplayErrors(force)
   end
   if not MDT.copyHelper then MDT:MakeCopyHelper(MDT.UI.Root) end
   local errorText = buildErrorText()
+  MDT:CloseBottomLeftPanels()
   UI.Dialogs.Open({
     key = "errors", globalName = "MDTErrorFrame", title = L["MDT Error"], width = 800, parent = visibleParent(),
     onClose = function() MDT.copyHelper:SmartHide() end,

@@ -39,7 +39,7 @@ local linkButtons
 
 ---A labeled read-only link and a Copy button. Copy selects the link and shows the Ctrl+C hint centered on `anchor`.
 ---@param parent table kit container, or a plain frame the caller anchors the returned row in
----@param spec {label: string, url: string, anchor: table, width: number?, onCopied: fun()?}
+---@param spec {label: string?, url: string, anchor: table, width: number?, onCopied: fun()?}
 ---@return MDT.UI.Control row
 function MDT:AddCopyableLinkRow(parent, spec)
   local row = UI.Row(parent, { gap = "sm", valign = "end", width = spec.width })
@@ -76,15 +76,28 @@ function MDT:CreateHoverHighlight(button, yInset)
   return highlight
 end
 
+---The version check, the error report and the link boxes share the map's bottom-left corner; only one is open at a time.
+function MDT:CloseBottomLeftPanels()
+  for _, key in ipairs({ "versionCheck", "errors" }) do
+    local dialog = UI.Dialogs.Get(key)
+    if dialog then dialog:Close("replaced") end
+  end
+  UI.Overlay.PopAll("popover", "replaced")
+end
+
 ---Opens in the map's bottom-left corner, where MDT always showed its link box.
 ---@param link table an entry of MDT.externalLinks
 function MDT:ShowExternalLinkPopover(link)
+  MDT:CloseBottomLeftPanels()
   UI.Popover({
     place = { point = "BOTTOMLEFT", relativeTo = MDT.main_frame }, width = 420,
     onClose = function() MDT.copyHelper:SmartHide() end,
     build = function(content, popover)
+      local header = UI.Row(content, { id = "header", gap = "sm", valign = "center" })
+      UI.Text(header, { id = "title", text = link.name, font = "heading", wrap = false, grow = 1, width = 40 })
+      UI.CloseButton(header, { tooltip = L["Close"], onClick = function() popover:Close("x") end })
       MDT:AddCopyableLinkRow(content, {
-        label = link.name, url = link.url, anchor = MDT.main_frame,
+        url = link.url, anchor = MDT.main_frame,
         onCopied = function() popover:Close("copied") end,
       })
     end,
