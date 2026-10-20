@@ -287,8 +287,12 @@ return function(ctx)
     W.hover(icon)
     expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == icon, "the macro icon shows no tooltip")
     W.fireScript(icon, "OnLeave")
+    local pickupMacro, pickedUp = _G.PickupMacro, nil
+    _G.PickupMacro = function(index) pickedUp = index end
     W.fireScript(icon, "OnDragStart")
-    expect(GetMacroIndexByName(settings.macroName or "MDTFocusMarker") > 0, "dragging the icon did not create the macro")
+    _G.PickupMacro = pickupMacro
+    local macroIndex = _G["GetMacroIndexByName"](settings.macroName or "MDTFocusMarker")
+    expect(macroIndex > 0 and pickedUp == macroIndex, "dragging the icon did not pick up the macro")
     render("focus marker section", main)
     click(control(page, "useMacro"))
     expect(settings.useMacro == false and not icon:IsVisible(), "the macro icon stayed after Use macro was cleared")
