@@ -648,7 +648,7 @@ local function POI_SetOptions(frame, type, poi)
         spellId = 325189,
       }
     }
-    frame.Texture:SetTexture(itemInfo[poi.itemType].texture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemInfo[poi.itemType].texture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame.setAssigned = function()
@@ -704,7 +704,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 3528441
     local itemDescription = L["imbuedIronBarDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -729,7 +729,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 448305
     local itemDescription = L["stolenPowerDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -755,7 +755,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 1239141
     local itemDescription = L["EDAItem1Description"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -779,7 +779,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 4037124
     local itemSpellId = 1236971
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -802,7 +802,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 6891021
     local itemSpellId = 1239229
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -826,7 +826,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 439208
     local itemDescription = L["araKaraItemDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -851,7 +851,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 435088
     local itemDescription = L["prioryItemDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -875,7 +875,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 2061718
     local itemSpellId = 420307
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -899,7 +899,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 434696
     local itemDescription = L["rookItemDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(16, 16)
@@ -924,7 +924,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 439698
     local itemDescription = L["brewItemADescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(16, 16)
@@ -949,7 +949,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 439005
     local itemDescription = L["brewItemBDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(16, 16)
@@ -973,7 +973,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 310733
     local itemSpellId = 257481
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -995,7 +995,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 1405803
     local itemSpellId = 282943
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -1017,7 +1017,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 986484
     local itemSpellId = 464294
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(20, 20)
@@ -1068,7 +1068,7 @@ local function POI_SetOptions(frame, type, poi)
     }
     local info = itemInfo[poi.itemType]
 
-    frame.Texture:SetTexture(info.texture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, info.texture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(info.size, info.size)
@@ -1098,7 +1098,7 @@ local function POI_SetOptions(frame, type, poi)
       frame.Texture:SetAtlas(info.atlas)
       frame.HighlightTexture:SetAtlas(info.atlas)
     else
-      frame.Texture:SetTexture(info.texture)
+      MDT.UI.Icon.SetZoomed(frame.Texture, info.texture)
       frame.HighlightTexture:SetAtlas("bags-innerglow")
     end
 
@@ -1153,7 +1153,7 @@ local function POI_SetOptions(frame, type, poi)
       frame.Texture:SetAtlas(info.atlas)
       frame.HighlightTexture:SetAtlas(info.atlas)
     else
-      frame.Texture:SetTexture(info.texture)
+      MDT.UI.Icon.SetZoomed(frame.Texture, info.texture)
       frame.HighlightTexture:SetAtlas("bags-innerglow")
     end
 
@@ -1275,6 +1275,7 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetSize(18, 18)
     frame.Texture:SetSize(18, 18)
     frame.Texture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]]..poi.index..[[.blp]])
+    frame.Texture:SetTexCoord(0, 1, 0, 1)
     frame.HighlightTexture:SetSize(18, 18)
     frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]]..poi.index..[[.blp]])
   end

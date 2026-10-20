@@ -9,6 +9,7 @@
 	<Script file='Fonts.lua'/>
 	<Script file='Pixel.lua'/>
 	<Script file='Root.lua'/>
+	<Script file='Icon.lua'/>
 	<Script file='Class.lua'/>
 	<Script file='LayoutHost.lua'/>
 	<Script file='Glyphs.lua'/>

@@ -158,10 +158,7 @@ local function getSpellName(spellId, fallback)
 end
 
 ---Rendering
---spell and spec icons are zoomed in by 20% to cut off their borders
-local ICON_ZOOM = 0.2
-local ICON_INSET = (1 - 1 / (1 + ICON_ZOOM)) / 2
-local ZOOMED_COORDS = { ICON_INSET, 1 - ICON_INSET, ICON_INSET, 1 - ICON_INSET }
+local ZOOMED_COORDS = MDT.UI.Icon.ZOOMED_COORDS
 --markup coords are in pixels of the given texture size, only their ratio matters
 local ZOOMED_MARKUP_SIZE = 1000
 local ZOOMED_MARKUP_COORDS = {}

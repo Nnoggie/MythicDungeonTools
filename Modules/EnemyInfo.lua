@@ -200,7 +200,7 @@ end
 ---@param item MDT.EnemyInfoSpellItem
 function SpellRow:Bind(item)
   self.spellId = item.spellId
-  self.kitIcon:SetTexture(item.icon)
+  UI.Icon.SetZoomed(self.kitIcon, item.icon)
   self.kitName:SetText(item.name)
   self.kitName:ClearAllPoints()
   self.kitName:SetPoint("RIGHT", self, "RIGHT", -Theme.Space("md"), 0)
@@ -337,7 +337,7 @@ local function applyCharacteristics(data)
   for _, characteristic in ipairs(CHARACTERISTICS) do
     if data.characteristics and data.characteristics[characteristic.key] then
       UI.Button(row, {
-        variant = "icon", icon = characteristic.icon, iconSize = CHARACTERISTIC_ICON_SIZE, iconColor = false,
+        variant = "icon", icon = characteristic.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE, iconColor = false,
         tooltip = L[characteristic.key],
       })
     end

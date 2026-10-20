@@ -207,6 +207,25 @@ dofile(root.."/scripts/headless/enemy_info_steps.lua")({
 })
 dofile(root.."/scripts/headless/dialogs_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, snapshot = snapshot, unusedPresetName = unusedPresetName, presetCount = presetCount })
 
+step("spell and item icons on the map are zoomed 20%", function()
+  local db = MDT:GetDB()
+  local before = db.currentDungeonIdx
+  MDT:UpdateToDungeon(45) -- Algeth'ar Academy has item POIs
+  W.settle(asyncIdle, 30)
+  local inset = MDT.UI.Icon.ZOOMED_COORDS[1]
+  local icons = 0
+  for _, frame in ipairs(MDT.GetFramePool("MapLinkPinTemplate").active) do
+    if frame:IsShown() and type(frame.Texture:GetTexture()) == "number" then
+      icons = icons + 1
+      local left, top = frame.Texture:GetTexCoord()
+      expect(math.abs(left - inset) < 0.001 and math.abs(top - inset) < 0.001, "a POI icon is not zoomed: "..tostring(frame.Texture:GetTexture()))
+    end
+  end
+  expect(icons > 0, "setup: no item POIs on the map")
+  MDT:UpdateToDungeon(before)
+  W.settle(asyncIdle, 30)
+end)
+
 step("every visible MDT text uses MDT's fonts", function()
   local allowed = {}
   for _, file in pairs(MDT.UI.Fonts.files) do allowed[file:lower():gsub("/", "\\")] = true end
