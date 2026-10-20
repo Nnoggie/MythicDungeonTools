@@ -192,7 +192,7 @@ function SpellRow:OnCreate()
     icon:Hide()
     self.kitStatusIcons[i] = icon
   end
-  self:SetScript("OnKeyDown", onDevKey)
+  UI.Script(self, "OnKeyDown", onDevKey)
   self:EnableKeyboard(false)
 end
 
@@ -418,20 +418,20 @@ local function createCard(kind)
   card.content:SetPoint("TOPLEFT", card, "TOPLEFT", 0, 0)
   if kind == "pinned" then
     card.model = CreateFrame("PlayerModel", nil, card, "ModelWithControlsTemplate")
-    card.model:SetScript("OnEnter", nil)
+    UI.Script(card.model, "OnEnter", nil)
     card:SetMovable(true)
     card:RegisterForDrag("LeftButton")
-    card:SetScript("OnDragStart", card.StartMoving)
-    card:SetScript("OnDragStop", card.StopMovingOrSizing)
-    card:SetScript("OnHide", function() MDT:CloseEnemyInfo() end)
+    UI.Script(card, "OnDragStart", card.StartMoving)
+    UI.Script(card, "OnDragStop", card.StopMovingOrSizing)
+    UI.Script(card, "OnHide", function() MDT:CloseEnemyInfo() end)
   else
     card.model = CreateFrame("PlayerModel", nil, card)
     card.model.facing = 0
-    card.model:SetScript("OnUpdate", function(model, elapsed)
+    UI.Script(card.model, "OnUpdate", function(model, elapsed)
       model.facing = (model.facing + elapsed * MODEL_ROTATION_SPEED) % (math.pi * 2)
       model:SetFacing(model.facing)
     end)
-    card:SetScript("OnUpdate", watchHover)
+    UI.Script(card, "OnUpdate", watchHover)
   end
   card:Hide()
   return card
