@@ -3,8 +3,9 @@ local UI = MDT.UI
 local Theme, Fonts = UI.Theme, UI.Fonts
 
 local LABEL_HEIGHT = 14
-local TRACK_HEIGHT = 6
-local THUMB = 10
+-- MethodInternal's slider: a bordered track with a tall, thin thumb and no fill.
+local TRACK_HEIGHT = 10
+local THUMB_WIDTH, THUMB_HEIGHT = 6, 14
 local NATURAL_WIDTH = 160
 
 local Methods = {}
@@ -23,22 +24,14 @@ local function repaint(self)
   Theme.Bind(self.kitLabel, disabled and "text.disabled" or "text.muted")
   Theme.Bind(self.kitValueText, disabled and "text.disabled" or "text.normal")
   Theme.Bind(self.kitThumbTexture, disabled and "text.disabled" or "accent")
-  Theme.Bind(self.kitFill, disabled and "border.strong" or "accent.border")
+  self.kitTrackBorder:SetToken(not disabled and self.kitHovered and "accent.active" or "border.strong")
   self.kitValueText:SetText(formatValue(self, self.kitProps.value or 0))
-end
-
-local function updateFill(self)
-  local min, max = self.kitSlider:GetMinMaxValues()
-  local span = max - min
-  local fraction = span > 0 and (self.kitSlider:GetValue() - min) / span or 0
-  self.kitFill:SetWidth(math.max(0.01, self.kitSlider:GetWidth() * fraction))
 end
 
 local function applyRange(self)
   local props = self.kitProps
   self.kitSlider:SetMinMaxValues(props.min, props.max)
   self.kitSlider:SetValueStep(props.step or 0)
-  updateFill(self)
 end
 
 local function setValue(self, value)
@@ -47,7 +40,6 @@ local function setValue(self, value)
   self.kitSettingValue = true
   self.kitSlider:SetValue(value)
   self.kitSettingValue = nil
-  updateFill(self)
   repaint(self)
 end
 
@@ -95,9 +87,9 @@ UI.Define({
 
     self.kitSlider = CreateFrame("Slider", nil, self)
     self.kitSlider:SetOrientation("HORIZONTAL")
-    self.kitSlider:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", THUMB / 2, 0)
-    self.kitSlider:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -THUMB / 2, 0)
-    self.kitSlider:SetHeight(THUMB + 4)
+    self.kitSlider:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
+    self.kitSlider:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
+    self.kitSlider:SetHeight(THUMB_HEIGHT)
     self:kitForwardHover(self.kitSlider)
     self.kitSlider:SetObeyStepOnDrag(true)
     local track = CreateFrame("Frame", nil, self.kitSlider)
@@ -107,19 +99,16 @@ UI.Define({
     local trackBackground = track:CreateTexture(nil, "BACKGROUND")
     trackBackground:SetAllPoints()
     Theme.Bind(trackBackground, "bg.sunken")
-    UI.Pixel.Border(track, "border.strong")
-    self.kitFill = track:CreateTexture(nil, "ARTWORK")
-    self.kitFill:SetPoint("TOPLEFT", track, "TOPLEFT", 0, 0)
-    self.kitFill:SetPoint("BOTTOMLEFT", track, "BOTTOMLEFT", 0, 0)
+    self.kitTrackBorder = UI.Pixel.Border(track, "border.strong")
+    self.kitTrack = track
     local thumb = self.kitSlider:CreateTexture(nil, "OVERLAY")
-    thumb:SetSize(THUMB, THUMB)
+    thumb:SetSize(THUMB_WIDTH, THUMB_HEIGHT)
     self.kitSlider:SetThumbTexture(thumb)
     self.kitThumbTexture = thumb
 
     self.kitSlider:SetScript("OnValueChanged", function(slider, value, userInput)
       if self.kitSettingValue then return end
       self.kitProps.value = value
-      updateFill(self)
       repaint(self)
       if userInput then self:Emit("onChange", value, self) end
     end)
@@ -127,11 +116,10 @@ UI.Define({
       if self.kitProps.disabled then return end
       self:Emit("onCommit", self.kitProps.value, self)
     end)
-    self.kitSlider:SetScript("OnSizeChanged", function() updateFill(self) end)
     self.kitRepaint = repaint
   end,
   Measure = function(self, availW)
-    local height = THUMB + 4
+    local height = THUMB_HEIGHT
     if self.kitProps.label then height = height + LABEL_HEIGHT + Theme.Space("xs") end
     return self.kitProps.width or math.min(availW, NATURAL_WIDTH), height
   end,

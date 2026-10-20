@@ -158,6 +158,18 @@ return function(ctx)
     host:Release()
   end)
 
+  step("kit slider: MethodInternal's bordered track and tall thumb, the border lights on hover", function()
+    local slider = page:Find("slider")
+    local thumb = slider.kitThumbTexture
+    expect(math.abs(slider.kitTrack:GetHeight() - 10) < 0.01, "the track is "..slider.kitTrack:GetHeight().." tall")
+    expect(math.abs(thumb:GetWidth() - 6) < 0.01 and math.abs(thumb:GetHeight() - 14) < 0.01, "the thumb is not 6x14")
+    expect(slider.kitTrackBorder.token == "border.strong", "the idle track border is lit")
+    W.hover(slider.kitSlider)
+    expect(slider.kitTrackBorder.token == "accent.active", "hovering does not light the track border")
+    W.fireScript(slider.kitSlider, "OnLeave")
+    expect(slider.kitTrackBorder.token == "border.strong", "the track border stayed lit")
+  end)
+
   step("kit stepper: hovering an arrow lights only that arrow, not the stepper's frame", function()
     local box = UI.Stack(page, { id = "stepperBox" })
     local stepper = UI.Stepper(box, { value = 5, min = 0, max = 10, variant = "primary" })
