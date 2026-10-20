@@ -74,7 +74,7 @@ function MDT:initToolbar(frame)
 
   local function iconButton(parent, id, coords, tooltip, onClick, texture)
     return UI.Button(parent, {
-      id = id, variant = "window", icon = texture or ICON_ATLAS, iconCoords = coords, iconSize = ICON_SIZE,
+      id = id, variant = "plain", icon = texture or ICON_ATLAS, iconCoords = coords, iconSize = ICON_SIZE,
       width = CONTROL_SIZE, height = CONTROL_SIZE, tooltip = tooltip, onClick = onClick,
     })
   end

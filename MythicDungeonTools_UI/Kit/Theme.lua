@@ -57,6 +57,14 @@ Theme.data = {
       selected = { bg = "bg.selected", border = false, text = "accent" },
       disabled = { bg = false, border = false, text = "text.disabled" },
     },
+    -- Borderless icon buttons that stay at full brightness: the map toolbar and the bottom bar links.
+    plain = {
+      normal = { bg = false, border = false, text = "text.normal" },
+      hover = { bg = "bg.raised2", border = false, text = "accent" },
+      pressed = { bg = "bg.raised", border = false, text = "accent" },
+      selected = { bg = "accent.bg", border = false, text = "accent" },
+      disabled = { bg = false, border = false, text = "text.disabled" },
+    },
     window = {
       normal = { bg = "bg.raised2", border = "border.strong", text = "text.normal" },
       hover = { bg = "bg.hover", border = "accent.border", text = "accent" },

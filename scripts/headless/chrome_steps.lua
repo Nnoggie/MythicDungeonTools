@@ -107,6 +107,15 @@ return function(ctx)
       expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool(id)), id.." shows no tooltip")
       W.fireScript(tool(id), "OnLeave")
     end
+    -- Toolbar and bottom bar icons are bare and at full brightness until hovered.
+    local white = UI.Theme.Rgba("text.normal")
+    local bare = { tool("undo"), tool("pencil"), MDT:GetExternalLinkButton(MDT.externalLinks[1].name) }
+    for _, button in ipairs(bare) do
+      local name = tostring(button.kitProps.id)
+      expect(not button.kitBackground:IsShown() and not button.kitBorder.textures.top:IsShown(), name.." has a background or border")
+      local r, g, b = button.kitIcon:GetVertexColor()
+      expect(math.abs(r - white[1]) < 0.01 and math.abs(g - white[2]) < 0.01 and math.abs(b - white[3]) < 0.01, name.." icon is faded")
+    end
     GameTooltip:Hide()
     W.hover(tool("brushSize").kitEdit)
     expect(GameTooltip:IsShown() and GameTooltip:IsOwned(tool("brushSize")), "brush size shows no tooltip")

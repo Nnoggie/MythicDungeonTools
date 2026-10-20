@@ -99,13 +99,13 @@ function MDT:CreateExternalLinkButtons(frame)
   linkButtons:SetFrameLevel(7)
   for _, link in ipairs(MDT.externalLinks) do
     UI.Button(linkButtons, {
-      id = link.name, variant = "ghost", icon = link.icon, iconCoords = link.iconCoords, iconSize = 18,
+      id = link.name, variant = "plain", icon = link.icon, iconCoords = link.iconCoords, iconSize = 18,
       text = link.label, width = not link.label and 24 or nil, height = "sm", tooltip = link.tooltip,
       onClick = function(button) MDT:ShowExternalLinkPopover(link, button) end,
     })
   end
   UI.Button(linkButtons, {
-    id = "errors", variant = "ghost", icon = ATLAS, iconCoords = { 0.76, 1, 0.25, 0.5 }, iconSize = 18, iconColor = "warn",
+    id = "errors", variant = "plain", icon = ATLAS, iconCoords = { 0.76, 1, 0.25, 0.5 }, iconSize = 18, iconColor = "warn",
     width = 24, height = "sm", hidden = true, tooltip = L["encounteredErrors"],
     onClick = function() MDT:DisplayErrors(true) end,
   })
