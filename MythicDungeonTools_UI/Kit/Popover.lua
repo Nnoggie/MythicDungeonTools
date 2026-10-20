@@ -41,9 +41,8 @@ UI.Define({
 })
 
 ---@class MDT.UI.PopoverSpec
----@field anchor table? the popover opens beside it, flipping to stay on screen; needs either anchor or place
+---@field anchor table the popover opens beside it, flipping to stay on screen
 ---@field prefer "below"|"above"|"right"|"left"?
----@field place MDT.UI.Place? a fixed spot instead of opening beside an anchor
 ---@field width number? default 240
 ---@field padding MDT.UI.Space|number?
 ---@field gap MDT.UI.Space|number?
@@ -67,11 +66,7 @@ function UI.Popover(spec)
     end,
   }
   Overlay.Push(popover.kitEntry)
-  if spec.place then
-    Overlay.SetPlace(popover, spec.place)
-  else
-    Overlay.Place(popover, spec.anchor, spec.prefer or "below", Theme.Space("xs"))
-  end
+  Overlay.Place(popover, spec.anchor, spec.prefer or "below", Theme.Space("xs"))
   popover:Show()
   return popover
 end
