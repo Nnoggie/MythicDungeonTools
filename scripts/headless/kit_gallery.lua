@@ -551,6 +551,28 @@ return function(ctx)
     UI.Layout.FlushAll()
   end)
 
+  step("kit fonts: a font family that comes back without its font falls back to a plain font", function()
+    local Fonts = UI.Fonts
+    local objects, fallbacks = {}, {}
+    for role, font in pairs(Fonts.objects) do objects[role] = font end
+    for role, byAlphabet in pairs(Fonts.fallbacks) do fallbacks[role] = byAlphabet end
+    local realFamily = CreateFontFamily
+    CreateFontFamily = function(name) return CreateFont(name) end
+    local ok, err = pcall(Fonts.Setup)
+    CreateFontFamily = realFamily
+    local file = Fonts.objects.body and Fonts.objects.body:GetFont()
+    for role, font in pairs(objects) do
+      Fonts.objects[role] = font
+      _G[W.state[font].name] = font
+    end
+    for role, byAlphabet in pairs(fallbacks) do
+      Fonts.fallbacks[role] = byAlphabet
+      for _, font in pairs(byAlphabet) do _G[W.state[font].name] = font end
+    end
+    expect(ok, "Fonts.Setup raised: "..tostring(err))
+    expect(file == Fonts.files.roman, "a silently empty font family left the body font at "..tostring(file))
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs

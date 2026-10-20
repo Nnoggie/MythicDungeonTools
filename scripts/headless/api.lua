@@ -341,8 +341,12 @@ return function(W)
   -- Fonts ----------------------------------------------------------------------------------
 
   G.CreateFont = function(name) return W.CreateFont(name) end
+  -- The family's own font is its roman member, whatever order the members come in.
   function G.CreateFontFamily(name, members)
     local first = members and members[1]
+    for _, member in ipairs(members or {}) do
+      if member.alphabet == "roman" then first = member end
+    end
     local font = W.CreateFont(name)
     if first then
       if first.fontObject then font:CopyFontObject(first.fontObject) end

@@ -85,7 +85,11 @@ Fonts.locale = "enUS"
 
 local function familyName(role) return "MDTFont_"..role end
 
----Creates one font family per role (or a plain font when CreateFontFamily is unavailable) plus one fallback font per other alphabet.
+local function samePath(a, b)
+  return type(a) == "string" and (a:lower():gsub("/", "\\")) == (b:lower():gsub("/", "\\"))
+end
+
+---Creates one font family per role (or a plain font when CreateFontFamily is unavailable or returns a family without its roman font) plus one fallback font per other alphabet.
 function Fonts.Setup()
   Fonts.locale = GetLocale()
   local plan = Fonts.Plan(Fonts.locale, UI.Theme.data.font)
@@ -93,7 +97,7 @@ function Fonts.Setup()
     local name = familyName(role)
     local ok = type(CreateFontFamily) == "function" and pcall(CreateFontFamily, name, members)
     local font = ok and _G[name] or nil
-    if not font then
+    if not (font and samePath(font:GetFont(), Fonts.files.roman)) then
       font = CreateFont(name)
       font:SetFont(members[1].file, members[1].height, members[1].flags)
     end
