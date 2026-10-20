@@ -83,6 +83,25 @@ local function commit(self, source)
   self:Emit("onCommit", text, self, source)
 end
 
+local function flushPaste(self)
+  self:SetScript("OnUpdate", nil)
+  local text = table.concat(self.kitPaste)
+  self.kitPaste = nil
+  self.kitEdit:SetMaxBytes(self.kitProps.maxBytes or 0)
+  self:Emit("onPaste", text, self)
+end
+
+---Collects a keystroke burst outside the field. The field holds one byte meanwhile, so a huge paste costs no layout.
+local function bufferChar(self, char)
+  if not self.kitProps.onPaste then return end
+  if not self.kitPaste then
+    self.kitPaste = {}
+    self.kitEdit:SetMaxBytes(1)
+    self:SetScript("OnUpdate", flushPaste)
+  end
+  self.kitPaste[#self.kitPaste + 1] = char
+end
+
 ---@class MDT.UI.EditBoxSpec : MDT.UI.CommonSpec
 ---@field value string?
 ---@field label string?
@@ -102,6 +121,7 @@ end
 ---@field onEscape fun(self: MDT.UI.Control)? after Escape restored the last committed text (reported through onChange) and dropped focus without committing
 ---@field onFocusLost fun(self: MDT.UI.Control)?
 ---@field onCopy fun(self: MDT.UI.Control)? Ctrl+C pressed while focused
+---@field onPaste fun(text: string, self: MDT.UI.Control)? for boxes that take very long pastes (route strings): characters arriving within one frame are collected outside the field and delivered together on the next frame; the caller sets what the field shows
 UI.Define({
   name = "EditBox", frameType = "Frame", mixins = { Methods },
   props = {
@@ -127,6 +147,7 @@ UI.Define({
     { name = "onEscape", default = nil },
     { name = "onFocusLost", default = nil },
     { name = "onCopy", default = nil },
+    { name = "onPaste", default = nil },
   },
   Create = function(self)
     self.kitLabel = self:CreateFontString(nil, "ARTWORK")
@@ -217,6 +238,7 @@ UI.Define({
       commit(self, "blur")
       self:Emit("onFocusLost", self)
     end)
+    self.kitEdit:SetScript("OnChar", function(_, char) bufferChar(self, char) end)
     self.kitEdit:SetScript("OnKeyUp", function(_, key)
       if key == "C" and IsControlKeyDown() then self:Emit("onCopy", self) end
     end)
@@ -235,6 +257,10 @@ UI.Define({
   OnRelease = function(self)
     self.kitEdit:ClearFocus()
     self.kitLastCommit = nil
+    if self.kitPaste then
+      self.kitPaste = nil
+      self:SetScript("OnUpdate", nil)
+    end
   end,
   Measure = function(self, availW)
     local props = self.kitProps

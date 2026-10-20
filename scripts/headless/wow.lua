@@ -498,10 +498,15 @@ function W.userClick(frame, button)
   end
 end
 
--- Simulates typing: keystrokes reach only the focused edit box.
+-- Simulates typing: keystrokes reach only the focused edit box, one character at a time. Like the client, a character
+-- past the byte limit is dropped but still fires OnChar.
 function W.userType(editBox, text)
   if not editBox:HasFocus() then return false end
-  editBox:Insert(text)
+  for char in tostring(text):gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+    local limit = editBox:GetMaxBytes()
+    if limit == 0 or #editBox:GetText() < limit then editBox:Insert(char) end
+    fireScript(editBox, "OnChar", char)
+  end
   return true
 end
 
