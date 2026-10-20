@@ -25,9 +25,11 @@ local function depth(container)
   return d
 end
 
----Lays out every dirty container. A child whose height changed re-dirties its parent, so up to three passes run per flush.
+local MAX_PASSES = 32
+
+---Lays out every dirty container until none is left. A child whose height changed re-dirties its parent, so a deep tree takes one pass per level.
 function Layout.FlushAll()
-  for _ = 1, 3 do
+  for _ = 1, MAX_PASSES do
     if #queue == 0 then break end
     local batch = queue
     queue, dirty = {}, {}
@@ -38,7 +40,11 @@ function Layout.FlushAll()
       if not container.kitReleased then container:kitLayout() end
     end
   end
-  if #queue == 0 then ticker:Hide() end
+  if #queue > 0 then
+    queue, dirty = {}, {}
+    geterrorhandler()("MDT UI: layout did not settle after "..MAX_PASSES.." passes")
+  end
+  ticker:Hide()
 end
 
 ticker:SetScript("OnUpdate", Layout.FlushAll)

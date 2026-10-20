@@ -471,6 +471,36 @@ return function(ctx)
     dialog:Close("api")
   end)
 
+  step("kit layout: Batch returns with a 5-deep nested tree fully measured", function()
+    local root = UI.Stack(page, {})
+    UI.Layout.FlushAll()
+    local leaf
+    root:Batch(function()
+      local parent = root
+      for _ = 1, 5 do parent = UI.Stack(parent, { padding = "sm" }) end
+      leaf = UI.Text(parent, { text = "deep" })
+    end)
+    local afterBatch = root:GetHeight()
+    expect(not UI.Layout.IsDirty(), "Batch returned with containers still dirty")
+    UI.Layout.FlushAll()
+    expect(afterBatch == root:GetHeight() and afterBatch >= leaf:GetHeight() + 5 * 2 * UI.Theme.Space("sm"),
+      ("root was %d tall after Batch and %d once settled"):format(afterBatch, root:GetHeight()))
+
+    local errors = {}
+    local previous = geterrorhandler()
+    seterrorhandler(function(message) errors[#errors + 1] = tostring(message) end)
+    local loop = UI.Stack(page, {})
+    local settles = loop.kitLayout
+    loop.kitLayout = function(self) UI.Layout.Invalidate(self) end
+    UI.Layout.FlushAll()
+    seterrorhandler(previous)
+    expect(#errors == 1 and errors[1]:find("did not settle", 1, true), "a layout that never settles was not reported: "..table.concat(errors, "; "))
+    loop.kitLayout = settles
+    loop:Release()
+    root:Release()
+    UI.Layout.FlushAll()
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
