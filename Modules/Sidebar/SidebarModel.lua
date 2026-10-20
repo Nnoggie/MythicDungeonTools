@@ -245,7 +245,7 @@ end
 ---@param pulls table[]
 ---@param selection integer[]
 ---@param anchor integer
----@return table[] remaining, integer select
+---@return table[] remaining, integer nextPull
 function Model.DeletePulls(pulls, selection, anchor)
   local keep
   for index = anchor, 1, -1 do
@@ -265,8 +265,8 @@ function Model.DeletePulls(pulls, selection, anchor)
       remaining[#remaining + 1] = pull
     end
   end
-  local select = keep and (keep - removedBelowKeep) or 1
-  return remaining, math.max(1, math.min(select, #remaining))
+  local nextPull = keep and (keep - removedBelowKeep) or 1
+  return remaining, math.max(1, math.min(nextPull, #remaining))
 end
 
 ---@class MDT.PullMenuContext

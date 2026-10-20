@@ -296,8 +296,8 @@ local function setUpMouseHandlers(self)
     preset.value.pulls = tempPulls
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull(), tempPulls)
     MDT:SetSelectionToPull(targetPull)
-    MDT:ReloadPullButtons(true)
-    MDT:UpdateProgressbar()
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls(nil, true)
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())
     end
@@ -366,8 +366,8 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
     end
     MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, not self.selected, IsControlKeyDown())
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
-    MDT:UpdateProgressbar()
-    MDT:ReloadPullButtons()
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())
     end
@@ -947,7 +947,6 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
         end
       end
     end
-    -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pullIdx) end
   end
   if add then
     if isCloneConstrained(blip.clone) then return end
@@ -975,7 +974,6 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
       end
     end
   end
-  -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pull) end
 end
 
 local BOX_SELECTION_MIN_DRAG = 4
@@ -1174,8 +1172,8 @@ function MDT:DungeonEnemies_StopBoxSelection(cancel)
   end
   selection.preset.value.pulls = selection.tempPulls
   MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
-  MDT:ReloadPullButtons(true)
-  MDT:UpdateProgressbar()
+  MDT:RefreshSidebar()
+  MDT:DrawAllHulls(nil, true)
   if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
     MDT:LiveSession_SendPulls(MDT:GetPulls())
   end

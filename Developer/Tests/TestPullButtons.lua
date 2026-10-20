@@ -6,7 +6,7 @@ local importString =
 
 local function setup()
   local frame = MDT.main_frame
-  frame.sidePanelImportButton.frame:Click()
+  MDT:OpenImportPresetDialog()
   C_Timer.After(0.3, function()
     frame.presetImportBox:SetText(importString)
     frame.presetImportBox:HighlightText()
@@ -19,30 +19,27 @@ end
 
 local function teardown()
   local frame = MDT.main_frame
-  local deleteButton = frame.sidePanelDeleteButton.frame
   local okayButton = frame.DeleteConfirmationFrame.OkayButton.frame
-  deleteButton:Click()
+  MDT:OpenDeletePresetDialog()
   C_Timer.After(0.5, function()
     okayButton:Click()
   end)
 end
 
 local function testFunc()
-  local sidepanel = MDT.main_frame.sidePanel
   setup()
   C_Timer.After(1.5, function()
+    local list = MDT:GetSidebarControl("pulls")
     local numPulls = MDT:GetPullsNum()
     for i = 1, numPulls do
       C_Timer.After(0.2 * i, function()
-        local pullButton = sidepanel.newPullButtons[i].frame
-        local onEnter = pullButton:GetScript("OnEnter")
-        local onLeave = pullButton:GetScript("OnLeave")
-        local onClick = pullButton:GetScript("OnClick")
-        onEnter()
+        list:ScrollTo(i, "nearest")
+        local row = list:GetRow(i)
+        row:GetScript("OnEnter")(row)
         C_Timer.After(0.2, function()
-          onLeave()
+          row:GetScript("OnLeave")(row)
           C_Timer.After(0.2, function()
-            onClick(nil, "LeftButton", true)
+            row:Click("LeftButton")
           end)
         end)
       end)

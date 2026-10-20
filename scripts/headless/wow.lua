@@ -466,6 +466,8 @@ function ScriptRegion:IsMouseEnabled() return S[self].mouseEnabled == true end
 function ScriptRegion:EnableMouseMotion(enabled) S[self].mouseMotion = enabled ~= false end
 function ScriptRegion:SetMouseClickEnabled(enabled) S[self].mouseClick = enabled end
 function ScriptRegion:SetMouseMotionEnabled(enabled) S[self].mouseMotion = enabled end
+function ScriptRegion:SetPropagateMouseMotion(enabled) S[self].propagateMouseMotion = enabled end
+function ScriptRegion:SetPropagateMouseClicks(enabled) S[self].propagateMouseClicks = enabled end
 function ScriptRegion:SetPassThroughButtons() end
 
 function ScriptRegion:SetAlpha(alpha)

@@ -292,7 +292,6 @@ function MDT:RegisterErrorHandledFunctions()
   local blacklisted = {
     ["DungeonEnemies_UpdateSelected"] = true,
     ["DungeonEnemies_UpdateEnemiesAsync"] = true,
-    ["ReloadPullButtons"] = true,
     ["DrawAllPresetObjects"] = true,
     ["AddPull"] = true,
     ["ClearPull"] = true,

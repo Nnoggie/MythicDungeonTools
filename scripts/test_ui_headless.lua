@@ -149,42 +149,10 @@ step("switch season and back", function()
   dropdown:Fire("OnValueChanged", 1)
 end)
 
-step("add a pull with the new pull button", function()
-  local before = #pulls()
-  click(main.sidePanel.newPullButton)
-  W.settle(asyncIdle, 30)
-  expect(#pulls() == before + 1, ("pull count %d, expected %d"):format(#pulls(), before + 1))
-end)
-
-step("add an enemy to the current pull by clicking its blip", function()
-  local blip
-  for _, frame in ipairs(MDT.dungeonEnemies_framePool.active) do
-    if frame:IsVisible() and frame.data then blip = frame break end
-  end
-  expect(blip, "no visible enemy blip on the map")
-  click(blip, "LeftButton")
-  W.settle(asyncIdle, 30)
-  local current = pulls()[MDT:GetCurrentPreset().value.currentPull]
-  expect(current and next(current) ~= nil, "current pull has no enemies after clicking a blip")
-end)
-
-step("select the first pull", function()
-  click(main.sidePanel.newPullButtons[1], "LeftButton")
-  expect(MDT:GetCurrentPreset().value.currentPull == 1, "pull 1 is not selected")
-end)
-
-step("open the pull context menu", function()
-  local menus = #W.menus
-  click(main.sidePanel.newPullButtons[1], "RightButton")
-  expect(#W.menus > menus, "right-click did not open a context menu")
-end)
-
-step("change dungeon level with the slider", function()
-  local slider = main.sidePanel.DifficultySlider
-  slider.slider:SetValue(22, true)
-  W.fireScript(slider.slider, "OnMouseUp", "LeftButton")
-  expect(db.currentDifficulty == 22, "dungeon level is "..tostring(db.currentDifficulty))
-end)
+dofile(root.."/scripts/headless/sidebar_steps.lua")({
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
+  typeInto = typeInto, unusedPresetName = unusedPresetName, presetCount = presetCount,
+})
 
 step("sublevel dropdown: hidden for one floor, switches floors otherwise", function()
   local group = main.sublevelSelectionGroup
@@ -206,6 +174,7 @@ for _, section in ipairs(MDT:GetNavigationSections()) do
     expect(MDT:GetCurrentSection() == section.key, "current section is "..tostring(MDT:GetCurrentSection()))
     local content = main.sectionContentFrames[section.key]
     if content then expect(content:IsVisible(), "section content frame is hidden") end
+    expect(MDT:GetSidebarControl("pulls"):IsVisible() == (section.key == "maps"), "sidebar visibility is wrong in section "..section.key)
     snapshot("section "..section.key)
   end)
 end
@@ -214,70 +183,6 @@ step("return to the maps section", function()
   click(main.navigationSidebar.buttons.maps)
   expect(MDT:IsMapSectionActive(), "maps section not active")
   expect(main.mapPanelFrame:IsVisible(), "map panel hidden after returning to maps")
-end)
-
-step("new preset dialog creates a preset", function()
-  local before = presetCount()
-  click(main.sidePanelNewButton)
-  expect(main.presetCreationFrame.frame:IsVisible(), "new preset dialog not shown")
-  snapshot("new preset dialog")
-  local name = unusedPresetName("Headless Route")
-  typeInto(main.PresetCreationEditbox, name)
-  click(main.presetCreationCreateButton)
-  W.settle(asyncIdle, 30)
-  expect(presetCount() == before + 1, "preset was not created")
-  expect(MDT:GetCurrentPreset().text == name, "new preset is not current: "..tostring(MDT:GetCurrentPreset().text))
-  expect(not main.presetCreationFrame.frame:IsVisible(), "new preset dialog still shown")
-end)
-
-step("rename dialog renames the preset", function()
-  click(main.sidePanelRenameButton)
-  local dialog = main.RenameFrame
-  expect(dialog.frame:IsVisible(), "rename dialog not shown")
-  snapshot("rename dialog")
-  local name = unusedPresetName("Headless Renamed")
-  typeInto(dialog.Editbox, name)
-  click(dialog.RenameButton)
-  expect(MDT:GetCurrentPreset().text == name, "preset name is "..tostring(MDT:GetCurrentPreset().text))
-  MDT:HideAllDialogs()
-end)
-
-local exported
-step("export dialog shows the route string", function()
-  click(main.sidePanelExportButton)
-  expect(main.ExportFrame.frame:IsVisible(), "export dialog not shown")
-  snapshot("export dialog")
-  exported = main.ExportFrameEditbox:GetText()
-  expect(type(exported) == "string" and #exported > 20, "export string is empty")
-  main.ExportFrame:Hide()
-  expect(not main.ExportFrame.frame:IsVisible(), "export dialog still shown")
-end)
-
-step("import dialog imports the exported route", function()
-  local before = presetCount()
-  click(main.sidePanelImportButton)
-  expect(main.presetImportFrame.frame:IsVisible(), "import dialog not shown")
-  snapshot("import dialog")
-  typeInto(main.presetImportBox, exported)
-  click(main.presetImportButton)
-  W.settle(asyncIdle, 30)
-  local confirmation = main.ConfirmationFrame
-  expect(confirmation and confirmation.frame:IsVisible(), "re-importing a known route did not ask overwrite or copy")
-  click(confirmation.CancelButton)
-  W.settle(asyncIdle, 30)
-  expect(presetCount() == before + 1, ("preset count %d, expected %d after import"):format(presetCount(), before + 1))
-  MDT:HideAllDialogs()
-end)
-
-step("delete dialog deletes the current preset", function()
-  local before = presetCount()
-  click(main.sidePanelDeleteButton)
-  expect(main.DeleteConfirmationFrame.frame:IsVisible(), "delete dialog not shown")
-  snapshot("delete dialog")
-  click(main.DeleteConfirmationFrame.OkayButton)
-  W.settle(asyncIdle, 30)
-  expect(presetCount() == before - 1, "preset was not deleted")
-  expect(not main.DeleteConfirmationFrame.frame:IsVisible(), "delete dialog still shown")
 end)
 
 step("clear dialog opens and cancels", function()

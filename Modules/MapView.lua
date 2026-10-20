@@ -553,10 +553,9 @@ function MDT:GetTileFormat(dungeonIdx, sublevel)
   return mapInfo and mapInfo.tileFormat and mapInfo.tileFormat[sublevel] or 4
 end
 
-function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar, async)
+function MDT:UpdateMap(ignoreSetSelection, ignoreHullRedraw, _, async)
   initializeDB()
   MDT:CancelAsync("UpdateMap")
-  MDT:CancelAsync("ReloadPullButtons")
   MDT:CancelAsync("DrawAllHulls")
   if not MDT:AreFramesInitialized() then coroutine.yield() end
   local mapName
@@ -565,10 +564,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   MDT:EnsureDBTables()
   if not MDT:AreFramesInitialized() then coroutine.yield() end
   local preset = MDT:GetCurrentPreset()
-  if preset.difficulty then
-    db.currentDifficulty = preset.difficulty
-    frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
-  end
+  if preset.difficulty then db.currentDifficulty = preset.difficulty end
   if not MDT:AreFramesInitialized() then coroutine.yield() end
   local textureInfo = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
   if type(textureInfo) == "string" then --textures from blizzard files
@@ -623,34 +619,8 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not db.devMode then MDT:ZoomMapToDefault() end
     MDT:DungeonEnemies_UpdateEnemiesAsync()
     MDT:POI_UpdateAll()
-    if not ignoreReloadPullButtons then
-      MDT:ReloadPullButtons(true)
-    end
-    if not MDT:AreFramesInitialized() then coroutine.yield() end
-    --handle delete button disable/enable
-    local presetCount = 0
-    for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-      presetCount = presetCount + 1
-    end
-    if (db.currentPreset[db.currentDungeonIdx] == 1 or db.currentPreset[db.currentDungeonIdx] == presetCount) or
-        MDT.liveSessionActive then
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-    else
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-    end
-    if not MDT:AreFramesInitialized() then coroutine.yield() end
-    --live mode
-    local livePreset = MDT:GetCurrentLivePreset()
-    if MDT.liveSessionActive and preset ~= livePreset then
-      MDT.main_frame.liveReturnButton:Show()
-      MDT.main_frame.setLivePresetButton:Show()
-    else
-      MDT.main_frame.liveReturnButton:Hide()
-      MDT.main_frame.setLivePresetButton:Hide()
-    end
-    MDT:UpdatePresetDropdownTextColor()
+    MDT:RefreshSidebar()
+    if not ignoreHullRedraw then MDT:DrawAllHulls(nil, true) end
     if not MDT:AreFramesInitialized() then coroutine.yield() end
     if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
     if MDT.pendingAutoPanToPull then
@@ -662,7 +632,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not MDT:AreFramesInitialized() then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not MDT:AreFramesInitialized() then coroutine.yield() end
-    MDT:UpdateProgressbar()
+    MDT:RefreshSidebar()
   end, "UpdateMap", true)
 end
 
@@ -675,12 +645,11 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
   end
   if init then return end
-  MDT:UpdatePresetDropDown()
   if not ignoreUpdateMap then MDT:UpdateMap() end
   MDT:ZoomMapToDefault()
   --Colors the first pull in "Default" presets
   if db.currentPreset[db.currentDungeonIdx] == 1 then MDT:ColorPull() end
-  MDT:UpdateProgressbar()
+  MDT:RefreshSidebar()
 end
 
 --contains zoneIds to auto swap to corresponding dungeon when opening the AddOn

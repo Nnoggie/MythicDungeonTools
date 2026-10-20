@@ -115,7 +115,8 @@ function MDT:MakeCustomColorFrame(frame)
       db.colorPaletteInfo.numberCustomColors = value
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons()
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls()
     MDT:MakeCustomColorFrame(frame)
     MDT:OpenCustomColorsDialog()
   end)
@@ -137,7 +138,8 @@ function MDT:MakeCustomColorFrame(frame)
     frame.CustomColorFrame.ColorPicker[i]:SetCallback("OnValueChanged", function(widget, event, r, g, b)
       db.colorPaletteInfo.customPaletteValues[i] = { r, g, b }
       MDT:SetPresetColorPaletteInfo()
-      MDT:ReloadPullButtons()
+      MDT:RefreshSidebar()
+      MDT:DrawAllHulls()
     end)
     frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorPicker[i])
   end
@@ -221,7 +223,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.forcesCheckbox:SetValue(db.useForcesCount)
   frame.forcesCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.useForcesCount = value
-    MDT:ReloadPullButtons()
+    MDT:RefreshSidebar()
   end)
   frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
 
@@ -231,7 +233,7 @@ function MDT:MakeSettingsFrame(frame)
   frame.pullButtonHealthCheckbox:SetValue(db.showPullButtonHealth)
   frame.pullButtonHealthCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.showPullButtonHealth = value
-    MDT:ReloadPullButtons()
+    MDT:RefreshSidebar()
   end)
   frame.settingsGeneralColumn:AddChild(frame.pullButtonHealthCheckbox)
 
@@ -322,7 +324,8 @@ function MDT:MakeSettingsFrame(frame)
     MDT:SetPresetColorPaletteInfo()
     frame.toggleForceColorBlindMode:SetDisabled(not value)
     if value then
-      MDT:ReloadPullButtons(true)
+      MDT:RefreshSidebar()
+      MDT:DrawAllHulls(nil, true)
     end
   end)
   frame.settingsColorsColumn:AddChild(frame.AutomaticColorsCheck)
@@ -335,7 +338,8 @@ function MDT:MakeSettingsFrame(frame)
   frame.toggleForceColorBlindMode:SetCallback("OnValueChanged", function(widget, callbackName, value)
     db.colorPaletteInfo.forceColorBlindMode = value
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons(true)
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls(nil, true)
   end)
   frame.settingsColorsColumn:AddChild(frame.toggleForceColorBlindMode)
 
@@ -352,7 +356,8 @@ function MDT:MakeSettingsFrame(frame)
       db.colorPaletteInfo.colorPaletteIdx = value
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons(true)
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls(nil, true)
   end)
   frame.settingsColorsColumn:AddChild(frame.PaletteSelectDropdown)
 
@@ -368,7 +373,8 @@ function MDT:MakeSettingsFrame(frame)
       frame.toggleForceColorBlindMode:SetDisabled(false)
     end
     MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons(true)
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls(nil, true)
   end)
   frame.settingsColorsColumn:AddChild(frame.button)
 

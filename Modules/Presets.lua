@@ -9,18 +9,6 @@ local function initializeDB()
   db = db or MDT:GetDB()
 end
 
-function MDT:UpdatePresetDropDown()
-  initializeDB()
-  local dropdown = MDT.main_frame.sidePanel.WidgetGroup.PresetDropDown
-  local presetList = {}
-  for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-    presetList[k] = MDT:GetPresetDropdownText(v)
-  end
-  dropdown:SetList(presetList)
-  dropdown:SetValue(db.currentPreset[db.currentDungeonIdx])
-  dropdown:ClearFocus()
-end
-
 local raidClassColorKeyByClassIndex = {
   [1] = "WARRIOR",
   [2] = "PALADIN",
@@ -81,18 +69,6 @@ function MDT:GetPresetDropdownText(preset)
   return text
 end
 
-function MDT:UpdatePresetDropdownTextColor(forceReset)
-  local preset = self:GetCurrentPreset()
-  local livePreset = self:GetCurrentLivePreset()
-  if self.liveSessionActive and preset == livePreset and (not forceReset) then
-    local dropdown = MDT.main_frame.sidePanel.WidgetGroup.PresetDropDown
-    dropdown.text:SetTextColor(0, 1, 0, 1)
-  else
-    local dropdown = MDT.main_frame.sidePanel.WidgetGroup.PresetDropDown
-    dropdown.text:SetTextColor(1, 1, 1, 1)
-  end
-end
-
 ---Returns the current preset
 function MDT:GetCurrentPreset()
   initializeDB()
@@ -123,7 +99,6 @@ function MDT:ReturnToLivePreset()
   ---@diagnostic disable-next-line: need-check-nil
   self:UpdateToDungeon(preset.value.currentDungeonIdx, true)
   db.currentPreset[db.currentDungeonIdx] = presetIdx
-  self:UpdatePresetDropDown()
   self:UpdateMap()
 end
 
@@ -133,9 +108,7 @@ function MDT:SetLivePreset()
     self:SetUniqueID(preset)
     self.livePresetUID = preset.uid
     self:LiveSession_SendPreset(preset)
-    self:UpdatePresetDropdownTextColor()
-    self.main_frame.setLivePresetButton:Hide()
-    self.main_frame.liveReturnButton:Hide()
+    self:RefreshSidebar()
   end
   MDT:CheckPresetSize(callback)
 end
@@ -275,7 +248,6 @@ function MDT:DeletePreset(index)
   if index == 1 then return end
   tremove(db.presets[db.currentDungeonIdx], index)
   db.currentPreset[db.currentDungeonIdx] = index - 1
-  MDT:UpdatePresetDropDown()
   MDT:UpdateMap()
 end
 
@@ -293,7 +265,6 @@ function MDT:DeleteAllPresets()
     tremove(db.presets[db.currentDungeonIdx], i)
     db.currentPreset[db.currentDungeonIdx] = i - 1
   end
-  MDT:UpdatePresetDropDown()
   MDT:UpdateMap()
 end
 
@@ -303,10 +274,7 @@ function MDT:ClearPreset(preset, silent)
   preset.value.currentPull = 1
   --MDT:DeleteAllPresetObjects()
   self:EnsureDBTables()
-  if not silent then
-    self:UpdateMap()
-    self:ReloadPullButtons()
-  end
+  if not silent then self:UpdateMap() end
   MDT:ColorPull()
 end
 
@@ -341,7 +309,6 @@ function MDT:CreateNewPreset(name)
     db.currentPreset[db.currentDungeonIdx] = countPresets
     MDT:EnsurePresetCreatedBy(db.presets[db.currentDungeonIdx][countPresets], true)
     MDT.main_frame.presetCreationFrame:Hide()
-    MDT:UpdatePresetDropDown()
     MDT:UpdateMap()
     MDT:SetPresetColorPaletteInfo()
     MDT:ColorAllPulls()
@@ -412,7 +379,6 @@ function MDT:ImportPreset(preset, fromLiveSession)
   end
 
   local finishImport = function()
-    self:UpdatePresetDropDown()
     self:UpdateMap()
     self.liveUpdateFrameOpen = nil
     if fromLiveSession then
@@ -539,5 +505,5 @@ function MDT:RenamePreset(renameText, takeOwnership)
     MDT:SetUniqueID(preset)
   end
   MDT.main_frame.RenameFrame:Hide()
-  MDT:UpdatePresetDropDown()
+  MDT:RefreshSidebar()
 end
