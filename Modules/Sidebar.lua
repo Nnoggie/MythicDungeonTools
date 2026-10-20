@@ -141,7 +141,7 @@ local function applyLevelChange(level)
   MDT:GetCurrentPreset().difficulty = level
   if crossingTen then MDT:POI_UpdateAll() end
   MDT:RefreshSidebar()
-  if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
+  MDT:UpdateEnemyInfoData()
 end
 
 local function commitLevelChange()

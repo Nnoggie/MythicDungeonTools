@@ -226,6 +226,9 @@ dofile(root.."/scripts/headless/kit_gallery.lua")({
 dofile(root.."/scripts/headless/kit_list_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
 })
+dofile(root.."/scripts/headless/enemy_info_steps.lua")({
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, developer = flags.developer == true,
+})
 
 step("hover every visible widget", function()
   local hovered = 0
