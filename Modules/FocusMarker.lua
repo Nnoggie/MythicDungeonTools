@@ -1072,10 +1072,10 @@ local function markerButtonText(markerIndex, known)
   return markerLabel(markerIndex)
 end
 
+-- The section can change before the next frame; a refresh then must not switch back to the marks page.
 refreshAssignmentsFrame = function()
-  if not page then return end
-  if MDT.GetCurrentSection and MDT:GetCurrentSection() ~= "marks" then return end
   C_Timer.After(0, function()
+    if not page or MDT:GetCurrentSection() ~= "marks" then return end
     MDT:FocusMarker_OpenAssignments(true)
   end)
 end

@@ -309,5 +309,7 @@ return function(ctx)
     click(control(page, "syncMarks"))
     click(control(page, "setKeybind"))
     expect(page:Find("syncWarning") == nil, "a solo roster shows the sync warning")
+    click(main.navigationSidebar.buttons.maps)
+    expect(MDT:IsMapSectionActive(), "the map section did not come back")
   end)
 end
