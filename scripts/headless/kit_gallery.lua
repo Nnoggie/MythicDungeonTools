@@ -423,6 +423,35 @@ return function(ctx)
     UI.Layout.FlushAll()
   end)
 
+  step("kit lifecycle: a released color swatch closes its picker and ignores the picker's late callbacks", function()
+    log = {}
+    local first = UI.ColorSwatch(page, { color = { 1, 0, 0, 1 }, onChange = logged("first") })
+    UI.Layout.FlushAll()
+    click(first)
+    local stale = ColorPickerFrame.info
+    first:Release()
+    expect(not ColorPickerFrame:IsShown(), "releasing the swatch left its color picker open")
+    local second = UI.ColorSwatch(page, { color = { 0, 0, 1, 1 }, onChange = logged("second") })
+    expect(second == first, "setup: the pool did not hand back the released swatch")
+    stale.swatchFunc()
+    stale.cancelFunc()
+    expect(#log == 0, "a stale picker callback reached a control: "..table.concat(log, ","))
+    local r, g, b = unpack(second:GetColor())
+    expect(r == 0 and g == 0 and b == 1, "a stale picker callback recolored the reused swatch")
+
+    click(second)
+    local other = UI.ColorSwatch(page, { color = { 0, 1, 0, 1 }, onChange = logged("other") })
+    UI.Layout.FlushAll()
+    click(other)
+    second:Release()
+    expect(ColorPickerFrame:IsShown(), "releasing a swatch closed a picker another swatch owns")
+    ColorPickerFrame.info.swatchFunc()
+    expect(table.concat(log, ",") == "other", "the picker's owner did not get its callback: "..table.concat(log, ","))
+    ColorPickerFrame:Hide()
+    other:Release()
+    UI.Layout.FlushAll()
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
