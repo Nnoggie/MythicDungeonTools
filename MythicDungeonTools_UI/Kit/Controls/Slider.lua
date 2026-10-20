@@ -106,13 +106,13 @@ UI.Define({
     self.kitSlider:SetThumbTexture(thumb)
     self.kitThumbTexture = thumb
 
-    self.kitSlider:SetScript("OnValueChanged", function(slider, value, userInput)
+    UI.Script(self.kitSlider, "OnValueChanged", function(slider, value, userInput)
       if self.kitSettingValue then return end
       self.kitProps.value = value
       repaint(self)
       if userInput then self:Emit("onChange", value, self) end
     end)
-    self.kitSlider:SetScript("OnMouseUp", function()
+    UI.Script(self.kitSlider, "OnMouseUp", function()
       if self.kitProps.disabled then return end
       self:Emit("onCommit", self.kitProps.value, self)
     end)

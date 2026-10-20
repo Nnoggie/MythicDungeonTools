@@ -213,6 +213,18 @@ return function(ctx)
     _G.DEFAULT_CHAT_FRAME.editBox = nil
   end)
 
+  step("enemy card: scrolling away from a hovered spell recycles its row cleanly", function()
+    local list = part("pinned", "spells")
+    expect(#list.kitProps.items > 10, "setup: the pinned enemy needs more spells than fit")
+    local row = list:GetRow(1)
+    W.hover(row)
+    expect(MDTTooltip:IsShown() and MDTTooltip:IsOwned(row), "setup: hovering the first spell shows no tooltip")
+    for _ = 1, 4 do W.fireScript(list:GetRow(list:GetOffset() == 0 and 1 or 3) or row, "OnMouseWheel", -1) end
+    expect(list:GetOffset() > 0 and list:GetRow(1) == nil, "the list did not scroll the hovered row away")
+    expect(not MDTTooltip:IsOwned(row), "the recycled row kept its spell tooltip")
+    list:SetOffset(0)
+  end)
+
   step("enemy card: Link Spells posts every spell to the group", function()
     local link = part("pinned", "linkSpells")
     W.chatMessages = {}

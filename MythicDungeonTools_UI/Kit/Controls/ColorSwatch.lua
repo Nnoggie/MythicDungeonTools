@@ -83,7 +83,7 @@ UI.Define({
     self.kitLabel:SetWordWrap(false)
     self:kitSkinInit("ghost")
     self.kitOnRepaint = function(swatch, row) swatch.kitWellBorder:SetToken(row.border or (swatch.kitHovered and "accent" or "border.strong")) end
-    self:SetScript("OnClick", openPicker)
+    UI.Script(self, "OnClick", openPicker)
   end,
   OnRelease = function(self)
     local owned = self.kitPickerToken ~= nil and self.kitPickerToken == pickerToken

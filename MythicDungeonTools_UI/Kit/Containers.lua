@@ -130,7 +130,7 @@ local function createContainer(self)
   self.kitBackground = self:CreateTexture(nil, "BACKGROUND")
   self.kitBackground:SetAllPoints()
   self.kitBorder = UI.Pixel.Border(self, "border.normal")
-  self:SetScript("OnSizeChanged", sizeChanged)
+  UI.Script(self, "OnSizeChanged", sizeChanged)
 end
 
 local function containerProps(extra)

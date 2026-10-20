@@ -5,6 +5,7 @@
 	<Script file='Pure\ListMath.lua'/>
 	<Script file='Pure\Selection.lua'/>
 	<Script file='Pure\MenuModel.lua'/>
+	<Script file='Errors.lua'/>
 	<Script file='Theme.lua'/>
 	<Script file='Fonts.lua'/>
 	<Script file='Pixel.lua'/>

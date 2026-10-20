@@ -31,4 +31,4 @@ end
 applyScale()
 Root:RegisterEvent("UI_SCALE_CHANGED")
 Root:RegisterEvent("DISPLAY_SIZE_CHANGED")
-Root:SetScript("OnEvent", applyScale)
+UI.Script(Root, "OnEvent", applyScale)

@@ -54,7 +54,7 @@ local function ensureCard()
   card.kitBorder = UI.Pixel.Border(card, "border.strong")
   card.content = UI.Stack(card, { padding = "md", gap = "sm" })
   card.content:SetPoint("TOPLEFT", card, "TOPLEFT", 0, 0)
-  card.content:HookScript("OnSizeChanged", function(content) card:SetSize(content:GetWidth(), content:GetHeight()) end)
+  UI.HookScript(card.content, "OnSizeChanged", function(content) card:SetSize(content:GetWidth(), content:GetHeight()) end)
   return card
 end
 

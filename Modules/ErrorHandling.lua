@@ -186,6 +186,9 @@ local function onError(msg, stackTrace, name, omitRoute)
   return false
 end
 
+-- Errors inside the UI kit's frame scripts and callbacks land in the same report.
+UI.SetErrorHandler(function(message, stack) onError(message, stack, "UI") end)
+
 --accessible function for errors in coroutines
 -- omitRoute suppresses route export for the combined report if any error requests it.
 function MDT:OnError(msg, stackTrace, name, omitRoute)

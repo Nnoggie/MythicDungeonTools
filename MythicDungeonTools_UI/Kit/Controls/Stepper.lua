@@ -102,22 +102,22 @@ UI.Define({
     self.kitUp.kitGlyph = UI.Glyphs.Create(self.kitUp, "right", 7, "text.muted")
     self.kitUp.kitGlyph:SetPoint("CENTER", self.kitUp, "CENTER", 0, 0)
     for _, arrow in ipairs({ self.kitDown, self.kitUp }) do
-      arrow:HookScript("OnEnter", paintArrow)
-      arrow:HookScript("OnLeave", paintArrow)
+      UI.HookScript(arrow, "OnEnter", paintArrow)
+      UI.HookScript(arrow, "OnLeave", paintArrow)
     end
     self.kitValue = CreateFrame("Button", nil, self)
     self.kitValue:SetPoint("TOPLEFT", self.kitDown, "TOPRIGHT", 0, 0)
     self.kitValue:SetPoint("BOTTOMRIGHT", self.kitUp, "BOTTOMLEFT", 0, 0)
-    self.kitValue:SetScript("OnClick", function() if not self.kitProps.disabled then self:Emit("onPick", self) end end)
+    UI.Script(self.kitValue, "OnClick", function() if not self.kitProps.disabled then self:Emit("onPick", self) end end)
     self.kitValueText = self.kitValue:CreateFontString(nil, "ARTWORK")
     self.kitValueText:SetFontObject(Fonts.Get("title"))
     self.kitValueText:SetAllPoints()
     self.kitValueText:SetJustifyH("CENTER")
     self:EnableMouseWheel(true)
-    self:SetScript("OnMouseWheel", function(_, delta) if self.kitProps.wheel then stepBy(self, delta > 0 and 1 or -1) end end)
+    UI.Script(self, "OnMouseWheel", function(_, delta) if self.kitProps.wheel then stepBy(self, delta > 0 and 1 or -1) end end)
     self.kitValue:EnableMouseWheel(true)
     self:kitForwardHover(self.kitDown, self.kitUp, self.kitValue)
-    self.kitValue:SetScript("OnMouseWheel", function(_, delta) if self.kitProps.wheel then stepBy(self, delta > 0 and 1 or -1) end end)
+    UI.Script(self.kitValue, "OnMouseWheel", function(_, delta) if self.kitProps.wheel then stepBy(self, delta > 0 and 1 or -1) end end)
   end,
   OnRelease = function(self)
     if self.kitCommitTimer then

@@ -83,4 +83,4 @@ end
 local events = CreateFrame("Frame")
 events:RegisterEvent("UI_SCALE_CHANGED")
 events:RegisterEvent("DISPLAY_SIZE_CHANGED")
-events:SetScript("OnEvent", Pixel.Refresh)
+UI.Script(events, "OnEvent", Pixel.Refresh)

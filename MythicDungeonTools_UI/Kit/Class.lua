@@ -13,20 +13,20 @@ UI.Holder = Holder
 local Base = {}
 UI.Base = Base
 
----Runs a callback prop through the error handler. A release requested while the callback runs waits for it to return.
+---Runs a callback prop; its errors go to the addon's error report. A release requested while the callback runs waits for it to return.
 ---@param name string
 ---@return ...
 function Base:Emit(name, ...)
   local fn = self.kitProps[name]
   if not fn then return end
   self.kitEmitDepth = (self.kitEmitDepth or 0) + 1
-  local results = { xpcall(fn, geterrorhandler(), ...) }
+  local results = { UI.Call(fn, ...) }
   self.kitEmitDepth = self.kitEmitDepth - 1
   if self.kitEmitDepth == 0 and self.kitReleasePending then
     self.kitReleasePending = nil
     self:Release()
   end
-  if results[1] then return unpack(results, 2) end
+  return unpack(results)
 end
 
 ---Idempotent. Releases the subtree, resets every prop to its default and parks the frame in its class pool.
@@ -115,8 +115,8 @@ end
 function Base:kitForwardHover(...)
   for index = 1, select("#", ...) do
     local child = select(index, ...)
-    child:HookScript("OnEnter", function() onEnter(self) end)
-    child:HookScript("OnLeave", function() onLeave(self) end)
+    UI.HookScript(child, "OnEnter", function() onEnter(self) end)
+    UI.HookScript(child, "OnLeave", function() onLeave(self) end)
   end
 end
 
@@ -191,12 +191,12 @@ function UI.Define(def)
     -- Disabled buttons still explain themselves: keep OnEnter/OnLeave (tooltips) firing while disabled.
     if frame:IsObjectType("Button") then frame:SetMotionScriptsWhileDisabled(true) end
     if frame:HasScript("OnEnter") then
-      frame:HookScript("OnEnter", onEnter)
-      frame:HookScript("OnLeave", onLeave)
+      UI.HookScript(frame, "OnEnter", onEnter)
+      UI.HookScript(frame, "OnLeave", onLeave)
     end
     if frame:HasScript("OnMouseDown") then
-      frame:HookScript("OnMouseDown", onMouseDown)
-      frame:HookScript("OnMouseUp", onMouseUp)
+      UI.HookScript(frame, "OnMouseDown", onMouseDown)
+      UI.HookScript(frame, "OnMouseUp", onMouseUp)
     end
     return frame
   end

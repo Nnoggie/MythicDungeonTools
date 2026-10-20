@@ -100,7 +100,7 @@ UI.Define({
     self.kitText:SetShadowOffset(0, -1)
     self.kitText:SetAllPoints()
     self.kitText:SetJustifyH("CENTER")
-    self:SetScript("OnSizeChanged", function() layoutSegments(self) end)
+    UI.Script(self, "OnSizeChanged", function() layoutSegments(self) end)
   end,
   Measure = function(self, availW) return self.kitProps.width or availW, Theme.Size("sm") end,
 })

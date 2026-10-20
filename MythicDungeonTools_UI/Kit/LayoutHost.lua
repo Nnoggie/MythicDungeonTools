@@ -45,12 +45,12 @@ function Layout.FlushAll()
   end
   if #queue > 0 then
     queue, dirty = {}, {}
-    geterrorhandler()("MDT UI: layout did not settle after "..MAX_PASSES.." passes")
+    UI.ReportError("MDT UI: layout did not settle after "..MAX_PASSES.." passes")
   end
   ticker:Hide()
 end
 
-ticker:SetScript("OnUpdate", Layout.FlushAll)
+UI.Script(ticker, "OnUpdate", Layout.FlushAll)
 
 ---Runs `fn` with layout paused, then flushes once synchronously so sizes are known when it returns.
 ---@param container MDT.UI.Control

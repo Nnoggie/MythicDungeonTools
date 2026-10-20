@@ -16,7 +16,7 @@ local catcher = CreateFrame("Frame", "MDTEscapeCatcher", UIParent)
 catcher:Hide()
 tinsert(UISpecialFrames, "MDTEscapeCatcher")
 
-catcher:SetScript("OnHide", function()
+UI.Script(catcher, "OnHide", function()
   if suppress then return end
   local top = stack[#stack]
   if top then top.close() end
@@ -91,7 +91,7 @@ local function updateCatcher()
   clickCatcher:SetShown(floatingCount() > 0)
 end
 
-clickCatcher:SetScript("OnClick", function()
+UI.Script(clickCatcher, "OnClick", function()
   for i = #entries, 1, -1 do
     if entries[i].kind ~= "dialog" then
       Overlay.Pop(entries[i], "outside")

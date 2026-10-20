@@ -30,7 +30,7 @@ UI.Define({
     self.kitBorder = UI.Pixel.Border(self, "border.strong")
     self.content = UI.Stack(self, {})
     self.content:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
-    self.content:HookScript("OnSizeChanged", function(content)
+    UI.HookScript(self.content, "OnSizeChanged", function(content)
       self:SetSize(content:GetWidth(), content:GetHeight())
     end)
   end,

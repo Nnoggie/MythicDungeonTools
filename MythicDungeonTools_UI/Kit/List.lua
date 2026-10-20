@@ -11,15 +11,18 @@ local INDICATOR_HEIGHT = 2
 ---@type table<MDT.UI.ListKind, table>
 local rowPools = setmetatable({}, { __mode = "k" })
 
-local function rowClick(row, button) row.kitList:kitRowClick(row, button) end
-local function rowEnter(row) row.kitList:kitRowHover(row, true) end
-local function rowLeave(row) row.kitList:kitRowHover(row, false) end
-local function rowDragStart(row) row.kitList:kitDragStart(row) end
+-- A row back in the pool has no list; hiding it can still fire its OnLeave.
+local function rowClick(row, button) if row.kitList then row.kitList:kitRowClick(row, button) end end
+local function rowEnter(row) if row.kitList then row.kitList:kitRowHover(row, true) end end
+local function rowLeave(row) if row.kitList then row.kitList:kitRowHover(row, false) end end
+local function rowDragStart(row) if row.kitList then row.kitList:kitDragStart(row) end end
 local function rowDragStop(row)
   local list = row.kitDragList or row.kitList
   if list then list:kitDragFinish(true) end
 end
-local function rowWheel(row, delta) row.kitList:SetOffset(row.kitList:GetOffset() - delta * WHEEL_STEP) end
+local function rowWheel(row, delta)
+  if row.kitList then row.kitList:SetOffset(row.kitList:GetOffset() - delta * WHEEL_STEP) end
+end
 
 ---@param kind MDT.UI.ListKind
 local function poolFor(kind)
@@ -33,12 +36,12 @@ local function poolFor(kind)
     row.kitRowBorder = UI.Pixel.Border(row, "accent")
     row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     if kind.draggable then row:RegisterForDrag("LeftButton") end
-    row:SetScript("OnClick", rowClick)
-    row:SetScript("OnEnter", rowEnter)
-    row:SetScript("OnLeave", rowLeave)
-    row:SetScript("OnDragStart", rowDragStart)
-    row:SetScript("OnDragStop", rowDragStop)
-    row:SetScript("OnMouseWheel", rowWheel)
+    UI.Script(row, "OnClick", rowClick)
+    UI.Script(row, "OnEnter", rowEnter)
+    UI.Script(row, "OnLeave", rowLeave)
+    UI.Script(row, "OnDragStart", rowDragStart)
+    UI.Script(row, "OnDragStop", rowDragStop)
+    UI.Script(row, "OnMouseWheel", rowWheel)
     row:EnableMouseWheel(true)
     kind.mixin.OnCreate(row)
     return row
@@ -50,8 +53,9 @@ end
 local function releaseRow(row)
   if row.kitKind.mixin.OnUnbind then row.kitKind.mixin.OnUnbind(row) end
   UI.Tooltip.Hide(row)
-  row.kitItem, row.kitIndex, row.kitKey, row.kitSig, row.kitList, row.kitHovered = nil, nil, nil, nil, nil, nil
+  -- Hiding a hovered row fires its OnLeave, which still needs its list and item.
   row:Hide()
+  row.kitItem, row.kitIndex, row.kitKey, row.kitSig, row.kitList, row.kitHovered = nil, nil, nil, nil, nil, nil
   row:ClearAllPoints()
   row:SetParent(UI.Holder)
   row:SetAlpha(1)
@@ -310,7 +314,7 @@ function Methods:kitDragStart(row)
   UI.Escape.Push(self.kitDrag.escape)
   UI.Tooltip.Hide(row)
   for _, visible in pairs(self.kitRows) do self:kitPaintRow(visible) end
-  self:SetScript("OnUpdate", dragUpdate)
+  UI.Script(self, "OnUpdate", dragUpdate)
   dragUpdate(self, 0)
 end
 
@@ -318,7 +322,7 @@ end
 function Methods:kitDragFinish(commit)
   local drag = self.kitDrag
   if not drag then return end
-  self:SetScript("OnUpdate", nil)
+  UI.Script(self, "OnUpdate", nil)
   self.kitIndicator:Hide()
   drag.ghostRow:EnableMouse(true)
   releaseRow(drag.ghostRow)
@@ -377,7 +381,7 @@ UI.Define({
     self.kitViewport:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
     self.kitViewport:SetClipsChildren(true)
     self.kitViewport:EnableMouseWheel(true)
-    self.kitViewport:SetScript("OnMouseWheel", function(_, delta) self:SetOffset(self.kitOffset - delta * WHEEL_STEP) end)
+    UI.Script(self.kitViewport, "OnMouseWheel", function(_, delta) self:SetOffset(self.kitOffset - delta * WHEEL_STEP) end)
     self.kitBar = UI.Scrollbar(self, { onChange = function(offset) self:SetOffset(offset) end })
     self.kitBar:SetPoint("TOPRIGHT", self, "TOPRIGHT", 0, 0)
     self.kitBar:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
@@ -385,8 +389,8 @@ UI.Define({
     self.kitIndicator:SetHeight(INDICATOR_HEIGHT)
     Theme.Bind(self.kitIndicator, "accent")
     self.kitIndicator:Hide()
-    self:SetScript("OnSizeChanged", function() self:kitRefresh() end)
-    self:HookScript("OnHide", function() self:kitDragFinish(false) end)
+    UI.Script(self, "OnSizeChanged", function() self:kitRefresh() end)
+    UI.HookScript(self, "OnHide", function() self:kitDragFinish(false) end)
   end,
   OnRelease = function(self)
     self:kitDragFinish(false)

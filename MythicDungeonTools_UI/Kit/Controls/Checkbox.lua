@@ -51,7 +51,7 @@ UI.Define({
     self.kitLabel:SetJustifyH("LEFT")
     self.kitLabel:SetWordWrap(false)
     self.kitRepaint = repaint
-    self:SetScript("OnClick", function(button)
+    UI.Script(self, "OnClick", function(button)
       if button.kitProps.disabled then return end
       local value = not button.kitProps.value
       button.kitProps.value = value

@@ -105,7 +105,7 @@ local function commit(self, source)
 end
 
 local function flushPaste(self)
-  self:SetScript("OnUpdate", nil)
+  UI.Script(self, "OnUpdate", nil)
   local text = table.concat(self.kitPaste)
   self.kitPaste = nil
   self.kitEdit:SetMaxBytes(self.kitProps.maxBytes or 0)
@@ -118,7 +118,7 @@ local function bufferChar(self, char)
   if not self.kitPaste then
     self.kitPaste = {}
     self.kitEdit:SetMaxBytes(1)
-    self:SetScript("OnUpdate", flushPaste)
+    UI.Script(self, "OnUpdate", flushPaste)
   end
   self.kitPaste[#self.kitPaste + 1] = char
 end
@@ -200,13 +200,13 @@ UI.Define({
     self.kitEdit:SetHeight(LINE_HEIGHT)
     self.kitEdit:SetTextInsets(0, 0, 0, 0)
     self.kitScroll:SetScrollChild(self.kitEdit)
-    self.kitScroll:SetScript("OnSizeChanged", function(scroll, width)
+    UI.Script(self.kitScroll, "OnSizeChanged", function(scroll, width)
       self.kitEdit:SetWidth(width)
       if not self.kitProps.multiline then self.kitEdit:SetHeight(scroll:GetHeight()) end
       updateScroll(self)
     end)
     self.kitScroll:EnableMouseWheel(true)
-    self.kitScroll:SetScript("OnMouseWheel", function(scroll, delta)
+    UI.Script(self.kitScroll, "OnMouseWheel", function(scroll, delta)
       if self.kitProps.onWheel then
         self:Emit("onWheel", delta, self)
         return
@@ -232,7 +232,7 @@ UI.Define({
     self.kitPlaceholder:SetJustifyH("LEFT")
     Theme.Bind(self.kitPlaceholder, "text.disabled")
 
-    self.kitEdit:SetScript("OnTextChanged", function(edit, userInput)
+    UI.Script(self.kitEdit, "OnTextChanged", function(edit, userInput)
       if self.kitSettingValue then return end
       local text = edit:GetText()
       if self.kitProps.readOnly and text ~= self.kitProps.value then
@@ -246,12 +246,12 @@ UI.Define({
       repaint(self)
       if userInput then self:Emit("onChange", text, self) end
     end)
-    self.kitEdit:SetScript("OnEnterPressed", function(edit)
+    UI.Script(self.kitEdit, "OnEnterPressed", function(edit)
       if self.kitProps.multiline then return end
       commit(self, "enter")
       edit:ClearFocus()
     end)
-    self.kitEdit:SetScript("OnEscapePressed", function(edit)
+    UI.Script(self.kitEdit, "OnEscapePressed", function(edit)
       local committed = self.kitLastCommit
       if committed and edit:GetText() ~= committed then
         edit:SetText(committed)
@@ -260,31 +260,31 @@ UI.Define({
       edit:ClearFocus()
       self:Emit("onEscape", self)
     end)
-    self.kitEdit:SetScript("OnEditFocusGained", function(edit)
+    UI.Script(self.kitEdit, "OnEditFocusGained", function(edit)
       self.kitFocused = true
-      if self.kitProps.onCopy then edit:SetScript("OnUpdate", trackCtrl) end
+      if self.kitProps.onCopy then UI.Script(edit, "OnUpdate", trackCtrl) end
       self.kitLastCommit = edit:GetText()
       repaint(self)
       if self.kitProps.selectAllOnFocus then edit:HighlightText(0, -1) end
     end)
-    self.kitEdit:SetScript("OnEditFocusLost", function(edit)
+    UI.Script(self.kitEdit, "OnEditFocusLost", function(edit)
       self.kitFocused = nil
-      edit:SetScript("OnUpdate", nil)
+      UI.Script(edit, "OnUpdate", nil)
       edit.kitCtrlAt = nil
       edit:HighlightText(0, 0)
       repaint(self)
       commit(self, "blur")
       self:Emit("onFocusLost", self)
     end)
-    self.kitEdit:SetScript("OnChar", function(_, char) bufferChar(self, char) end)
-    self.kitEdit:SetScript("OnKeyUp", function(edit, key)
+    UI.Script(self.kitEdit, "OnChar", function(_, char) bufferChar(self, char) end)
+    UI.Script(self.kitEdit, "OnKeyUp", function(edit, key)
       if key ~= "C" then return end
       if IsControlKeyDown() or (edit.kitCtrlAt and GetTime() - edit.kitCtrlAt < COPY_GRACE) then
         edit.kitCtrlAt = nil
         self:Emit("onCopy", self)
       end
     end)
-    self.kitEdit:SetScript("OnCursorChanged", function(edit, _, y, _, height)
+    UI.Script(self.kitEdit, "OnCursorChanged", function(edit, _, y, _, height)
       if not self.kitProps.multiline or not y then return end
       local offset = self.kitScroll:GetVerticalScroll()
       local viewH = self.kitScroll:GetHeight()
@@ -294,7 +294,7 @@ UI.Define({
     end)
     self.kitField:EnableMouse(true)
     self:kitForwardHover(self.kitField, self.kitEdit)
-    self.kitField:SetScript("OnMouseDown", function() if not self.kitProps.disabled then self.kitEdit:SetFocus() end end)
+    UI.Script(self.kitField, "OnMouseDown", function() if not self.kitProps.disabled then self.kitEdit:SetFocus() end end)
     self.kitRepaint = repaint
   end,
   OnRelease = function(self)
@@ -302,7 +302,7 @@ UI.Define({
     self.kitLastCommit = nil
     if self.kitPaste then
       self.kitPaste = nil
-      self:SetScript("OnUpdate", nil)
+      UI.Script(self, "OnUpdate", nil)
     end
   end,
   Measure = function(self, availW)

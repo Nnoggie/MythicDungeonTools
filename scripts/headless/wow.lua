@@ -187,6 +187,7 @@ W.fireScript = fireScript
 function W.hover(obj)
   W.cursorTo(obj)
   if obj:IsObjectType("Button") and not obj:IsEnabled() and not obj:GetMotionScriptsWhileDisabled() then return end
+  W.hoveredFrame = obj
   return fireScript(obj, "OnEnter")
 end
 
@@ -612,6 +613,12 @@ local function setShown(obj, shown)
   state.shown = shown
   local nowVisible = isVisible(obj)
   if wasVisible ~= nowVisible then propagateVisibility(obj, nowVisible and "OnShow" or "OnHide") end
+  -- Like the client: a hovered frame that disappears, itself or with a parent, gets its OnLeave.
+  local hovered = W.hoveredFrame
+  if wasVisible and not nowVisible and hovered and not isVisible(hovered) then
+    W.hoveredFrame = nil
+    fireScript(hovered, "OnLeave")
+  end
 end
 
 function ScriptRegion:Show() stateOf(self, "Show") setShown(self, true) end

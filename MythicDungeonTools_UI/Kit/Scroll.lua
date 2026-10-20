@@ -64,18 +64,18 @@ UI.Define({
     self.kitThumbTexture:SetAllPoints()
     Theme.Bind(self.kitThumbTexture, "border.strong")
     self.kitViewH, self.kitContentH, self.kitValue = 1, 1, 0
-    self.kitThumb:SetScript("OnEnter", function() Theme.Bind(self.kitThumbTexture, "text.muted") end)
-    self.kitThumb:SetScript("OnLeave", function() Theme.Bind(self.kitThumbTexture, "border.strong") end)
-    self.kitThumb:SetScript("OnMouseDown", function()
+    UI.Script(self.kitThumb, "OnEnter", function() Theme.Bind(self.kitThumbTexture, "text.muted") end)
+    UI.Script(self.kitThumb, "OnLeave", function() Theme.Bind(self.kitThumbTexture, "border.strong") end)
+    UI.Script(self.kitThumb, "OnMouseDown", function()
       local _, cursorY = GetCursorPosition()
       self.kitDrag = { startY = cursorY / self:GetEffectiveScale(), startValue = self.kitValue }
-      self:SetScript("OnUpdate", thumbDrag)
+      UI.Script(self, "OnUpdate", thumbDrag)
     end)
-    self.kitThumb:SetScript("OnMouseUp", function()
+    UI.Script(self.kitThumb, "OnMouseUp", function()
       self.kitDrag = nil
-      self:SetScript("OnUpdate", nil)
+      UI.Script(self, "OnUpdate", nil)
     end)
-    self:SetScript("OnMouseDown", function()
+    UI.Script(self, "OnMouseDown", function()
       local _, cursorY = GetCursorPosition()
       local aboveThumb = cursorY / self:GetEffectiveScale() > self.kitThumb:GetTop()
       self:SetValue(self.kitValue + (aboveThumb and -1 or 1) * self.kitViewH, true)
@@ -83,7 +83,7 @@ UI.Define({
   end,
   OnRelease = function(self)
     self.kitDrag = nil
-    self:SetScript("OnUpdate", nil)
+    UI.Script(self, "OnUpdate", nil)
   end,
   Measure = function(self) return TRACK_WIDTH, self:GetHeight() end,
 })
@@ -151,11 +151,11 @@ UI.Define({
     self.kitBar:SetPoint("TOPRIGHT", self, "TOPRIGHT", 0, 0)
     self.kitBar:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
     self.kitViewport:EnableMouseWheel(true)
-    self.kitViewport:SetScript("OnMouseWheel", function(_, delta) self:SetOffset(self:GetOffset() - delta * WHEEL_STEP) end)
-    self:SetScript("OnSizeChanged", function() self:kitUpdateRange() end)
+    UI.Script(self.kitViewport, "OnMouseWheel", function(_, delta) self:SetOffset(self:GetOffset() - delta * WHEEL_STEP) end)
+    UI.Script(self, "OnSizeChanged", function() self:kitUpdateRange() end)
     -- A scroll built inside a hidden section gets its size when the section first shows.
-    self:SetScript("OnShow", function() self:kitUpdateRange() end)
-    self.content:HookScript("OnSizeChanged", function() self:kitUpdateRange() end)
+    UI.Script(self, "OnShow", function() self:kitUpdateRange() end)
+    UI.HookScript(self.content, "OnSizeChanged", function() self:kitUpdateRange() end)
   end,
   OnRelease = function(self)
     self.content:ReleaseChildren()

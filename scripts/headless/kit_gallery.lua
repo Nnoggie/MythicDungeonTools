@@ -355,13 +355,18 @@ return function(ctx)
     expect(not ok and tostring(err):find("unknown spec key 'bogus'", 1, true), "unknown spec key was accepted: "..tostring(err))
 
     local caught = 0
-    local previous = geterrorhandler()
-    seterrorhandler(function() caught = caught + 1 end)
+    local previous = UI.GetErrorHandler()
+    UI.SetErrorHandler(function() caught = caught + 1 end)
     local bad = UI.Button(page, { text = "Bad", onClick = function() error("handler boom") end })
     UI.Layout.FlushAll()
     click(bad)
-    seterrorhandler(previous)
-    expect(caught == 1, "bad handler was not routed to the error handler")
+    -- A broken script the kit set, not only a callback, reaches the same handler.
+    local plain = CreateFrame("Frame", nil, page)
+    UI.Script(plain, "OnEnter", function() error("script boom") end)
+    W.fireScript(plain, "OnEnter")
+    plain:Hide()
+    UI.SetErrorHandler(previous)
+    expect(caught == 2, "bad handlers were not routed to the kit's error handler: "..caught)
     expect(bad:IsShown(), "a bad handler left the button hidden")
 
     local selfReleasing = UI.Button(page, { text = "Bye", onClick = function(button)
@@ -650,14 +655,14 @@ return function(ctx)
       ("root was %d tall after Batch and %d once settled"):format(afterBatch, root:GetHeight()))
 
     local errors = {}
-    local previous = geterrorhandler()
-    seterrorhandler(function(message) errors[#errors + 1] = tostring(message) end)
+    local previous = UI.GetErrorHandler()
+    UI.SetErrorHandler(function(message) errors[#errors + 1] = tostring(message) end)
     local loop = UI.Stack(page, {})
     local settles = loop.kitLayout
     loop.kitLayout = function(self) UI.Layout.Invalidate(self) end
     UI.Layout.Invalidate(loop)
     UI.Layout.FlushAll()
-    seterrorhandler(previous)
+    UI.SetErrorHandler(previous)
     expect(#errors == 1 and errors[1]:find("did not settle", 1, true), "a layout that never settles was not reported: "..table.concat(errors, "; "))
     loop.kitLayout = settles
     loop:Release()

@@ -101,8 +101,8 @@ UI.Define({
     self.kitLabel:SetWordWrap(false)
     self.kitIcon = self:CreateTexture(nil, "ARTWORK")
     self.kitChevron = UI.Glyphs.Create(self, "down", GLYPH_SIZE, "text.muted")
-    self:SetScript("OnClick", onClick)
-    self:SetScript("OnDragStart", function(button) button:Emit("onDragStart", button) end)
+    UI.Script(self, "OnClick", onClick)
+    UI.Script(self, "OnDragStart", function(button) button:Emit("onDragStart", button) end)
     self.kitOnRepaint = function(button, row)
       button.kitChevron:SetColor(row.text)
       local iconColor = button.kitProps.iconColor
