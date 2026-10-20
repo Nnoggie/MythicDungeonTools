@@ -102,7 +102,7 @@ return function(ctx)
 
   step("sidebar: search on top, the route actions row, the route list, the level and the forces bar", function()
     expect(control("routeSearch"):GetTop() >= control("newRoute"):GetTop(), "search is not above the route actions")
-    expect(control("newRoute"):GetHeight() >= 28, "route action buttons are small: "..control("newRoute"):GetHeight())
+    expect(control("newRoute"):GetHeight() >= 32, "route action buttons are small: "..control("newRoute"):GetHeight())
     local _, current = currentRouteRow()
     expect(current and current.name == preset().text, "current route row is "..tostring(current and current.name))
     expect(control("level"):GetValue() == db.currentDifficulty, "stepper value is "..tostring(control("level"):GetValue()))
@@ -113,7 +113,7 @@ return function(ctx)
 
   step("sidebar: every route action button shows its tooltip, also while disabled, with its icon centered", function()
     expect(control("shareRoute"):IsDisabled(), "setup: share should be disabled outside a group")
-    for _, id in ipairs({ "newRoute", "importRoute", "renameRoute", "duplicateRoute", "exportRoute", "shareRoute", "liveSession", "deleteRoute" }) do
+    for _, id in ipairs({ "shareRoute", "newRoute", "exportRoute", "importRoute", "liveSession" }) do
       local button = control(id)
       GameTooltip:Hide()
       W.hover(button)

@@ -8,8 +8,8 @@ local WINDOW_BUTTONS_WIDTH = 58
 local STEPPER_WIDTH = 64
 local MIN_LEVEL, MAX_LEVEL = 1, 35
 local VISIBLE_ROUTES = 7
-local ACTION_HEIGHT = 28
-local ACTION_ICON = 16
+local ACTION_HEIGHT = 32
+local ACTION_ICON = 20
 local BAR_TONES = { ["text.normal"] = "progress", ok = "ok", warn = "warn" }
 
 local db
@@ -72,7 +72,6 @@ local function paintHeader(header)
   sidebar.share:SetDisabled(not actions.canShare)
   sidebar.live:SetDisabled(not actions.canLive)
   sidebar.live:SetIconColor(actions.liveActive and "live" or nil)
-  sidebar.delete:SetDisabled(not actions.canDelete and not actions.canDeleteAll)
 end
 
 local function refreshRoutes(ctx)
@@ -326,15 +325,6 @@ local function actionButton(parent, id, icon, tooltip, onClick, onRightClick)
   })
 end
 
-local function deleteClicked()
-  local a = sidebar.state.header.actions
-  if IsShiftKeyDown() then
-    if a.canDeleteAll then routeActions.deleteAll() end
-  elseif a.canDelete then
-    routeActions.delete()
-  end
-end
-
 ---Every route action for one route, in the order of the action row. Actions on another route switch to it first.
 ---@param idx integer
 ---@return MDT.UI.MenuItem[]
@@ -370,13 +360,10 @@ function MDT:MakeSidebar(sidePanel)
     end })
     local actions = UI.Row(root, { id = "routeActions", gap = "xs", valign = "center" })
     built.share = actionButton(actions, "shareRoute", "share", L["Send to party"], routeActions.share)
-    built.export = actionButton(actions, "exportRoute", "export", L["Export"], routeActions.export)
     built.new = actionButton(actions, "newRoute", "plus", L["New Preset"], routeActions.new)
+    built.export = actionButton(actions, "exportRoute", "export", L["Export"], routeActions.export)
     built.import = actionButton(actions, "importRoute", "import", L["Import"], routeActions.import)
-    built.rename = actionButton(actions, "renameRoute", "rename", L["Rename"], routeActions.rename)
-    built.duplicate = actionButton(actions, "duplicateRoute", "copy", L["Duplicate"], routeActions.duplicate)
     built.live = actionButton(actions, "liveSession", "live", L["Live"], routeActions.toggleLive, openLiveMenu)
-    built.delete = actionButton(actions, "deleteRoute", "delete", L["Delete this preset"].."\n"..L["Shift-Click to delete all presets for this dungeon"], deleteClicked)
     built.routes = UI.List(root, {
       id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = MDT.RouteListRowHeight, scrollbar = true,
       onActivate = function(item) MDT:SwitchToPreset(item.idx) end,
