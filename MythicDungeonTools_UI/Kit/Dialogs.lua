@@ -113,7 +113,7 @@ function Dialogs.Open(spec)
   dialog.kitKey, dialog.kitGlobalName = spec.key, spec.globalName
   if spec.key then keyed[spec.key] = dialog end
   if spec.globalName then _G[spec.globalName] = dialog end
-  dialog:SetPoint("CENTER", parent, "CENTER", 0, 50)
+  UI.Overlay.SetPlace(dialog, spec.place or { point = "CENTER", relativeTo = parent, y = 50 })
   dialog.content:SetWidth(spec.width or DEFAULT_WIDTH)
   dialog.content:Batch(function()
     if spec.build then spec.build(dialog.content, dialog) end

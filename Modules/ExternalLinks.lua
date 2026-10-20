@@ -76,11 +76,11 @@ function MDT:CreateHoverHighlight(button, yInset)
   return highlight
 end
 
+---Opens in the map's bottom-left corner, where MDT always showed its link box.
 ---@param link table an entry of MDT.externalLinks
----@param anchor table the button that opened it
-function MDT:ShowExternalLinkPopover(link, anchor)
+function MDT:ShowExternalLinkPopover(link)
   UI.Popover({
-    anchor = anchor, prefer = "above", width = 380,
+    place = { point = "BOTTOMLEFT", relativeTo = MDT.main_frame }, width = 420,
     onClose = function() MDT.copyHelper:SmartHide() end,
     build = function(content, popover)
       MDT:AddCopyableLinkRow(content, {
@@ -101,7 +101,7 @@ function MDT:CreateExternalLinkButtons(frame)
     UI.Button(linkButtons, {
       id = link.name, variant = "plain", icon = link.icon, iconCoords = link.iconCoords, iconSize = 18,
       text = link.label, width = not link.label and 24 or nil, height = "sm", tooltip = link.tooltip,
-      onClick = function(button) MDT:ShowExternalLinkPopover(link, button) end,
+      onClick = function() MDT:ShowExternalLinkPopover(link) end,
     })
   end
   UI.Button(linkButtons, {

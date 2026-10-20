@@ -223,6 +223,8 @@ return function(ctx)
     click(button)
     local popover = UI.Overlay.Top("popover")
     expect(popover and popover.frame:IsVisible(), "clicking a link icon opened no popover")
+    expect(math.abs(popover.frame:GetLeft() - main:GetLeft()) < 0.5 and math.abs(popover.frame:GetBottom() - main:GetBottom()) < 0.5,
+      "the link popover is not in the map's bottom-left corner")
     local row = popover.frame.content.kitChildren[1]
     local editBox, copy = row.kitChildren[1], row.kitChildren[2]
     expect(editBox:GetValue() == MDT.externalLinks[2].url, "the popover shows "..tostring(editBox:GetValue()))
@@ -280,6 +282,8 @@ return function(ctx)
     local clickArea = _G.MDTBottomLeftPanelClickArea
     click(clickArea)
     local dialog = openDialog("versionCheck")
+    expect(math.abs(dialog:GetLeft() - main:GetLeft()) < 0.5 and math.abs(dialog:GetBottom() - main:GetBottom()) < 0.5,
+      "the version check is not in the map's bottom-left corner")
     local text
     for _, child in ipairs(dialog.content.kitChildren) do
       local scroll = child.kitChildren and child.kitChildren[1]

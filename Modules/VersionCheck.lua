@@ -304,6 +304,7 @@ function MDT:ToggleVersionCheckFrame()
   end
   UI.Dialogs.Open({
     key = "versionCheck", title = L["Version Check / Change Log"], width = 500,
+    place = { point = "BOTTOMLEFT", relativeTo = MDT.main_frame },
     onClose = function()
       view = nil
       MDT.copyHelper:SmartHide()

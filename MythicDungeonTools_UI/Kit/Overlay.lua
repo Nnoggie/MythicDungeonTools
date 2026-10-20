@@ -173,6 +173,14 @@ local function toRoot(region, value)
   return value * region:GetEffectiveScale() / UI.Root:GetEffectiveScale()
 end
 
+---Puts `frame` at a fixed spot.
+---@param frame table
+---@param place MDT.UI.Place
+function Overlay.SetPlace(frame, place)
+  frame:ClearAllPoints()
+  frame:SetPoint(place.point, place.relativeTo, place.relativePoint or place.point, place.x or 0, place.y or 0)
+end
+
 ---Anchor-relative placement in Root coordinates with flipping and clamping to the screen.
 ---@param frame table
 ---@param anchor table

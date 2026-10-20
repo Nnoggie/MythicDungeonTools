@@ -150,11 +150,20 @@
 ---@field draggable boolean?
 ---@field selectable boolean?
 
+---A fixed spot instead of the default placement: SetPoint(point, relativeTo, relativePoint or point, x or 0, y or 0).
+---@class MDT.UI.Place
+---@field point string
+---@field relativeTo table
+---@field relativePoint string?
+---@field x number?
+---@field y number?
+
 ---@class MDT.UI.DialogSpec
 ---@field title string
 ---@field key string? keyed singleton: re-opening replaces the open one with reason "replaced"
 ---@field width number? default 320
 ---@field pinned boolean? the title bar does not drag the dialog
+---@field place MDT.UI.Place? default: centered on the parent, slightly above the middle
 ---@field parent table? default: the registered provider, else UI.Root
 ---@field build fun(content: MDT.UI.Control, dialog: MDT.UI.Control)?
 ---@field onClose fun(dialog: MDT.UI.Control, reason: "x"|"escape"|"cancel"|"confirm"|"alt"|"replaced"|"api"|"hidden")?
