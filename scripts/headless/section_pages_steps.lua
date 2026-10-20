@@ -1,8 +1,61 @@
 -- Harness steps for the settings-style navigation sections: Settings, Combat Logging and Focus Marker.
 -- Driven through real frames. Not shipped code.
 return function(ctx)
-  local W, MDT, step, expect, click = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click
+  local W, MDT, step, expect, click, render = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.render
   local UI = MDT.UI
+  local L = MDT.L
+  local main = MDT.main_frame
+  local db = MDT:GetDB()
+
+  local function openSection(key)
+    click(main.navigationSidebar.buttons[key])
+    expect(MDT:GetCurrentSection() == key, "current section is "..tostring(MDT:GetCurrentSection()))
+    for _, child in ipairs({ main.sectionContentFrames[key]:GetChildren() }) do
+      if child.kit and child.kit.name == "Scroll" then
+        expect(child:IsVisible(), key.." page is hidden")
+        return child.content
+      end
+    end
+    error(key.." has no kit page")
+  end
+  local function control(page, id)
+    local found = page:Find(id)
+    expect(found and found:IsVisible(), "control "..id.." is missing or hidden")
+    return found
+  end
+  local function menuList()
+    local menu = UI.Overlay.Top("menu")
+    expect(menu and menu.frame:IsVisible(), "no menu is open")
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "List" then return child end
+    end
+  end
+  local function chooseFromMenu(text)
+    local list = menuList()
+    for index, item in ipairs(list.kitProps.items) do
+      if item.text == text then
+        list:ScrollTo(index, "nearest")
+        click(list:GetRow(index))
+        expect(UI.Overlay.Top("menu") == nil, "choosing "..text.." left the menu open")
+        return
+      end
+    end
+    error("the menu has no item "..text)
+  end
+  local function chooseFromDropdown(dropdown, text)
+    click(dropdown.kitButton)
+    chooseFromMenu(text)
+  end
+  local function toggle(page, id, read)
+    local box = control(page, id)
+    local before = read()
+    click(box)
+    expect(read() == not before and box:GetValue() == not before, id.." did not flip its saved value")
+    return function()
+      click(box)
+      expect(read() == before, id.." did not flip back")
+    end
+  end
 
   step("kit button: onDragStart registers the left button and fires on drag", function()
     local dragged = 0
@@ -17,5 +70,126 @@ return function(ctx)
     W.fireScript(plain, "OnDragStart")
     expect(dragged == 1, "a released onDragStart still fired")
     plain:Release()
+  end)
+
+  step("settings: every checkbox flips its saved value and back", function()
+    local page = openSection("settings")
+    local options = {
+      { "minimap", function() return not db.minimap.hide end },
+      { "compartment", function() return not db.minimap.compartmentHide end },
+      { "forcesCount", function() return db.useForcesCount == true end },
+      { "pullHealth", function() return db.showPullButtonHealth == true end },
+      { "autoPan", function() return db.autoPanToPull ~= false end },
+      { "alwaysOverwriteRoutes", function() return db.alwaysOverwriteRoutesByUID == true end },
+      { "muteXalatath", function() return db.muteXalatathVoiceLines == true end },
+      { "announceReset", function() return db.announceDungeonReset == true end },
+      { "fadeOut", function() return db.fadeOutDuringCombat == true end },
+      { "autoColoring", function() return db.colorPaletteInfo.autoColoring == true end },
+      { "colorBlindMode", function() return db.colorPaletteInfo.forceColorBlindMode == true end },
+    }
+    for _, option in ipairs(options) do toggle(page, option[1], option[2])() end
+  end)
+
+  step("settings: transparency follows the combat fade toggle and its slider saves the alpha", function()
+    local page = openSection("settings")
+    local slider = control(page, "fadeOutAlpha")
+    local restore = toggle(page, "fadeOut", function() return db.fadeOutDuringCombat == true end)
+    expect(slider:IsDisabled() == not db.fadeOutDuringCombat, "the transparency slider ignores the fade toggle")
+    restore()
+    expect(slider:IsDisabled() == not db.fadeOutDuringCombat, "the transparency slider did not follow the toggle back")
+    local before, fading = db.fadeOutAlpha, db.fadeOutDuringCombat
+    db.fadeOutDuringCombat = true
+    MDT:Settings_Refresh()
+    expect(not slider:IsDisabled(), "setup: the slider is still disabled")
+    W.userDrag(slider.kitSlider, 0.3)
+    expect(math.abs(db.fadeOutAlpha - 0.3) < 0.001, "dragging the slider saved alpha "..tostring(db.fadeOutAlpha))
+    expect(slider.kitValueText:GetText() == "0.3", "the slider shows "..tostring(slider.kitValueText:GetText()))
+    W.userDrag(slider.kitSlider, before)
+    db.fadeOutDuringCombat = fading
+    MDT:Settings_Refresh()
+  end)
+
+  step("settings: the minimap checkbox follows /mdt minimap and Settings_Refresh resyncs from saved variables", function()
+    local page = openSection("settings")
+    local box = control(page, "minimap")
+    local before = not db.minimap.hide
+    W.RunSlashCommand("/mdt minimap")
+    expect(box:GetValue() == not before and box:GetValue() == not db.minimap.hide, "the checkbox did not follow /mdt minimap")
+    W.RunSlashCommand("/mdt minimap")
+    expect(box:GetValue() == before, "the checkbox did not follow /mdt minimap back")
+    local overwrite = control(page, "alwaysOverwriteRoutes")
+    local was = db.alwaysOverwriteRoutesByUID == true
+    db.alwaysOverwriteRoutesByUID = not was
+    MDT:Settings_Refresh()
+    expect(overwrite:GetValue() == not was, "Settings_Refresh did not resync the overwrite checkbox")
+    db.alwaysOverwriteRoutesByUID = was
+    MDT:Settings_Refresh()
+  end)
+
+  step("settings: dropdowns save the enemy forces tooltip and the palette, which reaches the route", function()
+    local page = openSection("settings")
+    local tooltipBefore, paletteBefore, autoBefore = db.enemyForcesTooltip, db.colorPaletteInfo.colorPaletteIdx, db.colorPaletteInfo.autoColoring
+    local tooltipDropdown = control(page, "enemyForcesTooltip")
+    chooseFromDropdown(tooltipDropdown, L["None"])
+    expect(db.enemyForcesTooltip == 1, "choosing None saved "..tostring(db.enemyForcesTooltip))
+    chooseFromDropdown(tooltipDropdown, tooltipDropdown.kitProps.items[5].text)
+    expect(db.enemyForcesTooltip == 5, "choosing the fifth format saved "..tostring(db.enemyForcesTooltip))
+    db.colorPaletteInfo.autoColoring = true
+    MDT:Settings_Refresh()
+    chooseFromDropdown(control(page, "palette"), L["Custom"])
+    expect(db.colorPaletteInfo.colorPaletteIdx == 6, "choosing Custom saved palette "..tostring(db.colorPaletteInfo.colorPaletteIdx))
+    expect(MDT:GetCurrentPreset().colorPaletteInfo.colorPaletteIdx == 6, "the route did not take the custom palette")
+    chooseFromDropdown(control(page, "palette"), L["Rainbow"])
+    expect(MDT:GetCurrentPreset().colorPaletteInfo.colorPaletteIdx == 1, "the route did not take the rainbow palette")
+    db.enemyForcesTooltip = tooltipBefore
+    db.colorPaletteInfo.colorPaletteIdx, db.colorPaletteInfo.autoColoring = paletteBefore, autoBefore
+    MDT:SetPresetColorPaletteInfo()
+    MDT:Settings_Refresh()
+    expect(control(page, "palette"):GetValue() == paletteBefore, "Settings_Refresh did not resync the palette dropdown")
+  end)
+
+  step("settings: Apply to preset turns auto coloring on and unlocks color blind mode", function()
+    local page = openSection("settings")
+    if db.colorPaletteInfo.autoColoring then click(control(page, "autoColoring")) end
+    expect(db.colorPaletteInfo.autoColoring == false, "setup: auto coloring is still on")
+    expect(control(page, "colorBlindMode"):IsDisabled(), "color blind mode stays enabled without auto coloring")
+    expect(MDT:GetCurrentPreset().colorPaletteInfo.autoColoring == false, "the route kept auto coloring")
+    click(control(page, "applyToPreset"))
+    expect(db.colorPaletteInfo.autoColoring == true and control(page, "autoColoring"):GetValue() == true, "Apply to preset did not turn auto coloring on")
+    expect(not control(page, "colorBlindMode"):IsDisabled(), "Apply to preset left color blind mode disabled")
+    expect(MDT:GetCurrentPreset().colorPaletteInfo.autoColoring == true, "Apply to preset did not reach the route")
+  end)
+
+  step("settings: the custom color count rebuilds the swatches and a swatch saves its color", function()
+    local page = openSection("settings")
+    local before = db.colorPaletteInfo.numberCustomColors
+    local slider = control(page, "customColorCount")
+    W.userDrag(slider.kitSlider, 5)
+    expect(db.colorPaletteInfo.numberCustomColors == before, "the count saved before the mouse was released")
+    W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
+    W.settle(ctx.asyncIdle, 30)
+    expect(db.colorPaletteInfo.numberCustomColors == 5, "the count saved "..tostring(db.colorPaletteInfo.numberCustomColors))
+    expect(#control(page, "customColors").kitChildren == 5, "the swatch row has "..#control(page, "customColors").kitChildren.." swatches")
+    render("settings custom palette", main)
+    click(control(page, "customColor2"))
+    expect(ColorPickerFrame:IsShown(), "the swatch did not open the color picker")
+    local getColor = ColorPickerFrame.GetColorRGB
+    ColorPickerFrame.GetColorRGB = function() return 0.2, 0.4, 0.6 end
+    ColorPickerFrame.info.swatchFunc()
+    ColorPickerFrame.GetColorRGB = getColor
+    local saved = db.colorPaletteInfo.customPaletteValues[2]
+    expect(saved[1] == 0.2 and saved[2] == 0.4 and saved[3] == 0.6, "the swatch saved "..table.concat(saved, ","))
+    ColorPickerFrame.info.cancelFunc()
+    ColorPickerFrame:Hide()
+    W.userDrag(slider.kitSlider, before)
+    W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
+    W.settle(ctx.asyncIdle, 30)
+    expect(#control(page, "customColors").kitChildren == before, "the swatch row did not grow back to "..before)
+  end)
+
+  step("settings: the language button is disabled without AddonLocale", function()
+    local page = openSection("settings")
+    expect(SlashCmdList.ADDONLOCALE == nil, "setup: the harness has AddonLocale")
+    expect(control(page, "language"):IsDisabled(), "the language button is enabled without AddonLocale")
   end)
 end
