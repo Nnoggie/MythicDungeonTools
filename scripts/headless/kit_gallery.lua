@@ -501,6 +501,38 @@ return function(ctx)
     UI.Layout.FlushAll()
   end)
 
+  step("kit menus: a submenu hover timer from a closed menu does not fire into the next menu", function()
+    local function menuList(entry)
+      for _, child in ipairs(entry.frame.content.kitChildren) do
+        if child.kit.name == "List" then return child end
+      end
+    end
+    local function subTexts()
+      local texts = {}
+      local top = UI.Overlay.Top("menu")
+      while top and top.submenu do
+        local list = menuList(top)
+        list:ForEachRow(function(row) texts[#texts + 1] = row.kitLabel:GetText() end)
+        UI.Overlay.Pop(top, "api")
+        top = UI.Overlay.Top("menu")
+      end
+      return table.concat(texts, ",")
+    end
+    local anchor = page:Find("default")
+    UI.Menu.Open({ anchor = anchor, items = { { kind = "submenu", text = "Old", items = { { text = "Stale" } } } } })
+    local first = UI.Overlay.Top("menu").frame
+    W.fireScript(menuList(UI.Overlay.Top("menu")):GetRow(1), "OnEnter")
+    UI.Menu.Close()
+    UI.Menu.Open({ anchor = anchor, items = { { kind = "submenu", text = "New", items = { { text = "Fresh" } } } } })
+    expect(UI.Overlay.Top("menu").frame == first, "setup: the second menu did not reuse the first popover")
+    W.fireScript(menuList(UI.Overlay.Top("menu")):GetRow(1), "OnEnter")
+    W.pump(UI.Theme.data.motion.submenuDelay + 0.05)
+    local opened = subTexts()
+    expect(opened == "Fresh", "submenus opened after the hover delay: "..opened)
+    UI.Menu.Close()
+    W.settle(asyncIdle, 5)
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
