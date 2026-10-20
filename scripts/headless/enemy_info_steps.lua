@@ -270,4 +270,121 @@ return function(ctx)
     MDT.main_frame:Show()
     W.settle(asyncIdle, 5)
   end)
+
+  if not ctx.developer then return end
+
+  local function panel() return main.devPanel end
+  local function inPanel(kitName, predicate) return find(kitName, predicate, panel()) end
+  local function panelButton(label)
+    local button = inPanel("Button", function(candidate) return candidate:GetText() == label and candidate:IsVisible() end)
+    expect(button, "dev panel has no visible "..label.." button")
+    return button
+  end
+  local function panelBox(label)
+    local box = inPanel("EditBox", function(candidate) return candidate.kitProps.label == label end)
+    expect(box, "dev panel has no "..label.." field")
+    return box
+  end
+  local function typeAndEnter(box, value)
+    W.userClick(box.kitEdit)
+    box.kitEdit:SetText("")
+    expect(W.userType(box.kitEdit, value), "could not type into "..tostring(box.kitProps.label))
+    W.fireScript(box.kitEdit, "OnEnterPressed")
+    W.settle(asyncIdle, 30)
+  end
+
+  step("dev panel: enabling dev mode shows the kit panel beside the navigation bar", function()
+    expect(not db.devMode and main.devPanel == nil, "setup: dev mode is already on")
+    MDT:ToggleDevMode()
+    W.settle(asyncIdle, 30)
+    expect(db.devMode and panel() and panel():IsVisible(), "dev panel is not shown in dev mode")
+    expect(math.abs(panel():GetRight() - main.navigationSidebar:GetLeft()) < 0.5 and math.abs(panel():GetTop() - main.navigationSidebar:GetTop()) < 0.5,
+      "dev panel is not docked to the navigation bar")
+    expect(panel():GetWidth() == 250 and panel():GetHeight() > 200, ("dev panel is %.0fx%.0f"):format(panel():GetWidth(), panel():GetHeight()))
+    for _, label in ipairs({ "POI/Zoom", "Enemy", "Manage DB" }) do panelButton(label) end
+    expect(inPanel("Dropdown"):GetValue() ~= nil, "the enemy tab is not the first tab shown")
+    render("dev panel", main, { panel() })
+  end)
+
+  step("dev panel: tabs switch between POI, enemy and database tools", function()
+    click(panelButton("POI/Zoom"))
+    panelButton("MapLink")
+    expect(inPanel("Dropdown") == nil, "the enemy tab stayed after switching to POI/Zoom")
+    render("dev panel poi", main, { panel() })
+    click(panelButton("Manage DB"))
+    panelButton("Toggle DevMode")
+    local startup = inPanel("Checkbox", function(box) return box.kitProps.label == "Load MDT on Startup" end)
+    local before = db.loadOnStartUp
+    click(startup)
+    expect((db.loadOnStartUp == true) == not before, "Load MDT on Startup did not toggle the setting")
+    click(startup)
+    expect(db.loadOnStartUp == before, "Load MDT on Startup did not toggle back")
+    click(panelButton("Enemy"))
+    expect(inPanel("Dropdown"), "switching back did not rebuild the enemy tab")
+  end)
+
+  step("dev panel: the POI tab adds a door with the typed name", function()
+    click(panelButton("POI/Zoom"))
+    local box = panelBox("Door Name / Connected Index")
+    W.userClick(box.kitEdit)
+    W.userType(box.kitEdit, "Headless Door")
+    click(panelButton("Door"))
+    local pois = MDT.mapPOIs[db.currentDungeonIdx][MDT:GetCurrentSubLevel()]
+    local door = pois[#pois]
+    expect(door.type == "door" and door.doorName == "Headless Door" and door.template == "MapLinkPinTemplate", "the door POI is "..tostring(door.type).." "..tostring(door.doorName))
+    table.remove(pois)
+    MDT:POI_UpdateAll()
+    click(panelButton("Enemy"))
+  end)
+
+  step("dev panel: the enemy tab edits the picked enemy and its toggles", function()
+    local dropdown = inPanel("Dropdown")
+    click(dropdown.kitButton)
+    click(menuRow(menuList(), MDT.dungeonEnemies[db.currentDungeonIdx][2].name))
+    W.settle(asyncIdle, 30)
+    local data = MDT.dungeonEnemies[db.currentDungeonIdx][2]
+    expect(inPanel("Dropdown"):GetValue() == 2, "picking enemy 2 did not stick")
+    expect(panelBox("health"):GetValue() == tostring(data.health), "health field is "..panelBox("health"):GetValue())
+    local health = data.health
+    typeAndEnter(panelBox("health"), "12345")
+    expect(data.health == 12345, "Enter in the health field did not write the enemy: "..tostring(data.health))
+    expect(panelBox("health"):GetValue() == "12345", "the rebuilt tab does not show the new health")
+    data.health = health
+    local forces = panelBox(MDT.L["Clone forces override (blank = default)"])
+    expect(forces:IsVisible() and forces.kitProps.disabled, "clone forces is editable without a selected blip")
+    local movable = db.devModeBlipsMovable
+    click(inPanel("Checkbox", function(box) return box.kitProps.label == "Blips Movable" end))
+    expect((db.devModeBlipsMovable == true) == not movable, "Blips Movable did not toggle the setting")
+    db.devModeBlipsMovable = movable
+    render("dev panel enemy", main, { panel() })
+  end)
+
+  step("dev panel: Open Enemy Info shows the selected blip in dev mode", function()
+    blip.devSelected = true
+    MDT:UpdateMap()
+    W.settle(asyncIdle, 30)
+    local forces = panelBox(MDT.L["Clone forces override (blank = default)"])
+    expect(not forces.kitProps.disabled and forces:GetValue() == (blip.clone.count and tostring(blip.clone.count) or ""), "clone forces does not show the selected blip")
+    click(panelButton("Open Enemy Info"))
+    expect(window() and window().kitTitle:GetText() == L[blip.data.name], "Open Enemy Info did not open the selected blip")
+    expect(find("Text", function(text) return text.kitLabel:GetText():find("Toggle", 1, true) ~= nil end):IsShown(), "dev key help is hidden in dev mode")
+    window():Close("api")
+    blip.devSelected = nil
+    MDT:UpdateMap()
+  end)
+
+  step("dev panel: maximize moves the panel to the window's top left and restore docks it back", function()
+    click(main.maximizeButton)
+    W.settle(asyncIdle, 30)
+    expect(math.abs(panel():GetLeft() - main:GetLeft()) < 0.5 and math.abs(panel():GetTop() - (main:GetTop() - 45)) < 0.5, "maximized dev panel is not at the top left")
+    click(main.maximizeButton)
+    W.settle(asyncIdle, 30)
+    expect(math.abs(panel():GetRight() - main.navigationSidebar:GetLeft()) < 0.5, "restored dev panel is not docked to the navigation bar")
+  end)
+
+  step("dev panel: disabling dev mode hides the panel", function()
+    MDT:ToggleDevMode()
+    W.settle(asyncIdle, 30)
+    expect(not db.devMode and not panel():IsShown(), "dev panel stayed up after dev mode was turned off")
+  end)
 end
