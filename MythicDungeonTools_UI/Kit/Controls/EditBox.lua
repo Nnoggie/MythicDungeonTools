@@ -97,15 +97,18 @@ end
 ---@field autoFocus boolean? focus right after creation
 ---@field disabled boolean?
 ---@field font MDT.UI.FontRole?
+---@field justify "LEFT"|"CENTER"|"RIGHT"? default "LEFT"
 ---@field onChange fun(text: string, self: MDT.UI.Control)? every user edit
 ---@field onCommit fun(text: string, self: MDT.UI.Control, source: "enter"|"blur")? every Enter; focus lost only when the text changed since the last commit
 ---@field onEscape fun(self: MDT.UI.Control)? after Escape restored the last committed text (reported through onChange) and dropped focus without committing
 ---@field onFocusLost fun(self: MDT.UI.Control)?
 ---@field onCopy fun(self: MDT.UI.Control)? Ctrl+C pressed while focused
+---@field onWheel fun(delta: number, self: MDT.UI.Control)? mouse wheel over the field; replaces scrolling the text
 UI.Define({
   name = "EditBox", frameType = "Frame", mixins = { Methods },
   props = {
     { name = "font", default = "body", set = function(self, v) self.kitEdit:SetFontObject(Fonts.Get(v)) end },
+    { name = "justify", default = "LEFT", set = function(self, v) self.kitEdit:SetJustifyH(v) end },
     { name = "label", default = nil, set = arrange, relayout = true },
     { name = "placeholder", default = nil, set = function(self, v) self.kitPlaceholder:SetText(v or "") repaint(self) end },
     { name = "multiline", default = false, set = arrange, relayout = true },
@@ -127,6 +130,7 @@ UI.Define({
     { name = "onEscape", default = nil },
     { name = "onFocusLost", default = nil },
     { name = "onCopy", default = nil },
+    { name = "onWheel", default = nil },
   },
   Create = function(self)
     self.kitLabel = self:CreateFontString(nil, "ARTWORK")
@@ -161,6 +165,10 @@ UI.Define({
     end)
     self.kitScroll:EnableMouseWheel(true)
     self.kitScroll:SetScript("OnMouseWheel", function(scroll, delta)
+      if self.kitProps.onWheel then
+        self:Emit("onWheel", delta, self)
+        return
+      end
       local maxOffset = math.max(0, self.kitEdit:GetHeight() - scroll:GetHeight())
       local offset = math.max(0, math.min(maxOffset, scroll:GetVerticalScroll() - delta * WHEEL_STEP))
       scroll:SetVerticalScroll(offset)
