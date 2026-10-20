@@ -151,7 +151,7 @@ local bound = setmetatable({}, { __mode = "k" })
 
 local function apply(region, token)
   local r, g, b, a = Theme.Resolve(token)
-  if region:IsObjectType("FontString") then
+  if region:IsObjectType("FontString") or region:IsObjectType("EditBox") then
     region:SetTextColor(r, g, b, a)
   else
     region:SetColorTexture(r, g, b, a)

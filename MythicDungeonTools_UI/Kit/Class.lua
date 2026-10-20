@@ -40,15 +40,24 @@ function Base:Release()
   if self.kitChildren then
     local children = self.kitChildren
     self.kitChildren = {}
+    for _, child in ipairs(children) do
+      if child.kitPersistent then
+        self.kitChildren[#self.kitChildren + 1] = child
+        child:ReleaseChildren()
+      end
+    end
     for i = #children, 1, -1 do
-      children[i].kitParent = nil
-      children[i]:Release()
+      local child = children[i]
+      if not child.kitPersistent then
+        child.kitParent = nil
+        child:Release()
+      end
     end
   end
   local def = self.kit
   if def.OnRelease then def.OnRelease(self) end
+  for _, prop in ipairs(def.allProps) do self.kitProps[prop.name] = prop.default end
   for _, prop in ipairs(def.allProps) do
-    self.kitProps[prop.name] = prop.default
     if prop.set then prop.set(self, prop.default) end
   end
   if self.kitParent then self.kitParent:kitDisown(self) end
@@ -81,6 +90,15 @@ end
 
 function Base:IsDisabled()
   return self.kitProps.disabled == true
+end
+
+---@return MDT.UI.State
+function Base:kitState()
+  if self.kitProps.disabled then return "disabled" end
+  if self.kitPressed then return "pressed" end
+  if self.kitProps.selected or self.kitFocused then return "selected" end
+  if self.kitHovered then return "hover" end
+  return "normal"
 end
 
 local function onEnter(self)
@@ -184,7 +202,9 @@ function UI.Define(def)
       local value = spec[prop.name]
       if value == nil then value = prop.default end
       frame.kitProps[prop.name] = value
-      if prop.set then prop.set(frame, value) end
+    end
+    for _, prop in ipairs(allProps) do
+      if prop.set then prop.set(frame, frame.kitProps[prop.name]) end
     end
     if frame.kitRepaint then frame:kitRepaint() end
     if parent and parent.kitAdopt then parent:kitAdopt(frame) end
@@ -219,15 +239,6 @@ function Skinned:kitSkinInit(variant)
   end
   self.kitVariant = variant
   self:kitRepaint()
-end
-
----@return MDT.UI.State
-function Skinned:kitState()
-  if self.kitProps.disabled then return "disabled" end
-  if self.kitPressed then return "pressed" end
-  if self.kitProps.selected or self.kitFocused then return "selected" end
-  if self.kitHovered then return "hover" end
-  return "normal"
 end
 
 function Skinned:kitRepaint()

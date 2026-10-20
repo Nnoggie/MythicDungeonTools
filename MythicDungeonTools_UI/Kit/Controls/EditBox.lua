@@ -1,0 +1,235 @@
+local _, MDT = ...
+local UI = MDT.UI
+local Theme, Fonts = UI.Theme, UI.Fonts
+
+local INSET = 6
+local LABEL_HEIGHT = 14
+local LINE_HEIGHT = 14
+local NATURAL_WIDTH = 160
+local WHEEL_STEP = 28
+
+local Methods = {}
+function Methods:GetValue() return self.kitProps.value end
+function Methods:Focus() self.kitEdit:SetFocus() end
+function Methods:ClearFocus() self.kitEdit:ClearFocus() end
+function Methods:SelectAll() self.kitEdit:HighlightText(0, -1) end
+---@param position integer
+function Methods:SetCursor(position) self.kitEdit:SetCursorPosition(position) end
+
+local function repaint(self)
+  local row = Theme.Skin("field", self:kitState())
+  Theme.Bind(self.kitFieldBackground, row.bg or "bg.sunken")
+  self.kitFieldBorder:SetToken(row.border or "border.strong")
+  Theme.Bind(self.kitEdit, row.text)
+  Theme.Bind(self.kitLabel, self.kitProps.disabled and "text.disabled" or "text.muted")
+  self.kitPlaceholder:SetShown(self.kitProps.value == "" and not self.kitEdit:HasFocus() and self.kitProps.placeholder ~= nil)
+end
+
+local function arrange(self)
+  local props = self.kitProps
+  local top = 0
+  if props.label and props.label ~= "" then
+    self.kitLabel:SetText(props.label)
+    self.kitLabel:Show()
+    top = LABEL_HEIGHT + Theme.Space("xs")
+  else
+    self.kitLabel:Hide()
+  end
+  self.kitField:SetPoint("TOPLEFT", self, "TOPLEFT", 0, -top)
+  self.kitEdit:SetMultiLine(props.multiline)
+  if props.multiline then
+    self.kitScroll:SetPoint("BOTTOMRIGHT", self.kitField, "BOTTOMRIGHT", -(INSET + 8 + Theme.Space("xs")), INSET)
+    self.kitEdit:SetJustifyV("TOP")
+    self.kitBar:Show()
+  else
+    self.kitScroll:SetPoint("BOTTOMRIGHT", self.kitField, "BOTTOMRIGHT", -INSET, INSET)
+    self.kitEdit:SetJustifyV("MIDDLE")
+    self.kitBar:Hide()
+  end
+  self:InvalidateLayout()
+end
+
+local function fieldHeight(self)
+  local props = self.kitProps
+  if props.multiline then return (props.lines or 1) * LINE_HEIGHT + INSET * 2 end
+  return Theme.Size("md")
+end
+
+local function updateScroll(self)
+  if not self.kitProps.multiline then return end
+  local viewH = self.kitScroll:GetHeight()
+  local contentH = self.kitEdit:GetHeight()
+  self.kitBar:SetRange(viewH, contentH)
+  local maxOffset = math.max(0, contentH - viewH)
+  self.kitScroll:SetVerticalScroll(math.min(maxOffset, self.kitScroll:GetVerticalScroll()))
+end
+
+local function setValue(self, text)
+  text = text or ""
+  self.kitProps.value = text
+  if self.kitEdit:GetText() ~= text then
+    self.kitSettingValue = true
+    self.kitEdit:SetText(text)
+    self.kitSettingValue = nil
+  end
+  repaint(self)
+end
+
+local function commit(self)
+  local text = self.kitEdit:GetText()
+  if text == self.kitLastCommit then return end
+  self.kitLastCommit = text
+  self:Emit("onCommit", text, self)
+end
+
+---@class MDT.UI.EditBoxSpec : MDT.UI.CommonSpec
+---@field value string?
+---@field label string?
+---@field placeholder string?
+---@field multiline boolean?
+---@field lines number? visible lines when multiline
+---@field numeric boolean?
+---@field maxLetters number?
+---@field maxBytes number?
+---@field readOnly boolean? text can be selected and copied but not changed
+---@field selectAllOnFocus boolean?
+---@field autoFocus boolean? focus right after creation
+---@field disabled boolean?
+---@field font MDT.UI.FontRole?
+---@field onChange fun(text: string, self: MDT.UI.Control)? every user edit
+---@field onCommit fun(text: string, self: MDT.UI.Control)? Enter or focus lost, once per changed value
+---@field onEscape fun(self: MDT.UI.Control)?
+---@field onFocusLost fun(self: MDT.UI.Control)?
+---@field onCopy fun(self: MDT.UI.Control)? Ctrl+C pressed while focused
+UI.Define({
+  name = "EditBox", frameType = "Frame", mixins = { Methods },
+  props = {
+    { name = "font", default = "body", set = function(self, v) self.kitEdit:SetFontObject(Fonts.Get(v)) end },
+    { name = "label", default = nil, set = arrange, relayout = true },
+    { name = "placeholder", default = nil, set = function(self, v) self.kitPlaceholder:SetText(v or "") repaint(self) end },
+    { name = "multiline", default = false, set = arrange, relayout = true },
+    { name = "lines", default = 1, set = arrange, relayout = true },
+    { name = "numeric", default = false, set = function(self, v) self.kitEdit:SetNumeric(v) end },
+    { name = "maxLetters", default = 0, set = function(self, v) self.kitEdit:SetMaxLetters(v or 0) end },
+    { name = "maxBytes", default = 0, set = function(self, v) self.kitEdit:SetMaxBytes(v or 0) end },
+    { name = "readOnly", default = false },
+    { name = "selectAllOnFocus", default = false },
+    { name = "disabled", default = false, set = function(self, v) self.kitEdit:SetEnabled(not v) repaint(self) end },
+    { name = "value", default = "", set = setValue },
+    { name = "autoFocus", default = false, set = function(self, v) if v and not self.kitReleased then self.kitEdit:SetFocus() end end },
+    { name = "onChange", default = nil },
+    { name = "onCommit", default = nil },
+    { name = "onEscape", default = nil },
+    { name = "onFocusLost", default = nil },
+    { name = "onCopy", default = nil },
+  },
+  Create = function(self)
+    self.kitLabel = self:CreateFontString(nil, "ARTWORK")
+    self.kitLabel:SetFontObject(Fonts.Get("small"))
+    self.kitLabel:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
+    self.kitLabel:SetPoint("TOPRIGHT", self, "TOPRIGHT", 0, 0)
+    self.kitLabel:SetHeight(LABEL_HEIGHT)
+    self.kitLabel:SetJustifyH("LEFT")
+
+    self.kitField = CreateFrame("Frame", nil, self)
+    self.kitField:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
+    self.kitField:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 0)
+    self.kitFieldBackground = self.kitField:CreateTexture(nil, "BACKGROUND")
+    self.kitFieldBackground:SetAllPoints()
+    self.kitFieldBorder = UI.Pixel.Border(self.kitField, "border.strong")
+
+    self.kitScroll = CreateFrame("ScrollFrame", nil, self.kitField)
+    self.kitScroll:SetPoint("TOPLEFT", self.kitField, "TOPLEFT", INSET, -INSET)
+    self.kitScroll:SetClipsChildren(true)
+    self.kitEdit = CreateFrame("EditBox", nil, self.kitScroll)
+    self.kitEdit:SetAutoFocus(false)
+    self.kitEdit:SetFontObject(Fonts.Get("body"))
+    self.kitEdit:SetPoint("TOPLEFT", self.kitScroll, "TOPLEFT", 0, 0)
+    self.kitEdit:SetPoint("TOPRIGHT", self.kitScroll, "TOPRIGHT", 0, 0)
+    self.kitEdit:SetHeight(LINE_HEIGHT)
+    self.kitEdit:SetTextInsets(0, 0, 0, 0)
+    self.kitScroll:SetScrollChild(self.kitEdit)
+    self.kitScroll:SetScript("OnSizeChanged", function(scroll, width)
+      self.kitEdit:SetWidth(width)
+      if not self.kitProps.multiline then self.kitEdit:SetHeight(scroll:GetHeight()) end
+      updateScroll(self)
+    end)
+    self.kitScroll:EnableMouseWheel(true)
+    self.kitScroll:SetScript("OnMouseWheel", function(scroll, delta)
+      local maxOffset = math.max(0, self.kitEdit:GetHeight() - scroll:GetHeight())
+      local offset = math.max(0, math.min(maxOffset, scroll:GetVerticalScroll() - delta * WHEEL_STEP))
+      scroll:SetVerticalScroll(offset)
+      self.kitBar:SetValue(offset)
+    end)
+    self.kitBar = UI.Scrollbar(self.kitField, { onChange = function(offset) self.kitScroll:SetVerticalScroll(offset) end })
+    self.kitBar:SetPoint("TOPRIGHT", self.kitField, "TOPRIGHT", -INSET, -INSET)
+    self.kitBar:SetPoint("BOTTOMRIGHT", self.kitField, "BOTTOMRIGHT", -INSET, INSET)
+
+    self.kitPlaceholder = self.kitScroll:CreateFontString(nil, "ARTWORK")
+    self.kitPlaceholder:SetFontObject(Fonts.Get("body"))
+    self.kitPlaceholder:SetPoint("TOPLEFT", self.kitScroll, "TOPLEFT", 0, 0)
+    self.kitPlaceholder:SetJustifyH("LEFT")
+    Theme.Bind(self.kitPlaceholder, "text.disabled")
+
+    self.kitEdit:SetScript("OnTextChanged", function(edit, userInput)
+      if self.kitSettingValue then return end
+      local text = edit:GetText()
+      if self.kitProps.readOnly and text ~= self.kitProps.value then
+        self.kitSettingValue = true
+        edit:SetText(self.kitProps.value)
+        self.kitSettingValue = nil
+        return
+      end
+      self.kitProps.value = text
+      updateScroll(self)
+      repaint(self)
+      if userInput then self:Emit("onChange", text, self) end
+    end)
+    self.kitEdit:SetScript("OnEnterPressed", function(edit)
+      if self.kitProps.multiline then return end
+      commit(self)
+      edit:ClearFocus()
+    end)
+    self.kitEdit:SetScript("OnEscapePressed", function(edit)
+      edit:ClearFocus()
+      self:Emit("onEscape", self)
+    end)
+    self.kitEdit:SetScript("OnEditFocusGained", function(edit)
+      self.kitFocused = true
+      self.kitLastCommit = edit:GetText()
+      repaint(self)
+      if self.kitProps.selectAllOnFocus then edit:HighlightText(0, -1) end
+    end)
+    self.kitEdit:SetScript("OnEditFocusLost", function(edit)
+      self.kitFocused = nil
+      edit:HighlightText(0, 0)
+      repaint(self)
+      commit(self)
+      self:Emit("onFocusLost", self)
+    end)
+    self.kitEdit:SetScript("OnKeyUp", function(_, key)
+      if key == "C" and IsControlKeyDown() then self:Emit("onCopy", self) end
+    end)
+    self.kitEdit:SetScript("OnCursorChanged", function(edit, _, y, _, height)
+      if not self.kitProps.multiline or not y then return end
+      local offset = self.kitScroll:GetVerticalScroll()
+      local viewH = self.kitScroll:GetHeight()
+      if -y < offset then offset = -y elseif -y + height > offset + viewH then offset = -y + height - viewH end
+      self.kitScroll:SetVerticalScroll(math.max(0, offset))
+      self.kitBar:SetValue(offset)
+    end)
+    self.kitField:EnableMouse(true)
+    self.kitField:SetScript("OnMouseDown", function() if not self.kitProps.disabled then self.kitEdit:SetFocus() end end)
+    self.kitRepaint = repaint
+  end,
+  OnRelease = function(self)
+    self.kitEdit:ClearFocus()
+    self.kitLastCommit = nil
+  end,
+  Measure = function(self, availW)
+    local props = self.kitProps
+    local height = fieldHeight(self)
+    if props.label and props.label ~= "" then height = height + LABEL_HEIGHT + Theme.Space("xs") end
+    return props.width or math.min(availW, NATURAL_WIDTH), height
+  end,
+})

@@ -2,9 +2,10 @@ local _, MDT = ...
 local UI = MDT.UI or {}
 MDT.UI = UI
 
----@class MDT.UI.TextMath
+---UTF-8 string helpers. UI.Text is the control; this is the math behind it.
+---@class MDT.UI.Strings
 local Text = {}
-UI.Text = Text
+UI.Strings = Text
 
 local byte = string.byte
 

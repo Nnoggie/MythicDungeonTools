@@ -67,7 +67,7 @@ end
 ---@param locale string
 ---@return MDT.UI.Alphabet?
 function Fonts.FallbackAlphabet(text, locale)
-  local found = UI.Text.Alphabet(text)
+  local found = UI.Strings.Alphabet(text)
   local needed
   if found == "cyrillic" then needed = "russian"
   elseif found == "hangul" then needed = "korean"

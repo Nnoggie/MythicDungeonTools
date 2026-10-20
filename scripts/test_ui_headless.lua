@@ -287,6 +287,10 @@ step("clear dialog opens and cancels", function()
   expect(not main.ClearConfirmationFrame.frame:IsVisible(), "clear dialog still shown")
 end)
 
+dofile(root.."/scripts/headless/kit_gallery.lua")({
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
+})
+
 step("hover every visible widget", function()
   local hovered = 0
   for _, object in ipairs(W.objects) do

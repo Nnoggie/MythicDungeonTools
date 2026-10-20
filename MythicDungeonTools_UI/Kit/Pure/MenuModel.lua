@@ -66,7 +66,7 @@ end
 ---@return MDT.UI.ListItem[]
 function MenuModel.Filter(items, query)
   if query == nil or query == "" then return MenuModel.Normalize(items) end
-  local Text = UI.Text
+  local Text = UI.Strings
   local kept = {}
   for _, item in ipairs(items) do
     if item then
