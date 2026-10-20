@@ -10,6 +10,15 @@ local MIN_LEVEL, MAX_LEVEL = 1, 35
 
 local db
 local sidebar
+local lastRoute = {}
+
+local function notifyRouteChanged(preset)
+  local dungeonIdx = db.currentDungeonIdx
+  local presetIdx = db.currentPreset[dungeonIdx]
+  if lastRoute.dungeonIdx == dungeonIdx and lastRoute.presetIdx == presetIdx and lastRoute.preset == preset then return end
+  lastRoute.dungeonIdx, lastRoute.presetIdx, lastRoute.preset = dungeonIdx, presetIdx, preset
+  MDT:FireRouteChanged(dungeonIdx, presetIdx)
+end
 
 local function authorColor(createdBy)
   local classFile = createdBy and MDT:GetClassFileByIndex(createdBy.classIdx)
@@ -70,6 +79,7 @@ function MDT:RefreshSidebar()
   paintHeader(state.header)
   sidebar.list:SetItems(state.items)
   sidebar.list:SetSelection(MDT:GetSelection())
+  notifyRouteChanged(preset)
 end
 
 ---@param shown boolean

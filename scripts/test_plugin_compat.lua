@@ -68,6 +68,10 @@ local API = assert(_G.MythicDungeonToolsAPI)
 assert(_G.MDT == nil)
 assert(type(API.GetDB) == "function")
 assert(type(API.RegisterUIInitializer) == "function")
+assert(type(API.RegisterRouteChangedCallback) == "function")
+local routeEvents = {}
+API:RegisterRouteChangedCallback(function(dungeonIdx, presetIdx) routeEvents[#routeEvents + 1] = "early:"..dungeonIdx..":"..presetIdx end)
+assert(not pcall(API.RegisterRouteChangedCallback, API, "not a function"))
 
 local function loadLegacy(legacyRoot)
   local addon = {}
@@ -189,6 +193,12 @@ API:AttachUI({
 }, pluginAPI)
 
 assert(legacyInitialized)
+API:RegisterRouteChangedCallback(function() error("callback boom") end)
+API:RegisterRouteChangedCallback(function(dungeonIdx, presetIdx) routeEvents[#routeEvents + 1] = "late:"..dungeonIdx..":"..presetIdx end)
+API:FireRouteChanged(160, 2)
+assert(table.concat(routeEvents, ",") == "early:160:2,late:160:2", table.concat(routeEvents, ","))
+assert(#errors == 1 and errors[1]:find("callback boom", 1, true), "a failing route callback was not routed to the error handler")
+errors[1] = nil
 assert(pluginAPI.RegisterNavigationSection == nil, "navigation sections leaked through the plugin API")
 assert(pluginAPI.GetNavigationSectionContentFrame == nil, "section content frames leaked through the plugin API")
 assert(ui.dungeonList[900] == "Localized Dungeon")
