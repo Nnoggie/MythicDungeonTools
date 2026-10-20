@@ -158,6 +158,21 @@ return function(ctx)
     host:Release()
   end)
 
+  step("kit edit box: a multiline box grows its field to the text, so every line shows and scrolls", function()
+    local box = UI.Stack(page, { id = "multiBox" })
+    local lines = {}
+    for i = 1, 10 do lines[i] = "line "..i end
+    local edit = UI.EditBox(box, { multiline = true, lines = 4, value = table.concat(lines, "\n") })
+    UI.Layout.FlushAll()
+    W.pump(0.05)
+    local viewH = edit.kitScroll:GetHeight()
+    expect(edit.kitEdit:GetHeight() > viewH * 2, ("the field is %.0f tall for 10 lines in a %.0f view"):format(edit.kitEdit:GetHeight(), viewH))
+    expect(edit.kitBar:IsShown(), "no scrollbar for text taller than the box")
+    edit:SetValue("one line")
+    expect(math.abs(edit.kitEdit:GetHeight() - viewH) < 0.5, "a short text did not shrink the field back to the view")
+    box:Release()
+  end)
+
   step("kit slider: MethodInternal's bordered track and tall thumb, the border lights on hover", function()
     local slider = page:Find("slider")
     local thumb = slider.kitThumbTexture

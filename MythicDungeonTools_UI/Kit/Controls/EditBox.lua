@@ -62,8 +62,21 @@ local function fieldHeight(self)
   return Theme.Size("md")
 end
 
+---A multiline edit box must be as tall as its text: at a fixed one-line height the client cuts the text after the
+---first line and ends it with "...". A hidden copy of the text measures the height.
+local function fitHeight(self)
+  if not self.kitProps.multiline then return end
+  local measure = self.kitTextMeasure
+  measure:SetWidth(math.max(1, self.kitEdit:GetWidth()))
+  -- A trailing newline still holds the cursor on a new line.
+  measure:SetText((self.kitEdit:GetText() or ""):gsub("\n$", "\n ").." ")
+  local height = math.max(self.kitScroll:GetHeight(), math.ceil(measure:GetStringHeight()) + 2)
+  if math.abs(self.kitEdit:GetHeight() - height) > 0.5 then self.kitEdit:SetHeight(height) end
+end
+
 local function updateScroll(self)
   if not self.kitProps.multiline then return end
+  fitHeight(self)
   local viewH = self.kitScroll:GetHeight()
   local contentH = self.kitEdit:GetHeight()
   self.kitBar:SetRange(viewH, contentH)
@@ -79,6 +92,7 @@ local function setValue(self, text)
     self.kitEdit:SetText(text)
     self.kitSettingValue = nil
   end
+  updateScroll(self)
   repaint(self)
 end
 
@@ -206,6 +220,12 @@ UI.Define({
     self.kitBar:SetPoint("TOPRIGHT", self.kitField, "TOPRIGHT", -INSET, -INSET)
     self.kitBar:SetPoint("BOTTOMRIGHT", self.kitField, "BOTTOMRIGHT", -INSET, INSET)
 
+    self.kitTextMeasure = self:CreateFontString(nil, "ARTWORK")
+    self.kitTextMeasure:SetFontObject(Fonts.Get("body"))
+    self.kitTextMeasure:SetWordWrap(true)
+    self.kitTextMeasure:SetNonSpaceWrap(true)
+    self.kitTextMeasure:SetJustifyH("LEFT")
+    self.kitTextMeasure:Hide()
     self.kitPlaceholder = self.kitScroll:CreateFontString(nil, "ARTWORK")
     self.kitPlaceholder:SetFontObject(Fonts.Get("body"))
     self.kitPlaceholder:SetPoint("TOPLEFT", self.kitScroll, "TOPLEFT", 0, 0)
