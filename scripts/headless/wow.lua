@@ -177,6 +177,7 @@ function Object:SetForbidden() end
 function Object:CanChangeProtectedState() return true end
 
 local function fireScript(obj, scriptName, ...)
+  if scriptName == "OnDragStart" then W.mouseDown = true elseif scriptName == "OnDragStop" then W.mouseDown = false end
   local handler = S[obj].scripts[scriptName]
   if handler then return protectedCall(handler, obj, ...) end
 end
@@ -451,6 +452,7 @@ function W.userClick(frame, button)
   local x, y = frame:GetCenter()
   W.cursorX, W.cursorY = x, y
   W.mouseFocus = frame
+  W.mouseDown = false
   button = button or "LeftButton"
   if isA(S[frame].class, "Button") then
     frame:Click(button)

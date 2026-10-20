@@ -123,19 +123,6 @@ function ListMath.Reorder(order, movingKeys, insertIndex)
   return newOrder, changed
 end
 
----Indices whose (kind, key, sig) differ between two item arrays, plus every index past the shorter one.
----@param old MDT.UI.ListItem[]
----@param new MDT.UI.ListItem[]
----@return integer[]
-function ListMath.Changed(old, new)
-  local changed = {}
-  for i = 1, math.max(#old, #new) do
-    local a, b = old[i], new[i]
-    if not a or not b or a.kind ~= b.kind or a.key ~= b.key or a.sig ~= b.sig then changed[#changed + 1] = i end
-  end
-  return changed
-end
-
 ---Scroll offset that brings item `index` into view.
 ---@param tops number[]
 ---@param heights number[]

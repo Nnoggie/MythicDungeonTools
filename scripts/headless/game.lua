@@ -56,7 +56,7 @@ return function(W)
   G.GetScaledCursorPosition = G.GetCursorPosition
   function G.GetMouseFocus() return W.mouseFocus end
   function G.GetMouseFoci() return { W.mouseFocus } end
-  function G.IsMouseButtonDown() return false end
+  function G.IsMouseButtonDown() return W.mouseDown == true end
   function G.IsShiftKeyDown() return W.modifiers and W.modifiers.shift or false end
   function G.IsControlKeyDown() return W.modifiers and W.modifiers.ctrl or false end
   function G.IsAltKeyDown() return W.modifiers and W.modifiers.alt or false end
