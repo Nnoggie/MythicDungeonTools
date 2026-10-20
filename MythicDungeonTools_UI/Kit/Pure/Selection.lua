@@ -2,7 +2,7 @@ local _, MDT = ...
 local UI = MDT.UI or {}
 MDT.UI = UI
 
----Click semantics of the pull list, lifted from the AceGUI pull button's OnClickNormal.
+---Click semantics of the pull list, matching the pull buttons MDT had before the kit.
 ---The selection keeps click order; its last entry is the anchor for shift ranges.
 ---Shift and Ctrl right-clicks never change the selection: the list owner handles those chords.
 ---@class MDT.UI.SelectionMath

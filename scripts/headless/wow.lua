@@ -426,7 +426,7 @@ end
 
 -- Once per frame the client re-resolves anchors and fires OnSizeChanged for frames whose size moved since
 -- the last report, including moves that came from anchors rather than SetSize. Layouts that size from
--- OnSizeChanged (AceGUI containers, scroll children) depend on it.
+-- OnSizeChanged (kit containers, scroll children) depend on it.
 function W.layoutPass()
   local frames, fired = {}, 0
   for frame in pairs(W.sizeWatchers) do frames[#frames + 1] = frame end

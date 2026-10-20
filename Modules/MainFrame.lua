@@ -506,24 +506,6 @@ function MDT:MakeSidePanel(frame)
 
 end
 
-function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
-  frame = frame or MDT.main_frame
-  local originalShow, originalHide = frame.Show, frame.Hide
-  if not isFrame then
-    widget = widget.frame
-  end
-  function frame:Hide(...)
-    widget:Hide()
-    return originalHide(self, ...)
-  end
-
-  if hideOnly then return end
-  function frame:Show(...)
-    widget:Show()
-    return originalShow(self, ...)
-  end
-end
-
 function MDT:ResetMainFramePos(soft)
   MDT:Async(function()
     --soft reset just redraws the window with existing coordinates from db

@@ -492,7 +492,7 @@ test("SidebarModel.Build: rows, cumulative text, the pull that completes forces,
   eq(onlyDefault.header.actions.canDeleteAll, false)
 end)
 
--- The drop algorithm of the old AceGUI pull button, ported to arrays of pulls that carry an `id` option.
+-- The drop algorithm of MDT's pre-kit pull button, ported to arrays of pulls that carry an `id` option.
 local function oldAddPull(pulls, index, data) table.insert(pulls, index, data or {}) end
 local function oldDeletePull(pulls, index) table.remove(pulls, index) end
 local function oldMergePulls(pulls, list, destination)
