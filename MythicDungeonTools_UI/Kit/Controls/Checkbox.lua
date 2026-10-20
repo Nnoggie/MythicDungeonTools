@@ -2,16 +2,16 @@ local _, MDT = ...
 local UI = MDT.UI
 local Theme, Fonts = UI.Theme, UI.Fonts
 
-local BOX = 14
+-- MethodInternal's checkbox: a square box whose border lights up on hover or when checked, filled with a solid square.
+local BOX = 18
+local FILL = 10
+local DISABLED_ALPHA = 0.5
 
 local function repaint(self)
-  local state = self:kitState()
-  local row = Theme.Skin("field", state)
-  Theme.Bind(self.kitBoxBackground, row.bg or "bg.sunken")
-  self.kitBoxBorder:SetToken(self.kitProps.value and "accent" or row.border or "border.strong")
-  Theme.Bind(self.kitLabel, row.text)
-  self.kitCheck:SetColor(state == "disabled" and "text.disabled" or "accent")
-  self.kitCheck:SetShown(self.kitProps.value == true)
+  local checked = self.kitProps.value == true
+  self.kitBoxBorder:SetToken((checked or self.kitHovered) and "accent.active" or "border.strong")
+  self.kitFill:SetShown(checked)
+  self:SetAlpha(self.kitProps.disabled and DISABLED_ALPHA or 1)
 end
 
 ---@class MDT.UI.CheckboxSpec : MDT.UI.CommonSpec
@@ -37,11 +37,15 @@ UI.Define({
     self.kitBox:SetPoint("LEFT", self, "LEFT", 0, 0)
     self.kitBoxBackground = self.kitBox:CreateTexture(nil, "BACKGROUND")
     self.kitBoxBackground:SetAllPoints()
+    Theme.Bind(self.kitBoxBackground, "bg.sunken")
     self.kitBoxBorder = UI.Pixel.Border(self.kitBox, "border.strong")
-    self.kitCheck = UI.Glyphs.Create(self.kitBox, "check", BOX - 4, "accent")
-    self.kitCheck:SetPoint("CENTER", self.kitBox, "CENTER", 0, 0)
+    self.kitFill = self.kitBox:CreateTexture(nil, "ARTWORK")
+    self.kitFill:SetSize(FILL, FILL)
+    self.kitFill:SetPoint("CENTER", self.kitBox, "CENTER", 0, 0)
+    Theme.Bind(self.kitFill, "accent")
     self.kitLabel = self:CreateFontString(nil, "ARTWORK")
     self.kitLabel:SetFontObject(Fonts.Get("body"))
+    Theme.Bind(self.kitLabel, "text.normal")
     self.kitLabel:SetPoint("LEFT", self.kitBox, "RIGHT", Theme.Space("sm"), 0)
     self.kitLabel:SetPoint("RIGHT", self, "RIGHT", 0, 0)
     self.kitLabel:SetJustifyH("LEFT")

@@ -14,7 +14,7 @@ Theme.data = {
     ["bg.overlay"] = "141417", ["bg.dim"] = "00000099",
     ["border.normal"] = "2b2b30", ["border.strong"] = "303036", ["border.divider"] = "1f1f23",
     ["text.normal"] = "e9e6e1", ["text.secondary"] = "cfcac2", ["text.muted"] = "8e8a84", ["text.disabled"] = "55534f", ["text.inverse"] = "111113",
-    ["accent"] = "ffffff", ["accent.bg"] = "26262b", ["accent.border"] = "4a4a52",
+    ["accent"] = "ffffff", ["accent.bg"] = "26262b", ["accent.border"] = "4a4a52", ["accent.active"] = "ffffff80",
     ["ok"] = "5ee07a", ["ok.line"] = "2d5a36", ["bar.progress"] = "2f5fc4", ["bar.ok"] = "2e8f4a", ["bar.warn"] = "8e3540", ["warn"] = "ff6b5b", ["live"] = "ff4b4b", ["live.bg"] = "3a1416",
     ["danger.bg"] = "3a1416", ["danger.border"] = "5a2626",
   },

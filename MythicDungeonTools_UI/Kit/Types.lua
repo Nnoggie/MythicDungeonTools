@@ -23,6 +23,7 @@
 ---| "accent.bg"
 ---| "accent.bgHover"
 ---| "accent.border"
+---| "accent.active"
 ---| "ok"
 ---| "ok.line"
 ---| "bar.progress"
