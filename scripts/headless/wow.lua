@@ -183,6 +183,12 @@ local function fireScript(obj, scriptName, ...)
   if handler then return protectedCall(handler, obj, ...) end
 end
 W.fireScript = fireScript
+-- Like the client: the cursor moves onto the frame, and a disabled button only gets OnEnter when it allows motion scripts while disabled.
+function W.hover(obj)
+  W.cursorX, W.cursorY = obj:GetCenter()
+  if obj.IsEnabled and not obj:IsEnabled() and not obj:GetMotionScriptsWhileDisabled() then return end
+  return fireScript(obj, "OnEnter")
+end
 
 local function checkScript(obj, scriptName, method)
   local state = stateOf(obj, method)

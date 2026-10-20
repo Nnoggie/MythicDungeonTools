@@ -111,6 +111,17 @@ return function(ctx)
     expect(control("routes"):GetWidth() > 150 and control("pulls"):GetHeight() > 150, "sidebar layout has no size")
   end)
 
+  step("sidebar: every route action button shows its tooltip, also while disabled", function()
+    expect(control("shareRoute"):IsDisabled(), "setup: share should be disabled outside a group")
+    for _, id in ipairs({ "newRoute", "importRoute", "renameRoute", "duplicateRoute", "exportRoute", "shareRoute", "liveSession", "deleteRoute" }) do
+      local button = control(id)
+      GameTooltip:Hide()
+      W.hover(button)
+      expect(GameTooltip:IsShown() and GameTooltip:GetOwner() == button, id.." shows no tooltip"..(button:IsDisabled() and " while disabled" or ""))
+      W.fireScript(button, "OnLeave")
+    end
+  end)
+
   step("sidebar: + Add pull appends a pull and selects it", function()
     local before = #pulls()
     local row = rowOfKind(control("pulls"), "newPull")

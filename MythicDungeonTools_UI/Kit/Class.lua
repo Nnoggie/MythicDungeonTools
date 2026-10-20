@@ -177,6 +177,8 @@ function UI.Define(def)
     frame.kit = def
     frame.kitProps = {}
     def.Create(frame)
+    -- Disabled buttons still explain themselves: keep OnEnter/OnLeave (tooltips) firing while disabled.
+    if frame:IsObjectType("Button") then frame:SetMotionScriptsWhileDisabled(true) end
     if frame:HasScript("OnEnter") then
       frame:HookScript("OnEnter", onEnter)
       frame:HookScript("OnLeave", onLeave)

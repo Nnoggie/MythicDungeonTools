@@ -267,8 +267,8 @@ return function(W)
   end
   function Button:SetButtonState(value, locked) S[self].buttonState = value end
   function Button:GetButtonState() return S[self].buttonState or "NORMAL" end
-  function Button:SetMotionScriptsWhileDisabled(value) end
-  function Button:GetMotionScriptsWhileDisabled() return false end
+  function Button:SetMotionScriptsWhileDisabled(value) S[self].motionWhileDisabled = value and true or false end
+  function Button:GetMotionScriptsWhileDisabled() return S[self].motionWhileDisabled == true end
   function Button:SetPushedTextOffset() end
   function Button:GetPushedTextOffset() return 0, 0 end
   function Button:SetHighlightLocked(value) S[self].highlightLocked = value end
