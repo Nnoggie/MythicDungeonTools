@@ -276,6 +276,44 @@ return function(ctx)
     for i = #errors, before + 1, -1 do table.remove(errors, i) end
   end)
 
+  step("version check: the version text opens the changelog, a newer party version offers downloads, tabs switch", function()
+    local clickArea = _G.MDTBottomLeftPanelClickArea
+    click(clickArea)
+    local dialog = openDialog("versionCheck")
+    local text
+    for _, child in ipairs(dialog.content.kitChildren) do
+      local scroll = child.kitChildren and child.kitChildren[1]
+      if scroll and scroll.kit.name == "Scroll" then text = scroll.content:Find("versionText") end
+    end
+    expect(dialog.content:Find("changelogTab").kitProps.selected and not dialog.content:Find("versionsTab").kitProps.selected, "the changelog tab is not selected")
+    expect(MDT.changeLog[1] and text.kitProps.text:find("v"..MDT.changeLog[1].tag, 1, true), "the changelog text is missing")
+    local downloads, report
+    for _, child in ipairs(dialog.content.kitChildren) do
+      if child.kit.name == "Row" and child:Find("reportVersions") then report = child end
+      if child.kit.name == "Row" and #child.kitChildren == 2 and child.kitChildren[1].kit.name == "Row" then downloads = child end
+    end
+    expect(downloads and not downloads:IsShown() and not report:IsShown(), "downloads or the report button show while up to date")
+    MDT:VersionCheck_OnCommReceived("V99.0.0", "PARTY", "Someone-Realm")
+    W.pump(0.05)
+    expect(downloads:IsShown(), "a newer party version did not offer the downloads")
+    expect(main.bottomLeftPanelString:GetText():find(L["update available"], 1, true), "the version text does not say an update is available")
+    snapshot("version check changelog", dialog)
+    click(dialog.content:Find("versionsTab"))
+    W.pump(0.05)
+    expect(dialog.content:Find("versionsTab").kitProps.selected and report:IsShown() and not downloads:IsShown(), "the versions tab did not switch the controls")
+    expect(text.kitProps.text:find(": v", 1, true), "the versions tab lists no versions")
+    local sent = #W.chatMessages
+    click(dialog.content:Find("reportVersions"))
+    expect(#W.chatMessages > sent and W.chatMessages[sent + 1].message == "MDT Version Check:", "the report button sent nothing to party chat")
+    snapshot("version check versions", dialog)
+    click(clickArea)
+    expect(UI.Dialogs.Get("versionCheck") == nil, "clicking the version text again did not close the dialog")
+    click(clickArea)
+    expect(openDialog("versionCheck").content:Find("versionsTab").kitProps.selected, "the dialog forgot the last tab")
+    MDT:HideAllDialogs()
+    expect(UI.Dialogs.Get("versionCheck") == nil, "HideAllDialogs left the version check open")
+  end)
+
   step("dialogs: /mdt hardreset with the window closed asks on screen", function()
     MDT:HideInterface()
     MDT:HandleSlashCommand("hardreset")

@@ -30,9 +30,6 @@ end
 
 function MDT:HideAllDialogs()
   UI.Dialogs.CloseAll("api")
-  if MDT.main_frame then
-    if MDT.versionCheckFrame then MDT.versionCheckFrame:Hide() end
-  end
   if MDT.copyHelper then MDT.copyHelper:SmartHide() end
 end
 
