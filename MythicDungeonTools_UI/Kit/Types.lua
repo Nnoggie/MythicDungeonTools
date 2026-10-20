@@ -83,7 +83,7 @@
 
 ---@class MDT.UI.CommonSpec
 ---@field id string? container:Find(id)
----@field width number? fixed width; nil stretches in a Stack and takes the natural width in a Row
+---@field width number? fixed width; nil stretches in a Stack and takes the natural width in a Row. A container's natural width is the whole row, so a Stack, Row or Columns inside a Row needs an explicit width
 ---@field height (number|MDT.UI.ControlSize)? fixed height
 ---@field grow number? share of leftover space in the parent container
 ---@field hidden boolean? hidden children take no layout space

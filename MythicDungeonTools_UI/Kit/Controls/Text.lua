@@ -17,10 +17,17 @@ local function measureText(self, availW)
   local label = self.kitLabel
   if self.kitProps.wrap then
     label:SetWidth(availW)
-    return availW, label:GetStringHeight()
+    return math.min(availW, math.ceil(label:GetWrappedWidth())), label:GetStringHeight()
   end
   label:SetWidth(0)
   return label:GetStringWidth(), label:GetStringHeight()
+end
+
+local TextMethods = {}
+
+---Wraps at the placed width, which a stack stretches past the measured one, so justify uses the whole frame.
+function TextMethods:kitPlaced()
+  if self.kitProps.wrap then self.kitLabel:SetWidth(self:GetWidth()) end
 end
 
 ---@class MDT.UI.TextSpec : MDT.UI.CommonSpec
@@ -31,7 +38,7 @@ end
 ---@field justify "LEFT"|"CENTER"|"RIGHT"?
 ---@field userText boolean? route names and other user-authored strings: swaps to a fallback font when the client font lacks the glyphs
 UI.Define({
-  name = "Text", frameType = "Frame",
+  name = "Text", frameType = "Frame", mixins = { TextMethods },
   props = {
     { name = "font", default = "body", set = applyText, relayout = true },
     { name = "userText", default = false, set = applyText, relayout = true },

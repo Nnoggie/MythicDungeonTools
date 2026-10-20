@@ -407,6 +407,22 @@ return function(ctx)
     expect(#short == 0, table.concat(short, "; "))
   end)
 
+  step("kit layout: wrapped text in a row takes its text's width, not the whole row", function()
+    local row = UI.Row(page, { gap = "sm" })
+    local text = UI.Text(row, { text = "Short" })
+    local button = UI.Button(row, { text = "After" })
+    UI.Layout.FlushAll()
+    local needed = text.kitLabel:GetUnboundedStringWidth()
+    expect(text:GetWidth() >= needed and text:GetWidth() <= needed + 1,
+      ("short text in a row is %d wide for %d of text"):format(text:GetWidth(), needed))
+    expect(button:GetRight() <= row:GetRight(), "the button after the text was pushed out of the row")
+    local long = UI.Text(row, { text = string.rep("long words wrap ", 40) })
+    UI.Layout.FlushAll()
+    expect(long:GetWidth() <= row:GetWidth(), "long wrapped text grew past the row")
+    row:Release()
+    UI.Layout.FlushAll()
+  end)
+
   step("kit dialogs: stack, keyed replacement, every dismissal runs cancel once, Escape pops the top dialog first", function()
     log = {}
     local Dialogs = UI.Dialogs
