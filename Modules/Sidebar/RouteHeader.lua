@@ -194,7 +194,9 @@ end
 ---@return MDT.UI.Control popover
 function MDT:OpenLevelPicker(anchor, level, onPick)
   local popover
-  local cells, multipliers = {}, nil
+  local cells = {}
+  ---@type MDT.UI.Control
+  local multipliers
   local current = level
   local function paint()
     for value, cell in pairs(cells) do cell:SetSelected(value == current) end
