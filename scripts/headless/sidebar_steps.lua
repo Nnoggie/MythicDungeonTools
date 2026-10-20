@@ -121,7 +121,7 @@ return function(ctx)
       W.fireScript(button, "OnLeave")
       local ix, iy = button.kitIcon:GetCenter()
       local bx, by = button:GetCenter()
-      expect(button:GetText() ~= "" or (math.abs(ix - bx) < 0.5 and math.abs(iy - by) < 0.5), ("%s icon is off center by %.1f, %.1f"):format(id, ix - bx, iy - by))
+      expect(math.abs(ix - bx) < 0.5 and math.abs(iy - by) < 0.5, ("%s icon is off center by %.1f, %.1f"):format(id, ix - bx, iy - by))
     end
   end)
 
