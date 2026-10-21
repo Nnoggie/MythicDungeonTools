@@ -73,6 +73,10 @@ return function(ctx)
     local health = MDT:FormatEnemyHealth(MDT:CalculateEnemyHealth(blip.data.isBoss or false, blip.data.health, db.currentDifficulty, blip.data.ignoreFortified))
     expect(text("hover", "health"):find(health, 1, true), "health line is "..text("hover", "health"))
     expect(text("hover", "forces"):find(MDT:FormatEnemyForces(MDT:GetCloneEnemyForces(blip.data, blip.clone)), 1, true), "forces line is "..text("hover", "forces"))
+    for id, key in pairs({ stealth = "Enemy Info NPC Stealth", stealthDetect = "Enemy Info NPC Stealth Detect" }) do
+      local expected = L[key]..": "..(blip.data[id] and YES or NO)
+      expect(text("hover", id) == expected, id.." line is "..tostring(text("hover", id)))
+    end
     expect(hover:GetLeft() >= blip:GetRight() or hover:GetRight() <= blip:GetLeft(), "the card covers its enemy")
     expect(hover:GetBottom() >= main:GetBottom() - 0.5 and hover:GetRight() <= main:GetRight() + 0.5, "the card leaves the window")
     local spells = spellCount(blip.data)

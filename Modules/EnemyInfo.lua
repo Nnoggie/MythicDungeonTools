@@ -284,6 +284,11 @@ end
 
 local pin
 
+---A "Label: Yes/No" line, highlighted when set, so players can tell "no" apart from missing info.
+local function flag(parent, id, label, value)
+  UI.Text(parent, { id = id, text = label..": "..(value and YES or NO), font = "small", color = value and "warn" or "text.muted" })
+end
+
 ---Fills a card for one enemy clone. Both cards share this; the pinned card adds the NPC id, more spells, dev help and
 ---Link Spells, and swaps the pin button for a close button.
 ---@param card MDT.EnemyCard
@@ -325,8 +330,8 @@ local function fill(card, blip)
     UI.Text(stats, { id = "forces", text = L["Forces"]..": "..MDT:FormatEnemyForces(count) })
     UI.Text(stats, { id = "efficiency", text = L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health), font = "small", color = "text.muted" })
     if pinned then UI.Text(stats, { id = "npcId", text = L["Enemy Info NPC Id"]..": "..data.id, font = "small", color = "text.muted" }) end
-    if data.stealth then UI.Text(stats, { id = "stealth", text = L["Enemy Info NPC Stealth"], font = "small", color = "warn" }) end
-    if data.stealthDetect then UI.Text(stats, { id = "stealthDetect", text = L["Enemy Info NPC Stealth Detect"], font = "small", color = "warn" }) end
+    flag(stats, "stealth", L["Enemy Info NPC Stealth"], data.stealth)
+    flag(stats, "stealthDetect", L["Enemy Info NPC Stealth Detect"], data.stealthDetect)
 
     local affected = {}
     for _, characteristic in ipairs(CHARACTERISTICS) do
