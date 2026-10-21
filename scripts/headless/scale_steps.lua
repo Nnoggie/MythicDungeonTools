@@ -56,6 +56,9 @@ return function(ctx)
     local slider = scaleSlider()
     expect(slider.kitValueText:GetText() == ("%d%%"):format(db.uiScale * 100), "the slider shows "..tostring(slider.kitValueText:GetText()))
     local before = rootScale()
+    W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
+    W.settle(asyncIdle, 30)
+    expect(rootScale() == before, "releasing the slider without moving it rescaled MDT")
     W.userDrag(slider.kitSlider, 1.5)
     expect(db.uiScale ~= 1.5 and near(rootScale(), before), "MDT rescaled while the slider was still held")
     W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
@@ -64,6 +67,27 @@ return function(ctx)
     expect(near(rootScale(), 768 / 1440 * 1.5), "root scale is "..rootScale().." at MDT scale 150%")
     expect(slider.kitValueText:GetText() == "150%", "the slider shows "..tostring(slider.kitValueText:GetText()))
     expectOnScreen("at MDT scale 150%")
+  end)
+
+  step("scale: a corrupt or out of range MDT scale is applied as a valid one", function()
+    local UI, db = MDT.UI, MDT:GetDB()
+    for _, case in ipairs({ { "big", 1 }, { 0 / 0, 1 }, { false, 1 }, { 9, 2 }, { 0.1, 0.5 } }) do
+      local applied = UI.SetUserScale(case[1])
+      expect(applied == case[2] and near(rootScale(), 768 / 1440 * case[2]),
+        ("MDT scale %s applied as %s, root scale %s"):format(tostring(case[1]), tostring(applied), rootScale()))
+    end
+    UI.SetUserScale(db.uiScale)
+    W.settle(asyncIdle, 30)
+  end)
+
+  step("scale: MDT keeps its scale when another addon rescales UIParent without UI_SCALE_CHANGED", function()
+    local db = MDT:GetDB()
+    for _, uiScale in ipairs({ 0.7, 1 }) do
+      UIParent:SetScale(uiScale)
+      W.settle(asyncIdle, 30)
+      expect(near(rootScale(), 768 / 1440 * db.uiScale), ("root scale is %s after UIParent:SetScale(%s)"):format(rootScale(), uiScale))
+      expectOnScreen("after UIParent:SetScale("..uiScale..")")
+    end
   end)
 
   step("scale: at MDT scale 200% the window fits the screen, maximized and normal", function()

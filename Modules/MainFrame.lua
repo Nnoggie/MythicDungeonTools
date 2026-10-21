@@ -307,7 +307,7 @@ local function fitToRoot()
   end
 end
 
-MDT.UI.OnRootRescale(function()
+MDT.UI.HookScript(MDT.UI.Root, "OnSizeChanged", function()
   if framesInitialized then fitToRoot() end
 end)
 
