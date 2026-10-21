@@ -42,10 +42,13 @@ return function(ctx)
       ("the maximized window does not fill the screen %s: %.1fx%.1f of %.1fx%.1f"):format(when, right - left, top - bottom, W.screenWidth, W.screenHeight))
   end
 
+  local windowKeys = { "nonFullscreenScale", "anchorFrom", "anchorTo", "xoffset", "yoffset" }
+
   ---What the user set: the saved window scale and position.
   local function savedWindow()
-    local db = MDT:GetDB()
-    return { db.nonFullscreenScale, db.anchorFrom, db.anchorTo, db.xoffset, db.yoffset }
+    local db, saved = MDT:GetDB(), {}
+    for index, key in ipairs(windowKeys) do saved[index] = db[key] end
+    return saved
   end
 
   local function expectSavedWindow(saved, when)
@@ -131,6 +134,37 @@ return function(ctx)
       ("the window is %.1f tall, expected %.1f at saved scale %s %s"):format(f:GetHeight(), mapHeight * scale, db.nonFullscreenScale, when))
   end
 
+  local anchorPoints = {
+    TOPLEFT = true, TOP = true, TOPRIGHT = true, LEFT = true, CENTER = true, RIGHT = true,
+    BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
+  }
+  local function finite(value) return type(value) == "number" and value == value and math.abs(value) ~= math.huge end
+
+  ---The MDT scale and window geometry MDT should load from what was stored: what it cannot show the window with falls
+  ---back to the default, offsets together with their anchors.
+  local function loadedSettings(stored)
+    local loaded = {}
+    for _, key in ipairs({ "uiScale", "nonFullscreenScale", "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do
+      if stored[key] == nil then loaded[key] = defaults[key] else loaded[key] = stored[key] end
+    end
+    loaded.uiScale = finite(loaded.uiScale) and loaded.uiScale > 0 and math.min(2, math.max(0.5, loaded.uiScale)) or 1
+    loaded.nonFullscreenScale = finite(loaded.nonFullscreenScale) and math.max(0.9, loaded.nonFullscreenScale) or defaults.nonFullscreenScale
+    if not (anchorPoints[loaded.anchorFrom] and anchorPoints[loaded.anchorTo]) then
+      for _, key in ipairs({ "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do loaded[key] = defaults[key] end
+    end
+    for _, key in ipairs({ "xoffset", "yoffset" }) do
+      if not finite(loaded[key]) then loaded[key] = defaults[key] end
+    end
+    return loaded
+  end
+
+  local loaded = loadedSettings(ctx.stored)
+  local storedWindow, storedValid = {}, true
+  for index, key in ipairs(windowKeys) do
+    if ctx.stored[key] == nil then storedWindow[index] = defaults[key] else storedWindow[index] = ctx.stored[key] end
+    if loaded[key] ~= storedWindow[index] then storedValid = false end
+  end
+
   local function setScreen(width, height)
     W.setScreen(width, height)
     W.FireEvent("DISPLAY_SIZE_CHANGED")
@@ -153,12 +187,32 @@ return function(ctx)
       end
       expect(near(db.scale * mapHeight, f:GetHeight()), ("the map uses scale %s for a window %s tall"):format(db.scale, f:GetHeight()))
     end
-    local stored = {}
-    for index, key in ipairs({ "nonFullscreenScale", "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do
-      if ctx.stored[key] == nil then stored[index] = defaults[key] else stored[index] = ctx.stored[key] end
-    end
-    expectSavedWindow(stored, "at load")
+    if storedValid then expectSavedWindow(storedWindow, "at load") end
     expectOnScreen("after load")
+  end)
+
+  step("scale: a broken saved MDT scale, map scale and window geometry load as valid ones", function()
+    if ctx.seeded then
+      local output = ctx.bootWithSavedVariables([[MythicDungeonToolsDB = { global = {
+        uiScale = -3, scale = 0/0, maximized = true, nonFullscreenScale = 0.3,
+        anchorFrom = "TOPLEFT", anchorTo = 12, xoffset = 300, yoffset = -50,
+      } }]])
+      local failures = {}
+      for line in output:gmatch("[^\n]+") do
+        if line:find("^FAIL") or line:find("^  ") then failures[#failures + 1] = line end
+      end
+      expect(output:find("\nPASSED") and #failures == 0, "booting with broken saved variables failed:\n"..table.concat(failures, "\n"):sub(1, 3000))
+      return
+    end
+    local db = MDT:GetDB()
+    for key, value in pairs(loaded) do
+      expect(db[key] == value, ("saved %s %s loaded as %s, expected %s"):format(key, tostring(ctx.stored[key]), tostring(db[key]), tostring(value)))
+    end
+    expect(near(rootScale(), 768 / 1440 * loaded.uiScale), "root scale is "..rootScale())
+    local _, _, fullscreenScale = MDT:GetFullScreenSizes()
+    local scale = db.maximized and fullscreenScale or MDT:GetNormalWindowScale()
+    expect(near(db.scale, scale), ("the map uses scale %s, expected %s"):format(tostring(db.scale), scale))
+    if db.maximized then expectFillsScreen("after load") else expectOnScreen("after load") end
   end)
 
   step("scale: the settings slider sets MDT's scale on release and saves it", function()

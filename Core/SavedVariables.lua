@@ -86,22 +86,34 @@ local anchorPoints = {
   BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
 }
 
+local minNonFullscreenScale = 0.9
+
 local function isFiniteNumber(value)
   return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
 end
 
----Puts back the default for any saved window geometry the window could not be placed with.
-local function validateWindowGeometry()
+---Puts back the default for any saved MDT scale or window geometry the window could not be shown with.
+local function validateWindowSettings()
   local defaults = defaultSavedVars.global
-  if not (isFiniteNumber(db.nonFullscreenScale) and db.nonFullscreenScale > 0) then
+  if not (isFiniteNumber(db.uiScale) and db.uiScale > 0) then db.uiScale = defaults.uiScale end
+  if not isFiniteNumber(db.nonFullscreenScale) then
     db.nonFullscreenScale = defaults.nonFullscreenScale
+  elseif db.nonFullscreenScale < minNonFullscreenScale then
+    db.nonFullscreenScale = minNonFullscreenScale
+  end
+  -- Offsets only mean something together with the anchors they were saved with.
+  if not (anchorPoints[db.anchorFrom] and anchorPoints[db.anchorTo]) then
+    db.anchorFrom, db.anchorTo = defaults.anchorFrom, defaults.anchorTo
+    db.xoffset, db.yoffset = defaults.xoffset, defaults.yoffset
   end
   for _, key in ipairs({ "xoffset", "yoffset" }) do
     if not isFiniteNumber(db[key]) then db[key] = defaults[key] end
   end
-  for _, key in ipairs({ "anchorFrom", "anchorTo" }) do
-    if not anchorPoints[db[key]] then db[key] = defaults[key] end
-  end
+end
+
+---The smallest scale the normal window can be resized to.
+function MDT:GetMinNonFullscreenScale()
+  return minNonFullscreenScale
 end
 
 function MDT:GetDefaultSavedVariables()
@@ -116,7 +128,7 @@ function MDT:InitializeSavedVariables()
   for dungeonIdx, presetIdx in pairs(db.currentPreset) do
     if presetIdx <= 0 then db.currentPreset[dungeonIdx] = 1 end
   end
-  validateWindowGeometry()
+  validateWindowSettings()
 
   return db
 end

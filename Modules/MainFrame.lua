@@ -10,7 +10,7 @@ local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPos
 local sizex = 840
 local sizey = 555
 local defaultSavedVars = MDT:GetDefaultSavedVariables()
-local minNonFullscreenScale = 0.9
+local minNonFullscreenScale = MDT:GetMinNonFullscreenScale()
 local sidePanelWidth = 251
 local panelHeight = 30
 local framesInitialized
@@ -578,7 +578,7 @@ function MDT:InitializeMainFrame()
 
   if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end
 
-  if not db.maximized then db.scale = MDT:GetNormalWindowScale() end
+  db.scale = db.maximized and select(3, MDT:GetFullScreenSizes()) or MDT:GetNormalWindowScale()
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
   MDT:RegisterMainFrameDragHandle(main_frame)

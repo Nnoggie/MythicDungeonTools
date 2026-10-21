@@ -166,9 +166,30 @@ local function click(widget, button)
   W.userClick(frame, button)
 end
 
+---Runs this harness again in a new process on the same screen, booted with the given SavedVariables file text.
+---@return string output
+local function bootWithSavedVariables(text)
+  local path = (os.getenv("TEMP") or os.getenv("TMPDIR") or "/tmp").."/mdt-headless-"..os.time().."-"..math.random(1e6)..".lua"
+  local file = assert(io.open(path, "w"))
+  file:write(text)
+  file:close()
+  local function quote(value) return '"'..value..'"' end
+  local command = table.concat({
+    quote(arg[-1]), quote(arg[0]), quote(root), "--savedvariables="..quote(path),
+    ("--screen=%dx%d"):format(W.physicalWidth, W.physicalHeight), W.strict and "--strict" or "", flags.developer and "--developer" or "",
+  }, " ").." 2>&1"
+  -- cmd.exe strips the outer quotes of a command that holds more than two.
+  if package.config:sub(1, 1) == "\\" then command = '"'..command..'"' end
+  local pipe = assert(io.popen(command))
+  local output = pipe:read("*a")
+  pipe:close()
+  os.remove(path)
+  return output
+end
+
 dofile(root.."/scripts/headless/scale_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded, stored = stored,
-  loginRelayouts = loginRelayouts,
+  loginRelayouts = loginRelayouts, bootWithSavedVariables = bootWithSavedVariables,
 })
 
 step("main window is shown", function()
