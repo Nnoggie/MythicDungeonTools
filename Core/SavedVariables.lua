@@ -81,6 +81,29 @@ end
 
 local db
 
+local anchorPoints = {
+  TOPLEFT = true, TOP = true, TOPRIGHT = true, LEFT = true, CENTER = true, RIGHT = true,
+  BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
+}
+
+local function isFiniteNumber(value)
+  return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
+end
+
+---Puts back the default for any saved window geometry the window could not be placed with.
+local function validateWindowGeometry()
+  local defaults = defaultSavedVars.global
+  if not (isFiniteNumber(db.nonFullscreenScale) and db.nonFullscreenScale > 0) then
+    db.nonFullscreenScale = defaults.nonFullscreenScale
+  end
+  for _, key in ipairs({ "xoffset", "yoffset" }) do
+    if not isFiniteNumber(db[key]) then db[key] = defaults[key] end
+  end
+  for _, key in ipairs({ "anchorFrom", "anchorTo" }) do
+    if not anchorPoints[db[key]] then db[key] = defaults[key] end
+  end
+end
+
 function MDT:GetDefaultSavedVariables()
   return defaultSavedVars
 end
@@ -93,6 +116,7 @@ function MDT:InitializeSavedVariables()
   for dungeonIdx, presetIdx in pairs(db.currentPreset) do
     if presetIdx <= 0 then db.currentPreset[dungeonIdx] = 1 end
   end
+  validateWindowGeometry()
 
   return db
 end
