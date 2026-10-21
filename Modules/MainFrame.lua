@@ -517,10 +517,10 @@ function MDT:ResetMainFramePos()
     db.nonFullscreenScale = defaults.nonFullscreenScale
     db.anchorFrom, db.anchorTo = defaults.anchorFrom, defaults.anchorTo
     db.xoffset, db.yoffset = defaults.xoffset, defaults.yoffset
-    local oldScale = db.uiScale
-    db.uiScale = MDT.UI.SetUserScale(defaults.uiScale)
-    -- A new MDT scale resizes the Root, whose refit lays the window out.
-    if db.uiScale == oldScale then MDT:Minimize() end
+    local rescaled
+    db.uiScale, rescaled = MDT.UI.SetUserScale(defaults.uiScale)
+    -- A rescaled Root changes size, and its refit lays the window out.
+    if not rescaled then MDT:Minimize() end
     MDT:Settings_Refresh()
   end, 'resetMainFramePos')
 end

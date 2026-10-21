@@ -49,10 +49,10 @@ end
 
 ---@param scale any MDT's own scale on top of its screen-relative size, 1 = 100%; anything but a number means 1
 ---@return number scale the scale applied, clamped to 0.5 - 2
+---@return boolean rescaled whether the Root rescaled, so its size change will refit what is sized in Root units
 function UI.SetUserScale(scale)
   userScale = type(scale) == "number" and scale == scale and math.min(2, math.max(0.5, scale)) or 1
-  applyScale()
-  return userScale
+  return userScale, applyScale()
 end
 
 applyScale()
@@ -66,5 +66,5 @@ end)
 -- scale changes the size again, so listeners wait for that next, settled size.
 UI.Script(Root, "OnSizeChanged", function()
   if applyScale() then return end
-  for _, fn in ipairs(resizeListeners) do UI.Call(fn) end
+  for _, fn in ipairs({ unpack(resizeListeners) }) do UI.Call(fn) end
 end)
