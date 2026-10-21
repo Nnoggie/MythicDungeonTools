@@ -177,10 +177,12 @@ local function updateDragPreviewPosition(preview, cursorX, cursorY)
   preview:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", cursorX + preview.offsetX, cursorY + preview.offsetY)
 end
 
-local function setupDragPreview(preview, blip, cursorX, cursorY)
+---The grabbed enemy's preview sits centered on the cursor; group members keep their distance from it.
+local function setupDragPreview(preview, blip, grabbed, cursorX, cursorY)
   local _, _, _, blipX, blipY = blip:GetPoint()
-  preview.offsetX = (blipX or cursorX) - cursorX
-  preview.offsetY = (blipY or cursorY) - cursorY
+  local _, _, _, grabbedX, grabbedY = grabbed:GetPoint()
+  preview.offsetX = (blipX or 0) - (grabbedX or 0)
+  preview.offsetY = (blipY or 0) - (grabbedY or 0)
   preview:SetFrameStrata("HIGH")
   preview:SetFrameLevel(120)
   preview:SetAlpha(0.5)
@@ -215,7 +217,7 @@ local function showDragPreviews(blip, ignoreGrouped)
   MDT.dungeonEnemyDragPreview_framePool:ReleaseAll()
   local cursorX, cursorY = MDT:GetCursorPosition()
   for _, draggedBlip in pairs(getDraggedBlips(blip, ignoreGrouped)) do
-    setupDragPreview(MDT.dungeonEnemyDragPreview_framePool:Acquire(), draggedBlip, cursorX, cursorY)
+    setupDragPreview(MDT.dungeonEnemyDragPreview_framePool:Acquire(), draggedBlip, blip, cursorX, cursorY)
   end
 end
 
