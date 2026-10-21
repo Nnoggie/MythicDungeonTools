@@ -21,8 +21,13 @@ local HOVER_GRACE = 0.2
 local CARD_OFFSET = 30
 local MODEL_ROTATION_SPEED = math.pi / 4
 
+---Pin and close buttons in the header; UI.CloseButton is this size.
+local HEADER_BUTTON_SIZE = 24
+---Card padding: full at the sides, trimmed at top and bottom, where the header button already leaves room.
+local PAD_X, PAD_Y = "md", "sm"
+
 local LAYOUT = {
-  hover = { width = 250, modelWidth = 72, modelHeight = 84, spells = 4, strata = "TOOLTIP" },
+  hover = { width = 250, modelWidth = 56, modelHeight = 64, spells = 3, strata = "TOOLTIP" },
   pinned = { width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG" },
 }
 
@@ -291,8 +296,9 @@ end
 
 local pin
 
----Fills a card for one enemy clone. Both cards share this; the pinned card adds the NPC id, more spells, dev help and
----Link Spells, and swaps the pin button for a close button.
+---Fills a card for one enemy clone. Both cards share this layout: the portrait on the left, and on the right the
+---health and forces line above the spells. The pinned card adds level, efficiency and NPC id under the portrait, lists
+---every spell, shows what the enemy is affected by, dev help and Link Spells, and swaps the pin button for a close button.
 ---@param card MDT.EnemyCard
 ---@param blip table the enemy's map blip
 local function fill(card, blip)
@@ -306,41 +312,72 @@ local function fill(card, blip)
   local count = MDT:GetCloneEnemyForces(data, clone)
   local content = card.content
   content:ReleaseChildren()
-  content:SetWidth(layout.width)
+  local contentWidth = layout.width - Theme.Space(PAD_X) * 2
+  content:SetWidth(contentWidth)
   content:Batch(function()
+    -- G45: Unleashed Imp #2. A long name wraps rather than running under the button.
+    local title = L[data.name]
+    if clone.g then title = string.format(L["G%d:"], clone.g).." "..title end
+    if not data.isBoss then title = title.." #"..blip.cloneIdx end
     local header = UI.Row(content, { id = "header", gap = "sm", valign = "center" })
-    UI.Text(header, { id = "name", text = L[data.name], font = "title", wrap = false, grow = 1, width = 40 })
-    local occurrence = (data.isBoss and "" or ("#"..blip.cloneIdx))..(clone.g and " "..string.format(L["(G %d)"], clone.g) or "")
-    if occurrence ~= "" then UI.Text(header, { id = "occurrence", text = occurrence, font = "small", color = "text.muted", wrap = false }) end
+    UI.Text(header, { id = "name", text = title, font = "title", width = contentWidth - Theme.Space("sm") - HEADER_BUTTON_SIZE })
     if pinned then
       UI.CloseButton(header, { tooltip = L["Close"], onClick = function() MDT:CloseEnemyInfo() end })
     else
       UI.Button(header, {
-        id = "pin", variant = "plain", icon = MDT:GetIconPath("pin"), iconSize = 14, width = 22, height = 22,
-        tooltip = L["Pin"], onClick = function() pin(blip) end,
+        id = "pin", variant = "plain", icon = MDT:GetIconPath("pin"), iconSize = 14,
+        width = HEADER_BUTTON_SIZE, height = HEADER_BUTTON_SIZE, tooltip = L["Pin"], onClick = function() pin(blip) end,
       })
     end
 
     local body = UI.Row(content, { gap = "md", valign = "start" })
-    card.modelHost = UI.Stack(body, {
+    local portrait = UI.Stack(body, { width = layout.modelWidth, gap = pinned and "sm" or "xs" })
+    card.modelHost = UI.Stack(portrait, {
       id = "model", width = layout.modelWidth, height = layout.modelHeight, autoHeight = false,
       background = "bg.sunken", border = "border.normal",
     })
-    local stats = UI.Stack(body, { gap = "xs", grow = 1, width = 40 })
-    UI.Text(stats, { id = "level", text = string.format(L["Level %d %s"], data.level, L[data.creatureType]), font = "small", color = "text.muted" })
-    UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)) })
-    UI.Text(stats, { id = "forces", text = L["Forces"]..": "..MDT:FormatEnemyForces(count) })
-    UI.Text(stats, { id = "efficiency", text = L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health), font = "small", color = "text.muted" })
-    if pinned then UI.Text(stats, { id = "npcId", text = L["Enemy Info NPC Id"]..": "..data.id, font = "small", color = "text.muted" }) end
-    local stealthIcons
+    if pinned then
+      local function detail(id, text) UI.Text(portrait, { id = id, text = text, font = "small", color = "text.muted" }) end
+      detail("level", string.format(L["Level %d %s"], data.level, L[data.creatureType]))
+      detail("efficiency", L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health))
+      detail("npcId", L["Enemy Info NPC Id"]..": "..data.id)
+    end
+
+    local column = UI.Stack(body, { gap = "xs", grow = 1, width = 40 })
+    local stats = UI.Row(column, { id = "stats", gap = "xs", valign = "center" })
+    UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)), wrap = false })
+    UI.Text(stats, { text = "·", color = "text.muted", wrap = false })
+    UI.Text(stats, { id = "forces", text = MDT:FormatEnemyForces(count), wrap = false, grow = 1 })
+    local stealthFlags = {}
     for _, entry in ipairs(STEALTH_FLAGS) do
-      if data[entry.key] then
-        stealthIcons = stealthIcons or UI.Row(stats, { id = "stealthIcons", gap = "xs" })
+      if data[entry.key] then stealthFlags[#stealthFlags + 1] = entry end
+    end
+    if #stealthFlags > 0 then
+      local iconWidth = CHARACTERISTIC_ICON_SIZE + 2
+      local stealthIcons = UI.Row(stats, {
+        id = "stealthIcons", gap = "xs", width = #stealthFlags * iconWidth + (#stealthFlags - 1) * Theme.Space("xs"),
+      })
+      for _, entry in ipairs(stealthFlags) do
         UI.Button(stealthIcons, {
           id = entry.key, variant = "icon", icon = entry.icon, iconCoords = entry.coords, iconSize = CHARACTERISTIC_ICON_SIZE,
-          iconColor = false, width = CHARACTERISTIC_ICON_SIZE + 2, height = CHARACTERISTIC_ICON_SIZE + 2, tooltip = L[entry.label],
+          iconColor = false, width = iconWidth, height = iconWidth, tooltip = L[entry.label],
         })
       end
+    end
+
+    if #card.spells > 0 then
+      spellList(column, card, layout)
+      if not pinned and #card.spells > layout.spells then
+        -- Under the portrait, which is shorter than the spells beside it, so it adds no line.
+        UI.Text(portrait, { id = "moreSpells", text = string.format(L["+%d more spells"], #card.spells - layout.spells), font = "small", color = "text.muted", justify = "CENTER" })
+      end
+    end
+
+    if not pinned then
+      if db.devMode then
+        UI.Text(content, { id = "devHint", text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"], font = "small", color = "text.muted" })
+      end
+      return
     end
 
     local affected = {}
@@ -348,8 +385,8 @@ local function fill(card, blip)
       if data.characteristics and data.characteristics[characteristic.key] then affected[#affected + 1] = characteristic end
     end
     if #affected > 0 then
-      UI.Text(content, { text = L["Affected by:"], font = "small", color = "text.muted" })
       local icons = UI.Row(content, { id = "characteristics", gap = "xs", wrap = true })
+      UI.Text(icons, { text = L["Affected by:"], font = "small", color = "text.muted", wrap = false })
       for _, characteristic in ipairs(affected) do
         UI.Button(icons, {
           variant = "icon", icon = characteristic.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE,
@@ -358,20 +395,9 @@ local function fill(card, blip)
       end
     end
 
-    if #card.spells > 0 then
-      spellList(content, card, layout)
-      if not pinned and #card.spells > layout.spells then
-        UI.Text(content, { id = "moreSpells", text = string.format(L["+%d more spells"], #card.spells - layout.spells), font = "small", color = "text.muted" })
-      end
-    end
-
-    if pinned then
-      if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = "small", color = "text.muted" }) end
-      local actions = UI.Row(content, { align = "end" })
-      UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = linkSpells })
-    elseif db.devMode then
-      UI.Text(content, { id = "devHint", text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"], font = "small", color = "text.muted" })
-    end
+    if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = "small", color = "text.muted" }) end
+    local actions = UI.Row(content, { align = "end" })
+    UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = linkSpells })
   end)
   -- The model is the card's own frame; it sits on the placeholder the layout just placed.
   local model = card.model
@@ -429,10 +455,10 @@ local function createCard(kind)
   background:SetAllPoints()
   Theme.Bind(background, "bg.panel")
   UI.Pixel.Border(card, "border.strong")
-  card.content = UI.Stack(card, { padding = "md", gap = "sm", onLayout = function(content)
-    card:SetSize(content:GetWidth(), content:GetHeight())
+  card.content = UI.Stack(card, { gap = "sm", onLayout = function(content)
+    card:SetSize(content:GetWidth() + Theme.Space(PAD_X) * 2, content:GetHeight() + Theme.Space(PAD_Y) * 2)
   end })
-  card.content:SetPoint("TOPLEFT", card, "TOPLEFT", 0, 0)
+  card.content:SetPoint("TOPLEFT", card, "TOPLEFT", Theme.Space(PAD_X), -Theme.Space(PAD_Y))
   if kind == "pinned" then
     card.model = CreateFrame("PlayerModel", nil, card, "ModelWithControlsTemplate")
     UI.Script(card.model, "OnEnter", nil)
