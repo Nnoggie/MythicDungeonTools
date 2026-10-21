@@ -88,15 +88,45 @@ return function(ctx)
     settle()
   end
 
-  ---Drags the window by its top bar and drops it with its point at x, y. The client anchors a dropped window to the
-  ---same point of its parent.
-  local function dragWindowTo(point, x, y)
+  ---Drags the window by handle (default: its top bar) and drops it with its point at x, y. The client moves only a
+  ---window that started moving, and anchors a dropped window to the same point of its parent.
+  local function dragWindowTo(point, x, y, handle)
     local f = MDT.main_frame
-    W.fireScript(f.topPanel, "OnDragStart", "LeftButton")
-    f:ClearAllPoints()
-    f:SetPoint(point, MDT.UI.Root, point, x, y)
-    W.fireScript(f.topPanel, "OnDragStop")
+    handle = handle or f.topPanel
+    W.fireScript(handle, "OnDragStart", "LeftButton")
+    if W.state[f].moving then
+      f:ClearAllPoints()
+      f:SetPoint(point, MDT.UI.Root, point, x, y)
+    end
+    W.fireScript(handle, "OnDragStop")
     settle()
+  end
+
+  ---Drags the resize handle until the window is height tall; MDT keeps the map's aspect ratio.
+  local function resizeWindowTo(height)
+    local f = MDT.main_frame
+    W.fireScript(f.resizer, "OnMouseDown", "LeftButton")
+    f:SetSize(f:GetWidth(), height)
+    settle()
+    W.fireScript(f.resizer, "OnMouseUp", "LeftButton")
+    settle()
+  end
+
+  ---The window is shown where it is saved, at the saved size.
+  local function expectShownAtSaved(when)
+    local db, f = MDT:GetDB(), MDT.main_frame
+    local _, mapHeight = MDT:GetDefaultMapPanelSize()
+    local point, _, relativePoint, x, y = f:GetPoint()
+    expect(db.anchorTo == point and db.anchorFrom == relativePoint and near(db.xoffset, x, 1e-3) and near(db.yoffset, y, 1e-3),
+      ("the window is at %s %s %s %s but saved at %s %s %s %s %s"):format(point, relativePoint, x, y, db.anchorTo, db.anchorFrom, db.xoffset, db.yoffset, when))
+    expect(near(f:GetHeight(), mapHeight * db.nonFullscreenScale, 1e-3),
+      ("the window is %.1f tall but saved at scale %s %s"):format(f:GetHeight(), db.nonFullscreenScale, when))
+  end
+
+  ---Where the window's top left corner is, from the Root's top left corner.
+  local function topLeftOffset()
+    local f, Root = MDT.main_frame, MDT.UI.Root
+    return f:GetLeft() - Root:GetLeft(), f:GetTop() - Root:GetTop()
   end
 
   local function setScreen(width, height)
@@ -200,17 +230,30 @@ return function(ctx)
     local db, f = MDT:GetDB(), MDT.main_frame
     dragWindowTo("TOPLEFT", -200, 50)
     expectOnScreen("after dropping the window past the top left corner")
-    local point, _, relativePoint, x, y = f:GetPoint()
-    expect(db.anchorFrom == point and db.anchorTo == relativePoint and db.xoffset == x and db.yoffset == y,
-      ("the window is at %s %s %s %s but saved at %s %s %s %s"):format(point, relativePoint, x, y, db.anchorFrom, db.anchorTo, db.xoffset, db.yoffset))
+    expectShownAtSaved("after dropping the window past the top left corner")
     local left, _, _, top = windowRect()
     expect(near(left, 0, 0.01) and near(top, W.screenHeight, 0.01), ("the window moved further than needed, to %.1f, %.1f"):format(left, top))
+  end)
+
+  step("scale: dragging the maximized window changes neither it nor where the normal window is saved", function()
+    local db, f = MDT:GetDB(), MDT.main_frame
+    local saved, shown = savedWindow(), shownWindow()
+    click(f.maximizeButton)
+    expect(db.maximized, "setup: the window did not maximize")
+    local maximized = shownWindow()
+    for _, handle in ipairs({ f.sidePanel, f.navigationSidebar, f.topPanel }) do
+      dragWindowTo("TOPLEFT", 40, -40, handle)
+      expectShownWindow(maximized, "after dragging the maximized window by "..tostring(handle:GetName()))
+    end
+    expectSavedWindow(saved, "after dragging the maximized window")
+    click(f.maximizeButton)
+    expectShownWindow(shown, "after leaving fullscreen")
   end)
 
   step("scale: MDT scale 200% and back restores the window, and fullscreen in between keeps where it was saved", function()
     local f = MDT.main_frame
     local slider = scaleSlider()
-    dragWindowTo("TOPLEFT", MDT.UI.Root:GetWidth() - 251 - f:GetWidth() - 50, -80)
+    dragWindowTo("TOPLEFT", MDT.UI.Root:GetWidth() - f.sidePanel:GetWidth() - f:GetWidth() - 50, -80)
     local saved, shown = savedWindow(), shownWindow()
     dragAndRelease(slider, 2)
     expect(f:GetHeight() < shown[2] - 0.5, "setup: the window does not need to shrink at MDT scale 200%")
@@ -255,6 +298,34 @@ return function(ctx)
       expect(near(rootScale(), 768 / 1440), ("root scale is %s after UIParent:SetScale(%s)"):format(rootScale(), uiScale))
       expectShownWindow(shown, "after UIParent:SetScale("..uiScale..")")
     end
+  end)
+
+  step("scale: a resized window is saved where it is shown, and keeps its top left corner when MDT rescales", function()
+    local db, f = MDT:GetDB(), MDT.main_frame
+    local slider = scaleSlider()
+    W.RunSlashCommand("/mdt reset")
+    settle()
+    expect(select(1, f:GetPoint()) == "TOP", "setup: /mdt reset did not anchor the window by its top")
+    local left, top = topLeftOffset()
+    resizeWindowTo(f:GetHeight() * 0.9)
+    local resizedLeft, resizedTop = topLeftOffset()
+    expect(near(resizedLeft, left, 1e-3) and near(resizedTop, top, 1e-3),
+      ("resizing moved the top left corner from %.1f, %.1f to %.1f, %.1f"):format(left, top, resizedLeft, resizedTop))
+    expectShownAtSaved("after resizing")
+
+    local uiScale = db.uiScale
+    dragAndRelease(slider, uiScale - 0.1)
+    local rescaledLeft, rescaledTop = topLeftOffset()
+    expect(near(rescaledLeft, left, 1e-3) and near(rescaledTop, top, 1e-3),
+      ("rescaling moved the top left corner from %.1f, %.1f to %.1f, %.1f"):format(left, top, rescaledLeft, rescaledTop))
+    expectShownAtSaved("after rescaling a resized window")
+    dragAndRelease(slider, uiScale)
+
+    dragWindowTo("TOPRIGHT", -f.sidePanel:GetWidth() - 10, -100)
+    resizeWindowTo(f:GetHeight() * 1.1)
+    expectOnScreen("after resizing past the right edge")
+    expectShownAtSaved("after resizing past the right edge")
+    click(f.navigationSidebar.buttons.maps)
   end)
 
   step("scale: /mdt reset puts the window back after the scale steps", function()

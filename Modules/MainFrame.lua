@@ -29,25 +29,35 @@ local function onScreenShift(f)
   return dx, dy
 end
 
-function MDT:RegisterMainFrameDragHandle(dragHandle, frame)
-  frame = frame or MDT.main_frame
-  if not dragHandle or not frame then return end
+---Saves where the user moved or resized the normal window to, after moving it fully on screen.
+local function saveWindowPlacement()
+  local f = MDT.main_frame
+  local from, _, to, x, y = f:GetPoint()
+  local dx, dy = onScreenShift(f)
+  db.anchorFrom, db.anchorTo = from, to
+  db.xoffset, db.yoffset = x + dx, y + dy
+  f:ClearAllPoints()
+  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+end
+
+local moving
+function MDT:RegisterMainFrameDragHandle(dragHandle)
+  if not dragHandle then return end
 
   dragHandle:EnableMouse(true)
   dragHandle:RegisterForDrag("LeftButton")
   dragHandle:SetScript("OnDragStart", function()
-    frame:SetMovable(true)
-    frame:StartMoving()
+    moving = not db.maximized
+    if not moving then return end
+    MDT.main_frame:SetMovable(true)
+    MDT.main_frame:StartMoving()
   end)
   dragHandle:SetScript("OnDragStop", function()
-    frame:StopMovingOrSizing()
-    frame:SetMovable(false)
-    local from, _, to, x, y = frame:GetPoint()
-    local dx, dy = onScreenShift(frame)
-    db.anchorFrom, db.anchorTo = from, to
-    db.xoffset, db.yoffset = x + dx, y + dy
-    frame:ClearAllPoints()
-    frame:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+    if not moving then return end
+    moving = false
+    MDT.main_frame:StopMovingOrSizing()
+    MDT.main_frame:SetMovable(false)
+    saveWindowPlacement()
   end)
 end
 
@@ -163,6 +173,7 @@ function MDT:CreateMenu()
   end)
   resizer:SetScript("OnMouseUp", function()
     self.main_frame:StopMovingOrSizing()
+    saveWindowPlacement()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
     self:UpdateBottomText()
@@ -371,7 +382,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT")
   frame.topPanel:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT")
 
-  MDT:RegisterMainFrameDragHandle(frame.topPanel, frame)
+  MDT:RegisterMainFrameDragHandle(frame.topPanel)
 
   if frame.bottomPanel == nil then
     frame.bottomPanel = CreateFrame("Frame", "MDTBottomPanel", frame)
@@ -441,7 +452,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.statusString:SetTextColor(1, 1, 1, 1)
   frame.statusString:Hide()
 
-  MDT:RegisterMainFrameDragHandle(frame.bottomPanel, frame)
+  MDT:RegisterMainFrameDragHandle(frame.bottomPanel)
 end
 
 function MDT:MakeCopyHelper(frame)
@@ -505,7 +516,7 @@ function MDT:MakeSidePanel(frame)
     frame.sidePanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.sidePanelTex:Show()
   end
-  MDT:RegisterMainFrameDragHandle(frame.sidePanel, frame)
+  MDT:RegisterMainFrameDragHandle(frame.sidePanel)
 
   frame.sidePanel:ClearAllPoints()
   frame.sidePanel:SetWidth(sidePanelWidth)
@@ -574,7 +585,7 @@ function MDT:InitializeMainFrame()
   if not db.maximized then db.scale = MDT:GetNormalWindowScale() end
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
-  MDT:RegisterMainFrameDragHandle(main_frame, main_frame)
+  MDT:RegisterMainFrameDragHandle(main_frame)
   main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
   main_frame.background:SetAllPoints()
   main_frame.background:SetDrawLayer(canvasDrawLayer, 1)

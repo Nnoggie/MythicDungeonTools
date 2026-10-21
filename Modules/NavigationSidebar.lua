@@ -138,7 +138,7 @@ function MDT:MakeNavigationSidebar(frame)
     frame.navigationSidebar.tex:SetDrawLayer(canvasDrawLayer, -5)
     frame.navigationSidebar.tex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.navigationSidebar.buttons = {}
-    MDT:RegisterMainFrameDragHandle(frame.navigationSidebar, frame)
+    MDT:RegisterMainFrameDragHandle(frame.navigationSidebar)
 
     local sections = MDT:GetNavigationSections()
     local buttonSize = 36
@@ -217,7 +217,7 @@ function MDT:MakeSectionFrames(frame)
       contentFrame:SetAllPoints(frame)
       contentFrame:SetFrameStrata(mainFrameStrata)
       contentFrame:SetFrameLevel(2)
-      MDT:RegisterMainFrameDragHandle(contentFrame, frame)
+      MDT:RegisterMainFrameDragHandle(contentFrame)
       contentFrame:Hide()
       frame.sectionContentFrames[sectionKey] = contentFrame
     end
@@ -227,7 +227,7 @@ function MDT:MakeSectionFrames(frame)
       sidePanelFrame:SetAllPoints(frame.sidePanel)
       sidePanelFrame:SetFrameStrata(mainFrameStrata)
       sidePanelFrame:SetFrameLevel(3)
-      MDT:RegisterMainFrameDragHandle(sidePanelFrame, frame)
+      MDT:RegisterMainFrameDragHandle(sidePanelFrame)
       sidePanelFrame:Hide()
       frame.sectionSidePanelFrames[sectionKey] = sidePanelFrame
     end
