@@ -78,9 +78,11 @@ function MDT:Minimize()
   if f.blackoutFrame then f.blackoutFrame:Hide() end
   f.topPanel:SetMouseClickEnabled(true)
   f.bottomPanel:SetMouseClickEnabled(true)
-  MDT:PlaceNormalWindow()
+  db.scale = MDT:GetNormalWindowScale()
   local newSizex = sizex * db.scale
   local newSizey = sizey * db.scale
+  f:SetSize(newSizex, newSizey)
+  MDT:PlaceNormalWindow()
   f.scrollFrame:SetSize(newSizex, newSizey)
   f.mapPanelFrame:SetSize(newSizex, newSizey)
   for i = 1, 12 do

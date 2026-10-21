@@ -273,19 +273,17 @@ function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
   return min(defaultNonFullscreenScale, max(minNonFullscreenScale, maxScale))
 end
 
----The normal window's scale as shown: the saved one, shrunk to fit the Root.
-local function normalWindowScale()
+---The normal (not maximized) window's scale as shown: the saved one, shrunk to fit the Root. The saved scale stays as
+---the user left it, so the window grows back when the Root does.
+function MDT:GetNormalWindowScale()
   local _, _, fullscreenScale = MDT:GetFullScreenSizes()
   return min(db.nonFullscreenScale, fullscreenScale)
 end
 
----Sizes and anchors the normal (not maximized) window at the saved scale and position, shrunk and moved just enough
----for all of it to lie inside the Root. The saved scale and position stay as the user left them, so the window
----comes back when the Root grows again.
+---Anchors the normal window at the saved position, moved just enough for all of it to lie inside the Root. The saved
+---position stays as the user left it.
 function MDT:PlaceNormalWindow()
   local f = MDT.main_frame
-  db.scale = normalWindowScale()
-  f:SetSize(sizex * db.scale, sizey * db.scale)
   f:ClearAllPoints()
   f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
   local dx, dy = onScreenShift(f)
@@ -300,7 +298,7 @@ local function fitToRoot()
   f:SetResizeBounds(sizex * minScale, sizey * minScale, sizex * fullscreenScale, sizey * fullscreenScale)
   if db.maximized then
     if abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
-  elseif abs(f:GetHeight() - sizey * normalWindowScale()) > 0.5 then
+  elseif abs(f:GetHeight() - sizey * MDT:GetNormalWindowScale()) > 0.5 then
     MDT:Minimize()
   else
     MDT:PlaceNormalWindow()
@@ -573,7 +571,7 @@ function MDT:InitializeMainFrame()
 
   if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end
 
-  if not db.maximized then db.scale = db.nonFullscreenScale end
+  if not db.maximized then db.scale = MDT:GetNormalWindowScale() end
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
   MDT:RegisterMainFrameDragHandle(main_frame, main_frame)

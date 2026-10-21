@@ -74,12 +74,13 @@ local function expect(condition, message)
 end
 
 local MDT, db, main
--- Without --savedvariables, boot with an MDT scale of 150% and the largest window 6.3.10 allowed on this screen, at its
--- right edge. 6.3.10's Root was as many units as the screen has pixels.
-local oldMaxScale = math.min((W.physicalHeight - 60) / 555, (W.physicalWidth - 42 - 251) / 840)
+-- Without --savedvariables, boot with an MDT scale of 150% and a window 6.3.10 saved on this screen: grown with the
+-- screen (6.3.10's Root had as many units as the screen has pixels) and pinned to its top right corner, so the bars
+-- and side panel hang off screen. Larger screens make it larger than the screen can show.
+local oldScale = W.physicalHeight / 768
 local seeded = {
-  uiScale = 1.5, nonFullscreenScale = oldMaxScale, scale = oldMaxScale, anchorFrom = "TOPLEFT", anchorTo = "TOPLEFT",
-  xoffset = W.physicalWidth - 251 - 840 * oldMaxScale, yoffset = -30,
+  uiScale = 1.5, nonFullscreenScale = oldScale, scale = oldScale, anchorFrom = "TOPRIGHT", anchorTo = "TOPRIGHT",
+  xoffset = 0, yoffset = 0,
 }
 
 -- MythicDungeonToolsDB.global as stored before load.
@@ -134,12 +135,28 @@ step("load core addon", function()
   W.FireEvent("PLAYER_ENTERING_WORLD", true, false)
 end)
 
+-- How often the first open laid the normal window out again after building it.
+local loginRelayouts, minimize = 0, nil
+local uiLoadWatcher = CreateFrame("Frame")
+uiLoadWatcher:RegisterEvent("ADDON_LOADED")
+uiLoadWatcher:SetScript("OnEvent", function(_, _, name)
+  if name ~= "MythicDungeonTools_UI" then return end
+  local namespace = Loader.addons.MythicDungeonTools_UI.namespace
+  minimize = namespace.Minimize
+  namespace.Minimize = function(...)
+    loginRelayouts = loginRelayouts + 1
+    return minimize(...)
+  end
+end)
+
 step("open main window via /mdt", function()
   W.RunSlashCommand("/mdt")
   expect(not Loader.addons.MythicDungeonTools_UI.loaded, "UI loaded before the loading spinner could render")
 end)
 
 MDT = Loader.addons.MythicDungeonTools_UI.namespace
+uiLoadWatcher:UnregisterAllEvents()
+if minimize then MDT.Minimize = minimize end
 db = MDT.GetDB and MDT:GetDB()
 main = MDT.main_frame
 
@@ -151,6 +168,7 @@ end
 
 dofile(root.."/scripts/headless/scale_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded, stored = stored,
+  loginRelayouts = loginRelayouts,
 })
 
 step("main window is shown", function()

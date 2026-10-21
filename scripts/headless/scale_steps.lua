@@ -107,11 +107,19 @@ return function(ctx)
 
   step("scale: a saved MDT scale and a window saved by 6.3.10 on this screen fit the screen after load", function()
     local db, f = MDT:GetDB(), MDT.main_frame
+    local _, mapHeight = MDT:GetDefaultMapPanelSize()
+    expect(ctx.loginRelayouts == 0, ("the window was laid out %d more times after it was built"):format(ctx.loginRelayouts))
     if ctx.seeded then
       local seeded = ctx.seeded
       expect(near(rootScale(), 768 / 1440 * seeded.uiScale), "the saved MDT scale was not applied: root scale "..rootScale())
-      expect(f:GetHeight() < 555 * seeded.nonFullscreenScale - 0.5, "the oversized window was not shown smaller")
-      expect(near(db.scale * 555, f:GetHeight()), ("the map uses scale %s for a window %s tall"):format(db.scale, f:GetHeight()))
+      local _, _, fullscreenScale = MDT:GetFullScreenSizes()
+      local shownScale = math.min(seeded.nonFullscreenScale, fullscreenScale)
+      expect(near(f:GetHeight(), mapHeight * shownScale, 1e-3),
+        ("the window is %.1f tall, expected %.1f (saved scale %.3f, fullscreen scale %.3f)"):format(f:GetHeight(), mapHeight * shownScale, seeded.nonFullscreenScale, fullscreenScale))
+      if seeded.nonFullscreenScale > fullscreenScale then
+        expect(f:GetHeight() < mapHeight * seeded.nonFullscreenScale - 0.5, "the oversized window was not shown smaller")
+      end
+      expect(near(db.scale * mapHeight, f:GetHeight()), ("the map uses scale %s for a window %s tall"):format(db.scale, f:GetHeight()))
     end
     local stored = {}
     for index, key in ipairs({ "nonFullscreenScale", "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do
