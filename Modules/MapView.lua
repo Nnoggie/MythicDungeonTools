@@ -2,8 +2,8 @@ local _, MDT = ...
 local L = MDT.L
 local canvasDrawLayer = "BORDER"
 
-local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
-    table.insert, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition, GameTooltip
+local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, MDTTooltip =
+    table.insert, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition, MDTTooltip
 
 local sizex = 840
 local sizey = 555
@@ -16,7 +16,7 @@ end
 local function createAlphaWatermarkLabel(frame)
   local label = frame:CreateFontString(nil, canvasDrawLayer)
   label:SetDrawLayer(canvasDrawLayer, 6)
-  label:SetFont("Fonts\\ARIALN.TTF", 40, "")
+  MDT.UI.Fonts.Apply(label, 40)
   label:SetText("ALPHA")
   label:SetTextColor(1, 1, 1, 0.25)
 
@@ -81,32 +81,22 @@ local function createAlphaWarning(frame)
   icon:SetSize(48, 48)
   icon:SetPoint("LEFT", warning, "LEFT", 8, 0)
 
-  local close = CreateFrame("Button", nil, warning, "UIPanelCloseButton")
-  close:SetSize(22, 22)
-  close:SetPoint("TOPRIGHT", warning, "TOPRIGHT", -1, -1)
-  close:SetScript("OnClick", function()
+  local close = MDT.UI.CloseButton(warning, { onClick = function()
     warning:Hide()
     if MDT.copyHelper then MDT.copyHelper:SmartHide() end
-  end)
+  end })
+  close:SetPoint("TOPRIGHT", warning, "TOPRIGHT", -3, -3)
 
-  local title = warning:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+  local title = warning:CreateFontString(nil, "OVERLAY")
+  title:SetFontObject(MDT.UI.Fonts.Get("body"))
   title:SetPoint("TOPLEFT", warning, "TOPLEFT", 64, -8)
   title:SetWidth(296)
   title:SetJustifyH("LEFT")
   title:SetText(L["Alpha Version! Mapping will be inaccurate!"])
   title:SetTextColor(1, 0.15, 0.15)
 
-  warning.linkRow = MDT:CreateCopyableLinkRow(warning, "Discord", MDT.externalLinks[2].url, {
-    width = 318,
-    buttonWidth = 72,
-    point = true,
-    xOffset = 64,
-    yOffset = -25,
-    label = L["Report enemy positions in Discord:"],
-    copyHelperAnchor = frame,
-    copyHelperY = 50,
-  })
-  warning.linkRow.editBox.label:SetTextColor(1, 1, 1)
+  local linkRow = MDT:AddCopyableLinkRow(warning, { label = L["Report enemy positions in Discord:"], url = MDT.externalLinks[2].url, anchor = frame, width = 318 })
+  linkRow:SetPoint("TOPLEFT", warning, "TOPLEFT", 64, -25)
 
   frame.alphaWarningFrame = warning
   frame:HookScript("OnShow", function()
@@ -184,14 +174,7 @@ function MDT:ExportCurrentZoomPanSettings()
   output = output.."            verticalPan = "..panV..";\n"
   output = output.."        };\n"
 
-  MDT:HideAllDialogs()
-  MDT.main_frame.ExportFrame:Show()
-  MDT.main_frame.ExportFrame:ClearAllPoints()
-  MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-  MDT.main_frame.ExportFrameEditbox:SetText(output)
-  MDT.main_frame.ExportFrameEditbox:HighlightText(0, string.len(output))
-  MDT.main_frame.ExportFrameEditbox:SetFocus()
-  MDT.main_frame.ExportFrameEditbox:SetLabel("Current pan/zoom settings");
+  MDT:OpenExportStringDialog("Current pan/zoom settings", output)
 end
 
 function MDT:SetViewPortPosition(zoomScale, horizontalPan, verticalPan)
@@ -262,8 +245,9 @@ function MDT:ZoomMap(delta)
   scrollFrame.zoomedIn = abs(newScale - 1) > 0.02
 
   local cursorX, cursorY = GetCursorPosition()
-  local frameX = (cursorX / UIParent:GetScale()) - scrollFrame:GetLeft()
-  local frameY = scrollFrame:GetTop() - (cursorY / UIParent:GetScale())
+  local frameScale = scrollFrame:GetEffectiveScale()
+  local frameX = (cursorX / frameScale) - scrollFrame:GetLeft()
+  local frameY = scrollFrame:GetTop() - (cursorY / frameScale)
   local scaleChange = newScale / oldScale
   local newScrollH = (scaleChange * frameX - frameX) / newScale + oldScrollH
   local newScrollV = (scaleChange * frameY - frameY) / newScale + oldScrollV
@@ -553,10 +537,9 @@ function MDT:GetTileFormat(dungeonIdx, sublevel)
   return mapInfo and mapInfo.tileFormat and mapInfo.tileFormat[sublevel] or 4
 end
 
-function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdateProgressBar, async)
+function MDT:UpdateMap(ignoreSetSelection, ignoreHullRedraw, _, async)
   initializeDB()
   MDT:CancelAsync("UpdateMap")
-  MDT:CancelAsync("ReloadPullButtons")
   MDT:CancelAsync("DrawAllHulls")
   if not MDT:AreFramesInitialized() then coroutine.yield() end
   local mapName
@@ -565,10 +548,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
   MDT:EnsureDBTables()
   if not MDT:AreFramesInitialized() then coroutine.yield() end
   local preset = MDT:GetCurrentPreset()
-  if preset.difficulty then
-    db.currentDifficulty = preset.difficulty
-    frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
-  end
+  if preset.difficulty then db.currentDifficulty = preset.difficulty end
   if not MDT:AreFramesInitialized() then coroutine.yield() end
   local textureInfo = MDT.dungeonMaps[db.currentDungeonIdx][preset.value.currentSublevel]
   if type(textureInfo) == "string" then --textures from blizzard files
@@ -623,34 +603,8 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not db.devMode then MDT:ZoomMapToDefault() end
     MDT:DungeonEnemies_UpdateEnemiesAsync()
     MDT:POI_UpdateAll()
-    if not ignoreReloadPullButtons then
-      MDT:ReloadPullButtons(true)
-    end
-    if not MDT:AreFramesInitialized() then coroutine.yield() end
-    --handle delete button disable/enable
-    local presetCount = 0
-    for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-      presetCount = presetCount + 1
-    end
-    if (db.currentPreset[db.currentDungeonIdx] == 1 or db.currentPreset[db.currentDungeonIdx] == presetCount) or
-        MDT.liveSessionActive then
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-    else
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-    end
-    if not MDT:AreFramesInitialized() then coroutine.yield() end
-    --live mode
-    local livePreset = MDT:GetCurrentLivePreset()
-    if MDT.liveSessionActive and preset ~= livePreset then
-      MDT.main_frame.liveReturnButton:Show()
-      MDT.main_frame.setLivePresetButton:Show()
-    else
-      MDT.main_frame.liveReturnButton:Hide()
-      MDT.main_frame.setLivePresetButton:Hide()
-    end
-    MDT:UpdatePresetDropdownTextColor()
+    MDT:RefreshSidebar()
+    if not ignoreHullRedraw then MDT:DrawAllHulls(nil, true) end
     if not MDT:AreFramesInitialized() then coroutine.yield() end
     if not ignoreSetSelection then MDT:SetSelectionToPull(preset.value.currentPull) end
     if MDT.pendingAutoPanToPull then
@@ -662,7 +616,7 @@ function MDT:UpdateMap(ignoreSetSelection, ignoreReloadPullButtons, ignoreUpdate
     if not MDT:AreFramesInitialized() then coroutine.yield() end
     MDT:DrawAllPresetObjects()
     if not MDT:AreFramesInitialized() then coroutine.yield() end
-    MDT:UpdateProgressbar()
+    MDT:RefreshSidebar()
   end, "UpdateMap", true)
 end
 
@@ -675,12 +629,12 @@ function MDT:UpdateToDungeon(dungeonIdx, ignoreUpdateMap, init)
     db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.currentSublevel = 1
   end
   if init then return end
-  MDT:UpdatePresetDropDown()
+  MDT:CloseEnemyInfo()
   if not ignoreUpdateMap then MDT:UpdateMap() end
   MDT:ZoomMapToDefault()
   --Colors the first pull in "Default" presets
   if db.currentPreset[db.currentDungeonIdx] == 1 then MDT:ColorPull() end
-  MDT:UpdateProgressbar()
+  MDT:RefreshSidebar()
 end
 
 --contains zoneIds to auto swap to corresponding dungeon when opening the AddOn

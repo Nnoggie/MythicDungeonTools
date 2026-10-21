@@ -296,8 +296,8 @@ local function setUpMouseHandlers(self)
     preset.value.pulls = tempPulls
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull(), tempPulls)
     MDT:SetSelectionToPull(targetPull)
-    MDT:ReloadPullButtons(true)
-    MDT:UpdateProgressbar()
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls(nil, true)
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())
     end
@@ -318,40 +318,38 @@ local iconColors = {
 local createEnemyContextMenu = function(frame)
   MDT:GetCurrentPreset().value.enemyAssignments = MDT:GetCurrentPreset().value.enemyAssignments or {}
   local assignments = MDT:GetCurrentPreset().value.enemyAssignments
-  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateTitle(L[frame.data.name])
-
-    local function IsSelected(data)
-      local assignment = assignments[data.enemyIdx] and assignments[data.enemyIdx][data.cloneIdx]
-      return assignment and assignment == data.index or false
+  local function isSelected(index)
+    local assignment = assignments[frame.enemyIdx] and assignments[frame.enemyIdx][frame.cloneIdx]
+    return assignment ~= nil and assignment == index
+  end
+  local function select(index)
+    assignments[frame.enemyIdx] = assignments[frame.enemyIdx] or {}
+    assignments[frame.enemyIdx][frame.cloneIdx] = index ~= 0 and index or nil
+    frame:SetUp(frame.data, frame.clone)
+    if not db.hasSeenAssignmentWarning then
+      MDT.UI.Dialogs.Confirm({ key = "assignmentWarning", width = 450, title = L["Warning"], text = L["assignmentWarning"], confirm = { text = L["Okay"], onClick = function() end } })
+      db.hasSeenAssignmentWarning = true
     end
-    local function SetSelected(data)
-      assignments[data.enemyIdx] = assignments[data.enemyIdx] or {}
-      assignments[data.enemyIdx][data.cloneIdx] = data.index ~= 0 and data.index or nil
-      frame:SetUp(frame.data, frame.clone)
-      if not db.hasSeenAssignmentWarning then
-        MDT:OpenConfirmationFrame(450, 150, L["Warning"], L["Okay"], L["assignmentWarning"])
-        db.hasSeenAssignmentWarning = true
-      end
-    end
-    local submenu = rootDescription:CreateButton(L["Set Target Marker"], function() end);
-    for i = 1, 8 do
-      local iconPath = ICON_LIST[i].."16:16:|t"
-      local color = CreateColor(unpack(iconColors[i]))
-      local iconName = WrapTextInColor(_G["RAID_TARGET_"..i], color)
-      submenu:CreateRadio(iconPath.." "..iconName, IsSelected, SetSelected, { enemyIdx = frame.enemyIdx, cloneIdx = frame.cloneIdx, index = i })
-    end
-    submenu:CreateRadio(L["None"], IsSelected, SetSelected, { enemyIdx = frame.enemyIdx, cloneIdx = frame.cloneIdx, index = 0 })
-    submenu:CreateButton(L["Clear all Markers"], function()
-      twipe(assignments)
-      MDT:Async(function()
-        MDT:DungeonEnemies_UpdateEnemiesAsync()
-      end, "ClearAllMarkers")
-    end)
-    rootDescription:CreateButton(L["Open Enemy Info"], function()
-      MDT:ShowEnemyInfoFrame(frame)
-    end)
-  end)
+  end
+  local markers = {}
+  for i = 1, 8 do
+    local iconPath = ICON_LIST[i].."16:16:|t"
+    local color = CreateColor(unpack(iconColors[i]))
+    local iconName = WrapTextInColor(_G["RAID_TARGET_"..i], color)
+    markers[#markers + 1] = { kind = "choice", text = iconPath.." "..iconName, checked = isSelected(i), onSelect = function() select(i) end }
+  end
+  markers[#markers + 1] = { kind = "choice", text = L["None"], checked = isSelected(0), onSelect = function() select(0) end }
+  markers[#markers + 1] = { text = L["Clear all Markers"], onSelect = function()
+    twipe(assignments)
+    MDT:Async(function()
+      MDT:DungeonEnemies_UpdateEnemiesAsync()
+    end, "ClearAllMarkers")
+  end }
+  MDT:CreateContextMenu(MDT.main_frame, {
+    { kind = "title", text = L[frame.data.name] },
+    { kind = "submenu", text = L["Set Target Marker"], items = markers },
+    { text = L["Open Enemy Info"], onSelect = function() MDT:ShowEnemyInfoFrame(frame) end },
+  })
 end
 
 function MDTDungeonEnemyMixin:OnClick(button, down)
@@ -366,8 +364,8 @@ function MDTDungeonEnemyMixin:OnClick(button, down)
     end
     MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(self, not self.selected, IsControlKeyDown())
     MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
-    MDT:UpdateProgressbar()
-    MDT:ReloadPullButtons()
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls()
     if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
       MDT:LiveSession_SendPulls(MDT:GetPulls())
     end
@@ -467,75 +465,6 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
       end
     end
   end
-end
-
-local ranOnce
-function MDT:DisplayBlipTooltip(blip, shown)
-  if not ranOnce then
-    MDT.tooltip:ClearAllPoints()
-    MDT.tooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT")
-    MDT.tooltip:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT")
-    MDT.tooltip:Show()
-    MDT.tooltip:Hide()
-    ranOnce = true
-  end
-
-  local tooltip = MDT.tooltip
-  local data = blip.data
-  if shown then
-    tooltip.Model:SetCreature(data.id)
-    tooltip.Model:SetPosition(0, 0, 0)
-    tooltip.String:Show()
-    tooltip:Show()
-  else
-    tooltip.String:Hide()
-    tooltip:Hide()
-    return
-  end
-
-  local boss = blip.data.isBoss or false
-  local health = MDT:CalculateEnemyHealth(boss, data.health, db.currentDifficulty, data.ignoreFortified)
-  local group = blip.clone.g and " "..string.format(L["(G %d)"], blip.clone.g) or ""
-  local occurence = (blip.data.isBoss and "") or blip.cloneIdx
-
-  if not L[data.name] then print("MDT: Could not find localization for "..data.name) end
-  local text = L[data.name]..
-      " "..
-      occurence..
-      group..
-      "\n"..
-      string.format(L["Level %d %s"], data.level, L[data.creatureType]).." "..data.id..
-      "\n"..string.format(L["%s HP"], MDT:FormatEnemyHealth(health)).."\n"
-
-  if db.devMode then
-    text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"].."\n\n"..text
-  end
-
-  local count = MDT:GetCloneEnemyForces(data, blip.clone)
-  text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count)
-  text = text.."\n"..L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health)
-  text = text.."\n\n["..L["Right click for more info"].."]"
-  tooltip.String:SetText(text)
-
-  tooltip:ClearAllPoints()
-  tooltip:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", 30, 0)
-  tooltip:SetPoint("BOTTOMRIGHT", blip, "BOTTOMRIGHT", 30 + tooltip.mySizes.x, -tooltip.mySizes.y)
-  local bottomOffset = 0
-  local rightOffset = 0
-  local tooltipBottom = tooltip:GetBottom()
-  local mainFrameBottom = MDT.main_frame:GetBottom()
-  if tooltipBottom < mainFrameBottom then
-    bottomOffset = tooltip.mySizes.y
-  end
-  local tooltipRight = tooltip:GetRight()
-  local mainFrameRight = MDT.main_frame:GetRight()
-  if tooltipRight > mainFrameRight then
-    rightOffset = -(tooltip.mySizes.x + 60)
-  end
-
-  tooltip:SetPoint("TOPLEFT", blip, "BOTTOMRIGHT", 30 + rightOffset, bottomOffset)
-  tooltip:SetPoint("BOTTOMRIGHT", blip, "BOTTOMRIGHT", 30 + tooltip.mySizes.x + rightOffset,
-    -tooltip.mySizes.y + bottomOffset)
 end
 
 function MDT:GetEfficiencyScoreString(count, health)
@@ -742,7 +671,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPrese
   if not self.setupInitialized then
     self.texture_Portrait:SetDesaturated(false)
     self.texture_MouseHighlight:SetAlpha(0.4)
-    self.fontstring_Text1:SetFontObject("GameFontNormal")
+    MDT.UI.Fonts.Apply(self.fontstring_Text1, 12)
     setUpMouseHandlers(self)
     self.setupInitialized = true
   end
@@ -755,7 +684,7 @@ function MDTDungeonEnemyMixin:SetUp(data, clone, overlapCandidates, currentPrese
     self:SetSize(normalScale * BLIP_FRAME_SIZE, normalScale * BLIP_FRAME_SIZE)
     self:updateSizes(1)
     local textScale = math.max(0.2, normalScale * 10)
-    self.fontstring_Text1:SetFont(self.fontstring_Text1:GetFont(), textScale, "OUTLINE", "")
+    MDT.UI.Fonts.Apply(self.fontstring_Text1, textScale, "OUTLINE")
   end
   self:SetFrameLevelAboveOverlaps(overlapCandidates)
   local count = MDT:GetCloneEnemyForces(data, clone)
@@ -947,7 +876,6 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
         end
       end
     end
-    -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pullIdx) end
   end
   if add then
     if isCloneConstrained(blip.clone) then return end
@@ -975,7 +903,6 @@ function MDT:DungeonEnemies_AddOrRemoveBlipToCurrentPull(blip, add, ignoreGroupe
       end
     end
   end
-  -- if not ignoreUpdates then self:UpdatePullButtonNPCData(pull) end
 end
 
 local BOX_SELECTION_MIN_DRAG = 4
@@ -1174,8 +1101,8 @@ function MDT:DungeonEnemies_StopBoxSelection(cancel)
   end
   selection.preset.value.pulls = selection.tempPulls
   MDT:DungeonEnemies_UpdateSelected(MDT:GetCurrentPull())
-  MDT:ReloadPullButtons(true)
-  MDT:UpdateProgressbar()
+  MDT:RefreshSidebar()
+  MDT:DrawAllHulls(nil, true)
   if MDT.liveSessionActive and MDT:GetCurrentPreset().uid == MDT.livePresetUID then
     MDT:LiveSession_SendPulls(MDT:GetPulls())
   end

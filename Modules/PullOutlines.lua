@@ -174,8 +174,7 @@ local function getFontString()
     fs:SetJustifyH("CENTER")
     fs:SetJustifyV("MIDDLE")
     fs:SetTextColor(1, 1, 1, 1)
-    local font = GameFontNormalMed3Outline
-    fs:SetFontObject(font)
+    MDT.UI.Fonts.Apply(fs, 10, "OUTLINE")
     fsFrame.fs = fs
     return fsFrame
   else
@@ -239,8 +238,7 @@ function MDT:DrawHullFontString(hull, pullIdx)
   else
     fsFrame.fs:SetTextColor(1, 1, 1, NONACTIVE_ALPHA)
   end
-  fsFrame.fs:SetFontObject("GameFontNormal")
-  fsFrame.fs:SetFont(fsFrame.fs:GetFont(), 10, "OUTLINE", "")
+  MDT.UI.Fonts.Apply(fsFrame.fs, 10, "OUTLINE")
   fsFrame.fs:SetText(pullIdx)
   fsFrame:ClearAllPoints()
   fsFrame:SetSize(40, 40)

@@ -1,6 +1,4 @@
 local _, MDT = ...
-local AceGUI = LibStub("AceGUI-3.0")
-local conflictFrame
 local L = MDT.L
 
 -- In DungeonTools case the AddOn has not been updated in over a year and has caused many users to be
@@ -113,30 +111,25 @@ function MDT:CheckAddonConflicts()
 end
 
 function MDT:ShowConflictFrame()
-  if not conflictFrame then
-    conflictFrame = AceGUI:Create("Frame")
-    conflictFrame:EnableResize(false)
-    conflictFrame:SetLayout("Flow")
-    conflictFrame:SetCallback("OnClose", function(widget) end)
-    conflictFrame:SetTitle(L["Addon Conflict"])
-
-    conflictFrame.label = AceGUI:Create("Label")
-    conflictFrame.label:SetWidth(550)
-    conflictFrame.label:SetFontObject('GameFontNormalLarge')
-    local labelText = L["conflictPrompt"]
-    -- add all conflicting addons to the text in red color
-    for _, candidate in pairs(candidates) do
-      if candidate.detected then
-        local updateNote = "\n- |cFFFF0000"..candidate.name.."|r"
-        if candidate.note then
-          updateNote = updateNote.." "..candidate.note
-        end
-        labelText = labelText..updateNote
+  local labelText = L["conflictPrompt"]
+  -- add all conflicting addons to the text in red color
+  for _, candidate in pairs(candidates) do
+    if candidate.detected then
+      local updateNote = "\n- |cFFFF0000"..candidate.name.."|r"
+      if candidate.note then
+        updateNote = updateNote.." "..candidate.note
       end
+      labelText = labelText..updateNote
     end
-
-    conflictFrame.label:SetText(labelText)
-    conflictFrame:AddChild(conflictFrame.label)
   end
-  conflictFrame:Show()
+
+  MDT.UI.Dialogs.Open({
+    key = "addonConflict",
+    title = L["Addon Conflict"],
+    width = 580,
+    parent = MDT.UI.Root,
+    build = function(content)
+      MDT.UI.Text(content, { text = labelText, font = "title" })
+    end,
+  })
 end

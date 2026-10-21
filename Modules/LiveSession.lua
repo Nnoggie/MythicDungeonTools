@@ -8,12 +8,6 @@ local requestTimer
 ---LiveSession_Enable
 function MDT:LiveSession_Enable()
   if self.liveSessionActive then return end
-  self.main_frame.LiveSessionButton:SetText(L["*Live*"])
-  self.main_frame.LiveSessionButton.text:SetTextColor(0, 1, 0)
-  self.main_frame.LinkToChatButton:SetDisabled(true)
-  self.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
-  self.main_frame.sidePanelDeleteButton:SetDisabled(true)
-  self.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
   self.liveSessionActive = true
   --check if there is other clients having live mode active
   self:LiveSession_RequestSession()
@@ -21,7 +15,7 @@ function MDT:LiveSession_Enable()
   self:SetUniqueID(self:GetCurrentPreset())
   self:EnsurePresetCreatedBy(self:GetCurrentPreset())
   self.livePresetUID = self:GetCurrentPreset().uid
-  self:UpdatePresetDropdownTextColor()
+  self:RefreshSidebar()
   timer = C_Timer.NewTimer(2, function()
     local callback = function()
       self.liveSessionRequested = false
@@ -37,37 +31,30 @@ function MDT:LiveSession_Enable()
     local cancelCallback = function()
       MDT:LiveSession_Disable()
     end
-    local fireCancelOnClose = true
-    MDT:CheckPresetSize(callback, cancelCallback, fireCancelOnClose)
+    MDT:CheckPresetSize(callback, cancelCallback)
   end)
 end
 
 ---LiveSession_Disable
 function MDT:LiveSession_Disable()
-  local widget = MDT.main_frame.LiveSessionButton
-  widget.text:SetTextColor(widget.normalTextColor.r, widget.normalTextColor.g, widget.normalTextColor.b)
-  widget.text:SetText(L["Live"])
-  MDT.main_frame.LinkToChatButton:SetDisabled(false)
-  self.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
-  local db = MDT:GetDB()
-  if db.presets[db.currentDungeonIdx][1] == MDT:GetCurrentPreset() then
-    MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-    MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-  else
-    self.main_frame.sidePanelDeleteButton:SetDisabled(false)
-    self.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-  end
   self.liveSessionActive = false
   self.liveSessionAcceptingPreset = false
-  self:UpdatePresetDropdownTextColor()
-  self.main_frame.liveReturnButton:Hide()
-  self.main_frame.setLivePresetButton:Hide()
+  self:RefreshSidebar()
   if timer then timer:Cancel() end
   self.liveSessionRequested = false
   self.main_frame.SendingStatusBar:Hide()
   if self.main_frame.LoadingSpinner then
     self.main_frame.LoadingSpinner:Hide()
     self.main_frame.LoadingSpinner.Anim:Stop()
+  end
+end
+
+function MDT:ToggleLiveSession()
+  if self:IsInRestrictedEnvironment(true) then return end
+  if self.liveSessionActive then
+    self:LiveSession_Disable()
+  else
+    self:LiveSession_Enable()
   end
 end
 
@@ -117,7 +104,7 @@ function MDT:LiveSession_SessionFound(fullName, uid)
         end
         self.main_frame.LoadingSpinner:Show()
         self.main_frame.LoadingSpinner.Anim:Play()
-        self:UpdatePresetDropdownTextColor(true)
+        self:RefreshSidebar()
 
         self.liveSessionRequested = false
         self:LiveSession_RequestPreset(self.liveSessionActiveSessions[1][1])

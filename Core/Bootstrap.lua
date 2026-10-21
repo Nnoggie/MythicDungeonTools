@@ -94,6 +94,23 @@ function API:RegisterUIInitializer(initializer)
   end
 end
 
+local routeChangedCallbacks = {}
+
+---Registers a callback fired with (dungeonIdx, presetIdx) whenever the current route changes:
+---a route or dungeon switch, an import, a new or duplicated route, a delete, or a live session preset change.
+function API:RegisterRouteChangedCallback(callback)
+  assert(type(callback) == "function", "MythicDungeonTools route changed callback must be a function")
+  routeChangedCallbacks[#routeChangedCallbacks + 1] = callback
+end
+
+function MDT:FireRouteChanged(dungeonIdx, presetIdx)
+  for _, callback in ipairs(routeChangedCallbacks) do
+    xpcall(callback, geterrorhandler(), dungeonIdx, presetIdx)
+  end
+end
+
+MDT:ExportAPI("FireRouteChanged")
+
 function API:AttachUI(handlers, pluginAPI)
   assert(not uiHandlers, "MythicDungeonTools UI already attached")
   assert(type(handlers) == "table", "MythicDungeonTools UI handlers must be a table")
@@ -101,7 +118,7 @@ function API:AttachUI(handlers, pluginAPI)
     assert(type(handlers[methodName]) == "function", "Missing MythicDungeonTools UI handler: "..methodName)
   end
   assert(type(pluginAPI) == "table", "MythicDungeonTools UI plugin API must be a table")
-  for _, methodName in ipairs({ "RegisterNavigationSection", "GetCurrentSection", "SetCurrentSection", "GetNavigationSectionContentFrame", "HideAllDialogs", "RegisterDungeonData" }) do
+  for _, methodName in ipairs({ "GetCurrentSection", "SetCurrentSection", "HideAllDialogs", "RegisterDungeonData" }) do
     assert(type(pluginAPI[methodName]) == "function", "Missing MythicDungeonTools UI plugin method: "..methodName)
   end
   uiHandlers = handlers

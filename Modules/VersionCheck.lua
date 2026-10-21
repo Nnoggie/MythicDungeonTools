@@ -1,7 +1,7 @@
 local _, MDT = ...
 local L = MDT.L
 local MDTcommsObject = MDT.commsObject
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
 
 local versionCheckPrefix = MDT.versionCheckPrefix
 local versionCheckRequest = "R"
@@ -19,10 +19,10 @@ local downloadLinks = {
   { name = "Wago",       url = "https://addons.wago.io/addons/mythic-dungeon-tools" },
 }
 
-local versionColors = {
-  current = { 1, 1, 1, 1 },
-  patch = { 1, 0.82, 0, 1 },
-  majorMinor = { 1, 0.1, 0.1, 1 },
+local versionTokens = {
+  current = "text.normal",
+  patch = "warn",
+  majorMinor = "live",
 }
 
 local changeLog = MDT.changeLog or {}
@@ -31,6 +31,9 @@ local reportedVersions = {}
 local remoteChangeLog
 local buildChangeLogText
 local buildPlayerVersionsText
+local activeTab = "changelog"
+---Controls of the open version check dialog; nil while it is closed.
+local view
 
 local function getFullName(unit)
   local name, realm = UnitFullName(unit)
@@ -114,57 +117,26 @@ end
 function MDT:UpdateVersionCheckDisplay()
   local outdatedType = getOutdatedType()
   local bottomText = " v"..currentVersion
-  local bottomColor = versionColors.current
-
-  if outdatedType then
-    bottomText = bottomText.." "..L["update available"]
-    bottomColor = versionColors[outdatedType]
-  end
+  if outdatedType then bottomText = bottomText.." "..L["update available"] end
 
   local versionText = MDT.main_frame and MDT.main_frame.bottomLeftPanelString
   if versionText then
     versionText:SetText(bottomText)
-    versionText:SetTextColor(unpack(bottomColor))
+    UI.Theme.Bind(versionText, versionTokens[outdatedType or "current"])
     if versionText.clickArea then
       versionText.clickArea:SetWidth(versionText:GetStringWidth() + 3)
     end
   end
 
-  if MDT.versionCheckFrame and MDT.versionCheckFrame.downloadFrame then
-    if outdatedType and MDT.versionCheckFrame.activeTab == "changelog" then
-      MDT.versionCheckFrame.downloadFrame:Show()
-    else
-      MDT.versionCheckFrame.downloadFrame:Hide()
-    end
-  end
-end
-
-local function updateVersionCheckScrollText(f, text)
-  if not f or not f.changeLogTextBox then return end
-
-  f.changeLogTextBox:SetText(text)
-  local contentHeight = math.max(f.scrollHeight, f.changeLogTextBox:GetStringHeight() + (f.textPadding * 2))
-  f.changeLogContentFrame:SetHeight(contentHeight)
-  f.sliderHeight = math.max(1, contentHeight - f.scrollHeight)
-  f.slider:SetMinMaxValues(0, f.sliderHeight)
-  local sliderValue = math.min(f.slider:GetValue(), f.sliderHeight)
-  f.slider:SetValue(sliderValue)
+  if view then view.downloads:SetHidden(not (outdatedType and activeTab == "changelog")) end
 end
 
 function MDT:UpdateChangeLogDisplay()
-  local f = MDT.versionCheckFrame
-  if not f or not f.changeLogTextBox then return end
-  if f.activeTab and f.activeTab ~= "changelog" then return end
-
-  updateVersionCheckScrollText(f, buildChangeLogText())
+  if view and activeTab == "changelog" then view.text:SetText(buildChangeLogText()) end
 end
 
 function MDT:UpdatePlayerVersionsDisplay()
-  local f = MDT.versionCheckFrame
-  if not f or not f.changeLogTextBox then return end
-  if f.activeTab ~= "versions" then return end
-
-  updateVersionCheckScrollText(f, buildPlayerVersionsText())
+  if view and activeTab == "versions" then view.text:SetText(buildPlayerVersionsText()) end
 end
 
 function MDT:VersionCheck_OnCommReceived(message, distribution, sender)
@@ -287,218 +259,57 @@ buildPlayerVersionsText = function()
   return table.concat(lines, "\n")
 end
 
-local function setActiveVersionCheckTab(f, tab)
-  f.activeTab = tab
-  f.changeLogTab:SetDisabled(tab == "changelog")
-  f.versionsTab:SetDisabled(tab == "versions")
+local function showTab(tab)
+  activeTab = tab
+  view.tabs.changelog:SetSelected(tab == "changelog")
+  view.tabs.versions:SetSelected(tab == "versions")
+  view.report:SetHidden(tab ~= "versions")
   if tab == "versions" then
-    f.reportVersionsButton.frame:Show()
     requestMissingPlayerVersions()
     MDT:UpdatePlayerVersionsDisplay()
   else
-    f.reportVersionsButton.frame:Hide()
     MDT:UpdateChangeLogDisplay()
   end
   MDT:UpdateVersionCheckDisplay()
 end
 
-local function createVersionCheckTabButton(parent, tab, text, tabIndex)
-  local width = parent:GetWidth() / 3
-  local xOffset = 10 + ((tabIndex - 1) * width)
-  local button = AceGUI:Create("Button")
-  button.frame:SetParent(parent)
-  button:SetWidth(width)
-  button:SetHeight(22)
-  button.frame:SetPoint("TOPLEFT", parent, "TOPLEFT", xOffset, -31)
-  button.frame:Show()
-  button:SetText(text)
-  button:SetCallback("OnClick", function()
-    setActiveVersionCheckTab(parent, tab)
-  end)
-
-  return button
-end
-
-local function createVersionCheckFrame()
-  local width, height = 500, 300
-  local titleText = L["Version Check / Change Log"]
-
-  local f = CreateFrame("frame", "MDT_VersionCheckFrame", MDT.main_frame, "BackdropTemplate")
-  f:SetSize(width, height)
-  f:ClearAllPoints()
-  f:SetPoint("BOTTOMLEFT", MDT.main_frame, "BOTTOMLEFT", 0, 0)
-  f:SetFrameStrata("HIGH")
-  f:SetFrameLevel(50)
-  f:EnableMouse(true)
-  f.bgTex = f:CreateTexture(nil, "BACKGROUND", nil, 0)
-  f.bgTex:SetAllPoints()
-  f.bgTex:SetDrawLayer("BORDER", -5)
-  f.bgTex:SetColorTexture(unpack(MDT.BackdropColor))
-  f:Hide()
-
-  MDT.main_frame:HookScript("OnHide", function()
-    f:Hide()
-  end)
-
-  local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-  title:SetPoint("TOP", f, "TOP", 0, -5)
-  title:SetText(titleText)
-  --bigger font size
-  title:SetFontObject("GameFontNormal")
-  ---@diagnostic disable-next-line: param-type-mismatch
-  title:SetFont(title:GetFont(), 12);
-  title:SetTextColor(1, 1, 1)
-
-  local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
-  close:SetPoint("TOPRIGHT", f, "TOPRIGHT", -2, -2)
-  close:SetScript("OnClick", function()
-    f:Hide()
-    MDT.copyHelper:SmartHide()
-  end)
-
-  f.changeLogTab = createVersionCheckTabButton(f, "changelog", L["Change Log"], 1)
-  f.versionsTab = createVersionCheckTabButton(f, "versions", L["Party Versions"], 2)
-  f.activeTab = "changelog"
-
-  local scrollFrame = CreateFrame("scrollframe", nil, f, "BackdropTemplate")
-  scrollFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 10, -62)
-  local scrollWidth = width - 46
-  local scrollHeight = height - 127
-  scrollFrame:SetSize(scrollWidth, scrollHeight)
-
-  local contentFrame = CreateFrame("frame", nil, scrollFrame, "BackdropTemplate")
-  contentFrame:SetWidth(scrollWidth)
-  contentFrame:SetBackdrop({
-    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-    tile = true,
-    tileSize = 16,
-    insets = { left = 1, right = 1, top = 0, bottom = 1 },
-  })
-  contentFrame:SetBackdropColor(0.267, 0.267, 0.267, 1)
-
-  --text box
-  local textPadding = 6
-  local textBox = contentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-  textBox:SetPoint("TOPLEFT", contentFrame, "TOPLEFT", textPadding, -textPadding)
-  textBox:SetPoint("BOTTOMRIGHT", contentFrame, "BOTTOMRIGHT", -textPadding, textPadding)
-  textBox:SetJustifyH("LEFT")
-  textBox:SetJustifyV("TOP")
-  textBox:SetTextColor(1, 1, 1)
-  textBox:SetWidth(scrollWidth - (textPadding * 2))
-
-  textBox:SetText(buildChangeLogText())
-  local contentHeight = math.max(scrollHeight, textBox:GetStringHeight() + (textPadding * 2))
-  contentFrame:SetSize(scrollWidth, contentHeight)
-  -- this is the trick
-  local sliderHeight = math.max(1, contentHeight - scrollHeight)
-
-  ---@diagnostic disable-next-line: param-type-mismatch
-  scrollFrame:SetScrollChild(contentFrame)
-
-  local slider = CreateFrame("slider", nil, f, "BackdropTemplate")
-  slider:SetBackdrop({
-    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-    tile = true,
-    tileSize = 16,
-    insets = { left = 1, right = 1, top = 0, bottom = 1 },
-  })
-  slider:SetBackdropColor(.4, .4, .4, .7)
-
-  slider.thumb = slider:CreateTexture(nil, "OVERLAY")
-  slider.thumb:SetTexture("Interface\\Buttons\\UI-ScrollBar-Knob")
-  slider.thumb:SetSize(25, 25)
-
-  slider:SetThumbTexture(slider.thumb)
-  slider:SetOrientation("VERTICAL");
-  slider:SetSize(16, scrollHeight + 1)
-  slider:SetPoint("TOPLEFT", scrollFrame, "TOPRIGHT")
-  slider:SetMinMaxValues(0, sliderHeight)
-  slider:SetValueStep(1)
-  slider:SetValue(0)
-  f.sliderHeight = sliderHeight
-  slider:SetScript("OnValueChanged", function(self)
-    scrollFrame:SetVerticalScroll(self:GetValue())
-  end)
-
-  scrollFrame:EnableMouseWheel(true)
-  scrollFrame:SetScript("OnMouseWheel", function(self, delta)
-    local current = slider:GetValue()
-    local sliderHeight = f.sliderHeight
-    if (IsShiftKeyDown() and (delta > 0)) then
-      slider:SetValue(0)
-    elseif (IsShiftKeyDown() and (delta < 0)) then
-      slider:SetValue(sliderHeight)
-    elseif ((delta < 0) and (current < sliderHeight)) then
-      slider:SetValue(current + 20)
-    elseif ((delta > 0) and (current > 0)) then
-      slider:SetValue(current - 20)
-    end
-  end)
-
-  local downloadFrame = CreateFrame("Frame", nil, f)
-  downloadFrame:SetPoint("TOPLEFT", scrollFrame, "BOTTOMLEFT", 0, -8)
-  downloadFrame:SetSize(scrollWidth, 44)
-  f.downloadFrame = downloadFrame
-
-  local downloadLinkWidth = (scrollWidth - 8) / 2
-  MDT:CreateCopyableLinkRow(downloadFrame, downloadLinks[1].name, downloadLinks[1].url, {
-    width = downloadLinkWidth,
-    buttonWidth = 64,
-    point = true,
-    xOffset = 0,
-    copyHelperAnchor = MDT.main_frame,
-    copyHelperY = 50,
-  })
-  MDT:CreateCopyableLinkRow(downloadFrame, downloadLinks[2].name, downloadLinks[2].url, {
-    width = downloadLinkWidth,
-    buttonWidth = 64,
-    point = true,
-    xOffset = downloadLinkWidth + 8,
-    copyHelperAnchor = MDT.main_frame,
-    copyHelperY = 50,
-  })
-  downloadFrame:Hide()
-
-  local reportVersionsButton = AceGUI:Create("Button")
-  reportVersionsButton.frame:SetParent(f)
-  reportVersionsButton:SetWidth(230)
-  reportVersionsButton:SetHeight(22)
-  reportVersionsButton.frame:SetPoint("TOPLEFT", scrollFrame, "BOTTOMLEFT", 0, -8)
-  reportVersionsButton:SetText(L["Send versions to party chat"])
-  reportVersionsButton:SetCallback("OnClick", reportPlayerVersionsToParty)
-  reportVersionsButton.frame:Hide()
-
-  f.reportVersionsButton = reportVersionsButton
-  f.changeLogTextBox = textBox
-  f.changeLogContentFrame = contentFrame
-  f.scrollHeight = scrollHeight
-  f.textPadding = textPadding
-  f.slider = slider
-  setActiveVersionCheckTab(f, f.activeTab)
-
-  return f
+local function buildVersionCheck(content)
+  view = {}
+  local tabs = UI.Row(content, { gap = "xs" })
+  view.tabs = {
+    changelog = UI.Button(tabs, { id = "changelogTab", text = L["Change Log"], variant = "ghost", onClick = function() showTab("changelog") end }),
+    versions = UI.Button(tabs, { id = "versionsTab", text = L["Party Versions"], variant = "ghost", onClick = function() showTab("versions") end }),
+  }
+  local box = UI.Stack(content, { background = "bg.sunken", border = "border.normal", padding = "sm" })
+  local scroll = UI.Scroll(box, { height = 180 })
+  view.text = UI.Text(scroll.content, { id = "versionText", text = "" })
+  view.downloads = UI.Row(content, { gap = "sm", hidden = true })
+  local linkWidth = (content:GetWidth() - UI.Theme.Space("lg") * 2 - UI.Theme.Space("sm")) / 2
+  for _, link in ipairs(downloadLinks) do
+    MDT:AddCopyableLinkRow(view.downloads, { label = link.name, url = link.url, anchor = MDT.main_frame, width = linkWidth })
+  end
+  view.report = UI.Row(content, { hidden = true })
+  UI.Button(view.report, { id = "reportVersions", text = L["Send versions to party chat"], onClick = reportPlayerVersionsToParty })
 end
 
 function MDT:ToggleVersionCheckFrame()
-  if not MDT.versionCheckFrame then
-    MDT.versionCheckFrame = createVersionCheckFrame()
+  local open = UI.Dialogs.Get("versionCheck")
+  if open then
+    open:Close("api")
+    return
   end
-  if MDT.versionCheckFrame:IsShown() then
-    MDT.versionCheckFrame:Hide()
-    MDT.copyHelper:SmartHide()
-  else
-    MDT:HideAllDialogs()
-    MDT.copyHelper:SmartHide()
-    MDT:UpdateVersionCheckDisplay()
-    if getOutdatedType() and (not remoteChangeLog or remoteChangeLog.tag ~= latestVersion) then
-      sendVersionCheckComm(changeLogRequestPrefix..latestVersion)
-    end
-    if MDT.versionCheckFrame.activeTab == "versions" then
-      requestMissingPlayerVersions()
-      MDT:UpdatePlayerVersionsDisplay()
-    else
-      MDT:UpdateChangeLogDisplay()
-    end
-    MDT.versionCheckFrame:Show()
+  MDT:HideAllDialogs()
+  if getOutdatedType() and (not remoteChangeLog or remoteChangeLog.tag ~= latestVersion) then
+    sendVersionCheckComm(changeLogRequestPrefix..latestVersion)
   end
+  UI.Dialogs.Open({
+    key = "versionCheck", title = L["Version Check / Change Log"], width = 500,
+    place = { point = "BOTTOMLEFT", relativeTo = MDT.main_frame },
+    onClose = function()
+      view = nil
+      MDT.copyHelper:SmartHide()
+    end,
+    build = buildVersionCheck,
+  })
+  showTab(activeTab)
 end

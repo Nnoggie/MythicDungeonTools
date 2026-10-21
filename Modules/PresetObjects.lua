@@ -1,10 +1,12 @@
 local _, MDT = ...
 local L = MDT.L
 local objectDrawLayer = "OVERLAY"
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
+local NOTE_EDITOR_WIDTH = 240
+local NOTE_EDITOR_LINES = 6
 
-local twipe, tinsert, tremove, pi, max, pairs, ipairs, GameTooltip =
-    table.wipe, table.insert, table.remove, math.pi, math.max, pairs, ipairs, GameTooltip
+local twipe, tinsert, tremove, pi, max, pairs, ipairs, MDTTooltip =
+    table.wipe, table.insert, table.remove, math.pi, math.max, pairs, ipairs, MDTTooltip
 
 ---TexturePool
 local activeTextures = {}
@@ -518,7 +520,9 @@ function MDT:DrawTriangle(x, y, rotation, size, color, layer, layerSublevel, isO
   tinsert(activeTextures, triangle)
 end
 
-local noteEditbox
+---@type {popover: table, noteIdx: integer}?
+local noteEditor
+local zoomHooked
 
 --store text in nobj
 local function updateNoteObjText(text, note)
@@ -534,64 +538,58 @@ local function deleteNoteObj(note)
   MDT:DrawAllPresetObjects()
 end
 
-local function makeNoteEditbox()
-  local editbox = AceGUI:Create("SimpleGroup")
-  editbox.frame:SetParent(MDT.main_frame)
-  editbox:SetWidth(240)
-  editbox:SetHeight(120)
-  editbox.frame:SetFrameStrata("DIALOG")
-  editbox.frame:SetFrameLevel(50)
-  if not editbox.frame.SetBackdrop then
-    Mixin(editbox.frame, BackdropTemplateMixin)
+local function closeNoteEditor()
+  if noteEditor then noteEditor.popover:Close("api") end
+end
+
+---Opens the note text editor beside the note, or closes it when it is already open for that note.
+local function toggleNoteEditor(note)
+  if noteEditor and noteEditor.noteIdx == note.noteIdx then
+    closeNoteEditor()
+    return
   end
-  editbox.frame:SetBackdropColor(unpack(MDT.BackdropColor))
-  editbox:SetLayout("Flow")
-  editbox.multiBox = AceGUI:Create("MultiLineEditBox")
-  editbox.multiBox:SetLabel(L["Note Text:"])
+  if not zoomHooked then
+    zoomHooked = true
+    hooksecurefunc(MDT, "ZoomMap", closeNoteEditor)
+  end
+  local editor = { noteIdx = note.noteIdx }
+  editor.popover = UI.Popover({
+    anchor = note, prefer = "right", width = NOTE_EDITOR_WIDTH,
+    build = function(content, popover)
+      local text = UI.EditBox(content, { id = "noteText", multiline = true, lines = NOTE_EDITOR_LINES, value = note.tooltipText, autoFocus = true })
+      local footer = UI.Row(content, { align = "end" })
+      UI.Button(footer, { id = "saveNote", text = L["Save note"], variant = "primary", onClick = function()
+        -- Notes are redrawn from pooled frames, so find the note by its index rather than keeping the frame.
+        for _, active in pairs(noteFramePool.active) do
+          if active.noteIdx == editor.noteIdx then
+            active.tooltipText = text:GetValue()
+            updateNoteObjText(active.tooltipText, active)
+            break
+          end
+        end
+        popover:Close("confirm")
+      end })
+    end,
+    onClose = function()
+      if noteEditor == editor then noteEditor = nil end
+    end,
+  })
+  noteEditor = editor
+end
 
-  editbox.multiBox:SetCallback("OnEnterPressed", function(widget, callbackName, text)
-    for _, note in pairs(noteFramePool.active) do
-      if note.noteIdx == editbox.noteIdx then
-        note.tooltipText = text
-        updateNoteObjText(text, note)
-        break
-      end
-    end
-    editbox.frame:Hide()
-  end)
-
-  editbox.multiBox:SetWidth(240)
-  editbox.multiBox:SetHeight(120)
-  editbox.multiBox.label:Hide()
-  --[[ hiding the scrollbar messes up the whole editbox
-    editbox.multiBox.scrollBar:Hide()
-    editbox.multiBox.scrollBar:ClearAllPoints()
-    editbox.multiBox.scrollBar:SetPoint("BOTTOM", editbox.multiBox.button, "TOP", 0, 16)
-    editbox.multiBox.scrollBar.ScrollUpButton:SetPoint("BOTTOM", editbox.multiBox.scrollBar, "TOP",0,3)
-    ]]
-  editbox.frame:Hide()
-  editbox:AddChild(editbox.multiBox)
-  MDT:FixAceGUIShowHide(editbox, nil, nil, true)
-  editbox.frame:SetScript("OnShow", function()
-    hooksecurefunc(MDT, "MouseDownHook", function() editbox.frame:Hide() end)
-    hooksecurefunc(MDT, "ZoomMap", function() editbox.frame:Hide() end)
-  end)
-
-  return editbox
+---Test access to the open note editor's popover, nil when it is closed.
+---@return MDT.UI.Control?
+function MDT:GetNoteEditor()
+  return noteEditor and noteEditor.popover
 end
 
 local currentNote
 
 local function openContextMenu()
-  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateButton(L["Edit"], function()
-      currentNote:OpenEditBox()
-    end)
-    rootDescription:CreateButton(L["Delete"], function()
-      deleteNoteObj(currentNote)
-    end)
-    rootDescription:CreateButton(L["Close"], function() end)
-  end)
+  MDT:CreateContextMenu(MDT.main_frame, {
+    { text = L["Edit"], onSelect = function() currentNote:OpenEditBox() end },
+    { text = L["Delete"], onSelect = function() deleteNoteObj(currentNote) end },
+  })
 end
 
 local function POIButton_CalculateNumericTexCoords(index, color)
@@ -642,17 +640,7 @@ function MDT:DrawNote(x, y, text, objectIndex)
   note:RegisterForClicks("AnyUp")
   --click
   function note:OpenEditBox()
-    if not noteEditbox then noteEditbox = makeNoteEditbox() end
-    if noteEditbox.frame:IsShown() and noteEditbox.noteIdx == note.noteIdx then
-      noteEditbox.frame:Hide()
-    else
-      noteEditbox.noteIdx = note.noteIdx
-      noteEditbox:ClearAllPoints()
-      noteEditbox.frame:SetPoint("TOPLEFT", note, "TOPRIGHT")
-      noteEditbox.frame:Show()
-      noteEditbox.multiBox:SetText(note.tooltipText)
-      noteEditbox.multiBox.button:Enable()
-    end
+    toggleNoteEditor(note)
   end
 
   note:SetScript("OnClick", function(self, button, down)
@@ -660,20 +648,18 @@ function MDT:DrawNote(x, y, text, objectIndex)
       CloseDropDownMenus()
       self:OpenEditBox()
     elseif button == "RightButton" then
+      closeNoteEditor()
       currentNote = note
       openContextMenu()
-      if noteEditbox and noteEditbox.frame:IsShown() then
-        noteEditbox.frame:Hide()
-      end
     end
   end)
   note:SetScript("OnEnter", function()
-    GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-    GameTooltip:AddLine(note.tooltipText, 1, 1, 1, 1)
-    GameTooltip:Show()
+    MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+    MDTTooltip:AddLine(note.tooltipText, 1, 1, 1, 1)
+    MDTTooltip:Show()
   end)
   note:SetScript("OnLeave", function()
-    GameTooltip:Hide()
+    MDTTooltip:Hide()
   end)
 
   -- Interface\AddOns\Blizzard_MapCanvas\MapCanvas_DataProviderBase.lua calls this function when a pin is clicked

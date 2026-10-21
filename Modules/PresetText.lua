@@ -1,9 +1,9 @@
 local _, MDT = ...
 local L = MDT.L
 
-local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, CreateFrame, GameTooltip, GetTime =
+local tinsert, tremove, pairs, ipairs, min, max, abs, tonumber, type, unpack, CreateFrame, MDTTooltip, GetTime =
     table.insert, table.remove, pairs, ipairs, math.min, math.max, math.abs, tonumber, type, unpack, CreateFrame,
-    GameTooltip, GetTime
+    MDTTooltip, GetTime
 local cos, sin, rad, deg, atan2, floor = math.cos, math.sin, math.rad, math.deg, math.atan2, math.floor
 local GetCursorPosition, IsShiftKeyDown, IsMouseButtonDown = GetCursorPosition, IsShiftKeyDown, IsMouseButtonDown
 
@@ -172,7 +172,7 @@ local function hasVisibleText(text)
 end
 
 local function applyFontStyle(fontInstance, obj)
-  fontInstance:SetFont(STANDARD_TEXT_FONT, getFontSize(obj) * MDT:GetScale(), "OUTLINE")
+  MDT.UI.Fonts.Apply(fontInstance, getFontSize(obj) * MDT:GetScale(), "OUTLINE", obj.d and obj.d[5])
   fontInstance:SetTextColor(MDT:HexToRGB(getColorHex(obj)))
   fontInstance:SetJustifyH(getAlign(obj))
 end
@@ -753,13 +753,13 @@ end
 ---Style bar
 local function showButtonTooltip(button)
   if not button.tooltipText then return end
-  GameTooltip:SetOwner(button, "ANCHOR_TOP")
-  GameTooltip:SetText(button.tooltipText, 1, 1, 1, 1, true)
-  GameTooltip:Show()
+  MDTTooltip:SetOwner(button, "ANCHOR_TOP")
+  MDTTooltip:SetText(button.tooltipText, 1, 1, 1, 1, true)
+  MDTTooltip:Show()
 end
 
 local function hideTooltip()
-  GameTooltip:Hide()
+  MDTTooltip:Hide()
 end
 
 local function createBarButton(bar, tooltipText, onClick)
@@ -890,7 +890,7 @@ local function createAlignButton(bar)
   end
   --refresh the tooltip after a click changed the alignment
   button:HookScript("OnClick", function(self)
-    if GameTooltip:IsOwned(self) then showButtonTooltip(self) end
+    if MDTTooltip:IsOwned(self) then showButtonTooltip(self) end
   end)
   updateAlignButton(button, DEFAULT_ALIGN)
   return button
@@ -906,7 +906,7 @@ local function createBackgroundButton(bar)
   box:SetPoint("BOTTOMRIGHT", -3, 3)
   box:SetColorTexture(0, 0, 0, 0.8)
   local letter = button:CreateFontString(nil, "OVERLAY")
-  letter:SetFont(STANDARD_TEXT_FONT, 10, "OUTLINE")
+  letter:SetFontObject(MDT.UI.Fonts.Get("small", true))
   letter:SetPoint("CENTER", 0, 0)
   letter:SetText("A")
   return button
@@ -915,7 +915,7 @@ end
 local function createTextButton(bar, text, tooltipText, onClick)
   local button = createBarButton(bar, tooltipText, onClick)
   local label = button:CreateFontString(nil, "OVERLAY")
-  label:SetFont(STANDARD_TEXT_FONT, 14, "OUTLINE")
+  MDT.UI.Fonts.Apply(label, 14, "OUTLINE")
   label:SetPoint("CENTER", 0, 1)
   label:SetText(text)
   return button
@@ -953,7 +953,8 @@ local function createDeleteConfirm(bar)
   })
   confirm:SetBackdropColor(unpack(MDT.BackdropColor))
   confirm:SetBackdropBorderColor(1, 1, 1, 0.2)
-  local label = confirm:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+  local label = confirm:CreateFontString(nil, "OVERLAY")
+  label:SetFontObject(MDT.UI.Fonts.Get("small"))
   label:SetPoint("LEFT", BAR_PADDING + 2, 0)
   label:SetText(L["Delete text?"])
 
@@ -1268,7 +1269,8 @@ function getStyleBar()
   place(createTextButton(bar, "-", L["Decrease Text Size"], function() stepFontSize(-1) end), nil, true)
   bar.size = CreateFrame("Frame", nil, bar)
   bar.size:SetSize(22, BAR_BUTTON_SIZE)
-  bar.size.text = bar.size:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+  bar.size.text = bar.size:CreateFontString(nil, "OVERLAY")
+  bar.size.text:SetFontObject(MDT.UI.Fonts.Get("small"))
   bar.size.text:SetPoint("CENTER")
   bar.size.tooltipText = L["textSizeHint"]
   bar.size:EnableMouse(true)
@@ -1441,21 +1443,20 @@ end
 
 ---Context menu
 local function openContextMenu(preset, obj)
-  MDT:CreateContextMenu(MDT.main_frame, function(_, rootDescription)
-    rootDescription:CreateButton(L["Edit"], function()
+  MDT:CreateContextMenu(MDT.main_frame, {
+    { text = L["Edit"], onSelect = function()
       if findObjectIndex(preset, obj) then openEditor(preset, obj) end
-    end)
-    rootDescription:CreateButton(L["Duplicate"], function()
+    end },
+    { text = L["Duplicate"], onSelect = function()
       if not findObjectIndex(preset, obj) then return end
       duplicateText(preset, obj, obj.d[1] + DUPLICATE_OFFSET, obj.d[2] - DUPLICATE_OFFSET)
-    end)
-    rootDescription:CreateButton(L["Delete"], function()
+    end },
+    { text = L["Delete"], onSelect = function()
       if not findObjectIndex(preset, obj) then return end
       selectText(preset, obj)
       confirmDelete()
-    end)
-    rootDescription:CreateButton(L["Close"], function() end)
-  end)
+    end },
+  })
 end
 
 ---Dragging

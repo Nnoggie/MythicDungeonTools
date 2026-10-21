@@ -1,16 +1,35 @@
 local _, MDT = ...
 local L = MDT.L
-local sizex, sizey = 33, 453
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
+local ICON_ATLAS = "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons"
+local CONTROL_SIZE = 26
+local ICON_SIZE = 20
+local MIN_BRUSH, MAX_BRUSH = 1, 99
 local db
-local toolbarTools = {}
+local toolButtons = {}
+local sizeBox
 local activeTextures = MDT.presetObjectActiveTextures
 local currentTool
 local objectDrawLayer = "OVERLAY"
 
-local tinsert, CreateFrame, tonumber, pi, max, atan2, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
+local tinsert, CreateFrame, tonumber, pi, max, atan2, abs, pairs, ipairs, GetCursorPosition, MDTTooltip =
     table.insert, CreateFrame, tonumber, math.pi, math.max, math.atan2, math.abs, pairs, ipairs, GetCursorPosition,
-    GameTooltip
+    MDTTooltip
+
+---The drawing tools in toolbar order. `coords` cut the icon from the icon atlas; `texture` replaces the atlas.
+---@type {id: string, coords: number[]?, texture: string?, tooltip: string|fun(tooltip: table)}[]
+MDT.ToolbarTools = {
+  { id = "pencil", coords = { 0, 0.25, 0, 0.25 }, tooltip = L["Drawing: Freehand"] },
+  { id = "line", coords = { 0, 0.25, 0.75, 1 }, tooltip = L["Drawing: Line"] },
+  { id = "arrow", coords = { 0.25, 0.5, 0, 0.25 }, tooltip = L["Drawing: Arrow"] },
+  { id = "text", texture = "Interface\\AddOns\\MythicDungeonTools\\Textures\\text", tooltip = function(tooltip)
+    tooltip:SetText(L["Insert Text"], 1, 1, 1)
+    tooltip:AddLine(L["insertTextHint"], 1, 1, 1)
+  end },
+  { id = "note", coords = { 0.75, 1, 0, 0.25 }, tooltip = L["Insert Note"] },
+  { id = "mover", coords = { 0.5, 0.75, 0, 0.25 }, tooltip = L["Move Object"] },
+  { id = "eraser", coords = { 0.25, 0.5, 0.25, 0.5 }, tooltip = L["Drawing: Eraser"] },
+}
 
 ---sets up the toolbar frame and the widgets in it
 function MDT:initToolbar(frame)
@@ -20,9 +39,9 @@ function MDT:initToolbar(frame)
   frame.toolbar:SetFrameStrata("HIGH")
   -- above enemy blips, which start at level 5 and rise when stacked or hovered
   frame.toolbar:SetFrameLevel(20)
-  frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "OVERLAY", nil, 6)
+  frame.toolbar.tex = frame.toolbar:CreateTexture(nil, "BACKGROUND")
   frame.toolbar.tex:SetAllPoints()
-  frame.toolbar.tex:SetColorTexture(unpack(MDT.BackdropColor))
+  UI.Theme.Bind(frame.toolbar.tex, "bg.panel")
   frame.toolbar.toggleButton = CreateFrame("Button", nil, frame);
   frame.toolbar.toggleButton:SetFrameStrata("HIGH")
   frame.toolbar.toggleButton:SetFrameLevel(21)
@@ -53,230 +72,64 @@ function MDT:initToolbar(frame)
     end
   end)
 
-  frame.toolbar.widgetGroup = AceGUI:Create("SimpleGroup")
-  frame.toolbar.widgetGroup.frame:ClearAllPoints()
-  frame.toolbar.widgetGroup.frame:SetPoint("TOPLEFT", frame.toolbar, "TOPLEFT", 2, 0)
-  frame.toolbar.widgetGroup.frame:SetPoint("BOTTOMRIGHT", frame.toolbar, "BOTTOMRIGHT", 0, 0)
-  frame.toolbar.widgetGroup.frame:SetParent(frame.toolbar)
-  if not frame.toolbar.widgetGroup.frame.SetBackdrop then
-    Mixin(frame.toolbar.widgetGroup.frame, BackdropTemplateMixin)
+  local function iconButton(parent, id, coords, tooltip, onClick, texture)
+    return UI.Button(parent, {
+      id = id, variant = "plain", icon = texture or ICON_ATLAS, iconCoords = coords, iconSize = ICON_SIZE,
+      width = CONTROL_SIZE, height = CONTROL_SIZE, tooltip = tooltip, onClick = onClick,
+    })
   end
-  frame.toolbar.widgetGroup.frame:SetBackdropColor(0, 0, 0, 0)
-  frame.toolbar.widgetGroup:SetLayout("Flow")
+  local function setBrushSize(size)
+    db.toolbar.brushSize = math.max(MIN_BRUSH, math.min(MAX_BRUSH, size))
+    sizeBox:SetValue(tostring(db.toolbar.brushSize))
+  end
 
-  MDT:FixAceGUIShowHide(frame.toolbar.widgetGroup, frame.toolbar)
-
-  do
-    --dirty hook to make widgetgroup show/hide
-    local originalShow, originalHide = frame.Show, frame.Hide
-    function frame:Show(...)
-      if frame.toolbar:IsShown() then
-        frame.toolbar.widgetGroup.frame:Show()
-      end
-      return originalShow(self, ...)
+  local stack = UI.Stack(frame.toolbar, { gap = "sm", padding = "sm", align = "center" })
+  stack:SetPoint("TOPLEFT", frame.toolbar, "TOPLEFT", 0, 0)
+  stack:SetWidth(CONTROL_SIZE + UI.Theme.Space("sm") * 2)
+  stack:Batch(function()
+    iconButton(stack, "undo", { 0.5, 0.75, 0.5, 0.75 }, L["Undo"], function() MDT:PresetObjectStepBack() end)
+    iconButton(stack, "redo", { 0.75, 1, 0.5, 0.75 }, L["Redo"], function() MDT:PresetObjectStepForward() end)
+    local color = db.toolbar.color
+    UI.ColorSwatch(stack, {
+      id = "color", color = { color.r, color.g, color.b, color.a }, tooltip = L["Colorpicker"],
+      onChange = function(r, g, b, a) color.r, color.g, color.b, color.a = r, g, b, a end,
+    })
+    iconButton(stack, "brushUp", { 0.25, 0.5, 0.5, 0.75 }, L["Increase Brush Size"], function() setBrushSize(db.toolbar.brushSize + 1) end)
+    sizeBox = UI.EditBox(stack, {
+      id = "brushSize", width = CONTROL_SIZE, tooltip = L["Brush Size"], numeric = true, maxLetters = 2, justify = "CENTER", selectAllOnFocus = true,
+      value = tostring(db.toolbar.brushSize),
+      onChange = function(text)
+        local size = tonumber(text)
+        if size and size >= MIN_BRUSH then db.toolbar.brushSize = size end
+      end,
+      onCommit = function(text) setBrushSize(tonumber(text) or db.toolbar.brushSize) end,
+      onWheel = function(delta) setBrushSize(db.toolbar.brushSize + delta) end,
+    })
+    iconButton(stack, "brushDown", { 0, 0.25, 0.5, 0.75 }, L["Decrease Brush Size"], function() setBrushSize(db.toolbar.brushSize - 1) end)
+    for _, tool in ipairs(MDT.ToolbarTools) do
+      toolButtons[tool.id] = iconButton(stack, tool.id, tool.coords, tool.tooltip, function()
+        MDT:UpdateSelectedToolbarTool(currentTool ~= tool.id and tool.id or nil)
+      end, tool.texture)
     end
-
-    function frame:Hide(...)
-      frame.toolbar.widgetGroup.frame:Hide()
-      return originalHide(self, ...)
-    end
-  end
-
-  ---TOOLBAR WIDGETS
-  local widgetWidth = 24
-  local widgets = {}
-  MDT.tempWidgets = widgets
-
-  ---back
-  local back = AceGUI:Create("Icon")
-  back:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, 0.75, 0.5, 0.75)
-  back:SetCallback("OnClick", function(widget, callbackName)
-    self:PresetObjectStepBack()
-  end)
-  back.tooltipText = L["Undo"]
-  tinsert(widgets, back)
-
-  ---forward
-  local forward = AceGUI:Create("Icon")
-  forward:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0.5, 0.75)
-  forward:SetCallback("OnClick", function(widget, callbackName)
-    self:PresetObjectStepForward()
-  end)
-  forward.tooltipText = L["Redo"]
-  tinsert(widgets, forward)
-
-  ---colorPicker
-  local colorPicker = AceGUI:Create("ColorPicker")
-  --colorPicker:SetHasAlpha(true)
-  colorPicker:SetColor(db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b, db.toolbar.color.a)
-  colorPicker:SetCallback("OnValueChanged", function(widget, callbackName, r, g, b, a)
-    db.toolbar.color.r, db.toolbar.color.g, db.toolbar.color.b, db.toolbar.color.a = r, g, b, a
-    colorPicker:SetColor(r, g, b, a)
-  end)
-  colorPicker.tooltipText = L["Colorpicker"]
-  tinsert(widgets, colorPicker)
-
-  local sizeIndicator
-  ---plus
-  local plus = AceGUI:Create("Icon")
-  plus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.5, 0.75)
-  plus:SetCallback("OnClick", function(widget, callbackName)
-    db.toolbar.brushSize = db.toolbar.brushSize + 1
-    sizeIndicator:SetText(db.toolbar.brushSize)
-  end)
-  plus.tooltipText = L["Increase Brush Size"]
-  tinsert(widgets, plus)
-
-  ---sizeIndicator
-  sizeIndicator = AceGUI:Create("EditBox")
-  sizeIndicator:DisableButton(true)
-  sizeIndicator:SetMaxLetters(2)
-  sizeIndicator.editbox:SetNumeric(true)
-  sizeIndicator:SetText(db.toolbar.brushSize)
-  local function updateBrushSize(size)
-    db.toolbar.brushSize = size
-  end
-
-  sizeIndicator:SetCallback("OnEnterPressed", function(widget, callback, text)
-    sizeIndicator:ClearFocus()
-    local size = tonumber(text)
-    updateBrushSize(size)
-  end)
-  sizeIndicator:SetCallback("OnTextChanged", function(widget, callback, text)
-    local size = tonumber(text)
-    updateBrushSize(size)
-  end)
-  --Enable mousewheel scrolling
-  sizeIndicator.editbox:EnableMouseWheel(true)
-  sizeIndicator.editbox:SetScript("OnMouseWheel", function(self, delta)
-    local newSize = db.toolbar.brushSize + delta
-    if newSize < 1 then newSize = 1 end
-    if newSize > 99 then newSize = 99 end
-    db.toolbar.brushSize = newSize
-    sizeIndicator:SetText(db.toolbar.brushSize)
-  end)
-  sizeIndicator.tooltipText = L["Brush Size"]
-  tinsert(widgets, sizeIndicator)
-
-
-  ---minus
-  local minus = AceGUI:Create("Icon")
-  minus:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, 0.25, 0.5, 0.75)
-  minus:SetCallback("OnClick", function(widget, callbackName)
-    db.toolbar.brushSize = db.toolbar.brushSize - 1
-    if db.toolbar.brushSize < 1 then db.toolbar.brushSize = 1 end
-    sizeIndicator:SetText(db.toolbar.brushSize)
-  end)
-  minus.tooltipText = L["Decrease Brush Size"]
-  tinsert(widgets, minus)
-
-  ---pencil
-  local pencil = AceGUI:Create("Icon")
-  pencil:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, 0.25, 0, 0.25)
-  toolbarTools["pencil"] = pencil
-  pencil:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "pencil" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("pencil") end
-  end)
-  pencil.tooltipText = L["Drawing: Freehand"]
-  tinsert(widgets, pencil)
-
-  ---line
-  local line = AceGUI:Create("Icon")
-  line:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0, 0.25, 0.75, 1)
-  toolbarTools["line"] = line
-  line:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "line" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("line") end
-  end)
-  line.tooltipText = L["Drawing: Line"]
-  tinsert(widgets, line)
-
-  ---arrow
-  local arrow = AceGUI:Create("Icon")
-  arrow:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0, 0.25)
-  toolbarTools["arrow"] = arrow
-  arrow:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "arrow" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("arrow") end
-  end)
-  arrow.tooltipText = L["Drawing: Arrow"]
-  tinsert(widgets, arrow)
-
-  ---text
-  local text = AceGUI:Create("Icon")
-  text:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\text")
-  toolbarTools["text"] = text
-  text:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "text" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("text") end
-  end)
-  text.tooltipText = L["Insert Text"]
-  text.tooltipHint = L["insertTextHint"]
-  tinsert(widgets, text)
-
-  ---note
-  local note = AceGUI:Create("Icon")
-  note:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.75, 1, 0, 0.25)
-  toolbarTools["note"] = note
-  note:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "note" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("note") end
-  end)
-  note.tooltipText = L["Insert Note"]
-  tinsert(widgets, note)
-
-  ---mover
-  local mover = AceGUI:Create("Icon")
-  mover:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, 0.75, 0, 0.25)
-  toolbarTools["mover"] = mover
-  mover:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "mover" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("mover") end
-  end)
-  mover.tooltipText = L["Move Object"]
-  tinsert(widgets, mover)
-
-  ---eraser
-  local eraser = AceGUI:Create("Icon")
-  eraser:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.25, 0.5)
-  toolbarTools["eraser"] = eraser
-  eraser:SetCallback("OnClick", function(widget, callbackName)
-    if currentTool == "eraser" then MDT:UpdateSelectedToolbarTool() else MDT:UpdateSelectedToolbarTool("eraser") end
-  end)
-  eraser.tooltipText = L["Drawing: Eraser"]
-  tinsert(widgets, eraser)
-
-  ---delete
-  local delete = AceGUI:Create("Icon")
-  delete:SetImage("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.25, 0.5, 0.75, 1)
-  delete:SetCallback("OnClick", function(widget, callbackName)
-    local prompt = string.format(L["deleteAllDrawingsPrompt"], "\n", "\n", "\n")
-    self:OpenConfirmationFrame(450, 150, L["Delete ALL drawings"], L["Delete"], prompt, function()
-      self:DeletePresetObjects()
-      if self.liveSessionActive then self:LiveSession_SendCommand("deletePresetObjects") end
+    iconButton(stack, "deleteAll", { 0.25, 0.5, 0.75, 1 }, L["Delete ALL drawings"], function()
+      UI.Dialogs.Confirm({
+        key = "deleteAllDrawings", title = L["Delete ALL drawings"], width = 400,
+        text = string.format(L["deleteAllDrawingsPrompt"], "\n", "", ""),
+        confirm = { text = L["Delete"], variant = "danger", onClick = function()
+          self:DeletePresetObjects()
+          if self.liveSessionActive then self:LiveSession_SendCommand("deletePresetObjects") end
+        end },
+      })
     end)
   end)
-  delete.tooltipText = L["Delete ALL drawings"]
-  tinsert(widgets, delete)
+  frame.toolbar.controls = stack
 
-  for k, widget in ipairs(widgets) do
-    widget:SetWidth(widgetWidth)
-    if widget.type == "EditBox" then widget:SetWidth(30) end
-    if widget.SetImageSize then widget:SetImageSize(20, 20) end
-    if widget.type == "Icon" then
-      widget:SetCallback("OnRelease", MDT:ReplaceIconHighlight(widget))
-    end
-    widget:SetCallback("OnEnter", function(widget, callbackName)
-      MDT:ToggleToolbarTooltip(true, widget)
-    end)
-    widget:SetCallback("OnLeave", function()
-      MDT:ToggleToolbarTooltip(false)
-    end)
-    frame.toolbar.widgetGroup:AddChild(widget)
-  end
-
-  frame.toolbar:SetSize(sizex, sizey)
+  frame.toolbar:SetSize(stack:GetWidth(), stack:GetHeight())
   frame.toolbar:ClearAllPoints()
   frame.toolbar:SetPoint("LEFT", frame, "LEFT", 0, 0)
 
   MDT:CreateBrushPreview(frame)
   MDT:UpdateSelectedToolbarTool()
-  frame.toolbar.widgetGroup.frame:Hide()
 end
 
 ---CreateBrushPreview
@@ -306,18 +159,18 @@ local function updateTextPreview(preview)
     return
   end
   local x, y = GetCursorPosition()
-  local uiScale = UIParent:GetScale()
+  local scale = preview:GetEffectiveScale()
   --brush tools resize the preview frame, the text has to start exactly at the cursor
   preview:SetSize(1, 1)
   preview:ClearAllPoints()
-  preview:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / uiScale, y / uiScale)
+  preview:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / scale, y / scale)
   local mapScale = MDT.main_frame.mapPanelFrame:GetEffectiveScale() / preview:GetEffectiveScale()
   local r, g, b, size = MDT:GetPresetTextDefaultStyle()
   local fontSize = max(1, size * MDT:GetScale() * mapScale)
   --runs every frame, only update the font when zooming changed its size
   if preview.textFontSize ~= fontSize then
     preview.textFontSize = fontSize
-    preview.text:SetFont(STANDARD_TEXT_FONT, fontSize, "OUTLINE")
+    UI.Fonts.Apply(preview.text, fontSize, "OUTLINE")
     preview.text:SetTextColor(r, g, b)
     preview.text:SetText("Aa")
   end
@@ -341,8 +194,8 @@ function MDT:EnableBrushPreview(tool)
   frame.brushPreview:SetScript("OnUpdate", function(self, tick)
     if MDTScrollFrame:IsMouseOver() and not MDTToolbarFrame:IsMouseOver() then
       local x, y = GetCursorPosition()
-      x = x / UIParent:GetScale()
-      y = y / UIParent:GetScale()
+      x = x / self:GetEffectiveScale()
+      y = y / self:GetEffectiveScale()
       self:ClearAllPoints()
       self:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x, y)
       if tool == "eraser" then
@@ -373,26 +226,22 @@ end
 ---ToggleToolbarTooltip
 function MDT:ToggleToolbarTooltip(show, widget, anchor)
   if not show then
-    GameTooltip:Hide()
+    MDTTooltip:Hide()
   else
-    anchor = anchor or "ANCHOR_BOTTOM"
-    local yOffset = -1
-    if widget.type == "EditBox" then yOffset = yOffset - 1 end
-    if widget.type == "ColorPicker" then yOffset = yOffset - 3 end
-    GameTooltip:SetOwner(widget.frame, anchor, 0, yOffset)
-    GameTooltip:SetText(widget.tooltipText, 1, 1, 1, 1)
-    if widget.tooltipHint then GameTooltip:AddLine(widget.tooltipHint, 1, 1, 1) end
-    GameTooltip:Show()
+    MDTTooltip:SetOwner(widget.frame, anchor or "ANCHOR_BOTTOM", 0, -1)
+    MDTTooltip:SetText(widget.tooltipText, 1, 1, 1, 1)
+    MDTTooltip:Show()
   end
 end
 
 ---UpdateSelectedToolbarTool
 ---Called when a tool is selected/deselected
-function MDT:UpdateSelectedToolbarTool(widgetName)
-  local toolbar = MDT.main_frame.toolbar
+---@param toolId string? nil deselects
+function MDT:UpdateSelectedToolbarTool(toolId)
   MDT:ClearPresetTextSelection()
-  if not widgetName or (not toolbarTools[widgetName]) then
-    if toolbar.highlight then toolbar.highlight:Hide() end
+  if not toolButtons[toolId] then toolId = nil end
+  for id, button in pairs(toolButtons) do button:SetSelected(id == toolId) end
+  if not toolId then
     MDT:RestoreScrollframeScripts()
     MDT:DisableBrushPreview()
     if MDT.drawingActive then
@@ -403,22 +252,14 @@ function MDT:UpdateSelectedToolbarTool(widgetName)
       if currentTool == "eraser" then MDT:StopEraserDrawing() end
     end
     currentTool = nil
-    toolbar:SetScript("OnUpdate", nil)
+    MDT.main_frame.toolbar:SetScript("OnUpdate", nil)
     MDT:UpdatePresetTextInteractivity()
     return
   end
-  local widget = toolbarTools[widgetName]
-  currentTool = widgetName
-  toolbar.highlight = toolbar.highlight or toolbar:CreateTexture(nil, "OVERLAY", nil, 7)
-  toolbar.highlight:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\icons")
-  toolbar.highlight:SetTexCoord(0.5, 0.75, 0.25, 0.5)
-  toolbar.highlight:SetSize(widget.frame:GetWidth(), widget.frame:GetWidth())
-  toolbar.highlight:ClearAllPoints()
-  toolbar.highlight:SetPoint("CENTER", widget.frame, "CENTER")
+  currentTool = toolId
   MDT:OverrideScrollframeScripts()
   MDT:EnableBrushPreview(currentTool)
   MDT:UpdatePresetTextInteractivity()
-  toolbar.highlight:Show()
 end
 
 ---Returns the name of the selected toolbar tool, nil if no tool is selected
@@ -491,14 +332,14 @@ end
 function MDT:GetCursorPosition()
   local frame = MDT.main_frame
   local scrollFrame = frame.scrollFrame
-  local relativeFrame = UIParent --UIParent
   local mapPanelFrame = MDT.main_frame.mapPanelFrame
   local cursorX, cursorY = GetCursorPosition()
+  local frameScale = scrollFrame:GetEffectiveScale()
   local mapScale = mapPanelFrame:GetScale()
   local scrollH = scrollFrame:GetHorizontalScroll()
   local scrollV = scrollFrame:GetVerticalScroll()
-  local frameX = (cursorX / relativeFrame:GetScale()) - scrollFrame:GetLeft()
-  local frameY = scrollFrame:GetTop() - (cursorY / relativeFrame:GetScale())
+  local frameX = (cursorX / frameScale) - scrollFrame:GetLeft()
+  local frameY = scrollFrame:GetTop() - (cursorY / frameScale)
   frameX = (frameX / mapScale) + scrollH
   frameY = (frameY / mapScale) + scrollV
   return frameX - 1, -frameY

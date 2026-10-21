@@ -1,26 +1,29 @@
 local _, MDT = ...
 local L = MDT.L
-local AceGUI = LibStub("AceGUI-3.0")
+local UI = MDT.UI
+
+local ATLAS = "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons"
 
 MDT.externalLinks = {
   {
     name = "GitHub",
     tooltip = L["Open an issue on GitHub"],
     url = "https://github.com/Nnoggie/MythicDungeonTools/issues",
-    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\github", 0, 1, 0, 1 },
+    icon = "Interface\\AddOns\\MythicDungeonTools\\Textures\\github",
   },
   {
     name = "Discord",
     tooltip = L["Provide feedback in Discord"],
     url = "https://discord.gg/tdxMPb3",
-    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\icons", 0.5, .75, 0.75, 1 },
+    icon = ATLAS,
+    iconCoords = { 0.5, 0.75, 0.75, 1 },
   },
   {
     name = "Patreon",
     hideInErrorFrame = true,
     tooltip = L["Support MDT on Patreon"],
     url = "https://www.patreon.com/nnoggie",
-    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\patreon", 0, 1, 0, 1 },
+    icon = "Interface\\AddOns\\MythicDungeonTools\\Textures\\patreon",
   },
   {
     name = "Donate",
@@ -28,97 +31,37 @@ MDT.externalLinks = {
     label = L["Donate"],
     tooltip = L["Support MDT with a donation"],
     url = "https://streamlabs.com/nnoggie/tip",
-    texture = { "Interface\\AddOns\\MythicDungeonTools\\Textures\\donate", 0, 1, 0, 1 },
+    icon = "Interface\\AddOns\\MythicDungeonTools\\Textures\\donate",
   },
 }
 
-function MDT:CreateCopyableLinkRow(parent, name, url, options)
-  options = options or {}
-  local parentFrame = parent.frame or parent
-  local buttonWidth = options.buttonWidth or 64
-  local buttonGap = options.buttonGap or 3
-  local rowWidth = options.width or 440
-  local editBoxWidth = rowWidth - buttonWidth - buttonGap
-  local copyHelperAnchor = options.copyHelperAnchor or parentFrame
-  local copyHelperX = options.copyHelperX or 0
-  local copyHelperY = options.copyHelperY or 0
-  local editBoxText = url
+local linkButtons
 
-  local editBox = AceGUI:Create("EditBox")
-  local copyButton = AceGUI:Create("Button")
-  local row = {
-    editBox = editBox,
-    copyButton = copyButton,
-  }
-
-  local function getLabel(labelName)
-    if options.label then return options.label end
-    if options.addColon then return labelName..":" end
-    return labelName
-  end
-
-  local function selectEditBox()
-    if not MDT.copyHelper then
-      MDT:MakeCopyHelper(copyHelperAnchor)
-    end
-    editBox:HighlightText(0, string.len(editBoxText))
-    editBox:SetFocus()
-    MDT.copyHelper:SmartShow(copyHelperAnchor, copyHelperX, copyHelperY)
-  end
-
-  function row:SetLink(linkName, linkUrl)
-    editBoxText = linkUrl
-    editBox.myText = linkUrl
-    editBox:SetLabel(getLabel(linkName))
-    if options.hideLabel and editBox.label then editBox.label:Hide() end
-    editBox:SetText(linkUrl)
-    editBox.editbox:SetCursorPosition(0)
-  end
-
-  editBox:DisableButton(true)
-  editBox:SetWidth(editBoxWidth)
-  editBox:SetCallback("OnTextChanged", function(widget)
-    widget:SetText(editBoxText)
-    widget.editbox:SetCursorPosition(0)
-  end)
-  editBox.editbox:HookScript("OnEditFocusLost", function()
-    editBox.editbox:SetCursorPosition(0)
-    if MDT.copyHelper then MDT.copyHelper:SmartHide() end
-  end)
-  editBox.editbox:SetScript("OnKeyUp", function(_, key)
-    if MDT.copyHelper and MDT.copyHelper:WasControlKeyDown() and key == "C" then
-      editBox:ClearFocus()
-      if options.closeFrameOnCopy then
-        options.closeFrameOnCopy:Hide()
-      end
-      MDT.copyHelper:SmartFadeOut()
-    elseif MDT.copyHelper then
+---A labeled read-only link and a Copy button. Copy selects the link and shows the Ctrl+C hint centered on `anchor`.
+---@param parent table kit container, or a plain frame the caller anchors the returned row in
+---@param spec {label: string?, url: string, anchor: table, width: number?, onCopied: fun()?}
+---@return MDT.UI.Control row
+function MDT:AddCopyableLinkRow(parent, spec)
+  local row = UI.Row(parent, { gap = "sm", valign = "end", width = spec.width })
+  local editBox, copyButton
+  editBox = UI.EditBox(row, {
+    label = spec.label, value = spec.url, readOnly = true, selectAllOnFocus = true, grow = 1,
+    onFocusLost = function()
+      copyButton:SetDisabled(false)
       MDT.copyHelper:SmartHide()
-    end
-  end)
-
-  copyButton:SetWidth(buttonWidth)
-  copyButton:SetText(L["Copy"])
-  copyButton:SetCallback("OnClick", selectEditBox)
-
-  if options.point then
-    local xOffset = options.xOffset or 0
-    local yOffset = options.yOffset or 0
-    editBox.frame:SetParent(parentFrame)
-    editBox.frame:ClearAllPoints()
-    editBox.frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", xOffset, yOffset)
-    editBox.frame:Show()
-    copyButton.frame:SetParent(parentFrame)
-    copyButton.frame:ClearAllPoints()
-    copyButton.frame:SetPoint("BOTTOMLEFT", editBox.frame, "BOTTOMRIGHT", buttonGap, 0)
-    copyButton.frame:Show()
-  else
-    parent:AddChild(editBox)
-    parent:AddChild(copyButton)
-  end
-
-  row:SetLink(name, url)
-
+    end,
+    onCopy = function()
+      MDT.copyHelper:SmartFadeOut()
+      editBox:ClearFocus()
+      if spec.onCopied then spec.onCopied() end
+    end,
+  })
+  copyButton = UI.Button(row, { text = L["Copy"], width = 64, onClick = function()
+    editBox:Focus()
+    editBox:SelectAll()
+    copyButton:SetDisabled(true)
+    MDT.copyHelper:SmartShow(spec.anchor, 0, 0)
+  end })
   return row
 end
 
@@ -133,134 +76,70 @@ function MDT:CreateHoverHighlight(button, yInset)
   return highlight
 end
 
----Replaces the default glow of an AceGUI Icon widget with our hover highlight
----@return function restore restores the default glow, call when the widget is released
-function MDT:ReplaceIconHighlight(iconWidget)
-  local frame = iconWidget.frame
-  -- cache the default glow on first use, a pooled frame keeps our hidden highlights from earlier acquisitions
-  if not frame.mdtDefaultHighlight then
-    for _, region in ipairs({ frame:GetRegions() }) do
-      if region:IsObjectType("Texture") and region:GetDrawLayer() == "HIGHLIGHT" then
-        frame.mdtDefaultHighlight = region
-        break
-      end
-    end
-  end
-  local defaultHighlight = frame.mdtDefaultHighlight
-  if defaultHighlight then defaultHighlight:Hide() end
-  local highlight = MDT:CreateHoverHighlight(frame, 3)
-  return function()
-    frame:ClearHighlightTexture()
-    highlight:Hide()
-    if defaultHighlight then defaultHighlight:Show() end
+---The version check, the error report and the link box share the map's bottom-left corner; only one is open at a time.
+function MDT:CloseBottomLeftPanels()
+  for _, key in ipairs({ "versionCheck", "errors", "externalLink" }) do
+    local dialog = UI.Dialogs.Get(key)
+    if dialog then dialog:Close("replaced") end
   end
 end
 
-function MDT:CreateExternalLinkButtons(frame)
-  local externalButtonGroup = AceGUI:Create("SimpleGroup")
-  MDT:FixAceGUIShowHide(externalButtonGroup, frame)
-  externalButtonGroup.frame:ClearAllPoints()
-  externalButtonGroup.frame:SetParent(frame.bottomPanel)
-  if not externalButtonGroup.frame.SetBackdrop then
-    Mixin(externalButtonGroup.frame, BackdropTemplateMixin)
-  end
-  externalButtonGroup.frame:SetBackdropColor(0, 0, 0, 0)
-  -- Flow adds a 3px gap above the 30px icon row, pad the bottom to match so icons center on the version text
-  externalButtonGroup.noAutoHeight = true
-  externalButtonGroup:SetHeight(36)
-  externalButtonGroup:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", 3, 0)
-  externalButtonGroup:SetLayout("Flow")
-  externalButtonGroup.frame:SetFrameStrata("High")
-  externalButtonGroup.frame:SetFrameLevel(7)
-  externalButtonGroup.frame:ClearBackdrop()
-  frame.externalButtonGroup = externalButtonGroup
+local shownLink
 
-  for _, dest in ipairs(MDT.externalLinks) do
-    local button = AceGUI:Create("Icon")
-    button:SetImage(unpack(dest.texture))
-    button:SetCallback("OnClick", function()
-      MDT:ShowExternalLinkCopyFrame(dest)
-      MDT:ToggleToolbarTooltip(false)
-    end)
-    button.tooltipText = dest.tooltip
-    button:SetWidth(24)
-    button:SetImageSize(20, 20)
-    local restoreHighlight = MDT:ReplaceIconHighlight(button)
-    local labelText
-    if dest.label then
-      labelText = button.frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-      labelText:SetTextColor(1, 1, 1, 1)
-      labelText:SetText(dest.label)
-      labelText:SetPoint("LEFT", button.image, "RIGHT", 3, 0)
-      button.image:ClearAllPoints()
-      button.image:SetPoint("TOPLEFT", 2, -5)
-      button:SetWidth(24 + 3 + labelText:GetStringWidth())
-    end
-    -- restore the pooled Icon widget's default layout
-    button:SetCallback("OnRelease", function(widget)
-      if labelText then
-        labelText:Hide()
-        widget.image:ClearAllPoints()
-        widget.image:SetPoint("TOP", 0, -5)
-      end
-      restoreHighlight()
-    end)
-    button:SetCallback("OnEnter", function(widget)
-      MDT:ToggleToolbarTooltip(true, widget, "ANCHOR_TOPLEFT")
-    end)
-    button:SetCallback("OnLeave", function()
-      MDT:ToggleToolbarTooltip(false)
-    end)
-    externalButtonGroup:AddChild(button)
-  end
-end
-
-function MDT:ShowExternalLinkCopyFrame(link)
-  if not MDT.externalLinkCopyFrame then
-    local frame = CreateFrame("Frame", "MDTExternalLinkCopyFrame", MDT.main_frame, "BackdropTemplate")
-    MDT.externalLinkCopyFrame = frame
-    frame:SetFrameStrata("HIGH")
-    frame:SetFrameLevel(50)
-    frame:SetSize(420, 50)
-    frame:EnableMouse(true)
-    frame.bgTex = frame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    frame.bgTex:SetAllPoints()
-    frame.bgTex:SetDrawLayer("BORDER", -5)
-    frame.bgTex:SetColorTexture(unpack(MDT.BackdropColor))
-    frame:Hide()
-
-    frame.close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-    frame.close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -2, -2)
-    frame.close:SetScript("OnClick", function()
-      frame:Hide()
-      if MDT.copyHelper then MDT.copyHelper:SmartHide() end
-    end)
-
-    frame.linkRow = MDT:CreateCopyableLinkRow(frame, link.name, link.url, {
-      width = 378,
-      buttonWidth = 64,
-      point = true,
-      xOffset = 10,
-      yOffset = -2,
-      copyHelperAnchor = MDT.main_frame,
-      copyHelperY = 50,
-      closeFrameOnCopy = frame,
-    })
-  end
-
-  local frame = MDT.externalLinkCopyFrame
-  if frame:IsShown() and frame.currentLinkName == link.name then
-    frame:Hide()
-    if MDT.copyHelper then MDT.copyHelper:SmartHide() end
+---Opens the link box in the map's bottom-left corner, where MDT always showed it, or closes it when it already shows
+---this link. Like the version check it is a panel, not a popover: clicks elsewhere, such as on another link icon, reach
+---what they click.
+---@param link table an entry of MDT.externalLinks
+function MDT:ToggleExternalLink(link)
+  local open = UI.Dialogs.Get("externalLink")
+  if open and shownLink == link then
+    open:Close("api")
     return
   end
-  MDT:HideAllDialogs()
-  if MDT.copyHelper then MDT.copyHelper:SmartHide() end
-  frame.linkRow:SetLink(link.name, link.url)
-  frame.currentLinkName = link.name
-  frame:SetParent(MDT.main_frame)
-  frame:SetFrameStrata("HIGH")
-  frame:ClearAllPoints()
-  frame:SetPoint("BOTTOMLEFT", MDT.main_frame, "BOTTOMLEFT", 0, 0)
-  frame:Show()
+  MDT:CloseBottomLeftPanels()
+  shownLink = link
+  UI.Dialogs.Open({
+    key = "externalLink", title = link.name, width = 420, pinned = true,
+    place = { point = "BOTTOMLEFT", relativeTo = MDT.main_frame },
+    onClose = function()
+      shownLink = nil
+      MDT.copyHelper:SmartHide()
+    end,
+    build = function(content, dialog)
+      MDT:AddCopyableLinkRow(content, {
+        url = link.url, anchor = MDT.main_frame,
+        onCopied = function() dialog:Close("copied") end,
+      })
+    end,
+  })
+end
+
+---The link icons right of the version text, plus the error report button that stays hidden until an error is caught.
+function MDT:CreateExternalLinkButtons(frame)
+  linkButtons = UI.Row(frame.bottomPanel, { gap = "xs", width = 300 })
+  linkButtons:SetPoint("LEFT", frame.bottomLeftPanelString, "RIGHT", UI.Theme.Space("sm"), 0)
+  linkButtons:SetFrameStrata("HIGH")
+  linkButtons:SetFrameLevel(7)
+  for _, link in ipairs(MDT.externalLinks) do
+    UI.Button(linkButtons, {
+      id = link.name, variant = "plain", icon = link.icon, iconCoords = link.iconCoords, iconSize = 18,
+      text = link.label, width = not link.label and 24 or nil, height = "sm", tooltip = link.tooltip,
+      onClick = function() MDT:ToggleExternalLink(link) end,
+    })
+  end
+  UI.Button(linkButtons, {
+    id = "errors", variant = "plain", icon = ATLAS, iconCoords = { 0.76, 1, 0.25, 0.5 }, iconSize = 18, iconColor = "warn",
+    width = 24, height = "sm", hidden = true, tooltip = L["encounteredErrors"],
+    onClick = function() MDT:DisplayErrors(true) end,
+  })
+end
+
+---@param id string a link name, or "errors"
+---@return MDT.UI.Control?
+function MDT:GetExternalLinkButton(id)
+  return linkButtons and linkButtons:Find(id)
+end
+
+function MDT:ShowErrorReportButton()
+  MDT:GetExternalLinkButton("errors"):SetHidden(false)
 end

@@ -11,7 +11,7 @@
 ..\MythicDungeonTools\libs\load_libs.xml
 Bootstrap.lua
 ..\MythicDungeonTools\locales.xml
-..\MythicDungeonTools\AceGUIWidgets\load_widgets.xml
+Kit\load_kit.xml
 ..\MythicDungeonTools\Utility.lua
 ..\MythicDungeonTools\Core\SavedVariables.lua
 ..\MythicDungeonTools\MythicDungeonTools.lua
