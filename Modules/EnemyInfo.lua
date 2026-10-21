@@ -26,10 +26,11 @@ local LAYOUT = {
   pinned = { width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG" },
 }
 
----Icons shown only for enemies that are stealthed or detect stealth.
+---Icons shown only for enemies that are stealthed or detect stealth. 166057 is spells/eyeblue.blp, the eye the game
+---draws above NPCs with stealth detection.
 local STEALTH_FLAGS = {
-  { key = "stealth", label = "Enemy Info NPC Stealth", icon = "Interface\\ICONS\\ability_stealth" },
-  { key = "stealthDetect", label = "Enemy Info NPC Stealth Detect", icon = "Interface\\ICONS\\spell_shadow_detectinvisibility" },
+  { key = "stealth", label = "Enemy Info NPC Stealth", icon = "Interface\\ICONS\\ability_stealth", coords = UI.Icon.ZOOMED_COORDS },
+  { key = "stealthDetect", label = "Enemy Info NPC Stealth Detect", icon = 166057 },
 }
 
 local CHARACTERISTICS = {
@@ -336,7 +337,7 @@ local function fill(card, blip)
       if data[entry.key] then
         stealthIcons = stealthIcons or UI.Row(stats, { id = "stealthIcons", gap = "xs" })
         UI.Button(stealthIcons, {
-          id = entry.key, variant = "icon", icon = entry.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE,
+          id = entry.key, variant = "icon", icon = entry.icon, iconCoords = entry.coords, iconSize = CHARACTERISTIC_ICON_SIZE,
           iconColor = false, width = CHARACTERISTIC_ICON_SIZE + 2, height = CHARACTERISTIC_ICON_SIZE + 2, tooltip = L[entry.label],
         })
       end

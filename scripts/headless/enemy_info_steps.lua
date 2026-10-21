@@ -194,7 +194,7 @@ return function(ctx)
     local icons = part("pinned", "stealthIcons")
     expect(icons and #icons.kitChildren == 1, "expected 1 stealth icon, got "..(icons and #icons.kitChildren or 0))
     local icon = icons.kitChildren[1]
-    expect(icon.kitIcon:GetTexture():lower():find("spell_shadow_detectinvisibility", 1, true), "wrong stealth detection icon")
+    expect(icon.kitIcon:GetTexture() == 166057, "stealth detection does not use the eye shown above NPCs")
     W.hover(icon)
     expect(MDTTooltip:IsShown() and (W.state[MDTTooltip].lines or {})[1] == L["Enemy Info NPC Stealth Detect"], "stealth detection icon has no tooltip")
     W.fireScript(icon, "OnLeave")
