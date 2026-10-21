@@ -82,6 +82,9 @@ local seeded = {
   xoffset = W.physicalWidth - 251 - 840 * oldMaxScale, yoffset = -30,
 }
 
+-- MythicDungeonToolsDB.global as stored before load.
+local stored = {}
+
 local renders = {}
 if flags.render == true then flags.render = "ui-render" end
 if flags.render then
@@ -125,6 +128,7 @@ step("load core addon", function()
     for key, value in pairs(seeded) do global[key] = value end
     _G.MythicDungeonToolsDB = { global = global }
   end
+  for key, value in pairs(_G.MythicDungeonToolsDB and _G.MythicDungeonToolsDB.global or {}) do stored[key] = value end
   expect(Loader.load("MythicDungeonTools"), "core addon failed to load")
   W.FireEvent("PLAYER_LOGIN")
   W.FireEvent("PLAYER_ENTERING_WORLD", true, false)
@@ -146,7 +150,7 @@ local function click(widget, button)
 end
 
 dofile(root.."/scripts/headless/scale_steps.lua")({
-  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded,
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded, stored = stored,
 })
 
 step("main window is shown", function()

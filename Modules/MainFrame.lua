@@ -573,10 +573,6 @@ function MDT:InitializeMainFrame()
 
   if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end
 
-  db.nonFullscreenScale = db.nonFullscreenScale or MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-  if db.nonFullscreenScale == defaultNonFullscreenScale and db.anchorFrom == "TOP" and db.anchorTo == "TOP" then
-    db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-  end
   if not db.maximized then db.scale = db.nonFullscreenScale end
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)

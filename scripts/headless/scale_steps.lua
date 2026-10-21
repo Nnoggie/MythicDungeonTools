@@ -102,8 +102,12 @@ return function(ctx)
       expect(near(rootScale(), 768 / 1440 * seeded.uiScale), "the saved MDT scale was not applied: root scale "..rootScale())
       expect(f:GetHeight() < 555 * seeded.nonFullscreenScale - 0.5, "the oversized window was not shown smaller")
       expect(near(db.scale * 555, f:GetHeight()), ("the map uses scale %s for a window %s tall"):format(db.scale, f:GetHeight()))
-      expectSavedWindow({ seeded.nonFullscreenScale, seeded.anchorFrom, seeded.anchorTo, seeded.xoffset, seeded.yoffset }, "at load")
     end
+    local stored = {}
+    for index, key in ipairs({ "nonFullscreenScale", "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do
+      if ctx.stored[key] == nil then stored[index] = defaults[key] else stored[index] = ctx.stored[key] end
+    end
+    expectSavedWindow(stored, "at load")
     expectOnScreen("after load")
   end)
 
