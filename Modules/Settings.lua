@@ -153,7 +153,10 @@ local function buildColors(column)
   checkbox(column, "colorBlindMode", L["Local color blind mode"], function() return db.colorPaletteInfo.forceColorBlindMode == true end, function(value)
     db.colorPaletteInfo.forceColorBlindMode = value
     recolorPulls(true)
-  end, function() return not db.colorPaletteInfo.autoColoring end)
+  end, function()
+    -- Routes keep their own auto coloring, so a mode that is on must stay switchable off.
+    return not db.colorPaletteInfo.autoColoring and not db.colorPaletteInfo.forceColorBlindMode
+  end)
   bind(UI.Dropdown(column, {
     id = "palette", label = L["Choose preferred color palette"], items = paletteItems, value = db.colorPaletteInfo.colorPaletteIdx,
     onChange = function(value)

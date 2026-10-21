@@ -4,7 +4,8 @@ local Theme = UI.Theme
 
 UI.Fonts.Setup()
 
-local Holder = CreateFrame("Frame", "MDTKitHolder", UIParent)
+-- Under Root, so pooled controls build their pixel borders at the scale they are shown at.
+local Holder = CreateFrame("Frame", "MDTKitHolder", UI.Root)
 Holder:Hide()
 UI.Holder = Holder
 

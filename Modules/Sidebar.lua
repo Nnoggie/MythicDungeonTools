@@ -110,6 +110,7 @@ function MDT:RefreshSidebar()
   refreshRoutes(ctx)
   sidebar.list:SetItems(state.items)
   sidebar.list:SetSelection(MDT:GetSelection())
+  MDT:CloseRouteDialogs()
   notifyRouteChanged(preset)
 end
 

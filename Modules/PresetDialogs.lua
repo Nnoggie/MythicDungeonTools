@@ -22,15 +22,46 @@ function MDT:CheckPresetSize(callback, cancelCallback)
       text = string.format(L["LargePresetWarning"], timeToSend, "\n", "\n", ""),
       confirm = { text = L["Share"], onClick = callback },
       cancel = cancelCallback and { onClick = cancelCallback },
+      -- Confirm skips cancel when the window hides; a live session waiting on this answer must still end.
+      onClose = function(_, reason)
+        if reason == "hidden" and cancelCallback then cancelCallback() end
+      end,
     })
   else
     callback()
   end
 end
 
+-- Reports and warnings MDT raises on its own stay open when a page or another dialog opens.
+local keepOnHideAll = { errors = true, hardReset = true, addonConflict = true, prePatchWarning = true }
+
 function MDT:HideAllDialogs()
-  UI.Dialogs.CloseAll("api")
+  UI.Dialogs.CloseAll("api", keepOnHideAll)
   if MDT.copyHelper then MDT.copyHelper:SmartHide() end
+end
+
+-- Rename, delete and reset act on the current route when confirmed, so each closes once its route stops being current.
+local routeDialogPresets = {}
+
+---@param open fun(spec: table): MDT.UI.Control UI.Dialogs.Confirm or UI.Dialogs.Prompt
+---@param spec table
+local function openForCurrentRoute(open, spec)
+  local preset = MDT:GetCurrentPreset()
+  local onConfirm = spec.confirm.onClick
+  -- The sidebar closes these dialogs a few frames after a switch; a confirm in between must not hit the new route.
+  spec.confirm.onClick = function(...)
+    if MDT:GetCurrentPreset() == preset then onConfirm(...) end
+  end
+  spec.onClose = function(dialog) routeDialogPresets[dialog] = nil end
+  local dialog = open(spec)
+  routeDialogPresets[dialog] = preset
+end
+
+function MDT:CloseRouteDialogs()
+  local current = MDT:GetCurrentPreset()
+  for dialog, preset in pairs(routeDialogPresets) do
+    if preset ~= current then dialog:Close("api") end
+  end
 end
 
 function MDT:OpenImportPresetDialog()
@@ -125,7 +156,7 @@ function MDT:OpenRenamePresetDialog()
   initializeDB()
   MDT:HideAllDialogs()
   local currentName = currentPresetName()
-  UI.Dialogs.Prompt({
+  openForCurrentRoute(UI.Dialogs.Prompt, {
     key = "renamePreset", title = L["Rename Preset"], width = 350,
     label = L["Preset Name"]..":", value = currentName,
     validate = function(text)
@@ -188,7 +219,7 @@ end
 function MDT:OpenDeletePresetDialog()
   initializeDB()
   MDT:HideAllDialogs()
-  UI.Dialogs.Confirm({
+  openForCurrentRoute(UI.Dialogs.Confirm, {
     key = "deletePreset", title = L["Delete Preset"], text = string.format(L["Delete %s?"], currentPresetName()),
     confirm = { text = L["Delete"], variant = "danger", onClick = function()
       MDT:DeletePreset(db.currentPreset[db.currentDungeonIdx])
@@ -207,7 +238,7 @@ end
 function MDT:OpenClearPresetDialog()
   initializeDB()
   MDT:HideAllDialogs()
-  UI.Dialogs.Confirm({
+  openForCurrentRoute(UI.Dialogs.Confirm, {
     key = "clearPreset", title = L["Reset Preset"], text = string.format(L["Reset %s?"], currentPresetName()),
     confirm = { text = L["Reset"], variant = "danger", onClick = function()
       MDT:ClearPreset(MDT:GetCurrentPreset())

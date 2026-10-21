@@ -7,8 +7,14 @@ local Theme = UI.Theme
 local Pixel = {}
 UI.Pixel = Pixel
 
----@type table<MDT.UI.PixelBorder, true>
+---Borders and glyphs, each with a Refresh method that re-derives its thickness.
+---@type table<{Refresh: fun(self)}, true>
 local registry = setmetatable({}, { __mode = "k" })
+
+---@param object {Refresh: fun(self)}
+function Pixel.Track(object)
+  registry[object] = true
+end
 
 ---@param frame table
 ---@return number size of one physical pixel in this frame's units
@@ -70,17 +76,13 @@ function Pixel.Border(frame, token, edges)
   return border
 end
 
----Re-derives every registered border's thickness from its frame's current effective scale.
+---Re-derives every tracked border's and glyph's thickness from its frame's current effective scale. Root calls it
+---after rescaling on UI_SCALE_CHANGED and DISPLAY_SIZE_CHANGED.
 function Pixel.Refresh()
-  for border in pairs(registry) do border:Refresh() end
+  for object in pairs(registry) do object:Refresh() end
 end
 
 ---@param frame table
 function Pixel.RefreshFrame(frame)
   for border in pairs(frame.kitPixelBorders or {}) do border:Refresh() end
 end
-
-local events = CreateFrame("Frame")
-events:RegisterEvent("UI_SCALE_CHANGED")
-events:RegisterEvent("DISPLAY_SIZE_CHANGED")
-UI.Script(events, "OnEvent", Pixel.Refresh)

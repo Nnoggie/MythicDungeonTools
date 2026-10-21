@@ -215,9 +215,11 @@ function Dialogs.Prompt(spec)
 end
 
 ---@param reason string?
-function Dialogs.CloseAll(reason)
+---@param keep table<string, boolean>? keys of dialogs to leave open
+function Dialogs.CloseAll(reason, keep)
   for i = #stack, 1, -1 do
-    if stack[i] then stack[i]:Close(reason or "api") end
+    local dialog = stack[i]
+    if dialog and not (keep and dialog.kitKey and keep[dialog.kitKey]) then dialog:Close(reason or "api") end
   end
 end
 

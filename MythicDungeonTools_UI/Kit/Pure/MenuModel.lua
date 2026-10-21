@@ -63,9 +63,11 @@ end
 ---Keeps items whose text or detail contains `query`. Titles survive when their group still has hits.
 ---@param items MDT.UI.MenuItem[]
 ---@param query string
+---@param value any? marks the matching choice as checked
 ---@return MDT.UI.ListItem[]
-function MenuModel.Filter(items, query)
-  if query == nil or query == "" then return MenuModel.Normalize(items) end
+function MenuModel.Filter(items, query, value)
+  if type(items) == "function" then items = items() end
+  if query == nil or query == "" then return MenuModel.Normalize(items, value) end
   local Text = UI.Strings
   local kept = {}
   for _, item in ipairs(items) do
@@ -78,7 +80,7 @@ function MenuModel.Filter(items, query)
       end
     end
   end
-  return MenuModel.Normalize(kept)
+  return MenuModel.Normalize(kept, value)
 end
 
 ---@param items MDT.UI.MenuItem[]

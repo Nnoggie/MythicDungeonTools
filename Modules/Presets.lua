@@ -379,13 +379,34 @@ function MDT:ImportPreset(preset, fromLiveSession)
     end
   end
 
+  -- The overwrite dialog does not block the window; the user may switch dungeon or delete routes before answering.
+  local dungeonIdx = db.currentDungeonIdx
+  local function returnToDungeon()
+    if db.currentDungeonIdx == dungeonIdx then return end
+    MDT:SetDungeonList(nil, dungeonIdx)
+    MDT:UpdateDungeonDropDown()
+    MDT:UpdateToDungeon(dungeonIdx, true)
+  end
+
+  local copyCallback
+
   local updateCallback = function()
-    db.presets[db.currentDungeonIdx][updateIndex] = preset
-    db.currentPreset[db.currentDungeonIdx] = updateIndex
+    returnToDungeon()
+    local presets = db.presets[dungeonIdx]
+    if presets[updateIndex] ~= duplicatePreset then
+      updateIndex = nil
+      for index, existing in ipairs(presets) do
+        if existing == duplicatePreset then updateIndex = index end
+      end
+      if not updateIndex then return copyCallback(true) end
+    end
+    presets[updateIndex] = preset
+    db.currentPreset[dungeonIdx] = updateIndex
     finishImport()
   end
 
-  local copyCallback = function(preserveUid)
+  copyCallback = function(preserveUid)
+    returnToDungeon()
     local name = preset.text
     local num = 2
     for k, v in pairs(db.presets[db.currentDungeonIdx]) do

@@ -1289,9 +1289,9 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
     focusMarkerSyncWarning = nil
     resetAssignmentKnowledgeForRoster(roster, assignments)
     self:FocusMarker_SendStateRequest()
+    MDT:HideAllDialogs()
   end
 
-  MDT:HideAllDialogs()
   if not page then
     local content = MDT.main_frame.sectionContentFrames.marks
     page = UI.Scroll(content, { padding = "md", gap = "md" })

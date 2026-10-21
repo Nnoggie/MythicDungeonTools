@@ -42,6 +42,10 @@ function Glyph:SetShape(shape)
   for i = #segments + 1, #self.kitLines do self.kitLines[i]:Hide() end
 end
 
+function Glyph:Refresh()
+  if self.kitShape then self:SetShape(self.kitShape) end
+end
+
 ---@param token MDT.UI.Color
 function Glyph:SetColor(token)
   self.kitToken = token
@@ -66,5 +70,6 @@ function Glyphs.Create(parent, shape, size, token)
   frame:SetSize(size, size)
   frame:SetColor(token)
   frame:SetShape(shape)
+  UI.Pixel.Track(frame)
   return frame
 end

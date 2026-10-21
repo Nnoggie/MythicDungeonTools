@@ -33,10 +33,13 @@ local function applyFonts(tooltip)
     end
   end
 end
+-- Above MDT's other TOOLTIP-strata frames, such as the enemy hover card whose icons own these tooltips.
+local FRAME_LEVEL = 100
 local show = frame.Show
 function frame:Show()
   useRootScale(self)
   applyFonts(self)
+  self:SetFrameLevel(FRAME_LEVEL)
   show(self)
 end
 

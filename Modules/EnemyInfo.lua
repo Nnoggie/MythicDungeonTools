@@ -85,6 +85,7 @@ end
 ---@field content MDT.UI.Control
 ---@field model table
 ---@field modelHost MDT.UI.Control
+---@field modelData table? the enemy data the model shows
 ---@field blip table? the enemy blip the card shows
 ---@field enemyIdx integer?
 ---@field cloneIdx integer?
@@ -249,6 +250,7 @@ local function linkSpells()
 end
 
 local function setModel(card, data)
+  card.modelData = data
   local model = card.model
   if data.displayId then model:SetDisplayInfo(data.displayId) else model:SetCreature(data.id or DEFAULT_DISPLAY_ID) end
   -- ResetModel comes from the template's mixin, which not every client version has.
@@ -433,6 +435,8 @@ local function createCard(kind)
     end)
     UI.Script(card, "OnUpdate", watchHover)
   end
+  -- A model set while its frame has never been drawn can stay blank, so it is set again once the card shows.
+  UI.HookScript(card.model, "OnShow", function() if card.modelData then setModel(card, card.modelData) end end)
   card:Hide()
   return card
 end

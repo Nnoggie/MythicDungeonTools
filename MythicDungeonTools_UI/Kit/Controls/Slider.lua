@@ -28,6 +28,17 @@ local function repaint(self)
   self.kitValueText:SetText(formatValue(self, self.kitProps.value or 0))
 end
 
+-- The client stores slider values as single floats (a 0.1 step reads back as 1.2000000476837), so values snap to the
+-- step and round to its decimals before anyone sees them.
+local function snap(self, value)
+  local step, min = self.kitProps.step, self.kitProps.min
+  if not step or step <= 0 then return value end
+  value = math.min(self.kitProps.max, min + math.floor((value - min) / step + 0.5) * step)
+  local decimals = 0
+  while step * 10 ^ decimals ~= math.floor(step * 10 ^ decimals) and decimals < 6 do decimals = decimals + 1 end
+  return tonumber(string.format("%."..decimals.."f", value))
+end
+
 local function applyRange(self)
   local props = self.kitProps
   self.kitSlider:SetMinMaxValues(props.min, props.max)
@@ -105,6 +116,8 @@ UI.Define({
 
     UI.Script(self.kitSlider, "OnValueChanged", function(slider, value, userInput)
       if self.kitSettingValue then return end
+      value = snap(self, value)
+      if value == self.kitProps.value then return end
       self.kitProps.value = value
       repaint(self)
       if userInput then self:Emit("onChange", value, self) end

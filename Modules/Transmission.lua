@@ -552,5 +552,9 @@ function MDT:SendToGroup(distribution, silent, preset)
     local export = MDT:TableToString(preset)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,
       { distribution, preset, silent, context })
-  end, function(err) reportShareError(context, err) end)
+  end, function(err)
+    reportShareError(context, err)
+    MDT.transmissionBusy = nil
+    MDT:RefreshSidebar()
+  end)
 end

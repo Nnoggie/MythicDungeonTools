@@ -285,23 +285,21 @@ local bottomTips = {
   [1] = L["Please report any bugs on https://github.com/Nnoggie/MythicDungeonTools/issues"],
   [2] = L["Hold CTRL to single-select enemies."],
   [3] = L["Hold SHIFT to create a new pull while selecting enemies."],
-  [4] = L["Hold SHIFT to delete all presets with the delete preset button."],
-  [5] = L["Right click a pull for more options."],
-  [6] = L["Right click an enemy to open the enemy info window."],
-  [7] = L["Drag the bottom right edge to resize MDT."],
-  [8] = L["Click the fullscreen button for a maximized view of MDT."],
-  [9] = L["Use /mdt reset to restore the default position and scale of MDT."],
-  [10] = L["Mouseover the Live button while in a group to learn more about Live mode."],
-  [11] = L["You are using MDT. You rock!"],
-  [12] = L["You can choose from different color palettes in the automatic pull coloring settings menu."],
-  [13] = L["You can cycle through different floors by holding CTRL and using the mousewheel."],
-  [14] = L["altKeyGroupsTip"],
-  [15] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
-  [16] = L["Expand the top toolbar to gain access to drawing and note features."],
-  [17] = L["ConnectedTip"],
-  [18] = L["EfficiencyScoreTip"],
-  [19] = L["ctrlKeyCountTip"],
-  [20] = L["enemyDragToPullTip"],
+  [4] = L["Right click a pull for more options."],
+  [5] = L["Right click an enemy to open the enemy info window."],
+  [6] = L["Drag the bottom right edge to resize MDT."],
+  [7] = L["Click the fullscreen button for a maximized view of MDT."],
+  [8] = L["Use /mdt reset to restore the default position and scale of MDT."],
+  [9] = L["You are using MDT. You rock!"],
+  [10] = L["You can choose from different color palettes in the automatic pull coloring settings menu."],
+  [11] = L["You can cycle through different floors by holding CTRL and using the mousewheel."],
+  [12] = L["altKeyGroupsTip"],
+  [13] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
+  [14] = L["Expand the top toolbar to gain access to drawing and note features."],
+  [15] = L["ConnectedTip"],
+  [16] = L["EfficiencyScoreTip"],
+  [17] = L["ctrlKeyCountTip"],
+  [18] = L["enemyDragToPullTip"],
 }
 
 function MDT:UpdateBottomText()
@@ -544,7 +542,11 @@ function MDT:InitializeMainFrame()
   main_frame:Hide()
   local escapeEntry = { close = function() MDT:HideInterface() end }
   main_frame:HookScript("OnShow", function() MDT.UI.Escape.Push(escapeEntry) end)
-  main_frame:HookScript("OnHide", function() MDT.UI.Escape.Remove(escapeEntry) end)
+  main_frame:HookScript("OnHide", function()
+    MDT.UI.Escape.Remove(escapeEntry)
+    MDT.UI.Overlay.PopAll("menu", "hidden")
+    MDT.UI.Overlay.PopAll("popover", "hidden")
+  end)
   MDT.UI.Dialogs.SetDefaultParent(function() return MDT.main_frame end)
 
   if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end

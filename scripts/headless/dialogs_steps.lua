@@ -298,7 +298,7 @@ return function(ctx)
     expect(errorButton:IsVisible(), "the error button did not appear")
     click(errorButton)
     expect(rawget(_G, "MDTErrorFrame") and rawget(_G, "MDTErrorFrame"):IsVisible(), "the error button did not reopen the report")
-    MDT:HideAllDialogs()
+    UI.Dialogs.CloseAll("api")
     for i = #errors, before + 1, -1 do table.remove(errors, i) end
   end)
 
@@ -353,5 +353,142 @@ return function(ctx)
     _G.MythicDungeonToolsAPI:ShowInterface()
     W.settle(asyncIdle, 30)
     expect(main:IsVisible(), "main window did not come back")
+  end)
+
+  local function clickCatcher()
+    for _, child in ipairs({ UIParent:GetChildren() }) do
+      if child:GetObjectType() == "Button" and child:GetFrameStrata() == "FULLSCREEN_DIALOG" and child:GetFrameLevel() == 50 then return child end
+    end
+  end
+  local function menuList(entry)
+    for _, child in ipairs(entry.frame.content.kitChildren) do
+      if child.kit.name == "List" then return child end
+    end
+  end
+  local function menuDepth()
+    local depth, top = 0, UI.Overlay.Top("menu")
+    while top do
+      depth = depth + 1
+      if not top.submenu then break end
+      UI.Overlay.Pop(top, "api")
+      top = UI.Overlay.Top("menu")
+    end
+    return depth
+  end
+
+  step("kit menus: closing the main window closes its menu and the click catcher", function()
+    W.settle(asyncIdle, 5)
+    MDT:CreateContextMenu(main, { { text = "A", onSelect = function() end } })
+    expect(UI.Menu.IsOpen(), "setup: the context menu did not open")
+    MDT:HideInterface()
+    expect(not UI.Menu.IsOpen() and not clickCatcher():IsShown(), "the menu or its click catcher outlived the window")
+    _G.MythicDungeonToolsAPI:ShowInterface()
+    W.settle(asyncIdle, 30)
+    expect(main:IsVisible(), "main window did not come back")
+  end)
+
+  step("kit menus: one outside click closes a menu with its submenu, and a submenu opens once", function()
+    W.settle(asyncIdle, 5)
+    MDT:CreateContextMenu(main, {
+      { kind = "submenu", text = "Marker", items = { { text = "One", onSelect = function() end } } },
+      { text = "Other", onSelect = function() end },
+    })
+    local parent = UI.Overlay.Top("menu")
+    W.userClick(menuList(parent):GetRow(1))
+    W.userClick(menuList(parent):GetRow(1))
+    expect(UI.Overlay.Top("menu").submenu and menuDepth() == 2, "re-activating the submenu item stacked a second submenu")
+    W.userClick(menuList(parent):GetRow(1))
+    W.userClick(clickCatcher())
+    expect(not UI.Menu.IsOpen(), "the first outside click left the parent menu open")
+  end)
+
+  step("kit dropdown: typing in the search keeps the current choice checked", function()
+    local items = {}
+    for i = 1, 15 do items[i] = { kind = "choice", value = i, text = "Item "..i } end
+    local host = UI.Stack(UI.Root, {})
+    host:SetPoint("TOPLEFT")
+    host:SetWidth(200)
+    local dropdown = UI.Dropdown(host, { items = items, value = 3 })
+    W.userClick(dropdown.kitButton)
+    local menu = UI.Overlay.Top("menu")
+    local search
+    for _, child in ipairs(menu.frame.content.kitChildren) do
+      if child.kit.name == "EditBox" then search = child end
+    end
+    expect(search, "setup: a 15-item dropdown has no search box")
+    W.userType(search.kitEdit, "Item")
+    local checked = 0
+    menuList(menu):ForEachRow(function(row) if row.kitCheck:IsShown() then checked = checked + 1 end end)
+    expect(checked == 1, checked.." rows are checked after typing")
+    UI.Menu.Close()
+    host:Release()
+  end)
+
+  step("kit slider: values snap to the step, not the client's float noise", function()
+    local reported
+    local slider = UI.Slider(UI.Root, { min = 0.5, max = 2, step = 0.1, value = 1, onChange = function(value) reported = value end })
+    W.fireScript(slider.kitSlider, "OnValueChanged", 1.2000000476837, true)
+    expect(reported == 1.2 and slider:GetValue() == 1.2, "the slider reported "..tostring(reported))
+    slider:Release()
+  end)
+
+  step("dialogs: the large route warning cancels when the window closes over it", function()
+    local realToString = MDT.TableToString
+    MDT.TableToString = function() return string.rep("x", 4000) end
+    local log = {}
+    MDT:CheckPresetSize(function() log[#log + 1] = "share" end, function() log[#log + 1] = "cancel" end)
+    openDialog("largePreset")
+    MDT.TableToString = realToString
+    MDT:HideInterface()
+    expect(table.concat(log, ",") == "cancel", "closing the window over the warning reported "..table.concat(log, ","))
+    _G.MythicDungeonToolsAPI:ShowInterface()
+    W.settle(asyncIdle, 30)
+  end)
+
+  step("dialogs: a route dialog never acts on a route switched to while it was open", function()
+    local dungeonIdx = db.currentDungeonIdx
+    local start = db.currentPreset[dungeonIdx]
+    local nameA, nameB = unusedPresetName("Switch A"), unusedPresetName("Switch B")
+    MDT:CreateNewPreset(nameA)
+    local aIdx = db.currentPreset[dungeonIdx]
+    MDT:CreateNewPreset(nameB)
+    local bIdx = db.currentPreset[dungeonIdx]
+    W.settle(asyncIdle, 30)
+    local function names()
+      local found = {}
+      for _, preset in ipairs(db.presets[dungeonIdx]) do found[preset.text] = true end
+      return found
+    end
+    MDT:OpenDeletePresetDialog()
+    local dialog = openDialog("deletePreset")
+    MDT:SwitchToPreset(aIdx)
+    click(dialog.content:Find("confirm"))
+    expect(names()[nameA] and names()[nameB], "Delete removed a route other than the one it named")
+    MDT:OpenClearPresetDialog()
+    openDialog("clearPreset")
+    MDT:SwitchToPreset(bIdx)
+    W.settle(asyncIdle, 30)
+    expect(UI.Dialogs.Get("clearPreset") == nil, "the reset dialog stayed open after its route was switched away")
+    MDT:DeletePreset(bIdx)
+    MDT:DeletePreset(aIdx)
+    MDT:SwitchToPreset(start)
+    W.settle(asyncIdle, 30)
+  end)
+
+  step("dialogs: opening a page or another dialog leaves the error report open", function()
+    local errors = MDT:GetErrors()
+    local before = #errors
+    MDT:OnError("headless kept error", "headless stack line", "HeadlessTest")
+    W.pump(0.6)
+    openDialog("errors")
+    local section = MDT:GetCurrentSection()
+    MDT:SetCurrentSection("combatLogging")
+    W.settle(asyncIdle, 5)
+    MDT:HideAllDialogs()
+    expect(UI.Dialogs.Get("errors"), "opening a page or HideAllDialogs closed the error report")
+    UI.Dialogs.CloseAll("api")
+    MDT:SetCurrentSection(section)
+    W.settle(asyncIdle, 5)
+    for i = #errors, before + 1, -1 do table.remove(errors, i) end
   end)
 end

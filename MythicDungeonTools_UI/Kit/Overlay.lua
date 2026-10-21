@@ -94,6 +94,7 @@ end
 UI.Script(clickCatcher, "OnClick", function()
   for i = #entries, 1, -1 do
     if entries[i].kind ~= "dialog" then
+      while i > 1 and entries[i].submenu and entries[i - 1].kind == "menu" do i = i - 1 end
       Overlay.Pop(entries[i], "outside")
       return
     end
@@ -141,6 +142,16 @@ function Overlay.Pop(entry, reason)
   Escape.Remove(entry.escape)
   updateCatcher()
   if entry.onDismiss then entry.onDismiss(reason) end
+end
+
+---Pops every entry stacked above `entry`, leaving `entry` open.
+---@param entry MDT.UI.OverlayEntry
+---@param reason string
+function Overlay.PopAbove(entry, reason)
+  for i = #entries, 1, -1 do
+    if entries[i] == entry then return end
+    Overlay.Pop(entries[i], reason)
+  end
 end
 
 ---@param kind ("popover"|"menu"|"dialog")? nil pops every entry

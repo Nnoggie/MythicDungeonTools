@@ -158,13 +158,14 @@ function Menu.Open(spec)
   local list
 
   local function refresh(query)
-    local normalized = query and MenuModel.Filter(spec.items, query) or MenuModel.Normalize(spec.items, spec.value)
+    local normalized = query and MenuModel.Filter(spec.items, query, spec.value) or MenuModel.Normalize(spec.items, spec.value)
     list:SetItems(normalized)
   end
 
   local function activate(item, index)
     if item.disabled or item.kind == "title" or item.kind == "separator" then return end
     if item.kind == "submenu" then
+      Overlay.PopAbove(popover.kitEntry, "replaced")
       Menu.Open({ items = item.items, anchor = list:GetRow(index) or popover, prefer = "right", submenu = true, onSelect = spec.onSelect })
       return
     end

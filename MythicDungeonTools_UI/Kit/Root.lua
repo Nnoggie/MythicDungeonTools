@@ -26,6 +26,7 @@ end
 
 local function applyScale()
   Root:SetScale(UI.RootScale())
+  UI.Pixel.Refresh()
 end
 
 applyScale()
