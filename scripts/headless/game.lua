@@ -13,8 +13,6 @@ return function(W)
   function W.setScreen(physicalWidth, physicalHeight)
     W.physicalWidth, W.physicalHeight = physicalWidth, physicalHeight
     W.screenWidth, W.screenHeight = 768 * physicalWidth / physicalHeight, 768
-    W.UIParent:SetSize(W.screenWidth, W.screenHeight)
-    W.WorldFrame:SetSize(W.screenWidth, W.screenHeight)
   end
   W.setScreen(1920, 1080)
   G.GameTooltip = W.CreateFrame("GameTooltip", "GameTooltip", W.UIParent, "GameTooltipTemplate")
