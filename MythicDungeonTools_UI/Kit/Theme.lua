@@ -12,6 +12,8 @@ Theme.data = {
   color = {
     ["bg.panel"] = "111113", ["bg.sunken"] = "0b0b0c", ["bg.raised"] = "17171a", ["bg.raised2"] = "1b1b1f",
     ["bg.overlay"] = "141417", ["bg.dim"] = "00000099",
+    -- White washes over whatever is behind a borderless control, matching the navigation sidebar's hover and active.
+    ["bg.hoverTint"] = "ffffff14", ["bg.selectedTint"] = "ffffff24",
     ["border.normal"] = "2b2b30", ["border.strong"] = "303036", ["border.divider"] = "1f1f23",
     ["text.normal"] = "e9e6e1", ["text.secondary"] = "cfcac2", ["text.muted"] = "8e8a84", ["text.disabled"] = "55534f", ["text.inverse"] = "111113",
     ["accent"] = "ffffff", ["accent.bg"] = "26262b", ["accent.border"] = "4a4a52", ["accent.active"] = "ffffff80",
@@ -19,11 +21,11 @@ Theme.data = {
     ["danger.bg"] = "3a1416", ["danger.border"] = "5a2626",
   },
   derived = {
-    ["bg.hover"] = { "bg.raised2", "lighten", 0.06 },
+    ["bg.hover"] = { "bg.raised2", "lighten", 0.08 },
     ["bg.pressed"] = { "bg.raised", "darken", 0.04 },
     ["bg.selected"] = { "bg.raised", "mix", 0.08, "accent" },
-    ["accent.bgHover"] = { "accent.bg", "lighten", 0.06 },
-    ["danger.bgHover"] = { "danger.bg", "lighten", 0.06 },
+    ["accent.bgHover"] = { "accent.bg", "lighten", 0.08 },
+    ["danger.bgHover"] = { "danger.bg", "lighten", 0.08 },
   },
   space = { xs = 2, sm = 4, md = 8, lg = 12, xl = 16 },
   size = { sm = 22, md = 26, lg = 30, row = 28 },
@@ -56,9 +58,9 @@ Theme.data = {
     },
     ghost = {
       normal = { bg = false, border = false, text = "text.muted" },
-      hover = { bg = "bg.raised2", border = false, text = "text.normal" },
+      hover = { bg = "bg.hoverTint", border = false, text = "text.normal" },
       pressed = { bg = "bg.raised", border = false, text = "text.normal" },
-      selected = { bg = "bg.selected", border = false, text = "accent" },
+      selected = { bg = "bg.selectedTint", border = false, text = "accent" },
       disabled = { bg = false, border = false, text = "text.disabled" },
     },
     -- Never a background or border: the caller shows hover itself (stepper arrows).
@@ -72,9 +74,9 @@ Theme.data = {
     -- Borderless icon buttons that stay at full brightness: the map toolbar and the bottom bar links.
     plain = {
       normal = { bg = false, border = false, text = "text.normal" },
-      hover = { bg = "bg.raised2", border = false, text = "accent" },
+      hover = { bg = "bg.hoverTint", border = false, text = "accent" },
       pressed = { bg = "bg.raised", border = false, text = "accent" },
-      selected = { bg = "accent.bg", border = false, text = "accent" },
+      selected = { bg = "bg.selectedTint", border = false, text = "accent" },
       disabled = { bg = false, border = false, text = "text.disabled" },
     },
     window = {
@@ -100,9 +102,9 @@ Theme.data = {
     },
     row = {
       normal = { bg = false, border = false, text = "text.normal" },
-      hover = { bg = "bg.raised2", border = false, text = "text.normal" },
+      hover = { bg = "bg.hoverTint", border = false, text = "text.normal" },
       pressed = { bg = "bg.raised", border = false, text = "text.normal" },
-      selected = { bg = "bg.selected", border = "accent", text = "text.normal" },
+      selected = { bg = "bg.selectedTint", border = "accent", text = "text.normal" },
       disabled = { bg = false, border = false, text = "text.disabled" },
     },
   },
