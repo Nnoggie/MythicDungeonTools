@@ -73,10 +73,6 @@ return function(ctx)
     local health = MDT:FormatEnemyHealth(MDT:CalculateEnemyHealth(blip.data.isBoss or false, blip.data.health, db.currentDifficulty, blip.data.ignoreFortified))
     expect(text("hover", "health"):find(health, 1, true), "health line is "..text("hover", "health"))
     expect(text("hover", "forces"):find(MDT:FormatEnemyForces(MDT:GetCloneEnemyForces(blip.data, blip.clone)), 1, true), "forces line is "..text("hover", "forces"))
-    for id, key in pairs({ stealth = "Enemy Info NPC Stealth", stealthDetect = "Enemy Info NPC Stealth Detect" }) do
-      local expected = L[key]..": "..(blip.data[id] and YES or NO)
-      expect(text("hover", id) == expected, id.." line is "..tostring(text("hover", id)))
-    end
     expect(hover:GetLeft() >= blip:GetRight() or hover:GetRight() <= blip:GetLeft(), "the card covers its enemy")
     expect(hover:GetBottom() >= main:GetBottom() - 0.5 and hover:GetRight() <= main:GetRight() + 0.5, "the card leaves the window")
     local spells = spellCount(blip.data)
@@ -184,6 +180,26 @@ return function(ctx)
     expect(table.concat(tooltips, ",") == table.concat({ L["Stun"], L["Fear"], L["Root"] }, ","), "icons are not in characteristic order: "..table.concat(tooltips, ","))
     render("enemy pinned card characteristics", main, { card("pinned") })
     data.characteristics = saved
+    MDT:UpdateEnemyInfoFrame()
+  end)
+
+  step("enemy card: a stealth detection icon shows only for enemies that detect stealth", function()
+    local data = blip.data
+    local stealth, stealthDetect = data.stealth, data.stealthDetect
+    data.stealth, data.stealthDetect = nil, nil
+    MDT:UpdateEnemyInfoFrame()
+    expect(part("pinned", "stealthIcons") == nil, "an enemy without stealth flags shows stealth icons")
+    data.stealthDetect = true
+    MDT:UpdateEnemyInfoFrame()
+    local icons = part("pinned", "stealthIcons")
+    expect(icons and #icons.kitChildren == 1, "expected 1 stealth icon, got "..(icons and #icons.kitChildren or 0))
+    local icon = icons.kitChildren[1]
+    expect(icon.kitIcon:GetTexture():lower():find("spell_shadow_detectinvisibility", 1, true), "wrong stealth detection icon")
+    W.hover(icon)
+    expect(MDTTooltip:IsShown() and (W.state[MDTTooltip].lines or {})[1] == L["Enemy Info NPC Stealth Detect"], "stealth detection icon has no tooltip")
+    W.fireScript(icon, "OnLeave")
+    render("enemy pinned card stealth detection", main, { card("pinned") })
+    data.stealth, data.stealthDetect = stealth, stealthDetect
     MDT:UpdateEnemyInfoFrame()
   end)
 

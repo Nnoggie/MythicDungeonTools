@@ -26,6 +26,12 @@ local LAYOUT = {
   pinned = { width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG" },
 }
 
+---Icons shown only for enemies that are stealthed or detect stealth.
+local STEALTH_FLAGS = {
+  { key = "stealth", label = "Enemy Info NPC Stealth", icon = "Interface\\ICONS\\ability_stealth" },
+  { key = "stealthDetect", label = "Enemy Info NPC Stealth Detect", icon = "Interface\\ICONS\\spell_shadow_detectinvisibility" },
+}
+
 local CHARACTERISTICS = {
   { key = "Stun", icon = "Interface\\ICONS\\spell_frost_stun" },
   { key = "Sap", icon = "Interface\\ICONS\\ability_sap" },
@@ -284,11 +290,6 @@ end
 
 local pin
 
----A "Label: Yes/No" line, highlighted when set, so players can tell "no" apart from missing info.
-local function flag(parent, id, label, value)
-  UI.Text(parent, { id = id, text = label..": "..(value and YES or NO), font = "small", color = value and "warn" or "text.muted" })
-end
-
 ---Fills a card for one enemy clone. Both cards share this; the pinned card adds the NPC id, more spells, dev help and
 ---Link Spells, and swaps the pin button for a close button.
 ---@param card MDT.EnemyCard
@@ -330,8 +331,16 @@ local function fill(card, blip)
     UI.Text(stats, { id = "forces", text = L["Forces"]..": "..MDT:FormatEnemyForces(count) })
     UI.Text(stats, { id = "efficiency", text = L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health), font = "small", color = "text.muted" })
     if pinned then UI.Text(stats, { id = "npcId", text = L["Enemy Info NPC Id"]..": "..data.id, font = "small", color = "text.muted" }) end
-    flag(stats, "stealth", L["Enemy Info NPC Stealth"], data.stealth)
-    flag(stats, "stealthDetect", L["Enemy Info NPC Stealth Detect"], data.stealthDetect)
+    local stealthIcons
+    for _, entry in ipairs(STEALTH_FLAGS) do
+      if data[entry.key] then
+        stealthIcons = stealthIcons or UI.Row(stats, { id = "stealthIcons", gap = "xs" })
+        UI.Button(stealthIcons, {
+          id = entry.key, variant = "icon", icon = entry.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE,
+          iconColor = false, width = CHARACTERISTIC_ICON_SIZE + 2, height = CHARACTERISTIC_ICON_SIZE + 2, tooltip = L[entry.label],
+        })
+      end
+    end
 
     local affected = {}
     for _, characteristic in ipairs(CHARACTERISTICS) do
