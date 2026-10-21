@@ -56,6 +56,9 @@
 ---| "heading"
 ---| "number"
 ---| "display"
+---| "bodyCompact"
+---| "smallCompact"
+---| "titleCompact"
 
 ---@alias MDT.UI.Variant
 ---| "default"

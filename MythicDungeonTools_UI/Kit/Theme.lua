@@ -27,7 +27,11 @@ Theme.data = {
   },
   space = { xs = 2, sm = 4, md = 8, lg = 12, xl = 16 },
   size = { sm = 22, md = 26, lg = 30, row = 28 },
-  font = { body = { size = 12 }, small = { size = 10 }, title = { size = 15 }, heading = { size = 13 }, number = { size = 12 }, display = { size = 20 } },
+  font = {
+    body = { size = 12 }, small = { size = 10 }, title = { size = 15 }, heading = { size = 13 }, number = { size = 12 }, display = { size = 20 },
+    -- One size down, for tooltip-like popups.
+    bodyCompact = { size = 11 }, smallCompact = { size = 9 }, titleCompact = { size = 14 },
+  },
   skin = {
     default = {
       normal = { bg = "bg.raised", border = "border.normal", text = "text.normal" },

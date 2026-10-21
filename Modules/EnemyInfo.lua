@@ -27,8 +27,14 @@ local HEADER_BUTTON_SIZE = 24
 local PAD_X, PAD_Y = "md", "sm"
 
 local LAYOUT = {
-  hover = { width = 250, modelWidth = 56, modelHeight = 64, spells = 3, strata = "TOOLTIP" },
-  pinned = { width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG" },
+  hover = {
+    width = 250, modelWidth = 56, modelHeight = 64, spells = 3, strata = "TOOLTIP",
+    font = { title = "titleCompact", body = "bodyCompact", small = "smallCompact" },
+  },
+  pinned = {
+    width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG",
+    font = { title = "title", body = "body", small = "small" },
+  },
 }
 
 ---Icons shown only for enemies that are stealthed or detect stealth. 166057 is spells/eyeblue.blp, the eye the game
@@ -91,6 +97,7 @@ end
 ---@field name string
 ---@field icon string|number
 ---@field statuses table[] entries of SPELL_STATUSES set on the spell
+---@field font MDT.UI.FontRole the spell name's font
 
 ---@class MDT.EnemyCard : Frame
 ---@field kind "hover"|"pinned"
@@ -111,8 +118,10 @@ local hoverBlip, lastInside = nil, 0
 local lastSpot
 local pinnedEscape
 
+---@param spells table? the enemy's spells by spell id
+---@param font MDT.UI.FontRole
 ---@return MDT.EnemyInfoSpellItem[]
-local function spellItems(spells)
+local function spellItems(spells, font)
   local spellIds = {}
   for spellId in pairs(spells or {}) do spellIds[#spellIds + 1] = spellId end
   table.sort(spellIds)
@@ -131,7 +140,7 @@ local function spellItems(spells)
     local name = info and info.name or tostring(spellId)
     items[#items + 1] = {
       kind = "spell", key = spellId, sig = name.."|"..table.concat(flags),
-      spellId = spellId, name = name, statuses = statuses,
+      spellId = spellId, name = name, statuses = statuses, font = font,
       icon = info and C_Spell.GetSpellTexture(spellId) or UNKNOWN_SPELL_ICON,
     }
   end
@@ -192,7 +201,6 @@ function SpellRow:OnCreate()
   self.kitIcon:SetSize(SPELL_ICON_SIZE, SPELL_ICON_SIZE)
   self.kitIcon:SetPoint("LEFT", self, "LEFT", 0, 0)
   self.kitName = self:CreateFontString(nil, "ARTWORK")
-  self.kitName:SetFontObject(Fonts.Get("body"))
   self.kitName:SetJustifyH("LEFT")
   self.kitName:SetWordWrap(false)
   self.kitName:SetPoint("LEFT", self.kitIcon, "RIGHT", Theme.Space("sm"), 0)
@@ -213,6 +221,7 @@ end
 function SpellRow:Bind(item)
   self.spellId = item.spellId
   UI.Icon.SetZoomed(self.kitIcon, item.icon)
+  self.kitName:SetFontObject(Fonts.Get(item.font))
   self.kitName:SetText(item.name)
   for _, icon in ipairs(self.kitStatusIcons) do icon:Hide() end
   local gap = Theme.Space("xs")
@@ -307,7 +316,7 @@ local function fill(card, blip)
   local layout = LAYOUT[card.kind]
   local pinned = card.kind == "pinned"
   card.blip, card.enemyIdx, card.cloneIdx = blip, blip.enemyIdx, blip.cloneIdx
-  card.spells = spellItems(data.spells)
+  card.spells = spellItems(data.spells, layout.font.body)
   local health = MDT:CalculateEnemyHealth(data.isBoss or false, data.health, db.currentDifficulty, data.ignoreFortified)
   local count = MDT:GetCloneEnemyForces(data, clone)
   local content = card.content
@@ -320,7 +329,7 @@ local function fill(card, blip)
     if clone.g then title = string.format(L["G%d:"], clone.g).." "..title end
     if not data.isBoss then title = title.." #"..blip.cloneIdx end
     local header = UI.Row(content, { id = "header", gap = "sm", valign = "center" })
-    UI.Text(header, { id = "name", text = title, font = "title", width = contentWidth - Theme.Space("sm") - HEADER_BUTTON_SIZE })
+    UI.Text(header, { id = "name", text = title, font = layout.font.title, width = contentWidth - Theme.Space("sm") - HEADER_BUTTON_SIZE })
     if pinned then
       UI.CloseButton(header, { tooltip = L["Close"], onClick = function() MDT:CloseEnemyInfo() end })
     else
@@ -337,7 +346,7 @@ local function fill(card, blip)
       background = "bg.sunken", border = "border.normal",
     })
     if pinned then
-      local function detail(id, text) UI.Text(portrait, { id = id, text = text, font = "small", color = "text.muted" }) end
+      local function detail(id, text) UI.Text(portrait, { id = id, text = text, font = layout.font.small, color = "text.muted" }) end
       detail("level", string.format(L["Level %d %s"], data.level, L[data.creatureType]))
       detail("efficiency", L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health))
       detail("npcId", L["Enemy Info NPC Id"]..": "..data.id)
@@ -345,9 +354,9 @@ local function fill(card, blip)
 
     local column = UI.Stack(body, { gap = "xs", grow = 1, width = 40 })
     local stats = UI.Row(column, { id = "stats", gap = "xs", valign = "center" })
-    UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)), wrap = false })
-    UI.Text(stats, { text = "·", color = "text.muted", wrap = false })
-    UI.Text(stats, { id = "forces", text = MDT:FormatEnemyForces(count), wrap = false, grow = 1 })
+    UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)), font = layout.font.body, wrap = false })
+    UI.Text(stats, { text = "·", font = layout.font.body, color = "text.muted", wrap = false })
+    UI.Text(stats, { id = "forces", text = MDT:FormatEnemyForces(count), font = layout.font.body, wrap = false, grow = 1 })
     local stealthFlags = {}
     for _, entry in ipairs(STEALTH_FLAGS) do
       if data[entry.key] then stealthFlags[#stealthFlags + 1] = entry end
@@ -369,13 +378,13 @@ local function fill(card, blip)
       spellList(column, card, layout)
       if not pinned and #card.spells > layout.spells then
         -- Under the portrait, which is shorter than the spells beside it, so it adds no line.
-        UI.Text(portrait, { id = "moreSpells", text = string.format(L["+%d more spells"], #card.spells - layout.spells), font = "small", color = "text.muted", justify = "CENTER" })
+        UI.Text(portrait, { id = "moreSpells", text = string.format(L["+%d more spells"], #card.spells - layout.spells), font = layout.font.small, color = "text.muted", justify = "CENTER" })
       end
     end
 
     if not pinned then
       if db.devMode then
-        UI.Text(content, { id = "devHint", text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"], font = "small", color = "text.muted" })
+        UI.Text(content, { id = "devHint", text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"], font = layout.font.small, color = "text.muted" })
       end
       return
     end
@@ -386,7 +395,7 @@ local function fill(card, blip)
     end
     if #affected > 0 then
       local icons = UI.Row(content, { id = "characteristics", gap = "xs", wrap = true })
-      UI.Text(icons, { text = L["Affected by:"], font = "small", color = "text.muted", wrap = false })
+      UI.Text(icons, { text = L["Affected by:"], font = layout.font.small, color = "text.muted", wrap = false })
       for _, characteristic in ipairs(affected) do
         UI.Button(icons, {
           variant = "icon", icon = characteristic.icon, iconCoords = UI.Icon.ZOOMED_COORDS, iconSize = CHARACTERISTIC_ICON_SIZE,
@@ -395,7 +404,7 @@ local function fill(card, blip)
       end
     end
 
-    if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = "small", color = "text.muted" }) end
+    if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = layout.font.small, color = "text.muted" }) end
     local actions = UI.Row(content, { align = "end" })
     UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = linkSpells })
   end)
