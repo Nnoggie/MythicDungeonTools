@@ -94,24 +94,36 @@ return function(ctx)
     ctx.render("kit gallery", root)
   end)
 
-  step("kit root: MDT keeps the pixel-perfect scale whatever UI scale the user sets", function()
-    local pixelPerfect = 768 / W.physicalHeight
+  step("kit root: MDT covers the same share of the screen at every resolution, UI scale and MDT scale", function()
     local function near(a, b) return math.abs(a - b) < 1e-6 end
-    expect(near(UI.Root:GetEffectiveScale(), pixelPerfect), "root scale is "..UI.Root:GetEffectiveScale())
     local button = page:Find("default")
-    local width = button:GetWidth()
-    local _, _, screenWidth = button:GetScaledRect()
-    for _, uiScale in ipairs({ 0.64, 1.15 }) do
-      UIParent:SetScale(uiScale)
-      W.FireEvent("UI_SCALE_CHANGED")
-      expect(near(UI.Root:GetEffectiveScale(), pixelPerfect), ("root scale is %s at UI scale %s"):format(UI.Root:GetEffectiveScale(), uiScale))
-      expect(near(UI.Root:GetWidth(), W.screenWidth / pixelPerfect), "root does not cover the screen at UI scale "..uiScale)
-      local _, _, scaledWidth = button:GetScaledRect()
-      expect(near(button:GetWidth(), width) and near(scaledWidth, screenWidth), "a button changed its on-screen size at UI scale "..uiScale)
-      expect(near(UI.Tooltip.Frame:GetEffectiveScale(), pixelPerfect), "MDT's tooltip is not at MDT's scale at UI scale "..uiScale)
+    local physicalWidth, physicalHeight = W.physicalWidth, W.physicalHeight
+    local shares = {}
+    for _, screen in ipairs({ { 1920, 1080 }, { 3840, 2160 }, { 3440, 1440 } }) do
+      W.setScreen(screen[1], screen[2])
+      W.FireEvent("DISPLAY_SIZE_CHANGED")
+      for _, uiScale in ipairs({ 0.64, 1.15 }) do
+        UIParent:SetScale(uiScale)
+        W.FireEvent("UI_SCALE_CHANGED")
+        for _, userScale in ipairs({ 1, 1.5 }) do
+          UI.SetUserScale(userScale)
+          local where = ("at %dx%d, UI scale %s, MDT scale %s"):format(screen[1], screen[2], uiScale, userScale)
+          expect(near(UI.Root:GetEffectiveScale(), 768 / 1440 * userScale), "root scale is "..UI.Root:GetEffectiveScale().." "..where)
+          expect(near(UI.Root:GetHeight(), 1440 / userScale), "root does not cover the screen "..where)
+          local _, _, _, height = button:GetScaledRect()
+          shares[userScale] = shares[userScale] or height / W.screenHeight
+          expect(near(height / W.screenHeight, shares[userScale]), "a button's share of the screen height changed "..where)
+          expect(near(UI.Tooltip.Frame:GetEffectiveScale(), UI.Root:GetEffectiveScale()), "MDT's tooltip is not at MDT's scale "..where)
+          local _, _, _, border = button.kitBorder.textures.top:GetScaledRect()
+          expect(near(border * W.physicalHeight / 768, 1), ("border is %s physical pixels %s"):format(border * W.physicalHeight / 768, where))
+        end
+      end
     end
+    expect(near(shares[1.5], shares[1] * 1.5), "MDT scale 150% does not make a button 1.5 times as tall")
+    W.setScreen(physicalWidth, physicalHeight)
+    W.FireEvent("DISPLAY_SIZE_CHANGED")
     UIParent:SetScale(1)
-    W.FireEvent("UI_SCALE_CHANGED")
+    UI.SetUserScale(1)
   end)
 
   step("kit tooltips: composite controls show their tooltip from the parts that take the mouse", function()

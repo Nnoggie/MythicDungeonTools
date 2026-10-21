@@ -74,6 +74,8 @@ local function expect(condition, message)
 end
 
 local MDT, db, main
+-- Without --savedvariables, boot with a window 6.3.10 saved on a 4K screen, where the Root was 2160 units tall.
+local seeded = { nonFullscreenScale = 3, scale = 3, anchorFrom = "TOPLEFT", anchorTo = "TOPLEFT", xoffset = 2900, yoffset = -150 }
 
 local renders = {}
 if flags.render == true then flags.render = "ui-render" end
@@ -112,6 +114,11 @@ step("load core addon", function()
     local saved = {}
     setfenv(chunk, saved)()
     _G.MythicDungeonToolsDB = saved.MythicDungeonToolsDB
+    seeded = nil
+  else
+    local global = {}
+    for key, value in pairs(seeded) do global[key] = value end
+    _G.MythicDungeonToolsDB = { global = global }
   end
   expect(Loader.load("MythicDungeonTools"), "core addon failed to load")
   W.FireEvent("PLAYER_LOGIN")
@@ -126,6 +133,8 @@ end)
 MDT = Loader.addons.MythicDungeonTools_UI.namespace
 db = MDT.GetDB and MDT:GetDB()
 main = MDT.main_frame
+
+local scaleSteps = dofile(root.."/scripts/headless/scale_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, seeded = seeded })
 
 step("main window is shown", function()
   expect(main, "MDT.main_frame was not created")

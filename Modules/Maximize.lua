@@ -108,4 +108,5 @@ function MDT:Minimize()
 
   db.maximized = false
   if f.maximizeButton then f.maximizeButton:SetIcon(MDT:GetIconPath("maximize")) end
+  MDT:MoveMainFrameOnScreen()
 end

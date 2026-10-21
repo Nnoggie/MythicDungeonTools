@@ -281,6 +281,40 @@ function MDT:IsFrameOffScreen()
   return left > width or right < 0 or bottom < 0 or top > height
 end
 
+---Moves the (not maximized) window just far enough to lie inside the Root, and saves the new position.
+function MDT:MoveMainFrameOnScreen()
+  local f = MDT.main_frame
+  local width, height = MDT.UI.Root:GetSize()
+  local dx = max(0, -f.navigationSidebar:GetLeft()) + min(0, width - f.sidePanel:GetRight())
+  local dy = max(0, -f.bottomPanel:GetBottom()) + min(0, height - f.topPanel:GetTop())
+  if abs(dx) > 0.01 or abs(dy) > 0.01 then
+    db.xoffset, db.yoffset = db.xoffset + dx, db.yoffset + dy
+    f:ClearAllPoints()
+    f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+  end
+end
+
+---Keeps the window inside the Root. The Root's size in its own units changes with the MDT scale and the screen's
+---aspect ratio, and windows saved by 6.3.10 were sized for a Root as tall as the screen's pixel height.
+local function fitToRoot()
+  local f = MDT.main_frame
+  local fullWidth, fullHeight, fullscreenScale = MDT:GetFullScreenSizes()
+  local minScale = min(minNonFullscreenScale, fullscreenScale)
+  f:SetResizeBounds(sizex * minScale, sizey * minScale, sizex * fullscreenScale, sizey * fullscreenScale)
+  db.nonFullscreenScale = min(db.nonFullscreenScale, fullscreenScale)
+  if db.maximized then
+    if abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
+  elseif abs(f:GetHeight() - sizey * db.nonFullscreenScale) > 0.5 then
+    MDT:Minimize()
+  else
+    MDT:MoveMainFrameOnScreen()
+  end
+end
+
+MDT.UI.OnRootRescale(function()
+  if framesInitialized then fitToRoot() end
+end)
+
 local bottomTips = {
   [1] = L["Please report any bugs on https://github.com/Nnoggie/MythicDungeonTools/issues"],
   [2] = L["Hold CTRL to single-select enemies."],
@@ -566,8 +600,6 @@ function MDT:InitializeMainFrame()
   main_frame.background:SetAlpha(0)
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
-  local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  main_frame:SetResizeBounds(sizex * 0.9, sizey * 0.9, sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
   main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -637,13 +669,10 @@ function MDT:InitializeMainFrame()
   MDT:UpdateSectionVisibility()
   coroutine.yield()
 
-  if MDT:IsFrameOffScreen() then
-    MDT:ResetMainFramePos()
-  end
-
   framesInitialized = true
   --Maximize if needed
   if db.maximized then MDT:Maximize() end
+  fitToRoot()
   initSpinner:Hide()
   initSpinner.Anim:Stop()
   local callbacks = frameInitializedCallbacks

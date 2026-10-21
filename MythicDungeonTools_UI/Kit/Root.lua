@@ -1,20 +1,19 @@
 local _, MDT = ...
 local UI = MDT.UI
 
+-- At 100% MDT scale one MDT unit is one physical pixel on a 1440p screen.
+local REFERENCE_HEIGHT = 1440
+
 ---The parent of every MDT window, popover, menu and tooltip. It covers the screen and cancels the user's UI scale:
----its effective scale is always WoW's pixel-perfect scale (768 / physical screen height), so one MDT unit is one
----screen pixel and MDT looks the same whatever UI scale is set.
+---it is always REFERENCE_HEIGHT / user scale units tall, so MDT covers the same share of the screen at every
+---resolution and UI scale.
 local Root = CreateFrame("Frame", "MDTUIRoot", UIParent)
 Root:SetAllPoints(UIParent)
 UI.Root = Root
 
----@return number scale the Root needs under the current UIParent
-function UI.RootScale()
-  local _, height = GetPhysicalScreenSize()
-  local parentScale = UIParent:GetEffectiveScale()
-  if not height or height <= 0 or not parentScale or parentScale <= 0 then return 1 end
-  return (768 / height) / parentScale
-end
+local userScale = 1
+---@type fun()[]
+local listeners = {}
 
 ---Converts a cursor position (GetCursorPosition) to Root units.
 ---@return number x, number y
@@ -25,8 +24,24 @@ function UI.CursorInRoot()
 end
 
 local function applyScale()
-  Root:SetScale(UI.RootScale())
+  local parentScale = UIParent:GetEffectiveScale()
+  if not parentScale or parentScale <= 0 then return end
+  Root:SetScale(768 / REFERENCE_HEIGHT * userScale / parentScale)
   UI.Pixel.Refresh()
+  for _, listener in ipairs(listeners) do listener() end
+end
+
+---@param scale number MDT's own scale on top of its screen-relative size, 1 = 100%
+function UI.SetUserScale(scale)
+  userScale = scale
+  applyScale()
+end
+
+---Calls listener after every rescale. Root's size in its own units changes with the user scale and the screen's
+---aspect ratio, so windows sized in Root units refit here.
+---@param listener fun()
+function UI.OnRootRescale(listener)
+  listeners[#listeners + 1] = listener
 end
 
 applyScale()

@@ -7,7 +7,7 @@ local Theme = UI.Theme
 local Tooltip = {}
 UI.Tooltip = Tooltip
 
----MDT's tooltip: a GameTooltip of its own on the UI root, so it has the pixel-perfect scale like the rest of MDT
+---MDT's tooltip: a GameTooltip of its own on the UI root, so it has the root's scale like the rest of MDT
 ---instead of following the user's UI scale. It has the whole GameTooltip API; every MDT tooltip uses it.
 local frame = CreateFrame("GameTooltip", "MDTTooltip", UI.Root, "GameTooltipTemplate")
 -- The tooltip template ignores its parent's scale; MDT's tooltip takes the root's.

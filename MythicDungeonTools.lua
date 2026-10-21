@@ -40,6 +40,7 @@ end
 function MDT:InitializeRuntime()
   db = MDT:InitializeSavedVariables()
   if not db then return end
+  MDT.UI.SetUserScale(db.uiScale)
   -- Release packages omit Developer/. Keep its saved edits, but use normal UI/data.
   if not MDT.CreateDevPanel then db.devMode = false end
   MDT:InitializeFadeFrame()

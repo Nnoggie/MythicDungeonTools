@@ -6,6 +6,7 @@ local defaultSavedVars = {
     toolbarExpanded = true,
     scale = 1,
     nonFullscreenScale = 1.4,
+    uiScale = 1,
     useForcesCount = false, -- replaces percent in pull buttons with count
     showPullButtonHealth = false,
     autoPanToPull = true,

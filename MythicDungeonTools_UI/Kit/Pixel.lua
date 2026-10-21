@@ -77,7 +77,7 @@ function Pixel.Border(frame, token, edges)
 end
 
 ---Re-derives every tracked border's and glyph's thickness from its frame's current effective scale. Root calls it
----after rescaling on UI_SCALE_CHANGED and DISPLAY_SIZE_CHANGED.
+---after every rescale.
 function Pixel.Refresh()
   for object in pairs(registry) do object:Refresh() end
 end
