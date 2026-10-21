@@ -10,11 +10,9 @@ local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPos
 local sizex = 840
 local sizey = 555
 local defaultSavedVars = MDT:GetDefaultSavedVariables()
-local defaultNonFullscreenScale = defaultSavedVars.global.nonFullscreenScale
 local minNonFullscreenScale = 0.9
 local sidePanelWidth = 251
 local panelHeight = 30
-local screenEdgePadding = 10
 local framesInitialized
 local frameInitializedCallbacks = {}
 
@@ -266,24 +264,6 @@ function MDT:GetFullScreenSizes()
   return newSizex, newSizey, scale, isNarrow
 end
 
-function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
-  xoffset = xoffset or defaultSavedVars.global.xoffset
-  yoffset = yoffset or defaultSavedVars.global.yoffset
-
-  local screenWidth, screenHeight = MDT.UI.Root:GetWidth(), MDT.UI.Root:GetHeight()
-  if not screenWidth or not screenHeight or screenWidth <= 0 or screenHeight <= 0 then
-    return defaultNonFullscreenScale
-  end
-
-  local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
-  local maxLeftScale = ((screenWidth / 2) + xoffset - navigationSidebarWidth - screenEdgePadding) * 2 / sizex
-  local maxRightScale = ((screenWidth / 2) - sidePanelWidth - xoffset - screenEdgePadding) * 2 / sizex
-  local maxHeightScale = (screenHeight + yoffset - panelHeight - screenEdgePadding) / sizey
-  local maxScale = min(maxLeftScale, maxRightScale, maxHeightScale)
-
-  return min(defaultNonFullscreenScale, max(minNonFullscreenScale, maxScale))
-end
-
 ---The normal (not maximized) window's scale as shown: the saved one, shrunk to fit the Root. The saved scale stays as
 ---the user left it, so the window grows back when the Root does.
 function MDT:GetNormalWindowScale()
@@ -307,9 +287,11 @@ local function fitToRoot()
   local fullWidth, fullHeight, fullscreenScale = MDT:GetFullScreenSizes()
   local minScale = min(minNonFullscreenScale, fullscreenScale)
   f:SetResizeBounds(sizex * minScale, sizey * minScale, sizex * fullscreenScale, sizey * fullscreenScale)
+  -- /mdt reset clears db.maximized and leaves the layout to this refit.
+  local laidOutMaximized = f.blackoutFrame and f.blackoutFrame:IsShown()
   if db.maximized then
     if abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
-  elseif abs(f:GetHeight() - sizey * MDT:GetNormalWindowScale()) > 0.5 then
+  elseif laidOutMaximized or abs(f:GetHeight() - sizey * MDT:GetNormalWindowScale()) > 0.5 then
     MDT:Minimize()
   else
     MDT:PlaceNormalWindow()
@@ -530,11 +512,15 @@ function MDT:ResetMainFramePos()
   MDT:Async(function()
     if not framesInitialized then MDT:StartMainFrameInitialization() end
     if not framesInitialized then return end
-    db.anchorFrom, db.anchorTo = "TOP", "TOP"
-    db.xoffset, db.yoffset = defaultSavedVars.global.xoffset, defaultSavedVars.global.yoffset
-    db.uiScale = MDT.UI.SetUserScale(1)
-    db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-    MDT:Minimize()
+    local defaults = defaultSavedVars.global
+    db.maximized = false
+    db.nonFullscreenScale = defaults.nonFullscreenScale
+    db.anchorFrom, db.anchorTo = defaults.anchorFrom, defaults.anchorTo
+    db.xoffset, db.yoffset = defaults.xoffset, defaults.yoffset
+    local oldScale = db.uiScale
+    db.uiScale = MDT.UI.SetUserScale(defaults.uiScale)
+    -- A new MDT scale resizes the Root, whose refit lays the window out.
+    if db.uiScale == oldScale then MDT:Minimize() end
     MDT:Settings_Refresh()
   end, 'resetMainFramePos')
 end

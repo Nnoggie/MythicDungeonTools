@@ -209,21 +209,43 @@ return function(ctx)
     expectOnScreen("at MDT scale 200%")
   end)
 
+  ---Runs /mdt reset and checks that it laid the window out once, saved the defaults and shows them fitted to the Root.
+  local function resetWindow(when)
+    local db, f = MDT:GetDB(), MDT.main_frame
+    local calls, originals = {}, {}
+    for _, name in ipairs({ "Minimize", "Maximize", "PlaceNormalWindow" }) do
+      calls[name], originals[name] = 0, MDT[name]
+      MDT[name] = function(...)
+        calls[name] = calls[name] + 1
+        return originals[name](...)
+      end
+    end
+    local ok, err = pcall(function()
+      W.RunSlashCommand("/mdt reset")
+      settle()
+    end)
+    for name, original in pairs(originals) do MDT[name] = original end
+    if not ok then error(err, 0) end
+    expect(calls.Minimize == 1 and calls.Maximize == 0 and calls.PlaceNormalWindow == 1,
+      ("/mdt reset %s laid the window out %d times normal, %d times maximized and placed it %d times"):format(when, calls.Minimize, calls.Maximize, calls.PlaceNormalWindow))
+    expect(not db.maximized and not (f.blackoutFrame and f.blackoutFrame:IsShown()), "the window is still maximized "..when)
+    expectSavedWindow({ defaults.nonFullscreenScale, defaults.anchorFrom, defaults.anchorTo, defaults.xoffset, defaults.yoffset }, when)
+    expect(db.uiScale == 1 and near(rootScale(), 768 / 1440), ("MDT scale is %s, root scale %s %s"):format(db.uiScale, rootScale(), when))
+    local _, mapHeight = MDT:GetDefaultMapPanelSize()
+    local _, _, fullscreenScale = MDT:GetFullScreenSizes()
+    local shownScale = math.min(defaults.nonFullscreenScale, fullscreenScale)
+    expect(near(f:GetHeight(), mapHeight * shownScale, 1e-3) and near(db.scale, shownScale),
+      ("the window is %.1f tall at map scale %s, expected scale %s %s"):format(f:GetHeight(), db.scale, shownScale, when))
+    expectOnScreen(when)
+  end
+
   step("scale: /mdt reset leaves fullscreen and restores the default position, window size and MDT scale", function()
     local db, f = MDT:GetDB(), MDT.main_frame
     local slider = scaleSlider()
     click(f.maximizeButton)
     expect(db.maximized and db.uiScale ~= 1, "setup: the window is not maximized at a custom MDT scale")
-    W.RunSlashCommand("/mdt reset")
-    settle()
-    expect(not db.maximized and not f.blackoutFrame:IsShown(), "the window is still maximized")
-    local point, relativeTo, relativePoint, x, y = f:GetPoint()
-    expect(point == "TOP" and relativeTo == MDT.UI.Root and relativePoint == "TOP" and x == defaults.xoffset and y == defaults.yoffset,
-      ("the window is at %s %s %s %s"):format(point, relativePoint, x, y))
-    expect(math.abs(f:GetWidth() - 840 * defaults.nonFullscreenScale) < 0.01, "the window is "..f:GetWidth().." wide")
-    expect(db.uiScale == 1 and near(rootScale(), 768 / 1440), ("MDT scale is %s, root scale %s"):format(db.uiScale, rootScale()))
+    resetWindow("from fullscreen at MDT scale "..db.uiScale)
     expect(slider.kitValueText:GetText() == "100%", "the slider shows "..tostring(slider.kitValueText:GetText()))
-    expectOnScreen("after /mdt reset")
   end)
 
   step("scale: a window dropped partly off screen moves on screen and saves where it ends up", function()
@@ -328,9 +350,8 @@ return function(ctx)
     click(f.navigationSidebar.buttons.maps)
   end)
 
-  step("scale: /mdt reset puts the window back after the scale steps", function()
-    W.RunSlashCommand("/mdt reset")
-    settle()
-    expectOnScreen("after /mdt reset")
+  step("scale: /mdt reset at MDT scale 100% puts a moved and resized window back", function()
+    expect(MDT:GetDB().uiScale == 1, "setup: MDT scale is not 100%")
+    resetWindow("at MDT scale 100%")
   end)
 end
