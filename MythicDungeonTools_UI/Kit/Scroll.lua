@@ -13,7 +13,8 @@ local ScrollbarMethods = {}
 ---@param contentH number
 function ScrollbarMethods:SetRange(viewH, contentH)
   self.kitViewH, self.kitContentH = math.max(1, viewH), math.max(1, contentH)
-  local fits = contentH <= viewH
+  -- Sizes read back through a fractional effective scale carry float noise (219 reads as 218.99999999999991).
+  local fits = contentH - viewH < 0.01
   self:SetShown(not fits)
   local trackH = self:GetHeight()
   local thumbH = fits and trackH or math.max(16, trackH * viewH / contentH)
