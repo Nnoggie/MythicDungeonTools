@@ -334,7 +334,7 @@ local function fill(card, blip)
       UI.CloseButton(header, { tooltip = L["Close"], onClick = function() MDT:CloseEnemyInfo() end })
     else
       UI.Button(header, {
-        id = "pin", variant = "plain", icon = MDT:GetIconPath("pin"), iconSize = 14,
+        id = "pin", variant = "plain", icon = MDT:GetIconPath("pin"), iconSize = 16,
         width = HEADER_BUTTON_SIZE, height = HEADER_BUTTON_SIZE, tooltip = L["Pin"], onClick = function() pin(blip) end,
       })
     end
