@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.12",
+    date = "2026-10-21",
+    notes = {
+      "Hover highlights across the AddOn are now easier to see.",
+    },
+  },
+  {
     tag = "6.3.11",
     date = "2026-10-21",
     notes = {
@@ -19,14 +26,6 @@ MDT.changeLog = {
       "The sidebar now lists every route for the dungeon with a search box. Click a route to open it, or right-click it to rename, duplicate, export, send to party, start a live session or delete it.",
       "Hovering an enemy now shows an enemy info card with its model, health, forces and spells. Click the pin button to keep it open.",
       "Fixed icons in map texts becoming far too large in fullscreen.",
-    },
-  },
-  {
-    tag = "6.3.9",
-    date = "2026-10-17",
-    notes = {
-      "Added a \"Don't set focus on mouseover\" option to the Focus Marker settings. When enabled, the focus keybind and macro always focus your current target.",
-      "Improved the Korean translations.",
     },
   },
 }

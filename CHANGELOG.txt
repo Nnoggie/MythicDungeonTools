@@ -1,6 +1,3 @@
-## 6.3.11 (2026-10-21)
+## 6.3.12 (2026-10-21)
 
-- Added an MDT Scale setting under Settings > General to make MDT bigger or smaller. /mdt reset sets it back to 100%.
-- Fixed MDT appearing much too small on 4K and other high-resolution screens.
-- The enemy info card is more compact. Pin it to also see more info.
-- Stealth and stealth detection now show as icons on the enemy info card.
+- Hover highlights across the AddOn are now easier to see.
