@@ -81,6 +81,15 @@ end
 
 local function buildGeneral(column)
   UI.Heading(column, { text = L["General"] })
+  -- Applied on release: rescaling the page under the cursor while dragging would move the slider away.
+  bind(UI.Slider(column, {
+    id = "uiScale", label = L["MDT Scale"], min = 0.5, max = 2, step = 0.05, value = db.uiScale,
+    format = function(value) return ("%d%%"):format(math.floor(value * 100 + 0.5)) end,
+    onCommit = function(value)
+      db.uiScale = value
+      UI.SetUserScale(value)
+    end,
+  }), function() return db.uiScale end)
   checkbox(column, "minimap", L["Enable Minimap Button"], function() return not db.minimap.hide end, function(value)
     if value then MDT:ShowMinimapButton() else MDT:HideMinimapButton() end
   end)

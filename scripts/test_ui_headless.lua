@@ -74,8 +74,9 @@ local function expect(condition, message)
 end
 
 local MDT, db, main
--- Without --savedvariables, boot with a window 6.3.10 saved on a 4K screen, where the Root was 2160 units tall.
-local seeded = { nonFullscreenScale = 3, scale = 3, anchorFrom = "TOPLEFT", anchorTo = "TOPLEFT", xoffset = 2900, yoffset = -150 }
+-- Without --savedvariables, boot with an MDT scale of 125% and a window 6.3.10 saved on a 4K screen, where the Root
+-- was 2160 units tall.
+local seeded = { uiScale = 1.25, nonFullscreenScale = 3, scale = 3, anchorFrom = "TOPLEFT", anchorTo = "TOPLEFT", xoffset = 2900, yoffset = -150 }
 
 local renders = {}
 if flags.render == true then flags.render = "ui-render" end
@@ -140,7 +141,7 @@ local function click(widget, button)
   W.userClick(frame, button)
 end
 
-local scaleSteps = dofile(root.."/scripts/headless/scale_steps.lua")({
+dofile(root.."/scripts/headless/scale_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded,
 })
 

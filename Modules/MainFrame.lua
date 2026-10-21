@@ -524,12 +524,15 @@ function MDT:ResetMainFramePos(soft)
     if not soft then
       if not framesInitialized then MDT:StartMainFrameInitialization() end
       if not framesInitialized then return end
+      db.uiScale = 1
+      MDT.UI.SetUserScale(1)
       db.xoffset = defaultSavedVars.global.xoffset
       db.yoffset = defaultSavedVars.global.yoffset
       db.anchorFrom = "TOP"
       db.anchorTo = "TOP"
       db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
       MDT:Minimize()
+      MDT:Settings_Refresh()
     end
     f:ClearAllPoints()
     f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
