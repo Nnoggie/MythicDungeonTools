@@ -1,6 +1,7 @@
 -- Harness steps for MDT's screen-relative scale: the window stays on screen as the Root's size changes.
 return function(ctx)
-  local W, MDT, step, expect = ctx.W, ctx.MDT, ctx.step, ctx.expect
+  local W, MDT, step, expect, click, asyncIdle = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.asyncIdle
+  local defaults = MDT:GetDefaultSavedVariables().global
 
   ---The visible window (sidebar, map, side panel and both bars) lies within the screen.
   local function expectOnScreen(when)
@@ -22,6 +23,20 @@ return function(ctx)
     expect(db.nonFullscreenScale <= fullscreenScale + 1e-9, ("window scale %s is above the fullscreen scale %s"):format(db.nonFullscreenScale, fullscreenScale))
     if ctx.seeded then expect(db.nonFullscreenScale < ctx.seeded.nonFullscreenScale, "the oversized window was not scaled down") end
     expectOnScreen("after load")
+  end)
+
+  step("scale: /mdt reset leaves fullscreen and restores the default position and window size", function()
+    local db, f = MDT:GetDB(), MDT.main_frame
+    click(f.maximizeButton)
+    expect(db.maximized, "setup: the window did not maximize")
+    W.RunSlashCommand("/mdt reset")
+    W.settle(asyncIdle, 30)
+    expect(not db.maximized and not f.blackoutFrame:IsShown(), "the window is still maximized")
+    local point, relativeTo, relativePoint, x, y = f:GetPoint()
+    expect(point == "TOP" and relativeTo == MDT.UI.Root and relativePoint == "TOP" and x == defaults.xoffset and y == defaults.yoffset,
+      ("the window is at %s %s %s %s"):format(point, relativePoint, x, y))
+    expect(math.abs(f:GetWidth() - 840 * defaults.nonFullscreenScale) < 0.01, "the window is "..f:GetWidth().." wide")
+    expectOnScreen("after /mdt reset")
   end)
 
   return { expectOnScreen = expectOnScreen }

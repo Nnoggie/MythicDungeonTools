@@ -136,10 +136,6 @@ function MDT:CreateMenu()
   })
   maximizeButton:SetPoint("RIGHT", closeButton, "LEFT", -3, 0)
   maximizeButton:SetFrameLevel(10)
-  ---Leaves fullscreen if needed; kept for callers that reset the window.
-  function maximizeButton:Minimize()
-    if MDT:GetDB().maximized then MDT:Minimize() end
-  end
   self.main_frame.maximizeButton = maximizeButton
 
   --Resize Handle
@@ -526,7 +522,6 @@ function MDT:ResetMainFramePos(soft)
     if not framesInitialized then MDT:StartMainFrameInitialization() end
     local f = self.main_frame
     if not soft then
-      db.maximized = false
       if not framesInitialized then MDT:StartMainFrameInitialization() end
       if not framesInitialized then return end
       db.xoffset = defaultSavedVars.global.xoffset
@@ -534,8 +529,7 @@ function MDT:ResetMainFramePos(soft)
       db.anchorFrom = "TOP"
       db.anchorTo = "TOP"
       db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-      db.scale = db.nonFullscreenScale
-      f.maximizeButton:Minimize()
+      MDT:Minimize()
     end
     f:ClearAllPoints()
     f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)

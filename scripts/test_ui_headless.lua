@@ -134,7 +134,15 @@ MDT = Loader.addons.MythicDungeonTools_UI.namespace
 db = MDT.GetDB and MDT:GetDB()
 main = MDT.main_frame
 
-local scaleSteps = dofile(root.."/scripts/headless/scale_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, seeded = seeded })
+local function click(widget, button)
+  local frame = widget.frame or widget
+  expect(frame:IsVisible(), "clicked a hidden widget: "..tostring(frame:GetName() or frame:GetObjectType()))
+  W.userClick(frame, button)
+end
+
+local scaleSteps = dofile(root.."/scripts/headless/scale_steps.lua")({
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded,
+})
 
 step("main window is shown", function()
   expect(main, "MDT.main_frame was not created")
@@ -142,12 +150,6 @@ step("main window is shown", function()
   expect(MDT:AreFramesInitialized(), "frames not initialized")
   snapshot("main window")
 end)
-
-local function click(widget, button)
-  local frame = widget.frame or widget
-  expect(frame:IsVisible(), "clicked a hidden widget: "..tostring(frame:GetName() or frame:GetObjectType()))
-  W.userClick(frame, button)
-end
 
 local function pulls() return MDT:GetCurrentPreset().value.pulls end
 local function unusedPresetName(base)
