@@ -2,6 +2,12 @@ local _, MDT = ...
 local db
 local sizex, sizey
 local canvasDrawLayer = "BORDER"
+local shownMaximized = false
+
+---Whether the window is laid out fullscreen, which can differ from db.maximized until the next layout.
+function MDT:IsShownMaximized()
+  return shownMaximized
+end
 
 --Fullscreen the AddOn Window
 function MDT:Maximize()
@@ -60,6 +66,7 @@ function MDT:Maximize()
   end
   f.resizer:Hide()
   db.maximized = true
+  shownMaximized = true
   if f.maximizeButton then f.maximizeButton:SetIcon(MDT:GetIconPath("minimize")) end
 end
 
@@ -106,5 +113,6 @@ function MDT:Minimize()
   f.resizer:Show()
 
   db.maximized = false
+  shownMaximized = false
   if f.maximizeButton then f.maximizeButton:SetIcon(MDT:GetIconPath("maximize")) end
 end

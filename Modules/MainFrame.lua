@@ -298,10 +298,10 @@ local function fitToRoot()
   local minScale = min(minNonFullscreenScale, fullscreenScale)
   f:SetResizeBounds(sizex * minScale, sizey * minScale, sizex * fullscreenScale, sizey * fullscreenScale)
   -- /mdt reset clears db.maximized and leaves the layout to this refit.
-  local laidOutMaximized = f.blackoutFrame and f.blackoutFrame:IsShown()
+  local shownMaximized = MDT:IsShownMaximized()
   if db.maximized then
-    if abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
-  elseif laidOutMaximized or abs(f:GetHeight() - sizey * MDT:GetNormalWindowScale()) > 0.5 then
+    if not shownMaximized or abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
+  elseif shownMaximized or abs(f:GetHeight() - sizey * MDT:GetNormalWindowScale()) > 0.5 then
     MDT:Minimize()
   else
     MDT:PlaceNormalWindow()
