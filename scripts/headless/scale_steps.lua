@@ -8,6 +8,16 @@ return function(ctx)
   local function rootScale() return MDT.UI.Root:GetEffectiveScale() end
   local function settle() W.settle(asyncIdle, 30) end
 
+  ---Runs fn and returns how often the Root reported a settled new size meanwhile.
+  local function countRootResizes(fn)
+    local count = 0
+    local unsubscribe = MDT.UI.OnRootResized(function() count = count + 1 end)
+    local ok, err = pcall(fn)
+    unsubscribe()
+    if not ok then error(err, 0) end
+    return count
+  end
+
   ---The visible window (sidebar, map, side panel and both bars) in screen units.
   local function windowRect()
     local f = MDT.main_frame
@@ -118,10 +128,11 @@ return function(ctx)
     local format = slider.kitProps.format
     expect(slider.kitValueText:GetText() == format(db.uiScale), "the slider shows "..tostring(slider.kitValueText:GetText()))
 
-    local scale, shown, resized = MDT.UI.Root:GetScale(), shownWindow(), 0
-    MDT.UI.Root:HookScript("OnSizeChanged", function() resized = resized + 1 end)
-    W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
-    settle()
+    local scale, shown = MDT.UI.Root:GetScale(), shownWindow()
+    local resized = countRootResizes(function()
+      W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
+      settle()
+    end)
     expect(resized == 0, "releasing the slider without moving it rescaled MDT")
     expectShownWindow(shown, "after releasing the slider without moving it")
 
@@ -228,8 +239,11 @@ return function(ctx)
   step("scale: MDT keeps its scale when another addon rescales UIParent without UI_SCALE_CHANGED", function()
     local shown = shownWindow()
     for _, uiScale in ipairs({ 0.7, 1 }) do
-      UIParent:SetScale(uiScale)
-      settle()
+      local refits = countRootResizes(function()
+        UIParent:SetScale(uiScale)
+        settle()
+      end)
+      expect(refits == 1, ("the window refit %d times after UIParent:SetScale(%s)"):format(refits, uiScale))
       expect(near(rootScale(), 768 / 1440), ("root scale is %s after UIParent:SetScale(%s)"):format(rootScale(), uiScale))
       expectShownWindow(shown, "after UIParent:SetScale("..uiScale..")")
     end
