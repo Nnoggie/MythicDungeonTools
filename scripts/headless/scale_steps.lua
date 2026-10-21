@@ -102,31 +102,33 @@ return function(ctx)
     settle()
   end
 
-  ---Drags the resize handle until the window is height tall; MDT keeps the map's aspect ratio.
+  ---Drags the resize handle until the window is height tall at the map's aspect ratio and lets go in the same frame,
+  ---before the client reports that last size change.
+  ---@return number[] rect the window (windowRect) just before the handle was released
   local function resizeWindowTo(height)
     local f = MDT.main_frame
+    local mapWidth, mapHeight = MDT:GetDefaultMapPanelSize()
     W.fireScript(f.resizer, "OnMouseDown", "LeftButton")
-    f:SetSize(f:GetWidth(), height)
-    settle()
+    local point, _, relativePoint = f:GetPoint()
+    expect(point ~= relativePoint, "setup: sizing left the window anchored by matching points")
+    f:SetSize(height * mapWidth / mapHeight, height)
+    local rect = { windowRect() }
     W.fireScript(f.resizer, "OnMouseUp", "LeftButton")
     settle()
+    return rect
   end
 
-  ---The window is shown where it is saved, at the saved size.
+  ---The window is shown where it is saved, at the saved size as far as the Root fits it.
   local function expectShownAtSaved(when)
     local db, f = MDT:GetDB(), MDT.main_frame
     local _, mapHeight = MDT:GetDefaultMapPanelSize()
+    local _, _, fullscreenScale = MDT:GetFullScreenSizes()
     local point, _, relativePoint, x, y = f:GetPoint()
-    expect(db.anchorTo == point and db.anchorFrom == relativePoint and near(db.xoffset, x, 1e-3) and near(db.yoffset, y, 1e-3),
-      ("the window is at %s %s %s %s but saved at %s %s %s %s %s"):format(point, relativePoint, x, y, db.anchorTo, db.anchorFrom, db.xoffset, db.yoffset, when))
-    expect(near(f:GetHeight(), mapHeight * db.nonFullscreenScale, 1e-3),
-      ("the window is %.1f tall but saved at scale %s %s"):format(f:GetHeight(), db.nonFullscreenScale, when))
-  end
-
-  ---Where the window's top left corner is, from the Root's top left corner.
-  local function topLeftOffset()
-    local f, Root = MDT.main_frame, MDT.UI.Root
-    return f:GetLeft() - Root:GetLeft(), f:GetTop() - Root:GetTop()
+    expect(db.anchorFrom == point and db.anchorTo == relativePoint and point == relativePoint and near(db.xoffset, x, 1e-3) and near(db.yoffset, y, 1e-3),
+      ("the window is at %s %s %s %s but saved at %s %s %s %s %s"):format(point, relativePoint, x, y, db.anchorFrom, db.anchorTo, db.xoffset, db.yoffset, when))
+    local scale = math.min(db.nonFullscreenScale, fullscreenScale)
+    expect(near(f:GetHeight(), mapHeight * scale, 1e-3),
+      ("the window is %.1f tall, expected %.1f at saved scale %s %s"):format(f:GetHeight(), mapHeight * scale, db.nonFullscreenScale, when))
   end
 
   local function setScreen(width, height)
@@ -322,24 +324,22 @@ return function(ctx)
     end
   end)
 
-  step("scale: a resized window is saved where it is shown, and keeps its top left corner when MDT rescales", function()
+  step("scale: a resized window stays where it is shown and is saved there, also when MDT rescales", function()
     local db, f = MDT:GetDB(), MDT.main_frame
     local slider = scaleSlider()
     W.RunSlashCommand("/mdt reset")
     settle()
-    expect(select(1, f:GetPoint()) == "TOP", "setup: /mdt reset did not anchor the window by its top")
-    local left, top = topLeftOffset()
-    resizeWindowTo(f:GetHeight() * 0.9)
-    local resizedLeft, resizedTop = topLeftOffset()
-    expect(near(resizedLeft, left, 1e-3) and near(resizedTop, top, 1e-3),
-      ("resizing moved the top left corner from %.1f, %.1f to %.1f, %.1f"):format(left, top, resizedLeft, resizedTop))
+    local shown = resizeWindowTo(f:GetHeight() * 0.9)
+    local now = { windowRect() }
+    for index = 1, 4 do
+      expect(near(now[index], shown[index], 1e-3), ("releasing the resize handle moved the window from %.1f to %.1f"):format(shown[index], now[index]))
+    end
+    expectOnScreen("after resizing")
     expectShownAtSaved("after resizing")
 
     local uiScale = db.uiScale
     dragAndRelease(slider, uiScale - 0.1)
-    local rescaledLeft, rescaledTop = topLeftOffset()
-    expect(near(rescaledLeft, left, 1e-3) and near(rescaledTop, top, 1e-3),
-      ("rescaling moved the top left corner from %.1f, %.1f to %.1f, %.1f"):format(left, top, rescaledLeft, rescaledTop))
+    expectOnScreen("after rescaling a resized window")
     expectShownAtSaved("after rescaling a resized window")
     dragAndRelease(slider, uiScale)
 

@@ -115,20 +115,21 @@ return function(W)
     S[self].moving = true
   end
   local pinnedCorner = { BOTTOMRIGHT = "TOPLEFT", BOTTOMLEFT = "TOPRIGHT", TOPRIGHT = "BOTTOMLEFT", TOPLEFT = "BOTTOMRIGHT" }
-  -- Like the client, sizing re-anchors the frame by the corner opposite the dragged one, to its parent, where it is.
+  -- Assumes the client re-anchors a frame it sizes by the corner opposite the dragged one, where it is. The mock
+  -- anchors that corner to the parent's BOTTOMLEFT, so code that expects matching point names fails here.
   function Frame:StartSizing(point)
     usage(S[self].resizable, "StartSizing(): frame is not resizable")
     S[self].sizing = true
     local corner, parent = pinnedCorner[point or "BOTTOMRIGHT"], self:GetParent()
     local left, bottom, width, height = self:GetScaledRect()
     if not corner or not parent or not left then return end
-    local parentLeft, parentBottom, parentWidth, parentHeight = parent:GetScaledRect()
-    local x = corner:find("LEFT") and left - parentLeft or left + width - parentLeft - parentWidth
-    local y = corner:find("TOP") and bottom + height - parentBottom - parentHeight or bottom - parentBottom
+    local parentLeft, parentBottom = parent:GetScaledRect()
+    local x = (corner:find("LEFT") and left or left + width) - parentLeft
+    local y = (corner:find("TOP") and bottom + height or bottom) - parentBottom
     local scale = self:GetEffectiveScale()
     self:SetSize(width / scale, height / scale)
     self:ClearAllPoints()
-    self:SetPoint(corner, parent, corner, x / scale, y / scale)
+    self:SetPoint(corner, parent, "BOTTOMLEFT", x / scale, y / scale)
   end
   function Frame:StopMovingOrSizing() S[self].moving, S[self].sizing = nil, nil end
   function Frame:SetUserPlaced(value) S[self].userPlaced = value end

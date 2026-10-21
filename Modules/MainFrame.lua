@@ -27,15 +27,26 @@ local function onScreenShift(f)
   return dx, dy
 end
 
+---Anchors the window's saved point to the same named point of the Root, offset by x, y.
+local function anchorWindow(x, y)
+  local f = MDT.main_frame
+  f:ClearAllPoints()
+  f:SetPoint(db.anchorFrom, MDT.UI.Root, db.anchorTo, x, y)
+end
+
 ---Saves where the user moved or resized the normal window to, after moving it fully on screen.
 local function saveWindowPlacement()
-  local f = MDT.main_frame
-  local from, _, to, x, y = f:GetPoint()
+  local f, Root = MDT.main_frame, MDT.UI.Root
+  local point, relativeTo, relativePoint, x, y = f:GetPoint()
+  -- The client may leave a moved or sized window anchored to another frame, or by two different points.
+  if point ~= relativePoint or (relativeTo ~= Root and relativeTo ~= UIParent) then
+    point, relativePoint = "TOPLEFT", "TOPLEFT"
+    x, y = f:GetLeft() - Root:GetLeft(), f:GetTop() - Root:GetTop()
+  end
   local dx, dy = onScreenShift(f)
-  db.anchorFrom, db.anchorTo = from, to
+  db.anchorFrom, db.anchorTo = point, relativePoint
   db.xoffset, db.yoffset = x + dx, y + dy
-  f:ClearAllPoints()
-  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+  anchorWindow(db.xoffset, db.yoffset)
 end
 
 local moving
@@ -171,6 +182,7 @@ function MDT:CreateMenu()
   end)
   resizer:SetScript("OnMouseUp", function()
     self.main_frame:StopMovingOrSizing()
+    self:SetScale(self.main_frame:GetHeight() / sizey)
     saveWindowPlacement()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
@@ -274,11 +286,9 @@ end
 ---Anchors the normal window at the saved position, moved just enough for all of it to lie inside the Root. The saved
 ---position stays as the user left it.
 function MDT:PlaceNormalWindow()
-  local f = MDT.main_frame
-  f:ClearAllPoints()
-  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
-  local dx, dy = onScreenShift(f)
-  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset + dx, db.yoffset + dy)
+  anchorWindow(db.xoffset, db.yoffset)
+  local dx, dy = onScreenShift(MDT.main_frame)
+  anchorWindow(db.xoffset + dx, db.yoffset + dy)
 end
 
 ---Refits the window to the Root, whose size in its own units changes with the MDT scale and the screen's aspect ratio.
@@ -590,8 +600,7 @@ function MDT:InitializeMainFrame()
   local version = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version"):gsub("%.", "")
   db.version = tonumber(version)
   -- Set frame position
-  main_frame:ClearAllPoints()
-  main_frame:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+  anchorWindow(db.xoffset, db.yoffset)
   main_frame.contextDropdown = CreateFrame("frame", "MDTContextDropDown", nil, "UIDropDownMenuTemplate")
   MDT:CheckCurrentZone(true)
   MDT:EnsureDBTables()
