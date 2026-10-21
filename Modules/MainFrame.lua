@@ -20,6 +20,15 @@ local frameInitializedCallbacks = {}
 
 local db
 
+---How far the window must move for all of it (sidebar, side panel and both bars) to lie inside the Root.
+---@return number dx, number dy
+local function onScreenShift(f)
+  local width, height = MDT.UI.Root:GetSize()
+  local dx = max(0, -f.navigationSidebar:GetLeft()) + min(0, width - f.sidePanel:GetRight())
+  local dy = max(0, -f.bottomPanel:GetBottom()) + min(0, height - f.topPanel:GetTop())
+  return dx, dy
+end
+
 function MDT:RegisterMainFrameDragHandle(dragHandle, frame)
   frame = frame or MDT.main_frame
   if not dragHandle or not frame then return end
@@ -33,14 +42,12 @@ function MDT:RegisterMainFrameDragHandle(dragHandle, frame)
   dragHandle:SetScript("OnDragStop", function()
     frame:StopMovingOrSizing()
     frame:SetMovable(false)
-    if MDT:IsFrameOffScreen() then
-      MDT:ResetMainFramePos(true)
-    else
-      local from, _, to, x, y = frame:GetPoint()
-      db.anchorFrom = from
-      db.anchorTo = to
-      db.xoffset, db.yoffset = x, y
-    end
+    local from, _, to, x, y = frame:GetPoint()
+    local dx, dy = onScreenShift(frame)
+    db.anchorFrom, db.anchorTo = from, to
+    db.xoffset, db.yoffset = x + dx, y + dy
+    frame:ClearAllPoints()
+    frame:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
   end)
 end
 
@@ -266,44 +273,37 @@ function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
   return min(defaultNonFullscreenScale, max(minNonFullscreenScale, maxScale))
 end
 
-function MDT:IsFrameOffScreen()
-  local topPanel = MDT.main_frame.topPanel
-  local bottomPanel = MDT.main_frame.bottomPanel
-  local width, height = MDT.UI.Root:GetWidth(), MDT.UI.Root:GetHeight()
-  local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
-  local right = topPanel:GetRight()                                                                                  --<0
-  local bottom = topPanel:GetBottom()                                                                                --<0
-  local top = bottomPanel:GetTop()                                                                                   -->height
-  return left > width or right < 0 or bottom < 0 or top > height
+---The normal window's scale as shown: the saved one, shrunk to fit the Root.
+local function normalWindowScale()
+  local _, _, fullscreenScale = MDT:GetFullScreenSizes()
+  return min(db.nonFullscreenScale, fullscreenScale)
 end
 
----Moves the (not maximized) window just far enough to lie inside the Root, and saves the new position.
-function MDT:MoveMainFrameOnScreen()
+---Sizes and anchors the normal (not maximized) window at the saved scale and position, shrunk and moved just enough
+---for all of it to lie inside the Root. The saved scale and position stay as the user left them, so the window
+---comes back when the Root grows again.
+function MDT:PlaceNormalWindow()
   local f = MDT.main_frame
-  local width, height = MDT.UI.Root:GetSize()
-  local dx = max(0, -f.navigationSidebar:GetLeft()) + min(0, width - f.sidePanel:GetRight())
-  local dy = max(0, -f.bottomPanel:GetBottom()) + min(0, height - f.topPanel:GetTop())
-  if abs(dx) > 0.01 or abs(dy) > 0.01 then
-    db.xoffset, db.yoffset = db.xoffset + dx, db.yoffset + dy
-    f:ClearAllPoints()
-    f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
-  end
+  db.scale = normalWindowScale()
+  f:SetSize(sizex * db.scale, sizey * db.scale)
+  f:ClearAllPoints()
+  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+  local dx, dy = onScreenShift(f)
+  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset + dx, db.yoffset + dy)
 end
 
----Keeps the window inside the Root. The Root's size in its own units changes with the MDT scale and the screen's
----aspect ratio, and windows saved by 6.3.10 were sized for a Root as tall as the screen's pixel height.
+---Refits the window to the Root, whose size in its own units changes with the MDT scale and the screen's aspect ratio.
 local function fitToRoot()
   local f = MDT.main_frame
   local fullWidth, fullHeight, fullscreenScale = MDT:GetFullScreenSizes()
   local minScale = min(minNonFullscreenScale, fullscreenScale)
   f:SetResizeBounds(sizex * minScale, sizey * minScale, sizex * fullscreenScale, sizey * fullscreenScale)
-  db.nonFullscreenScale = min(db.nonFullscreenScale, fullscreenScale)
   if db.maximized then
     if abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
-  elseif abs(f:GetHeight() - sizey * db.nonFullscreenScale) > 0.5 then
+  elseif abs(f:GetHeight() - sizey * normalWindowScale()) > 0.5 then
     MDT:Minimize()
   else
-    MDT:MoveMainFrameOnScreen()
+    MDT:PlaceNormalWindow()
   end
 end
 
@@ -516,26 +516,17 @@ function MDT:MakeSidePanel(frame)
 
 end
 
-function MDT:ResetMainFramePos(soft)
+---Leaves fullscreen and restores the default window position and size and MDT scale 100%.
+function MDT:ResetMainFramePos()
   MDT:Async(function()
-    --soft reset just redraws the window with existing coordinates from db
     if not framesInitialized then MDT:StartMainFrameInitialization() end
-    local f = self.main_frame
-    if not soft then
-      if not framesInitialized then MDT:StartMainFrameInitialization() end
-      if not framesInitialized then return end
-      db.uiScale = 1
-      MDT.UI.SetUserScale(1)
-      db.xoffset = defaultSavedVars.global.xoffset
-      db.yoffset = defaultSavedVars.global.yoffset
-      db.anchorFrom = "TOP"
-      db.anchorTo = "TOP"
-      db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-      MDT:Minimize()
-      MDT:Settings_Refresh()
-    end
-    f:ClearAllPoints()
-    f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
+    if not framesInitialized then return end
+    db.anchorFrom, db.anchorTo = "TOP", "TOP"
+    db.xoffset, db.yoffset = defaultSavedVars.global.xoffset, defaultSavedVars.global.yoffset
+    db.uiScale = MDT.UI.SetUserScale(1)
+    db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
+    MDT:Minimize()
+    MDT:Settings_Refresh()
   end, 'resetMainFramePos')
 end
 

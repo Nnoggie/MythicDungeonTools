@@ -78,12 +78,9 @@ function MDT:Minimize()
   if f.blackoutFrame then f.blackoutFrame:Hide() end
   f.topPanel:SetMouseClickEnabled(true)
   f.bottomPanel:SetMouseClickEnabled(true)
-  db.scale = db.nonFullscreenScale
+  MDT:PlaceNormalWindow()
   local newSizex = sizex * db.scale
   local newSizey = sizey * db.scale
-  f:ClearAllPoints()
-  f:SetPoint(db.anchorTo, MDT.UI.Root, db.anchorFrom, db.xoffset, db.yoffset)
-  f:SetSize(newSizex, newSizey)
   f.scrollFrame:SetSize(newSizex, newSizey)
   f.mapPanelFrame:SetSize(newSizex, newSizey)
   for i = 1, 12 do
@@ -108,5 +105,4 @@ function MDT:Minimize()
 
   db.maximized = false
   if f.maximizeButton then f.maximizeButton:SetIcon(MDT:GetIconPath("maximize")) end
-  MDT:MoveMainFrameOnScreen()
 end

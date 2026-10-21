@@ -74,9 +74,13 @@ local function expect(condition, message)
 end
 
 local MDT, db, main
--- Without --savedvariables, boot with an MDT scale of 125% and a window 6.3.10 saved on a 4K screen, where the Root
--- was 2160 units tall.
-local seeded = { uiScale = 1.25, nonFullscreenScale = 3, scale = 3, anchorFrom = "TOPLEFT", anchorTo = "TOPLEFT", xoffset = 2900, yoffset = -150 }
+-- Without --savedvariables, boot with an MDT scale of 150% and the largest window 6.3.10 allowed on this screen, at its
+-- right edge. 6.3.10's Root was as many units as the screen has pixels.
+local oldMaxScale = math.min((W.physicalHeight - 60) / 555, (W.physicalWidth - 42 - 251) / 840)
+local seeded = {
+  uiScale = 1.5, nonFullscreenScale = oldMaxScale, scale = oldMaxScale, anchorFrom = "TOPLEFT", anchorTo = "TOPLEFT",
+  xoffset = W.physicalWidth - 251 - 840 * oldMaxScale, yoffset = -30,
+}
 
 local renders = {}
 if flags.render == true then flags.render = "ui-render" end
