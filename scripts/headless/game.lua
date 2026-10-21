@@ -7,9 +7,16 @@ return function(W)
 
   G.CreateFrame = W.CreateFrame
   W.UIParent = W.CreateFrame("Frame", "UIParent")
-  W.UIParent:SetSize(W.screenWidth, W.screenHeight)
   W.WorldFrame = W.CreateFrame("Frame", "WorldFrame")
-  W.WorldFrame:SetSize(W.screenWidth, W.screenHeight)
+  ---Sets the monitor resolution in physical pixels. Like the client, the screen is 768 units tall at scale 1, and
+  ---positions (W.screenWidth/Height, the cursor) are in those units.
+  function W.setScreen(physicalWidth, physicalHeight)
+    W.physicalWidth, W.physicalHeight = physicalWidth, physicalHeight
+    W.screenWidth, W.screenHeight = 768 * physicalWidth / physicalHeight, 768
+    W.UIParent:SetSize(W.screenWidth, W.screenHeight)
+    W.WorldFrame:SetSize(W.screenWidth, W.screenHeight)
+  end
+  W.setScreen(1920, 1080)
   G.GameTooltip = W.CreateFrame("GameTooltip", "GameTooltip", W.UIParent, "GameTooltipTemplate")
   G.GameTooltip:Hide()
   G.ItemRefTooltip = W.CreateFrame("GameTooltip", "ItemRefTooltip", W.UIParent, "GameTooltipTemplate")
@@ -36,11 +43,11 @@ return function(W)
   G.AddonCompartmentFrame.registeredAddons = {}
   function G.AddonCompartmentFrame:RegisterAddon(info) table.insert(self.registeredAddons, info) end
   function G.AddonCompartmentFrame:UpdateDisplay() end
-  function G.GetScreenWidth() return W.screenWidth end
+  function G.GetScreenWidth() return W.screenWidth / W.UIParent:GetScale() end
   G.PixelUtil = {
-    GetPixelToUIUnitFactor = function() return 768 / W.screenHeight end,
+    GetPixelToUIUnitFactor = function() return 768 / W.physicalHeight end,
     GetNearestPixelSize = function(uiUnitSize, layoutScale, minPixels)
-      local factor = 768 / W.screenHeight
+      local factor = 768 / W.physicalHeight
       local pixels = uiUnitSize * layoutScale / factor
       if minPixels and pixels < minPixels then pixels = minPixels end
       return math.floor(pixels + 0.5) * factor / layoutScale
@@ -50,8 +57,8 @@ return function(W)
     SetHeight = function(region, height) region:SetHeight(height) end,
     SetSize = function(region, width, height) region:SetSize(width, height) end,
   }
-  function G.GetScreenHeight() return W.screenHeight end
-  function G.GetPhysicalScreenSize() return W.screenWidth, W.screenHeight end
+  function G.GetScreenHeight() return W.screenHeight / W.UIParent:GetScale() end
+  function G.GetPhysicalScreenSize() return W.physicalWidth, W.physicalHeight end
   function G.GetCursorPosition() return W.cursorX or W.screenWidth / 2, W.cursorY or W.screenHeight / 2 end
   G.GetScaledCursorPosition = G.GetCursorPosition
   function G.GetMouseFocus() return W.mouseFocus end

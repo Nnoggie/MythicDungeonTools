@@ -880,12 +880,12 @@ html,body{margin:0;padding:0;background:#1b1b1f}
     return pageWidth, pageHeight
   end
 
-  ---Writes root (and opts.also frames) as one HTML page. opts.scale: pixels per UI unit (default 1).
+  ---Writes root (and opts.also frames) as one HTML page. opts.scale: pixels per scale-1 unit (default: physical pixels).
   ---opts.hover: the frame whose HIGHLIGHT layer shows (default the mock's mouse focus).
   ---@return table stats with page width and height
   function W.renderHTML(root, path, opts)
     opts = opts or {}
-    opts.scale = opts.scale or 1
+    opts.scale = opts.scale or W.physicalHeight / 768
     -- The client lays out pending size changes before it draws, so a checkpoint mid-step sees settled sizes.
     for _ = 1, 10 do
       if W.layoutPass() == 0 then break end

@@ -3,7 +3,6 @@ return function(W)
   local S, usage, checkNumber = W.state, W.usage, W.checkNumber
   local G = _G
 
-  W.screenWidth, W.screenHeight = 1920, 1080
   W.now = 1000
   W.printed = {}
   W.popups = {}

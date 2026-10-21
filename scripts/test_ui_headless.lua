@@ -4,7 +4,8 @@
 --   --developer                   also load the #@do-not-package@ Developer files
 --   --dump=path                   write a text snapshot of the visible frame tree at each checkpoint
 --   --render=dir                  write <dir>/<checkpoint>.html renders of the main window at each checkpoint
---   --render-scale=n              pixels per UI unit in those renders (default 1)
+--   --render-scale=n              pixels per scale-1 UI unit in those renders (default: physical pixels)
+--   --screen=WxH                  monitor resolution in physical pixels (default 1920x1080)
 --   --savedvariables=path         boot with a SavedVariables file (e.g. WTF/.../MythicDungeonTools.lua)
 --   --write-savedvariables=path   write MythicDungeonToolsDB after PLAYER_LOGOUT
 --   --undefined-globals           list undefined globals that were read
@@ -19,6 +20,11 @@ local W = dofile(root.."/scripts/headless/wow.lua")
 W.strict = flags.strict == true
 W.verbose = flags.verbose == true
 local Loader = dofile(root.."/scripts/headless/loader.lua")(W, { developer = flags.developer == true })
+if flags.screen then
+  local width, height = tostring(flags.screen):match("^(%d+)x(%d+)$")
+  assert(width, "--screen must look like 2560x1440")
+  W.setScreen(tonumber(width), tonumber(height))
+end
 Loader.register("MythicDungeonTools", root, "")
 Loader.register("MythicDungeonTools_UI", root.."/MythicDungeonTools_UI", "MythicDungeonTools_UI/")
 

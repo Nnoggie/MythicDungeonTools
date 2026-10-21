@@ -95,7 +95,7 @@ return function(ctx)
   end)
 
   step("kit root: MDT keeps the pixel-perfect scale whatever UI scale the user sets", function()
-    local pixelPerfect = 768 / W.screenHeight
+    local pixelPerfect = 768 / W.physicalHeight
     local function near(a, b) return math.abs(a - b) < 1e-6 end
     expect(near(UI.Root:GetEffectiveScale(), pixelPerfect), "root scale is "..UI.Root:GetEffectiveScale())
     local button = page:Find("default")
