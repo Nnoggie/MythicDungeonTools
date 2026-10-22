@@ -175,6 +175,21 @@ function MDT:ColorAllPulls(colorValues, startFrom, bypass, exportColorBlind)
   end
 end
 
+---Recolors the pulls of a route copy from its own palette, dropping the local color blind colors before an export.
+---@param preset table a copy, never a stored route
+function MDT:ColorPullsForExport(preset)
+  local info = preset.colorPaletteInfo
+  if not info or not info.autoColoring then return end
+  local custom = info.colorPaletteIdx == 6
+  local colorValues = custom and info.customPaletteValues or colorPaletteValues[info.colorPaletteIdx]
+  local numberColors = custom and info.numberCustomColors or colorValues and #colorValues
+  if not colorValues or not numberColors or numberColors < 1 then return end
+  for pullIdx, pull in pairs(preset.value.pulls) do
+    local color = colorValues[(pullIdx - 1) % numberColors + 1]
+    if color then pull.color = MDT:RGBToHex(color[1], color[2], color[3]) end
+  end
+end
+
 function MDT:PresetsAddPull(index, data, preset)
   preset = preset or self:GetCurrentPreset()
   if not data then data = {} end

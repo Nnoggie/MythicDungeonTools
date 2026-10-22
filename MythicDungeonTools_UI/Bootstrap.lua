@@ -82,5 +82,10 @@ function MDT:AttachCoreAPI()
     GetDungeonName = function(...) return MDT:GetDungeonName(...) end,
     GetDungeonSublevels = function(...) return MDT:GetDungeonSublevels(...) end,
     OnMinimapVisibilityChanged = function() MDT:Settings_Refresh() end,
+    GetShareableRoutes = function() return MDT:API_GetShareableRoutes() end,
+    ExportRoutes = function(...) return MDT:API_ExportRoutes(...) end,
+    DecodeRoutes = function(...) return MDT:API_DecodeRoutes(...) end,
+    AreRouteStringsEqual = function(...) return MDT:API_AreRouteStringsEqual(...) end,
+    ImportRoutes = function(...) return MDT:API_ImportRoutes(...) end,
   }, pluginAPI)
 end

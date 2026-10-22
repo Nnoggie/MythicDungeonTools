@@ -14,8 +14,19 @@ local function repaint(self)
   self:SetAlpha(self.kitProps.disabled and DISABLED_ALPHA or 1)
 end
 
+local function applyLabel(self)
+  local props = self.kitProps
+  if props.userText then
+    Fonts.SetUserText(self.kitLabel, props.label or "", "body")
+  else
+    self.kitLabel:SetFontObject(Fonts.Get("body"))
+    self.kitLabel:SetText(props.label or "")
+  end
+end
+
 ---@class MDT.UI.CheckboxSpec : MDT.UI.CommonSpec
 ---@field label string?
+---@field userText boolean? a route name or other user-authored label: swaps to a fallback font when the client font lacks the glyphs
 ---@field value boolean?
 ---@field disabled boolean?
 ---@field onChange fun(value: boolean, self: MDT.UI.Control)?
@@ -26,7 +37,8 @@ function Methods:GetValue() return self.kitProps.value end
 UI.Define({
   name = "Checkbox", frameType = "Button", mixins = { Methods },
   props = {
-    { name = "label", default = "", set = function(self, v) self.kitLabel:SetText(v) end, relayout = true },
+    { name = "userText", default = false, set = applyLabel, relayout = true },
+    { name = "label", default = "", set = applyLabel, relayout = true },
     { name = "value", default = false, set = repaint },
     { name = "disabled", default = false, set = function(self, v) self:SetEnabled(not v) repaint(self) end },
     { name = "onChange", default = nil },

@@ -78,15 +78,22 @@ function MDT:OpenImportPresetDialog()
       MDT:HideAllDialogs()
       return
     end
-    local newPreset = MDT:StringToTable(pasted or input:GetValue())
-    if MDT:ValidateImportPreset(newPreset) then
-      dialog:Close("confirm")
-      MDT:ImportPreset(newPreset)
-      if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
-    else
-      problem:SetText(type(newPreset) == "string" and newPreset or L["Invalid import string"])
-      problem:SetHidden(false)
+    local routes, reason, isBatch = MDT:DecodeRouteString(pasted or input:GetValue())
+    if routes and not isBatch and not MDT:IsRouteDungeonKnown(routes[1]) then
+      routes, reason = nil, L["routeBatchUnknownDungeon"]
     end
+    if not routes then
+      problem:SetText(reason)
+      problem:SetHidden(false)
+      return
+    end
+    dialog:Close("confirm")
+    if isBatch then
+      MDT:OpenRouteBatchImportDialog(routes)
+      return
+    end
+    MDT:ImportPreset(routes[1])
+    if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
   end
   UI.Dialogs.Open({
     key = "importPreset", title = L["Import Preset"], width = 400,
@@ -168,6 +175,27 @@ function MDT:OpenRenamePresetDialog()
   })
 end
 
+---A read-only string with Select all and the copy hint; Ctrl+C closes the dialog.
+local function buildExportString(content, dialog, label, text)
+  local box
+  box = UI.EditBox(content, {
+    id = "text", label = label, value = text, multiline = true, lines = 20,
+    readOnly = true, selectAllOnFocus = true, autoFocus = true,
+    onFocusLost = function() MDT.copyHelper:SmartHide() end,
+    onCopy = function()
+      MDT.copyHelper:SmartFadeOut()
+      dialog:Close("confirm")
+    end,
+    onEscape = function() dialog:Close("escape") end,
+  })
+  local row = UI.Row(content, { align = "end" })
+  UI.Button(row, { id = "selectAll", text = L["Select all"], onClick = function()
+    box:Focus()
+    box:SelectAll()
+    MDT.copyHelper:SmartShow(dialog, 0, 0)
+  end })
+end
+
 ---Shows a read-only string with Select all and the copy hint; Ctrl+C closes it.
 ---@param label string
 ---@param text string
@@ -176,28 +204,13 @@ function MDT:OpenExportStringDialog(label, text)
   local dialog = UI.Dialogs.Open({
     key = "export", title = L["Export"], width = 600,
     onClose = function() MDT.copyHelper:SmartHide() end,
-    build = function(content, dialog)
-      local box
-      box = UI.EditBox(content, {
-        id = "text", label = label, value = text, multiline = true, lines = 20,
-        readOnly = true, selectAllOnFocus = true, autoFocus = true,
-        onFocusLost = function() MDT.copyHelper:SmartHide() end,
-        onCopy = function()
-          MDT.copyHelper:SmartFadeOut()
-          dialog:Close("confirm")
-        end,
-        onEscape = function() dialog:Close("escape") end,
-      })
-      local row = UI.Row(content, { align = "end" })
-      UI.Button(row, { id = "selectAll", text = L["Select all"], onClick = function()
-        box:Focus()
-        box:SelectAll()
-        MDT.copyHelper:SmartShow(dialog, 0, 0)
-      end })
-    end,
+    build = function(content, dialog) buildExportString(content, dialog, label, text) end,
   })
   MDT.copyHelper:SmartShow(dialog, 0, 0)
 end
+
+-- The export dialog opens on the tab used last, until the next reload.
+local exportTab = "current"
 
 function MDT:OpenExportDialog()
   initializeDB()
@@ -212,8 +225,28 @@ function MDT:OpenExportDialog()
   preset.difficulty = db.currentDifficulty
   preset.addonVersion = db.version
   local export = MDT:TableToString(preset)
-  MDT:OpenExportStringDialog(preset.text.." "..string.len(export), export)
   if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
+  MDT:HideAllDialogs()
+  local dialog = UI.Dialogs.Open({
+    key = "export", title = L["Export"], width = 600,
+    onClose = function() MDT.copyHelper:SmartHide() end,
+    build = function(content, dialog)
+      UI.Tabs(content, {
+        id = "tabs", selected = exportTab,
+        tabs = {
+          { key = "current", text = L["Current Route"], build = function(tab)
+            buildExportString(tab, dialog, preset.text.." "..string.len(export), export)
+          end },
+          { key = "multiple", text = L["Multiple Routes"], build = function(tab) MDT:BuildMultipleRoutesExport(tab, dialog) end },
+        },
+        onSelect = function(key)
+          exportTab = key
+          if key == "current" then MDT.copyHelper:SmartShow(dialog, 0, 0) else MDT.copyHelper:SmartHide() end
+        end,
+      })
+    end,
+  })
+  if exportTab == "current" then MDT.copyHelper:SmartShow(dialog, 0, 0) end
 end
 
 function MDT:OpenDeletePresetDialog()

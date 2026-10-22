@@ -219,7 +219,7 @@ function MDT:UpdateDungeonDropDown()
     end
     local mapInfo = MDT.mapInfo[dungeonIdx]
     button.dungeonIdx = dungeonIdx
-    button.texture:SetTexture(mapInfo.iconId or (mapInfo.teleportId and C_Spell.GetSpellTexture(mapInfo.teleportId)) or 134400)
+    button.texture:SetTexture(MDT:GetDungeonIcon(dungeonIdx))
     button.texture:SetTexCoord(ICON_CROP, 1 - ICON_CROP, ICON_CROP, 1 - ICON_CROP)
     button.shortText:SetText(mapInfo.shortName)
     button:SetScript("OnClick", function(self, button)
@@ -262,6 +262,14 @@ function MDT:CreateSublevelDropdown(frame)
     MDT:UpdateMap()
   end)
   sublevelDropdown:SetPoint("TOPLEFT", frame, "TOPLEFT", 4, -(BUTTON_SIZE + 4))
+end
+
+---The dungeon's icon: its own, else its teleport spell's, else a question mark.
+---@param dungeonIdx integer
+---@return number|string
+function MDT:GetDungeonIcon(dungeonIdx)
+  local mapInfo = MDT.mapInfo[dungeonIdx] or {}
+  return mapInfo.iconId or (mapInfo.teleportId and C_Spell.GetSpellTexture(mapInfo.teleportId)) or 134400
 end
 
 function MDT:SetDungeonList(key, dungeonIdx)

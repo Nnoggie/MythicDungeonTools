@@ -221,6 +221,7 @@ function MDT:RegisterErrorHandledFunctions()
     ["RegisterErrorHandledFunctions"] = true,
     ["OnError"] = true,
   }
+  local function packResults(...) return { n = select("#", ...), ... } end
   local tablesToAdd = {
     MDT, MDTDungeonEnemyMixin
   }
@@ -229,16 +230,16 @@ function MDT:RegisterErrorHandledFunctions()
       if type(func) == "function" and not blacklisted[funcName] then
         table[funcName] = function(...)
           currentFunc = funcName
-          local results = { xpcall(func, onError, ...) }
-          local ok = select(1, unpack(results))
-          if not ok then
+          -- n keeps returns after a nil, such as `nil, problem`
+          local results = packResults(xpcall(func, onError, ...))
+          if not results[1] then
             if addTrace then
               --add stackTrace to the latest error
               caughtErrors[#caughtErrors].stackTrace = currentFunc..":\n"..debugstack()
             end
             return
           end
-          return select(2, unpack(results))
+          return unpack(results, 2, results.n)
         end
       end
     end

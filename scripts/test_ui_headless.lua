@@ -271,6 +271,7 @@ dofile(root.."/scripts/headless/enemy_info_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, developer = flags.developer == true,
 })
 dofile(root.."/scripts/headless/dialogs_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, snapshot = snapshot, unusedPresetName = unusedPresetName, presetCount = presetCount })
+dofile(root.."/scripts/headless/route_batch_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, snapshot = snapshot })
 
 step("spell and item icons on the map are zoomed 20%", function()
   local db = MDT:GetDB()

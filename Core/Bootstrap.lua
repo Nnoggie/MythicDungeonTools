@@ -233,6 +233,51 @@ MDT:ExportAPI("GetEnemyForces")
 MDT:ExportAPI("GetDungeonName")
 MDT:ExportAPI("GetDungeonSublevels")
 
+-- Route sharing for other addons, such as WagoUI packs. Routes are identified by their uid; every call loads the MDT UI.
+-- The core has no translations, so the message for a UI that cannot load is English.
+local UI_LOAD_FAILED = "MDT could not load its interface."
+
+---@return table[]? routes {uid, name, dungeonIdx, dungeonName, dungeonIcon, pulls, author?, authorClass?, currentSeason}: every
+---route with content, newest season first; nil when the UI cannot load. authorClass is the author's class file name, such
+---as "MAGE"; currentSeason marks routes of the season selected in MDT.
+function API:GetShareableRoutes()
+  return callUI("GetShareableRoutes")
+end
+
+---@param uids string|string[]
+---@return string? export a route string for one uid, one string carrying all routes for several, nil when none is found
+function API:ExportRoutes(uids)
+  return callUI("ExportRoutes", uids)
+end
+
+---@param text string a route string or a string carrying several routes
+---@return table[]? routes {uid?, name, dungeonIdx, dungeonName?, dungeonIcon, pulls, author?, authorClass?, known}; known is false for dungeons this MDT lacks
+---@return string? problem
+function API:DecodeRoutes(text)
+  local routes, problem = callUI("DecodeRoutes", text)
+  if routes == nil and problem == nil then return nil, UI_LOAD_FAILED end
+  return routes, problem
+end
+
+---Whether two strings carry the same routes, ignoring which MDT version exported them.
+---@param textA string
+---@param textB string
+---@return boolean
+function API:AreRouteStringsEqual(textA, textB)
+  return callUI("AreRouteStringsEqual", textA, textB) == true
+end
+
+---Opens MDT with every route of the strings listed; the player picks which to import.
+---@param texts string|string[]
+---@param callback fun(imported: table<string, boolean>)? runs once when the list closes, with the uids of the imported routes
+---@return boolean opened
+---@return string? problem
+function API:ImportRoutes(texts, callback)
+  local opened, problem = callUI("ImportRoutes", texts, callback)
+  if opened == nil then return false, UI_LOAD_FAILED end
+  return opened, problem
+end
+
 BINDING_HEADER_MDT = "Mythic Dungeon Tools (MDT)"
 BINDING_NAME_MDTTOGGLE = L["Toggle MDT"]
 _G["BINDING_NAME_CLICK MDTFocusMarkerButton:LeftButton"] = L["MDT Set Focus Macro"]

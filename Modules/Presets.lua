@@ -325,7 +325,8 @@ function MDT:SanitizePresetName(text)
   end
 end
 
-function MDT:ValidateImportPreset(preset, allowKnownDungeon)
+---Whether a table has the fields every route has, whatever its dungeon.
+function MDT:IsRouteShapeValid(preset)
   if type(preset) ~= "table" then return false end
   if not preset.text then return false end
   if not preset.value then return false end
@@ -336,6 +337,11 @@ function MDT:ValidateImportPreset(preset, allowKnownDungeon)
   if not preset.value.currentSublevel then return false end
   if not preset.value.pulls then return false end
   if type(preset.value.pulls) ~= "table" then return false end
+  return true
+end
+
+function MDT:ValidateImportPreset(preset, allowKnownDungeon)
+  if not MDT:IsRouteShapeValid(preset) then return false end
   if not MDT.dungeonList[preset.value.currentDungeonIdx] and
       not (allowKnownDungeon and MDT.knownDungeons and MDT.knownDungeons[preset.value.currentDungeonIdx]) then
     return false
