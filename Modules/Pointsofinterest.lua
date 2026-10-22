@@ -1214,10 +1214,20 @@ local function POI_SetOptions(frame, type, poi)
       MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       local title = info.name and (L[info.name] or info.name) or ""
       if poi.index then
-        title = title.." "..poi.index
+        -- names containing %d place the index themselves, e.g. "Snitch %d Interrogated"
+        if title:find("%d", 1, true) then
+          title = title:format(poi.index)
+        else
+          title = title.." "..poi.index
+        end
       end
       if info.spellId then
         MDTTooltip:SetSpellByID(info.spellId)
+        -- spell tooltips set their own title, so append the index to it
+        local titleLine = _G[MDTTooltip:GetName().."TextLeft1"]
+        if poi.index and titleLine and titleLine:GetText() then
+          titleLine:SetText(titleLine:GetText().." "..poi.index)
+        end
       else
         GameTooltip_SetTitle(MDTTooltip, title)
       end

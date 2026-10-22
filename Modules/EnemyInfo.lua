@@ -661,10 +661,49 @@ local function holdsMouseFocus(card)
   return false
 end
 
----A click on a pinned card behind another brings it to the front. The kit frames in a card take its clicks, so the
----card watches every click instead of its own.
+---Kit controls that only lay out or show text. Every kit control takes the mouse, so a press on them never reaches the
+---card; the card drags from them instead. Anything else, buttons, the spell list or the model, keeps its own handling.
+local DRAG_THROUGH = { Stack = true, Row = true, Text = true, Heading = true }
+---How far the cursor moves with the button down before a press on a card's text becomes a drag, in screen pixels.
+local DRAG_THRESHOLD = 4
+
+---The pinned card a press at the cursor drags from its content: the cursor is on the card's layout or text only. A press
+---on the card itself or its title drags through their own scripts.
+---@return MDT.EnemyCard?
+local function cardUnderContentPress()
+  ---@type table? kit controls carry their class in .kit
+  local frame = GetMouseFoci()[1]
+  if not (frame and frame.kit and DRAG_THROUGH[frame.kit.name]) then return nil end
+  while frame do
+    for _, card in ipairs(pinnedCards) do
+      if frame == card then return card end
+    end
+    if not (frame.kit and DRAG_THROUGH[frame.kit.name]) then return nil end
+    frame = frame:GetParent()
+  end
+end
+
+local startDrag
+
+---Drags the card once the cursor moves far enough with the button still down; a press released before that is a click.
+local function watchPress(card)
+  local x, y = GetCursorPosition()
+  UI.Script(card, "OnUpdate", function()
+    if not IsMouseButtonDown("LeftButton") then return stopDrag(card) end
+    local cx, cy = GetCursorPosition()
+    if math.abs(cx - x) + math.abs(cy - y) >= DRAG_THRESHOLD then startDrag(card, x, y) end
+  end)
+end
+
+---A click on a pinned card behind another brings it to the front, and a press on its layout or text can drag it. The
+---kit frames in a card take its clicks, so the card watches every click instead of its own.
 local frontWatcher = CreateFrame("Frame")
-UI.Script(frontWatcher, "OnEvent", function()
+UI.Script(frontWatcher, "OnEvent", function(_, _, button)
+  local pressed = button == "LeftButton" and cardUnderContentPress()
+  if pressed then
+    bringToFront(pressed)
+    return watchPress(pressed)
+  end
   for i = 1, #pinnedCards - 1 do
     local card = pinnedCards[i]
     if holdsMouseFocus(card) then return bringToFront(card) end
@@ -673,9 +712,12 @@ end)
 
 ---Drags a card with the cursor until the button is released, in front of the others. StartMoving can only keep a frame
 ---on the screen, not on the map.
-local function startDrag(card)
+---@param card MDT.EnemyCard
+---@param x number? where the press began, in screen pixels; the card keeps its place under it. The cursor by default.
+---@param y number?
+startDrag = function(card, x, y)
   bringToFront(card)
-  local x, y = GetCursorPosition()
+  if not x then x, y = GetCursorPosition() end
   local scale = card:GetEffectiveScale()
   card.dragOffsetX, card.dragOffsetY = x / scale - card:GetLeft(), y / scale - card:GetTop()
   UI.Script(card, "OnUpdate", followCursor)
@@ -773,13 +815,30 @@ pin = function(blip)
 end
 
 ---@param blip table
-showHover = function(blip)
+---@param place fun(card: MDT.EnemyCard, blip: table)? where the card goes; beside the enemy by default
+showHover = function(blip, place)
   hoverCard = hoverCard or createCard("hover")
   hoverBlip, heldOverBlip, corridorSince = blip, nil, nil
   anchorAt(hoverCard, blip)
   fill(hoverCard, blip)
-  placeBeside(hoverCard, blip)
+  local placeCard = place or placeBeside
+  placeCard(hoverCard, blip)
   hoverCard:Show()
+end
+
+---Shows the hover card for an enemy portrait in a pull row, beside the row like the pull's card. The portrait stands in
+---for the enemy on the map: the card stays while the cursor is on it.
+---@param portraitFrame table the portrait in the row
+---@param portrait MDT.SidebarPortrait
+---@param row table
+function MDT:ShowEnemyCardBesideRow(portraitFrame, portrait, row)
+  db = MDT:GetDB()
+  local data = MDT.dungeonEnemies[db.currentDungeonIdx][portrait.enemyIdx]
+  local clone = data and data.clones[portrait.cloneIdx]
+  if not clone then return end
+  portraitFrame.data, portraitFrame.clone = data, clone
+  portraitFrame.enemyIdx, portraitFrame.cloneIdx = portrait.enemyIdx, portrait.cloneIdx
+  showHover(portraitFrame, function(card) MDT:PlaceBesidePullRow(card, row) end)
 end
 
 ---Called by enemy blips on enter and leave. Entering shows the hover card for that enemy right away, unless Ctrl holds
@@ -788,7 +847,7 @@ end
 ---@param blip table
 ---@param shown boolean
 function MDT:DisplayBlipTooltip(blip, shown)
-  if not shown then return end
+  if not shown or MDT:IsPullLabelHovered() or MDT:IsEnemyDragging() then return end
   if pinnedCardFor(blip) then return end
   if IsControlKeyDown() and hoverCard and hoverCard:IsShown() then
     heldOverBlip = blip
@@ -801,6 +860,23 @@ end
 ---@param blip table
 function MDT:ShowEnemyInfoFrame(blip)
   pin(blip)
+end
+
+---Hides the enemy hover card; pinned cards stay.
+function MDT:HideEnemyHoverCard()
+  hideHover()
+end
+
+---Whether the enemy hover card is open.
+---@return boolean
+function MDT:IsEnemyHoverCardShown()
+  return hoverCard ~= nil and hoverCard:IsShown()
+end
+
+---What the open enemy hover card belongs to: an enemy on the map or a portrait in a pull row.
+---@return table?
+function MDT:GetEnemyHoverCardOwner()
+  return MDT:IsEnemyHoverCardShown() and hoverBlip or nil
 end
 
 ---Closes the hover card and every pinned card.

@@ -548,6 +548,70 @@ return function(ctx)
     blip = visibleBlips()[1]
   end)
 
+  step("efficiency colors rate a score against the dungeon's typical enemy: half red, typical yellow, double green", function()
+    local scores = {}
+    local total = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
+    local function score(count, health) return 2.5 * (count / total) * 13000 / (health / 20000) end
+    for _, enemy in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+      if not enemy.isBoss and (enemy.count or 0) > 0 and (enemy.health or 0) > 0 then scores[#scores + 1] = score(enemy.count, enemy.health) end
+    end
+    expect(#scores > 2, "setup: the dungeon has too few enemies")
+    table.sort(scores)
+    local middle = (#scores + 1) / 2
+    local typical = (scores[math.floor(middle)] + scores[math.ceil(middle)]) / 2
+    -- The health that gives 10 forces a score of typical * factor.
+    local function colorAt(factor) return select(2, MDT:GetEfficiencyScore(10, score(10, 1) / (typical * factor))) end
+    ---Whether a hex color is within rounding of red, green, blue in 0-255.
+    local function near(hex, r, g, b)
+      local cr, cg, cb = tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5, 6), 16)
+      return math.abs(cr - r) <= 2 and math.abs(cg - g) <= 2 and math.abs(cb - b) <= 2
+    end
+    expect(near(colorAt(1), 255, 255, 0), "the typical score is "..colorAt(1).." not yellow")
+    expect(near(colorAt(2), 0, 255, 0) and near(colorAt(4), 0, 255, 0), "twice the typical score is "..colorAt(2).." not green")
+    expect(near(colorAt(0.5), 255, 0, 0) and near(colorAt(0.1), 255, 0, 0), "half the typical score is "..colorAt(0.5).." not red")
+    expect(near(colorAt(1.41), 128, 255, 0), "1.41 times the typical score is "..colorAt(1.41).." not halfway to green")
+  end)
+
+  step("pinned enemy card: drags from anywhere on its layout and text, while its buttons, spells and model keep working", function()
+    local blip
+    for _, frame in ipairs(MDT.dungeonEnemies_framePool.active) do
+      if frame:IsVisible() and frame.data and frame.data.spells and next(frame.data.spells) then blip = frame break end
+    end
+    expect(blip, "setup: no visible enemy with spells")
+    MDT:CloseEnemyInfo()
+    MDT:ShowEnemyInfoFrame(blip)
+    local pinned = MDT:GetEnemyInfoCard("pinned")
+    expect(#MDT:GetEnemyInfoPinnedCards() == 1, "setup: other pinned cards are open")
+    expect(pinned and pinned:IsShown(), "setup: pinning opened no card")
+    ---Presses on a frame of the card, moves the cursor 40 pixels right with the button down and lets go; returns how far
+    ---the card moved.
+    local function dragFrom(frame)
+      local left = pinned:GetLeft()
+      local x, y = frame:GetCenter()
+      W.cursorTo(frame, x, y)
+      W.mouseFocus, W.mouseDown = frame, true
+      W.FireEvent("GLOBAL_MOUSE_DOWN", "LeftButton")
+      W.pump(0.02)
+      W.cursorTo(frame, x + 40, y)
+      W.pump(0.05)
+      W.cursorTo(frame, x + 40, y)
+      W.pump(0.05)
+      W.mouseDown = false
+      W.pump(0.05)
+      W.mouseFocus = nil
+      return pinned:GetLeft() - left
+    end
+    local health = pinned.content:Find("health")
+    expect(math.abs(dragFrom(health) - 40) < 1, "dragging from the card's health text did not move it with the cursor")
+    expect(math.abs(dragFrom(pinned.content:Find("stats")) - 40) < 1, "dragging from the card's layout did not move it")
+    local spells = pinned.content:Find("spells")
+    expect(spells and spells:GetRow(1), "setup: the pinned card lists no spells")
+    expect(dragFrom(spells:GetRow(1)) == 0, "a press on a spell row dragged the card")
+    expect(dragFrom(pinned.model) == 0, "a press on the model dragged the card")
+    expect(dragFrom(pinned.content:Find("linkSpells")) == 0, "a press on a button dragged the card")
+    pinned:Hide()
+  end)
+
   if not ctx.developer then return end
 
   local function panel() return main.devPanel end

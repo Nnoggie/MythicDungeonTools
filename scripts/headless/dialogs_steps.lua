@@ -280,6 +280,20 @@ return function(ctx)
     local copy = dialog.content:Find("copyError")
     click(copy)
     expect(box.kitEdit:HasFocus() and copy:IsDisabled() and MDT.copyHelper:IsShown(), "Copy error did not select the report with the hint")
+    -- The client reports the cursor again without it moving (after a layout pass, for one); that must not undo the
+    -- user's scrolling. With all text selected the cursor sits at the end, so each report would snap to the bottom.
+    local scroll = box.kitScroll
+    local viewH = scroll:GetHeight()
+    -- The harness does not measure wrapped text, so the report gets the height a long one has in the client.
+    local contentH = viewH * 3
+    box.kitEdit:SetHeight(contentH)
+    W.fireScript(box.kitEdit, "OnCursorChanged", 0, -(contentH - 14), 2, 14)
+    expect(math.abs(scroll:GetVerticalScroll() - (contentH - viewH)) < 0.5, "a moved cursor does not scroll into view")
+    W.fireScript(scroll, "OnMouseWheel", 1)
+    local scrolled = scroll:GetVerticalScroll()
+    expect(scrolled < contentH - viewH, "the wheel did not scroll the report up")
+    W.fireScript(box.kitEdit, "OnCursorChanged", 0, -(contentH - 14), 2, 14)
+    expect(scroll:GetVerticalScroll() == scrolled, "an unmoved cursor pulled the report back to the bottom")
     W.modifiers = { ctrl = true }
     W.fireScript(box.kitEdit, "OnKeyUp", "C")
     W.modifiers = nil

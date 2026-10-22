@@ -29,6 +29,7 @@ local MAX_PORTRAITS = 7
 
 ---@class MDT.SidebarPortrait
 ---@field enemyIdx integer
+---@field cloneIdx integer the lowest of its clones in the pull, which the enemy card shows
 ---@field npcId integer
 ---@field displayId integer?
 ---@field quantity integer
@@ -49,7 +50,9 @@ local MAX_PORTRAITS = 7
 ---@field cumulative integer
 ---@field pullText string "+8.8%" or "+64", empty for a pull with no forces
 ---@field cumulativeText string "45.2%" or "329"
----@field healthText string?
+---@field healthText string? only with Show pull health on
+---@field health number health of every enemy in the pull at the current level
+---@field baseHealth number health of every enemy in the pull before level scaling, as efficiency scores use it
 ---@field completes boolean? the pull where the running total first reaches 100% (only when more pulls follow)
 
 ---@class MDT.SidebarHeader
@@ -94,9 +97,9 @@ end
 ---Groups the clones of one pull by (enemy, forces per clone), the way the old pull button did.
 ---@param pull table
 ---@param ctx MDT.SidebarContext
----@return integer forces, MDT.SidebarPortrait[] portraits, boolean isBoss, number health
+---@return integer forces, MDT.SidebarPortrait[] portraits, boolean isBoss, number health, number baseHealth
 function Model.SummarizePull(pull, ctx)
-  local forces, health, isBoss = 0, 0, false
+  local forces, health, baseHealth, isBoss = 0, 0, 0, false
   local portraits, byKey = {}, {}
   for enemyIdx, clones in pairs(pull) do
     local enemy = tonumber(enemyIdx) and ctx.enemies[enemyIdx]
@@ -107,12 +110,13 @@ function Model.SummarizePull(pull, ctx)
           local count = clone.count or enemy.count
           forces = forces + count
           health = health + ctx.healthOf(enemy)
+          baseHealth = baseHealth + (enemy.health or 0)
           isBoss = isBoss or enemy.isBoss == true
           local key = enemyIdx.."\1"..count
           local entry = byKey[key]
           if not entry then
             entry = {
-              enemyIdx = enemyIdx, npcId = enemy.id, displayId = enemy.displayId, quantity = 0, count = count,
+              enemyIdx = enemyIdx, cloneIdx = cloneIdx, npcId = enemy.id, displayId = enemy.displayId, quantity = 0, count = count,
               name = enemy.name, level = enemy.level, creatureType = enemy.creatureType, baseHealth = enemy.health,
               ignoreFortified = enemy.ignoreFortified, isBoss = enemy.isBoss == true,
             }
@@ -120,6 +124,7 @@ function Model.SummarizePull(pull, ctx)
             portraits[#portraits + 1] = entry
           end
           entry.quantity = entry.quantity + 1
+          entry.cloneIdx = math.min(entry.cloneIdx, cloneIdx)
         end
       end
     end
@@ -129,7 +134,76 @@ function Model.SummarizePull(pull, ctx)
     return a.enemyIdx < b.enemyIdx
   end)
   for i = #portraits, MAX_PORTRAITS + 1, -1 do portraits[i] = nil end
-  return forces, portraits, isBoss, health
+  return forces, portraits, isBoss, health, baseHealth
+end
+
+---@class MDT.PullInterrupt
+---@field spellId integer
+---@field casters integer how many of the pull's enemies cast it
+
+---@class MDT.PullCaster
+---@field enemyIdx integer
+---@field name string
+---@field displayId integer?
+---@field iconTexture (string|number)? a portrait some enemies have in place of a creature display
+---@field count integer how many of the pull's enemies the entry stands for
+---@field spellIds integer[] its interruptible spells
+
+---The pull's enemies that cast interruptible spells, as the pull card lists them: enemies of a kind with one such spell
+---share an entry, an enemy with several gets an entry of its own. Entries standing for the most enemies come first.
+---@param pull table
+---@param enemies table<integer, table> enemies of the current dungeon
+---@return MDT.PullCaster[]
+function Model.PullCasters(pull, enemies)
+  local casters = {}
+  for enemyIdx, clones in pairs(pull) do
+    local enemy = tonumber(enemyIdx) and enemies[enemyIdx]
+    if enemy and enemy.spells then
+      local count = 0
+      for _, cloneIdx in pairs(clones) do
+        if enemy.clones[cloneIdx] then count = count + 1 end
+      end
+      local spellIds = {}
+      for spellId, spell in pairs(enemy.spells) do
+        if spell.interruptible then spellIds[#spellIds + 1] = spellId end
+      end
+      table.sort(spellIds)
+      local function entry(stands)
+        return {
+          enemyIdx = enemyIdx, name = enemy.name, displayId = enemy.displayId, iconTexture = enemy.iconTexture,
+          count = stands, spellIds = spellIds,
+        }
+      end
+      if count > 0 and #spellIds == 1 then
+        casters[#casters + 1] = entry(count)
+      elseif #spellIds > 1 then
+        for _ = 1, count do casters[#casters + 1] = entry(1) end
+      end
+    end
+  end
+  table.sort(casters, function(a, b)
+    if a.count ~= b.count then return a.count > b.count end
+    return a.enemyIdx < b.enemyIdx
+  end)
+  return casters
+end
+
+---The interruptible spells a pull's enemies cast, each with how many of them cast it; the most cast first.
+---@param pull table
+---@param enemies table<integer, table> enemies of the current dungeon
+---@return MDT.PullInterrupt[]
+function Model.PullInterrupts(pull, enemies)
+  local casters = {}
+  for _, caster in ipairs(Model.PullCasters(pull, enemies)) do
+    for _, spellId in ipairs(caster.spellIds) do casters[spellId] = (casters[spellId] or 0) + caster.count end
+  end
+  local list = {}
+  for spellId, count in pairs(casters) do list[#list + 1] = { spellId = spellId, casters = count } end
+  table.sort(list, function(a, b)
+    if a.casters ~= b.casters then return a.casters > b.casters end
+    return a.spellId < b.spellId
+  end)
+  return list
 end
 
 local function countRoutes(presets)
@@ -150,16 +224,17 @@ function Model.LivePresetIdx(ctx)
   end
 end
 
----@param preset table
+---One item per pull with its forces, running total, health and portraits. The pull rows and the map's pull labels
+---both show these.
+---@param pulls table[]
 ---@param ctx MDT.SidebarContext
----@return {header: MDT.SidebarHeader, items: MDT.UI.ListItem[]}
-function Model.Build(preset, ctx)
-  local pulls = preset.value.pulls
+---@return MDT.SidebarPullItem[] items, integer cumulative forces of every pull
+function Model.PullItems(pulls, ctx)
   local total = ctx.totalForces
   local items = {}
   local cumulative, completed = 0, false
   for index, pull in ipairs(pulls) do
-    local forces, portraits, isBoss, health = Model.SummarizePull(pull, ctx)
+    local forces, portraits, isBoss, health, baseHealth = Model.SummarizePull(pull, ctx)
     local previous = cumulative
     cumulative = cumulative + forces
     local r, g, b = ctx.pullColor(index)
@@ -177,9 +252,19 @@ function Model.Build(preset, ctx)
       kind = "pull", key = index, sig = table.concat(sigParts, "|"),
       index = index, color = { r, g, b }, portraits = portraits, isBoss = isBoss,
       forces = forces, cumulative = cumulative, pullText = pullText, cumulativeText = cumulativeText, healthText = healthText,
-      completes = completes,
+      health = health, baseHealth = baseHealth, completes = completes,
     }
   end
+  return items, cumulative
+end
+
+---@param preset table
+---@param ctx MDT.SidebarContext
+---@return {header: MDT.SidebarHeader, items: MDT.UI.ListItem[]}
+function Model.Build(preset, ctx)
+  local total = ctx.totalForces
+  local pullItems, cumulative = Model.PullItems(preset.value.pulls, ctx)
+  local items = pullItems --[[@as MDT.UI.ListItem[] ]]
   items[#items + 1] = { kind = "newPull", key = "new" }
 
   local isLiveRoute = ctx.liveActive and preset.uid ~= nil and preset.uid == ctx.livePresetUID
