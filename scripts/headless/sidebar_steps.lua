@@ -1,7 +1,7 @@
 -- Harness steps for the kit sidebar: route list, level stepper, forces bar, pull rows, drag reorder,
 -- context menu, the more menu and its dialogs, live state and hover. Driven through real frames. Not shipped code.
 return function(ctx)
-  local W, MDT, step, expect, click, asyncIdle = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.asyncIdle
+  local W, MDT, step, expect, click, asyncIdle, render = ctx.W, ctx.MDT, ctx.step, ctx.expect, ctx.click, ctx.asyncIdle, ctx.render
   local unusedPresetName, presetCount = ctx.unusedPresetName, ctx.presetCount
   local UI = MDT.UI
   local L = MDT.L
@@ -386,6 +386,63 @@ return function(ctx)
     MDT:RefreshSidebar()
     for _, item in ipairs(control("pulls").kitProps.items) do expect(not item.completes, "a pull is marked below 100%") end
     totals.normal = realTotal
+    MDT:RefreshSidebar()
+  end)
+
+  step("sidebar: with pull health shown, a pull row's texts overlap neither each other nor its portraits", function()
+    ensurePulls(3)
+    -- Pull 1: seven enemy types, the healthiest, for the widest texts. Pull 2: a boss, with health but no forces.
+    local enemies, boss = {}, nil
+    for enemyIdx, enemy in pairs(MDT.dungeonEnemies[db.currentDungeonIdx]) do
+      if enemy.clones[1] then
+        if enemy.isBoss then boss = boss or enemyIdx elseif enemy.count > 0 then enemies[#enemies + 1] = enemyIdx end
+      end
+    end
+    local data = MDT.dungeonEnemies[db.currentDungeonIdx]
+    table.sort(enemies, function(a, b) return data[a].health > data[b].health end)
+    expect(#enemies >= 7 and boss, "setup: the dungeon lacks seven enemy types and a boss")
+    local saved = { pulls()[1], pulls()[2], db.showPullButtonHealth }
+    pulls()[1], pulls()[2] = {}, { [boss] = { 1 } }
+    for i = 1, 7 do pulls()[1][enemies[i]] = { 1 } end
+
+    local function rowsFit(where)
+      local list = control("pulls")
+      for index = 1, 2 do
+        local row = list:GetRow(index)
+        local top, bottom = row.kitCumulative, row.kitPull
+        local lastPortrait
+        for _, portrait in ipairs(row.kitPortraits) do
+          if portrait:IsShown() then lastPortrait = portrait end
+        end
+        local portraitsEnd = lastPortrait and lastPortrait:GetRight() + 3 or row:GetLeft()
+        for _, text in ipairs({ top, bottom }) do
+          local width = text:GetUnboundedStringWidth()
+          expect(width <= text:GetWidth() + 0.5, ("pull %d %s: %q wraps (%.1f in %.1f)"):format(index, where, text:GetText(), width, text:GetWidth()))
+          expect(text:GetRight() - width >= portraitsEnd, ("pull %d %s: %q runs into the portraits"):format(index, where, text:GetText()))
+        end
+        expect(top:GetBottom() >= bottom:GetTop() - 0.5, ("pull %d %s: the top and bottom texts overlap"):format(index, where))
+      end
+      return list
+    end
+
+    db.showPullButtonHealth = false
+    MDT:RefreshSidebar()
+    local list = rowsFit("without health")
+    for i = 1, 7 do expect(list:GetRow(1).kitPortraits[i]:IsShown(), "without health, portrait "..i.." of pull 1 is hidden") end
+
+    db.showPullButtonHealth = true
+    MDT:RefreshSidebar()
+    list = rowsFit("with health")
+    local items = list.kitProps.items
+    for index = 1, 2 do
+      local row = list:GetRow(index)
+      expect(items[index].healthText and row.kitPull:GetText():find(items[index].healthText, 1, true),
+        ("pull %d does not show its health beside its own forces: %q"):format(index, tostring(row.kitPull:GetText())))
+      expect(row.kitCumulative:GetText() == items[index].cumulativeText, ("pull %d's total shows more than the total: %q"):format(index, row.kitCumulative:GetText()))
+    end
+    render("sidebar pull health", MDT.main_frame.sidePanel)
+
+    pulls()[1], pulls()[2], db.showPullButtonHealth = saved[1], saved[2], saved[3]
     MDT:RefreshSidebar()
   end)
 

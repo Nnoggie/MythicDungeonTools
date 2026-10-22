@@ -228,7 +228,7 @@ step("switch dungeon via dungeon button", function()
 end)
 
 dofile(root.."/scripts/headless/sidebar_steps.lua")({
-  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render,
   unusedPresetName = unusedPresetName, presetCount = presetCount,
 })
 

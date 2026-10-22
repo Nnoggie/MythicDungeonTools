@@ -7,7 +7,8 @@ local NUMBER_WIDTH = 18
 local PORTRAIT = 24
 local PORTRAIT_OVERLAP = 4
 local MAX_PORTRAITS = 7
-local VALUE_WIDTH = 60
+---How far a portrait's count runs past its right edge.
+local COUNT_OVERHANG = 3
 local ROW_HEIGHT = 34
 -- Pull colors are bright palette colors; mixing them toward the panel background keeps white text readable.
 local TINT_MUTE = 0.5
@@ -213,7 +214,7 @@ function PullRow:OnCreate()
   self.kitCumulative:SetShadowColor(0, 0, 0, 1)
   self.kitCumulative:SetShadowOffset(1, -1)
   self.kitCumulative:SetPoint("TOPRIGHT", self, "TOPRIGHT", -Theme.Space("md"), -4)
-  self.kitCumulative:SetWidth(VALUE_WIDTH)
+  self.kitCumulative:SetWordWrap(false)
   self.kitCumulative:SetJustifyH("RIGHT")
   Theme.Bind(self.kitCumulative, "text.normal")
   self.kitPull = self:CreateFontString(nil, "ARTWORK")
@@ -221,7 +222,7 @@ function PullRow:OnCreate()
   self.kitPull:SetShadowColor(0, 0, 0, 1)
   self.kitPull:SetShadowOffset(1, -1)
   self.kitPull:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", -Theme.Space("md"), 4)
-  self.kitPull:SetWidth(VALUE_WIDTH)
+  self.kitPull:SetWordWrap(false)
   self.kitPull:SetJustifyH("RIGHT")
   Theme.Bind(self.kitPull, "text.secondary")
   self.kitWatcher = CreateFrame("Frame", nil, self)
@@ -231,6 +232,23 @@ function PullRow:OnCreate()
     row:kitWatchPortraits(false)
     PullTooltip.Hide(row)
   end)
+  self:HookScript("OnSizeChanged", function(row) row:kitFitPortraits() end)
+end
+
+---Shows the portraits that end before the forces and health on the right; a long health text can leave no room for
+---the last ones.
+function PullRow:kitFitPortraits()
+  local item = self.kitItem
+  if not item then return end
+  local valuesWidth = math.max(self.kitCumulative:GetUnboundedStringWidth(), self.kitPull:GetUnboundedStringWidth())
+  -- A row is bound before the list places it; until then it has no width, and OnSizeChanged fits it once placed.
+  local width = self:GetWidth()
+  local room = width > 0 and width - Theme.Space("md") - valuesWidth - Theme.Space("sm") or math.huge
+  local left = Theme.Space("xs") + NUMBER_WIDTH + Theme.Space("sm")
+  for i, portrait in ipairs(self.kitPortraits) do
+    local right = left + i * PORTRAIT - (i - 1) * PORTRAIT_OVERLAP + COUNT_OVERHANG
+    portrait:SetShown(item.portraits[i] ~= nil and right <= room)
+  end
 end
 
 ---@param item MDT.SidebarPullItem
@@ -248,16 +266,17 @@ function PullRow:Bind(item)
         portrait.texture:SetTexture("Interface\\Icons\\achievement_boss_hellfire_mannorothreanimated")
       end
       portrait.count:SetText("x"..data.quantity)
-      portrait:Show()
-    else
-      portrait:Hide()
     end
   end
   self.kitComplete:SetShown(item.completes == true)
-  self.kitPull:SetText(item.pullText)
-  local cumulative = item.cumulativeText
-  if item.healthText then cumulative = cumulative.." · "..item.healthText end
-  self.kitCumulative:SetText(cumulative)
+  self.kitCumulative:SetText(item.cumulativeText)
+  -- The health is this pull's own, like the forces below the total, so it sits beside them.
+  local pull, health = item.pullText, item.healthText
+  if health then pull = pull ~= "" and pull.." · "..health or health end
+  self.kitPull:SetText(pull)
+  -- Sized to their text, so they never wrap into each other; the portraits make room instead.
+  for _, text in ipairs({ self.kitCumulative, self.kitPull }) do text:SetWidth(math.ceil(text:GetUnboundedStringWidth())) end
+  self:kitFitPortraits()
 end
 
 function PullRow:OnUnbind()
