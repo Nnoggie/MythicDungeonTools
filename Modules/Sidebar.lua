@@ -1,7 +1,7 @@
 local _, MDT = ...
 local L = MDT.L
 local UI = MDT.UI
-local Theme, Selection, Model, PullTooltip = UI.Theme, UI.Selection, MDT.SidebarModel, MDT.PullTooltip
+local Theme, Selection, Model = UI.Theme, UI.Selection, MDT.SidebarModel
 
 local TOP_HEIGHT = 24
 local ACTION_COUNT = 4
@@ -36,6 +36,8 @@ end
 ---The impure edge: everything SidebarModel.Build reads, gathered from db and the live state.
 ---@return MDT.SidebarContext
 function MDT:SidebarContext()
+  -- The map's pull labels ask for this too, and may do so before the sidebar is built.
+  db = db or MDT:GetDB()
   local dungeonIdx = db.currentDungeonIdx
   local preset = MDT:GetCurrentPreset()
   local author = MDT:GetCurrentRouteAuthor()
@@ -120,7 +122,7 @@ function MDT:SetSidebarShown(shown)
   sidebar.root:SetHidden(not shown)
   if not shown then
     UI.Overlay.PopAll("popover", "api")
-    PullTooltip.Hide()
+    MDT:HidePullListCards()
   end
 end
 
@@ -285,15 +287,42 @@ local function onContext(item, index, mods)
     if #pulls > 1 then MDT:DeletePull(index) end
     return nil
   end
-  local selection = MDT:GetSelection()
-  if #selection <= 1 then
+  if #MDT:GetSelection() <= 1 then
     MDT:SetMapSublevel(index)
     MDT:SetSelectionToPull(index)
-    selection = MDT:GetSelection()
   end
-  local ctx = { index = index, maxPulls = #pulls, selection = CopyTable(selection) }
-  MDT:CreateContextMenu(sidebar.list, Model.PullMenuItems(ctx, pullActions, L))
+  MDT:OpenPullMenu(sidebar.list, index)
   return nil
+end
+
+---Opens the pull menu for a pull, acting on the selection when the pull is part of it. The pull rows and the map's
+---pull labels open it.
+---@param owner table
+---@param index integer
+---@param title string? shown above the items
+function MDT:OpenPullMenu(owner, index, title)
+  local ctx = { index = index, maxPulls = #MDT:GetPulls(), selection = CopyTable(MDT:GetSelection()) }
+  local items = Model.PullMenuItems(ctx, pullActions, L)
+  if title then table.insert(items, 1, { kind = "title", text = title }) end
+  MDT:CreateContextMenu(owner, items)
+end
+
+---Runs a pull action the way the pull menu does, sending the pulls to a live session.
+---@param action string key of pullActions
+function MDT:RunPullAction(action, ...)
+  pullActions[action](...)
+end
+
+---Scrolls the pull list just far enough to show a pull's row, if it is out of view.
+---@param index integer
+function MDT:ScrollSidebarToPull(index)
+  if sidebar then sidebar.list:ScrollTo(index, "nearest") end
+end
+
+---Shows the running total up to a pull on the forces bar, like hovering its row; nil goes back to the route's total.
+---@param cumulative integer?
+function MDT:PreviewSidebarForces(cumulative)
+  if sidebar and sidebar.state then previewForces(cumulative) end
 end
 
 local function onReorder(keys, slot)
@@ -302,8 +331,9 @@ local function onReorder(keys, slot)
 end
 
 local function onHover(item, index, row)
-  if item.kind ~= "pull" then return end
-  PullTooltip.ShowPull(row, item)
+  -- An enemy dragged across the list shows no cards.
+  if item.kind ~= "pull" or MDT:IsEnemyDragging() then return end
+  MDT:ShowPullCardBesideRow(row, item)
   row:kitWatchPortraits(true)
   previewForces(item.cumulative)
   MDT:PullClickAreaOnEnter(index)
@@ -312,7 +342,8 @@ end
 local function onHoverEnd(item, index, row)
   if item.kind ~= "pull" then return end
   row:kitWatchPortraits(false)
-  PullTooltip.Hide(row)
+  -- An enemy card held by Ctrl stays; it closes itself once Ctrl is let go away from it.
+  if IsControlKeyDown() then MDT:HidePullCardBesideRow(row) else MDT:HidePullListCards(row) end
   previewForces(nil)
   MDT:PullClickAreaOnLeave()
 end
@@ -437,7 +468,7 @@ function MDT:MakeSidebar(sidePanel)
     })
   end)
   sidebar = built
-  sidePanel:GetParent():HookScript("OnHide", function() PullTooltip.Hide() end)
+  sidePanel:GetParent():HookScript("OnHide", function() MDT:HidePullListCards() end)
   MDT:RefreshSidebar()
 end
 

@@ -232,6 +232,10 @@ dofile(root.."/scripts/headless/sidebar_steps.lua")({
   unusedPresetName = unusedPresetName, presetCount = presetCount,
 })
 
+dofile(root.."/scripts/headless/pull_label_steps.lua")({
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render,
+})
+
 for _, section in ipairs(MDT:GetNavigationSections()) do
   step("open navigation section "..section.key, function()
     click(main.navigationSidebar.buttons[section.key])

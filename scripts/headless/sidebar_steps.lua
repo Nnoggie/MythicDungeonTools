@@ -163,6 +163,17 @@ return function(ctx)
     local list = control("pulls")
     local row = list:GetRow(preset().value.currentPull)
     expect(row and row.kitPortraits[1]:IsShown(), "the pull row shows no portrait for the enemy")
+    -- The portrait wears the enemy's ring from the map, its face inside at the map's size.
+    local portrait = row.kitPortraits[1]
+    local ring, face = portrait.ring, portrait.texture
+    expect(ring:GetTexture() == MDT.EnemyRing.texture and select(1, ring:GetTexCoord()) == MDT.EnemyRing.coords[1], "the pull row portrait has not the enemy's ring")
+    local rx, ry = ring:GetCenter()
+    local fx, fy = face:GetCenter()
+    expect(math.abs(rx - fx) < 0.5 and math.abs(ry - fy) < 0.5 and math.abs(face:GetHeight() - ring:GetHeight() * MDT.EnemyRing.face) < 0.01,
+      "the pull row portrait's face does not sit in its ring as on the map")
+    local _, ringSub = ring:GetDrawLayer()
+    local _, faceSub = face:GetDrawLayer()
+    expect(ringSub > faceSub, "the ring is under the face")
     expect(row.kitPull:GetText():sub(1, 1) == "+", "the pull row shows no forces: "..tostring(row.kitPull:GetText()))
   end)
 
@@ -611,7 +622,7 @@ return function(ctx)
     MDT:RefreshSidebar()
   end)
 
-  step("sidebar: the scroll position survives an edit and hovering shows the tooltip and the model", function()
+  step("sidebar: the scroll position survives an edit, and hovering shows the pull card or an enemy's card", function()
     local list = control("pulls")
     while list.kitTotal < list.kitViewport:GetHeight() + 300 do MDT:AddPull() end
     W.settle(asyncIdle, 30)
@@ -627,18 +638,45 @@ return function(ctx)
     expect(row and row.kitPortraits[1]:IsShown(), "edited row did not rebind")
     W.cursorTo(row)
     W.fireScript(row, "OnEnter")
-    local tooltip = MDT.PullTooltip.Frame()
-    expect(tooltip and tooltip:IsShown() and tooltip.botString:GetText():find("Forces", 1, true), "hover did not show the pull tooltip")
-    expect(not tooltip.Model:IsShown(), "model shown before a portrait hover")
+    -- The row shows the pull card beside it, where the pull list's tooltip went: top right at the row's top left.
+    local pullCard, enemyCard = MDT:GetPullLabelCard(), function() return MDT:GetEnemyInfoCard("hover") end
+    local function besideRow(card)
+      local onTop = math.abs(card:GetTop() - row:GetTop()) < 0.5
+      local onBottom = math.abs(card:GetBottom() - row:GetBottom()) < 0.5
+      return math.abs(card:GetRight() - row:GetLeft()) < 0.5 and (onTop or onBottom)
+    end
+    expect(pullCard and pullCard:IsShown(), "hovering a pull row did not show the pull card")
+    expect(pullCard.content:Find("title").kitLabel:GetText():find(string.format(L["Pull %d"], target), 1, true), "the row shows another pull's card")
+    expect(besideRow(pullCard), "the pull card is not beside the row")
     expect(not row.kitPortraits[1]:IsMouseEnabled(), "portraits take the mouse and would swallow the row's clicks")
+    -- An enemy's portrait shows that enemy's hover card instead.
     W.cursorTo(row.kitPortraits[1])
     W.pump(0.05)
-    expect(tooltip.Model:IsShown() and tooltip.topString:IsShown() and tooltip.topString:GetText():find("x1", 1, true), "portrait hover did not show the model")
+    local portrait = row.kitItem.portraits[1]
+    expect(enemyCard() and enemyCard():IsShown() and not pullCard:IsShown(), "hovering a portrait did not swap the pull card for the enemy's")
+    expect(enemyCard().enemyIdx == portrait.enemyIdx and enemyCard().cloneIdx == portrait.cloneIdx, "the enemy card shows another enemy")
+    expect(besideRow(enemyCard()), "the enemy card is not beside the row")
     W.cursorTo(row, row:GetRight() - 4, select(2, row:GetCenter()))
     W.pump(0.05)
-    expect(not tooltip.Model:IsShown() and tooltip:IsShown(), "moving off the portrait hid the whole tooltip")
+    expect(not enemyCard():IsShown() and pullCard:IsShown(), "moving off the portrait did not bring the pull card back")
     W.fireScript(row, "OnLeave")
-    expect(not tooltip:IsShown(), "leaving the row left the tooltip open")
+    expect(not pullCard:IsShown() and not enemyCard():IsShown(), "leaving the row left a card open")
+    -- Ctrl holds the enemy card open, as on the map: moving off its portrait or out of the row keeps it.
+    W.cursorTo(row)
+    W.fireScript(row, "OnEnter")
+    W.cursorTo(row.kitPortraits[1])
+    W.pump(0.05)
+    expect(enemyCard():IsShown(), "setup: hovering a portrait shows no enemy card")
+    W.modifiers = { ctrl = true }
+    W.cursorTo(row, row:GetRight() - 4, select(2, row:GetCenter()))
+    W.pump(0.5)
+    expect(enemyCard():IsShown() and not pullCard:IsShown(), "Ctrl does not hold the enemy card while the cursor moves along the row")
+    W.fireScript(row, "OnLeave")
+    W.pump(0.5)
+    expect(enemyCard():IsShown(), "Ctrl does not hold the enemy card when the cursor leaves the row")
+    W.modifiers = nil
+    W.pump(0.1)
+    expect(not enemyCard():IsShown(), "the enemy card stays after Ctrl is let go away from it")
     local forces, total = control("forces"), MDT.dungeonTotalCount[db.currentDungeonIdx].normal
     expect(forces.kitText:GetFontObject() == UI.Fonts.Get("body"), "forces bar text is not the body font")
     W.fireScript(row, "OnEnter")

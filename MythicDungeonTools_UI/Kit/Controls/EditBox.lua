@@ -284,8 +284,12 @@ UI.Define({
         self:Emit("onCopy", self)
       end
     end)
-    UI.Script(self.kitEdit, "OnCursorChanged", function(edit, _, y, _, height)
+    UI.Script(self.kitEdit, "OnCursorChanged", function(edit, x, y, _, height)
       if not self.kitProps.multiline or not y then return end
+      -- The client also reports a cursor that did not move, after a layout pass for one. Following those would pull
+      -- the text back to the cursor while the user scrolls, to the bottom when all of it is selected.
+      if x == self.kitCursorX and y == self.kitCursorY then return end
+      self.kitCursorX, self.kitCursorY = x, y
       local offset = self.kitScroll:GetVerticalScroll()
       local viewH = self.kitScroll:GetHeight()
       if -y < offset then offset = -y elseif -y + height > offset + viewH then offset = -y + height - viewH end
@@ -300,6 +304,7 @@ UI.Define({
   OnRelease = function(self)
     self.kitEdit:ClearFocus()
     self.kitLastCommit = nil
+    self.kitCursorX, self.kitCursorY = nil, nil
     if self.kitPaste then
       self.kitPaste = nil
       UI.Script(self, "OnUpdate", nil)
