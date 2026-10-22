@@ -26,6 +26,7 @@ end
 local pureFiles = { "Pure/Color.lua", "Pure/Text.lua", "Pure/Layout.lua", "Pure/ListMath.lua", "Pure/Selection.lua", "Pure/MenuModel.lua", "Theme.lua", "Fonts.lua" }
 for _, path in ipairs(pureFiles) do loadPure(path) end
 loadPure("../../Modules/SidebarModel.lua")
+loadPure("../../Modules/PullLabelLayout.lua")
 local UI = MDT.UI
 local Model = MDT.SidebarModel
 
@@ -706,6 +707,203 @@ test("Selection.Click: Shift and Ctrl right-clicks leave the selection alone, th
   eq(Click({ 2 }, 4, { button = "RightButton", shift = true }), { 2 })
   eq(Click({ 2, 3 }, 4, { button = "RightButton", ctrl = true }), { 2, 3 })
   eq(Click({ 2 }, 4, { button = "LeftButton", ctrl = true }), { 2, 4 }, "ctrl left-click still toggles")
+end)
+
+test("SidebarModel.PullItems: the pull rows without the new-pull row, with each pull's health", function()
+  local items, cumulative = Model.PullItems(fixturePreset().value.pulls, fixtureContext())
+  eq({ #items, cumulative }, { 4, 29 })
+  eq({ items[1].health, items[3].health }, { 4000, 10000 }, "health is there with Show pull health off")
+  eq(items[1].healthText, nil)
+  -- Efficiency scores use health before level scaling.
+  eq({ items[1].baseHealth, items[3].baseHealth }, { 2000, 5000 })
+end)
+
+test("SidebarModel.PullInterrupts: interruptible spells with how many of the pull's enemies cast them", function()
+  local enemies = fixtureEnemies()
+  enemies[1].spells = { [11] = { interruptible = true }, [12] = { magic = true } }
+  enemies[3].spells = { [11] = { interruptible = true }, [33] = { interruptible = true } }
+  local interrupts = Model.PullInterrupts({ [1] = { 1, 2 }, [3] = { 1, 99 }, [4] = { 1 }, color = "ff0000" }, enemies)
+  eq(interrupts, { { spellId = 11, casters = 3 }, { spellId = 33, casters = 1 } }, "unknown clones and other spells do not count")
+  eq(Model.PullInterrupts({ [4] = { 1 } }, enemies), {})
+end)
+
+test("SidebarModel.PullCasters: a kind with one spell to interrupt shares an entry, an enemy with several gets its own", function()
+  local enemies = fixtureEnemies()
+  enemies[1].spells = { [11] = { interruptible = true }, [12] = { magic = true } }
+  enemies[3].spells = { [31] = { interruptible = true }, [32] = { interruptible = true } }
+  local casters = Model.PullCasters({ [1] = { 1, 2, 3 }, [3] = { 1, 2, 99 }, [4] = { 1 }, color = "ff0000" }, enemies)
+  local summary = {}
+  for i, caster in ipairs(casters) do
+    summary[i] = { caster.enemyIdx, caster.count, table.concat(caster.spellIds, "+"), caster.name, caster.displayId }
+  end
+  eq(summary, {
+    { 1, 3, "11", "Grunt", 11 },
+    { 3, 1, "31+32", "Imp", 33 },
+    { 3, 1, "31+32", "Imp", 33 },
+  }, "three grunts share an entry, the two imps get one each, unknown clones and the rat do not count")
+  eq(Model.PullCasters({ [4] = { 1 } }, enemies), {})
+end)
+
+local PullLabelLayout = MDT.PullLabelLayout
+
+---A square outline centered on x, y.
+local function square(x, y, half)
+  return { { x - half, y - half }, { x + half, y - half }, { x + half, y + half }, { x - half, y + half } }
+end
+
+---Whether a placed label of the given size overlaps an enemy {x, y, r}.
+---How deep a placed label of the given size reaches into an enemy {x, y, r}, as a share of its radius.
+local function coverDepth(placement, width, height, enemy)
+  local dx = math.max(placement.x - width / 2, math.min(enemy[1], placement.x + width / 2)) - enemy[1]
+  local dy = math.max(placement.y - height / 2, math.min(enemy[2], placement.y + height / 2)) - enemy[2]
+  return math.max(0, 1 - math.sqrt(dx * dx + dy * dy) / enemy[3])
+end
+
+---Whether a label covers no enemy deeper than the layout allows, so never an enemy's face.
+local function clearOfFaces(placement, width, height, enemies)
+  for _, enemy in ipairs(enemies) do
+    if coverDepth(placement, width, height, enemy) > 0.45 + 1e-9 then return false end
+  end
+  return true
+end
+
+test("PullLabelLayout.AreaCenter: a dense side does not pull the center, and degenerate outlines average", function()
+  local x, y = PullLabelLayout.AreaCenter(square(10, -20, 5))
+  eq({ x, y }, { 10, -20 })
+  -- Many points crowd the left edge; the area center stays in the middle.
+  local crowded = { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 }, { 0, 4 }, { 0, 5 }, { 0, 6 }, { 0, 7 }, { 0, 8 }, { 0, 10 }, { 10, 10 }, { 10, 0 } }
+  x, y = PullLabelLayout.AreaCenter(crowded)
+  eq({ x, y }, { 5, 5 })
+  x, y = PullLabelLayout.AreaCenter({ { 0, 0 }, { 4, 2 } })
+  eq({ x, y }, { 2, 1 })
+end)
+
+test("PullLabelLayout.Contains and NearestOnOutline: either winding, edges count as inside", function()
+  local ccw = square(0, 0, 10)
+  local cw = { ccw[4], ccw[3], ccw[2], ccw[1] }
+  for _, poly in ipairs({ ccw, cw }) do
+    eq({ PullLabelLayout.Contains(poly, 0, 0), PullLabelLayout.Contains(poly, 10, 0), PullLabelLayout.Contains(poly, 11, 0) }, { true, true, false })
+  end
+  eq({ PullLabelLayout.NearestOnOutline(ccw, 25, 3) }, { 10, 3 })
+end)
+
+test("PullLabelLayout.Place: a free area center keeps the label there", function()
+  local placements = PullLabelLayout.Place({ { key = 1, outline = square(0, 0, 50), width = 20, height = 10 } }, {})
+  eq({ placements[1].x, placements[1].y, placements[1].leaderX }, { 0, 0, nil })
+end)
+
+test("PullLabelLayout.Place: a pack on the center pushes the label aside, still inside its outline", function()
+  local enemies = { { 0, 0, 8 }, { 12, 0, 8 }, { -12, 0, 8 }, { 0, 12, 8 }, { 0, -12, 8 } }
+  local outline = square(0, 0, 50)
+  local placement = PullLabelLayout.Place({ { key = 7, outline = outline, width = 24, height = 12 } }, enemies, { pad = 1 })[7]
+  eq(clearOfFaces(placement, 24, 12, enemies), true, "label covers an enemy's face")
+  for _, corner in ipairs({ { -12, -6 }, { 12, -6 }, { 12, 6 }, { -12, 6 } }) do
+    eq(PullLabelLayout.Contains(outline, placement.x + corner[1], placement.y + corner[2]), true, "label leaves its outline")
+  end
+  eq(placement.leaderX, nil)
+  eq(math.sqrt(placement.x ^ 2 + placement.y ^ 2) < 40, true, "label went far: "..placement.x..", "..placement.y)
+end)
+
+test("PullLabelLayout.Place: a pull with no room inside gets a label beside it, a far one a leader line", function()
+  -- The outline hugs a single enemy, so the label reaches out of it.
+  local enemy = { 0, 0, 10 }
+  local placement = PullLabelLayout.Place({ { key = 1, outline = square(0, 0, 12), width = 20, height = 10 } }, { enemy })[1]
+  eq(clearOfFaces(placement, 20, 10, { enemy }), true, "label covers the enemy's face")
+  eq(placement.leaderX, nil, "a label at its outline needs no leader")
+  -- A ring of pins, which labels never cover, keeps the label further away.
+  local ring = {}
+  for i = 0, 15 do
+    local angle = i / 16 * 2 * math.pi
+    ring[#ring + 1] = { math.cos(angle) * 22, math.sin(angle) * 22, 9 }
+  end
+  local far = PullLabelLayout.Place({ { key = 1, outline = square(0, 0, 12), width = 20, height = 10 } }, { enemy }, { pins = ring })[1]
+  for _, pin in ipairs(ring) do eq(coverDepth(far, 20, 10, pin), 0, "label covers a pin") end
+  eq(far.leaderX ~= nil, true, "a label away from its outline has a leader line")
+  eq({ PullLabelLayout.NearestOnOutline(square(0, 0, 12), far.x, far.y) }, { far.leaderX, far.leaderY })
+end)
+
+test("PullLabelLayout.Place: a label goes between two groups of its pull rather than outside, reaching into their edges", function()
+  -- Two packs inside one long outline, the gap between them narrower than the label.
+  local outline = { { -40, -12 }, { 40, -12 }, { 40, 12 }, { -40, 12 } }
+  local enemies = {}
+  for _, x in ipairs({ -32, -22, 22, 32 }) do
+    enemies[#enemies + 1] = { x, 5, 6 }
+    enemies[#enemies + 1] = { x, -5, 6 }
+  end
+  local placement = PullLabelLayout.Place({ { key = 1, outline = outline, width = 36, height = 10 } }, enemies)[1]
+  eq(clearOfFaces(placement, 36, 10, enemies), true, "label covers an enemy's face")
+  eq(PullLabelLayout.Contains(outline, placement.x, placement.y), true, "label left the pull: "..placement.x..", "..placement.y)
+  eq(math.abs(placement.x) < 6, true, "label is not between the groups: "..placement.x)
+end)
+
+test("PullLabelLayout.Place: labels keep clear of each other, other outlines and the bounds", function()
+  local requests = {
+    { key = "a", outline = square(0, 0, 30), width = 20, height = 10 },
+    { key = "b", outline = square(0, 0, 30), width = 20, height = 10 },
+    { key = "c", outline = square(70, 0, 30), width = 20, height = 10 },
+  }
+  local placements = PullLabelLayout.Place(requests, {}, { pad = 1 })
+  local a, b, c = placements.a, placements.b, placements.c
+  eq({ a.x, a.y }, { 0, 0 }, "the first label takes the center")
+  eq(math.abs(a.x - b.x) >= 20 or math.abs(a.y - b.y) >= 10, true, "labels a and b overlap")
+  eq({ c.x, c.y }, { 70, 0 })
+  -- c's outline overlaps a wide label at 0, 0 that sits inside it.
+  local overlapped = PullLabelLayout.Place({
+    { key = "wide", outline = square(0, 0, 40), width = 30, height = 10 },
+    { key = "beside", outline = square(30, 0, 20), width = 10, height = 10 },
+  }, {})
+  eq(PullLabelLayout.Contains(square(30, 0, 20), overlapped.wide.x - 15, overlapped.wide.y)
+    or PullLabelLayout.Contains(square(30, 0, 20), overlapped.wide.x + 15, overlapped.wide.y), false, "the label sits on another pull's outline")
+  -- A small pull inside a big one keeps its label inside its own outline rather than out past the big one.
+  local nested = PullLabelLayout.Place({
+    { key = "big", outline = square(0, 0, 80), width = 20, height = 10 },
+    { key = "small", outline = square(40, 0, 20), width = 20, height = 10 },
+  }, { { 0, 0, 10 } })
+  eq(PullLabelLayout.Contains(square(40, 0, 20), nested.small.x, nested.small.y), true, "the nested pull's label left its outline")
+  eq(nested.small.leaderX, nil)
+  eq(PullLabelLayout.Contains(square(40, 0, 20), nested.big.x, nested.big.y), false, "the big pull's label sits in the nested pull")
+  local bounded = PullLabelLayout.Place({ { key = 1, outline = square(0, 0, 30), width = 20, height = 10 } }, {},
+    { bounds = { left = -5, right = 100, top = 100, bottom = -100 } })[1]
+  eq(bounded.x - 10 >= -5, true, "the label leaves the bounds")
+end)
+
+test("PullLabelLayout.Place: a label keeps its previous spot while it costs about the same, and pauses", function()
+  local outline = square(0, 0, 50)
+  local first = PullLabelLayout.Place({ { key = 1, outline = outline, width = 20, height = 10 } }, { { 0, 0, 8 } })[1]
+  eq(first.cost < 1.5, true, "an inside spot costs "..first.cost)
+  local function placeWith(previous, enemies)
+    return PullLabelLayout.Place({ { key = 1, outline = outline, width = 20, height = 10, previous = previous } }, enemies)[1]
+  end
+  local kept = placeWith({ x = 30, y = 30, cost = 0.9 }, { { 0, 0, 8 } })
+  eq({ kept.x, kept.y }, { 30, 30 }, "a previous spot that costs about what it did is kept over a closer one")
+  local better = placeWith({ x = 30, y = 30, cost = 0.1 }, { { 0, 0, 8 } })
+  eq(better.x ~= 30 or better.y ~= 30, true, "a previous spot that got dearer is given up")
+  local covered = placeWith({ x = 30, y = 30, cost = 0.9 }, { { 30, 30, 8 } })
+  eq(covered.x ~= 30 or covered.y ~= 30, true, "a previous spot an enemy now covers is given up")
+  eq(placeWith({ x = 80, y = 0, cost = 0.2 }, {}).x, 0, "a previous spot now outside the outline is given up")
+  local pauses = 0
+  PullLabelLayout.Place({
+    { key = 1, outline = outline, width = 20, height = 10 },
+    { key = 2, outline = square(200, 0, 20), width = 20, height = 10 },
+  }, {}, { pause = function() pauses = pauses + 1 end })
+  eq(pauses >= 2, true, "pause runs after each label")
+end)
+
+test("PullLabelLayout.Place: a pull too narrow for its label, under a big pull, gets its label right beside it", function()
+  -- A thin pull of enemies, with a big pull's outline over everything on its left.
+  local thin = { { -6, -40 }, { 6, -40 }, { 6, 40 }, { -6, 40 } }
+  local big = { { -200, -100 }, { 2, -100 }, { 2, 100 }, { -200, 100 } }
+  local enemies = {}
+  for y = -35, 35, 10 do enemies[#enemies + 1] = { 0, y, 4 } end
+  local placements = PullLabelLayout.Place({
+    { key = "big", outline = big, width = 30, height = 10 },
+    { key = "thin", outline = thin, width = 30, height = 10 },
+  }, enemies, { pad = 1 })
+  local label = placements.thin
+  eq(clearOfFaces(label, 30, 10, enemies), true, "the label covers an enemy's face")
+  eq(label.leaderX, nil, "the label went so far it needs a leader line")
+  eq(label.x - 15 >= 6 - 0.01, true, "the label is not right of the thin pull, clear of the big one: "..label.x)
+  eq(label.x - 15 - 6 < 10, true, "the label is far from its pull: "..label.x)
 end)
 
 io.write(("test_kit: %d passed, %d failed (%d pure files loaded without WoW globals)\n"):format(passed, failed, #pureFiles))

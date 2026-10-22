@@ -216,6 +216,7 @@ function MDT:RegisterErrorHandledFunctions()
     ["DeletePull"] = true,
     ["ExportDungeonDataIncrementally"] = true,
     ["DrawAllHulls"] = true,
+    ["PlacePullLabels"] = true,
     ["ExportString"] = true,
     ["Async"] = true,
     ["RegisterErrorHandledFunctions"] = true,

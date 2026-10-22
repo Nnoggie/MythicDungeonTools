@@ -254,12 +254,14 @@ function MDT:UpdateSelectedToolbarTool(toolId)
     currentTool = nil
     MDT.main_frame.toolbar:SetScript("OnUpdate", nil)
     MDT:UpdatePresetTextInteractivity()
+    MDT:UpdatePullLabelInteractivity()
     return
   end
   currentTool = toolId
   MDT:OverrideScrollframeScripts()
   MDT:EnableBrushPreview(currentTool)
   MDT:UpdatePresetTextInteractivity()
+  MDT:UpdatePullLabelInteractivity()
 end
 
 ---Returns the name of the selected toolbar tool, nil if no tool is selected
