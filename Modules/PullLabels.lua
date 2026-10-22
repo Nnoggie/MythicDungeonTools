@@ -123,6 +123,9 @@ local PORTRAIT_MASK = "Interface\\CharacterFrame\\TempPortraitAlphaMask"
 
 ---A spell name beside its icons needs at least this much room; with less it goes on the line below them.
 local MIN_SPELL_NAME_WIDTH = 70
+---Room the name leaves at the end of its line. The line's width is rounded to whole screen pixels, depending on where
+---the card opens; a name filling the line exactly would then not fit beside its icons and drop below them.
+local SPELL_NAME_SLACK = 2
 
 ---Width of text in the card's heading font.
 ---@param text string
@@ -166,7 +169,7 @@ local function spellChip(parent, spellId, count, width)
   -- Icons fill the line from the left; the name gets what is left of the line they end on.
   local left = width - used % (width + gap)
   UI.Text(chip, { id = "spellName", text = info and info.name or tostring(spellId), font = "heading",
-    width = left >= MIN_SPELL_NAME_WIDTH and left or width })
+    width = (left >= MIN_SPELL_NAME_WIDTH and left or width) - SPELL_NAME_SLACK })
 end
 
 ---One caster: a place for its portrait, and beside it its name and the spells to interrupt it on.
