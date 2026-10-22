@@ -469,14 +469,21 @@ function MDTDungeonEnemyMixin:DisplayPatrol(shown)
   end
 end
 
-function MDT:GetEfficiencyScoreString(count, health)
+---An enemy's efficiency score rounded to one decimal, and its color as hex, from red at 0 to green at 10.
+---@return string score
+---@return string colorHex
+function MDT:GetEfficiencyScore(count, health)
   local totalCount = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
   local score = 2.5 * (count / totalCount) * 13000 / (health / 20000)
-  local formattedScore = MDT:Round(score, 1)
   local value = score / 10
   --https://stackoverflow.com/a/7947812/17380548
   local colorHex = MDT:RGBToHex(math.max(0, math.min(1, 2 * (1 - value))), math.min(1, 2 * value), 0)
-  return ("|cFF%s%s|r"):format(colorHex, formattedScore)
+  return MDT:Round(score, 1), colorHex
+end
+
+function MDT:GetEfficiencyScoreString(count, health)
+  local score, colorHex = MDT:GetEfficiencyScore(count, health)
+  return ("|cFF%s%s|r"):format(colorHex, score)
 end
 
 function MDT:GetCurrentDevmodeBlip()

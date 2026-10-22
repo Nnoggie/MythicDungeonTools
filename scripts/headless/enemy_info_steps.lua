@@ -77,7 +77,15 @@ return function(ctx)
     expect(text("hover", "name") == title(blip), "card name is "..tostring(text("hover", "name")))
     local health = MDT:FormatEnemyHealth(MDT:CalculateEnemyHealth(blip.data.isBoss or false, blip.data.health, db.currentDifficulty, blip.data.ignoreFortified))
     expect(text("hover", "health"):find(health, 1, true), "health line is "..text("hover", "health"))
-    expect(text("hover", "forces"):find(MDT:FormatEnemyForces(MDT:GetCloneEnemyForces(blip.data, blip.clone)), 1, true), "forces line is "..text("hover", "forces"))
+    local count = MDT:GetCloneEnemyForces(blip.data, blip.clone)
+    expect(text("hover", "forces"):find(MDT:FormatEnemyForces(count), 1, true), "forces line is "..text("hover", "forces"))
+    -- E: 3.4 after the count, colored as a whole in the efficiency color.
+    local score, colorHex = MDT:GetEfficiencyScore(count, blip.data.health)
+    local expected = ("|cFF%s%s|r"):format(colorHex, string.format(L["enemyInfoEfficiencyShort"], score))
+    expect(text("hover", "score") == expected, "efficiency is "..tostring(text("hover", "score")).." expected "..expected)
+    local forces, scoreText = part("hover", "forces"), part("hover", "score")
+    expect(scoreText:GetLeft() > forces:GetRight() and math.abs(scoreText:GetTop() - forces:GetTop()) < 0.5, "the efficiency is not after the count")
+    expect(scoreText.kitLabel:GetLeft() + scoreText.kitLabel:GetStringWidth() <= card("hover"):GetRight(), "the efficiency runs off the card")
     expect(hover:GetLeft() >= blip:GetRight() or hover:GetRight() <= blip:GetLeft(), "the card covers its enemy")
     expect(hover:GetBottom() >= main:GetBottom() - 0.5 and hover:GetRight() <= main:GetRight() + 0.5, "the card leaves the window")
     local spells = spellCount(blip.data)
@@ -86,14 +94,26 @@ return function(ctx)
     expect(not list.kitBar:IsShown(), "the hover card's spell list scrolls")
     local row = list:GetRow(1)
     expect(row and row:IsVisible() and row.kitName:GetText() ~= "" and row:GetWidth() > 150, ("the first spell row is not laid out: row=%s vis=%s name=%s w=%s list=%sx%s"):format(tostring(row), tostring(row and row:IsVisible()), tostring(row and row.kitName:GetText()), tostring(row and row:GetWidth()), tostring(list:GetWidth()), tostring(list:GetHeight())))
-    local more = part("hover", "moreSpells")
+    local lastRow = list:GetRow(math.min(spells, 3))
     if spells > 3 then
-      expect(more and more.kitLabel:GetText() == string.format(L["+%d more spells"], spells - 3), "no +more line for "..spells.." spells")
       expect(list:GetHeight() < 4 * 22, "the hover card shows more than 3 spell rows")
-    else
-      expect(more == nil, "a +more line for "..spells.." spells")
+      -- "+N more" follows the last spell's name on its own line.
+      local more = lastRow.kitMore
+      expect(more:IsShown() and more:GetText() == string.format(L["+%d more"], spells - 3), "the last spell row does not count the "..(spells - 3).." left out")
+      local nameRight = lastRow.kitName:GetLeft() + lastRow.kitName:GetWidth()
+      expect(more:GetLeft() >= nameRight and more:GetLeft() - nameRight < 10, ("+more is not right after the name: %.1f after %.1f"):format(more:GetLeft(), nameRight))
+      expect(select(2, more:GetCenter()) == select(2, lastRow.kitName:GetCenter()), "+more is not on the last spell's line")
+      expect(more:GetLeft() + more:GetWidth() <= lastRow:GetRight() + 0.5, "+more runs off the row")
+      for i = 1, 2 do expect(not list:GetRow(i).kitMore:IsShown(), "spell row "..i.." counts left out spells") end
+      expect(part("hover", "moreSpellsRow") == nil, "the hover card still has a +more line of its own")
+    elseif lastRow then
+      expect(not lastRow.kitMore:IsShown(), "a +more for "..spells.." spells")
     end
     expect(part("hover", "pin") and part("hover", "devHint") == nil, "the hover card has no pin button or shows dev hints outside dev mode")
+    expect(text("hover", "ctrlHint") == L["enemyInfoHoldCtrlTip"], "the hover card does not say Ctrl keeps it open")
+    local hint = part("hover", "ctrlHint")
+    expect(hint.kitLabel:GetJustifyH() == "CENTER" and math.abs(hint:GetWidth() - part("hover", "header"):GetWidth()) < 0.5,
+      "the Ctrl hint is not centered across the card")
     for _, id in ipairs({ "level", "efficiency", "npcId", "characteristics" }) do
       expect(part("hover", id) == nil, "the hover card shows "..id)
     end
@@ -101,19 +121,66 @@ return function(ctx)
     render("enemy hover card", main, { hover })
   end)
 
-  step("enemy card: the hover card waits for the cursor and switches to the next enemy at once", function()
+  step("enemy card: the hover card goes at once unless the cursor heads for it or Ctrl is held", function()
     local hover = card("hover")
     rest(0.5)
     expect(shown("hover"), "the card left while the cursor is on its enemy")
+    -- Screen points along the line through the enemy's center and the card's: t = 0 is the enemy, t = 1 the card.
+    local function centerOf(region)
+      local left, bottom, width, height = region:GetScaledRect()
+      return left + width / 2, bottom + height / 2
+    end
+    local function cursorAlong(t)
+      local x1, y1 = centerOf(blip)
+      local x2, y2 = centerOf(hover)
+      W.cursorX, W.cursorY = x1 + (x2 - x1) * t, y1 + (y2 - y1) * t
+    end
     W.fireScript(blip, "OnLeave")
+    local blipLeft, _, blipWidth = blip:GetScaledRect()
+    local hoverLeft = hover:GetScaledRect()
+    expect(hoverLeft > blipLeft + blipWidth or hoverLeft + hover:GetWidth() * hover:GetEffectiveScale() < blipLeft,
+      "setup: the card has no gap beside its enemy")
+    cursorAlong(0.3)
+    expect(not blip:IsMouseOver() and not hover:IsMouseOver(), "setup: the cursor is not between the enemy and the card")
+    rest(0.5)
+    expect(shown("hover"), "the card left while the cursor crossed the gap to it")
     W.cursorTo(hover)
     rest(0.5)
     expect(shown("hover"), "the card left while the cursor is on it")
     moveAway()
-    W.pump(0.1)
-    expect(shown("hover"), "the card left before its grace period")
-    rest(0.3)
-    expect(not shown("hover"), "the card stayed after the cursor left")
+    W.pump(1 / 60)
+    expect(not shown("hover"), "the card stayed after the cursor left it")
+
+    W.hover(blip)
+    W.fireScript(blip, "OnLeave")
+    cursorAlong(-1)
+    W.pump(1 / 60)
+    expect(not shown("hover"), "the card stayed when the cursor left its enemy away from it")
+
+    W.hover(blip)
+    W.fireScript(blip, "OnLeave")
+    W.modifiers = { ctrl = true }
+    moveAway()
+    rest(0.5)
+    expect(shown("hover"), "the card left while Ctrl was held")
+    W.modifiers = nil
+    W.pump(1 / 60)
+    expect(not shown("hover"), "the card stayed after Ctrl was released")
+
+    W.hover(blip)
+    W.modifiers = { ctrl = true }
+    W.fireScript(blip, "OnLeave")
+    W.hover(other)
+    rest(0.5)
+    expect(shown("hover") and text("hover", "name") == title(blip), "hovering another enemy with Ctrl held switched the card")
+    W.modifiers = nil
+    W.pump(1 / 60)
+    expect(shown("hover") and text("hover", "name") == title(other), "releasing Ctrl over another enemy did not switch the card to it")
+    W.fireScript(other, "OnLeave")
+    moveAway()
+    W.pump(1 / 60)
+    expect(not shown("hover"), "the card stayed after the cursor left the enemy it switched to")
+
     W.hover(blip)
     W.fireScript(blip, "OnLeave")
     W.hover(other)
@@ -141,7 +208,23 @@ return function(ctx)
     expect(text("pinned", "name") == title(blip) and text("pinned", "npcId"):find(tostring(blip.data.id), 1, true), "the pinned card shows the wrong enemy")
     local list = part("pinned", "spells")
     expect(#list.kitProps.items == spellCount(blip.data), "the pinned card lists the wrong spells")
-    expect(part("pinned", "linkSpells") and part("pinned", "pin") == nil and part("pinned", "moreSpells") == nil, "the pinned card has hover-card parts")
+    expect(part("pinned", "linkSpells") and part("pinned", "pin") == nil and part("pinned", "score") == nil and part("pinned", "ctrlHint") == nil, "the pinned card has hover-card parts")
+    -- Under the portrait, top to bottom: health and count, efficiency, level and type, NPC id. The spells start right
+    -- under the header.
+    local model = part("pinned", "model")
+    local previous = model
+    for _, id in ipairs({ "health", "forces", "efficiency", "level", "npcId" }) do
+      local detail = part("pinned", id)
+      expect(detail and detail:IsVisible(), "the pinned card has no "..id)
+      expect(detail:GetTop() <= previous:GetBottom() + 0.5 and math.abs(detail:GetLeft() - model:GetLeft()) < 0.5,
+        ("%s is not under the portrait in order"):format(id))
+      previous = detail
+    end
+    local health = MDT:FormatEnemyHealth(MDT:CalculateEnemyHealth(blip.data.isBoss or false, blip.data.health, db.currentDifficulty, blip.data.ignoreFortified))
+    expect(text("pinned", "health") == L["Health"]..": "..health, "the pinned card's health is "..text("pinned", "health"))
+    local forces = MDT:FormatEnemyForces(MDT:GetCloneEnemyForces(blip.data, blip.clone))
+    expect(text("pinned", "forces") == L["Enemy Info NPC Enemy Forces"]..": "..forces, "the pinned card's forces are "..text("pinned", "forces"))
+    expect(math.abs(list:GetTop() - model:GetTop()) < 0.5, "the spells do not start beside the portrait's top")
     expect(UI.Escape.Depth() == depth + 1, "the pinned card is not on the Escape stack")
     moveAway()
     rest(0.5)
@@ -166,8 +249,68 @@ return function(ctx)
     expect(not shown("hover"), "hovering the pinned enemy shows a second card")
     W.fireScript(card("pinned").blip, "OnLeave")
     moveAway()
+
+    local first = card("pinned")
     MDT:ShowEnemyInfoFrame(blip)
-    expect(text("pinned", "name") == title(blip), "pinning another enemy did not replace the pinned card")
+    local second = card("pinned")
+    local cards = MDT:GetEnemyInfoPinnedCards()
+    expect(#cards == 2 and second ~= first and first:IsVisible() and second:IsVisible(), "pinning another enemy did not open a second card")
+    expect(text("pinned", "name") == title(blip) and first.blip == other, "the second card shows the wrong enemy")
+    expect(second:GetFrameLevel() > first:GetFrameLevel(), "the new card is not in front")
+    W.hover(blip)
+    expect(not shown("hover"), "hovering the second pinned enemy shows a hover card")
+    W.fireScript(blip, "OnLeave")
+    moveAway()
+
+    MDT:ShowEnemyInfoFrame(other)
+    expect(#MDT:GetEnemyInfoPinnedCards() == 2 and card("pinned") == first, "pinning an enemy again did not bring its card to the front")
+    expect(first:GetFrameLevel() > second:GetFrameLevel(), "the card brought to the front is behind")
+    W.fireScript(second.dragHandle, "OnDragStart")
+    W.fireScript(second.dragHandle, "OnDragStop")
+    expect(card("pinned") == second and second:GetFrameLevel() > first:GetFrameLevel(), "dragging a card did not bring it to the front")
+    -- A click is for the card the frame under the cursor belongs to; one on a frame above the cards, like a dialog, is not.
+    W.mouseFocus = main
+    W.FireEvent("GLOBAL_MOUSE_DOWN", "LeftButton")
+    expect(card("pinned") == second, "a click outside the cards changed their order")
+    W.mouseFocus = first.content:Find("name")
+    W.FireEvent("GLOBAL_MOUSE_DOWN", "LeftButton")
+    expect(card("pinned") == first and first:GetFrameLevel() > second:GetFrameLevel(), "clicking the back card did not bring it to the front")
+    W.mouseFocus = first.content
+    W.FireEvent("GLOBAL_MOUSE_DOWN", "LeftButton")
+    expect(card("pinned") == first, "clicking the front card changed the order")
+    W.mouseFocus = nil
+    W.cursorTo(second.dragHandle)
+    W.fireScript(second.dragHandle, "OnDragStart")
+    W.fireScript(second.dragHandle, "OnDragStop")
+    moveAway()
+
+    -- The front card closes first on Escape, and a card's close button closes only that card.
+    MDT:ShowEnemyInfoFrame(other)
+    expect(CloseSpecialWindows(), "Escape closed nothing")
+    expect(not first:IsVisible() and second:IsVisible() and main:IsShown(), "Escape did not close only the front card")
+    MDT:ShowEnemyInfoFrame(other)
+    local reused = card("pinned")
+    expect(reused == first and #MDT:GetEnemyInfoPinnedCards() == 2, "a closed card was not reused")
+    click(find("Button", function(button) return button.kitProps.variant == "window" end, reused.content))
+    expect(not reused:IsVisible() and second:IsVisible() and card("pinned") == second, "the close button did not close only its card")
+    expect(text("pinned", "name") == title(blip), "the remaining card shows the wrong enemy")
+
+    -- The map reuses its enemy frames when it redraws, e.g. on another floor: the frame that showed this card's enemy
+    -- now shows another one. That enemy still gets its own hover card and pinned card, and this card keeps its enemy.
+    local frame, pinnedTitle = blip, title(blip)
+    local saved = { frame.enemyIdx, frame.cloneIdx, frame.data, frame.clone }
+    frame.enemyIdx, frame.cloneIdx, frame.data, frame.clone = other.enemyIdx, other.cloneIdx, other.data, other.clone
+    MDT:DisplayBlipTooltip(frame, true)
+    expect(shown("hover") and text("hover", "name") == title(other), "a reused enemy frame shows no hover card for its new enemy")
+    moveAway()
+    W.pump(1 / 60)
+    MDT:ShowEnemyInfoFrame(frame)
+    expect(#MDT:GetEnemyInfoPinnedCards() == 2 and text("pinned", "name") == title(other), "pinning the new enemy of a reused frame brought up the old card")
+    card("pinned"):Hide()
+    MDT:UpdateEnemyInfoFrame()
+    expect(shown("pinned") and text("pinned", "name") == pinnedTitle, "refreshing a card whose enemy frame was reused changed its enemy")
+    frame.enemyIdx, frame.cloneIdx, frame.data, frame.clone = saved[1], saved[2], saved[3], saved[4]
+    MDT:UpdateEnemyInfoFrame()
   end)
 
   step("enemy card: characteristics show their icons in full color with a tooltip", function()
@@ -211,6 +354,21 @@ return function(ctx)
     expect(MDTTooltip:IsShown() and (W.state[MDTTooltip].lines or {})[1] == L["Enemy Info NPC Stealth Detect"], "stealth detection icon has no tooltip")
     W.fireScript(icon, "OnLeave")
     render("enemy pinned card stealth detection", main, { card("pinned") })
+    -- Both stealth icons share the hover card's stats line with the efficiency, which must still fit.
+    data.stealth = true
+    local hovered = visibleBlips()[2]
+    local hoveredData = hovered.data
+    local hoveredStealth, hoveredDetect = hoveredData.stealth, hoveredData.stealthDetect
+    hoveredData.stealth, hoveredData.stealthDetect = true, true
+    W.hover(hovered)
+    local score, stealthIcons = part("hover", "score"), part("hover", "stealthIcons")
+    expect(stealthIcons and #stealthIcons.kitChildren == 2, "setup: the hover card does not show both stealth icons")
+    expect(score.kitLabel:GetStringWidth() <= score:GetWidth() + 0.5 and score:GetRight() <= stealthIcons:GetLeft() + 0.5,
+      ("the efficiency does not fit beside the stealth icons: text %.1f in %.1f"):format(score.kitLabel:GetStringWidth(), score:GetWidth()))
+    W.fireScript(hovered, "OnLeave")
+    moveAway()
+    W.pump(1 / 60)
+    hoveredData.stealth, hoveredData.stealthDetect = hoveredStealth, hoveredDetect
     data.stealth, data.stealthDetect = stealth, stealthDetect
     MDT:UpdateEnemyInfoFrame()
   end)
@@ -307,26 +465,66 @@ return function(ctx)
 
   step("enemy card: the pinned card drags, and Escape, hiding the window or switching dungeon close it", function()
     local pinned = card("pinned")
-    W.fireScript(pinned, "OnDragStart")
-    expect(W.state[pinned].moving, "dragging did not move the pinned card")
-    W.fireScript(pinned, "OnDragStop")
+    local canvas = main.scrollFrame
+    local function near(a, b) return math.abs(a - b) < 0.5 end
+    -- The kit frames under the title take the mouse in game, so the handle must sit above them.
+    local handle, name = pinned.dragHandle, part("pinned", "name")
+    W.cursorTo(name)
+    expect(handle:IsMouseOver() and handle:GetFrameLevel() > name:GetFrameLevel(), "the title is not a drag handle above the card's content")
+    expect(handle:GetRight() <= name:GetRight() + 0.5, "the drag handle covers the close button")
+
+    local scale = pinned:GetEffectiveScale()
+    local function moveCursor(dx, dy)
+      W.cursorX, W.cursorY = W.cursorX + dx * scale, W.cursorY + dy * scale
+      W.pump(1 / 60)
+    end
+    local left, top = pinned:GetLeft(), pinned:GetTop()
+    local dx = pinned:GetCenter() < canvas:GetCenter() and 40 or -40
+    local dy = select(2, pinned:GetCenter()) < select(2, canvas:GetCenter()) and 30 or -30
+    W.fireScript(handle, "OnDragStart")
+    moveCursor(dx, dy)
+    expect(near(pinned:GetLeft(), left + dx) and near(pinned:GetTop(), top + dy),
+      ("dragging the title did not move the card with the cursor: %.1f,%.1f from %.1f,%.1f"):format(pinned:GetLeft(), pinned:GetTop(), left, top))
+    moveCursor(100000, -100000)
+    expect(near(pinned:GetRight(), canvas:GetRight()) and near(pinned:GetBottom(), canvas:GetBottom()), "the card left the map at its bottom right")
+    moveCursor(-200000, 200000)
+    expect(near(pinned:GetLeft(), canvas:GetLeft()) and near(pinned:GetTop(), canvas:GetTop()), "the card left the map at its top left")
+    W.fireScript(handle, "OnDragStop")
+    left, top = pinned:GetLeft(), pinned:GetTop()
+    moveCursor(50, -50)
+    expect(near(pinned:GetLeft(), left) and near(pinned:GetTop(), top), "the card kept following the cursor after the drag")
+    expect(select(2, pinned:GetPoint()) == canvas, "the dragged card is not anchored to the map")
     expect(CloseSpecialWindows(), "no special window closed")
     expect(not shown("pinned") and main:IsShown(), "Escape did not close the pinned card first")
     W.settle(asyncIdle, 5)
     MDT:UpdateEnemyInfoFrame()
     MDT:UpdateEnemyInfoData()
     expect(not shown("pinned"), "an update reopened the pinned card")
-    MDT:ShowEnemyInfoFrame(blip)
+    -- Two pinned cards, so every one has to go, not just the front one.
+    local function pinBoth()
+      MDT:ShowEnemyInfoFrame(blip)
+      MDT:ShowEnemyInfoFrame(other)
+      local cards = MDT:GetEnemyInfoPinnedCards()
+      expect(#cards == 2, "setup: pinned "..#cards.." cards, expected 2")
+      return cards
+    end
+    local function noneShown(cards)
+      for _, pinnedCard in ipairs(cards) do
+        if pinnedCard:IsVisible() then return false end
+      end
+      return #MDT:GetEnemyInfoPinnedCards() == 0
+    end
+    local cards = pinBoth()
     MDT:HideInterface()
-    expect(not shown("pinned"), "hiding the main window left the pinned card")
+    expect(noneShown(cards), "hiding the main window left a pinned card")
     MDT.main_frame:Show()
     W.settle(asyncIdle, 5)
-    expect(not shown("pinned"), "showing the window again brought back the pinned card")
-    MDT:ShowEnemyInfoFrame(blip)
+    expect(noneShown(cards), "showing the window again brought back a pinned card")
+    cards = pinBoth()
     local before = db.currentDungeonIdx
     MDT:UpdateToDungeon(before == 45 and 46 or 45)
     W.settle(asyncIdle, 30)
-    expect(not shown("pinned"), "switching dungeon left the pinned card open")
+    expect(noneShown(cards), "switching dungeon left a pinned card open")
     MDT:UpdateToDungeon(before)
     W.settle(asyncIdle, 30)
     blip = visibleBlips()[1]

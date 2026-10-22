@@ -4,9 +4,11 @@ local UI = MDT.UI
 local Theme, Fonts = UI.Theme, UI.Fonts
 local db
 
--- Enemy info lives in two cards. Hovering an enemy shows the compact hover card beside it; it stays while the cursor
--- moves into it, so its spells can be hovered and linked. Pinning (its pin button or the right-click menu) opens the
--- expanded pinned card in the same spot, which stays until closed while the map keeps working.
+-- Enemy info lives in two cards. Hovering an enemy shows the compact hover card beside it. It goes the moment the cursor
+-- leaves the enemy, unless the cursor heads straight for the card or Ctrl is held, so its spells can be hovered and
+-- linked. While Ctrl is held it also stays on its enemy when the cursor passes over others. Pinning (its pin button or
+-- the right-click menu) opens an expanded pinned card in the same spot, which stays until closed while the map keeps
+-- working. Any number of enemies can be pinned at once; each card drags by its title, anywhere on the map.
 
 local DEFAULT_DISPLAY_ID = 39490
 local UNKNOWN_SPELL_ICON = 134400
@@ -15,11 +17,12 @@ local SPELL_ICON_SIZE = 18
 local STATUS_ICON_SIZE = 14
 local TOOLTIP_ICON_SIZE = 12
 local CHARACTERISTIC_ICON_SIZE = 16
----Seconds the hover card waits for the cursor after it leaves the enemy.
-local HOVER_GRACE = 0.2
 ---Gap between an enemy and its card.
 local CARD_OFFSET = 30
 local MODEL_ROTATION_SPEED = math.pi / 4
+---Pinned card frame levels: the back card's, the gap between cards, which leaves room for a card's own frames, and how
+---many front cards stack in order below the dialogs' level 100.
+local PINNED_LEVEL_BASE, PINNED_LEVEL_STEP, PINNED_STACKED = 5, 15, 6
 
 ---Pin and close buttons in the header; UI.CloseButton is this size.
 local HEADER_BUTTON_SIZE = 24
@@ -32,7 +35,7 @@ local LAYOUT = {
     font = { title = "titleCompact", body = "bodyCompact", small = "smallCompact" },
   },
   pinned = {
-    width = 300, modelWidth = 96, modelHeight = 112, spells = 10, strata = "DIALOG",
+    width = 320, modelWidth = 116, modelHeight = 135, spells = 10, strata = "DIALOG",
     font = { title = "title", body = "body", small = "small" },
   },
 }
@@ -98,6 +101,8 @@ end
 ---@field icon string|number
 ---@field statuses table[] entries of SPELL_STATUSES set on the spell
 ---@field font MDT.UI.FontRole the spell name's font
+---@field more integer? on the hover card's last row: how many spells it leaves out
+---@field moreFont MDT.UI.FontRole?
 
 ---@class MDT.EnemyCard : Frame
 ---@field kind "hover"|"pinned"
@@ -109,14 +114,20 @@ end
 ---@field enemyIdx integer?
 ---@field cloneIdx integer?
 ---@field spells MDT.EnemyInfoSpellItem[]?
+---@field dragHandle table? the pinned card's title, which drags it
+---@field dragOffsetX number? where the cursor holds the card while it drags, from its top left
+---@field dragOffsetY number?
+---@field escape table? closes the pinned card on Escape
 
----@type MDT.EnemyCard?, MDT.EnemyCard?
-local hoverCard, pinnedCard
----The enemy the hover card belongs to, and when the cursor was last over it or its card.
-local hoverBlip, lastInside = nil, 0
+---@type MDT.EnemyCard?
+local hoverCard
+---Open pinned cards, the front one last, and closed ones kept for reuse.
+---@type MDT.EnemyCard[], MDT.EnemyCard[]
+local pinnedCards, sparePinnedCards = {}, {}
+---The enemy the hover card belongs to, and the last enemy the cursor entered while Ctrl kept the card on another one.
+local hoverBlip, heldOverBlip
 ---Where the hover card last showed and for which enemy, so pinning from the right-click menu opens in the same spot.
 local lastSpot
-local pinnedEscape
 
 ---@param spells table? the enemy's spells by spell id
 ---@param font MDT.UI.FontRole
@@ -147,16 +158,37 @@ local function spellItems(spells, font)
   return items
 end
 
-local function isPinned()
-  return pinnedCard ~= nil and pinnedCard:IsShown() and pinnedCard.enemyIdx ~= nil
+---The map reuses its enemy frames whenever it redraws, so a pinned card knows its enemy by enemy and clone index.
+---@param blip table
+---@return MDT.EnemyCard?
+local function pinnedCardFor(blip)
+  for _, card in ipairs(pinnedCards) do
+    if card.enemyIdx == blip.enemyIdx and card.cloneIdx == blip.cloneIdx then return card end
+  end
 end
 
-local function pinnedEnemy()
-  return isPinned() and MDT.dungeonEnemies[db.currentDungeonIdx][pinnedCard.enemyIdx] or nil
+---What a pinned card's enemy clone fills from: its frame on the map, or the same fields from the dungeon data while
+---the clone is on another floor. nil once the clone is gone.
+---@param card MDT.EnemyCard
+---@return table?
+local function pinnedEnemyBlip(card)
+  local data = MDT.dungeonEnemies[db.currentDungeonIdx][card.enemyIdx]
+  local clone = data and data.clones[card.cloneIdx]
+  if not clone then return nil end
+  local blip = MDT:GetBlip(card.enemyIdx, card.cloneIdx)
+  if blip and blip.data == data then return blip end
+  return { data = data, clone = clone, enemyIdx = card.enemyIdx, cloneIdx = card.cloneIdx }
 end
 
+---@param card MDT.EnemyCard
+local function cardEnemy(card)
+  return card.enemyIdx and MDT.dungeonEnemies[db.currentDungeonIdx][card.enemyIdx] or nil
+end
+
+---The enemy of the front pinned card.
 function MDT:GetEnemyInfoEnemyIdx()
-  return isPinned() and pinnedCard.enemyIdx or nil
+  local front = pinnedCards[#pinnedCards]
+  return front and front.enemyIdx or nil
 end
 
 local function showSpellTooltip(row, item)
@@ -174,8 +206,8 @@ local function showSpellTooltip(row, item)
 end
 
 local function onDevKey(row, key)
-  if not db.devMode then return end
-  local enemy = pinnedEnemy()
+  if not db.devMode or not row.card then return end
+  local enemy = cardEnemy(row.card)
   local spell = enemy and enemy.spells and enemy.spells[row.spellId]
   if not spell then return end
   if key == DEV_PRINT_KEY then
@@ -193,7 +225,8 @@ local function onDevKey(row, key)
   MDT:UpdateEnemyInfoFrame()
 end
 
----One spell: its icon, its name and its status icons on the right.
+---One spell: its icon, its name and its status icons on the right. The hover card's last row also counts the spells
+---it leaves out, right after the name.
 local SpellRow = {}
 
 function SpellRow:OnCreate()
@@ -205,6 +238,10 @@ function SpellRow:OnCreate()
   self.kitName:SetWordWrap(false)
   self.kitName:SetPoint("LEFT", self.kitIcon, "RIGHT", Theme.Space("sm"), 0)
   Theme.Bind(self.kitName, "text.normal")
+  self.kitMore = self:CreateFontString(nil, "ARTWORK")
+  self.kitMore:SetWordWrap(false)
+  self.kitMore:Hide()
+  Theme.Bind(self.kitMore, "text.muted")
   self.kitStatusIcons = {}
   for i, status in ipairs(SPELL_STATUSES) do
     local icon = self:CreateTexture(nil, "OVERLAY")
@@ -214,7 +251,31 @@ function SpellRow:OnCreate()
     self.kitStatusIcons[i] = icon
   end
   UI.Script(self, "OnKeyDown", onDevKey)
+  UI.HookScript(self, "OnSizeChanged", function(row) row:kitLayoutName() end)
   self:EnableKeyboard(false)
+end
+
+---The name runs up to the status icons. With a "+N more", the name gives up only the room the count needs, and the
+---count follows it.
+function SpellRow:kitLayoutName()
+  local name, more, gap = self.kitName, self.kitMore, Theme.Space("xs")
+  name:ClearAllPoints()
+  name:SetPoint("LEFT", self.kitIcon, "RIGHT", Theme.Space("sm"), 0)
+  if not more:IsShown() then
+    local nameEnd = self.kitNameEnd
+    name:SetPoint("RIGHT", nameEnd or self, nameEnd and "LEFT" or "RIGHT", -gap, 0)
+    return
+  end
+  local moreWidth = math.ceil(more:GetUnboundedStringWidth())
+  more:SetWidth(moreWidth)
+  local room = self:GetWidth() - SPELL_ICON_SIZE - Theme.Space("sm") - self.kitStatusWidth - moreWidth - Theme.Space("sm")
+  local nameWidth = math.ceil(name:GetUnboundedStringWidth())
+  -- Rows are bound before the list places them; OnSizeChanged lays the name out again once the row has a width.
+  -- At least 1: a width of 0 lets the client size the name to its text.
+  if self:GetWidth() > 0 then nameWidth = math.max(1, math.min(nameWidth, room)) end
+  name:SetWidth(nameWidth)
+  more:ClearAllPoints()
+  more:SetPoint("LEFT", name, "RIGHT", Theme.Space("sm"), 0)
 end
 
 ---@param item MDT.EnemyInfoSpellItem
@@ -241,12 +302,19 @@ function SpellRow:Bind(item)
       end
     end
   end
-  self.kitName:SetPoint("RIGHT", previous or self, previous and "LEFT" or "RIGHT", -gap, 0)
+  self.kitNameEnd = previous
+  self.kitStatusWidth = gap + #item.statuses * (STATUS_ICON_SIZE + gap)
+  self.kitMore:SetShown(item.more ~= nil)
+  if item.more then
+    self.kitMore:SetFontObject(Fonts.Get(item.moreFont))
+    self.kitMore:SetText(string.format(L["+%d more"], item.more))
+  end
+  self:kitLayoutName()
 end
 
 function SpellRow:OnUnbind()
   self:EnableKeyboard(false)
-  self.spellId = nil
+  self.spellId, self.card = nil, nil
 end
 
 local SPELL_KINDS = { spell = { height = SPELL_ROW_HEIGHT, mixin = SpellRow } }
@@ -258,9 +326,10 @@ local function insertSpellLink(item)
   end
 end
 
-local function linkSpells()
-  local enemy = pinnedEnemy()
-  local items = pinnedCard and pinnedCard.spells or {}
+---@param card MDT.EnemyCard
+local function linkSpells(card)
+  local enemy = cardEnemy(card)
+  local items = card.spells or {}
   if not enemy or #items < 1 then return end
   local distribution = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
   if not distribution then return end
@@ -280,17 +349,29 @@ local function setModel(card, data)
   model:SetPosition(0, 0, 0)
 end
 
----The hover card lists its first spells and counts the rest; the pinned card scrolls through all of them.
+---The hover card lists its first spells and counts the rest on the last row; the pinned card scrolls through all of
+---them.
 local function spellList(content, card, layout)
   local items = card.spells
   local rows = math.min(#items, layout.spells)
-  if card.kind == "hover" then items = { unpack(items, 1, rows) } end
+  if card.kind == "hover" then
+    items = { unpack(items, 1, rows) }
+    if #card.spells > rows then
+      local last = {}
+      for key, value in pairs(items[rows]) do last[key] = value end
+      last.more, last.moreFont = #card.spells - rows, layout.font.small
+      last.sig = last.sig.."|+"..last.more
+      items[rows] = last
+    end
+  end
   local gap = Theme.Space("xs")
   UI.List(content, {
     id = "spells", kinds = SPELL_KINDS, items = items, gap = gap, scrollbar = #items > rows,
     height = rows * SPELL_ROW_HEIGHT + math.max(0, rows - 1) * gap,
     onHover = function(item, _, row)
       showSpellTooltip(row, item)
+      -- The dev keys edit the enemy of the card the row is in.
+      row.card = card
       if card.kind == "pinned" and db.devMode then row:EnableKeyboard(true) end
     end,
     onHoverEnd = function(_, _, row)
@@ -305,9 +386,10 @@ end
 
 local pin
 
----Fills a card for one enemy clone. Both cards share this layout: the portrait on the left, and on the right the
----health and forces line above the spells. The pinned card adds level, efficiency and NPC id under the portrait, lists
----every spell, shows what the enemy is affected by, dev help and Link Spells, and swaps the pin button for a close button.
+---Fills a card for one enemy clone. Both cards put the portrait on the left and the spells on the right. The hover card
+---puts health, forces and efficiency above its spells. The pinned card lists health and forces, efficiency, level and
+---NPC id under the portrait, lists every spell, shows what the enemy is affected by, dev help and Link Spells, and
+---swaps the pin button for a close button.
 ---@param card MDT.EnemyCard
 ---@param blip table the enemy's map blip
 local function fill(card, blip)
@@ -331,12 +413,31 @@ local function fill(card, blip)
     local header = UI.Row(content, { id = "header", gap = "sm", valign = "center" })
     UI.Text(header, { id = "name", text = title, font = layout.font.title, width = contentWidth - Theme.Space("sm") - HEADER_BUTTON_SIZE })
     if pinned then
-      UI.CloseButton(header, { tooltip = L["Close"], onClick = function() MDT:CloseEnemyInfo() end })
+      UI.CloseButton(header, { tooltip = L["Close"], onClick = function() card:Hide() end })
     else
       UI.Button(header, {
         id = "pin", variant = "plain", icon = MDT:GetIconPath("pin"), iconSize = 16,
         width = HEADER_BUTTON_SIZE, height = HEADER_BUTTON_SIZE, tooltip = L["Pin"], onClick = function() pin(blip) end,
       })
+    end
+
+    local forcesText = MDT:FormatEnemyForces(count)
+    local stealthFlags = {}
+    for _, entry in ipairs(STEALTH_FLAGS) do
+      if data[entry.key] then stealthFlags[#stealthFlags + 1] = entry end
+    end
+    local function stealthIcons(row)
+      if #stealthFlags == 0 then return end
+      local iconWidth = CHARACTERISTIC_ICON_SIZE + 2
+      local icons = UI.Row(row, {
+        id = "stealthIcons", gap = "xs", width = #stealthFlags * iconWidth + (#stealthFlags - 1) * Theme.Space("xs"),
+      })
+      for _, entry in ipairs(stealthFlags) do
+        UI.Button(icons, {
+          id = entry.key, variant = "icon", icon = entry.icon, iconCoords = entry.coords, iconSize = CHARACTERISTIC_ICON_SIZE,
+          iconColor = false, width = iconWidth, height = iconWidth, tooltip = L[entry.label],
+        })
+      end
     end
 
     local body = UI.Row(content, { gap = "md", valign = "start" })
@@ -345,44 +446,37 @@ local function fill(card, blip)
       id = "model", width = layout.modelWidth, height = layout.modelHeight, autoHeight = false,
       background = "bg.sunken", border = "border.normal",
     })
-    if pinned then
-      local function detail(id, text) UI.Text(portrait, { id = id, text = text, font = layout.font.small, color = "text.muted" }) end
-      detail("level", string.format(L["Level %d %s"], data.level, L[data.creatureType]))
-      detail("efficiency", L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health))
-      detail("npcId", L["Enemy Info NPC Id"]..": "..data.id)
-    end
-
     local column = UI.Stack(body, { gap = "xs", grow = 1, width = 40 })
-    local stats = UI.Row(column, { id = "stats", gap = "xs", valign = "center" })
-    UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)), font = layout.font.body, wrap = false })
-    UI.Text(stats, { text = "·", font = layout.font.body, color = "text.muted", wrap = false })
-    UI.Text(stats, { id = "forces", text = MDT:FormatEnemyForces(count), font = layout.font.body, wrap = false, grow = 1 })
-    local stealthFlags = {}
-    for _, entry in ipairs(STEALTH_FLAGS) do
-      if data[entry.key] then stealthFlags[#stealthFlags + 1] = entry end
-    end
-    if #stealthFlags > 0 then
-      local iconWidth = CHARACTERISTIC_ICON_SIZE + 2
-      local stealthIcons = UI.Row(stats, {
-        id = "stealthIcons", gap = "xs", width = #stealthFlags * iconWidth + (#stealthFlags - 1) * Theme.Space("xs"),
+
+    if pinned then
+      local small = layout.font.small
+      local function detail(id, text) UI.Text(portrait, { id = id, text = text, font = small, color = "text.muted" }) end
+      local stats = UI.Stack(portrait, { id = "stats", gap = 0 })
+      UI.Text(stats, { id = "health", text = L["Health"]..": "..MDT:FormatEnemyHealth(health), font = small, color = "text.muted" })
+      UI.Text(stats, { id = "forces", text = L["Enemy Info NPC Enemy Forces"]..": "..forcesText, font = small, color = "text.muted" })
+      -- Stealth icons get a line of their own, as the labelled lines fill the column.
+      if #stealthFlags > 0 then stealthIcons(UI.Row(stats, { gap = "xs" })) end
+      detail("efficiency", L["Efficiency Score"]..": "..MDT:GetEfficiencyScoreString(count, data.health))
+      detail("level", string.format(L["Level %d %s"], data.level, L[data.creatureType]))
+      detail("npcId", L["Enemy Info NPC Id"]..": "..data.id)
+    else
+      local stats = UI.Row(column, { id = "stats", gap = "xs", valign = "center" })
+      UI.Text(stats, { id = "health", text = string.format(L["%s HP"], MDT:FormatEnemyHealth(health)), font = layout.font.body, color = "text.muted", wrap = false })
+      UI.Text(stats, { text = "·", font = layout.font.body, color = "text.muted", wrap = false })
+      UI.Text(stats, { id = "forces", text = forcesText, font = layout.font.body, color = "text.muted", wrap = false })
+      local score, colorHex = MDT:GetEfficiencyScore(count, data.health)
+      UI.Text(stats, { text = "·", font = layout.font.body, color = "text.muted", wrap = false })
+      UI.Text(stats, {
+        id = "score", text = ("|cFF%s%s|r"):format(colorHex, string.format(L["enemyInfoEfficiencyShort"], score)),
+        font = layout.font.body, wrap = false, grow = 1,
       })
-      for _, entry in ipairs(stealthFlags) do
-        UI.Button(stealthIcons, {
-          id = entry.key, variant = "icon", icon = entry.icon, iconCoords = entry.coords, iconSize = CHARACTERISTIC_ICON_SIZE,
-          iconColor = false, width = iconWidth, height = iconWidth, tooltip = L[entry.label],
-        })
-      end
+      stealthIcons(stats)
     end
 
-    if #card.spells > 0 then
-      spellList(column, card, layout)
-      if not pinned and #card.spells > layout.spells then
-        -- Under the portrait, which is shorter than the spells beside it, so it adds no line.
-        UI.Text(portrait, { id = "moreSpells", text = string.format(L["+%d more spells"], #card.spells - layout.spells), font = layout.font.small, color = "text.muted", justify = "CENTER" })
-      end
-    end
+    if #card.spells > 0 then spellList(column, card, layout) end
 
     if not pinned then
+      UI.Text(content, { id = "ctrlHint", text = L["enemyInfoHoldCtrlTip"], font = layout.font.small, color = "text.muted", justify = "CENTER" })
       if db.devMode then
         UI.Text(content, { id = "devHint", text = L["devModeShiftDragHint"].."\n"..L["devModeCtrlDragHint"], font = layout.font.small, color = "text.muted" })
       end
@@ -406,7 +500,7 @@ local function fill(card, blip)
 
     if db.devMode then UI.Text(content, { id = "devHelp", text = DEV_HELP, font = layout.font.small, color = "text.muted" }) end
     local actions = UI.Row(content, { align = "end" })
-    UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = linkSpells })
+    UI.Button(actions, { id = "linkSpells", text = L["Link Spells"], onClick = function() linkSpells(card) end })
   end)
   -- The model is the card's own frame; it sits on the placeholder the layout just placed.
   local model = card.model
@@ -415,6 +509,17 @@ local function fill(card, blip)
   model:SetPoint("BOTTOMRIGHT", card.modelHost, "BOTTOMRIGHT", -1, 1)
   model:SetFrameLevel(card.modelHost:GetFrameLevel() + 2)
   setModel(card, data)
+  if pinned then
+    -- The kit frames in the card take the mouse, so the card itself never sees a drag that starts on them. A handle
+    -- over the title, above them, drags it instead, like a dialog's title bar.
+    local header, name = content:Find("header"), content:Find("name")
+    local handle = card.dragHandle
+    handle:ClearAllPoints()
+    handle:SetPoint("TOPLEFT", card, "TOPLEFT")
+    handle:SetPoint("RIGHT", name, "RIGHT")
+    handle:SetPoint("BOTTOM", header, "BOTTOM")
+    handle:SetFrameLevel(name:GetFrameLevel() + 1)
+  end
 end
 
 ---Gives a card a position before it is filled, so its spell list measures a real view.
@@ -440,16 +545,126 @@ local function hideHover()
     lastSpot = { blip = hoverBlip, left = hoverCard:GetLeft(), top = hoverCard:GetTop() }
     hoverCard:Hide()
   end
-  hoverBlip = nil
+  hoverBlip, heldOverBlip = nil, nil
 end
 
----While the hover card shows: it stays as long as the cursor is over the enemy or the card, and goes after a short grace.
+---Narrows [tMin, tMax] to the t where value + t * delta <= limit. An empty range comes back with tMin > tMax.
+local function below(tMin, tMax, value, delta, limit)
+  if delta > 0 then return tMin, math.min(tMax, (limit - value) / delta) end
+  if delta < 0 then return math.max(tMin, (limit - value) / delta), tMax end
+  if value <= limit then return tMin, tMax end
+  return 1, 0
+end
+
+---Narrows [tMin, tMax] to the t where the span blended from [lo1, hi1] towards [lo2, hi2] holds p.
+local function spanHolds(tMin, tMax, p, lo1, hi1, lo2, hi2)
+  tMin, tMax = below(tMin, tMax, lo1, lo2 - lo1, p)
+  return below(tMin, tMax, -hi1, hi1 - hi2, -p)
+end
+
+---Whether the cursor is in the corridor from a region to another: the smallest convex shape holding both, so the cursor
+---can cross the gap between them. A point is in it when some blend t in [0, 1] of the two rects holds it on both axes.
+local function cursorInCorridor(from, to)
+  local x, y = GetCursorPosition()
+  local l1, b1, w1, h1 = from:GetScaledRect()
+  local l2, b2, w2, h2 = to:GetScaledRect()
+  if not l1 or not l2 then return false end
+  local tMin, tMax = spanHolds(0, 1, x, l1, l1 + w1, l2, l2 + w2)
+  tMin, tMax = spanHolds(tMin, tMax, y, b1, b1 + h1, b2, b2 + h2)
+  return tMin <= tMax
+end
+
+local showHover
+
+---While the hover card shows: it stays while Ctrl is held or the cursor is on the enemy, on the card, or between them.
+---Releasing Ctrl over another enemy moves the card to that enemy.
 local function watchHover(card)
-  if (hoverBlip and hoverBlip:IsVisible() and hoverBlip:IsMouseOver()) or card:IsMouseOver() then
-    lastInside = GetTime()
-  elseif GetTime() - lastInside > HOVER_GRACE then
-    hideHover()
+  if IsControlKeyDown() then return end
+  local waiting = heldOverBlip
+  heldOverBlip = nil
+  if waiting and waiting ~= hoverBlip and waiting:IsVisible() and waiting:IsMouseOver() then return showHover(waiting) end
+  if card:IsMouseOver() then return end
+  if hoverBlip and hoverBlip:IsVisible() and cursorInCorridor(hoverBlip, card) then return end
+  hideHover()
+end
+
+---Puts a card's top left at left, top (in its own units), moved only as far as it must to stay on the map. It is
+---anchored to the map's frame, so panning or zooming the map leaves it in place.
+local function placeOnMap(card, left, top)
+  local canvas = MDT.main_frame.scrollFrame
+  local ratio = canvas:GetEffectiveScale() / card:GetEffectiveScale()
+  local canvasLeft, canvasTop = canvas:GetLeft() * ratio, canvas:GetTop() * ratio
+  left = math.max(canvasLeft, math.min(left, canvas:GetRight() * ratio - card:GetWidth()))
+  top = math.min(canvasTop, math.max(top, canvas:GetBottom() * ratio + card:GetHeight()))
+  card:ClearAllPoints()
+  card:SetPoint("TOPLEFT", canvas, "TOPLEFT", left - canvasLeft, top - canvasTop)
+end
+
+local function keepOnMap(card)
+  placeOnMap(card, card:GetLeft(), card:GetTop())
+end
+
+local function stopDrag(card)
+  card:SetScript("OnUpdate", nil)
+end
+
+local function followCursor(card)
+  if not IsMouseButtonDown("LeftButton") then return stopDrag(card) end
+  local x, y = GetCursorPosition()
+  local scale = card:GetEffectiveScale()
+  placeOnMap(card, x / scale - card.dragOffsetX, y / scale - card.dragOffsetY)
+end
+
+---Stacks the pinned cards in their order, the front one on top. They share the DIALOG strata with MDT's dialogs, which
+---start at level 100, so only the front few get levels of their own and the rest share the lowest.
+local function stackPinned()
+  local count = #pinnedCards
+  for i, card in ipairs(pinnedCards) do
+    card:SetFrameLevel(PINNED_LEVEL_BASE + math.max(0, i - 1 - math.max(0, count - PINNED_STACKED)) * PINNED_LEVEL_STEP)
   end
+end
+
+---Puts a pinned card in front of the others, and first in line for Escape.
+---@param card MDT.EnemyCard
+local function bringToFront(card)
+  for i = #pinnedCards, 1, -1 do
+    if pinnedCards[i] == card then table.remove(pinnedCards, i) end
+  end
+  pinnedCards[#pinnedCards + 1] = card
+  stackPinned()
+  UI.Escape.Push(card.escape)
+end
+
+---Whether the frame the cursor is on belongs to a card, so a click that lands on a dialog above it does not count.
+local function holdsMouseFocus(card)
+  for _, focus in ipairs(GetMouseFoci()) do
+    local frame = focus
+    while frame do
+      if frame == card then return true end
+      frame = frame:GetParent()
+    end
+  end
+  return false
+end
+
+---A click on a pinned card behind another brings it to the front. The kit frames in a card take its clicks, so the
+---card watches every click instead of its own.
+local frontWatcher = CreateFrame("Frame")
+UI.Script(frontWatcher, "OnEvent", function()
+  for i = 1, #pinnedCards - 1 do
+    local card = pinnedCards[i]
+    if holdsMouseFocus(card) then return bringToFront(card) end
+  end
+end)
+
+---Drags a card with the cursor until the button is released, in front of the others. StartMoving can only keep a frame
+---on the screen, not on the map.
+local function startDrag(card)
+  bringToFront(card)
+  local x, y = GetCursorPosition()
+  local scale = card:GetEffectiveScale()
+  card.dragOffsetX, card.dragOffsetY = x / scale - card:GetLeft(), y / scale - card:GetTop()
+  UI.Script(card, "OnUpdate", followCursor)
 end
 
 ---@param kind "hover"|"pinned"
@@ -471,11 +686,31 @@ local function createCard(kind)
   if kind == "pinned" then
     card.model = CreateFrame("PlayerModel", nil, card, "ModelWithControlsTemplate")
     UI.Script(card.model, "OnEnter", nil)
-    card:SetMovable(true)
-    card:RegisterForDrag("LeftButton")
-    UI.Script(card, "OnDragStart", card.StartMoving)
-    UI.Script(card, "OnDragStop", card.StopMovingOrSizing)
-    UI.Script(card, "OnHide", function() MDT:CloseEnemyInfo() end)
+    card.dragHandle = CreateFrame("Frame", nil, card)
+    card.dragHandle:EnableMouse(true)
+    -- The card's own padding drags it too.
+    for _, frame in ipairs({ card, card.dragHandle }) do
+      frame:RegisterForDrag("LeftButton")
+      UI.Script(frame, "OnDragStart", function() startDrag(card) end)
+      UI.Script(frame, "OnDragStop", function() stopDrag(card) end)
+    end
+    card.escape = { close = function() card:Hide() end }
+    -- Every way a pinned card goes, its close button, Escape or the window closing, ends here. Hiding it again keeps it
+    -- closed when it went with the window.
+    UI.Script(card, "OnHide", function()
+      card:Hide()
+      stopDrag(card)
+      UI.Escape.Remove(card.escape)
+      for i = #pinnedCards, 1, -1 do
+        if pinnedCards[i] == card then
+          table.remove(pinnedCards, i)
+          sparePinnedCards[#sparePinnedCards + 1] = card
+        end
+      end
+      card.blip, card.enemyIdx, card.cloneIdx = nil, nil, nil
+      stackPinned()
+      if #pinnedCards == 0 then frontWatcher:UnregisterEvent("GLOBAL_MOUSE_DOWN") end
+    end)
   else
     card.model = CreateFrame("PlayerModel", nil, card)
     card.model.facing = 0
@@ -491,42 +726,61 @@ local function createCard(kind)
   return card
 end
 
----Opens the pinned card for an enemy where its hover card was, or beside the enemy.
+local watchingMapSize = false
+
+---Opens a pinned card for an enemy where its hover card was, or beside the enemy. An enemy that is already pinned
+---brings its card to the front instead.
 ---@param blip table
 pin = function(blip)
-  pinnedCard = pinnedCard or createCard("pinned")
   hideHover()
-  local spot = lastSpot and lastSpot.blip == blip and lastSpot or nil
-  local main = MDT.main_frame
-  local left, top = spot and spot.left, spot and spot.top
-  anchorAt(pinnedCard, blip)
-  fill(pinnedCard, blip)
-  if left and top then
-    -- Grows down from the hover card's top left, moved up only as far as it must to stay inside the window.
-    top = math.max(top, main:GetBottom() + pinnedCard:GetHeight())
-    pinnedCard:ClearAllPoints()
-    pinnedCard:SetPoint("TOPLEFT", main, "BOTTOMLEFT", left - main:GetLeft(), top - main:GetBottom())
-  else
-    placeBeside(pinnedCard, blip)
+  local card = pinnedCardFor(blip)
+  if card then return bringToFront(card) end
+  if not watchingMapSize then
+    watchingMapSize = true
+    -- Keeps the pinned cards on the map when the window changes size.
+    UI.HookScript(MDT.main_frame.scrollFrame, "OnSizeChanged", function()
+      for _, pinned in ipairs(pinnedCards) do keepOnMap(pinned) end
+    end)
   end
-  pinnedCard:Show()
-  pinnedEscape = pinnedEscape or { close = function() MDT:CloseEnemyInfo() end }
-  UI.Escape.Push(pinnedEscape)
+  card = table.remove(sparePinnedCards) or createCard("pinned")
+  local spot = lastSpot and lastSpot.blip == blip and lastSpot or nil
+  anchorAt(card, blip)
+  fill(card, blip)
+  if spot then
+    -- Grows down from the hover card's top left.
+    placeOnMap(card, spot.left, spot.top)
+  else
+    placeBeside(card, blip)
+    keepOnMap(card)
+  end
+  card:Show()
+  bringToFront(card)
+  frontWatcher:RegisterEvent("GLOBAL_MOUSE_DOWN")
 end
 
----Called by enemy blips on enter and leave. Entering shows the hover card for that enemy right away; leaving lets the
----card's own watch hide it once the cursor is neither on the enemy nor on the card.
 ---@param blip table
----@param shown boolean
-function MDT:DisplayBlipTooltip(blip, shown)
-  if not shown then return end
-  if isPinned() and pinnedCard.blip == blip then return end
+showHover = function(blip)
   hoverCard = hoverCard or createCard("hover")
-  hoverBlip, lastInside = blip, GetTime()
+  hoverBlip, heldOverBlip = blip, nil
   anchorAt(hoverCard, blip)
   fill(hoverCard, blip)
   placeBeside(hoverCard, blip)
   hoverCard:Show()
+end
+
+---Called by enemy blips on enter and leave. Entering shows the hover card for that enemy right away, unless Ctrl holds
+---the card on another enemy; leaving lets the card's own watch hide it once the cursor is off the enemy and not heading
+---for the card.
+---@param blip table
+---@param shown boolean
+function MDT:DisplayBlipTooltip(blip, shown)
+  if not shown then return end
+  if pinnedCardFor(blip) then return end
+  if IsControlKeyDown() and hoverCard and hoverCard:IsShown() then
+    heldOverBlip = blip
+    return
+  end
+  showHover(blip)
 end
 
 ---Pins the enemy info card for a blip. The right-click menu and the dev panel open it through here.
@@ -535,21 +789,24 @@ function MDT:ShowEnemyInfoFrame(blip)
   pin(blip)
 end
 
+---Closes the hover card and every pinned card.
 function MDT:CloseEnemyInfo()
   hideHover()
-  if pinnedEscape then UI.Escape.Remove(pinnedEscape) end
-  if isPinned() then
-    pinnedCard.blip, pinnedCard.enemyIdx, pinnedCard.cloneIdx = nil, nil, nil
-    pinnedCard:Hide()
-  end
+  for i = #pinnedCards, 1, -1 do pinnedCards[i]:Hide() end
 end
 
----Refills the pinned card after dev edits or map changes. No-op while nothing is pinned.
+---Refills the pinned cards after dev edits or map changes, and closes those whose enemy clone is gone.
 function MDT:UpdateEnemyInfoFrame()
-  if not isPinned() then return end
-  local blip = pinnedCard.blip
-  if not blip.data or blip.enemyIdx ~= pinnedCard.enemyIdx then return MDT:CloseEnemyInfo() end
-  fill(pinnedCard, blip)
+  for i = #pinnedCards, 1, -1 do
+    local card = pinnedCards[i]
+    local blip = pinnedEnemyBlip(card)
+    if not blip then
+      card:Hide()
+    else
+      fill(card, blip)
+      keepOnMap(card)
+    end
+  end
 end
 
 ---Refreshes health and forces after the key level changed.
@@ -562,5 +819,12 @@ end
 ---@param kind "hover"|"pinned"
 ---@return MDT.EnemyCard?
 function MDT:GetEnemyInfoCard(kind)
-  return kind == "pinned" and pinnedCard or hoverCard
+  if kind == "pinned" then return pinnedCards[#pinnedCards] end
+  return hoverCard
+end
+
+---Test access to the open pinned cards, the front one last.
+---@return MDT.EnemyCard[]
+function MDT:GetEnemyInfoPinnedCards()
+  return { unpack(pinnedCards) }
 end
