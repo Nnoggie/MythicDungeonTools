@@ -333,7 +333,8 @@ end
 local function onHover(item, index, row)
   -- An enemy dragged across the list shows no cards.
   if item.kind ~= "pull" or MDT:IsEnemyDragging() then return end
-  MDT:ShowPullCardBesideRow(row, item)
+  -- An enemy card held by Ctrl stays the only card; the row shows its own once Ctrl is let go over it.
+  if not (IsControlKeyDown() and MDT:IsEnemyHoverCardShown()) then MDT:ShowPullCardBesideRow(row, item) end
   row:kitWatchPortraits(true)
   previewForces(item.cumulative)
   MDT:PullClickAreaOnEnter(index)

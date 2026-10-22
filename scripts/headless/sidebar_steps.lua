@@ -677,6 +677,36 @@ return function(ctx)
     W.modifiers = nil
     W.pump(0.1)
     expect(not enemyCard():IsShown(), "the enemy card stays after Ctrl is let go away from it")
+    -- Other pulls and their enemies show nothing while Ctrl holds the card.
+    W.cursorTo(row)
+    W.fireScript(row, "OnEnter")
+    W.cursorTo(row.kitPortraits[1])
+    W.pump(0.05)
+    W.modifiers = { ctrl = true }
+    W.cursorTo(row, row:GetRight() - 4, select(2, row:GetCenter()))
+    W.fireScript(row, "OnLeave")
+    W.pump(0.5)
+    expect(enemyCard():IsShown(), "setup: Ctrl did not hold the enemy card")
+    local held = enemyCard().cloneIdx
+    local otherRow
+    control("pulls"):ForEachRow(function(candidate)
+      if not otherRow and candidate ~= row and candidate.kitItem and candidate.kitItem.kind == "pull" then otherRow = candidate end
+    end)
+    expect(otherRow, "setup: no second pull row")
+    W.cursorTo(otherRow, otherRow:GetRight() - 4, select(2, otherRow:GetCenter()))
+    W.fireScript(otherRow, "OnEnter")
+    W.pump(0.1)
+    expect(not pullCard:IsShown() and enemyCard():IsShown(), "another pull showed its card while Ctrl held the enemy card")
+    if otherRow.kitPortraits[1]:IsShown() then
+      W.cursorTo(otherRow.kitPortraits[1])
+      W.pump(0.1)
+      expect(enemyCard().cloneIdx == held and enemyCard():IsShown(), "another enemy took the card while Ctrl held it")
+      W.cursorTo(otherRow, otherRow:GetRight() - 4, select(2, otherRow:GetCenter()))
+    end
+    W.modifiers = nil
+    W.pump(0.1)
+    expect(pullCard:IsShown() and not enemyCard():IsShown(), "letting go of Ctrl over a pull did not show its card")
+    W.fireScript(otherRow, "OnLeave")
     local forces, total = control("forces"), MDT.dungeonTotalCount[db.currentDungeonIdx].normal
     expect(forces.kitText:GetFontObject() == UI.Fonts.Get("body"), "forces bar text is not the body font")
     W.fireScript(row, "OnEnter")
