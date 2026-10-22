@@ -78,8 +78,8 @@ function MDT:BuildDevCacheEdits(before, after)
     diff(old[key] and old[key].enemy, new[key] and new[key].enemy, {}, edits.enemies,
       entry.enemy.id, entry.index, duplicate[entry.enemy.id])
   end
-  -- POI floor lists have positional indices: concurrent changes to the same list
-  -- require resolution. Only changed floors (and changed patrols) are stored whole.
+  -- POI floor lists have positional indices, so changed floors (and changed patrols)
+  -- are stored whole. Replay splits a floor into per-value changes when it can.
   keys = {}
   for floor in pairs(before.pois) do keys[floor] = true end
   for floor in pairs(after.pois) do keys[floor] = true end
@@ -104,6 +104,43 @@ local function applyValue(root, edit)
   if equal(parent[key], edit.after) then return true end
   if not equal(parent[key], edit.before) then return false end
   parent[key] = copy(edit.after)
+  return true
+end
+
+-- A whole-floor POI edit stops matching once source changes anything on that floor.
+-- If markers were only changed or appended, indices are stable, so replay each changed
+-- value on its own: values source already has are done, untouched ones are replayed,
+-- and anything else is still a conflict.
+local function applyPOIFloor(pois, edit)
+  if applyValue(pois, edit) then return true end
+  local floor, before, after = edit.path[1], edit.before, edit.after
+  if #edit.path ~= 1 or type(before) ~= "table" or type(after) ~= "table" or type(pois[floor]) ~= "table" then
+    return false
+  end
+  local lastBefore = 0
+  for index in pairs(before) do
+    if type(index) ~= "number" or after[index] == nil then return false end
+    lastBefore = math.max(lastBefore, index)
+  end
+  local parts = {}
+  for index, marker in pairs(after) do
+    if type(index) ~= "number" then return false end
+    if before[index] ~= nil then
+      diff(before[index], marker, { index }, parts)
+    else
+      if index <= lastBefore then return false end
+      local current = pois[floor][index]
+      if current == nil then
+        parts[#parts + 1] = { path = { index }, after = marker }
+      -- An added marker has no earlier version: the same spot means source already has it.
+      elseif type(current) ~= "table" or type(marker) ~= "table" or current.x ~= marker.x or current.y ~= marker.y then
+        return false
+      end
+    end
+  end
+  for _, part in ipairs(parts) do
+    if not applyValue(pois[floor], part) then return false end
+  end
   return true
 end
 
@@ -152,7 +189,7 @@ function MDT:ApplyDevCacheEdits(data, edits)
     end
   end
   for _, edit in ipairs(edits.pois or {}) do
-    if not applyValue(result.pois, edit) then return nil, "POI floor "..tostring(edit.path[1]) end
+    if not applyPOIFloor(result.pois, edit) then return nil, "POI floor "..tostring(edit.path[1]) end
   end
   return result
 end
