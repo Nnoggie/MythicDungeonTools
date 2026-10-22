@@ -1,6 +1,3 @@
-## 6.3.13 (2026-10-22)
+## 6.3.14 (2026-10-22)
 
-- You can now pin several enemy info cards at once and drag them anywhere on the map.
-- The enemy info card now closes as soon as you move off the enemy. Hold Ctrl to keep it open.
-- The enemy info card now shows the enemy's efficiency score.
-- Fixed pull health overlapping the pull's forces in the sidebar when Show pull health is on.
+- Fixed the enemy info card staying open while the cursor rests between the enemy and the card.

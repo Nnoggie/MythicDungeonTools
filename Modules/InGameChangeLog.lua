@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.14",
+    date = "2026-10-22",
+    notes = {
+      "Fixed the enemy info card staying open while the cursor rests between the enemy and the card.",
+    },
+  },
+  {
     tag = "6.3.13",
     date = "2026-10-22",
     notes = {
@@ -16,16 +23,6 @@ MDT.changeLog = {
     date = "2026-10-21",
     notes = {
       "Hover highlights across the AddOn are now easier to see.",
-    },
-  },
-  {
-    tag = "6.3.11",
-    date = "2026-10-21",
-    notes = {
-      "Added an MDT Scale setting under Settings > General to make MDT bigger or smaller. /mdt reset sets it back to 100%.",
-      "Fixed MDT appearing much too small on 4K and other high-resolution screens.",
-      "The enemy info card is more compact. Pin it to also see more info.",
-      "Stealth and stealth detection now show as icons on the enemy info card.",
     },
   },
 }
