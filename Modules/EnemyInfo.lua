@@ -19,6 +19,8 @@ local TOOLTIP_ICON_SIZE = 12
 local CHARACTERISTIC_ICON_SIZE = 16
 ---Gap between an enemy and its card.
 local CARD_OFFSET = 30
+---Seconds the cursor may spend between an enemy and its hover card on the way to the card.
+local CORRIDOR_TIMEOUT = 0.3
 local MODEL_ROTATION_SPEED = math.pi / 4
 ---Pinned card frame levels: the back card's, the gap between cards, which leaves room for a card's own frames, and how
 ---many front cards stack in order below the dialogs' level 100.
@@ -126,6 +128,8 @@ local hoverCard
 local pinnedCards, sparePinnedCards = {}, {}
 ---The enemy the hover card belongs to, and the last enemy the cursor entered while Ctrl kept the card on another one.
 local hoverBlip, heldOverBlip
+---When the cursor entered the corridor between the hover card's enemy and the card; nil while it is elsewhere.
+local corridorSince
 ---Where the hover card last showed and for which enemy, so pinning from the right-click menu opens in the same spot.
 local lastSpot
 
@@ -545,7 +549,7 @@ local function hideHover()
     lastSpot = { blip = hoverBlip, left = hoverCard:GetLeft(), top = hoverCard:GetTop() }
     hoverCard:Hide()
   end
-  hoverBlip, heldOverBlip = nil, nil
+  hoverBlip, heldOverBlip, corridorSince = nil, nil, nil
 end
 
 ---Narrows [tMin, tMax] to the t where value + t * delta <= limit. An empty range comes back with tMin > tMax.
@@ -576,15 +580,25 @@ end
 
 local showHover
 
----While the hover card shows: it stays while Ctrl is held or the cursor is on the enemy, on the card, or between them.
----Releasing Ctrl over another enemy moves the card to that enemy.
+---While the hover card shows: it stays while Ctrl is held or the cursor is on the enemy or the card, and for a moment
+---while it crosses the corridor between them. Releasing Ctrl over another enemy moves the card to that enemy.
 local function watchHover(card)
-  if IsControlKeyDown() then return end
+  if IsControlKeyDown() then
+    corridorSince = nil
+    return
+  end
   local waiting = heldOverBlip
   heldOverBlip = nil
   if waiting and waiting ~= hoverBlip and waiting:IsVisible() and waiting:IsMouseOver() then return showHover(waiting) end
-  if card:IsMouseOver() then return end
-  if hoverBlip and hoverBlip:IsVisible() and cursorInCorridor(hoverBlip, card) then return end
+  local onBlip = hoverBlip and hoverBlip:IsVisible() and hoverBlip:IsMouseOver()
+  if onBlip or card:IsMouseOver() then
+    corridorSince = nil
+    return
+  end
+  if hoverBlip and hoverBlip:IsVisible() and cursorInCorridor(hoverBlip, card) then
+    corridorSince = corridorSince or GetTime()
+    if GetTime() - corridorSince <= CORRIDOR_TIMEOUT then return end
+  end
   hideHover()
 end
 
@@ -761,7 +775,7 @@ end
 ---@param blip table
 showHover = function(blip)
   hoverCard = hoverCard or createCard("hover")
-  hoverBlip, heldOverBlip = blip, nil
+  hoverBlip, heldOverBlip, corridorSince = blip, nil, nil
   anchorAt(hoverCard, blip)
   fill(hoverCard, blip)
   placeBeside(hoverCard, blip)
