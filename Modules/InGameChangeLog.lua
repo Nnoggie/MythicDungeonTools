@@ -2,6 +2,16 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.13",
+    date = "2026-10-22",
+    notes = {
+      "You can now pin several enemy info cards at once and drag them anywhere on the map.",
+      "The enemy info card now closes as soon as you move off the enemy. Hold Ctrl to keep it open.",
+      "The enemy info card now shows the enemy's efficiency score.",
+      "Fixed pull health overlapping the pull's forces in the sidebar when Show pull health is on.",
+    },
+  },
+  {
     tag = "6.3.12",
     date = "2026-10-21",
     notes = {
@@ -16,16 +26,6 @@ MDT.changeLog = {
       "Fixed MDT appearing much too small on 4K and other high-resolution screens.",
       "The enemy info card is more compact. Pin it to also see more info.",
       "Stealth and stealth detection now show as icons on the enemy info card.",
-    },
-  },
-  {
-    tag = "6.3.10",
-    date = "2026-10-21",
-    notes = {
-      "MDT has a new look. Every window, menu, dialog and settings page was rebuilt with a cleaner design and a new font.",
-      "The sidebar now lists every route for the dungeon with a search box. Click a route to open it, or right-click it to rename, duplicate, export, send to party, start a live session or delete it.",
-      "Hovering an enemy now shows an enemy info card with its model, health, forces and spells. Click the pin button to keep it open.",
-      "Fixed icons in map texts becoming far too large in fullscreen.",
     },
   },
 }
