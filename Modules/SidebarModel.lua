@@ -147,6 +147,7 @@ end
 ---@field displayId integer?
 ---@field iconTexture (string|number)? a portrait some enemies have in place of a creature display
 ---@field count integer how many of the pull's enemies the entry stands for
+---@field cloneIdx integer? the enemy's number, when the entry stands for one enemy that is not a boss
 ---@field spellIds integer[] its interruptible spells
 
 ---The pull's enemies that cast interruptible spells, as the pull card lists them: enemies of a kind with one such spell
@@ -159,31 +160,34 @@ function Model.PullCasters(pull, enemies)
   for enemyIdx, clones in pairs(pull) do
     local enemy = tonumber(enemyIdx) and enemies[enemyIdx]
     if enemy and enemy.spells then
-      local count = 0
+      local cloneIdxs = {}
       for _, cloneIdx in pairs(clones) do
-        if enemy.clones[cloneIdx] then count = count + 1 end
+        if enemy.clones[cloneIdx] then cloneIdxs[#cloneIdxs + 1] = cloneIdx end
       end
+      table.sort(cloneIdxs)
+      local count = #cloneIdxs
       local spellIds = {}
       for spellId, spell in pairs(enemy.spells) do
         if spell.interruptible then spellIds[#spellIds + 1] = spellId end
       end
       table.sort(spellIds)
-      local function entry(stands)
+      local function entry(stands, cloneIdx)
         return {
           enemyIdx = enemyIdx, name = enemy.name, displayId = enemy.displayId, iconTexture = enemy.iconTexture,
-          count = stands, spellIds = spellIds,
+          count = stands, cloneIdx = not enemy.isBoss and cloneIdx or nil, spellIds = spellIds,
         }
       end
       if count > 0 and #spellIds == 1 then
-        casters[#casters + 1] = entry(count)
+        casters[#casters + 1] = entry(count, count == 1 and cloneIdxs[1] or nil)
       elseif #spellIds > 1 then
-        for _ = 1, count do casters[#casters + 1] = entry(1) end
+        for _, cloneIdx in ipairs(cloneIdxs) do casters[#casters + 1] = entry(1, cloneIdx) end
       end
     end
   end
   table.sort(casters, function(a, b)
     if a.count ~= b.count then return a.count > b.count end
-    return a.enemyIdx < b.enemyIdx
+    if a.enemyIdx ~= b.enemyIdx then return a.enemyIdx < b.enemyIdx end
+    return (a.cloneIdx or 0) < (b.cloneIdx or 0)
   end)
   return casters
 end

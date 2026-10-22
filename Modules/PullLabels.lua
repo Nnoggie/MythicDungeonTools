@@ -180,7 +180,9 @@ local function casterBlock(parent, id, caster, width)
   local portrait = UI.Stack(row, { id = "portrait", width = CASTER_PORTRAIT_SIZE, height = CASTER_PORTRAIT_SIZE, autoHeight = false })
   local columnWidth = width - CASTER_PORTRAIT_SIZE - Theme.Space("sm")
   local column = UI.Stack(row, { id = "column", gap = "xs", width = columnWidth })
+  -- Numbered like the enemy info card: High Evolutionist #3.
   local name = L[caster.name]
+  if caster.cloneIdx then name = name.." #"..caster.cloneIdx end
   if caster.count > 1 then name = name.." "..UI.Color.Escape(Theme.Rgba("text.muted"), "x"..caster.count) end
   UI.Text(column, { id = "name", text = name, font = "heading", width = columnWidth })
   local spells = UI.Stack(column, { id = "spells", gap = "xs" })

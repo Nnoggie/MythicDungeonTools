@@ -734,13 +734,15 @@ test("SidebarModel.PullCasters: a kind with one spell to interrupt shares an ent
   local casters = Model.PullCasters({ [1] = { 1, 2, 3 }, [3] = { 1, 2, 99 }, [4] = { 1 }, color = "ff0000" }, enemies)
   local summary = {}
   for i, caster in ipairs(casters) do
-    summary[i] = { caster.enemyIdx, caster.count, table.concat(caster.spellIds, "+"), caster.name, caster.displayId }
+    summary[i] = { caster.enemyIdx, caster.count, table.concat(caster.spellIds, "+"), caster.name, caster.displayId, caster.cloneIdx or false }
   end
   eq(summary, {
-    { 1, 3, "11", "Grunt", 11 },
-    { 3, 1, "31+32", "Imp", 33 },
-    { 3, 1, "31+32", "Imp", 33 },
-  }, "three grunts share an entry, the two imps get one each, unknown clones and the rat do not count")
+    { 1, 3, "11", "Grunt", 11, false },
+    { 3, 1, "31+32", "Imp", 33, 1 },
+    { 3, 1, "31+32", "Imp", 33, 2 },
+  }, "three grunts share an entry, the two imps get one each with their number, unknown clones and the rat do not count")
+  local single = Model.PullCasters({ [1] = { 2 } }, enemies)[1]
+  eq(single.cloneIdx, 2, "a lone caster of one spell carries its number")
   eq(Model.PullCasters({ [4] = { 1 } }, enemies), {})
 end)
 
