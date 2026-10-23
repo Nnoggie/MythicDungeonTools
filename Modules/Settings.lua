@@ -142,6 +142,7 @@ local function buildGeneral(column)
   checkbox(column, "forcesCount", L["Use forces count"], function() return db.useForcesCount == true end, function(value)
     db.useForcesCount = value
     MDT:RefreshSidebar()
+    MDT:DrawAllHulls()
   end)
   checkbox(column, "pullHealth", L["Show pull health"], function() return db.showPullButtonHealth == true end, function(value)
     db.showPullButtonHealth = value
