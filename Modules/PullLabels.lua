@@ -14,7 +14,7 @@ local max, pairs, ipairs, unpack = math.max, pairs, ipairs, unpack
 -- Enemy sizes differ a lot between dungeons, so they make a poor yardstick. Sizes below are fractions of the label's
 -- height.
 ---Label height in map units at map scale 1 and label size 1 (100% on the dev mode size slider).
-local HEIGHT = 8
+local HEIGHT = 12
 ---The pull number leads; the running total beside it is smaller.
 local NUMBER_FONT, TOTAL_FONT = 0.72, 0.52
 ---Room beside the number, and around the total; a little more on the right, where the pill rounds off.
