@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.17",
+    date = "2026-10-23",
+    notes = {
+      "Changing the MDT Scale now keeps the window in the same place and at the same size on screen.",
+      "The MDT Scale now goes up to 300%.",
+    },
+  },
+  {
     tag = "6.3.16",
     date = "2026-10-23",
     notes = {
@@ -18,13 +26,6 @@ MDT.changeLog = {
       "Pull numbers on the map now show the pull's forces. Hover one for the pull's details, and drag it onto another pull to merge them.",
       "Murder Row's snitches are now numbered and can be assigned to players.",
       "Flourishing Stride, Overload Golems, Proofs, Mutating Elixir, Warding Incense and Rune of Anchoring can now be assigned to players.",
-    },
-  },
-  {
-    tag = "6.3.14",
-    date = "2026-10-22",
-    notes = {
-      "Fixed the enemy info card staying open while the cursor rests between the enemy and the card.",
     },
   },
 }
