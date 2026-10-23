@@ -217,8 +217,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216538] = {
         ["magic"] = true,
       },
-      [1221063] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -344,8 +342,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216300] = {
         ["bleed"] = true,
       },
-      [1221063] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -437,8 +433,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216571] = {
         ["interruptible"] = true,
       },
-      [1221063] = {
-      },
       [1229433] = {
         ["magic"] = true,
       },
@@ -512,8 +506,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1216529] = {
       },
-      [1221063] = {
-      },
       [1295035] = {
       },
     },
@@ -543,8 +535,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 91,
     ["spells"] = {
       [1216529] = {
-      },
-      [1221063] = {
       },
       [1256276] = {
       },
@@ -650,8 +640,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1216590] = {
         ["poison"] = true,
-      },
-      [1221063] = {
       },
     },
     ["clones"] = {
@@ -1165,8 +1153,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1217930] = {
         ["magic"] = true,
       },
-      [1221063] = {
-      },
       [1293101] = {
       },
     },
@@ -1276,8 +1262,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1214980] = {
         ["interruptible"] = true,
       },
-      [1221063] = {
-      },
       [1297693] = {
       },
       [1297695] = {
@@ -1368,8 +1352,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
         ["enrage"] = true,
       },
-      [1221063] = {
-      },
       [1295426] = {
       },
       [1295427] = {
@@ -1457,8 +1439,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1217973] = {
         ["curse"] = true,
       },
-      [1221063] = {
-      },
       [1294789] = {
       },
       [1297682] = {
@@ -1507,8 +1487,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1293022] = {
       },
     },
@@ -1750,8 +1728,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1218187] = {
       },
-      [1221063] = {
-      },
       [1294824] = {
       },
       [1294827] = {
@@ -1872,8 +1848,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1217989] = {
       },
-      [1221063] = {
-      },
       [1223906] = {
       },
       [1230298] = {
@@ -1930,8 +1904,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1218347] = {
       },
-      [1221063] = {
-      },
       [1222598] = {
       },
       [1222795] = {
@@ -1963,8 +1935,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1311,
     ["spells"] = {
       [1217464] = {
-      },
-      [1221063] = {
       },
       [1228198] = {
         ["magic"] = true,
@@ -2265,8 +2235,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1223204] = {
         ["interruptible"] = true,
       },
@@ -2292,8 +2260,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 93,
     ["spells"] = {
-      [1221063] = {
-      },
       [1231256] = {
       },
       [1231262] = {

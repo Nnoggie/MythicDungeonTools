@@ -223,8 +223,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238687] = {
       },
       [1238725] = {
@@ -289,8 +287,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1241214] = {
         ["interruptible"] = true,
       },
@@ -384,8 +380,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1241217] = {
       },
       [1297699] = {
@@ -533,8 +527,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238053] = {
         ["enrage"] = true,
       },
@@ -650,8 +642,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1309947] = {
       },
       [1309964] = {
@@ -676,8 +666,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1241226] = {
       },
       [1265400] = {
@@ -806,8 +794,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1296518] = {
       },
       [1296519] = {
@@ -892,8 +878,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1309919] = {
         ["interruptible"] = true,
       },
@@ -959,8 +943,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1239860] = {
         ["magic"] = true,
       },
@@ -1030,8 +1012,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1240280] = {
       },
       [1241463] = {
@@ -1110,8 +1090,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1246687] = {
         ["interruptible"] = true,
       },
@@ -1162,8 +1140,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1246957] = {
       },
       [1246986] = {
@@ -1468,8 +1444,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2777,
     ["instanceID"] = 1311,
     ["spells"] = {
-      [1221063] = {
-      },
       [1232012] = {
       },
       [1234021] = {
@@ -1520,8 +1494,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238439] = {
         ["bleed"] = true,
       },
@@ -1854,8 +1826,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238801] = {
         ["curse"] = true,
       },
@@ -1918,8 +1888,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2777,
     ["instanceID"] = 1311,
     ["spells"] = {
-      [1221063] = {
-      },
       [1242860] = {
       },
       [1242869] = {

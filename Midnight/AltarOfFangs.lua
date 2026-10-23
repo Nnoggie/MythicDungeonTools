@@ -63,8 +63,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1306517] = {
       },
       [1306550] = {
@@ -127,8 +125,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1307526] = {
       },
     },
@@ -241,8 +237,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1287544] = {
       },
       [1289416] = {
@@ -341,8 +335,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1306383] = {
       },
     },
@@ -503,8 +495,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1294557] = {
         ["interruptible"] = true,
       },
@@ -608,8 +598,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1306308] = {
         ["enrage"] = true,
       },
@@ -801,8 +789,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1293420] = {
       },
       [1294934] = {
@@ -845,8 +831,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1294567] = {
       },
       [1294568] = {
@@ -1106,8 +1090,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1294845] = {
         ["poison"] = true,
       },
@@ -1147,8 +1129,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1308518] = {
       },
     },
@@ -1474,8 +1454,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 92,
     ["spells"] = {
-      [1221063] = {
-      },
       [1300503] = {
       },
       [1300618] = {
