@@ -147,7 +147,7 @@ return function(ctx)
     for _, key in ipairs({ "uiScale", "nonFullscreenScale", "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do
       if stored[key] == nil then loaded[key] = defaults[key] else loaded[key] = stored[key] end
     end
-    loaded.uiScale = finite(loaded.uiScale) and loaded.uiScale > 0 and math.min(2, math.max(0.5, loaded.uiScale)) or 1
+    loaded.uiScale = finite(loaded.uiScale) and loaded.uiScale > 0 and math.min(3, math.max(0.5, loaded.uiScale)) or 1
     loaded.nonFullscreenScale = finite(loaded.nonFullscreenScale) and math.max(0.9, loaded.nonFullscreenScale) or defaults.nonFullscreenScale
     if not (anchorPoints[loaded.anchorFrom] and anchorPoints[loaded.anchorTo]) then
       for _, key in ipairs({ "anchorFrom", "anchorTo", "xoffset", "yoffset" }) do loaded[key] = defaults[key] end
@@ -243,7 +243,7 @@ return function(ctx)
 
   step("scale: a corrupt or out of range MDT scale is applied as a valid one", function()
     local UI, db = MDT.UI, MDT:GetDB()
-    for _, case in ipairs({ { "big", 1 }, { 0 / 0, 1 }, { false, 1 }, { 9, 2 }, { 0.1, 0.5 } }) do
+    for _, case in ipairs({ { "big", 1 }, { 0 / 0, 1 }, { false, 1 }, { 9, 3 }, { 0.1, 0.5 } }) do
       local applied = UI.SetUserScale(case[1])
       expect(applied == case[2] and near(rootScale(), 768 / 1440 * case[2]),
         ("MDT scale %s applied as %s, root scale %s"):format(tostring(case[1]), tostring(applied), rootScale()))
@@ -252,17 +252,17 @@ return function(ctx)
     settle()
   end)
 
-  step("scale: at MDT scale 200% the window fits the screen, maximized and normal", function()
+  step("scale: at MDT scale 300% the window fits the screen, maximized and normal", function()
     local db, f = MDT:GetDB(), MDT.main_frame
     local slider = scaleSlider()
     click(f.maximizeButton)
     expect(db.maximized, "setup: the window did not maximize")
-    dragAndRelease(slider, 2)
-    expect(near(rootScale(), 768 / 1440 * 2), "root scale is "..rootScale().." at MDT scale 200%")
-    expectFillsScreen("at MDT scale 200%")
+    dragAndRelease(slider, 3)
+    expect(near(rootScale(), 768 / 1440 * 3), "root scale is "..rootScale().." at MDT scale 300%")
+    expectFillsScreen("at MDT scale 300%")
     click(f.maximizeButton)
     expect(not db.maximized, "setup: the window did not leave fullscreen")
-    expectOnScreen("at MDT scale 200%")
+    expectOnScreen("at MDT scale 300%")
   end)
 
   ---Runs /mdt reset and checks that it laid the window out once, saved the defaults and shows them fitted to the Root.
@@ -423,7 +423,7 @@ return function(ctx)
   step("scale: the window is never saved bigger than the screen holds after rescaling", function()
     local db, f = MDT:GetDB(), MDT.main_frame
     local slider = scaleSlider()
-    for _, target in ipairs({ 2, 0.5, 1.5, 0.75, 1 }) do
+    for _, target in ipairs({ 3, 0.5, 2, 0.75, 1 }) do
       dragAndRelease(slider, target)
       local _, _, fullscreenScale = MDT:GetFullScreenSizes()
       expect(db.nonFullscreenScale <= math.max(MDT:GetMinNonFullscreenScale(), fullscreenScale) + 1e-6,
