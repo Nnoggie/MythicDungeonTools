@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.16",
+    date = "2026-10-23",
+    notes = {
+      "You can now pick MDT's font in Settings.",
+      "Pull numbers on the map are now bigger and easier to read on every pull color.",
+    },
+  },
+  {
     tag = "6.3.15",
     date = "2026-10-23",
     notes = {
@@ -17,16 +25,6 @@ MDT.changeLog = {
     date = "2026-10-22",
     notes = {
       "Fixed the enemy info card staying open while the cursor rests between the enemy and the card.",
-    },
-  },
-  {
-    tag = "6.3.13",
-    date = "2026-10-22",
-    notes = {
-      "You can now pin several enemy info cards at once and drag them anywhere on the map.",
-      "The enemy info card now closes as soon as you move off the enemy. Hold Ctrl to keep it open.",
-      "The enemy info card now shows the enemy's efficiency score.",
-      "Fixed pull health overlapping the pull's forces in the sidebar when Show pull health is on.",
     },
   },
 }
