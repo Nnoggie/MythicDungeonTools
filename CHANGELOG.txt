@@ -1,4 +1,3 @@
-## 6.3.17 (2026-10-23)
+## 6.3.18 (2026-10-23)
 
-- Changing the MDT Scale now keeps the window in the same place and at the same size on screen.
-- The MDT Scale now goes up to 300%.
+- "Use forces count in Sidebar" is now "Use forces count in Sidebar and pull labels", as it also switches the pull labels on the map between percent and count.
