@@ -1,4 +1,4 @@
-## 6.3.16 (2026-10-23)
+## 6.3.17 (2026-10-23)
 
-- You can now pick MDT's font in Settings.
-- Pull numbers on the map are now bigger and easier to read on every pull color.
+- Changing the MDT Scale now keeps the window in the same place and at the same size on screen.
+- The MDT Scale now goes up to 300%.
