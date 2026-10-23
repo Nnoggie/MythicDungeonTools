@@ -126,7 +126,7 @@ local function buildGeneral(column)
   bind(UI.Slider(column, {
     id = "uiScale", label = L["MDT Scale"], min = 0.5, max = 2, step = 0.05, value = db.uiScale,
     format = function(value) return ("%d%%"):format(math.floor(value * 100 + 0.5)) end,
-    onCommit = function(value) db.uiScale = UI.SetUserScale(value) end,
+    onCommit = function(value) MDT:SetUserScale(value) end,
   }), function() return db.uiScale end)
   bind(UI.Dropdown(column, {
     id = "font", label = L["Font"], items = fontItems(), value = currentFont(), search = true, onChange = pickFont,

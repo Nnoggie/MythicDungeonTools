@@ -261,8 +261,10 @@ function MDT:SetScale(scale)
   db.nonFullscreenScale = scale
 end
 
-function MDT:GetFullScreenSizes()
-  local screenWidth, screenHeight = MDT.UI.Root:GetWidth(), MDT.UI.Root:GetHeight()
+---@param screenWidth number? the Root's width in its own units, default its current one
+---@param screenHeight number? the Root's height in its own units, default its current one
+function MDT:GetFullScreenSizes(screenWidth, screenHeight)
+  if not screenWidth then screenWidth, screenHeight = MDT.UI.Root:GetSize() end
   local newSizey = screenHeight - (panelHeight * 2)
   local newSizex = newSizey * (sizex / sizey)
   local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
@@ -291,6 +293,32 @@ function MDT:PlaceNormalWindow()
   anchorWindow(db.xoffset + dx, db.yoffset + dy)
 end
 
+---Where a named point (e.g. "TOPLEFT") lies on a box, as fractions of its width from the left and height from the bottom.
+local function pointFractions(point)
+  local x = point:find("LEFT") and 0 or point:find("RIGHT") and 1 or 0.5
+  local y = point:find("TOP") and 1 or point:find("BOTTOM") and 0 or 0.5
+  return x, y
+end
+
+---The normal window's visible top left corner (sidebar and top bar included) from the Root's top left, and its visible
+---height, in Root units. While maximized this is where the saved placement puts the normal window.
+---@return number left, number top, number height
+local function normalWindowCorner()
+  local f, Root = MDT.main_frame, MDT.UI.Root
+  if not MDT:IsShownMaximized() then
+    local top = f.topPanel:GetTop()
+    return f.navigationSidebar:GetLeft() - Root:GetLeft(), top - Root:GetTop(), top - f.bottomPanel:GetBottom()
+  end
+  local rootWidth, rootHeight = Root:GetSize()
+  local scale = MDT:GetNormalWindowScale()
+  local width, height = sizex * scale, sizey * scale
+  local fromX, fromY = pointFractions(db.anchorFrom)
+  local toX, toY = pointFractions(db.anchorTo)
+  local left = toX * rootWidth + db.xoffset - fromX * width
+  local top = toY * rootHeight + db.yoffset + (1 - fromY) * height
+  return left - MDT:GetNavigationSidebarWidth(), top + panelHeight - rootHeight, height + 2 * panelHeight
+end
+
 ---Refits the window to the Root, whose size in its own units changes with the MDT scale and the screen's aspect ratio.
 local function fitToRoot()
   local f = MDT.main_frame
@@ -311,6 +339,31 @@ end
 MDT.UI.OnRootResized(function()
   if framesInitialized then fitToRoot() end
 end)
+
+---Sets the MDT scale (1 = 100%) and saves it. The normal window keeps its top left corner and its height on screen:
+---before rescaling, it is saved anchored by its top left at the map scale that fills the same height at the new scale,
+---at most one that fits the Root at the new scale.
+function MDT:SetUserScale(scale)
+  scale = MDT.UI.ClampUserScale(scale)
+  if not framesInitialized or scale == db.uiScale then
+    db.uiScale = MDT.UI.SetUserScale(scale)
+    return
+  end
+  local left, top, height = normalWindowCorner()
+  -- How many new Root units one old Root unit spans.
+  local ratio = db.uiScale / scale
+  local rootWidth, rootHeight = MDT.UI.Root:GetSize()
+  local _, _, fullscreenScale = MDT:GetFullScreenSizes(rootWidth * ratio, rootHeight * ratio)
+  local windowScale = max(minNonFullscreenScale, (height * ratio - 2 * panelHeight) / sizey)
+  db.nonFullscreenScale = min(windowScale, max(minNonFullscreenScale, fullscreenScale))
+  db.anchorFrom, db.anchorTo = "TOPLEFT", "TOPLEFT"
+  db.xoffset = left * ratio + MDT:GetNavigationSidebarWidth()
+  db.yoffset = top * ratio - panelHeight
+  db.uiScale = MDT.UI.SetUserScale(scale)
+  -- The client may report the Root's new size during the rescale, later or not at all, and may still return its old
+  -- size until the next frame: refit on the next frame either way.
+  C_Timer.After(0, fitToRoot)
+end
 
 local bottomTips = {
   [1] = L["Please report any bugs on https://github.com/Nnoggie/MythicDungeonTools/issues"],

@@ -328,22 +328,108 @@ return function(ctx)
     expectShownWindow(shown, "after leaving fullscreen")
   end)
 
-  step("scale: MDT scale 200% and back restores the window, and fullscreen in between keeps where it was saved", function()
-    local f = MDT.main_frame
+  ---Runs fn while the Root reports its new size in the middle of rescaling, as the client may when the pixel borders
+  ---refresh, instead of on the next frame.
+  local function withImmediateRootResize(fn)
+    local Pixel = MDT.UI.Pixel
+    local refresh = Pixel.Refresh
+    Pixel.Refresh = function(...)
+      refresh(...)
+      W.layoutPass()
+    end
+    local ok, err = pcall(fn)
+    Pixel.Refresh = refresh
+    if not ok then error(err, 0) end
+  end
+
+  ---Runs fn while the Root never reports a new size.
+  local function withoutRootResize(fn)
+    local scripts = W.state[MDT.UI.Root].scripts
+    local onSizeChanged = scripts.OnSizeChanged
+    scripts.OnSizeChanged = nil
+    local ok, err = pcall(fn)
+    scripts.OnSizeChanged = onSizeChanged
+    W.state[MDT.UI.Root].reportedSize = { MDT.UI.Root:GetSize() }
+    if not ok then error(err, 0) end
+  end
+
+  local timings = {
+    ["on the next frame"] = function(fn) fn() end,
+    ["right away"] = withImmediateRootResize,
+    ["never"] = withoutRootResize,
+  }
+  for _, timing in ipairs({ "on the next frame", "right away", "never" }) do
+    step("scale: rescaling MDT keeps the window's top left corner and height on screen, also from fullscreen, with the Root resized "..timing, function()
+      local db, f = MDT:GetDB(), MDT.main_frame
+      local slider = scaleSlider()
+      expect(db.uiScale == 1, "setup: MDT scale is not 100%")
+      dragWindowTo("TOPLEFT", 150, -80)
+      local shown = shownWindow()
+      local left, _, bottom, top = windowRect()
+      local function expectSameCorner(when)
+        local nowLeft, _, nowBottom, nowTop = windowRect()
+        expect(near(nowLeft, left, 0.01) and near(nowTop, top, 0.01) and near(nowTop - nowBottom, top - bottom, 0.01),
+          ("the window's top left moved from %.2f, %.2f to %.2f, %.2f and its height from %.2f to %.2f %s"):format(left, top, nowLeft, nowTop, top - bottom, nowTop - nowBottom, when))
+        expectShownAtSaved(when)
+        -- A later refit, here from another addon rescaling UIParent, leaves the window as it is.
+        local shownNow = shownWindow()
+        UIParent:SetScale(0.7)
+        settle()
+        UIParent:SetScale(1)
+        settle()
+        expectShownWindow(shownNow, "after a later refit "..when)
+      end
+      local function run()
+        dragAndRelease(slider, 1.25)
+        expectSameCorner("at MDT scale 125%")
+        dragAndRelease(slider, 0.8)
+        expectSameCorner("at MDT scale 80%")
+        click(f.maximizeButton)
+        dragAndRelease(slider, 1.4)
+        expectFillsScreen("at MDT scale 140%")
+        click(f.maximizeButton)
+        expectSameCorner("after leaving fullscreen at MDT scale 140%")
+        dragAndRelease(slider, 1)
+        expectSameCorner("back at MDT scale 100%")
+        expectShownWindow(shown, "back at MDT scale 100%")
+      end
+      local ok, err = pcall(timings[timing], run)
+      if not ok then
+        if db.maximized then click(f.maximizeButton) end
+        dragAndRelease(slider, 1)
+        click(f.navigationSidebar.buttons.maps)
+        error(err, 0)
+      end
+      click(f.navigationSidebar.buttons.maps)
+    end)
+  end
+
+  step("scale: at MDT scale 200% the window grows to its smallest size and is saved at the same top left corner", function()
+    local db, f = MDT:GetDB(), MDT.main_frame
     local slider = scaleSlider()
-    dragWindowTo("TOPLEFT", MDT.UI.Root:GetWidth() - f.sidePanel:GetWidth() - f:GetWidth() - 50, -80)
-    local saved, shown = savedWindow(), shownWindow()
+    local left, _, _, top = windowRect()
     dragAndRelease(slider, 2)
-    expect(f:GetHeight() < shown[2] - 0.5, "setup: the window does not need to shrink at MDT scale 200%")
+    -- On a narrow screen the grown window may be shown moved on screen; it is saved where it was.
+    local scale, navigationWidth = rootScale(), MDT:GetNavigationSidebarWidth()
+    local savedLeft, savedTop = (db.xoffset - navigationWidth) * scale, W.screenHeight + (db.yoffset + 30) * scale
+    expect(db.anchorFrom == "TOPLEFT" and db.anchorTo == "TOPLEFT" and near(savedLeft, left, 0.01) and near(savedTop, top, 0.01),
+      ("the window's top left was %.2f, %.2f and is saved at %s %.2f, %.2f"):format(left, top, db.anchorFrom, savedLeft, savedTop))
+    expect(db.nonFullscreenScale == MDT:GetMinNonFullscreenScale(), "the saved window scale is "..db.nonFullscreenScale)
     expectOnScreen("at MDT scale 200%")
-    click(f.maximizeButton)
-    expectFillsScreen("at MDT scale 200%")
-    click(f.maximizeButton)
-    expectOnScreen("after leaving fullscreen at MDT scale 200%")
-    expectSavedWindow(saved, "at MDT scale 200%")
     dragAndRelease(slider, 1)
-    expectSavedWindow(saved, "back at MDT scale 100%")
-    expectShownWindow(shown, "back at MDT scale 100%")
+    click(f.navigationSidebar.buttons.maps)
+  end)
+
+  step("scale: the window is never saved bigger than the screen holds after rescaling", function()
+    local db, f = MDT:GetDB(), MDT.main_frame
+    local slider = scaleSlider()
+    for _, target in ipairs({ 2, 0.5, 1.5, 0.75, 1 }) do
+      dragAndRelease(slider, target)
+      local _, _, fullscreenScale = MDT:GetFullScreenSizes()
+      expect(db.nonFullscreenScale <= math.max(MDT:GetMinNonFullscreenScale(), fullscreenScale) + 1e-6,
+        ("at MDT scale %s the window is saved at scale %.3f, but only %.3f fits"):format(target, db.nonFullscreenScale, fullscreenScale))
+      expectOnScreen("at MDT scale "..target)
+    end
     click(f.navigationSidebar.buttons.maps)
   end)
 
