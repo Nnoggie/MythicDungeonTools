@@ -148,6 +148,67 @@ return function(ctx)
     expect(control(page, "palette"):GetValue() == paletteBefore, "Settings_Refresh did not resync the palette dropdown")
   end)
 
+  step("settings: the font dropdown saves a LibSharedMedia font and offers a reload, Archivo clears the pick", function()
+    local page = openSection("settings")
+    local dropdown = control(page, "font")
+    expect(UI.Fonts.files.roman == UI.Fonts.defaultFile, "MDT does not draw in Archivo")
+    -- A pick from an addon that is not loaded stays saved and shown, so it comes back with its addon.
+    local missing = ctx.seeded and ctx.seeded.font
+    expect(db.font == missing, ("loading changed the saved font %s to %s"):format(tostring(missing), tostring(db.font)))
+    expect(dropdown:GetValue() == (missing or "Archivo Narrow Bold"), "the font dropdown shows "..tostring(dropdown:GetValue()))
+    local reloads = 0
+    local reload = ReloadUI
+    ReloadUI = function() reloads = reloads + 1 end
+
+    -- Each name is drawn in its font; the rows are reused, so a menu without fonts shows the body font again.
+    click(dropdown.kitButton)
+    local list = menuList()
+    for index, item in ipairs(list.kitProps.items) do
+      if item.text == "Morpheus" then list:ScrollTo(index, "nearest") end
+    end
+    local drawn = {}
+    for index, item in ipairs(list.kitProps.items) do
+      local row = list:GetRow(index)
+      if row then drawn[item.text] = row.kitLabel:GetFont() end
+    end
+    expect(drawn["Morpheus"] == LibStub("LibSharedMedia-3.0"):Fetch("font", "Morpheus"), "Morpheus is drawn in "..tostring(drawn["Morpheus"]))
+    UI.Overlay.PopAll("menu", "test")
+    click(control(page, "palette").kitButton)
+    local paletteRow = menuList():GetRow(1)
+    expect(paletteRow.kitLabel:GetFont() == UI.Fonts.Get("body"):GetFont(), "a palette row kept a font name's font")
+    UI.Overlay.PopAll("menu", "test")
+
+    chooseFromDropdown(dropdown, "Friz Quadrata TT")
+    expect(db.font == "Friz Quadrata TT", "choosing Friz Quadrata TT saved "..tostring(db.font))
+    local dialog = UI.Dialogs.Get("fontReload")
+    expect(dialog and dialog:IsVisible(), "picking another font offers no reload")
+    click(dialog.content:Find("cancel"))
+    expect(UI.Dialogs.Get("fontReload") == nil and reloads == 0, "Later did not close the reload prompt without reloading")
+    expect(db.openAfterReload == nil, "Later still opens MDT after the next reload")
+    chooseFromDropdown(dropdown, "Morpheus")
+    click(UI.Dialogs.Get("fontReload").content:Find("confirm"))
+    expect(reloads == 1, "Reload UI did not reload")
+    expect(db.openAfterReload == true, "the font reload does not open MDT once it is back")
+    db.openAfterReload = nil
+
+    -- Back to the font MDT draws in now: nothing to reload.
+    chooseFromDropdown(dropdown, "Archivo Narrow Bold")
+    expect(db.font == nil, "choosing Archivo kept "..tostring(db.font))
+    expect(UI.Dialogs.Get("fontReload") == nil, "choosing the font in use offers a reload")
+    ReloadUI = reload
+    db.font = missing
+  end)
+
+  step("settings: MDT opens once after a reload for a new font, and not on later logins", function()
+    -- Fresh clients, booted from saved variables in another process; only the run that seeds its own boots them.
+    if not ctx.seeded then return end
+    local afterFontReload = ctx.bootWithSavedVariables("MythicDungeonToolsDB = { global = { openAfterReload = true } }", "--login-only")
+    expect(afterFontReload:find("opened after login: true", 1, true), "MDT did not open after the font reload:\n"..afterFontReload:sub(-1500))
+    expect(afterFontReload:find("openAfterReload: nil", 1, true), "MDT keeps opening on every login:\n"..afterFontReload:sub(-1500))
+    local plainLogin = ctx.bootWithSavedVariables("MythicDungeonToolsDB = { global = {} }", "--login-only")
+    expect(plainLogin:find("opened after login: false", 1, true), "MDT opened on a plain login:\n"..plainLogin:sub(-1500))
+  end)
+
   step("settings: Apply to preset turns auto coloring on and unlocks color blind mode", function()
     local page = openSection("settings")
     if db.colorPaletteInfo.autoColoring then click(control(page, "autoColoring")) end

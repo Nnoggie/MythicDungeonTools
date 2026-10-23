@@ -66,6 +66,14 @@ function MDT:HardReset()
   ReloadUI()
 end
 
+---Reloads the UI and opens MDT once it is back, for changes that need a reload, such as a new font.
+function MDT:ReloadAndOpen()
+  db.openAfterReload = true
+  ReloadUI()
+end
+
+MDT:ExportAPI("ReloadAndOpen")
+
 function MDT:ResetDataCache()
   db.devModeCache = nil
   db.dungeonEnemies = nil
@@ -598,6 +606,9 @@ eventFrame:SetScript("OnEvent", function(self, event)
     local dungeonToolsButton = minimapIcon.objects and minimapIcon.objects.DungeonTools
     if dungeonToolsButton then dungeonToolsButton:SetScript("OnClick", function() MDT:ShowInterface() end) end
   end
-  if db.loadOnStartUp and db.devMode then MDT:ShowInterface(true) end
+  -- Opening once after MDT:ReloadAndOpen; the flag goes first, so a failed open does not repeat on every login.
+  local reopen = db.openAfterReload
+  db.openAfterReload = nil
+  if reopen or (db.loadOnStartUp and db.devMode) then MDT:ShowInterface(true) end
   self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)

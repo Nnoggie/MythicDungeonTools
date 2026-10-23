@@ -10,6 +10,7 @@
 
 ..\MythicDungeonTools\libs\load_libs.xml
 Bootstrap.lua
+Font.lua
 ..\MythicDungeonTools\locales.xml
 Kit\load_kit.xml
 ..\MythicDungeonTools\Utility.lua

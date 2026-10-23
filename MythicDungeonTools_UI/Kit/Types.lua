@@ -136,6 +136,7 @@
 ---@field trailing string? right-aligned text
 ---@field icon (string|number)?
 ---@field textColor MDT.UI.Color?
+---@field font string? a font file the label is drawn in, at the body size; only rows on screen load theirs
 ---@field value any? choice: compared with the dropdown value
 ---@field checked boolean? toggle or choice
 ---@field disabled boolean?

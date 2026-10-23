@@ -8,6 +8,7 @@
 --   --screen=WxH                  monitor resolution in physical pixels (default 1920x1080)
 --   --savedvariables=path         boot with a SavedVariables file (e.g. WTF/.../MythicDungeonTools.lua)
 --   --write-savedvariables=path   write MythicDungeonToolsDB after PLAYER_LOGOUT
+--   --login-only                  stop after login and report whether MDT opened on its own
 --   --undefined-globals           list undefined globals that were read
 --   --verbose                     echo print() output
 local root, flags = ".", {}
@@ -76,11 +77,12 @@ end
 local MDT, db, main
 -- Without --savedvariables, boot with an MDT scale of 150% and a window 6.3.10 saved on this screen: grown with the
 -- screen (6.3.10's Root had as many units as the screen has pixels) and pinned to its top right corner, so the bars
--- and side panel hang off screen. Larger screens make it larger than the screen can show.
+-- and side panel hang off screen. Larger screens make it larger than the screen can show. The font picked is from an
+-- addon that is not loaded, so MDT has to keep the pick and draw in Archivo meanwhile.
 local oldScale = W.physicalHeight / 768
 local seeded = {
   uiScale = 1.5, nonFullscreenScale = oldScale, scale = oldScale, anchorFrom = "TOPRIGHT", anchorTo = "TOPRIGHT",
-  xoffset = 0, yoffset = 0,
+  xoffset = 0, yoffset = 0, font = "Font From A Missing Addon",
 }
 
 -- MythicDungeonToolsDB.global as stored before load.
@@ -135,6 +137,15 @@ step("load core addon", function()
   W.FireEvent("PLAYER_ENTERING_WORLD", true, false)
 end)
 
+if flags["login-only"] then
+  W.settle(asyncIdle, 30)
+  local ui = Loader.addons.MythicDungeonTools_UI
+  local frame = ui and ui.loaded and ui.namespace.main_frame
+  io.write(("opened after login: %s\n"):format(tostring(frame and frame:IsVisible() or false)))
+  io.write(("openAfterReload: %s\n"):format(tostring(_G.MythicDungeonToolsDB.global.openAfterReload)))
+  os.exit(0)
+end
+
 -- How often the first open laid the normal window out again after building it.
 local loginRelayouts, minimize = 0, nil
 local uiLoadWatcher = CreateFrame("Frame")
@@ -167,8 +178,10 @@ local function click(widget, button)
 end
 
 ---Runs this harness again in a new process on the same screen, booted with the given SavedVariables file text.
+---@param text string
+---@param extraFlags string? such as "--login-only"
 ---@return string output
-local function bootWithSavedVariables(text)
+local function bootWithSavedVariables(text, extraFlags)
   local path = (os.getenv("TEMP") or os.getenv("TMPDIR") or "/tmp").."/mdt-headless-"..os.time().."-"..math.random(1e6)..".lua"
   local file = assert(io.open(path, "w"))
   file:write(text)
@@ -177,6 +190,7 @@ local function bootWithSavedVariables(text)
   local command = table.concat({
     quote(arg[-1]), quote(arg[0]), quote(root), "--savedvariables="..quote(path),
     ("--screen=%dx%d"):format(W.physicalWidth, W.physicalHeight), W.strict and "--strict" or "", flags.developer and "--developer" or "",
+    extraFlags or "",
   }, " ").." 2>&1"
   -- cmd.exe strips the outer quotes of a command that holds more than two.
   if package.config:sub(1, 1) == "\\" then command = '"'..command..'"' end
@@ -268,7 +282,8 @@ dofile(root.."/scripts/headless/kit_list_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle,
 })
 dofile(root.."/scripts/headless/section_pages_steps.lua")({
-  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render,
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, seeded = seeded,
+  bootWithSavedVariables = bootWithSavedVariables,
 })
 dofile(root.."/scripts/headless/chrome_steps.lua")({ W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render })
 dofile(root.."/scripts/headless/enemy_info_steps.lua")({

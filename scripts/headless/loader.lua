@@ -188,6 +188,14 @@ return function(W, options)
     end
   end
 
+  -- LibSharedMedia rejects media the client does not know. File ids and game files outside Interface\AddOns count as known.
+  _G.C_UIFileAsset = {
+    IsKnownFile = function(file)
+      if type(file) == "number" then return true end
+      return type(file) == "string" and W.resolveAddonFile(file) ~= nil
+    end,
+  }
+
   function W.checkAddonFile(path)
     local found = W.resolveAddonFile(path)
     if found ~= nil then return end

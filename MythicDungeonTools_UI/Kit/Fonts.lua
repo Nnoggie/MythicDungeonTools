@@ -10,9 +10,13 @@ UI.Fonts = Fonts
 
 Fonts.alphabets = { "roman", "russian", "korean", "simplifiedchinese", "traditionalchinese" }
 
----Per-alphabet files. roman is the font MDT ships; the rest are files the client installs with every locale.
+---The font MDT ships for roman text.
+Fonts.defaultFile = "Interface\\AddOns\\MythicDungeonTools\\Fonts\\ArchivoNarrow-Bold.ttf"
+
+---Per-alphabet files. roman is the font MDT ships, or the one the user picked (MDT.userFontFile, found before the kit
+---loads); the rest are files the client installs with every locale.
 Fonts.files = {
-  roman = "Interface\\AddOns\\MythicDungeonTools\\Fonts\\ArchivoNarrow-Bold.ttf",
+  roman = MDT.userFontFile or Fonts.defaultFile,
   russian = "Fonts\\FRIZQT___CYR.TTF",
   korean = "Fonts\\2002.TTF",
   simplifiedchinese = "Fonts\\ARKai_T.ttf",

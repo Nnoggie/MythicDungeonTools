@@ -54,6 +54,12 @@ function ItemRow:Bind(item)
   self.kitLabel:ClearAllPoints()
   self.kitLabel:SetPoint("LEFT", self, "LEFT", left, 0)
   self.kitLabel:SetPoint("RIGHT", self.kitDetail, "LEFT", -Theme.Space("sm"), 0)
+  if item.font then
+    local _, size = Fonts.Get("body"):GetFont()
+    self.kitLabel:SetFont(item.font, size, "")
+  else
+    self.kitLabel:SetFontObject(Fonts.Get("body"))
+  end
   self.kitLabel:SetText(item.text or "")
   local textColor = item.disabled and "text.disabled" or item.textColor or "text.normal"
   Theme.Bind(self.kitLabel, textColor)
