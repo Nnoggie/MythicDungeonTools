@@ -1330,9 +1330,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
-      [269232] = {
-      },
       [1242200] = {
+      },
+      [1314883] = {
       },
     },
     ["clones"] = {
