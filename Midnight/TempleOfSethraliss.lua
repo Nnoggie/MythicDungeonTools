@@ -64,11 +64,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1292585] = {
       },
-      [1292623] = {
-      },
       [1308113] = {
-      },
-      [1308116] = {
       },
     },
     ["clones"] = {
@@ -337,8 +333,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       ["Slow"] = true,
     },
     ["spells"] = {
-      [1295610] = {
-      },
       [1295635] = {
       },
       [1308100] = {
@@ -580,8 +574,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1310396] = {
       },
-      [1310402] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -713,10 +705,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
         ["curse"] = true,
       },
-      [1314082] = {
-        ["interruptible"] = true,
-        ["curse"] = true,
-      },
     },
     ["clones"] = {
       [1] = {
@@ -806,19 +794,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1290797] = {
       },
-      [1291734] = {
-      },
       [1293048] = {
-      },
-      [1296738] = {
       },
       [1296912] = {
       },
       [1297034] = {
-      },
-      [1298329] = {
-      },
-      [1308838] = {
       },
     },
     ["clones"] = {
@@ -849,11 +829,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1293475] = {
       },
       [1293650] = {
-      },
-      [1293652] = {
-      },
-      [1310739] = {
-        ["magic"] = true,
       },
     },
     ["clones"] = {
@@ -903,8 +878,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1291262] = {
         ["interruptible"] = true,
-      },
-      [1296045] = {
       },
       [1296052] = {
         ["magic"] = true,
@@ -1019,11 +992,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300684] = {
       },
-      [1311964] = {
-      },
       [1311980] = {
-      },
-      [1311981] = {
       },
     },
     ["clones"] = {
@@ -1187,8 +1156,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1303486] = {
       },
-      [1308546] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1262,8 +1229,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [267483] = {
       },
       [273241] = {
-      },
-      [1225638] = {
       },
     },
     ["clones"] = {
@@ -1344,21 +1309,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1288087] = {
       },
-      [1288092] = {
-      },
-      [1288235] = {
-      },
       [1288428] = {
       },
-      [1289229] = {
-      },
-      [1308738] = {
-      },
-      [1308740] = {
-      },
       [1310311] = {
-      },
-      [1314051] = {
       },
     },
     ["clones"] = {
@@ -1387,19 +1340,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1288864] = {
       },
-      [1288885] = {
-      },
       [1289062] = {
-      },
-      [1289229] = {
       },
       [1292035] = {
       },
       [1310311] = {
-      },
-      [1310712] = {
-      },
-      [1311808] = {
       },
     },
     ["clones"] = {
@@ -1554,11 +1499,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1302616] = {
       },
-      [1302618] = {
-      },
       [1302761] = {
-      },
-      [1303446] = {
       },
     },
     ["clones"] = {
@@ -1642,10 +1583,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1302158] = {
         ["interruptible"] = true,
-      },
-      [1311964] = {
-      },
-      [1311979] = {
       },
     },
     ["clones"] = {
