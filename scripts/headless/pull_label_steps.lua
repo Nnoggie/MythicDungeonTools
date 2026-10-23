@@ -171,6 +171,69 @@ return function(ctx)
     expect(math.abs((zoomedTop - zoomedBottom) - height * 3) < 0.5, ("label is %.1f high zoomed in, %.1f before"):format(zoomedTop - zoomedBottom, height))
   end)
 
+  step("pull labels: in dev mode a size slider grows the labels in place while it moves and places them anew on release", function()
+    local devMode = db.devMode
+    expect(not devMode and not (main.pullLabelSizeSlider and main.pullLabelSizeSlider:IsShown()), "the label size slider shows out of dev mode")
+    db.devMode = true
+    MDT:UpdatePullLabelSizeSlider()
+    local panel = main.pullLabelSizeSlider
+    expect(panel and panel:IsVisible(), "the label size slider is not on the map in dev mode")
+    local control = panel:Find("pullLabelSize")
+    local slider = control.kitSlider
+    local function measure(region)
+      local l, r, b, t = screenRect(region)
+      return (l + r) / 2, (b + t) / 2, t - b
+    end
+    local function release()
+      W.fireScript(slider, "OnMouseUp")
+      W.settle(asyncIdle, 30)
+    end
+    expect(control.kitValueText:GetText() == "100%", "the slider starts at "..tostring(control.kitValueText:GetText()))
+    local x, y, height = measure(label(1))
+
+    -- The slider's middle is 100%; its right half reaches 400% and its left half 0%, in 5% steps.
+    W.fireScript(slider, "OnValueChanged", 120, true)
+    expect(control.kitValueText:GetText() == "400%", "the right end reads "..control.kitValueText:GetText())
+    W.fireScript(slider, "OnValueChanged", 2, true)
+    expect(control.kitValueText:GetText() == "5%", "a step on the left half reads "..control.kitValueText:GetText())
+
+    W.fireScript(slider, "OnValueChanged", 90, true)
+    local mx, my, grown = measure(label(1))
+    expect(math.abs(grown - height * 2.5) < 0.5, ("at 250%% the label is %.1f high, %.1f at 100%%"):format(grown, height))
+    expect(math.abs(mx - x) < 0.5 and math.abs(my - y) < 0.5, "the label moved off its spot while it grew")
+    expect(db.devPullLabelSize == 1, "the size was saved before the slider was let go")
+    release()
+    expect(db.devPullLabelSize == 2.5, "letting go saved "..tostring(db.devPullLabelSize))
+    local _, _, placed = measure(label(1))
+    expect(label(1):GetScale() == 1 and math.abs(placed - height * 2.5) < 0.5, "the labels were not placed at their new size")
+
+    -- Out of dev mode the saved size is ignored and the slider hides.
+    db.devMode = false
+    MDT:UpdatePullLabelSizeSlider()
+    MDT:DrawAllHulls(nil, true)
+    W.settle(asyncIdle, 30)
+    local _, _, normal = measure(label(1))
+    expect(not panel:IsShown(), "the label size slider stayed up after dev mode was turned off")
+    expect(math.abs(normal - height) < 0.5, ("out of dev mode the label is %.1f high, %.1f normally"):format(normal, height))
+    db.devMode = true
+    MDT:UpdatePullLabelSizeSlider()
+    MDT:DrawAllHulls(nil, true)
+    W.settle(asyncIdle, 30)
+
+    W.fireScript(slider, "OnValueChanged", 0, true)
+    expect(not label(1):IsShown(), "the labels show at 0%")
+    release()
+    expect(label(1) == nil, "labels are placed at 0%")
+
+    W.fireScript(slider, "OnValueChanged", 60, true)
+    release()
+    expect(db.devPullLabelSize == 1 and label(1) and label(1):IsShown(), "the labels did not come back at 100%")
+    local _, _, restored = measure(label(1))
+    expect(math.abs(restored - height) < 0.5, "the labels did not come back at their size")
+    db.devMode = devMode
+    MDT:UpdatePullLabelSizeSlider()
+  end)
+
   step("pull labels: hovering a label shows its pull card and lights it up, leaving hides the card", function()
     local hovered = label(2)
     W.hover(hovered)

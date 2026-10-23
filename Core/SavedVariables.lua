@@ -10,6 +10,7 @@ local defaultSavedVars = {
     useForcesCount = false, -- replaces percent in pull buttons with count
     showPullButtonHealth = false,
     autoPanToPull = true,
+    devPullLabelSize = 1, -- the pull labels' size on the map in dev mode, from the slider in its top right
     enemyForcesTooltip = 1,
     muteXalatathVoiceLines = false,
     announceDungeonReset = false,

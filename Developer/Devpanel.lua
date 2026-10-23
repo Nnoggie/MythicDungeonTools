@@ -63,6 +63,7 @@ function MDT:EnableDevMode()
     MDT:PositionDevPanel(frame)
   end
 
+  MDT:UpdatePullLabelSizeSlider()
   MDT:UpdateMap()
   MDT:UpdateEnemyInfoFrame()
 end
@@ -81,6 +82,7 @@ function MDT:DisableDevMode()
 
   MDT:SetUpModifiers(frame)
   MDT:HideAllBlipLabels(true)
+  MDT:UpdatePullLabelSizeSlider()
   MDT:UpdateMap()
   MDT:UpdateEnemyInfoFrame()
 end

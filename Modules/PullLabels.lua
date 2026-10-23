@@ -13,7 +13,7 @@ local max, pairs, ipairs, unpack = math.max, pairs, ipairs, unpack
 -- Labels are the same size on every map, as the maps are, and grow with the map's scale and zoom like the enemies.
 -- Enemy sizes differ a lot between dungeons, so they make a poor yardstick. Sizes below are fractions of the label's
 -- height.
----Label height in map units at map scale 1.
+---Label height in map units at map scale 1 and label size 1 (100% on the dev mode size slider).
 local HEIGHT = 8
 ---The pull number leads; the running total beside it is smaller.
 local NUMBER_FONT, TOTAL_FONT = 0.72, 0.52
@@ -58,6 +58,7 @@ local CARD_PAD_X, CARD_PAD_Y = "md", "sm"
 ---@field dropPull table? the pull the drag would merge into
 ---@field dragEndedAt number? GetTime() of the last drag's end, so its mouse up is no click
 ---@field bright boolean? shown at full color: the current pull, or lit up
+---@field placedHeight number? the height the label was placed at; another height places it anew
 
 ---Shown labels by pull index, and hidden ones kept for reuse.
 ---@type table<integer, MDT.PullLabel>, MDT.PullLabel[]
@@ -473,12 +474,14 @@ local function settle(label)
   local placement = label.placement
   if not placement then return end
   local tile = MDT.main_frame.mapPanelTile1
+  -- Offsets count in the label's own scale, which the size slider changes while it moves.
+  local scale = label:GetScale()
   label:ClearAllPoints()
-  label:SetPoint("CENTER", tile, "TOPLEFT", placement.x, placement.y)
+  label:SetPoint("CENTER", tile, "TOPLEFT", placement.x / scale, placement.y / scale)
   local leader = label.leader
   if placement.leaderX then
-    leader:SetStartPoint("TOPLEFT", tile, placement.x, placement.y)
-    leader:SetEndPoint("TOPLEFT", tile, placement.leaderX, placement.leaderY)
+    leader:SetStartPoint("TOPLEFT", tile, placement.x / scale, placement.y / scale)
+    leader:SetEndPoint("TOPLEFT", tile, placement.leaderX / scale, placement.leaderY / scale)
     leader:Show()
   else
     leader:Hide()
@@ -573,6 +576,11 @@ end
 ---@param height number the label's height in map units
 local function paint(label, item, height)
   label.pullIdx, label.item = item.index, item
+  -- Back from the size slider's preview: at its new size, on its spot until the layout places it again.
+  if label:GetScale() ~= 1 then
+    label:SetScale(1)
+    if label ~= dragging then settle(label) end
+  end
   -- Outlined, so it reads on light and dark pull colors alike.
   Fonts.Apply(label.number, NUMBER_FONT * height, "OUTLINE")
   Fonts.Apply(label.total, TOTAL_FONT * height)
@@ -618,7 +626,7 @@ local function releaseLabel(index)
   label:Hide()
   endDrag(label)
   label:SetFrameLevel(LABEL_LEVEL)
-  label.placement, label.outline, label.outlineKey = nil, nil, nil
+  label.placement, label.outline, label.outlineKey, label.placedHeight = nil, nil, nil, nil
   spareLabels[#spareLabels + 1] = label
 end
 
@@ -653,6 +661,14 @@ local function setInteractive(label)
   label:EnableMouse(MDT:GetCurrentToolbarTool() == nil)
 end
 
+---Label height in map units for a label size; by default the size slider's in dev mode, else 1. 0 hides the labels.
+---@param size number?
+---@return number
+local function labelHeight(size)
+  local db = MDT:GetDB()
+  return HEIGHT * MDT:GetScale() * (size or db.devMode and db.devPullLabelSize or 1)
+end
+
 ---Labels every pull that has an outline and places the labels around the enemies, in pull order.
 ---@param pulls table[] the pulls the outlines were drawn for
 ---@param pullOutlines table<integer, number[][]> outlines by pull index
@@ -660,9 +676,14 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
   local main = MDT.main_frame
   if not main then return end
   outlines = pullOutlines
+  local height = labelHeight()
   local items = Model.PullItems(pulls, MDT:SidebarContext())
   for index in pairs(labels) do
-    if not (items[index] and outlines[index]) then releaseLabel(index) end
+    if height <= 0 or not (items[index] and outlines[index]) then releaseLabel(index) end
+  end
+  if height <= 0 then
+    hideCard()
+    return
   end
   local enemies = {}
   for _, blip in pairs(MDT:GetDungeonEnemyBlips()) do
@@ -671,7 +692,6 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
       enemies[#enemies + 1] = { x, y, PORTRAIT_RADIUS * blip.normalScale }
     end
   end
-  local height = HEIGHT * MDT:GetScale()
   local requests = {}
   for index, item in ipairs(items) do
     local outline = outlines[index]
@@ -685,7 +705,7 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
       local placement = label.placement
       requests[#requests + 1] = {
         key = index, outline = outline, outlineKey = key, width = label:GetWidth(), height = label:GetHeight(),
-        previous = placement and label.outlineKey == key and placement.cost < math.huge
+        previous = placement and label.outlineKey == key and label.placedHeight == height and placement.cost < math.huge
           and { x = placement.x, y = placement.y, cost = placement.cost } or nil,
       }
     end
@@ -706,6 +726,7 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
     local label = labels[index]
     if label then
       label.placement, label.outline, label.outlineKey = placement, placed[index].outline, placed[index].outlineKey
+      label.placedHeight = height
       if label ~= dragging then settle(label) end
       label:Show()
     end
@@ -713,6 +734,25 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
   refreshTones()
   -- A redraw can change the hovered pull's forces and health.
   if hovered and card and card:IsShown() then showCard(hovered) end
+end
+
+---Shows the labels at another size while the size slider moves, each grown or shrunk around its center; the next
+---placement lays them out at the saved size.
+---@param size number
+function MDT:PreviewPullLabelSize(size)
+  local height = labelHeight(size)
+  for _, label in pairs(labels) do
+    if label.placement and label.placedHeight then
+      local scale = height / label.placedHeight
+      if scale > 0 then
+        label:SetScale(scale)
+        settle(label)
+        label:Show()
+      else
+        label:Hide()
+      end
+    end
+  end
 end
 
 ---Hides every label, as the map clears its outlines.

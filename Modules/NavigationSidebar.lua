@@ -108,6 +108,7 @@ function MDT:UpdateSectionVisibility()
   end
 
   MDT:SetSidebarShown(showMapControls)
+  MDT:UpdatePullLabelSizeSlider()
 
   if MDT.UpdateDungeonSelectVisibility then MDT:UpdateDungeonSelectVisibility(showMapControls) end
 

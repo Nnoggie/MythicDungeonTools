@@ -14,6 +14,7 @@
 	<Script file='PullOutlines.lua'/>
 	<Script file='PullLabelLayout.lua'/>
 	<Script file='PullLabels.lua'/>
+	<Script file='PullLabelSizeSlider.lua'/>
 	<Script file='EnemyInfo.lua'/>
 	<Script file='Pointsofinterest.lua'/>
 	<Script file='PresetObjects.lua'/>
