@@ -32,8 +32,6 @@ local CIRCLE = "Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White"
 ---An enemy portrait's radius on the map per unit of the enemy's scale (texture_Background in DungeonEnemies.lua).
 local PORTRAIT_RADIUS = 10
 local LABEL_LEVEL, RAISED_LEVEL = 100, 105
----Text on the pull color swatch turns dark above this brightness.
-local LIGHT_SWATCH = 0.6
 
 local CARD_WIDTH = 250
 local UNKNOWN_SPELL_ICON = 134400
@@ -86,8 +84,7 @@ local function tone(label, bright)
   for _, part in ipairs({ label.edgeLeft, label.edgeRight }) do part:SetVertexColor(r, g, b, 1) end
   label.edgeMiddle:SetColorTexture(r, g, b, 1)
   label.leader:SetColorTexture(r, g, b, 1)
-  local light = 0.299 * r + 0.587 * g + 0.114 * b > LIGHT_SWATCH
-  label.number:SetTextColor(unpack(Theme.Rgba(light and "text.inverse" or (bright and "text.normal" or "text.secondary"))))
+  label.number:SetTextColor(unpack(Theme.Rgba("text.normal")))
   label.total:SetTextColor(unpack(Theme.Rgba(bright and "text.normal" or "text.muted")))
 end
 
@@ -576,7 +573,8 @@ end
 ---@param height number the label's height in map units
 local function paint(label, item, height)
   label.pullIdx, label.item = item.index, item
-  Fonts.Apply(label.number, NUMBER_FONT * height)
+  -- Outlined, so it reads on light and dark pull colors alike.
+  Fonts.Apply(label.number, NUMBER_FONT * height, "OUTLINE")
   Fonts.Apply(label.total, TOTAL_FONT * height)
   label.number:SetText(tostring(item.index))
   -- The running total as the pull rows show it: "45.7%", or the count with Use forces count on.
