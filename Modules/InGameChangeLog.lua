@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.20",
+    date = "2026-10-23",
+    notes = {
+      "Enemies in Midnight Season 2 dungeons no longer show the same spell several times in their spell list.",
+    },
+  },
+  {
     tag = "6.3.19",
     date = "2026-10-23",
     notes = {
@@ -13,14 +20,6 @@ MDT.changeLog = {
     date = "2026-10-23",
     notes = {
       "\"Use forces count in Sidebar\" is now \"Use forces count in Sidebar and pull labels\", as it also switches the pull labels on the map between percent and count.",
-    },
-  },
-  {
-    tag = "6.3.17",
-    date = "2026-10-23",
-    notes = {
-      "Changing the MDT Scale now keeps the window in the same place and at the same size on screen.",
-      "The MDT Scale now goes up to 300%.",
     },
   },
 }
