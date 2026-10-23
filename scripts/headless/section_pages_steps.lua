@@ -160,8 +160,26 @@ return function(ctx)
     expect(MDT:GetCurrentPreset().colorPaletteInfo.autoColoring == true, "Apply to preset did not reach the route")
   end)
 
+  step("settings: the custom colors only show with the custom palette", function()
+    local page = openSection("settings")
+    local palette = db.colorPaletteInfo.colorPaletteIdx
+    chooseFromDropdown(control(page, "palette"), L["Rainbow"])
+    expect(not page:Find("customPalette"):IsVisible(), "the custom colors show with the rainbow palette")
+    chooseFromDropdown(control(page, "palette"), L["Custom"])
+    control(page, "customPalette")
+    control(page, "customColorCount")
+    db.colorPaletteInfo.colorPaletteIdx = 1
+    MDT:Settings_Refresh()
+    expect(not page:Find("customPalette"):IsVisible(), "Settings_Refresh did not hide the custom colors")
+    db.colorPaletteInfo.colorPaletteIdx = palette
+    MDT:SetPresetColorPaletteInfo()
+    MDT:Settings_Refresh()
+  end)
+
   step("settings: the custom color count rebuilds the swatches and a swatch saves its color", function()
     local page = openSection("settings")
+    local palette = db.colorPaletteInfo.colorPaletteIdx
+    chooseFromDropdown(control(page, "palette"), L["Custom"])
     local before = db.colorPaletteInfo.numberCustomColors
     local slider = control(page, "customColorCount")
     W.userDrag(slider.kitSlider, 5)
@@ -185,6 +203,9 @@ return function(ctx)
     W.fireScript(slider.kitSlider, "OnMouseUp", "LeftButton")
     W.settle(ctx.asyncIdle, 30)
     expect(#control(page, "customColors").kitChildren == before, "the swatch row did not grow back to "..before)
+    db.colorPaletteInfo.colorPaletteIdx = palette
+    MDT:SetPresetColorPaletteInfo()
+    MDT:Settings_Refresh()
   end)
 
   step("settings: the language button is disabled without AddonLocale", function()

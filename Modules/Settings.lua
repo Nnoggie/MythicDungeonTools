@@ -7,13 +7,15 @@ local PAGE_TOP = 45
 local PAGE_BOTTOM = 15
 local SWATCH_WIDTH = 56
 
+---The palette the user colors themselves.
+local CUSTOM_PALETTE = 6
 local paletteItems = UI.MenuModel.FromList({
   [1] = L["Rainbow"],
   [2] = L["Black and Yellow"],
   [3] = L["Red, Green and Blue"],
   [4] = L["High Contrast"],
   [5] = L["Color Blind Friendly"],
-  [6] = L["Custom"],
+  [CUSTOM_PALETTE] = L["Custom"],
 }, { 1, 2, 3, 4, 5, 6 })
 
 local enemyForcesTooltipIcon = "|TInterface\\AddOns\\MythicDungeonTools\\Textures\\MDTMinimap:0:0|t"
@@ -30,18 +32,19 @@ local enemyForcesTooltipItems = UI.MenuModel.FromList({
 
 local db
 local page
----@type {control: MDT.UI.Control, value: (fun(): any)?, disabled: (fun(): boolean)?}[]
+---@type {control: MDT.UI.Control, value: (fun(): any)?, disabled: (fun(): boolean)?, hidden: (fun(): boolean)?}[]
 local bindings = {}
 
 local function sync()
   for _, binding in ipairs(bindings) do
     if binding.value then binding.control:SetValue(binding.value()) end
     if binding.disabled then binding.control:SetDisabled(binding.disabled()) end
+    if binding.hidden then binding.control:SetHidden(binding.hidden()) end
   end
 end
 
-local function bind(control, value, disabled)
-  bindings[#bindings + 1] = { control = control, value = value, disabled = disabled }
+local function bind(control, value, disabled, hidden)
+  bindings[#bindings + 1] = { control = control, value = value, disabled = disabled, hidden = hidden }
   return control
 end
 
@@ -168,6 +171,7 @@ local function buildColors(column)
     onChange = function(value)
       db.colorPaletteInfo.colorPaletteIdx = value
       recolorPulls(true)
+      sync()
     end,
   }), function() return db.colorPaletteInfo.colorPaletteIdx end)
   -- Re-applies the palette to an imported route without toggling auto coloring or switching palettes back and forth.
@@ -180,9 +184,12 @@ local function buildColors(column)
     end,
   })
 
-  UI.Heading(column, { text = L["Custom Color Palette"] })
+  -- Only for the custom palette, the one these colors make up.
+  local customHidden = function() return db.colorPaletteInfo.colorPaletteIdx ~= CUSTOM_PALETTE end
+  local custom = bind(UI.Stack(column, { id = "customPalette", gap = "md", hidden = customHidden() }), nil, nil, customHidden)
+  UI.Heading(custom, { text = L["Custom Color Palette"] })
   local swatches
-  UI.Slider(column, {
+  UI.Slider(custom, {
     id = "customColorCount", label = L["Choose number of colors"], min = 2, max = 20, step = 1,
     value = db.colorPaletteInfo.numberCustomColors,
     onCommit = function(value)
@@ -191,7 +198,7 @@ local function buildColors(column)
       fillCustomColors(swatches)
     end,
   })
-  swatches = UI.Row(column, { id = "customColors", wrap = true, gap = "sm" })
+  swatches = UI.Row(custom, { id = "customColors", wrap = true, gap = "sm" })
   fillCustomColors(swatches)
 end
 
