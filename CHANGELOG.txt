@@ -1,5 +1,3 @@
-## 6.3.21 (2026-10-24)
+## 6.3.22 (2026-10-25)
 
-- Fixed dungeon short names that were translated word for word in several languages, such as Voidscar Arena in French and Temple of Sethraliss in French and German.
-- Enemy, spell and dungeon names now match the in-game names in all languages.
-- Fixed many mistranslated and inconsistent texts across all languages.
+- MDT can be dragged partly off screen again.

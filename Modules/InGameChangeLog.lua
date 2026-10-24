@@ -2,6 +2,13 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.22",
+    date = "2026-10-25",
+    notes = {
+      "MDT can be dragged partly off screen again.",
+    },
+  },
+  {
     tag = "6.3.21",
     date = "2026-10-24",
     notes = {
@@ -15,13 +22,6 @@ MDT.changeLog = {
     date = "2026-10-23",
     notes = {
       "Enemies in Midnight Season 2 dungeons no longer show the same spell several times in their spell list.",
-    },
-  },
-  {
-    tag = "6.3.19",
-    date = "2026-10-23",
-    notes = {
-      "Removed Xal'atath's Gift from the enemy spell lists in Altar of Fangs, Den of Nalorakk and Murder Row.",
     },
   },
 }
