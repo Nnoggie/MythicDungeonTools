@@ -1,3 +1,5 @@
-## 6.3.20 (2026-10-23)
+## 6.3.21 (2026-10-24)
 
-- Enemies in Midnight Season 2 dungeons no longer show the same spell several times in their spell list.
+- Fixed dungeon short names that were translated word for word in several languages, such as Voidscar Arena in French and Temple of Sethraliss in French and German.
+- Enemy, spell and dungeon names now match the in-game names in all languages.
+- Fixed many mistranslated and inconsistent texts across all languages.
