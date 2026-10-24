@@ -15,6 +15,7 @@ local coreDefaults = {
   focusMarker = {
     announceReadyCheck = false,
     useMacro = false,
+    disableMouseoverFocus = false,
     disableTargetMarkerInRaid = false,
     preserveExistingTargetMarkers = true,
     suppressNotifications = false,
@@ -65,6 +66,14 @@ function MDT:HardReset()
   ReloadUI()
 end
 
+---Reloads the UI and opens MDT once it is back, for changes that need a reload, such as a new font.
+function MDT:ReloadAndOpen()
+  db.openAfterReload = true
+  ReloadUI()
+end
+
+MDT:ExportAPI("ReloadAndOpen")
+
 function MDT:ResetDataCache()
   db.devModeCache = nil
   db.dungeonEnemies = nil
@@ -93,6 +102,23 @@ function API:RegisterUIInitializer(initializer)
   end
 end
 
+local routeChangedCallbacks = {}
+
+---Registers a callback fired with (dungeonIdx, presetIdx) whenever the current route changes:
+---a route or dungeon switch, an import, a new or duplicated route, a delete, or a live session preset change.
+function API:RegisterRouteChangedCallback(callback)
+  assert(type(callback) == "function", "MythicDungeonTools route changed callback must be a function")
+  routeChangedCallbacks[#routeChangedCallbacks + 1] = callback
+end
+
+function MDT:FireRouteChanged(dungeonIdx, presetIdx)
+  for _, callback in ipairs(routeChangedCallbacks) do
+    xpcall(callback, geterrorhandler(), dungeonIdx, presetIdx)
+  end
+end
+
+MDT:ExportAPI("FireRouteChanged")
+
 function API:AttachUI(handlers, pluginAPI)
   assert(not uiHandlers, "MythicDungeonTools UI already attached")
   assert(type(handlers) == "table", "MythicDungeonTools UI handlers must be a table")
@@ -100,7 +126,7 @@ function API:AttachUI(handlers, pluginAPI)
     assert(type(handlers[methodName]) == "function", "Missing MythicDungeonTools UI handler: "..methodName)
   end
   assert(type(pluginAPI) == "table", "MythicDungeonTools UI plugin API must be a table")
-  for _, methodName in ipairs({ "RegisterNavigationSection", "GetCurrentSection", "SetCurrentSection", "GetNavigationSectionContentFrame", "HideAllDialogs", "RegisterDungeonData" }) do
+  for _, methodName in ipairs({ "GetCurrentSection", "SetCurrentSection", "HideAllDialogs", "RegisterDungeonData" }) do
     assert(type(pluginAPI[methodName]) == "function", "Missing MythicDungeonTools UI plugin method: "..methodName)
   end
   uiHandlers = handlers
@@ -215,6 +241,51 @@ MDT:ExportAPI("GetEnemyForces")
 MDT:ExportAPI("GetDungeonName")
 MDT:ExportAPI("GetDungeonSublevels")
 
+-- Route sharing for other addons, such as WagoUI packs. Routes are identified by their uid; every call loads the MDT UI.
+-- The core has no translations, so the message for a UI that cannot load is English.
+local UI_LOAD_FAILED = "MDT could not load its interface."
+
+---@return table[]? routes {uid, name, dungeonIdx, dungeonName, dungeonIcon, pulls, author?, authorClass?, currentSeason}: every
+---route with content, newest season first; nil when the UI cannot load. authorClass is the author's class file name, such
+---as "MAGE"; currentSeason marks routes of the season selected in MDT.
+function API:GetShareableRoutes()
+  return callUI("GetShareableRoutes")
+end
+
+---@param uids string|string[]
+---@return string? export a route string for one uid, one string carrying all routes for several, nil when none is found
+function API:ExportRoutes(uids)
+  return callUI("ExportRoutes", uids)
+end
+
+---@param text string a route string or a string carrying several routes
+---@return table[]? routes {uid?, name, dungeonIdx, dungeonName?, dungeonIcon, pulls, author?, authorClass?, known}; known is false for dungeons this MDT lacks
+---@return string? problem
+function API:DecodeRoutes(text)
+  local routes, problem = callUI("DecodeRoutes", text)
+  if routes == nil and problem == nil then return nil, UI_LOAD_FAILED end
+  return routes, problem
+end
+
+---Whether two strings carry the same routes, ignoring which MDT version exported them.
+---@param textA string
+---@param textB string
+---@return boolean
+function API:AreRouteStringsEqual(textA, textB)
+  return callUI("AreRouteStringsEqual", textA, textB) == true
+end
+
+---Opens MDT with every route of the strings listed; the player picks which to import.
+---@param texts string|string[]
+---@param callback fun(imported: table<string, boolean>)? runs once when the list closes, with the uids of the imported routes
+---@return boolean opened
+---@return string? problem
+function API:ImportRoutes(texts, callback)
+  local opened, problem = callUI("ImportRoutes", texts, callback)
+  if opened == nil then return false, UI_LOAD_FAILED end
+  return opened, problem
+end
+
 BINDING_HEADER_MDT = "Mythic Dungeon Tools (MDT)"
 BINDING_NAME_MDTTOGGLE = L["Toggle MDT"]
 _G["BINDING_NAME_CLICK MDTFocusMarkerButton:LeftButton"] = L["MDT Set Focus Macro"]
@@ -300,7 +371,7 @@ if not db.minimap.compartmentHide then minimapIcon:AddButtonToCompartment("Mythi
 
 local function buildFocusMarkerMacro(settings)
   local markerIndex = tonumber(settings.lastMarker) or 0
-  local body = "/focus [@mouseover,exists,nodead][]"
+  local body = settings.disableMouseoverFocus and "/focus" or "/focus [@mouseover,exists,nodead][]"
   if markerIndex == 0 and settings.preserveExistingTargetMarkers then return body end
   local conditionals = "[@focus]"
   local targetMarkerIndex = markerIndex
@@ -535,6 +606,9 @@ eventFrame:SetScript("OnEvent", function(self, event)
     local dungeonToolsButton = minimapIcon.objects and minimapIcon.objects.DungeonTools
     if dungeonToolsButton then dungeonToolsButton:SetScript("OnClick", function() MDT:ShowInterface() end) end
   end
-  if db.loadOnStartUp and db.devMode then MDT:ShowInterface(true) end
+  -- Opening once after MDT:ReloadAndOpen; the flag goes first, so a failed open does not repeat on every login.
+  local reopen = db.openAfterReload
+  db.openAfterReload = nil
+  if reopen or (db.loadOnStartUp and db.devMode) then MDT:ShowInterface(true) end
   self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)

@@ -1,7 +1,23 @@
 local _, MDT = ...
 local tinsert, tremove = table.insert, table.remove
 
-local NONACTIVE_ALPHA = 0.5
+---Pulls other than the current one fade this far towards the panel background. Outlines and pull labels stay opaque:
+---WoW fades each texture on its own, so a see-through outline would show its round joins through its lines.
+local DIM = 0.4
+---Outlines draw in rotating sublevels so pulls rarely share one; the current and hovered pulls draw above them all.
+local TOP_SUBLEVEL = 7
+
+---A pull's color at full strength, or faded for pulls other than the current one.
+---@param r number
+---@param g number
+---@param b number
+---@param bright boolean
+---@return number r, number g, number b
+function MDT:PullTone(r, g, b, bright)
+  if bright then return r, g, b end
+  local fill = MDT.UI.Theme.Rgba("bg.panel")
+  return r + (fill[1] - r) * DIM, g + (fill[2] - g) * DIM, b + (fill[3] - b) * DIM
+end
 
 -- return true if a is more lower-left than b
 local function is_lower_left(a, b)
@@ -92,103 +108,56 @@ local function getTexture()
   else
     local tex = texturePool[size]
     tremove(texturePool, size)
-    tex.isCircle = nil
     tex:SetRotation(0)
     tex:SetTexCoord(0, 1, 0, 1)
     tex:ClearAllPoints()
     tex.coords = nil
     tex.points = nil
-    tex.pullIdx = nil
+    tex.pullIdx, tex.color, tex.sublevel = nil, nil, nil
     return tex
   end
 end
 
---make a pool for fontStrings
-local activeFontStrings = {}
-local fontStringPool = {}
-local frameIndex = 0
+---The outline each drawn pull got, by pull index; the pull labels place themselves by these.
+local outlines = {}
 
-local getFSFrameByPullIdx = function(pullIdx)
-  for _, frame in pairs(activeFontStrings) do
-    if frame.pullIdx == pullIdx then
-      return frame
-    end
-  end
+---Colors an outline texture at full strength and above the other outlines, or faded in its own sublevel.
+local function toneTexture(tex, bright)
+  local color = tex.color
+  tex:SetVertexColor(MDT:PullTone(color.r, color.g, color.b, bright))
+  tex:SetDrawLayer("ARTWORK", bright and TOP_SUBLEVEL or tex.sublevel)
 end
 
 function MDT:PullClickAreaOnEnter(pullIdx)
-  local fsFrame = getFSFrameByPullIdx(pullIdx)
-  if not fsFrame then return end
-  fsFrame.fs:SetScale(1.25)
-  fsFrame.fs:SetAlpha(1)
   for _, tex in pairs(activeTextures) do
-    if tex.pullIdx == pullIdx then
-      tex:SetAlpha(1)
-    end
+    if tex.pullIdx == pullIdx then toneTexture(tex, true) end
   end
+  MDT:HighlightPullLabel(pullIdx)
 end
 
 function MDT:PullClickAreaOnLeave()
-  for _, fsFrame in pairs(activeFontStrings) do
-    local isCurrentPull = fsFrame.pullIdx == MDT:GetCurrentPull()
-    fsFrame.fs:SetScale(1)
-    fsFrame.fs:SetAlpha(isCurrentPull and 1 or NONACTIVE_ALPHA)
-  end
-  for _, tex in pairs(activeTextures) do
-    local isCurrentPull = tex.pullIdx == MDT:GetCurrentPull()
-    if tex.isCircle then
-      tex:SetAlpha(isCurrentPull and 1 or 0)
-    else
-      tex:SetAlpha(isCurrentPull and 1 or NONACTIVE_ALPHA)
-    end
-  end
+  local current = MDT:GetCurrentPull()
+  for _, tex in pairs(activeTextures) do toneTexture(tex, tex.pullIdx == current) end
+  MDT:HighlightPullLabel(nil)
 end
 
-local function getFontString()
-  local size = #fontStringPool
-  if size == 0 then
-    local fsFrame = CreateFrame("Frame", "MDTFontStringContainerFrame"..frameIndex, MDT.main_frame.mapPanelFrame)
-    frameIndex = frameIndex + 1
-    fsFrame:SetFrameStrata("HIGH")
-    fsFrame:SetFrameLevel(100)
-    fsFrame:SetWidth(40)
-    fsFrame:SetHeight(40)
-    local clickArea = CreateFrame("Button", "MDTFontString"..frameIndex.."ClickArea", fsFrame)
-    clickArea:SetAllPoints(fsFrame)
-    clickArea:SetFrameStrata("MEDIUM")
-    clickArea:SetScript("OnClick", function(self, button, down)
-      if button == "LeftButton" then
-        MDT:SetSelectionToPull(self:GetParent().pullIdx)
-        MDT:PullClickAreaOnEnter(self:GetParent().pullIdx)
-      end
-    end)
-    clickArea:SetScript("OnEnter", function(self)
-      MDT:PullClickAreaOnEnter(self:GetParent().pullIdx)
-    end)
-    clickArea:SetScript("OnLeave", function(self)
-      MDT:PullClickAreaOnLeave()
-    end)
-    fsFrame.clickArea = clickArea
-    local fs = fsFrame:CreateFontString(nil, "OVERLAY", nil)
-    fs:SetPoint("CENTER", 0, 0)
-    fs:SetJustifyH("CENTER")
-    fs:SetJustifyV("MIDDLE")
-    fs:SetTextColor(1, 1, 1, 1)
-    local font = GameFontNormalMed3Outline
-    fs:SetFontObject(font)
-    fsFrame.fs = fs
-    return fsFrame
-  else
-    local fsFrame = fontStringPool[size]
-    tremove(fontStringPool, size)
-    fsFrame.fs:SetText("")
-    return fsFrame
+---Test access to the textures drawing a pull's outline.
+---@param pullIdx integer
+---@return table[]
+function MDT:GetPullOutlineTextures(pullIdx)
+  local found = {}
+  for _, tex in ipairs(activeTextures) do
+    if tex.pullIdx == pullIdx then found[#found + 1] = tex end
   end
+  return found
 end
 
 local previousPulls
 
-function MDT:ReleaseHullTextures(pullsToRelease)
+---Releases the outlines of the given pulls, or of every pull.
+---@param pullsToRelease table<integer, true>?
+---@param keepLabels boolean? leaves the pull labels up for a redraw that places them again
+function MDT:ReleaseHullTextures(pullsToRelease, keepLabels)
   for i = #activeTextures, 1, -1 do
     local tex = activeTextures[i]
     if not pullsToRelease or pullsToRelease[tex.pullIdx] then
@@ -197,93 +166,49 @@ function MDT:ReleaseHullTextures(pullsToRelease)
       tremove(activeTextures, i)
     end
   end
-  for i = #activeFontStrings, 1, -1 do
-    local fsFrame = activeFontStrings[i]
-    if not pullsToRelease or pullsToRelease[fsFrame.pullIdx] then
-      fsFrame:Hide()
-      tinsert(fontStringPool, fsFrame)
-      tremove(activeFontStrings, i)
-    end
-  end
-  if not pullsToRelease then previousPulls = nil end
-end
-
-function MDT:DrawHullFontString(hull, pullIdx)
-  --2. get centroid of each pull
-  local center
-  if hull and hull[#hull] then
-    if #hull > 2 then
-      center = centroid(hull)
-      if not center then return end
-      center[1] = center[1]
-      center[2] = center[2]
-    elseif #hull == 2 then
-      local x1 = hull[1][1]
-      local y1 = hull[1][2]
-      local x2 = hull[2][1]
-      local y2 = hull[2][2]
-      if not x1 or not y1 or not x2 or not y2 then return end
-      center = { (x1 + x2) / 2, (y1 + y2) / 2 }
-    elseif #hull == 1 then
-      local x1 = hull[1][1]
-      local y1 = hull[1][2]
-      if not x1 or not y1 then return end
-      center = { x1, y1 + 15 }
-    end
-  end
-  if not center then return end
-  local fsFrame = getFontString()
-  fsFrame.pullIdx = pullIdx
-  if MDT:GetCurrentPull() == pullIdx then
-    fsFrame.fs:SetTextColor(1, 1, 1, 1)
+  if pullsToRelease then
+    for pullIdx in pairs(pullsToRelease) do outlines[pullIdx] = nil end
   else
-    fsFrame.fs:SetTextColor(1, 1, 1, NONACTIVE_ALPHA)
+    wipe(outlines)
+    if not keepLabels then MDT:HidePullLabels() end
+    previousPulls = nil
   end
-  fsFrame.fs:SetFontObject("GameFontNormal")
-  fsFrame.fs:SetFont(fsFrame.fs:GetFont(), 10, "OUTLINE", "")
-  fsFrame.fs:SetText(pullIdx)
-  fsFrame:ClearAllPoints()
-  fsFrame:SetSize(40, 40)
-  fsFrame:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", center[1], center[2])
-  fsFrame:Show()
-  tinsert(activeFontStrings, fsFrame)
 end
 
-function MDT:DrawHullCircle(x, y, size, color, alpha, layer, layerSublevel, pullIdx)
+function MDT:DrawHullCircle(x, y, size, color, bright, layerSublevel, pullIdx)
   local circle = getTexture()
-  circle:SetDrawLayer(layer, layerSublevel)
   circle:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White")
-  local a = alpha ~= 1 and 0 or alpha
-  circle:SetVertexColor(color.r, color.g, color.b, a)
+  circle.color, circle.sublevel = color, layerSublevel
+  toneTexture(circle, bright)
   circle:SetWidth(1.1 * size)
   circle:SetHeight(1.1 * size)
   circle:ClearAllPoints()
   circle:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x, y)
   circle:Show()
   circle.pullIdx = pullIdx
-  circle.isCircle = true
   tinsert(activeTextures, circle)
 end
 
-function MDT:DrawHullLine(x, y, a, b, size, color, alpha, smooth, layer, layerSublevel, lineFactor, pullIdx)
+function MDT:DrawHullLine(x, y, a, b, size, color, bright, smooth, layerSublevel, lineFactor, pullIdx)
   local line = getTexture()
   line:SetTexture("Interface\\AddOns\\MythicDungeonTools\\Textures\\Square_White")
-  line:SetVertexColor(color.r, color.g, color.b, alpha)
   DrawLine(line, MDT.main_frame.mapPanelTile1, x, y, a, b, size, lineFactor and lineFactor or 1.1, "TOPLEFT")
-  line:SetDrawLayer(layer, layerSublevel)
+  line.color, line.sublevel = color, layerSublevel
+  toneTexture(line, bright)
   line:Show()
   line.coords = { x, y, a, b }
   line.pullIdx = pullIdx
   tinsert(activeTextures, line)
   if smooth == true then
-    MDT:DrawHullCircle(x, y, size * 0.9, color, alpha, layer, layerSublevel, pullIdx)
+    MDT:DrawHullCircle(x, y, size * 0.9, color, bright, layerSublevel, pullIdx)
   end
 end
 
+---Draws a pull's outline around its enemies and returns the outline's points.
+---@return number[][]?
 function MDT:DrawHull(vertices, pullColor, pullIdx)
   local isCurrent = MDT:GetCurrentPull() == pullIdx
   local sizeMultiplier = 0.8
-  local alpha = isCurrent and 1 or NONACTIVE_ALPHA
   local hull = convex_hull(vertices)
   if hull then
     -- expand_polygon: higher value = more points = more expensive = smoother outlines
@@ -294,12 +219,13 @@ function MDT:DrawHull(vertices, pullColor, pullIdx)
       local a = hull[i]
       local b = hull[1]
       if i ~= #hull then b = hull[i + 1] end
-      --layerSublevel go from -8 to 7
+      --layerSublevel go from -8 to 6; 7 is kept for the current and hovered pulls
       --we rotate through the layerSublevel to avoid collisions
-      MDT:DrawHullLine(a[1], a[2], b[1], b[2], sizeMultiplier * 3 * (MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, alpha,
-        true, "ARTWORK", pullIdx % 16 - 8, 1, pullIdx)
+      MDT:DrawHullLine(a[1], a[2], b[1], b[2], sizeMultiplier * 3 * (MDT.scaleMultiplier[MDT:GetDB().currentDungeonIdx] or 1), pullColor, isCurrent,
+        true, pullIdx % 15 - 8, 1, pullIdx)
     end
   end
+  return hull
 end
 
 local function getPullVertices(p, blips)
@@ -409,7 +335,7 @@ function MDT:DrawAllHulls(pulls, force)
     local pullsToDraw, removedPulls
     if force then
       pullsToDraw = pulls
-      MDT:ReleaseHullTextures()
+      MDT:ReleaseHullTextures(nil, true)
     else
       pullsToDraw, removedPulls = getPullsToDraw(pulls)
       local pullsToRelease = {}
@@ -427,10 +353,11 @@ function MDT:DrawAllHulls(pulls, force)
     for pullIdx, p in pairs(pullsToDraw) do
       local r, g, b = MDT:DungeonEnemies_GetPullColor(pullIdx, pullsToDraw)
       vertices = getPullVertices(p, blips)
-      MDT:DrawHull(vertices, { r = r, g = g, b = b, a = 1 }, pullIdx)
-      MDT:DrawHullFontString(vertices, pullIdx)
+      outlines[pullIdx] = MDT:DrawHull(vertices, { r = r, g = g, b = b, a = 1 }, pullIdx)
       coroutine.yield()
     end
+    -- Every label is placed again: a changed pull moves the running totals of the pulls after it.
+    MDT:PlacePullLabels(pulls, outlines)
     previousPulls = CopyTable(pulls)
   end, "DrawAllHulls", true)
 end

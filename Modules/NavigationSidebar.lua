@@ -70,12 +70,6 @@ local function setShown(region, shown)
   end
 end
 
-local function closeAceDropdown(widget)
-  if not widget or not widget.pullout then return end
-  widget.pullout:Close()
-  if widget.pullout.frame then widget.pullout.frame:Hide() end
-end
-
 function MDT:SetCurrentSection(sectionKey)
   if not self:IsValidNavigationSection(sectionKey) then sectionKey = "maps" end
   local db = MDT:GetDB()
@@ -113,33 +107,9 @@ function MDT:UpdateSectionVisibility()
     end
   end
 
-  if frame.sidePanel then
-    setShown(frame.sidePanel.WidgetGroup, showMapControls)
-    if frame.sidePanel.WidgetGroup then
-      setShown(frame.sidePanel.WidgetGroup.PresetDropDown, showMapControls)
-    end
-    setShown(frame.sidePanelNewButton, showMapControls)
-    setShown(frame.sidePanelRenameButton, showMapControls)
-    setShown(frame.sidePanelDeleteButton, showMapControls)
-    setShown(frame.sidePanelExportButton, showMapControls)
-    setShown(frame.sidePanelImportButton, showMapControls)
-    setShown(frame.LinkToChatButton, showMapControls)
-    setShown(frame.LiveSessionButton, showMapControls)
-    setShown(frame.sidePanel.DifficultySlider, showMapControls)
-    setShown(frame.sidePanel.middleLine, showMapControls)
-    setShown(frame.sidePanel.PullButtonScrollGroup, showMapControls)
-    setShown(frame.sidePanel.ProgressBar, showMapControls)
-    if not showMapControls then
-      closeAceDropdown(frame.sidePanel.WidgetGroup and frame.sidePanel.WidgetGroup.PresetDropDown)
-    end
-  end
+  MDT:SetSidebarShown(showMapControls)
+  MDT:UpdatePullLabelSizeSlider()
 
-  if frame.seasonSelectionGroup then setShown(frame.seasonSelectionGroup, showMapControls) end
-  if frame.sublevelSelectionGroup then setShown(frame.sublevelSelectionGroup, showMapControls) end
-  if not showMapControls then
-    closeAceDropdown(frame.seasonSelectionGroup and frame.seasonSelectionGroup.seasonDropdown)
-    closeAceDropdown(frame.sublevelSelectionGroup and frame.sublevelSelectionGroup.sublevelDropdown)
-  end
   if MDT.UpdateDungeonSelectVisibility then MDT:UpdateDungeonSelectVisibility(showMapControls) end
 
   if frame.sectionContentFrames then
@@ -169,7 +139,7 @@ function MDT:MakeNavigationSidebar(frame)
     frame.navigationSidebar.tex:SetDrawLayer(canvasDrawLayer, -5)
     frame.navigationSidebar.tex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.navigationSidebar.buttons = {}
-    MDT:RegisterMainFrameDragHandle(frame.navigationSidebar, frame)
+    MDT:RegisterMainFrameDragHandle(frame.navigationSidebar)
 
     local sections = MDT:GetNavigationSections()
     local buttonSize = 36
@@ -214,11 +184,11 @@ function MDT:MakeNavigationSidebar(frame)
       button:SetHighlightTexture(highlight)
 
       button:SetScript("OnEnter", function()
-        GameTooltip:SetOwner(button, "ANCHOR_NONE")
-        GameTooltip:ClearAllPoints()
-        GameTooltip:SetPoint("LEFT", button, "RIGHT", 4, 0)
-        GameTooltip:SetText(button.tooltipText, 1, 1, 1, 1)
-        GameTooltip:Show()
+        MDTTooltip:SetOwner(button, "ANCHOR_NONE")
+        MDTTooltip:ClearAllPoints()
+        MDTTooltip:SetPoint("LEFT", button, "RIGHT", 4, 0)
+        MDTTooltip:SetText(button.tooltipText, 1, 1, 1, 1)
+        MDTTooltip:Show()
       end)
       button:SetScript("OnLeave", function()
         MDT:ToggleToolbarTooltip(false)
@@ -248,7 +218,7 @@ function MDT:MakeSectionFrames(frame)
       contentFrame:SetAllPoints(frame)
       contentFrame:SetFrameStrata(mainFrameStrata)
       contentFrame:SetFrameLevel(2)
-      MDT:RegisterMainFrameDragHandle(contentFrame, frame)
+      MDT:RegisterMainFrameDragHandle(contentFrame)
       contentFrame:Hide()
       frame.sectionContentFrames[sectionKey] = contentFrame
     end
@@ -258,7 +228,7 @@ function MDT:MakeSectionFrames(frame)
       sidePanelFrame:SetAllPoints(frame.sidePanel)
       sidePanelFrame:SetFrameStrata(mainFrameStrata)
       sidePanelFrame:SetFrameLevel(3)
-      MDT:RegisterMainFrameDragHandle(sidePanelFrame, frame)
+      MDT:RegisterMainFrameDragHandle(sidePanelFrame)
       sidePanelFrame:Hide()
       frame.sectionSidePanelFrames[sectionKey] = sidePanelFrame
     end

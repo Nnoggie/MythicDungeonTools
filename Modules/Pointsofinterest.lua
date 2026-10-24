@@ -66,48 +66,28 @@ local function POI_SetDevOptions(frame, poi)
 end
 
 local createPlayerAssignmentContextMenu = function(frame)
-  MDT:CreateContextMenu(MDT.main_frame, function(ownerRegion, rootDescription)
-    rootDescription:CreateTitle(L["dropdownAssignPlayer"])
-
-    local group = MDT.U.GetGroupMembers()
-    for _, player in pairs(group) do
-      local function IsSelected(p)
-        return frame.playerAssignmentString:GetText() == p
-      end
-      local function SetSelected(p)
-        frame.playerAssignmentString:SetText(p)
-        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
-        if frame.setAssigned then
-          frame.setAssigned()
-        end
-      end
-      rootDescription:CreateRadio(player, IsSelected, SetSelected, player)
+  local function assign(p)
+    frame.playerAssignmentString:SetText(p)
+    MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
+    if frame.setAssigned then
+      frame.setAssigned()
     end
-
-    local classStrings = MDT.U.GetClassColoredClassNames()
-
-    for _, classString in pairs(classStrings) do
-      local function IsSelected(p)
-        return frame.playerAssignmentString:GetText() == p
-      end
-      local function SetSelected(p)
-        frame.playerAssignmentString:SetText(p)
-        MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, p)
-        if frame.setAssigned then
-          frame.setAssigned()
-        end
-      end
-      rootDescription:CreateRadio(classString, IsSelected, SetSelected, classString)
+  end
+  local items = { { kind = "title", text = L["dropdownAssignPlayer"] } }
+  for _, player in pairs(MDT.U.GetGroupMembers()) do
+    items[#items + 1] = { kind = "choice", text = player, checked = frame.playerAssignmentString:GetText() == player, onSelect = function() assign(player) end }
+  end
+  for _, classString in pairs(MDT.U.GetClassColoredClassNames()) do
+    items[#items + 1] = { kind = "choice", text = classString, checked = frame.playerAssignmentString:GetText() == classString, onSelect = function() assign(classString) end }
+  end
+  items[#items + 1] = { text = L["dropdownClear"], onSelect = function()
+    frame.playerAssignmentString:SetText()
+    MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
+    if frame.setUnassigned then
+      frame.setUnassigned()
     end
-
-    rootDescription:CreateButton(L["dropdownClear"], function()
-      frame.playerAssignmentString:SetText()
-      MDT:POI_SetPOIAssignment(MDT:GetCurrentSubLevel(), frame.poiIdx, nil)
-      if frame.setUnassigned then
-        frame.setUnassigned()
-      end
-    end)
-  end)
+  end }
+  MDT:CreateContextMenu(MDT.main_frame, items)
 end
 
 local function POI_SetOptions(frame, type, poi)
@@ -154,14 +134,14 @@ local function POI_SetOptions(frame, type, poi)
       MDT:UpdateMap()
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(MDT:GetDungeonSublevels()[db.currentDungeonIdx][poi.target], 1, 1, 1, 1)
-      if db.devMode then GameTooltip:AddLine(frame.poi.connectionIndex, 1, 1, 1, 1) end
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(MDT:GetDungeonSublevels()[db.currentDungeonIdx][poi.target], 1, 1, 1, 1)
+      if db.devMode then MDTTooltip:AddLine(frame.poi.connectionIndex, 1, 1, 1, 1) end
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -173,19 +153,19 @@ local function POI_SetOptions(frame, type, poi)
     frame.Texture:SetAtlas("map-icon-SuramarDoor.tga")
     frame:SetScript("OnClick", nil)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       local doorName = poi.doorName and L[poi.doorName] or ""
       local doorDescription = poi.doorDescription and L[poi.doorDescription] or ""
       if poi.formattedDoorDescription then
         doorDescription = formatPoiString(poi.formattedDoorDescription)
       end
-      GameTooltip:AddLine(doorName..
+      MDTTooltip:AddLine(doorName..
         (slen(doorDescription) > 0 and "\n"..doorDescription or "")..
         (poi.lockpick and "\n|cFF32CD32"..L["Locked"] or ""), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "graveyard" then
@@ -194,14 +174,14 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetScript("OnClick", nil)
     frame:SetScript("OnEnter", function()
       local text = poi.graveyardDescription and L[poi.graveyardDescription] or ""
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(L["Graveyard"]..
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(L["Graveyard"]..
         (slen(text) > 0 and "\n"..text or
           ""), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "tdprisonkey" then
@@ -214,12 +194,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["TDPrisonKeyText"], "\n", "\n", "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["TDPrisonKeyText"], "\n", "\n", "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "wmMaggotNote" then
@@ -232,12 +212,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["MaggotNote"], "\n", "\n", "\n", "\n", "\n", "\n", "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["MaggotNote"], "\n", "\n", "\n", "\n", "\n", "\n", "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "heavyCannon" then
@@ -250,12 +230,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["CannonNote"], "\n", "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["CannonNote"], "\n", "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "mlFrackingTotem" then
@@ -268,12 +248,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["frackingNote"], "\n", "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["frackingNote"], "\n", "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "mlMineCart" then
@@ -286,12 +266,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["minecartNote"], "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["minecartNote"], "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "tuSkip" then
@@ -304,12 +284,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["underrotSkipNote"], "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["underrotSkipNote"], "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "shrineSkip" then
@@ -322,12 +302,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(L["Shortcut"], 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(L["Shortcut"], 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "templeEye" then
@@ -340,12 +320,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["templeEyeNote"], "\n", "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["templeEyeNote"], "\n", "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "krSpiritGuide" then
@@ -358,12 +338,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["krSkipNote"], "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["krSkipNote"], "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "sobGutters" then
@@ -376,12 +356,12 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(string.format(L["siegeGuttersNote"], "\n"), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(string.format(L["siegeGuttersNote"], "\n"), 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "generalNote" then
@@ -394,13 +374,13 @@ local function POI_SetOptions(frame, type, poi)
 
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       local text = (poi.text and L[poi.text]) or (poi.formattedText and formatPoiString(poi.formattedText)) or ""
-      GameTooltip:AddLine(text, 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:AddLine(text, 1, 1, 1, 1)
+      MDTTooltip:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
     end)
   end
   if type == "mechagonBot" then
@@ -424,7 +404,7 @@ local function POI_SetOptions(frame, type, poi)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetFontObject(MDT.UI.Fonts.Get("small"))
     frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
@@ -438,15 +418,15 @@ local function POI_SetOptions(frame, type, poi)
     end)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, botOptions[poi.botType].text.." "..poi.botTypeIndex)
-      GameTooltip:AddTexture(botOptions[poi.botType].textureId)
-      GameTooltip:SetSpellByID(botOptions[poi.botType].spellId)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(MDTTooltip, botOptions[poi.botType].text.." "..poi.botTypeIndex)
+      MDTTooltip:AddTexture(botOptions[poi.botType].textureId)
+      MDTTooltip:SetSpellByID(botOptions[poi.botType].spellId)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -461,7 +441,7 @@ local function POI_SetOptions(frame, type, poi)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetFontObject(MDT.UI.Fonts.Get("small"))
     frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
@@ -474,15 +454,15 @@ local function POI_SetOptions(frame, type, poi)
       createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["ironDocksIronStar"].." "..poi.starIndex)
-      GameTooltip:AddTexture(450907)
-      GameTooltip:SetSpellByID(167299)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(MDTTooltip, L["ironDocksIronStar"].." "..poi.starIndex)
+      MDTTooltip:AddTexture(450907)
+      MDTTooltip:SetSpellByID(167299)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -513,10 +493,10 @@ local function POI_SetOptions(frame, type, poi)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetFontObject(MDT.UI.Fonts.Get("small"))
     frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
-    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), 6, "OUTLINE", "")
+    MDT.UI.Fonts.Apply(frame.playerAssignmentString, 6, "OUTLINE")
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
     frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
     frame.playerAssignmentString:SetText(assignment)
@@ -527,15 +507,15 @@ local function POI_SetOptions(frame, type, poi)
       createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["brackenhideCage"].." "..poi.cageIndex)
-      GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
-      GameTooltip:AddTexture(646379)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(MDTTooltip, L["brackenhideCage"].." "..poi.cageIndex)
+      MDTTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
+      MDTTooltip:AddTexture(646379)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -566,10 +546,10 @@ local function POI_SetOptions(frame, type, poi)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetFontObject(MDT.UI.Fonts.Get("small"))
     frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
-    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), 6, "OUTLINE", "")
+    MDT.UI.Fonts.Apply(frame.playerAssignmentString, 6, "OUTLINE")
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
     frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
     frame.playerAssignmentString:SetText(assignment)
@@ -580,15 +560,15 @@ local function POI_SetOptions(frame, type, poi)
       createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["neltharusChain"].." "..poi.chainIndex)
-      GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
-      GameTooltip:AddTexture(133035)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(MDTTooltip, L["neltharusChain"].." "..poi.chainIndex)
+      MDTTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
+      MDTTooltip:AddTexture(133035)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -601,13 +581,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(383376)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(383376)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -620,13 +600,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(377172)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(377172)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -639,13 +619,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(8, 8)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(374288)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(374288)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -668,7 +648,7 @@ local function POI_SetOptions(frame, type, poi)
         spellId = 325189,
       }
     }
-    frame.Texture:SetTexture(itemInfo[poi.itemType].texture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemInfo[poi.itemType].texture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame.setAssigned = function()
@@ -693,10 +673,10 @@ local function POI_SetOptions(frame, type, poi)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetFontObject(MDT.UI.Fonts.Get("small"))
     frame.playerAssignmentString:SetJustifyH(poi.textAnchor or "LEFT")
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
-    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), 10, "OUTLINE", "")
+    MDT.UI.Fonts.Apply(frame.playerAssignmentString, 10, "OUTLINE")
     frame.playerAssignmentString:SetPoint(poi.textAnchor or "LEFT", frame, poi.textAnchorTo or "RIGHT", 0, 0)
     frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
     frame.playerAssignmentString:SetText(assignment)
@@ -707,16 +687,16 @@ local function POI_SetOptions(frame, type, poi)
       createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemInfo[poi.itemType].spellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
-      GameTooltip:AddTexture(itemInfo[poi.itemType].texture)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemInfo[poi.itemType].spellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
+      MDTTooltip:AddTexture(itemInfo[poi.itemType].texture)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -724,7 +704,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 3528441
     local itemDescription = L["imbuedIronBarDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -732,15 +712,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(462500)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(462500)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -749,7 +729,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 448305
     local itemDescription = L["stolenPowerDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -757,15 +737,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -775,7 +755,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 1239141
     local itemDescription = L["EDAItem1Description"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -783,15 +763,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(10, 10)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -799,7 +779,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 4037124
     local itemSpellId = 1236971
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -807,13 +787,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(10, 10)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -822,7 +802,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 6891021
     local itemSpellId = 1239229
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -830,13 +810,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(10, 10)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -846,7 +826,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 439208
     local itemDescription = L["araKaraItemDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -854,15 +834,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -871,7 +851,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 435088
     local itemDescription = L["prioryItemDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -879,15 +859,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -895,7 +875,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 2061718
     local itemSpellId = 420307
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(8, 8)
@@ -903,14 +883,14 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(8, 8)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -919,7 +899,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 434696
     local itemDescription = L["rookItemDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(16, 16)
@@ -927,15 +907,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(16, 16)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -944,7 +924,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 439698
     local itemDescription = L["brewItemADescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(16, 16)
@@ -952,15 +932,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(16, 16)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -969,7 +949,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemSpellId = 439005
     local itemDescription = L["brewItemBDescription"]
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(16, 16)
@@ -977,15 +957,15 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(16, 16)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(itemDescription, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(itemDescription, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -993,7 +973,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 310733
     local itemSpellId = 257481
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -1001,13 +981,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -1015,7 +995,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 1405803
     local itemSpellId = 282943
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(12, 12)
@@ -1023,13 +1003,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(12, 12)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -1037,7 +1017,7 @@ local function POI_SetOptions(frame, type, poi)
     local itemTexture = 986484
     local itemSpellId = 464294
 
-    frame.Texture:SetTexture(itemTexture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, itemTexture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(20, 20)
@@ -1045,13 +1025,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(20, 20)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:SetSpellByID(itemSpellId)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetSpellByID(itemSpellId)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -1088,7 +1068,7 @@ local function POI_SetOptions(frame, type, poi)
     }
     local info = itemInfo[poi.itemType]
 
-    frame.Texture:SetTexture(info.texture)
+    MDT.UI.Icon.SetZoomed(frame.Texture, info.texture)
     frame.HighlightTexture:SetAtlas("bags-innerglow")
 
     frame:SetSize(info.size, info.size)
@@ -1096,26 +1076,31 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetSize(info.size, info.size)
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       if info.spellId then
-        GameTooltip:SetSpellByID(info.spellId)
+        MDTTooltip:SetSpellByID(info.spellId)
       else
-        GameTooltip_SetTitle(GameTooltip, info.name)
-        GameTooltip:AddLine(info.description, 1, 1, 1, true)
-        GameTooltip:AddTexture(info.texture)
+        GameTooltip_SetTitle(MDTTooltip, info.name)
+        MDTTooltip:AddLine(info.description, 1, 1, 1, true)
+        MDTTooltip:AddTexture(info.texture)
       end
-      GameTooltip:Show()
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
   if type == "genericItem" then
     local info = poi.info
-    frame.Texture:SetTexture(info.texture)
-    frame.HighlightTexture:SetAtlas("bags-innerglow")
+    if info.atlas then
+      frame.Texture:SetAtlas(info.atlas)
+      frame.HighlightTexture:SetAtlas(info.atlas)
+    else
+      MDT.UI.Icon.SetZoomed(frame.Texture, info.texture)
+      frame.HighlightTexture:SetAtlas("bags-innerglow")
+    end
 
     frame:SetSize(info.size, info.size)
     frame.Texture:SetSize(info.size, info.size)
@@ -1135,22 +1120,27 @@ local function POI_SetOptions(frame, type, poi)
     end
 
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       if info.spellId then
-        GameTooltip:SetSpellByID(info.spellId)
+        MDTTooltip:SetSpellByID(info.spellId)
       else
-        GameTooltip_SetTitle(GameTooltip, L[info.name])
-        GameTooltip:AddTexture(info.texture)
+        GameTooltip_SetTitle(MDTTooltip, L[info.name])
+        if info.texture then
+          MDTTooltip:AddTexture(info.texture)
+        end
       end
       if formattedDescription then
-        GameTooltip:AddLine(" ", 1, 1, 1, true)
-        GameTooltip:AddLine(formattedDescription, 1, 1, 1, true)
+        -- text-only tooltips show the description directly below the title
+        if info.spellId then
+          MDTTooltip:AddLine(" ", 1, 1, 1, true)
+        end
+        MDTTooltip:AddLine(formattedDescription, 1, 1, 1, true)
       end
-      GameTooltip:Show()
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -1163,7 +1153,7 @@ local function POI_SetOptions(frame, type, poi)
       frame.Texture:SetAtlas(info.atlas)
       frame.HighlightTexture:SetAtlas(info.atlas)
     else
-      frame.Texture:SetTexture(info.texture)
+      MDT.UI.Icon.SetZoomed(frame.Texture, info.texture)
       frame.HighlightTexture:SetAtlas("bags-innerglow")
     end
 
@@ -1191,7 +1181,7 @@ local function POI_SetOptions(frame, type, poi)
 
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject("GameFontNormalSmall")
+    frame.playerAssignmentString:SetFontObject(MDT.UI.Fonts.Get("small"))
     local textAnchor = poi.textAnchor or "LEFT"
     local justifyH = textAnchor
     if justifyH ~= "LEFT" and justifyH ~= "CENTER" and justifyH ~= "RIGHT" then
@@ -1199,7 +1189,7 @@ local function POI_SetOptions(frame, type, poi)
     end
     frame.playerAssignmentString:SetJustifyH(justifyH)
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
-    frame.playerAssignmentString:SetFont(frame.playerAssignmentString:GetFont(), info.fontSize or 10, "OUTLINE", "")
+    MDT.UI.Fonts.Apply(frame.playerAssignmentString, info.fontSize or 10, "OUTLINE")
     frame.playerAssignmentString:SetPoint(textAnchor, frame, poi.textAnchorTo or "RIGHT", info.textOffsetX or 0, info.textOffsetY or 0)
     frame.playerAssignmentString:SetTextColor(1, 1, 1, 1)
     frame.playerAssignmentString:SetText(assignment)
@@ -1221,27 +1211,37 @@ local function POI_SetOptions(frame, type, poi)
       createPlayerAssignmentContextMenu(frame)
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
       local title = info.name and (L[info.name] or info.name) or ""
       if poi.index then
-        title = title.." "..poi.index
+        -- names containing %d place the index themselves, e.g. "Snitch %d Interrogated"
+        if title:find("%d", 1, true) then
+          title = title:format(poi.index)
+        else
+          title = title.." "..poi.index
+        end
       end
       if info.spellId then
-        GameTooltip:SetSpellByID(info.spellId)
+        MDTTooltip:SetSpellByID(info.spellId)
+        -- spell tooltips set their own title, so append the index to it
+        local titleLine = _G[MDTTooltip:GetName().."TextLeft1"]
+        if poi.index and titleLine and titleLine:GetText() then
+          titleLine:SetText(titleLine:GetText().." "..poi.index)
+        end
       else
-        GameTooltip_SetTitle(GameTooltip, title)
+        GameTooltip_SetTitle(MDTTooltip, title)
       end
       if formattedDescription then
-        GameTooltip:AddLine(" ", 1, 1, 1, true)
-        GameTooltip:AddLine(formattedDescription, 1, 1, 1, true)
+        MDTTooltip:AddLine(" ", 1, 1, 1, true)
+        MDTTooltip:AddLine(formattedDescription, 1, 1, 1, true)
       end
-      GameTooltip:AddLine(" ")
-      GameTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:AddLine(" ")
+      MDTTooltip:AddLine(L["Click to assign player"], 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -1254,13 +1254,13 @@ local function POI_SetOptions(frame, type, poi)
     frame.Texture:SetSize(size, size)
     frame.HighlightTexture:SetSize(size, size)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip_SetTitle(GameTooltip, L["Dungeon Entrance"])
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      GameTooltip_SetTitle(MDTTooltip, L["Dungeon Entrance"])
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end
@@ -1271,7 +1271,7 @@ local function POI_SetOptions(frame, type, poi)
     frame.HighlightTexture:SetTexture(nil)
     frame.playerAssignmentString = frame.playerAssignmentString or frame:CreateFontString()
     frame.playerAssignmentString:ClearAllPoints()
-    frame.playerAssignmentString:SetFontObject(GameFontNormalMed3Outline)
+    MDT.UI.Fonts.Apply(frame.playerAssignmentString, 14, "OUTLINE")
     frame.playerAssignmentString:SetJustifyH("CENTER")
     frame.playerAssignmentString:SetJustifyV("MIDDLE")
     frame.playerAssignmentString:SetPoint("CENTER", frame, "CENTER", 0, 0)
@@ -1285,6 +1285,7 @@ local function POI_SetOptions(frame, type, poi)
     frame:SetSize(18, 18)
     frame.Texture:SetSize(18, 18)
     frame.Texture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]]..poi.index..[[.blp]])
+    frame.Texture:SetTexCoord(0, 1, 0, 1)
     frame.HighlightTexture:SetSize(18, 18)
     frame.HighlightTexture:SetTexture([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_]]..poi.index..[[.blp]])
   end
@@ -1310,13 +1311,13 @@ local function POI_SetOptions(frame, type, poi)
       end
     end)
     frame:SetScript("OnEnter", function()
-      GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-      GameTooltip:AddLine(L["Zoom"].." "..(shouldZoomIn() and L["zoomIn"] or L["zoomOut"]), 1, 1, 1, 1)
-      GameTooltip:Show()
+      MDTTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+      MDTTooltip:AddLine(L["Zoom"].." "..(shouldZoomIn() and L["zoomIn"] or L["zoomOut"]), 1, 1, 1, 1)
+      MDTTooltip:Show()
       frame.HighlightTexture:Show()
     end)
     frame:SetScript("OnLeave", function()
-      GameTooltip:Hide()
+      MDTTooltip:Hide()
       frame.HighlightTexture:Hide()
     end)
   end

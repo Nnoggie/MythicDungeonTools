@@ -1,32 +1,248 @@
 local _, MDT = ...
 local L = MDT.L
-local mainFrameStrata = "HIGH"
-local panelHeight = 30
+local UI = MDT.UI
 
-local AceGUI = LibStub("AceGUI-3.0")
+local PAGE_WIDTH = 686
+local PAGE_TOP = 45
+local PAGE_BOTTOM = 15
+local SWATCH_WIDTH = 56
 
----Dropdown menu items for color settings frame
-local colorPaletteNames = {
+local LSM = LibStub("LibSharedMedia-3.0")
+---MDT's own font in LibSharedMedia, where other addons can pick it too.
+local DEFAULT_FONT = "Archivo Narrow Bold"
+LSM:Register("font", DEFAULT_FONT, UI.Fonts.defaultFile)
+
+---The palette the user colors themselves.
+local CUSTOM_PALETTE = 6
+local paletteItems = UI.MenuModel.FromList({
   [1] = L["Rainbow"],
   [2] = L["Black and Yellow"],
   [3] = L["Red, Green and Blue"],
   [4] = L["High Contrast"],
   [5] = L["Color Blind Friendly"],
-  [6] = L["Custom"],
-}
+  [CUSTOM_PALETTE] = L["Custom"],
+}, { 1, 2, 3, 4, 5, 6 })
 
 local enemyForcesTooltipIcon = "|TInterface\\AddOns\\MythicDungeonTools\\Textures\\MDTMinimap:0:0|t"
 local enemyForcesTooltipLabel = L["Enemy Info NPC Enemy Forces"]
-local enemyForcesTooltipOptions = {
-  [1] = "None",
+local enemyForcesTooltipItems = UI.MenuModel.FromList({
+  [1] = L["None"],
   [2] = enemyForcesTooltipIcon..enemyForcesTooltipLabel..": 1.2% (5)",
   [3] = enemyForcesTooltipIcon..enemyForcesTooltipLabel..": 5",
   [4] = enemyForcesTooltipIcon..enemyForcesTooltipLabel..": 1.2%",
   [5] = enemyForcesTooltipIcon.."1.2% (5)",
   [6] = enemyForcesTooltipIcon.."5",
   [7] = enemyForcesTooltipIcon.."1.2%",
-}
-local enemyForcesTooltipOptionOrder = { 1, 2, 4, 3, 5, 7, 6 }
+}, { 1, 2, 4, 3, 5, 7, 6 })
+
+local db
+local page
+---@type {control: MDT.UI.Control, value: (fun(): any)?, disabled: (fun(): boolean)?, hidden: (fun(): boolean)?}[]
+local bindings = {}
+
+local function sync()
+  for _, binding in ipairs(bindings) do
+    if binding.value then binding.control:SetValue(binding.value()) end
+    if binding.disabled then binding.control:SetDisabled(binding.disabled()) end
+    if binding.hidden then binding.control:SetHidden(binding.hidden()) end
+  end
+end
+
+local function bind(control, value, disabled, hidden)
+  bindings[#bindings + 1] = { control = control, value = value, disabled = disabled, hidden = hidden }
+  return control
+end
+
+local function checkbox(parent, id, label, value, onChange, disabled)
+  return bind(UI.Checkbox(parent, {
+    id = id, label = label, value = value(), disabled = disabled and disabled() or false,
+    onChange = function(checked)
+      onChange(checked)
+      sync()
+    end,
+  }), value, disabled)
+end
+
+local function recolorPulls(force)
+  MDT:SetPresetColorPaletteInfo()
+  MDT:RefreshSidebar()
+  MDT:DrawAllHulls(nil, force)
+end
+
+---The user's font pick, else Archivo. A pick whose addon is missing stays picked and shows here: MDT draws in Archivo
+---meanwhile and goes back to the pick once its addon returns. Nothing but the user's own pick changes it.
+---@return string
+local function currentFont()
+  return db.font or DEFAULT_FONT
+end
+
+---Every font in LibSharedMedia, each name drawn in its font. LibSharedMedia only lists fonts made for the client's
+---alphabet, so Archivo joins on other clients, and so does a pick whose addon is missing.
+local function fontItems()
+  local names = CopyTable(LSM:List("font"))
+  if not tContains(names, DEFAULT_FONT) then table.insert(names, 1, DEFAULT_FONT) end
+  if db.font and not tContains(names, db.font) then table.insert(names, 1, db.font) end
+  local items = {}
+  for _, name in ipairs(names) do
+    local file = name == DEFAULT_FONT and UI.Fonts.defaultFile or LSM:Fetch("font", name, true)
+    items[#items + 1] = { kind = "choice", key = name, text = name, value = name, font = file }
+  end
+  return items
+end
+
+---Saves the font pick. MDT builds its fonts once as it loads, so another font shows after a reload.
+---@param name string
+local function pickFont(name)
+  db.font = name ~= DEFAULT_FONT and name or nil
+  local file = name == DEFAULT_FONT and UI.Fonts.defaultFile or LSM:Fetch("font", name, true)
+  if file == UI.Fonts.files.roman then return end
+  UI.Dialogs.Confirm({
+    key = "fontReload", title = L["Font"], text = L["fontReloadPrompt"],
+    confirm = { text = L["Reload UI"], onClick = function() MDT:ReloadAndOpen() end }, cancel = { text = L["Later"] },
+  })
+end
+
+local function fillCustomColors(row)
+  local palette = db.colorPaletteInfo
+  row:ReleaseChildren()
+  row:Batch(function()
+    for i = 1, palette.numberCustomColors do
+      palette.customPaletteValues[i] = palette.customPaletteValues[i] or { 1, 1, 1 }
+      local color = palette.customPaletteValues[i]
+      UI.ColorSwatch(row, {
+        id = "customColor"..i, label = tostring(i), width = SWATCH_WIDTH, color = { color[1], color[2], color[3], 1 },
+        onChange = function(r, g, b)
+          palette.customPaletteValues[i] = { r, g, b }
+          recolorPulls()
+        end,
+      })
+    end
+  end)
+end
+
+local function buildGeneral(column)
+  UI.Heading(column, { text = L["General"] })
+  -- Applied on release: rescaling the page under the cursor while dragging would move the slider away.
+  bind(UI.Slider(column, {
+    id = "uiScale", label = L["MDT Scale"], min = 0.5, max = 3, step = 0.05, value = db.uiScale,
+    format = function(value) return ("%d%%"):format(math.floor(value * 100 + 0.5)) end,
+    onCommit = function(value) MDT:SetUserScale(value) end,
+  }), function() return db.uiScale end)
+  bind(UI.Dropdown(column, {
+    id = "font", label = L["Font"], items = fontItems(), value = currentFont(), search = true, onChange = pickFont,
+  }), currentFont)
+  checkbox(column, "minimap", L["Enable Minimap Button"], function() return not db.minimap.hide end, function(value)
+    if value then MDT:ShowMinimapButton() else MDT:HideMinimapButton() end
+  end)
+  if MDT:IsRetail() then
+    checkbox(column, "compartment", L["Enable Compartment Button"], function() return not db.minimap.compartmentHide end, function(value)
+      MDT:SetCompartmentButtonShown(value)
+    end)
+  end
+  checkbox(column, "forcesCount", L["Use forces count"], function() return db.useForcesCount == true end, function(value)
+    db.useForcesCount = value
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls()
+  end)
+  checkbox(column, "pullHealth", L["Show pull health"], function() return db.showPullButtonHealth == true end, function(value)
+    db.showPullButtonHealth = value
+    MDT:RefreshSidebar()
+  end)
+  checkbox(column, "autoPan", L["Auto pan to selected pull"], function() return db.autoPanToPull ~= false end, function(value)
+    db.autoPanToPull = value
+  end)
+  bind(UI.Dropdown(column, {
+    id = "enemyForcesTooltip", label = L["Enemy forces in tooltips"], items = enemyForcesTooltipItems, value = db.enemyForcesTooltip,
+    onChange = function(value)
+      db.enemyForcesTooltip = value
+      if value ~= 1 then MDT:EnableEnemyForcesTooltip() end
+    end,
+  }), function() return db.enemyForcesTooltip end)
+  checkbox(column, "alwaysOverwriteRoutes", L["Always overwrite matching routes on import"], function() return db.alwaysOverwriteRoutesByUID == true end, function(value)
+    db.alwaysOverwriteRoutesByUID = value
+  end)
+  if MDT:IsRetail() then
+    checkbox(column, "muteXalatath", L["Mute Xal'atath Voice Lines"], function() return db.muteXalatathVoiceLines == true end, function(value)
+      db.muteXalatathVoiceLines = value
+      MDT:SetXalatathVoiceLinesMuted(value)
+    end)
+  end
+  checkbox(column, "announceReset", L["announceDungeonReset"], function() return db.announceDungeonReset == true end, function(value)
+    db.announceDungeonReset = value
+    if value then MDT:EnableDungeonResetAnnounceHook() end
+  end)
+  checkbox(column, "fadeOut", L["Make window transparent in combat"], function() return db.fadeOutDuringCombat == true end, function(value)
+    db.fadeOutDuringCombat = value
+    MDT:UpdateFadeEventRegistration()
+  end)
+  local fadeOutDisabled = function() return not db.fadeOutDuringCombat end
+  bind(UI.Slider(column, {
+    id = "fadeOutAlpha", label = L["Combat Transparency"], min = 0.1, max = 1, step = 0.1, format = "%.1f",
+    value = db.fadeOutAlpha, disabled = fadeOutDisabled(),
+    onChange = function(value) db.fadeOutAlpha = value end,
+  }), function() return db.fadeOutAlpha end, fadeOutDisabled)
+
+  UI.Heading(column, { text = L["Language"] })
+  local changeLanguage = _G.SlashCmdList["ADDONLOCALE"]
+  UI.Button(column, { id = "language", text = L["Change Language"], disabled = not changeLanguage, onClick = function() changeLanguage("") end })
+  UI.Text(column, {
+    text = changeLanguage and L["localeButtonTooltip2"] or L["localeButtonTooltip1"],
+    color = changeLanguage and "text.secondary" or "text.muted",
+  })
+end
+
+local function buildColors(column)
+  UI.Heading(column, { text = L["Colors"] })
+  checkbox(column, "autoColoring", L["Automatically color pulls"], function() return db.colorPaletteInfo.autoColoring == true end, function(value)
+    db.colorPaletteInfo.autoColoring = value
+    MDT:SetPresetColorPaletteInfo()
+    if value then
+      MDT:RefreshSidebar()
+      MDT:DrawAllHulls(nil, true)
+    end
+  end)
+  checkbox(column, "colorBlindMode", L["Local color blind mode"], function() return db.colorPaletteInfo.forceColorBlindMode == true end, function(value)
+    db.colorPaletteInfo.forceColorBlindMode = value
+    recolorPulls(true)
+  end, function()
+    -- Routes keep their own auto coloring, so a mode that is on must stay switchable off.
+    return not db.colorPaletteInfo.autoColoring and not db.colorPaletteInfo.forceColorBlindMode
+  end)
+  bind(UI.Dropdown(column, {
+    id = "palette", label = L["Choose preferred color palette"], items = paletteItems, value = db.colorPaletteInfo.colorPaletteIdx,
+    onChange = function(value)
+      db.colorPaletteInfo.colorPaletteIdx = value
+      recolorPulls(true)
+      sync()
+    end,
+  }), function() return db.colorPaletteInfo.colorPaletteIdx end)
+  -- Re-applies the palette to an imported route without toggling auto coloring or switching palettes back and forth.
+  UI.Button(column, {
+    id = "applyToPreset", text = L["Apply to preset"],
+    onClick = function()
+      db.colorPaletteInfo.autoColoring = true
+      recolorPulls(true)
+      sync()
+    end,
+  })
+
+  -- Only for the custom palette, the one these colors make up.
+  local customHidden = function() return db.colorPaletteInfo.colorPaletteIdx ~= CUSTOM_PALETTE end
+  local custom = bind(UI.Stack(column, { id = "customPalette", gap = "md", hidden = customHidden() }), nil, nil, customHidden)
+  UI.Heading(custom, { text = L["Custom Color Palette"] })
+  local swatches
+  UI.Slider(custom, {
+    id = "customColorCount", label = L["Choose number of colors"], min = 2, max = 20, step = 1,
+    value = db.colorPaletteInfo.numberCustomColors,
+    onCommit = function(value)
+      db.colorPaletteInfo.numberCustomColors = value
+      recolorPulls()
+      fillCustomColors(swatches)
+    end,
+  })
+  swatches = UI.Row(custom, { id = "customColors", wrap = true, gap = "sm" })
+  fillCustomColors(swatches)
+end
 
 MDT:RegisterNavigationSection({
   key = "settings",
@@ -37,368 +253,30 @@ MDT:RegisterNavigationSection({
   iconSize = 25,
   iconOffsetX = 0.75,
   onShow = function()
-    MDT:Settings_RefreshLayout()
+    MDT:Settings_Refresh()
   end,
 })
 
-function MDT:ToggleSettingsDialog()
-  local db = MDT:GetDB()
-  if not db then return end
-
-  if not MDT.main_frame.settingsFrame then
-    MDT:MakeSettingsFrame(MDT.main_frame)
-  end
-  MDT:SetCurrentSection("settings")
-  if db.colorPaletteInfo.colorPaletteIdx == 6 then
-    MDT:OpenCustomColorsDialog()
-  end
-end
-
-function MDT:OpenCustomColorsDialog()
-  if not MDT.main_frame.settingsFrame then
-    MDT:MakeSettingsFrame(MDT.main_frame)
-  end
-  MDT:SetCurrentSection("settings")
-  MDT:Settings_RefreshLayout()
-end
-
-function MDT:Settings_RefreshLayout()
-  local frame = MDT.main_frame
-  if not frame or not frame.settingsFrame then return end
-
-  frame.settingsFrame.frame:Show()
-  if frame.settingsGeneralColumn then
-    frame.settingsGeneralColumn.frame:Show()
-    frame.settingsGeneralColumn:DoLayout()
-  end
-  if frame.settingsColorsColumn then
-    frame.settingsColorsColumn.frame:Show()
-    frame.settingsColorsColumn:DoLayout()
-  end
-  if frame.settingsFrame.CustomColorFrame then
-    frame.settingsFrame.CustomColorFrame.frame:Show()
-    frame.settingsFrame.CustomColorFrame:DoLayout()
-  end
-end
-
----creates frame housing settings for user customized color palette
-function MDT:MakeCustomColorFrame(frame)
-  local db = MDT:GetDB()
-  if not db then return end
-
-  --Base frame for custom palette setup
-  if not frame.CustomColorFrame then
-    local customColorParent = frame.settingsColorsColumn or frame
-    frame.CustomColorFrame = AceGUI:Create("InlineGroup")
-    frame.CustomColorFrame:SetTitle(L["Custom Color Palette"])
-    frame.CustomColorFrame:SetWidth(frame.settingWidth or 250)
-    frame.CustomColorFrame:SetLayout("Flow")
-    customColorParent:AddChild(frame.CustomColorFrame)
-  end
-
-  frame.CustomColorFrame:ReleaseChildren()
-  frame.CustomColorFrame.ColorPicker = {}
-
-  --Slider to adjust number of different colors and remake the frame OnMouseUp
-  frame.CustomColorFrame.ColorSlider = AceGUI:Create("Slider")
-  frame.CustomColorFrame.ColorSlider:SetSliderValues(2, 20, 1)
-  frame.CustomColorFrame.ColorSlider:SetLabel(L["Choose number of colors"])
-  frame.CustomColorFrame.ColorSlider:SetRelativeWidth(1)
-  frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorSlider)
-  frame.CustomColorFrame.ColorSlider:SetValue(db.colorPaletteInfo.numberCustomColors)
-  frame.CustomColorFrame.ColorSlider:SetCallback("OnMouseUp", function(event, callbackName, value)
-    if value > 20 then
-      db.colorPaletteInfo.numberCustomColors = 20
-    elseif value < 2 then
-      db.colorPaletteInfo.numberCustomColors = 2
-    else
-      db.colorPaletteInfo.numberCustomColors = value
-    end
-    MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons()
-    MDT:MakeCustomColorFrame(frame)
-    MDT:OpenCustomColorsDialog()
-  end)
-
-  --Loop to create as many colorpickers as requested limited by db.colorPaletteInfo.numberCustomColors
-  for i = 1, db.colorPaletteInfo.numberCustomColors do
-    frame.CustomColorFrame.ColorPicker[i] = AceGUI:Create("ColorPicker")
-    if db.colorPaletteInfo.customPaletteValues[i] then
-      frame.CustomColorFrame.ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
-        db.colorPaletteInfo.customPaletteValues[i][2], db.colorPaletteInfo.customPaletteValues[i][3])
-    else
-      db.colorPaletteInfo.customPaletteValues[i] = { 1, 1, 1 }
-      frame.CustomColorFrame.ColorPicker[i]:SetColor(db.colorPaletteInfo.customPaletteValues[i][1],
-        db.colorPaletteInfo.customPaletteValues[i][2], db.colorPaletteInfo.customPaletteValues[i][3])
-    end
-    frame.CustomColorFrame.ColorPicker[i]:SetLabel(" "..i)
-    frame.CustomColorFrame.ColorPicker[i]:SetRelativeWidth(0.25)
-    frame.CustomColorFrame.ColorPicker[i]:SetHeight(15)
-    frame.CustomColorFrame.ColorPicker[i]:SetCallback("OnValueChanged", function(widget, event, r, g, b)
-      db.colorPaletteInfo.customPaletteValues[i] = { r, g, b }
-      MDT:SetPresetColorPaletteInfo()
-      MDT:ReloadPullButtons()
-    end)
-    frame.CustomColorFrame:AddChild(frame.CustomColorFrame.ColorPicker[i])
-  end
-  if frame.settingsColorsColumn then
-    frame.settingsColorsColumn:DoLayout()
-  end
+---Re-reads every setting from the saved variables. Call after changing one outside the settings page.
+function MDT:Settings_Refresh()
+  if page then sync() end
 end
 
 function MDT:MakeSettingsFrame(frame)
-  if frame.settingsFrame then return end
-
-  local db = MDT:GetDB()
+  if page then return end
+  db = MDT:GetDB()
   if not db then return end
 
-  local parentFrame = frame.sectionContentFrames and frame.sectionContentFrames.settings or frame
-  frame.settingsFrame = AceGUI:Create("SimpleGroup")
-  frame.settingsFrame.frame:SetParent(parentFrame)
-  frame.settingsFrame.frame:SetFrameStrata(mainFrameStrata)
-  frame.settingsFrame.frame:SetFrameLevel(3)
-  local columnWidth = 325
-  local columnGap = 36
-  local columnHeight = 450
-  local frameWidth = (columnWidth * 2) + columnGap
-  local settingWidth = columnWidth - 10
-  frame.settingsFrame:SetWidth(frameWidth)
-  frame.settingsFrame:SetHeight(columnHeight)
-  frame.settingsFrame:SetAutoAdjustHeight(false)
-  frame.settingsFrame.settingWidth = settingWidth
-  frame.settingsFrame:SetLayout("Flow")
-  frame.settingsFrame.frame:ClearAllPoints()
-  frame.settingsFrame.frame:SetPoint("TOP", parentFrame, "TOP", 0, -(panelHeight + 15))
-
-  local function createSettingsColumn(point, relativeTo, relativePoint, xOffset)
-    local column = AceGUI:Create("SimpleGroup")
-    column:SetParent(frame.settingsFrame)
-    column.frame:SetFrameStrata(mainFrameStrata)
-    column.frame:SetFrameLevel(frame.settingsFrame.frame:GetFrameLevel() + 1)
-    column:SetWidth(columnWidth)
-    column:SetHeight(columnHeight)
-    column:SetLayout("Flow")
-    column:SetAutoAdjustHeight(false)
-    column.alignoffset = 0
-    column.frame:ClearAllPoints()
-    column.frame:SetPoint(point, relativeTo, relativePoint, xOffset, 0)
-    column.frame:Show()
-    return column
-  end
-
-  frame.settingsGeneralColumn = createSettingsColumn("TOPLEFT", frame.settingsFrame.content, "TOPLEFT", 0)
-  frame.settingsColorsColumn = createSettingsColumn("TOPLEFT", frame.settingsGeneralColumn.frame, "TOPRIGHT", columnGap)
-  frame.settingsFrame.settingsColorsColumn = frame.settingsColorsColumn
-
-  frame.settingsHeading = AceGUI:Create("Heading")
-  frame.settingsHeading:SetText(L["General"])
-  frame.settingsHeading:SetFullWidth(true)
-  frame.settingsGeneralColumn:AddChild(frame.settingsHeading)
-
-  frame.minimapCheckbox = AceGUI:Create("CheckBox")
-  frame.minimapCheckbox:SetLabel(L["Enable Minimap Button"])
-  frame.minimapCheckbox:SetWidth(settingWidth)
-  frame.minimapCheckbox:SetValue(not db.minimap.hide)
-  frame.minimapCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    if value then MDT:ShowMinimapButton() else MDT:HideMinimapButton() end
+  local content = frame.sectionContentFrames.settings
+  page = UI.Scroll(content, { padding = "md" })
+  page:SetPoint("TOP", content, "TOP", 0, -PAGE_TOP)
+  page:SetPoint("BOTTOM", content, "BOTTOM", 0, PAGE_BOTTOM)
+  page:SetWidth(PAGE_WIDTH)
+  page.content:Batch(function()
+    local columns = UI.Columns(page.content, { gap = "xl" })
+    columns[1]:SetGap("md")
+    columns[2]:SetGap("md")
+    buildGeneral(columns[1])
+    buildColors(columns[2])
   end)
-  frame.settingsGeneralColumn:AddChild(frame.minimapCheckbox)
-
-  frame.compartmentCheckbox = AceGUI:Create("CheckBox")
-  frame.compartmentCheckbox:SetLabel(L["Enable Compartment Button"])
-  frame.compartmentCheckbox:SetWidth(settingWidth)
-  frame.compartmentCheckbox:SetValue(not db.minimap.compartmentHide)
-  frame.compartmentCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    MDT:SetCompartmentButtonShown(value)
-  end)
-  if MDT:IsRetail() then
-    frame.settingsGeneralColumn:AddChild(frame.compartmentCheckbox)
-  end
-
-  frame.forcesCheckbox = AceGUI:Create("CheckBox")
-  frame.forcesCheckbox:SetLabel(L["Use forces count"])
-  frame.forcesCheckbox:SetWidth(settingWidth)
-  frame.forcesCheckbox:SetValue(db.useForcesCount)
-  frame.forcesCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.useForcesCount = value
-    MDT:ReloadPullButtons()
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.forcesCheckbox)
-
-  frame.pullButtonHealthCheckbox = AceGUI:Create("CheckBox")
-  frame.pullButtonHealthCheckbox:SetLabel(L["Show pull health"])
-  frame.pullButtonHealthCheckbox:SetWidth(settingWidth)
-  frame.pullButtonHealthCheckbox:SetValue(db.showPullButtonHealth)
-  frame.pullButtonHealthCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.showPullButtonHealth = value
-    MDT:ReloadPullButtons()
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.pullButtonHealthCheckbox)
-
-  frame.autoPanToPullCheckbox = AceGUI:Create("CheckBox")
-  frame.autoPanToPullCheckbox:SetLabel(L["Auto pan to selected pull"])
-  frame.autoPanToPullCheckbox:SetWidth(settingWidth)
-  frame.autoPanToPullCheckbox:SetValue(db.autoPanToPull ~= false)
-  frame.autoPanToPullCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.autoPanToPull = value
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.autoPanToPullCheckbox)
-
-  frame.enemyForcesTooltipDropdown = AceGUI:Create("Dropdown")
-  frame.enemyForcesTooltipDropdown:SetList(enemyForcesTooltipOptions, enemyForcesTooltipOptionOrder)
-  frame.enemyForcesTooltipDropdown:SetLabel(L["Enemy forces in tooltips"])
-  frame.enemyForcesTooltipDropdown:SetWidth(settingWidth)
-  frame.enemyForcesTooltipDropdown:SetValue(db.enemyForcesTooltip)
-  frame.enemyForcesTooltipDropdown:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.enemyForcesTooltip = value
-    if value ~= 1 then MDT:EnableEnemyForcesTooltip() end
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.enemyForcesTooltipDropdown)
-
-  frame.alwaysOverwriteRoutesByUIDCheckbox = AceGUI:Create("CheckBox")
-  frame.alwaysOverwriteRoutesByUIDCheckbox:SetLabel(L["Always overwrite matching routes on import"])
-  frame.alwaysOverwriteRoutesByUIDCheckbox:SetWidth(settingWidth)
-  frame.alwaysOverwriteRoutesByUIDCheckbox:SetValue(db.alwaysOverwriteRoutesByUID)
-  frame.alwaysOverwriteRoutesByUIDCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.alwaysOverwriteRoutesByUID = value
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.alwaysOverwriteRoutesByUIDCheckbox)
-
-  frame.muteXalatathVoiceLinesCheckbox = AceGUI:Create("CheckBox")
-  frame.muteXalatathVoiceLinesCheckbox:SetLabel(L["Mute Xal'atath Voice Lines"])
-  frame.muteXalatathVoiceLinesCheckbox:SetWidth(settingWidth)
-  frame.muteXalatathVoiceLinesCheckbox:SetValue(db.muteXalatathVoiceLines == true)
-  frame.muteXalatathVoiceLinesCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.muteXalatathVoiceLines = value
-    MDT:SetXalatathVoiceLinesMuted(value)
-  end)
-  if MDT:IsRetail() then
-    frame.settingsGeneralColumn:AddChild(frame.muteXalatathVoiceLinesCheckbox)
-  end
-
-  frame.announceDungeonResetCheckbox = AceGUI:Create("CheckBox")
-  frame.announceDungeonResetCheckbox:SetLabel(L["announceDungeonReset"])
-  frame.announceDungeonResetCheckbox:SetWidth(settingWidth)
-  frame.announceDungeonResetCheckbox:SetValue(db.announceDungeonReset == true)
-  frame.announceDungeonResetCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.announceDungeonReset = value
-    if value then MDT:EnableDungeonResetAnnounceHook() end
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.announceDungeonResetCheckbox)
-
-  frame.fadeOutCheckbox = AceGUI:Create("CheckBox")
-  frame.fadeOutCheckbox:SetLabel(L["Make window transparent in combat"])
-  frame.fadeOutCheckbox:SetWidth(settingWidth)
-  frame.fadeOutCheckbox:SetValue(db.fadeOutDuringCombat)
-  frame.fadeOutCheckbox:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.fadeOutDuringCombat = value
-    frame.fadeOutAlphaSlider:SetDisabled(not value)
-    MDT:UpdateFadeEventRegistration()
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.fadeOutCheckbox)
-
-  frame.fadeOutAlphaSlider = AceGUI:Create("Slider")
-  frame.fadeOutAlphaSlider:SetLabel(L["Combat Transparency"])
-  frame.fadeOutAlphaSlider:SetWidth(settingWidth)
-  frame.fadeOutAlphaSlider:SetSliderValues(0.1, 1.0, 0.1)
-  frame.fadeOutAlphaSlider:SetValue(db.fadeOutAlpha)
-  frame.fadeOutAlphaSlider:SetDisabled(not db.fadeOutDuringCombat)
-  frame.fadeOutAlphaSlider:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.fadeOutAlpha = value
-  end)
-  frame.settingsGeneralColumn:AddChild(frame.fadeOutAlphaSlider)
-
-  frame.colorsHeading = AceGUI:Create("Heading")
-  frame.colorsHeading:SetText(L["Colors"])
-  frame.colorsHeading:SetFullWidth(true)
-  frame.settingsColorsColumn:AddChild(frame.colorsHeading)
-
-  frame.AutomaticColorsCheck = AceGUI:Create("CheckBox")
-  frame.AutomaticColorsCheck:SetLabel(L["Automatically color pulls"])
-  frame.AutomaticColorsCheck:SetWidth(settingWidth)
-  frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-  frame.AutomaticColorsCheck:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.colorPaletteInfo.autoColoring = value
-    MDT:SetPresetColorPaletteInfo()
-    frame.toggleForceColorBlindMode:SetDisabled(not value)
-    if value then
-      MDT:ReloadPullButtons(true)
-    end
-  end)
-  frame.settingsColorsColumn:AddChild(frame.AutomaticColorsCheck)
-
-  --Toggle local color blind mode
-  frame.toggleForceColorBlindMode = AceGUI:Create("CheckBox")
-  frame.toggleForceColorBlindMode:SetLabel(L["Local color blind mode"])
-  frame.toggleForceColorBlindMode:SetWidth(settingWidth)
-  frame.toggleForceColorBlindMode:SetValue(db.colorPaletteInfo.forceColorBlindMode)
-  frame.toggleForceColorBlindMode:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    db.colorPaletteInfo.forceColorBlindMode = value
-    MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons(true)
-  end)
-  frame.settingsColorsColumn:AddChild(frame.toggleForceColorBlindMode)
-
-  frame.PaletteSelectDropdown = AceGUI:Create("Dropdown")
-  frame.PaletteSelectDropdown:SetList(colorPaletteNames)
-  frame.PaletteSelectDropdown:SetLabel(L["Choose preferred color palette"])
-  frame.PaletteSelectDropdown:SetWidth(settingWidth)
-  frame.PaletteSelectDropdown:SetValue(db.colorPaletteInfo.colorPaletteIdx)
-  frame.PaletteSelectDropdown:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    if value == 6 then
-      db.colorPaletteInfo.colorPaletteIdx = value
-      MDT:OpenCustomColorsDialog()
-    else
-      db.colorPaletteInfo.colorPaletteIdx = value
-    end
-    MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons(true)
-  end)
-  frame.settingsColorsColumn:AddChild(frame.PaletteSelectDropdown)
-
-  -- The reason this button exists is to allow altering colorPaletteInfo of an imported preset
-  -- Without the need to untoggle/toggle or swap back and forth in the PaletteSelectDropdown
-  frame.button = AceGUI:Create("Button")
-  frame.button:SetText(L["Apply to preset"])
-  frame.button:SetWidth(settingWidth)
-  frame.button:SetCallback("OnClick", function(widget, callbackName)
-    if not db.colorPaletteInfo.autoColoring then
-      db.colorPaletteInfo.autoColoring = true
-      frame.AutomaticColorsCheck:SetValue(db.colorPaletteInfo.autoColoring)
-      frame.toggleForceColorBlindMode:SetDisabled(false)
-    end
-    MDT:SetPresetColorPaletteInfo()
-    MDT:ReloadPullButtons(true)
-  end)
-  frame.settingsColorsColumn:AddChild(frame.button)
-
-  MDT:MakeCustomColorFrame(frame.settingsFrame)
-
-  frame.localeHeading = AceGUI:Create("Heading")
-  frame.localeHeading:SetText(L["Language"])
-  frame.localeHeading:SetFullWidth(true)
-  frame.settingsGeneralColumn:AddChild(frame.localeHeading)
-
-  frame.localeButton = AceGUI:Create("Button")
-  frame.localeButton:SetText(L["Change Language"])
-  frame.localeButton:SetWidth(settingWidth)
-  local slashToFire = _G.SlashCmdList["ADDONLOCALE"]
-  if not slashToFire then
-    frame.localeButton:SetDisabled(true)
-  else
-    frame.localeButton:SetCallback("OnClick", function(widget, callbackName)
-      slashToFire("")
-    end)
-  end
-  frame.settingsGeneralColumn:AddChild(frame.localeButton)
-
-  frame.localeLabel = AceGUI:Create("Label")
-  if not slashToFire then
-    frame.localeLabel:SetText("|cff808080"..L["localeButtonTooltip1"].."|r")
-  else
-    frame.localeLabel:SetText(L["localeButtonTooltip2"])
-  end
-  frame.settingsGeneralColumn:AddChild(frame.localeLabel)
-
-  MDT:Settings_RefreshLayout()
 end

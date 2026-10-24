@@ -1,5 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='AceGUIWidget-MythicDungeonToolsNewPullButton.lua'/>
-	<Script file='AceGUIWidget-MythicDungeonToolsPullButton.lua'/>
-	<Script file='AceGUIWidget-MythicDungeonToolsSpellButton.lua'/>
-</Ui>

@@ -6,7 +6,6 @@ local CreateFrame, tonumber, pairs, ipairs = CreateFrame, tonumber, pairs, ipair
 
 _G["BINDING_NAME_CLICK MDTFocusMarkerButton:LeftButton"] = L["MDT Set Focus Macro"]
 
-local AceGUI = LibStub("AceGUI-3.0")
 local db
 
 ---@param shouldWarn boolean|nil
@@ -20,14 +19,28 @@ function MDT:IsInRestrictedEnvironment(shouldWarn)
   return false
 end
 
-function MDT:CreateContextMenu(ownerRegion, generator, ...)
+-- close.tga is MethodInternal's CloseCross, copied as is; the other icons are drawn to match it.
+local ICON_FILES = { close = "close.tga" }
+
+---@param name string icon name under Textures\Icons
+---@return string
+function MDT:GetIconPath(name)
+  return "Interface\\AddOns\\MythicDungeonTools\\Textures\\Icons\\"..(ICON_FILES[name] or name..".png")
+end
+
+---Opens a kit context menu at the cursor. Every right-click menu in MDT goes through here so the restricted check runs once.
+---@param owner table?
+---@param items MDT.UI.MenuItem[]|fun(): MDT.UI.MenuItem[]
+---@return MDT.UI.Control?
+function MDT:CreateContextMenu(owner, items)
   if self:IsInRestrictedEnvironment(true) then return end
-  return MenuUtil.CreateContextMenu(ownerRegion, generator, ...)
+  return MDT.UI.Menu.OpenContext(items, owner)
 end
 
 function MDT:InitializeRuntime()
   db = MDT:InitializeSavedVariables()
   if not db then return end
+  db.uiScale = MDT.UI.SetUserScale(db.uiScale)
   -- Release packages omit Developer/. Keep its saved edits, but use normal UI/data.
   if not MDT.CreateDevPanel then db.devMode = false end
   MDT:InitializeFadeFrame()
@@ -91,110 +104,6 @@ function MDT:FormatEnemyForces(forces, forcesmax, progressbar)
   local percent = forcesmax > 0 and (forces / forcesmax) * 100 or 0
   if progressbar then return string.format((forces.."/"..forcesmax.." (%.2f%%)"), percent) end
   return string.format(forces.." (%.2f%%)", percent)
-end
-
----Progressbar_SetValue
----Sets the value/progress/color of the count progressbar to the apropriate data
-function MDT:Progressbar_SetValue(self, totalCurrent, totalMax)
-  local percent = totalMax > 0 and (totalCurrent / totalMax) * 100 or 0
-  if percent >= 102 then
-    if totalCurrent - totalMax > 8 then
-      self.Bar:SetStatusBarColor(1, 0, 0, 1)
-    else
-      self.Bar:SetStatusBarColor(0, 1, 0, 1)
-    end
-  elseif percent >= 100 then
-    self.Bar:SetStatusBarColor(0, 1, 0, 1)
-  else
-    self.Bar:SetStatusBarColor(0.26, 0.42, 1)
-  end
-  self.Bar:SetValue(percent)
-  self.Bar.Label:SetText(MDT:FormatEnemyForces(totalCurrent, totalMax, true))
-  self.AnimValue = percent
-end
-
----UpdateProgressbar
----Update the progressbar on the sidepanel with the correct values
-function MDT:UpdateProgressbar()
-  MDT:EnsureDBTables()
-  local grandTotal = MDT:CountForces()
-  MDT:Progressbar_SetValue(MDT.main_frame.sidePanel.ProgressBar, grandTotal, MDT.dungeonTotalCount[db.currentDungeonIdx].normal)
-end
-
----ActivatePullTooltip
----
-function MDT:ActivatePullTooltip(pull)
-  local pullTooltip = MDT.pullTooltip
-  pullTooltip.currentPull = pull
-  pullTooltip:Show()
-end
-
----UpdatePullTooltip
----Updates the tooltip which is being displayed when a pull is mouseovered
-function MDT:UpdatePullTooltip(tooltip)
-  local frame = MDT.main_frame
-  if not frame.sidePanel.pullButtonsScrollFrame.frame:IsMouseOver() then
-    tooltip:Hide()
-  elseif frame.sidePanel.newPullButton and frame.sidePanel.newPullButton.frame:IsMouseOver() then
-    tooltip:Hide()
-  else
-    if frame.sidePanel.newPullButtons and tooltip.currentPull and frame.sidePanel.newPullButtons[tooltip.currentPull] then
-      local showData
-
-      --enemy portraits
-      for k, v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
-        if v:IsMouseOver() and v:IsShown() then
-          --model
-          if v.enemyData.displayId and (not tooltip.modelNpcId or (tooltip.modelNpcId ~= v.enemyData.displayId)) then
-            tooltip.Model:SetDisplayInfo(v.enemyData.displayId)
-            tooltip.modelNpcId = v.enemyData.displayId
-          end
-          --topString
-          local newLine = "\n"
-          local text = newLine..newLine..newLine..L[v.enemyData.name].." x"..v.enemyData.quantity..newLine
-          text = text..string.format(L["Level %d %s"], v.enemyData.level, L[v.enemyData.creatureType])..newLine
-          local boss = v.enemyData.isBoss or false
-          local health = MDT:CalculateEnemyHealth(boss, v.enemyData.baseHealth, db.currentDifficulty, v.enemyData.ignoreFortified)
-          text = text..string.format(L["%s HP"], MDT:FormatEnemyHealth(health))..newLine
-
-          local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-          local count = v.enemyData.count
-          text = text..L["Forces"]..": "..MDT:FormatEnemyForces(count, totalForcesMax, false)
-
-          tooltip.topString:SetText(text)
-          showData = true
-          break
-        end
-      end
-      if showData then
-        tooltip.topString:Show()
-        tooltip.Model:Show()
-      else
-        tooltip.topString:Hide()
-        tooltip.Model:Hide()
-      end
-
-      local countEnemies = 0
-      for k, v in pairs(frame.sidePanel.newPullButtons[tooltip.currentPull].enemyPortraits) do
-        if v:IsShown() then countEnemies = countEnemies + 1 end
-      end
-      if countEnemies == 0 then
-        tooltip:Hide()
-        return
-      end
-      local pullForces = MDT:CountForces(tooltip.currentPull, true)
-      local totalForces = MDT:CountForces(tooltip.currentPull, false)
-      local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-
-      local text = L["Forces"]..": "..MDT:FormatEnemyForces(pullForces, totalForcesMax, false)
-      text = text.."\n"..L["Total"]..": "..MDT:FormatEnemyForces(totalForces, totalForcesMax, true)
-      -- local pullHealth = MDT:SumCurrentPullHealth(tooltip.currentPull)
-      -- text = text .. "\n" .. L["Efficiency Score"] .. ": " .. MDT:GetEfficiencyScoreString(pullForces, pullHealth)
-
-      tooltip.botString:SetText(text)
-      tooltip.botString:Show()
-    end
-  end
 end
 
 local function round(number, decimals)
@@ -275,183 +184,6 @@ function MDT:FormatEnemyHealth(amount)
   end
 end
 
-function MDT:MakePullSelectionButtons(frame)
-  frame.PullButtonScrollGroup = AceGUI:Create("SimpleGroup")
-  frame.PullButtonScrollGroup:SetWidth(248)
-  frame.PullButtonScrollGroup:SetHeight(410)
-  frame.PullButtonScrollGroup:SetPoint("TOPLEFT", frame.WidgetGroup.frame, "BOTTOMLEFT", -4, -32)
-  frame.PullButtonScrollGroup:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 30)
-  frame.PullButtonScrollGroup:SetLayout("Fill")
-  frame.PullButtonScrollGroup.frame:SetParent(frame)
-  if not frame.PullButtonScrollGroup.frame.SetBackdrop then
-    Mixin(frame.PullButtonScrollGroup.frame, BackdropTemplateMixin)
-  end
-  frame.PullButtonScrollGroup.frame:SetBackdropColor(1, 1, 1, 0)
-  frame.PullButtonScrollGroup.frame:Hide()
-
-  self:FixAceGUIShowHide(frame.PullButtonScrollGroup)
-
-  frame.pullButtonsScrollFrame = AceGUI:Create("ScrollFrame")
-  frame.pullButtonsScrollFrame:SetLayout("Flow")
-
-  frame.PullButtonScrollGroup:AddChild(frame.pullButtonsScrollFrame)
-
-  frame.newPullButtons = {}
-  --rightclick context menu
-  frame.optionsDropDown = CreateFrame("frame", "MDTPullButtonsOptionsDropDown", nil, "UIDropDownMenuTemplate")
-end
-
----Updates the portraits display of a button to show which and how many npcs are selected
-function MDT:UpdatePullButtonNPCData(idx)
-  if db.devMode then return end
-  local preset = MDT:GetCurrentPreset()
-  local frame = MDT.main_frame.sidePanel
-  local enemyTable = {}
-  if preset.value.pulls[idx] then
-    local enemyTableIdx = 0
-    for enemyIdx, clones in pairs(preset.value.pulls[idx]) do
-      if tonumber(enemyIdx) then
-        --check if enemy exists, remove if not
-        if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx] then
-          -- Keep portraits with different per-clone forces separate.
-          local entriesByCount = {}
-          local npcId = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["id"]
-          local name = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["name"]
-          local creatureType = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["creatureType"]
-          local level = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["level"]
-          local baseHealth = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["health"]
-          for k, cloneIdx in pairs(clones) do
-            --check if clone exists, remove if not
-            if MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]["clones"][cloneIdx] then
-              if self:IsCloneIncluded(enemyIdx, cloneIdx) then
-                local data = MDT.dungeonEnemies[db.currentDungeonIdx][enemyIdx]
-                local count = MDT:GetCloneEnemyForces(data, data.clones[cloneIdx])
-                if not entriesByCount[count] then
-                  enemyTableIdx = enemyTableIdx + 1
-                  entriesByCount[count] = enemyTableIdx
-                end
-                local entryIdx = entriesByCount[count]
-                if not enemyTable[entryIdx] then enemyTable[entryIdx] = {} end
-                local entry = enemyTable[entryIdx]
-                entry.quantity = (entry.quantity or 0) + 1
-                entry.npcId = npcId
-                entry.count = count
-                entry.displayId = data.displayId
-                entry.name = name
-                entry.level = level
-                entry.creatureType = creatureType
-                entry.baseHealth = baseHealth
-                entry.ignoreFortified = data.ignoreFortified
-                entry.isBoss = data.isBoss
-              end
-            end
-          end
-        end
-      end
-    end
-  end
-  frame.newPullButtons[idx]:SetNPCData(enemyTable)
-
-  local pullForces = MDT:CountForces(idx, false)
-  local totalForcesMax = MDT.dungeonTotalCount[db.currentDungeonIdx].normal
-
-  --count per health
-  if pullForces > 0 then
-    frame.newPullButtons[idx]:ShowCountPerHealth(true, pullForces, totalForcesMax)
-  else
-    frame.newPullButtons[idx]:ShowCountPerHealth(true, pullForces, totalForcesMax)
-  end
-end
-
----Reloads all pull buttons in the scroll frame
-function MDT:ReloadPullButtons(force)
-  MDT:Async(function()
-    local frame = MDT.main_frame.sidePanel
-    if not frame.pullButtonsScrollFrame then return end
-    local preset = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]]
-    --store scroll value
-    local oldScrollValue = frame.pullButtonsScrollFrame.localstatus.scrollvalue
-    --first release all children of the scroll frame
-    frame.pullButtonsScrollFrame:ReleaseChildren()
-    coroutine.yield()
-    local maxPulls = 0
-    for k, v in pairs(preset.value.pulls) do
-      maxPulls = maxPulls + 1
-    end
-    --add new children to the scrollFrame, the frames are from the widget pool so no memory is wasted
-    local idx = 0
-    for k, pull in ipairs(preset.value.pulls) do
-      idx = idx + 1
-      ---@diagnostic disable-next-line: param-type-mismatch
-      frame.newPullButtons[idx] = AceGUI:Create("MDTPullButton")
-      frame.newPullButtons[idx]:SetMaxPulls(maxPulls)
-      frame.newPullButtons[idx]:SetIndex(idx)
-      MDT:UpdatePullButtonNPCData(idx)
-      frame.newPullButtons[idx]:Initialize()
-      frame.newPullButtons[idx]:Enable()
-      frame.pullButtonsScrollFrame:AddChild(frame.newPullButtons[idx])
-      coroutine.yield()
-    end
-    --add the "new pull" button
-    ---@diagnostic disable-next-line: param-type-mismatch
-    frame.newPullButton = AceGUI:Create("MDTNewPullButton")
-    frame.newPullButton:Initialize()
-    frame.newPullButton:Enable()
-    frame.pullButtonsScrollFrame:AddChild(frame.newPullButton)
-    --set the scroll value back to the old value
-    frame.pullButtonsScrollFrame.scrollframe.obj:SetScroll(oldScrollValue)
-    frame.pullButtonsScrollFrame.scrollframe.obj:FixScroll()
-    if self:GetCurrentPreset().value.currentPull then
-      self:PickPullButton(self:GetCurrentPreset().value.currentPull)
-    end
-    MDT:ColorAllPulls(nil, 0)
-    MDT:DrawAllHulls(preset.value.pulls, force)
-  end, "ReloadPullButtons", true)
-end
-
----Deselects all pull buttons
-function MDT:ClearPullButtonPicks()
-  local frame = MDT.main_frame.sidePanel
-  for k, v in pairs(frame.newPullButtons) do
-    v:ClearPick()
-  end
-end
-
----Selects the current pull button and deselects all other buttons
-function MDT:PickPullButton(idx, keepPicked)
-  if db.devMode then return end
-
-  if not keepPicked then
-    MDT:ClearPullButtonPicks()
-  end
-  local frame = MDT.main_frame.sidePanel
-  if frame.newPullButtons[idx] then
-    frame.newPullButtons[idx]:Pick()
-  end
-end
-
-function MDT:GetFirstNotSelectedPullButton(start, direction)
-  if not direction then
-    direction = -1
-  elseif direction == "UP" then
-    direction = -1
-  elseif direction == "DOWN" then
-    direction = 1
-  end
-
-  local pullIdx = start
-  while MDT.U.contains(MDT:GetCurrentPreset().value.selection, pullIdx)
-    and MDT.U.isInRange(pullIdx, 1, #MDT:GetCurrentPreset().value.pulls) do
-    pullIdx = pullIdx + direction
-  end
-
-  if not MDT.U.isInRange(pullIdx, 1, #MDT:GetCurrentPreset().value.pulls) then
-    return
-  end
-
-  return pullIdx
-end
-
 function MDT:Round(number, decimals)
   return (("%%.%df"):format(decimals)):format(number)
 end
@@ -481,72 +213,4 @@ end
 function MDT:IsPlayerInGroup()
   local inGroup = (UnitInRaid("player") and "RAID") or (IsInGroup() and "PARTY")
   return inGroup
-end
-
-function MDT:DropIndicator()
-  local indicator = MDT.main_frame.drop_indicator
-  if not indicator then
-    indicator = CreateFrame("Frame", "MDT_DropIndicator")
-    indicator:SetHeight(4)
-    indicator:SetFrameStrata("FULLSCREEN")
-
-    local texture = indicator:CreateTexture(nil, "OVERLAY", nil, 0)
-    texture:SetBlendMode("ADD")
-    texture:SetAllPoints(indicator)
-    texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
-
-    local icon = indicator:CreateTexture(nil, "OVERLAY", nil, 0)
-    icon:ClearAllPoints()
-    icon:SetSize(16, 16)
-    icon:SetPoint("CENTER", indicator)
-
-    indicator.icon = icon
-    indicator.texture = texture
-    MDT.main_frame.drop_indicator = indicator
-
-    indicator:Hide()
-  end
-
-  return indicator
-end
-
-function MDT:IsShown_DropIndicator()
-  local indicator = MDT:DropIndicator()
-  return indicator:IsShown()
-end
-
-function MDT:Show_DropIndicator(target, pos)
-  local indicator = MDT:DropIndicator()
-  indicator:ClearAllPoints()
-  if pos == "TOP" then
-    indicator:SetPoint("BOTTOMLEFT", target.frame, "TOPLEFT", 0, -1)
-    indicator:SetPoint("BOTTOMRIGHT", target.frame, "TOPRIGHT", 0, -1)
-    indicator:Show()
-  elseif pos == "BOTTOM" then
-    indicator:SetPoint("TOPLEFT", target.frame, "BOTTOMLEFT", 0, 1)
-    indicator:SetPoint("TOPRIGHT", target.frame, "BOTTOMRIGHT", 0, 1)
-    indicator:Show()
-  end
-end
-
-function MDT:Hide_DropIndicator()
-  local indicator = MDT:DropIndicator()
-  indicator:Hide()
-end
-
-function MDT:GetScrollingAmount(scrollFrame, pixelPerSecond)
-  local viewheight = scrollFrame.frame.obj.content:GetHeight()
-  return (pixelPerSecond / viewheight) * 1000
-end
-
-function MDT:GetPullButton(pullIdx)
-  local frame = MDT.main_frame.sidePanel
-  return frame.newPullButtons[pullIdx]
-end
-
-function MDT:UpdatePullButtonColor(pullIdx, r, g, b)
-  local button = MDT:GetPullButton(pullIdx)
-  if not button then return end
-  button.color.r, button.color.g, button.color.b = r, g, b
-  button:UpdateColor()
 end

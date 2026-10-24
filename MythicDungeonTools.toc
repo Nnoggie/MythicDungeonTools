@@ -1,8 +1,8 @@
-## Interface: 120100
-# WOW_INTERFACE_TARGETS: standard
+## Interface: 120107, 120105
+# WOW_INTERFACE_TARGETS: standard-test, standard
 ## Title: Mythic Dungeon Tools (MDT)
 ## Author: Nnoggie
-## Version: 6.2.20
+## Version: 6.3.20
 ## X-Curse-Project-ID: 288981
 ## X-Wago-ID: rN4VrAKD
 ## Notes: Tool for planning and optimizing Mythic+ dungeon runs

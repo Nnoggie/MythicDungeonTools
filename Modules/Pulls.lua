@@ -159,7 +159,6 @@ function MDT:ColorPull(colorValues, pullIdx, preset, bypass, exportColorBlind) -
       r, g, b = colorValues[colorIdx][1], colorValues[colorIdx][2], colorValues[colorIdx][3]
 
       MDT:DungeonEnemies_SetPullColor(pullIdx, r, g, b)
-      MDT:UpdatePullButtonColor(pullIdx, r, g, b)
       MDT:DungeonEnemies_UpdateBlipColors(pullIdx, r, g, b)
     end
   end
@@ -173,6 +172,21 @@ function MDT:ColorAllPulls(colorValues, startFrom, bypass, exportColorBlind)
     if pullIdx >= startFrom then
       MDT:ColorPull(colorValues, pullIdx, preset, bypass, exportColorBlind)
     end
+  end
+end
+
+---Recolors the pulls of a route copy from its own palette, dropping the local color blind colors before an export.
+---@param preset table a copy, never a stored route
+function MDT:ColorPullsForExport(preset)
+  local info = preset.colorPaletteInfo
+  if not info or not info.autoColoring then return end
+  local custom = info.colorPaletteIdx == 6
+  local colorValues = custom and info.customPaletteValues or colorPaletteValues[info.colorPaletteIdx]
+  local numberColors = custom and info.numberCustomColors or colorValues and #colorValues
+  if not colorValues or not numberColors or numberColors < 1 then return end
+  for pullIdx, pull in pairs(preset.value.pulls) do
+    local color = colorValues[(pullIdx - 1) % numberColors + 1]
+    if color then pull.color = MDT:RGBToHex(color[1], color[2], color[3]) end
   end
 end
 
@@ -292,26 +306,27 @@ function MDT:SetSelectionToPull(pull, ignoreHulls)
   if type(pull) == "number" and pull > 0 then
     MDT:GetCurrentPreset().value.currentPull = pull
     MDT:GetCurrentPreset().value.selection = { pull }
-    MDT:PickPullButton(pull)
-
     MDT:DungeonEnemies_UpdateSelected(pull, nil, ignoreHulls)
   elseif type(pull) == "table" then
     MDT:GetCurrentPreset().value.currentPull = pull[#pull]
     MDT:GetCurrentPreset().value.selection = pull
-
-    MDT:ClearPullButtonPicks()
     for _, pullIdx in ipairs(MDT:GetSelection()) do
-      MDT:PickPullButton(pullIdx, true)
       MDT:DungeonEnemies_UpdateSelected(pullIdx, nil, ignoreHulls)
     end
   end
+  MDT:RefreshSidebar()
   MDT:PullClickAreaOnLeave()
 end
 
----Creates a new pull in the current preset and calls ReloadPullButtons to reflect the change in the scrollframe
+local function pullsChanged()
+  MDT:RefreshSidebar()
+  MDT:DrawAllHulls()
+end
+
+---Creates a new pull in the current preset and selects it
 function MDT:AddPull(index)
   MDT:PresetsAddPull(index)
-  MDT:ReloadPullButtons()
+  pullsChanged()
   MDT:SetSelectionToPull(index)
 end
 
@@ -320,21 +335,21 @@ function MDT:ClearPull(index)
   initializeDB()
   table.wipe(db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].value.pulls[index])
   MDT:EnsureDBTables()
-  MDT:ReloadPullButtons()
+  pullsChanged()
   MDT:SetSelectionToPull(index)
 end
 
 ---Moves the selected pull up
 function MDT:MovePullUp(index)
   MDT:PresetsSwapPulls(index, index - 1)
-  MDT:ReloadPullButtons()
+  pullsChanged()
   MDT:SetSelectionToPull(index - 1)
 end
 
 ---Moves the selected pull down
 function MDT:MovePullDown(index)
   MDT:PresetsSwapPulls(index, index + 1)
-  MDT:ReloadPullButtons()
+  pullsChanged()
   MDT:SetSelectionToPull(index + 1)
 end
 
@@ -343,14 +358,48 @@ function MDT:DeletePull(index)
   local pulls = self:GetPulls()
   if #pulls == 1 then return end
   self:PresetsDeletePull(index)
-  self:ReloadPullButtons()
-  self:UpdateProgressbar()
+  pullsChanged()
   local pullCount = 0
   for k, v in pairs(pulls) do
     pullCount = pullCount + 1
   end
   if index > pullCount then index = pullCount end
   self:SetSelectionToPull(index)
+end
+
+---Deletes every selected pull at once, never the last one, and selects the nearest survivor
+---@param indices integer[]
+---@param anchor integer the right-clicked pull
+function MDT:DeletePulls(indices, anchor)
+  local preset = self:GetCurrentPreset()
+  local remaining, nextPull = MDT.SidebarModel.DeletePulls(preset.value.pulls, indices, anchor)
+  preset.value.pulls = remaining
+  preset.value.selection = {}
+  self:EnsureDBTables()
+  pullsChanged()
+  self:SetSelectionToPull(nextPull)
+end
+
+---Moves pulls as a block so it starts at `slot` (insert-before among all pulls) and keeps the block selected
+---@param indices integer[]
+---@param slot integer
+function MDT:MovePulls(indices, slot)
+  local preset = self:GetCurrentPreset()
+  local newPulls, newSelection, changed = MDT.SidebarModel.MovePulls(preset.value.pulls, indices, slot)
+  if not changed then return end
+  preset.value.pulls = newPulls
+  self:EnsureDBTables()
+  pullsChanged()
+  self:SetSelectionToPull(#newSelection == 1 and newSelection[1] or newSelection)
+end
+
+---Merges the listed pulls into `into` and selects the result
+---@param list integer[]
+---@param into integer
+function MDT:MergePulls(list, into)
+  local newIndex = self:PresetsMergePulls(list, into)
+  pullsChanged()
+  self:SetSelectionToPull(newIndex)
 end
 
 function MDT:GetSelection()

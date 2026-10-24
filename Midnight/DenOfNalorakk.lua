@@ -35,33 +35,178 @@ MDT.mapPOIs[dungeonIndex] = {
       ["sizeMult"] = 1.5,
     },
     [2] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 82.873761510963,
       ["y"] = -326.03647700266,
+      ["index"] = 1,
+      ["textAnchor"] = "RIGHT",
+      ["textAnchorTo"] = "LEFT",
       ["info"] = {
         ["texture"] = 135265,
         ["spellId"] = 1271545,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = -1,
+        ["textOffsetY"] = 0,
       },
     },
     [3] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 199.9,
       ["y"] = -431,
+      ["index"] = 2,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 135265,
         ["spellId"] = 1271545,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
     [4] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 497.97968554859,
       ["y"] = -231.42173301341,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 237528,
         ["spellId"] = 1271737,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
+      },
+    },
+    [5] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 205.51918350488,
+      ["y"] = -317.40444367503,
+      ["textAnchor"] = "TOP",
+      ["textAnchorTo"] = "BOTTOM",
+      ["info"] = {
+        ["name"] = "Barrel of Apples",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 0,
+        ["textOffsetY"] = 3,
+      },
+    },
+    [6] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 208.7,
+      ["y"] = -346.2,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
+      ["info"] = {
+        ["name"] = "Barrel of Apples",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = -3,
+        ["textOffsetY"] = 0,
+      },
+    },
+    [7] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 62.08549950098,
+      ["y"] = -357.21217207522,
+      ["textAnchor"] = "BOTTOM",
+      ["textAnchorTo"] = "TOP",
+      ["info"] = {
+        ["name"] = "Berry Bush",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 0,
+        ["textOffsetY"] = -3,
+      },
+    },
+    [8] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 202.39585722742,
+      ["y"] = -392.30655105323,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
+      ["info"] = {
+        ["name"] = "Salmon Pool",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = -3,
+        ["textOffsetY"] = 0,
+      },
+    },
+    [9] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 140.69223030081,
+      ["y"] = -412.23687474388,
+      ["textAnchor"] = "RIGHT",
+      ["textAnchorTo"] = "LEFT",
+      ["info"] = {
+        ["name"] = "Salmon Pool",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 3,
+        ["textOffsetY"] = 0,
+      },
+    },
+    [10] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 58.319794845419,
+      ["y"] = -456.51285361668,
+      ["textAnchor"] = "TOP",
+      ["textAnchorTo"] = "BOTTOM",
+      ["info"] = {
+        ["name"] = "Berry Bush",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 0,
+        ["textOffsetY"] = 3,
+      },
+    },
+    [11] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 163.79754306587,
+      ["y"] = -483.05885093204,
+      ["textAnchor"] = "RIGHT",
+      ["textAnchorTo"] = "LEFT",
+      ["info"] = {
+        ["name"] = "Barrel of Apples",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 3,
+        ["textOffsetY"] = 0,
+      },
+    },
+    [12] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 174.39492631256,
+      ["y"] = -492.37589533525,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
+      ["info"] = {
+        ["name"] = "Barrel of Apples",
+        ["description"] = "Acquire 6 Offerings",
+        ["atlas"] = "ChatBallon",
+        ["size"] = 20,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = -3,
+        ["textOffsetY"] = 0,
       },
     },
   },
@@ -78,15 +223,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238687] = {
       },
-      [1238725] = {
-      },
       [1238760] = {
-      },
-      [1249737] = {
       },
     },
     ["clones"] = {
@@ -115,8 +254,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 164.74115888348,
-        ["y"] = -492.2792838739,
+        ["x"] = 159.11072909292,
+        ["y"] = -495.6977677336,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -127,8 +266,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [7] = {
-        ["x"] = 196.40706283057,
-        ["y"] = -391.47134266265,
+        ["x"] = 190.3744537304,
+        ["y"] = -393.38166274102,
         ["g"] = 20,
         ["sublevel"] = 1,
       },
@@ -144,8 +283,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1241214] = {
         ["interruptible"] = true,
       },
@@ -156,14 +293,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 128.0548741521,
-        ["y"] = -475.25196837863,
+        ["x"] = 126.96576703474,
+        ["y"] = -471.2585340682,
         ["g"] = 22,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 130.19252531176,
-        ["y"] = -466.66085282454,
+        ["x"] = 129.1034181944,
+        ["y"] = -462.66741851411,
         ["g"] = 22,
         ["sublevel"] = 1,
       },
@@ -174,14 +311,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 205.46594984529,
-        ["y"] = -316.11405364603,
+        ["x"] = 214.61541695266,
+        ["y"] = -317.11948466063,
         ["g"] = 66,
         ["sublevel"] = 1,
       },
       [6] = {
-        ["x"] = 202.67853765858,
-        ["y"] = -343.99320670775,
+        ["x"] = 200.26549631977,
+        ["y"] = -342.28395902476,
         ["g"] = 7,
         ["sublevel"] = 1,
       },
@@ -192,8 +329,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [9] = {
-        ["x"] = 162.70754782784,
-        ["y"] = -480.94928274419,
+        ["x"] = 170.14776725222,
+        ["y"] = -477.02808913034,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -239,8 +376,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1241217] = {
       },
       [1297699] = {
@@ -251,14 +386,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 137.61816762569,
-        ["y"] = -478.57594197296,
+        ["x"] = 136.52906050833,
+        ["y"] = -474.58250766253,
         ["g"] = 22,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 139.02095089243,
-        ["y"] = -470.37807283228,
+        ["x"] = 137.93184377507,
+        ["y"] = -466.38463852185,
         ["g"] = 22,
         ["sublevel"] = 1,
       },
@@ -287,25 +422,25 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [7] = {
-        ["x"] = 200.35476921662,
-        ["y"] = -309.60888745216,
+        ["x"] = 202.26510080128,
+        ["y"] = -309.10616619172,
         ["g"] = 66,
         ["sublevel"] = 1,
       },
       [8] = {
-        ["x"] = 207.78920923209,
-        ["y"] = -309.60888745216,
+        ["x"] = 210.50387642339,
+        ["y"] = -308.70400414154,
         ["g"] = 66,
         ["sublevel"] = 1,
       },
       [9] = {
-        ["x"] = 211.50686346217,
-        ["y"] = -352.35687065627,
+        ["x"] = 208.39002846754,
+        ["y"] = -355.77535451597,
         ["g"] = 7,
         ["sublevel"] = 1,
       },
       [10] = {
-        ["x"] = 201.74916405991,
+        ["x"] = 199.63774857359,
         ["y"] = -352.8214826228,
         ["g"] = 7,
         ["sublevel"] = 1,
@@ -329,8 +464,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [16] = {
-        ["x"] = 171.71348029167,
-        ["y"] = -485.01648177336,
+        ["x"] = 178.55043650478,
+        ["y"] = -482.50289273057,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -388,8 +523,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238053] = {
         ["enrage"] = true,
       },
@@ -505,11 +638,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1309947] = {
-      },
-      [1309964] = {
       },
     },
     ["clones"] = {
@@ -531,13 +660,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1241226] = {
       },
       [1265400] = {
-      },
-      [1265402] = {
       },
     },
     ["clones"] = {
@@ -661,11 +786,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1296518] = {
-      },
-      [1296519] = {
       },
     },
     ["clones"] = {
@@ -747,8 +868,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1309919] = {
         ["interruptible"] = true,
       },
@@ -814,12 +933,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Elemental",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1239860] = {
         ["magic"] = true,
-      },
-      [1239871] = {
       },
       [1266178] = {
       },
@@ -885,13 +1000,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Undead",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1240280] = {
       },
       [1241463] = {
-      },
-      [1241464] = {
       },
     },
     ["clones"] = {
@@ -965,8 +1076,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1246687] = {
         ["interruptible"] = true,
       },
@@ -1017,8 +1126,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
-      [1221063] = {
-      },
       [1246957] = {
       },
       [1246986] = {
@@ -1057,8 +1164,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1246847] = {
         ["interruptible"] = true,
-      },
-      [1246860] = {
       },
       [1246865] = {
         ["enrage"] = true,
@@ -1117,8 +1222,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 64.211959104665,
-        ["y"] = -449.46878743667,
+        ["x"] = 65.674408353367,
+        ["y"] = -449.65159620782,
         ["g"] = 17,
         ["sublevel"] = 1,
       },
@@ -1323,8 +1428,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2777,
     ["instanceID"] = 1311,
     ["spells"] = {
-      [1221063] = {
-      },
       [1232012] = {
       },
       [1234021] = {
@@ -1333,16 +1436,10 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1234681] = {
       },
-      [1234734] = {
-      },
       [1234846] = {
         ["poison"] = true,
       },
       [1235072] = {
-      },
-      [1235075] = {
-      },
-      [1235076] = {
       },
       [1235079] = {
       },
@@ -1375,12 +1472,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238439] = {
         ["bleed"] = true,
-      },
-      [1238440] = {
       },
     },
     ["clones"] = {
@@ -1501,25 +1594,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["instanceID"] = 1311,
     ["spells"] = {
       [1235548] = {
-      },
-      [1235549] = {
         ["magic"] = true,
       },
       [1235623] = {
       },
-      [1235635] = {
-      },
       [1235656] = {
-      },
-      [1235658] = {
       },
       [1235783] = {
       },
-      [1235795] = {
-      },
       [1236289] = {
-      },
-      [1297749] = {
       },
     },
     ["clones"] = {
@@ -1540,8 +1623,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
-      [1235638] = {
-      },
       [1235641] = {
       },
     },
@@ -1593,10 +1674,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["spells"] = {
-      [1247366] = {
-      },
-      [1247367] = {
-      },
       [1251027] = {
       },
       [1264753] = {
@@ -1605,8 +1682,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["interruptible"] = true,
       },
       [1296722] = {
-      },
-      [1309924] = {
       },
       [1309925] = {
       },
@@ -1709,8 +1784,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1238801] = {
         ["curse"] = true,
       },
@@ -1741,8 +1814,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [5] = {
-        ["x"] = 203.51022159939,
-        ["y"] = -390.79535372356,
+        ["x"] = 197.47761249922,
+        ["y"] = -401.0507794135,
         ["g"] = 20,
         ["sublevel"] = 1,
       },
@@ -1753,8 +1826,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [7] = {
-        ["x"] = 169.12606748529,
-        ["y"] = -498.59433483946,
+        ["x"] = 168.5228157803,
+        ["y"] = -501.81172616778,
         ["g"] = 24,
         ["sublevel"] = 1,
       },
@@ -1773,31 +1846,15 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2777,
     ["instanceID"] = 1311,
     ["spells"] = {
-      [1221063] = {
-      },
       [1242860] = {
-      },
-      [1242869] = {
-      },
-      [1242887] = {
       },
       [1243002] = {
       },
-      [1243011] = {
-      },
-      [1243273] = {
-      },
       [1243408] = {
-      },
-      [1243569] = {
       },
       [1254622] = {
       },
-      [1261976] = {
-      },
       [1297792] = {
-      },
-      [1297793] = {
       },
       [1297796] = {
       },
@@ -1827,15 +1884,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1243078] = {
       },
-      [1243856] = {
-      },
       [1249186] = {
       },
       [1261776] = {
       },
       [1262253] = {
-      },
-      [1270826] = {
       },
     },
     ["clones"] = {
@@ -1862,11 +1915,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1242976] = {
       },
-      [1255570] = {
-      },
       [1255577] = {
-      },
-      [1262577] = {
       },
     },
     ["clones"] = {
@@ -1959,21 +2008,19 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1238439] = {
         ["bleed"] = true,
       },
-      [1238440] = {
-      },
       [1239394] = {
         ["interruptible"] = true,
       },
     },
     ["clones"] = {
       [1] = {
-        ["x"] = 64.3,
-        ["y"] = -363.3,
+        ["x"] = 66.493663412791,
+        ["y"] = -368.60140729227,
         ["sublevel"] = 1,
       },
       [2] = {
-        ["x"] = 51.1,
-        ["y"] = -452.1,
+        ["x"] = 48.098555921767,
+        ["y"] = -454.039072776,
         ["g"] = 75,
         ["sublevel"] = 1,
       },
@@ -1989,8 +2036,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
-      [1246821] = {
-      },
       [1246825] = {
       },
     },

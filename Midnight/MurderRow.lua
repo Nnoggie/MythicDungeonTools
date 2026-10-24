@@ -45,23 +45,35 @@ MDT.mapPOIs[dungeonIndex] = {
       },
     },
     [3] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 505.61695608532,
       ["y"] = -387.2334648551,
+      ["index"] = 4,
+      ["textAnchor"] = "RIGHT",
+      ["textAnchorTo"] = "LEFT",
       ["info"] = {
-        ["texture"] = 1003586,
-        ["spellId"] = 1270638,
+        ["name"] = "Snitch %d Interrogated",
+        ["texture"] = 2056011,
         ["size"] = 10,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = -1,
+        ["textOffsetY"] = 0,
       },
     },
     [4] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 643.15357254173,
       ["y"] = -516.87104180165,
+      ["index"] = 1,
+      ["textAnchor"] = "RIGHT",
+      ["textAnchorTo"] = "LEFT",
       ["info"] = {
-        ["texture"] = 1003586,
-        ["spellId"] = 1270638,
+        ["name"] = "Snitch %d Interrogated",
+        ["texture"] = 2056011,
         ["size"] = 10,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = -1,
+        ["textOffsetY"] = 0,
       },
     },
     [5] = {
@@ -75,13 +87,19 @@ MDT.mapPOIs[dungeonIndex] = {
       },
     },
     [6] = {
-      ["type"] = "genericItem",
-      ["x"] = 561.37503170287,
-      ["y"] = -442.99160283332,
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 562.52256441224,
+      ["y"] = -440.88114051791,
+      ["index"] = 3,
+      ["textAnchor"] = "RIGHT",
+      ["textAnchorTo"] = "LEFT",
       ["info"] = {
-        ["texture"] = 1003586,
-        ["spellId"] = 1270638,
+        ["name"] = "Snitch %d Interrogated",
+        ["texture"] = 2056011,
         ["size"] = 10,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = -1,
+        ["textOffsetY"] = 0,
       },
     },
     [7] = {
@@ -95,33 +113,48 @@ MDT.mapPOIs[dungeonIndex] = {
       },
     },
     [8] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 269.5167128871,
       ["y"] = -376.8470350715,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 4620673,
         ["spellId"] = 1223133,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
     [9] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 329.69351763166,
       ["y"] = -399.87010735725,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 4620673,
         ["spellId"] = 1223133,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
     [10] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 295.49705550539,
       ["y"] = -333.8557617639,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 4620673,
         ["spellId"] = 1223133,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
     [11] = {
@@ -132,6 +165,37 @@ MDT.mapPOIs[dungeonIndex] = {
         ["texture"] = 1120423,
         ["spellId"] = 1223607,
         ["size"] = 15,
+      },
+    },
+    [12] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 804.60706054425,
+      ["y"] = -366.85283228223,
+      ["index"] = 2,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
+      ["info"] = {
+        ["name"] = "Snitch %d Interrogated",
+        ["texture"] = 2056011,
+        ["size"] = 10,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
+      },
+    },
+    [13] = {
+      ["type"] = "genericAssignablePOI",
+      ["x"] = 768.83970887885,
+      ["y"] = -400.95661128507,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
+      ["info"] = {
+        ["texture"] = 1003586,
+        ["spellId"] = 1270638,
+        ["size"] = 10,
+        ["fontSize"] = 5,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
   },
@@ -152,8 +216,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1216538] = {
         ["magic"] = true,
-      },
-      [1221063] = {
       },
     },
     ["clones"] = {
@@ -280,8 +342,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216300] = {
         ["bleed"] = true,
       },
-      [1221063] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -368,12 +428,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 90,
     ["spells"] = {
-      [1216570] = {
-      },
       [1216571] = {
         ["interruptible"] = true,
-      },
-      [1221063] = {
       },
       [1229433] = {
         ["magic"] = true,
@@ -448,8 +504,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1216529] = {
       },
-      [1221063] = {
-      },
       [1295035] = {
       },
     },
@@ -479,8 +533,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 91,
     ["spells"] = {
       [1216529] = {
-      },
-      [1221063] = {
       },
       [1256276] = {
       },
@@ -583,11 +635,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1216284] = {
       },
       [1216589] = {
-      },
-      [1216590] = {
         ["poison"] = true,
-      },
-      [1221063] = {
       },
     },
     ["clones"] = {
@@ -736,6 +784,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["g"] = 42,
         ["sublevel"] = 1,
       },
+      [2] = {
+        ["x"] = 261.21287710279,
+        ["y"] = -352.12600323086,
+        ["g"] = 45,
+        ["sublevel"] = 1,
+      },
       [3] = {
         ["x"] = 308.29274321403,
         ["y"] = -443.0482430441,
@@ -785,14 +839,14 @@ MDT.dungeonEnemies[dungeonIndex] = {
         ["sublevel"] = 1,
       },
       [11] = {
-        ["x"] = 254.49227903615,
-        ["y"] = -356.22330101866,
+        ["x"] = 251.23059850424,
+        ["y"] = -356.64873337607,
         ["g"] = 45,
         ["sublevel"] = 1,
       },
       [12] = {
-        ["x"] = 260.174545459,
-        ["y"] = -353.61234242878,
+        ["x"] = 256.06198398306,
+        ["y"] = -354.60503415861,
         ["g"] = 45,
         ["sublevel"] = 1,
       },
@@ -1090,12 +1144,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 90,
     ["spells"] = {
-      [1217881] = {
-      },
       [1217930] = {
         ["magic"] = true,
-      },
-      [1221063] = {
       },
       [1293101] = {
       },
@@ -1206,13 +1256,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1214980] = {
         ["interruptible"] = true,
       },
-      [1221063] = {
-      },
       [1297693] = {
-      },
-      [1297695] = {
-      },
-      [1309970] = {
       },
     },
     ["clones"] = {
@@ -1297,10 +1341,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1214922] = {
         ["interruptible"] = true,
         ["enrage"] = true,
-      },
-      [1221063] = {
-      },
-      [1295426] = {
       },
       [1295427] = {
       },
@@ -1387,17 +1427,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1217973] = {
         ["curse"] = true,
       },
-      [1221063] = {
-      },
-      [1294789] = {
-      },
       [1297682] = {
       },
-      [1297683] = {
-      },
       [1297684] = {
-      },
-      [1297686] = {
       },
     },
     ["clones"] = {
@@ -1437,8 +1469,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1293022] = {
       },
     },
@@ -1577,8 +1607,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1294770] = {
       },
-      [1294774] = {
-      },
       [1297676] = {
       },
       [1297691] = {
@@ -1641,16 +1669,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1216954] = {
       },
-      [1216955] = {
-      },
       [1217930] = {
         ["magic"] = true,
       },
       [1217937] = {
       },
       [1302007] = {
-      },
-      [1302010] = {
       },
     },
     ["clones"] = {
@@ -1672,19 +1696,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Mechanical",
     ["level"] = 91,
     ["spells"] = {
-      [1215872] = {
-      },
       [1215961] = {
       },
-      [1215985] = {
-      },
-      [1218187] = {
-      },
-      [1221063] = {
-      },
       [1294824] = {
-      },
-      [1294827] = {
       },
       [1294836] = {
       },
@@ -1753,21 +1767,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [474197] = {
       },
-      [474231] = {
-      },
       [474234] = {
-      },
-      [1214637] = {
       },
       [1214641] = {
       },
-      [1214647] = {
-      },
-      [1214663] = {
-      },
       [1295453] = {
-      },
-      [1295455] = {
       },
     },
     ["clones"] = {
@@ -1794,15 +1798,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [474238] = {
       },
-      [474240] = {
-      },
       [1214959] = {
       },
-      [1217464] = {
-      },
       [1217989] = {
-      },
-      [1221063] = {
       },
       [1223906] = {
       },
@@ -1835,38 +1833,16 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [474478] = {
       },
-      [474483] = {
-      },
       [474515] = {
         ["poison"] = true,
       },
-      [474545] = {
-      },
-      [474740] = {
-        ["bleed"] = true,
-      },
-      [474763] = {
-      },
-      [734276] = {
-        ["interruptible"] = true,
-      },
-      [1214352] = {
-      },
-      [1214355] = {
-      },
       [1214357] = {
       },
-      [1217123] = {
-      },
       [1218347] = {
-      },
-      [1221063] = {
-      },
-      [1222598] = {
+        ["bleed"] = true,
+        ["interruptible"] = true,
       },
       [1222795] = {
-      },
-      [1223939] = {
         ["poison"] = true,
       },
     },
@@ -1894,18 +1870,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1217464] = {
       },
-      [1221063] = {
-      },
       [1228198] = {
         ["magic"] = true,
-      },
-      [1230289] = {
       },
       [1230304] = {
       },
       [1253811] = {
-      },
-      [1253813] = {
       },
     },
     ["clones"] = {
@@ -1935,22 +1905,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [474408] = {
       },
-      [474457] = {
-      },
       [474462] = {
       },
       [1214675] = {
       },
-      [1214730] = {
-      },
-      [1214740] = {
-      },
-      [1216945] = {
-        ["interruptible"] = true,
-      },
       [1217345] = {
-      },
-      [1217384] = {
       },
       [1217415] = {
       },
@@ -1959,6 +1918,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [1226469] = {
       },
       [1287627] = {
+        ["interruptible"] = true,
       },
     },
     ["clones"] = {
@@ -1980,8 +1940,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 92,
     ["spells"] = {
-      [1217881] = {
-      },
       [1293101] = {
       },
     },
@@ -2006,8 +1964,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1217099] = {
         ["interruptible"] = true,
-      },
-      [1219631] = {
       },
       [1222598] = {
       },
@@ -2195,8 +2151,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 90,
     ["spells"] = {
-      [1221063] = {
-      },
       [1223204] = {
         ["interruptible"] = true,
       },
@@ -2222,13 +2176,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Demon",
     ["level"] = 93,
     ["spells"] = {
-      [1221063] = {
-      },
       [1231256] = {
       },
       [1231262] = {
-      },
-      [1231353] = {
       },
     },
     ["clones"] = {
@@ -2337,9 +2287,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 92,
     ["spells"] = {
       [1264106] = {
-        ["interruptible"] = true,
-      },
-      [1264110] = {
         ["interruptible"] = true,
       },
     },

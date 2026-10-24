@@ -1,6 +1,3 @@
-## 6.2.20 (2026-09-25)
+## 6.3.20 (2026-10-23)
 
-- Backend changes
-- Added a Mutating Elixir map icon in Altar of Fangs.
-- Added Warding Incense and Rune of Anchoring map icons in Den of Nalorakk.
-- Added Proof of Endurance and Proof of Mastery map icons above the enemies that grant them in Voidscar Arena.
+- Enemies in Midnight Season 2 dungeons no longer show the same spell several times in their spell list.

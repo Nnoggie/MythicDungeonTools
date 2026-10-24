@@ -2,13 +2,11 @@ local _, addon = ...
 local MDT = addon
 
 local function testFunc()
-  local frame = MDT.main_frame
-  local deleteButton = frame.sidePanelDeleteButton.frame
-  local okayButton = frame.DeleteConfirmationFrame.OkayButton.frame
-  deleteButton:Click()
-  C_Timer.After(0.5, function()
-    okayButton:Click()
-  end)
+  local db = MDT:GetDB()
+  local presets, index = db.presets[db.currentDungeonIdx], db.currentPreset[db.currentDungeonIdx]
+  local before = #presets
+  MDT:DeletePreset(index)
+  assert(index == 1 or #presets == before - 1, "DeletePreset did not remove the route")
 end
 
 ---@type MDTTest

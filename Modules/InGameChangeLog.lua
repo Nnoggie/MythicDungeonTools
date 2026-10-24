@@ -2,28 +2,24 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
-    tag = "6.2.20",
-    date = "2026-09-25",
+    tag = "6.3.20",
+    date = "2026-10-23",
     notes = {
-      "Backend changes",
-      "Added a Mutating Elixir map icon in Altar of Fangs.",
-      "Added Warding Incense and Rune of Anchoring map icons in Den of Nalorakk.",
-      "Added Proof of Endurance and Proof of Mastery map icons above the enemies that grant them in Voidscar Arena.",
+      "Enemies in Midnight Season 2 dungeons no longer show the same spell several times in their spell list.",
     },
   },
   {
-    tag = "6.2.19",
-    date = "2026-09-22",
+    tag = "6.3.19",
+    date = "2026-10-23",
     notes = {
-      "Fixed overlapping enemy blips visuals",
-      "Corrected G34 Living Venom positions and added two missing Living Venoms in Altar of Fangs.",
+      "Removed Xal'atath's Gift from the enemy spell lists in Altar of Fangs, Den of Nalorakk and Murder Row.",
     },
   },
   {
-    tag = "6.2.18",
-    date = "2026-09-21",
+    tag = "6.3.18",
+    date = "2026-10-23",
     notes = {
-      "Corrected positions of G62 and a Devouring Brutalizer in Voidscar Arena.",
+      "\"Use forces count in Sidebar\" is now \"Use forces count in Sidebar and pull labels\", as it also switches the pull labels on the map between percent and count.",
     },
   },
 }

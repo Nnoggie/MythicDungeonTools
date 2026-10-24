@@ -4,7 +4,6 @@ local MDTcommsObject = MDT.commsObject
 local presetCommPrefix = MDT.presetCommPrefix
 
 -- Lua APIs
-local tremove = table.remove
 local pairs, type, unpack = pairs, type, unpack
 
 local uidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()"
@@ -36,34 +35,8 @@ local function diagnosticValue(value)
   return tostring(value)
 end
 
-local receiptHistory = {}
-local function reportImportError(link, text, sender, displayName)
-  local details = {
-    "Time: "..GetTime(),
-    "Link: "..diagnosticValue(link):gsub("|", "||"),
-    "Text: "..diagnosticValue(text):gsub("|", "||"),
-    "Sender: "..diagnosticValue(sender),
-    "Display name: "..diagnosticValue(displayName),
-    "Group size: "..GetNumGroupMembers(),
-    "In group: "..diagnosticValue(IsInGroup()),
-    "In raid: "..diagnosticValue(IsInRaid()),
-    "Lockdowns at click: "..MDT:GetLockdownState(),
-    "Cache keys (no route contents):",
-  }
-  for cachedSender, presets in pairs(MDT.transmissionCache) do
-    for cachedName, preset in pairs(presets) do
-      details[#details + 1] = diagnosticValue(cachedSender).." / "..diagnosticValue(cachedName).." / "..type(preset)
-    end
-  end
-  details[#details + 1] = "Recent completed preset receipts (oldest first; empty means none processed since UI load):"
-  for _, receipt in ipairs(receiptHistory) do
-    local fields = {}
-    for key, value in pairs(receipt) do fields[#fields + 1] = key.."="..diagnosticValue(value) end
-    table.sort(fields)
-    details[#details + 1] = table.concat(fields, "; ")
-  end
-  MDT:OnError("Missing or invalid cached route for "..diagnosticValue(sender).." / "..diagnosticValue(displayName),
-    table.concat(details, "\n").."\n"..debugstack(), "MDT failed to import preset from chat link", true)
+local function printIncompleteRouteMessage(sender)
+  print("|cFFFF0000MDT:|r "..L["routeIncomplete"]:format(sender))
 end
 
 local function showMapSectionIfNeeded()
@@ -97,7 +70,7 @@ function MDT:HandleChatLink(link, text)
     local sender = link:sub(17, string.len(link))
     local name, realm = string.match(sender, "(.*)+(.*)")
     if (not name) or (not realm) then
-      reportImportError(link, text, sender)
+      printIncompleteRouteMessage(sender)
       return
     end
     -- to get the displayName (name of the preset) we need to get everything between the starting and closing brackets
@@ -114,28 +87,13 @@ function MDT:HandleChatLink(link, text)
       local msg = L["WARNING_OLD_DUNGEON_IMPORT"]
       print("|cFFFF0000MDT:|r "..msg)
     else
-      reportImportError(link, text, sender, displayName)
+      printIncompleteRouteMessage(sender)
     end
     return
   end
 end
 
 function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
-  local receipt
-  if prefix == presetCommPrefix then
-    receipt = {
-      time = GetTime(),
-      sender = diagnosticValue(sender),
-      distribution = diagnosticValue(distribution),
-      bytes = #message,
-      status = "Resolving sender",
-      lockdowns = MDT:GetLockdownState(),
-      groupSize = GetNumGroupMembers(),
-    }
-    -- Keep metadata for only the latest 20 completed messages, never their route payloads.
-    if #receiptHistory == 20 then tremove(receiptHistory, 1) end
-    receiptHistory[#receiptHistory + 1] = receipt
-  end
   --[[
         Sender has no realm name attached when sender is from the same realm as the player
         UnitFullName("Nnoggie") returns no realm while UnitFullName("player") does
@@ -143,20 +101,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         We append our realm if there is no realm
     ]]
   local name, realm = UnitFullName(sender)
-  if receipt then
-    receipt.name = diagnosticValue(name)
-    receipt.realm = diagnosticValue(realm)
-  end
-  if not name then
-    if receipt then receipt.status = "Dropped: sender lookup returned nil" end
-    return
-  end
+  if not name then return end
   if not realm or string.len(realm) < 3 then
     local _, r = UnitFullName("player")
     realm = r
   end
   local fullName = name.."-"..realm
-  if receipt then receipt.cacheSender = fullName end
 
   if prefix == MDT.versionCheckPrefix then
     if MDT.VersionCheck_OnCommReceived then
@@ -169,49 +119,23 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   --we cache the preset here already
   --the user still decides if he wants to click the chat link and add the preset to his db
   if prefix == presetCommPrefix then
-    receipt.status = "Decoding route"
     local preset = MDT:StringToTable(message)
-    receipt.decodedType = type(preset)
-    if type(preset) == "string" then receipt.decodeError = preset end
-    if type(preset) == "table" then
-      receipt.textType = type(preset.text)
-      receipt.valueType = type(preset.value)
-      if type(preset.value) == "table" then
-        receipt.dungeonIndex = diagnosticValue(preset.value.currentDungeonIdx)
-        receipt.currentPull = diagnosticValue(preset.value.currentPull)
-        receipt.currentSublevel = diagnosticValue(preset.value.currentSublevel)
-        receipt.pullsType = type(preset.value.pulls)
-      end
-    end
-    receipt.status = "Validating route"
-    if not MDT:ValidateImportPreset(preset, true) then
-      receipt.status = "Dropped: route validation failed"
-      return
-    end
-    receipt.status = "Resolving dungeon"
-    receipt.dungeonIndex = preset.value.currentDungeonIdx
-    receipt.presetName = preset.text
-    receipt.uid = preset.uid
+    if not MDT:ValidateImportPreset(preset, true) then return end
     local presetName = preset.text
     local dungeon = MDT:GetDungeonName(preset.value.currentDungeonIdx, true)
     if not dungeon then
-      receipt.status = "Dropped: unknown dungeon"
       -- check if it's dungeon that has been in MDT before but is not in the current version
       local knownDungeon = MDT.knownDungeons[preset.value.currentDungeonIdx]
       if knownDungeon then
         local displayName = knownDungeon..": "..presetName
         MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
         MDT.transmissionCache[fullName][displayName] = 0 --special marker for old dungeon preset
-        receipt.status = "Cached old-dungeon marker"
-        receipt.displayName = displayName
       end
       return
     end
     local displayName = dungeon..": "..presetName
     MDT.transmissionCache[fullName] = MDT.transmissionCache[fullName] or {}
     MDT.transmissionCache[fullName][displayName] = preset
-    receipt.status = "Cached"
-    receipt.displayName = displayName
     --live session preset
     if MDT.liveSessionActive and MDT.liveSessionAcceptingPreset and preset.uid == MDT.livePresetUID then
       MDT:ImportPreset(preset, true)
@@ -243,9 +167,9 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
         preset.value.selection = { #preset.value.pulls }
       end
       if preset == MDT:GetCurrentPreset() then
-        MDT:ReloadPullButtons()
+        MDT:RefreshSidebar()
+        MDT:DrawAllHulls()
         MDT:SetSelectionToPull(MDT:GetCurrentPull())
-        MDT:UpdateProgressbar()
       end
     end
   end
@@ -257,10 +181,8 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local difficulty = tonumber(message)
       if difficulty and difficulty ~= db.currentDifficulty then
         db.currentDifficulty = difficulty
-        MDT.main_frame.sidePanel.DifficultySlider:SetValue(difficulty)
-        MDT:UpdateProgressbar()
-        if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
-        MDT:ReloadPullButtons()
+        MDT:RefreshSidebar()
+        MDT:UpdateEnemyInfoData()
       end
     end
   end
@@ -330,12 +252,12 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local preset = MDT:GetCurrentLivePreset()
       local obj = MDT:StringToTable(message)
       if type(obj) ~= "table" then return end
-      MDT:StorePresetObject(obj, true, preset)
+      local storedObj = MDT:StorePresetObject(obj, true, preset)
       if preset == MDT:GetCurrentPreset() then
         local scale = MDT:GetScale()
         local currentPreset = MDT:GetCurrentPreset()
         local currentSublevel = MDT:GetCurrentSubLevel()
-        MDT:DrawPresetObject(obj, nil, scale, currentPreset, currentSublevel)
+        MDT:DrawPresetObject(storedObj, nil, scale, currentPreset, currentSublevel)
       end
     end
   end
@@ -360,7 +282,10 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
       local changedObjects = MDT:StringToTable(message)
       if changedObjects and type(changedObjects) == "table" then
         for objIdx, obj in pairs(changedObjects) do
-          preset.objects[objIdx] = obj
+          --texts keep their table so a selected or edited text stays attached
+          if not MDT:ApplyPresetTextUpdate(preset.objects[objIdx], obj) then
+            preset.objects[objIdx] = obj
+          end
         end
         if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
       end
@@ -382,19 +307,21 @@ function MDTcommsObject:OnCommReceived(prefix, message, distribution, sender)
   if prefix == MDT.liveSessionPrefixes.note then
     if MDT.liveSessionActive then
       local preset = MDT:GetCurrentLivePreset()
-      local action, noteIdx, text, y = string.match(message, "(.*):(.*):(.*):(.*)")
+      --text may contain colons, the trailing y value never does
+      local action, noteIdx, text, y = string.match(message, "^(%a+):(%d+):(.*):([^:]*)$")
       noteIdx = tonumber(noteIdx)
-      if action == "text" then
-        preset.objects[noteIdx].d[5] = text
-      elseif action == "delete" then
-        tremove(preset.objects, noteIdx)
-      elseif action == "move" then
-        local x = tonumber(text)
-        y = tonumber(y)
-        preset.objects[noteIdx].d[1] = x
-        preset.objects[noteIdx].d[2] = y
+      local obj = noteIdx and preset.objects and preset.objects[noteIdx]
+      if obj then
+        if action == "text" then
+          obj.d[5] = text
+        elseif action == "delete" then
+          MDT:RemovePresetObject(preset, noteIdx)
+        elseif action == "move" then
+          obj.d[1] = tonumber(text)
+          obj.d[2] = tonumber(y)
+        end
+        if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
       end
-      if preset == MDT:GetCurrentPreset() then MDT:DrawAllPresetObjects() end
     end
   end
 
@@ -435,7 +362,7 @@ function MDT:MakeSendingStatusBar(f)
 
   statusbar.value = statusbar:CreateFontString(nil, "OVERLAY")
   statusbar.value:SetPoint("CENTER", statusbar, "CENTER", 0, 0)
-  statusbar.value:SetFontObject(GameFontNormalSmall)
+  statusbar.value:SetFontObject(MDT.UI.Fonts.Get("small"))
   statusbar.value:SetJustifyH("CENTER")
   statusbar.value:SetJustifyV("MIDDLE")
   statusbar.value:SetShadowOffset(1, -1)
@@ -500,17 +427,8 @@ local function updateSendingProgress(userArgs, bytesSent, bytesToSend, didSend, 
     local distribution = userArgs[1]
     local preset = userArgs[2]
     local silent = userArgs[3]
-    --restore "Send" and "Live" button
-    if MDT.liveSessionActive then
-      MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
-    else
-      MDT.main_frame.LiveSessionButton:SetText(L["Live"])
-      MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
-      MDT.main_frame.LinkToChatButton:SetDisabled(false)
-      MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
-    end
-    MDT.main_frame.LinkToChatButton:SetText(L["Share"])
-    MDT.main_frame.LiveSessionButton:SetDisabled(false)
+    MDT.transmissionBusy = nil
+    MDT:RefreshSidebar()
     MDT.main_frame.SendingStatusBar:Hide()
     --output chat link
     if didSend ~= false and not silent and preset then
@@ -598,6 +516,18 @@ function MDT:SetUniqueID(preset)
   end
 end
 
+---Shares the current preset with the group after the size check; the sidebar shows the transfer as busy
+function MDT:SendCurrentPresetToGroup()
+  if MDT:IsInRestrictedEnvironment(true) then return end
+  local distribution = MDT:IsPlayerInGroup()
+  if not distribution then return end
+  MDT:CheckPresetSize(function()
+    MDT.transmissionBusy = true
+    MDT:RefreshSidebar()
+    MDT:SendToGroup(distribution)
+  end)
+end
+
 ---SendToGroup
 ---Send current preset to group/raid
 function MDT:SendToGroup(distribution, silent, preset)
@@ -622,5 +552,9 @@ function MDT:SendToGroup(distribution, silent, preset)
     local export = MDT:TableToString(preset)
     MDTcommsObject:SendCommMessage("MDTPreset", export, distribution, nil, "BULK", displaySendingProgress,
       { distribution, preset, silent, context })
-  end, function(err) reportShareError(context, err) end)
+  end, function(err)
+    reportShareError(context, err)
+    MDT.transmissionBusy = nil
+    MDT:RefreshSidebar()
+  end)
 end

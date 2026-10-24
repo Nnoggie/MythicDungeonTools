@@ -6,9 +6,11 @@ local defaultSavedVars = {
     toolbarExpanded = true,
     scale = 1,
     nonFullscreenScale = 1.4,
+    uiScale = 1,
     useForcesCount = false, -- replaces percent in pull buttons with count
     showPullButtonHealth = false,
     autoPanToPull = true,
+    devPullLabelSize = 1, -- the pull labels' size on the map in dev mode, from the slider in its top right
     enemyForcesTooltip = 1,
     muteXalatathVoiceLines = false,
     announceDungeonReset = false,
@@ -33,6 +35,7 @@ local defaultSavedVars = {
     focusMarker = {
       announceReadyCheck = false,
       useMacro = false,
+      disableMouseoverFocus = false,
       disableTargetMarkerInRaid = false,
       preserveExistingTargetMarkers = true,
       suppressNotifications = false,
@@ -79,6 +82,41 @@ end
 
 local db
 
+local anchorPoints = {
+  TOPLEFT = true, TOP = true, TOPRIGHT = true, LEFT = true, CENTER = true, RIGHT = true,
+  BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
+}
+
+local minNonFullscreenScale = 0.9
+
+local function isFiniteNumber(value)
+  return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
+end
+
+---Puts back the default for any saved MDT scale or window geometry the window could not be shown with.
+local function validateWindowSettings()
+  local defaults = defaultSavedVars.global
+  if not (isFiniteNumber(db.uiScale) and db.uiScale > 0) then db.uiScale = defaults.uiScale end
+  if not isFiniteNumber(db.nonFullscreenScale) then
+    db.nonFullscreenScale = defaults.nonFullscreenScale
+  elseif db.nonFullscreenScale < minNonFullscreenScale then
+    db.nonFullscreenScale = minNonFullscreenScale
+  end
+  -- Offsets only mean something together with the anchors they were saved with.
+  if not (anchorPoints[db.anchorFrom] and anchorPoints[db.anchorTo]) then
+    db.anchorFrom, db.anchorTo = defaults.anchorFrom, defaults.anchorTo
+    db.xoffset, db.yoffset = defaults.xoffset, defaults.yoffset
+  end
+  for _, key in ipairs({ "xoffset", "yoffset" }) do
+    if not isFiniteNumber(db[key]) then db[key] = defaults[key] end
+  end
+end
+
+---The smallest scale the normal window can be resized to.
+function MDT:GetMinNonFullscreenScale()
+  return minNonFullscreenScale
+end
+
 function MDT:GetDefaultSavedVariables()
   return defaultSavedVars
 end
@@ -91,6 +129,7 @@ function MDT:InitializeSavedVariables()
   for dungeonIdx, presetIdx in pairs(db.currentPreset) do
     if presetIdx <= 0 then db.currentPreset[dungeonIdx] = 1 end
   end
+  validateWindowSettings()
 
   return db
 end

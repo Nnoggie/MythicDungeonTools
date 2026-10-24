@@ -35,23 +35,33 @@ MDT.mapPOIs[dungeonIndex] = {
       ["sizeMult"] = 1.5,
     },
     [2] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 130.08146835458,
       ["y"] = -320.26698138614,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 7383546,
         ["spellId"] = 1298903,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
     [3] = {
-      ["type"] = "genericItem",
+      ["type"] = "genericAssignablePOI",
       ["x"] = 268.8512308625,
       ["y"] = -321.02148651696,
+      ["textAnchor"] = "LEFT",
+      ["textAnchorTo"] = "RIGHT",
       ["info"] = {
         ["texture"] = 6994479,
         ["spellId"] = 1298902,
         ["size"] = 15,
+        ["fontSize"] = 6,
+        ["textOffsetX"] = 1,
+        ["textOffsetY"] = 0,
       },
     },
   },
@@ -69,8 +79,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1250640] = {
-      },
-      [1268707] = {
       },
     },
     ["clones"] = {
@@ -172,8 +180,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1249661] = {
         ["enrage"] = true,
-      },
-      [1267754] = {
       },
       [1267894] = {
       },
@@ -577,15 +583,7 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Humanoid",
     ["level"] = 91,
     ["spells"] = {
-      [1228126] = {
-      },
-      [1228127] = {
-      },
-      [1261645] = {
-      },
       [1298900] = {
-      },
-      [1298901] = {
       },
       [1310309] = {
       },
@@ -655,15 +653,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1298908] = {
       },
-      [1298922] = {
-      },
       [1298924] = {
       },
-      [1298933] = {
-      },
       [1299125] = {
-      },
-      [1299133] = {
       },
       [1299145] = {
       },
@@ -693,13 +685,9 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1299240] = {
       },
-      [1299244] = {
-      },
       [1299257] = {
       },
       [1299270] = {
-      },
-      [1299273] = {
       },
       [1311712] = {
       },
@@ -733,10 +721,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1249661] = {
         ["enrage"] = true,
-      },
-      [1250079] = {
-      },
-      [1250695] = {
       },
     },
     ["clones"] = {
@@ -812,8 +796,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1234890] = {
       },
-      [1234917] = {
-      },
       [1245186] = {
       },
       [1249661] = {
@@ -843,8 +825,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Dragonkin",
     ["level"] = 90,
     ["spells"] = {
-      [1249236] = {
-      },
       [1249238] = {
         ["magic"] = true,
       },
@@ -1133,14 +1113,8 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["spells"] = {
       [1233472] = {
       },
-      [1233485] = {
-      },
-      [1289258] = {
-        ["poison"] = true,
-      },
       [1289265] = {
-      },
-      [1311778] = {
+        ["poison"] = true,
       },
     },
     ["clones"] = {
@@ -1286,16 +1260,12 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Beast",
     ["level"] = 91,
     ["spells"] = {
-      [1239855] = {
-        ["magic"] = true,
-      },
       [1239856] = {
+        ["magic"] = true,
       },
       [1300116] = {
       },
       [1300138] = {
-      },
-      [1300156] = {
       },
     },
     ["clones"] = {
@@ -1341,10 +1311,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300243] = {
       },
-      [1300244] = {
-      },
-      [1300248] = {
-      },
       [1300249] = {
       },
       [1300250] = {
@@ -1385,8 +1351,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1269866] = {
-      },
-      [1269878] = {
       },
     },
     ["clones"] = {
@@ -1830,8 +1794,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1300259] = {
       },
-      [1300262] = {
-      },
     },
     ["clones"] = {
       [1] = {
@@ -1863,21 +1825,13 @@ MDT.dungeonEnemies[dungeonIndex] = {
       },
       [1222721] = {
       },
-      [1222724] = {
-      },
-      [1226031] = {
-        ["poison"] = true,
-      },
       [1226120] = {
-      },
-      [1247395] = {
+        ["poison"] = true,
       },
       [1262497] = {
       },
       [1263971] = {
         ["poison"] = true,
-      },
-      [1300351] = {
       },
     },
     ["clones"] = {
@@ -1902,17 +1856,11 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["encounterID"] = 2793,
     ["instanceID"] = 1313,
     ["spells"] = {
-      [1222755] = {
-      },
       [1227197] = {
       },
       [1227247] = {
       },
       [1248112] = {
-      },
-      [1248121] = {
-      },
-      [1300372] = {
       },
       [1310025] = {
       },
@@ -1939,8 +1887,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 91,
     ["spells"] = {
       [1222692] = {
-      },
-      [1222693] = {
       },
       [1282892] = {
       },
@@ -1970,8 +1916,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["creatureType"] = "Not specified",
     ["level"] = 90,
     ["spells"] = {
-      [1246821] = {
-      },
       [1246825] = {
       },
     },
@@ -1989,10 +1933,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 92,
     ["spells"] = {
       [1222100] = {
-      },
-      [1222103] = {
-      },
-      [1222105] = {
       },
       [1296963] = {
       },
@@ -2017,8 +1957,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
     ["level"] = 90,
     ["spells"] = {
       [1263984] = {
-      },
-      [1264188] = {
       },
     },
     ["clones"] = {

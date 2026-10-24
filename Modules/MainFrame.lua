@@ -3,45 +3,70 @@ local L = MDT.L
 local mainFrameStrata = "HIGH"
 local canvasDrawLayer = "BORDER"
 
-local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, GameTooltip =
+local tinsert, CreateFrame, tonumber, max, min, abs, pairs, ipairs, GetCursorPosition, MDTTooltip =
     table.insert, CreateFrame, tonumber, math.max, math.min, math.abs, pairs, ipairs, GetCursorPosition,
-    GameTooltip
+    MDTTooltip
 
 local sizex = 840
 local sizey = 555
 local defaultSavedVars = MDT:GetDefaultSavedVariables()
-local defaultNonFullscreenScale = defaultSavedVars.global.nonFullscreenScale
-local minNonFullscreenScale = 0.9
+local minNonFullscreenScale = MDT:GetMinNonFullscreenScale()
 local sidePanelWidth = 251
 local panelHeight = 30
-local screenEdgePadding = 10
 local framesInitialized
 local frameInitializedCallbacks = {}
 
-local AceGUI = LibStub("AceGUI-3.0")
 local db
 
-function MDT:RegisterMainFrameDragHandle(dragHandle, frame)
-  frame = frame or MDT.main_frame
-  if not dragHandle or not frame then return end
+---How far the window must move for all of it (sidebar, side panel and both bars) to lie inside the Root.
+---@return number dx, number dy
+local function onScreenShift(f)
+  local width, height = MDT.UI.Root:GetSize()
+  local dx = max(0, -f.navigationSidebar:GetLeft()) + min(0, width - f.sidePanel:GetRight())
+  local dy = max(0, -f.bottomPanel:GetBottom()) + min(0, height - f.topPanel:GetTop())
+  return dx, dy
+end
+
+---Anchors the window's saved point to the same named point of the Root, offset by x, y.
+local function anchorWindow(x, y)
+  local f = MDT.main_frame
+  f:ClearAllPoints()
+  f:SetPoint(db.anchorFrom, MDT.UI.Root, db.anchorTo, x, y)
+end
+
+---Saves where the user moved or resized the normal window to, after moving it fully on screen.
+local function saveWindowPlacement()
+  local f, Root = MDT.main_frame, MDT.UI.Root
+  local point, relativeTo, relativePoint, x, y = f:GetPoint()
+  -- The client may leave a moved or sized window anchored to another frame, or by two different points.
+  if point ~= relativePoint or (relativeTo ~= Root and relativeTo ~= UIParent) then
+    point, relativePoint = "TOPLEFT", "TOPLEFT"
+    x, y = f:GetLeft() - Root:GetLeft(), f:GetTop() - Root:GetTop()
+  end
+  local dx, dy = onScreenShift(f)
+  db.anchorFrom, db.anchorTo = point, relativePoint
+  db.xoffset, db.yoffset = x + dx, y + dy
+  anchorWindow(db.xoffset, db.yoffset)
+end
+
+local moving
+function MDT:RegisterMainFrameDragHandle(dragHandle)
+  if not dragHandle then return end
 
   dragHandle:EnableMouse(true)
   dragHandle:RegisterForDrag("LeftButton")
   dragHandle:SetScript("OnDragStart", function()
-    frame:SetMovable(true)
-    frame:StartMoving()
+    moving = not db.maximized
+    if not moving then return end
+    MDT.main_frame:SetMovable(true)
+    MDT.main_frame:StartMoving()
   end)
   dragHandle:SetScript("OnDragStop", function()
-    frame:StopMovingOrSizing()
-    frame:SetMovable(false)
-    if MDT:IsFrameOffScreen() then
-      MDT:ResetMainFramePos(true)
-    else
-      local from, _, to, x, y = frame:GetPoint()
-      db.anchorFrom = from
-      db.anchorTo = to
-      db.xoffset, db.yoffset = x, y
-    end
+    if not moving then return end
+    moving = false
+    MDT.main_frame:StopMovingOrSizing()
+    MDT.main_frame:SetMovable(false)
+    saveWindowPlacement()
   end)
 end
 
@@ -122,58 +147,22 @@ end
 
 function MDT:CreateMenu()
   -- Close button
-  self.main_frame.closeButton = CreateFrame("Button", "MDTCloseButton", self.main_frame, "UIPanelCloseButton")
-  self.main_frame.closeButton:ClearAllPoints()
-  self.main_frame.closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -1, -4)
-  self.main_frame.closeButton:SetScript("OnClick", function() self:HideInterface() end)
-  self.main_frame.closeButton:SetFrameLevel(4)
-  self.main_frame.closeButton:SetSize(24, 24)
+  local UI = MDT.UI
+  local closeButton = UI.CloseButton(self.main_frame, { onClick = function() self:HideInterface() end })
+  closeButton:SetPoint("TOPRIGHT", self.main_frame.sidePanel, "TOPRIGHT", -4, -4)
+  closeButton:SetFrameLevel(10)
+  self.main_frame.closeButton = closeButton
 
-  --Maximize Button
-  self.main_frame.maximizeButton = CreateFrame("Button", "MDTMaximizeButton", self.main_frame,
-    "MaximizeMinimizeButtonFrameTemplate")
-  self.main_frame.maximizeButton:ClearAllPoints()
-  ---@diagnostic disable-next-line: param-type-mismatch
-  self.main_frame.maximizeButton:SetPoint("RIGHT", self.main_frame.closeButton, "LEFT", 0, 0)
-  self.main_frame.maximizeButton:SetFrameLevel(4)
   db.maximized = db.maximized or false
-  if not db.maximized then self.main_frame.maximizeButton:Minimize() end
-  self.main_frame.maximizeButton:SetOnMaximizedCallback(self.Maximize)
-  self.main_frame.maximizeButton:SetOnMinimizedCallback(self.Minimize)
-  self.main_frame.maximizeButton:SetSize(24, 24)
-
-  --return to live preset
-  self.main_frame.liveReturnButton = CreateFrame("Button", "MDTLiveReturnButton", self.main_frame, "UIPanelCloseButton")
-  local liveReturnButton = self.main_frame.liveReturnButton
-  liveReturnButton:ClearAllPoints()
-  liveReturnButton:SetPoint("RIGHT", self.main_frame.topPanel, "RIGHT", 0, 0)
-  liveReturnButton:Hide()
-  liveReturnButton.Icon = liveReturnButton:CreateTexture(nil, "OVERLAY", nil, 0)
-  liveReturnButton.Icon:SetTexture("Interface\\Buttons\\UI-RefreshButton")
-  liveReturnButton.Icon:SetSize(16, 16)
-  liveReturnButton.Icon:SetTexCoord(1, 0, 0, 1) --flipped image
-  ---@diagnostic disable-next-line: param-type-mismatch
-  liveReturnButton.Icon:SetPoint("CENTER", liveReturnButton, "CENTER")
-  liveReturnButton:SetScript("OnClick", function() self:ReturnToLivePreset() end)
-  liveReturnButton:SetFrameLevel(4)
-  liveReturnButton.tooltip = L["Return to the live preset"]
-
-  --set preset as new live preset
-  self.main_frame.setLivePresetButton = CreateFrame("Button", "MDTSetLivePresetButton", self.main_frame,
-    "UIPanelCloseButton")
-  local setLivePresetButton = self.main_frame.setLivePresetButton
-  setLivePresetButton:ClearAllPoints()
-  ---@diagnostic disable-next-line: param-type-mismatch
-  setLivePresetButton:SetPoint("RIGHT", liveReturnButton, "LEFT", 0, 0)
-  setLivePresetButton:Hide()
-  setLivePresetButton.Icon = setLivePresetButton:CreateTexture(nil, "OVERLAY", nil, 0)
-  setLivePresetButton.Icon:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
-  setLivePresetButton.Icon:SetSize(16, 16)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  setLivePresetButton.Icon:SetPoint("CENTER", setLivePresetButton, "CENTER")
-  setLivePresetButton:SetScript("OnClick", function() self:SetLivePreset() end)
-  setLivePresetButton:SetFrameLevel(4)
-  setLivePresetButton.tooltip = L["Make this preset the live preset"]
+  local maximizeButton = UI.Button(self.main_frame, {
+    variant = "window", icon = MDT:GetIconPath(db.maximized and "minimize" or "maximize"), iconSize = 17, width = 24, height = 24,
+    onClick = function()
+      if MDT:GetDB().maximized then MDT:Minimize() else MDT:Maximize() end
+    end,
+  })
+  maximizeButton:SetPoint("RIGHT", closeButton, "LEFT", -3, 0)
+  maximizeButton:SetFrameLevel(10)
+  self.main_frame.maximizeButton = maximizeButton
 
   --Resize Handle
   self.main_frame.resizer = CreateFrame("BUTTON", nil, self.main_frame.sidePanel)
@@ -193,6 +182,8 @@ function MDT:CreateMenu()
   end)
   resizer:SetScript("OnMouseUp", function()
     self.main_frame:StopMovingOrSizing()
+    self:SetScale(self.main_frame:GetHeight() / sizey)
+    saveWindowPlacement()
     self:UpdateEnemyInfoFrame()
     self:UpdateMap()
     self:UpdateBottomText()
@@ -270,13 +261,16 @@ function MDT:SetScale(scale)
   db.nonFullscreenScale = scale
 end
 
-function MDT:GetFullScreenSizes()
-  local newSizey = GetScreenHeight() - (panelHeight * 2)
+---@param screenWidth number? the Root's width in its own units, default its current one
+---@param screenHeight number? the Root's height in its own units, default its current one
+function MDT:GetFullScreenSizes(screenWidth, screenHeight)
+  if not screenWidth then screenWidth, screenHeight = MDT.UI.Root:GetSize() end
+  local newSizey = screenHeight - (panelHeight * 2)
   local newSizex = newSizey * (sizex / sizey)
   local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
   local isNarrow
-  if newSizex + sidePanelWidth + navigationSidebarWidth > GetScreenWidth() then
-    newSizex = GetScreenWidth() - sidePanelWidth - navigationSidebarWidth
+  if newSizex + sidePanelWidth + navigationSidebarWidth > screenWidth then
+    newSizex = screenWidth - sidePanelWidth - navigationSidebarWidth
     newSizey = newSizex * (sizey / sizex)
     isNarrow = true
   end
@@ -284,65 +278,112 @@ function MDT:GetFullScreenSizes()
   return newSizex, newSizey, scale, isNarrow
 end
 
-function MDT:GetDefaultNonFullscreenScale(xoffset, yoffset)
-  xoffset = xoffset or defaultSavedVars.global.xoffset
-  yoffset = yoffset or defaultSavedVars.global.yoffset
+---The normal (not maximized) window's scale as shown: the saved one, shrunk to fit the Root. The saved scale stays as
+---the user left it, so the window grows back when the Root does.
+function MDT:GetNormalWindowScale()
+  local _, _, fullscreenScale = MDT:GetFullScreenSizes()
+  return min(db.nonFullscreenScale, fullscreenScale)
+end
 
-  local screenWidth = GetScreenWidth()
-  local screenHeight = GetScreenHeight()
-  if not screenWidth or not screenHeight or screenWidth <= 0 or screenHeight <= 0 then
-    return defaultNonFullscreenScale
+---Anchors the normal window at the saved position, moved just enough for all of it to lie inside the Root. The saved
+---position stays as the user left it.
+function MDT:PlaceNormalWindow()
+  anchorWindow(db.xoffset, db.yoffset)
+  local dx, dy = onScreenShift(MDT.main_frame)
+  anchorWindow(db.xoffset + dx, db.yoffset + dy)
+end
+
+---Where a named point (e.g. "TOPLEFT") lies on a box, as fractions of its width from the left and height from the bottom.
+local function pointFractions(point)
+  local x = point:find("LEFT") and 0 or point:find("RIGHT") and 1 or 0.5
+  local y = point:find("TOP") and 1 or point:find("BOTTOM") and 0 or 0.5
+  return x, y
+end
+
+---The normal window's visible top left corner (sidebar and top bar included) from the Root's top left, and its visible
+---height, in Root units. While maximized this is where the saved placement puts the normal window.
+---@return number left, number top, number height
+local function normalWindowCorner()
+  local f, Root = MDT.main_frame, MDT.UI.Root
+  if not MDT:IsShownMaximized() then
+    local top = f.topPanel:GetTop()
+    return f.navigationSidebar:GetLeft() - Root:GetLeft(), top - Root:GetTop(), top - f.bottomPanel:GetBottom()
   end
-
-  local navigationSidebarWidth = MDT:GetNavigationSidebarWidth()
-  local maxLeftScale = ((screenWidth / 2) + xoffset - navigationSidebarWidth - screenEdgePadding) * 2 / sizex
-  local maxRightScale = ((screenWidth / 2) - sidePanelWidth - xoffset - screenEdgePadding) * 2 / sizex
-  local maxHeightScale = (screenHeight + yoffset - panelHeight - screenEdgePadding) / sizey
-  local maxScale = min(maxLeftScale, maxRightScale, maxHeightScale)
-
-  return min(defaultNonFullscreenScale, max(minNonFullscreenScale, maxScale))
+  local rootWidth, rootHeight = Root:GetSize()
+  local scale = MDT:GetNormalWindowScale()
+  local width, height = sizex * scale, sizey * scale
+  local fromX, fromY = pointFractions(db.anchorFrom)
+  local toX, toY = pointFractions(db.anchorTo)
+  local left = toX * rootWidth + db.xoffset - fromX * width
+  local top = toY * rootHeight + db.yoffset + (1 - fromY) * height
+  return left - MDT:GetNavigationSidebarWidth(), top + panelHeight - rootHeight, height + 2 * panelHeight
 end
 
-function MDT:SkinProgressBar(progressBar)
-  local bar = progressBar and progressBar.Bar
-  if not bar then return end
-  if bar.Icon then bar.Icon:Hide() end
-  if bar.IconBG then bar.IconBG:Hide() end
+---Refits the window to the Root, whose size in its own units changes with the MDT scale and the screen's aspect ratio.
+local function fitToRoot()
+  local f = MDT.main_frame
+  local fullWidth, fullHeight, fullscreenScale = MDT:GetFullScreenSizes()
+  local minScale = min(minNonFullscreenScale, fullscreenScale)
+  f:SetResizeBounds(sizex * minScale, sizey * minScale, sizex * fullscreenScale, sizey * fullscreenScale)
+  -- /mdt reset clears db.maximized and leaves the layout to this refit.
+  local shownMaximized = MDT:IsShownMaximized()
+  if db.maximized then
+    if not shownMaximized or abs(f:GetWidth() - fullWidth) > 0.5 or abs(f:GetHeight() - fullHeight) > 0.5 then MDT:Maximize() end
+  elseif shownMaximized or abs(f:GetHeight() - sizey * MDT:GetNormalWindowScale()) > 0.5 then
+    MDT:Minimize()
+  else
+    MDT:PlaceNormalWindow()
+  end
 end
 
-function MDT:IsFrameOffScreen()
-  local topPanel = MDT.main_frame.topPanel
-  local bottomPanel = MDT.main_frame.bottomPanel
-  local width = GetScreenWidth()
-  local height = GetScreenHeight()
-  local left = MDT.main_frame.navigationSidebar and MDT.main_frame.navigationSidebar:GetLeft() or topPanel:GetLeft() -->width
-  local right = topPanel:GetRight()                                                                                  --<0
-  local bottom = topPanel:GetBottom()                                                                                --<0
-  local top = bottomPanel:GetTop()                                                                                   -->height
-  return left > width or right < 0 or bottom < 0 or top > height
+MDT.UI.OnRootResized(function()
+  if framesInitialized then fitToRoot() end
+end)
+
+---Sets the MDT scale (1 = 100%) and saves it. The normal window keeps its top left corner and its height on screen:
+---before rescaling, it is saved anchored by its top left at the map scale that fills the same height at the new scale,
+---at most one that fits the Root at the new scale.
+function MDT:SetUserScale(scale)
+  scale = MDT.UI.ClampUserScale(scale)
+  if not framesInitialized or scale == db.uiScale then
+    db.uiScale = MDT.UI.SetUserScale(scale)
+    return
+  end
+  local left, top, height = normalWindowCorner()
+  -- How many new Root units one old Root unit spans.
+  local ratio = db.uiScale / scale
+  local rootWidth, rootHeight = MDT.UI.Root:GetSize()
+  local _, _, fullscreenScale = MDT:GetFullScreenSizes(rootWidth * ratio, rootHeight * ratio)
+  local windowScale = max(minNonFullscreenScale, (height * ratio - 2 * panelHeight) / sizey)
+  db.nonFullscreenScale = min(windowScale, max(minNonFullscreenScale, fullscreenScale))
+  db.anchorFrom, db.anchorTo = "TOPLEFT", "TOPLEFT"
+  db.xoffset = left * ratio + MDT:GetNavigationSidebarWidth()
+  db.yoffset = top * ratio - panelHeight
+  db.uiScale = MDT.UI.SetUserScale(scale)
+  -- The client may report the Root's new size during the rescale, later or not at all, and may still return its old
+  -- size until the next frame: refit on the next frame either way.
+  C_Timer.After(0, fitToRoot)
 end
 
 local bottomTips = {
   [1] = L["Please report any bugs on https://github.com/Nnoggie/MythicDungeonTools/issues"],
   [2] = L["Hold CTRL to single-select enemies."],
   [3] = L["Hold SHIFT to create a new pull while selecting enemies."],
-  [4] = L["Hold SHIFT to delete all presets with the delete preset button."],
-  [5] = L["Right click a pull for more options."],
-  [6] = L["Right click an enemy to open the enemy info window."],
-  [7] = L["Drag the bottom right edge to resize MDT."],
-  [8] = L["Click the fullscreen button for a maximized view of MDT."],
-  [9] = L["Use /mdt reset to restore the default position and scale of MDT."],
-  [10] = L["Mouseover the Live button while in a group to learn more about Live mode."],
-  [11] = L["You are using MDT. You rock!"],
-  [12] = L["You can choose from different color palettes in the automatic pull coloring settings menu."],
-  [13] = L["You can cycle through different floors by holding CTRL and using the mousewheel."],
-  [14] = L["altKeyGroupsTip"],
-  [15] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
-  [16] = L["Expand the top toolbar to gain access to drawing and note features."],
-  [17] = L["ConnectedTip"],
-  [18] = L["EfficiencyScoreTip"],
-  [19] = L["ctrlKeyCountTip"],
-  [20] = L["enemyDragToPullTip"],
+  [4] = L["Right click a pull for more options."],
+  [5] = L["Right click an enemy to open the enemy info window."],
+  [6] = L["Drag the bottom right edge to resize MDT."],
+  [7] = L["Click the fullscreen button for a maximized view of MDT."],
+  [8] = L["Use /mdt reset to restore the default position and scale of MDT."],
+  [9] = L["You are using MDT. You rock!"],
+  [10] = L["You can choose from different color palettes in the automatic pull coloring settings menu."],
+  [11] = L["You can cycle through different floors by holding CTRL and using the mousewheel."],
+  [12] = L["altKeyGroupsTip"],
+  [13] = L["Mouseover a patrolling enemy with a blue border to view the patrol path."],
+  [14] = L["Expand the top toolbar to gain access to drawing and note features."],
+  [15] = L["ConnectedTip"],
+  [16] = L["EfficiencyScoreTip"],
+  [17] = L["ctrlKeyCountTip"],
+  [18] = L["enemyDragToPullTip"],
 }
 
 function MDT:UpdateBottomText()
@@ -363,7 +404,7 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelTex:SetDrawLayer(canvasDrawLayer, -5)
     frame.topPanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.topPanelString = frame.topPanel:CreateFontString("MDT name")
-    frame.topPanelString:SetFontObject(GameFontNormalMed3)
+    frame.topPanelString:SetFontObject(MDT.UI.Fonts.Get("display"))
     frame.topPanelString:SetTextColor(1, 1, 1, 1)
     frame.topPanelString:SetJustifyH("CENTER")
     frame.topPanelString:SetJustifyV("MIDDLE")
@@ -373,7 +414,6 @@ function MDT:MakeTopBottomTextures(frame)
     frame.topPanelString:ClearAllPoints()
     frame.topPanelString:SetPoint("CENTER", frame.topPanel, "CENTER", 10, 0)
     frame.topPanelString:Show()
-    frame.topPanelString:SetFont(frame.topPanelString:GetFont() or '', 20, '')
     frame.topPanelLogo = frame.topPanel:CreateTexture(nil, "ARTWORK", nil, 7)
     frame.topPanelLogo:SetTexture("Interface\\AddOns\\"..MDT.AddonName.."\\Textures\\MDTFull")
     frame.topPanelLogo:SetWidth(30)
@@ -387,7 +427,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.topPanel:SetPoint("BOTTOMLEFT", frame, "TOPLEFT")
   frame.topPanel:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT")
 
-  MDT:RegisterMainFrameDragHandle(frame.topPanel, frame)
+  MDT:RegisterMainFrameDragHandle(frame.topPanel)
 
   if frame.bottomPanel == nil then
     frame.bottomPanel = CreateFrame("Frame", "MDTBottomPanel", frame)
@@ -403,7 +443,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomPanel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT")
 
   frame.bottomPanelString = frame.bottomPanel:CreateFontString("MDTMid")
-  frame.bottomPanelString:SetFontObject(GameFontNormalSmall)
+  frame.bottomPanelString:SetFontObject(MDT.UI.Fonts.Get("body"))
   frame.bottomPanelString:SetJustifyH("CENTER")
   frame.bottomPanelString:SetJustifyV("MIDDLE")
   frame.bottomPanelString:SetPoint("CENTER", frame.bottomPanel, "CENTER", 0, 0)
@@ -411,7 +451,7 @@ function MDT:MakeTopBottomTextures(frame)
   frame.bottomPanelString:Show()
 
   frame.bottomLeftPanelString = frame.bottomPanel:CreateFontString("MDTVersion")
-  frame.bottomLeftPanelString:SetFontObject(GameFontNormalSmall)
+  frame.bottomLeftPanelString:SetFontObject(MDT.UI.Fonts.Get("body"))
   frame.bottomLeftPanelString:SetJustifyH("LEFT")
   frame.bottomLeftPanelString:SetJustifyV("MIDDLE")
   frame.bottomLeftPanelString:SetPoint("LEFT", frame.bottomPanel, "LEFT", 0, 0)
@@ -432,6 +472,7 @@ function MDT:MakeTopBottomTextures(frame)
     MDT:ToggleVersionCheckFrame()
     MDT:ToggleToolbarTooltip(false)
   end)
+  MDT:CreateHoverHighlight(clickArea, 3)
   clickArea.tooltipText = L["Open changelog / version check"]
   clickArea:SetScript("OnEnter", function()
     local widget = {
@@ -449,14 +490,14 @@ function MDT:MakeTopBottomTextures(frame)
   MDT:CreateExternalLinkButtons(frame)
 
   frame.statusString = frame.bottomPanel:CreateFontString("MDTStatusLabel")
-  frame.statusString:SetFontObject(GameFontNormalSmall)
+  frame.statusString:SetFontObject(MDT.UI.Fonts.Get("body"))
   frame.statusString:SetJustifyH("RIGHT")
   frame.statusString:SetJustifyV("MIDDLE")
   frame.statusString:SetPoint("RIGHT", frame.bottomPanel, "RIGHT", 0, 0)
   frame.statusString:SetTextColor(1, 1, 1, 1)
   frame.statusString:Hide()
 
-  MDT:RegisterMainFrameDragHandle(frame.bottomPanel, frame)
+  MDT:RegisterMainFrameDragHandle(frame.bottomPanel)
 end
 
 function MDT:MakeCopyHelper(frame)
@@ -473,14 +514,13 @@ function MDT:MakeCopyHelper(frame)
   MDT.copyHelper.tex:SetAllPoints()
   MDT.copyHelper.tex:SetColorTexture(unpack(MDT.BackdropColor))
   MDT.copyHelper.text = MDT.copyHelper:CreateFontString("MDT name")
-  MDT.copyHelper.text:SetFontObject(GameFontNormalMed3)
+  MDT.copyHelper.text:SetFontObject(MDT.UI.Fonts.Get("display"))
   MDT.copyHelper.text:SetJustifyH("CENTER")
   MDT.copyHelper.text:SetJustifyV("MIDDLE")
   MDT.copyHelper.text:SetText(L["errorLabel3"])
   MDT.copyHelper.text:ClearAllPoints()
   MDT.copyHelper.text:SetPoint("CENTER", MDT.copyHelper, "CENTER")
   MDT.copyHelper.text:Show()
-  MDT.copyHelper.text:SetFont(MDT.copyHelper.text:GetFont() or '', 20, '')
   MDT.copyHelper.text:SetTextColor(1, 1, 0)
   function MDT.copyHelper:SmartFadeOut(seconds)
     seconds = seconds or 0.3
@@ -490,7 +530,6 @@ function MDT:MakeCopyHelper(frame)
     UIFrameFadeOut(MDT.copyHelper, seconds, 1, 0)
     MDT.copyHelper.text:SetText(L["copiedToClipboard"])
     MDT.copyHelper.text:SetTextColor(1, 1, 1)
-    MDT.copyHelper:SetScript("OnUpdate", nil)
     C_Timer.After(seconds, function()
       MDT.copyHelper.text:SetText(L["errorLabel3"])
       MDT.copyHelper.text:SetTextColor(1, 1, 0)
@@ -506,22 +545,10 @@ function MDT:MakeCopyHelper(frame)
     MDT.copyHelper:SetFrameLevel(200)
     MDT.copyHelper:SetAlpha(1)
     MDT.copyHelper:Show()
-    MDT.copyHelper:SetScript("OnUpdate", function()
-      if IsControlKeyDown() then
-        MDT.lastCtrlDown = GetTime()
-      end
-    end)
   end
 
   function MDT.copyHelper:SmartHide()
     if not MDT.copyHelper.isFading then MDT.copyHelper:Hide() end
-  end
-
-  --ctrl+c works when ctrl was released up to 0.5s before the c key
-  function MDT.copyHelper:WasControlKeyDown()
-    if IsControlKeyDown() then return true end
-    if not MDT.lastCtrlDown then return false end
-    return (GetTime() - MDT.lastCtrlDown) < 0.5
   end
 end
 
@@ -534,439 +561,30 @@ function MDT:MakeSidePanel(frame)
     frame.sidePanelTex:SetColorTexture(unpack(MDT.BackdropColor))
     frame.sidePanelTex:Show()
   end
-  MDT:RegisterMainFrameDragHandle(frame.sidePanel, frame)
+  MDT:RegisterMainFrameDragHandle(frame.sidePanel)
 
   frame.sidePanel:ClearAllPoints()
   frame.sidePanel:SetWidth(sidePanelWidth)
   frame.sidePanel:SetPoint("TOPLEFT", frame, "TOPRIGHT", 0, 30)
   frame.sidePanel:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, -30)
 
-  frame.sidePanelString = frame.sidePanel:CreateFontString("MDTSidePanelText")
-  frame.sidePanelString:SetFont("Fonts\\FRIZQT__.TTF", 10, "")
-  frame.sidePanelString:SetTextColor(1, 1, 1, 1)
-  frame.sidePanelString:SetJustifyH("LEFT")
-  frame.sidePanelString:SetJustifyV("TOP")
-  frame.sidePanelString:SetWidth(200)
-  frame.sidePanelString:SetHeight(500)
-  frame.sidePanelString:SetText("")
-  frame.sidePanelString:ClearAllPoints()
-  frame.sidePanelString:SetPoint("TOPLEFT", frame.sidePanel, "TOPLEFT", 33, -120 - 30 - 25)
-  frame.sidePanelString:Hide()
-
-  frame.sidePanel.WidgetGroup = AceGUI:Create("SimpleGroup")
-  frame.sidePanel.WidgetGroup.frame:SetParent(frame.sidePanel)
-  frame.sidePanel.WidgetGroup:SetWidth(245)
-  frame.sidePanel.WidgetGroup:SetHeight(frame:GetHeight() + (frame.topPanel:GetHeight() * 2) - 31)
-  frame.sidePanel.WidgetGroup:SetPoint("TOP", frame.sidePanel, "TOP", 3, 5)
-  frame.sidePanel.WidgetGroup:SetLayout("Flow")
-
-  frame.sidePanel.WidgetGroup.frame:SetFrameStrata(mainFrameStrata)
-  MDT:RegisterMainFrameDragHandle(frame.sidePanel.WidgetGroup.frame, frame)
-  if not frame.sidePanel.WidgetGroup.frame.SetBackdrop then
-    Mixin(frame.sidePanel.WidgetGroup.frame, BackdropTemplateMixin)
-  end
-  frame.sidePanel.WidgetGroup.frame:SetBackdropColor(1, 1, 1, 0)
-  frame.sidePanel.WidgetGroup.frame:Hide()
-
-  --dirty hook to make widgetgroup show/hide
-  local originalShow, originalHide = frame.Show, frame.Hide
-  function frame:Show(...)
-    frame.sidePanel.WidgetGroup.frame:Show()
-    return originalShow(self, ...)
-  end
-
-  function frame:Hide(...)
-    frame.sidePanel.WidgetGroup.frame:Hide()
-    MDT.pullTooltip:Hide()
-    return originalHide(self, ...)
-  end
-
-  --preset selection
-  frame.sidePanel.WidgetGroup.PresetDropDown = AceGUI:Create("Dropdown")
-  frame.sidePanel.WidgetGroup.PresetDropDown.pullout.frame:SetParent(frame.sidePanel.WidgetGroup.PresetDropDown.frame)
-  local dropdown = frame.sidePanel.WidgetGroup.PresetDropDown
-  dropdown.frame:SetWidth(170)
-  dropdown.text:SetJustifyH("LEFT")
-  dropdown:SetCallback("OnValueChanged", function(widget, callbackName, key)
-    if db.presets[db.currentDungeonIdx][key].value == 0 then
-      MDT:OpenNewPresetDialog()
-      MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-      MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-    else
-      if key == 1 then
-        MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-        MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-      else
-        if not MDT.liveSessionActive then
-          MDT.main_frame.sidePanelDeleteButton:SetDisabled(false)
-          MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(1, 0.8196, 0)
-        else
-          MDT.main_frame.sidePanelDeleteButton:SetDisabled(true)
-          MDT.main_frame.sidePanelDeleteButton.text:SetTextColor(0.5, 0.5, 0.5)
-        end
-      end
-      db.currentPreset[db.currentDungeonIdx] = key
-      MDT:UpdateMap()
-    end
-  end)
-  MDT:UpdatePresetDropDown()
-  frame.sidePanel.WidgetGroup:AddChild(dropdown)
-
-  local function anchorTooltip(anchorFrame)
-    GameTooltip:SetOwner(anchorFrame, "ANCHOR_BOTTOMLEFT", -7, anchorFrame:GetHeight() + 3)
-  end
-
-  local function closeIfShown(dialog)
-    if dialog and dialog:IsShown() then
-      dialog:Hide()
-      if MDT.copyHelper then MDT.copyHelper:SmartHide() end
-      return true
-    end
-    return false
-  end
-
-  ---new profile,rename,export,delete
-  local buttonWidth = 75
-  frame.sidePanelNewButton = AceGUI:Create("Button")
-  frame.sidePanelNewButton:SetText(L["New"])
-  frame.sidePanelNewButton:SetWidth(buttonWidth)
-  --button fontInstance
-  local fontInstance = CreateFont("MDTButtonFont")
-  if not fontInstance then return end
-  fontInstance:CopyFontObject(frame.sidePanelNewButton.frame:GetNormalFontObject())
-  local fontName, height = fontInstance:GetFont()
-  fontInstance:SetFont(fontName, 10, "")
-  frame.sidePanelNewButton.frame:SetNormalFontObject(fontInstance)
-  frame.sidePanelNewButton.frame:SetHighlightFontObject(fontInstance)
-  frame.sidePanelNewButton.frame:SetDisabledFontObject(fontInstance)
-  frame.sidePanelNewButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if closeIfShown(MDT.main_frame.presetCreationFrame) then return end
-    MDT:OpenNewPresetDialog()
-  end)
-  frame.sidePanelNewButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.sidePanelNewButton.frame)
-    GameTooltip:AddLine(L["Create a new preset"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.sidePanelNewButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-
-  frame.sidePanelRenameButton = AceGUI:Create("Button")
-  frame.sidePanelRenameButton:SetWidth(buttonWidth)
-  frame.sidePanelRenameButton:SetText(L["Rename"])
-  frame.sidePanelRenameButton.frame:SetNormalFontObject(fontInstance)
-  frame.sidePanelRenameButton.frame:SetHighlightFontObject(fontInstance)
-  frame.sidePanelRenameButton.frame:SetDisabledFontObject(fontInstance)
-  frame.sidePanelRenameButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if closeIfShown(MDT.main_frame.RenameFrame) then return end
-    MDT:HideAllDialogs()
-    local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-    MDT.main_frame.RenameFrame:Show()
-    MDT.main_frame.RenameFrame.RenameButton:SetDisabled(true)
-    MDT.main_frame.RenameFrame.RenameButton.text:SetTextColor(0.5, 0.5, 0.5)
-    MDT.main_frame.RenameFrame:ClearAllPoints()
-    MDT.main_frame.RenameFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-    MDT.main_frame.RenameFrame.TakeOwnershipCheckbox:SetValue(false)
-    MDT.main_frame.RenameFrame.Editbox:SetText(currentPresetName)
-    MDT.main_frame.RenameFrame.Editbox:HighlightText(0, string.len(currentPresetName))
-    MDT.main_frame.RenameFrame.Editbox:SetFocus()
-  end)
-  frame.sidePanelRenameButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.sidePanelNewButton.frame)
-    GameTooltip:AddLine(L["Rename the preset"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.sidePanelRenameButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-
-  frame.sidePanelImportButton = AceGUI:Create("Button")
-  frame.sidePanelImportButton:SetText(L["Import"])
-  frame.sidePanelImportButton:SetWidth(buttonWidth)
-  frame.sidePanelImportButton.frame:SetNormalFontObject(fontInstance)
-  frame.sidePanelImportButton.frame:SetHighlightFontObject(fontInstance)
-  frame.sidePanelImportButton.frame:SetDisabledFontObject(fontInstance)
-  frame.sidePanelImportButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if InCombatLockdown() then
-      print('MDT: '..L["Cannot import while in combat"])
-      return
-    end
-    if closeIfShown(MDT.main_frame.presetImportFrame) then return end
-    MDT:OpenImportPresetDialog()
-  end)
-  frame.sidePanelImportButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.LinkToChatButton.frame)
-    GameTooltip:AddLine(L["Import a preset from a text string"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.sidePanelImportButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-
-  frame.sidePanelExportButton = AceGUI:Create("Button")
-  frame.sidePanelExportButton:SetText(L["Export"])
-  frame.sidePanelExportButton:SetWidth(buttonWidth)
-  frame.sidePanelExportButton.frame:SetNormalFontObject(fontInstance)
-  frame.sidePanelExportButton.frame:SetHighlightFontObject(fontInstance)
-  frame.sidePanelExportButton.frame:SetDisabledFontObject(fontInstance)
-  frame.sidePanelExportButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if InCombatLockdown() then
-      print('MDT: '..L["Cannot export while in combat"])
-      return
-    end
-    if closeIfShown(MDT.main_frame.ExportFrame) then return end
-    if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls(_, _, _, true) end
-    local preset = MDT:GetCurrentPreset()
-    MDT:SetUniqueID(preset)
-    MDT:EnsurePresetCreatedBy(preset)
-    preset.difficulty = db.currentDifficulty
-    preset.addonVersion = db.version
-    local export = MDT:TableToString(preset)
-    MDT:HideAllDialogs()
-    MDT.main_frame.ExportFrame:Show()
-    MDT.main_frame.ExportFrame:ClearAllPoints()
-    MDT.main_frame.ExportFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-    MDT.main_frame.ExportFrameEditbox:SetText(export)
-    MDT.main_frame.ExportFrameEditbox:HighlightText(0, string.len(export))
-    MDT.main_frame.ExportFrameEditbox:SetFocus()
-    MDT.main_frame.ExportFrameEditbox:SetLabel(preset.text.." "..string.len(export))
-    MDT.copyHelper:SmartShow(MDT.main_frame, 0, 50)
-    if db.colorPaletteInfo.forceColorBlindMode then MDT:ColorAllPulls() end
-  end)
-  frame.sidePanelExportButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.LinkToChatButton.frame)
-    GameTooltip:AddLine(L["Export the preset as a text string"], 1, 1, 1)
-    GameTooltip:AddLine(L["stringShareExternalWebsite"], 1, 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.sidePanelExportButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-
-  frame.sidePanelDeleteButton = AceGUI:Create("Button")
-  frame.sidePanelDeleteButton:SetText(L["Delete"])
-  frame.sidePanelDeleteButton:SetWidth(buttonWidth)
-  frame.sidePanelDeleteButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.sidePanelNewButton.frame)
-    GameTooltip:AddLine(L["Delete this preset"], 1, 1, 1)
-    GameTooltip:AddLine(L["Shift-Click to delete all presets for this dungeon"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.sidePanelDeleteButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-  frame.sidePanelDeleteButton.frame:SetNormalFontObject(fontInstance)
-  frame.sidePanelDeleteButton.frame:SetHighlightFontObject(fontInstance)
-  frame.sidePanelDeleteButton.frame:SetDisabledFontObject(fontInstance)
-  frame.sidePanelDeleteButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if not widget.frame:IsEnabled() then return end
-    if closeIfShown(frame.DeleteConfirmationFrame) then return end
-    if IsShiftKeyDown() then
-      --delete all profiles
-      local numPresets = self:CountPresets()
-      local prompt = string.format(L["deleteAllWarning"], "\n", "\n", numPresets, "\n")
-      MDT:OpenConfirmationFrame(450, 150, L["Delete ALL presets"], L["Delete"], prompt, MDT.DeleteAllPresets)
-    else
-      MDT:HideAllDialogs()
-      frame.DeleteConfirmationFrame:ClearAllPoints()
-      frame.DeleteConfirmationFrame:SetPoint("CENTER", MDT.main_frame, "CENTER", 0, 50)
-      local currentPresetName = db.presets[db.currentDungeonIdx][db.currentPreset[db.currentDungeonIdx]].text
-      frame.DeleteConfirmationFrame.label:SetText(string.format(L["Delete %s?"], currentPresetName))
-      frame.DeleteConfirmationFrame:Show()
-    end
-  end)
-
-  frame.LinkToChatButton = AceGUI:Create("Button")
-  frame.LinkToChatButton:SetText(L["Share"])
-  frame.LinkToChatButton:SetWidth(buttonWidth)
-  frame.LinkToChatButton.frame:SetNormalFontObject(fontInstance)
-  frame.LinkToChatButton.frame:SetHighlightFontObject(fontInstance)
-  frame.LinkToChatButton.frame:SetDisabledFontObject(fontInstance)
-  frame.LinkToChatButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if MDT:IsInRestrictedEnvironment(true) then return end
-    local distribution = MDT:IsPlayerInGroup()
-    if not distribution then return end
-    local callback = function()
-      frame.LinkToChatButton:SetDisabled(true)
-      frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
-      frame.LiveSessionButton:SetDisabled(true)
-      frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
-      frame.LinkToChatButton:SetText("...")
-      frame.LiveSessionButton:SetText("...")
-      MDT:SendToGroup(distribution)
-    end
-    MDT:CheckPresetSize(callback)
-  end)
-  frame.LinkToChatButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.LinkToChatButton.frame)
-    GameTooltip:AddLine(L["Share the preset with your party members"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.LinkToChatButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-  local inGroup = UnitInRaid("player") or IsInGroup()
-  MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
-  if inGroup then
-    MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
-  else
-    MDT.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
-  end
-
-  frame.LiveSessionButton = AceGUI:Create("Button")
-  frame.LiveSessionButton:SetText(L["Live"])
-  frame.LiveSessionButton:SetWidth(buttonWidth)
-  frame.LiveSessionButton.frame:SetNormalFontObject(fontInstance)
-  frame.LiveSessionButton.frame:SetHighlightFontObject(fontInstance)
-  frame.LiveSessionButton.frame:SetDisabledFontObject(fontInstance)
-  local c1, c2, c3 = frame.LiveSessionButton.text:GetTextColor()
-  frame.LiveSessionButton.normalTextColor = { r = c1, g = c2, b = c3, }
-  frame.LiveSessionButton:SetCallback("OnClick", function(widget, callbackName, value)
-    if MDT:IsInRestrictedEnvironment(true) then return end
-    if MDT.liveSessionActive then
-      MDT:LiveSession_Disable()
-    else
-      MDT:LiveSession_Enable()
-    end
-  end)
-  frame.LiveSessionButton.frame:SetScript("OnEnter", function()
-    anchorTooltip(frame.LinkToChatButton.frame)
-    GameTooltip:AddLine(L["Start or join the current |cFF00FF00Live Session|r"], 1, 1, 1)
-    GameTooltip:AddLine(L[
-    "Clicking this button will attempt to join the ongoing Live Session of your group or create a new one if none is found"
-    ], 1, 1, 1, 1)
-    GameTooltip:AddLine(L[
-    "The preset will continuously synchronize between all party members participating in the Live Session"], 1, 1, 1, 1)
-    GameTooltip:AddLine(L[
-    "Players can join the live session by either clicking this button or the Live Session chat link"], 1, 1, 1, 1)
-    GameTooltip:AddLine(L[
-    "To share a different preset while the live session is active simply navigate to the preferred preset and click the new 'Set to Live' Button next to the preset-dropdown"
-    ], 1, 1, 1, 1)
-    GameTooltip:AddLine(L[
-    "You can always return to the current Live Session preset by clicking the 'Return to Live' button next to the preset-dropdown"
-    ], 1, 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.LiveSessionButton.frame:SetScript("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-  MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
-  if inGroup then
-    MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
-  else
-    MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
-  end
-
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelNewButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelRenameButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelDeleteButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.LinkToChatButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelExportButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanelImportButton)
-  frame.sidePanel.WidgetGroup:AddChild(frame.LiveSessionButton)
-
-  --difficulty slider
-  frame.sidePanel.DifficultySlider = AceGUI:Create("Slider")
-  frame.sidePanel.DifficultySlider:SetSliderValues(1, 35, 1)
-  frame.sidePanel.DifficultySlider:SetLabel(L["Dungeon Level"])
-  frame.sidePanel.DifficultySlider.label:SetJustifyH("LEFT")
-  frame.sidePanel.DifficultySlider.label:SetFontObject("GameFontNormalSmall")
-  frame.sidePanel.DifficultySlider:SetWidth(200)
-  frame.sidePanel.DifficultySlider:SetValue(db.currentDifficulty)
-  local timer
-  frame.sidePanel.DifficultySlider:SetCallback("OnValueChanged", function(widget, callbackName, value)
-    local difficulty = tonumber(value)
-    if (difficulty >= 10 and db.currentDifficulty < 10) or (difficulty < 10 and db.currentDifficulty >= 10) then
-      db.currentDifficulty = difficulty or db.currentDifficulty
-      MDT:POI_UpdateAll()
-      MDT:ReloadPullButtons()
-    else
-      db.currentDifficulty = difficulty or db.currentDifficulty
-    end
-    MDT:GetCurrentPreset().difficulty = db.currentDifficulty
-    MDT:UpdateProgressbar()
-    if MDT.EnemyInfoFrame and MDT.EnemyInfoFrame.frame:IsShown() then MDT:UpdateEnemyInfoData() end
-    if timer then timer:Cancel() end
-    timer = C_Timer.NewTimer(2, function()
-      MDT:ReloadPullButtons()
-      if MDT.liveSessionActive then
-        local livePreset = MDT:GetCurrentLivePreset()
-        local shouldUpdate = livePreset == MDT:GetCurrentPreset()
-        if shouldUpdate then MDT:LiveSession_SendDifficulty() end
-      end
-    end)
-  end)
-  frame.sidePanel.DifficultySlider:SetCallback("OnMouseUp", function()
-    if timer then timer:Cancel() end
-    MDT:ReloadPullButtons()
-    if MDT.liveSessionActive then
-      local livePreset = MDT:GetCurrentLivePreset()
-      local shouldUpdate = livePreset == MDT:GetCurrentPreset()
-      if shouldUpdate then MDT:LiveSession_SendDifficulty() end
-    end
-  end)
-  frame.sidePanel.DifficultySlider:SetCallback("OnEnter", function()
-    GameTooltip:SetOwner(frame.sidePanel.DifficultySlider.frame, "ANCHOR_BOTTOMLEFT", 0, 40)
-    GameTooltip:AddLine(L["Select the dungeon level"], 1, 1, 1)
-    GameTooltip:AddLine(L["The selected level will affect displayed npc health"], 1, 1, 1)
-    GameTooltip:Show()
-  end)
-  frame.sidePanel.DifficultySlider:SetCallback("OnLeave", function()
-    GameTooltip:Hide()
-  end)
-  if MDT:IsRetail() then
-    frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.DifficultySlider)
-  end
-  frame.sidePanel.middleLine = AceGUI:Create("Heading")
-  frame.sidePanel.middleLine:SetWidth(240)
-  frame.sidePanel.WidgetGroup:AddChild(frame.sidePanel.middleLine)
-  frame.sidePanel.WidgetGroup.frame:SetFrameLevel(3)
-
-  frame.sidePanel.ProgressBar = CreateFrame("Frame", nil, frame.sidePanel, "ScenarioProgressBarTemplate")
-  frame.sidePanel.ProgressBar:Show()
-  frame.sidePanel.ProgressBar:ClearAllPoints()
-  frame.sidePanel.ProgressBar:SetPoint("TOP", frame.sidePanel.WidgetGroup.frame, "BOTTOM", -10, 5)
-  MDT:SkinProgressBar(frame.sidePanel.ProgressBar)
 end
 
-function MDT:FixAceGUIShowHide(widget, frame, isFrame, hideOnly)
-  frame = frame or MDT.main_frame
-  local originalShow, originalHide = frame.Show, frame.Hide
-  if not isFrame then
-    widget = widget.frame
-  end
-  function frame:Hide(...)
-    widget:Hide()
-    return originalHide(self, ...)
-  end
-
-  if hideOnly then return end
-  function frame:Show(...)
-    widget:Show()
-    return originalShow(self, ...)
-  end
-end
-
-function MDT:ResetMainFramePos(soft)
+---Leaves fullscreen and restores the default window position and size and MDT scale 100%.
+function MDT:ResetMainFramePos()
   MDT:Async(function()
-    --soft reset just redraws the window with existing coordinates from db
     if not framesInitialized then MDT:StartMainFrameInitialization() end
-    local f = self.main_frame
-    if not soft then
-      db.maximized = false
-      if not framesInitialized then MDT:StartMainFrameInitialization() end
-      if not framesInitialized then return end
-      db.xoffset = defaultSavedVars.global.xoffset
-      db.yoffset = defaultSavedVars.global.yoffset
-      db.anchorFrom = "TOP"
-      db.anchorTo = "TOP"
-      db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-      db.scale = db.nonFullscreenScale
-      f.maximizeButton:Minimize()
-    end
-    f:ClearAllPoints()
-    f:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
+    if not framesInitialized then return end
+    local defaults = defaultSavedVars.global
+    db.maximized = false
+    db.nonFullscreenScale = defaults.nonFullscreenScale
+    db.anchorFrom, db.anchorTo = defaults.anchorFrom, defaults.anchorTo
+    db.xoffset, db.yoffset = defaults.xoffset, defaults.yoffset
+    local rescaled
+    db.uiScale, rescaled = MDT.UI.SetUserScale(defaults.uiScale)
+    -- A rescaled Root changes size, and its refit lays the window out.
+    if not rescaled then MDT:Minimize() end
+    MDT:Settings_Refresh()
   end, 'resetMainFramePos')
 end
 
@@ -998,22 +616,25 @@ function MDT:InitializeMainFrame()
   initSpinner.Anim:Play()
   MDT.initSpinner = initSpinner
 
-  local main_frame = CreateFrame("frame", "MDTFrame", UIParent)
+  local main_frame = CreateFrame("frame", "MDTFrame", MDT.UI.Root)
   main_frame:SetToplevel(true)
   MDT:SetUpModifiers(main_frame)
   main_frame:Hide()
-  tinsert(UISpecialFrames, "MDTFrame")
+  local escapeEntry = { close = function() MDT:HideInterface() end }
+  main_frame:HookScript("OnShow", function() MDT.UI.Escape.Push(escapeEntry) end)
+  main_frame:HookScript("OnHide", function()
+    MDT.UI.Escape.Remove(escapeEntry)
+    MDT.UI.Overlay.PopAll("menu", "hidden")
+    MDT.UI.Overlay.PopAll("popover", "hidden")
+  end)
+  MDT.UI.Dialogs.SetDefaultParent(function() return MDT.main_frame end)
 
   if MDT.InitializeDevModeCache then MDT:InitializeDevModeCache() end
 
-  db.nonFullscreenScale = db.nonFullscreenScale or MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-  if db.nonFullscreenScale == defaultNonFullscreenScale and db.anchorFrom == "TOP" and db.anchorTo == "TOP" then
-    db.nonFullscreenScale = MDT:GetDefaultNonFullscreenScale(db.xoffset, db.yoffset)
-  end
-  if not db.maximized then db.scale = db.nonFullscreenScale end
+  db.scale = db.maximized and select(3, MDT:GetFullScreenSizes()) or MDT:GetNormalWindowScale()
   main_frame:SetFrameStrata(mainFrameStrata)
   main_frame:SetFrameLevel(1)
-  MDT:RegisterMainFrameDragHandle(main_frame, main_frame)
+  MDT:RegisterMainFrameDragHandle(main_frame)
   main_frame.background = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
   main_frame.background:SetAllPoints()
   main_frame.background:SetDrawLayer(canvasDrawLayer, 1)
@@ -1021,8 +642,6 @@ function MDT:InitializeMainFrame()
   main_frame.background:SetAlpha(0)
   main_frame:SetSize(sizex * db.scale, sizey * db.scale)
   main_frame:SetResizable(true)
-  local _, _, fullscreenScale = MDT:GetFullScreenSizes()
-  main_frame:SetResizeBounds(sizex * 0.9, sizey * 0.9, sizex * fullscreenScale, sizey * fullscreenScale)
   MDT.main_frame = main_frame
 
   main_frame.mainFrametex = main_frame:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -1034,8 +653,7 @@ function MDT:InitializeMainFrame()
   local version = C_AddOns.GetAddOnMetadata(MDT.AddonName, "Version"):gsub("%.", "")
   db.version = tonumber(version)
   -- Set frame position
-  main_frame:ClearAllPoints()
-  main_frame:SetPoint(db.anchorTo, UIParent, db.anchorFrom, db.xoffset, db.yoffset)
+  anchorWindow(db.xoffset, db.yoffset)
   main_frame.contextDropdown = CreateFrame("frame", "MDTContextDropDown", nil, "UIDropDownMenuTemplate")
   MDT:CheckCurrentZone(true)
   MDT:EnsureDBTables()
@@ -1051,23 +669,11 @@ function MDT:InitializeMainFrame()
   coroutine.yield()
   MDT:CreateMenu()
   coroutine.yield()
-  MDT:MakePresetCreationFrame(main_frame)
-  coroutine.yield()
-  MDT:MakePresetImportFrame(main_frame)
-  coroutine.yield()
   MDT:DungeonEnemies_CreateFramePools()
   MDT:CreateSeasonDropdown(main_frame)
   MDT:CreateSublevelDropdown(main_frame)
   coroutine.yield()
-  MDT:MakePullSelectionButtons(main_frame.sidePanel)
-  coroutine.yield()
-  MDT:MakeExportFrame(main_frame)
-  coroutine.yield()
-  MDT:MakeRenameFrame(main_frame)
-  coroutine.yield()
-  MDT:MakeDeleteConfirmationFrame(main_frame)
-  coroutine.yield()
-  MDT:MakeClearConfirmationFrame(main_frame)
+  MDT:MakeSidebar(main_frame.sidePanel)
   coroutine.yield()
   MDT:POI_CreateFramePools()
   MDT:MakeSendingStatusBar(main_frame)
@@ -1079,110 +685,11 @@ function MDT:InitializeMainFrame()
     MDT:CreateDevPanel(MDT.main_frame)
   end
 
-  --tooltip new
-  do
-    MDT.tooltip = CreateFrame("Frame", "MDTModelTooltip", UIParent, "TooltipBorderedFrameTemplate")
-    local tooltip = MDT.tooltip
-    tooltip:SetClampedToScreen(true)
-    tooltip:SetFrameStrata("TOOLTIP")
-    tooltip.mySizes = { x = 290, y = 120 }
-    tooltip:SetSize(tooltip.mySizes.x, tooltip.mySizes.y)
-    tooltip.Model = CreateFrame("PlayerModel", nil, tooltip)
-    tooltip.Model:SetFrameLevel(1)
-    tooltip.Model:SetSize(100, 100)
-    tooltip.Model.fac = 0
-    tooltip.Model:SetScript("OnUpdate", function(self, elapsed)
-      self.fac = self.fac + 0.5
-      if self.fac >= 360 then
-        self.fac = 0
-      end
-      self:SetFacing(PI * 2 / 360 * self.fac)
-    end)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    tooltip.Model:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 7, -7)
-    tooltip.String = tooltip:CreateFontString("MDTToolTipString")
-    tooltip.String:SetFontObject(GameFontNormalSmall)
-    tooltip.String:SetFont(tooltip.String:GetFont() or '', 10, '')
-    tooltip.String:SetTextColor(1, 1, 1, 1)
-    tooltip.String:SetJustifyH("LEFT")
-    --tooltip.String:SetJustifyV("MIDDLE")
-    tooltip.String:SetWidth(tooltip:GetWidth())
-    tooltip.String:SetHeight(90)
-    tooltip.String:SetWidth(175)
-    tooltip.String:SetText(" ")
-    ---@diagnostic disable-next-line: param-type-mismatch
-    tooltip.String:SetPoint("TOPLEFT", tooltip, "TOPLEFT", 110, -10)
-    tooltip.String:Show()
-  end
-
-  --pullTooltip
-  do
-    MDT.pullTooltip = CreateFrame("Frame", "MDTPullTooltip", UIParent, "TooltipBorderedFrameTemplate")
-    --MDT.pullTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-    MDT.pullTooltip:SetClampedToScreen(true)
-    MDT.pullTooltip:SetFrameStrata("TOOLTIP")
-    MDT.pullTooltip.myHeight = 180
-    MDT.pullTooltip:SetSize(250, MDT.pullTooltip.myHeight)
-    MDT.pullTooltip.Model = CreateFrame("PlayerModel", nil, MDT.pullTooltip)
-    MDT.pullTooltip.Model:SetFrameLevel(1)
-    MDT.pullTooltip.Model.fac = 0
-    if true then
-      MDT.pullTooltip.Model:SetScript("OnUpdate", function(self, elapsed)
-        self.fac = self.fac + 0.5
-        if self.fac >= 360 then
-          self.fac = 0
-        end
-        self:SetFacing(PI * 2 / 360 * self.fac)
-      end)
-    else
-      MDT.pullTooltip.Model:SetPortraitZoom(1)
-      MDT.pullTooltip.Model:SetFacing(PI * 2 / 360 * 2)
-    end
-
-    MDT.pullTooltip.Model:SetSize(110, 110)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    MDT.pullTooltip.Model:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 7, -7)
-
-    MDT.pullTooltip.topString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
-    MDT.pullTooltip.topString:SetFontObject(GameFontNormalSmall)
-    MDT.pullTooltip.topString:SetFont(MDT.pullTooltip.topString:GetFont() or '', 10, '')
-    MDT.pullTooltip.topString:SetTextColor(1, 1, 1, 1)
-    MDT.pullTooltip.topString:SetJustifyH("LEFT")
-    MDT.pullTooltip.topString:SetJustifyV("TOP")
-    MDT.pullTooltip.topString:SetHeight(110)
-    MDT.pullTooltip.topString:SetWidth(130)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    MDT.pullTooltip.topString:SetPoint("TOPLEFT", MDT.pullTooltip, "TOPLEFT", 110, -7)
-    MDT.pullTooltip.topString:Hide()
-
-    local heading = MDT.pullTooltip:CreateTexture(nil, "OVERLAY", nil, 0)
-    heading:SetHeight(8)
-    heading:SetPoint("LEFT", 12, -30)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    heading:SetPoint("RIGHT", MDT.pullTooltip, "RIGHT", -12, -30)
-    heading:SetTexture("Interface\\Tooltips\\UI-Tooltip-Border")
-    heading:SetTexCoord(0.81, 0.94, 0.5, 1)
-    heading:Show()
-
-    MDT.pullTooltip.botString = MDT.pullTooltip:CreateFontString("MDTToolTipString")
-    local botString = MDT.pullTooltip.botString
-    botString:SetFontObject(GameFontNormalSmall)
-    botString:SetFont(MDT.pullTooltip.topString:GetFont() or '', 10, '')
-    botString:SetTextColor(1, 1, 1, 1)
-    botString:SetJustifyH("CENTER")
-    botString:SetJustifyV("TOP")
-    botString:SetHeight(40)
-    botString:SetWidth(250)
-    botString:SetPoint("TOPLEFT", heading, "LEFT", -12, -7)
-    botString:Hide()
-  end
-
   coroutine.yield()
   MDT:initToolbar(main_frame)
   coroutine.yield()
   if db.toolbarExpanded then
     main_frame.toolbar.toggleButton:Click()
-    main_frame.toolbar.widgetGroup.frame:Hide()
   end
   MDT:UpdateSectionVisibility()
 
@@ -1203,13 +710,10 @@ function MDT:InitializeMainFrame()
   MDT:UpdateSectionVisibility()
   coroutine.yield()
 
-  if MDT:IsFrameOffScreen() then
-    MDT:ResetMainFramePos()
-  end
-
   framesInitialized = true
   --Maximize if needed
   if db.maximized then MDT:Maximize() end
+  fitToRoot()
   initSpinner:Hide()
   initSpinner.Anim:Stop()
   local callbacks = frameInitializedCallbacks

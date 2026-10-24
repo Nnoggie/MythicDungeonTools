@@ -34,7 +34,7 @@ function MDT:HandleSlashCommand(cmd, editbox)
       MDT:HardReset()
     else
       MDT:Async(function()
-        MDT:OpenConfirmationFrame(450, 150, L["hardResetPromptTitle"], L["Delete"], L["hardResetPrompt"], MDT.HardReset)
+        MDT.UI.Dialogs.Confirm({ width = 450, parent = not (MDT.main_frame and MDT.main_frame:IsShown()) and MDT.UI.Root or nil, title = L["hardResetPromptTitle"], text = L["hardResetPrompt"], confirm = { text = L["Delete"], variant = "danger", onClick = function() MDT:HardReset() end } })
       end, "hardReset")
     end
   elseif rqst == "minimap" then
@@ -45,7 +45,7 @@ function MDT:HandleSlashCommand(cmd, editbox)
     end
   elseif rqst == "test" then
     if MDT.test and MDT.test.RunAllTests then
-      MDT:OpenConfirmationFrame(450, 150, "MDT Test", "Run", "Run all tests?", MDT.test.RunAllTests)
+      MDT.UI.Dialogs.Confirm({ width = 450, parent = not (MDT.main_frame and MDT.main_frame:IsShown()) and MDT.UI.Root or nil, title = "MDT Test", text = "Run all tests?", confirm = { text = "Run", onClick = function() MDT.test.RunAllTests() end } })
     end
   else
     MDT:Async(function() MDT:ShowInterfaceInternal() end, "showInterface")
@@ -73,22 +73,7 @@ function MDT.GROUP_ROSTER_UPDATE()
   local now = GetTime()
   if last < now - 1 then
     if not MDT.main_frame then return end
-    local inGroup = UnitInRaid("player") or IsInGroup()
-    MDT.main_frame.LinkToChatButton:SetDisabled(not inGroup)
-    MDT.main_frame.LiveSessionButton:SetDisabled(not inGroup)
-    if inGroup then
-      MDT.main_frame.LinkToChatButton.text:SetTextColor(1, 0.8196, 0)
-      if MDT.liveSessionActive then
-        MDT.main_frame.LiveSessionButton:SetText(L["*Live*"])
-        MDT.main_frame.LiveSessionButton.text:SetTextColor(0, 1, 0)
-      else
-        MDT.main_frame.LiveSessionButton:SetText(L["Live"])
-        MDT.main_frame.LiveSessionButton.text:SetTextColor(1, 0.8196, 0)
-      end
-    else
-      MDT.main_frame.LinkToChatButton.text:SetTextColor(0.5, 0.5, 0.5)
-      MDT.main_frame.LiveSessionButton.text:SetTextColor(0.5, 0.5, 0.5)
-    end
+    MDT:RefreshSidebar()
     last = now
   end
 end
