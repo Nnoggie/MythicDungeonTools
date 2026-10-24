@@ -18,6 +18,13 @@ local frameInitializedCallbacks = {}
 
 local db
 
+---Whether none of the window (sidebar, side panel and both bars) lies inside the Root.
+local function isOffScreen(f)
+  local width, height = MDT.UI.Root:GetSize()
+  return f.navigationSidebar:GetLeft() >= width or f.sidePanel:GetRight() <= 0
+      or f.bottomPanel:GetBottom() >= height or f.topPanel:GetTop() <= 0
+end
+
 ---How far the window must move for all of it (sidebar, side panel and both bars) to lie inside the Root.
 ---@return number dx, number dy
 local function onScreenShift(f)
@@ -34,9 +41,16 @@ local function anchorWindow(x, y)
   f:SetPoint(db.anchorFrom, MDT.UI.Root, db.anchorTo, x, y)
 end
 
----Saves where the user moved or resized the normal window to, after moving it fully on screen.
-local function saveWindowPlacement()
+---Saves where the user moved or resized the normal window to. A window dropped partly off screen stays there, as users
+---do on purpose to hide part of it, such as the pull list; one with none of it left on screen goes back to where it
+---was. A resized window moves fully on screen unless the user parked it partly off screen.
+---@param dropped boolean? the user dragged the window there
+local function saveWindowPlacement(dropped)
   local f, Root = MDT.main_frame, MDT.UI.Root
+  if isOffScreen(f) then
+    MDT:PlaceNormalWindow()
+    return
+  end
   local point, relativeTo, relativePoint, x, y = f:GetPoint()
   -- The client may leave a moved or sized window anchored to another frame, or by two different points.
   if point ~= relativePoint or (relativeTo ~= Root and relativeTo ~= UIParent) then
@@ -44,6 +58,8 @@ local function saveWindowPlacement()
     x, y = f:GetLeft() - Root:GetLeft(), f:GetTop() - Root:GetTop()
   end
   local dx, dy = onScreenShift(f)
+  if dropped then db.windowPartlyOffScreen = abs(dx) > 0.01 or abs(dy) > 0.01 end
+  if db.windowPartlyOffScreen then dx, dy = 0, 0 end
   db.anchorFrom, db.anchorTo = point, relativePoint
   db.xoffset, db.yoffset = x + dx, y + dy
   anchorWindow(db.xoffset, db.yoffset)
@@ -66,7 +82,7 @@ function MDT:RegisterMainFrameDragHandle(dragHandle)
     moving = false
     MDT.main_frame:StopMovingOrSizing()
     MDT.main_frame:SetMovable(false)
-    saveWindowPlacement()
+    saveWindowPlacement(true)
   end)
 end
 
@@ -285,10 +301,11 @@ function MDT:GetNormalWindowScale()
   return min(db.nonFullscreenScale, fullscreenScale)
 end
 
----Anchors the normal window at the saved position, moved just enough for all of it to lie inside the Root. The saved
----position stays as the user left it.
+---Anchors the normal window at the saved position, moved just enough for all of it to lie inside the Root. A window
+---the user parked partly off screen only moves once none of it shows. The saved position stays as the user left it.
 function MDT:PlaceNormalWindow()
   anchorWindow(db.xoffset, db.yoffset)
+  if db.windowPartlyOffScreen and not isOffScreen(MDT.main_frame) then return end
   local dx, dy = onScreenShift(MDT.main_frame)
   anchorWindow(db.xoffset + dx, db.yoffset + dy)
 end
@@ -580,6 +597,7 @@ function MDT:ResetMainFramePos()
     db.nonFullscreenScale = defaults.nonFullscreenScale
     db.anchorFrom, db.anchorTo = defaults.anchorFrom, defaults.anchorTo
     db.xoffset, db.yoffset = defaults.xoffset, defaults.yoffset
+    db.windowPartlyOffScreen = defaults.windowPartlyOffScreen
     local rescaled
     db.uiScale, rescaled = MDT.UI.SetUserScale(defaults.uiScale)
     -- A rescaled Root changes size, and its refit lays the window out.

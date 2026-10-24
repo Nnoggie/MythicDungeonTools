@@ -19,6 +19,7 @@ local defaultSavedVars = {
     yoffset = -100,
     anchorFrom = "TOP",
     anchorTo = "TOP",
+    windowPartlyOffScreen = false, -- the user dropped the window partly off screen, so refits leave it there
     minimap = {
       hide = false,
       compartmentHide = false,
