@@ -260,14 +260,6 @@ function MDT:OpenDeletePresetDialog()
   })
 end
 
-function MDT:OpenDeleteAllPresetsDialog()
-  UI.Dialogs.Confirm({
-    key = "deleteAllPresets", width = 450, title = L["Delete ALL presets"],
-    text = string.format(L["deleteAllWarning"], "\n", "\n", self:CountPresets(), "\n"),
-    confirm = { text = L["Delete"], variant = "danger", onClick = function() MDT:DeleteAllPresets() end },
-  })
-end
-
 function MDT:OpenClearPresetDialog()
   initializeDB()
   MDT:HideAllDialogs()

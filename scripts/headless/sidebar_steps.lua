@@ -566,6 +566,17 @@ return function(ctx)
     local _, item = rowByText(routeMenu(db.presets[db.currentDungeonIdx][1].text), "Delete this route")
     expect(item and item.disabled, "the default route can be deleted from its menu")
     UI.Menu.Close()
+    local route = preset()
+    click((rowByText(routeMenu(route.text), "Delete multiple routes")))
+    local list = openDialog("deleteRoutes").content:Find("routes").content
+    local pickedName
+    for _, group in ipairs(MDT:GetDeletableRouteGroups()) do
+      for position, candidate in ipairs(group.routes) do
+        if list:Find("pick"..group.dungeonIdx.."_"..position):GetValue() then pickedName = candidate.text end
+      end
+    end
+    expect(pickedName == route.text, "the list did not start with the route whose menu opened it: "..tostring(pickedName))
+    MDT:HideAllDialogs()
   end)
 
   step("sidebar: Mark as my route makes someone else's route yours and leaves the menu", function()
@@ -603,6 +614,8 @@ return function(ctx)
     menu = routeMenu(preset().text)
     expect(rowByText(menu, "Stop live session") and rowByText(menu, "Make this route the live route") == nil and rowByText(menu, "Start live session") == nil,
       "live menu on the live route is wrong: "..menuLabels(menu))
+    local _, deleteMultiple = rowByText(menu, "Delete multiple routes")
+    expect(deleteMultiple and deleteMultiple.disabled, "Delete multiple routes is enabled during a live session")
     UI.Menu.Close()
     MDT.livePresetUID = "somewhere-else"
     MDT:RefreshSidebar()

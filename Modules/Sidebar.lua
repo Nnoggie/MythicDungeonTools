@@ -175,7 +175,6 @@ local routeActions = {
   setLive = function() MDT:SetLivePreset() end,
   returnToLive = function() MDT:ReturnToLivePreset() end,
   delete = function() MDT:OpenDeletePresetDialog() end,
-  deleteAll = function() MDT:OpenDeleteAllPresetsDialog() end,
 }
 
 local pullActions = {
@@ -354,7 +353,6 @@ end
 ---@param presetIdx integer
 function MDT:RunRouteAction(action, presetIdx)
   if presetIdx ~= db.currentPreset[db.currentDungeonIdx] then MDT:SwitchToPreset(presetIdx) end
-  if action == "delete" and IsShiftKeyDown() then action = "deleteAll" end
   routeActions[action]()
 end
 
@@ -419,7 +417,7 @@ local function routeMenuItems(idx)
     a.liveActive and { text = L["Stop live session"], textColor = "live", onSelect = routeActions.toggleLive } or false,
     { kind = "separator" },
     { text = L["Delete this preset"], textColor = "warn", disabled = idx == 1 or a.liveActive, onSelect = run("delete") },
-    { text = L["Delete ALL presets"], textColor = "warn", disabled = not a.canDeleteAll, onSelect = routeActions.deleteAll },
+    { text = L["Delete multiple routes"], textColor = "warn", disabled = a.liveActive, onSelect = function() MDT:OpenDeleteRoutesDialog(preset) end },
   }
 end
 

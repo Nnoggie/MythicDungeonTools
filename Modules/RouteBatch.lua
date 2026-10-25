@@ -92,18 +92,19 @@ local function currentSeasonDungeons()
   return set
 end
 
----The player's routes with content, grouped by dungeon, newest season first.
+---The player's routes that pass `include`, grouped by dungeon, newest season first.
 ---@param currentSeason boolean? only dungeons of the season selected in MDT
+---@param include fun(preset: table, index: integer): boolean
 ---@return MDT.RouteGroup[]
-function MDT:GetShareableRouteGroups(currentSeason)
+local function routeGroups(currentSeason, include)
   initializeDB()
   local groups = {}
   local season = currentSeason and currentSeasonDungeons()
   for _, dungeonIdx in ipairs(dungeonOrder()) do
     local routes = {}
     if not season or season[dungeonIdx] then
-      for _, preset in ipairs(db.presets[dungeonIdx] or {}) do
-        if hasContent(preset) then routes[#routes + 1] = preset end
+      for index, preset in ipairs(db.presets[dungeonIdx] or {}) do
+        if include(preset, index) then routes[#routes + 1] = preset end
       end
     end
     if #routes > 0 then
@@ -111,6 +112,21 @@ function MDT:GetShareableRouteGroups(currentSeason)
     end
   end
   return groups
+end
+
+---The player's routes with content, grouped by dungeon, newest season first.
+---@param currentSeason boolean? only dungeons of the season selected in MDT
+---@return MDT.RouteGroup[]
+function MDT:GetShareableRouteGroups(currentSeason)
+  return routeGroups(currentSeason, hasContent)
+end
+
+---Every route of the season selected in MDT except the default route and <New Preset>, grouped by dungeon.
+---@return MDT.RouteGroup[]
+function MDT:GetDeletableRouteGroups()
+  return routeGroups(true, function(preset, index)
+    return index > 1 and type(preset) == "table" and preset.value ~= 0
+  end)
 end
 
 ---A copy of the route as an export carries it. The route itself gets a uid and an author first, so importing the
@@ -336,24 +352,14 @@ function MDT:OpenRouteBatchImportDialog(routes, onDone)
   })
 end
 
----Builds the Multiple Routes tab of the export dialog: routes grouped by dungeon, and a button that creates one string
----for all picked routes.
+---A search box and a scrolling list of routes grouped by dungeon, with a checkbox for each route and each dungeon.
 ---@param content MDT.UI.Control
----@param dialog table the export dialog
-function MDT:BuildMultipleRoutesExport(content, dialog)
-  local groups = MDT:GetShareableRouteGroups(true)
-  -- Without a pick in this season, the current route starts picked.
-  local available, anyPicked = {}, false
-  for _, group in ipairs(groups) do
-    for _, preset in ipairs(group.routes) do
-      available[preset] = true
-      anyPicked = anyPicked or batchSelection[preset] == true
-    end
-  end
-  if not anyPicked and available[MDT:GetCurrentPreset()] then batchSelection[MDT:GetCurrentPreset()] = true end
-
+---@param groups MDT.RouteGroup[]
+---@param picked table<table, true?> the picked presets; the list reads and writes it
+---@param onPick fun() runs after the player picks or clears routes
+---@return fun(): table[] selected the picked presets in list order
+local function buildRoutePicker(content, groups, picked, onPick)
   local routeBoxes, groupBoxes, routeLines, shown = {}, {}, {}, {}
-  local countText, createButton, output
   local query = ""
 
   ---Whether the route's name, dungeon or creator contains the search text.
@@ -370,35 +376,29 @@ function MDT:BuildMultipleRoutesExport(content, dialog)
     local presets = {}
     for _, group in ipairs(groups) do
       for _, preset in ipairs(group.routes) do
-        if batchSelection[preset] then presets[#presets + 1] = preset end
+        if picked[preset] then presets[#presets + 1] = preset end
       end
     end
     return presets
   end
   local function refresh()
-    for preset, box in pairs(routeBoxes) do box:SetValue(batchSelection[preset] == true) end
+    for preset, box in pairs(routeBoxes) do box:SetValue(picked[preset] == true) end
     for group, box in pairs(groupBoxes) do
-      local picked, visible, visiblePicked = 0, 0, 0
+      local count, visible, visiblePicked = 0, 0, 0
       for _, preset in ipairs(group.routes) do
-        if batchSelection[preset] then picked = picked + 1 end
+        if picked[preset] then count = count + 1 end
         if shown[preset] then
           visible = visible + 1
-          if batchSelection[preset] then visiblePicked = visiblePicked + 1 end
+          if picked[preset] then visiblePicked = visiblePicked + 1 end
         end
       end
       box:SetValue(visible > 0 and visiblePicked == visible)
-      box:SetLabel(string.format("%s (%d/%d)", dungeonTitle(group.dungeonIdx, group.name), picked, #group.routes))
+      box:SetLabel(string.format("%s (%d/%d)", dungeonTitle(group.dungeonIdx, group.name), count, #group.routes))
     end
-    local count = #selected()
-    countText:SetText(string.format(L["Selected: %d"], count))
-    createButton:SetDisabled(count == 0)
   end
-  -- A string made before the picks changed would leave routes out or carry extra ones.
   local function picksChanged()
     refresh()
-    output:SetValue("")
-    output:SetLabel(L["Export string"])
-    MDT.copyHelper:SmartHide()
+    onPick()
   end
   local function applySearch()
     for _, group in ipairs(groups) do
@@ -413,10 +413,6 @@ function MDT:BuildMultipleRoutesExport(content, dialog)
     refresh()
   end
 
-  if #groups == 0 then
-    UI.Text(content, { id = "noRoutes", text = L["routeBatchNoRoutes"], color = "text.secondary" })
-    return
-  end
   UI.EditBox(content, { id = "routeSearch", placeholder = L["Search routes"], onChange = function(text)
     query = strtrim(text or ""):lower()
     applySearch()
@@ -428,7 +424,7 @@ function MDT:BuildMultipleRoutesExport(content, dialog)
       -- Picks or clears the routes of this dungeon that the search shows.
       onChange = function(value)
         for _, preset in ipairs(group.routes) do
-          if shown[preset] then batchSelection[preset] = value or nil end
+          if shown[preset] then picked[preset] = value or nil end
         end
         picksChanged()
       end,
@@ -440,12 +436,49 @@ function MDT:BuildMultipleRoutesExport(content, dialog)
       routeBoxes[preset] = UI.Checkbox(line, {
         id = "pick"..group.dungeonIdx.."_"..position, label = MDT:GetPresetDropdownText(preset), userText = true, width = 1, grow = 1,
         onChange = function(value)
-          batchSelection[preset] = value or nil
+          picked[preset] = value or nil
           picksChanged()
         end,
       })
     end
   end
+  applySearch()
+  return selected
+end
+
+---Builds the Multiple Routes tab of the export dialog: routes grouped by dungeon, and a button that creates one string
+---for all picked routes.
+---@param content MDT.UI.Control
+---@param dialog table the export dialog
+function MDT:BuildMultipleRoutesExport(content, dialog)
+  local groups = MDT:GetShareableRouteGroups(true)
+  if #groups == 0 then
+    UI.Text(content, { id = "noRoutes", text = L["routeBatchNoRoutes"], color = "text.secondary" })
+    return
+  end
+  -- Without a pick in this season, the current route starts picked.
+  local available, anyPicked = {}, false
+  for _, group in ipairs(groups) do
+    for _, preset in ipairs(group.routes) do
+      available[preset] = true
+      anyPicked = anyPicked or batchSelection[preset] == true
+    end
+  end
+  if not anyPicked and available[MDT:GetCurrentPreset()] then batchSelection[MDT:GetCurrentPreset()] = true end
+
+  local countText, createButton, output, selected
+  local function updateCount()
+    local count = #selected()
+    countText:SetText(string.format(L["Selected: %d"], count))
+    createButton:SetDisabled(count == 0)
+  end
+  selected = buildRoutePicker(content, groups, batchSelection, function()
+    updateCount()
+    -- A string made before the picks changed would leave routes out or carry extra ones.
+    output:SetValue("")
+    output:SetLabel(L["Export string"])
+    MDT.copyHelper:SmartHide()
+  end)
   local actions = UI.Row(content, { gap = "sm" })
   countText = UI.Text(actions, { id = "count", text = "", color = "text.secondary", wrap = false, grow = 1 })
   createButton = UI.Button(actions, {
@@ -476,7 +509,47 @@ function MDT:BuildMultipleRoutesExport(content, dialog)
     end,
     onEscape = function() dialog:Close("escape") end,
   })
-  applySearch()
+  updateCount()
+end
+
+---Lists the routes of the season selected in MDT to pick several and delete them at once.
+---@param preset table? starts picked: the route whose menu opened the list
+function MDT:OpenDeleteRoutesDialog(preset)
+  initializeDB()
+  MDT:HideAllDialogs()
+  local groups = MDT:GetDeletableRouteGroups()
+  local picked = {}
+  for _, group in ipairs(groups) do
+    for _, candidate in ipairs(group.routes) do
+      if candidate == preset then picked[candidate] = true end
+    end
+  end
+  return UI.Dialogs.Open({
+    key = "deleteRoutes", title = L["Delete multiple routes"], width = 480,
+    build = function(content, dialog)
+      if #groups == 0 then
+        UI.Text(content, { id = "noRoutes", text = L["routeBatchNoDeletableRoutes"], color = "text.secondary" })
+        return
+      end
+      local deleteButton, selected
+      local function updateCount()
+        local count = #selected()
+        deleteButton:SetText(string.format(L["Delete (%d)"], count))
+        deleteButton:SetDisabled(count == 0)
+      end
+      selected = buildRoutePicker(content, groups, picked, updateCount)
+      UI.Text(content, { id = "warning", text = L["routeBatchDeleteWarning"], color = "warn" })
+      local footer = UI.Row(content, { gap = "sm", align = "end" })
+      deleteButton = UI.Button(footer, { id = "confirm", text = "", variant = "danger", onClick = function()
+        local doomed = {}
+        for _, route in ipairs(selected()) do doomed[route] = true end
+        dialog:Close("confirm")
+        MDT:DeletePresets(doomed)
+      end })
+      UI.Button(footer, { id = "cancel", text = L["Cancel"], onClick = function() dialog:Close("cancel") end })
+      updateCount()
+    end,
+  })
 end
 
 -- Route sharing for other addons, reached through MythicDungeonToolsAPI. Routes are identified by uid.

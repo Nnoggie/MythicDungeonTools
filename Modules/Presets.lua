@@ -259,19 +259,32 @@ function MDT:DeletePreset(index)
   MDT:UpdateMap()
 end
 
----Counts the number of presets of the current dungeon
-function MDT:CountPresets()
+---Deletes routes of any dungeon. The default route, <New Preset> and the live route stay. A dungeon whose current
+---route is deleted shows the nearest route above it, like deleting one route does.
+---@param doomed table<table, true> the presets to delete
+function MDT:DeletePresets(doomed)
   initializeDB()
-  return #db.presets[db.currentDungeonIdx] - 2
-end
-
----Deletes all presets from the current dungeon
-function MDT:DeleteAllPresets()
-  initializeDB()
-  local countPresets = #db.presets[db.currentDungeonIdx] - 1
-  for i = countPresets, 2, -1 do
-    tremove(db.presets[db.currentDungeonIdx], i)
-    db.currentPreset[db.currentDungeonIdx] = i - 1
+  for dungeonIdx, presets in pairs(db.presets) do
+    local function deletes(index)
+      local preset = presets[index]
+      return index > 1 and doomed[preset] and preset.value ~= 0
+        and not (MDT.liveSessionActive and preset.uid and preset.uid == MDT.livePresetUID)
+    end
+    local shown = db.currentPreset[dungeonIdx] or 1
+    while deletes(shown) do shown = shown - 1 end
+    local shownPreset = presets[shown]
+    local deleted = false
+    for index = #presets, 2, -1 do
+      if deletes(index) then
+        tremove(presets, index)
+        deleted = true
+      end
+    end
+    if deleted then
+      for index, preset in ipairs(presets) do
+        if preset == shownPreset then db.currentPreset[dungeonIdx] = index end
+      end
+    end
   end
   MDT:UpdateMap()
 end

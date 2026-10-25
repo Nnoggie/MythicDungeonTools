@@ -339,6 +339,43 @@ return function(ctx)
     if not db.alwaysOverwriteRoutesByUID then added[#added + 1] = { dungeonIdx = startDungeon, uid = MDT:GetCurrentPreset().uid } end
   end)
 
+  step("route batch: delete multiple routes removes the picked routes of several dungeons", function()
+    local function deletePickId(preset)
+      for _, group in ipairs(MDT:GetDeletableRouteGroups()) do
+        for position, candidate in ipairs(group.routes) do
+          if candidate == preset then return "pick"..group.dungeonIdx.."_"..position end
+        end
+      end
+    end
+    local doomedA, kept = addRoute(startDungeon, "Doomed A"), addRoute(startDungeon, "Kept")
+    local doomedB, doomedEmpty = addRoute(otherDungeon, "Doomed B"), addRoute(otherDungeon, "Doomed Empty")
+    doomedEmpty.value.pulls = { {} }
+    db.currentPreset[startDungeon] = indexOf(startDungeon, doomedA)
+    local above = db.presets[startDungeon][indexOf(startDungeon, doomedA) - 1]
+    expect(deletePickId(doomedEmpty), "an empty route is not listed")
+    expect(deletePickId(db.presets[startDungeon][1]) == nil, "the default route is listed")
+
+    MDT:OpenDeleteRoutesDialog(doomedA)
+    local content = openDialog("deleteRoutes").content
+    expect(find(content, deletePickId(doomedA)):GetValue(), "the route whose menu opened the list is not picked")
+    click(find(content, deletePickId(doomedB)))
+    click(find(content, deletePickId(doomedEmpty)))
+    expect(content:Find("confirm"):GetText() == "Delete (3)", "the delete button shows "..content:Find("confirm"):GetText())
+    snapshot("delete multiple routes", openDialog("deleteRoutes"))
+    click(content:Find("confirm"))
+    W.settle(asyncIdle, 30)
+    expect(UI.Dialogs.Get("deleteRoutes") == nil, "the dialog stayed open")
+    expect(not indexOf(startDungeon, doomedA) and not indexOf(otherDungeon, doomedB) and not indexOf(otherDungeon, doomedEmpty),
+      "a picked route was not deleted")
+    expect(indexOf(startDungeon, kept), "a route that was not picked was deleted")
+    expect(db.presets[startDungeon][db.currentPreset[startDungeon]] == above, "the current route did not move to the route above it")
+
+    MDT.liveSessionActive, MDT.livePresetUID = true, kept.uid
+    MDT:DeletePresets({ [kept] = true })
+    MDT.liveSessionActive, MDT.livePresetUID = false, nil
+    expect(indexOf(startDungeon, kept), "the live route was deleted")
+  end)
+
   step("route batch: clean up the test routes", function()
     MDT:HideAllDialogs()
     for index = #added, 1, -1 do
