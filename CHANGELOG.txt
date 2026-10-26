@@ -1,3 +1,3 @@
-## 6.3.23 (2026-10-25)
+## 6.3.24 (2026-10-26)
 
-- "Delete ALL routes" in the route menu is now "Delete multiple routes", where you pick which routes to delete.
+- New Focus Marker option "Only focus enemy units", on by default.
