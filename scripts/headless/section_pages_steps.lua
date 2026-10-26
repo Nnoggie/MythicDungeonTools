@@ -339,7 +339,7 @@ return function(ctx)
     for _, id in ipairs({ "announceReadyCheck", "useMacro", "suppressNotifications" }) do
       toggle(page, id, function() return settings[id] == true end)()
     end
-    local probes = { disableMouseoverFocus = "@mouseover", disableTargetMarkerInRaid = "/stopmacro", preserveExistingTargetMarkers = "~" }
+    local probes = { onlyFocusEnemies = "[harm]", disableMouseoverFocus = "@mouseover", disableTargetMarkerInRaid = "/stopmacro", preserveExistingTargetMarkers = "~" }
     for id, probe in pairs(probes) do
       local had = preview:GetValue():find(probe, 1, true) ~= nil
       local restore = toggle(page, id, function() return settings[id] == true end)

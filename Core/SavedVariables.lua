@@ -37,6 +37,7 @@ local defaultSavedVars = {
       announceReadyCheck = false,
       useMacro = false,
       disableMouseoverFocus = false,
+      onlyFocusEnemies = true,
       disableTargetMarkerInRaid = false,
       preserveExistingTargetMarkers = true,
       suppressNotifications = false,

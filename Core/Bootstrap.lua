@@ -16,6 +16,7 @@ local coreDefaults = {
     announceReadyCheck = false,
     useMacro = false,
     disableMouseoverFocus = false,
+    onlyFocusEnemies = true,
     disableTargetMarkerInRaid = false,
     preserveExistingTargetMarkers = true,
     suppressNotifications = false,
@@ -371,9 +372,14 @@ if not db.minimap.compartmentHide then minimapIcon:AddButtonToCompartment("Mythi
 
 local function buildFocusMarkerMacro(settings)
   local markerIndex = tonumber(settings.lastMarker) or 0
-  local body = settings.disableMouseoverFocus and "/focus" or "/focus [@mouseover,exists,nodead][]"
+  local body
+  if settings.onlyFocusEnemies then
+    body = settings.disableMouseoverFocus and "/focus [harm]" or "/focus [@mouseover,harm,nodead][harm]"
+  else
+    body = settings.disableMouseoverFocus and "/focus" or "/focus [@mouseover,exists,nodead][]"
+  end
   if markerIndex == 0 and settings.preserveExistingTargetMarkers then return body end
-  local conditionals = "[@focus]"
+  local conditionals = settings.onlyFocusEnemies and "[@focus,harm,exists]" or "[@focus]"
   local targetMarkerIndex = markerIndex
   if settings.disableTargetMarkerInRaid then
     body = body.."\n/stopmacro [group:raid]"

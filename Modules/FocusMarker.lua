@@ -5,6 +5,8 @@ local UI = MDT.UI
 
 local MACRO_NAME = "MDTFocusMarker"
 local MACRO_CONDITIONALS = "[@mouseover,exists,nodead][]"
+local HOSTILE_MACRO_CONDITIONALS = "[@mouseover,harm,nodead][harm]"
+local HOSTILE_FOCUS_CONDITIONALS = "[harm]"
 local TARGET_MARKER_CONDITIONALS = "[@focus]"
 local HOSTILE_TARGET_MARKER_CONDITIONALS = "[@focus,harm,exists]"
 local RAID_GROUP_STOP_CONDITIONALS = "[group:raid]"
@@ -447,12 +449,15 @@ end
 
 local function buildMacroBody(markerIndex, settings)
   markerIndex = tonumber(markerIndex) or 0
+  local onlyEnemies = settings and settings.onlyFocusEnemies
   local body = "/focus"
   if not (settings and settings.disableMouseoverFocus) then
-    body = body.." "..MACRO_CONDITIONALS
+    body = body.." "..(onlyEnemies and HOSTILE_MACRO_CONDITIONALS or MACRO_CONDITIONALS)
+  elseif onlyEnemies then
+    body = body.." "..HOSTILE_FOCUS_CONDITIONALS
   end
   if markerIndex == 0 and settings and settings.preserveExistingTargetMarkers then return body end
-  local targetMarkerConditionals = TARGET_MARKER_CONDITIONALS
+  local targetMarkerConditionals = onlyEnemies and HOSTILE_TARGET_MARKER_CONDITIONALS or TARGET_MARKER_CONDITIONALS
   local targetMarkerIndex = markerIndex
   if settings and settings.disableTargetMarkerInRaid then
     body = body.."\n/stopmacro "..RAID_GROUP_STOP_CONDITIONALS
@@ -1240,6 +1245,7 @@ local function buildAssignments(content, roster, assignments, settings)
     id = "announceReadyCheck", label = L["Announce focus marker on ready check"], value = settings.announceReadyCheck == true,
     onChange = function(value) settings.announceReadyCheck = value end,
   })
+  macroOption("onlyFocusEnemies", L["Only focus enemy units"], "onlyFocusEnemies")
   macroOption("disableMouseoverFocus", L["Don't set focus on mouseover"], "disableMouseoverFocus")
   macroOption("disableTargetMarkerInRaid", L["Don't set target marker while in a raid group"], "disableTargetMarkerInRaid")
   macroOption("preserveExistingTargetMarkers", L["Don't overwrite existing target markers"], "preserveExistingTargetMarkers")
