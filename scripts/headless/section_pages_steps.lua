@@ -336,7 +336,7 @@ return function(ctx)
     local settings = db.focusMarker
     local page = openSection("marks")
     local preview = control(page, "macroPreview")
-    for _, id in ipairs({ "announceReadyCheck", "useMacro", "suppressNotifications" }) do
+    for _, id in ipairs({ "announceReadyCheck", "suppressNotifications" }) do
       toggle(page, id, function() return settings[id] == true end)()
     end
     local probes = { onlyFocusEnemies = "[harm]", disableMouseoverFocus = "@mouseover", disableTargetMarkerInRaid = "/stopmacro", preserveExistingTargetMarkers = "~" }
@@ -355,17 +355,19 @@ return function(ctx)
     preview:ClearFocus()
   end)
 
-  step("focus marker: the macro icon follows Use macro, explains itself and drags the macro out", function()
+  step("focus marker: the Keybind/Macro switch swaps Set Keybind for the macro icon, which explains itself and drags the macro out", function()
     local settings = db.focusMarker
     local page = openSection("marks")
-    local icon = page:Find("macroIcon")
-    if settings.useMacro then click(control(page, "useMacro")) end
-    expect(not icon:IsVisible(), "the macro icon shows without Use macro")
-    click(control(page, "useMacro"))
-    expect(settings.useMacro == true and icon:IsVisible(), "the macro icon did not appear with Use macro")
+    local icon, setKeybind = page:Find("macroIcon"), page:Find("setKeybind")
+    click(control(page, "triggerKeybind"))
+    expect(settings.useMacro ~= true and not icon:IsVisible() and setKeybind:IsVisible(), "Keybind mode does not show only Set Keybind")
+    expect(control(page, "triggerKeybind").kitProps.selected and not control(page, "triggerMacro").kitProps.selected, "Keybind is not the selected trigger")
+    click(control(page, "triggerMacro"))
+    expect(settings.useMacro == true and icon:IsVisible() and not setKeybind:IsVisible(), "Macro mode does not show only the macro icon")
+    expect(control(page, "triggerMacro").kitProps.selected and not control(page, "triggerKeybind").kitProps.selected, "Macro is not the selected trigger")
     W.pump(0.05)
-    local box = control(page, "useMacro")
-    expect(icon:GetLeft() >= box:GetRight() and icon:GetLeft() - box:GetRight() < 12, "the macro icon is not right after the checkbox label")
+    local row = page:Find("activationRow")
+    expect(icon:GetLeft() > control(page, "triggerMacro"):GetRight() and math.abs(icon:GetRight() - row:GetRight()) < 1, "the macro icon is not at the right end of the Activation row")
     W.hover(icon)
     expect(MDTTooltip:IsShown() and MDTTooltip:GetOwner() == icon, "the macro icon shows no tooltip")
     W.fireScript(icon, "OnLeave")
@@ -376,8 +378,8 @@ return function(ctx)
     local macroIndex = _G["GetMacroIndexByName"](settings.macroName or "MDTFocusMarker")
     expect(macroIndex > 0 and pickedUp == macroIndex, "dragging the icon did not pick up the macro")
     render("focus marker section", main)
-    click(control(page, "useMacro"))
-    expect(settings.useMacro == false and not icon:IsVisible(), "the macro icon stayed after Use macro was cleared")
+    click(control(page, "triggerKeybind"))
+    expect(settings.useMacro == false and not icon:IsVisible() and setKeybind:IsVisible(), "switching back to Keybind did not restore Set Keybind")
   end)
 
   step("focus marker: Auto Assign gives the player a marker and the action buttons run", function()

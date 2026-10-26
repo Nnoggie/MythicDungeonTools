@@ -1189,8 +1189,14 @@ local function syncWarningText()
   if focusMarkerSyncWarning == FOCUS_MARKER_SYNC_WARNING_MANUAL then return manualChangeNeedsSyncText() end
 end
 
-local function buildAssignments(content, roster, assignments, settings)
-  UI.Heading(content, { text = L["Focus Marker Assignments"] })
+local function section(content, heading)
+  local stack = UI.Stack(content, { gap = "md" })
+  UI.Heading(stack, { text = heading })
+  return stack
+end
+
+local function buildAssignments(pageContent, roster, assignments, settings)
+  local content = section(pageContent, L["Focus Marker Assignments"])
   UI.Text(content, { text = L["focusMarkerAssignmentsTooltip"], color = "text.secondary" })
 
   for index = 1, math.max(#roster, 5) do
@@ -1208,10 +1214,8 @@ local function buildAssignments(content, roster, assignments, settings)
     end
   end
 
-  local actions = UI.Columns(content, { weights = { 1, 1, 1 }, gap = "sm" })
-  UI.Button(actions[1], { id = "setKeybind", text = L["Set Keybind"], onClick = function() openKeybindSettings() end })
-  UI.Button(actions[2], { id = "syncMarks", text = L["Sync Marks"], onClick = function() MDT:FocusMarker_SendAssignments() end })
-  UI.Button(actions[3], {
+  local actions = UI.Columns(content, { weights = { 1, 1 }, gap = "sm" })
+  UI.Button(actions[1], {
     id = "autoAssign", text = L["Auto Assign"],
     onClick = function()
       roster = getGroupRoster()
@@ -1228,7 +1232,40 @@ local function buildAssignments(content, roster, assignments, settings)
       refreshAssignmentsFrame()
     end,
   })
+  UI.Button(actions[2], { id = "syncMarks", text = L["Sync Marks"], onClick = function() MDT:FocusMarker_SendAssignments() end })
 
+  local warning = syncWarningText()
+  if warning then UI.Text(content, { id = "syncWarning", text = warning, color = "warn" }) end
+
+  content = section(pageContent, L["Activation"])
+  local activation = UI.Row(content, { id = "activationRow", gap = "sm" })
+  local keybindButton, macroButton, setKeybindButton, macroIcon
+  local function setUseMacro(useMacro)
+    if (settings.useMacro == true) == useMacro then return end
+    settings.useMacro = useMacro
+    keybindButton:SetSelected(not useMacro)
+    macroButton:SetSelected(useMacro)
+    setKeybindButton:SetHidden(useMacro)
+    macroIcon:SetHidden(not useMacro)
+    MDT:FocusMarker_RefreshAction()
+  end
+  keybindButton = UI.Button(activation, {
+    id = "triggerKeybind", text = L["Keybind"], selected = not settings.useMacro, onClick = function() setUseMacro(false) end,
+  })
+  macroButton = UI.Button(activation, {
+    id = "triggerMacro", text = L["Macro"], selected = settings.useMacro == true, onClick = function() setUseMacro(true) end,
+  })
+  UI.Text(activation, { text = "", grow = 1 })
+  setKeybindButton = UI.Button(activation, {
+    id = "setKeybind", text = L["Set Keybind"], hidden = settings.useMacro == true, onClick = function() openKeybindSettings() end,
+  })
+  macroIcon = UI.Button(activation, {
+    id = "macroIcon", variant = "icon", icon = settings.macroIcon or MACRO_ICON, iconSize = MACRO_ICON_SIZE - 4, iconColor = "accent",
+    width = MACRO_ICON_SIZE, height = MACRO_ICON_SIZE, hidden = not settings.useMacro, tooltip = macroIconTooltip,
+    onClick = pickupFocusMarkerMacro, onDragStart = pickupFocusMarkerMacro,
+  })
+
+  content = section(pageContent, L["Macro Behavior"])
   local macroPreview
   local function macroOption(id, label, key)
     UI.Checkbox(content, {
@@ -1240,43 +1277,24 @@ local function buildAssignments(content, roster, assignments, settings)
       end,
     })
   end
-
-  UI.Checkbox(content, {
-    id = "announceReadyCheck", label = L["Announce focus marker on ready check"], value = settings.announceReadyCheck == true,
-    onChange = function(value) settings.announceReadyCheck = value end,
-  })
   macroOption("onlyFocusEnemies", L["Only focus enemy units"], "onlyFocusEnemies")
   macroOption("disableMouseoverFocus", L["Don't set focus on mouseover"], "disableMouseoverFocus")
   macroOption("disableTargetMarkerInRaid", L["Don't set target marker while in a raid group"], "disableTargetMarkerInRaid")
   macroOption("preserveExistingTargetMarkers", L["Don't overwrite existing target markers"], "preserveExistingTargetMarkers")
-
-  local macroRow = UI.Row(content, { id = "macroRow", gap = "md" })
-  local macroIcon
-  UI.Checkbox(macroRow, {
-    id = "useMacro", label = L["Use macro instead of keybind"], value = settings.useMacro == true,
-    onChange = function(value)
-      settings.useMacro = value
-      macroIcon:SetHidden(not value)
-      MDT:FocusMarker_RefreshAction()
-    end,
-  })
-  macroIcon = UI.Button(macroRow, {
-    id = "macroIcon", variant = "icon", icon = settings.macroIcon or MACRO_ICON, iconSize = MACRO_ICON_SIZE - 4, iconColor = "accent",
-    width = MACRO_ICON_SIZE, height = MACRO_ICON_SIZE, hidden = not settings.useMacro, tooltip = macroIconTooltip,
-    onClick = pickupFocusMarkerMacro, onDragStart = pickupFocusMarkerMacro,
+  macroPreview = UI.EditBox(content, {
+    id = "macroPreview", label = L["Macro Preview:"], multiline = true, lines = 3, readOnly = true,
+    value = buildMacroBody(settings.lastMarker or 0, settings),
   })
 
+  content = section(pageContent, L["Alerts"])
+  UI.Checkbox(content, {
+    id = "announceReadyCheck", label = L["Announce focus marker on ready check"], value = settings.announceReadyCheck == true,
+    onChange = function(value) settings.announceReadyCheck = value end,
+  })
   UI.Checkbox(content, {
     id = "suppressNotifications", label = L["Never show MDT focus marker notification."], value = settings.suppressNotifications == true,
     onChange = function(value) settings.suppressNotifications = value end,
   })
-  macroPreview = UI.EditBox(content, {
-    id = "macroPreview", label = L["Macro Preview:"], multiline = true, lines = 4, readOnly = true,
-    value = buildMacroBody(settings.lastMarker or 0, settings),
-  })
-
-  local warning = syncWarningText()
-  if warning then UI.Text(content, { id = "syncWarning", text = warning, color = "warn" }) end
 end
 
 function MDT:FocusMarker_OpenAssignments(skipDiscovery)
@@ -1300,7 +1318,7 @@ function MDT:FocusMarker_OpenAssignments(skipDiscovery)
 
   if not page then
     local content = MDT.main_frame.sectionContentFrames.marks
-    page = UI.Scroll(content, { padding = "md", gap = "md" })
+    page = UI.Scroll(content, { padding = "md", gap = "xl" })
     page:SetPoint("TOP", content, "TOP", 0, -PAGE_TOP)
     page:SetPoint("BOTTOM", content, "BOTTOM", 0, PAGE_BOTTOM)
     page:SetWidth(PAGE_WIDTH)
