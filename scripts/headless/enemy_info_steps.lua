@@ -121,59 +121,36 @@ return function(ctx)
     render("enemy hover card", main, { hover })
   end)
 
-  step("enemy card: the hover card goes at once unless the cursor heads for it or Ctrl is held", function()
+  step("enemy card: the hover card goes as soon as the cursor leaves its enemy unless Ctrl is held", function()
     local hover = card("hover")
     rest(0.5)
     expect(shown("hover"), "the card left while the cursor is on its enemy")
-    -- Screen points along the line through the enemy's center and the card's: t = 0 is the enemy, t = 1 the card.
+    -- Even on the way to the card, leaving the enemy hides it.
     local function centerOf(region)
       local left, bottom, width, height = region:GetScaledRect()
       return left + width / 2, bottom + height / 2
     end
-    local function cursorAlong(t)
-      local x1, y1 = centerOf(blip)
-      local x2, y2 = centerOf(hover)
-      W.cursorX, W.cursorY = x1 + (x2 - x1) * t, y1 + (y2 - y1) * t
-    end
     W.fireScript(blip, "OnLeave")
-    local blipLeft, _, blipWidth = blip:GetScaledRect()
-    local hoverLeft = hover:GetScaledRect()
-    expect(hoverLeft > blipLeft + blipWidth or hoverLeft + hover:GetWidth() * hover:GetEffectiveScale() < blipLeft,
-      "setup: the card has no gap beside its enemy")
-    cursorAlong(0.3)
+    local x1, y1 = centerOf(blip)
+    local x2, y2 = centerOf(hover)
+    W.cursorX, W.cursorY = x1 + (x2 - x1) * 0.3, y1 + (y2 - y1) * 0.3
     expect(not blip:IsMouseOver() and not hover:IsMouseOver(), "setup: the cursor is not between the enemy and the card")
-    W.pump(0.2)
-    expect(shown("hover"), "the card left while the cursor crossed the gap to it")
-    W.cursorTo(hover)
+    W.pump(1 / 60)
+    expect(not shown("hover"), "the card stayed after the cursor left its enemy towards it")
+
+    -- Ctrl held before the cursor reaches an enemy locks the card on that first enemy.
+    W.modifiers = { ctrl = true }
+    W.hover(blip)
+    expect(shown("hover") and text("hover", "name") == title(blip), "entering an enemy with Ctrl held showed no card")
+    W.fireScript(blip, "OnLeave")
+    W.hover(other)
     rest(0.5)
-    expect(shown("hover"), "the card left while the cursor is on it")
+    expect(shown("hover") and text("hover", "name") == title(blip), "with Ctrl held from the start, another enemy took the card")
+    W.fireScript(other, "OnLeave")
     moveAway()
+    W.modifiers = nil
     W.pump(1 / 60)
-    expect(not shown("hover"), "the card stayed after the cursor left it")
-
-    -- The corridor only covers the way over: stopping in it hides the card after a moment.
-    W.hover(blip)
-    W.fireScript(blip, "OnLeave")
-    cursorAlong(0.3)
-    W.pump(0.2)
-    expect(shown("hover"), "the card left before the cursor had time to cross to it")
-    W.pump(0.15)
-    expect(not shown("hover"), "the card stayed while the cursor stopped between the enemy and the card")
-    -- Back on the enemy, the time starts over.
-    W.hover(blip)
-    W.pump(0.5)
-    W.fireScript(blip, "OnLeave")
-    cursorAlong(0.3)
-    W.pump(0.2)
-    expect(shown("hover"), "the time in the corridor did not start over after returning to the enemy")
-    moveAway()
-    W.pump(1 / 60)
-
-    W.hover(blip)
-    W.fireScript(blip, "OnLeave")
-    cursorAlong(-1)
-    W.pump(1 / 60)
-    expect(not shown("hover"), "the card stayed when the cursor left its enemy away from it")
+    expect(not shown("hover"), "the card stayed after Ctrl was released away from any enemy")
 
     W.hover(blip)
     W.fireScript(blip, "OnLeave")

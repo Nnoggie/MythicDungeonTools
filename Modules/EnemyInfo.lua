@@ -5,8 +5,8 @@ local Theme, Fonts = UI.Theme, UI.Fonts
 local db
 
 -- Enemy info lives in two cards. Hovering an enemy shows the compact hover card beside it. It goes the moment the cursor
--- leaves the enemy, unless the cursor heads straight for the card or Ctrl is held, so its spells can be hovered and
--- linked. While Ctrl is held it also stays on its enemy when the cursor passes over others. Pinning (its pin button or
+-- leaves the enemy, unless Ctrl is held, which keeps it open and on its enemy while the cursor passes over others, so
+-- its spells can be hovered and linked. Pinning (its pin button or
 -- the right-click menu) opens an expanded pinned card in the same spot, which stays until closed while the map keeps
 -- working. Any number of enemies can be pinned at once; each card drags by its title, anywhere on the map.
 
@@ -19,8 +19,6 @@ local TOOLTIP_ICON_SIZE = 12
 local CHARACTERISTIC_ICON_SIZE = 16
 ---Gap between an enemy and its card.
 local CARD_OFFSET = 30
----Seconds the cursor may spend between an enemy and its hover card on the way to the card.
-local CORRIDOR_TIMEOUT = 0.3
 local MODEL_ROTATION_SPEED = math.pi / 4
 ---Pinned card frame levels: the back card's, the gap between cards, which leaves room for a card's own frames, and how
 ---many front cards stack in order below the dialogs' level 100.
@@ -128,8 +126,6 @@ local hoverCard
 local pinnedCards, sparePinnedCards = {}, {}
 ---The enemy the hover card belongs to, and the last enemy the cursor entered while Ctrl kept the card on another one.
 local hoverBlip, heldOverBlip
----When the cursor entered the corridor between the hover card's enemy and the card; nil while it is elsewhere.
-local corridorSince
 ---Where the hover card last showed and for which enemy, so pinning from the right-click menu opens in the same spot.
 local lastSpot
 
@@ -549,56 +545,19 @@ local function hideHover()
     lastSpot = { blip = hoverBlip, left = hoverCard:GetLeft(), top = hoverCard:GetTop() }
     hoverCard:Hide()
   end
-  hoverBlip, heldOverBlip, corridorSince = nil, nil, nil
-end
-
----Narrows [tMin, tMax] to the t where value + t * delta <= limit. An empty range comes back with tMin > tMax.
-local function below(tMin, tMax, value, delta, limit)
-  if delta > 0 then return tMin, math.min(tMax, (limit - value) / delta) end
-  if delta < 0 then return math.max(tMin, (limit - value) / delta), tMax end
-  if value <= limit then return tMin, tMax end
-  return 1, 0
-end
-
----Narrows [tMin, tMax] to the t where the span blended from [lo1, hi1] towards [lo2, hi2] holds p.
-local function spanHolds(tMin, tMax, p, lo1, hi1, lo2, hi2)
-  tMin, tMax = below(tMin, tMax, lo1, lo2 - lo1, p)
-  return below(tMin, tMax, -hi1, hi1 - hi2, -p)
-end
-
----Whether the cursor is in the corridor from a region to another: the smallest convex shape holding both, so the cursor
----can cross the gap between them. A point is in it when some blend t in [0, 1] of the two rects holds it on both axes.
-local function cursorInCorridor(from, to)
-  local x, y = GetCursorPosition()
-  local l1, b1, w1, h1 = from:GetScaledRect()
-  local l2, b2, w2, h2 = to:GetScaledRect()
-  if not l1 or not l2 then return false end
-  local tMin, tMax = spanHolds(0, 1, x, l1, l1 + w1, l2, l2 + w2)
-  tMin, tMax = spanHolds(tMin, tMax, y, b1, b1 + h1, b2, b2 + h2)
-  return tMin <= tMax
+  hoverBlip, heldOverBlip = nil, nil
 end
 
 local showHover
 
----While the hover card shows: it stays while Ctrl is held or the cursor is on the enemy or the card, and for a moment
----while it crosses the corridor between them. Releasing Ctrl over another enemy moves the card to that enemy.
+---While the hover card shows: it stays while Ctrl is held or the cursor is on its enemy or the card. Releasing Ctrl
+---over another enemy moves the card to that enemy.
 local function watchHover(card)
-  if IsControlKeyDown() then
-    corridorSince = nil
-    return
-  end
+  if IsControlKeyDown() then return end
   local waiting = heldOverBlip
   heldOverBlip = nil
   if waiting and waiting ~= hoverBlip and waiting:IsVisible() and waiting:IsMouseOver() then return showHover(waiting) end
-  local onBlip = hoverBlip and hoverBlip:IsVisible() and hoverBlip:IsMouseOver()
-  if onBlip or card:IsMouseOver() then
-    corridorSince = nil
-    return
-  end
-  if hoverBlip and hoverBlip:IsVisible() and cursorInCorridor(hoverBlip, card) then
-    corridorSince = corridorSince or GetTime()
-    if GetTime() - corridorSince <= CORRIDOR_TIMEOUT then return end
-  end
+  if (hoverBlip and hoverBlip:IsVisible() and hoverBlip:IsMouseOver()) or card:IsMouseOver() then return end
   hideHover()
 end
 
@@ -818,7 +777,7 @@ end
 ---@param place fun(card: MDT.EnemyCard, blip: table)? where the card goes; beside the enemy by default
 showHover = function(blip, place)
   hoverCard = hoverCard or createCard("hover")
-  hoverBlip, heldOverBlip, corridorSince = blip, nil, nil
+  hoverBlip, heldOverBlip = blip, nil
   anchorAt(hoverCard, blip)
   fill(hoverCard, blip)
   local placeCard = place or placeBeside
@@ -842,8 +801,7 @@ function MDT:ShowEnemyCardBesideRow(portraitFrame, portrait, row)
 end
 
 ---Called by enemy blips on enter and leave. Entering shows the hover card for that enemy right away, unless Ctrl holds
----the card on another enemy; leaving lets the card's own watch hide it once the cursor is off the enemy and not heading
----for the card.
+---the card on another enemy; leaving lets the card's own watch hide it once the cursor is off the enemy.
 ---@param blip table
 ---@param shown boolean
 function MDT:DisplayBlipTooltip(blip, shown)
