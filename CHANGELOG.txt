@@ -1,3 +1,4 @@
-## 6.3.25 (2026-10-27)
+## 6.3.26 (2026-10-28)
 
-- The enemy info card now hides as soon as the cursor leaves the enemy. Hold Ctrl to keep it open.
+- Updated Russian and German translations.
+- Long checkbox labels in Settings now wrap instead of being cut off.
