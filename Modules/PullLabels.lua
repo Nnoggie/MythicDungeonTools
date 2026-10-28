@@ -589,7 +589,10 @@ local function paint(label, item, height)
   label.total:SetText(item.cumulativeText)
   local swatch = max(height, label.number:GetUnboundedStringWidth() + NUMBER_PAD * 2 * height)
   local totalText = label.total:GetUnboundedStringWidth()
-  local width = swatch + totalText + (TOTAL_PAD_LEFT + TOTAL_PAD_RIGHT) * height
+  local totalFit = totalText + (TOTAL_PAD_LEFT + TOTAL_PAD_RIGHT) * height
+  -- At least a height wide, so the dark round end stays clear of the number's swatch; a short total is centered in it.
+  local totalSpace = max(totalFit, height)
+  local width = swatch + totalSpace
   local edge = EDGE * height
   label:SetSize(width, height)
 
@@ -613,7 +616,8 @@ local function paint(label, item, height)
   label.number:ClearAllPoints()
   label.number:SetPoint("CENTER", label, "LEFT", swatch / 2, -TEXT_DROP * NUMBER_FONT * height)
   label.total:ClearAllPoints()
-  label.total:SetPoint("CENTER", label, "LEFT", swatch + TOTAL_PAD_LEFT * height + totalText / 2, -TEXT_DROP * TOTAL_FONT * height)
+  label.total:SetPoint("CENTER", label, "LEFT", swatch + TOTAL_PAD_LEFT * height + totalText / 2 + (totalSpace - totalFit) / 2,
+    -TEXT_DROP * TOTAL_FONT * height)
   label.leader:SetThickness(LEADER_THICKNESS * height)
   tone(label, item.index == MDT:GetCurrentPull() or lit[item.index] == true)
 end
