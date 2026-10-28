@@ -59,9 +59,8 @@ UI.Define({
     self.kitLabel:SetFontObject(Fonts.Get("body"))
     Theme.Bind(self.kitLabel, "text.normal")
     self.kitLabel:SetPoint("LEFT", self.kitBox, "RIGHT", Theme.Space("sm"), 0)
-    self.kitLabel:SetPoint("RIGHT", self, "RIGHT", 0, 0)
     self.kitLabel:SetJustifyH("LEFT")
-    self.kitLabel:SetWordWrap(false)
+    self.kitLabel:SetWordWrap(true)
     self.kitRepaint = repaint
     UI.Script(self, "OnClick", function(button)
       if button.kitProps.disabled then return end
@@ -71,7 +70,10 @@ UI.Define({
       button:Emit("onChange", value, button)
     end)
   end,
-  Measure = function(self)
-    return BOX + Theme.Space("sm") + math.ceil(self.kitLabel:GetUnboundedStringWidth()), Theme.Size("sm")
+  Measure = function(self, availW)
+    local labelLeft = BOX + Theme.Space("sm")
+    local labelWidth = math.max(1, math.min(math.ceil(self.kitLabel:GetUnboundedStringWidth()), availW - labelLeft))
+    self.kitLabel:SetWidth(labelWidth)
+    return labelLeft + labelWidth, math.max(Theme.Size("sm"), math.ceil(self.kitLabel:GetStringHeight()))
   end,
 })
