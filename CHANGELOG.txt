@@ -1,4 +1,3 @@
-## 6.3.26 (2026-10-28)
+## 6.3.27 (2026-10-29)
 
-- Updated Russian and German translations.
-- Long checkbox labels in Settings now wrap instead of being cut off.
+- Fixed short pull totals on map pull labels running into the pull number.
