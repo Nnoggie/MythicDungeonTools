@@ -129,7 +129,8 @@ step("load core addon", function()
   else
     local global = {}
     for key, value in pairs(seeded) do global[key] = value end
-    _G.MythicDungeonToolsDB = { global = global }
+    -- profileKeys as AceDB used to save them.
+    _G.MythicDungeonToolsDB = { global = global, profileKeys = { ["Player - Realm"] = "Default" } }
   end
   for key, value in pairs(_G.MythicDungeonToolsDB and _G.MythicDungeonToolsDB.global or {}) do stored[key] = value end
   expect(Loader.load("MythicDungeonTools"), "core addon failed to load")
@@ -414,8 +415,14 @@ step("escape closes the main window", function()
   expect(not main:IsShown(), "main window still shown")
 end)
 
-step("PLAYER_LOGOUT leaves saved variables serializable", function()
+step("PLAYER_LOGOUT saves only changed settings, in a form that loads again", function()
   W.FireEvent("PLAYER_LOGOUT")
+  local saved = _G.MythicDungeonToolsDB
+  expect(saved.profileKeys == nil, "AceDB's old profileKeys are still saved")
+  local presetLists, currentPresets = 0, 0
+  for _ in pairs(saved.global.presets or {}) do presetLists = presetLists + 1 end
+  for _ in pairs(saved.global.currentPreset or {}) do currentPresets = currentPresets + 1 end
+  expect(presetLists < 200 and currentPresets < 200, "dungeons never opened still save their default presets")
   local text = "MythicDungeonToolsDB = "..W.serialize(_G.MythicDungeonToolsDB, "MythicDungeonToolsDB", true).."\n"
   expect(loadstring(text), "serialized saved variables do not parse")
   if flags["write-savedvariables"] then

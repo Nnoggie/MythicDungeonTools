@@ -123,10 +123,40 @@ function MDT:GetDefaultSavedVariables()
   return defaultSavedVars
 end
 
+---Fills in every setting missing from target with a copy of its default.
+local function copyDefaults(target, defaults)
+  for key, value in pairs(defaults) do
+    if type(value) == "table" then
+      if target[key] == nil then target[key] = {} end
+      if type(target[key]) == "table" then copyDefaults(target[key], value) end
+    elseif target[key] == nil then
+      target[key] = value
+    end
+  end
+end
+
+---Removes every setting still at its default, so the saved file keeps only what the player changed
+---and a default changed in a later release reaches everyone who never touched it.
+local function removeDefaults(target, defaults)
+  for key, value in pairs(defaults) do
+    local current = target[key]
+    if type(value) == "table" then
+      if type(current) == "table" then
+        removeDefaults(current, value)
+        if next(current) == nil then target[key] = nil end
+      end
+    elseif current == value then
+      target[key] = nil
+    end
+  end
+end
+
 function MDT:InitializeSavedVariables()
   if db then return db end
-  db = LibStub("AceDB-3.0"):New("MythicDungeonToolsDB", defaultSavedVars).global
-  if not db then return end
+  -- AceDB, which MDT no longer uses, saved an unused profile name for every character here.
+  MythicDungeonToolsDB.profileKeys = nil
+  db = MythicDungeonToolsDB.global
+  copyDefaults(db, defaultSavedVars.global)
 
   for dungeonIdx, presetIdx in pairs(db.currentPreset) do
     if presetIdx <= 0 then db.currentPreset[dungeonIdx] = 1 end
@@ -155,3 +185,8 @@ function MDT:HardReset()
 end
 
 MDT:InitializeSavedVariables()
+
+-- Uses db, not MythicDungeonToolsDB, because a hard reset clears that global before the reload logs out.
+local logoutFrame = CreateFrame("Frame")
+logoutFrame:RegisterEvent("PLAYER_LOGOUT")
+logoutFrame:SetScript("OnEvent", function() removeDefaults(db, defaultSavedVars.global) end)
