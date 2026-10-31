@@ -1094,7 +1094,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [11] = {
         ["x"] = 755.64670953528,
         ["y"] = -213.92133908921,
-        ["g"] = 67,
         ["sublevel"] = 1,
       },
     },
@@ -1743,7 +1742,6 @@ MDT.dungeonEnemies[dungeonIndex] = {
       [11] = {
         ["x"] = 747.12227121581,
         ["y"] = -237.17441937161,
-        ["g"] = 67,
         ["sublevel"] = 1,
       },
     },
