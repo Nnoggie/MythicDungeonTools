@@ -1,3 +1,3 @@
-## 6.3.29 (2026-11-01)
+## 6.3.30 (2026-11-04)
 
-- Added the four Curious Yearlings next to the lone Territorial Matriarch in Den of Nalorakk.
+- Fixed route names not showing when importing or exporting multiple routes.
