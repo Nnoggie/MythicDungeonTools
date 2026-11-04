@@ -87,6 +87,11 @@ return function(ctx)
     W.userType(edit, text)
   end
   local function visible(content, preset) return find(content, pickId(preset)):IsVisible() end
+  ---Whether a route checkbox's label is as wide as its name, so the name is readable.
+  local function labelFits(box)
+    local label = box.kitLabel
+    return label:GetUnboundedStringWidth() > 0 and label:GetWidth() >= math.ceil(label:GetUnboundedStringWidth())
+  end
 
   local routeA, routeB, routeC
 
@@ -116,6 +121,7 @@ return function(ctx)
     click(find(content, pickId(routeC)))
     expect(not find(content, "dungeon"..otherDungeon):GetValue(), "the dungeon checkbox stays checked with a route left out")
     click(find(content, pickId(routeC)))
+    expect(labelFits(find(content, pickId(routeA))), "a picked route's name is cut off")
     snapshot("export multiple routes", dialog)
 
     click(content:Find("createExport"))
@@ -220,6 +226,7 @@ return function(ctx)
     expect(find(content, "route1"):GetValue() and find(content, "route2"):GetValue() and find(content, "route3"):GetValue(), "routes are not all picked")
     expect(find(content, "overwrite1") and find(content, "overwrite2") and find(content, "overwrite3") == nil, "overwrite shows for the wrong routes")
     expect(not find(content, "overwrite1"):GetValue(), "overwrite is checked with the setting off")
+    expect(labelFits(find(content, "route1")) and labelFits(find(content, "route3")), "a listed route's name is cut off")
     snapshot("import routes", dialog)
     click(find(content, "route1"))
     expect(find(content, "overwrite1"):IsDisabled(), "overwrite stays enabled for a route left out")

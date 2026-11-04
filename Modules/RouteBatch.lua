@@ -328,7 +328,7 @@ function MDT:OpenRouteBatchImportDialog(routes, onDone)
           UI.Text(line, { text = "", width = INDENT })
           row.includeBox = UI.Checkbox(line, {
             id = "route"..row.index, label = MDT:GetPresetDropdownText(row.route), userText = true, value = row.include,
-            disabled = not row.known, width = 1, grow = 1,
+            disabled = not row.known, grow = 1,
             tooltip = not row.known and L["routeBatchUnknownDungeon"] or nil,
             onChange = function(value)
               row.include = value
@@ -434,7 +434,7 @@ local function buildRoutePicker(content, groups, picked, onPick)
       routeLines[preset] = line
       UI.Text(line, { text = "", width = INDENT })
       routeBoxes[preset] = UI.Checkbox(line, {
-        id = "pick"..group.dungeonIdx.."_"..position, label = MDT:GetPresetDropdownText(preset), userText = true, width = 1, grow = 1,
+        id = "pick"..group.dungeonIdx.."_"..position, label = MDT:GetPresetDropdownText(preset), userText = true, grow = 1,
         onChange = function(value)
           picked[preset] = value or nil
           picksChanged()

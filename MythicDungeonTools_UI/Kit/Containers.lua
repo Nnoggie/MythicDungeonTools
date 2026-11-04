@@ -53,21 +53,41 @@ function Container:Batch(fn)
 end
 
 ---Layout items for the children. Stacks stretch children without a width; rows use their natural width.
+---With a `gap` (a row that does not wrap), growing children without a width are measured in the width the other
+---children leave them, so a wrapping label gets the width it is drawn at.
 ---@param innerW number
 ---@param naturalWidth boolean
+---@param gap number?
 ---@return MDT.UI.LayoutItem[]
-function Container:kitItems(innerW, naturalWidth)
-  local items = {}
+function Container:kitItems(innerW, naturalWidth, gap)
+  local items, flexible = {}, {}
+  local used, visible, shares = 0, 0, 0
+  local function measure(i, child, availW)
+    local props = child.kitProps
+    local measuredW, measuredH = child:kitMeasure(props.width or availW)
+    local w = props.width
+    if naturalWidth and not w then w = measuredW end
+    items[i] = { w = w, h = props.height and Theme.Size(props.height) or measuredH, grow = props.grow }
+  end
   for i, child in ipairs(self.kitChildren) do
     local props = child.kitProps
     if props.hidden then
       items[i] = { hidden = true, h = 0 }
     else
-      local measuredW, measuredH = child:kitMeasure(props.width or innerW)
-      local w = props.width
-      if naturalWidth and not w then w = measuredW end
-      items[i] = { w = w, h = props.height and Theme.Size(props.height) or measuredH, grow = props.grow }
+      visible = visible + 1
+      if gap and not props.width and (props.grow or 0) > 0 then
+        flexible[#flexible + 1] = i
+        shares = shares + props.grow
+      else
+        measure(i, child, innerW)
+        used = used + (items[i].w or 0)
+      end
     end
+  end
+  local remaining = innerW - used - math.max(0, visible - 1) * (gap or 0)
+  for _, i in ipairs(flexible) do
+    local child = self.kitChildren[i]
+    measure(i, child, math.max(1, remaining * child.kitProps.grow / shares))
   end
   return items
 end
@@ -203,10 +223,11 @@ UI.Define({
       local width = row:GetWidth()
       row.kitLaidOutWidth = width
       local pad = Theme.Space(row.kitProps.padding)
-      local items = row:kitItems(width - pad * 2, true)
+      local gap = Theme.Space(row.kitProps.gap)
+      local items = row:kitItems(width - pad * 2, true, not row.kitProps.wrap and gap or nil)
       local fixed = not row:kitAutoHeight()
       local rects, total = Layout.Row(items, {
-        width = width, gap = Theme.Space(row.kitProps.gap), pad = pad, wrap = row.kitProps.wrap,
+        width = width, gap = gap, pad = pad, wrap = row.kitProps.wrap,
         align = row.kitProps.align, valign = row.kitProps.valign,
         lineHeight = fixed and not row.kitProps.wrap and (row:GetHeight() - pad * 2) or nil,
       })
