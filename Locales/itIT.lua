@@ -340,6 +340,7 @@ L["routeBatchDeleteWarning"] = "I percorsi cancellati non possono essere recuper
 L["routeBatchOverwriteTooltip"] = "Sostituisce il tuo percorso '%s'. Se non selezionato, il percorso viene importato come copia."
 L["routeBatchUnknownDungeon"] = "Questo percorso è per una spedizione che la tua versione di MDT non ha. Aggiorna MDT per importarlo."
 L["Search routes"] = "Cerca percorsi"
+L["Drag to reorder"] = "Trascina per riordinare"
 L["Selected: %d"] = "Selezionati: %d"
 L["Start live session"] = "Avvia sessione live"
 L["Join a group first"] = "Unisciti prima a un gruppo"

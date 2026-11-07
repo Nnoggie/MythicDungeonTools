@@ -130,11 +130,13 @@ function MDT:OpenNewPresetDialog(startingPointIdx)
   initializeDB()
   MDT:HideAllDialogs()
   local startingPoints = { { kind = "choice", text = L["Empty"], value = 0 } }
+  local sources = {}
   local highestIndex = 1
   local countPresets = 0
   for index, preset in ipairs(db.presets[db.currentDungeonIdx]) do
     if preset.text ~= L["<New Preset>"] then
       startingPoints[#startingPoints + 1] = { kind = "choice", text = MDT:GetPresetDropdownText(preset), value = index }
+      sources[index] = preset
       local indexNumber = tonumber(preset.text:match("^"..L["defaultPresetName"].."%s*(%d+)$"))
       if indexNumber and indexNumber > highestIndex then highestIndex = indexNumber end
       countPresets = countPresets + 1
@@ -155,7 +157,14 @@ function MDT:OpenNewPresetDialog(startingPointIdx)
         onChange = function(value) startingPoint = value end,
       })
     end,
-    confirm = { text = L["Create"], onClick = function(text) MDT:CreateNewPreset(text, startingPoint) end },
+    -- A route added on top while the dialog is open moves the others down, so the starting point is looked up again.
+    confirm = { text = L["Create"], onClick = function(text)
+      local sourceIdx = 0
+      for index, preset in ipairs(db.presets[db.currentDungeonIdx]) do
+        if preset == sources[startingPoint] then sourceIdx = index end
+      end
+      MDT:CreateNewPreset(text, sourceIdx)
+    end },
   })
 end
 

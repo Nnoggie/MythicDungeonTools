@@ -566,6 +566,9 @@ return function(ctx)
     local _, item = rowByText(routeMenu(db.presets[db.currentDungeonIdx][1].text), "Delete this route")
     expect(item and item.disabled, "the default route can be deleted from its menu")
     UI.Menu.Close()
+    -- Deleting the top route shows the route above it, the default one, which Delete multiple routes never lists.
+    MDT:SwitchToPreset(2)
+    W.settle(asyncIdle, 30)
     local route = preset()
     click((rowByText(routeMenu(route.text), "Delete multiple routes")))
     local list = openDialog("deleteRoutes").content:Find("routes").content
@@ -632,6 +635,75 @@ return function(ctx)
       "live route entries are missing: "..menuLabels(menu))
     UI.Menu.Close()
     MDT.liveSessionActive, MDT.livePresetUID = false, nil
+    MDT:RefreshSidebar()
+  end)
+
+  step("sidebar: new routes go on top, yours come first until a route is dragged, then someone else's can go above yours", function()
+    local dungeonIdx = db.currentDungeonIdx
+    local presets = db.presets[dungeonIdx]
+    db.customRouteOrder[dungeonIdx] = nil
+    local doomed = {}
+    for index = 2, #presets do doomed[presets[index]] = true end
+    MDT:DeletePresets(doomed)
+    local names = {}
+    for i = 1, 3 do
+      names[i] = unusedPresetName("Headless Order "..i)
+      MDT:CreateNewPreset(names[i])
+    end
+    local someoneElse = presets[3]
+    expect(someoneElse.text == names[2], "the routes were not added on top: "..tostring(someoneElse.text))
+    someoneElse.createdBy = { name = "Someone", realm = "Elsewhere", classIdx = 8 }
+    MDT:RefreshSidebar()
+    W.settle(asyncIdle, 30)
+    local shown = preset()
+    expect(shown.text == names[3], "the last created route is not shown")
+    local function listed()
+      local list = {}
+      for _, item in ipairs(control("routes").kitProps.items) do list[#list + 1] = item.name end
+      return table.concat(list, "|")
+    end
+    local function saved()
+      local list = {}
+      for _, candidate in ipairs(presets) do
+        if candidate.value ~= 0 then list[#list + 1] = candidate.text end
+      end
+      return table.concat(list, "|")
+    end
+    local default = presets[1].text
+    expect(saved() == table.concat({ default, names[3], names[2], names[1] }, "|"), "new routes are not saved on top: "..saved())
+    expect(listed() == table.concat({ default, names[3], names[1], names[2] }, "|"), "someone else's route is not listed after yours: "..listed())
+    local defaultRow = routeRow(default)
+    expect(defaultRow and not defaultRow.kitHandle:IsShown(), "the default route shows a grip")
+    local target = routeRow(names[3])
+    local held = routeRow(names[2])
+    expect(held.kitHandle:IsShown() and target.kitHandle:IsShown(), "your routes and someone else's show no grip")
+
+    W.cursorTo(held.kitHandle)
+    W.mouseDown = true
+    W.fireScript(held.kitHandle, "OnMouseDown", "LeftButton")
+    expect(control("routes"):IsDragging(), "pressing a route's grip did not pick it up")
+    W.cursorToY(target, target:GetTop() - 3)
+    W.pump(0.3)
+    render("sidebar route held by its grip", MDT.main_frame.sidePanel)
+    W.mouseDown = false
+    W.fireScript(held.kitHandle, "OnMouseUp", "LeftButton")
+    W.settle(asyncIdle, 30)
+    expect(db.customRouteOrder[dungeonIdx] == true, "dragging a route did not keep the order")
+    local expected = table.concat({ default, names[2], names[3], names[1] }, "|")
+    expect(listed() == expected, "someone else's route did not land above yours: "..listed())
+    expect(saved() == expected, "the saved order differs from the list: "..saved())
+    expect(preset() == shown and presets[db.currentPreset[dungeonIdx]] == shown, "the shown route changed when another moved")
+    local _, current = currentRouteRow()
+    expect(current and current.name == names[3], "the list highlights another route after the move")
+
+    local search = control("routeSearch")
+    search.kitEdit:Insert("Headless Order")
+    local row = routeRow(names[2])
+    expect(row and not row.kitHandle:IsShown(), "a filtered list shows grips")
+    search.kitEdit:SetText("")
+    W.fireScript(search.kitEdit, "OnTextChanged", true)
+    expect(routeRow(names[2]).kitHandle:IsShown(), "clearing the search did not bring the grips back")
+    db.customRouteOrder[dungeonIdx] = nil
     MDT:RefreshSidebar()
   end)
 

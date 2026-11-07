@@ -472,27 +472,25 @@ return function(ctx)
     local start = db.currentPreset[dungeonIdx]
     local nameA, nameB = unusedPresetName("Switch A"), unusedPresetName("Switch B")
     MDT:CreateNewPreset(nameA)
-    local aIdx = db.currentPreset[dungeonIdx]
     MDT:CreateNewPreset(nameB)
-    local bIdx = db.currentPreset[dungeonIdx]
     W.settle(asyncIdle, 30)
-    local function names()
-      local found = {}
-      for _, preset in ipairs(db.presets[dungeonIdx]) do found[preset.text] = true end
-      return found
+    local function indexOf(name)
+      for index, preset in ipairs(db.presets[dungeonIdx]) do
+        if preset.text == name then return index end
+      end
     end
     MDT:OpenDeletePresetDialog()
     local dialog = openDialog("deletePreset")
-    MDT:SwitchToPreset(aIdx)
+    MDT:SwitchToPreset(indexOf(nameA))
     click(dialog.content:Find("confirm"))
-    expect(names()[nameA] and names()[nameB], "Delete removed a route other than the one it named")
+    expect(indexOf(nameA) and indexOf(nameB), "Delete removed a route other than the one it named")
     MDT:OpenClearPresetDialog()
     openDialog("clearPreset")
-    MDT:SwitchToPreset(bIdx)
+    MDT:SwitchToPreset(indexOf(nameB))
     W.settle(asyncIdle, 30)
     expect(UI.Dialogs.Get("clearPreset") == nil, "the reset dialog stayed open after its route was switched away")
-    MDT:DeletePreset(bIdx)
-    MDT:DeletePreset(aIdx)
+    MDT:DeletePreset(indexOf(nameB))
+    MDT:DeletePreset(indexOf(nameA))
     MDT:SwitchToPreset(start)
     W.settle(asyncIdle, 30)
   end)

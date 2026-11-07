@@ -1,7 +1,7 @@
 local _, MDT = ...
 local L = MDT.L
 
-local tremove, tonumber, pairs = table.remove, tonumber, pairs
+local tinsert, tremove, tonumber, pairs = table.insert, table.remove, tonumber, pairs
 local defaultSavedVars = MDT:GetDefaultSavedVariables()
 local db
 
@@ -289,6 +289,26 @@ function MDT:DeletePresets(doomed)
   MDT:UpdateMap()
 end
 
+---Puts routes of the current dungeon in a new order. They fill the slots they held between them, so every other
+---route keeps its slot, and the shown route stays shown. From then on the route list shows the saved order instead
+---of your routes first.
+---@param order integer[] preset indices in their new order
+function MDT:ReorderPresets(order)
+  initializeDB()
+  local dungeonIdx = db.currentDungeonIdx
+  db.customRouteOrder[dungeonIdx] = true
+  local presets = db.presets[dungeonIdx]
+  local shown = presets[db.currentPreset[dungeonIdx]]
+  local slots, moved = {}, {}
+  for i, index in ipairs(order) do slots[i], moved[i] = index, presets[index] end
+  table.sort(slots)
+  for i, slot in ipairs(slots) do presets[slot] = moved[i] end
+  for index, preset in ipairs(presets) do
+    if preset == shown then db.currentPreset[dungeonIdx] = index end
+  end
+  MDT:RefreshSidebar()
+end
+
 function MDT:ClearPreset(preset, silent)
   if preset == self:GetCurrentPreset() then silent = false end
   table.wipe(preset.value.pulls)
@@ -299,24 +319,36 @@ function MDT:ClearPreset(preset, silent)
   MDT:ColorPull()
 end
 
+---Adds a route right below the default route, so new and imported routes are listed first. The shown route stays shown.
+---@param dungeonIdx integer
+---@param preset table
+---@param index integer? where to add it, for routes added after one another; default 2, right below the default route
+---@return integer index of the added route
+function MDT:AddPresetOnTop(dungeonIdx, preset, index)
+  initializeDB()
+  index = index or 2
+  tinsert(db.presets[dungeonIdx], index, preset)
+  local shown = db.currentPreset[dungeonIdx]
+  if shown and shown >= index then db.currentPreset[dungeonIdx] = shown + 1 end
+  return index
+end
+
 ---@param startingPointIdx integer? copy this preset of the current dungeon; nil or 0 starts empty
 function MDT:CreateNewPreset(name, startingPointIdx)
   initializeDB()
   if not MDT:SanitizePresetName(name) then return end
-  local countPresets = 0
-  for _ in pairs(db.presets[db.currentDungeonIdx]) do countPresets = countPresets + 1 end
-  db.presets[db.currentDungeonIdx][countPresets + 1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
-
+  local dungeonIdx = db.currentDungeonIdx
+  local preset
   if startingPointIdx and startingPointIdx > 0 then
-    db.presets[db.currentDungeonIdx][countPresets] = CopyTable(db.presets[db.currentDungeonIdx][startingPointIdx])
-    db.presets[db.currentDungeonIdx][countPresets].text = name
-    db.presets[db.currentDungeonIdx][countPresets].uid = nil
+    preset = CopyTable(db.presets[dungeonIdx][startingPointIdx])
+    preset.text = name
+    preset.uid = nil
   else
-    db.presets[db.currentDungeonIdx][countPresets] = { text = name, value = {} }
+    preset = { text = name, value = {} }
   end
 
-  db.currentPreset[db.currentDungeonIdx] = countPresets
-  MDT:EnsurePresetCreatedBy(db.presets[db.currentDungeonIdx][countPresets], true)
+  db.currentPreset[dungeonIdx] = MDT:AddPresetOnTop(dungeonIdx, preset)
+  MDT:EnsurePresetCreatedBy(preset, true)
   MDT:UpdateMap()
   MDT:SetPresetColorPaletteInfo()
   MDT:ColorAllPulls()
@@ -442,13 +474,7 @@ function MDT:ImportPreset(preset, fromLiveSession)
       if not preserveUid then preset.uid = nil end
       MDT:SetUniqueID(preset)
     end
-    local countPresets = 0
-    for k, v in pairs(db.presets[db.currentDungeonIdx]) do
-      countPresets = countPresets + 1
-    end
-    db.presets[db.currentDungeonIdx][countPresets + 1] = db.presets[db.currentDungeonIdx][countPresets] --put <New Preset> at the end of the list
-    db.presets[db.currentDungeonIdx][countPresets] = preset
-    db.currentPreset[db.currentDungeonIdx] = countPresets
+    db.currentPreset[db.currentDungeonIdx] = MDT:AddPresetOnTop(db.currentDungeonIdx, preset)
     finishImport()
   end
   local closeCallback = function()

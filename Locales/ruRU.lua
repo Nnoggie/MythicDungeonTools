@@ -340,6 +340,7 @@ L["routeBatchDeleteWarning"] = "Удалённые маршруты нельзя
 L["routeBatchOverwriteTooltip"] = "Заменяет Ваш маршрут '%s'. Если флажок снят, маршрут импортируется как копия."
 L["routeBatchUnknownDungeon"] = "Этот маршрут для подземелья, которого нет в Вашей версии MDT. Обновите MDT, чтобы импортировать его."
 L["Search routes"] = "Поиск маршрутов"
+L["Drag to reorder"] = "Перетащите, чтобы изменить порядок"
 L["Selected: %d"] = "Выбрано: %d"
 L["Start live session"] = "Начать прямую трансляцию"
 L["Join a group first"] = "Сначала вступите в группу"

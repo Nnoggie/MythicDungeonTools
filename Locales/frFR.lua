@@ -340,6 +340,7 @@ L["routeBatchDeleteWarning"] = "Les routes supprimées ne peuvent pas être rest
 L["routeBatchOverwriteTooltip"] = "Remplace votre route '%s'. Décochée, la route est importée en tant que copie."
 L["routeBatchUnknownDungeon"] = "Cette route concerne un donjon que votre version de MDT ne connaît pas. Mettez MDT à jour pour l'importer."
 L["Search routes"] = "Rechercher des routes"
+L["Drag to reorder"] = "Faites glisser pour réorganiser"
 L["Selected: %d"] = "Sélectionnées : %d"
 L["Start live session"] = "Démarrer une session en direct"
 L["Join a group first"] = "Rejoignez d'abord un groupe"

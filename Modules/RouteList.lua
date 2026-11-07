@@ -5,7 +5,8 @@ local Theme, Fonts = UI.Theme, UI.Fonts
 
 local ROW_HEIGHT = 22
 
----A row of the route list: class-colored author / name, and a LIVE tag on the live route. Actions live in the right-click menu.
+---A row of the route list: a grip to reorder it, class-colored author / name, and a LIVE tag on the live route.
+---Actions live in the right-click menu.
 local RouteRow = {}
 
 function RouteRow:OnCreate()
@@ -25,7 +26,7 @@ function RouteRow:OnCreate()
   Theme.Bind(self.kitLive, "live")
   self.kitAuthor = self:CreateFontString(nil, "ARTWORK")
   self.kitAuthor:SetFontObject(Fonts.Get("body"))
-  self.kitAuthor:SetPoint("LEFT", self, "LEFT", pad, 0)
+  self.kitAuthor:SetPoint("LEFT", self.kitHandle, "RIGHT", Theme.Space("xs"), 0)
   self.kitAuthor:SetWordWrap(false)
   self.kitSlash = self:CreateFontString(nil, "ARTWORK")
   self.kitSlash:SetFontObject(Fonts.Get("body"))
@@ -53,7 +54,7 @@ function RouteRow:Bind(item)
   if hasAuthor then
     self.kitName:SetPoint("LEFT", self.kitSlash, "RIGHT", Theme.Space("xs"), 0)
   else
-    self.kitName:SetPoint("LEFT", self, "LEFT", Theme.Space("md"), 0)
+    self.kitName:SetPoint("LEFT", self.kitHandle, "RIGHT", Theme.Space("xs"), 0)
   end
   self.kitLive:SetShown(item.isLive)
   if item.isLive then
@@ -67,7 +68,7 @@ end
 
 ---@type table<string, MDT.UI.ListKind>
 MDT.RouteListKinds = {
-  route = { height = ROW_HEIGHT, mixin = RouteRow },
+  route = { height = ROW_HEIGHT, mixin = RouteRow, handle = { tooltip = L["Drag to reorder"] } },
 }
 
 MDT.RouteListRowHeight = ROW_HEIGHT

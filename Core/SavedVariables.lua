@@ -30,6 +30,7 @@ local defaultSavedVars = {
     },
     presets = {},
     currentPreset = {},
+    customRouteOrder = {}, -- dungeonIdx -> true once routes were dragged: the route list shows the saved order, not yours first
     alwaysOverwriteRoutesByUID = false,
     fadeOutDuringCombat = false,
     fadeOutAlpha = 0.5,

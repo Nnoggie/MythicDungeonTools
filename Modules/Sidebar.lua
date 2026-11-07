@@ -55,6 +55,7 @@ function MDT:SidebarContext()
     player = author and { name = author.name, realm = author.realm } or nil,
     presets = db.presets[dungeonIdx],
     presetIdx = db.currentPreset[dungeonIdx],
+    customRouteOrder = db.customRouteOrder[dungeonIdx] == true,
     liveActive = MDT.liveSessionActive == true,
     livePresetUID = MDT.livePresetUID,
     inGroup = MDT:IsPlayerInGroup() and true or false,
@@ -329,6 +330,21 @@ local function onReorder(keys, slot)
   sendPullsIfLive()
 end
 
+---A route row dropped within its group; route item keys are preset indices.
+local function onRouteReorder(keys, slot)
+  local items = sidebar.routes.kitProps.items
+  local dragGroup
+  for _, item in ipairs(items) do
+    if item.key == keys[1] then dragGroup = item.dragGroup end
+  end
+  local order = {}
+  for _, item in ipairs(items) do
+    if dragGroup ~= nil and item.dragGroup == dragGroup then order[#order + 1] = item.idx end
+  end
+  local newOrder, changed = UI.ListMath.Reorder(order, keys, slot)
+  if changed then MDT:ReorderPresets(newOrder) end
+end
+
 local function onHover(item, index, row)
   -- An enemy dragged across the list shows no cards.
   if item.kind ~= "pull" or MDT:IsEnemyDragging() then return end
@@ -398,8 +414,15 @@ end
 ---@return MDT.UI.MenuItem[]
 local function routeMenuItems(idx)
   local a = sidebar.state.header.actions
-  local function run(action) return function() MDT:RunRouteAction(action, idx) end end
   local preset = db.presets[db.currentDungeonIdx][idx]
+  -- A route added on top while the menu is open moves this one down, so the action looks it up again.
+  local function run(action)
+    return function()
+      for index, candidate in ipairs(db.presets[db.currentDungeonIdx]) do
+        if candidate == preset then return MDT:RunRouteAction(action, index) end
+      end
+    end
+  end
   -- The default route has no author, and a new uid would drop the live route out of its session.
   local canTakeOwnership = idx ~= 1 and not (a.liveActive and idx == a.livePresetIdx)
     and not Model.IsAuthoredBy(preset.createdBy, MDT:GetCurrentRouteAuthor())
@@ -446,6 +469,7 @@ function MDT:MakeSidebar(sidePanel)
     built.routes = UI.List(root, {
       id = "routes", kinds = MDT.RouteListKinds, gap = 0, height = VISIBLE_ROUTES * MDT.RouteListRowHeight, scrollbar = true,
       onActivate = function(item) MDT:SwitchToPreset(item.idx) end,
+      onReorder = onRouteReorder,
       onContext = function(item)
         MDT:CreateContextMenu(sidebar.routes, routeMenuItems(item.idx))
         return nil

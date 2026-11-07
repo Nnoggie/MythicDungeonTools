@@ -679,22 +679,31 @@ test("SidebarModel.PullMenuItems: single and multi menus hide what the old butto
   eq(calls, { "merge:1,3;2", "clear:1,3", "delete:1,3;2", "moveUp:2", "mergeDown:2", "delete:2;2" })
 end)
 
-test("SidebarModel.RouteGroups and RouteListItems: live, then yours, then others, no headers, no <New Preset>", function()
+test("SidebarModel.RouteGroups and RouteListItems: live first, yours before others' until reordered by hand, no <New Preset>", function()
   local ctx = fixtureContext({ liveActive = true, livePresetUID = "theirs" })
   local groups = Model.RouteGroups(ctx)
-  eq({ #groups.live, #groups.mine, #groups.others }, { 1, 2, 0 })
+  eq({ #groups.live, #groups.routes }, { 1, 2 })
   eq({ groups.live[1].idx, groups.live[1].name, groups.live[1].author, groups.live[1].isLive }, { 3, "Theirs", "Zed", true })
-  eq({ groups.mine[2].idx, groups.mine[2].level, groups.mine[2].isCurrent }, { 2, 12, true })
+  eq({ groups.routes[2].idx, groups.routes[2].level, groups.routes[2].isCurrent }, { 2, 12, true })
   local items = Model.RouteListItems(groups, "")
   local names = {}
   for _, item in ipairs(items) do names[#names + 1] = item.kind..":"..item.name end
   eq(table.concat(names, "|"), "route:Theirs|route:Default|route:Mine")
   eq({ items[1].author, items[1].authorColor, items[1].isLive }, { "Zed", { 0, 0.5, 1 }, true })
-  eq({ items[3].idx, items[3].isCurrent }, { 2, true })
-  local offline = Model.RouteListItems(Model.RouteGroups(fixtureContext()), "")
-  names = {}
-  for _, item in ipairs(offline) do names[#names + 1] = item.name end
-  eq(table.concat(names, "|"), "Default|Mine|Theirs", "your routes come before everyone else's")
+  eq({ items[3].idx, items[3].isCurrent, items[3].dragGroup }, { 2, true, nil }, "a lone movable route has no grip")
+  local function order(swapped, query)
+    local list = {}
+    for _, item in ipairs(Model.RouteListItems(Model.RouteGroups(swapped), query or "")) do list[#list + 1] = item.name..":"..tostring(item.dragGroup) end
+    return table.concat(list, "|")
+  end
+  local swapped = fixtureContext()
+  swapped.presets[2], swapped.presets[3] = swapped.presets[3], swapped.presets[2]
+  eq(order(swapped), "Default:nil|Mine:routes|Theirs:routes", "your routes come before everyone else's, and both move as one pool")
+  eq(order(swapped, "e"), "Default:nil|Mine:nil|Theirs:nil", "a filtered list has no grips")
+  swapped.presets[1].createdBy = { name = "Zed", realm = "Other", classIdx = 8 }
+  eq(order(swapped), "Default:nil|Mine:routes|Theirs:routes", "the default route stays first whoever made it")
+  swapped.customRouteOrder = true
+  eq(order(swapped), "Default:nil|Theirs:routes|Mine:routes", "a hand-made order keeps the saved order")
   eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "ZED"), 1, "search matches the author, case-insensitive")
   eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "min"), 1, "search matches the name")
   eq(#Model.RouteListItems(Model.RouteGroups(fixtureContext()), "nothing"), 0)

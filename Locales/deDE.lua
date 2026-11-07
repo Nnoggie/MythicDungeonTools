@@ -340,6 +340,7 @@ L["routeBatchDeleteWarning"] = "Gelöschte Routen können nicht wiederhergestell
 L["routeBatchOverwriteTooltip"] = "Ersetzt deine Route '%s'. Ohne Haken wird die Route als Kopie importiert."
 L["routeBatchUnknownDungeon"] = "Diese Route gehört zu einem Dungeon, den deine MDT-Version nicht kennt. Aktualisiere MDT, um sie zu importieren."
 L["Search routes"] = "Routen durchsuchen"
+L["Drag to reorder"] = "Zum Sortieren ziehen"
 L["Selected: %d"] = "Ausgewählt: %d"
 L["Start live session"] = "Live-Sitzung starten"
 L["Join a group first"] = "Tritt zuerst einer Gruppe bei"
