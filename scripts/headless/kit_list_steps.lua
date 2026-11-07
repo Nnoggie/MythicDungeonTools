@@ -91,6 +91,111 @@ return function(ctx)
     list:Release()
   end)
 
+  step("kit list: a grip lifts its row, the rows it passes slide aside, and it stays in its group", function()
+    -- Item 1 has no group, 2-6 are group a, 7-10 group b.
+    local function groupOf(key)
+      if key == 1 then return nil end
+      return key <= 6 and "a" or "b"
+    end
+    local handleKinds = { row = { height = 28, mixin = Row, handle = { tooltip = "Drag to reorder" } } }
+    local handleOrder, handleLog = {}, {}
+    for i = 1, 10 do handleOrder[i] = i end
+    local function handleItems()
+      local items = {}
+      for i, key in ipairs(handleOrder) do items[i] = { kind = "row", key = key, sig = "h"..key, text = "Item "..key, dragGroup = groupOf(key) } end
+      return items
+    end
+    list = UI.List(root, { height = 200, kinds = handleKinds, items = handleItems(), onReorder = function(keys, slot)
+      handleLog[#handleLog + 1] = table.concat(keys, ",")..">"..slot
+      local members = {}
+      for _, key in ipairs(handleOrder) do
+        if groupOf(key) == groupOf(keys[1]) then members[#members + 1] = key end
+      end
+      local moved, at = UI.ListMath.Reorder(members, keys, slot), 0
+      for i, key in ipairs(handleOrder) do
+        if groupOf(key) == groupOf(keys[1]) then
+          at = at + 1
+          handleOrder[i] = moved[at]
+        end
+      end
+      list:SetItems(handleItems())
+    end })
+    list:SetPoint("TOPLEFT", root, "TOPLEFT", 0, 0)
+    list:SetPoint("BOTTOMRIGHT", root, "BOTTOMRIGHT", 0, 0)
+    UI.Layout.FlushAll()
+    list:kitPlaced()
+    local tops = {}
+    for i = 1, 7 do tops[i] = list:GetRow(i):GetTop() end
+    expect(not list:GetRow(1).kitHandle:IsShown(), "an item without a drag group shows a grip")
+    expect(list:GetRow(2).kitHandle:IsShown() and list:GetRow(7).kitHandle:IsShown(), "grouped items show no grip")
+
+    local held = list:GetRow(2)
+    local function grab(row)
+      W.cursorTo(row.kitHandle)
+      W.mouseDown = true
+      W.fireScript(row.kitHandle, "OnMouseDown", "LeftButton")
+      expect(list:IsDragging(), "pressing the grip did not pick the row up")
+    end
+    local function release(row)
+      W.mouseDown = false
+      W.fireScript(row.kitHandle, "OnMouseUp", "LeftButton")
+      expect(not list:IsDragging(), "letting go of the grip did not drop the row")
+    end
+    local function near(a, b) return math.abs(a - b) < 0.5 end
+
+    grab(held)
+    W.cursorToY(held, tops[1] + 10)
+    W.pump(0.1)
+    expect(near(held:GetTop(), tops[2]), "the held row left its group upward: "..held:GetTop().." vs "..tops[2])
+    local row4 = list:GetRow(4)
+    W.cursorToY(row4, tops[4] - 28 + 4)
+    W.pump(0.02)
+    expect(near(held:GetTop(), tops[4] - 28 / 2 + 4), "the held row does not follow the cursor: "..held:GetTop())
+    expect(row4:GetTop() > tops[4] and row4:GetTop() < tops[3], "row 4 jumped instead of sliding: "..row4:GetTop())
+    W.pump(0.5)
+    expect(near(list:GetRow(3):GetTop(), tops[2]) and near(row4:GetTop(), tops[3]), "rows 3 and 4 did not slide up into the gap")
+    expect(near(list:GetRow(5):GetTop(), tops[5]), "row 5 moved although the held row is above it")
+    release(held)
+    expect(handleLog[#handleLog] == "2>4", "the drop reported "..tostring(handleLog[#handleLog]))
+    expect(table.concat(handleOrder, ",", 1, 6) == "1,3,4,2,5,6", "item 2 did not land after item 4: "..table.concat(handleOrder, ","))
+    for i = 1, 7 do expect(near(list:GetRow(i):GetTop(), tops[i]), "row "..i.." is not back in its slot after the drop") end
+
+    local count = #handleLog
+    held = list:GetRow(3)
+    grab(held)
+    W.cursorToY(held, tops[6])
+    W.pump(0.5)
+    click(held.kitHandle, "RightButton")
+    expect(not list:IsDragging() and #handleLog == count, "a right-click on the grip did not cancel the drag")
+    for i = 1, 7 do expect(near(list:GetRow(i):GetTop(), tops[i]), "row "..i.." stayed displaced after a cancel") end
+
+    held = list:GetRow(3)
+    grab(held)
+    W.cursorToY(held, tops[6])
+    W.pump(0.2)
+    local changed = handleItems()
+    changed[5].sig = "renamed"
+    list:SetItems(changed)
+    release(held)
+    expect(#handleLog == count, "a drop after its group changed was reported: "..tostring(handleLog[#handleLog]))
+
+    held = list:GetRow(7)
+    grab(held)
+    W.pump(0.3)
+    expect(list:GetOffset() == 0, "holding a grip at the bottom edge scrolled before the cursor moved: "..list:GetOffset())
+    W.cursorToY(held, tops[3])
+    W.pump(0.1)
+    expect(near(held:GetTop(), tops[7]), "a group b row moved into group a")
+    release(held)
+    expect(#handleLog == count, "a drop back on its own slot reported a reorder")
+
+    held = list:GetRow(1)
+    W.cursorTo(held.kitHandle)
+    W.fireScript(held.kitHandle, "OnMouseDown", "LeftButton")
+    expect(not list:IsDragging(), "an item without a drag group was picked up")
+    list:Release()
+  end)
+
   step("kit list: scrollbar = false hides the bar and the viewport spans the full width", function()
     newList({ height = 200, scrollbar = false })
     expect(not list.kitBar:IsShown(), "scrollbar shown with scrollbar = false")

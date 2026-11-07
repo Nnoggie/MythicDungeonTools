@@ -6,6 +6,10 @@ local OVERSCAN = 1
 local WHEEL_STEP = 56
 local BAR_WIDTH = 8
 local INDICATOR_HEIGHT = 2
+local HANDLE_WIDTH = 14
+local GRIP_SIZE = 10
+local LIFT_LEVELS = 10
+local LIFT_SLOP = 4
 
 ---Rows are pooled per kind, shared by every list that uses that kind.
 ---@type table<MDT.UI.ListKind, table>
@@ -24,6 +28,52 @@ local function rowWheel(row, delta)
   if row.kitList then row.kitList:SetOffset(row.kitList:GetOffset() - delta * WHEEL_STEP) end
 end
 
+-- The grip covers part of its row, so hovering it keeps the row hovered.
+local function handleDown(handle, button)
+  local row = handle.kitRow
+  if button == "LeftButton" and row.kitList then row.kitList:kitHandleDragStart(row) end
+end
+local function handleUp(handle, button)
+  local row = handle.kitRow
+  local list = row.kitDragList or row.kitList
+  if button == "LeftButton" and list then list:kitDragFinish(true) end
+end
+local function handleEnter(handle)
+  local row = handle.kitRow
+  handle.kitHovered = true
+  if row.kitList then row.kitList:kitRowHover(row, true) end
+  local tooltip = row.kitKind.handle.tooltip
+  if tooltip and not (row.kitList and row.kitList.kitDrag) then UI.Tooltip.Show(handle, tooltip) end
+end
+local function handleLeave(handle)
+  local row = handle.kitRow
+  handle.kitHovered = nil
+  UI.Tooltip.Hide(handle)
+  if row.kitList then row.kitList:kitRowHover(row, false) end
+end
+local function handleWheel(handle, delta) rowWheel(handle.kitRow, delta) end
+-- A right-click on the grip acts like one on its row: it cancels a drag or opens the row's menu.
+local function handleClick(handle, button) rowClick(handle.kitRow, button) end
+
+local function createHandle(row)
+  local handle = CreateFrame("Button", nil, row)
+  handle:SetPoint("TOPLEFT")
+  handle:SetPoint("BOTTOMLEFT")
+  handle:SetWidth(HANDLE_WIDTH)
+  handle.kitRow = row
+  handle.kitGrip = UI.Glyphs.Create(handle, "grip", GRIP_SIZE, "text.muted")
+  handle.kitGrip:SetPoint("CENTER")
+  UI.Script(handle, "OnMouseDown", handleDown)
+  UI.Script(handle, "OnMouseUp", handleUp)
+  UI.Script(handle, "OnEnter", handleEnter)
+  UI.Script(handle, "OnLeave", handleLeave)
+  UI.Script(handle, "OnMouseWheel", handleWheel)
+  handle:RegisterForClicks("RightButtonUp")
+  UI.Script(handle, "OnClick", handleClick)
+  handle:EnableMouseWheel(true)
+  row.kitHandle = handle
+end
+
 ---@param kind MDT.UI.ListKind
 local function poolFor(kind)
   local pool = rowPools[kind]
@@ -34,6 +84,7 @@ local function poolFor(kind)
     row.kitRowBackground = row:CreateTexture(nil, "BACKGROUND")
     row.kitRowBackground:SetAllPoints()
     row.kitRowBorder = UI.Pixel.Border(row, "accent")
+    if kind.handle then createHandle(row) end
     row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     if kind.draggable then row:RegisterForDrag("LeftButton") end
     UI.Script(row, "OnClick", rowClick)
@@ -53,6 +104,7 @@ end
 local function releaseRow(row)
   if row.kitKind.mixin.OnUnbind then row.kitKind.mixin.OnUnbind(row) end
   UI.Tooltip.Hide(row)
+  if row.kitHandle then UI.Tooltip.Hide(row.kitHandle) end
   -- Hiding a hovered row fires its OnLeave, which still needs its list and item.
   row:Hide()
   row.kitItem, row.kitIndex, row.kitKey, row.kitSig, row.kitList, row.kitHovered = nil, nil, nil, nil, nil, nil
@@ -142,8 +194,21 @@ function Methods:kitPaintRow(row)
   else
     row.kitRowBorder:SetShown(false)
   end
-  local dragged = self.kitDrag and self.kitDrag.keySet[row.kitKey]
-  row:SetAlpha(dragged and Theme.data.alpha.dragSource or 1)
+  local drag = self.kitDrag
+  local lifted = drag and drag.lift and drag.row == row
+  if lifted then
+    Theme.Bind(row.kitRowBackground, "bg.raised2")
+    row.kitRowBackground:Show()
+    row.kitRowBorder:SetToken("border.strong")
+    row.kitRowBorder:SetShown(true)
+  end
+  local handle = row.kitHandle
+  if handle then
+    handle:SetShown(row.kitItem.dragGroup ~= nil and self.kitProps.onReorder ~= nil)
+    handle.kitGrip:SetColor((lifted or (handle.kitHovered and not drag)) and "text.normal" or "text.muted")
+  end
+  local ghosted = drag and not drag.lift and drag.keySet[row.kitKey]
+  row:SetAlpha(ghosted and Theme.data.alpha.dragSource or 1)
 end
 
 function Methods:kitBind(row, item, index)
@@ -155,6 +220,14 @@ end
 ---The row that started a drag stays bound and placed until the drop, even when it scrolls out of the viewport.
 function Methods:kitIsDragOrigin(row)
   return self.kitDrag ~= nil and self.kitDrag.row == row
+end
+
+---Anchors a row at its content offset, or where a handle drag has slid it.
+function Methods:kitPlaceRow(row, index)
+  local drag = self.kitDrag
+  local top = drag and drag.lift and drag.shown[index] or self.kitTops[index]
+  row:ClearAllPoints()
+  row:SetPoint("TOPLEFT", self.kitViewport, "TOPLEFT", 0, -(top - self.kitOffset))
 end
 
 ---Virtualization pass: releases rows outside the visible range, binds rows for new indices, repositions the rest.
@@ -177,8 +250,7 @@ function Methods:kitRefresh()
   end
   local width = viewport:GetWidth()
   local function place(row, index)
-    row:ClearAllPoints()
-    row:SetPoint("TOPLEFT", viewport, "TOPLEFT", 0, -(self.kitTops[index] - self.kitOffset))
+    self:kitPlaceRow(row, index)
     row:SetSize(width, self.kitHeights[index])
     row:Show()
   end
@@ -246,6 +318,39 @@ local function ghostFor(list)
   return ghost
 end
 
+---A handle drag: the held row follows the cursor within its group, and the others ease toward the spots they take
+---if it is dropped now.
+local function liftUpdate(self, drag, elapsed, cursorY)
+  local tops, heights, members, held = self.kitTops, self.kitHeights, drag.members, drag.index
+  local first, last = members[1], members[#members]
+  local height = heights[held]
+  local y = math.max(tops[first], math.min(tops[last] + heights[last] - height, cursorY + self.kitOffset - drag.grab))
+  -- A row swaps places once the held row's leading edge crosses its middle.
+  local position, order = 1, {}
+  for _, index in ipairs(members) do
+    if index ~= held then
+      order[#order + 1] = index
+      local middle = tops[index] + heights[index] / 2
+      local staysAbove
+      if index < held then staysAbove = y >= middle else staysAbove = y + height > middle end
+      if staysAbove then position = position + 1 end
+    end
+  end
+  table.insert(order, position, held)
+  drag.noop = position == drag.from
+  drag.slot = position > drag.from and position + 1 or position
+  local gap, top = Theme.Space(self.kitProps.gap), tops[first]
+  local ease = math.min(1, elapsed * Theme.data.motion.dragSlide)
+  for _, index in ipairs(order) do
+    if index ~= held then drag.shown[index] = drag.shown[index] + (top - drag.shown[index]) * ease end
+    top = top + heights[index] + gap
+  end
+  drag.shown[held] = y
+  for index, row in pairs(self.kitRows) do
+    if drag.shown[index] then self:kitPlaceRow(row, index) end
+  end
+end
+
 local function dragUpdate(self, elapsed)
   local drag = self.kitDrag
   if not drag then return end
@@ -257,8 +362,15 @@ local function dragUpdate(self, elapsed)
   local _, cursorY = GetCursorPosition()
   local localY = viewport:GetTop() - cursorY / viewport:GetEffectiveScale()
   local viewH = viewport:GetHeight()
-  local speed = ListMath.AutoScroll(localY, viewH, Theme.data.motion.dragEdge, Theme.data.motion.dragScrollMax)
+  -- A row picked up by its grip near an edge waits for the cursor to move before the list scrolls under it.
+  if drag.lift and not drag.moved then drag.moved = math.abs(localY - drag.startY) > LIFT_SLOP end
+  local speed = (drag.lift and not drag.moved) and 0
+    or ListMath.AutoScroll(localY, viewH, Theme.data.motion.dragEdge, Theme.data.motion.dragScrollMax)
   if speed ~= 0 then self:SetOffset(self.kitOffset + speed * elapsed) end
+  if drag.lift then
+    liftUpdate(self, drag, elapsed, localY)
+    return
+  end
   drag.ghost:ClearAllPoints()
   drag.ghost:SetPoint("LEFT", viewport, "TOPLEFT", 0, -localY)
   local rows = {}
@@ -318,23 +430,75 @@ function Methods:kitDragStart(row)
   dragUpdate(self, 0)
 end
 
+---The keys and sigs of a drag group's items, to tell whether items set during a drag changed it.
+---@param items MDT.UI.ListItem[]
+---@param dragGroup any
+---@return string
+local function groupSignature(items, dragGroup)
+  local parts = {}
+  for _, item in ipairs(items) do
+    if item.dragGroup == dragGroup then parts[#parts + 1] = tostring(item.key).."\0"..tostring(item.sig) end
+  end
+  return table.concat(parts, "\1")
+end
+
+---Picks up a row by its grip. It moves among the adjacent items that share its dragGroup.
+function Methods:kitHandleDragStart(row)
+  local item, index = row.kitItem, row.kitIndex
+  if self.kitDrag or not item or item.dragGroup == nil or not self.kitProps.onReorder then return end
+  local members, from = {}, nil
+  for i, other in ipairs(self.kitProps.items) do
+    if other.dragGroup == item.dragGroup then
+      members[#members + 1] = i
+      if i == index then from = #members end
+    end
+  end
+  if #members < 2 then return end
+  local shown = {}
+  for _, i in ipairs(members) do shown[i] = self.kitTops[i] end
+  local viewport = self.kitViewport
+  local _, cursorY = GetCursorPosition()
+  local startY = viewport:GetTop() - cursorY / viewport:GetEffectiveScale()
+  self.kitDrag = {
+    lift = true, keys = { item.key }, keySet = { [item.key] = true }, row = row, index = index,
+    members = members, from = from, shown = shown, grab = startY + self.kitOffset - self.kitTops[index], startY = startY,
+    dragGroup = item.dragGroup, group = groupSignature(self.kitProps.items, item.dragGroup), noop = true, frameLevel = row:GetFrameLevel(),
+  }
+  row.kitDragList = self
+  row:SetFrameLevel(row:GetFrameLevel() + LIFT_LEVELS)
+  self.kitDrag.escape = { close = function() self:kitDragFinish(false) end }
+  UI.Escape.Push(self.kitDrag.escape)
+  UI.Tooltip.Hide(row)
+  UI.Tooltip.Hide(row.kitHandle)
+  for _, visible in pairs(self.kitRows) do self:kitPaintRow(visible) end
+  UI.Script(self, "OnUpdate", dragUpdate)
+  dragUpdate(self, 0)
+end
+
 ---@param commit boolean
 function Methods:kitDragFinish(commit)
   local drag = self.kitDrag
   if not drag then return end
   UI.Script(self, "OnUpdate", nil)
   self.kitIndicator:Hide()
-  drag.ghostRow:EnableMouse(true)
-  releaseRow(drag.ghostRow)
-  drag.ghost:Hide()
+  if drag.lift then
+    drag.row:SetFrameLevel(drag.frameLevel)
+  else
+    drag.ghostRow:EnableMouse(true)
+    releaseRow(drag.ghostRow)
+    drag.ghost:Hide()
+  end
   UI.Escape.Remove(drag.escape)
   drag.row.kitDragList = nil
   self.kitDrag = nil
   local pending = self.kitPendingItems
   if pending then
+    -- A grip drop is a slot within the group as it was; if the group changed meanwhile, the drop is dropped.
+    if drag.lift and groupSignature(pending, drag.dragGroup) ~= drag.group then commit = false end
     self.kitPendingItems = nil
     self:SetItems(pending)
   else
+    if drag.lift then self:kitRefresh() end
     for _, row in pairs(self.kitRows) do self:kitPaintRow(row) end
   end
   if commit and drag.slot and not drag.noop then self:Emit("onReorder", drag.keys, drag.slot) end
@@ -349,7 +513,7 @@ end
 ---@field onSelect fun(selection: integer[], clicked: integer, mods: MDT.UI.ClickMods)? proposed selection from the pure click semantics
 ---@field onActivate fun(item: MDT.UI.ListItem, index: integer, mods: MDT.UI.ClickMods)?
 ---@field onContext fun(item: MDT.UI.ListItem, index: integer, mods: MDT.UI.ClickMods): MDT.UI.MenuItem[]? returned items open at the cursor
----@field onReorder fun(keys: (string|number)[], slot: integer)? slot is the insert-before position among draggable rows, 1..n+1
+---@field onReorder fun(keys: (string|number)[], slot: integer)? slot is the insert-before position, 1..n+1, among the draggable rows, or for a handle drag among the rows of the dragged item's dragGroup
 ---@field onHover fun(item: MDT.UI.ListItem, index: integer, row: table)?
 ---@field onHoverEnd fun(item: MDT.UI.ListItem, index: integer, row: table)?
 UI.Define({

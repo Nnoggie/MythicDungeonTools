@@ -93,7 +93,7 @@
 ---@field skin table<MDT.UI.Variant, table<MDT.UI.State, MDT.UI.SkinRow>>
 ---@field border number
 ---@field alpha {disabled: number, dragSource: number}
----@field motion {commitDelay: number, dragScrollMax: number, dragEdge: number, submenuDelay: number}
+---@field motion {commitDelay: number, dragScrollMax: number, dragEdge: number, dragSlide: number, submenuDelay: number}
 
 ---@class MDT.UI.CommonSpec
 ---@field id string? container:Find(id)
@@ -150,12 +150,14 @@
 ---@field kind string selects a ListKind
 ---@field key string|number identity for reconcile and drag
 ---@field sig string? content signature; equal kind, key and sig skip the rebind
+---@field dragGroup any? with a handle kind: the run of adjacent items this one reorders among; nil shows no grip
 ---@field [string] any
 
 ---@class MDT.UI.ListKind
 ---@field height number|MDT.UI.ControlSize
 ---@field mixin {OnCreate: fun(row: MDT.UI.Control), Bind: fun(row: MDT.UI.Control, item: MDT.UI.ListItem, index: integer, list: MDT.UI.Control), OnUnbind: fun(row: MDT.UI.Control)?}
----@field draggable boolean?
+---@field draggable boolean? the whole row drags a ghost to a drop line
+---@field handle {tooltip: string?}? a grip on the row's left drags the row itself within its dragGroup while the others slide aside; row content anchors to row.kitHandle
 ---@field selectable boolean?
 
 ---A fixed spot instead of the default placement: SetPoint(point, relativeTo, relativePoint or point, x or 0, y or 0).

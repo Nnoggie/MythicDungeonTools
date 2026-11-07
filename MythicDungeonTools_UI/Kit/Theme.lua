@@ -110,7 +110,7 @@ Theme.data = {
   },
   border = 1,
   alpha = { disabled = 0.45, dragSource = 0.35 },
-  motion = { commitDelay = 0.4, dragScrollMax = 600, dragEdge = 24, submenuDelay = 0.15 },
+  motion = { commitDelay = 0.4, dragScrollMax = 600, dragEdge = 24, dragSlide = 24, submenuDelay = 0.15 },
 }
 
 ---@type table<string, MDT.UI.RGBA>

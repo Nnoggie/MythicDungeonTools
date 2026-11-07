@@ -17,12 +17,13 @@ local shapes = {
   cross = { { -0.4, 0.4, 0.4, -0.4 }, { -0.4, -0.4, 0.4, 0.4 } },
   plus = { { -0.5, 0, 0.5, 0 }, { 0, -0.5, 0, 0.5 } },
   minus = { { -0.5, 0, 0.5, 0 } },
+  grip = { { -0.4, 0.3, 0.4, 0.3 }, { -0.4, 0, 0.4, 0 }, { -0.4, -0.3, 0.4, -0.3 } },
 }
 
 ---@class MDT.UI.Glyph : MDT.UI.Control
 local Glyph = {}
 
----@param shape "down"|"up"|"left"|"right"|"check"|"cross"|"plus"|"minus"
+---@param shape "down"|"up"|"left"|"right"|"check"|"cross"|"plus"|"minus"|"grip"
 function Glyph:SetShape(shape)
   local segments = shapes[shape] or error("Glyphs: unknown shape "..tostring(shape), 2)
   self.kitShape = shape
