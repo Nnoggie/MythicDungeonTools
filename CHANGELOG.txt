@@ -1,3 +1,4 @@
-## 6.3.30 (2026-11-04)
+## 6.3.31 (2026-11-08)
 
-- Fixed route names not showing when importing or exporting multiple routes.
+- Routes can now be reordered. Drag a route by the grip on its left.
+- New and imported routes are now added to the top of the route list.
