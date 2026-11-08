@@ -109,6 +109,22 @@ return function(ctx)
     MDT:Settings_Refresh()
   end)
 
+  step("settings: the April Fools jokes option shows only on April 1st and saves its value", function()
+    local page = openSection("settings")
+    local box = page:Find("hideAprilFools")
+    expect(box and not box:IsVisible(), "the April Fools option shows on a day that is not April 1st")
+    local isAprilFirst = MDT.IsAprilFirst
+    MDT.IsAprilFirst = function() return true end
+    local ok, err = pcall(function()
+      MDT:Settings_Refresh()
+      toggle(page, "hideAprilFools", function() return db.hideAprilFools == true end)()
+    end)
+    MDT.IsAprilFirst = isAprilFirst
+    MDT:Settings_Refresh()
+    if not ok then error(err, 0) end
+    expect(not box:IsVisible(), "the April Fools option stays after April 1st")
+  end)
+
   step("settings: the minimap checkbox follows /mdt minimap and Settings_Refresh resyncs from saved variables", function()
     local page = openSection("settings")
     local box = control(page, "minimap")

@@ -51,6 +51,8 @@ end
 
 local function asyncIdle()
   local ui = Loader.addons.MythicDungeonTools_UI.namespace
+  -- Pull labels placed anew walk to their spots for a while.
+  if ui.ArePullLabelsWalking and ui:ArePullLabelsWalking() then return false end
   return not ui.asyncHandler or ui.asyncHandler.size == 0
 end
 

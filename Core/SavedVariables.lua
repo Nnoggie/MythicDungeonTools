@@ -10,6 +10,7 @@ local defaultSavedVars = {
     useForcesCount = false, -- replaces percent in pull buttons with count
     showPullButtonHealth = false,
     autoPanToPull = true,
+    hideAprilFools = false, -- on April 1st, pull labels walk the spiral their placement searched unless this is on
     devPullLabelSize = 1, -- the pull labels' size on the map in dev mode, from the slider in its top right
     enemyForcesTooltip = 1,
     muteXalatathVoiceLines = false,

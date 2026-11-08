@@ -541,6 +541,70 @@ return function(ctx)
     expect(math.abs(nx - x) < 0.01 and math.abs(ny - y) < 0.01, "a redraw with the same pulls moved the label")
   end)
 
+  ---Places every label anew and returns one that walks to its spot, if any does.
+  local function placeAnew()
+    -- Labels placed for no outline yet search anew.
+    MDT:HidePullLabels()
+    MDT:DrawAllHulls(nil, true)
+    for _ = 1, 30 * 60 do
+      if MDT:ArePullLabelsWalking() or asyncIdle() then break end
+      W.pump(1 / 60)
+    end
+    for index = 1, #pulls() do
+      local shown = label(index)
+      if shown and shown.walk then return shown end
+    end
+  end
+
+  ---Runs fn as if it were April 1st.
+  local function onAprilFirst(fn)
+    local isAprilFirst = MDT.IsAprilFirst
+    MDT.IsAprilFirst = function() return true end
+    local ok, err = pcall(fn)
+    MDT.IsAprilFirst = isAprilFirst
+    W.settle(asyncIdle, 30)
+    if not ok then error(err, 0) end
+  end
+
+  step("pull labels: on April 1st a label placed anew walks the spiral its search took to its spot", function()
+    expect(not placeAnew(), "a label walks on a day that is not April 1st")
+    W.settle(asyncIdle, 30)
+    onAprilFirst(function()
+      local walker = placeAnew()
+      expect(walker, "no label walks after a fresh placement")
+      local placement, path = walker.placement, walker.walk.path
+      local function at()
+        local _, _, _, x, y = walker:GetPoint()
+        return x, y
+      end
+      local function near(x, y, tx, ty) return math.abs(x - tx) < 0.01 and math.abs(y - ty) < 0.01 end
+      W.pump(1)
+      local x, y = at()
+      expect(not near(x, y, placement.x, placement.y) and not near(x, y, path[1], path[2]),
+        "halfway the label is not between its pull's center and its spot")
+      expect(not walker.leader:IsShown(), "a walking label shows its leader line")
+      W.settle(asyncIdle, 30)
+      x, y = at()
+      expect(not walker.walk and near(x, y, placement.x, placement.y), "the label did not end its walk on its spot")
+      expect(walker.leader:IsShown() == (placement.leaderX ~= nil), "the leader line did not come back with the walk's end")
+    end)
+  end)
+
+  step("pull labels: turning the April Fools walks off stops walking labels on their spots", function()
+    onAprilFirst(function()
+      local walker = placeAnew()
+      expect(walker, "setup: no label walks")
+      MDT:SetPullLabelWalksOn(false)
+      local _, _, _, x, y = walker:GetPoint()
+      expect(not MDT:ArePullLabelsWalking() and x == walker.placement.x and y == walker.placement.y,
+        "turning the walks off left a label walking")
+      W.settle(asyncIdle, 30)
+      expect(not placeAnew(), "a label walks with the walks turned off")
+      W.settle(asyncIdle, 30)
+      MDT:SetPullLabelWalksOn(true)
+    end)
+  end)
+
   step("pull labels: with a drawing tool picked, labels let clicks through to the map", function()
     MDT:UpdateSelectedToolbarTool("pencil")
     expect(not label(1):IsMouseEnabled() and not label(2):IsMouseEnabled(), "labels take clicks while drawing")

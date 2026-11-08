@@ -813,6 +813,19 @@ test("PullLabelLayout.Place: a pack on the center pushes the label aside, still 
   eq(math.sqrt(placement.x ^ 2 + placement.y ^ 2) < 40, true, "label went far: "..placement.x..", "..placement.y)
 end)
 
+test("PullLabelLayout.Place: a searched spot comes with the spiral walked to it, a kept or central one without", function()
+  local outline = square(0, 0, 50)
+  local enemies = { { 0, 0, 8 }, { 12, 0, 8 }, { -12, 0, 8 }, { 0, 12, 8 }, { 0, -12, 8 } }
+  local placement = PullLabelLayout.Place({ { key = 1, outline = outline, width = 24, height = 12 } }, enemies)[1]
+  local path = placement.path
+  eq(path ~= nil and #path >= 4 and #path % 2 == 0, true, "no path to a spot off the center")
+  eq({ path[1], path[2], path[#path - 1], path[#path] }, { 0, 0, placement.x, placement.y })
+  local kept = PullLabelLayout.Place({ { key = 1, outline = outline, width = 24, height = 12,
+    previous = { x = placement.x, y = placement.y, cost = placement.cost } } }, enemies)[1]
+  eq({ kept.x, kept.y, kept.path }, { placement.x, placement.y, nil })
+  eq(PullLabelLayout.Place({ { key = 1, outline = outline, width = 20, height = 10 } }, {})[1].path, nil)
+end)
+
 test("PullLabelLayout.Place: a pull with no room inside gets a label beside it, a far one a leader line", function()
   -- The outline hugs a single enemy, so the label reaches out of it.
   local enemy = { 0, 0, 10 }

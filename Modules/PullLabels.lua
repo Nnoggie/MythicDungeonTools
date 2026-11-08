@@ -6,9 +6,9 @@ local Layout, Model = MDT.PullLabelLayout, MDT.SidebarModel
 local max, pairs, ipairs, unpack = math.max, pairs, ipairs, unpack
 
 -- Every pull on the map has a label: its number on a swatch of its color, and the running forces total up to it. The
--- labels place themselves around the enemies (MDT.PullLabelLayout) each time the outlines redraw. Hovering a label
--- shows the pull's card and lights up its outline, a click selects the pull, a right-click opens the pull menu and
--- dragging it onto another pull merges the two.
+-- labels place themselves around the enemies (MDT.PullLabelLayout) each time the outlines redraw; on April 1st a label
+-- placed anew walks the spiral its search took to its spot. Hovering a label shows the pull's card and lights up its
+-- outline, a click selects the pull, a right-click opens the pull menu and dragging it onto another pull merges the two.
 
 -- Labels are the same size on every map, as the maps are, and grow with the map's scale and zoom like the enemies.
 -- Enemy sizes differ a lot between dungeons, so they make a poor yardstick. Sizes below are fractions of the label's
@@ -32,6 +32,9 @@ local CIRCLE = "Interface\\AddOns\\MythicDungeonTools\\Textures\\Circle_White"
 ---An enemy portrait's radius on the map per unit of the enemy's scale (texture_Background in DungeonEnemies.lua).
 local PORTRAIT_RADIUS = 10
 local LABEL_LEVEL, RAISED_LEVEL = 100, 105
+---On April 1st a label the search just placed walks the spiral it searched, from its pull's area center to its spot,
+---over this long.
+local WALK_SECONDS = 2
 
 local CARD_WIDTH = 250
 local UNKNOWN_SPELL_ICON = 134400
@@ -59,6 +62,13 @@ local CARD_PAD_X, CARD_PAD_Y = "md", "sm"
 ---@field dragEndedAt number? GetTime() of the last drag's end, so its mouse up is no click
 ---@field bright boolean? shown at full color: the current pull, or lit up
 ---@field placedHeight number? the height the label was placed at; another height places it anew
+---@field walk MDT.PullLabelWalk? the label's walk along its search's spiral, while it walks
+
+---@class MDT.PullLabelWalk
+---@field path number[] x1, y1, x2, y2, ... from the area center to the spot
+---@field lengths number[] the distance along the path at each of its points
+---@field elapsed number
+---@field segment integer the path segment the label was last on
 
 ---Shown labels by pull index, and hidden ones kept for reuse.
 ---@type table<integer, MDT.PullLabel>, MDT.PullLabel[]
@@ -468,16 +478,29 @@ local function followCursor(label)
   end
 end
 
----Puts a label where the layout placed it, with its leader line when it has one.
+---Centers a label on x, y of the map.
+---@param label MDT.PullLabel
+---@param x number
+---@param y number
+local function moveTo(label, x, y)
+  -- Offsets count in the label's own scale, which the size slider changes while it moves.
+  local scale = label:GetScale()
+  label:ClearAllPoints()
+  label:SetPoint("CENTER", MDT.main_frame.mapPanelTile1, "TOPLEFT", x / scale, y / scale)
+end
+
+---Puts a label where the layout placed it, with its leader line when it has one. A walking label stops walking.
 ---@param label MDT.PullLabel
 local function settle(label)
   local placement = label.placement
   if not placement then return end
+  if label.walk then
+    label.walk = nil
+    label:SetScript("OnUpdate", nil)
+  end
   local tile = MDT.main_frame.mapPanelTile1
-  -- Offsets count in the label's own scale, which the size slider changes while it moves.
   local scale = label:GetScale()
-  label:ClearAllPoints()
-  label:SetPoint("CENTER", tile, "TOPLEFT", placement.x / scale, placement.y / scale)
+  moveTo(label, placement.x, placement.y)
   local leader = label.leader
   if placement.leaderX then
     leader:SetStartPoint("TOPLEFT", tile, placement.x / scale, placement.y / scale)
@@ -488,6 +511,45 @@ local function settle(label)
   end
 end
 
+---Moves a walking label on along its path, at an even speed, and settles it on its spot at the end.
+---@param label MDT.PullLabel
+---@param elapsed number
+local function walkOn(label, elapsed)
+  local walk = label.walk
+  if not walk then return end
+  walk.elapsed = walk.elapsed + elapsed
+  if walk.elapsed >= WALK_SECONDS then
+    settle(label)
+    return
+  end
+  local path, lengths = walk.path, walk.lengths
+  local distance = lengths[#lengths] * walk.elapsed / WALK_SECONDS
+  local i = walk.segment
+  while lengths[i + 1] <= distance do i = i + 1 end
+  walk.segment = i
+  local t = (distance - lengths[i]) / (lengths[i + 1] - lengths[i])
+  local x1, y1 = path[2 * i - 1], path[2 * i]
+  moveTo(label, x1 + (path[2 * i + 1] - x1) * t, y1 + (path[2 * i + 2] - y1) * t)
+end
+
+---Starts a label walking the spiral its search took, from its pull's area center to its spot.
+---@param label MDT.PullLabel
+---@param path number[]
+local function startWalk(label, path)
+  local lengths = { 0 }
+  for i = 3, #path, 2 do
+    lengths[#lengths + 1] = lengths[#lengths] + math.sqrt((path[i] - path[i - 2]) ^ 2 + (path[i + 1] - path[i - 1]) ^ 2)
+  end
+  if lengths[#lengths] <= 0 then
+    settle(label)
+    return
+  end
+  label.walk = { path = path, lengths = lengths, elapsed = 0, segment = 1 }
+  label.leader:Hide()
+  moveTo(label, path[1], path[2])
+  UI.Script(label, "OnUpdate", walkOn)
+end
+
 ---@param label MDT.PullLabel
 local function onDragStart(label)
   hovered = nil
@@ -496,6 +558,7 @@ local function onDragStart(label)
   MDT:HideEnemyHoverCard()
   hideCard()
   MDT:PreviewSidebarForces(nil)
+  label.walk = nil
   label.leader:Hide()
   label:SetFrameLevel(RAISED_LEVEL)
   label.dragPull, label.dropPull = MDT:GetPulls()[label.pullIdx], nil
@@ -562,8 +625,9 @@ local function createLabel()
   UI.Script(label, "OnDragStart", onDragStart)
   UI.Script(label, "OnDragStop", onDragStop)
   -- The window can close mid-drag or mid-hover, and then no OnDragStop or OnLeave comes; a hidden label ends both, so it
-  -- does not hold back the enemy cards.
+  -- does not hold back the enemy cards. A hidden label stops walking on its spot, as it gets no OnUpdate meanwhile.
   UI.Script(label, "OnHide", function()
+    if label.walk then settle(label) end
     endDrag(label)
     if hovered == label then onLeave(label) end
   end)
@@ -731,7 +795,15 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
     if label then
       label.placement, label.outline, label.outlineKey = placement, placed[index].outline, placed[index].outlineKey
       label.placedHeight = height
-      if label ~= dragging then settle(label) end
+      if label ~= dragging then
+        local walk = label.walk
+        if placement.path and MDT:ArePullLabelWalksOn() then
+          startWalk(label, placement.path)
+        -- A redraw that keeps the spot a label walks to lets it walk on.
+        elseif not (walk and walk.path[#walk.path - 1] == placement.x and walk.path[#walk.path] == placement.y) then
+          settle(label)
+        end
+      end
       label:Show()
     end
   end
@@ -756,6 +828,28 @@ function MDT:PreviewPullLabelSize(size)
         label:Hide()
       end
     end
+  end
+end
+
+---Whether it is April 1st, the day labels walk to their spots.
+---@return boolean
+function MDT:IsAprilFirst()
+  return date("%m-%d") == "04-01"
+end
+
+---Whether labels placed anew walk to their spots: on April 1st, unless April Fools jokes are turned off in the settings.
+---@return boolean
+function MDT:ArePullLabelWalksOn()
+  return MDT:IsAprilFirst() and not MDT:GetDB().hideAprilFools
+end
+
+---Turns the April 1st label walks on or off; turned off, walking labels stop on their spots.
+---@param on boolean
+function MDT:SetPullLabelWalksOn(on)
+  MDT:GetDB().hideAprilFools = not on
+  if on then return end
+  for _, label in pairs(labels) do
+    if label.walk then settle(label) end
   end
 end
 
@@ -828,4 +922,13 @@ end
 ---@return table?
 function MDT:GetPullLabelCard()
   return card
+end
+
+---Whether a shown label still walks to its spot.
+---@return boolean
+function MDT:ArePullLabelsWalking()
+  for _, label in pairs(labels) do
+    if label.walk and label:IsVisible() then return true end
+  end
+  return false
 end

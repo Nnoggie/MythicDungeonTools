@@ -37,6 +37,8 @@ local abs, cos, sin, sqrt, max, min, pi = math.abs, math.cos, math.sin, math.sqr
 ---@field cost number what the spot cost; math.huge when no spot was free
 ---@field leaderX number? where a leader line from the label meets the outline; nil when the label is on or beside it
 ---@field leaderY number?
+---@field path number[]? the spiral the search walked from the area center to the spot, as x1, y1, x2, y2, ...; nil
+---when the label kept its previous spot or stayed on the center
 
 ---@class MDT.PullLabelOptions
 ---@field pad number? free space kept around each label
@@ -332,7 +334,7 @@ function Layout.Place(requests, enemies, opts)
       return min(COST.insidePerHeight * r / height, outside)
     end
 
-    local x, y, best
+    local x, y, best, path
     local previous = request.previous
     if previous then
       local value = cost(previous.x, previous.y, sqrt(((previous.x - anchorX) / stretch) ^ 2 + (previous.y - anchorY) ^ 2))
@@ -343,17 +345,24 @@ function Layout.Place(requests, enemies, opts)
       -- An Archimedean spiral, its turns and its points about step apart.
       local step = height / 2
       local theta, r = 0, 0
+      local walked, bestAt = {}, 0
       while r <= reach and (not best or cheapestFrom(r) < best) do
         local px, py = anchorX + stretch * r * cos(theta), anchorY + r * sin(theta)
+        walked[#walked + 1], walked[#walked + 2] = px, py
         local value = cost(px, py, r, best)
-        if value and (not best or value < best) then x, y, best = px, py, value end
+        if value and (not best or value < best) then x, y, best, bestAt = px, py, value, #walked end
         theta = theta + (r < step and 0.8 or step / r)
         r = step * theta / (2 * pi)
+      end
+      -- The spots tested past the one chosen are left out.
+      if bestAt > 2 then
+        for j = #walked, bestAt + 1, -1 do walked[j] = nil end
+        path = walked
       end
     end
     x, y = x or anchorX, y or anchorY
 
-    local placement = { x = x, y = y, anchorX = anchorX, anchorY = anchorY, cost = best or math.huge }
+    local placement = { x = x, y = y, anchorX = anchorX, anchorY = anchorY, cost = best or math.huge, path = path }
     if not Layout.Contains(own, x, y) then
       local lx, ly = Layout.NearestOnOutline(own, x, y)
       local dx, dy = max(0, abs(lx - x) - halfW), max(0, abs(ly - y) - halfH)

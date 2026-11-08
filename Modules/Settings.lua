@@ -53,14 +53,14 @@ local function bind(control, value, disabled, hidden)
   return control
 end
 
-local function checkbox(parent, id, label, value, onChange, disabled)
+local function checkbox(parent, id, label, value, onChange, disabled, hidden)
   return bind(UI.Checkbox(parent, {
-    id = id, label = label, value = value(), disabled = disabled and disabled() or false,
+    id = id, label = label, value = value(), disabled = disabled and disabled() or false, hidden = hidden and hidden() or false,
     onChange = function(checked)
       onChange(checked)
       sync()
     end,
-  }), value, disabled)
+  }), value, disabled, hidden)
 end
 
 local function recolorPulls(force)
@@ -181,6 +181,10 @@ local function buildGeneral(column)
     value = db.fadeOutAlpha, disabled = fadeOutDisabled(),
     onChange = function(value) db.fadeOutAlpha = value end,
   }), function() return db.fadeOutAlpha end, fadeOutDisabled)
+  -- April Fools: only on April 1st, the one day it does anything.
+  checkbox(column, "hideAprilFools", L["hideAprilFools"], function() return db.hideAprilFools == true end, function(value)
+    MDT:SetPullLabelWalksOn(not value)
+  end, nil, function() return not MDT:IsAprilFirst() end)
 
   UI.Heading(column, { text = L["Language"] })
   local changeLanguage = _G.SlashCmdList["ADDONLOCALE"]
