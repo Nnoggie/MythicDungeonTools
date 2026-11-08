@@ -785,6 +785,7 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
     bounds = { left = 0, right = map:GetWidth(), top = 0, bottom = -map:GetHeight() },
     -- Inside DrawAllHulls' task, crowded maps spread the search over frames.
     pause = coroutine.running() and coroutine.yield or nil,
+    paths = MDT:ArePullLabelWalksOn(),
   })
   local placed = {}
   for _, request in ipairs(requests) do placed[request.key] = request end
@@ -797,7 +798,7 @@ function MDT:PlacePullLabels(pulls, pullOutlines)
       label.placedHeight = height
       if label ~= dragging then
         local walk = label.walk
-        if placement.path and MDT:ArePullLabelWalksOn() then
+        if placement.path then
           startWalk(label, placement.path)
         -- A redraw that keeps the spot a label walks to lets it walk on.
         elseif not (walk and walk.path[#walk.path - 1] == placement.x and walk.path[#walk.path] == placement.y) then
@@ -843,11 +844,11 @@ function MDT:ArePullLabelWalksOn()
   return MDT:IsAprilFirst() and not MDT:GetDB().hideAprilFools
 end
 
----Turns the April 1st label walks on or off; turned off, walking labels stop on their spots.
----@param on boolean
-function MDT:SetPullLabelWalksOn(on)
-  MDT:GetDB().hideAprilFools = not on
-  if on then return end
+---Hides the April Fools jokes, or shows them again; hidden, walking labels stop on their spots.
+---@param hidden boolean
+function MDT:SetAprilFoolsHidden(hidden)
+  MDT:GetDB().hideAprilFools = hidden
+  if not hidden then return end
   for _, label in pairs(labels) do
     if label.walk then settle(label) end
   end

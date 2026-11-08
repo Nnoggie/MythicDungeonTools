@@ -37,8 +37,8 @@ local abs, cos, sin, sqrt, max, min, pi = math.abs, math.cos, math.sin, math.sqr
 ---@field cost number what the spot cost; math.huge when no spot was free
 ---@field leaderX number? where a leader line from the label meets the outline; nil when the label is on or beside it
 ---@field leaderY number?
----@field path number[]? the spiral the search walked from the area center to the spot, as x1, y1, x2, y2, ...; nil
----when the label kept its previous spot or stayed on the center
+---@field path number[]? with opts.paths, the spiral the search walked from the area center to the spot, as x1, y1, x2,
+---y2, ...; nil when the label kept its previous spot or stayed on the center
 
 ---@class MDT.PullLabelOptions
 ---@field pad number? free space kept around each label
@@ -47,6 +47,7 @@ local abs, cos, sin, sqrt, max, min, pi = math.abs, math.cos, math.sin, math.sqr
 ---@field reach number? how far past its outline a label may go, in label heights (default 6)
 ---@field leaderGap number? a label further than this from its outline gets a leader line, in label heights (default 0.75)
 ---@field pause fun()? called now and then during the search, so a caller in a coroutine can yield
+---@field paths boolean? return the spiral each search walked, as placement.path
 
 ---Costs, in label heights where they grow with distance.
 local COST = {
@@ -345,17 +346,19 @@ function Layout.Place(requests, enemies, opts)
       -- An Archimedean spiral, its turns and its points about step apart.
       local step = height / 2
       local theta, r = 0, 0
-      local walked, bestAt = {}, 0
+      local walked, bestAt = opts.paths and {}, 0
+      local walkedCount = 0
       while r <= reach and (not best or cheapestFrom(r) < best) do
         local px, py = anchorX + stretch * r * cos(theta), anchorY + r * sin(theta)
-        walked[#walked + 1], walked[#walked + 2] = px, py
+        walkedCount = walkedCount + 2
+        if walked then walked[walkedCount - 1], walked[walkedCount] = px, py end
         local value = cost(px, py, r, best)
-        if value and (not best or value < best) then x, y, best, bestAt = px, py, value, #walked end
+        if value and (not best or value < best) then x, y, best, bestAt = px, py, value, walkedCount end
         theta = theta + (r < step and 0.8 or step / r)
         r = step * theta / (2 * pi)
       end
       -- The spots tested past the one chosen are left out.
-      if bestAt > 2 then
+      if walked and bestAt > 2 then
         for j = #walked, bestAt + 1, -1 do walked[j] = nil end
         path = walked
       end

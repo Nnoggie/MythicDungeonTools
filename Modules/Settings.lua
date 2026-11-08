@@ -183,7 +183,7 @@ local function buildGeneral(column)
   }), function() return db.fadeOutAlpha end, fadeOutDisabled)
   -- April Fools: only on April 1st, the one day it does anything.
   checkbox(column, "hideAprilFools", L["hideAprilFools"], function() return db.hideAprilFools == true end, function(value)
-    MDT:SetPullLabelWalksOn(not value)
+    MDT:SetAprilFoolsHidden(value)
   end, nil, function() return not MDT:IsAprilFirst() end)
 
   UI.Heading(column, { text = L["Language"] })
