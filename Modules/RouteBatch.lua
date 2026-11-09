@@ -213,7 +213,7 @@ end
 function MDT:ImportRouteBatch(entries)
   initializeDB()
   local imported = {}
-  -- New routes go on top in the batch's own order.
+  -- New routes are added in the batch's own order.
   local nextIndex = {}
   for _, entry in ipairs(entries) do
     local preset = CopyTable(entry.route)
@@ -226,7 +226,7 @@ function MDT:ImportRouteBatch(entries)
       if matchIndex then preset.uid = nil end
       preset.text = uniqueName(presets, preset.text)
       MDT:SetUniqueID(preset)
-      nextIndex[dungeonIdx] = MDT:AddPresetOnTop(dungeonIdx, preset, nextIndex[dungeonIdx]) + 1
+      nextIndex[dungeonIdx] = MDT:AddPreset(dungeonIdx, preset, nextIndex[dungeonIdx]) + 1
     end
     imported[#imported + 1] = { dungeonIdx = dungeonIdx, preset = preset }
   end

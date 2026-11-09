@@ -31,6 +31,7 @@ L["Alpha Version! Mapping will be inaccurate!"] = "Alpha 版本！地圖資料�
 L["AltarOfFangs"] = "毒牙祭壇"
 L["AltarOfFangsShortName"] = "毒牙"
 L["Always overwrite matching routes on import"] = "匯入時一律覆寫相符的路線"
+L["Add new routes at the top"] = "將新路線加到頂端"
 L["Angry Krolusk"] = "憤怒的葉殼蟲"
 L["Animated Codex"] = "活化寶典"
 L["Animated Gold"] = "活化黃金"

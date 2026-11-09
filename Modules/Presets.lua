@@ -319,15 +319,20 @@ function MDT:ClearPreset(preset, silent)
   MDT:ColorPull()
 end
 
----Adds a route right below the default route, so new and imported routes are listed first. The shown route stays shown.
+---Adds a route last, before <New Preset>, or right below the default route when new routes go on top. The shown
+---route stays shown.
 ---@param dungeonIdx integer
 ---@param preset table
----@param index integer? where to add it, for routes added after one another; default 2, right below the default route
+---@param index integer? where to add it, for routes added after one another
 ---@return integer index of the added route
-function MDT:AddPresetOnTop(dungeonIdx, preset, index)
+function MDT:AddPreset(dungeonIdx, preset, index)
   initializeDB()
-  index = index or 2
-  tinsert(db.presets[dungeonIdx], index, preset)
+  local presets = db.presets[dungeonIdx]
+  if not index then
+    local last = presets[#presets]
+    index = db.newRoutesOnTop and 2 or last and last.value == 0 and #presets or #presets + 1
+  end
+  tinsert(presets, index, preset)
   local shown = db.currentPreset[dungeonIdx]
   if shown and shown >= index then db.currentPreset[dungeonIdx] = shown + 1 end
   return index
@@ -347,7 +352,7 @@ function MDT:CreateNewPreset(name, startingPointIdx)
     preset = { text = name, value = {} }
   end
 
-  db.currentPreset[dungeonIdx] = MDT:AddPresetOnTop(dungeonIdx, preset)
+  db.currentPreset[dungeonIdx] = MDT:AddPreset(dungeonIdx, preset)
   MDT:EnsurePresetCreatedBy(preset, true)
   MDT:UpdateMap()
   MDT:SetPresetColorPaletteInfo()
@@ -474,7 +479,7 @@ function MDT:ImportPreset(preset, fromLiveSession)
       if not preserveUid then preset.uid = nil end
       MDT:SetUniqueID(preset)
     end
-    db.currentPreset[db.currentDungeonIdx] = MDT:AddPresetOnTop(db.currentDungeonIdx, preset)
+    db.currentPreset[db.currentDungeonIdx] = MDT:AddPreset(db.currentDungeonIdx, preset)
     finishImport()
   end
   local closeCallback = function()

@@ -81,6 +81,7 @@ return function(ctx)
       { "pullHealth", function() return db.showPullButtonHealth == true end },
       { "autoPan", function() return db.autoPanToPull ~= false end },
       { "alwaysOverwriteRoutes", function() return db.alwaysOverwriteRoutesByUID == true end },
+      { "newRoutesOnTop", function() return db.newRoutesOnTop == true end },
       { "muteXalatath", function() return db.muteXalatathVoiceLines == true end },
       { "announceReset", function() return db.announceDungeonReset == true end },
       { "fadeOut", function() return db.fadeOutDuringCombat == true end },

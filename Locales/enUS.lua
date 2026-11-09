@@ -28,6 +28,7 @@ L["Alpha Version! Mapping will be inaccurate!"] = "Alpha Version! Mapping will b
 L["AltarOfFangs"] = "Altar of Fangs"
 L["AltarOfFangsShortName"] = "FANG"
 L["Always overwrite matching routes on import"] = "Always overwrite matching routes on import"
+L["Add new routes at the top"] = "Add new routes at the top"
 L["Angry Krolusk"] = "Angry Krolusk"
 L["Animated Codex"] = "Animated Codex"
 L["Animated Gold"] = "Animated Gold"

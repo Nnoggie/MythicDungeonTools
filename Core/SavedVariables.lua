@@ -33,6 +33,7 @@ local defaultSavedVars = {
     currentPreset = {},
     customRouteOrder = {}, -- dungeonIdx -> true once routes were dragged: the route list shows the saved order, not yours first
     alwaysOverwriteRoutesByUID = false,
+    newRoutesOnTop = false, -- new, duplicated and imported routes go right below the default route instead of last
     fadeOutDuringCombat = false,
     fadeOutAlpha = 0.5,
     focusMarker = {

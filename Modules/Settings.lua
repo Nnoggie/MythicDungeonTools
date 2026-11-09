@@ -161,6 +161,9 @@ local function buildGeneral(column)
   checkbox(column, "alwaysOverwriteRoutes", L["Always overwrite matching routes on import"], function() return db.alwaysOverwriteRoutesByUID == true end, function(value)
     db.alwaysOverwriteRoutesByUID = value
   end)
+  checkbox(column, "newRoutesOnTop", L["Add new routes at the top"], function() return db.newRoutesOnTop == true end, function(value)
+    db.newRoutesOnTop = value
+  end)
   if MDT:IsRetail() then
     checkbox(column, "muteXalatath", L["Mute Xal'atath Voice Lines"], function() return db.muteXalatathVoiceLines == true end, function(value)
       db.muteXalatathVoiceLines = value

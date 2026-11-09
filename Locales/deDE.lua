@@ -31,6 +31,7 @@ L["Alpha Version! Mapping will be inaccurate!"] = "Alpha-Version! Die Kartendate
 L["AltarOfFangs"] = "Der Altar der Fänge"
 L["AltarOfFangsShortName"] = "FANG"
 L["Always overwrite matching routes on import"] = "Passende Routen beim Import immer überschreiben"
+L["Add new routes at the top"] = "Neue Routen oben hinzufügen"
 L["Angry Krolusk"] = "Wütender Krolusk"
 L["Animated Codex"] = "Belebter Kodex"
 L["Animated Gold"] = "Animiertes Gold"

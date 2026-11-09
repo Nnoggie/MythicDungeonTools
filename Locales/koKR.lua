@@ -31,6 +31,7 @@ L["Alpha Version! Mapping will be inaccurate!"] = "알파 버전! 매핑이 부�
 L["AltarOfFangs"] = "송곳니의 제단"
 L["AltarOfFangsShortName"] = "송곳니"
 L["Always overwrite matching routes on import"] = "가져올 때 항상 일치하는 경로를 덮어씀"
+L["Add new routes at the top"] = "새 경로를 맨 위에 추가"
 L["Angry Krolusk"] = "성난 크롤러스크"
 L["Animated Codex"] = "살아 움직이는 전서"
 L["Animated Gold"] = "살아 움직이는 황금"

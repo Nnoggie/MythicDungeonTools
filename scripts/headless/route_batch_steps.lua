@@ -237,12 +237,11 @@ return function(ctx)
     expect(UI.Dialogs.Get("importRoutes") == nil, "importing left the list open")
     expect(#db.presets[startDungeon] == countA, "a route left out was imported")
     expect(#presetsB == countB + 1, "the new route was not added")
-    -- B is replaced in its slot, then the new route goes on top and moves it down one.
-    expect(presetsB[2].uid == routeC.uid, "the new route was not added on top")
-    expect(presetsB[indexB + 1] ~= routeB and presetsB[indexB + 1].uid == routeB.uid and presetsB[indexB + 1].text == "Batch B", "overwrite did not replace the route in place")
+    expect(presetsB[#presetsB - 1].uid == routeC.uid, "the new route was not added last")
+    expect(presetsB[indexB] ~= routeB and presetsB[indexB].uid == routeB.uid and presetsB[indexB].text == "Batch B", "overwrite did not replace the route in place")
     expect(findUID(otherDungeon, routeC.uid), "the new route lost its uid")
     expect(db.currentDungeonIdx == otherDungeon and MDT:GetCurrentPreset().text == "Batch B", "import did not show the first imported route")
-    routeB = presetsB[indexB + 1]
+    routeB = presetsB[indexB]
     routeC = findUID(otherDungeon, routeC.uid)
 
     db.alwaysOverwriteRoutesByUID = true
@@ -255,7 +254,7 @@ return function(ctx)
     local before = #presetsB
     click(content:Find("confirm"))
     W.settle(asyncIdle, 30)
-    local copy = presetsB[2]
+    local copy = presetsB[#presetsB - 1]
     expect(#presetsB == before + 1 and copy.text == "Batch C 2" and copy.uid ~= routeC.uid, "an unchecked overwrite did not import a copy")
     added[#added + 1] = { dungeonIdx = otherDungeon, uid = copy.uid }
     expect(MDT:GetCurrentPreset() == copy, "import did not show the copy")
@@ -274,17 +273,28 @@ return function(ctx)
     W.settle(asyncIdle, 30)
     expect(db.currentDungeonIdx == startDungeon and MDT:GetCurrentPreset().text == "Batch A 2", "import did not prefer the current dungeon's route")
     added[#added + 1] = { dungeonIdx = startDungeon, uid = MDT:GetCurrentPreset().uid }
-    added[#added + 1] = { dungeonIdx = otherDungeon, uid = db.presets[otherDungeon][2].uid }
+    added[#added + 1] = { dungeonIdx = otherDungeon, uid = db.presets[otherDungeon][#db.presets[otherDungeon] - 1].uid }
   end)
 
-  step("route batch: new routes of one dungeon go on top in the batch's order", function()
+  step("route batch: new routes of one dungeon go last, or on top with the setting, in the batch's order", function()
     local presets = db.presets[otherDungeon]
+    local onTop = db.newRoutesOnTop
+    db.newRoutesOnTop = false
+    MDT:ImportRouteBatch({ { route = routeB }, { route = routeC } })
+    W.settle(asyncIdle, 30)
+    local b, c = presets[#presets - 2], presets[#presets - 1]
+    expect(b.text:find("^Batch B") and c.text:find("^Batch C") and presets[#presets].value == 0,
+      "the batch was not added last in its order: "..tostring(b.text)..", "..tostring(c.text))
+    added[#added + 1] = { dungeonIdx = otherDungeon, uid = b.uid }
+    added[#added + 1] = { dungeonIdx = otherDungeon, uid = c.uid }
+    db.newRoutesOnTop = true
     MDT:ImportRouteBatch({ { route = routeB }, { route = routeC } })
     W.settle(asyncIdle, 30)
     expect(presets[2].text:find("^Batch B") and presets[3].text:find("^Batch C"),
       "the batch was not added on top in its order: "..tostring(presets[2].text)..", "..tostring(presets[3].text))
     added[#added + 1] = { dungeonIdx = otherDungeon, uid = presets[2].uid }
     added[#added + 1] = { dungeonIdx = otherDungeon, uid = presets[3].uid }
+    db.newRoutesOnTop = onTop
   end)
 
   step("route batch: routes of unknown dungeons are listed but cannot be picked", function()

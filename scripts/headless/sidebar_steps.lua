@@ -638,20 +638,23 @@ return function(ctx)
     MDT:RefreshSidebar()
   end)
 
-  step("sidebar: new routes go on top, yours come first until a route is dragged, then someone else's can go above yours", function()
+  step("sidebar: new routes go last or on top, yours come first until a route is dragged, then someone else's can go above yours", function()
     local dungeonIdx = db.currentDungeonIdx
     local presets = db.presets[dungeonIdx]
+    local onTop = db.newRoutesOnTop
     db.customRouteOrder[dungeonIdx] = nil
     local doomed = {}
     for index = 2, #presets do doomed[presets[index]] = true end
     MDT:DeletePresets(doomed)
     local names = {}
     for i = 1, 3 do
+      db.newRoutesOnTop = i == 3
       names[i] = unusedPresetName("Headless Order "..i)
       MDT:CreateNewPreset(names[i])
     end
-    local someoneElse = presets[3]
-    expect(someoneElse.text == names[2], "the routes were not added on top: "..tostring(someoneElse.text))
+    expect(presets[2].text == names[3], "the route was not added on top: "..tostring(presets[2].text))
+    local someoneElse = presets[4]
+    expect(someoneElse.text == names[2], "the routes were not added last: "..tostring(someoneElse.text))
     someoneElse.createdBy = { name = "Someone", realm = "Elsewhere", classIdx = 8 }
     MDT:RefreshSidebar()
     W.settle(asyncIdle, 30)
@@ -670,7 +673,7 @@ return function(ctx)
       return table.concat(list, "|")
     end
     local default = presets[1].text
-    expect(saved() == table.concat({ default, names[3], names[2], names[1] }, "|"), "new routes are not saved on top: "..saved())
+    expect(saved() == table.concat({ default, names[3], names[1], names[2] }, "|"), "new routes are not saved where they were added: "..saved())
     expect(listed() == table.concat({ default, names[3], names[1], names[2] }, "|"), "someone else's route is not listed after yours: "..listed())
     local defaultRow = routeRow(default)
     expect(defaultRow and not defaultRow.kitHandle:IsShown(), "the default route shows a grip")
@@ -704,6 +707,7 @@ return function(ctx)
     W.fireScript(search.kitEdit, "OnTextChanged", true)
     expect(routeRow(names[2]).kitHandle:IsShown(), "clearing the search did not bring the grips back")
     db.customRouteOrder[dungeonIdx] = nil
+    db.newRoutesOnTop = onTop
     MDT:RefreshSidebar()
   end)
 
