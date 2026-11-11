@@ -2,6 +2,14 @@ local _, MDT = ...
 
 MDT.changeLog = {
   {
+    tag = "6.3.33",
+    date = "2026-11-11",
+    notes = {
+      "Fixed a Lua error on Italian clients when showing an enemy's level.",
+      "Improved the French, Spanish, Italian, Korean, Brazilian Portuguese, Russian and Chinese translations.",
+    },
+  },
+  {
     tag = "6.3.32",
     date = "2026-11-09",
     notes = {
@@ -15,13 +23,6 @@ MDT.changeLog = {
     notes = {
       "Routes can now be reordered. Drag a route by the grip on its left.",
       "New and imported routes are now added to the top of the route list.",
-    },
-  },
-  {
-    tag = "6.3.30",
-    date = "2026-11-04",
-    notes = {
-      "Fixed route names not showing when importing or exporting multiple routes.",
     },
   },
 }

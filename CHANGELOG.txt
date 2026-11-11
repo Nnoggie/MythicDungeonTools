@@ -1,4 +1,4 @@
-## 6.3.32 (2026-11-09)
+## 6.3.33 (2026-11-11)
 
-- New and imported routes are added to the bottom of the route list again.
-- New Settings option 'Add new routes at the top', off by default.
+- Fixed a Lua error on Italian clients when showing an enemy's level.
+- Improved the French, Spanish, Italian, Korean, Brazilian Portuguese, Russian and Chinese translations.
