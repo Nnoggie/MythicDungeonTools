@@ -23,7 +23,7 @@ local candidates = {
   },
   ["MDTGuide"] = {
     name = "MDTGuide",
-    version = 123, --latest version that causes issues
+    version = 209, --latest version that causes issues
     detected = false,
     onDetect = function()
 
