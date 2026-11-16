@@ -768,6 +768,7 @@ L["Unsupported route format. Only !~MDT2~ routes are supported."] = "지원하�
 L["Use /mdt reset to restore the default position and scale of MDT."] = "MDT의 위치와 크기를 기본값으로 되돌리려면 '/mdt reset'을 입력하세요."
 L["Use as a starting point:"] = "시작점으로 사용:"
 L["Use forces count"] = "사이드바와 풀링 라벨에 병력을 수치로 표시"
+L["preciseForcesPercent"] = "백분율을 소수점 둘째 자리까지 표시"
 L["Venom Leech"] = "맹독 거머리"
 L["Version Check / Change Log"] = "버전 확인 / 변경 로그"
 L["Vexamus"] = "벡사무스"

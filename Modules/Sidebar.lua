@@ -47,6 +47,7 @@ function MDT:SidebarContext()
     totalForces = totals and totals.normal or 0,
     level = db.currentDifficulty,
     useForcesCount = db.useForcesCount == true,
+    preciseForcesPercent = db.preciseForcesPercent == true,
     showHealth = db.showPullButtonHealth == true,
     healthOf = function(enemy) return MDT:CalculateEnemyHealth(enemy.isBoss or false, enemy.health, db.currentDifficulty, enemy.ignoreFortified) end,
     formatHealth = function(health) return tostring(MDT:FormatEnemyHealth(health)) end,

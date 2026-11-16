@@ -8,6 +8,7 @@ local defaultSavedVars = {
     nonFullscreenScale = 1.4,
     uiScale = 1,
     useForcesCount = false, -- replaces percent in pull buttons with count
+    preciseForcesPercent = false, -- two decimal places in the pull buttons' and labels' percentages
     showPullButtonHealth = false,
     autoPanToPull = true,
     hideAprilFools = false, -- on April 1st, pull labels walk the spiral their placement searched unless this is on

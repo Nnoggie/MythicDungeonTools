@@ -14,6 +14,7 @@ local MAX_PORTRAITS = 7
 ---@field totalForces integer
 ---@field level integer
 ---@field useForcesCount boolean
+---@field preciseForcesPercent boolean percentages with two decimal places instead of one
 ---@field showHealth boolean
 ---@field healthOf fun(enemy: table): number enemy health at the current level
 ---@field formatHealth fun(health: number): string
@@ -70,10 +71,11 @@ local MAX_PORTRAITS = 7
 
 ---@param value number
 ---@param total number
+---@param precise boolean? two decimal places instead of one
 ---@return string
-function Model.FormatPercent(value, total)
+function Model.FormatPercent(value, total, precise)
   local percent = total > 0 and value / total * 100 or 0
-  return string.format("%.1f%%", percent)
+  return string.format(precise and "%.2f%%" or "%.1f%%", percent)
 end
 
 ---The progress bar's old coloring rule: red only when over by more than 8 forces at 102% or more.
@@ -237,9 +239,9 @@ function Model.PullItems(pulls, ctx)
     local r, g, b = ctx.pullColor(index)
     local pullText = ""
     if forces > 0 then
-      pullText = "+"..(ctx.useForcesCount and tostring(forces) or Model.FormatPercent(forces, total))
+      pullText = "+"..(ctx.useForcesCount and tostring(forces) or Model.FormatPercent(forces, total, ctx.preciseForcesPercent))
     end
-    local cumulativeText = ctx.useForcesCount and tostring(cumulative) or Model.FormatPercent(cumulative, total)
+    local cumulativeText = ctx.useForcesCount and tostring(cumulative) or Model.FormatPercent(cumulative, total, ctx.preciseForcesPercent)
     local healthText = ctx.showHealth and health > 0 and ctx.formatHealth(health) or nil
     local completes = not completed and total > 0 and previous < total and cumulative >= total and index < #pulls
     if completes then completed = true end

@@ -78,6 +78,7 @@ return function(ctx)
       { "minimap", function() return not db.minimap.hide end },
       { "compartment", function() return not db.minimap.compartmentHide end },
       { "forcesCount", function() return db.useForcesCount == true end },
+      { "preciseForcesPercent", function() return db.preciseForcesPercent == true end },
       { "pullHealth", function() return db.showPullButtonHealth == true end },
       { "autoPan", function() return db.autoPanToPull ~= false end },
       { "alwaysOverwriteRoutes", function() return db.alwaysOverwriteRoutesByUID == true end },
@@ -89,6 +90,16 @@ return function(ctx)
       { "colorBlindMode", function() return db.colorPaletteInfo.forceColorBlindMode == true end },
     }
     for _, option in ipairs(options) do toggle(page, option[1], option[2])() end
+  end)
+
+  step("settings: two decimal places is greyed out while forces show as a count", function()
+    local page = openSection("settings")
+    local precise = control(page, "preciseForcesPercent")
+    expect(precise:IsDisabled() == (db.useForcesCount == true), "the decimals option ignores Use forces count")
+    local restore = toggle(page, "forcesCount", function() return db.useForcesCount == true end)
+    expect(precise:IsDisabled() == (db.useForcesCount == true), "the decimals option did not follow Use forces count")
+    restore()
+    expect(precise:IsDisabled() == (db.useForcesCount == true), "the decimals option did not follow Use forces count back")
   end)
 
   step("settings: transparency follows the combat fade toggle and its slider saves the alpha", function()

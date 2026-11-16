@@ -768,6 +768,7 @@ L["Unsupported route format. Only !~MDT2~ routes are supported."] = "不支援�
 L["Use /mdt reset to restore the default position and scale of MDT."] = "輸入 /mdt reset 來重置 MDT 視窗，恢復成預設的大小和位置。"
 L["Use as a starting point:"] = "從這個規劃路線開始編輯:"
 L["Use forces count"] = "在側邊欄和拉怪標籤顯示敵方部隊數值"
+L["preciseForcesPercent"] = "百分比顯示到小數點後兩位"
 L["Venom Leech"] = "劇毒水蛭"
 L["Version Check / Change Log"] = "版本檢查 / 更新紀錄"
 L["Vexamus"] = "維薩穆斯"

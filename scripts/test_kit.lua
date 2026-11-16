@@ -413,6 +413,7 @@ end
 test("SidebarModel: percent, forces tone and total text follow the old progress bar", function()
   eq(Model.FormatPercent(735, 729), "100.8%")
   eq(Model.FormatPercent(0, 0), "0.0%")
+  eq(Model.FormatPercent(735, 729, true), "100.82%")
   eq(Model.FormatForcesTotal(735, 729), "735/729 (100.82%)")
   eq(Model.ForcesTone(700, 729), "text.normal")
   eq(Model.ForcesTone(729, 729), "ok")
@@ -479,6 +480,12 @@ test("SidebarModel.Build: rows, cumulative text, the pull that completes forces,
   eq({ counted.items[1].pullText, counted.items[1].cumulativeText, counted.items[1].healthText }, { "+10", "10", "4000hp" })
   eq(counted.items[3].healthText, "10000hp", "boss health shows even with no forces")
   eq(counted.items[3].sig ~= items[3].sig, true, "health text changes the sig")
+
+  local precise = Model.Build(fixturePreset(), fixtureContext({ preciseForcesPercent = true }))
+  eq({ precise.items[1].pullText, precise.items[1].cumulativeText }, { "+50.00%", "50.00%" })
+  eq(precise.items[1].sig ~= items[1].sig, true, "the decimals change the sig")
+  local preciseCount = Model.Build(fixturePreset(), fixtureContext({ preciseForcesPercent = true, useForcesCount = true }))
+  eq({ preciseCount.items[1].pullText, preciseCount.items[1].cumulativeText }, { "+10", "10" }, "counts ignore the decimals")
 
   local live = Model.Build(fixturePreset(), fixtureContext({ liveActive = true, livePresetUID = "mine", inGroup = true }))
   eq(live.header.isLiveRoute, true)

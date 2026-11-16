@@ -768,6 +768,7 @@ L["Unsupported route format. Only !~MDT2~ routes are supported."] = "Format de r
 L["Use /mdt reset to restore the default position and scale of MDT."] = "Utilisez '/mdt reset' pour rétablir la position et l'échelle par défaut de MDT."
 L["Use as a starting point:"] = "À utiliser comme point de départ :"
 L["Use forces count"] = "Utiliser le nombre de forces ennemies dans la barre latérale et les étiquettes de pull"
+L["preciseForcesPercent"] = "Afficher les pourcentages avec deux décimales"
 L["Venom Leech"] = "Sangsue venimeuse"
 L["Version Check / Change Log"] = "Vérification de la version / journal des modifications"
 L["Vexamus"] = "Vexamus"

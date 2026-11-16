@@ -144,6 +144,12 @@ local function buildGeneral(column)
     MDT:RefreshSidebar()
     MDT:DrawAllHulls()
   end)
+  -- Counts have no decimals, so this only matters while the percentages show.
+  checkbox(column, "preciseForcesPercent", L["preciseForcesPercent"], function() return db.preciseForcesPercent == true end, function(value)
+    db.preciseForcesPercent = value
+    MDT:RefreshSidebar()
+    MDT:DrawAllHulls()
+  end, function() return db.useForcesCount == true end)
   checkbox(column, "pullHealth", L["Show pull health"], function() return db.showPullButtonHealth == true end, function(value)
     db.showPullButtonHealth = value
     MDT:RefreshSidebar()

@@ -768,6 +768,7 @@ L["Unsupported route format. Only !~MDT2~ routes are supported."] = "Непод�
 L["Use /mdt reset to restore the default position and scale of MDT."] = "Используйте команду /mdt reset, чтобы восстановить положение и масштаб MDT по умолчанию."
 L["Use as a starting point:"] = "Использовать как начальную точку:"
 L["Use forces count"] = "Использовать количество сил врага на боковой панели и подписях пуллов"
+L["preciseForcesPercent"] = "Показывать проценты с двумя знаками после запятой"
 L["Venom Leech"] = "Ядовитая пиявка"
 L["Version Check / Change Log"] = "Проверка версии / Журнал изменений"
 L["Vexamus"] = "Вексам"
