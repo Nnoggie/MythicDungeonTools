@@ -19,50 +19,41 @@ function MDT:PullTone(r, g, b, bright)
   return r + (fill[1] - r) * DIM, g + (fill[2] - g) * DIM, b + (fill[3] - b) * DIM
 end
 
--- return true if a is more lower-left than b
-local function is_lower_left(a, b)
-  if a[1] < b[1] then return true end
-  if a[1] > b[1] then return false end
-  if a[2] < b[2] then return true end
-  if a[2] > b[2] then return true end
-  return false
+local function cross(o, a, b)
+  return (a[1] - o[1]) * (b[2] - o[2]) - (a[2] - o[2]) * (b[1] - o[1])
 end
 
--- return true if c is left of line a-b
-local function is_left_of(a, b, c)
-  local u1 = b[1] - a[1]
-  local v1 = b[2] - a[2]
-  local u2 = c[1] - a[1]
-  local v2 = c[2] - a[2]
-  return u1 * v2 - v1 * u2 < 0
+local function by_x_then_y(a, b)
+  if a[1] ~= b[1] then return a[1] < b[1] end
+  return a[2] < b[2]
 end
 
+---Convex hull by Andrew's monotone chain. Collinear points are left out.
+---@param pts number[][]?
+---@return number[][]?
 local function convex_hull(pts)
   if not pts or #pts == 0 then return end
-  local lower_left = 1
-  for i = 2, #pts do
-    if not pts[i][1] or not pts[lower_left][1] then return end
-    if is_lower_left(pts[i], pts[lower_left]) then lower_left = i end
+  local sorted = {}
+  for i, p in ipairs(pts) do
+    if not p[1] or not p[2] then return end
+    sorted[i] = p
   end
+  table.sort(sorted, by_x_then_y)
+  local n = #sorted
+  if n < 3 then return sorted end
 
   local hull = {}
-  local final = 1
-  local tries = 0
-  repeat
-    table.insert(hull, lower_left)
-    final = 1
-    for j = 2, #pts do
-      if lower_left == final or is_left_of(pts[lower_left], pts[final], pts[j]) then final = j end
-    end
-    lower_left = final
-    tries = tries + 1
-  until final == hull[1] or tries > 100 --deadlocked here otherwise?!?
-
-  local hullpts = {}
-  for _, index in ipairs(hull) do
-    table.insert(hullpts, pts[index])
+  for i = 1, n do
+    while #hull >= 2 and cross(hull[#hull - 1], hull[#hull], sorted[i]) <= 0 do hull[#hull] = nil end
+    hull[#hull + 1] = sorted[i]
   end
-  return hullpts
+  local lowerSize = #hull + 1
+  for i = n - 1, 1, -1 do
+    while #hull >= lowerSize and cross(hull[#hull - 1], hull[#hull], sorted[i]) <= 0 do hull[#hull] = nil end
+    hull[#hull + 1] = sorted[i]
+  end
+  hull[#hull] = nil -- the first point again
+  return hull
 end
 
 local function centroid(pts)
