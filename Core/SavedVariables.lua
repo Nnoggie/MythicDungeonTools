@@ -7,6 +7,7 @@ local defaultSavedVars = {
     scale = 1,
     nonFullscreenScale = 1.4,
     uiScale = 1,
+    scaleChooserShown = false, -- the size chooser was shown once, or skipped because the MDT scale was already set
     useForcesCount = false, -- replaces percent in pull buttons with count
     preciseForcesPercent = false, -- two decimal places in the pull buttons' and labels' percentages
     showPullButtonHealth = false,

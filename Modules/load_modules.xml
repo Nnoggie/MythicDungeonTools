@@ -34,6 +34,7 @@
 	<Script file='DungeonSelect.lua'/>
 	<Script file='Conflicts.lua'/>
 	<Script file='PrePatchWarning.lua'/>
+	<Script file='ScaleChooser.lua'/>
 	<Script file='ErrorHandling.lua'/>
 	<Script file='InGameChangeLog.lua'/>
 	<Script file='VersionCheck.lua'/>

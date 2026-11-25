@@ -208,6 +208,9 @@ dofile(root.."/scripts/headless/scale_steps.lua")({
   W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, seeded = seeded, stored = stored,
   loginRelayouts = loginRelayouts, bootWithSavedVariables = bootWithSavedVariables,
 })
+dofile(root.."/scripts/headless/scale_chooser_steps.lua")({
+  W = W, MDT = MDT, step = step, expect = expect, click = click, asyncIdle = asyncIdle, render = render, seeded = seeded,
+})
 
 step("main window is shown", function()
   expect(main, "MDT.main_frame was not created")

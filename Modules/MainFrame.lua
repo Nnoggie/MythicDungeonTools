@@ -123,6 +123,7 @@ function MDT:ShowInterfaceInternal(force)
     MDT:RequestVersionCheck()
     self:CheckCurrentZone()
     MDT:UpdateBottomText()
+    MDT:ShowScaleChooser()
   end
 end
 
